@@ -1,0 +1,320 @@
+# REP-07 — Audit Gate v0.2 record for carroll-read-this-photographs, authored IN THE CANDIDATE
+# DIR.
+#
+# STATUS: PROPOSED — deliberately NOT in canon/audit/records/ (a candidate dir must not gain a
+# record there while under canon/candidates/). On admission this file moves unchanged to
+# canon/audit/records/carroll-read-this-photographs.audit.yaml. Admission is a Controller
+# decision; nothing here performs it.
+
+audit_record_version: v0.2
+audit_id: aud_carroll_photographs
+source_id: carroll-read-this-photographs
+knowledge_dir: canon/candidates/canon-014/carroll-read-this-photographs
+recorded_at_commit: b665625ca7f192ca4b8722870397f65133b859b7
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 8678c962d82404736cecf4f3e0bbcb2a51ce9f9a94f9c0ace607525035102586
+    - path: operational-bindings.yaml
+      digest: 50ae194187c17abeb8fd0d09c180aa43a1f28df4db087badaf94f4d63e317e6f
+    - path: source-concept-systems.yaml
+      digest: 41bd8ff5fb2d237762bcb2c7a71a86e6af8c2135f158152b2b7d78f54a0b057f
+    - path: source-knowledge.yaml
+      digest: 949778c4abfa6bc75f3c17dea065b65f6ca1c8566dff5a2012d6a211a429bd46
+    - path: visual-evidence-ledger.yaml
+      digest: d6d425d52725f76d8236f7968696f548ee072fae1fb15bc4889e50393d18f229
+  combined_digest: f7a9d5ca2d34f3a2f4e69b3fad34b8ec48fd3ed26a79bc7bdbadd50eb539c282
+
+evidence_basis_for_this_audit:
+  - canon/candidates/canon-014/carroll-read-this-photographs/source-knowledge.yaml
+  - canon/candidates/canon-014/carroll-read-this-photographs/source-concept-systems.yaml
+  - canon/candidates/canon-014/carroll-read-this-photographs/operational-bindings.yaml
+  - canon/candidates/canon-014/carroll-read-this-photographs/ontology-mappings.yaml
+  - canon/candidates/canon-014/carroll-read-this-photographs/visual-evidence-ledger.yaml
+  - canon/candidates/canon-014/carroll-read-this-photographs/PROVENANCE.md
+  - canon/candidates/canon-014/carroll-read-this-photographs/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/carroll-read-this-photographs/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/INSPECTION-RUNBOOK.md
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+  - "~/Downloads/Books/Read This If You Want to Take Great Photographs.epub (hash-verified on arrival, unpacked to scratchpad, 73/79 images opened)"
+source_reopened: true
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable EPUB with no page map and no anchors; page_start/page_end are null on all 30
+    objects and every locator is the spread's own title + printed sub-heading + spine number.
+    The REP-07 pass re-parsed the OPF spine and re-resolved all 30 locators exactly
+    (visual-evidence-ledger.yaml, locator_verification). The file's print-edition page
+    references remain unanchored in the text; the pass additionally established that IMAGE
+    files are named for their print pages (pg21_1.jpg = print p.21, verified on three of the
+    book's own cross-references), which recovers photograph-page references mechanically while
+    prose pages stay unaddressable.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        No page exists in this format. Spread-title locators are the stable citation unit and
+        all 30 re-resolve against the arrived copy (hash-matched to the extraction's recorded
+        original-file SHA-256).
+    - pattern: false_page_affordance
+      affects: "print-edition page references throughout ('p. 21' lists, body cross-references, Index, Credits)"
+      detectability: named_by_text
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The copy looks paginated and is not - the trap the extraction recorded without falling
+        into. The inspection found the recovery route: image filenames encode print pages, so
+        every reference to a photograph's page resolves to an image file. The two content
+        losses the extraction charged to this pattern are recovered in the ledger: the
+        pages-10/16/22 exercise behind sk_crl_0019 (they are the Leading lines, Foreground
+        interest and Rule of thirds spreads) and the focal-length table behind sk_crl_0021
+        (opened; contents recorded verbatim in its ledger row).
+    - pattern: no_loss_detected
+      affects: "the visual dimension of the extracted span"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        All 79 images present and intact; 73 opened, including the photograph behind every
+        object; the 6 unopened are sub-4KB interface icons whose families were opened. Printed
+        credits match the caption facts the extraction recorded. 26 of 30 lessons resolve
+        claim_visible_in_photograph, 1 claim_visible_with_noted_limit, 2 have no photograph
+        behind them (verbal lessons with interface charts only), and no photograph contradicts
+        the lesson written against it. The book also prints four diagram variants (eye-path
+        arrows, construction lines, thirds grid) that draw the claimed mechanisms onto the
+        photographs themselves - text-figure binding stronger than the text stream could show.
+    - pattern: figure_inspected_claim_underdetermined
+      affects: "sk_crl_0030 - a series says what no single photograph can"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        The figure behind the lesson is the cover of Frank's The Americans: one image standing
+        for an ordered 83-image sequence. The claim is about style-consistency and order; the
+        reproduction cannot exhibit either in principle, so the figure was looked at and the
+        claim still is not settled by it. The object's evidence remains Carroll's
+        autobiographical report, as its frozen caveats already state.
+  claim_resolution_after_inspection: some_underdetermined
+  consequence: >
+    The candidate's blocking condition (half_the_knowledge_rests_on_uninspected_photographs,
+    audit-assessment-HOLD.yaml) is discharged: all 14 figure_not_inspected objects now have
+    their photographs opened and checked, 13 fully visible and 1 visible with a reproduction-
+    resolution limit, with zero contradictions found. Carroll's descriptions of his examples
+    are accurate in every checked instance; the one underdetermination (sk_crl_0030) is a
+    property of the lesson's evidence form, not of the copy, and its frozen record never
+    claimed figure support.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    30 objects, one author, one register: a practising photographer-teacher stating rules,
+    mechanisms and judgements in his own voice against reproduced exemplar photographs by
+    other photographers. No study, measurement, reader test or controlled comparison exists
+    anywhere in the book, and no object cites one.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_crl_0001, sk_crl_0002, sk_crl_0003, sk_crl_0004, sk_crl_0005,
+                sk_crl_0006, sk_crl_0007, sk_crl_0008, sk_crl_0009, sk_crl_0010,
+                sk_crl_0011, sk_crl_0012, sk_crl_0013, sk_crl_0014, sk_crl_0015,
+                sk_crl_0016, sk_crl_0017, sk_crl_0018, sk_crl_0019, sk_crl_0020,
+                sk_crl_0021, sk_crl_0022, sk_crl_0023, sk_crl_0024, sk_crl_0025,
+                sk_crl_0026, sk_crl_0027, sk_crl_0028, sk_crl_0029, sk_crl_0030]
+      evidence: >
+        Every object is Carroll speaking as practitioner: the dominant frozen characteristics
+        are practitioner_assertion and explicitly_stated, with mechanism_given where he argues
+        and mechanism_absent where he does not. The photographs he argues against are other
+        photographers' works, but the claims about them are his own readings, printed in his
+        voice - no photographer is quoted making any extracted claim, so no object rises to
+        source_quotes_named_third_party. Numeric thresholds (about 1/60, about 1/125, ISO 800)
+        are his rules of thumb, hedged where he hedges (source_uncertainty: source_hedges on
+        sk_crl_0011/0012), never measurements. sk_crl_0030's evidence is his own
+        autobiographical reading history, which is still the author's assertion about his
+        subject.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record by direct recount: empirical_within_source appears on 0
+    of 30 objects (EXTRACTION-NOTES.md §6 "Verified in code: 0 of 30", re-verified against the
+    frozen YAML in this pass), and no origin category asserting a supplied measurement is used.
+    The survivorship caveat (all examples are celebrated photographs selected on outcome) is
+    the extraction-layer counterpart of this single-category origin picture and is untouched
+    by the figure pass - the photographs verify what the examples show, never that the rules
+    caused their success.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        Deliberate extraction refusal, re-affirmed by this audit: nothing in a photography
+        primer is inferred onto any Creative IR path, and the header of
+        operational-bindings.yaml states the refusal in terms.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_crl_005, bnd_crl_006]
+      note: >
+        Two production bindings over physical camera acts (exposure/flash settings; lens
+        choice and standing position), both status production_candidate with target_path null
+        because Production IR does not exist. Both refuse generative translation explicitly -
+        bnd_crl_006 states the reason: the photographer's real position and real exposure to
+        the subject are what the picture carries, a mechanism with no meaning where no one
+        stood anywhere. This audit preserves that refusal; the parked status is the right
+        shape for this consumer today.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_crl_001, bnd_crl_002, bnd_crl_003, bnd_crl_004]
+      note: >
+        Four evaluation bindings: the excuse test with its anti-perfectionism counterweight
+        (whole_asset), the single-frame compositional-cue checklist (frame), the
+        light-conditional composition check (frame), and the wrong-unit flag for series
+        (asset_set_over_time). bnd_crl_002's limit that a cue found is a question rather than
+        a verdict is now BETTER grounded than at extraction: the inspection verified that the
+        same four cues it lists are all visibly present in the celebrated Brandt portrait
+        (ledger row sk_crl_0009), so the checklist demonstrably cannot be scored as failure
+        detection.
+    - consumer: governance
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The one candidate (composition-as-checklist makes work safe and predictable) was
+        examined at extraction and refused correctly: it is advice to a photographer about
+        their own practice, not a rule about how recorded knowledge is consumed
+        (EXTRACTION-NOTES.md §7). Nothing found in the figure pass changes that.
+    - consumer: benchmark
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The alternating hard/soft light spreads were examined and refused as a benchmark
+        source: different photographer, subject and scene each time, nothing held constant.
+        The inspection confirms the refusal from the images themselves - Parke's street,
+        Godwin's stones, McGinley's figure and Learoyd's nude share no controlled variable;
+        building a minimal pair from them would manufacture a comparison the source does not
+        contain.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        Nothing here is exactly executable. The rule of thirds is offered as "a rough
+        guideline" with two unquantified failure zones; the numeric exposure thresholds are
+        hedged rules of thumb without subject speed, focal length or sensor stated. The one
+        exact-looking artifact, the focal-length table (now inspected, ledger row
+        sk_crl_0021), classifies lenses per sensor format - reference data for reading the
+        source, not composition geometry.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        Workflow-shaped knowledge exists - configure the camera before the moment
+        (sk_crl_0024), the pre-shutter frame-scan procedure (sk_crl_0007), the self-editing
+        discipline (sk_crl_0026, whose remedy term t_crl_0023 is the lane's one
+        executable_by human_edit term) - but no workflow binding was made and none is
+        manufactured here.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_crl_0024]
+      observation: >
+        The strongest transferable doctrine in the lane by the extraction's own reckoning -
+        settle every settable decision before the moment so the only live decision is timing -
+        binds to nothing: it sits outside bnd_crl_005/006 (it is not a physical act) and
+        outside the evaluation set (it governs working procedure, not assets). If a workflow
+        consumer ever takes bindings, this is the first candidate.
+    - sk_refs: [sk_crl_0021]
+      observation: >
+        The now-inspected focal-length table (wide/standard/telephoto boundaries per Full
+        Frame/APS-C/Four Thirds) is the lane's only numeric reference artifact; it is recorded
+        verbatim in the ledger and currently informs no binding.
+  conclusion: >
+    Right-shaped fit for a practitioner primer whose method is the exemplar photograph:
+    evaluation bindings carry the judgement-shaped knowledge with their limits stated, the
+    physical-craft knowledge is parked as production candidates that refuse generative
+    rewriting, and the four refusals (creative IR, governance, benchmark, deterministic
+    composition) each carry a reasoned negative finding rather than an omission.
+
+lineage:
+  authors: ["Henry Carroll"]
+  publisher: Laurence King Publishing
+  series: null
+  first_published: 2014
+  copy_edition: >
+    EPUB derived from the 2014 Laurence King edition (print ISBN 978-1-78067-335-6 as printed
+    in the file); design The Urban Ant, picture research Peter Kent. Copy identity:
+    5,142,000 bytes, SHA-256 c0a69021c14f2852c0235851ff7b45cf15676d25e6237144627f6e1936faa60a,
+    hash-on-arrival match to PROVENANCE.md recorded verbatim in visual-evidence-ledger.yaml.
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, publisher or primary informant with any live source or canon-014
+    candidate. PROVENANCE.md §4 records the nearest live neighbour
+    (freeman-photographers-eye-graphic-guide, same compositional territory) and explicitly
+    asserts no relationship, equivalence or agreement anywhere in the YAML; the neighbour
+    shaped extraction selection only (one Carroll spread refused as restatement), which is an
+    observation about what to extract, not a lineage relation. The ~50 reproduced photographs
+    are by ~50 named photographers, none of whom is a corpus author and none of whom is quoted
+    as a knowledge source - Carroll's claims about their pictures are his own, so no
+    shared_primary_informant relation arises from the reproductions.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other corpus sources;
+      no SPEC quotes Carroll, and this source entered the repository only through the
+      canon-014 candidate lane.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The book teaches on a circa-2014 consumer digital camera - mode dials, P/S(Tv)/A(Av)/M,
+    per-frame ISO, exposure-compensation buttons, IS/VR, inbuilt flash defaults, RAW/JPEG -
+    and six objects carry historical_claim for exactly that stratum. Underneath it sit optical
+    and light-geometry claims that do not date, and above it viewer-response claims bound to
+    culture rather than to any technology. The three strata need separating, which is this
+    section's job.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_crl_0001, sk_crl_0002, sk_crl_0003, sk_crl_0004, sk_crl_0006,
+                sk_crl_0007, sk_crl_0008, sk_crl_0009, sk_crl_0013, sk_crl_0014,
+                sk_crl_0017, sk_crl_0019, sk_crl_0021, sk_crl_0022, sk_crl_0024,
+                sk_crl_0025, sk_crl_0026, sk_crl_0027, sk_crl_0029, sk_crl_0030]
+      evidence: >
+        Composition and attention devices (leading line, internal frame, foreground layering,
+        frame-scan, thirds), optical geometry (depth of field needing depth to act on, focal
+        length fixing distance and field, wide-angle proportioning), light geometry (hard
+        light's lit/unlit division, flat light shifting the guiding burden to composition) and
+        judgement procedures (pre-setting before the moment, the excuse test, series as unit)
+        rest on optics, scene geometry and human looking, none of which expires with a camera
+        generation. Where the mechanism inside one of these is asserted rather than argued,
+        the frozen caveats already say so; durability, not demonstration, is what is classed
+        here.
+    - class: technology_contingent
+      sk_refs: [sk_crl_0010, sk_crl_0011, sk_crl_0012, sk_crl_0015, sk_crl_0016, sk_crl_0020]
+      evidence: >
+        The six historical_claim objects: the exposure trio's interface and mode vocabulary,
+        the shutter/shake and freeze rules of thumb stated for 2014 hand-held bodies (IS/VR by
+        their period names), the manual-mode argument (meter behaviour, P suppressing flash,
+        compensation on a dial), the metering/compensation account, and inbuilt-flash
+        behaviour. The physics underneath (light admitted over time, on-axis shadow geometry)
+        is durable; the interfaces, defaults and numeric thumb-rules are of their period, and
+        the book's own reference chart (opened this pass) prints them as period interface
+        facts.
+    - class: historical_convention
+      sk_refs: [sk_crl_0028]
+      evidence: >
+        The "nice subject" list - sunsets, pretty flowers, hot air balloons - is a snapshot of
+        one photographic culture around 2014, stated as such in the frozen caveat
+        (culturally_bounded). The underlying claim about pre-supplied interest may travel; the
+        inventory of what counts as photogenic is a convention of its time and place.
+    - class: uncertain
+      sk_refs: [sk_crl_0005, sk_crl_0018, sk_crl_0023]
+      evidence: >
+        Viewer-response claims resting on cultural reading habits rather than on any
+        technology: symmetry answering a "primal need for order", soft light flattering and
+        reading contemplative, distance reading predatory. All three carry culturally_bounded
+        in the frozen record; whether they are durable features of human looking or
+        conventions of Carroll's audience cannot be classed from this source, and the source
+        offers no evidence either way.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]
