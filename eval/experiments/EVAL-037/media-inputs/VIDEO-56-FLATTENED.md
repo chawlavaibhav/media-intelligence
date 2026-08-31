@@ -7919,3 +7919,326 @@ The moment feels suspended, unresolved.
 Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
 
 ---
+
+# CONTEST V07 — B01
+
+Use frozen brief B01 from the top of this file.
+
+## PACKAGE A
+
+## DELIVERABLE
+One (1) vertical 9:16 video ad, ~30 seconds, for RentOK — targeting hostel/PG owners in India. Delivered as a single edited sequence built from sequential generation shots + text overlays + audio design (no live-action shoot; fully AI-generated/composited production).
+
+## OBJECTIVE_INTERPRETATION
+The customer wants prospective hostel/PG owners to viscerally recognize their own daily operational pain (WhatsApp chaos, notebooks, spreadsheets, missed rent, KYC gaps, complaint pile-ups) and then feel relief/aspiration when RentOK is introduced as the organized alternative. Tone must be Indian, contemporary, credible — like a sharp regional startup ad, not a Western SaaS explainer with stock-photo laptops and generic office actors. Success = an owner watching thinks "this is literally my life" in the first 15 seconds, then "I need this" by the end.
+
+## CORE_CREATIVE_IDEA
+**"Chaos to Control, in One Tap."**
+A single PG/hostel owner's desk becomes the battlefield — phone buzzing with WhatsApp tenant messages, a torn spreadsheet notebook, loose KYC photocopies, sticky notes for complaints — all escalating in speed and noise until it visually and sonically peaks in overwhelm. Then a hand taps one phone screen — the chaos physically collapses/sucks away — replaced by the clean RentOK dashboard. The metaphor: RentOK doesn't add a tool, it removes the mess.
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Hook (0-3s):** Instant recognizable chaos — phone ping overload, physical clutter of paper/notebooks.
+2. **Escalation (3-14s):** Specific pain points shown in rapid vignettes — unpaid rent chase on WhatsApp, illegible tenant notebook, missing KYC photocopy, complaint sticky notes falling off wall.
+3. **Turn (14-18s):** Peak overwhelm → hard cut/wipe transition as hand taps phone.
+4. **Resolution (18-26s):** Clean RentOK app UI — rent auto-collected, tenant profile with KYC done, complaint ticket resolved, dashboard calm — set in the same physical space now tidy.
+5. **CTA (26-30s):** RentOK logo, tagline, and action prompt "Get Free Demo" with app install/website mention.
+
+## VISUAL_SYSTEM
+- **Palette:** Chaos section — warm, slightly desaturated, cramped, mixed harsh light (tube light + phone glow) to feel real Indian PG-owner desk at night. Resolution section — RentOK brand palette (clean whites, deep blue/teal, one accent orange/yellow consistent with app UI screens), bright even lighting.
+- **Typography:** Bold, condensed Indian-contemporary sans (Devanagari-friendly font pairing optional for on-screen Hindi/Hinglish text like "जिकझिक ख़तम" nodding to site's own "jhikjhik" phrase), high-contrast white/yellow captions, punchy Hinglish copy lines.
+- **Texture/Setting:** A believable Tier-2/3 India small-business office/PG warden room — steel almirah, plastic chair, calendar on wall, register book, not a polished Silicon Valley loft.
+- **Motion Language:** Chaos phase = fast whip pans, jittery handheld micro-shake, quick cuts (0.5–1s each), overlapping WhatsApp notification pop-ups as UI graphics. Resolution phase = smooth locked-off or slow glide camera, clean UI zoom-ins, confident pacing.
+- **Brand Motif:** RentOK screen UI (dashboard, KYC tick, autopay confirmation) shown as authentic in-app capture style, not abstract graphic — matches actual product feature set (Autopay, Tenant Verification, Complaint Management) per rentok.com.
+
+## PRODUCTION_RECIPE
+Fully generative vertical video, 6 sequential shots, edited with overlay text/graphics and sound design. Same "owner" character (mid-30s–40s Indian man or woman, kurta/simple shirt, warden-style) and same room set maintained across shots for continuity. Product UI screens are treated as deterministic overlays (screen-recorded style mockups), not left to the generative model to invent — see below.
+
+## GENERATION_PROMPTS
+**Shot 1 — HOOK (0–3s, ~3s)**
+Purpose: Instant relatable chaos, grab attention in first frame.
+Prompt: "Vertical 9:16 cinematic shot, dim tube-lit Indian PG warden's room at night, middle-aged Indian man in a plain collared shirt sits at a cluttered wooden desk, three phones buzzing with WhatsApp notification pop-ups on screen, papers and a torn spreadsheet notebook scattered, handheld camera with slight jitter, warm-cool mixed lighting, realistic textures, film grain, fast whip-pan into his stressed face as phone lights flash."
+
+**Shot 2 — RENT CHASING (3–7s, ~4s)**
+Purpose: Show specific pain — rent follow-up via WhatsApp.
+Prompt: "Vertical 9:16, close-up of hands scrolling frantically through a WhatsApp chat thread on a phone screen, dozens of unread tenant messages about rent, thumb typing 'Sir rent due date...' repeatedly, quick cut zoom, notification badges multiplying rapidly, same warm cluttered desk in soft focus background."
+
+**Shot 3 — PAPER KYC / NOTEBOOK (7–11s, ~4s)**
+Purpose: Show KYC/tenant record chaos.
+Prompt: "Vertical 9:16, overhead shot of hands flipping through a torn handwritten tenant register notebook and loose photocopied Aadhaar/ID papers spilling off a wooden table, one photocopy slipping to the floor, quick handheld shake, realistic Indian stationery textures, dim ambient light."
+
+**Shot 4 — COMPLAINTS WALL (11–14s, ~3s)**
+Purpose: Show complaint management chaos, peak overwhelm.
+Prompt: "Vertical 9:16, sticky notes with handwritten tenant complaints ('AC not working', 'Water leak Room 12') falling off a cluttered wall one by one, man in background rubbing his forehead in frustration, fast cut, phone still buzzing in foreground, chaotic sound cues implied by shaking frame."
+
+**Shot 5 — THE TURN / TRANSITION (14–18s, ~4s)**
+Purpose: Pivotal wipe from chaos to clarity.
+Prompt: "Vertical 9:16, close-up of the same man's hand picking up one phone and tapping it once with calm confidence, sudden hard light change from warm dim to clean bright white-blue, background clutter visually dissolves/wipes away like dust blown off frame, smooth camera push-in, transition motion blur, satisfying 'reset' feel."
+
+**Shot 6 — RESOLUTION / RENTOK DASHBOARD (18–26s, ~8s)**
+Purpose: Show organized system, product value, calm confident owner.
+Prompt: "Vertical 9:16, same man now sitting relaxed at the same desk, now tidy and well-lit, holding phone showing a clean modern app dashboard interface with rent collection status, tenant KYC verified checkmark, and resolved complaint ticket, soft smile, smooth slow camera glide, bright optimistic lighting, contemporary Indian small-business context, confident calm body language."
+
+**Shot 7 — CTA / LOGO (26–30s, ~4s)**
+Purpose: Brand close, call to action.
+Prompt: "Vertical 9:16, clean minimal background in RentOK brand blue with white RentOK logo centered, bold Hinglish tagline text animating in, app icon and 'Get Free Demo' button graphic, crisp modern motion graphics, no clutter, confident finishing beat."
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- **RentOK app UI screens** (rent dashboard, KYC verified badge, complaint resolved ticket, autopay confirmation) — must be actual/mocked screen captures matching real product UI conventions from rentok.com feature set (Autopay, Tenant Verification, Complaint Management), composited into Shot 6, not generatively hallucinated.
+- **RentOK logo, wordmark, and brand color values** — sourced directly from brand assets, added as a deterministic overlay in Shot 7.
+- **On-screen text captions/subtitles** (Hinglish lines, CTA "Get Free Demo") — typeset in post, not generated.
+- **WhatsApp notification pop-up graphics** in Shots 1–2 — recreated as authentic UI overlay graphics (not the real WhatsApp trademark asset, but a close generic chat-bubble notification style) composited in post for legal safety and crispness.
+
+## AUDIO_AND_EDIT
+- **0–14s (Chaos):** Fast-paced diegetic sound design — overlapping phone notification dings (increasing frequency), paper rustling, pen scratching, a frustrated exhale, one muffled Hindi phrase like "yeh phir se…" (optional, kept generic/non-VO-heavy to avoid language-lock issues). Quick-cut editing, 0.5–1s per beat, jump-cut energy, handheld shake retained.
+- **14–18s (Turn):** Sudden audio drop-out / whoosh transition SFX — one clean "tap" sound, then silence beat (0.3s) before music kicks in.
+- **18–30s (Resolution + CTA):** Uplifting, contemporary Indian-fusion instrumental (tabla/electronic hybrid, confident mid-tempo), clean single upbeat music bed, subtle app "success chime" SFX on dashboard checkmarks, voiceover line (Hindi/Hinglish, warm confident male or female VO): *"Jhikjhik khatam. Ab sab kuch, ek jagah."* ("The hassle ends. Now everything, in one place.") — matches site's own "jhikjhik" language. End card VO: *"RentOK — Property manage karo, aaram se."*
+- **Captions:** Burned-in bilingual (Hindi+English) subtitles throughout for silent-scroll viewing (critical for social vertical video consumption).
+
+## FAILURE_PREVENTION
+- Avoid generic "Silicon Valley SaaS" cues: no glass conference rooms, no diverse office actors in blazers, no laptop-on-marble-table shots — replaced entirely with authentic Indian PG/hostel warden-room setting and real regional textures (steel furniture, notebooks, tube lighting).
+- Avoid brand/trademark risk: do not render real WhatsApp logo/UI verbatim; use generic chat-notification style graphics.
+- Maintain character/set continuity across all 6 shots (same actor, same room, same desk) to avoid a disjointed stock-footage feel — explicitly instructed in every prompt.
+- Do not let generative model invent fake app UI — dashboard/UI screens are deterministic composites to guarantee accuracy to real RentOK product.
+- Keep VO/text in Hinglish, not pure English, to preserve "credible and Indian" requirement — avoid overly polished Western VO tone.
+- Ensure pacing lands the "turn" exactly around 14–18s so the emotional payoff arrives before typical vertical-video drop-off (~15–20s).
+- Keep total runtime tightly to ~30s by pre-locking shot durations (3+4+4+3+4+8+4=30s).
+
+## HARD_CONSTRAINT_CHECK
+- ✅ Vertical video ad — confirmed 9:16 throughout.
+- ✅ ~30 seconds target — shot durations sum to 30s exactly.
+- ✅ Audience: hostel/PG owners in India — setting, language, and pain points explicitly targeted.
+- ✅ Operational chaos (rent collection, tenant records, KYC, move-outs, complaints, compliance via WhatsApp/notebooks/spreadsheets) made "painfully recognisable" — covered across Shots 1–4.
+- ✅ RentOK positioned as the clean system — Shots 5–7.
+- ✅ Contemporary, credible, Indian feel, not generic Silicon Valley SaaS — explicitly designed into visual system and failure prevention.
+- ✅ Only rentok.com used for company/product/brand facts — confirmed below.
+- ✅ Single concept, no alternatives presented.
+- ✅ No model/provider recommended.
+
+## PACKAGE B
+
+## DELIVERABLE
+One 9:16 vertical video, ~30 seconds, for paid social (Instagram/YouTube Shorts/WhatsApp forwarding), targeting Indian PG/hostel owners. Single cut, no alternate versions.
+
+## OBJECTIVE_INTERPRETATION
+The customer is not selling "software" — they're selling relief from the daily chaos of running a PG/hostel using WhatsApp threads, notebooks and Excel. The ad must make an Indian PG-owner say "yeh toh mera hi problem hai" (this is literally my problem) within the first 3 seconds, then show the same moment resolved calmly inside RentOK. Success = recognition → relief → action (demo/trial), not admiration for slick design.
+
+## CORE_CREATIVE_IDEA
+**"Ek Malik, Sau Jhanjhat" (One Owner, Hundred Hassles) → "Ab Sab RentOK Mein"**
+A harried PG owner is drowning in the exact tools named in the brief — WhatsApp notification spam, a torn notebook of rent dues, a spreadsheet no one updates, a tenant shouting about a complaint, a police-verification form gone missing. We shoot this as lived-in Indian PG reality (steel almirah, tiffin boxes, ceiling fan, tube light, doorbell) — not a clean SaaS office. At the 15s mark, a single tap on the RentOK app freezes the chaos: notifications stop, notebook closes, spreadsheet fades — replaced by one clean dashboard screen. Same owner, same room, now calm, chai in hand, phone in other, everything visible on one screen.
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Hook (0–3s):** Visual chaos + on-screen text "Rent WhatsApp pe. Records notebook mein. Bharosa kisi pe nahi." — instant recognition.
+2. **Escalation (3–15s):** Named pain points dramatized in quick succession: rent follow-up, KYC/police verification, move-out confusion, complaint ignored.
+3. **Turn (15–18s):** The tap/wipe transition — chaos to clarity.
+4. **Resolution (18–26s):** RentOK dashboard shows rent collected, KYC done, complaints closed, move-out logged — in Hindi/Hinglish UI voice.
+5. **CTA (26–30s):** Logo, tagline, "Free demo book karein" + phone/app CTA, trust stat "15,000+ property owners" (from site).
+
+Primary message: *RentOK converts PG chaos into one clean system.*
+Secondary proof point: scale/trust number from website (15,000+ owners / 100 Cr+ collection) — used as a credibility stamp, not a headline.
+
+## VISUAL_SYSTEM
+- **Look:** Warm, slightly desaturated Indian tungsten-tube-light interiors for the "chaos" half; clean, bright, neutral daylight-balanced tones for the "RentOK" half. Grain and handheld wobble in chaos section; locked-off, smooth gimbal in resolution section.
+- **Color:** Chaos = warm yellow/brown clutter tones. RentOK brand moment = brand teal/blue-white UI glow (consistent with RentOK's app screens) introduced only after the turn, so the brand color becomes the "relief" color.
+- **Typography:** Bold Hinglish captions, Devanagari-friendly sans (e.g., Baloo/Poppins style), burned-in kinetic text synced to VO, not translated English SaaS captions.
+- **Wardrobe/props:** Real PG signifiers — steel cupboard, name-plate register, tiffin carrier, cash in an envelope, a torn rent-due notebook, phone buzzing with 40+ WhatsApp unread badges, a printed "ROOM VACANT" paper taped crooked on a door.
+- **Casting:** Mid-30s to 50s Indian PG/hostel owner (any gender), physically ordinary, not model-styled — should look like an actual landlord, not a founder.
+
+## PRODUCTION_RECIPE
+Format: 9:16, 1080x1920, 30fps, target 30s (±2s), single continuous narrative arc, 8 shots.
+
+| # | Shot | Duration | Purpose |
+|---|------|----------|---------|
+| 1 | Extreme close-up: phone screen flooded with WhatsApp notifications (rent, complaints, tenant queries) buzzing non-stop | 0–3s | Hook — instant chaos recognition |
+| 2 | Owner flipping frantically through a torn spiral notebook full of crossed-out rent entries, cash notes tucked in | 3–6s | Establish manual record-keeping pain |
+| 3 | Cut to laptop: Excel sheet with red/yellow highlighted cells, cursor scrolling confusedly, someone shouting off-frame "kiska rent baaki hai?" | 6–9s | Spreadsheet chaos |
+| 4 | Tenant at the door holding a complaint slip / broken tap, owner distracted, papers falling | 9–12s | Complaints/ops leakage |
+| 5 | Owner digging through a drawer for a tenant's Aadhaar photocopy for police verification, panicked | 12–15s | KYC/compliance pain, escalation peak |
+| 6 | TURN SHOT: owner's thumb taps RentOK app icon — screen light washes over his face, all background chaos audio cuts to silence | 15–18s | Pivot moment |
+| 7 | Clean dashboard sequence (screen-recorded UI, not filmed off a phone): rent auto-collected tick, KYC verified badge, complaint marked resolved, move-out logged — owner now seated calmly, chai in hand | 18–26s | Resolution, product proof |
+| 8 | RentOK logo lockup on clean background + tagline + CTA text + trust line "15,000+ property owners trust RentOK" | 26–30s | CTA / brand close |
+
+## GENERATION_PROMPTS
+Since this is a video, shot-level prompts (execute in sequence, consistent character/location across shots 1–7, cut to clean UI/graphic for shots 7b–8):
+
+**Shot 1 (0–3s):** "Extreme close-up handheld shot, vertical 9:16, phone screen glowing in a dim room, dozens of WhatsApp notification banners rapidly stacking — rent reminders, tenant complaints, 'when's my refund' messages. Warm tungsten light, slight grain, realistic Indian PG owner's thumb visible at edge of frame trying to swipe them away, anxious quick breathing sound design."
+
+**Shot 2 (3–6s):** "Handheld vertical shot, dim yellow-lit PG office corner, Indian man in his 40s in a simple kurta/shirt flipping through a worn spiral notebook full of crossed-out handwritten rent entries and cash tucked between pages, frustration on his face, steel almirah and tiffin boxes visible in background, documentary realism, no studio lighting."
+
+**Shot 3 (6–9s):** "Vertical shot over-the-shoulder of same man at an old laptop, Excel spreadsheet on screen with red and yellow highlighted overdue-rent cells, his finger scrolling frantically, off-screen voice shouting in Hindi asking about pending rent, warm cluttered room, realistic desk clutter."
+
+**Shot 4 (9–12s):** "Vertical shot, PG hostel corridor with tube-light, a young tenant standing at a door holding a folded complaint paper about a broken tap, gesturing frustrated, the owner in background distracted shuffling papers that spill slightly, authentic Indian hostel corridor set."
+
+**Shot 5 (12–15s):** "Vertical close shot, same man rummaging through a metal drawer full of loose photocopies and ID documents, pulls out a crumpled Aadhaar card copy, sweating slightly, panicked expression, dim practical lighting, handheld camera shake increasing tension."
+
+**Shot 6 (15–18s):** "Vertical shot, same man's thumb taps a phone screen showing the RentOK app icon; screen light flares warm-to-cool, background chaos sounds cut abruptly to silence, his face softens under the cool blue-white glow of the screen, smooth locked camera move replacing previous handheld shake."
+
+**Shot 7 (18–26s):** "Clean vertical screen-capture style UI animation, RentOK app dashboard: rent-collected checkmark ticks in, KYC-verified badge appears, complaint status turns 'Resolved' green, move-out entry logs automatically — crisp white background, brand teal/blue accents, minimal Hinglish labels (Rent Collected, KYC Verified, Complaint Resolved). Cut back briefly to same man now seated calmly on a chair, chai cup in hand, phone in the other, soft daylight through a window, composed and relaxed, same room now tidy."
+
+**Shot 8 (26–30s):** "Vertical clean brand end-card, white/light background, RentOK logo centered, tagline 'Ek App. Poora Hostel. Zero Jhanjhat.' beneath it, small trust line '15,000+ Property Owners Trust RentOK' at bottom, CTA button-style text 'Free Demo Book Karein' with phone icon, minimal motion graphic fade-in, brand teal accent color."
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- RentOK logo, wordmark, and exact tagline/CTA text must be inserted as deterministic brand overlays (not generated organically) using RentOK's actual logo asset and brand color from rentok.com.
+- Dashboard UI in Shot 7 should be a real/recreated screen capture of RentOK's actual app UI (rent collection, KYC, complaint management, move-out modules — all confirmed as real features on rentok.com) rather than a generic invented SaaS UI, for credibility.
+- Trust stat "15,000+ property owners" / "100 Cr+ collection" pulled directly from rentok.com — insert as static text, not paraphrased/estimated.
+- End-card CTA phone/app-store icons should be real deterministic assets, not AI-generated.
+
+## AUDIO_AND_EDIT
+- **0–15s:** Diegetic chaos sound design — buzzing phone notifications, paper rustling, overlapping distant Hindi chatter, a tenant's raised voice — mixed slightly harsh/overlapping to build irritation. No music, or only tense low sub-hum.
+- **15s cut:** Hard silence/sound-drop on the tap, then a single clean UI "confirm" chime.
+- **18–30s:** Warm, contemporary Indian instrumental bed (tabla/lo-fi fusion, not generic corporate synth) at moderate tempo, confident not corporate.
+- **VO/captions:** Hinglish male or female VO (matching owner's likely persona), colloquial not scripted-sounding, e.g., "Rent bhi WhatsApp pe, records bhi... bhai, ab RentOK pe sab kuch." Burned-in captions throughout for silent autoplay viewing (critical for social).
+- **Edit pace:** Fast jump-cuts (1–1.5s holds) during chaos section; slows to 3–4s holds during resolution section — pacing itself communicates the "chaos to calm" arc.
+
+## FAILURE_PREVENTION
+- Risk: chaos section reads as generic "busy office" stock-footage feel → mitigate by insisting on specific Indian PG props (steel almirah, tiffin, notebook, tube light, doorbell) named explicitly in every chaos prompt.
+- Risk: resolution UI section looks like a disconnected app-demo insert → mitigate by keeping the same actor/room visible bridging into and out of the UI insert (shot 7 explicitly returns to him calm in the same space).
+- Risk: looking like "generic Silicon Valley SaaS ad" → avoid clean minimalist white office, English-only text, stock-photo diversity casting; keep it grounded, regional, Hinglish-first.
+- Risk: overclaiming features not confirmed on site → all named features (rent collection/autopay, KYC/tenant verification, complaint management, move-out/room shifting) are directly listed on rentok.com; no invented capabilities used.
+- Risk: 30s runtime overload with 8 shots → keep shots 1–5 tight (3s each, jump-cut energy) so pacing feels intentional, not rushed.
+
+## HARD_CONSTRAINT_CHECK
+- Vertical 9:16: ✅ specified throughout.
+- ~30 seconds: ✅ shot list sums to 30s.
+- Target audience = Indian hostel/PG owners: ✅ casting, props, language, tone all localized.
+- Named pains (rent collection, tenant records, KYC, move-outs, complaints, compliance via WhatsApp/notebooks/spreadsheets): ✅ each explicitly dramatized in shots 1–5 and resolved in shot 7.
+- Feel contemporary, credible, Indian, not generic SaaS: ✅ visual system, casting, sound design, Hinglish captions all built against generic-SaaS aesthetics.
+- Single concept, no alternatives presented: ✅ one package delivered.
+- Only rentok.com used for company/product/brand facts: ✅ see below.
+- No model/provider recommended: ✅ none named.
+
+## PACKAGE C
+
+## DELIVERABLE
+One vertical (9:16) commercial video advertisement, ~30 seconds, for RentOK — targeting hostel/PG owners in India. Delivered as a single edited spot with shot-level generation prompts, on-screen text, and audio direction.
+
+## OBJECTIVE_INTERPRETATION
+The customer wants the ad to do two jobs in order: (1) make the owner viscerally recognise their own daily operational pain — WhatsApp chaos, notebook ledgers, scattered spreadsheets, missed rent follow-ups, KYC lost in chat threads, complaint messages buried — and (2) resolve that pain by cutting to RentOK as one clean, calm, credible system. Tone must be Indian-contemporary (real PG/hostel textures, Hindi-English mixed voice/text, recognisable Indian UI patterns like WhatsApp), not a polished generic SaaS explainer with sterile stock-office aesthetics. Success = an owner watching this says "yeh toh mera hi problem hai" (this is literally my problem) in the first 10 seconds, then feels relief and clarity by second 25, and knows what to do by second 30.
+
+## CORE_CREATIVE_IDEA
+**"Chaos-to-Control, in one wipe."**
+Structure the film as a single escalating montage of real PG-owner chaos — a warden's phone buzzing non-stop, a notebook with cut-and-crossed rent entries, a spreadsheet with broken formulas, a tenant KYC photo lost in a WhatsApp scroll — cut fast and messy, handheld, cluttered frame, overlapping notification sounds. At the peak of overwhelm, one confident tap on a phone triggers a hard visual/audio wipe into the RentOK app: same owner, same room, but now the frame is clean, organised, one screen showing rent status, KYC, complaints, all resolved. The chaos footage and the calm footage use the *same actor, same location* — proving it's not a different world, it's the same PG, just managed differently.
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Hook (0–3s):** Instant recognisable chaos — phone exploding with WhatsApp rent-reminder texts. Pattern-interrupt for scroll-stopping.
+2. **Escalation (3–14s):** Stack the specific pains in quick cuts — rent follow-ups, notebook ledger errors, KYC document lost in chat, tenant complaint ignored, move-out confusion. Each cut = one pain, one visual, ≤2s.
+3. **Turn (14–17s):** Owner looks tired/done → picks up phone → opens RentOK app. Wipe transition.
+4. **Resolution (17–26s):** Clean RentOK UI moments — auto rent reminders sent, digital KYC verified, complaint marked resolved, dues dashboard — each shown as the *direct fix* to a pain just shown (mirror structure).
+5. **CTA (26–30s):** Logo, tagline, one clear action line + trust stat.
+
+Information hierarchy on screen: Pain-label (Hindi/English) → RentOK fix-label → Logo/CTA. Never more than one message on screen at once.
+
+## VISUAL_SYSTEM
+- **Two distinct visual grades, one location:** Chaos half = handheld, slightly underexposed, warm mixed lighting (tube light + phone glow), cluttered frame, visible clutter (registers, chai cups, wires), fast whip-pans, slight motion blur. Calm half = same location but tidied framing, steadier camera (locked-off or slow gimbal), brighter neutral daylight balance, RentOK app UI in brand colors overlaid cleanly on screen.
+- **Indian specificity, not generic SaaS:** real signage in Hindi/English ("Sharma PG for Boys", "Room available", laminated rent charts on wall), WhatsApp green ticks and notification sound literally used as a chaos motif, notebook with rupee (₹) entries, ceiling fan, steel almirah, common Indian PG visual vocabulary — not a Silicon Valley open-plan office.
+- **Talent:** one PG/hostel owner (35–50, Indian, believable as a real warden/manager — not model-polished), optionally a tenant briefly in frame during complaint/move-out beat.
+- **Typography:** bold sans on-screen captions, Hindi+English mixed (Hinglish), bright accent color matching RentOK brand, punchy 2–3 word pain labels ("Rent bhool gaya?", "KYC kahan gaya?") flipping to RentOK fix labels ("Auto Reminder ✅", "Digital KYC ✅").
+- **RentOK brand elements (from rentok.com):** app screens showing Autopay, WhatsApp Communication, Tenant Verification/Digital KYC, Complaint Management, dues/collection dashboard — these are real named features and must be depicted accurately per site.
+
+## PRODUCTION_RECIPE
+Format: 9:16, ~30s, 8–10 shots, fast-cut chaos block (≤2s/shot) into slower resolution block (~3s/shot), hard wipe/whip transition at the midpoint pivot.
+
+**Shot list & order:**
+
+| # | Shot | Duration | Purpose |
+|---|------|----------|---------|
+| 1 | Extreme close-up: phone screen flooding with WhatsApp rent-reminder chats, notification badge climbing (99+) | 2s | Hook / pattern interrupt |
+| 2 | Owner's hand flipping through a worn notebook, rent entries crossed out and rewritten in red pen | 2s | Pain: manual ledger |
+| 3 | Laptop screen, spreadsheet with a #REF! error, cursor clicking uselessly | 1.5s | Pain: scattered spreadsheets |
+| 4 | Owner scrolling frantically through WhatsApp chat trying to find a tenant's Aadhaar photo among memes/forwards | 2s | Pain: lost KYC |
+| 5 | Tenant knocking, complaint ignored/muted phone buzzing on table, owner overwhelmed, rubbing forehead | 2s | Pain: missed complaints |
+| 6 | Wide shot: cluttered PG office table — notebook, phone, laptop, chai cup — owner exhales, sets phone down deliberately | 2s | Turn / breath before pivot |
+| 7 | Owner taps RentOK app icon — quick whip-pan/hard wipe transition, lighting shifts warm→bright | 1.5s | Pivot moment |
+| 8 | Same table, now tidy: phone shows RentOK dashboard — "Rent Collected ✅ Autopay Active" | 3s | Resolution: rent |
+| 9 | Same owner, calm, tapping "Verify KYC" on app, tenant document shown clean and verified with green check | 3s | Resolution: KYC |
+| 10 | App notification: "Complaint Resolved" tick, tenant nodding happily in background, owner relaxed with chai | 3s | Resolution: complaints |
+| 11 | Final: RentOK logo animates in on clean bright background, tagline + CTA text, trust stat overlay | 4s | CTA / brand close |
+
+## GENERATION_PROMPTS
+**Shot 1–5 (Chaos block) — single combined generation prompt for AI video model (can be split per-shot with same visual language):**
+"Vertical 9:16 handheld video, realistic Indian PG/hostel office interior, warm slightly dim tube-light and phone-glow lighting, mild grain and motion blur. Extreme close-up of a smartphone screen filling with a rapid stack of WhatsApp rent-reminder chat bubbles and a notification counter climbing past 99. Cut to a middle-aged Indian man's hands flipping through a worn spiral notebook full of crossed-out rupee rent entries in red pen. Cut to a laptop screen showing a cluttered Excel spreadsheet with a visible #REF! error as a cursor clicks helplessly. Cut to the same man frantically scrolling a WhatsApp chat thread full of forwarded memes and images searching for a tenant's ID photo. Cut to his phone buzzing unanswered on a cluttered table next to a steel almirah and a laminated rent-rate chart on the wall, while a tenant is faintly visible knocking in the background; the man rubs his forehead, visibly overwhelmed. Fast whip-pan cuts between shots, documentary-realistic, no stock-photo gloss, authentic small-business PG/hostel texture, natural Indian clothing and setting, no text overlays baked into video (captions added in post)."
+
+**Shot 6–7 (Pivot) — prompt:**
+"Vertical 9:16, same Indian PG office and same man from previous shots, wide shot of a cluttered office table with notebook, laptop, phone and a chai cup; he exhales, sets the phone down deliberately, calm resolve on his face. He picks the phone back up and taps an app icon. Hard whip-pan transition: lighting shifts from dim warm tungsten to bright clean neutral daylight, camera stabilizes from handheld to smooth locked-off framing, midway through the pan the same table appears tidied and organised. Realistic, cinematic transition, no text baked in."
+
+**Shot 8–10 (Resolution block) — prompt:**
+"Vertical 9:16, same man, same PG office now tidy and brightly lit, calm steady camera. Close-up of his phone screen showing a clean mobile app dashboard UI with a green checkmark and text 'Rent Collected' and 'Autopay Active', modern minimal Indian fintech-app UI design in a blue/teal brand color. Cut to him tapping a 'Verify KYC' button on the same app, a tenant ID document appearing on screen with a clean green verified checkmark. Cut to a notification banner sliding in reading 'Complaint Resolved' with a checkmark, while in the softly blurred background a tenant nods and smiles; the man leans back relaxed holding a cup of chai. Bright, credible, contemporary Indian small-business aesthetic, believable UI, no visual clutter, no baked-in captions."
+
+**Shot 11 (Logo/CTA) — prompt:**
+"Vertical 9:16, clean bright minimal background, RentOK logo animates smoothly into center frame, brand blue/teal colour palette, modern confident Indian tech-brand feel, simple and premium, no clutter, short elegant motion graphic, space reserved above and below logo for tagline and CTA text to be added in post."
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- RentOK logo, exact brand colors/typography, and the app UI screens must be sourced from actual RentOK brand assets/app screenshots (Autopay, Digital KYC/Tenant Verification, Complaint Management, WhatsApp Communication features) rather than generated, to ensure accuracy — generative shots 8–10 should be treated as placeholders/style reference and replaced with real captured app-screen footage in final production.
+- On-screen captions/text overlays (Hinglish pain labels, fix labels, tagline, CTA, trust stat "15,000+ properties / 100 Cr+ collected") are added as deterministic post-production typography, not generated in-video.
+- Final CTA line and phone/website details are composited text, not AI-generated.
+
+## AUDIO_AND_EDIT
+- **0–14s (Chaos):** Diegetic sound design — overlapping WhatsApp notification pings, phone buzzing on table, pen scratching, keyboard clatter, a low anxious ambient hum. No music yet, or a tense sparse background pulse. Sound should feel cluttered/overlapping, mirroring the visual chaos.
+- **14–17s (Pivot):** Hard sound cut/whoosh — all chaotic sound drops out abruptly on the wipe, replaced by a single clean UI "confirm" chime.
+- **17–30s (Resolution):** Upbeat, contemporary Indian-fusion instrumental (tabla/lo-fi beat blend, not generic corporate synth), confident and light. Optional short voiceover in Hinglish: *"WhatsApp, register, Excel — sab bhool jao. Ab sab kuch ek jagah."* ("Forget WhatsApp, registers, Excel — now everything's in one place.")
+- End card: music resolves on a clean final beat as logo lands; CTA line read aloud or as bold on-screen text: **"RentOK — Apni property, apne control mein."**
+- Edit pacing: cuts ≤2s in chaos block, cuts of ~3s in resolution block — pacing itself communicates the shift from chaos to calm.
+
+## FAILURE_PREVENTION
+- Avoid making the chaos section look like a comedy sketch — keep performances grounded and mildly exhausted, not exaggerated/slapstick, to preserve credibility.
+- Avoid generic glossy "SaaS ad" tropes (white minimalist office, diverse stock-photo team, English-only corporate voiceover) — everything must stay visually and linguistically rooted in an actual Indian PG/hostel setting.
+- Ensure feature claims shown on-screen (Autopay, Digital KYC, Complaint Management, WhatsApp reminders) match real RentOK features as listed on rentok.com — do not invent unlisted features.
+- Keep on-screen text minimal and large enough to read on mobile (9:16, sound-off viewing common) — every key message must also work as silent captioned text.
+- Maintain same actor/location across chaos and resolution halves so the "wipe" pivot lands as believable transformation, not a scene change.
+
+## HARD_CONSTRAINT_CHECK
+- Vertical 9:16 format: ✅ specified throughout.
+- ~30 seconds target: ✅ shot list totals ~30s (2+2+1.5+2+2+2+1.5+3+3+3+4 ≈ 30s, adjustable ±2s in edit).
+- Audience = Indian hostel/PG owners: ✅ setting, language, cultural details throughout.
+- Pain points required (rent collection, tenant records, KYC, move-outs, complaints, compliance via WhatsApp/notebooks/spreadsheets): ✅ rent, notebook ledger, spreadsheet, KYC, complaints all dramatized; move-out/compliance referenced via tenant records/KYC verification beat and can be reinforced in caption copy if needed.
+- Must position RentOK as the clean system: ✅ resolution block + CTA.
+- Contemporary, credible, Indian, not generic SaaS: ✅ visual system and failure-prevention section directly address this.
+- Only rentok.com used for company/brand/product info: ✅ confirmed below.
+- Single concept only, no alternatives offered: ✅.
+- No model/provider recommended: ✅ none named.
+
+## JUDGE V07
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
+
+# CONTEST V08 — B04
+
+Use frozen brief B04 from the top of this file.
+
+## PACKAGE A
+
+
+
+## PACKAGE B
+
+
+
+## PACKAGE C
+
+
+
+## JUDGE V08
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
+
+# CONTEST V09 — B05
+
+Use frozen brief B05 from the top of this file.
+
+## PACKAGE A
+
+
+
+## PACKAGE B
+
+
+
+## PACKAGE C
+
+
+
+## JUDGE V09
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
