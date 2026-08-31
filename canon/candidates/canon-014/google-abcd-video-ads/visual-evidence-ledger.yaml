@@ -1,0 +1,179 @@
+# REP-07 — visual-evidence ledger for Google, "ABCDs of effective video ads".
+#
+# RE-FETCH-AND-PIN pass, executed 2026-08-31/09-01 under Controller ruling DN-02
+# (REP-07-DECISION-NOTES.md): the three Google pages were re-fetched, byte-pinned with SHA-256,
+# screenshotted, and the light visual pass ran over the PINNED snapshots, not the live pages.
+# The extraction (30 Aug 2026) had pinned only its processed text dump; this pass supplies the
+# missing byte-exact page fingerprints and the figure inspection.
+
+source_id: google-abcd-video-ads
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: illustrative_only
+
+fetch_manifest:
+  ruling: DN-02 (Controller authorised both zero-cost re-fetches, 2026-09-01 IST)
+  retrieved_at_utc: "2026-08-31T22:51:56Z"
+  method: >
+    curl -sSL with a desktop browser User-Agent, bytes saved verbatim; full-page screenshots
+    captured by headless Chrome (window 1280px wide) minutes after the byte fetch. Content-bearing
+    images referenced by the pinned pages were fetched separately into snapshots/images/ with
+    per-file SHA-256 in snapshots/images/MANIFEST.txt.
+  pages:
+    - page: P1
+      title_seen: "A Guide To Creating Effective Video Ads - YouTube Ads"
+      url: "https://business.google.com/us/resources/articles/abcds-of-effective-video-ads/"
+      snapshot: snapshots/P1-business-resources-abcds.html
+      bytes: 268102
+      sha256: 69b8e59c8eb540ff1ff2fcc417f00593b92c761f2d84b4b01d267200226f2ff4
+      screenshot: snapshots/P1-screenshot.png
+      page_own_date: "May 2023"
+    - page: P2
+      title_seen: "YouTube ABCDs: Video ad best practices - Think with Google"
+      url: "https://business.google.com/us/think/future-of-marketing/youtube-video-ad-creative/"
+      snapshot: snapshots/P2-think-with-google-abcds.html
+      bytes: 238156
+      sha256: f4c9ba090da07506c62ff83b032eb33718072613bae522009a1904d75df62228
+      screenshot: snapshots/P2-screenshot.png
+      page_own_date: "April 2022"
+    - page: P3
+      title_seen: "About the ABCDs of effective video ads - Google Ads Help"
+      url: "https://support.google.com/google-ads/answer/14783551"
+      snapshot: snapshots/P3-google-ads-help-abcds.html
+      bytes: 1658615
+      sha256: 6fb62a5d7f82a02796d66b7148788d2dfa2f3893675be725d269087dd2bbd2f6
+      screenshot: snapshots/P3-screenshot.png
+      page_own_date: "undated; footer ©2026 Google"
+  original_processed_text: >
+    The extraction's processed dump (scratchpad/src/SRC-google-abcd.txt, 31,262 bytes, SHA-256
+    df27a00fa974cf2369e8c4d5a6ef51f5a2b0b88c85d89947402beabeb35d85e4 as recorded in PROVENANCE.md)
+    does not exist in this environment; per DN-01 no extraction-side asset survives. The pinned
+    snapshots above are the identity mechanism from this pass forward. Note: the dump hash is
+    transcribed here from PROVENANCE.md for cross-reference only; the authoritative copy of that
+    string is PROVENANCE.md itself.
+
+claims_diff:
+  scope: all 26 source_knowledge objects
+  method: >
+    For every object, its anchor strings (section headings, guideline names, table-cell strings,
+    and distinctive quoted phrases) were searched mechanically in the text extracted from the
+    three pinned snapshots. The three-way effectiveness-figure phrasing and the P3 objective
+    matrix were re-verified structurally (table markup parsed cell-by-cell).
+  verdict_totals: {match: 26, changed: 0, gone: 0}
+  notable_reverifications:
+    - >
+      Figure-statistic discrepancy STANDS EXACTLY AS RECORDED: P3 "Deliver as much as a 30% lift
+      ... and a 17% lift" (upper bound); P2 "On average, the ABCDs deliver a 30% lift ... 17%
+      lift" (central tendency); P1 bare callouts with "n=11,000 ads" and the footer "Actual
+      results will vary by advertiser". Nothing on any pinned page resolves it.
+    - >
+      P3 objective matrix cell-to-column bindings re-read from the pinned table markup match the
+      extraction's resolved matrix exactly, including the two double-bullet Connection cells
+      ("Make the people core to the story" + "Be different, yet simple"; "Show how it works" +
+      "Be relatable") that the original text dump had flattened (sk_abcd_0023-0026).
+    - >
+      sk_abcd_0014's platform-behaviour claim is verbatim on P2: "YouTube is almost entirely a
+      sound-on experience, so take advantage of the multisensory aspect of your medium".
+    - >
+      sk_abcd_0019's principle wording "Ask them to take action and give clear, concise direction
+      that's easy to follow" is verbatim on P1 (D – Direction); P2 carries the four instruction
+      vehicles ("A written call to action, graphics, audio ..."); P3's core table row carries the
+      CTA guideline. All three citations in the object's section field resolve.
+
+inspection:
+  method: >
+    Every <img> on the three pinned pages was enumerated from the snapshot HTML. Navigation
+    chrome (product logos, SSO placeholders, support icons, the repeated site header) was
+    identified by URL pattern and excluded. All 25 content-bearing or potentially content-bearing
+    images were downloaded, hashed (snapshots/images/MANIFEST.txt) and opened. The five ABCD
+    framework illustrations and the storyboard graphic were inspected individually; the fourteen
+    brand-vignette thumbnails were opened and checked against their alt text and against the
+    examples.positive entries that cite them.
+  images_enumerated: 64
+  chrome_excluded: 39
+  content_images_opened: 25
+  figures: 0
+  figure_note: >
+    No image on any of the three pages is a figure in the argument-bearing sense. The pass found
+    nothing whose content a cited claim depends on.
+  groups:
+    - group: framework_illustrations
+      files: [images/P2-img19.png, images/P2-img20.png, images/P2-img21.png, images/P2-img22.png, images/P2-img23.png, images/P2-img24.png]
+      role_found: illustrative_of_stated_propositions
+      finding: >
+        P2 carries an ABCD legend graphic (A=Attention, B=Branding, C=Connection, D=Direction over
+        a red check mark), a four-panel greyscale storyboard, and one illustration per principle,
+        all built on an invented pet-food brand "Fishos": a shark-fin teaser and a fish-shaped
+        snack in a mouth (Attention/hook), logo splash + pack + storefront (Branding), a woman
+        feeding her dog (Connection), and "PICK SOME UP AT YOUR PET STORE" end cards (Direction).
+        Every illustration restates a proposition the adjacent text already makes; none adds a
+        rule, a number or a constraint. The alt text on these images is Traditional-Chinese CMS
+        alt text describing the same ABCD content, an asset-reuse artifact of Google's CMS, not a
+        content difference.
+    - group: brand_vignette_thumbnails
+      files: [images/P1-img01.png, images/P1-img02.png, images/P1-img03.png, images/P1-img04.png, images/P1-img05.png, images/P1-img06.png, images/P1-img07.png, images/P1-img08.png, images/P1-img09.png, images/P1-img10.png, images/P1-img11.png, images/P1-img12.png, images/P1-img13.png, images/P1-img14.png]
+      role_found: illustrative_of_stated_propositions
+      finding: >
+        The fourteen P1 thumbnails are video preview stills for the named brand vignettes
+        (Cheetos, Fastrack, Silmäasema, Pokémon, Ruffles, Weekendesk, Oi, Gojek, BareMinerals,
+        M&M's, Fanta, Halodoc, Shopee, Air Up). Spot-opened stills match their alt text and the
+        one-line examples.positive entries (e.g. the Cheetos still shows the orange-dusted-hand
+        gag; the Halodoc still shows in-app doctor booking with burned-in Indonesian copy).
+        The linked videos remain unwatched, exactly as the extraction recorded; no object claims
+        visual support from them.
+    - group: promo_and_decorative
+      files: [images/P1-img15.png, images/P1-img16.png, images/P1-img17.png, images/P2-img18.png, images/P3-img25.png]
+      role_found: navigation_or_decoration
+      finding: >
+        YouTube Works Awards card, a Think-with-Google promo card, a campaigns collage card, a
+        2.6 KB byline avatar, and the Google Ads logo on P3. None is cited by any text.
+  extraction_claim_checked: >
+    PROVENANCE.md asserts "No figure carries essential meaning that the text alone does not" and
+    that no object carries visually_demonstrated or non-empty inspected.figures. CONFIRMED by
+    this pass: every content image opened is illustrative or decorative, and
+    figure_semantic_binding_lost does not apply to any image (the one binding loss in this source
+    was the P3 table in the text dump, a table not a figure, and it is re-verified repaired
+    above).
+
+observed_loss_patterns:
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Live web publication; no page exists anywhere. Every locator is page + section heading
+      (+ table row), and this pass re-resolved the cited headings on the pinned snapshots. Not a
+      fault of the copy; recorded so downstream readers know no page-level citation can exist.
+  - pattern: text_layer_order_damage
+    affects: "the two P3 tables in the extraction's plain-text dump (cell-to-column binding)"
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      The extraction's text dump linearised P3's objective matrix, destroying which instruction
+      belonged to which principle column (two Connection cells carry two bullets each, so reading
+      order yields five instructions for four columns with no uncertainty signal). The extraction
+      repaired this by re-fetching the table markup; THIS pass independently re-parsed the pinned
+      P3 snapshot's table markup and confirms the recorded matrix cell-for-cell. The loss is
+      fully recovered and now byte-pinned.
+  - pattern: no_loss_detected
+    affects: "the visual dimension of all three pages"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      All 25 content-bearing images were opened; every one is illustrative of a proposition the
+      text states or is navigation/decoration. Nothing visual that any extracted claim depends on
+      is absent, damaged or unbound.
+
+volatility_note: >
+  This is a living artifact; it can change under this ledger. The pin above is the reference
+  version. living_artifact_not_fingerprinted (audit-assessment-HOLD.yaml) no longer applies: the
+  fingerprint block is now present here and in the committed snapshots. Any later re-check should
+  diff against these hashes first.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  The re-fetch found the live pages unchanged in every string, table binding and image the
+  extraction relies on, one year to four years after the pages' own stated dates. The visual pass
+  found no argument-bearing figure, so the extraction's text-supported basis stands. What this
+  pass adds is identity: the source is now byte-pinned, so "which version did we read" has a
+  mechanical answer for the first time.
