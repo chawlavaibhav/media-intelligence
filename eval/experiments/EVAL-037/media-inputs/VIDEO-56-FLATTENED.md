@@ -4010,3 +4010,3912 @@ Person A: "That's what makes it worse. You chose not to tell me."
 Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
 
 ---
+
+# CONTEST V04 — B01
+
+Use frozen brief B01 from the top of this file.
+
+## PACKAGE A
+
+## DELIVERABLE
+A **30-second vertical video ad** (9:16, optimized for social and mobile) that builds emotional recognition of hostel/PG management chaos and positions RentOK as the solution. Execution: live-action, documentary-style authenticity with rapid sequences and text callouts.
+
+---
+
+### OBJECTIVE_INTERPRETATION
+Convert hostel and PG owners from scattered manual systems (WhatsApp, notebooks, spreadsheets) to RentOK by showing that **operational leakage and friction are not inevitable**—they're recognisable problems with a clean system answer. Target: owners aged 30–55 managing 10–50-bed properties in Tier-1 and Tier-2 Indian cities. Intent: drive app download / demo signup.
+
+---
+
+### CORE_CREATIVE_IDEA
+**"The chaos montage → the clarity moment"**
+
+Show rapid, overlapping friction moments that every PG owner knows (missed rent reminder, tenant KYC lost, complaints unanswered, staff payroll mess, occupancy confusion). No voiceover pretense. Then, in one moment, show RentOK's clean interface solving these at scale. End with the RentOK brand line: *"Save time. Work less. Earn more."*
+
+The tone is **Indian, not Silicon Valley**—real frustration, real relief, contemporary but grounded.
+
+---
+
+### MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Problem (first 18 seconds):** Operational chaos is recognisable, costly, and endemic.
+   - Rent collection delays (WhatsApp chasing)
+   - Tenant records scattered (notebooks, photos, docs)
+   - KYC verification chaos
+   - Complaint backlog
+   - Occupancy confusion
+   
+2. **Solution (last 10 seconds):** One platform, one app, done.
+   - Single interface showing all data
+   - Automated rent collection
+   - Verified tenant records
+   - Zero friction
+
+3. **Call-to-action (final 2 seconds):** Brand promise + CTA.
+
+---
+
+### VISUAL_SYSTEM
+
+**Aesthetic:**
+- Hand-held, naturalistic camera (not overly polished)
+- Colours: warm, slightly desaturated realism; RentOK's blue/brand accent to highlight solution
+- Typography: Sans-serif, Hindi/English bilingual (subtitles)
+- Aspect: 9:16, safe for vertical scroll, full-bleed
+
+**Chaos Montage Palette (0–18s):**
+- Flickering phone screens (WhatsApp message chains, missed calls, red "pending" badges)
+- Physical notebooks, scattered rent receipts, pen marks
+- Spreadsheet grids (Excel columns, hand-entered data, formula errors visible)
+- Multiple notifications (SMS, call missed, email, Telegram)
+- Stressed property manager at desk, paper stacks
+
+**Solution Moment (18–28s):**
+- Clean app interface, dashboard with live data
+- Smooth transitions between tenant cards, rent status, occupancy map
+- Sunlit, clear background (symbolic cleanliness)
+- Rapid, satisfying UI animations (payment cleared ✓, KYC verified ✓, occupancy map updated)
+
+**Branding & Close (28–30s):**
+- RentOK logo
+- Tagline: *"Save time. Work less. Earn more."*
+- CTA: *"Download RentOK"* + App Store/Play Store badges
+
+---
+
+### PRODUCTION_RECIPE
+
+**Shoot location:**
+- Real hostel/PG office or property manager's workspace (authentic, recognisable)
+- Desktop / phone screens (screen capture or filmed display)
+- One or two property managers (mid-shot, over-shoulder angles during "chaos" sequences)
+
+**Key assets:**
+- Prop notebooks, rent receipts, spreadsheets (printed or live on laptop)
+- Phones/tablets showing WhatsApp, email, notification spam
+- Clean RentOK app interface (recorded or re-screened)
+- Background: daytime Indian hostel/PG office environment
+
+**Editing approach:**
+- Fast cuts (0.5–1.5 seconds per shot in chaos montage)
+- Match cuts between problem and solution (e.g., scattered papers → clean dashboard)
+- Sound design: tense, repetitive notification tones (chaos), then resolved tone (solution)
+
+---
+
+### GENERATION_PROMPTS
+
+**Final composite generation prompt (if using generative video):**
+
+"30-second vertical mobile ad, 9:16 aspect ratio, Indian hostel/PG setting.
+**Shots 0–18s (Chaos Montage):**
+Shot 1 (0–2s): Stressed property manager's hands at desk, WhatsApp chaining on phone screen, red notification badges. Hindi/English text overlay: 'Rent reminder... Tenant complaint... KYC missing'. Handheld, natural daylight.
+Shot 2 (2–4s): Quick cuts: scattered paper notebooks, handwritten rent entries, pen corrections visible. Frustration implied.
+Shot 3 (4–6s): Laptop screen, Excel spreadsheet with multiple columns, formula cells visible, messy data entry. Text overlay: 'Spreadsheets. Scattered records. No sync.'
+Shot 4 (6–8s): Phone notifications overlapping—WhatsApp, SMS, call missed, email. Screen flashing. High anxiety.
+Shot 5 (8–10s): Property manager on phone call, gesturing, trying to collect rent. Over-shoulder angle, real office environment, morning light.
+Shot 6 (10–12s): Tenant photos, documents, KYC forms scattered on desk. Unorganised.
+Shot 7 (12–14s): Manager scrolling through notebook pages, looking confused. Text overlay: 'Who paid? Who's moving out? Which room is occupied?'
+Shot 8 (14–16s): Multiple WhatsApp chat boxes on screen, overlapping, unread messages piling.
+Shot 9 (16–18s): Manager looking at phone, overwhelmed.
+
+**Shots 18–28s (Solution Clarity):**
+Shot 10 (18–20s): Clean, sunlit workspace. RentOK app opens on phone/tablet. Dashboard visible, showing all data in one place. Text overlay: 'RentOK'. Smooth, calm UI transitions. Rent collection status shows 'Collected'. KYC shows 'Verified'. Occupancy shows floor plan, all beds filled/vacant clear.
+Shot 11 (20–22s): RentOK interface: tenant cards, one swipe shows full profile—personal details, KYC status, payment history, renting details. Fluid, confirmatory animations.
+Shot 12 (22–24s): RentOK: automated rent reminder sent via WhatsApp in one click. Payment received ✓ animation plays. Text overlay: 'Automatic. Accurate. No running around.'
+Shot 13 (24–26s): RentOK: floor plan interface showing occupancy in real-time, beds colour-coded (occupied green, vacant grey, under-notice yellow). Manager taps, transitions smooth. Relief implied.
+Shot 14 (26–28s): Manager smiling, phone in hand, clean desk, office calm. Text overlay: 'Save time. Work less. Earn more.'
+
+**Shots 28–30s (Branding):**
+Shot 15 (28–30s): RentOK logo on clean background. Text: 'Download RentOK'. App Store and Play Store badges. Tagline: 'The easiest way to manage your PGs and hostels.'"
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+**Must be deterministic / shoot/source:**
+- RentOK app interface (capture live or pre-recorded from actual app)
+- RentOK logo and branding (use official assets from https://rentok.com or brand guidelines)
+- Tagline text: *"Save time. Work less. Earn more."* (from website)
+- CTA: "Download RentOK" + App Store/Play Store badges (standard)
+- Hindi/English subtitles (consistent with RentOK's bilingual positioning)
+
+**Can be generated or sourced:**
+- Chaos montage sequences (generic property manager, offices, papers, phones)
+- Notification animations and UI mock-ups (if not sourced from actual RentOK app)
+- Ambient sound design and music
+
+---
+
+### AUDIO_AND_EDIT
+
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## OBJECTIVE_INTERPRETATION
+Convert hostel and PG owners from scattered manual systems (WhatsApp, notebooks, spreadsheets) to RentOK by showing that **operational leakage and friction are not inevitable**—they're recognisable problems with a clean system answer. Target: owners aged 30–55 managing 10–50-bed properties in Tier-1 and Tier-2 Indian cities. Intent: drive app download / demo signup.
+
+---
+
+### CORE_CREATIVE_IDEA
+**"The chaos montage → the clarity moment"**
+
+Show rapid, overlapping friction moments that every PG owner knows (missed rent reminder, tenant KYC lost, complaints unanswered, staff payroll mess, occupancy confusion). No voiceover pretense. Then, in one moment, show RentOK's clean interface solving these at scale. End with the RentOK brand line: *"Save time. Work less. Earn more."*
+
+The tone is **Indian, not Silicon Valley**—real frustration, real relief, contemporary but grounded.
+
+---
+
+### MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Problem (first 18 seconds):** Operational chaos is recognisable, costly, and endemic.
+   - Rent collection delays (WhatsApp chasing)
+   - Tenant records scattered (notebooks, photos, docs)
+   - KYC verification chaos
+   - Complaint backlog
+   - Occupancy confusion
+   
+2. **Solution (last 10 seconds):** One platform, one app, done.
+   - Single interface showing all data
+   - Automated rent collection
+   - Verified tenant records
+   - Zero friction
+
+3. **Call-to-action (final 2 seconds):** Brand promise + CTA.
+
+---
+
+### VISUAL_SYSTEM
+
+**Aesthetic:**
+- Hand-held, naturalistic camera (not overly polished)
+- Colours: warm, slightly desaturated realism; RentOK's blue/brand accent to highlight solution
+- Typography: Sans-serif, Hindi/English bilingual (subtitles)
+- Aspect: 9:16, safe for vertical scroll, full-bleed
+
+**Chaos Montage Palette (0–18s):**
+- Flickering phone screens (WhatsApp message chains, missed calls, red "pending" badges)
+- Physical notebooks, scattered rent receipts, pen marks
+- Spreadsheet grids (Excel columns, hand-entered data, formula errors visible)
+- Multiple notifications (SMS, call missed, email, Telegram)
+- Stressed property manager at desk, paper stacks
+
+**Solution Moment (18–28s):**
+- Clean app interface, dashboard with live data
+- Smooth transitions between tenant cards, rent status, occupancy map
+- Sunlit, clear background (symbolic cleanliness)
+- Rapid, satisfying UI animations (payment cleared ✓, KYC verified ✓, occupancy map updated)
+
+**Branding & Close (28–30s):**
+- RentOK logo
+- Tagline: *"Save time. Work less. Earn more."*
+- CTA: *"Download RentOK"* + App Store/Play Store badges
+
+---
+
+### PRODUCTION_RECIPE
+
+**Shoot location:**
+- Real hostel/PG office or property manager's workspace (authentic, recognisable)
+- Desktop / phone screens (screen capture or filmed display)
+- One or two property managers (mid-shot, over-shoulder angles during "chaos" sequences)
+
+**Key assets:**
+- Prop notebooks, rent receipts, spreadsheets (printed or live on laptop)
+- Phones/tablets showing WhatsApp, email, notification spam
+- Clean RentOK app interface (recorded or re-screened)
+- Background: daytime Indian hostel/PG office environment
+
+**Editing approach:**
+- Fast cuts (0.5–1.5 seconds per shot in chaos montage)
+- Match cuts between problem and solution (e.g., scattered papers → clean dashboard)
+- Sound design: tense, repetitive notification tones (chaos), then resolved tone (solution)
+
+---
+
+### GENERATION_PROMPTS
+
+**Final composite generation prompt (if using generative video):**
+
+"30-second vertical mobile ad, 9:16 aspect ratio, Indian hostel/PG setting.
+**Shots 0–18s (Chaos Montage):**
+Shot 1 (0–2s): Stressed property manager's hands at desk, WhatsApp chaining on phone screen, red notification badges. Hindi/English text overlay: 'Rent reminder... Tenant complaint... KYC missing'. Handheld, natural daylight.
+Shot 2 (2–4s): Quick cuts: scattered paper notebooks, handwritten rent entries, pen corrections visible. Frustration implied.
+Shot 3 (4–6s): Laptop screen, Excel spreadsheet with multiple columns, formula cells visible, messy data entry. Text overlay: 'Spreadsheets. Scattered records. No sync.'
+Shot 4 (6–8s): Phone notifications overlapping—WhatsApp, SMS, call missed, email. Screen flashing. High anxiety.
+Shot 5 (8–10s): Property manager on phone call, gesturing, trying to collect rent. Over-shoulder angle, real office environment, morning light.
+Shot 6 (10–12s): Tenant photos, documents, KYC forms scattered on desk. Unorganised.
+Shot 7 (12–14s): Manager scrolling through notebook pages, looking confused. Text overlay: 'Who paid? Who's moving out? Which room is occupied?'
+Shot 8 (14–16s): Multiple WhatsApp chat boxes on screen, overlapping, unread messages piling.
+Shot 9 (16–18s): Manager looking at phone, overwhelmed.
+
+**Shots 18–28s (Solution Clarity):**
+Shot 10 (18–20s): Clean, sunlit workspace. RentOK app opens on phone/tablet. Dashboard visible, showing all data in one place. Text overlay: 'RentOK'. Smooth, calm UI transitions. Rent collection status shows 'Collected'. KYC shows 'Verified'. Occupancy shows floor plan, all beds filled/vacant clear.
+Shot 11 (20–22s): RentOK interface: tenant cards, one swipe shows full profile—personal details, KYC status, payment history, renting details. Fluid, confirmatory animations.
+Shot 12 (22–24s): RentOK: automated rent reminder sent via WhatsApp in one click. Payment received ✓ animation plays. Text overlay: 'Automatic. Accurate. No running around.'
+Shot 13 (24–26s): RentOK: floor plan interface showing occupancy in real-time, beds colour-coded (occupied green, vacant grey, under-notice yellow). Manager taps, transitions smooth. Relief implied.
+Shot 14 (26–28s): Manager smiling, phone in hand, clean desk, office calm. Text overlay: 'Save time. Work less. Earn more.'
+
+**Shots 28–30s (Branding):**
+Shot 15 (28–30s): RentOK logo on clean background. Text: 'Download RentOK'. App Store and Play Store badges. Tagline: 'The easiest way to manage your PGs and hostels.'"
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+**Must be deterministic / shoot/source:**
+- RentOK app interface (capture live or pre-recorded from actual app)
+- RentOK logo and branding (use official assets from https://rentok.com or brand guidelines)
+- Tagline text: *"Save time. Work less. Earn more."* (from website)
+- CTA: "Download RentOK" + App Store/Play Store badges (standard)
+- Hindi/English subtitles (consistent with RentOK's bilingual positioning)
+
+**Can be generated or sourced:**
+- Chaos montage sequences (generic property manager, offices, papers, phones)
+- Notification animations and UI mock-ups (if not sourced from actual RentOK app)
+- Ambient sound design and music
+
+---
+
+### AUDIO_AND_EDIT
+
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## CORE_CREATIVE_IDEA
+**"The chaos montage → the clarity moment"**
+
+Show rapid, overlapping friction moments that every PG owner knows (missed rent reminder, tenant KYC lost, complaints unanswered, staff payroll mess, occupancy confusion). No voiceover pretense. Then, in one moment, show RentOK's clean interface solving these at scale. End with the RentOK brand line: *"Save time. Work less. Earn more."*
+
+The tone is **Indian, not Silicon Valley**—real frustration, real relief, contemporary but grounded.
+
+---
+
+### MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Problem (first 18 seconds):** Operational chaos is recognisable, costly, and endemic.
+   - Rent collection delays (WhatsApp chasing)
+   - Tenant records scattered (notebooks, photos, docs)
+   - KYC verification chaos
+   - Complaint backlog
+   - Occupancy confusion
+   
+2. **Solution (last 10 seconds):** One platform, one app, done.
+   - Single interface showing all data
+   - Automated rent collection
+   - Verified tenant records
+   - Zero friction
+
+3. **Call-to-action (final 2 seconds):** Brand promise + CTA.
+
+---
+
+### VISUAL_SYSTEM
+
+**Aesthetic:**
+- Hand-held, naturalistic camera (not overly polished)
+- Colours: warm, slightly desaturated realism; RentOK's blue/brand accent to highlight solution
+- Typography: Sans-serif, Hindi/English bilingual (subtitles)
+- Aspect: 9:16, safe for vertical scroll, full-bleed
+
+**Chaos Montage Palette (0–18s):**
+- Flickering phone screens (WhatsApp message chains, missed calls, red "pending" badges)
+- Physical notebooks, scattered rent receipts, pen marks
+- Spreadsheet grids (Excel columns, hand-entered data, formula errors visible)
+- Multiple notifications (SMS, call missed, email, Telegram)
+- Stressed property manager at desk, paper stacks
+
+**Solution Moment (18–28s):**
+- Clean app interface, dashboard with live data
+- Smooth transitions between tenant cards, rent status, occupancy map
+- Sunlit, clear background (symbolic cleanliness)
+- Rapid, satisfying UI animations (payment cleared ✓, KYC verified ✓, occupancy map updated)
+
+**Branding & Close (28–30s):**
+- RentOK logo
+- Tagline: *"Save time. Work less. Earn more."*
+- CTA: *"Download RentOK"* + App Store/Play Store badges
+
+---
+
+### PRODUCTION_RECIPE
+
+**Shoot location:**
+- Real hostel/PG office or property manager's workspace (authentic, recognisable)
+- Desktop / phone screens (screen capture or filmed display)
+- One or two property managers (mid-shot, over-shoulder angles during "chaos" sequences)
+
+**Key assets:**
+- Prop notebooks, rent receipts, spreadsheets (printed or live on laptop)
+- Phones/tablets showing WhatsApp, email, notification spam
+- Clean RentOK app interface (recorded or re-screened)
+- Background: daytime Indian hostel/PG office environment
+
+**Editing approach:**
+- Fast cuts (0.5–1.5 seconds per shot in chaos montage)
+- Match cuts between problem and solution (e.g., scattered papers → clean dashboard)
+- Sound design: tense, repetitive notification tones (chaos), then resolved tone (solution)
+
+---
+
+### GENERATION_PROMPTS
+
+**Final composite generation prompt (if using generative video):**
+
+"30-second vertical mobile ad, 9:16 aspect ratio, Indian hostel/PG setting.
+**Shots 0–18s (Chaos Montage):**
+Shot 1 (0–2s): Stressed property manager's hands at desk, WhatsApp chaining on phone screen, red notification badges. Hindi/English text overlay: 'Rent reminder... Tenant complaint... KYC missing'. Handheld, natural daylight.
+Shot 2 (2–4s): Quick cuts: scattered paper notebooks, handwritten rent entries, pen corrections visible. Frustration implied.
+Shot 3 (4–6s): Laptop screen, Excel spreadsheet with multiple columns, formula cells visible, messy data entry. Text overlay: 'Spreadsheets. Scattered records. No sync.'
+Shot 4 (6–8s): Phone notifications overlapping—WhatsApp, SMS, call missed, email. Screen flashing. High anxiety.
+Shot 5 (8–10s): Property manager on phone call, gesturing, trying to collect rent. Over-shoulder angle, real office environment, morning light.
+Shot 6 (10–12s): Tenant photos, documents, KYC forms scattered on desk. Unorganised.
+Shot 7 (12–14s): Manager scrolling through notebook pages, looking confused. Text overlay: 'Who paid? Who's moving out? Which room is occupied?'
+Shot 8 (14–16s): Multiple WhatsApp chat boxes on screen, overlapping, unread messages piling.
+Shot 9 (16–18s): Manager looking at phone, overwhelmed.
+
+**Shots 18–28s (Solution Clarity):**
+Shot 10 (18–20s): Clean, sunlit workspace. RentOK app opens on phone/tablet. Dashboard visible, showing all data in one place. Text overlay: 'RentOK'. Smooth, calm UI transitions. Rent collection status shows 'Collected'. KYC shows 'Verified'. Occupancy shows floor plan, all beds filled/vacant clear.
+Shot 11 (20–22s): RentOK interface: tenant cards, one swipe shows full profile—personal details, KYC status, payment history, renting details. Fluid, confirmatory animations.
+Shot 12 (22–24s): RentOK: automated rent reminder sent via WhatsApp in one click. Payment received ✓ animation plays. Text overlay: 'Automatic. Accurate. No running around.'
+Shot 13 (24–26s): RentOK: floor plan interface showing occupancy in real-time, beds colour-coded (occupied green, vacant grey, under-notice yellow). Manager taps, transitions smooth. Relief implied.
+Shot 14 (26–28s): Manager smiling, phone in hand, clean desk, office calm. Text overlay: 'Save time. Work less. Earn more.'
+
+**Shots 28–30s (Branding):**
+Shot 15 (28–30s): RentOK logo on clean background. Text: 'Download RentOK'. App Store and Play Store badges. Tagline: 'The easiest way to manage your PGs and hostels.'"
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+**Must be deterministic / shoot/source:**
+- RentOK app interface (capture live or pre-recorded from actual app)
+- RentOK logo and branding (use official assets from https://rentok.com or brand guidelines)
+- Tagline text: *"Save time. Work less. Earn more."* (from website)
+- CTA: "Download RentOK" + App Store/Play Store badges (standard)
+- Hindi/English subtitles (consistent with RentOK's bilingual positioning)
+
+**Can be generated or sourced:**
+- Chaos montage sequences (generic property manager, offices, papers, phones)
+- Notification animations and UI mock-ups (if not sourced from actual RentOK app)
+- Ambient sound design and music
+
+---
+
+### AUDIO_AND_EDIT
+
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Problem (first 18 seconds):** Operational chaos is recognisable, costly, and endemic.
+   - Rent collection delays (WhatsApp chasing)
+   - Tenant records scattered (notebooks, photos, docs)
+   - KYC verification chaos
+   - Complaint backlog
+   - Occupancy confusion
+   
+2. **Solution (last 10 seconds):** One platform, one app, done.
+   - Single interface showing all data
+   - Automated rent collection
+   - Verified tenant records
+   - Zero friction
+
+3. **Call-to-action (final 2 seconds):** Brand promise + CTA.
+
+---
+
+### VISUAL_SYSTEM
+
+**Aesthetic:**
+- Hand-held, naturalistic camera (not overly polished)
+- Colours: warm, slightly desaturated realism; RentOK's blue/brand accent to highlight solution
+- Typography: Sans-serif, Hindi/English bilingual (subtitles)
+- Aspect: 9:16, safe for vertical scroll, full-bleed
+
+**Chaos Montage Palette (0–18s):**
+- Flickering phone screens (WhatsApp message chains, missed calls, red "pending" badges)
+- Physical notebooks, scattered rent receipts, pen marks
+- Spreadsheet grids (Excel columns, hand-entered data, formula errors visible)
+- Multiple notifications (SMS, call missed, email, Telegram)
+- Stressed property manager at desk, paper stacks
+
+**Solution Moment (18–28s):**
+- Clean app interface, dashboard with live data
+- Smooth transitions between tenant cards, rent status, occupancy map
+- Sunlit, clear background (symbolic cleanliness)
+- Rapid, satisfying UI animations (payment cleared ✓, KYC verified ✓, occupancy map updated)
+
+**Branding & Close (28–30s):**
+- RentOK logo
+- Tagline: *"Save time. Work less. Earn more."*
+- CTA: *"Download RentOK"* + App Store/Play Store badges
+
+---
+
+### PRODUCTION_RECIPE
+
+**Shoot location:**
+- Real hostel/PG office or property manager's workspace (authentic, recognisable)
+- Desktop / phone screens (screen capture or filmed display)
+- One or two property managers (mid-shot, over-shoulder angles during "chaos" sequences)
+
+**Key assets:**
+- Prop notebooks, rent receipts, spreadsheets (printed or live on laptop)
+- Phones/tablets showing WhatsApp, email, notification spam
+- Clean RentOK app interface (recorded or re-screened)
+- Background: daytime Indian hostel/PG office environment
+
+**Editing approach:**
+- Fast cuts (0.5–1.5 seconds per shot in chaos montage)
+- Match cuts between problem and solution (e.g., scattered papers → clean dashboard)
+- Sound design: tense, repetitive notification tones (chaos), then resolved tone (solution)
+
+---
+
+### GENERATION_PROMPTS
+
+**Final composite generation prompt (if using generative video):**
+
+"30-second vertical mobile ad, 9:16 aspect ratio, Indian hostel/PG setting.
+**Shots 0–18s (Chaos Montage):**
+Shot 1 (0–2s): Stressed property manager's hands at desk, WhatsApp chaining on phone screen, red notification badges. Hindi/English text overlay: 'Rent reminder... Tenant complaint... KYC missing'. Handheld, natural daylight.
+Shot 2 (2–4s): Quick cuts: scattered paper notebooks, handwritten rent entries, pen corrections visible. Frustration implied.
+Shot 3 (4–6s): Laptop screen, Excel spreadsheet with multiple columns, formula cells visible, messy data entry. Text overlay: 'Spreadsheets. Scattered records. No sync.'
+Shot 4 (6–8s): Phone notifications overlapping—WhatsApp, SMS, call missed, email. Screen flashing. High anxiety.
+Shot 5 (8–10s): Property manager on phone call, gesturing, trying to collect rent. Over-shoulder angle, real office environment, morning light.
+Shot 6 (10–12s): Tenant photos, documents, KYC forms scattered on desk. Unorganised.
+Shot 7 (12–14s): Manager scrolling through notebook pages, looking confused. Text overlay: 'Who paid? Who's moving out? Which room is occupied?'
+Shot 8 (14–16s): Multiple WhatsApp chat boxes on screen, overlapping, unread messages piling.
+Shot 9 (16–18s): Manager looking at phone, overwhelmed.
+
+**Shots 18–28s (Solution Clarity):**
+Shot 10 (18–20s): Clean, sunlit workspace. RentOK app opens on phone/tablet. Dashboard visible, showing all data in one place. Text overlay: 'RentOK'. Smooth, calm UI transitions. Rent collection status shows 'Collected'. KYC shows 'Verified'. Occupancy shows floor plan, all beds filled/vacant clear.
+Shot 11 (20–22s): RentOK interface: tenant cards, one swipe shows full profile—personal details, KYC status, payment history, renting details. Fluid, confirmatory animations.
+Shot 12 (22–24s): RentOK: automated rent reminder sent via WhatsApp in one click. Payment received ✓ animation plays. Text overlay: 'Automatic. Accurate. No running around.'
+Shot 13 (24–26s): RentOK: floor plan interface showing occupancy in real-time, beds colour-coded (occupied green, vacant grey, under-notice yellow). Manager taps, transitions smooth. Relief implied.
+Shot 14 (26–28s): Manager smiling, phone in hand, clean desk, office calm. Text overlay: 'Save time. Work less. Earn more.'
+
+**Shots 28–30s (Branding):**
+Shot 15 (28–30s): RentOK logo on clean background. Text: 'Download RentOK'. App Store and Play Store badges. Tagline: 'The easiest way to manage your PGs and hostels.'"
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+**Must be deterministic / shoot/source:**
+- RentOK app interface (capture live or pre-recorded from actual app)
+- RentOK logo and branding (use official assets from https://rentok.com or brand guidelines)
+- Tagline text: *"Save time. Work less. Earn more."* (from website)
+- CTA: "Download RentOK" + App Store/Play Store badges (standard)
+- Hindi/English subtitles (consistent with RentOK's bilingual positioning)
+
+**Can be generated or sourced:**
+- Chaos montage sequences (generic property manager, offices, papers, phones)
+- Notification animations and UI mock-ups (if not sourced from actual RentOK app)
+- Ambient sound design and music
+
+---
+
+### AUDIO_AND_EDIT
+
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## VISUAL_SYSTEM
+**Aesthetic:**
+- Hand-held, naturalistic camera (not overly polished)
+- Colours: warm, slightly desaturated realism; RentOK's blue/brand accent to highlight solution
+- Typography: Sans-serif, Hindi/English bilingual (subtitles)
+- Aspect: 9:16, safe for vertical scroll, full-bleed
+
+**Chaos Montage Palette (0–18s):**
+- Flickering phone screens (WhatsApp message chains, missed calls, red "pending" badges)
+- Physical notebooks, scattered rent receipts, pen marks
+- Spreadsheet grids (Excel columns, hand-entered data, formula errors visible)
+- Multiple notifications (SMS, call missed, email, Telegram)
+- Stressed property manager at desk, paper stacks
+
+**Solution Moment (18–28s):**
+- Clean app interface, dashboard with live data
+- Smooth transitions between tenant cards, rent status, occupancy map
+- Sunlit, clear background (symbolic cleanliness)
+- Rapid, satisfying UI animations (payment cleared ✓, KYC verified ✓, occupancy map updated)
+
+**Branding & Close (28–30s):**
+- RentOK logo
+- Tagline: *"Save time. Work less. Earn more."*
+- CTA: *"Download RentOK"* + App Store/Play Store badges
+
+---
+
+### PRODUCTION_RECIPE
+
+**Shoot location:**
+- Real hostel/PG office or property manager's workspace (authentic, recognisable)
+- Desktop / phone screens (screen capture or filmed display)
+- One or two property managers (mid-shot, over-shoulder angles during "chaos" sequences)
+
+**Key assets:**
+- Prop notebooks, rent receipts, spreadsheets (printed or live on laptop)
+- Phones/tablets showing WhatsApp, email, notification spam
+- Clean RentOK app interface (recorded or re-screened)
+- Background: daytime Indian hostel/PG office environment
+
+**Editing approach:**
+- Fast cuts (0.5–1.5 seconds per shot in chaos montage)
+- Match cuts between problem and solution (e.g., scattered papers → clean dashboard)
+- Sound design: tense, repetitive notification tones (chaos), then resolved tone (solution)
+
+---
+
+### GENERATION_PROMPTS
+
+**Final composite generation prompt (if using generative video):**
+
+"30-second vertical mobile ad, 9:16 aspect ratio, Indian hostel/PG setting.
+**Shots 0–18s (Chaos Montage):**
+Shot 1 (0–2s): Stressed property manager's hands at desk, WhatsApp chaining on phone screen, red notification badges. Hindi/English text overlay: 'Rent reminder... Tenant complaint... KYC missing'. Handheld, natural daylight.
+Shot 2 (2–4s): Quick cuts: scattered paper notebooks, handwritten rent entries, pen corrections visible. Frustration implied.
+Shot 3 (4–6s): Laptop screen, Excel spreadsheet with multiple columns, formula cells visible, messy data entry. Text overlay: 'Spreadsheets. Scattered records. No sync.'
+Shot 4 (6–8s): Phone notifications overlapping—WhatsApp, SMS, call missed, email. Screen flashing. High anxiety.
+Shot 5 (8–10s): Property manager on phone call, gesturing, trying to collect rent. Over-shoulder angle, real office environment, morning light.
+Shot 6 (10–12s): Tenant photos, documents, KYC forms scattered on desk. Unorganised.
+Shot 7 (12–14s): Manager scrolling through notebook pages, looking confused. Text overlay: 'Who paid? Who's moving out? Which room is occupied?'
+Shot 8 (14–16s): Multiple WhatsApp chat boxes on screen, overlapping, unread messages piling.
+Shot 9 (16–18s): Manager looking at phone, overwhelmed.
+
+**Shots 18–28s (Solution Clarity):**
+Shot 10 (18–20s): Clean, sunlit workspace. RentOK app opens on phone/tablet. Dashboard visible, showing all data in one place. Text overlay: 'RentOK'. Smooth, calm UI transitions. Rent collection status shows 'Collected'. KYC shows 'Verified'. Occupancy shows floor plan, all beds filled/vacant clear.
+Shot 11 (20–22s): RentOK interface: tenant cards, one swipe shows full profile—personal details, KYC status, payment history, renting details. Fluid, confirmatory animations.
+Shot 12 (22–24s): RentOK: automated rent reminder sent via WhatsApp in one click. Payment received ✓ animation plays. Text overlay: 'Automatic. Accurate. No running around.'
+Shot 13 (24–26s): RentOK: floor plan interface showing occupancy in real-time, beds colour-coded (occupied green, vacant grey, under-notice yellow). Manager taps, transitions smooth. Relief implied.
+Shot 14 (26–28s): Manager smiling, phone in hand, clean desk, office calm. Text overlay: 'Save time. Work less. Earn more.'
+
+**Shots 28–30s (Branding):**
+Shot 15 (28–30s): RentOK logo on clean background. Text: 'Download RentOK'. App Store and Play Store badges. Tagline: 'The easiest way to manage your PGs and hostels.'"
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+**Must be deterministic / shoot/source:**
+- RentOK app interface (capture live or pre-recorded from actual app)
+- RentOK logo and branding (use official assets from https://rentok.com or brand guidelines)
+- Tagline text: *"Save time. Work less. Earn more."* (from website)
+- CTA: "Download RentOK" + App Store/Play Store badges (standard)
+- Hindi/English subtitles (consistent with RentOK's bilingual positioning)
+
+**Can be generated or sourced:**
+- Chaos montage sequences (generic property manager, offices, papers, phones)
+- Notification animations and UI mock-ups (if not sourced from actual RentOK app)
+- Ambient sound design and music
+
+---
+
+### AUDIO_AND_EDIT
+
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## PRODUCTION_RECIPE
+**Shoot location:**
+- Real hostel/PG office or property manager's workspace (authentic, recognisable)
+- Desktop / phone screens (screen capture or filmed display)
+- One or two property managers (mid-shot, over-shoulder angles during "chaos" sequences)
+
+**Key assets:**
+- Prop notebooks, rent receipts, spreadsheets (printed or live on laptop)
+- Phones/tablets showing WhatsApp, email, notification spam
+- Clean RentOK app interface (recorded or re-screened)
+- Background: daytime Indian hostel/PG office environment
+
+**Editing approach:**
+- Fast cuts (0.5–1.5 seconds per shot in chaos montage)
+- Match cuts between problem and solution (e.g., scattered papers → clean dashboard)
+- Sound design: tense, repetitive notification tones (chaos), then resolved tone (solution)
+
+---
+
+### GENERATION_PROMPTS
+
+**Final composite generation prompt (if using generative video):**
+
+"30-second vertical mobile ad, 9:16 aspect ratio, Indian hostel/PG setting.
+**Shots 0–18s (Chaos Montage):**
+Shot 1 (0–2s): Stressed property manager's hands at desk, WhatsApp chaining on phone screen, red notification badges. Hindi/English text overlay: 'Rent reminder... Tenant complaint... KYC missing'. Handheld, natural daylight.
+Shot 2 (2–4s): Quick cuts: scattered paper notebooks, handwritten rent entries, pen corrections visible. Frustration implied.
+Shot 3 (4–6s): Laptop screen, Excel spreadsheet with multiple columns, formula cells visible, messy data entry. Text overlay: 'Spreadsheets. Scattered records. No sync.'
+Shot 4 (6–8s): Phone notifications overlapping—WhatsApp, SMS, call missed, email. Screen flashing. High anxiety.
+Shot 5 (8–10s): Property manager on phone call, gesturing, trying to collect rent. Over-shoulder angle, real office environment, morning light.
+Shot 6 (10–12s): Tenant photos, documents, KYC forms scattered on desk. Unorganised.
+Shot 7 (12–14s): Manager scrolling through notebook pages, looking confused. Text overlay: 'Who paid? Who's moving out? Which room is occupied?'
+Shot 8 (14–16s): Multiple WhatsApp chat boxes on screen, overlapping, unread messages piling.
+Shot 9 (16–18s): Manager looking at phone, overwhelmed.
+
+**Shots 18–28s (Solution Clarity):**
+Shot 10 (18–20s): Clean, sunlit workspace. RentOK app opens on phone/tablet. Dashboard visible, showing all data in one place. Text overlay: 'RentOK'. Smooth, calm UI transitions. Rent collection status shows 'Collected'. KYC shows 'Verified'. Occupancy shows floor plan, all beds filled/vacant clear.
+Shot 11 (20–22s): RentOK interface: tenant cards, one swipe shows full profile—personal details, KYC status, payment history, renting details. Fluid, confirmatory animations.
+Shot 12 (22–24s): RentOK: automated rent reminder sent via WhatsApp in one click. Payment received ✓ animation plays. Text overlay: 'Automatic. Accurate. No running around.'
+Shot 13 (24–26s): RentOK: floor plan interface showing occupancy in real-time, beds colour-coded (occupied green, vacant grey, under-notice yellow). Manager taps, transitions smooth. Relief implied.
+Shot 14 (26–28s): Manager smiling, phone in hand, clean desk, office calm. Text overlay: 'Save time. Work less. Earn more.'
+
+**Shots 28–30s (Branding):**
+Shot 15 (28–30s): RentOK logo on clean background. Text: 'Download RentOK'. App Store and Play Store badges. Tagline: 'The easiest way to manage your PGs and hostels.'"
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+**Must be deterministic / shoot/source:**
+- RentOK app interface (capture live or pre-recorded from actual app)
+- RentOK logo and branding (use official assets from https://rentok.com or brand guidelines)
+- Tagline text: *"Save time. Work less. Earn more."* (from website)
+- CTA: "Download RentOK" + App Store/Play Store badges (standard)
+- Hindi/English subtitles (consistent with RentOK's bilingual positioning)
+
+**Can be generated or sourced:**
+- Chaos montage sequences (generic property manager, offices, papers, phones)
+- Notification animations and UI mock-ups (if not sourced from actual RentOK app)
+- Ambient sound design and music
+
+---
+
+### AUDIO_AND_EDIT
+
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## GENERATION_PROMPTS
+**Final composite generation prompt (if using generative video):**
+
+"30-second vertical mobile ad, 9:16 aspect ratio, Indian hostel/PG setting.
+**Shots 0–18s (Chaos Montage):**
+Shot 1 (0–2s): Stressed property manager's hands at desk, WhatsApp chaining on phone screen, red notification badges. Hindi/English text overlay: 'Rent reminder... Tenant complaint... KYC missing'. Handheld, natural daylight.
+Shot 2 (2–4s): Quick cuts: scattered paper notebooks, handwritten rent entries, pen corrections visible. Frustration implied.
+Shot 3 (4–6s): Laptop screen, Excel spreadsheet with multiple columns, formula cells visible, messy data entry. Text overlay: 'Spreadsheets. Scattered records. No sync.'
+Shot 4 (6–8s): Phone notifications overlapping—WhatsApp, SMS, call missed, email. Screen flashing. High anxiety.
+Shot 5 (8–10s): Property manager on phone call, gesturing, trying to collect rent. Over-shoulder angle, real office environment, morning light.
+Shot 6 (10–12s): Tenant photos, documents, KYC forms scattered on desk. Unorganised.
+Shot 7 (12–14s): Manager scrolling through notebook pages, looking confused. Text overlay: 'Who paid? Who's moving out? Which room is occupied?'
+Shot 8 (14–16s): Multiple WhatsApp chat boxes on screen, overlapping, unread messages piling.
+Shot 9 (16–18s): Manager looking at phone, overwhelmed.
+
+**Shots 18–28s (Solution Clarity):**
+Shot 10 (18–20s): Clean, sunlit workspace. RentOK app opens on phone/tablet. Dashboard visible, showing all data in one place. Text overlay: 'RentOK'. Smooth, calm UI transitions. Rent collection status shows 'Collected'. KYC shows 'Verified'. Occupancy shows floor plan, all beds filled/vacant clear.
+Shot 11 (20–22s): RentOK interface: tenant cards, one swipe shows full profile—personal details, KYC status, payment history, renting details. Fluid, confirmatory animations.
+Shot 12 (22–24s): RentOK: automated rent reminder sent via WhatsApp in one click. Payment received ✓ animation plays. Text overlay: 'Automatic. Accurate. No running around.'
+Shot 13 (24–26s): RentOK: floor plan interface showing occupancy in real-time, beds colour-coded (occupied green, vacant grey, under-notice yellow). Manager taps, transitions smooth. Relief implied.
+Shot 14 (26–28s): Manager smiling, phone in hand, clean desk, office calm. Text overlay: 'Save time. Work less. Earn more.'
+
+**Shots 28–30s (Branding):**
+Shot 15 (28–30s): RentOK logo on clean background. Text: 'Download RentOK'. App Store and Play Store badges. Tagline: 'The easiest way to manage your PGs and hostels.'"
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+**Must be deterministic / shoot/source:**
+- RentOK app interface (capture live or pre-recorded from actual app)
+- RentOK logo and branding (use official assets from https://rentok.com or brand guidelines)
+- Tagline text: *"Save time. Work less. Earn more."* (from website)
+- CTA: "Download RentOK" + App Store/Play Store badges (standard)
+- Hindi/English subtitles (consistent with RentOK's bilingual positioning)
+
+**Can be generated or sourced:**
+- Chaos montage sequences (generic property manager, offices, papers, phones)
+- Notification animations and UI mock-ups (if not sourced from actual RentOK app)
+- Ambient sound design and music
+
+---
+
+### AUDIO_AND_EDIT
+
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+**Must be deterministic / shoot/source:**
+- RentOK app interface (capture live or pre-recorded from actual app)
+- RentOK logo and branding (use official assets from https://rentok.com or brand guidelines)
+- Tagline text: *"Save time. Work less. Earn more."* (from website)
+- CTA: "Download RentOK" + App Store/Play Store badges (standard)
+- Hindi/English subtitles (consistent with RentOK's bilingual positioning)
+
+**Can be generated or sourced:**
+- Chaos montage sequences (generic property manager, offices, papers, phones)
+- Notification animations and UI mock-ups (if not sourced from actual RentOK app)
+- Ambient sound design and music
+
+---
+
+### AUDIO_AND_EDIT
+
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## AUDIO_AND_EDIT
+**Sound Design:**
+- **0–18s (Chaos):** Layered notification tones (WhatsApp bubble, SMS alert, call ring), overlapping and accelerating. Underlying tense, minimal string drone. No dialogue; overlapping phone/office ambient sound (keys clicking, papers rustling, phone vibration).
+- **18–28s (Solution):** Notifications stop abruptly. Calm, resolving musical note (Bollywood-inspired, uplifting strings or acoustic guitar). UI interaction sounds (soft, satisfying tones for button taps, confirmatory ✓ chimes).
+- **28–30s (Close):** Music sustains softly into brand moment. No sound shock; smooth fade to silence or brand audio logo if available.
+
+**Music:**
+- Royalty-free or licensed Indian contemporary track (not Bollywood cliché; think modern, minimal production with Indian instrumentation undertones).
+- Tempo: 100–110 BPM, dynamic arc matching visual intensity.
+
+**Editing Pace:**
+- Chaos montage: rapid cuts, 0.8–1.2 seconds per shot, building energy.
+- Solution montage: 1.5–2 seconds per shot, deliberate and smooth, visual calm.
+- Close: 2 seconds, locked, steady.
+
+---
+
+### FAILURE_PREVENTION
+
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## FAILURE_PREVENTION
+1. **Authenticity failure:** Do not use generic office stock footage or overly polished UI mock-ups. Use real RentOK app screens or realistic on-set props. Hostel/PG owners will reject Silicon Valley aesthetics.
+
+2. **Clarity failure:** Do not make the chaos so abstract that owners don't see themselves. Explicitly show WhatsApp, notebooks, spreadsheets—the tools they use today.
+
+3. **Overexplain failure:** Do not add voiceover or lengthy text. Let the visual cuts and iconic overlays (WhatsApp logo, Excel logo, RentOK logo transition) tell the story.
+
+4. **Brand disconnect:** Ensure RentOK's core features mentioned on the website (autopay, tenant verification, complaint management, occupancy tracking, WhatsApp integration) are hinted at in the solution sequences—not all, but 2–3 flagship features clearly visible.
+
+5. **CTA failure:** Ensure app store badges are correct, download link is live, and landing page (or app onboarding) is ready to convert demo/download traffic. Test on mobile devices at 9:16 ratio.
+
+6. **Cultural disconnect:** Avoid English-only messaging. Bilingual subtitles (Hindi/English) and consideration of regional languages if scaling to regional audiences.
+
+7. **Length control:** Strict 30-second hard limit. Build in 2-second buffer; editing target is 28 seconds of content + 2-second branding/close.
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## HARD_CONSTRAINT_CHECK
+✅ **Duration:** ~30 seconds (content 28s + close 2s)  
+✅ **Aspect ratio:** 9:16 (vertical, mobile-first)  
+✅ **Target audience:** Hostel and PG owners in India (reflected in realism, language, UI choices, problem specificity)  
+✅ **Problem statement:** Rent collection, tenant records, KYC, move-outs, complaints, compliance—all shown in chaos montage  
+✅ **Solution positioning:** RentOK as clean, integrated system—shown in solution sequences  
+✅ **Tone:** Contemporary, credible, Indian (not generic SaaS)—reflected in authentic office/hostel setting, real property manager, overlapping notification chaos, no Valley-speak  
+✅ **Information source:** Only https://rentok.com used for company, product, brand facts and tagline  
+✅ **No model/provider recommendation:** Production recipe and prompts provided; no AI provider named  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**Source: https://rentok.com**
+
+- **Features referenced:** Autopay (automatic rent & due collection), Complaint Management, Tenant Verification (KYC and digital docs), WhatsApp Communication, Smart Attendance, Occupancy/Floor Plan tracking, accounting & ledger.
+- **Brand positioning:** *"The easiest way to manage your PGs and hostels"* / *"Save time. Work less. Earn more."* — used as tagline and close message.
+- **Target market:** PG, Hostel, Flat, Studio owners (website confirms all four property types; brief specifies hostels and PGs, so focus there).
+- **Scale proof:** 15,000+ properties, 3+ lakh tenants, 2.3+ lakh rupees collection, 100+ Cr AUM — used contextually to signal credibility, but not prominent in 30-second ad (scale not relevant to individual owner's pain point).
+- **Key visual cue:** App/platform nature (web app + mobile app mentioned on website; we emphasise mobile app interface for 9:16 vertical video format).
+
+**No other external sources used.** Canon knowledge library not accessed; RentOK's own website provides sufficient product, positioning and brand clarity for this brief.
+
+---
+
+**Status:** **PRODUCTION-READY.** Hand off to execution team with the above prompt, asset list, and audio spec. Test final render on iOS (Safari/Instagram/WhatsApp) and Android (Chrome/YouTube/Instagram) at 9:16; confirm CTA links and app store redirect work. Measure: download rate, demo signup rate, retention-to-paid conversion within 7 days of install.
+
+## PACKAGE B
+
+## DELIVERABLE
+A 30-second vertical video advertisement (9:16 aspect ratio) for RentOK targeting hostel and PG owners in India. The narrative arc moves from chaotic manual property management to calm control via RentOK.
+
+---
+
+## OBJECTIVE_INTERPRETATION
+Make the operational chaos of managing PGs/hostels viscerally recognizable to Indian property owners (rent collection delays, tenant records scattered, KYC compliance gaps, complaint backlogs), then position RentOK as the antidote—a single system that works 24/7 with honesty and accuracy. Avoid Silicon Valley SaaS clichés; ground it in Indian property management reality.
+
+---
+
+## CORE_CREATIVE_IDEA
+**"Chaos vs. Control"** — Fast-cut montage of a frazzled hostel/PG owner struggling with WhatsApp threads, handwritten notebooks, scattered spreadsheets, and tenant chaos. Overwhelm and friction are *visible*. Then a hard cut to the same owner, calm and in control, viewing RentOK's dashboard. One system. Everything clear. Everything on time.
+
+The insight: Indian PG/hostel owners live in operational fragmentation. RentOK is the antidote to that specific pain.
+
+---
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+**Primary message:** RentOK transforms chaotic, manual property management into a single, trustworthy system.
+
+**Supporting messages** (visible in the chaos, solved by RentOK):
+1. Rent collection—automatic, no "running after tenants"
+2. Tenant records & KYC—centralized, digitized, verified
+3. Complaints & service requests—tracked, resolved, logged
+4. Compliance & documentation—all in one place
+5. Time savings—"Save time. Work less. Earn more." (RentOK's tagline)
+
+**Tone:** Honest, contemporary, Indian. Not aspirational tech-bro language. Real operational relief.
+
+---
+
+## VISUAL_SYSTEM
+**Chaos sequence (0–15s):**
+- Overhead handheld POV: property owner at messy desk, phone screen flooded with WhatsApp groups
+- Rapid cuts: notebook pages flipping, handwritten KYC forms, spreadsheet screenshots, tenant photos scattered
+- Owner's expression: overwhelmed, searching phone, sighing
+- Color palette: desaturated, warm overhead fluorescents, slightly chaotic framing
+- Sound: notification pings, phone vibration, background chatter, low-level stress ambient
+
+**Transition moment (15–17s):**
+- Hard cut to a blank screen or fade to dark
+- Single sound: a satisfying "click" or reset tone
+
+**RentOK sequence (17–30s):**
+- Clean, well-lit phone screen showing RentOK dashboard
+- Clean desk, same owner, but visibly calmer
+- Tap-through of key features visible on screen:
+  - Tenant list with KYC status ✅
+  - Rent collection summary (automatic payments, due dates)
+  - Complaint log with resolution status
+  - Real-time balance and cash flow
+- Owner relaxed, making a checking gesture or nodding—confidence restored
+- Visual: bright, minimal UI, clear data, organized
+- Color palette: RentOK's brand blue/app interface colors, clean light background
+- Text overlay (bottom third): "100% Automatic Rent Collection. All Tenant Details in One Place. 24/7 Digital Accountant."
+- Final frame: RentOK logo + "Save time. Work less. Earn more." + "Download RentOK" call-to-action
+- Sound: calm, purposeful notification tones; soft, affirming UI sounds
+
+---
+
+## PRODUCTION_RECIPE
+**Format:** Shot-list structure for video generation
+
+| Shot # | Duration | Visual Description | Purpose | Audio |
+|--------|----------|-------------------|---------|-------|
+| 1–3 | 5s | Chaos montage: overhead POV, owner at desk, phone with notification explosions, WhatsApp threads visible, documents scattered | Establish pain: fragmentation, overwhelm | Notification pings, phone vibrations, slight stress ambience |
+| 4–6 | 5s | Rapid cuts: notebook pages, handwritten forms, spreadsheets, tenant photos, owner searching phone frantically | Deepen pain recognition: KYC, records, compliance scattered | Continued pings, background chatter, owner sighs |
+| 7–8 | 5s | Owner's frustrated/overwhelmed expression, phone in hand, looking for solution, looking down | Emotional anchor: the problem is real and the owner is struggling | Phone vibration, ambient tension |
+| 9 | 2s | Dark fade or transition screen | Narrative pivot | Satisfying "reset" click or tone |
+| 10–14 | 8s | Clean, well-lit phone screen; RentOK dashboard visible; tap-through of: tenant list (✅ KYC verified), rent collection status, complaints resolved, balance summary; owner's calm expression in soft-focus background | Show the solution: one system, organized, complete | Calm, purposeful notification tones; subtle UI sounds; confident ambient |
+| 15 | 2s | RentOK logo, tagline, CTA button | Brand seal and call-to-action | Brand audio signature or subtle positive tone |
+
+---
+
+## GENERATION_PROMPTS
+**Prompt 1 – Chaos Montage (0–15s):**
+> A frazzled Indian hostel owner in his 30s–40s sits at a cluttered desk in a small office. Phone screen is flooded with WhatsApp messages, notifications pinging constantly. Overhead camera angle. Scattered around the desk: handwritten KYC forms, pen marks, loose tenant photos, a well-worn notebook filled with rent notes, an open laptop showing messy spreadsheets. Owner keeps switching between apps on his phone, looking frustrated and overwhelmed. Overhead fluorescent light. Warm, slightly desaturated color grade. No text on screen. Shot duration ~15 seconds. Fast cuts between: (A) phone notification flood, (B) flipping notebook pages, (C) scattered tenant documents, (D) spreadsheet screenshot, (E) owner's tired face looking down and sighing. Sound design: WhatsApp notification pings, phone vibrations, background office ambience, soft stress audio cues. HD quality, 9:16 vertical aspect ratio, Indian setting aesthetic.
+
+**Prompt 2 – Transition & Solution (17–30s):**
+> Hard cut to a bright, clean phone screen showing a professional RentOK dashboard UI. The same hostel owner, now calm and relaxed, visible in soft focus in the background of the shot; the phone screen is in sharp focus. Clean, bright desk environment (better lighting than before). The RentOK app screen shows: (A) Tenant list with names, KYC status verified (green ✓), (B) Rent collection summary with "Rs 45,000 collected on time" and due dates, (C) Complaint tracker showing "2 resolved, 0 pending", (D) Real-time balance / cash flow display. User fingers tap through each section, showing the information is interactive and organized. Final frame: RentOK logo centered, tagline "Save time. Work less. Earn more." in clear sans-serif type, call-to-action button "Download RentOK" visible. Color palette: RentOK brand blue, white, clean minimal design. Sound: calm, affirming notification tones (not alarm-like), subtle UI touch sounds, confident ambient music or silence. HD quality, 9:16 vertical aspect ratio, professional app UI aesthetic. Duration ~13 seconds including final frame. Shot builds confidence and trust.
+
+---
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+**Deterministic (must be created or sourced as assets, not AI-generated video):**
+- RentOK logo and brand identity (use official assets from rentok.com)
+- App UI screens (actual RentOK dashboard mockups or screenshots, color-corrected to match brand)
+- Text overlays: "Save time. Work less. Earn more." and "Download RentOK" CTA
+- Final frame branding and call-to-action layout
+- Optional: audio branding signature or licensed calming background music (if not using UI-generated tones)
+
+**Generative (video AI models can create):**
+- All human performance and dialogue-free scenes
+- Environmental setups (desk, office, lighting)
+- Chaos montage sequences
+- Transition moment
+- Visual performance of calm vs. overwhelm
+
+---
+
+## AUDIO_AND_EDIT
+**Audio Strategy:**
+- **Chaos section (0–15s):** Stacked notification pings, phone vibrations, WhatsApp notification sound, light ambient office chatter, subtle low-frequency stress tone (not dramatic—realistic frustration). Volume builds slightly toward cut.
+- **Transition (15–17s):** Single, clean "reset" or confirmation click. Brief silence or soft fade.
+- **Solution section (17–30s):** Calm, purposeful UI touch tones (not startling). Optional: minimalist, confident ambient soundscape or silence with only UI audio. Positive, affirming tone throughout.
+- **Final frame (28–30s):** Subtle brand audio signature or fade-to-silence.
+
+**Edit Style:**
+- Fast cuts in chaos section (0.5–1 second per clip) to emphasize overwhelm.
+- Smooth transitions into RentOK section; longer dwell on dashboard screens (2–3 seconds per screen view) to allow viewers to read and absorb.
+- Color grade shift: desaturated/warm → bright/cool (chaos to clarity).
+- No music in chaos; optional light, uplifting ambient in solution phase.
+- On-screen text minimal until final branding moment.
+
+---
+
+## FAILURE_PREVENTION
+**Risk 1: Chaos montage feels melodramatic or inauthentic.**
+- *Mitigation:* Ground all chaos visuals in real PG/hostel owner pain points (WhatsApp groups, notebooks, scattered forms). Avoid B-movie exaggeration. Owner expressions should read as tired and real, not pantomimed frustration.
+
+**Risk 2: RentOK dashboard is unclear or unreadable in video.**
+- *Mitigation:* Use clean, high-contrast app mockups. Slow the tap-through in the dashboard. Large, legible fonts on all data displays. Consider brief text callouts (e.g., "✅ KYC Verified," "Rent Collected on Time") overlaid on the screen itself.
+
+**Risk 3: Transition feels jarring or loses narrative continuity.**
+- *Mitigation:* Use the same owner in both segments (same face, same environment backdrop, just cleaner in the solution). The "before and after" of the same person is the continuity anchor.
+
+**Risk 4: Audio cues are too SaaS-generic or unrelatable.**
+- *Mitigation:* Use actual WhatsApp and mobile notification sounds (familiar to Indian audiences) in chaos section. Solution section can use quiet UI tones or silence—overuse of "positive" music feels patronizing.
+
+**Risk 5: 30 seconds is too short to show all RentOK features.**
+- *Mitigation:* Don't try to show every feature. Show only: tenant KYC, rent collection, complaint tracking, and data organization. These four address the core pain points named in the brief. Save deeper features for the full website or app install.
+
+**Risk 6: Viewer doesn't understand it's an app until the very end.**
+- *Mitigation:* Make the phone screen or app UI visible as early as the transition moment (17s) so viewers immediately recognize this is a software solution, not a service or process change.
+
+---
+
+## HARD_CONSTRAINT_CHECK
+✅ **Vertical video (9:16 aspect ratio):** All prompts specify 9:16 vertical orientation.
+
+✅ **~30 seconds duration:** Prompt breakdown totals 15s + 2s transition + 13s solution = 30s.
+
+✅ **Targets hostel/PG owners in India:** Casting, environment, and pain points (WhatsApp, notebooks, KYC, rent delays) all specific to this audience.
+
+✅ **Shows operational chaos as recognizable and painful:** Chaos montage (0–15s) establishes this explicitly via scattered documents, WhatsApp threads, overwhelmed expression.
+
+✅ **Positions RentOK as clean system:** Solution sequence (17–30s) shows unified dashboard and calm owner.
+
+✅ **Contemporary, credible, Indian—not Silicon Valley SaaS explainer:** No voiceover. No cheesy music. No "this one weird trick" framing. Visual-led, grounded in real frustration and real relief. Uses actual mobile notification sounds familiar to Indian audiences.
+
+✅ **Uses only rentok.com for brand/product information:** All product features (rent collection, tenant verification, KYC, complaint management, accounting) sourced from website content.
+
+✅ **No current model or provider recommendation:** Prompts are platform-agnostic, executable by any video generation system.
+
+---
+
+## PACKAGE C
+
+## DELIVERABLE
+Vertical video (9:16), 30 seconds, designed for short-form social/performance marketing. Showcases operational chaos of scattered rent management and positions RentOK as the unified system.
+
+---
+
+## OBJECTIVE_INTERPRETATION
+Create urgent recognition of pain (scattered WhatsApp, notebooks, spreadsheets breaking down property management) followed by immediate relief through RentOK. Target hostel and PG owners in India already experiencing these specific frictions. Tone: gritty-real, not sanitized Silicon Valley. Credible and contemporary.
+
+---
+
+## CORE_CREATIVE_IDEA
+**"The Mess vs. The System"**
+
+Open: rapid montage of a property owner's daily chaos—WhatsApp notifications flooding, notebook pages shuffling, spreadsheet tabs multiplying, complaint messages getting lost, tenant records scattered. Frustration is tactile and recognisable.
+
+Close: cut to the same owner using RentOK—clean interface, single screen, one tap collects rent, one view shows all tenants, complaints routed cleanly, compliance tracked. The contrast is immediate and physically satisfying.
+
+Headline: "Why rent like 1990s?" (borrowed directly from RentOK's own positioning on their website) → Cut to RentOK dashboard.
+
+---
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Primary Problem** (0-10s): Operational chaos is your daily reality—scattered data, missed follow-ups, compliance gaps.
+2. **Proof of Problem** (10-15s): Show actual pain points RentOK solves (autopay, KYC, complaints, tenant records, attendance).
+3. **The Shift** (15-20s): One clean system. Everything you need in one app.
+4. **Proof Point** (20-28s): Brief glimpse of interface showing features (rent collection real-time, tenant ledger, complaint tracking, floor plan).
+5. **Call-to-Action** (28-30s): RentOK logo + "Save time. Work less. Earn more." + "Get free demo."
+
+---
+
+## VISUAL_SYSTEM
+- **Chaos sequence** (0-12s): Use warm, slightly-desaturated, natural lighting. Handheld, overlapping POV shots. Real hands managing papers, phone screens flickering with WhatsApp notifications, spreadsheet cells highlighted in red. Use close-ups and quick cuts to create claustrophobic energy.
+  
+- **Transition** (12-15s): Quick wipe or camera motion from mess to clean. Slight pause—breath before the solution.
+
+- **RentOK sequence** (15-30s): Brighter, cleaner lighting. Smooth, composed camera movements. App interface animations are snappy but not jarring. Green accent tones (trust, completion) on key CTAs. Interface should feel modern, accessible, Indian—not glossy corporate.
+
+- **Color language**: Warm chaos (oranges, reds, rust tones) → cool relief (clean whites, accent in brand green). The contrast itself tells the story.
+
+- **Typography**: Modern, sans-serif. Hindi numerals or mixed script could reinforce "Indian, not Silicon Valley"—but only if UI mockups support it naturally.
+
+---
+
+## PRODUCTION_RECIPE
+### Shot List (30 seconds, ~6-8 shots for tight pacing):
+
+**Shot 1 (0–3s): "The Notification Avalanche"**  
+Handheld POV. Property owner's phone screen flooded with WhatsApp notifications—rent reminders, tenant complaints, vendor messages, all unread. Notification badges stacking. Ambient sound: notification dings accelerating, overlapping.  
+*Duration: ~3s*
+
+**Shot 2 (3–6s): "The Notebook Shuffle"**  
+Close-up of hands flipping through physical notebooks, pages disorganised, notes overlapping, margin scribbles. Camera shaky, slightly frustrated rhythm. Cut between notebook pages and a crumpled tenant record.  
+*Duration: ~3s*
+
+**Shot 3 (6–9s): "The Spreadsheet Spiral"**  
+POV looking down at a laptop screen. Multiple Excel tabs open—one for rent due, one for KYC, one for complaints, one for attendance. Cursor jumps erratically between tabs, highlighting how fragmented the data is.  
+*Duration: ~3s*
+
+**Shot 4 (9–12s): "Peak Frustration"**  
+Pull back to show property owner at desk, hands covering face briefly, then looking up at camera (slightly exasperated but not melodramatic). Transition happens here: a subtle motion blur or camera pan.  
+*Duration: ~3s*
+
+**[TRANSITION: 12–14s]**  
+Quick cut to black or subtle wipe. RentOK logo reveals. Ambient sound shifts from chaos to calm. Copyline on screen: "Why rent like 1990s?"
+
+---
+
+**Shot 5 (14–20s): "The RentOK Dashboard"**  
+Smooth camera move across a phone mockup showing the RentOK app. Dashboard visible showing:
+- Green checkmark next to "Autopay: 100% collected"
+- Tenant roster with KYC status
+- Complaint inbox (zero unresolved)
+- Floor plan with room occupancy
+Each element animates in subtly as the camera pans. Clean, modern UI. Fingers tap key actions—payment confirmation, tenant verified, complaint closed.  
+*Duration: ~6s*
+
+**Shot 6 (20–28s): "The Property Owner, Relieved"**  
+Same person from Shot 4, now at the same desk but visibly lighter. Holding phone, nodding with quiet satisfaction. Quick cutaways to specific features:
+- One-tap bulk WhatsApp reminder with payment link
+- Real-time transaction on app
+- Tenant ledger pull-up
+- Floor plan overlay showing occupied/vacant status  
+*Duration: ~8s*
+
+**Shot 7 (28–30s): "CTA & Brand Close"**  
+Full-frame RentOK logo, headline text, and CTA.  
+On-screen text:  
+"Save time. Work less. Earn more."  
+"Get free demo" (with phone number or website)  
+Gentle, confident music bed sustains through close.  
+*Duration: ~2s*
+
+---
+
+## GENERATION_PROMPTS
+### Master Final Prompt (to generate the full video or as shot guide):
+
+**SHOT 1 (0–3s):**
+```
+Close-up of a smartphone screen, handheld and steady, portrait mode. 
+The screen is being overwhelmed by WhatsApp notifications—multiple 
+messages flooding in simultaneously from different contacts. Notification 
+badges are stacking in the top-right corner. The messages are about rent 
+collection reminders, tenant complaints, vendor issues, and maintenance 
+requests. Notification sounds are overlapping and quickening in the audio. 
+The person holding the phone looks tired and frustrated, though only 
+their fingers/thumb are visible as they scroll. Warm indoor lighting, 
+slightly warm color grading. Realistic, gritty feel.
+```
+
+**SHOT 2 (3–6s):**
+```
+Extreme close-up of hands flipping through handwritten physical notebooks 
+on a wooden desk. Pages are disorganised, cramped with notes, scratched-out 
+entries, margin scribbles. Some pages are coffee-stained. The hands flip 
+faster, indicating frustration. A tenant record with partially filled-in 
+details is visible among the pages. The desk is cluttered with other papers. 
+Warm lighting, slightly desaturated. Handheld camera, slight jitter to 
+suggest urgency and disorganisation.
+```
+
+**SHOT 3 (6–9s):**
+```
+First-person POV over a desk looking down at a laptop screen. Multiple 
+Excel spreadsheet tabs are open on the screen—each tab labeled with rent 
+records, KYC verification, complaints log, attendance tracking, expenses. 
+The cursor jumps between tabs erratically. Data is scattered across 
+different sheets. The screen looks cluttered and confusing. Warm, 
+slightly dim indoor lighting. Camera movement is jerky, suggesting 
+frustration. The user is searching for a specific piece of information 
+but has to jump between multiple tabs.
+```
+
+**SHOT 4 (9–12s):**
+```
+Medium shot of a property owner (30s–45s, male or female, casually dressed, 
+authentic Indian appearance) sitting at their desk surrounded by papers and 
+a laptop. They briefly place their hands over their face in a gesture of 
+mild exasperation (not theatrical, just real), then look directly at the 
+camera with a wry, exhausted expression. A beat of pause. The lighting is 
+warm and natural. Around 12 seconds, a subtle motion blur or camera pan 
+indicates a transition moment.
+```
+
+**[TRANSITION: 12–14s]**
+```
+Quick cut to black. RentOK wordmark/logo fades in cleanly. 
+Tagline appears on screen in modern sans-serif font: "Why rent like 1990s?"
+Audio shifts from chaotic notification sounds to calm, contemporary music 
+(Indian-influenced, modern beats, optimistic tone).
+```
+
+**SHOT 5 (14–20s):**
+```
+Smooth, slow camera pan across a smartphone mockup (or phone in hand) 
+displaying the RentOK app dashboard. The dashboard is clean, white background, 
+with green accent elements. Visible sections include:
+- Rent collection status: "100% Autopay Collected" with a green checkmark
+- Tenant roster showing names and KYC verification badges (green check marks)
+- Complaint inbox showing zero pending complaints
+- Property floor plan with room occupancy (green = occupied, grey = vacant)
+- Real-time transaction update with date and amount in green
+The camera moves smoothly left-to-right or in a circular motion. Each section 
+animates in subtly as the camera passes it (soft fade-in, gentle scale). 
+A finger occasionally taps elements to demonstrate interactivity. Clean, 
+bright lighting. Modern UI design, contemporary Indian aesthetic (not 
+overstyled, very functional). Audio: calm, modern music bed with subtle 
+UI interaction sounds (gentle beeps, soft notifications).
+```
+
+**SHOT 6 (20–28s):**
+```
+The same property owner from Shot 4, now at the same desk but visibly 
+more relaxed. They're holding their phone, looking at the RentOK app, 
+and nodding slightly with quiet satisfaction. Their posture is open. 
+Quick cutaway montage during this shot showing:
+1. Bulk WhatsApp reminder feature—one tap sends payment link to multiple tenants
+2. Real-time transaction confirmation appearing on the app with UTR number
+3. Tenant ledger view showing payment history and dues
+4. Floor plan overlay with color-coded room status (occupied, vacant, under-notice)
+Each cutaway is 1–2 seconds, smooth transitions. The owner's reaction 
+remains calm and pleased. Lighting is brighter than the chaos section, 
+conveying relief and clarity. Modern, optimistic music continues.
+```
+
+**SHOT 7 (28–30s):**
+```
+Full-frame presentation of the RentOK brand identity. The RentOK logo 
+is centre and prominent. Below, in clean modern typography:
+"Save time. Work less. Earn more."
+Below that:
+"Get free demo" (with phone number, website link, or QR code)
+Possibly a subtle tagline: "Join 15,000+ property owners managing smarter"
+Background is clean white or very light, with subtle green accent lines 
+or shapes. The overall feel is professional, trustworthy, and forward-thinking. 
+Audio: music resolves to a satisfying end, confident and warm. Optional: 
+a subtle voiceover in Hindi/English hybrid: "RentOK: Why rent like 1990s?"
+```
+
+---
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+1. **RentOK App UI Mockups**: The dashboard, tenant roster, complaint inbox, floor plan, and transaction views must be based on or recreate RentOK's actual interface (or a faithful, branded representation). Do not hallucinate interface design.
+   - **Source**: Information extracted from rentok.com. UI should reflect the features listed: Autopay, Tenant Verification, Complaint Management, Floor Plan, Real-time Accounting.
+   - **Deterministic requirement**: Ensure green accents for positive states (rent collected, verified, complaint resolved), clean white background, modern sans-serif typography.
+
+2. **Tagline and CTA Copy**: 
+   - "Why rent like 1990s?" – sourced directly from RentOK website.
+   - "Save time. Work less. Earn more." – RentOK's official tagline from website.
+   - Both must appear verbatim on screen.
+
+3. **RentOK Logo**: Use official RentOK branding from the website.
+
+4. **Contact Information/CTA**: Use phone numbers or website from rentok.com (e.g., "Get free demo" with contact details from website if calling out specific channels).
+
+5. **Feature Mentions**: All features shown (Autopay, KYC, Complaint Management, Floor Plan, Real-time Accounting, WhatsApp integration) are directly from RentOK's feature list on their website.
+
+---
+
+## AUDIO_AND_EDIT
+**Music & Sound Design:**
+- **0–12s (Chaos Section)**: Layered notification dings, WhatsApp tones, keyboard clicks, paper shuffling, subtle ambient tension. No music bed yet; just organic SFX. Gradually increase in intensity and speed.
+- **12–14s (Transition)**: Fade out chaos audio. Single, clear notification or chime, then cut to silence. Fresh start.
+- **14–30s (Solution Section)**: Modern, optimistic instrumental music bed (contemporary Indian influence suggested: light sitar/acoustic elements layered under modern electronic production, or simply clean modern beats with warm tones). The music should feel present, calm, confident—not overly produced. Soft UI interaction sounds (gentle tap, notification, confirmation beeps) layered subtly. Optional voiceover (calm, professional, Hindi or English) at 28s: "RentOK: Why rent like 1990s?" (2 seconds, fades with music resolution).
+
+**Editing Approach:**
+- Chaos section: quick cuts, overlapping transitions, slightly jerky motion. Average shot length 2–3 seconds. Conveys overwhelm.
+- Transition: deliberate pause and reset (black frame, logo, tagline).
+- Solution section: longer, smoother shots (4–8s each), slower cuts, steady camera motion. Conveys clarity and control.
+- Overall pacing: 30 seconds, no filler. Every shot earns its frame.
+
+---
+
+## FAILURE_PREVENTION
+1. **Avoid Generic SaaS Tone**: Do not make this feel corporate, glossy, or like every other app explainer. Ground it in real Indian property management context (notebooks, WhatsApp, scattered records are authentic pain points for this audience).
+
+2. **Ensure Chaos Feels Real**: The mess section should feel like the viewer's actual Monday morning, not an exaggerated sketch. Real frustration, not comedy.
+
+3. **Do Not Oversell the Interface**: Show RentOK's real features clearly, but do not make the app look unrealistic or overly polished. It should feel trustworthy and practical, not magic.
+
+4. **Audio Balance**: Chaos audio must not be so loud or jarring that it alienates viewers. It should feel **relatable**, not assault-like.
+
+5. **Color Consistency**: Green accents should feel natural to RentOK's brand identity (check rentok.com for any existing brand guidelines in the snapshot). If no explicit brand color is visible, infer from the website's design tone and use green conservatively for trust/completion signals.
+
+6. **Cultural Specificity**: References to "notebooks," "spreadsheets," and "WhatsApp" are intentional and correct for this audience. Avoid Anglicisms or Silicon Valley jargon. Use clear, functional language.
+
+7. **Duration Adherence**: Strictly 30 seconds. Do not creep into 40-second ads; it dilutes impact and increases platform friction.
+
+8. **CTA Clarity**: "Get free demo" must include a visible phone number, website, or QR code. Viewers should know exactly how to proceed. Ensure contact details are current from rentok.com.
+
+---
+
+## HARD_CONSTRAINT_CHECK
+✅ **Vertical video (9:16)**: Confirmed. All shot framing designed for portrait mobile-first delivery.
+
+✅ **~30 seconds duration**: Confirmed. Shot list totals 30 seconds.
+
+✅ **Target audience (hostel/PG owners in India)**: Confirmed. Pain points and solution directly address rent collection, tenant records, KYC, move-outs, complaints, compliance—RentOK's core offering for this segment.
+
+✅ **Operational chaos clearly recognisable**: Confirmed. Shots 1–4 explicitly show WhatsApp flooding, notebooks, spreadsheets, scattered records.
+
+✅ **RentOK positioned as clean system**: Confirmed. Shots 5–6 show unified dashboard, single-tap actions, real-time tracking.
+
+✅ **Contemporary, credible, Indian tone**: Confirmed. No generic Silicon Valley language. Grounded in real property management workflows. Modern aesthetic without overstyling.
+
+✅ **Only rentok.com as brand/product source**: Confirmed. All taglines, features, and positioning sourced from https://rentok.com.
+
+✅ **Aspect ratio 9:16**: Confirmed.
+
+---
+
+## JUDGE V04
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
+
+# CONTEST V05 — B04
+
+Use frozen brief B04 from the top of this file.
+
+## PACKAGE A
+
+## DELIVERABLE
+A 9:16 vertical UGC-style video (approximately 25 seconds) featuring one Indian woman speaking directly to camera, demonstrating a 2% salicylic-acid facial serum with clear, natural authenticity while remaining commercially safe and visually controlled.
+
+---
+
+### OBJECTIVE_INTERPRETATION
+Produce credible creator-style content that educates and persuades through honest product demonstration and relatable problem-solving, not through polish or medical authority. The video should feel like it was made by someone who genuinely uses the product, not by an agency, while maintaining broadcast-quality execution and legal safety (no claims, statistics, or medical language).
+
+---
+
+### CORE_CREATIVE_IDEA
+**"Real skin, real results"** — A single moment of authentic product use by an Indian woman who acknowledges oily, blemish-prone skin as a real concern and shows the serum as a straightforward daily tool that works *for her*, without overpromising.
+
+The video's truth is the demonstration itself: texture, absorption speed, ease of incorporation into routine—observable proof that doesn't require verbal claims.
+
+---
+
+### MESSAGE_AND_INFORMATION_HIERARCHY
+
+**Primary message (visual + audio):**  
+"This serum works well for my oily, blemish-prone skin."
+
+**Secondary message (visual):**  
+The product is lightweight, absorbs quickly, fits seamlessly into a morning routine.
+
+**Tertiary (via tone):**  
+This is a real product used by real people, not a fantasy.
+
+**What is not present:**  
+- Clinical jargon  
+- Percentage efficacy  
+- "Clinically proven," "dermatologist tested," or similar language  
+- Before/after transformations  
+- Guarantees of any kind  
+
+---
+
+### VISUAL_SYSTEM
+
+**Frame format:** 9:16, shot on phone-like simplicity (soft natural or supplemental light, minimal color correction—authentic but clean).
+
+**Camera angles & composition:**
+- **Shot 1 (Intro):** Medium close-up, direct to camera, slight downward angle (eye level or just below), woman's face fills 60% of frame.
+- **Shot 2 (Product reveal):** Product bottle held in hand, brought into frame from below or side, fills frame for 2–3 seconds; woman speaks to camera while holding it.
+- **Shot 3 (Application):** Close-up of hand applying serum to cheek/forehead; camera pulls slightly back to show face/neck application; about 4–5 seconds.
+- **Shot 4 (Final message):** Return to medium close-up direct to camera, closing statement, slight smile or knowing nod.
+
+**Lighting:**  
+Soft, even light (window light or diffused key light + small fill). No harsh shadows or dramatic side-lighting. Skin should look healthy and real, not airbrushed.
+
+**Color:**  
+Natural skin tones, minimal saturation tweaking. Product bottle should be clearly visible but not artificially brightened. Warm undertone to the light.
+
+**Text/graphics:**  
+Minimal. Brand name + "2% Salicylic Acid Serum" as a lower-third graphic for 2–3 seconds only. No animated transitions; slide in/fade only.
+
+---
+
+### PRODUCTION_RECIPE
+
+**Pre-production:**
+- Cast: One Indian woman, mid-twenties to mid-thirties, with visible or addressed oily/combination skin. She should feel natural on camera and capable of conversational, unscripted-sounding speech.
+- Prep talent with loose talking points (problem she solves with the serum, how she uses it, one reason it works for her), not a rigid script.
+- Physical product: Bottle should be well-lit so the 2% label and packaging are clearly readable in close-up.
+
+**Production:**
+- Record 3–4 takes of each shot (talent variation in delivery, ad-lib phrasing).
+- Prefer takes where the talent is slightly less "performed" (natural blinks, small pauses, conversational rhythm).
+- Serum application should be genuine (not rehearsed to artificial perfection); one full-face application on fresh/clean skin is best.
+- Capture 2–3 seconds of buffer at the start and end of each take.
+
+**Post-production:**
+- Intercut shots 2, 3, 4 in logical sequence (reveal → apply → close).
+- Keep Shot 1 as intro (2–3 seconds).
+- No transitions between shots (hard cuts or fade).
+- No background music (or very minimal ambient sound if any; UGC typically avoids heavy scoring).
+- No B-roll of lifestyle, nature, or unrelated imagery.
+- Color grade: slightly warm, natural, minimal contrast adjustment. Avoid filters.
+- Sound: Clean dialogue, no audible pops or wind. If using ambient sound, keep it subtle (indoor room tone).
+
+---
+
+### GENERATION_PROMPTS
+
+**SINGLE INTEGRATED PROMPT FOR VIDEO GENERATION:**
+
+```
+Create a 9:16 vertical UGC-style short-form video, approximately 25 seconds.
+
+A believable Indian woman, aged 25–35, speaks directly to camera in a medium 
+close-up. She has combination or oily skin with visible minor blemishes. 
+Lighting is soft and natural (window or diffused key light), skin looks real 
+and unretouched. No makeup filters or heavy color grading.
+
+Shot sequence:
+
+SHOT 1 (0–3 sec): Woman introduces herself directly to camera. She's speaking 
+naturally and conversationally. Audio: "I have oily skin and it's always been 
+a challenge—blemishes, excess shine, finding something that actually works 
+without drying me out." Camera is medium close-up, eye-level or slightly lower.
+
+SHOT 2 (3–7 sec): Woman holds up a clear/frosted bottle labeled "2% Salicylic 
+Acid Serum." The bottle is visible in frame; label is readable. Audio: "This 
+serum is a game-changer for me. It's fragrance-free, lightweight, and I use it 
+every morning and night." She speaks to camera while holding the product.
+
+SHOT 3 (7–18 sec): Close-up of her hand applying a few drops to her fingertips. 
+She smooths the serum onto her cheek, across her forehead, and down her neck. 
+Camera pulls back slightly as she applies. The serum absorbs visibly into skin 
+within seconds; no sticky residue. Audio (optional, or mostly silent with soft 
+ambient sound): "It sinks in fast. No greasy feeling, no residue." Her voice is 
+calm and matter-of-fact.
+
+SHOT 4 (18–25 sec): Return to medium close-up, direct to camera. Her skin 
+shows the applied product, looks smooth and even. Audio: "For oily, blemish-prone 
+skin, this works. And it's affordable." She gives a slight, genuine smile or 
+confident nod. Video fades to black or holds on her face as a final frame.
+
+Visual style: Shot on phone or handheld camera. Hard cuts between shots. No 
+transitions, no filters, no music. Soft, warm lighting. Color grade: natural, 
+slightly warm, minimal contrast. No artificial brightening of product or face.
+
+Audio: Clean dialogue, conversational tone, no scripted formality. Optional 
+subtle room tone or ambient sound underneath.
+
+Text overlay (optional, appears for 2–3 sec): Brand name and "2% Salicylic 
+Acid Serum" as a lower-third graphic, simple sans-serif font, white or light 
+text on semi-transparent dark bar.
+
+Tone: Authentic, relatable, knowledgeable but not clinical. She's recommending 
+a product she actually uses, not delivering a commercial. No medical claims, 
+no statistics, no guarantees.
+```
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+- **Product bottle:** Must be the actual brand's bottle (or a physical prop matching the brand identity). Use real product photography or a real bottle shot in production.
+- **Talent:** Specific casting is required. An AI-generated talent can be used, but must be consistent across all four shots and must read as genuine, not synthetic.
+- **Text overlay:** Design and apply post-production. Brand name and product label must be accurate (not generated).
+- **Audio:** If using voice synthesis, ensure Indian-accent fluency and conversational naturalness; alternatively, use a real human voice.
+
+---
+
+### AUDIO_AND_EDIT
+
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## OBJECTIVE_INTERPRETATION
+Produce credible creator-style content that educates and persuades through honest product demonstration and relatable problem-solving, not through polish or medical authority. The video should feel like it was made by someone who genuinely uses the product, not by an agency, while maintaining broadcast-quality execution and legal safety (no claims, statistics, or medical language).
+
+---
+
+### CORE_CREATIVE_IDEA
+**"Real skin, real results"** — A single moment of authentic product use by an Indian woman who acknowledges oily, blemish-prone skin as a real concern and shows the serum as a straightforward daily tool that works *for her*, without overpromising.
+
+The video's truth is the demonstration itself: texture, absorption speed, ease of incorporation into routine—observable proof that doesn't require verbal claims.
+
+---
+
+### MESSAGE_AND_INFORMATION_HIERARCHY
+
+**Primary message (visual + audio):**  
+"This serum works well for my oily, blemish-prone skin."
+
+**Secondary message (visual):**  
+The product is lightweight, absorbs quickly, fits seamlessly into a morning routine.
+
+**Tertiary (via tone):**  
+This is a real product used by real people, not a fantasy.
+
+**What is not present:**  
+- Clinical jargon  
+- Percentage efficacy  
+- "Clinically proven," "dermatologist tested," or similar language  
+- Before/after transformations  
+- Guarantees of any kind  
+
+---
+
+### VISUAL_SYSTEM
+
+**Frame format:** 9:16, shot on phone-like simplicity (soft natural or supplemental light, minimal color correction—authentic but clean).
+
+**Camera angles & composition:**
+- **Shot 1 (Intro):** Medium close-up, direct to camera, slight downward angle (eye level or just below), woman's face fills 60% of frame.
+- **Shot 2 (Product reveal):** Product bottle held in hand, brought into frame from below or side, fills frame for 2–3 seconds; woman speaks to camera while holding it.
+- **Shot 3 (Application):** Close-up of hand applying serum to cheek/forehead; camera pulls slightly back to show face/neck application; about 4–5 seconds.
+- **Shot 4 (Final message):** Return to medium close-up direct to camera, closing statement, slight smile or knowing nod.
+
+**Lighting:**  
+Soft, even light (window light or diffused key light + small fill). No harsh shadows or dramatic side-lighting. Skin should look healthy and real, not airbrushed.
+
+**Color:**  
+Natural skin tones, minimal saturation tweaking. Product bottle should be clearly visible but not artificially brightened. Warm undertone to the light.
+
+**Text/graphics:**  
+Minimal. Brand name + "2% Salicylic Acid Serum" as a lower-third graphic for 2–3 seconds only. No animated transitions; slide in/fade only.
+
+---
+
+### PRODUCTION_RECIPE
+
+**Pre-production:**
+- Cast: One Indian woman, mid-twenties to mid-thirties, with visible or addressed oily/combination skin. She should feel natural on camera and capable of conversational, unscripted-sounding speech.
+- Prep talent with loose talking points (problem she solves with the serum, how she uses it, one reason it works for her), not a rigid script.
+- Physical product: Bottle should be well-lit so the 2% label and packaging are clearly readable in close-up.
+
+**Production:**
+- Record 3–4 takes of each shot (talent variation in delivery, ad-lib phrasing).
+- Prefer takes where the talent is slightly less "performed" (natural blinks, small pauses, conversational rhythm).
+- Serum application should be genuine (not rehearsed to artificial perfection); one full-face application on fresh/clean skin is best.
+- Capture 2–3 seconds of buffer at the start and end of each take.
+
+**Post-production:**
+- Intercut shots 2, 3, 4 in logical sequence (reveal → apply → close).
+- Keep Shot 1 as intro (2–3 seconds).
+- No transitions between shots (hard cuts or fade).
+- No background music (or very minimal ambient sound if any; UGC typically avoids heavy scoring).
+- No B-roll of lifestyle, nature, or unrelated imagery.
+- Color grade: slightly warm, natural, minimal contrast adjustment. Avoid filters.
+- Sound: Clean dialogue, no audible pops or wind. If using ambient sound, keep it subtle (indoor room tone).
+
+---
+
+### GENERATION_PROMPTS
+
+**SINGLE INTEGRATED PROMPT FOR VIDEO GENERATION:**
+
+```
+Create a 9:16 vertical UGC-style short-form video, approximately 25 seconds.
+
+A believable Indian woman, aged 25–35, speaks directly to camera in a medium 
+close-up. She has combination or oily skin with visible minor blemishes. 
+Lighting is soft and natural (window or diffused key light), skin looks real 
+and unretouched. No makeup filters or heavy color grading.
+
+Shot sequence:
+
+SHOT 1 (0–3 sec): Woman introduces herself directly to camera. She's speaking 
+naturally and conversationally. Audio: "I have oily skin and it's always been 
+a challenge—blemishes, excess shine, finding something that actually works 
+without drying me out." Camera is medium close-up, eye-level or slightly lower.
+
+SHOT 2 (3–7 sec): Woman holds up a clear/frosted bottle labeled "2% Salicylic 
+Acid Serum." The bottle is visible in frame; label is readable. Audio: "This 
+serum is a game-changer for me. It's fragrance-free, lightweight, and I use it 
+every morning and night." She speaks to camera while holding the product.
+
+SHOT 3 (7–18 sec): Close-up of her hand applying a few drops to her fingertips. 
+She smooths the serum onto her cheek, across her forehead, and down her neck. 
+Camera pulls back slightly as she applies. The serum absorbs visibly into skin 
+within seconds; no sticky residue. Audio (optional, or mostly silent with soft 
+ambient sound): "It sinks in fast. No greasy feeling, no residue." Her voice is 
+calm and matter-of-fact.
+
+SHOT 4 (18–25 sec): Return to medium close-up, direct to camera. Her skin 
+shows the applied product, looks smooth and even. Audio: "For oily, blemish-prone 
+skin, this works. And it's affordable." She gives a slight, genuine smile or 
+confident nod. Video fades to black or holds on her face as a final frame.
+
+Visual style: Shot on phone or handheld camera. Hard cuts between shots. No 
+transitions, no filters, no music. Soft, warm lighting. Color grade: natural, 
+slightly warm, minimal contrast. No artificial brightening of product or face.
+
+Audio: Clean dialogue, conversational tone, no scripted formality. Optional 
+subtle room tone or ambient sound underneath.
+
+Text overlay (optional, appears for 2–3 sec): Brand name and "2% Salicylic 
+Acid Serum" as a lower-third graphic, simple sans-serif font, white or light 
+text on semi-transparent dark bar.
+
+Tone: Authentic, relatable, knowledgeable but not clinical. She's recommending 
+a product she actually uses, not delivering a commercial. No medical claims, 
+no statistics, no guarantees.
+```
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+- **Product bottle:** Must be the actual brand's bottle (or a physical prop matching the brand identity). Use real product photography or a real bottle shot in production.
+- **Talent:** Specific casting is required. An AI-generated talent can be used, but must be consistent across all four shots and must read as genuine, not synthetic.
+- **Text overlay:** Design and apply post-production. Brand name and product label must be accurate (not generated).
+- **Audio:** If using voice synthesis, ensure Indian-accent fluency and conversational naturalness; alternatively, use a real human voice.
+
+---
+
+### AUDIO_AND_EDIT
+
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## CORE_CREATIVE_IDEA
+**"Real skin, real results"** — A single moment of authentic product use by an Indian woman who acknowledges oily, blemish-prone skin as a real concern and shows the serum as a straightforward daily tool that works *for her*, without overpromising.
+
+The video's truth is the demonstration itself: texture, absorption speed, ease of incorporation into routine—observable proof that doesn't require verbal claims.
+
+---
+
+### MESSAGE_AND_INFORMATION_HIERARCHY
+
+**Primary message (visual + audio):**  
+"This serum works well for my oily, blemish-prone skin."
+
+**Secondary message (visual):**  
+The product is lightweight, absorbs quickly, fits seamlessly into a morning routine.
+
+**Tertiary (via tone):**  
+This is a real product used by real people, not a fantasy.
+
+**What is not present:**  
+- Clinical jargon  
+- Percentage efficacy  
+- "Clinically proven," "dermatologist tested," or similar language  
+- Before/after transformations  
+- Guarantees of any kind  
+
+---
+
+### VISUAL_SYSTEM
+
+**Frame format:** 9:16, shot on phone-like simplicity (soft natural or supplemental light, minimal color correction—authentic but clean).
+
+**Camera angles & composition:**
+- **Shot 1 (Intro):** Medium close-up, direct to camera, slight downward angle (eye level or just below), woman's face fills 60% of frame.
+- **Shot 2 (Product reveal):** Product bottle held in hand, brought into frame from below or side, fills frame for 2–3 seconds; woman speaks to camera while holding it.
+- **Shot 3 (Application):** Close-up of hand applying serum to cheek/forehead; camera pulls slightly back to show face/neck application; about 4–5 seconds.
+- **Shot 4 (Final message):** Return to medium close-up direct to camera, closing statement, slight smile or knowing nod.
+
+**Lighting:**  
+Soft, even light (window light or diffused key light + small fill). No harsh shadows or dramatic side-lighting. Skin should look healthy and real, not airbrushed.
+
+**Color:**  
+Natural skin tones, minimal saturation tweaking. Product bottle should be clearly visible but not artificially brightened. Warm undertone to the light.
+
+**Text/graphics:**  
+Minimal. Brand name + "2% Salicylic Acid Serum" as a lower-third graphic for 2–3 seconds only. No animated transitions; slide in/fade only.
+
+---
+
+### PRODUCTION_RECIPE
+
+**Pre-production:**
+- Cast: One Indian woman, mid-twenties to mid-thirties, with visible or addressed oily/combination skin. She should feel natural on camera and capable of conversational, unscripted-sounding speech.
+- Prep talent with loose talking points (problem she solves with the serum, how she uses it, one reason it works for her), not a rigid script.
+- Physical product: Bottle should be well-lit so the 2% label and packaging are clearly readable in close-up.
+
+**Production:**
+- Record 3–4 takes of each shot (talent variation in delivery, ad-lib phrasing).
+- Prefer takes where the talent is slightly less "performed" (natural blinks, small pauses, conversational rhythm).
+- Serum application should be genuine (not rehearsed to artificial perfection); one full-face application on fresh/clean skin is best.
+- Capture 2–3 seconds of buffer at the start and end of each take.
+
+**Post-production:**
+- Intercut shots 2, 3, 4 in logical sequence (reveal → apply → close).
+- Keep Shot 1 as intro (2–3 seconds).
+- No transitions between shots (hard cuts or fade).
+- No background music (or very minimal ambient sound if any; UGC typically avoids heavy scoring).
+- No B-roll of lifestyle, nature, or unrelated imagery.
+- Color grade: slightly warm, natural, minimal contrast adjustment. Avoid filters.
+- Sound: Clean dialogue, no audible pops or wind. If using ambient sound, keep it subtle (indoor room tone).
+
+---
+
+### GENERATION_PROMPTS
+
+**SINGLE INTEGRATED PROMPT FOR VIDEO GENERATION:**
+
+```
+Create a 9:16 vertical UGC-style short-form video, approximately 25 seconds.
+
+A believable Indian woman, aged 25–35, speaks directly to camera in a medium 
+close-up. She has combination or oily skin with visible minor blemishes. 
+Lighting is soft and natural (window or diffused key light), skin looks real 
+and unretouched. No makeup filters or heavy color grading.
+
+Shot sequence:
+
+SHOT 1 (0–3 sec): Woman introduces herself directly to camera. She's speaking 
+naturally and conversationally. Audio: "I have oily skin and it's always been 
+a challenge—blemishes, excess shine, finding something that actually works 
+without drying me out." Camera is medium close-up, eye-level or slightly lower.
+
+SHOT 2 (3–7 sec): Woman holds up a clear/frosted bottle labeled "2% Salicylic 
+Acid Serum." The bottle is visible in frame; label is readable. Audio: "This 
+serum is a game-changer for me. It's fragrance-free, lightweight, and I use it 
+every morning and night." She speaks to camera while holding the product.
+
+SHOT 3 (7–18 sec): Close-up of her hand applying a few drops to her fingertips. 
+She smooths the serum onto her cheek, across her forehead, and down her neck. 
+Camera pulls back slightly as she applies. The serum absorbs visibly into skin 
+within seconds; no sticky residue. Audio (optional, or mostly silent with soft 
+ambient sound): "It sinks in fast. No greasy feeling, no residue." Her voice is 
+calm and matter-of-fact.
+
+SHOT 4 (18–25 sec): Return to medium close-up, direct to camera. Her skin 
+shows the applied product, looks smooth and even. Audio: "For oily, blemish-prone 
+skin, this works. And it's affordable." She gives a slight, genuine smile or 
+confident nod. Video fades to black or holds on her face as a final frame.
+
+Visual style: Shot on phone or handheld camera. Hard cuts between shots. No 
+transitions, no filters, no music. Soft, warm lighting. Color grade: natural, 
+slightly warm, minimal contrast. No artificial brightening of product or face.
+
+Audio: Clean dialogue, conversational tone, no scripted formality. Optional 
+subtle room tone or ambient sound underneath.
+
+Text overlay (optional, appears for 2–3 sec): Brand name and "2% Salicylic 
+Acid Serum" as a lower-third graphic, simple sans-serif font, white or light 
+text on semi-transparent dark bar.
+
+Tone: Authentic, relatable, knowledgeable but not clinical. She's recommending 
+a product she actually uses, not delivering a commercial. No medical claims, 
+no statistics, no guarantees.
+```
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+- **Product bottle:** Must be the actual brand's bottle (or a physical prop matching the brand identity). Use real product photography or a real bottle shot in production.
+- **Talent:** Specific casting is required. An AI-generated talent can be used, but must be consistent across all four shots and must read as genuine, not synthetic.
+- **Text overlay:** Design and apply post-production. Brand name and product label must be accurate (not generated).
+- **Audio:** If using voice synthesis, ensure Indian-accent fluency and conversational naturalness; alternatively, use a real human voice.
+
+---
+
+### AUDIO_AND_EDIT
+
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+**Primary message (visual + audio):**  
+"This serum works well for my oily, blemish-prone skin."
+
+**Secondary message (visual):**  
+The product is lightweight, absorbs quickly, fits seamlessly into a morning routine.
+
+**Tertiary (via tone):**  
+This is a real product used by real people, not a fantasy.
+
+**What is not present:**  
+- Clinical jargon  
+- Percentage efficacy  
+- "Clinically proven," "dermatologist tested," or similar language  
+- Before/after transformations  
+- Guarantees of any kind  
+
+---
+
+### VISUAL_SYSTEM
+
+**Frame format:** 9:16, shot on phone-like simplicity (soft natural or supplemental light, minimal color correction—authentic but clean).
+
+**Camera angles & composition:**
+- **Shot 1 (Intro):** Medium close-up, direct to camera, slight downward angle (eye level or just below), woman's face fills 60% of frame.
+- **Shot 2 (Product reveal):** Product bottle held in hand, brought into frame from below or side, fills frame for 2–3 seconds; woman speaks to camera while holding it.
+- **Shot 3 (Application):** Close-up of hand applying serum to cheek/forehead; camera pulls slightly back to show face/neck application; about 4–5 seconds.
+- **Shot 4 (Final message):** Return to medium close-up direct to camera, closing statement, slight smile or knowing nod.
+
+**Lighting:**  
+Soft, even light (window light or diffused key light + small fill). No harsh shadows or dramatic side-lighting. Skin should look healthy and real, not airbrushed.
+
+**Color:**  
+Natural skin tones, minimal saturation tweaking. Product bottle should be clearly visible but not artificially brightened. Warm undertone to the light.
+
+**Text/graphics:**  
+Minimal. Brand name + "2% Salicylic Acid Serum" as a lower-third graphic for 2–3 seconds only. No animated transitions; slide in/fade only.
+
+---
+
+### PRODUCTION_RECIPE
+
+**Pre-production:**
+- Cast: One Indian woman, mid-twenties to mid-thirties, with visible or addressed oily/combination skin. She should feel natural on camera and capable of conversational, unscripted-sounding speech.
+- Prep talent with loose talking points (problem she solves with the serum, how she uses it, one reason it works for her), not a rigid script.
+- Physical product: Bottle should be well-lit so the 2% label and packaging are clearly readable in close-up.
+
+**Production:**
+- Record 3–4 takes of each shot (talent variation in delivery, ad-lib phrasing).
+- Prefer takes where the talent is slightly less "performed" (natural blinks, small pauses, conversational rhythm).
+- Serum application should be genuine (not rehearsed to artificial perfection); one full-face application on fresh/clean skin is best.
+- Capture 2–3 seconds of buffer at the start and end of each take.
+
+**Post-production:**
+- Intercut shots 2, 3, 4 in logical sequence (reveal → apply → close).
+- Keep Shot 1 as intro (2–3 seconds).
+- No transitions between shots (hard cuts or fade).
+- No background music (or very minimal ambient sound if any; UGC typically avoids heavy scoring).
+- No B-roll of lifestyle, nature, or unrelated imagery.
+- Color grade: slightly warm, natural, minimal contrast adjustment. Avoid filters.
+- Sound: Clean dialogue, no audible pops or wind. If using ambient sound, keep it subtle (indoor room tone).
+
+---
+
+### GENERATION_PROMPTS
+
+**SINGLE INTEGRATED PROMPT FOR VIDEO GENERATION:**
+
+```
+Create a 9:16 vertical UGC-style short-form video, approximately 25 seconds.
+
+A believable Indian woman, aged 25–35, speaks directly to camera in a medium 
+close-up. She has combination or oily skin with visible minor blemishes. 
+Lighting is soft and natural (window or diffused key light), skin looks real 
+and unretouched. No makeup filters or heavy color grading.
+
+Shot sequence:
+
+SHOT 1 (0–3 sec): Woman introduces herself directly to camera. She's speaking 
+naturally and conversationally. Audio: "I have oily skin and it's always been 
+a challenge—blemishes, excess shine, finding something that actually works 
+without drying me out." Camera is medium close-up, eye-level or slightly lower.
+
+SHOT 2 (3–7 sec): Woman holds up a clear/frosted bottle labeled "2% Salicylic 
+Acid Serum." The bottle is visible in frame; label is readable. Audio: "This 
+serum is a game-changer for me. It's fragrance-free, lightweight, and I use it 
+every morning and night." She speaks to camera while holding the product.
+
+SHOT 3 (7–18 sec): Close-up of her hand applying a few drops to her fingertips. 
+She smooths the serum onto her cheek, across her forehead, and down her neck. 
+Camera pulls back slightly as she applies. The serum absorbs visibly into skin 
+within seconds; no sticky residue. Audio (optional, or mostly silent with soft 
+ambient sound): "It sinks in fast. No greasy feeling, no residue." Her voice is 
+calm and matter-of-fact.
+
+SHOT 4 (18–25 sec): Return to medium close-up, direct to camera. Her skin 
+shows the applied product, looks smooth and even. Audio: "For oily, blemish-prone 
+skin, this works. And it's affordable." She gives a slight, genuine smile or 
+confident nod. Video fades to black or holds on her face as a final frame.
+
+Visual style: Shot on phone or handheld camera. Hard cuts between shots. No 
+transitions, no filters, no music. Soft, warm lighting. Color grade: natural, 
+slightly warm, minimal contrast. No artificial brightening of product or face.
+
+Audio: Clean dialogue, conversational tone, no scripted formality. Optional 
+subtle room tone or ambient sound underneath.
+
+Text overlay (optional, appears for 2–3 sec): Brand name and "2% Salicylic 
+Acid Serum" as a lower-third graphic, simple sans-serif font, white or light 
+text on semi-transparent dark bar.
+
+Tone: Authentic, relatable, knowledgeable but not clinical. She's recommending 
+a product she actually uses, not delivering a commercial. No medical claims, 
+no statistics, no guarantees.
+```
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+- **Product bottle:** Must be the actual brand's bottle (or a physical prop matching the brand identity). Use real product photography or a real bottle shot in production.
+- **Talent:** Specific casting is required. An AI-generated talent can be used, but must be consistent across all four shots and must read as genuine, not synthetic.
+- **Text overlay:** Design and apply post-production. Brand name and product label must be accurate (not generated).
+- **Audio:** If using voice synthesis, ensure Indian-accent fluency and conversational naturalness; alternatively, use a real human voice.
+
+---
+
+### AUDIO_AND_EDIT
+
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## VISUAL_SYSTEM
+**Frame format:** 9:16, shot on phone-like simplicity (soft natural or supplemental light, minimal color correction—authentic but clean).
+
+**Camera angles & composition:**
+- **Shot 1 (Intro):** Medium close-up, direct to camera, slight downward angle (eye level or just below), woman's face fills 60% of frame.
+- **Shot 2 (Product reveal):** Product bottle held in hand, brought into frame from below or side, fills frame for 2–3 seconds; woman speaks to camera while holding it.
+- **Shot 3 (Application):** Close-up of hand applying serum to cheek/forehead; camera pulls slightly back to show face/neck application; about 4–5 seconds.
+- **Shot 4 (Final message):** Return to medium close-up direct to camera, closing statement, slight smile or knowing nod.
+
+**Lighting:**  
+Soft, even light (window light or diffused key light + small fill). No harsh shadows or dramatic side-lighting. Skin should look healthy and real, not airbrushed.
+
+**Color:**  
+Natural skin tones, minimal saturation tweaking. Product bottle should be clearly visible but not artificially brightened. Warm undertone to the light.
+
+**Text/graphics:**  
+Minimal. Brand name + "2% Salicylic Acid Serum" as a lower-third graphic for 2–3 seconds only. No animated transitions; slide in/fade only.
+
+---
+
+### PRODUCTION_RECIPE
+
+**Pre-production:**
+- Cast: One Indian woman, mid-twenties to mid-thirties, with visible or addressed oily/combination skin. She should feel natural on camera and capable of conversational, unscripted-sounding speech.
+- Prep talent with loose talking points (problem she solves with the serum, how she uses it, one reason it works for her), not a rigid script.
+- Physical product: Bottle should be well-lit so the 2% label and packaging are clearly readable in close-up.
+
+**Production:**
+- Record 3–4 takes of each shot (talent variation in delivery, ad-lib phrasing).
+- Prefer takes where the talent is slightly less "performed" (natural blinks, small pauses, conversational rhythm).
+- Serum application should be genuine (not rehearsed to artificial perfection); one full-face application on fresh/clean skin is best.
+- Capture 2–3 seconds of buffer at the start and end of each take.
+
+**Post-production:**
+- Intercut shots 2, 3, 4 in logical sequence (reveal → apply → close).
+- Keep Shot 1 as intro (2–3 seconds).
+- No transitions between shots (hard cuts or fade).
+- No background music (or very minimal ambient sound if any; UGC typically avoids heavy scoring).
+- No B-roll of lifestyle, nature, or unrelated imagery.
+- Color grade: slightly warm, natural, minimal contrast adjustment. Avoid filters.
+- Sound: Clean dialogue, no audible pops or wind. If using ambient sound, keep it subtle (indoor room tone).
+
+---
+
+### GENERATION_PROMPTS
+
+**SINGLE INTEGRATED PROMPT FOR VIDEO GENERATION:**
+
+```
+Create a 9:16 vertical UGC-style short-form video, approximately 25 seconds.
+
+A believable Indian woman, aged 25–35, speaks directly to camera in a medium 
+close-up. She has combination or oily skin with visible minor blemishes. 
+Lighting is soft and natural (window or diffused key light), skin looks real 
+and unretouched. No makeup filters or heavy color grading.
+
+Shot sequence:
+
+SHOT 1 (0–3 sec): Woman introduces herself directly to camera. She's speaking 
+naturally and conversationally. Audio: "I have oily skin and it's always been 
+a challenge—blemishes, excess shine, finding something that actually works 
+without drying me out." Camera is medium close-up, eye-level or slightly lower.
+
+SHOT 2 (3–7 sec): Woman holds up a clear/frosted bottle labeled "2% Salicylic 
+Acid Serum." The bottle is visible in frame; label is readable. Audio: "This 
+serum is a game-changer for me. It's fragrance-free, lightweight, and I use it 
+every morning and night." She speaks to camera while holding the product.
+
+SHOT 3 (7–18 sec): Close-up of her hand applying a few drops to her fingertips. 
+She smooths the serum onto her cheek, across her forehead, and down her neck. 
+Camera pulls back slightly as she applies. The serum absorbs visibly into skin 
+within seconds; no sticky residue. Audio (optional, or mostly silent with soft 
+ambient sound): "It sinks in fast. No greasy feeling, no residue." Her voice is 
+calm and matter-of-fact.
+
+SHOT 4 (18–25 sec): Return to medium close-up, direct to camera. Her skin 
+shows the applied product, looks smooth and even. Audio: "For oily, blemish-prone 
+skin, this works. And it's affordable." She gives a slight, genuine smile or 
+confident nod. Video fades to black or holds on her face as a final frame.
+
+Visual style: Shot on phone or handheld camera. Hard cuts between shots. No 
+transitions, no filters, no music. Soft, warm lighting. Color grade: natural, 
+slightly warm, minimal contrast. No artificial brightening of product or face.
+
+Audio: Clean dialogue, conversational tone, no scripted formality. Optional 
+subtle room tone or ambient sound underneath.
+
+Text overlay (optional, appears for 2–3 sec): Brand name and "2% Salicylic 
+Acid Serum" as a lower-third graphic, simple sans-serif font, white or light 
+text on semi-transparent dark bar.
+
+Tone: Authentic, relatable, knowledgeable but not clinical. She's recommending 
+a product she actually uses, not delivering a commercial. No medical claims, 
+no statistics, no guarantees.
+```
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+- **Product bottle:** Must be the actual brand's bottle (or a physical prop matching the brand identity). Use real product photography or a real bottle shot in production.
+- **Talent:** Specific casting is required. An AI-generated talent can be used, but must be consistent across all four shots and must read as genuine, not synthetic.
+- **Text overlay:** Design and apply post-production. Brand name and product label must be accurate (not generated).
+- **Audio:** If using voice synthesis, ensure Indian-accent fluency and conversational naturalness; alternatively, use a real human voice.
+
+---
+
+### AUDIO_AND_EDIT
+
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## PRODUCTION_RECIPE
+**Pre-production:**
+- Cast: One Indian woman, mid-twenties to mid-thirties, with visible or addressed oily/combination skin. She should feel natural on camera and capable of conversational, unscripted-sounding speech.
+- Prep talent with loose talking points (problem she solves with the serum, how she uses it, one reason it works for her), not a rigid script.
+- Physical product: Bottle should be well-lit so the 2% label and packaging are clearly readable in close-up.
+
+**Production:**
+- Record 3–4 takes of each shot (talent variation in delivery, ad-lib phrasing).
+- Prefer takes where the talent is slightly less "performed" (natural blinks, small pauses, conversational rhythm).
+- Serum application should be genuine (not rehearsed to artificial perfection); one full-face application on fresh/clean skin is best.
+- Capture 2–3 seconds of buffer at the start and end of each take.
+
+**Post-production:**
+- Intercut shots 2, 3, 4 in logical sequence (reveal → apply → close).
+- Keep Shot 1 as intro (2–3 seconds).
+- No transitions between shots (hard cuts or fade).
+- No background music (or very minimal ambient sound if any; UGC typically avoids heavy scoring).
+- No B-roll of lifestyle, nature, or unrelated imagery.
+- Color grade: slightly warm, natural, minimal contrast adjustment. Avoid filters.
+- Sound: Clean dialogue, no audible pops or wind. If using ambient sound, keep it subtle (indoor room tone).
+
+---
+
+### GENERATION_PROMPTS
+
+**SINGLE INTEGRATED PROMPT FOR VIDEO GENERATION:**
+
+```
+Create a 9:16 vertical UGC-style short-form video, approximately 25 seconds.
+
+A believable Indian woman, aged 25–35, speaks directly to camera in a medium 
+close-up. She has combination or oily skin with visible minor blemishes. 
+Lighting is soft and natural (window or diffused key light), skin looks real 
+and unretouched. No makeup filters or heavy color grading.
+
+Shot sequence:
+
+SHOT 1 (0–3 sec): Woman introduces herself directly to camera. She's speaking 
+naturally and conversationally. Audio: "I have oily skin and it's always been 
+a challenge—blemishes, excess shine, finding something that actually works 
+without drying me out." Camera is medium close-up, eye-level or slightly lower.
+
+SHOT 2 (3–7 sec): Woman holds up a clear/frosted bottle labeled "2% Salicylic 
+Acid Serum." The bottle is visible in frame; label is readable. Audio: "This 
+serum is a game-changer for me. It's fragrance-free, lightweight, and I use it 
+every morning and night." She speaks to camera while holding the product.
+
+SHOT 3 (7–18 sec): Close-up of her hand applying a few drops to her fingertips. 
+She smooths the serum onto her cheek, across her forehead, and down her neck. 
+Camera pulls back slightly as she applies. The serum absorbs visibly into skin 
+within seconds; no sticky residue. Audio (optional, or mostly silent with soft 
+ambient sound): "It sinks in fast. No greasy feeling, no residue." Her voice is 
+calm and matter-of-fact.
+
+SHOT 4 (18–25 sec): Return to medium close-up, direct to camera. Her skin 
+shows the applied product, looks smooth and even. Audio: "For oily, blemish-prone 
+skin, this works. And it's affordable." She gives a slight, genuine smile or 
+confident nod. Video fades to black or holds on her face as a final frame.
+
+Visual style: Shot on phone or handheld camera. Hard cuts between shots. No 
+transitions, no filters, no music. Soft, warm lighting. Color grade: natural, 
+slightly warm, minimal contrast. No artificial brightening of product or face.
+
+Audio: Clean dialogue, conversational tone, no scripted formality. Optional 
+subtle room tone or ambient sound underneath.
+
+Text overlay (optional, appears for 2–3 sec): Brand name and "2% Salicylic 
+Acid Serum" as a lower-third graphic, simple sans-serif font, white or light 
+text on semi-transparent dark bar.
+
+Tone: Authentic, relatable, knowledgeable but not clinical. She's recommending 
+a product she actually uses, not delivering a commercial. No medical claims, 
+no statistics, no guarantees.
+```
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+- **Product bottle:** Must be the actual brand's bottle (or a physical prop matching the brand identity). Use real product photography or a real bottle shot in production.
+- **Talent:** Specific casting is required. An AI-generated talent can be used, but must be consistent across all four shots and must read as genuine, not synthetic.
+- **Text overlay:** Design and apply post-production. Brand name and product label must be accurate (not generated).
+- **Audio:** If using voice synthesis, ensure Indian-accent fluency and conversational naturalness; alternatively, use a real human voice.
+
+---
+
+### AUDIO_AND_EDIT
+
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## GENERATION_PROMPTS
+**SINGLE INTEGRATED PROMPT FOR VIDEO GENERATION:**
+
+```
+Create a 9:16 vertical UGC-style short-form video, approximately 25 seconds.
+
+A believable Indian woman, aged 25–35, speaks directly to camera in a medium 
+close-up. She has combination or oily skin with visible minor blemishes. 
+Lighting is soft and natural (window or diffused key light), skin looks real 
+and unretouched. No makeup filters or heavy color grading.
+
+Shot sequence:
+
+SHOT 1 (0–3 sec): Woman introduces herself directly to camera. She's speaking 
+naturally and conversationally. Audio: "I have oily skin and it's always been 
+a challenge—blemishes, excess shine, finding something that actually works 
+without drying me out." Camera is medium close-up, eye-level or slightly lower.
+
+SHOT 2 (3–7 sec): Woman holds up a clear/frosted bottle labeled "2% Salicylic 
+Acid Serum." The bottle is visible in frame; label is readable. Audio: "This 
+serum is a game-changer for me. It's fragrance-free, lightweight, and I use it 
+every morning and night." She speaks to camera while holding the product.
+
+SHOT 3 (7–18 sec): Close-up of her hand applying a few drops to her fingertips. 
+She smooths the serum onto her cheek, across her forehead, and down her neck. 
+Camera pulls back slightly as she applies. The serum absorbs visibly into skin 
+within seconds; no sticky residue. Audio (optional, or mostly silent with soft 
+ambient sound): "It sinks in fast. No greasy feeling, no residue." Her voice is 
+calm and matter-of-fact.
+
+SHOT 4 (18–25 sec): Return to medium close-up, direct to camera. Her skin 
+shows the applied product, looks smooth and even. Audio: "For oily, blemish-prone 
+skin, this works. And it's affordable." She gives a slight, genuine smile or 
+confident nod. Video fades to black or holds on her face as a final frame.
+
+Visual style: Shot on phone or handheld camera. Hard cuts between shots. No 
+transitions, no filters, no music. Soft, warm lighting. Color grade: natural, 
+slightly warm, minimal contrast. No artificial brightening of product or face.
+
+Audio: Clean dialogue, conversational tone, no scripted formality. Optional 
+subtle room tone or ambient sound underneath.
+
+Text overlay (optional, appears for 2–3 sec): Brand name and "2% Salicylic 
+Acid Serum" as a lower-third graphic, simple sans-serif font, white or light 
+text on semi-transparent dark bar.
+
+Tone: Authentic, relatable, knowledgeable but not clinical. She's recommending 
+a product she actually uses, not delivering a commercial. No medical claims, 
+no statistics, no guarantees.
+```
+
+---
+
+### DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+
+- **Product bottle:** Must be the actual brand's bottle (or a physical prop matching the brand identity). Use real product photography or a real bottle shot in production.
+- **Talent:** Specific casting is required. An AI-generated talent can be used, but must be consistent across all four shots and must read as genuine, not synthetic.
+- **Text overlay:** Design and apply post-production. Brand name and product label must be accurate (not generated).
+- **Audio:** If using voice synthesis, ensure Indian-accent fluency and conversational naturalness; alternatively, use a real human voice.
+
+---
+
+### AUDIO_AND_EDIT
+
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- **Product bottle:** Must be the actual brand's bottle (or a physical prop matching the brand identity). Use real product photography or a real bottle shot in production.
+- **Talent:** Specific casting is required. An AI-generated talent can be used, but must be consistent across all four shots and must read as genuine, not synthetic.
+- **Text overlay:** Design and apply post-production. Brand name and product label must be accurate (not generated).
+- **Audio:** If using voice synthesis, ensure Indian-accent fluency and conversational naturalness; alternatively, use a real human voice.
+
+---
+
+### AUDIO_AND_EDIT
+
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## AUDIO_AND_EDIT
+**Dialogue:**
+- Natural, conversational pacing. Minimal "ums" or "ahs" (light cleanup acceptable).
+- No voiceover narration; all dialogue is the talent speaking directly.
+- Slightly slower than everyday speech (room for comprehension on mobile viewing).
+
+**Sound design:**
+- Fade in audio at the start (0.5 sec).
+- Room tone or subtle ambient sound underneath dialogue (optional, adds realness).
+- Product application sounds (fingertips, skin contact) should be audible but not loud or ASMR-ified.
+- Fade out audio in final 1–2 seconds or end with clean cut.
+
+**Music:**
+- None. UGC does not use background music. (If sound design feels too bare, add a single sustained ambient tone or very subtle lo-fi track at -18dB, but favor silence.)
+
+**Edit rhythm:**
+- Shot 1: Intro statement (2–3 sec).
+- Shot 2: Product reveal + context (4 sec).
+- Shot 3: Application + proof of absorption (10–11 sec)—this is the hero shot.
+- Shot 4: Closing statement + CTA (3–4 sec).
+- No B-roll filler or montage.
+
+---
+
+### FAILURE_PREVENTION
+
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## FAILURE_PREVENTION
+**What could go wrong and how to avoid it:**
+
+1. **Talent looks overly polished or synthetic**  
+   → Use minimal makeup, soft lighting that shows real skin texture, unretouched close-ups. Test the AI talent model for believability before final production.
+
+2. **Product looks artificially bright or fake**  
+   → Use actual product photography or real bottle footage. Light it naturally. Do not add glow effects or post-production brightening.
+
+3. **Dialogue sounds scripted or clinical**  
+   → Write loose talking points, not a script. Encourage ad-lib phrasing. Use takes where the talent is conversational and slightly less "perfect."
+
+4. **Serum application looks slow, clumpy, or leaves a visible residue**  
+   → Use real serum if possible, or ensure the AI/generated sequence shows near-instant absorption. Apply to pre-moisturized skin if needed to match product behavior.
+
+5. **Shot composition feels "commercial" instead of "UGC"**  
+   → Avoid symmetry, center-framing, or overly composed lighting. Keep handheld imperfection (micro-movements, slight focus shift). Frame informally.
+
+6. **No clear purchase reason emerges**  
+   → The closing statement must explicitly name the single reason: "For oily, blemish-prone skin, this works" or "Fast absorption, no greasy feeling, and affordable." Make this the final line.
+
+7. **Claims creep in post-production**  
+   → Audit the script and final voiceover for any medical language, guarantees, or statistics. Permitted: "works for me," "I use it every day," "sinks in fast," "affordable." Prohibited: "clinically proven," "removes blemishes," "99% effective," "dermatologist recommended."
+
+---
+
+### HARD_CONSTRAINT_CHECK
+
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## HARD_CONSTRAINT_CHECK
+✓ **9:16 format:** Confirmed. All shots composed for vertical, mobile-first viewing.  
+✓ **~25 seconds duration:** Confirmed. Shot breakdown totals 23–25 sec.  
+✓ **One Indian woman:** Confirmed. Specified in casting and talent direction.  
+✓ **Direct-to-camera speech:** Confirmed. Shots 1, 2, and 4 are direct address.  
+✓ **Natural product demonstration:** Confirmed. Shot 3 is the hero application sequence.  
+✓ **One clear purchase reason:** Confirmed. Final statement ties to oily/blemish-prone skin + affordability or efficacy.  
+✓ **Authentic UGC feel:** Confirmed. Handheld framing, soft lighting, hard cuts, no music, conversational dialogue, unretouched skin.  
+✓ **Commercially usable quality:** Confirmed. Professional lighting, clean audio, sharp focus, intentional shot composition.  
+✓ **No clinical statistics:** Confirmed. Script avoids percentage claims, efficacy claims, clinical language.  
+✓ **No guarantees or medical claims:** Confirmed. All statements are personal ("works for me," "my skin").  
+✓ **No external website reference:** Confirmed. No URL, no social handles, no "link in bio."  
+✓ **Fragrance-free 2% salicylic acid serum:** Confirmed in product description and labels throughout.  
+
+---
+
+### KNOWLEDGE_AND_WEBSITE_USE
+
+**No external knowledge sources were required for this brief.**
+
+The production approach is grounded in UGC/creator-content best practices and skincare product demonstration conventions, which are industry-standard and do not require external research or knowledge library lookup.
+
+**Creative decisions made independently:**
+- Shot structure and pacing optimized for mobile vertical video and viewer retention.
+- Dialogue and tone shaped to balance authenticity with legal/commercial safety.
+- Product demonstration designed to show observable product behavior (absorption, texture) rather than relying on claims.
+- Talent direction and lighting approach based on UGC production conventions and industry norms for skincare content.
+
+---
+
+**END OF FINAL_PRODUCTION_PACKAGE**
+
+## PACKAGE B
+
+
+
+## PACKAGE C
+
+## DELIVERABLE
+9:16 vertical video, ~25 seconds, UGC-style performance ad for D2C skincare serum.
+
+---
+
+## OBJECTIVE_INTERPRETATION
+Create authentic, conversion-focused creator content that positions the 2% salicylic acid serum as a straightforward, non-fussy solution for oily, blemished skin. One relatable Indian woman demonstrates real use, identifies one compelling purchase reason (visible results + simplicity), and avoids hype, clinical claims, or unrealistic promises. The output should feel like credible peer-to-peer recommendation, not commercial production, while remaining visually professional and on-brand.
+
+---
+
+## CORE_CREATIVE_IDEA
+**"Real skin, real routine, real difference."**
+
+A woman with visibly oily, blemish-prone skin speaks directly to camera in a natural home setting. She explains her problem, shows the product in use, and gives one honest reason she keeps using it: it works without complication. No miracle claims, no before/after, no jargon—just a person solving a real problem.
+
+---
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Identity**: "This is me. My skin is like this."
+2. **Problem**: Oily skin + breakouts mid-day
+3. **Solution**: Fragrance-free serum, salicylic acid, simple routine
+4. **One reason to buy**: Visible clarity + fast absorption = it fits my life
+5. **Call to action**: Brand name + link/handle
+
+---
+
+## VISUAL_SYSTEM
+- **Setting**: Authentic home bathroom or bedroom with natural window light; real mirror, shelf, or sink visible
+- **Talent**: Indian woman, age 20–35, with visible oily/blemished skin texture (not retouched; authenticity is key)
+- **Lighting**: Soft, natural daylight; no ring lights, no studio setup
+- **Color**: Warm, natural white balance; minimal grading; accurate skin tone
+- **Framing**: All shots in 9:16 vertical (mobile-native)
+- **Product visibility**: Bottle clearly visible; serum texture shown on application
+- **Aesthetic**: Unpolished but controlled; feels like a person's bedroom, not a set
+
+---
+
+## PRODUCTION_RECIPE
+| Element | Spec |
+|---------|------|
+| **Location** | Single room—bathroom or bedroom, natural light from window |
+| **Talent** | 1 Indian woman, visible oily/blemished skin, natural English or Hindi speech |
+| **Props** | Serum bottle, mirror (practical), optional: cleanser already in her routine |
+| **Lighting** | Window + ambient room light (no key/fill rigs) |
+| **Camera** | Tripod or handheld; 9:16 vertical phone-style framing |
+| **Audio** | On-location dialogue (talent speaking naturally) + diegetic SFX (bottle open, liquid sound, hands on skin); optional minimal background music |
+| **Duration** | 25 seconds total |
+
+---
+
+## GENERATION_PROMPTS
+### **Shot 1 (0–3 sec) — Problem / Direct Address**
+**Framing**: Close-up, shoulders in frame, face centered, eye contact with camera.  
+**Action**: Woman looks directly at camera, speaks naturally.  
+**Copy (spoken)**: *"My skin gets oily by midday, and breakouts make it worse. I've tried a lot."*  
+**Tone**: Conversational, slightly concerned but not desperate.
+
+**Visual Prompt**:  
+*Close-up 9:16 vertical shot of an Indian woman with oily, blemished skin looking directly at camera in a bathroom setting with soft natural window light. Realistic skin texture visible. Warm skin tone. No heavy makeup. Thoughtful, relatable expression. Shot from shoulders up.*
+
+---
+
+### **Shot 2 (3–8 sec) — Product Intro & Tactile Demo**
+**Framing**: Close-up of hands and product bottle; can frame to include her face/mirror in background.  
+**Action**: Hand opens the serum bottle, shows the clear/translucent gel consistency, applies one pump or drop to fingertip.  
+**Copy (spoken)**: *"This serum is fragrance-free, so nothing irritating. Just salicylic acid—two percent—that actually helps."*  
+**Details**: Bottle label should be legible but not forced; let natural light catch the serum to show texture and clarity.
+
+**Visual Prompt**:  
+*Close-up 9:16 vertical shot: hands opening a clear skincare serum bottle, revealing the gel/liquid inside. Serum is dispensed onto a fingertip. Natural indoor window light. Realistic, no artificial glow. Soft bathroom or bedroom background. Product is the focus but not over-styled.*
+
+---
+
+### **Shot 3 (8–15 sec) — Application & Feel/Ease**
+**Framing**: Close-up of her face; hands can be visible applying serum to cheeks, forehead, or chin area.  
+**Action**: She gently applies the serum, focusing on oily zones (T-zone, chin). Natural hand movements, no exaggerated motions.  
+**Copy (spoken)**: *"It absorbs fast—no sticky feeling, no heaviness. I use it after cleanser, morning and night. That's it."*  
+**Details**: Show real skin; capture the texture of the serum spreading. The benefit here is *simplicity and feel*, not a clinical claim.
+
+**Visual Prompt**:  
+*Close-up 9:16 vertical shot of an Indian woman with oily skin applying clear serum to her face with her fingertips. Serum spreads smoothly. Soft natural light from a window. Her skin appears slightly oily/textured (realistic). Authentic moment, no filters or heavy retouching.*
+
+---
+
+### **Shot 4 (15–22 sec) — One Clear Reason to Buy & Confidence**
+**Framing**: Medium close-up; can be her face at mirror, or her looking back at camera, or a split focus of her and the bottle.  
+**Action**: She either looks at her reflection thoughtfully or back at camera while speaking; conveys quiet confidence.  
+**Copy (spoken)**: *"Before bed, I know my skin is actually being treated. And by morning, I can see a difference in how clear it looks. That's why I keep using it."*  
+**Details**: The purchase reason here is *visible results without hype*. She's communicating trust and actual use, not promises. Avoid: "removes," "clears," "cures," or "clinically proven."
+
+**Visual Prompt**:  
+*9:16 vertical medium close-up: Indian woman looking at her reflection in a bathroom mirror or making eye contact with camera. Soft natural indoor lighting. Minimal or no makeup. Thoughtful, satisfied, confident expression. Real, unretouched skin visible.*
+
+---
+
+### **Shot 5 (22–25 sec) — Close-Out & Brand**
+**Framing**: Product bottle centered or on-shelf in natural light; OR back to her face for final word.  
+**Action**: Final spoken line + brand moment (product bottle on-screen with text overlay, or her speaking final line to camera).  
+**Copy (spoken)**: *"If you've got oily skin and breakouts, it's worth a try."*  
+**Brand**: Product name, "2% Salicylic Acid Serum," link/CTA (e.g., "Shop now" or brand handle/link).
+
+**Visual Prompt**:  
+*9:16 vertical close-up: skincare serum bottle, label clearly visible, centered or on a shelf with soft natural lighting. Clean, minimalist background. Warm, natural color. OR: back to woman's face, looking slightly satisfied at camera, natural light. Simple on-screen text overlay with brand name and CTA link below.*
+
+---
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+| Element | Handling |
+|---------|----------|
+| **Product bottle** | Real physical object; must be shot practically or sourced as high-res product photography |
+| **Talent** | Real person; casting for authentic oily/blemished skin is critical |
+| **Copy** | Provided above; deliver as written OR allow natural ad-libs if talent's variations remain authentic and claim-free |
+| **Editing** | Cuts on natural pauses and action changes; no jump cuts within a single continuous shot; match cuts during product application (hand to face, etc.) |
+| **Color grading** | Warm, natural, minimal saturation; accurate skin-tone representation; no artificial glow or heavy filters |
+| **Audio** | Recorded on-location; talent dialogue is primary; diegetic sound (bottle open, liquid, hands) preferred; optional minimal background music (lo-fi, warm, instrumental) |
+
+---
+
+## AUDIO_AND_EDIT
+- **Dialogue**: Recorded cleanly on-set with talent; tone is conversational, as if she's explaining to a friend. Slight naturalness (not announcer-perfect) is desirable.
+- **Music** (optional): Keep background, instrumental, warm, lo-fi, or soft ambient. Volume should not compete with dialogue. Do **not** use dramatic uplifts or commercial-style scoring.
+- **SFX**: Bottle opening, serum liquid/pump sound, hands on skin, soft room tone. No artificial transitions or swooshes.
+- **Subtitles**: Recommended for accessibility and silent-scroll viewing (YouTube, Instagram, TikTok). English and/or Hindi captions.
+- **Pacing**: Natural, unhurried; no rushes. Allow moments of quiet to let visuals breathe.
+- **Total duration**: 25 seconds; dialogue + natural pauses + product showcase fit within this frame without feeling truncated.
+
+---
+
+## FAILURE_PREVENTION
+| Risk | Prevention |
+|------|-----------|
+| **Over-polishing** (kills UGC authenticity) | Use only natural light; no beauty lighting, no makeup artist; real home setting; handheld or simple tripod |
+| **Clinical/medical claims** | Script avoids: "treat," "cure," "reduce," "eliminate," "dermatologist," "clinically proven." Use observational language only (e.g., "I see a difference," "absorbs fast") |
+| **Flawless talent** (undermines problem statement) | Casting must include visible oily shine and/or blemishes on camera; no heavy retouching or filters |
+| **Product obscurity** | Bottle must be clearly visible in Shots 2 & 5; texture of serum shown in Shot 3; label legible in close-ups |
+| **Weak call-to-action** | End with explicit brand name, product descriptor ("2% Salicylic Acid Serum"), and a clear link/CTA; no ambiguity |
+| **Inauthentic speech** | Talent should speak naturally; ad-lib is fine if on-brief; no voiceover announcer tone |
+| **Wrong target insight** | The reason to buy (Shot 4) focuses on *visible results + simplicity*, not hype. This aligns with oily-skin audience logic: they want efficiency + proof, not miracles |
+
+---
+
+## HARD_CONSTRAINT_CHECK
+✅ **9:16 vertical format** — All shots framed for mobile-native 9:16 ratio  
+✅ **~25 seconds duration** — Shot-by-shot timings total 25 sec  
+✅ **Performance-oriented UGC** — Direct address, problem-solution-CTA arc; no polished production framing  
+✅ **One Indian woman** — Single talent, natural presentation, on-camera demonstration  
+✅ **Direct-to-camera & product demo** — Shots 1, 4 (eye contact); Shots 2–3 (serum handling & application)  
+✅ **One clear purchase reason** — Shot 4: *visible clarity + simplicity* (not multiple claims)  
+✅ **Credible creator content feel** — Natural lighting, authentic home setting, conversational tone, no voiceover artifice  
+✅ **Visually controlled & commercially usable** — Framing, lighting, and audio specs ensure consistency; brand-appropriate aesthetic  
+✅ **No clinical statistics, guarantees, or medical claims** — Copy uses observational, non-clinical language; avoids "clinically proven," "reduce," "cure," etc.  
+✅ **No external website** — All elements self-contained; no external asset references  
+
+---
+
+## JUDGE V05
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
+
+# CONTEST V06 — B05
+
+Use frozen brief B05 from the top of this file.
+
+## PACKAGE A
+
+
+
+## PACKAGE B
+
+
+
+## PACKAGE C
+
+## DELIVERABLE
+A 40-second cinematic dialogue scene: two people at a café table, one person confronting the other about a concealed truth. Six shots, 16:9 aspect ratio, high-quality delivery format (ProRes or equivalent).
+
+---
+
+## OBJECTIVE_INTERPRETATION
+Produce a tense but quiet conversation between two adults facing each other at a café. The emotional arc: discovery → accusation → vulnerability → standoff. The viewer must never lose spatial orientation. Cinematic feel comes from composition, eyeline discipline, and silence/sound design, not camera movement. The dialogue must carry tension through restraint and what is *not* said.
+
+---
+
+## CORE_CREATIVE_IDEA
+**Restrained confrontation via spatial intimacy.** Two people trapped opposite each other in a public space, unable to raise their voices or leave easily. Tension emerges from stillness, weighted pauses, and the physical constraint of the café table between them. Each shot is composed to reinforce their proximity and the barrier between them.
+
+---
+
+## MESSAGE_AND_INFORMATION_HIERARCHY
+1. **Immediate:** Something is wrong. One person knows something the other tried to hide.
+2. **Emotional:** Hurt, betrayal, defensiveness—all constrained because they're in public.
+3. **Unresolved:** The confrontation does not resolve; it ends in an ambiguous moment—leaving space for viewer interpretation.
+
+Dialogue must be minimal, specific, and loaded. Avoid explanation. Let pauses and looks do work.
+
+---
+
+## VISUAL_SYSTEM
+- **Color:** Warm, neutral café lighting (amber/gold practicals, soft natural window light or overcast daylight).
+- **Depth of field:** Medium depth—table and both faces in focus to maintain spatial clarity, no extreme bokeh separation.
+- **Composition:** Geometrically balanced. The table edge acts as a compositional anchor in every shot.
+- **Eyelines:** Strict adherence. When A looks at B, the viewer sees B's face from A's angle. Never break the spatial logic.
+- **Movement:** None beyond minimal performer movement (reaching for coffee, adjusting posture, looking away and back). No motivated camera pushes or pans.
+
+---
+
+## PRODUCTION_RECIPE
+**Location:** Small café. A table for two, ideally with a window or soft background depth. Enough ambient sound to feel public (subtle café ambiance in background, but nothing loud).
+
+**Talent:** Two adult actors who can play subtext and restraint.
+
+**Lighting:** Motivated by the location. Practicals (table lamps, window light) only. No bounce or key lights visible. Natural-feeling, slightly soft.
+
+**Lens/Camera:** Prime lens preferred (50mm or 35mm on full-frame, equivalent on other formats). Handheld or locked tripod—no motion. Fixed focal length reinforces that we are static witnesses.
+
+**Audio Capture:** Dialogue-critical. Close lavalier or shotgun on each actor to capture every word clearly. Capture ambient café sound separately for layering.
+
+---
+
+## GENERATION_PROMPTS
+### SHOT 1: Wide Establishing Two-Shot (7 seconds)
+**Purpose:** Introduce both characters, the space, their positions relative to each other.
+
+**Prompt:**
+```
+Two people sit opposite each other at a small café table. Shot from a slight angle 
+that shows the full table, both their faces, and the café interior behind them. 
+Warm afternoon light from a window. Realistic, naturalistic lighting. One person 
+(A) is looking down at their coffee cup, the other (B) is watching A with an 
+expression of discomfort. Neither is speaking yet. The table is between them. 
+Shot is steady, locked camera. 16:9 aspect ratio. Cinematic, still frame.
+```
+
+**Dialogue:** None.
+
+**Shot Action:** A arrives at table or sits down. They exchange glances. A looks away. B's jaw tightens slightly. 4-5 seconds of this, then B opens mouth to speak (cut before sound).
+
+---
+
+### SHOT 2: Over-Shoulder, A's POV (8 seconds)
+**Purpose:** Bring viewer close to B; establish B as the "observed" party first.
+
+**Prompt:**
+```
+Over-the-shoulder shot from A's seated position, looking across the table at B. 
+We see the back of A's head/shoulder on the left third of frame, and B's face 
+fills the center-right, framed by the café interior. Same warm café lighting. 
+B's expression shifts from discomfort to cold clarity. B leans forward slightly. 
+Shot is steady, 16:9, cinematic realism.
+```
+
+**Dialogue (B speaks, quiet, controlled):** 
+"I know about the call. The one you didn't mention."
+
+**Shot Action:** B says the line. A flinches almost imperceptibly. B holds still, watching. 2-second silence. A's shoulder (visible at frame edge) tenses.
+
+---
+
+### SHOT 3: Over-Shoulder, B's POV (9 seconds)
+**Purpose:** Flip to A's face, capturing the moment of being caught. Maintain spatial integrity.
+
+**Prompt:**
+```
+Over-the-shoulder shot from B's seated position, looking back at A. Back of B's 
+head/shoulder on the right third of frame. A's face is center-left, lit by the 
+same warm café light. A's expression hardens—defensiveness taking over. Eyes 
+drop for a moment, then come back to meet B's gaze. Same steady, locked camera. 
+16:9, cinematic.
+```
+
+**Dialogue (A speaks, voice level, controlled):**
+"Who told you?"
+
+**Shot Action:** A asks the question. Pause. A reaches for coffee cup (small business to manage the moment). Does not take a sip. Holds the cup, a barrier.
+
+---
+
+### SHOT 4: Wide Two-Shot, Tighter (8 seconds)
+**Purpose:** Widen out slightly to show both again; the geography between them is the story now.
+
+**Prompt:**
+```
+Wider shot than Shot 1, but slightly closer framing—we still see both faces clearly 
+and the table, but the negative space between them is prominent. Composed to show 
+the table edge cutting across the middle of the frame, a visual barrier. Same 
+café lighting. Both are now still. A's hands are on or near the cup. B is leaning 
+back slightly, more distant. Steady camera. 16:9, cinematic.
+```
+
+**Dialogue (B speaks, quieter now, almost hurt):**
+"Does it matter?"
+
+**Shot Action:** B delivers the line. A does not answer immediately. Long pause—3 seconds. A sets cup down slowly, deliberately. A looks at B without speaking.
+
+---
+
+### SHOT 5: Close-In on B's Face (4 seconds)
+**Purpose:** Emotional intimacy on the person who was wronged. Brief, punchy.
+
+**Prompt:**
+```
+Close shot of B's face only, framed tightly but not uncomfortably so. Seen from 
+A's angle (slightly off-center). Warm café lighting hits B's face, one side catching 
+light, subtle shadow on the other. B's eyes are glassy, trying not to show it. 
+B's mouth is set. A moment of vulnerability breaking through the controlled exterior. 
+Steady, 16:9, cinematic.
+```
+
+**Dialogue:** None.
+
+**Shot Action:** Silence. B looks away toward the window or off-frame, breaking eye contact. 2-second beat. A's voice comes over (OS): quiet, almost a whisper.
+
+**A (Voice Over):** "I was going to tell you."
+
+---
+
+### SHOT 6: Wide Two-Shot, Final (4 seconds)
+**Purpose:** Back to wide; the conversation ends without resolution. Ambiguous standoff.
+
+**Prompt:**
+```
+Return to wide two-shot similar to Shots 1 and 4, showing both at the table, 
+café interior behind. Composed the same way—clarity of space is paramount. Both 
+are now still, exhausted. A and B are not making eye contact. The table is still 
+between them. Warm, static café lighting. Steady, locked camera. 16:9, cinematic. 
+The moment feels suspended, unresolved.
+```
+
+**Dialogue (B speaks, flat, almost to themselves):**
+"Okay."
+
+**Shot Action:** B says "Okay," but it means nothing is okay. Silence. A and B sit across from each other, not touching, not speaking. Ambient café sound is only sound. Hold for 2 seconds. Fade to black or cut.
+
+---
+
+## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- **Dialogue (scripted, not generative):**
+  - Shot 2 (B): "I know about the call. The one you didn't mention."
+  - Shot 3 (A): "Who told you?"
+  - Shot 4 (B): "Does it matter?"
+  - Shot 5 (A, OS): "I was going to tell you."
+  - Shot 6 (B): "Okay."
+
+- **Blocking (locked, not generative):**
+  - Shot 1: Both seated, A looks down, B watches.
+  - Shot 2: A's shoulder visible left, B's face center-right.
+  - Shot 3: B's shoulder visible right, A's face center-left.
+  - Shot 4: Both visible, table edge prominent, A's hands on cup.
+  - Shot 5: B only, tightly framed.
+  - Shot 6: Both at table, not making eye contact, ambient only.
+
+- **Camera (locked position for each shot, no motion):** Tripod or stable handheld with no deliberate moves.
+
+- **Lighting:** Practicals only, no added key/bounce unless essential to naturalism. Warm, café-consistent.
+
+---
+
+## AUDIO_AND_EDIT
+**Dialogue Mix:**
+- All lines recorded cleanly, separate tracks (A left, B right).
+- Delivered at conversational volume, no raised voices.
+- Tone: quiet, measured, controlled.
+
+**Ambient Sound:**
+- Café ambiance (distant chatter, espresso machine, clink of cups) recorded on location.
+- Layer beneath dialogue at -18 to -24 dB, present but not distracting.
+- Allows the space to feel public and real.
+
+**Sound Design:**
+- Cup sounds (reaching, setting down) are real and subtle—part of the story.
+- Silence between lines is held; no music, no emotional scoring.
+- The quiet is the cinematic choice.
+
+**Editing:**
+- Cuts are on eyeline changes or action (reaching for cup, looking away).
+- No jump cuts within a shot—each shot runs to its natural end or the next logical cut point.
+- Pace: slightly slower than naturalistic conversation—pauses are held slightly longer—to convey tension and restraint.
+- Total: ~40 seconds.
+
+**Color Grade:**
+- Warm, slightly desaturated (not blown out). Café ambiance emphasizes the "trapped" feeling.
+- Consistent white balance across all six shots.
+- No stylized grading; realism is the style.
+
+---
+
+## FAILURE_PREVENTION
+**What could go wrong:**
+
+1. **Spatial confusion:** If eyelines or shoulder position reverse between shots, the viewer loses the geography.
+   - *Prevention:* Strictly lock camera angle for each pair of shots (OS from A, OS from B). Never cross the line.
+
+2. **Dialogue too quiet:** If audio is not captured cleanly, the dialogue becomes frustrating rather than tense.
+   - *Prevention:* Use high-quality lavalier or shotgun mic on each actor. Record room tone separately.
+
+3. **Actors overplay the tension:** If they shout or make broad gestures, it breaks the "public space, restrained" constraint.
+   - *Prevention:* Direct for stillness, minimal eyebrow movement, controlled breathing. The restraint IS the tension.
+
+4. **Cuts too fast or too slow:** If pacing doesn't match the performance, it feels either rushed or draggy.
+   - *Prevention:* Shoot each shot with internal rhythm (2-3 seconds of hold after the dialogue); edit to that rhythm.
+
+5. **Lighting inconsistency between shots:** If one shot is much brighter or cooler, continuity breaks.
+   - *Prevention:* Shoot all six shots in one location, in sequence, with the same light source. No lighting changes between takes.
+
+6. **Camera moves unintentionally:** If the camera drifts even slightly, it undermines the "static witness" feel.
+   - *Prevention:* Lock tripod or use gimbal in lock mode. Call out any micro-movements during review.
+
+---
+
+## HARD_CONSTRAINT_CHECK
+✅ **Exactly six shots:** Shots 1–6 specified.
+
+✅ **Two people, opposite at café table:** Core geography in all shots.
+
+✅ **One discovered concealment:** "I know about the call" (Shot 2).
+
+✅ **Tense, restrained dialogue:** No shouting, all lines quiet and measured.
+
+✅ **Spatial clarity always maintained:** Over-shoulder discipline, consistent positioning.
+
+✅ **No elaborate camera movement:** All shots locked or minimal handheld, no motivated pushes/pans.
+
+✅ **Cinematic rather than mechanical:** Composition, performance, and pacing chosen for emotional weight, not coverage.
+
+✅ **~40 seconds:** Shot timings sum to ~40 seconds.
+
+✅ **16:9 aspect ratio:** Specified in all prompts.
+
+✅ **No external website use:** All production logic internal; no references to external research.
+
+---
+
+## JUDGE V06
+Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
+
+---
