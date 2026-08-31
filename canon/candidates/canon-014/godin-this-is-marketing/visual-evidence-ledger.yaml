@@ -1,0 +1,129 @@
+# REP-07 — visual-evidence ledger for Godin, "This Is Marketing".
+#
+# The visual pass RAN and COMPLETED. The runbook predicted a cheap null-visual pass; the actual
+# finding is materially different and is recorded as found: the EPUB contains SIXTEEN in-body
+# figures (simple diagrams, quadrant grids and charts), several of which the prose points at
+# directly ("the following graphic", "what you'll see will look like this"). Every one of them
+# illustrates a proposition the adjacent prose states in full, and no extracted claim depends on
+# any figure — but this is not a desai-style imageless null and is not recorded as one.
+
+source_id: godin-this-is-marketing
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: illustrative_only
+
+hash_on_arrival:
+  file: "/Users/vaibhavchawla/Downloads/Books/This Is Marketing.epub"
+  bytes: 2377250
+  sha256_recomputed: c8f464e184f1903923462c5a0820f031d83d87f9ba9fb7f54ce67146e7303c1b
+  sha256_recorded: c8f464e184f1903923462c5a0820f031d83d87f9ba9fb7f54ce67146e7303c1b
+  match: true
+  consequence: >
+    The on-arrival SHA-256 matches the hash recorded in PROVENANCE.md §3, so this inspection
+    provably looked at the same copy the extraction read. The runbook's 5-locator sample is
+    required only where the hash does not match or none is recorded; neither holds here.
+
+inspection:
+  method: >
+    The EPUB was unpacked outside the repository and all 22 image assets enumerated and measured.
+    All 22 were opened and viewed. Every img reference in every spine document was located and the
+    surrounding prose of every in-body figure was read. The whole text was searched for
+    figure-pointing language and caption classes ("this graph", "the following graphic",
+    "look like this", class x12-Caption) and every hit was resolved to an opened image.
+  images_in_archive: 22
+  figures: 16
+  images_opened: 22
+  figure_inventory:
+    - {file: "OEBPS/image/art-01.jpg", size: 219842, opened: true, identified_as: "concept-map sketch of the book's vocabulary (smallest viable audience, trust & permission, status, tension, etc.), Author's Note, captioned in text '[a sketch to show you what's to come]'"}
+    - {file: "OEBPS/image/art-02.jpg", size: 65725, opened: true, identified_as: "blank XY axes, Ch.5; the prose states the method in full ('draw a simple XY grid… pick two axes')"}
+    - {file: "OEBPS/image/art-03.jpg", size: 112782, opened: true, identified_as: "worked positioning map, axes security x speed of delivery, plotting armored truck / FedEx / UPS / insured mail / regular mail / bike messenger, Ch.5; all six alternatives and both axes are named in the prose"}
+    - {file: "OEBPS/image/art-04.jpg", size: 128399, opened: true, identified_as: "Metcalfe's-law diagram, value (curved) vs cost (straight) against # nodes, Ch.8; the prose describes both lines explicitly"}
+    - {file: "OEBPS/image/art-05.jpg", size: 101318, opened: true, identified_as: "status quadrant: self status x perceived status, quadrants a-d, Ch.11; the prose walks each quadrant ('the top-left quadrant (d)…')"}
+    - {file: "OEBPS/image/art-06.jpg", size: 109391, opened: true, identified_as: "status-moves quadrant: enable others / enable self-demean others x seek to stay high / low, quadrants 1-4, Ch.11; the prose introduces and reads it"}
+    - {file: "OEBPS/image/art-07.jpg", size: 510029, opened: true, identified_as: "the 'Helvetica clip sheet': a grid of ~130 near-interchangeable black-and-white corporate logos (3M, BASF, Intel, FENDI, …), Ch.13. Borderline demonstration-performs-the-claim: 'a quick glance at your Helvetica clip sheet shows that most brands couldn't be bothered' - the looking is the evidence. The extraction REFUSED the logo advice as period-bound business detail (EXTRACTION-NOTES §7), so nothing extracted rests on it"}
+    - {file: "OEBPS/image/art-08.jpg", size: 167121, opened: true, identified_as: "normal distribution with standard-deviation bands and percentages (34.1/13.6/2.1/0.1), Ch.14; the prose states the percentages and their reading"}
+    - {file: "OEBPS/image/art-09.jpg", size: 126550, opened: true, identified_as: "customer gross-margin bar chart with dashed per-customer marketing-cost line, Ch.14; the prose states the reading ('only eight of the customers on this graph actually contributed a profit')"}
+    - {file: "OEBPS/image/art-10.jpg", size: 224731, opened: true, identified_as: "long-tail chart, average plays per month on Rhapsody vs titles ranked by popularity, Walmart-overlap annotation, Ch.19, credited in text '[credit: Chris Anderson]'"}
+    - {file: "OEBPS/image/ART-11A.jpg", size: 126789, opened: true, identified_as: "'Short head vs. long tail' website-traffic bar chart with annotation arrow and circle, Ch.19, captioned 'Traffic to the most popular websites'"}
+    - {file: "OEBPS/image/art-12.jpg", size: 99782, opened: true, identified_as: "photograph of a print-on-demand t-shirt ('Legendary. Since. April 6th, 1988.'), Ch.19's long-tail t-shirt example; the prose describes the shirt class and its economics"}
+    - {file: "OEBPS/image/art-13.jpg", size: 197004, opened: true, identified_as: "Gartner Hype Cycle curve with its five stage labels, Ch.19, captioned 'The Gartner Hype Cycle'; the framework is credited to Gartner in text and was refused as another author's framework in extraction"}
+    - {file: "OEBPS/image/art-14.jpg", size: 126672, opened: true, identified_as: "Facebook users-per-year bar chart 2005-2011, Ch.19; the prose states the reading ('Sometime around 2008, a whole new bunch of everyone started using Facebook')"}
+    - {file: "OEBPS/image/art-15A.jpg", size: 211486, opened: true, identified_as: "LEED-certified buildings per year bar chart 2004-2016 with USGBC seal, Ch.19; the prose states the reading (two buildings a day at launch, the leap before the housing crisis)"}
+    - {file: "OEBPS/image/page_iii_3.jpg", size: 105989, opened: true, identified_as: "title page (THIS IS MARKETING / Seth Godin / Portfolio-Penguin)"}
+  furniture_inventory:
+    - {file: "OEBPS/image/page_246.png", size: 1046, opened: true, identified_as: "small grey chevron ornament used at chapter openings and in the contents page (23 references in 05_CONTENTS alone)"}
+    - {file: "OEBPS/image/page_246_2.png", size: 1084, opened: true, identified_as: "mirrored grey chevron ornament, paired with page_246.png at chapter heads"}
+    - {file: "OEBPS/image/cover.jpg", size: 299168, opened: true, identified_as: "publisher cover, not evidence"}
+    - {file: "OEBPS/image/portfolio_penguin_logo.jpg", size: 31964, opened: true, identified_as: "Portfolio/Penguin colophon on the copyright page"}
+    - {file: "OEBPS/image/penguin-logo-for-copyright.jpg", size: 30732, opened: true, identified_as: "Penguin Random House logo on the copyright page"}
+    - {file: "OEBPS/image/next-reads_logo.jpg", size: 202410, opened: true, identified_as: "publisher 'next reads' promotional logo in back matter (37_next-reads.xhtml)"}
+
+observed_loss_patterns:
+
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB, no authored page numbers. Every locator is chapter number and title plus
+      Godin's own bold section heading (PROVENANCE.md §2, Case 3), which is a genuinely fine
+      locator because his headings occur every few hundred words; page_start/page_end are null on
+      every object; spine numbers are a secondary aid only; no page number was invented. The image
+      filenames ('page_246.png', 'page_iii_3.jpg') echo print-edition folios but are asset names,
+      not an addressable page map.
+
+  - pattern: in_figure_text_absent
+    affects: "the internal text of all 16 figures (axis labels, quadrant labels, percentages, logo names)"
+    detectability: detected_by_independent_check
+    recoverability: recovered_in_this_copy
+    evidence: >
+      Every figure is a raster image; its internal text (e.g. 'security' / 'speed of delivery',
+      'High perceived status', '34.1%', the ~130 logo names) exists only inside the JPEGs and is
+      absent from the text layer the extraction read. This pass opened all 16 and confirms that
+      for every figure adjacent to an extracted claim, the prose states the semantic binding the
+      figure carries - the quadrant letters are read out ('the top-left quadrant (d)'), the chart
+      readings are stated ('only eight… contributed a profit'), the axes are named. No extracted
+      object cites an in-figure value that the prose does not also state.
+
+  - pattern: no_loss_detected
+    affects: "the argument carried by the extraction"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      All 16 figures illustrate stated propositions; the ones the prose points at hardest
+      (art-09, art-10, art-14) are narrated line by line. The material where a figure comes
+      closest to carrying the claim alone - the art-07 logo sheet, the Gartner Hype Cycle, the
+      long-tail t-shirt - was REFUSED by the extraction on independent grounds (period-bound
+      detail, another author's framework; EXTRACTION-NOTES §7), so a text-only representation
+      loses nothing any frozen object needs. The extraction's empty figure_refs on all 29 objects
+      is confirmed correct as a statement of dependence.
+
+demonstrations:
+  - >
+    art-07 (the Helvetica logo clip sheet) is the one image in this book whose claim is partly
+    performed by the reader's own act of looking - ~130 wordmarks that read as one logo. It is not
+    recorded as a demonstration_performs_the_claim loss because nothing extracted depends on it:
+    the logo material was refused in extraction. Recorded here so a later reader of the refusal
+    can find the specimen.
+visual_only_observations:
+  - >
+    PROVENANCE.md §2 states that where a diagram carries meaning the text alone does not, this is
+    'recorded in EXTRACTION-NOTES.md under figure_semantic_binding_lost'. The committed
+    EXTRACTION-NOTES.md contains no such section or string. This pass supplies the inspection that
+    the promised record would have pointed at, and finds no figure whose semantic binding an
+    extracted claim needs and lacks: the discrepancy is a documentation gap in the candidate's own
+    prose, not a knowledge defect, and it is recorded here rather than papered over.
+
+extraction_constraint_applied: >
+  Checked programmatically against the frozen source-knowledge.yaml: no object carries
+  source_support: visual or text_and_visual (all 29 are source_support: text), and
+  provenance.inspected.figures is empty on every object. No claim in the frozen record depends on
+  an image, and this pass confirmed by opening every image that none should have.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  The inspection changed no frozen claim. It corrected the runbook's expectation of a null-visual
+  book: This Is Marketing carries sixteen real figures, and the honest role for them is
+  illustrative_only - the prose states everything the extraction uses, and the figures restate it.
+  It also closed, by inspection, the figure_semantic_binding_lost question that PROVENANCE.md
+  raised and EXTRACTION-NOTES.md never recorded.
