@@ -1,0 +1,2471 @@
+eval_set_version: canon-015-offline-retrieval-eval-v0.1
+what_this_is: 'Real retrieval behaviour recorded during EVAL-037, extracted for offline comparison against
+  the CANON-015 retriever. It is a set of QUESTIONS models actually asked and a record of WHAT CAME BACK.
+  It is not a relevance benchmark: no item here is labelled relevant or irrelevant, because nobody has
+  judged them. Relevance needs the human rubric in HUMAN-REVIEW-RUBRIC.md.'
+provenance:
+  generated_by: canon/retrieval/evaluation/build_eval_set.py
+  sonnet_controlled_canon:
+    ref: origin/work/eval-037-sonnet-controlled-canon
+    commit: b4a2569cfbf60b3997697f51476e91953ecc3a50
+    lane: sonnet-controlled-canon
+  gemma_controlled_canon:
+    ref: origin/work/eval-037-gemma-controlled-canon
+    commit: 7bda868626afe087c22fba1c65557c166cd8e6b5
+    lane: gemma-controlled-canon
+  gemma_required_canon:
+    ref: origin/work/eval-037-gemma-required-canon
+    commit: 7af6de0db121514b6e6c11e4f3b22e929fdfc34f
+    lane: gemma-required-canon
+  sonnet_full_canon_repair:
+    ref: origin/work/eval-037-sonnet-full-canon-repair
+    commit: 0f8568e1048b205273295efe302143fd6658c9f7
+    lane: sonnet-full-canon-repair-001
+  canon_fingerprints_used_by_eval_037:
+    full_knowledge: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+    qa: 1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd
+  note: 'EVAL-037 searched the FULL status-aware corpus: accepted Canon, HOLD candidates and the Q&A banks.
+    CANON-015 retrieves accepted Canon only. The accepted bytes are identical in both — the accepted-Canon
+    fingerprint on main recomputes to the value the corpus index records — so a size and composition comparison
+    is fair, and the difference in what is REACHABLE is itself one of the findings.'
+briefs:
+- brief_id: B01
+  title: RentOK vertical video ad (Indian hostel/PG software)
+  text: 'I am RentOK. Create a commercially strong vertical video ad for owners who run hostels and PGs
+    in India. Managing rent collection, tenant records, KYC, move-outs, complaints and compliance through
+    WhatsApp, notebooks or scattered spreadsheets creates leakages and missed follow-ups. Make that operational
+    chaos painfully recognisable and then position RentOK as the clean system for managing the property.
+    It should feel contemporary, credible and Indian, not like a generic Silicon Valley SaaS explainer.
+    You may use only RentOK''s official website, https://rentok.com, for company, product and brand information.
+    Target duration: about 30 seconds. Aspect ratio: 9:16.'
+  sha256_of_committed_file: 944a0a7edd62bcc3f8dcab670a0aed3fffc06bb29e8df1beb6b103e014023cff
+- brief_id: B02
+  title: aight festive promotional poster (media-generation API pricing)
+  text: 'I am aight. Create one premium promotional poster for our media-generation API for Indian businesses
+    during the festive season. The key commercial proposition is: image generation at ₹9 and video generation
+    at ₹99. Both prices must be immediately understandable, but the design must still feel like a serious
+    AI infrastructure/product company rather than a discount retail flyer. Make typography and information
+    hierarchy do most of the work. You may use only aight''s official website, https://getaight.ai, for
+    product and brand information. Deliverable: one 4:5 poster.'
+  sha256_of_committed_file: 1974ed4998e88de52cf50cc79c94f64c5573959355cd2e0d0b4a64c686dff87a
+- brief_id: B03
+  title: mosambi sparkling drink premium advertising image
+  text: Create one premium 4:5 advertising image for a new Indian sparkling drink made from mosambi and
+    sparkling water. It is aimed at urban consumers aged roughly 22–35. The product should feel refreshing,
+    sophisticated and culturally contemporary while still retaining the familiarity of mosambi. Avoid
+    clichéd "Indian" visual shorthand and avoid making it look like a cheap soft drink. The product must
+    be the unmistakable hero. No celebrity and no external website.
+  sha256_of_committed_file: 896df798a0f91b8fbb3af461051248675d746e3a95b78bc0b62b95bba4123492
+- brief_id: B04
+  title: Indian D2C skincare UGC performance video
+  text: 'Create a 9:16 performance-oriented UGC video for a fictional Indian D2C skincare brand. The product
+    is a fragrance-free 2% salicylic-acid facial serum for adults with oily, blemish-prone skin. One believable
+    Indian woman should speak directly to camera, naturally demonstrate the product and communicate one
+    clear purchase reason. It should feel like credible creator content rather than a polished television
+    commercial, while remaining visually controlled and commercially usable. Do not invent clinical statistics,
+    guarantees or medical claims. Target duration: about 25 seconds. No external website.'
+  sha256_of_committed_file: 0d2b8a86fbc34551c2e10457beb104fd14160f136d759ee3d3ecee01456115ce
+- brief_id: B05
+  title: two-person café dialogue scene, six shots
+  text: 'Create a short cinematic scene between two people sitting opposite each other at a café table.
+    One person has discovered that the other concealed something important. The dialogue is tense but
+    restrained; nobody shouts. The viewer must always understand where each person is in relation to the
+    other. Use exactly six shots. Avoid elaborate camera movement. The scene should feel cinematic rather
+    than mechanically covered. Target final duration: about 40 seconds. Aspect ratio: 16:9. No external
+    website.'
+  sha256_of_committed_file: a5450117410e01e6eb8889977e463e6f697f0e6fb42f524c70784a254cd510c6
+- brief_id: B06
+  title: Aster Meridian 38 watch e-commerce hero image
+  text: 'Create one premium 4:5 e-commerce hero image for a fictional mechanical watch called the Aster
+    Meridian 38. Product facts are fixed: 38 mm brushed stainless-steel case, deep blue sunburst dial,
+    silver baton hour markers, silver dauphine hands, no date window, domed sapphire crystal and a dark
+    brown leather strap. The image must communicate craftsmanship, dial detail, material quality and wrist-watch
+    desirability while remaining commercially useful on a premium product page. Product geometry and details
+    must not be casually altered. Avoid generic floating-product CGI unless the creative idea genuinely
+    requires it. No external website.'
+  sha256_of_committed_file: 27391665eb56d62f9788329ce994dabcb2a8f152073843594caf6bef74ab8ff4
+sonnet_controlled_trials:
+- trial_id: E037SCC-sonnet-B01-R1
+  brief_id: B01
+  repetition: 1
+  status: complete
+  declared_knowledge_needs:
+  - How to make "operational chaos" (manual/WhatsApp/notebook workflows) visually recognisable and painful
+    within a fast-paced short ad, so the problem lands before the product appears.
+  - How to structure information hierarchy and pacing in a ~30s vertical problem→solution product ad so
+    the CTA and product identity land clearly.
+  - How to make Indian small-business/hostel-owner context feel authentic and credible on screen (casting,
+    environment, product design cues) rather than generic global SaaS aesthetic.
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: before after pain point chaos visual storytelling product ad
+    limit_requested: 8
+    result_bytes: 26135
+    results_returned: 8
+    total_matches_in_corpus: 2269
+    returned_objects:
+    - item_id: sk_abcd_0025
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_cat_c003_0011
+      kind: knowledge
+      source_dir: catmull-creativity-inc-ch5
+      source_status: ACCEPTED
+    - item_id: sk_abcd_0018
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_nnn_0010
+      kind: knowledge
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: bnd_abcd_001
+      kind: binding
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0011
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_ogx_0013
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sk_abcd_0006
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+  - query: 30 second vertical product ad information hierarchy pacing problem solution
+    limit_requested: 8
+    result_bytes: 20398
+    results_returned: 8
+    total_matches_in_corpus: 2820
+    returned_objects:
+    - item_id: qa_abcd_0018
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0023
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0006
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: vis_sam_structure_from_content
+      kind: visual_evidence
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: t_rbwl_0037
+      kind: ontology_term
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_abcd_0010
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: t_whip_0011
+      kind: ontology_term
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_ogx_0055
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+  - query: authentic Indian small business credibility casting production design
+    limit_requested: 8
+    result_bytes: 24558
+    results_returned: 8
+    total_matches_in_corpus: 1720
+    returned_objects:
+    - item_id: sk_rbwl_0020
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: sk_nnn_0050
+      kind: knowledge
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: qa_dmpl_0015
+      kind: qa
+      source_dir: desai-mother-pious-lady
+      source_status: HOLD
+    - item_id: scs_nnn_004
+      kind: concept_system
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: qa_ogx_0021
+      kind: qa
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: t_nnn_0053
+      kind: ontology_term
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: bnd_nnn_0007
+      kind: binding
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: sk_dmpl_0044
+      kind: knowledge
+      source_dir: desai-mother-pious-lady
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B01-R2
+  brief_id: B01
+  repetition: 2
+  status: complete
+  declared_knowledge_needs: []
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: before and after contrast chaos to clean system short ad
+    limit_requested: 8
+    result_bytes: 19089
+    results_returned: 8
+    total_matches_in_corpus: 4444
+    returned_objects:
+    - item_id: sk_logo_0008
+      kind: knowledge
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: bnd_abcd_005
+      kind: binding
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0025
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_nnn_0013
+      kind: knowledge
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: bnd_logo_013
+      kind: binding
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: t_ctg_0015
+      kind: ontology_term
+      source_dir: berger-contagious
+      source_status: HOLD
+    - item_id: sk_abcd_0009
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: t_abcd_0009
+      kind: ontology_term
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+  - query: authentic Indian SME visual credibility not generic SaaS explainer
+    limit_requested: 8
+    result_bytes: 25792
+    results_returned: 8
+    total_matches_in_corpus: 3367
+    returned_objects:
+    - item_id: sk_rbwl_0060
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: sk_r22_0037
+      kind: knowledge
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: sk_r22_0019
+      kind: knowledge
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: qa_r22_0015
+      kind: qa
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: scs_nnn_004
+      kind: concept_system
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: t_r22_0012
+      kind: ontology_term
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: sk_sb_c003_0007
+      kind: knowledge
+      source_dir: miller-storybrand-sb7
+      source_status: ACCEPTED
+    - item_id: cc_claim_credibility
+      kind: ontology_concept
+      source_dir: hopkins-my-life-in-advertising
+      source_status: HOLD
+  - query: 30 second vertical ad structure hook pacing shot order product
+    limit_requested: 8
+    result_bytes: 21454
+    results_returned: 8
+    total_matches_in_corpus: 2934
+    returned_objects:
+    - item_id: qa_abcd_0010
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0018
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0016
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0023
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0006
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_sgb_0035
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: t_hop_sa_0014
+      kind: ontology_term
+      source_dir: hopkins-scientific-advertising-ch1-7
+      source_status: ACCEPTED
+    - item_id: sk_abcd_0007
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B01-R3
+  brief_id: B01
+  repetition: 3
+  status: complete
+  declared_knowledge_needs: []
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: before and after chaos to order product ad contrast structure
+    limit_requested: 8
+    result_bytes: 30265
+    results_returned: 8
+    total_matches_in_corpus: 4468
+    returned_objects:
+    - item_id: sk_abcd_0025
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: scs_abcd_002
+      kind: concept_system
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: scs_disc_002
+      kind: concept_system
+      source_dir: connor-irizarry-discussing-design
+      source_status: HOLD
+    - item_id: qa_sgb_0026
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_abcd_0009
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: scs_wcag_002
+      kind: concept_system
+      source_dir: w3c-wcag22-text-legibility
+      source_status: HOLD
+    - item_id: qa_abcd_0011
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: scs_ogl_c003_001
+      kind: concept_system
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+  - query: Indian small business vernacular credible ad not generic SaaS explainer
+    limit_requested: 8
+    result_bytes: 31498
+    results_returned: 8
+    total_matches_in_corpus: 3372
+    returned_objects:
+    - item_id: sk_sgb_0027
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_nnn_0019
+      kind: knowledge
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: sk_ogx_0009
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sk_rbwl_0020
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_god_0024
+      kind: qa
+      source_dir: godin-this-is-marketing
+      source_status: HOLD
+    - item_id: qa_sgb_0020
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_rbwl_0060
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: sk_abcd_0020
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+  - query: mobile vertical video first seconds hook sound off captions attention
+    limit_requested: 8
+    result_bytes: 20146
+    results_returned: 8
+    total_matches_in_corpus: 2863
+    returned_objects:
+    - item_id: qa_abcd_0016
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0005
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: bnd_hea_mts_0003
+      kind: binding
+      source_dir: heath-made-to-stick-introduction
+      source_status: ACCEPTED
+    - item_id: qa_abcd_0005
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: t_abcd_0002
+      kind: ontology_term
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0004
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0006
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0009
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B02-R1
+  brief_id: B02
+  repetition: 1
+  status: complete
+  declared_knowledge_needs: []
+  canon_search_calls: 2
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: typography-led information hierarchy poster pricing clarity premium
+    limit_requested: 8
+    result_bytes: 24768
+    results_returned: 8
+    total_matches_in_corpus: 668
+    returned_objects:
+    - item_id: sk_sam_c003_0023
+      kind: knowledge
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: sk_sam_c003_0003
+      kind: knowledge
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: qa_sgb_0024
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_sgb_0031
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: vis_sam_structure_from_content
+      kind: visual_evidence
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: sk_sgb_0032
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: scs_dpci_001
+      kind: concept_system
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: t_dpci_0009
+      kind: ontology_term
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+  - query: festive premium tech brand poster design avoiding discount flyer look
+    limit_requested: 8
+    result_bytes: 27671
+    results_returned: 8
+    total_matches_in_corpus: 1626
+    returned_objects:
+    - item_id: sk_rbwl_0080
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_rbwl_0008
+      kind: qa
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_whip_0053
+      kind: qa
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: t_rbwl_0007
+      kind: ontology_term
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: sk_whip_0050
+      kind: knowledge
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: qa_logo_0031
+      kind: qa
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: sk_sgb_0027
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_whip_0049
+      kind: knowledge
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B02-R2
+  brief_id: B02
+  repetition: 2
+  status: complete
+  declared_knowledge_needs: []
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: typography-led information hierarchy premium poster pricing clarity
+    limit_requested: 8
+    result_bytes: 24768
+    results_returned: 8
+    total_matches_in_corpus: 668
+    returned_objects:
+    - item_id: sk_sam_c003_0023
+      kind: knowledge
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: sk_sam_c003_0003
+      kind: knowledge
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: qa_sgb_0024
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_sgb_0031
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: vis_sam_structure_from_content
+      kind: visual_evidence
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: sk_sgb_0032
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: scs_dpci_001
+      kind: concept_system
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: t_dpci_0009
+      kind: ontology_term
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+  - query: premium tech brand poster design not discount retail feel
+    limit_requested: 8
+    result_bytes: 29133
+    results_returned: 8
+    total_matches_in_corpus: 3548
+    returned_objects:
+    - item_id: sk_rbwl_0080
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_rbwl_0008
+      kind: qa
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: t_rbwl_0007
+      kind: ontology_term
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: sk_ctg_0044
+      kind: knowledge
+      source_dir: berger-contagious
+      source_status: HOLD
+    - item_id: sk_ctg_0015
+      kind: knowledge
+      source_dir: berger-contagious
+      source_status: HOLD
+    - item_id: sk_sgb_0027
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_r22_0040
+      kind: knowledge
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: qa_god_0009
+      kind: qa
+      source_dir: godin-this-is-marketing
+      source_status: HOLD
+  - query: festive Indian design motifs premium restrained not garish
+    limit_requested: 8
+    result_bytes: 29214
+    results_returned: 8
+    total_matches_in_corpus: 3432
+    returned_objects:
+    - item_id: sk_rbwl_0080
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_dmpl_0017
+      kind: qa
+      source_dir: desai-mother-pious-lady
+      source_status: HOLD
+    - item_id: qa_rbwl_0008
+      kind: qa
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: sk_rbwl_0120
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_dpci_0006
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: qa_pex_0035
+      kind: qa
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+    - item_id: sk_dmpl_0012
+      kind: knowledge
+      source_dir: desai-mother-pious-lady
+      source_status: HOLD
+    - item_id: sk_dpci_0070
+      kind: knowledge
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+- trial_id: E037SCC-sonnet-B02-R3
+  brief_id: B02
+  repetition: 3
+  status: complete
+  declared_knowledge_needs: []
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: premium poster typography information hierarchy pricing dominant
+    limit_requested: 8
+    result_bytes: 25541
+    results_returned: 8
+    total_matches_in_corpus: 632
+    returned_objects:
+    - item_id: sk_sam_c003_0003
+      kind: knowledge
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: qa_sgb_0024
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: vis_sam_structure_from_content
+      kind: visual_evidence
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: sk_sgb_0032
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_sgb_0025
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: bnd_gote_c003_0008
+      kind: binding
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: scs_dpci_001
+      kind: concept_system
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: t_dpci_0009
+      kind: ontology_term
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+  - query: tech brand premium visual language avoid discount retail look
+    limit_requested: 8
+    result_bytes: 28605
+    results_returned: 8
+    total_matches_in_corpus: 1594
+    returned_objects:
+    - item_id: sk_rbwl_0080
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_rbwl_0008
+      kind: qa
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_whip_0053
+      kind: qa
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_sgb_0027
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_whip_0050
+      kind: knowledge
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_whip_0030
+      kind: knowledge
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: t_rbwl_0007
+      kind: ontology_term
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: sk_abcd_0017
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+  - query: festive cultural motif premium minimalism balance India
+    limit_requested: 8
+    result_bytes: 20762
+    results_returned: 8
+    total_matches_in_corpus: 352
+    returned_objects:
+    - item_id: qa_dpci_0006
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: sk_nnn_0014
+      kind: knowledge
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: qa_nnn_0006
+      kind: qa
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: t_rbwl_0002
+      kind: ontology_term
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: sk_rbwl_0080
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: t_dpci_0009
+      kind: ontology_term
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: qa_dpci_0022
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: qa_dpci_0012
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+- trial_id: E037SCC-sonnet-B03-R1
+  brief_id: B03
+  repetition: 1
+  status: complete
+  declared_knowledge_needs:
+  - How to light/style a beverage product shot (condensation, carbonation, glass/can) to read as premium
+    and refreshing rather than cheap soda
+  - How to art-direct "contemporary/premium Indian" visual identity while avoiding clichéd ethnic shorthand
+  - How to build product-hero still-life composition and hierarchy for premium advertising stills (framing,
+    negative space, background)
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: beverage product photography condensation carbonation premium refreshing
+    limit_requested: 8
+    result_bytes: 21313
+    results_returned: 8
+    total_matches_in_corpus: 1059
+    returned_objects:
+    - item_id: qa_sa8_0045
+      kind: qa
+      source_dir: hopkins-scientific-advertising-ch8-21
+      source_status: HOLD
+    - item_id: sk_sa8_0040
+      kind: knowledge
+      source_dir: hopkins-scientific-advertising-ch8-21
+      source_status: HOLD
+    - item_id: t_nnn_0005
+      kind: ontology_term
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: sk_sa8_0008
+      kind: knowledge
+      source_dir: hopkins-scientific-advertising-ch8-21
+      source_status: HOLD
+    - item_id: t_dpci_0003
+      kind: ontology_term
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: t_mla_0018
+      kind: ontology_term
+      source_dir: hopkins-my-life-in-advertising
+      source_status: HOLD
+    - item_id: qa_lsmx_0026
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_r22_0032
+      kind: knowledge
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+  - query: contemporary premium Indian visual identity avoid cliché
+    limit_requested: 8
+    result_bytes: 26920
+    results_returned: 8
+    total_matches_in_corpus: 997
+    returned_objects:
+    - item_id: qa_whip_0053
+      kind: qa
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_rbwl_0080
+      kind: knowledge
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+    - item_id: qa_whip_0032
+      kind: qa
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_whip_0050
+      kind: knowledge
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: qa_dpci_0012
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: sk_dpci_0130
+      kind: knowledge
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: t_snt_0009
+      kind: ontology_term
+      source_dir: sontag-on-photography
+      source_status: HOLD
+    - item_id: sk_whip_0030
+      kind: knowledge
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+  - query: product hero still life composition negative space advertising
+    limit_requested: 8
+    result_bytes: 15468
+    results_returned: 8
+    total_matches_in_corpus: 2163
+    returned_objects:
+    - item_id: sk_sam_c003_0004
+      kind: knowledge
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0014
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: bnd_sb_c003_0001
+      kind: binding
+      source_dir: miller-storybrand-sb7
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0011
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: qa_sgb_0045
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: t_ogl_c003_0018
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0007
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0015
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+- trial_id: E037SCC-sonnet-B03-R2
+  brief_id: B03
+  repetition: 2
+  status: complete
+  declared_knowledge_needs:
+  - How to photograph a carbonated beverage (condensation, bubbles, liquid clarity) so it reads as premium
+    rather than a cheap soft drink.
+  - How to compose a product-hero advertising image so hierarchy and focal dominance are unambiguous.
+  - How to visually signal "contemporary Indian" sophistication without relying on clichéd cultural shorthand.
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: premium beverage product photography condensation carbonation glass
+    limit_requested: 8
+    result_bytes: 21447
+    results_returned: 8
+    total_matches_in_corpus: 1094
+    returned_objects:
+    - item_id: qa_lsmx_0035
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0026
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0002
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0017
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0014
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0037
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0013
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0007
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+  - query: product hero composition advertising image visual hierarchy
+    limit_requested: 8
+    result_bytes: 19436
+    results_returned: 8
+    total_matches_in_corpus: 2319
+    returned_objects:
+    - item_id: scs_ogl_c003_003
+      kind: concept_system
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0014
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: bnd_sb_c003_0001
+      kind: binding
+      source_dir: miller-storybrand-sb7
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0011
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0015
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogx_0041
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: bnd_hea_mts_0005
+      kind: binding
+      source_dir: heath-made-to-stick-introduction
+      source_status: ACCEPTED
+    - item_id: qa_whip_0046
+      kind: qa
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+  - query: contemporary cultural identity avoid cliche visual design
+    limit_requested: 8
+    result_bytes: 24103
+    results_returned: 8
+    total_matches_in_corpus: 1387
+    returned_objects:
+    - item_id: t_logo_0040
+      kind: ontology_term
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: qa_dpci_0022
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: sk_logo_0034
+      kind: knowledge
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: qa_dpci_0012
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: sk_dpci_0130
+      kind: knowledge
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: qa_logo_0043
+      kind: qa
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: sk_logo_0029
+      kind: knowledge
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: sk_logo_0036
+      kind: knowledge
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B03-R3
+  brief_id: B03
+  repetition: 3
+  status: complete
+  declared_knowledge_needs:
+  - How to light and style a beverage product (can/bottle, condensation, splash/citrus) so it reads as
+    premium and refreshing rather than a cheap soft drink
+  - How to art-direct "contemporary/sophisticated" cultural identity in product photography without clichéd
+    ethnic visual shorthand
+  - How to compose a hero-product advertising image (single SKU, 4:5 vertical) for clear information hierarchy
+    and shelf/social impact
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: premium beverage product photography condensation splash citrus refreshment lighting
+    limit_requested: 8
+    result_bytes: 21936
+    results_returned: 8
+    total_matches_in_corpus: 1180
+    returned_objects:
+    - item_id: qa_snt_0011
+      kind: qa
+      source_dir: sontag-on-photography
+      source_status: HOLD
+    - item_id: sk_snt_0010
+      kind: knowledge
+      source_dir: sontag-on-photography
+      source_status: HOLD
+    - item_id: qa_lsmx_0035
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0027
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: t_nnn_0005
+      kind: ontology_term
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: qa_lsmx_0002
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_sa8_0008
+      kind: knowledge
+      source_dir: hopkins-scientific-advertising-ch8-21
+      source_status: HOLD
+    - item_id: t_dpci_0003
+      kind: ontology_term
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+  - query: avoiding cultural cliche contemporary visual identity product advertising
+    limit_requested: 8
+    result_bytes: 25531
+    results_returned: 8
+    total_matches_in_corpus: 2071
+    returned_objects:
+    - item_id: qa_logo_0031
+      kind: qa
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: qa_dpci_0012
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: sk_dpci_0130
+      kind: knowledge
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: sk_logo_0034
+      kind: knowledge
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: qa_dpci_0022
+      kind: qa
+      source_dir: dwyer-patel-cinema-india
+      source_status: ACCEPTED
+    - item_id: sk_logo_0036
+      kind: knowledge
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: sk_logo_0004
+      kind: knowledge
+      source_dir: airey-logo-design-love
+      source_status: HOLD
+    - item_id: qa_jgb_0015
+      kind: qa
+      source_dir: jain-gods-in-the-bazaar
+      source_status: ACCEPTED
+  - query: hero product composition information hierarchy vertical advertising image
+    limit_requested: 8
+    result_bytes: 17722
+    results_returned: 8
+    total_matches_in_corpus: 2231
+    returned_objects:
+    - item_id: vis_sam_structure_from_content
+      kind: visual_evidence
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: scs_ogl_c003_003
+      kind: concept_system
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0014
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0011
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0015
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogx_0035
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: t_ogl_c003_0018
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0007
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+- trial_id: E037SCC-sonnet-B04-R1
+  brief_id: B04
+  repetition: 1
+  status: complete
+  declared_knowledge_needs:
+  - How to structure credible direct-to-camera creator/UGC footage (framing, delivery, authenticity cues)
+    vs polished commercial look
+  - How to structure a short-form (≈25s) performance/UGC ad hook and message hierarchy that drives purchase
+    without overclaiming
+  - How to shoot believable skincare product demonstration/application close-ups (texture, application,
+    packaging handling)
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: credible UGC direct to camera creator authenticity framing
+    limit_requested: 8
+    result_bytes: 23818
+    results_returned: 8
+    total_matches_in_corpus: 3865
+    returned_objects:
+    - item_id: sk_ogx_0034
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sk_r22_0022
+      kind: knowledge
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: sk_lsmx_0006
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_ogx_0021
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sc_whip_authenticity_signals
+      kind: ontology_concept
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_lsm_c003_0014
+      kind: knowledge
+      source_dir: light-science-magic-ch3
+      source_status: ACCEPTED
+    - item_id: qa_lsmx_0048
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: t_r22_0051
+      kind: ontology_term
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+  - query: short-form performance ad hook structure UGC purchase reason
+    limit_requested: 8
+    result_bytes: 22516
+    results_returned: 8
+    total_matches_in_corpus: 1831
+    returned_objects:
+    - item_id: qa_abcd_0016
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0005
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0007
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: t_hop_sa_0014
+      kind: ontology_term
+      source_dir: hopkins-scientific-advertising-ch1-7
+      source_status: ACCEPTED
+    - item_id: sk_hop_sa_0011
+      kind: knowledge
+      source_dir: hopkins-scientific-advertising-ch1-7
+      source_status: ACCEPTED
+    - item_id: bnd_hea_mts_0003
+      kind: binding
+      source_dir: heath-made-to-stick-introduction
+      source_status: ACCEPTED
+    - item_id: sk_abcd_0009
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_rbwl_0020
+      kind: qa
+      source_dir: bijapurkar-we-are-like-that-only
+      source_status: ACCEPTED
+  - query: skincare product demonstration application close-up texture shot
+    limit_requested: 8
+    result_bytes: 19014
+    results_returned: 8
+    total_matches_in_corpus: 2258
+    returned_objects:
+    - item_id: vis_gos_jumping_the_line
+      kind: visual_evidence
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: qa_pex_0002
+      kind: qa
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+    - item_id: sk_conv_c003_0026
+      kind: knowledge
+      source_dir: ondaatje-conversations-ch3
+      source_status: ACCEPTED
+    - item_id: vis_gos_matching_shot_types
+      kind: visual_evidence
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: vis_gote_fig_3_4_similar_angles
+      kind: visual_evidence
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: qa_whip_0052
+      kind: qa
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_abcd_0007
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_conv_c003_0020
+      kind: knowledge
+      source_dir: ondaatje-conversations-ch3
+      source_status: ACCEPTED
+- trial_id: E037SCC-sonnet-B04-R2
+  brief_id: B04
+  repetition: 2
+  status: complete
+  declared_knowledge_needs:
+  - How to structure direct-to-camera creator/UGC footage so it reads as credible rather than a polished
+    ad (framing, lighting, delivery cues).
+  - How to structure message/information hierarchy for a short-form (~25s) performance/D2C ad (hook, offer,
+    CTA pacing).
+  - How to shoot/demonstrate a skincare serum application on camera so texture and product truth read
+    credibly without implying clinical claims.
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: credible UGC direct-to-camera creator testimonial authenticity cues
+    limit_requested: 8
+    result_bytes: 22490
+    results_returned: 8
+    total_matches_in_corpus: 3848
+    returned_objects:
+    - item_id: sk_ogx_0034
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sk_ogx_0021
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: qa_ogx_0021
+      kind: qa
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sk_r22_0022
+      kind: knowledge
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: t_pex_0016
+      kind: ontology_term
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+    - item_id: qa_ogx_0025
+      kind: qa
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sc_whip_authenticity_signals
+      kind: ontology_concept
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_lsm_c003_0014
+      kind: knowledge
+      source_dir: light-science-magic-ch3
+      source_status: ACCEPTED
+  - query: short-form performance ad hook offer CTA structure information hierarchy
+    limit_requested: 8
+    result_bytes: 22669
+    results_returned: 8
+    total_matches_in_corpus: 1530
+    returned_objects:
+    - item_id: qa_abcd_0012
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0016
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0020
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0005
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0007
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0012
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0011
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: t_hop_sa_0014
+      kind: ontology_term
+      source_dir: hopkins-scientific-advertising-ch1-7
+      source_status: ACCEPTED
+  - query: skincare product demonstration texture close-up application shoot
+    limit_requested: 8
+    result_bytes: 17817
+    results_returned: 8
+    total_matches_in_corpus: 2120
+    returned_objects:
+    - item_id: qa_pex_0002
+      kind: qa
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+    - item_id: qa_nnn_0020
+      kind: qa
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: qa_lsmx_0029
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: vis_gos_jumping_the_line
+      kind: visual_evidence
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_conv_c003_0026
+      kind: knowledge
+      source_dir: ondaatje-conversations-ch3
+      source_status: ACCEPTED
+    - item_id: qa_lsmx_0026
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_crl_0002
+      kind: qa
+      source_dir: carroll-read-this-photographs
+      source_status: HOLD
+    - item_id: t_pex_0063
+      kind: ontology_term
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B04-R3
+  brief_id: B04
+  repetition: 3
+  status: complete
+  declared_knowledge_needs:
+  - How to structure a short-form (≈25s) UGC-style direct-to-camera performance ad for message/hook/CTA
+    hierarchy
+  - How to shoot/direct "creator authenticity" on camera (avoid overly polished TVC look) for product
+    demo content
+  - How to frame/light skin and product texture close-ups credibly for a skincare serum demo without implying
+    clinical claims
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: UGC performance ad hook structure short-form vertical video direct to camera
+    limit_requested: 8
+    result_bytes: 26495
+    results_returned: 8
+    total_matches_in_corpus: 3975
+    returned_objects:
+    - item_id: qa_abcd_0016
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0005
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0007
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0004
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0026
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: qa_abcd_0011
+      kind: qa
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0006
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_abcd_0012
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+  - query: creator authenticity direct to camera credible not overproduced
+    limit_requested: 8
+    result_bytes: 25407
+    results_returned: 8
+    total_matches_in_corpus: 4128
+    returned_objects:
+    - item_id: sk_ogx_0034
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sk_r22_0022
+      kind: knowledge
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: sk_ogx_0021
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: sk_lsm_c003_0014
+      kind: knowledge
+      source_dir: light-science-magic-ch3
+      source_status: ACCEPTED
+    - item_id: sk_lsmx_0006
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sc_whip_authenticity_signals
+      kind: ontology_concept
+      source_dir: sullivan-hey-whipple
+      source_status: HOLD
+    - item_id: sk_cat_c003_0006
+      kind: knowledge
+      source_dir: catmull-creativity-inc-ch5
+      source_status: ACCEPTED
+    - item_id: sk_lsm_c003_0010
+      kind: knowledge
+      source_dir: light-science-magic-ch3
+      source_status: ACCEPTED
+  - query: skincare product demo close-up lighting texture credibility
+    limit_requested: 8
+    result_bytes: 26878
+    results_returned: 8
+    total_matches_in_corpus: 1476
+    returned_objects:
+    - item_id: sk_lsmx_0011
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0010
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: bnd_lsmx_001
+      kind: binding
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0009
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: bnd_lsm_c003_0003
+      kind: binding
+      source_dir: light-science-magic-ch3
+      source_status: ACCEPTED
+    - item_id: sk_lsmx_0012
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_alt_c003_0020
+      kind: knowledge
+      source_dir: alton-painting-with-light-ch2
+      source_status: ACCEPTED
+    - item_id: sk_lsmx_0006
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B05-R1
+  brief_id: B05
+  repetition: 1
+  status: complete
+  declared_knowledge_needs:
+  - How to preserve spatial/geographic clarity between two seated people using minimal shots (180-degree
+    line, establishing/reverse coverage)
+  - How to stage and shoot restrained, tense dialogue (subtext, micro-performance, blocking) without relying
+    on shouting or heavy camera movement
+  - How to make a small six-shot dialogue scene read as cinematic rather than mechanical coverage (shot
+    design/rhythm, avoiding shot-reverse-shot monotony)
+  canon_search_calls: 3
+  canon_read_calls: 1
+  canon_catalog_calls: 0
+  searches:
+  - query: 180-degree line spatial continuity two-shot dialogue coverage
+    limit_requested: 8
+    result_bytes: 17055
+    results_returned: 8
+    total_matches_in_corpus: 2127
+    returned_objects:
+    - item_id: sk_gos_c003_0010
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: t_gos_c003_0006
+      kind: ontology_term
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0009
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: t_gos_c003_0001
+      kind: ontology_term
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0011
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: vis_gote_fig_5_4_vs_5_5_line_crossing
+      kind: visual_evidence
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sc_gos_c003_continuity_geometry
+      kind: ontology_concept
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: scs_gos_c003_001
+      kind: concept_system
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+  - query: restrained tense dialogue subtext blocking performance staging
+    limit_requested: 8
+    result_bytes: 21868
+    results_returned: 8
+    total_matches_in_corpus: 153
+    returned_objects:
+    - item_id: bnd_ms_c003_0005
+      kind: binding
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0004
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_sgb_0022
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_ms_c003_0017
+      kind: knowledge
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: qa_dmpl_0017
+      kind: qa
+      source_dir: desai-mother-pious-lady
+      source_status: HOLD
+    - item_id: bnd_conv_c003_0001
+      kind: binding
+      source_dir: ondaatje-conversations-ch3
+      source_status: ACCEPTED
+    - item_id: sk_conv_c003_0009
+      kind: knowledge
+      source_dir: ondaatje-conversations-ch3
+      source_status: ACCEPTED
+    - item_id: sk_conv_c003_0019
+      kind: knowledge
+      source_dir: ondaatje-conversations-ch3
+      source_status: ACCEPTED
+  - query: cinematic shot design avoid mechanical shot reverse shot dialogue scene
+    limit_requested: 8
+    result_bytes: 16863
+    results_returned: 8
+    total_matches_in_corpus: 1385
+    returned_objects:
+    - item_id: sk_gos_c003_0011
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: bnd_ogx_005
+      kind: binding
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+    - item_id: t_murch_c003_0010
+      kind: ontology_term
+      source_dir: murch-blink-p1-25
+      source_status: ACCEPTED
+    - item_id: t_gote_c003_0016
+      kind: ontology_term
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0005
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0017
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0051
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0016
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+- trial_id: E037SCC-sonnet-B05-R2
+  brief_id: B05
+  repetition: 2
+  status: complete
+  declared_knowledge_needs:
+  - 1. How to maintain spatial/geographic clarity (180-degree line, axis) across cuts in a two-person
+    dialogue scene.
+  - 2. How to block and frame restrained, tense dialogue cinematically using static/minimal camera movement.
+  - 3. How to sequence shots (order, shot sizes, cutting rhythm) for a short two-person dialogue scene
+    to avoid feeling like mechanical shot/reverse-shot coverage.
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: 180-degree line axis spatial continuity two-person dialogue scene
+    limit_requested: 8
+    result_bytes: 13662
+    results_returned: 8
+    total_matches_in_corpus: 2303
+    returned_objects:
+    - item_id: sk_gos_c003_0009
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sc_gos_c003_continuity_geometry
+      kind: ontology_concept
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: t_gos_c003_0012
+      kind: ontology_term
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0011
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0010
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: t_gos_c003_0006
+      kind: ontology_term
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: vis_gote_fig_5_4_vs_5_5_line_crossing
+      kind: visual_evidence
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sc_gote_line_geometry
+      kind: ontology_concept
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+  - query: staging restrained tense dialogue minimal camera movement blocking
+    limit_requested: 8
+    result_bytes: 19632
+    results_returned: 8
+    total_matches_in_corpus: 481
+    returned_objects:
+    - item_id: sk_ms_c003_0017
+      kind: knowledge
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: t_ms_c003_0008
+      kind: ontology_term
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: bnd_ms_c003_0005
+      kind: binding
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0004
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_ms_c003_0010
+      kind: knowledge
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: sk_ms_c003_0012
+      kind: knowledge
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: vis_gote_fig_5_4_vs_5_5_line_crossing
+      kind: visual_evidence
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: qa_sgb_0011
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+  - query: shot/reverse shot editing rhythm avoid mechanical coverage cinematic dialogue
+    limit_requested: 8
+    result_bytes: 18562
+    results_returned: 8
+    total_matches_in_corpus: 708
+    returned_objects:
+    - item_id: sk_gote_c003_0056
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0017
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0016
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0010
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: t_murch_c003_0010
+      kind: ontology_term
+      source_dir: murch-blink-p1-25
+      source_status: ACCEPTED
+    - item_id: vis_gos_matching_shot_types
+      kind: visual_evidence
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: t_gote_c003_0016
+      kind: ontology_term
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0051
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+- trial_id: E037SCC-sonnet-B05-R3
+  brief_id: B05
+  repetition: 3
+  status: complete
+  declared_knowledge_needs:
+  - How to maintain spatial clarity (geography/eyeline/180-degree line) across a limited six-shot dialogue
+    coverage between two seated people.
+  - How to select/sequence shots for a two-person dialogue scene so it reads as cinematic rather than
+    mechanical shot-reverse-shot coverage.
+  - How to stage restrained/subtextual tension (concealment, quiet confrontation) visually through framing
+    and composition without dialogue shouting or camera movement.
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: spatial clarity 180 degree rule dialogue coverage eyeline
+    limit_requested: 8
+    result_bytes: 18795
+    results_returned: 8
+    total_matches_in_corpus: 966
+    returned_objects:
+    - item_id: sk_gos_c003_0010
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: t_gos_c003_0006
+      kind: ontology_term
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0011
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0009
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: vis_gote_fig_5_4_vs_5_5_line_crossing
+      kind: visual_evidence
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: scs_gos_c003_001
+      kind: concept_system
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0014
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: t_gote_c003_0041
+      kind: ontology_term
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+  - query: two-person dialogue scene cinematic shot selection avoid mechanical coverage
+    limit_requested: 8
+    result_bytes: 22827
+    results_returned: 8
+    total_matches_in_corpus: 2258
+    returned_objects:
+    - item_id: sk_gote_c003_0056
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_ms_c003_0017
+      kind: knowledge
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: bnd_gote_c003_0008
+      kind: binding
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: vis_gote_fig_5_4_vs_5_5_line_crossing
+      kind: visual_evidence
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: bnd_gos_c003_0004
+      kind: binding
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+    - item_id: sk_gote_c003_0010
+      kind: knowledge
+      source_dir: grammar-of-the-edit-ch3-5
+      source_status: ACCEPTED
+    - item_id: sk_conv_c003_0027
+      kind: knowledge
+      source_dir: ondaatje-conversations-ch3
+      source_status: ACCEPTED
+    - item_id: sk_gos_c003_0010
+      kind: knowledge
+      source_dir: grammar-of-the-shot-ch4
+      source_status: ACCEPTED
+  - query: restrained tension subtext framing composition confrontation quiet
+    limit_requested: 8
+    result_bytes: 25467
+    results_returned: 8
+    total_matches_in_corpus: 603
+    returned_objects:
+    - item_id: qa_sgb_0012
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: qa_sgb_0011
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_sgb_0022
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: qa_dmpl_0017
+      kind: qa
+      source_dir: desai-mother-pious-lady
+      source_status: HOLD
+    - item_id: sk_fre_c003_0001
+      kind: knowledge
+      source_dir: freeman-photographers-eye-graphic-guide
+      source_status: ACCEPTED
+    - item_id: sk_sam_c003_0060
+      kind: knowledge
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: sk_sam_c003_0078
+      kind: knowledge
+      source_dir: samara-making-breaking-grid-ch1
+      source_status: ACCEPTED
+    - item_id: sk_god_0019
+      kind: knowledge
+      source_dir: godin-this-is-marketing
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B06-R1
+  brief_id: B06
+  repetition: 1
+  status: complete
+  declared_knowledge_needs:
+  - How to light/photograph a domed sapphire crystal and sunburst dial to reveal dial detail and material
+    quality without glare washing out legibility
+  - How to render brushed stainless steel surfaces to communicate craftsmanship and material quality without
+    blown highlights
+  - How to compose/stage a premium watch product hero shot (angle, background, support) for e-commerce
+    desirability while keeping geometry accurate
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: watch dial sapphire crystal reflection lighting product photography
+    limit_requested: 8
+    result_bytes: 23380
+    results_returned: 8
+    total_matches_in_corpus: 1249
+    returned_objects:
+    - item_id: qa_pex_0012
+      kind: qa
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+    - item_id: qa_lsmx_0049
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0005
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0035
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0003
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0040
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0047
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0031
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+  - query: brushed metal stainless steel product photography material quality lighting
+    limit_requested: 8
+    result_bytes: 27643
+    results_returned: 8
+    total_matches_in_corpus: 1503
+    returned_objects:
+    - item_id: qa_lsmx_0061
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0036
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0046
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0024
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: bnd_lsmx_002
+      kind: binding
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0057
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: bnd_lsmx_005
+      kind: binding
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0034
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+  - query: luxury product hero shot composition e-commerce watch presentation
+    limit_requested: 8
+    result_bytes: 17701
+    results_returned: 8
+    total_matches_in_corpus: 1346
+    returned_objects:
+    - item_id: bnd_sb_c003_0001
+      kind: binding
+      source_dir: miller-storybrand-sb7
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0014
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0011
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_r22_0025
+      kind: knowledge
+      source_dir: ries-22-immutable-laws-branding
+      source_status: HOLD
+    - item_id: t_ogl_c003_0007
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0018
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_abcd_0024
+      kind: knowledge
+      source_dir: google-abcd-video-ads
+      source_status: HOLD
+    - item_id: sk_ogx_0041
+      kind: knowledge
+      source_dir: ogilvy-beyond-ch2
+      source_status: HOLD
+- trial_id: E037SCC-sonnet-B06-R2
+  brief_id: B06
+  repetition: 2
+  status: complete
+  declared_knowledge_needs:
+  - How to light brushed steel and domed sapphire crystal surfaces to show material quality without glare/legibility
+    loss
+  - How to compose a watch hero shot to communicate craftsmanship and dial detail (angle, focus, macro
+    strategy)
+  - How to prevent generative distortion of precise product geometry (hands, markers, case proportions)
+    in image generation
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: lighting reflective metal watch case sapphire crystal product photography
+    limit_requested: 8
+    result_bytes: 27128
+    results_returned: 8
+    total_matches_in_corpus: 1804
+    returned_objects:
+    - item_id: qa_lsmx_0036
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0003
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: bnd_lsmx_002
+      kind: binding
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0026
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0028
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_pex_0012
+      kind: qa
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+    - item_id: sk_lsmx_0033
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0038
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+  - query: watch product hero shot composition craftsmanship dial detail
+    limit_requested: 8
+    result_bytes: 15504
+    results_returned: 8
+    total_matches_in_corpus: 1358
+    returned_objects:
+    - item_id: bnd_sb_c003_0001
+      kind: binding
+      source_dir: miller-storybrand-sb7
+      source_status: ACCEPTED
+    - item_id: qa_crl_0026
+      kind: qa
+      source_dir: carroll-read-this-photographs
+      source_status: HOLD
+    - item_id: sk_ogl_c003_0014
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0011
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_lsmx_0021
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: t_ogl_c003_0007
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: qa_pex_0031
+      kind: qa
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+    - item_id: t_ogl_c003_0018
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+  - query: preserving product geometry accuracy generative image fidelity
+    limit_requested: 8
+    result_bytes: 18890
+    results_returned: 8
+    total_matches_in_corpus: 1358
+    returned_objects:
+    - item_id: qa_nnn_0016
+      kind: qa
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: bnd_lsm_c003_0002
+      kind: binding
+      source_dir: light-science-magic-ch3
+      source_status: ACCEPTED
+    - item_id: sk_nnn_0016
+      kind: knowledge
+      source_dir: parameswaran-nawabs-nudes-noodles
+      source_status: ACCEPTED
+    - item_id: qa_snt_0023
+      kind: qa
+      source_dir: sontag-on-photography
+      source_status: HOLD
+    - item_id: sk_snt_0022
+      kind: knowledge
+      source_dir: sontag-on-photography
+      source_status: HOLD
+    - item_id: t_ogl_c003_0011
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: bnd_ms_c003_0005
+      kind: binding
+      source_dir: kenworthy-master-shots-ch8
+      source_status: ACCEPTED
+    - item_id: vis_conv_no_colour_dependence
+      kind: visual_evidence
+      source_dir: ondaatje-conversations-ch3
+      source_status: ACCEPTED
+- trial_id: E037SCC-sonnet-B06-R3
+  brief_id: B06
+  repetition: 3
+  status: complete
+  declared_knowledge_needs:
+  - Lighting technique for reflective steel and sunburst dial surfaces to convey material quality without
+    losing detail
+  - Product/watch photography composition and macro detail rendering for craftsmanship storytelling
+  - Hero image composition standards for premium e-commerce product pages (framing, background, information
+    hierarchy)
+  canon_search_calls: 3
+  canon_read_calls: 0
+  canon_catalog_calls: 0
+  searches:
+  - query: lighting reflective metal surfaces product photography highlights control
+    limit_requested: 8
+    result_bytes: 27466
+    results_returned: 8
+    total_matches_in_corpus: 1297
+    returned_objects:
+    - item_id: sk_lsmx_0032
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0010
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0034
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: bnd_lsmx_002
+      kind: binding
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0036
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0031
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_lsmx_0049
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: sk_lsmx_0026
+      kind: knowledge
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+  - query: watch product photography macro detail craftsmanship dial
+    limit_requested: 8
+    result_bytes: 26725
+    results_returned: 8
+    total_matches_in_corpus: 1167
+    returned_objects:
+    - item_id: sk_crl_0013
+      kind: knowledge
+      source_dir: carroll-read-this-photographs
+      source_status: HOLD
+    - item_id: qa_pex_0002
+      kind: qa
+      source_dir: freeman-photographers-eye-beyond-parts1-3
+      source_status: HOLD
+    - item_id: qa_lsmx_0027
+      kind: qa
+      source_dir: light-science-magic-beyond-ch3
+      source_status: HOLD
+    - item_id: qa_sgb_0028
+      kind: qa
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: t_sgb_0036
+      kind: ontology_term
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_sgb_0035
+      kind: knowledge
+      source_dir: samara-breaking-the-grid-ch2
+      source_status: HOLD
+    - item_id: sk_ppm_0010
+      kind: knowledge
+      source_dir: pandey-pandeymonium
+      source_status: ACCEPTED
+    - item_id: sk_crl_0017
+      kind: knowledge
+      source_dir: carroll-read-this-photographs
+      source_status: HOLD
+  - query: premium e-commerce hero product image composition background
+    limit_requested: 8
+    result_bytes: 15447
+    results_returned: 8
+    total_matches_in_corpus: 1524
+    returned_objects:
+    - item_id: scs_ogl_c003_003
+      kind: concept_system
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0014
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: bnd_sb_c003_0001
+      kind: binding
+      source_dir: miller-storybrand-sb7
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0011
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: sk_ogl_c003_0015
+      kind: knowledge
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: qa_crl_0010
+      kind: qa
+      source_dir: carroll-read-this-photographs
+      source_status: HOLD
+    - item_id: t_ogl_c003_0007
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+    - item_id: t_ogl_c003_0018
+      kind: ontology_term
+      source_dir: ogilvy-ch2-advertising-that-sells
+      source_status: ACCEPTED
+gemma_controlled_queries:
+- trial_id: E037GCC-gemma-B01-R1
+  brief_id: B01
+  query: contemporary Indian visual aesthetic production design commercial
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_technical
+- trial_id: E037GCC-gemma-B01-R1
+  brief_id: B01
+  query: commercial video pacing problem solution contrast
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_technical
+- trial_id: E037GCC-gemma-B01-R2
+  brief_id: B01
+  query: Indian small business operational chaos visual motifs property management
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B01-R3
+  brief_id: B01
+  query: Indian commercial visual aesthetics B2B SaaS
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B02-R1
+  brief_id: B02
+  query: premium typography layout pricing AI product
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B02-R2
+  brief_id: B02
+  query: premium typography minimalist promotional design B2B AI
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B02-R3
+  brief_id: B02
+  query: premium Indian festive visual design AI infrastructure
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B03-R1
+  brief_id: B03
+  query: premium beverage photography lighting composition
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B03-R1
+  brief_id: B03
+  query: modern Indian visual language premium aesthetic
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B03-R2
+  brief_id: B03
+  query: premium beverage photography sophisticated contemporary visual cues
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B03-R2
+  brief_id: B03
+  query: contemporary Indian aesthetic design color palette minimalist
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B03-R2
+  brief_id: B03
+  query: contemporary indian premium aesthetic visual language
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B03-R3
+  brief_id: B03
+  query: premium beverage visual language modern Indian aesthetic
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B03-R3
+  brief_id: B03
+  query: premium product photography lighting minimalist beverage
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B04-R3
+  brief_id: B04
+  query: UGC performance video skincare creator codes
+  applied_limit: 6
+  results_returned: 6
+  trial_status: complete
+- trial_id: E037GCC-gemma-B05-R2
+  brief_id: B05
+  query: spatial clarity dialogue shots cinematic tension 180 degree rule
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B05-R3
+  brief_id: B05
+  query: spatial continuity 180 degree rule cinematic tension café
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B06-R1
+  brief_id: B06
+  query: luxury watch photography lighting composition
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B06-R2
+  brief_id: B06
+  query: luxury watch photography lighting materials sunburst dial brushed steel
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+- trial_id: E037GCC-gemma-B06-R3
+  brief_id: B06
+  query: luxury watch photography lighting sunburst dial brushed steel
+  applied_limit: 6
+  results_returned: 6
+  trial_status: failed_required_canon_use
+unbounded_lane_outcomes:
+  note: Why an unbounded retrieval default is not an option. Neither lane is re-run by CANON-015; both
+    are quoted from their committed results.
+  sonnet_full_canon_repair_001:
+    model: claude-sonnet-5
+    trial_count: 18
+    statuses:
+      failed_execution: 16
+      complete: 2
+  gemma_required_canon:
+    model: gemma-4-31b-it
+    trial_count: 18
+    statuses:
+      failed_technical: 18

@@ -1,0 +1,739 @@
+{
+  "bundle_version": "canon-context-bundle-v0.1",
+  "contract": "canon/retrieval/RETRIEVAL-CONTRACT-v0.1.md",
+  "how_to_use": "This is the Canon knowledge selected for this request. It is durable creative and production knowledge — what makes work good and what commonly goes wrong. It says nothing about which image or video model to use, what a provider charges, or whether a model can execute something reliably. Read each item with its `epistemics`: a claim the source hedged is not a rule, a caveat marked extractor_observed is this project's doubt rather than the author's, and a binding marked proposed has not been reviewed by anyone. Items are delivered in full unless `delivered_complete` is false; `detail_ref` fetches the untruncated object in the rare case you need it.",
+  "status_legend": {
+    "ACCEPTED": "The source passed the project's Audit Gate: its extraction was checked against the exact bytes it was taken from. It does not mean the claim was independently tested.",
+    "claim_type.explicit_source_claim": "The source says this in words.",
+    "claim_type.source_interpretation": "This is our reading of the source, not its own words. `interpretation_basis` says what it was read from.",
+    "caveat_origin.source_stated": "The author limited their own claim this way.",
+    "caveat_origin.extractor_observed": "This project noticed a weakness in the support; the author did not state it.",
+    "binding_status.proposed": "Nobody has reviewed this suggested use. It is a proposal about how our system could apply the knowledge, not part of the source's claim.",
+    "evidence_basis.extractor_inference": "The step from the source's claim to this suggested use is our leap, not the source's."
+  },
+  "corpus": {
+    "surface": "accepted_only",
+    "production_default": true,
+    "diagnostic_reason": null,
+    "root": "canon/knowledge/current",
+    "accepted_sources_available": 24,
+    "items_available": 1623,
+    "corpus_fingerprint": {
+      "algorithm": "sha256-of-sorted-path-and-content",
+      "file_count": 120,
+      "combined_digest": "a9cee40fb433adc08ac98ba7c87e1ead790f60aa71d184327cc5e97f59ed7eb9"
+    }
+  },
+  "budgets": {
+    "max_items": 12,
+    "max_total_chars": 30000,
+    "max_chars_per_item": 4200,
+    "max_sources": 8,
+    "max_items_per_source": 3,
+    "max_items_per_lineage_group": 4,
+    "max_questions": 4,
+    "max_items_per_question": 5,
+    "max_candidates_per_question": 60
+  },
+  "plan": {
+    "detected_media": "image",
+    "question_count": 4,
+    "max_questions": 4,
+    "request_terms_used": [
+      "am",
+      "create",
+      "premium",
+      "promotional",
+      "poster",
+      "our",
+      "media",
+      "generation",
+      "indian",
+      "businesses",
+      "during",
+      "festive"
+    ],
+    "declared_needs_supplied": 0,
+    "questions": [
+      {
+        "question_id": "composition_hierarchy",
+        "plain_english": "How should the frame be composed, and what must the viewer notice first?",
+        "selected_by": "base_for_media",
+        "matched_request_cues": [
+          "hierarchy",
+          "poster",
+          "premium",
+          "typography"
+        ]
+      },
+      {
+        "question_id": "failure_prevention",
+        "plain_english": "What commonly goes wrong in work like this, and what does the source say to inspect?",
+        "selected_by": "base_for_media",
+        "matched_request_cues": []
+      },
+      {
+        "question_id": "message_structure",
+        "plain_english": "How should the advertising message be structured so the point lands?",
+        "selected_by": "request_cue_match",
+        "matched_request_cues": [
+          "commercial",
+          "promotional",
+          "proposition"
+        ]
+      },
+      {
+        "question_id": "brand_handling",
+        "plain_english": "How should the brand's own assets, colours and voice be handled?",
+        "selected_by": "request_cue_match",
+        "matched_request_cues": [
+          "brand",
+          "website"
+        ]
+      }
+    ],
+    "boundary_note": "Production questions ask what must be understood to specify the work. They never ask which model or provider should make it; that is capability routing and is out of Canon's scope."
+  },
+  "items": [
+    {
+      "n": 1,
+      "answers_question": "composition_hierarchy",
+      "kind": "knowledge",
+      "item_id": "sk_gote_c003_0041",
+      "source": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+        "title": "grammar-of-the-edit-ch3-5 (Roy Thompson, Christopher J. Bowen)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "screen_position_edit_moves_the_eye_across_the_frame",
+        "claim": "A screen position edit uses the placement of subjects in two shots to move the viewer's eyes around the screen. One strong element occupies one side of the frame and directs attention or movement toward the other; the incoming shot puts the object of that attention on the opposite side, satisfying the viewer's need to see something occupy that space. Also called a directional or placement edit. It can be a cut or a dissolve, but is usually a cut where no passage of time is implied.",
+        "source_words": [
+          "\"Directional\" because the edit helps direct the viewer's eyes around the screen, and \"placement\" because it is the unique placement of subjects or objects in the two shots cut together that make the viewer's eyes move around the frame.",
+          "one strong visual element occupies one side of the frame and casts its attention or a movement toward the other side"
+        ],
+        "mechanism_text": "The mirrored composition creates and then discharges an expectation: the viewer's eyes are on one side, the attention in frame points across, and the cut rewards the movement by placing the new subject where the eyes were sent.",
+        "mechanism_stated_by_source": true,
+        "scope_domain": [
+          "film_editing",
+          "television_editing"
+        ],
+        "scope_conditions": "coverage designed, through storyboards or script notes, to lead the eye across the frame"
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "visually_demonstrated",
+          "practitioner_assertion",
+          "mechanism_given",
+          "repeated_within_source"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the source states plainly that not every screen position edit will address all six elements, \"but the more the merrier\" — a third instance of the framework being treated as optional",
+            "origin": "source_stated"
+          },
+          {
+            "text": "the source says the shots must have been conceived and composed for this purpose during production, so the category describes what an editor can recognise rather than create",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "Chapter Four",
+        "section": "The Screen Position Edit",
+        "page_start": 90,
+        "page_end": 91,
+        "source_support": "text_and_visual"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 29.902673,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "attention",
+          "composition",
+          "create",
+          "during",
+          "eye",
+          "movement",
+          "placement",
+          "space",
+          "visual"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_gote_c003_0041"
+      }
+    },
+    {
+      "n": 2,
+      "answers_question": "failure_prevention",
+      "kind": "knowledge",
+      "item_id": "sk_gote_c003_0016",
+      "source": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "source_id": "grammar_of_the_edit_ch3_5_editing_decisions",
+        "title": "grammar-of-the-edit-ch3-5 (Roy Thompson, Christopher J. Bowen)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "cut_away_buys_time_for_the_audience_to_accept_a_discontinuity",
+        "claim": "Inserting any brief shot between two mismatched shots gives the audience both a distraction and enough elapsed time to accept that the change happened off screen. The same device is named twice in the chapter: as a cut-away for an object or action mismatch, and as an insert shot for a reversal of screen direction.",
+        "source_words": [
+          "the cut-away is any brief shot that will provide the appropriate distraction and time filler to allow the audience to make the leap in logic"
+        ],
+        "mechanism_text": "The intervening shot breaks the audience's continuous attention on the mismatched element and supplies the screen time in which the change could plausibly have occurred.",
+        "mechanism_stated_by_source": true,
+        "scope_domain": [
+          "film_editing",
+          "television_editing"
+        ],
+        "scope_conditions": "when the coverage contains a discontinuity that cannot be avoided by shot choice",
+        "source_stated_remedies": [
+          "cut away to a brief shot before returning to the action",
+          "insert a logical shot that continues the narrative and breaks attention on the direction of movement"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "visually_demonstrated",
+          "practitioner_assertion",
+          "mechanism_given",
+          "repeated_within_source"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the source requires only that the inserted shot be logical and fit the narrative flow; it sets no minimum duration and no test for whether the break was long enough",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "recorded as one remedy because the source describes the same action and the same mechanism in both places under two names; the reading that they are two devices is available but the text does not support it",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "Chapter Three",
+        "section": "Continuity of Content; Continuity of Movement",
+        "page_start": 67,
+        "page_end": 68,
+        "source_support": "text_and_visual"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 16.254117,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "breaks",
+          "distraction",
+          "remedy"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "grammar-of-the-edit-ch3-5",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_gote_c003_0016"
+      }
+    },
+    {
+      "n": 3,
+      "answers_question": "message_structure",
+      "kind": "knowledge",
+      "item_id": "sk_sb_c003_0001",
+      "source": {
+        "source_dir": "miller-storybrand-sb7",
+        "source_id": "miller_storybrand_sb7_framework_ch1_3",
+        "title": "miller-storybrand-sb7 (Donald Miller)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "the_failure_is_in_the_message_not_the_product_or_the_design",
+        "claim": "When marketing does not work, the source's first move is to relocate the fault: not to the product, and not to the quality of the design, but to how the offer is described. Spending on design before the message is clear is presented as spending on amplification of noise.",
+        "source_words": [
+          "pretty websites don't sell things. Words sell things",
+          "nobody will listen to you if your message isn't clear, no matter how expensive your marketing material may be"
+        ],
+        "mechanism_text": "An unclear message is not listened to at any production value, so design spend applied before clarity buys reach for something the customer will not process.",
+        "mechanism_stated_by_source": true,
+        "scope_domain": [
+          "marketing",
+          "branding",
+          "websites",
+          "sales_copy"
+        ],
+        "scope_conditions": "any commercial message aimed at a customer who has not yet engaged",
+        "source_stated_problems": [
+          "we haven't clarified our message"
+        ],
+        "source_stated_remedies": [
+          "clarify the message before spending on design"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "practitioner_assertion",
+          "outcome_claimed",
+          "anecdotal",
+          "mechanism_given",
+          "repeated_within_source"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the source sells message-clarification services, a certification programme and a software tool, so the diagnosis and the remedy are commercially linked",
+            "origin": "extractor_observed"
+          },
+          {
+            "text": "the supporting evidence is the author's own company doubling revenue for four consecutive years and unspecified clients doubling to quadrupling theirs, with no control and no failed case",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "1 — The Key to Being Seen, Heard, and Understood",
+        "section": "opening",
+        "locator": "EPUB Chapter_1.xhtml, opening",
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 27.298825,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "clarity",
+          "copy",
+          "message",
+          "offer",
+          "our",
+          "to"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "miller-storybrand-sb7",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_sb_c003_0001"
+      }
+    },
+    {
+      "n": 4,
+      "answers_question": "brand_handling",
+      "kind": "knowledge",
+      "item_id": "sk_vig_c003_0013",
+      "source": {
+        "source_dir": "vignelli-canon-intangibles",
+        "source_id": "vignelli_canon_part_one_intangibles",
+        "title": "vignelli-canon-intangibles (Massimo Vignelli)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "concept_label": "an_established_logo_holds_equity_that_should_be_protected",
+        "claim": "Requests to redesign a logo are often motivated by a desire for change merely for its own sake, which the source calls a very wrong motivation. A real corporate identity rests on an overall system rather than on a logo alone. A logo gradually becomes part of collective culture, and one in the public domain for more than fifty years becomes a classic and a landmark that should not be discarded for a new one however well designed. The source reports proposing a light retouch of the existing mark rather than a replacement when asked to design a new logo for Ford, and doing the same for Ciga Hotels, Cinzano and Lancia.",
+        "source_words": [
+          "A real Corporate Identity is based on an overall system approach, not just a logo.",
+          "When a logo has been in the public domain for more than fifty years it becomes a classic, a landmark, a respectable entity"
+        ],
+        "mechanism_text": "Long public exposure roots a mark in people's consciousness, so the accumulated recognition is itself the asset and replacing the mark discards it.",
+        "mechanism_stated_by_source": true,
+        "scope_domain": [
+          "graphic_design",
+          "corporate_identity"
+        ],
+        "scope_conditions": "established marks with long public exposure",
+        "source_stated_problems": [
+          "the desire of change merely for the sake of change"
+        ],
+        "source_stated_remedies": [
+          "propose a light retouch of an established mark rather than a replacement",
+          "treat corporate identity as an overall system rather than as a logo"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "claim_type": "explicit_source_claim",
+        "label_origin": "extractor_assigned",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "anecdotal",
+          "practitioner_assertion",
+          "historical_claim",
+          "mechanism_given"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "caveats": [
+          {
+            "text": "the source grounds the position partly autobiographically, in having grown up where history and vernacular architecture were treated as protected culture",
+            "origin": "source_stated"
+          },
+          {
+            "text": "the fifty-year threshold is stated without derivation; the cases named are all ones where the source's own recommendation was retention",
+            "origin": "extractor_observed"
+          }
+        ]
+      },
+      "provenance": {
+        "chapter": "Part One",
+        "section": "Equity",
+        "locator": "PDF spread 17",
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 25.706674,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "asset",
+          "identity",
+          "logo",
+          "recognition"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "vignelli-canon-intangibles",
+        "artifact": "source-knowledge.yaml",
+        "item_id": "sk_vig_c003_0013"
+      }
+    },
+    {
+      "n": 5,
+      "answers_question": "composition_hierarchy",
+      "kind": "concept_system",
+      "item_id": "scs_dpci_001",
+      "source": {
+        "source_dir": "dwyer-patel-cinema-india",
+        "source_id": "dwyer_patel_cinema_india",
+        "title": "dwyer-patel-cinema-india (Rachel Dwyer, Divia Patel)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "label": "how_a_still_image_carries_a_narrative_to_a_viewer_who_holds_the_code",
+        "system_type": "causal_model",
+        "description": "Patel's chapter-4 account of poster meaning, assembled: the face opens attention before recognition; recognition of the star brings forward a persona that was built cumulatively by star, artist and public and is carried by a few fixed features; character types compress whole sets of relations into single figures so that the relations BETWEEN them are inferred rather than depicted; and because the code does the work, text can be minim …[truncated — full text via detail_ref]",
+        "whole_system_claim": "A poster can carry a narrative structure it never depicts, provided the viewer holds the code. Attention is won by the face without recognition; meaning is then supplied by the viewer out of an accumulated persona and a familiar typology, not out of the poster. The poster's job is therefore indexing, not describing — which is why minimal text suffices and wh …[truncated — full text via detail_ref]",
+        "member_count": 5,
+        "member_refs": [
+          "sk_dpci_0090",
+          "sk_dpci_0100",
+          "sk_dpci_0120",
+          "sk_dpci_0130",
+          "sk_dpci_0080"
+        ],
+        "tradeoffs": [
+          {
+            "between": [
+              "sk_dpci_0130",
+              "sk_dpci_0120"
+            ],
+            "nature": "Patel states the trade-off herself: designs that focus on one element are more universally understood but 'convey less information about the culture in which they are produced'. Reach and specificity are exchanged",
+            "origin": "source_stated"
+          }
+        ],
+        "source_warns_against_isolated_use": true
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "system_type_origin": "extractor_inferred",
+        "whole_system_claim_origin": "extractor_synthesis",
+        "whole_system_claim_interpretation_basis": "Patel connects the first three members explicitly through her \"hierarchy of responses\" and her worked reading of the Deewaar poster. She does not present them as a model, does not draw the consequence for text as following from the type code, and never cites Dwyer's chapter-1 account of personification as the precondition. Assembling them into a causal chain, and adding those two members, is the extractor's. What the grouping ADDS, and what must be attributed to CANON-014, is the observation that all four devices fail together at the same boundary - the viewer who does not hold the code - which is visible across the set and not within any member.",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "argued",
+          "mechanism_given",
+          "culturally_bounded",
+          "historical_claim"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "system_level_uncertainty": "Moderate. The members are all Patel's, all from one chapter, and she does connect the first three explicitly through the \"hierarchy of responses\". What is the EXTRACTOR'S and must be attributed to CANON-014 is the addition of sk_dpci_0130 (minimal text) as a consequence of the code rather than as a separate observation, and the addition of sk_dpci_0080 (personification) from Dwyer's chapter as the precondition — Patel never cites Dwyer's chapter for this. The causal ordering is likewise the extractor's. The system is recorded as a reading of Patel's argument, not as a structure she sets out."
+      },
+      "provenance": {
+        "chapter": "4, Advertising and the Communication of Meaning (with one member from Ch. 1)",
+        "section": "The Star Image; The Cultural Construction of Meaning; Character Types",
+        "page_start": 183,
+        "page_end": 204,
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 13.190812,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "attention",
+          "hierarchy",
+          "indian",
+          "poster"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": false,
+      "detail_ref": {
+        "source_dir": "dwyer-patel-cinema-india",
+        "artifact": "source-concept-systems.yaml",
+        "item_id": "scs_dpci_001"
+      },
+      "trimmed_fields": [
+        "description",
+        "whole_system_claim"
+      ]
+    },
+    {
+      "n": 6,
+      "answers_question": "failure_prevention",
+      "kind": "binding",
+      "item_id": "bnd_fre_c003_0006",
+      "source": {
+        "source_dir": "freeman-photographers-eye-graphic-guide",
+        "source_id": "freeman_photographers_eye_graphic_guide_parts1_3",
+        "title": "freeman-photographers-eye-graphic-guide (Michael Freeman)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "what_it_binds_to": {
+          "target_type": "production",
+          "role": [
+            "derives"
+          ]
+        },
+        "rationale": "The bulk of this source. Nearly every remedy it gives is an action taken with a camera before the shutter opens — thin a bright framing element, wait for the transit, oppose two elements at the frame's extremes, pan level and overlap by half, shoot head-on so the intended diagonals are the only obliques, build a background that gives each unit a place, focus at ƒ/1.4 so one figure holds and the other releases. Production IR does not exist, so these are recorded in the source's own frame and parked.",
+        "applicability_when": "a photograph is actually being made",
+        "applicability_limits": "PHYSICAL PRODUCTION ACTIONS, NOT TRANSLATED. \"Shoot head-on so the diagonals are the only obliques\" does not become \"prompt for a frontal viewpoint with diagonal shadows\". That translation is a generative-media hypothesis, it is not supported by anything this source says, and this binding does not make it.",
+        "derived_from_source_knowledge": [
+          "sk_fre_c003_0004",
+          "sk_fre_c003_0006",
+          "sk_fre_c003_0008",
+          "sk_fre_c003_0013",
+          "sk_fre_c003_0026",
+          "sk_fre_c003_0030",
+          "sk_fre_c003_0031",
+          "sk_fre_c003_0033"
+        ]
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "binding_status": "production_candidate",
+        "binding_status_reason": "Production IR does not exist; parked, not translated",
+        "evidence_basis": "derived_from_source",
+        "review_note": "This is a proposed use of the knowledge by this project. It is not part of the source's claim."
+      },
+      "provenance": {},
+      "relevance": {
+        "kind_rank": 1,
+        "score": 6.789315,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "media",
+          "remedy"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "freeman-photographers-eye-graphic-guide",
+        "artifact": "operational-bindings.yaml",
+        "item_id": "bnd_fre_c003_0006"
+      }
+    },
+    {
+      "n": 7,
+      "answers_question": "message_structure",
+      "kind": "concept_system",
+      "item_id": "scs_hop_sa_002",
+      "source": {
+        "source_dir": "hopkins-scientific-advertising-ch1-7",
+        "source_id": "hopkins_scientific_advertising_ch1_7",
+        "title": "hopkins-scientific-advertising-ch1-7 (Claude C. Hopkins)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "label": "the_salesmanship_test_as_a_decision_procedure",
+        "system_type": "decision_framework",
+        "description": "A single question — would this help a salesman sell the goods, or help me sell them face to face with the buyer — offered as the way to settle any advertising question, together with the answers the source derives from it: advertising exists only to sell, its errors are multiplied, literary style and visible selling effort create resistance, imposed brevity is wrong, enlarged type is waste, write to one typical buyer, learn the buyer's reactions in person, never write to please the seller, offer service rather than ask for the order, and take the order by removing the buyer's risk. Chapter 5 then names the one place the analogy does not hold — the salesman cannot be ignored and the advertisement can — and treats the headline as the repair.",
+        "whole_system_claim": "Almost every question about how an advertisement should be written can be answered by asking what a good salesman would do in front of one buyer; the answers the book gives are that derivation, not separate findings.",
+        "member_count": 16,
+        "member_refs": [
+          "sk_hop_sa_0008",
+          "sk_hop_sa_0009",
+          "sk_hop_sa_0010",
+          "sk_hop_sa_0011",
+          "sk_hop_sa_0012",
+          "sk_hop_sa_0013",
+          "sk_hop_sa_0014",
+          "sk_hop_sa_0015",
+          "sk_hop_sa_0016",
+          "sk_hop_sa_0017",
+          "sk_hop_sa_0018",
+          "sk_hop_sa_0019",
+          "sk_hop_sa_0020",
+          "sk_hop_sa_0031",
+          "sk_hop_sa_0032",
+          "sk_hop_sa_0035"
+        ],
+        "source_warns_against_isolated_use": false
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "system_type_origin": "source_stated",
+        "whole_system_claim_origin": "source_explicit",
+        "evidence_characteristics": [
+          "explicitly_stated",
+          "argued",
+          "practitioner_assertion",
+          "mechanism_given",
+          "repeated_within_source"
+        ],
+        "source_uncertainty": "none",
+        "extraction_uncertainty": "none",
+        "system_level_uncertainty": "The framework and most of the membership are the source's own; chapter 2 states the test in the imperative and then works through the questions it answers. The system-level property worth recording is structural rather than uncertain: because these rules are derived from one analogy rather than each from its own evidence, they share a single point of failure. If the analogy is wrong for a given medium, every rule under it loses its support at once, and retrieving any one of them alone hides that."
+      },
+      "provenance": {
+        "chapter": "2, 3, 5",
+        "section": "Just Salesmanship; Offer Service; Headlines",
+        "page_start": 5,
+        "page_end": 17,
+        "source_support": "text"
+      },
+      "relevance": {
+        "kind_rank": 1,
+        "score": 17.184301,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "advertising",
+          "create",
+          "headline",
+          "offer",
+          "selling",
+          "single",
+          "to"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "hopkins-scientific-advertising-ch1-7",
+        "artifact": "source-concept-systems.yaml",
+        "item_id": "scs_hop_sa_002"
+      }
+    },
+    {
+      "n": 8,
+      "answers_question": "brand_handling",
+      "kind": "visual_evidence",
+      "item_id": "vis_conv_no_colour_dependence",
+      "source": {
+        "source_dir": "ondaatje-conversations-ch3",
+        "source_id": "ondaatje_conversations_third_conversation",
+        "title": "ondaatje-conversations-ch3 (Michael Ondaatje)",
+        "source_status": "ACCEPTED"
+      },
+      "content": {
+        "what_is_visible": "Every image greyscale; no claim in the chapter refers to colour.",
+        "why_it_matters": "Unlike the Albers hazard, there is nothing here for a greyscale reproduction to destroy. The films discussed are in colour, but the discussion is about sound, structure, character and lens geometry."
+      },
+      "epistemics": {
+        "source_status": "ACCEPTED",
+        "legibility_status": "source_supported"
+      },
+      "provenance": {},
+      "relevance": {
+        "kind_rank": 1,
+        "score": 4.541977,
+        "allocation": "allocated",
+        "matched_query_terms": [
+          "colour"
+        ],
+        "basis": "BM25 rank within this object kind. It measures fit to the retrieval question, and says nothing about how good or how well-evidenced the knowledge is."
+      },
+      "delivered_complete": true,
+      "detail_ref": {
+        "source_dir": "ondaatje-conversations-ch3",
+        "artifact": "visual-evidence-ledger.yaml",
+        "item_id": "vis_conv_no_colour_dependence"
+      }
+    }
+  ],
+  "coverage": {
+    "questions_planned": [
+      "composition_hierarchy",
+      "failure_prevention",
+      "message_structure",
+      "brand_handling"
+    ],
+    "questions_with_at_least_one_item": [
+      "brand_handling",
+      "composition_hierarchy",
+      "failure_prevention",
+      "message_structure"
+    ],
+    "questions_with_no_item": []
+  },
+  "spread": {
+    "items": 8,
+    "distinct_sources": 7,
+    "sources": [
+      "dwyer-patel-cinema-india",
+      "freeman-photographers-eye-graphic-guide",
+      "grammar-of-the-edit-ch3-5",
+      "hopkins-scientific-advertising-ch1-7",
+      "miller-storybrand-sb7",
+      "ondaatje-conversations-ch3",
+      "vignelli-canon-intangibles"
+    ],
+    "distinct_lineage_groups": 7,
+    "max_items_from_one_source": 2,
+    "max_items_from_one_lineage_group": 2,
+    "items_by_kind": {
+      "knowledge": 4,
+      "concept_system": 2,
+      "binding": 1,
+      "visual_evidence": 1
+    },
+    "source_stated_domains": {
+      "film_editing": 2,
+      "television_editing": 2,
+      "branding": 1,
+      "corporate_identity": 1,
+      "graphic_design": 1,
+      "marketing": 1,
+      "sales_copy": 1,
+      "websites": 1
+    },
+    "domains_note": "What the selected sources say THEY are about. Retrieval is lexical, so a source written about one medium can answer a question about another. Check this against the job."
+  },
+  "size": {
+    "total_chars": 28154,
+    "estimated_tokens": 7038,
+    "chars_per_token_estimate": 4,
+    "budget_chars": 30000,
+    "items_delivered_complete": 7,
+    "items_delivered_complete_share": 0.875,
+    "within_budget": true
+  }
+}
