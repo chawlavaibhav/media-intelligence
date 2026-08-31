@@ -1,0 +1,432 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+#
+# Orphan backfill v0 (Canon repair / REP-01).
+#
+# WHAT THIS IS. canon/validation/recompute_system_reachability.py shows that seeding from
+# SourceConceptSystem members and closing over intra_source_relations (undirected) reaches
+# 641/677 accepted knowledge objects; 36 are unreached, concentrated in the newest sources
+# (binet-field 12, parameswaran 9, pandey 5, murch 5, ondaatje 4, dwyer-patel 1). A system-seeded
+# pack compilation silently drops exactly these objects. This file proposes, for every unreached
+# sk_id, either a new intra-source relation edge, a new system membership, or the note that the
+# object becomes reachable through another entry here plus an ALREADY-COMMITTED relation edge.
+#
+# GOVERNANCE. Nothing here modifies any committed source-knowledge.yaml or
+# source-concept-systems.yaml — those are Audit-Gate outputs and are not this worker's to edit.
+# Each proposal is justified from committed claim text only (quoted or closely paraphrased, with
+# the sk_/scs_ ids to check it against); no source material was consulted and no model was
+# called. Adopting any proposal is a Controller decision executed by a source-file amendment
+# under the normal gate. Confidence grades are the worker's own and bind nothing.
+#
+# MECHANICS. proposal.type is one of:
+#   new_relation    — add {relation: R, target: T} to sk_id's intra_source_relations;
+#                     R is from the SPEC-03 intra-source enum (qualifies, qualified_by,
+#                     trades_off_with, depends_on, generalises, specialises, contradicts,
+#                     demonstrated_together_with).
+#   new_membership  — add sk_id to the members of scs_id (relation member_of_system).
+#   reachable_via   — no new edge for THIS object: adopting the named entry restores its
+#                     reachability through the committed relation row cited.
+# The validator (canon/validation/validate_live24_coverage.py) recomputes the closure, checks
+# this file covers every unreached sk_id, checks every relation against the SPEC-03 enum, and
+# simulates adoption of all proposals: the closure must then reach 677/677.
+
+meta:
+  task: Canon repair / REP-01
+  authored: 2026-08-31
+  status: PROPOSED
+  closure_script: canon/validation/recompute_system_reachability.py
+  baseline: {reached: 641, total: 677, unreached: 36}
+  relation_enum_source: canon/knowledge/SPEC-03-source-knowledge.md (intra_source_relations vocabulary)
+
+entries:
+
+# ── binet-field-effectiveness-in-context-ch1 (12 unreached) ────────────────────
+- sk_id: sk_eic_0008
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: new_membership, scs_id: scs_eic_001, relation: member_of_system}
+  confidence: strong
+  justification: >
+    Claim text: "In every consideration context the report examines, the share of campaigns
+    reporting very large penetration effects exceeds the share reporting very large loyalty
+    effects." The claim is quantified BY consideration context — the exact frame scs_eic_001
+    (consideration_context_framework) exists to hold.
+
+- sk_id: sk_eic_0009
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: reachable_via, entry: sk_eic_0008, committed_relation: qualifies, committed_on: sk_eic_0009}
+  confidence: strong
+  justification: >
+    sk_eic_0009 already carries the committed row {relation: qualifies, target: sk_eic_0008}
+    ("the variation inside the constant"); once sk_eic_0008 is seeded via scs_eic_001 this object
+    is in its closure. No new edge needed.
+
+- sk_id: sk_eic_0010
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: reachable_via, entry: sk_eic_0008, committed_relation: depends_on, committed_on: sk_eic_0010}
+  confidence: strong
+  justification: >
+    sk_eic_0010 already carries the committed row {relation: depends_on, target: sk_eic_0008}
+    ("the recommendation rests on the penetration finding"). Reachable once sk_eic_0008 is seeded.
+
+- sk_id: sk_eic_0011
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: reachable_via, entry: sk_eic_0012, committed_relation: qualified_by, committed_on: sk_eic_0012}
+  confidence: strong
+  justification: >
+    sk_eic_0012 carries the committed row {relation: qualified_by, target: sk_eic_0011} ("the
+    negative case that motivates it"); the closure is undirected, so seeding sk_eic_0012 reaches
+    this object.
+
+- sk_id: sk_eic_0012
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: new_membership, scs_id: scs_eic_002, relation: member_of_system}
+  confidence: strong
+  justification: >
+    Claim text: "Lower price sensitivity is achieved by engaging people emotionally rather than by
+    rational argument; in emotional categories it is easier to build brands that command a price
+    premium." Price-premium-through-emotional-engagement is the brand-building mechanism
+    scs_eic_002 (brand_and_activation_as_complementary_mechanisms) describes — "brand building
+    creating durable memory structures".
+
+- sk_id: sk_eic_0013
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: new_membership, scs_id: scs_eic_001, relation: member_of_system}
+  confidence: strong
+  justification: >
+    Claim text: "Within each kind of consideration, the direction of the effect on advertising
+    efficiency is opposite: as EMOTIONAL consideration rises, ESOV Efficiency rises (0.11, 0.18,
+    0.19...); as RATIONAL consideration rises, it falls (1.11, 0.43, 0.36)." Both framework
+    dimensions of scs_eic_001 (rational/emotional consideration) are the claim's own axes.
+
+- sk_id: sk_eic_0017
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: new_membership, scs_id: scs_eic_001, relation: member_of_system}
+  confidence: medium
+  justification: >
+    Claim text: "Overlaying a third-party measure of online research on 405 IPA cases,
+    high-research categories are more likely to be high-interest than low-research ones, 70 per
+    cent against 49 per cent, and rational decision-making is more important in them." The
+    online-research overlay is an operationalisation of scs_eic_001's two dimensions
+    (interest/consideration level and rational weight) with an external measure.
+
+- sk_id: sk_eic_0018
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: new_relation, relation: specialises, target: sk_eic_0013}
+  confidence: medium
+  justification: >
+    Claim text: "ESOV Efficiency for emotional advertising is 0.73 in high-research categories
+    against 0.67 in low-research ones" — the emotional-efficiency finding of sk_eic_0013
+    ("advertising efficiency is highest for emotional purchases") specialised into the
+    high/low-research category cut that sk_eic_0017 defines.
+
+- sk_id: sk_eic_0019
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: reachable_via, entry: sk_eic_0018, committed_relation: contradicts, committed_on: sk_eic_0019}
+  confidence: strong
+  justification: >
+    sk_eic_0019 already carries the committed row {relation: contradicts, target: sk_eic_0018}
+    ("practice runs against the reported efficiency"). Reachable once sk_eic_0018 connects.
+
+- sk_id: sk_eic_0020
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: new_relation, relation: specialises, target: sk_eic_0010}
+  confidence: medium
+  justification: >
+    Claim text: "Pure loyalty campaigns account for just 3 per cent of high-research-category IPA
+    cases." The observed rarity is the practice-side instance, in one category cut, of
+    sk_eic_0010's verdict that "strategies leading with loyalty rather than acquisition will
+    fail". Flagged: an evidence-of relation would fit better than specialises, but the SPEC-03
+    enum has no such relation; specialises (the narrower claim of the same family) is the
+    closest lawful type.
+
+- sk_id: sk_eic_0021
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: new_relation, relation: specialises, target: sk_eic_0003}
+  confidence: medium
+  justification: >
+    Claim text: "Across all campaigns, ESOV Efficiency in high-research categories is typically
+    just over twice that in low-research ones." sk_eic_0003 states the general form ("Advertising
+    efficiency is higher for more considered purchases: ESOV Efficiency is 0.73 ... against
+    0.60"), and sk_eic_0017 establishes that high-research categories are the high-interest,
+    more-considered ones (70% vs 49%) — so this is the same efficiency claim specialised to the
+    research-category cut.
+
+- sk_id: sk_eic_0028
+  source: binet-field-effectiveness-in-context-ch1
+  proposal: {type: new_membership, scs_id: scs_eic_003, relation: member_of_system}
+  confidence: medium
+  justification: >
+    Claim text: "The report explicitly declines to be read as a set of universal rules ... readers
+    are told to flex the rules and take only what fits their context." scs_eic_003
+    (ipa_databank_evidence_apparatus) is the system holding the report's own statements about what
+    its numbers can bear (sample bias sk_eic_0024, self-grading sk_eic_0025, under-reporting
+    sk_eic_0026, fitted-curve optimum sk_eic_0027); the refusal of universal application is the
+    same self-limiting register and belongs with them.
+
+# ── dwyer-patel-cinema-india (1 unreached) ─────────────────────────────────────
+- sk_id: sk_dpci_0180
+  source: dwyer-patel-cinema-india
+  proposal: {type: new_membership, scs_id: scs_dpci_002, relation: member_of_system}
+  confidence: strong
+  justification: >
+    Claim text: "Patel gives a dated, step-by-step account of one release's publicity process
+    (Mohabbatein, Yash Raj Films, 2000): stills are taken from the first day of filming; work on
+    posters begins twelve weeks before release..." scs_dpci_002 is "the conventions are dated and
+    the source dates them" — a grouping of the objects the source itself bounds in time; a
+    dated single-campaign timeline is precisely such an object, alongside sk_dpci_0150 and
+    sk_dpci_0170.
+
+# ── murch-blink-p1-25 (5 unreached) ────────────────────────────────────────────
+- sk_id: sk_murch_c003_0001
+  source: murch-blink-p1-25
+  proposal: {type: new_membership, scs_id: scs_murch_c003_004, relation: member_of_system}
+  confidence: medium
+  justification: >
+    Claim text: "Editing is not primarily the act of joining pieces. It is the discovery of a
+    path through the material ... activities that clear and illuminate the path ahead."
+    scs_murch_c003_004 (the_editors_stance_toward_the_material) is "a set of claims and practices
+    about where the editor should stand in relation to the footage"; editing-as-path-discovery is
+    the source's most general statement of that stance.
+
+- sk_id: sk_murch_c003_0002
+  source: murch-blink-p1-25
+  proposal: {type: reachable_via, entry: sk_murch_c003_0001, committed_relation: specialises, committed_on: sk_murch_c003_0002}
+  confidence: strong
+  justification: >
+    sk_murch_c003_0002 already carries the committed row {relation: specialises, target:
+    sk_murch_c003_0001} ("where the unaccounted time goes"). Reachable once sk_murch_c003_0001
+    is seeded.
+
+- sk_id: sk_murch_c003_0003
+  source: murch-blink-p1-25
+  proposal: {type: reachable_via, entry: sk_murch_c003_0001, committed_relation: specialises, committed_on: sk_murch_c003_0003}
+  confidence: strong
+  justification: >
+    sk_murch_c003_0003 already carries the committed row {relation: specialises, target:
+    sk_murch_c003_0001} ("why the path takes so long to find"). Reachable once sk_murch_c003_0001
+    is seeded.
+
+- sk_id: sk_murch_c003_0013
+  source: murch-blink-p1-25
+  proposal: {type: new_membership, scs_id: scs_murch_c003_004, relation: member_of_system}
+  confidence: strong
+  justification: >
+    Claim text: "Two editors given identical dailies will make different films, because the
+    editorial choice is not what the material contains but when and in what order its pieces of
+    information are released." A claim about what the editor's material actually is — the order
+    and rate of release — is a stance-toward-the-material claim, the register of
+    scs_murch_c003_004 (compare sk_murch_c003_0037, "see only what is on the screen").
+
+- sk_id: sk_murch_c003_0014
+  source: murch-blink-p1-25
+  proposal: {type: reachable_via, entry: sk_murch_c003_0013, committed_relation: generalises, committed_on: sk_murch_c003_0013}
+  confidence: strong
+  justification: >
+    sk_murch_c003_0013 already carries the committed row {relation: generalises, target:
+    sk_murch_c003_0014} ("and the warning that follows from it"); the closure is undirected, so
+    seeding sk_murch_c003_0013 reaches this object.
+
+# ── ondaatje-conversations-ch3 (4 unreached) ───────────────────────────────────
+- sk_id: sk_conv_c003_0017
+  source: ondaatje-conversations-ch3
+  proposal: {type: new_relation, relation: qualifies, target: sk_conv_c003_0013}
+  confidence: medium
+  justification: >
+    Claim text: "a declared refusal to show fixates the audience on what is being withheld, and
+    the fixation survives the suspicion that there is nothing there." sk_conv_c003_0013 states
+    that character is built by SELECTING moments that show conflict; sk_conv_c003_0017 qualifies
+    that principle with its limiting case — a character built by withholding the revealing moment
+    altogether. Both are Murch's accounts of presenting character through shown/withheld moments.
+
+- sk_id: sk_conv_c003_0018
+  source: ondaatje-conversations-ch3
+  proposal: {type: reachable_via, entry: sk_conv_c003_0017, committed_relation: trades_off_with, committed_on: sk_conv_c003_0017}
+  confidence: strong
+  justification: >
+    sk_conv_c003_0017 already carries the committed row {relation: trades_off_with, target:
+    sk_conv_c003_0018} ("withholding the character against clarifying the process"). Reachable
+    once sk_conv_c003_0017 connects.
+
+- sk_id: sk_conv_c003_0020
+  source: ondaatje-conversations-ch3
+  proposal: {type: new_membership, scs_id: scs_conv_c003_002, relation: member_of_system}
+  confidence: medium
+  justification: >
+    Claim text: "huge issues of character and story are frequently decided by whether a single
+    shot is included, and the effect reverberates through the whole film" — his case being the
+    removal of one close-up of a character visibly collapsing. scs_conv_c003_002 (the hat as the
+    source's own extended metaphor) holds sk_conv_c003_0014's claim that ONE moment is always
+    most revealing of character and sk_conv_c003_0016's amplification-by-cut; the
+    single-shot-decides-agency case is the same mechanism at its largest stated scale.
+
+- sk_id: sk_conv_c003_0021
+  source: ondaatje-conversations-ch3
+  proposal: {type: reachable_via, entry: sk_conv_c003_0020, committed_relation: generalises, committed_on: sk_conv_c003_0020}
+  confidence: strong
+  justification: >
+    sk_conv_c003_0020 already carries the committed row {relation: generalises, target:
+    sk_conv_c003_0021} ("the stated reason for the change was not the real one"). Reachable once
+    sk_conv_c003_0020 is seeded.
+
+# ── pandey-pandeymonium (5 unreached) ──────────────────────────────────────────
+- sk_id: sk_ppm_0001
+  source: pandey-pandeymonium
+  proposal: {type: new_membership, scs_id: scs_ppm_002, relation: member_of_system}
+  confidence: medium
+  justification: >
+    Claim text: "Pandey states his governing communication principle in the Preface ... He calls
+    these his 'kindergarten lessons in communication' and the book returns to them."
+    scs_ppm_002 records the book's own evidential/argumentative form; the credo the whole book
+    returns to is part of that form — a stated principle, argued by the author's own life case,
+    which is exactly the bound the system exists to attach.
+
+- sk_id: sk_ppm_0030
+  source: pandey-pandeymonium
+  proposal: {type: new_relation, relation: specialises, target: sk_ppm_0001}
+  confidence: medium
+  justification: >
+    Claim text: sk_ppm_0001 demands communication "in a context the audience can understand";
+    sk_ppm_0030's domestic multiculturalism — "a shared knowledge and resource pool ... and a
+    locally knowledgeable team that understands" the local audience — is that principle
+    specialised into an organisational structure for a multi-regional market. Depends on the
+    sk_ppm_0001 membership proposal above; both must be adopted together.
+
+- sk_id: sk_ppm_0031
+  source: pandey-pandeymonium
+  proposal: {type: new_membership, scs_id: scs_ppm_001, relation: member_of_system}
+  confidence: medium
+  justification: >
+    Claim text: "Pandey's stated condition on celebrity work is that the viewer must find the
+    celebrity, the script and the idea all memorable, not the celebrity alone." scs_ppm_001 is
+    the author's position on judging creative work before it runs; a stated pre-run acceptance
+    condition on celebrity work is a member of that position.
+
+- sk_id: sk_ppm_0040
+  source: pandey-pandeymonium
+  proposal: {type: new_membership, scs_id: scs_ppm_001, relation: member_of_system}
+  confidence: medium
+  justification: >
+    Claim text: the alternative to scam work "is both better and more likely to win, and ...
+    juries have become harder to fool." A claim about how creative work is (and should be) judged
+    in award review belongs with the author's judging-position system scs_ppm_001.
+
+- sk_id: sk_ppm_0041
+  source: pandey-pandeymonium
+  proposal: {type: new_membership, scs_id: scs_ppm_002, relation: member_of_system}
+  confidence: weak
+  justification: >
+    Claim text: "Pandey states that Indian advertising has too few women leading agencies,
+    accepts this as a failing of the industry's senior men including himself, and locates the
+    problem specifically at retention." The claim is argued entirely from the author's own
+    position and unbacked assertion — the evidential form scs_ppm_002 exists to bound. WEAKEST
+    ASSIGNMENT IN THIS FILE: the honest alternative is a new industry-structure system, which
+    only a Controller-authorised source amendment can create; recorded here so the object is a
+    visible residue rather than a silent drop.
+
+# ── parameswaran-nawabs-nudes-noodles (9 unreached) ────────────────────────────
+- sk_id: sk_nnn_0023
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_relation, relation: qualifies, target: sk_nnn_0022}
+  confidence: strong
+  justification: >
+    Claim text: "Four of the nineteen plates were opened and read and still do not establish what
+    their captions assert ... The Rasna caption describes a television line but the plate is a
+    press advertisement in which 'I love you Rasna' appears only as a small lockup beside the
+    logo." The object qualifies the plate-derived device claims of scs_nnn_003 — named directly:
+    the Rasna plate sits beside sk_nnn_0022's NDDB/plate-insert family — by bounding what a
+    reproduced plate can establish.
+
+- sk_id: sk_nnn_0030
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_relation, relation: qualified_by, target: sk_nnn_0031}
+  confidence: medium
+  justification: >
+    Claim text: Krishnakumar's position is that "a child-directed product should launch while
+    school is in session, because the child does not experience the advertisement as advertising
+    but as tradeable news". sk_nnn_0031 reports that a child's influence is "strongest for
+    low-value products aimed at the child (snacks, sweets, drinks)" and elsewhere only a veto —
+    the influence-band finding qualifies how far the schedule-for-school advice extends beyond
+    child-directed low-value categories. Chain: reachable only together with the sk_nnn_0031
+    proposal below.
+
+- sk_id: sk_nnn_0031
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_membership, scs_id: scs_nnn_001, relation: member_of_system}
+  confidence: weak
+  justification: >
+    Claim text: "The source reports researchers finding three bands" of household purchase
+    influence — research reported at second hand, in the same evidential posture scs_nnn_001
+    exists to brake (compare sk_nnn_0054: "a content analysis is invoked and its results are not
+    supplied"). WEAK: the system's stated subject is the mirror thesis; the honest alternative is
+    a new Indian-household-consumer system (Controller-gated). Recorded to make the drop visible.
+
+- sk_id: sk_nnn_0032
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_membership, scs_id: scs_nnn_001, relation: member_of_system}
+  confidence: weak
+  justification: >
+    Claim text: "The author's conjecture, offered explicitly as a suspicion rather than a
+    finding, is that the Indian sachet format succeeded for shampoo because shampooing was an
+    occasional rather than daily act." The author's own explicit brake ("suspicion rather than a
+    finding") is the register of scs_nnn_001 — "the brakes are what make it safe to consume."
+    Same caveat as sk_nnn_0031: a new consumer-behaviour system would be the better home.
+
+- sk_id: sk_nnn_0033
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_relation, relation: depends_on, target: sk_nnn_0011}
+  confidence: weak
+  justification: >
+    Claim text: sk_nnn_0033 recounts how Emami "opened the Indian men's fairness category in
+    2005" against an incumbent whose "women's brand" men were already using. The category
+    vocabulary the account is framed in — "fairness" — is the invested euphemism sk_nnn_0011
+    documents ("When Doordarshan forbade the word gori ('fair') in fairness-cream advertising,
+    the advertiser substituted nikhri ... Sustained use then loaded the substitute"). WEAK: the
+    dependence is framing-level, not inferential; flagged for Controller judgement, with a new
+    category-dynamics system as the honest alternative.
+
+- sk_id: sk_nnn_0050
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_relation, relation: specialises, target: sk_nnn_0051}
+  confidence: strong
+  justification: >
+    Claim text: "a full day shooting an infant may yield only about five seconds of usable
+    footage ... no baby shoot is booked with fewer than three infants standing by."
+    sk_nnn_0051 is the general object — "production facts stated as standing practitioner
+    cautions" (star working-day bounds, entourage costs, body doubles) that the brief does not
+    show; the infant-shoot yield is one more such standing production caution, the specific case
+    of the same claim family.
+
+- sk_id: sk_nnn_0052
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_relation, relation: qualifies, target: sk_nnn_0019}
+  confidence: medium
+  justification: >
+    Claim text: "From the mid-1970s writers such as Kamlesh Pandey began creating work ORIGINALLY
+    in Hi[ndi]" after decades in which "Indian-language writers were confined to a separate
+    'Language Department' that translated." sk_nnn_0019's "Thanda matlab Coca-Cola" execution is
+    vernacular copy working through script and setting; sk_nnn_0052 qualifies how such executions
+    are to be read — as origination from the centre, not translation — which is the condition of
+    their register working at all.
+
+- sk_id: sk_nnn_0053
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_membership, scs_id: scs_nnn_001, relation: member_of_system}
+  confidence: medium
+  justification: >
+    Claim text: television penetration figures "are on inconsistent bases — licensed sets in the
+    early years, households later — and are repor[ted]" from a cited secondary source (Nalin
+    Mehta). scs_nnn_001's description covers "the one place where the thesis's most
+    quantitative-sounding support turns out to be unsupplied"; this object is the same class —
+    quantitative support carried with its stated basis problems — and belongs with the brakes
+    that make the survey safe to consume.
+
+- sk_id: sk_nnn_0055
+  source: parameswaran-nawabs-nudes-noodles
+  proposal: {type: new_relation, relation: specialises, target: sk_nnn_0001}
+  confidence: strong
+  justification: >
+    Claim text: "The source records a recurring Indian pattern in which advertisers attach a
+    social cause to a commercial message: Amul's ... 'Jaago Re' (2008) ... 'Power of 49'."
+    sk_nnn_0001's organising proposition is that Indian advertising can be read as a record of
+    social change and "sometimes runs ahead o[f it]"; the cause-platform pattern is that
+    proposition specialised to one recurring device.

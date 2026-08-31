@@ -1,0 +1,1553 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+#
+# PROPOSED-domain-vocabulary-v1 — controlled two-axis vocabulary for
+# scope.domain_discussed_by_source, plus a mechanical label->term mapping and a review queue.
+#
+# Problem (GAP-13 / CD-domain-label-chaos): the field is free text — 1,335 mentions across the
+# accepted corpus resolve to 331 unique labels, 197 of them singletons (59.5%). Free text cannot
+# drive pack routing or coverage counting. This file replaces it with a closed 22-term enum
+# (11 medium + 11 subject) and maps every accepted label to terms or, when a label is a homonym,
+# a method, or out of scope, into an explicit review queue. No label is silently dropped.
+#
+# This is a mapping layer over committed extractions, not a rewrite of them.
+# Validate: python3 canon/validation/validate_domain_vocabulary.py
+domain_vocabulary_version: v1
+status: PROPOSED
+census:
+  field: scope.domain_discussed_by_source
+  corpus: canon/knowledge/current/*/source-knowledge.yaml (accepted sources only)
+  accepted:
+    mentions: 1335
+    unique_labels: 331
+    singletons: 197
+  full_corpus_including_hold_informational_only:
+    mentions: 3305
+    unique_labels: 711
+    singletons: 398
+    note: Reported for scale only. HOLD material (canon/candidates/) is NOT mapped here and must never
+      be consumed via this file; its labels enter the mapping only if the Controller admits the source.
+    recompute: python3 -c "import yaml,glob,collections; c=collections.Counter(); [c.update(dm for o in
+      yaml.safe_load(open(f))['source_knowledge'] for dm in (o.get('scope') or {}).get('domain_discussed_by_source')
+      or []) for f in glob.glob('canon/knowledge/current/*/source-knowledge.yaml')+glob.glob('canon/candidates/*/*/source-knowledge.yaml')];
+      print(sum(c.values()), len(c), sum(1 for v in c.values() if v==1))"
+  recompute: 'python3 -c "import yaml,glob,collections; c=collections.Counter(); [c.update(dm for o in
+    yaml.safe_load(open(f))[''source_knowledge''] for dm in (o.get(''scope'') or {}).get(''domain_discussed_by_source'')
+    or []) for f in glob.glob(''canon/knowledge/current/*/source-knowledge.yaml'')]; print(sum(c.values()),
+    len(c), sum(1 for v in c.values() if v==1))"  # expect 1335 331 197'
+coverage:
+  mapped_labels: 295
+  mapped_mentions: 1283
+  mapped_mention_share: 0.961
+  review_queue_labels: 36
+  review_queue_mentions: 52
+  note: 'Every one of the 331 accepted labels appears exactly once: in `mapping` or in `review_queue`.
+    No silent drops. All four figures above are recomputed, not trusted, by canon/validation/validate_domain_vocabulary.py.'
+vocabulary:
+  axes:
+  - medium
+  - subject
+  closed_enum: true
+  medium:
+  - term: m_moving_image_editing
+    definition: 'assembly of moving images after capture: cutting, pacing, transitions, sound editing
+      and mixing, grading'
+  - term: m_moving_image_production
+    definition: 'making moving images before and at capture: directing, staging, casting, sets, costume,
+      production craft of film/TV/ad film'
+  - term: m_cinematography_lighting
+    definition: 'camera and lighting craft: exposure, angles, movement, lighting setups and equipment'
+  - term: m_photography
+    definition: still photography in all genres
+  - term: m_graphic_print_design
+    definition: 'page-bound graphic design: editorial, publication, book, identity, packaging, illustration,
+      print production'
+  - term: m_typography
+    definition: type design and typesetting as a distinct craft
+  - term: m_colour
+    definition: colour theory, study and use as a distinct craft
+  - term: m_web_interactive
+    definition: web, interaction and screen-interface design
+  - term: m_outdoor_print_media
+    definition: posters, outdoor, signage and display print media
+  - term: m_fine_art
+    definition: 'art practice and art objects: painting, sculpture, bazaar/calendar art as imagery'
+  - term: m_short_form_feed_video
+    definition: feed-native short-form video (6-60s, usually vertical, platform-distributed)
+    reserved: true
+    rationale: 'Zero accepted labels map here and that is the point: no accepted source discusses feed-native
+      short-form video. The newest accepted moving-image source is 2011 (kenworthy; grammar-of-the-edit
+      2009, murch 2001, ondaatje 2002 per their PROVENANCE.md), and the only feed-native source in the
+      corpus, google-abcd-video-ads, is HOLD (canon/candidates/) and therefore not mappable. The term
+      is kept in the closed enum so coverage tooling reports the hole explicitly instead of absorbing
+      feed-video demand into film-era terms. It becomes populatable only by Controller admission of a
+      feed-native source.'
+  subject:
+  - term: s_advertising_craft
+    definition: 'how advertisements are made: copy, campaigns, endorsement, selling technique'
+  - term: s_advertising_effectiveness
+    definition: 'whether and why advertising works: measurement, pre-testing, response evidence'
+  - term: s_marketing_strategy
+    definition: markets, segmentation, pricing, branding, forecasting, go-to-market
+  - term: s_india_market_culture
+    definition: Indian market, consumers, visual culture, cinema culture and their history
+  - term: s_narrative_storytelling
+    definition: story, character, genre, screenwriting
+  - term: s_persuasion_psychology
+    definition: why people attend, believe, decide and change behaviour
+  - term: s_creative_practice_process
+    definition: 'how creative work gets made and learned: practice, craft learning, critique'
+  - term: s_org_management
+    definition: creative organisations, agencies, management, meetings
+  - term: s_regulation_compliance
+    definition: clearance, regulation, industry ethics
+  - term: s_composition_attention
+    definition: composition, visual attention and perception in the frame
+  - term: s_category_specific
+    definition: product-category-specific conventions (dairy, fmcg, footwear, ...)
+rules:
+  axis_rule: A label maps to at most one medium term and at most one subject term (one, the other, or
+    one of each). Never two terms on the same axis.
+  future_extraction_rule: New extractions populate scope.domain_discussed_by_source from this closed vocabulary.
+    When no term fits, the extractor keeps a free-text label AND appends it to this file's review_queue
+    with count and source dir (escape hatch); the free-text label is data, not a new term. The enum itself
+    grows only by Controller decision.
+  consumption_note: 'This mapping is an input to pack/coverage tooling (e.g. the live-coverage generators
+    in canon/planning/). It is a mapping layer: committed extraction files in canon/knowledge/current/
+    are not rewritten and remain byte-identical.'
+mapping:
+  film_editing:
+    count: 125
+    terms:
+    - m_moving_image_editing
+  advertising:
+    count: 81
+    terms:
+    - s_advertising_craft
+  television_editing:
+    count: 60
+    terms:
+    - m_moving_image_editing
+  editorial_design:
+    count: 59
+    terms:
+    - m_graphic_print_design
+  publication_design:
+    count: 38
+    terms:
+    - m_graphic_print_design
+  advertising_effectiveness:
+    count: 28
+    terms:
+    - s_advertising_effectiveness
+  graphic_design:
+    count: 28
+    terms:
+    - m_graphic_print_design
+  photography:
+    count: 26
+    terms:
+    - m_photography
+  indian_advertising:
+    count: 24
+    terms:
+    - s_india_market_culture
+    note: advertising sense retained via co-occurring labels; one subject term max
+  marketing:
+    count: 24
+    terms:
+    - s_marketing_strategy
+  communication:
+    count: 23
+    terms:
+    - s_persuasion_psychology
+    note: 'heath-made-to-stick usage: communication that sticks, not media craft'
+  artmaking:
+    count: 22
+    terms:
+    - m_fine_art
+    - s_creative_practice_process
+  typography:
+    count: 22
+    terms:
+    - m_typography
+  photographic_lighting:
+    count: 20
+    terms:
+    - m_cinematography_lighting
+  web_design:
+    count: 19
+    terms:
+    - m_web_interactive
+  colour_study_and_teaching:
+    count: 18
+    terms:
+    - m_colour
+  film_directing:
+    count: 18
+    terms:
+    - m_moving_image_production
+  cinematography:
+    count: 17
+    terms:
+    - m_cinematography_lighting
+  motion_picture_production:
+    count: 17
+    terms:
+    - m_moving_image_production
+  india:
+    count: 16
+    terms:
+    - s_india_market_culture
+  creative_organisations:
+    count: 14
+    terms:
+    - s_org_management
+  book_design:
+    count: 13
+    terms:
+    - m_graphic_print_design
+  film_production:
+    count: 13
+    terms:
+    - m_moving_image_production
+  branding:
+    count: 12
+    terms:
+    - s_marketing_strategy
+  product_design:
+    count: 12
+    terms:
+    - s_marketing_strategy
+    note: 'majority-usage rule: bijapurkar/sutherland treat it as a market-offer decision; the vignelli
+      minority usage is design craft'
+  mail_order_advertising:
+    count: 11
+    terms:
+    - s_advertising_effectiveness
+    note: 'hopkins: the measured-response channel, not a layout craft'
+  animated_film_production:
+    count: 10
+    terms:
+    - m_moving_image_production
+  hindi_cinema:
+    count: 10
+    terms:
+    - m_moving_image_production
+    - s_india_market_culture
+  business:
+    count: 9
+    terms:
+    - s_marketing_strategy
+  idea_design:
+    count: 9
+    terms:
+    - s_persuasion_psychology
+  painting:
+    count: 8
+    terms:
+    - m_fine_art
+  sound_editing:
+    count: 8
+    terms:
+    - m_moving_image_editing
+  film_posters:
+    count: 7
+    terms:
+    - m_outdoor_print_media
+  market_research:
+    count: 7
+    terms:
+    - s_marketing_strategy
+  policy:
+    count: 7
+    terms:
+    - s_persuasion_psychology
+    note: 'sutherland usage: behavioural persuasion applied to policy'
+  websites:
+    count: 7
+    terms:
+    - m_web_interactive
+  writing:
+    count: 7
+    terms:
+    - s_creative_practice_process
+  film_music:
+    count: 6
+    terms:
+    - m_moving_image_production
+  interaction_design:
+    count: 6
+    terms:
+    - m_web_interactive
+  persuasion:
+    count: 6
+    terms:
+    - s_persuasion_psychology
+  blocking:
+    count: 5
+    terms:
+    - m_moving_image_production
+    - s_composition_attention
+  character:
+    count: 5
+    terms:
+    - s_narrative_storytelling
+  decision_making:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  filmmaking:
+    count: 5
+    terms:
+    - m_moving_image_production
+  human_behaviour:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  iconography:
+    count: 5
+    terms:
+    - m_fine_art
+    - s_india_market_culture
+  landscape_photography:
+    count: 5
+    terms:
+    - m_photography
+  management:
+    count: 5
+    terms:
+    - s_org_management
+  narrative:
+    count: 5
+    terms:
+    - s_narrative_storytelling
+  personal_selling:
+    count: 5
+    terms:
+    - s_advertising_craft
+    note: 'hopkins: selling technique as the model for ad craft'
+  segmentation:
+    count: 5
+    terms:
+    - s_marketing_strategy
+  storytelling:
+    count: 5
+    terms:
+    - s_narrative_storytelling
+  studio_production:
+    count: 5
+    terms:
+    - m_cinematography_lighting
+    note: 'alton ch2 usage: shooting under studio lighting'
+  celebrity_endorsement:
+    count: 4
+    terms:
+    - s_advertising_craft
+  composition:
+    count: 4
+    terms:
+    - s_composition_attention
+  human_visual_perception:
+    count: 4
+    terms:
+    - s_composition_attention
+  identity_design:
+    count: 4
+    terms:
+    - m_graphic_print_design
+  music:
+    count: 4
+    terms:
+    - s_creative_practice_process
+    note: 'bayles-orland: music-making as art practice, not a media craft here'
+  music_video:
+    count: 4
+    terms:
+    - m_moving_image_editing
+    note: 'grammar-of-the-edit usage: cutting music video'
+  poster_design:
+    count: 4
+    terms:
+    - m_outdoor_print_media
+  pricing:
+    count: 4
+    terms:
+    - s_marketing_strategy
+  sound_design:
+    count: 4
+    terms:
+    - m_moving_image_editing
+    note: 'ondaatje/murch usage: sound as an editing craft'
+  art_history:
+    count: 3
+    terms:
+    - m_fine_art
+  cinema:
+    count: 3
+    terms:
+    - m_moving_image_production
+  costume:
+    count: 3
+    terms:
+    - m_moving_image_production
+  creative_practice:
+    count: 3
+    terms:
+    - s_creative_practice_process
+  creativity:
+    count: 3
+    terms:
+    - s_creative_practice_process
+  direct_marketing:
+    count: 3
+    terms:
+    - s_advertising_effectiveness
+  emerging_markets:
+    count: 3
+    terms:
+    - s_marketing_strategy
+  evolutionary_psychology:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  folklore:
+    count: 3
+    terms:
+    - s_narrative_storytelling
+  globalisation:
+    count: 3
+    terms:
+    - s_india_market_culture
+    note: 'dwyer-patel/jain usage: globalisation as it bears on Indian visual culture'
+  indian_calendar_art:
+    count: 3
+    terms:
+    - m_fine_art
+    - s_india_market_culture
+  interior_cinematography:
+    count: 3
+    terms:
+    - m_cinematography_lighting
+  lighting_practice:
+    count: 3
+    terms:
+    - m_cinematography_lighting
+  market_sizing:
+    count: 3
+    terms:
+    - s_marketing_strategy
+  outdoor_advertising:
+    count: 3
+    terms:
+    - m_outdoor_print_media
+    - s_advertising_craft
+  politics:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+    note: 'sutherland usage: persuasion in political behaviour'
+  science:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+    note: 'sutherland usage: limits of rational science in explaining behaviour'
+  screenwriting:
+    count: 3
+    terms:
+    - s_narrative_storytelling
+  set_construction:
+    count: 3
+    terms:
+    - m_moving_image_production
+  teaching_art:
+    count: 3
+    terms:
+    - m_fine_art
+    - s_creative_practice_process
+  ad_film_production:
+    count: 2
+    terms:
+    - m_moving_image_production
+    - s_advertising_craft
+  advertising_creative_practice:
+    count: 2
+    terms:
+    - s_advertising_craft
+  advertising_research:
+    count: 2
+    terms:
+    - s_advertising_effectiveness
+  architectural_photography:
+    count: 2
+    terms:
+    - m_photography
+  art_education:
+    count: 2
+    terms:
+    - m_fine_art
+    - s_creative_practice_process
+  behaviour_change:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  behavioural_science:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  black_and_white_cinematography:
+    count: 2
+    terms:
+    - m_cinematography_lighting
+  business_model_design:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  camera_movement:
+    count: 2
+    terms:
+    - m_cinematography_lighting
+  colour:
+    count: 2
+    terms:
+    - m_colour
+  consumer_behaviour:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  craft_learning:
+    count: 2
+    terms:
+    - s_creative_practice_process
+  dairy_category:
+    count: 2
+    terms:
+    - s_category_specific
+  devotional_image_use:
+    count: 2
+    terms:
+    - m_fine_art
+    - s_india_market_culture
+  direct_selling:
+    count: 2
+    terms:
+    - s_advertising_craft
+  dramatic_cinematography:
+    count: 2
+    terms:
+    - m_cinematography_lighting
+  elevator_pitch:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  exposure:
+    count: 2
+    terms:
+    - m_cinematography_lighting
+  film_advertising_history:
+    count: 2
+    terms:
+    - s_india_market_culture
+  forecasting:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  image_efficacy:
+    count: 2
+    terms:
+    - s_india_market_culture
+    note: jain-only label, argued inside Indian visual-culture material
+  image_theory:
+    count: 2
+    terms:
+    - s_india_market_culture
+    note: jain-only label, argued inside Indian visual-culture material
+  indian_advertising_regulation:
+    count: 2
+    terms:
+    - s_regulation_compliance
+    note: India specificity retained via co-occurring india labels
+  indian_broadcast_clearance:
+    count: 2
+    terms:
+    - s_regulation_compliance
+    note: India specificity retained via co-occurring india labels
+  indian_consumer_behaviour:
+    count: 2
+    terms:
+    - s_india_market_culture
+  market_entry:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  meetings:
+    count: 2
+    terms:
+    - s_org_management
+  melodrama:
+    count: 2
+    terms:
+    - s_narrative_storytelling
+  performance:
+    count: 2
+    terms:
+    - m_moving_image_production
+  press_advertising:
+    count: 2
+    terms:
+    - m_graphic_print_design
+    - s_advertising_craft
+  print_production:
+    count: 2
+    terms:
+    - m_graphic_print_design
+  production_design:
+    count: 2
+    terms:
+    - m_moving_image_production
+  psychology:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  regional_markets:
+    count: 2
+    terms:
+    - s_india_market_culture
+  reportage_photography:
+    count: 2
+    terms:
+    - m_photography
+  sales:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  set_dressing:
+    count: 2
+    terms:
+    - m_moving_image_production
+  star_image:
+    count: 2
+    terms:
+    - s_india_market_culture
+  taboo_categories:
+    count: 2
+    terms:
+    - s_category_specific
+  television:
+    count: 2
+    terms:
+    - m_moving_image_production
+  television_advertising:
+    count: 2
+    terms:
+    - m_moving_image_production
+    - s_advertising_craft
+  1990s_india:
+    count: 1
+    terms:
+    - s_india_market_culture
+  adhesives_category:
+    count: 1
+    terms:
+    - s_category_specific
+  advertising_copywriting:
+    count: 1
+    terms:
+    - s_advertising_craft
+  advertising_history:
+    count: 1
+    terms:
+    - s_advertising_craft
+  advertising_industry:
+    count: 1
+    terms:
+    - s_org_management
+  advertising_industry_ethics:
+    count: 1
+    terms:
+    - s_regulation_compliance
+  advertising_pre_testing:
+    count: 1
+    terms:
+    - s_advertising_effectiveness
+  advocacy:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  agency_client_relationships:
+    count: 1
+    terms:
+    - s_org_management
+  agency_organisation:
+    count: 1
+    terms:
+    - s_org_management
+  agency_politics:
+    count: 1
+    terms:
+    - s_org_management
+  airline_category:
+    count: 1
+    terms:
+    - s_category_specific
+  awards:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  b2b:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  bazaar_and_calendar_art:
+    count: 1
+    terms:
+    - m_fine_art
+    - s_india_market_culture
+  bazaar_prints:
+    count: 1
+    terms:
+    - m_fine_art
+    - s_india_market_culture
+  beverages:
+    count: 1
+    terms:
+    - s_category_specific
+  bottom_of_the_pyramid:
+    count: 1
+    terms:
+    - s_india_market_culture
+  brand_naming:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  business_communication:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  calendar_industry:
+    count: 1
+    terms:
+    - s_india_market_culture
+  calendar_trade:
+    count: 1
+    terms:
+    - s_india_market_culture
+  camera_angle:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  campaign_design:
+    count: 1
+    terms:
+    - m_graphic_print_design
+    - s_advertising_craft
+  campaign_planning:
+    count: 1
+    terms:
+    - s_advertising_craft
+  casting:
+    count: 1
+    terms:
+    - m_moving_image_production
+  casting_infants:
+    count: 1
+    terms:
+    - m_moving_image_production
+  category_creation:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  category_introduction:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  cause_related_advertising:
+    count: 1
+    terms:
+    - s_advertising_craft
+  celebrity_contracting:
+    count: 1
+    terms:
+    - s_advertising_craft
+  character_types:
+    count: 1
+    terms:
+    - s_narrative_storytelling
+  charitable_giving:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  charity_fundraising:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  children_as_audience:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  children_as_influencers:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  colonial_encounter:
+    count: 1
+    terms:
+    - s_india_market_culture
+  colonial_india:
+    count: 1
+    terms:
+    - s_india_market_culture
+  comics:
+    count: 1
+    terms:
+    - m_graphic_print_design
+  commercials:
+    count: 1
+    terms:
+    - m_moving_image_editing
+    - s_advertising_craft
+    note: 'grammar-of-the-edit usage: cutting commercials'
+  commodity_aesthetics:
+    count: 1
+    terms:
+    - s_india_market_culture
+  competitive_strategy:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  complicated_creative_projects:
+    count: 1
+    terms:
+    - s_org_management
+  continuity:
+    count: 1
+    terms:
+    - m_moving_image_editing
+  corporate_identity:
+    count: 1
+    terms:
+    - m_graphic_print_design
+  creative_work_generally:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  criticism:
+    count: 1
+    terms:
+    - s_creative_practice_process
+    note: 'bayles-orland usage: how criticism lands on working artists'
+  cross_cultural_comparison:
+    count: 1
+    terms:
+    - s_india_market_culture
+  cultural_change:
+    count: 1
+    terms:
+    - s_india_market_culture
+  dance:
+    count: 1
+    terms:
+    - m_fine_art
+  demand_forecasting:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  demand_structure:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  dialogue:
+    count: 1
+    terms:
+    - m_moving_image_production
+    note: 'kenworthy usage: staging and shooting dialogue scenes'
+  diaspora_market:
+    count: 1
+    terms:
+    - s_india_market_culture
+  direction:
+    count: 1
+    terms:
+    - m_moving_image_production
+  documentary:
+    count: 1
+    terms:
+    - m_moving_image_editing
+    note: 'grammar-of-the-edit usage: cutting documentary'
+  doordarshan:
+    count: 1
+    terms:
+    - s_india_market_culture
+  efficacy:
+    count: 1
+    terms:
+    - s_india_market_culture
+    note: jain-only label; same referent as image_efficacy
+  exhibition_catalogue:
+    count: 1
+    terms:
+    - m_graphic_print_design
+  exhibition_practice:
+    count: 1
+    terms:
+    - m_fine_art
+  exterior_and_interior_exterior_lighting:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  film_education:
+    count: 1
+    terms:
+    - m_moving_image_production
+    - s_creative_practice_process
+  film_history:
+    count: 1
+    terms:
+    - m_moving_image_production
+  film_industry:
+    count: 1
+    terms:
+    - s_org_management
+    note: 'catmull usage: the industry as an organisational environment'
+  film_marketing:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  fmcg:
+    count: 1
+    terms:
+    - s_category_specific
+  focus:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  footwear_category:
+    count: 1
+    terms:
+    - s_category_specific
+  gender:
+    count: 1
+    terms:
+    - s_india_market_culture
+    note: 'bijapurkar usage: gender in Indian market behaviour'
+  gender_roles_in_advertising:
+    count: 1
+    terms:
+    - s_india_market_culture
+  genre:
+    count: 1
+    terms:
+    - s_narrative_storytelling
+  gift_economy:
+    count: 1
+    terms:
+    - s_india_market_culture
+  grading:
+    count: 1
+    terms:
+    - m_moving_image_editing
+  healthcare:
+    count: 1
+    terms:
+    - s_category_specific
+  hindi_advertising_copy:
+    count: 1
+    terms:
+    - s_india_market_culture
+  hindu_nationalism:
+    count: 1
+    terms:
+    - s_india_market_culture
+  household_consumption:
+    count: 1
+    terms:
+    - s_india_market_culture
+  image_politics:
+    count: 1
+    terms:
+    - s_india_market_culture
+  indian_ad_production:
+    count: 1
+    terms:
+    - m_moving_image_production
+    - s_india_market_culture
+  indian_cinema:
+    count: 1
+    terms:
+    - m_moving_image_production
+    - s_india_market_culture
+  indian_consumer_society:
+    count: 1
+    terms:
+    - s_india_market_culture
+  indian_dress_conventions:
+    count: 1
+    terms:
+    - s_india_market_culture
+  indian_graphic_design:
+    count: 1
+    terms:
+    - m_graphic_print_design
+    - s_india_market_culture
+  indian_marketing:
+    count: 1
+    terms:
+    - s_india_market_culture
+  indian_media_history:
+    count: 1
+    terms:
+    - s_india_market_culture
+  indian_painted_photography:
+    count: 1
+    terms:
+    - m_photography
+    - s_india_market_culture
+  indian_popular_arts:
+    count: 1
+    terms:
+    - m_fine_art
+    - s_india_market_culture
+  indian_popular_imagery:
+    count: 1
+    terms:
+    - m_fine_art
+    - s_india_market_culture
+  instructional_illustration:
+    count: 1
+    terms:
+    - m_graphic_print_design
+  interior_photography:
+    count: 1
+    terms:
+    - m_photography
+  landscape:
+    count: 1
+    terms:
+    - m_moving_image_production
+    note: 'kenworthy usage: staging shots in landscape'
+  language_in_advertising:
+    count: 1
+    terms:
+    - s_india_market_culture
+    note: 'parameswaran usage: language politics of Indian advertising'
+  learning_craft:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  lighting_equipment:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  lighting_recipes:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  location_and_setting:
+    count: 1
+    terms:
+    - m_moving_image_production
+  male_grooming:
+    count: 1
+    terms:
+    - s_category_specific
+  market_definition:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  market_entry_strategy:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  market_forecasting:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  market_structure:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  marketing_copy:
+    count: 1
+    terms:
+    - s_advertising_craft
+  marketing_material:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  marketing_operations:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  mass_culture:
+    count: 1
+    terms:
+    - s_india_market_culture
+  mass_media:
+    count: 1
+    terms:
+    - s_india_market_culture
+    note: 'jain usage: mass media inside Indian visual culture'
+  media_planning:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  media_scheduling:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  monograph:
+    count: 1
+    terms:
+    - m_graphic_print_design
+  motion_picture_lighting:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  motion_picture_photography:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  news_production:
+    count: 1
+    terms:
+    - m_moving_image_editing
+    note: 'grammar-of-the-edit usage: cutting news'
+  organisations:
+    count: 1
+    terms:
+    - s_org_management
+  outdoor_and_press:
+    count: 1
+    terms:
+    - m_outdoor_print_media
+    - s_advertising_craft
+  pack_format:
+    count: 1
+    terms:
+    - s_marketing_strategy
+    note: 'parameswaran usage: pack format as a market-offer decision'
+  packaging:
+    count: 1
+    terms:
+    - m_graphic_print_design
+  paints_category:
+    count: 1
+    terms:
+    - s_category_specific
+  political_communication:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  political_economy_of_culture:
+    count: 1
+    terms:
+    - s_india_market_culture
+  political_iconography:
+    count: 1
+    terms:
+    - s_india_market_culture
+  portrait_lighting:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  portraiture:
+    count: 1
+    terms:
+    - m_photography
+    - s_india_market_culture
+    note: 'dwyer-patel usage: portrait conventions in Indian imagery'
+  post_liberalisation_india:
+    count: 1
+    terms:
+    - s_india_market_culture
+  poster_advertising:
+    count: 1
+    terms:
+    - m_outdoor_print_media
+    - s_advertising_craft
+  poster_technique:
+    count: 1
+    terms:
+    - m_outdoor_print_media
+  preproduction:
+    count: 1
+    terms:
+    - m_moving_image_production
+  print_design:
+    count: 1
+    terms:
+    - m_graphic_print_design
+  print_industry:
+    count: 1
+    terms:
+    - s_india_market_culture
+    note: 'jain usage: the Sivakasi-era Indian print trade'
+  product_adoption:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  production_technology:
+    count: 1
+    terms:
+    - m_moving_image_production
+  professional_learning:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  promotions:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  public_communication:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  public_health_communication:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  re_release_advertising:
+    count: 1
+    terms:
+    - s_advertising_craft
+  religious_visual_practice:
+    count: 1
+    terms:
+    - s_india_market_culture
+  retail:
+    count: 1
+    terms:
+    - s_category_specific
+  sales_copy:
+    count: 1
+    terms:
+    - s_advertising_craft
+  scene_staging:
+    count: 1
+    terms:
+    - m_moving_image_production
+  sculpture:
+    count: 1
+    terms:
+    - m_fine_art
+  services:
+    count: 1
+    terms:
+    - s_category_specific
+  set_lighting:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  signage:
+    count: 1
+    terms:
+    - m_outdoor_print_media
+  sivakasi_industry:
+    count: 1
+    terms:
+    - s_india_market_culture
+  skin_lightening_category:
+    count: 1
+    terms:
+    - s_category_specific
+  social_class:
+    count: 1
+    terms:
+    - s_india_market_culture
+  social_distinction:
+    count: 1
+    terms:
+    - s_india_market_culture
+  song_and_dance:
+    count: 1
+    terms:
+    - m_moving_image_production
+    - s_india_market_culture
+  song_sequences:
+    count: 1
+    terms:
+    - m_moving_image_production
+    - s_india_market_culture
+  sound_mixing:
+    count: 1
+    terms:
+    - m_moving_image_editing
+  staging:
+    count: 1
+    terms:
+    - m_moving_image_production
+  star_construction:
+    count: 1
+    terms:
+    - s_india_market_culture
+  star_system:
+    count: 1
+    terms:
+    - s_india_market_culture
+  still_life_photography:
+    count: 1
+    terms:
+    - m_photography
+  still_photography:
+    count: 1
+    terms:
+    - m_photography
+  stock_photography:
+    count: 1
+    terms:
+    - m_photography
+  strategy:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  studio_lighting:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  studio_photography:
+    count: 1
+    terms:
+    - m_photography
+  studio_still_life_photography:
+    count: 1
+    terms:
+    - m_photography
+  survey_data_interpretation:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  taste:
+    count: 1
+    terms:
+    - s_india_market_culture
+    note: 'jain usage: taste hierarchies around bazaar art'
+  teaching:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'heath usage: making ideas stick for teachers'
+  television_commercials:
+    count: 1
+    terms:
+    - m_moving_image_editing
+    - s_advertising_craft
+  training:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'heath usage: making ideas stick in training'
+  trend_detection:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  visual_arts:
+    count: 1
+    terms:
+    - m_fine_art
+  visual_attention:
+    count: 1
+    terms:
+    - s_composition_attention
+  window_lighting:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  women_in_advertising:
+    count: 1
+    terms:
+    - s_india_market_culture
+  youth_market:
+    count: 1
+    terms:
+    - s_marketing_strategy
+review_queue:
+- label: method
+  count: 5
+  source_dirs:
+  - bijapurkar-we-are-like-that-only
+  - dwyer-patel-cinema-india
+  - jain-gods-in-the-bazaar
+  reason: research methodology label spanning bijapurkar/dwyer-patel/jain; method-of-study, not a media
+    or subject domain — needs per-object adjudication or an extraction relabel
+- label: exhibition_design
+  count: 3
+  source_dirs:
+  - vignelli-canon-intangibles
+  reason: vignelli 3D/environmental design; no medium term covers spatial design and inventing one is
+    a Controller decision
+- label: interior_design
+  count: 3
+  source_dirs:
+  - vignelli-canon-intangibles
+  reason: vignelli 3D/spatial design; same out-of-scope reason as exhibition_design
+- label: sampling
+  count: 3
+  source_dirs:
+  - bijapurkar-we-are-like-that-only
+  - hopkins-scientific-advertising-ch1-7
+  reason: 'cross-source homonym: statistical sampling (bijapurkar) vs product-sample promotion (hopkins);
+    a single label->term row would be wrong for one of them'
+- label: automated_systems
+  count: 2
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland on automation/algorithms; no subject term fits — candidate for a future term if the
+    corpus grows this way
+- label: critique
+  count: 2
+  source_dirs:
+  - jain-gods-in-the-bazaar
+  reason: jain scholarly critique — a method of analysis, not a domain
+- label: design
+  count: 2
+  source_dirs:
+  - bayles-orland-art-and-fear
+  - sutherland-alchemy-introduction
+  reason: 'generic homonym: art practice (bayles-orland) vs behavioural design (sutherland)'
+- label: evaluation_of_practices
+  count: 2
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland generic usage; too broad for any single subject term
+- label: human_affairs
+  count: 2
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland generic usage; too broad for any single subject term
+- label: research
+  count: 2
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland generic usage; could be s_marketing_strategy or s_persuasion_psychology depending
+    on object
+- label: 1896_to_2002
+  count: 1
+  source_dirs:
+  - dwyer-patel-cinema-india
+  reason: a date span, not a domain; extraction-hygiene candidate for relabelling at source
+- label: architecture
+  count: 1
+  source_dirs:
+  - vignelli-canon-intangibles
+  reason: 3D/spatial design out of vocabulary scope (same reason as exhibition_design/interior_design)
+- label: authorship
+  count: 1
+  source_dirs:
+  - jain-gods-in-the-bazaar
+  reason: jain cultural-theory concept; no subject term fits without distortion
+- label: aviation
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland anecdote domain; unclear whether category or example — needs the object read
+- label: biology
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland analogy domain; not a media or subject domain
+- label: commentary
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland generic usage; unclear referent
+- label: complex_systems
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland analogy domain; not a media or subject domain
+- label: content_analysis
+  count: 1
+  source_dirs:
+  - parameswaran-nawabs-nudes-noodles
+  reason: parameswaran research method, not a domain
+- label: data_vintage
+  count: 1
+  source_dirs:
+  - bijapurkar-we-are-like-that-only
+  reason: bijapurkar methodological caveat about stale data, not a domain
+- label: economics
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland foil discipline; not a media or subject domain
+- label: engineering
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland analogy domain; not a media or subject domain
+- label: environmental_design
+  count: 1
+  source_dirs:
+  - samara-making-breaking-grid-ch1
+  reason: samara 3D/environmental graphics; out of vocabulary scope like architecture
+- label: ethnographic_method
+  count: 1
+  source_dirs:
+  - jain-gods-in-the-bazaar
+  reason: jain research method, not a domain
+- label: ethnography
+  count: 1
+  source_dirs:
+  - jain-gods-in-the-bazaar
+  reason: jain research method, not a domain
+- label: innovation
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland generic usage; too broad for any single subject term
+- label: investigation
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland generic usage; unclear referent
+- label: keynote
+  count: 1
+  source_dirs:
+  - miller-storybrand-sb7
+  reason: miller presentation-format label; no term fits; near-duplicate of keynotes — normalisation candidate
+- label: keynotes
+  count: 1
+  source_dirs:
+  - miller-storybrand-sb7
+  reason: miller presentation-format label; near-duplicate of keynote — normalisation candidate
+- label: motion_design
+  count: 1
+  source_dirs:
+  - samara-making-breaking-grid-ch1
+  reason: 'samara: graphic design executed as moving image — genuinely cross-axis; the strongest candidate
+    for a future medium term'
+- label: negotiation
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland generic usage; not a media or subject domain
+- label: observation
+  count: 1
+  source_dirs:
+  - alton-painting-with-light-ch2
+  reason: alton practice-of-seeing label; unclear axis without the object read
+- label: optimisation
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland generic usage; too broad for any single subject term
+- label: presentations
+  count: 1
+  source_dirs:
+  - miller-storybrand-sb7
+  reason: miller presentation-format label; no term fits (see keynote/keynotes)
+- label: social_science
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland foil discipline; not a media or subject domain
+- label: source_representation
+  count: 1
+  source_dirs:
+  - pandey-pandeymonium
+  reason: pandey label with unclear referent; needs the object read
+- label: traffic_design
+  count: 1
+  source_dirs:
+  - sutherland-alchemy-introduction
+  reason: sutherland behavioural-design example; no term fits — see automated_systems

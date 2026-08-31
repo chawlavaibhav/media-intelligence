@@ -1,0 +1,1280 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+#
+# REP-02 — cross-source join candidate ledger v0.
+#
+# NOTHING in this file is a declaration. Every row carries `status: proposed`. Promotion of any
+# row to a cross_source_concept or same_failure_family is a Controller (human) review under
+# SPEC-05 Governance rules 2 and 5. This file lives in the candidates lane precisely so that
+# Controller review has something concrete to review.
+#
+# Record semantics (per the CANON-00X cross-source-layer addendum, itself only proposed):
+#   relation    one of the 12-value closed enum; contradicts_across_sources / in_tension_with are
+#               proposed additions and are used here only in proposed rows
+#   usable      accepted_only  = every id resolves in canon/knowledge/current
+#               involves_hold  = at least one end lives under canon/candidates/ (HOLD lane);
+#                                NEVER content in a compiled/production artifact
+#               false          = not usable until a stated precondition is met
+#   confidence  high | medium | low (evidential support for the stated relation)
+#   independence[].audit_relation
+#               quoted from canon/audit/records/<a or b>.audit.yaml
+#               lineage.related_sources_in_corpus; the sentinel
+#               no_entry_in_either_audit_record means neither record carries an entry for the
+#               pair (under independent_origins_ok(), absence of a dependence relation does not
+#               defeat independence; the sentinel keeps the absence explicit and recomputable)
+#   independent_origins
+#               size of the largest subset of member source dirs that is pairwise independent
+#               under the audit records; recomputed mechanically by the validator
+#
+# Validate: python3 canon/validation/validate_cross_source_candidates.py
+
+schema: cross_source_candidate_ledger_v0
+task: REP-02
+status: proposed
+ledger_complete: true
+date: 2026-08-31
+governance_note: >
+  Candidate records only. No source is admitted, no cross_source_concept is created, no
+  Controller decision is asserted. HOLD material referenced here is referenced ABOUT admission
+  and review, never reproduced as usable content.
+
+# ── Transcribed comment-borne findings ────────────────────────────────────────────────────────
+# Cross-source join work already performed during extraction, stored only in YAML comments and
+# therefore machine-invisible until now. Text is verbatim from the cited lines; the leading
+# '# ' comment markers and box-drawing border lines are stripped, nothing else is changed.
+transcribed_findings:
+- finding_id: tf_murch_eye_trace
+  file: canon/knowledge/current/murch-blink-p1-25/ontology-mappings.yaml
+  lines: 468-479
+  text: |
+    NOTED AND NOT ACTED ON — a genuine cross-source candidate
+    `eye_trace` (t_murch_c003_0004) and the `eye_trace` term extracted from Grammar of the Edit in this
+    same lane name closely similar things, and unlike the Grammar of the Shot / Grammar of the Edit
+    pair these are genuinely independent origins: different authors, different publishers, and no
+    relationship between the books. That makes them a legitimate candidate for a cross_source_concept
+    under SPEC-05's two-independent-origins rule.
+
+    No such concept is created here. This file is source-local, cross-source aggregation is the
+    integrator's work under the parallel amendment, and SPEC-05 requires review before a claim of
+    agreement is made. Flagged for the integrator in the book 10 findings.
+- finding_id: tf_ondaatje_planarity
+  file: canon/knowledge/current/ondaatje-conversations-ch3/ontology-mappings.yaml
+  lines: 352-364
+  text: |
+    FLAGGED FOR THE INTEGRATOR, NOT ACTED ON
+    `t_conv_c003_0009` (planarity of the face) and `planarity` extracted from In the Blink of an Eye in
+    this same lane are the same speaker's word, used in the same sense, in two books with DIFFERENT
+    authors and DIFFERENT publishers. Under a count of distinct origin_ref values they would pass an
+    independence test for a cross_source_concept. They are not independent: one book is Murch's own
+    lecture, the other is Murch interviewed. The same is true of `most_characteristic_angle`, which
+    appears in both books as the Egyptian-painting argument.
+
+    No cross_source_concept is created here. Flagged in the book 12 findings as the sharpest form of
+    the independence problem this lane has found — sharper than the same-author case in LB-09, because
+    here even the author field differs.
+- finding_id: tf_pandey_header
+  file: canon/knowledge/current/pandey-pandeymonium/ontology-mappings.yaml
+  lines: 1-3
+  text: |
+    CANON-014 — SPEC-05 ontology for Pandey, "Pandeymonium". Source-local.
+    No cross_source_concept. The observed agreement with parameswaran_nawabs_nudes_noodles on
+    celebrity casting is recorded in the CANON-014 lineage matrix as an observation only.
+- finding_id: tf_parameswaran_header
+  file: canon/knowledge/current/parameswaran-nawabs-nudes-noodles/ontology-mappings.yaml
+  lines: 1-12
+  text: |
+    CANON-014 — SPEC-05 ontology for Parameswaran, "Nawabs, Nudes, Noodles". Source-local.
+
+    Source terminology is preserved, including Hindi terms, which are recorded in the source's own
+    form with a gloss rather than translated away. Existing relation types only.
+
+    NO cross_source_concept is created here or anywhere in CANON-014. This task is not authorised to
+    make any cross-source promotion, and several apparent agreements between this source and others
+    are recorded as observations in the lineage matrix instead.
+
+    Remedies state who or what can execute them, per SPEC-05.
+
+records:
+
+# ── Convergences among accepted sources (promotion candidates) ───────────────────────────────
+
+- record_id: xj_0001
+  kind: convergence
+  label: maker_blindness
+  status: proposed
+  relation: same_observed_effect
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_hea_mts_0001
+    source_dir: heath-made-to-stick-introduction
+    evidence: 'curse_of_knowledge: once you know something you cannot re-create your listener''s state of mind'
+  - id: t_cat_c003_0011
+    source_dir: catmull-creativity-inc-ch5
+    evidence: 'creator_loses_perspective: immersion makes the maker unable to see the work whole or the problem to fix'
+  - id: t_murch_c003_0013
+    source_dir: murch-blink-p1-25
+    evidence: 'seeing_around_the_edge_of_the_frame: anyone present at the shoot cannot view a take without imagining what lay beyond the photographed frame'
+  supporting_ids: [t_murch_c003_0021, t_murch_c003_0022]
+  independence:
+  - {a: heath-made-to-stick-introduction, b: catmull-creativity-inc-ch5, audit_relation: shares_publisher_only}
+  - {a: heath-made-to-stick-introduction, b: murch-blink-p1-25, audit_relation: no_entry_in_either_audit_record}
+  - {a: catmull-creativity-inc-ch5, b: murch-blink-p1-25, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 3
+  note: >
+    Three independent origins, same observed effect — the maker cannot judge the work as its
+    audience will — with mechanisms that differ: prior knowledge (Heath), immersion in detail
+    (Catmull), exposure to the conditions of production (Murch). Murch also supplies remedies
+    (see_only_whats_on_the_screen, ombudsman_for_the_audience). Strongest convergence cluster in
+    the accepted corpus; mechanisms_differ must be recorded true on any promoted concept.
+
+- record_id: xj_0002
+  kind: convergence
+  label: darshan
+  status: proposed
+  relation: maps_to
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: darshan
+  members:
+  - id: t_dpci_0001
+    source_dir: dwyer-patel-cinema-india
+    evidence: 'darshan: a two-way look in which the beholder takes darshan and the object gives it; the image, not the viewer, holds the power'
+  - id: t_jgb_0005
+    source_dir: jain-gods-in-the-bazaar
+    evidence: 'darshan: the devotee must not just see but be seen by the deity to receive its blessing; the reason for the iconic imperative of frontality'
+  supporting_ids: [t_dpci_0002, t_dpci_0016]
+  independence:
+  - {a: dwyer-patel-cinema-india, b: jain-gods-in-the-bazaar, audit_relation: cites_source}
+  independent_origins: 2
+  note: >
+    Same concept in both sources; Jain ties it to frontality, Dwyer/Patel extend it to tableaux
+    and a marked secular application (secular_darshan). cites_source does not defeat independence
+    per SPEC-05 Governance rule 5. Queued for promotion review.
+
+- record_id: xj_0003
+  kind: convergence
+  label: eye_trace
+  status: proposed
+  relation: narrower_than
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: eye_trace
+  transcribed_finding: tf_murch_eye_trace
+  members:
+  - id: t_gote_c003_0021
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'eye_trace: the gaze travelling across empty look room at a cut, landing where the new face or object is placed; also called eye-line match'
+  - id: t_murch_c003_0004
+    source_dir: murch-blink-p1-25
+    evidence: 'eye_trace: "the concern with the location and movement of the audience''s focus of interest within the frame" — fourth criterion, weighted 7%'
+  independence:
+  - {a: grammar-of-the-edit-ch3-5, b: murch-blink-p1-25, audit_relation: no_known_relation}
+  note: >
+    Same concern, and the Grammar of the Edit sense (look-room/eyeline mechanics at a cut) is
+    narrower than Murch's general criterion. Pre-noticed during extraction and deliberately not
+    acted on (transcribed finding tf_murch_eye_trace). Independence is committed:
+    no_known_relation in both audit records. Direction: from t_gote_c003_0021 (narrower) to
+    t_murch_c003_0004 (broader).
+
+- record_id: xj_0004
+  kind: convergence
+  label: performer_failure
+  status: proposed
+  relation: same_failure_family
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_hop_sa_0006
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'seeking_applause_instead_of_sales: "they forget they are salesmen and try to be performers"'
+  - id: t_ogl_c003_0005
+    source_dir: ogilvy-ch2-advertising-that-sells
+    evidence: 'cult_of_creativity: judging advertising by style, originality or awards rather than by whether it sells'
+  supporting_ids: [t_ogl_c003_0001]
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: ogilvy-ch2-advertising-that-sells, audit_relation: no_known_relation}
+  independent_origins: 2
+  note: >
+    One failure family — the maker optimising for the maker's audience instead of the buyer —
+    named independently four decades apart. irrelevant_brilliance is the same failure at the
+    craft level.
+
+- record_id: xj_0005
+  kind: convergence
+  label: seller_centred_message
+  status: proposed
+  relation: same_failure_family
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: t_hop_sa_0007
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'written_to_please_the_seller: "the interests of the buyer are forgotten... one can never sell goods profitably when that attitude exists"'
+  - id: t_sb_c003_0004
+    source_dir: miller-storybrand-sb7
+    evidence: 'brand_as_hero: the brand occupies the role the customer already holds, becoming a competitor for attention rather than a resource'
+  supporting_ids: [t_sb_c003_0005]
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: miller-storybrand-sb7, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    Same failure — the message organised around the seller — with Miller supplying the structural
+    remedy (customer_as_hero_brand_as_guide). Medium: the two frames (sales copy vs narrative
+    positioning) overlap rather than coincide.
+
+- record_id: xj_0006
+  kind: convergence
+  label: specificity
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_hop_sa_0024
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'being_specific: replace a general claim with a definite figure — "a 78-second shave, 1,018 experiments"'
+  - id: t_hea_mts_0010
+    source_dir: heath-made-to-stick-introduction
+    evidence: 'concrete: expressed in human actions and sensory information — the only way an idea means the same thing to everyone'
+  supporting_ids: [t_hop_sa_0004]
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: heath-made-to-stick-introduction, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    Shared mechanism: definite, checkable content is weighed and retained where generality rolls
+    off. The shared problem is committed on both sides — Hopkins' platitudes_and_generalities
+    "roll off the human understanding like water from a duck". See xj_0029 for the boundary
+    (inert statistics), which qualifies rather than defeats this convergence.
+
+- record_id: xj_0007
+  kind: convergence
+  label: durable_identity_vs_novelty
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_ogl_c003_0010
+    source_dir: ogilvy-ch2-advertising-that-sells
+    evidence: 'project_the_same_image_year_after_year: one consistent brand personality over years, resisting pressure to change'
+  - id: t_vig_c003_0011
+    source_dir: vignelli-canon-intangibles
+    evidence: 'change_for_the_sake_of_change: redesigning an established mark from a desire for novelty rather than need — "a very wrong motivation"'
+  - id: t_eic_0004
+    source_dir: binet-field-effectiveness-in-context-ch1
+    evidence: 'brand_building: marketing that creates enduring memory structures influencing future behaviour'
+  supporting_ids: [t_vig_c003_0012, t_vig_c003_0016]
+  independence:
+  - {a: ogilvy-ch2-advertising-that-sells, b: vignelli-canon-intangibles, audit_relation: no_entry_in_either_audit_record}
+  - {a: ogilvy-ch2-advertising-that-sells, b: binet-field-effectiveness-in-context-ch1, audit_relation: no_known_relation}
+  - {a: vignelli-canon-intangibles, b: binet-field-effectiveness-in-context-ch1, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 3
+  note: >
+    Three independent origins for one mechanism: identity accrues value through consistency over
+    time, and novelty-driven change destroys accrued value. Practitioner (Ogilvy), design canon
+    (Vignelli: retouch_an_established_mark_rather_than_replace_it), and dataset-backed
+    (Binet & Field) forms.
+
+- record_id: xj_0008
+  kind: convergence
+  label: self_report_unreliability
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_sut_alc_0012
+    source_dir: sutherland-alchemy-introduction
+    evidence: 'watch_what_people_feel_not_what_they_say: people do not have access to their own motives'
+  - id: t_ppm_0051
+    source_dir: pandey-pandeymonium
+    evidence: 'observe_attention_instead_of_collecting_self_report: watch whether the viewer is still looking rather than asking what they felt'
+  supporting_ids: [t_sut_alc_0006]
+  independence:
+  - {a: sutherland-alchemy-introduction, b: pandey-pandeymonium, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    Same mechanism — emotional_misattribution: stated reasons have little to do with real causes,
+    so observation of behaviour outranks self-report — arrived at independently in a UK agency
+    theory book and an Indian practitioner memoir.
+
+- record_id: xj_0009
+  kind: convergence
+  label: comprehension_gates_everything
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: t_vig_c003_0003
+    source_dir: vignelli-canon-intangibles
+    evidence: 'pragmatics: whether the work is understood at the point of use — the aspect that voids the other two if it fails'
+  - id: t_sb_c003_0017
+    source_dir: miller-storybrand-sb7
+    evidence: 'grunt_test: a five-second acceptance test — can a viewer say what you offer, how it helps, and what to do'
+  supporting_ids: [t_vig_c003_0001, t_vig_c003_0014, t_sb_c003_0021]
+  independence:
+  - {a: vignelli-canon-intangibles, b: miller-storybrand-sb7, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    Comprehension is the gate that voids everything else. Twin semantics pair rides with it:
+    Vignelli semantics / search_the_meaning_before_designing ~ Miller
+    clarify_the_message_before_spending_on_design — settle meaning before form in both. Medium:
+    Vignelli's is a design axiom, Miller's an acceptance test; same mechanism, different scope.
+
+- record_id: xj_0010
+  kind: convergence
+  label: test_over_argument
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_hop_sa_0016
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'keyed_advertising: mark each version so responses attribute to it alone — comparison replaces opinion'
+  - id: t_sut_alc_0009
+    source_dir: sutherland-alchemy-introduction
+    evidence: 'test_counterintuitive_things: "test counterintuitive things, because no one else ever does"'
+  supporting_ids: [t_hop_sa_0017, t_hop_sa_0019, sk_sut_alc_0003, sk_sut_alc_0004]
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: sutherland-alchemy-introduction, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    Same mechanism: a designed comparison settles what argument cannot, and options without a
+    prior rationale can only be found by testing (sk_sut_alc_0004's warrant; Hopkins'
+    traced_returns and town_by_town_comparison are the 1923 apparatus). This convergence also
+    qualifies the T1 contradiction (xj_0019): the two sources disagree on what testing yields,
+    not on testing.
+
+- record_id: xj_0011
+  kind: convergence
+  label: technique_visibility_breaks_immersion
+  status: proposed
+  relation: same_observed_effect
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_gote_c003_0030
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'invisible_technique: cutting that does not purposefully draw attention to itself — the standard of a well-edited programme'
+  - id: t_ms_c003_0013
+    source_dir: kenworthy-master-shots-ch8
+    evidence: 'audience_senses_the_camera_move: the viewer registering the technique instead of the scene — the outcome to avoid'
+  supporting_ids: [t_gote_c003_0037]
+  independence:
+  - {a: grammar-of-the-edit-ch3-5, b: kenworthy-master-shots-ch8, audit_relation: no_known_relation}
+  independent_origins: 2
+  note: >
+    Same observed effect across editing and camera movement: when technique registers, the viewer
+    is pulled_out_of_the_viewing_experience and absorption is impaired. Candidate seed for a
+    cross-modality invisibility-of-technique concept.
+
+- record_id: xj_0012
+  kind: convergence
+  label: jump_family
+  status: proposed
+  relation: same_observed_effect
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_gote_c003_0031
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'jump_cut: a perceived jump or glitch when successive images are too alike; the viewer notices consciously'
+  - id: t_gos_c003_0002
+    source_dir: grammar-of-the-shot-ch4
+    evidence: 'jump_cut: two shots with similar framing of the same object cut together, causing a visual jump in space or time'
+  - id: t_murch_c003_0012
+    source_dir: murch-blink-p1-25
+    evidence: 'mental_jarring: displacement neither subtle nor total reads as neither motion nor context change; the source "also calls it a jump"'
+  independence:
+  - {a: grammar-of-the-edit-ch3-5, b: grammar-of-the-shot-ch4, audit_relation: companion_volume}
+  - {a: grammar-of-the-edit-ch3-5, b: murch-blink-p1-25, audit_relation: no_known_relation}
+  - {a: grammar-of-the-shot-ch4, b: murch-blink-p1-25, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    The two Grammar terms are one authorial position stated twice (companion_volume — see
+    xj_0030) and count ONCE. Murch's mental_jarring is the independent second origin, and adds a
+    mechanism account the Grammar books lack. Promotion arithmetic: 2 independent origins, not 3.
+
+- record_id: xj_0013
+  kind: convergence
+  label: line_180
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_gos_c003_0012
+    source_dir: grammar-of-the-shot-ch4
+    evidence: 'axis_of_action: the imaginary line traced from the talent''s sight line; the source itself gives four names including action line'
+  - id: t_gote_c003_0019
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'action_line: the line along sight lines or object movement establishing the 180 degree arc; "also called the axis of action"'
+  - id: t_murch_c003_0007
+    source_dir: murch-blink-p1-25
+    evidence: 'stage_line: Murch''s name for the fifth criterion''s geometry, in the masking-asymmetry worked example'
+  supporting_ids: [t_murch_c003_0005]
+  independence:
+  - {a: grammar-of-the-shot-ch4, b: grammar-of-the-edit-ch3-5, audit_relation: companion_volume}
+  - {a: grammar-of-the-edit-ch3-5, b: murch-blink-p1-25, audit_relation: no_known_relation}
+  - {a: grammar-of-the-shot-ch4, b: murch-blink-p1-25, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    The Grammar pair is dependent (companion_volume; each term lists the other's name) and counts
+    once; Murch's stage_line/planarity is the independent second origin. Same mechanism: the
+    grammar of three dimensions transposed to two, broken when the camera crosses the line.
+
+- record_id: xj_0014
+  kind: convergence
+  label: unmotivated_technique
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: t_gote_c003_0028
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'motivation: an element in the outgoing shot that supplies the reason to leave it, and at that moment'
+  - id: t_ms_c003_0001
+    source_dir: kenworthy-master-shots-ch8
+    evidence: 'unmotivated_camera_move: moving the camera because the equipment allows it or movement is thought exciting'
+  independence:
+  - {a: grammar-of-the-edit-ch3-5, b: kenworthy-master-shots-ch8, audit_relation: no_known_relation}
+  independent_origins: 2
+  note: >
+    Same mechanism across cut and camera move: technique without a motivating reason registers as
+    technique (feeds xj_0011). Medium: one side states the criterion, the other names the failure.
+
+- record_id: xj_0015
+  kind: convergence
+  label: attention_steering
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: t_ms_c003_0003
+    source_dir: kenworthy-master-shots-ch8
+    evidence: 'object_guide: a minor object passed between characters motivates the camera from one part of a location to another'
+  - id: t_murch_c003_0016
+    source_dir: murch-blink-p1-25
+    evidence: 'misdirection: causing the audience to look where you want — the magicians'' term, which an editor "can, does and should" apply'
+  supporting_ids: [t_ms_c003_0006]
+  independence:
+  - {a: kenworthy-master-shots-ch8, b: murch-blink-p1-25, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    Same mechanism: staging cues steer gaze so the work happens where the audience is not
+    looking. Adjacent to the eye_trace pair (xj_0003); a promoted attention-direction concept
+    would likely take all three clusters as children with children_are_authoritative: true.
+
+- record_id: xj_0016
+  kind: convergence
+  label: india_adaptation
+  status: proposed
+  relation: same_mechanism
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_rbwl_0002
+    source_dir: bijapurkar-we-are-like-that-only
+    evidence: 'made_for_india: a strategy built from the market''s own structure, as against a global strategy adjusted for cultural sensitivity'
+  - id: t_ppm_0002
+    source_dir: pandey-pandeymonium
+    evidence: 'domestic_multiculturalism: one national market treated as internally multicultural to a degree comparable with operating across countries'
+  - id: t_jgb_0004
+    source_dir: jain-gods-in-the-bazaar
+    evidence: 'vernacularizing_capitalism: adaptation of capital''s axiomatics to varying local circumstances, incorporating vernacular constituencies'
+  independence:
+  - {a: bijapurkar-we-are-like-that-only, b: pandey-pandeymonium, audit_relation: no_known_relation}
+  - {a: bijapurkar-we-are-like-that-only, b: jain-gods-in-the-bazaar, audit_relation: no_known_relation}
+  - {a: jain-gods-in-the-bazaar, b: pandey-pandeymonium, audit_relation: no_known_relation}
+  independent_origins: 3
+  note: >
+    Three independent origins — market strategist, practitioner, ethnographer — for one
+    mechanism: forms built from the Indian market's own structure outperform global forms
+    localised at the surface. All three pairwise verdicts are committed no_known_relation.
+    Core seed for the currently-empty indian_indic_context pack.
+
+- record_id: xj_0017
+  kind: canonical_concept_proposal
+  label: evidence_hygiene
+  status: proposed
+  relation: related_to
+  usable: accepted_only
+  confidence: medium
+  asserts_equivalence: false
+  members:
+  - id: t_rbwl_0008
+    source_dir: bijapurkar-we-are-like-that-only
+    evidence: 'reliable_but_not_valid: repeatable survey answers that do not measure the real thing'
+  - id: t_nnn_0031
+    source_dir: parameswaran-nawabs-nudes-noodles
+    evidence: 'depiction_read_as_prevalence: treating what an advertisement depicts as evidence of how common the depicted arrangement is'
+  - id: t_nnn_0035
+    source_dir: parameswaran-nawabs-nudes-noodles
+    evidence: 'measurement_invoked_without_its_result: a study named, conclusions summarised directionally, numbers/sample/method absent'
+  - id: t_dpci_0033
+    source_dir: dwyer-patel-cinema-india
+    evidence: 'corpus_survival_bias: reasoning about a practice from artefacts that happened to survive'
+  - id: t_ppm_0033
+    source_dir: pandey-pandeymonium
+    evidence: 'lesson_drawn_from_a_case_that_succeeded: a practice recommended on one success, failures uncounted'
+  independence:
+  - {a: bijapurkar-we-are-like-that-only, b: parameswaran-nawabs-nudes-noodles, audit_relation: cites_source}
+  - {a: dwyer-patel-cinema-india, b: pandey-pandeymonium, audit_relation: no_known_relation}
+  - {a: pandey-pandeymonium, b: parameswaran-nawabs-nudes-noodles, audit_relation: no_known_relation}
+  note: >
+    Proposed canonical_concept (retrieval grouping, asserts_equivalence: false — deliberately
+    NOT a cross_source_concept): five distinct evidence-hygiene failure modes worth retrieving
+    together when weighing any effectiveness claim. No equivalence is asserted, so no
+    independence arithmetic applies; pairs quoted for completeness.
+
+- record_id: xj_0018
+  kind: retrieval_merge_proposal
+  label: perceived_break_at_a_transition
+  status: proposed
+  relation: related_to
+  usable: accepted_only
+  confidence: medium
+  asserts_equivalence: false
+  members:
+  - id: cc_perceived_break_at_a_transition
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'canonical concept: perceived_break_at_a_transition'
+  - id: cc_ms_c003_attention_failures
+    source_dir: kenworthy-master-shots-ch8
+    evidence: 'canonical concept: ways_a_shot_fails_to_direct_attention'
+  - id: cc_audience_participation_displaced
+    source_dir: murch-blink-p1-25
+    evidence: 'canonical concept: audience_participation_displaced'
+  independence:
+  - {a: grammar-of-the-edit-ch3-5, b: kenworthy-master-shots-ch8, audit_relation: no_known_relation}
+  - {a: grammar-of-the-edit-ch3-5, b: murch-blink-p1-25, audit_relation: no_known_relation}
+  - {a: kenworthy-master-shots-ch8, b: murch-blink-p1-25, audit_relation: no_entry_in_either_audit_record}
+  note: >
+    Proposed retrieval-time merge of three source-scoped canonical concepts that answer the same
+    retrieval question — "what makes a viewer register the apparatus instead of the scene?" — into
+    one canonical_concept with asserts_equivalence: false. Grouping only; children remain
+    authoritative; no agreement is claimed.
+
+# ── Cross-source tensions and contradictions (accepted sources only) ─────────────────────────
+# Under the proposed addendum vocabulary. Both claims are kept; a compiled pack stating either
+# side must co-deliver the other (compile invariant, addendum §2.5).
+
+- record_id: xj_0019
+  kind: tension
+  label: fixed_laws_vs_alchemy
+  status: proposed
+  relation: contradicts_across_sources
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: sk_hop_sa_0001
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'advertising is a science: causes and effects analysed, correct procedures proved and established, governed by laws'
+  - id: sk_sut_alc_0013
+    source_dir: sutherland-alchemy-introduction
+    evidence: 'in psychology the opposite of a good idea can also be a good idea; scarcity and ubiquity are both potent selling arguments'
+  supporting_ids: [t_hop_sa_0035, sk_sut_alc_0006, sk_sut_alc_0026, sk_sut_alc_0032]
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: sutherland-alchemy-introduction, audit_relation: no_entry_in_either_audit_record}
+  frame_note: >
+    Hopkins' fixed_principle ("invariably proves best") asserts context-free laws; Sutherland
+    asserts context decides and opposite approaches both work. Qualified twice: sk_sut_alc_0032
+    targets logical overreach, not logic, and both sources agree on testing (xj_0010) — the
+    disagreement is about what testing yields (laws vs local, context-bound wins).
+
+- record_id: xj_0020
+  kind: tension
+  label: immediate_response_vs_brand_building
+  status: proposed
+  relation: contradicts_across_sources
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: sk_hop_sa_0003
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'the final conclusion must always be drawn on cost per customer acquired — traced, immediate response is the criterion'
+  - id: t_eic_0012
+    source_dir: binet-field-effectiveness-in-context-ch1
+    evidence: 'short_termism: over-allocation of budget to sales activation at the expense of brand building'
+  supporting_ids: [sk_hop_sa_0021, t_eic_0004, sk_eic_0014]
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: binet-field-effectiveness-in-context-ch1, audit_relation: no_known_relation}
+  frame_note: >
+    Hopkins' sole criterion (immediate traced response; mail order as the school) is, on
+    Binet & Field's dataset, the named failure mode short_termism. Qualified by sk_eic_0014: peak
+    effectiveness needs strong brand AND activation effects together — which bounds rather than
+    dissolves the contradiction over what to optimise.
+
+- record_id: xj_0021
+  kind: tension
+  label: targeting_narrow_vs_penetration
+  status: proposed
+  relation: in_tension_with
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: t_hop_sa_0023
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'hail_those_people_only: write the headline to call out the specific people who could buy, and nobody else'
+  - id: t_eic_0008
+    source_dir: binet-field-effectiveness-in-context-ch1
+    evidence: 'penetration: growth achieved by recruiting new customers rather than selling more to existing ones'
+  supporting_ids: [t_eic_0019]
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: binet-field-effectiveness-in-context-ch1, audit_relation: no_known_relation}
+  frame_note: >
+    Opposed only if read at the same level. Hopkins prescribes narrow address at the level of a
+    headline; Binet & Field prescribe breadth (talk_to_both_existing_and_potential_customers) at
+    the level of budget and media strategy. A copy-level rule and a media-level rule can both
+    hold; the tension resolves by level of address.
+
+- record_id: xj_0022
+  kind: tension
+  label: whitespace
+  status: proposed
+  relation: in_tension_with
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: t_hop_sa_0009
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'unoccupied_space: "space paid for and not used to sell" — borders, margins, enlarged type'
+  - id: t_sam_c003_0018
+    source_dir: samara-making-breaking-grid-ch1
+    evidence: 'negative_space: white space seen as shapes of equal importance to the positive elements'
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: samara-making-breaking-grid-ch1, audit_relation: no_entry_in_either_audit_record}
+  frame_note: >
+    Cross-domain tension, conditioned on artifact class: in a 1923 paid newspaper inch every
+    unselling point is waste; in editorial and identity design white space is a working element.
+    A compiled pack must condition the rule on the artifact class, not pick a winner.
+
+- record_id: xj_0023
+  kind: tension
+  label: speculars
+  status: proposed
+  relation: in_tension_with
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: t_alt_c003_0021
+    source_dir: alton-painting-with-light-ch2
+    evidence: 'shiny_props: highly reflective set dressing so specular highlights give the image life; contingent on antihalo film stock'
+  - id: t_lsm_c003_0008
+    source_dir: light-science-magic-ch3
+    evidence: 'unwanted_direct_reflection: a mirror image of the light source appearing where the photographer does not want it'
+  independence:
+  - {a: alton-painting-with-light-ch2, b: light-science-magic-ch3, audit_relation: no_known_relation}
+  frame_note: >
+    Same physical mechanism (direct/specular reflection), opposite valuation. Not a genuine
+    doctrine conflict: Alton's term is flagged historically contingent (antihalo stock), and LSM
+    marks the reflection unwanted only when unplanned. The tension resolves on whether the
+    specular is placed deliberately.
+
+- record_id: xj_0024
+  kind: tension
+  label: completeness_vs_exclusion
+  status: proposed
+  relation: contradicts_across_sources
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: sk_hop_sa_0027
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'where the purpose is an immediate sale, tell a complete story; "the more you tell the more you sell"'
+  - id: t_hea_mts_0008
+    source_dir: heath-made-to-stick-introduction
+    evidence: 'simple: stripped to the essential core by exclusion and relentless prioritisation'
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: heath-made-to-stick-introduction, audit_relation: no_entry_in_either_audit_record}
+  frame_note: >
+    Complete-story copy versus relentless exclusion. Partially framed by purpose — Hopkins
+    scopes his rule to the immediate-sale case, Heath to the sticky message — but the two
+    prescriptions collide head-on for any artifact that must both persuade now and be
+    remembered, so recorded as a contradiction rather than a resolved tension.
+
+- record_id: xj_0025
+  kind: tension
+  label: makers_stance_toward_viewer
+  status: proposed
+  relation: in_tension_with
+  usable: accepted_only
+  confidence: medium
+  members:
+  - id: t_af_c003_0017
+    source_dir: bayles-orland-art-and-fear
+    evidence: 'adopting_the_viewers_attitude: the maker judging their own work as a viewer would — named a problem, "dangerously easy"'
+  - id: t_murch_c003_0022
+    source_dir: murch-blink-p1-25
+    evidence: 'ombudsman_for_the_audience: the editor''s role is precisely to represent an audience that knows nothing of production'
+  supporting_ids: [t_cat_c003_0011]
+  independence:
+  - {a: bayles-orland-art-and-fear, b: murch-blink-p1-25, audit_relation: no_entry_in_either_audit_record}
+  - {a: bayles-orland-art-and-fear, b: catmull-creativity-inc-ch5, audit_relation: no_known_relation}
+  frame_note: >
+    Resolves by phase. Bayles/Orland warn against the viewer's attitude DURING making;
+    Murch (and Catmull's review machinery) prescribe exactly that stance during editing and
+    review. Both feed the maker_blindness cluster (xj_0001) rather than defeating it.
+
+# ── Negative records (distinct_from — checked and found different, to preempt false merges) ──
+
+- record_id: xj_0026
+  kind: negative
+  label: story_homonym
+  status: proposed
+  relation: distinct_from
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: story
+  members:
+  - id: t_hea_mts_0013
+    source_dir: heath-made-to-stick-introduction
+    evidence: 'story (remedy): a narrative that lets the listener rehearse a situation — a "mental flight simulator"'
+  - id: t_murch_c003_0002
+    source_dir: murch-blink-p1-25
+    evidence: 'story (property): whether a cut advances the story; the second criterion, weighted 23%; no gloss given'
+  independence:
+  - {a: heath-made-to-stick-introduction, b: murch-blink-p1-25, audit_relation: no_entry_in_either_audit_record}
+  note: >
+    Homonym. A string join on "story" would merge a message-design remedy with a cut-selection
+    criterion. Checked and rejected; recorded per SPEC-05 Governance rule 4.
+
+- record_id: xj_0027
+  kind: negative
+  label: product_hero_vs_brand_hero
+  status: proposed
+  relation: distinct_from
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_ogl_c003_0011
+    source_dir: ogilvy-ch2-advertising-that-sells
+    evidence: 'make_the_product_the_hero: put the product at the centre of the advertising, shown with simplicity'
+  - id: t_sb_c003_0004
+    source_dir: miller-storybrand-sb7
+    evidence: 'brand_as_hero: the brand occupying the customer''s narrative role — the failure Miller''s framework exists to prevent'
+  independence:
+  - {a: ogilvy-ch2-advertising-that-sells, b: miller-storybrand-sb7, audit_relation: no_entry_in_either_audit_record}
+  note: >
+    The exact trap flagged in CANON-014 §3.2: "hero" as visual centrality (Ogilvy, a remedy) is
+    not "hero" as narrative protagonist (Miller, a problem). Ogilvy's remedy and Miller's remedy
+    (customer_as_hero_brand_as_guide) are compatible; a string merge would read them as opposed.
+
+- record_id: xj_0028
+  kind: negative
+  label: repetition_two_senses
+  status: proposed
+  relation: distinct_from
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_ogl_c003_0012
+    source_dir: ogilvy-ch2-advertising-that-sells
+    evidence: 'repeat_until_it_stops_selling: keep running a proven ad because the audience is a moving_parade of new prospects'
+  - id: t_hea_mts_0006
+    source_dir: heath-made-to-stick-introduction
+    evidence: 'reliance_on_repetition: repetition as a crutch for a badly designed message — "no urban legend has to be repeated ten times"'
+  supporting_ids: [t_ogl_c003_0019]
+  independence:
+  - {a: ogilvy-ch2-advertising-that-sells, b: heath-made-to-stick-introduction, audit_relation: no_entry_in_either_audit_record}
+  note: >
+    Not a contradiction: Ogilvy repeats a working message to a renewing audience; Heath rejects
+    repetition as a fix for a failing message. Different objects (audience renewal vs message
+    design). Checked and rejected as a tension candidate.
+
+- record_id: xj_0029
+  kind: negative
+  label: specific_numbers_vs_inert_statistic
+  status: proposed
+  relation: distinct_from
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_hop_sa_0024
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'being_specific: definite figures persuade — "reduced 25 per cent" carries weight where "lowest prices" rolls off'
+  - id: t_hea_mts_0004
+    source_dir: heath-made-to-stick-introduction
+    evidence: 'the_inert_statistic: a true number the audience has no way to evaluate produces no response ("37 grams of saturated fat")'
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: heath-made-to-stick-introduction, audit_relation: no_entry_in_either_audit_record}
+  note: >
+    Qualify, don't merge — and don't oppose. Heath's inert statistic bounds Hopkins' specificity
+    remedy (xj_0006): a number persuades only when the audience can evaluate it. Recorded
+    distinct_from so neither a false merge nor a false contradiction gets re-proposed.
+
+# ── Dependent pairs (recorded, NEVER counted as convergence) ─────────────────────────────────
+
+- record_id: xj_0030
+  kind: dependent_pair
+  label: jump_cut_companion_pair
+  status: proposed
+  relation: potentially_equivalent_to
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: jump_cut
+  independence_not_established: true
+  members:
+  - id: t_gote_c003_0031
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'jump_cut as perceived glitch — the viewer notices consciously'
+  - id: t_gos_c003_0002
+    source_dir: grammar-of-the-shot-ch4
+    evidence: 'jump_cut as similar-framing cut causing a jump in space or time'
+  independence:
+  - {a: grammar-of-the-edit-ch3-5, b: grammar-of-the-shot-ch4, audit_relation: companion_volume}
+  note: >
+    Same concept, but Thompson & Bowen companion volumes are one authorial position stated
+    twice — never two independent origins. potentially_equivalent_to only; may not be used for
+    aggregation (SPEC-05 rule 2). The independent second origin for the jump family is Murch
+    (xj_0012).
+
+- record_id: xj_0031
+  kind: dependent_pair
+  label: screen_direction_companion_pair
+  status: proposed
+  relation: potentially_equivalent_to
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: screen_direction
+  independence_not_established: true
+  members:
+  - id: t_gote_c003_0018
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'screen_direction: movement toward frame right/left that must be maintained across a cut'
+  - id: t_gos_c003_0013
+    source_dir: grammar-of-the-shot-ch4
+    evidence: 'screen_direction: the left or right movement of a subject relative to the frame edges'
+  independence:
+  - {a: grammar-of-the-edit-ch3-5, b: grammar-of-the-shot-ch4, audit_relation: companion_volume}
+  note: >
+    Same concept, same companion_volume dependence as xj_0030; counts once. No independent
+    second origin for this term is currently committed (Murch's related geometry is recorded at
+    xj_0013 for the 180-line, not for screen direction itself).
+
+- record_id: xj_0032
+  kind: dependent_pair
+  label: planarity_shared_informant
+  status: proposed
+  relation: potentially_equivalent_to
+  usable: accepted_only
+  confidence: high
+  independence_not_established: true
+  transcribed_finding: tf_ondaatje_planarity
+  members:
+  - id: t_murch_c003_0005
+    source_dir: murch-blink-p1-25
+    evidence: 'planarity: "the grammar of three dimensions transposed by photography to two" — fifth criterion, weighted 5%'
+  - id: t_conv_c003_0009
+    source_dir: ondaatje-conversations-ch3
+    evidence: 'planarity_of_the_face: how a face translates from three dimensions to two under a given lens at a given distance'
+  supporting_ids: [t_conv_c003_0010]
+  independence:
+  - {a: murch-blink-p1-25, b: ondaatje-conversations-ch3, audit_relation: shared_primary_informant}
+  note: >
+    The same practitioner's word in two books with different authors and publishers — the
+    sharpest committed counterexample to counting origin_ref values (transcribed finding
+    tf_ondaatje_planarity; CANON-006 decision). most_characteristic_angle (t_conv_c003_0010,
+    the Egyptian-painting argument) carries the same dependence. Recorded so the false
+    convergence is never re-proposed; never counts toward promotion.
+
+# ── Process-metadata quarantine ──────────────────────────────────────────────────────────────
+
+- record_id: xj_0033
+  kind: metadata_quarantine
+  label: no_authored_page
+  status: proposed
+  relation: distinct_from
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: no_authored_page
+  members:
+  - id: t_rbwl_0018
+    source_dir: bijapurkar-we-are-like-that-only
+    evidence: 'no_authored_page: applies to this source — calibre-converted pages are conversion artefacts, locators are chapter numbers'
+  - id: t_dpci_0019
+    source_dir: dwyer-patel-cinema-india
+    evidence: 'no_authored_page: "recorded here as NOT APPLICABLE to this source" — the scan preserves printed folios'
+  supporting_ids: [t_jgb_0021]
+  independence:
+  - {a: bijapurkar-we-are-like-that-only, b: dwyer-patel-cinema-india, audit_relation: no_known_relation}
+  note: >
+    Adjudication: process metadata, never a knowledge join. The two terms record provenance
+    facts about copies (one applying, one self-declared NOT APPLICABLE); jain's
+    authored_page_present (t_jgb_0021) is the same species. Proposed action for Controller: a
+    schema quarantine (kind: process_metadata, or relocation to PROVENANCE) so page-provenance
+    markers can never enter a compiled pack as content. distinct_from records that the string
+    match was checked and is not a concept identity.
+
+# ── Anchor gap (recorded, unusable) ──────────────────────────────────────────────────────────
+
+- record_id: xj_0034
+  kind: anchor_gap
+  label: bang_baseline_anchor_missing
+  status: proposed
+  relation: uncertain
+  usable: false
+  confidence: low
+  members: []
+  non_resolving_refs_note: >
+    canon/findings/FINDINGS-11-empirical-knowledge-join.md E-01 ("logo floating mid-air") joins
+    same_mechanism to mb_009 — Molly Bang's baseline/ground mechanism — called the strongest
+    join in the set. mb_009 resolves only in canon/knowledge/atoms-v1-superseded; Molly Bang is
+    not in the accepted corpus, so the corpus's best demonstrated empirical join has no valid
+    accepted-corpus anchor. The id is deliberately quoted here in prose, not in an id-checked
+    field. UNANCHORED pending either re-derivation from an accepted source (freeman/samara have
+    adjacent but unverified claims) or admission of the source through the Audit Gate — both
+    Controller matters.
+
+# ── HOLD-blocked observations (usable: false until the named sources pass the Audit Gate) ────
+# These rows reference findings ABOUT admission; no HOLD claims are reproduced here.
+
+- record_id: xj_0035
+  kind: hold_blocked_observation
+  label: ries_vs_binet_field
+  status: proposed
+  relation: uncertain
+  usable: false
+  confidence: low
+  members: []
+  hold_sources: [ries-22-immutable-laws-branding]
+  finding_ref: canon/findings/CANON-014-CROSS-SOURCE-OBSERVATIONS.md §3.1
+  note: >
+    Five recorded contradictions between the HOLD candidate Ries & Ries and the accepted
+    Binet & Field. Unusable until the HOLD source passes the Audit Gate (blocked on figure-level
+    inspection; source figures are not in the repo). Recorded so the review queue is visible.
+
+- record_id: xj_0036
+  kind: hold_blocked_observation
+  label: sullivan_vs_ogilvy_hopkins
+  status: proposed
+  relation: uncertain
+  usable: false
+  confidence: low
+  members: []
+  hold_sources: [sullivan-hey-whipple]
+  finding_ref: canon/findings/CANON-014-CROSS-SOURCE-OBSERVATIONS.md §3.2
+  note: >
+    Four recorded contradictions plus three false-disagreement warnings between the HOLD
+    candidate Sullivan and the accepted Ogilvy/Hopkins. Note the Sullivan lane declined to
+    assert independence from Ogilvy (an Ogilvy-published book is quoted across chapters).
+    Unusable until admission.
+
+- record_id: xj_0037
+  kind: hold_blocked_observation
+  label: noise_discussing_design_convergence
+  status: proposed
+  relation: uncertain
+  usable: false
+  confidence: low
+  members: []
+  hold_sources: [kahneman-sibony-sunstein-noise, connor-irizarry-discussing-design]
+  finding_ref: canon/findings/CANON-014-CROSS-SOURCE-OBSERVATIONS.md §4.4
+  note: >
+    A recorded convergence between two HOLD candidates (judgement variability across judges).
+    Both ends are HOLD, so this cannot even be graded involves_hold against an accepted anchor.
+    Unusable until at least one source is admitted.
+
+# ── Imported CANON-014 cross-reference observations (usable: involves_hold) ──────────────────
+# The 16 rows of canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml, imported one-to-one
+# with from/to/relation/note/declared_in verbatim. asserts_agreement_between_sources: false in
+# the source file; none of these rows asserts agreement, and no independence is established for
+# any pair (every declared_in source is a HOLD candidate with no audit record). Appended
+# programmatically from the source file — see the generation note in the REP-02 worker report.
+
+- record_id: xj_0038
+  kind: imported_observation
+  label: canon014_crossref_t_pex_0012__t_fre_c003_0043
+  status: proposed
+  relation: related_to
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_pex_0012
+    source_dir_or_candidate: freeman-photographers-eye-beyond-parts1-3
+  - id: t_fre_c003_0043
+  note: SAME BOOK, live Parts 1-3. The live term is a flat frontal viewpoint used to isolate deliberate
+    diagonals; four-square is the same physical stance argued for a different reason. Observation only,
+    no promotion
+- record_id: xj_0039
+  kind: imported_observation
+  label: canon014_crossref_t_pex_0029__t_fre_c003_0020
+  status: proposed
+  relation: distinct_from
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_pex_0029
+    source_dir_or_candidate: freeman-photographers-eye-beyond-parts1-3
+  - id: t_fre_c003_0020
+  note: 'SAME BOOK, live Parts 1-3. Checked and rejected: figure-in-a-landscape is about a scale reference
+    registering at all; near-far requires both elements sharp and demands a compared relationship between
+    them'
+- record_id: xj_0040
+  kind: imported_observation
+  label: canon014_crossref_t_pex_0069__t_fre_c003_0022
+  status: proposed
+  relation: distinct_from
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_pex_0069
+    source_dir_or_candidate: freeman-photographers-eye-beyond-parts1-3
+  - id: t_fre_c003_0022
+  note: 'SAME BOOK, live Parts 1-3. Checked and rejected: tonal weight is a quantity that unbalances a
+    division; the tonal reduction here is an illustration method for testing a shape claim'
+- record_id: xj_0041
+  kind: imported_observation
+  label: canon014_crossref_t_pex_0025__t_fre_c003_0012
+  status: proposed
+  relation: distinct_from
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_pex_0025
+    source_dir_or_candidate: freeman-photographers-eye-beyond-parts1-3
+  - id: t_fre_c003_0012
+  note: 'SAME BOOK, live Parts 1-3. Checked and rejected: edge magnetism is an attraction between a subject
+    edge and a frame edge; a scene-level vector is a direction the whole setting carries'
+- record_id: xj_0042
+  kind: imported_observation
+  label: canon014_crossref_t_pex_0024__t_fre_c003_0019
+  status: proposed
+  relation: related_to
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: freeman-photographers-eye-beyond-parts1-3
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_pex_0024
+    source_dir_or_candidate: freeman-photographers-eye-beyond-parts1-3
+  - id: t_fre_c003_0019
+  note: SAME BOOK, live Parts 1-3. The two-shot case makes attention travel between a pair; the eyeline
+    case names the force that does it. One author's vocabulary across his own chapters, not two sources
+    agreeing
+- record_id: xj_0043
+  kind: imported_observation
+  label: canon014_crossref_t_sa8_0034__t_hop_sa_0019
+  status: proposed
+  relation: distinct_from
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: hopkins-scientific-advertising-ch8-21
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_sa8_0034
+    source_dir_or_candidate: hopkins-scientific-advertising-ch8-21
+  - id: t_hop_sa_0019
+  note: 'OBSERVATION against live Canon, not a promotion. The live term `town_by_town_comparison` (chapter
+    1) is a MEASUREMENT substitute where direct returns are impossible. The chapter 13/16 paired-town
+    comparison is a designed experiment with an arm deliberately held back. Related in apparatus, different
+    in kind — and note that ch.14''s town-by-town DISTRIBUTION rollout (sk_sa8_0030) is a third thing
+    again, sharing only the word "town".
+
+    '
+- record_id: xj_0044
+  kind: imported_observation
+  label: canon014_crossref_t_sa8_0022__t_hop_sa_0008
+  status: proposed
+  relation: narrower_than
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: hopkins-scientific-advertising-ch8-21
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_sa8_0022
+    source_dir_or_candidate: hopkins-scientific-advertising-ch8-21
+  - id: t_hop_sa_0008
+  note: 'OBSERVATION against live Canon. The live problem term `useless_pictures` (chapter 4) names the
+    failure; `better_than_the_same_space_set_in_type` is the chapter 9 test that decides it, which chapters
+    1-7 do not supply. No duplicate problem term was created for chapter 9''s restatement of the failure.
+
+    '
+- record_id: xj_0045
+  kind: imported_observation
+  label: canon014_crossref_t_sa8_0020__t_hop_sa_0031
+  status: proposed
+  relation: broader_than
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: hopkins-scientific-advertising-ch8-21
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_sa8_0020
+    source_dir_or_candidate: hopkins-scientific-advertising-ch8-21
+  - id: t_hop_sa_0031
+  note: 'OBSERVATION against live Canon. The live remedy `tell_the_complete_story` (chapter 4) is scoped
+    to mail order and immediate-sale advertising. Chapter 8 generalises the same remedy to advertising
+    at large and supplies the mechanism. No duplicate remedy term was created; the chapter 8 term is registered
+    as the broader one and the relationship records why.
+
+    '
+- record_id: xj_0046
+  kind: imported_observation
+  label: canon014_crossref_t_sa8_0019__t_hop_sa_0011
+  status: proposed
+  relation: distinct_from
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: hopkins-scientific-advertising-ch8-21
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_sa8_0019
+    source_dir_or_candidate: hopkins-scientific-advertising-ch8-21
+  - id: t_hop_sa_0011
+  note: 'OBSERVATION against live Canon, and a genuinely easy false merge to make. The live problem `cheapened_by_giving_it_away`
+    (chapter 6) is about the SELLER giving the article away, which sets its value at zero. `charging_for_the_sample`
+    is about the BUYER being asked to pay, which suppresses the reply. They point in opposite directions
+    and both are held by the source at once: the prospect pays nothing, and the maker buys the sample
+    at retail rather than donating stock.
+
+    '
+- record_id: xj_0047
+  kind: imported_observation
+  label: canon014_crossref_t_sa8_0030__t_hop_sa_0026
+  status: proposed
+  relation: related_to
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: hopkins-scientific-advertising-ch8-21
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_sa8_0030
+    source_dir_or_candidate: hopkins-scientific-advertising-ch8-21
+  - id: t_hop_sa_0026
+  note: 'OBSERVATION against live Canon. The live remedy `sample_bought_at_retail_price` (chapter 6) governs
+    who pays the dealer; the chapter 13 three-part gate governs who receives the sample. Complementary
+    halves of one policy, not the same term.
+
+    '
+- record_id: xj_0048
+  kind: imported_observation
+  label: canon014_crossref_t_sa8_0046__t_hop_sa_0035
+  status: proposed
+  relation: related_to
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: hopkins-scientific-advertising-ch8-21
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_sa8_0046
+    source_dir_or_candidate: hopkins-scientific-advertising-ch8-21
+  - id: t_hop_sa_0035
+  note: 'OBSERVATION against live Canon, and the load-bearing one for this whole lane. The live term `fixed_principle`
+    (chapter 1) is what a method becomes when it "invariably proves best". `the_small_scale_average` is
+    the inferential step chapter 15 needs in order to get from a few towns to a national commitment. Chapter
+    1 promised chapter 15 would supply the evidence for it. It does not. Recorded as related_to and explicitly
+    NOT as `maps_to`, because asserting a correspondence would imply the second grounds the first, which
+    is the opposite of the finding.
+
+    '
+- record_id: xj_0049
+  kind: imported_observation
+  label: canon014_crossref_t_ogx_0067__t_sa8_0002
+  status: proposed
+  relation: related_to
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: ogilvy-beyond-ch2
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_ogx_0067
+    source_dir_or_candidate: ogilvy-beyond-ch2
+  - id: t_sa8_0002
+  note: OBSERVATION ONLY. Hopkins's term is space_spent_on_present_users, a problem; Ogilvy states in
+    his chapter on Hopkins that this position was disproved by later research and that users read a product's
+    advertisements more than non-users. That is one author reporting another as overturned, with no study
+    named. It needs review, not a merge, and nothing is promoted here
+- record_id: xj_0050
+  kind: imported_observation
+  label: canon014_crossref_t_ogx_0011__t_mla_0035
+  status: proposed
+  relation: related_to
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: ogilvy-beyond-ch2
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_ogx_0011
+    source_dir_or_candidate: ogilvy-beyond-ch2
+  - id: t_mla_0035
+  note: OBSERVATION ONLY. Hopkins's ordinary_type_and_upper_and_lower_case and Ogilvy's capitals_retard_reading
+    point the same way about capitals; the two are separated by decades and neither supplies a study,
+    so this records a resemblance and asserts nothing
+- record_id: xj_0051
+  kind: imported_observation
+  label: canon014_crossref_t_ogx_0031__t_mla_0032
+  status: proposed
+  relation: related_to
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: ogilvy-beyond-ch2
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_ogx_0031
+    source_dir_or_candidate: ogilvy-beyond-ch2
+  - id: t_mla_0032
+  note: OBSERVATION ONLY. Hopkins's headline_as_salutation and Ogilvy's flag_them_down both treat the
+    headline as selecting its audience rather than as announcing
+- record_id: xj_0052
+  kind: imported_observation
+  label: canon014_crossref_t_ogx_0045__t_mla_0005
+  status: proposed
+  relation: related_to
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: ogilvy-beyond-ch2
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_ogx_0045
+    source_dir_or_candidate: ogilvy-beyond-ch2
+  - id: t_mla_0005
+  note: OBSERVATION ONLY. Both are procedures for deciding by measured response rather than by argument;
+    Ogilvy's split run varies one element inside a live advertisement, Hopkins's test campaign runs a
+    whole campaign in a limited area. Similar purpose, different unit
+- record_id: xj_0053
+  kind: imported_observation
+  label: canon014_crossref_t_ogx_0056__t_whip_0024
+  status: proposed
+  relation: distinct_from
+  usable: involves_hold
+  confidence: medium
+  imported_from: canon/candidates/canon-014/CROSS-SOURCE-RELATIONSHIPS.yaml
+  declared_in: ogilvy-beyond-ch2
+  confidence_basis: extractor_judgement
+  members:
+  - id: t_ogx_0056
+    source_dir_or_candidate: ogilvy-beyond-ch2
+  - id: t_whip_0024
+  note: OBSERVATION ONLY, and a negative one. Sullivan's two_second_outdoor_test compresses an out-of-home
+    message to what can be read in passing; Ogilvy reasons from exposure duration in the opposite direction
+    and warns explicitly against designing a transit card like a billboard. Both are about out-of-home
+    and they are not the same claim

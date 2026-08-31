@@ -1,0 +1,600 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+#
+# domain->system map v0 (Canon repair / REP-01, live-24 corpus).
+#
+# WHY THIS EXISTS. The domain map assigns whole SOURCES to domains, so a pack compiler seeding
+# from it pulls 20-83% of the corpus per pack (measure: per-pack contributor object upper bounds
+# in CANON-V1-LIVE24-COVERAGE.yaml over 677 objects). The committed sub-source structure — 78
+# SourceConceptSystems averaging 8.7 members — is never referenced by any planning artifact. This
+# file is the missing middle layer: for each of the 56 diagnostic domains it names the scs_ids the
+# domain actually draws on, so compilation seeds at system granularity and closes over
+# intra_source_relations instead of pulling whole sources.
+#
+# WHAT THIS IS NOT. Every systems list here is an AUTHORED CANON JUDGEMENT made by reading the
+# committed system labels, descriptions and members against the domain definitions — validated
+# mechanically only for naming real scs_ids (canon/validation/validate_live24_coverage.py). It is
+# not machine-discovered, and adoption is a Controller decision.
+#
+# RESIDUE ENTRIES. Where a domain's material sits partly or wholly OUTSIDE any committed system
+# (isolated objects, or a contributor whose relevant claims are not system members), the entry
+# carries an explicit `residue` list so a system-seeded compiler knows what it will NOT reach and
+# must pull by sk_id or leave behind knowingly. Empty domains carry a residue entry saying so.
+# The 36 system-unreachable objects are catalogued with repair proposals in
+# canon/planning/PROPOSED-orphan-backfill-v0.yaml.
+#
+# Every scs_id below resolves in canon/knowledge/current/*/source-concept-systems.yaml; every
+# sk_id in a residue note resolves in the same source's source-knowledge.yaml (checked by the
+# validator).
+
+meta:
+  task: Canon repair / REP-01
+  authored: 2026-08-31
+  status: PROPOSED
+  basis: canon/knowledge/current (24 sources, 78 concept systems), canon/planning/live24_domain_map.yaml
+  domain_source: canon/planning/live24_domain_map.yaml
+
+domains:
+
+# ── A · Static visual craft ────────────────────────────────────────────────────
+- id: A01
+  pack: composition_and_attention
+  systems:
+    - {scs_id: scs_fre_c003_001, note: placement zones and the refusal of a placement rule}
+    - {scs_id: scs_fre_c003_002, note: how tightly the frame holds the subject}
+    - {scs_id: scs_fre_c003_003, note: choosing the frame's proportion}
+    - {scs_id: scs_fre_c003_005, note: dividing the frame}
+    - {scs_id: scs_ms_c003_002, note: staging that moves attention inside the frame}
+    - {scs_id: scs_alt_c003_003, note: illumination separating subject from ground}
+    - {scs_id: scs_dpci_001, note: frontal/iconic poster composition read through a held code}
+    - {scs_id: scs_jgb_001, note: frontal gaze as functional compositional requirement (sk_jgb_0010)}
+
+- id: A02
+  pack: composition_and_attention
+  systems:
+    - {scs_id: scs_fre_c003_001, note: placement as salience control}
+    - {scs_id: scs_fre_c003_004, note: devices that work by delaying the viewer}
+    - {scs_id: scs_sam_c003_002, note: hierarchy derived from typesetting structure}
+    - {scs_id: scs_sam_c003_003, note: alignment discipline as hierarchy carrier}
+    - {scs_id: scs_ms_c003_002, note: seven ways to move attention without a cut}
+    - {scs_id: scs_murch_c003_004, note: misdirecting attention as a magician does}
+    - {scs_id: scs_gote_c003_005, note: general practices steering the eye across cuts}
+    - {scs_id: scs_vig_c003_001, note: pragmatics — the message must be received}
+    - {scs_id: scs_dpci_001, note: face-first-then-recognition attention sequence (sk_dpci_0090)}
+
+- id: A03
+  pack: composition_and_attention
+  systems:
+    - {scs_id: scs_fre_c003_005, note: tonal division and weight}
+    - {scs_id: scs_alt_c003_003, note: tonal separation of subject from ground}
+    - {scs_id: scs_jgb_001, note: colour saturation as a public claim on attention (sk_jgb_0020)}
+
+- id: A04
+  pack: composition_and_attention
+  systems:
+    - {scs_id: scs_fre_c003_002, note: backgrounds giving each unit a place}
+    - {scs_id: scs_fre_c003_005, note: division satisfying or refusing the eye}
+    - {scs_id: scs_sam_c003_001, note: grid type chosen from content shape — modules and zones}
+    - {scs_id: scs_sam_c003_003, note: alignment as grouping}
+
+- id: A05
+  pack: colour_and_visual_register
+  systems:
+    - {scs_id: scs_alb_c003_001, note: colour as the most relative medium — the argument}
+    - {scs_id: scs_alb_c003_002, note: the relativity exercise and its conditions}
+    - {scs_id: scs_alt_c003_003, note: illumination-era tonal/colour separation}
+    - {scs_id: scs_ms_c003_002, note: colour as an attention guide within the frame}
+    - {scs_id: scs_vig_c003_002, note: colour discipline held against style}
+    - {scs_id: scs_jgb_001, note: saturation convention of the Indian bazaar print (sk_jgb_0020)}
+
+- id: A06
+  pack: typography_and_copy
+  systems:
+    - {scs_id: scs_sam_c003_002, note: measure, leading and column derivation}
+    - {scs_id: scs_vig_c003_002, note: typographic discipline and appropriateness}
+  residue:
+    - source: albers-interaction-of-color
+      note: >
+        albers contributes to this domain only via colour-in-type adjacency; no albers system is a
+        typography system. A system-seeded compile takes nothing from albers here, knowingly.
+
+- id: A07
+  pack: typography_and_copy
+  systems:
+    - {scs_id: scs_sam_c003_001, note: choosing a grid type from the shape of the content}
+    - {scs_id: scs_sam_c003_002, note: deriving the structure from the typesetting}
+    - {scs_id: scs_sam_c003_003, note: one alignment discipline and its named exceptions}
+    - {scs_id: scs_sam_c003_004, note: regularity as the value and the danger}
+    - {scs_id: scs_sam_c003_005, note: structure read as signification}
+    - {scs_id: scs_sam_c003_006, note: responsive structure from the smallest format outward}
+    - {scs_id: scs_vig_c003_001, note: semantics/syntax/pragmatics as a sequential test}
+    - {scs_id: scs_vig_c003_002, note: discipline against change for its own sake}
+
+- id: A08
+  pack: product_appearance
+  systems:
+    - {scs_id: scs_fre_c003_002, note: what the frame holds and how tightly}
+    - {scs_id: scs_hop_sa_003, note: the commercial test on imagery — useless pictures named}
+    - {scs_id: scs_alt_c003_003, note: what illumination is for}
+    - {scs_id: scs_dpci_003, note: setting/costume/props asked to carry meaning}
+    - {scs_id: scs_jgb_001, note: iconographic correctness as precondition (sk_jgb_0130, sk_jgb_0040)}
+
+- id: A09
+  pack: product_appearance
+  systems:
+    - {scs_id: scs_alt_c003_001, note: the named light functions}
+    - {scs_id: scs_alt_c003_002, note: the working order of lighting a scene}
+    - {scs_id: scs_alt_c003_003, note: what illumination is for}
+    - {scs_id: scs_lsm_c003_001, note: three reflection types as a contrast set}
+    - {scs_id: scs_lsm_c003_002, note: family of angles as a placement control}
+
+- id: A10
+  pack: product_appearance
+  systems:
+    - {scs_id: scs_lsm_c003_001, note: reflection type determines rendered appearance}
+    - {scs_id: scs_lsm_c003_002, note: family of angles predicts where reflections land}
+    - {scs_id: scs_lsm_c003_003, note: terminological discipline as a condition of the theory}
+    - {scs_id: scs_alt_c003_001, note: light functions modelling surface}
+
+- id: A11
+  pack: product_appearance
+  systems:
+    - {scs_id: scs_fre_c003_003, note: frame proportion craft}
+    - {scs_id: scs_lsm_c003_002, note: placement control craft}
+    - {scs_id: scs_alt_c003_002, note: working order of lighting a scene}
+
+- id: A12
+  pack: composition_and_attention
+  systems:
+    - {scs_id: scs_fre_c003_002, note: subject-in-frame spatial relations}
+    - {scs_id: scs_ms_c003_002, note: attention moved through space without a cut}
+    - {scs_id: scs_murch_c003_002, note: displacement regimes on the two-dimensional screen plane}
+    - {scs_id: scs_gos_c003_001, note: continuity geometry of the action line}
+
+- id: A13
+  pack: product_appearance
+  systems:
+    - {scs_id: scs_lsm_c003_001, note: reflection control on glossy product surfaces}
+    - {scs_id: scs_lsm_c003_002, note: family of angles — the packshot-relevant physical model}
+    - {scs_id: scs_alt_c003_001, note: named light functions}
+    - {scs_id: scs_alt_c003_002, note: lighting working order}
+  residue:
+    - note: >
+        The domain's missing half (packshot CONVENTION — hero angle, label legibility, scale cues)
+        has no accepted system anywhere; recorded in the domain map's state_override. A compiler
+        must not present these systems as packshot convention.
+
+- id: A14
+  pack: typography_and_copy
+  systems: []
+  residue:
+    - note: >
+        Domain empty in the live-24 corpus: no accepted source treats any non-Latin script
+        (gap ledger G1; CANON-008 stopped at its acquisition gate). Nothing to seed.
+
+# ── B · Moving image ───────────────────────────────────────────────────────────
+- id: B01
+  pack: camera_and_spatial_grammar
+  systems:
+    - {scs_id: scs_gos_c003_001, note: shot grammar of the action line}
+    - {scs_id: scs_gos_c003_003, note: rules held defeasible by creative intent}
+    - {scs_id: scs_gote_c003_002, note: the element set named fixed, applied variable}
+    - {scs_id: scs_gote_c003_003, note: the four continuities}
+    - {scs_id: scs_ms_c003_001, note: how the shot catalogue intends itself to be used}
+
+- id: B02
+  pack: camera_and_spatial_grammar
+  systems:
+    - {scs_id: scs_ms_c003_002, note: seven ways to move attention without a cut}
+    - {scs_id: scs_ms_c003_003, note: the standard a camera move is judged by}
+    - {scs_id: scs_gos_c003_001, note: placement constrained by the action line}
+    - {scs_id: scs_alt_c003_002, note: lighting order interacting with placement}
+
+- id: B03
+  pack: camera_and_spatial_grammar
+  systems:
+    - {scs_id: scs_gos_c003_001, note: continuity geometry}
+    - {scs_id: scs_gos_c003_002, note: defects with no within-frame signature}
+    - {scs_id: scs_gote_c003_003, note: the four continuities}
+    - {scs_id: scs_murch_c003_002, note: displacement regimes — why intermediate jumps jar}
+    - {scs_id: scs_conv_c003_003, note: costume consistency buying scene mobility}
+
+- id: B04
+  pack: editing_pacing_and_short_form
+  systems:
+    - {scs_id: scs_gote_c003_001, note: the six-element test for a transition}
+    - {scs_id: scs_gote_c003_005, note: the seven general practices}
+    - {scs_id: scs_murch_c003_001, note: the rule of six}
+    - {scs_id: scs_murch_c003_003, note: three independent justifications for cutting}
+    - {scs_id: scs_conv_c003_003, note: cutting decisions under missing material}
+  residue:
+    - source: murch-blink-p1-25
+      note: >
+        murch's path-discovery account (sk_murch_c003_0001..0003) and order-and-rate-of-release
+        claims (sk_murch_c003_0013, sk_murch_c003_0014) are system-unreachable today — see
+        PROPOSED-orphan-backfill-v0.yaml.
+
+- id: B05
+  pack: editing_pacing_and_short_form
+  systems:
+    - {scs_id: scs_murch_c003_001, note: rhythm as ranked criterion with sacrifice rules}
+    - {scs_id: scs_gote_c003_001, note: transition timing as tested element}
+    - {scs_id: scs_conv_c003_001, note: soundtrack attention economy pacing the picture}
+
+- id: B06
+  pack: editing_pacing_and_short_form
+  systems:
+    - {scs_id: scs_murch_c003_001, note: the rule of six — explicit ranked trade-off machinery}
+    - {scs_id: scs_gote_c003_001, note: element priorities at the cut}
+
+- id: B07
+  pack: concept_and_distinctiveness
+  systems:
+    - {scs_id: scs_murch_c003_004, note: occupying the audience's position}
+    - {scs_id: scs_conv_c003_002, note: the hat — a motif doing narrative work}
+    - {scs_id: scs_conv_c003_003, note: restructuring a story from what exists}
+    - {scs_id: scs_ms_c003_001, note: shots chosen for narrative effect}
+    - {scs_id: scs_sb_c003_002, note: commercial narrative structure (SB7)}
+
+- id: B08
+  pack: camera_and_spatial_grammar
+  systems:
+    - {scs_id: scs_ms_c003_003, note: judging a staged move}
+    - {scs_id: scs_conv_c003_002, note: gesture and aspect as performance signals}
+
+- id: B09
+  pack: editing_pacing_and_short_form
+  systems:
+    - {scs_id: scs_conv_c003_001, note: withdrawing dialogue to expose the soundtrack}
+    - {scs_id: scs_gote_c003_005, note: split-edit practice}
+    - {scs_id: scs_ms_c003_002, note: staging two speakers without cutting}
+
+- id: B10
+  pack: editing_pacing_and_short_form
+  systems:
+    - {scs_id: scs_conv_c003_001, note: picture and sound competing for one attention budget}
+    - {scs_id: scs_gote_c003_005, note: sound bridges as general practice}
+  residue:
+    - source: murch-blink-p1-25
+      note: >
+        murch's sound claims in this chapter range are incidental; no murch system is a sound
+        system. Seed from ondaatje.
+
+- id: B11
+  pack: editing_pacing_and_short_form
+  systems: []
+  residue:
+    - note: >
+        Domain empty in the live-24 corpus (gap ledger G2): newest accepted moving-image source is
+        2011 and the domain postdates it. Nothing to seed; do not promote film-era systems into
+        this slot.
+
+- id: B12
+  pack: editing_pacing_and_short_form
+  systems: []
+  residue:
+    - note: >
+        Domain empty as usable knowledge; one incidental motion_design tag on a samara print
+        object (recorded in the domain map as incidental_only, not counted).
+
+- id: B13
+  pack: colour_and_visual_register
+  systems: []
+  residue:
+    - note: >
+        Domain empty as usable knowledge; kenworthy tags grading/colour once each in passing and
+        alton is black-and-white-era illumination (incidental_only in the domain map).
+
+# ── C · Commercial communication ───────────────────────────────────────────────
+- id: C01
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_ogl_c003_001, note: preparation sequence before writing}
+    - {scs_id: scs_ogl_c003_002, note: the measurement argument}
+    - {scs_id: scs_hop_sa_001, note: how advertising knowledge is established}
+    - {scs_id: scs_hop_sa_002, note: the salesmanship test as a decision procedure}
+    - {scs_id: scs_eic_001, note: consideration context framework}
+    - {scs_id: scs_eic_002, note: brand and activation as complementary mechanisms}
+    - {scs_id: scs_sb_c003_001, note: why marketing fails and what the remedy must do}
+    - {scs_id: scs_sut_alc_001, note: the case against logical overreach}
+    - {scs_id: scs_sut_alc_003, note: the working method implied by the argument}
+
+- id: C02
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_eic_001, note: which effects are easy or hard by context}
+    - {scs_id: scs_eic_002, note: brand-building vs sales-activation as objective split}
+    - {scs_id: scs_ogl_c003_002, note: objectives that admit measurement}
+    - {scs_id: scs_hop_sa_002, note: the only admissible objective is selling}
+
+- id: C03
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_sut_alc_002, note: psycho-logic as a second operating system}
+    - {scs_id: scs_hop_sa_002, note: the consumer as the salesman's addressee}
+    - {scs_id: scs_eic_001, note: how buyers consider purchases}
+    - {scs_id: scs_sb_c003_001, note: the customer's survival concerns}
+    - {scs_id: scs_hea_mts_002, note: the curse of knowledge and its only escape}
+    - {scs_id: scs_rbwl_001, note: reasoning errors about the Indian consumer}
+    - {scs_id: scs_rbwl_003, note: three kinds of evidence in one voice}
+  residue:
+    - source: pandey-pandeymonium
+      note: >
+        pandey's audience-context claims (sk_ppm_0001, sk_ppm_0030) are system-unreachable today —
+        see PROPOSED-orphan-backfill-v0.yaml.
+    - source: parameswaran-nawabs-nudes-noodles
+      note: >
+        parameswaran's household influence/usage claims (sk_nnn_0030..sk_nnn_0033) are
+        system-unreachable today — see PROPOSED-orphan-backfill-v0.yaml.
+
+- id: C04
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_ogl_c003_003, note: image as the thing actually bought}
+    - {scs_id: scs_sb_c003_002, note: the SB7 framework positions the customer as hero}
+    - {scs_id: scs_hop_sa_002, note: proposition tested as salesmanship}
+    - {scs_id: scs_hea_mts_001, note: the success checklist shaping a proposition}
+
+- id: C05
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_sut_alc_001, note: persuasion beyond logical overreach}
+    - {scs_id: scs_sut_alc_002, note: psycho-logic mechanisms}
+    - {scs_id: scs_hea_mts_001, note: the six-property checklist}
+    - {scs_id: scs_hop_sa_004, note: levers that change response without changing the offer}
+    - {scs_id: scs_eic_001, note: emotional vs rational persuasion by context}
+    - {scs_id: scs_ogl_c003_002, note: persuasion claims held to measurement}
+
+- id: C06
+  pack: concept_and_distinctiveness
+  systems:
+    - {scs_id: scs_ogl_c003_003, note: brand as accumulated image}
+    - {scs_id: scs_vig_c003_002, note: identity discipline against style churn}
+    - {scs_id: scs_eic_002, note: brand building as durable memory structures}
+    - {scs_id: scs_sb_c003_002, note: brand's role in the customer's story}
+
+- id: C07
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_hop_sa_005, note: specificity as a credibility mechanism}
+    - {scs_id: scs_hop_sa_003, note: mail-order copy prescriptions for product claims}
+    - {scs_id: scs_ogl_c003_003, note: the product as the image's subject}
+    - {scs_id: scs_sb_c003_002, note: product as the guide's plan}
+    - {scs_id: scs_nnn_003, note: the image alone carrying the product argument (Indian executions)}
+
+- id: C08
+  pack: concept_and_distinctiveness
+  systems:
+    - {scs_id: scs_eic_001, note: emotional consideration favours brand building}
+    - {scs_id: scs_eic_002, note: emotional engagement's commercial consequence}
+    - {scs_id: scs_sut_alc_002, note: emotional mechanisms as psycho-logic}
+    - {scs_id: scs_hea_mts_001, note: emotional as checklist property}
+    - {scs_id: scs_sb_c003_002, note: internal/external/philosophical problem levels}
+
+- id: C09
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_hea_mts_001, note: unexpectedness and curiosity gaps}
+    - {scs_id: scs_hop_sa_003, note: headline-as-hook prescriptions}
+    - {scs_id: scs_ogl_c003_001, note: preparation determining the opening promise}
+  residue:
+    - note: >
+        Every system here assumes a reader already stopped on a page; the feed hook (first 1-2
+        seconds, sound-off) has no system anywhere — domain map carries the
+        representation_or_evidence_limited override. Compile as print-era hooks, marked.
+
+- id: C10
+  pack: concept_and_distinctiveness
+  systems:
+    - {scs_id: scs_hea_mts_001, note: the six-property stickiness checklist}
+    - {scs_id: scs_sut_alc_002, note: counterintuitive as memorable}
+    - {scs_id: scs_ogl_c003_003, note: image built by repetition and consistency}
+  residue:
+    - source: pandey-pandeymonium
+      note: >
+        sk_ppm_0031 (celebrity must not be the only memorable element) is system-unreachable
+        today — see PROPOSED-orphan-backfill-v0.yaml.
+
+- id: C11
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_sb_c003_002, note: direct vs transitional calls to action}
+    - {scs_id: scs_hop_sa_004, note: response levers}
+    - {scs_id: scs_eic_002, note: activation converting memory into sales}
+
+- id: C12
+  pack: typography_and_copy
+  systems:
+    - {scs_id: scs_sam_c003_002, note: hierarchy from typesetting}
+    - {scs_id: scs_sam_c003_005, note: structure read as signification}
+    - {scs_id: scs_vig_c003_001, note: the sequential semantics/syntax/pragmatics test}
+    - {scs_id: scs_sb_c003_001, note: the grunt test as legibility check}
+    - {scs_id: scs_fre_c003_001, note: placement as information hierarchy in the frame}
+
+- id: C13
+  pack: indian_indic_context
+  systems:
+    - {scs_id: scs_rbwl_001, note: reasoning errors about a market read wrongly}
+    - {scs_id: scs_rbwl_002, note: everything is 2008 data and the author says so}
+    - {scs_id: scs_rbwl_003, note: three kinds of evidence in one voice}
+    - {scs_id: scs_dpci_001, note: how a still image carries narrative to a code-holding viewer}
+    - {scs_id: scs_dpci_002, note: the conventions are dated and the source dates them}
+    - {scs_id: scs_dpci_003, note: exteriority — setting/costume/location carrying meaning}
+    - {scs_id: scs_jgb_001, note: production constraints of the image-as-housing}
+    - {scs_id: scs_jgb_002, note: field evidence and what it can bear}
+    - {scs_id: scs_jgb_003, note: value located in circulation}
+    - {scs_id: scs_ppm_001, note: judging creative work before it runs}
+    - {scs_id: scs_ppm_002, note: how the book argues and why that bounds support}
+    - {scs_id: scs_nnn_001, note: the mirror thesis and its brakes}
+    - {scs_id: scs_nnn_002, note: Indian advertising clearance as a multi-gate route}
+    - {scs_id: scs_nnn_003, note: devices carrying a whole argument in the image}
+    - {scs_id: scs_nnn_004, note: why Indian advertising saturated with celebrities}
+  residue:
+    - note: >
+        16 of the five sources' 97 objects are system-unreachable today (see
+        PROPOSED-orphan-backfill-v0.yaml: pandey 5, parameswaran 9, dwyer 1, plus jain/bijapurkar
+        fully covered); and the domain's operational half (festival codes, price framing, Hinglish
+        norms) has no system because no accepted source holds it — G3b in
+        PROPOSED-demand-weighted-pack-priority-v1.md.
+
+- id: C14
+  pack: commercial_communication
+  systems:
+    - {scs_id: scs_eic_003, note: the IPA Databank evidence apparatus, with its stated limits}
+    - {scs_id: scs_hop_sa_001, note: keyed/traced response as evidence}
+    - {scs_id: scs_ogl_c003_002, note: the measurement argument}
+
+# ── D · Creative thinking ──────────────────────────────────────────────────────
+- id: D01
+  pack: concept_and_distinctiveness
+  systems:
+    - {scs_id: scs_ogl_c003_001, note: preparation before the big idea}
+    - {scs_id: scs_hea_mts_003, note: stickiness as a learnable design skill}
+    - {scs_id: scs_cat_c003_001, note: iterate in public — the Braintrust compact}
+    - {scs_id: scs_af_c003_001, note: assumptions that sustain making}
+    - {scs_id: scs_af_c003_002, note: how practices end and the one procedure against it}
+
+- id: D02
+  pack: concept_and_distinctiveness
+  systems:
+    - {scs_id: scs_conv_c003_002, note: the hat as extended metaphor}
+    - {scs_id: scs_vig_c003_001, note: semantics — search the meaning before designing}
+    - {scs_id: scs_hea_mts_001, note: concrete imagery carrying abstract meaning}
+    - {scs_id: scs_dpci_003, note: objects and costume as a semiotic vocabulary}
+    - {scs_id: scs_dpci_001, note: character types as compression code}
+
+- id: D03
+  pack: concept_and_distinctiveness
+  systems:
+    - {scs_id: scs_sut_alc_001, note: the case for the counterintuitive}
+    - {scs_id: scs_sut_alc_003, note: test counterintuitive things}
+    - {scs_id: scs_hea_mts_001, note: unexpectedness as designed property}
+    - {scs_id: scs_ogl_c003_003, note: warning against irrelevant brilliance}
+    - {scs_id: scs_vig_c003_002, note: warning against change for its own sake}
+
+- id: D04
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_vig_c003_002, note: discipline as productive constraint}
+    - {scs_id: scs_af_c003_001, note: constraints as the condition of making}
+    - {scs_id: scs_af_c003_003, note: the three inevitabilities}
+    - {scs_id: scs_conv_c003_003, note: making a film from material that is missing}
+    - {scs_id: scs_murch_c003_004, note: separate what you wish from what is there}
+
+- id: D05
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_murch_c003_001, note: ranked criteria with sacrifice rules}
+    - {scs_id: scs_eic_002, note: budget split as explicit trade-off}
+    - {scs_id: scs_gos_c003_003, note: rules held defeasible by creative intent}
+    - {scs_id: scs_sam_c003_004, note: regularity as value and danger}
+    - {scs_id: scs_fre_c003_001, note: refusal of a placement rule}
+
+- id: D06
+  pack: colour_and_visual_register
+  systems:
+    - {scs_id: scs_vig_c003_002, note: register as discipline}
+    - {scs_id: scs_ogl_c003_003, note: register as accumulated image}
+    - {scs_id: scs_sam_c003_005, note: structure read as signification}
+    - {scs_id: scs_nnn_003, note: vernacular register carried by word, script and setting (sk_nnn_0019)}
+  residue:
+    - source: parameswaran-nawabs-nudes-noodles
+      note: >
+        sk_nnn_0052 (Hindi-originated copy moved to the centre) is system-unreachable today — see
+        PROPOSED-orphan-backfill-v0.yaml.
+
+- id: D07
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_sam_c003_003, note: named exceptions to the alignment discipline}
+    - {scs_id: scs_sam_c003_004, note: when regularity should be broken}
+    - {scs_id: scs_gos_c003_003, note: rules defeasible by creative intent}
+    - {scs_id: scs_gote_c003_004, note: how binding the grammar is}
+    - {scs_id: scs_fre_c003_001, note: the refusal of a rule}
+    - {scs_id: scs_murch_c003_001, note: sacrifice rules as licensed breaking}
+
+# ── E · Evaluation & critique ──────────────────────────────────────────────────
+- id: E01
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_ogl_c003_002, note: judge against measured selling}
+    - {scs_id: scs_eic_001, note: what to expect by objective and context}
+    - {scs_id: scs_sb_c003_001, note: the grunt test}
+    - {scs_id: scs_hop_sa_002, note: the salesmanship test}
+    - {scs_id: scs_gote_c003_001, note: the six-element transition test}
+
+- id: E02
+  pack: composition_and_attention
+  systems:
+    - {scs_id: scs_gos_c003_002, note: defects with no within-frame signature — the unit varies}
+    - {scs_id: scs_gote_c003_001, note: the transition PAIR as inspection unit}
+    - {scs_id: scs_murch_c003_002, note: the cut as inspection unit}
+    - {scs_id: scs_fre_c003_002, note: the frame as inspection unit}
+    - {scs_id: scs_sam_c003_002, note: the spread as inspection unit}
+
+- id: E03
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_cat_c003_001, note: diagnose the cause, not the symptom}
+    - {scs_id: scs_gote_c003_001, note: element-by-element diagnostic questioning}
+    - {scs_id: scs_lsm_c003_003, note: refusing ambiguous terms in diagnosis}
+    - {scs_id: scs_sb_c003_001, note: named failures as diagnostic prompts}
+    - {scs_id: scs_vig_c003_001, note: the sequential test as diagnostic order}
+
+- id: E04
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_gote_c003_001, note: transition failures}
+    - {scs_id: scs_gote_c003_005, note: practice failures}
+    - {scs_id: scs_sam_c003_003, note: alignment failures and exceptions}
+    - {scs_id: scs_fre_c003_001, note: placement failures}
+    - {scs_id: scs_hop_sa_003, note: copy failures named}
+    - {scs_id: scs_gos_c003_002, note: pair-level failures invisible in frames}
+    - {scs_id: scs_alt_c003_002, note: lighting-order failures}
+    - {scs_id: scs_lsm_c003_001, note: reflection failures}
+    - {scs_id: scs_murch_c003_002, note: the jarring intermediate displacement}
+    - {scs_id: scs_sb_c003_001, note: message failures}
+    - {scs_id: scs_hea_mts_002, note: the curse of knowledge as root failure}
+
+- id: E05
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_eic_001, note: effectiveness rules as context-dependent}
+    - {scs_id: scs_gos_c003_003, note: exceptions licensed by intent}
+    - {scs_id: scs_fre_c003_001, note: context refusing a rule}
+    - {scs_id: scs_sam_c003_004, note: when the value becomes the danger}
+    - {scs_id: scs_lsm_c003_002, note: placement conditional on geometry}
+    - {scs_id: scs_rbwl_001, note: the analogy trap — a market does not replay another's past}
+    - {scs_id: scs_rbwl_002, note: context dated by the source itself}
+
+- id: E06
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_murch_c003_001, note: six criteria that routinely conflict}
+    - {scs_id: scs_alb_c003_001, note: no colour has fixed appearance in isolation}
+    - {scs_id: scs_alb_c003_002, note: relational conditions made testable}
+    - {scs_id: scs_sam_c003_004, note: regularity interacting with vitality}
+    - {scs_id: scs_fre_c003_005, note: division principles interacting}
+    - {scs_id: scs_lsm_c003_002, note: one control, several simultaneous consequences}
+
+- id: E07
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_cat_c003_001, note: the Braintrust compact}
+    - {scs_id: scs_cat_c003_002, note: why people withhold and what acts on it}
+    - {scs_id: scs_vig_c003_002, note: critique vocabulary as discipline}
+    - {scs_id: scs_lsm_c003_003, note: terminological discipline in critique}
+
+- id: E08
+  pack: critique_and_effectiveness
+  systems:
+    - {scs_id: scs_sut_alc_001, note: post-rationalisation and privileging the hypothesis}
+    - {scs_id: scs_sut_alc_003, note: the working method against bias}
+    - {scs_id: scs_cat_c003_001, note: the creator losing perspective}
+    - {scs_id: scs_cat_c003_002, note: power dynamics distorting feedback}
+    - {scs_id: scs_af_c003_002, note: judgement failures that end practices}
+    - {scs_id: scs_eic_003, note: the evidence apparatus's own biases, stated}
+    - {scs_id: scs_hea_mts_002, note: the curse of knowledge}
+    - {scs_id: scs_rbwl_001, note: named measurement and reasoning errors}
+    - {scs_id: scs_ppm_001, note: self-report procedures rejected for observation}
+    - {scs_id: scs_nnn_001, note: instrument and depiction biases named with brakes}

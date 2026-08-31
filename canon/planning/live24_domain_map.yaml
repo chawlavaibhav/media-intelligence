@@ -1,0 +1,739 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+#
+# CANON live-24 — authored domain→source mapping for the LIVE 24 accepted sources.
+# SUPERSEDES canon/planning/live19_domain_map.yaml (frozen; never mutated — supersede only).
+# All 56 domain rows are carried over from the live19 map verbatim except where a row is
+# annotated "LIVE24 EDIT"; the only changes are (a) contributor additions for the five
+# India-context sources accepted under CANON-014 (bijapurkar-we-are-like-that-only,
+# dwyer-patel-cinema-india, jain-gods-in-the-bazaar, pandey-pandeymonium,
+# parameswaran-nawabs-nudes-noodles; 97 objects) and (b) gap-prose corrections that those
+# acceptances make factually necessary. Each addition carries a justification comment citing
+# the sk_/scs_ ids it was judged from.
+#
+# WHAT THIS IS. One row per diagnostic domain from `canon/experiments/CANON-COVERAGE-MAP-V0.md`.
+# `contributors` lists the accepted source directories that MATERIALLY contribute knowledge to that
+# domain, judged by reading the committed extraction — the source-declared
+# `scope.domain_discussed_by_source` values, the SourceConceptSystems, and the ontology terms — and
+# NOT by the book's title or its shelf position.
+#
+# WHAT THIS IS NOT. It is NOT machine-discovered truth. Every `contributors` list, every
+# `importance`, every `gap` and every `state_override` entry in this file is an AUTHORED CANON
+# JUDGEMENT. `build_live24_coverage.py` validates them for completeness and for naming only real
+# accepted source directories, and fails closed on a breach — but it cannot check whether a
+# judgement is right. Whether a different Canon worker reading the same 24 directories would assign
+# the same contributors is untested. The additions here are worker proposals pending Controller
+# acceptance.
+#
+# It is also not a quality score. A domain with four contributors is not "better" than
+# one with two; it holds knowledge from more places. Bindability is not evidence quality
+# (canon/HANDOFF.md), so nothing here ranks a source by how many bindings it has.
+#
+# Everything mechanical — independent-origin counts, binding state, object counts — is computed by
+# `build_live24_coverage.py` from committed artifacts and is NOT authored here.
+#
+# importance: critical | useful | peripheral   (to the frozen first-product scope)
+# Coverage state is COMPUTED, not authored, except where `state_override` gives a reason.
+
+meta:
+  task: Canon repair / REP-01 (live-24 coverage layer)
+  authored: 2026-08-31
+  status: PROPOSED
+  supersedes: canon/planning/live19_domain_map.yaml
+  domain_source: canon/experiments/CANON-COVERAGE-MAP-V0.md
+  basis: canon/knowledge/current (24 accepted source directories), canon/audit/records (24 records)
+
+domains:
+
+# ── A · Static visual craft ────────────────────────────────────────────────────
+- id: A01
+  name: Composition & framing
+  section: A
+  importance: critical
+  # LIVE24 EDIT — added dwyer-patel-cinema-india and jain-gods-in-the-bazaar.
+  # Justification: dwyer-patel treats frontality/iconicity as a compositional convention that
+  # freezes space to render meaning visible (sk_dpci_0020) and gives a two-stage account of the
+  # portrait-led poster composition (sk_dpci_0090, sk_dpci_0100; system scs_dpci_001). jain states
+  # the frontal gaze as a functional compositional requirement that overrides depicted action
+  # (sk_jgb_0010; system scs_jgb_001). Both are audience-code composition conventions, not camera
+  # placement craft — they extend, not replace, the three physical-world sources.
+  contributors: [freeman-photographers-eye-graphic-guide, kenworthy-master-shots-ch8, alton-painting-with-light-ch2, dwyer-patel-cinema-india, jain-gods-in-the-bazaar]
+  gap: >
+    Well covered for the still frame and the staged scene. The three craft sources assume a
+    photographer or director choosing a camera position in the physical world; none addresses
+    composing for a fixed vertical feed frame or for a crop that will be re-used at several aspect
+    ratios. The two India sources add frontal/iconic composition conventions read by an audience
+    that holds the code (2002/2007 material; dated, not feed-native).
+
+- id: A02
+  name: Hierarchy / attention / salience
+  section: A
+  importance: critical
+  # LIVE24 EDIT — added dwyer-patel-cinema-india.
+  # Justification: sk_dpci_0090 is an explicit two-stage salience account (the face opens
+  # attention before recognition; scope domain visual_attention) and scs_dpci_001 describes how a
+  # poster steers a viewer's attention through a held code.
+  contributors: [freeman-photographers-eye-graphic-guide, samara-making-breaking-grid-ch1, kenworthy-master-shots-ch8, murch-blink-p1-25, grammar-of-the-edit-ch3-5, vignelli-canon-intangibles, dwyer-patel-cinema-india]
+  gap: >
+    Strong and genuinely multi-origin across still, page and moving image. The v0 map rated this
+    strong on Picture This, Non-Designer's and Thinking with Type — none of which is in the live 19.
+    The rating survives, but on entirely different evidence.
+
+- id: A03
+  name: Visual weight
+  section: A
+  importance: critical
+  # LIVE24 EDIT — added jain-gods-in-the-bazaar.
+  # Justification: sk_jgb_0020 (member of scs_jgb_001) treats colour SATURATION as a public claim
+  # on attention — exactly the saturation-borne weight the live19 gap recorded as absent.
+  contributors: [freeman-photographers-eye-graphic-guide, alton-painting-with-light-ch2, jain-gods-in-the-bazaar]
+  gap: >
+    Freeman supplies tonal weight and division; Alton supplies tonal separation of subject from
+    ground. Both are tonal arguments. jain (sk_jgb_0020) now supplies saturation as a claim on
+    attention, from Indian bazaar-print practice; weight from brand-colour blocks — what a
+    commercial creative usually manipulates — remains untreated.
+
+- id: A04
+  name: Grouping / gestalt
+  section: A
+  importance: useful
+  contributors: [freeman-photographers-eye-graphic-guide, samara-making-breaking-grid-ch1]
+  gap: >
+    Present as practice — Samara's modules and spatial zones, Freeman's backgrounds that give each
+    unit a place — but no accepted source states the perceptual grouping principles themselves. The
+    Canon has the applications without the mechanism.
+
+- id: A05
+  name: Colour
+  section: A
+  importance: critical
+  # LIVE24 EDIT — added jain-gods-in-the-bazaar.
+  # Justification: sk_jgb_0020 records saturated colour as a convention of the Indian bazaar-print
+  # market that outlived its technical cause (Sivakasi print production), i.e. colour MEANING in a
+  # named market context — the exact half the live19 gap called absent. It is historical
+  # (2007-published field material), not a festival-by-festival colour code.
+  contributors: [albers-interaction-of-color, alton-painting-with-light-ch2, kenworthy-master-shots-ch8, vignelli-canon-intangibles, jain-gods-in-the-bazaar]
+  gap: >
+    Albers is deep on colour RELATION — a colour's appearance depends on its neighbour — which is the
+    hardest part and the part a generator gets wrong. Two limits matter: the Albers digitisation is
+    greyscale, so its own audit records blocked visual validation of a colour source; and colour
+    MEANING by market context is now present only as jain's dated bazaar-print account
+    (sk_jgb_0020) — festival-by-festival and category colour codes remain absent.
+
+- id: A06
+  name: Typography
+  section: A
+  importance: critical
+  contributors: [samara-making-breaking-grid-ch1, vignelli-canon-intangibles, albers-interaction-of-color]
+  gap: >
+    Latin typography only, and structural rather than letterform-level: Samara on measure, leading
+    and column derivation, Vignelli on discipline and appropriateness. No accepted source treats
+    typeface anatomy, and none treats any non-Latin script.
+
+- id: A07
+  name: Grids & layout systems
+  section: A
+  importance: useful
+  contributors: [samara-making-breaking-grid-ch1, vignelli-canon-intangibles]
+  gap: >
+    The strongest single domain in the corpus — Samara alone contributes 79 objects and six concept
+    systems. Print and web page structure. A single-image commercial creative is a different layout
+    problem, and the transfer is unproven rather than absent.
+
+- id: A08
+  name: Imagery & subject choice
+  section: A
+  importance: useful
+  # LIVE24 EDIT — added dwyer-patel-cinema-india and jain-gods-in-the-bazaar.
+  # Justification: the live19 gap named "choosing imagery that reads correctly to an Indian
+  # audience" as absent. dwyer-patel supplies the audience-held code for props, costume and
+  # character types (sk_dpci_0040, sk_dpci_0070, sk_dpci_0120); jain supplies iconographic
+  # correctness as the precondition of a functioning image, regional codes as the main ground of
+  # rejection, and a named injunction whose breach breaks images (sk_jgb_0130, sk_jgb_0040,
+  # sk_jgb_0030; system scs_jgb_001).
+  contributors: [freeman-photographers-eye-graphic-guide, hopkins-scientific-advertising-ch1-7, alton-painting-with-light-ch2, dwyer-patel-cinema-india, jain-gods-in-the-bazaar]
+  gap: >
+    Hopkins supplies the commercial test — a picture must sell, "useless pictures" are a named
+    failure — and Freeman the craft of what the frame holds. dwyer-patel and jain now supply
+    audience-code and iconographic-correctness priors for Indian imagery, dated 2002/2007;
+    contemporary Indian feed imagery conventions remain untreated.
+
+- id: A09
+  name: Lighting
+  section: A
+  importance: critical
+  contributors: [alton-painting-with-light-ch2, light-science-magic-ch3]
+  gap: >
+    Two genuinely independent origins with different explanatory bases — Alton names light functions
+    from studio practice, Light Science & Magic derives placement from the physics of reflection.
+    Both describe operating physical lights, so every binding is a production candidate rather than a
+    generative instruction. This is a translation problem, not a knowledge gap.
+
+- id: A10
+  name: Material appearance
+  section: A
+  importance: critical
+  contributors: [light-science-magic-ch3, alton-painting-with-light-ch2]
+  gap: >
+    Light Science & Magic's family-of-angles model is the most directly product-relevant physical
+    knowledge in the Canon: it predicts where a reflection will appear on a glossy surface. Directly
+    useful for judging whether a generated packshot is physically coherent.
+
+- id: A11
+  name: Photography craft
+  section: A
+  importance: useful
+  contributors: [freeman-photographers-eye-graphic-guide, light-science-magic-ch3, alton-painting-with-light-ch2]
+  gap: >
+    Camera-operation craft, largely inapplicable as instruction to a generator, but usable as
+    inspection criteria for whether an output is physically plausible.
+
+- id: A12
+  name: Spatial relationships & depth
+  section: A
+  importance: useful
+  contributors: [freeman-photographers-eye-graphic-guide, kenworthy-master-shots-ch8, murch-blink-p1-25, grammar-of-the-shot-ch4]
+  gap: >
+    Murch's planarity and the two-dimensional plane of the screen are load-bearing for judging
+    whether a generated shot sequence holds together spatially.
+
+- id: A13
+  name: Product / packshot photography
+  section: A
+  importance: critical
+  contributors: [light-science-magic-ch3, alton-painting-with-light-ch2]
+  gap: >
+    THE most important partially-covered domain for the first product. What exists is reflection
+    control and lighting function — real and relevant. What is missing is packshot convention: hero
+    angle, label legibility, scale cues, surface/finish rendering, and the commercial packshot's
+    obligation to show the product as it actually is. Both contributors are cinema/studio sources,
+    not product-photography sources.
+  state_override:
+    state: present_but_application_unbound
+    reason: >
+      Knowledge exists and is relevant, but every binding from both sources is a physical-production
+      candidate. Nothing has been translated into what to ask for, or what to inspect, in a generated
+      packshot. SPEC-04 forbids auto-translating physical advice into generative instruction.
+
+- id: A14
+  name: Devanagari & Indic typography
+  section: A
+  importance: critical
+  contributors: []
+  gap: >
+    Empty. No accepted source treats any non-Latin script. CANON-008 stopped at its acquisition gate
+    (only a 3-page abstract is public), so the slot is unfilled by decision, not by oversight. This
+    is the single largest named hole and it sits directly under a first-product language requirement.
+
+# ── B · Moving image ───────────────────────────────────────────────────────────
+- id: B01
+  name: Shot grammar & shot types
+  section: B
+  importance: critical
+  contributors: [grammar-of-the-shot-ch4, grammar-of-the-edit-ch3-5, kenworthy-master-shots-ch8]
+  gap: >
+    Note the independence trap: Grammar of the Shot and Grammar of the Edit are companion volumes and
+    are BLOCKED from counting as independent origins with each other. Kenworthy is the genuine second
+    origin here.
+
+- id: B02
+  name: Camera placement & movement
+  section: B
+  importance: useful
+  contributors: [kenworthy-master-shots-ch8, grammar-of-the-shot-ch4, alton-painting-with-light-ch2]
+  gap: >
+    Kenworthy's seven ways to move attention without a cut is unusually well suited to short-form,
+    where cuts are expensive in attention terms. The unmotivated camera move is a named failure.
+
+- id: B03
+  name: Continuity
+  section: B
+  importance: critical
+  contributors: [grammar-of-the-shot-ch4, grammar-of-the-edit-ch3-5, murch-blink-p1-25, ondaatje-conversations-ch3]
+  gap: >
+    Strong, and the most directly transferable moving-image knowledge the Canon holds for judging
+    generated video, where continuity failure is a known weakness. Two dependence pairs sit inside
+    this domain (companion volumes; shared primary informant), so the independent-origin count is
+    materially lower than the contributor count.
+
+- id: B04
+  name: Editing & cut logic
+  section: B
+  importance: critical
+  contributors: [grammar-of-the-edit-ch3-5, murch-blink-p1-25, ondaatje-conversations-ch3]
+  gap: >
+    Deep — 60, 39 and 27 objects. But Murch and Ondaatje are a shared-primary-informant pair, so this
+    is two independent origins, not three. Assembly-stage knowledge; a text-to-video generator
+    produces shots, so this is mostly evaluation and planning knowledge rather than instruction.
+
+- id: B05
+  name: Pacing & rhythm
+  section: B
+  importance: critical
+  contributors: [murch-blink-p1-25, grammar-of-the-edit-ch3-5, ondaatje-conversations-ch3]
+  gap: >
+    Feature-film pacing. Nothing addresses the 6–20 second commercial, where the whole piece is
+    shorter than a single scene in any of these sources. The knowledge is real and the scale is wrong.
+
+- id: B06
+  name: Temporal hierarchy
+  section: B
+  importance: useful
+  contributors: [murch-blink-p1-25, grammar-of-the-edit-ch3-5]
+  gap: >
+    Murch's Rule of Six is an explicit ranked priority list with sacrifice rules — the clearest piece
+    of trade-off machinery in the entire Canon, and reusable well beyond editing.
+
+- id: B07
+  name: Visual storytelling
+  section: B
+  importance: critical
+  contributors: [murch-blink-p1-25, ondaatje-conversations-ch3, kenworthy-master-shots-ch8, miller-storybrand-sb7]
+  gap: >
+    Miller supplies commercial narrative structure, the others cinematic. No accepted source treats
+    story compressed into a few seconds.
+
+- id: B08
+  name: Performance & direction
+  section: B
+  importance: peripheral
+  contributors: [kenworthy-master-shots-ch8, ondaatje-conversations-ch3]
+  gap: >
+    Thin, and correctly peripheral: directing a human performer is not what a generative pipeline
+    does. Retains value as evaluation vocabulary for whether a generated person reads as plausible.
+
+- id: B09
+  name: Dialogue presentation
+  section: B
+  importance: useful
+  contributors: [grammar-of-the-edit-ch3-5, ondaatje-conversations-ch3, kenworthy-master-shots-ch8]
+  gap: >
+    Split edits, sound bridges and Ondaatje's withdrawal of dialogue to expose the soundtrack.
+    Relevant to the two-speaker cases in the first-product scope. Nothing on lip-sync plausibility,
+    which is where generated dialogue actually fails.
+
+- id: B10
+  name: Sound / audiovisual relation
+  section: B
+  importance: useful
+  contributors: [ondaatje-conversations-ch3, grammar-of-the-edit-ch3-5, murch-blink-p1-25]
+  gap: >
+    Better than the v0 map credited. Ondaatje's attention economy of the soundtrack — that picture
+    and sound compete for one attention budget — is directly applicable to voiceover briefs. Both
+    Murch-lineage sources sit here, so independence is limited.
+
+- id: B11
+  name: Short-form / feed-native grammar
+  section: B
+  importance: critical
+  contributors: []
+  # LIVE24 EDIT — prose correction only; contributors unchanged (still empty).
+  # The live19 text said "the newest accepted source is 2013". Against the live-24 corpus that is
+  # false as written (samara 2017, binet-field 2018, sutherland 2019 per their PROVENANCE.md); the
+  # true and sharper claim is that the newest accepted MOVING-IMAGE source is 2011 (kenworthy).
+  gap: >
+    Empty, and unfillable from this library: the newest accepted MOVING-IMAGE source is 2011
+    (kenworthy; the corpus's post-2013 sources — samara 2017, binet-field 2018, sutherland 2019 —
+    are not moving-image sources) and the domain postdates all of them. Hook windows, sound-off
+    viewing, safe zones, vertical framing, the first-second decision. Directly under the
+    first-product scope.
+
+- id: B12
+  name: Motion design & animated type
+  section: B
+  importance: useful
+  contributors: []
+  gap: >
+    Empty as usable knowledge. One incidental `motion_design` domain tag appears on a Samara object
+    about print structure; that is a passing mention, not a treatment, and is recorded rather than
+    counted.
+  incidental_only: [samara-making-breaking-grid-ch1]
+
+- id: B13
+  name: Colour grading
+  section: B
+  importance: peripheral
+  contributors: []
+  gap: >
+    Empty as usable knowledge. Kenworthy tags `grading` and `colour` once each in passing; Alton is
+    black-and-white-era illumination. Peripheral for a generative pipeline that has no grading stage.
+  incidental_only: [kenworthy-master-shots-ch8, alton-painting-with-light-ch2]
+
+# ── C · Commercial communication ───────────────────────────────────────────────
+- id: C01
+  name: Advertising strategy
+  section: C
+  importance: critical
+  contributors: [ogilvy-ch2-advertising-that-sells, hopkins-scientific-advertising-ch1-7, binet-field-effectiveness-in-context-ch1, miller-storybrand-sb7, sutherland-alchemy-introduction]
+  gap: >
+    The deepest commercial domain in the Canon and spread across five genuinely independent origins
+    with different evidence bases — practitioner assertion (Ogilvy), mail-order response data
+    (Hopkins), aggregate econometric evidence (Binet & Field), a framework (Miller), behavioural
+    science (Sutherland). Chronological span 1923–2020.
+
+- id: C02
+  name: Objective setting
+  section: C
+  importance: critical
+  contributors: [ogilvy-ch2-advertising-that-sells, binet-field-effectiveness-in-context-ch1, hopkins-scientific-advertising-ch1-7]
+  gap: >
+    Binet & Field's brand-building versus sales-activation split is the sharpest objective-setting
+    knowledge the Canon holds, and it maps almost directly onto a Creative IR objective field.
+
+- id: C03
+  name: Audience understanding
+  section: C
+  importance: critical
+  # LIVE24 EDIT — added bijapurkar-we-are-like-that-only, pandey-pandeymonium,
+  # parameswaran-nawabs-nudes-noodles. Justification: the live19 gap said "No accepted source
+  # describes any Indian audience". bijapurkar is an audience-understanding book about the Indian
+  # consumer: segmenting by benefit-cost trading rather than affordability (sk_rbwl_0060), refusal
+  # patterns predicted by occupation/education not income (sk_rbwl_0070), hybrid adoption as the
+  # expected outcome (sk_rbwl_0120). pandey states audience-context understanding as his governing
+  # communication principle (sk_ppm_0001) and localises it organisationally (sk_ppm_0030).
+  # parameswaran reports Indian household purchase-influence structure and usage patterns
+  # (sk_nnn_0030, sk_nnn_0031, sk_nnn_0032).
+  contributors: [sutherland-alchemy-introduction, hopkins-scientific-advertising-ch1-7, binet-field-effectiveness-in-context-ch1, miller-storybrand-sb7, heath-made-to-stick-introduction, bijapurkar-we-are-like-that-only, pandey-pandeymonium, parameswaran-nawabs-nudes-noodles]
+  gap: >
+    Heath's curse of knowledge — once you know something you cannot imagine not knowing it — is the
+    mechanism behind most briefing failure. The five original origins are all Anglo-American; three
+    accepted India sources (2007/2015/2016) now describe the Indian audience's purchase logic,
+    influence structure and register expectations — as cultural history and practitioner assertion,
+    not as current operational data.
+
+- id: C04
+  name: Proposition & positioning
+  section: C
+  importance: critical
+  contributors: [ogilvy-ch2-advertising-that-sells, miller-storybrand-sb7, hopkins-scientific-advertising-ch1-7, heath-made-to-stick-introduction]
+  gap: >
+    Strong and directly bindable to Creative IR. Miller alone carries 4 Creative-IR bindings from 18
+    objects — the corpus's highest binding density and, per the standing lesson, its weakest evidence
+    support. Do not read binding count as quality.
+
+- id: C05
+  name: Persuasion
+  section: C
+  importance: critical
+  contributors: [sutherland-alchemy-introduction, heath-made-to-stick-introduction, hopkins-scientific-advertising-ch1-7, binet-field-effectiveness-in-context-ch1, ogilvy-ch2-advertising-that-sells]
+  gap: >
+    Five independent origins spanning practitioner assertion to econometrics.
+
+- id: C06
+  name: Branding & identity
+  section: C
+  importance: useful
+  contributors: [ogilvy-ch2-advertising-that-sells, vignelli-canon-intangibles, binet-field-effectiveness-in-context-ch1, miller-storybrand-sb7]
+  gap: >
+    Covers brand as accumulated image and as a mark to be protected. Nothing on applying an existing
+    brand system to a generated asset, which is the actual production task.
+
+- id: C07
+  name: Product communication
+  section: C
+  importance: critical
+  # LIVE24 EDIT — added parameswaran-nawabs-nudes-noodles.
+  # Justification: scs_nnn_003 is a system of devices by which a reproduced Indian advertisement
+  # carries its whole product argument in the image — product attribute argued entirely by a
+  # photographed situation (sk_nnn_0017), shock image with the product minimised (sk_nnn_0016),
+  # one headline plus one symbol (sk_nnn_0018) — Indian product-communication evidence at the
+  # execution level.
+  contributors: [hopkins-scientific-advertising-ch1-7, ogilvy-ch2-advertising-that-sells, miller-storybrand-sb7, parameswaran-nawabs-nudes-noodles]
+  gap: >
+    Hopkins's specificity-as-credibility mechanism and Ogilvy's "make the product the hero" are both
+    directly checkable against a generated creative. parameswaran adds worked Indian executions in
+    which the image alone carries the product argument (scs_nnn_003), dated 1950s-2000s.
+
+- id: C08
+  name: Emotional target
+  section: C
+  importance: useful
+  contributors: [binet-field-effectiveness-in-context-ch1, sutherland-alchemy-introduction, heath-made-to-stick-introduction, miller-storybrand-sb7]
+  gap: >
+    Binet & Field give emotional engagement an evidenced commercial consequence — reduced price
+    sensitivity — rather than leaving it an aesthetic preference.
+
+- id: C09
+  name: Hooks & openings
+  section: C
+  importance: critical
+  contributors: [heath-made-to-stick-introduction, hopkins-scientific-advertising-ch1-7, ogilvy-ch2-advertising-that-sells]
+  gap: >
+    Present but MEDIUM-MISMATCHED, and this needs stating plainly. What exists is print-era and
+    idea-level: Hopkins's blind headline, Heath's curiosity gaps, Ogilvy's ship-in-the-night. What
+    the first product needs is the feed hook — the first 1–2 seconds, sound-off, thumb-stopping.
+    The underlying attention principle may well transfer; that transfer is untested and must not be
+    asserted.
+  state_override:
+    state: representation_or_evidence_limited
+    reason: >
+      Three origins hold real hook knowledge, but every one of them assumes a reader who has already
+      stopped on a page. Counting this as covered for a feed product would overstate the Canon.
+
+- id: C10
+  name: Memorability & stickiness
+  section: C
+  importance: useful
+  # LIVE24 EDIT — added pandey-pandeymonium.
+  # Justification: sk_ppm_0031 states an explicit memorability condition on celebrity work — the
+  # viewer must find the celebrity, the script AND the idea memorable, not the celebrity alone —
+  # an Indian-practice check directly applicable to celebrity-led briefs.
+  contributors: [heath-made-to-stick-introduction, sutherland-alchemy-introduction, ogilvy-ch2-advertising-that-sells, pandey-pandeymonium]
+  gap: >
+    Heath's six-property checklist is one of the few directly operational checklists in the Canon.
+    pandey adds a celebrity-work memorability condition from Indian practice (sk_ppm_0031).
+
+- id: C11
+  name: CTA & response
+  section: C
+  importance: useful
+  contributors: [miller-storybrand-sb7, hopkins-scientific-advertising-ch1-7, binet-field-effectiveness-in-context-ch1]
+  gap: >
+    Miller's direct-versus-transitional call to action and the named "missing CTA" failure are
+    immediately usable as an evaluation check.
+
+- id: C12
+  name: Information hierarchy
+  section: C
+  importance: critical
+  contributors: [samara-making-breaking-grid-ch1, vignelli-canon-intangibles, miller-storybrand-sb7, freeman-photographers-eye-graphic-guide]
+  gap: >
+    Miller's grunt test — can a stranger say what you offer in five seconds — is the closest thing in
+    the Canon to a short-form legibility test, though it was written about websites.
+
+- id: C13
+  name: Indian market & cultural context
+  section: C
+  importance: critical
+  # LIVE24 EDIT — the five CANON-014 India-context sources are assigned here; the live19 row
+  # recorded this domain as empty, which is false against the live-24 corpus.
+  # Justification: bijapurkar (18 obj) is Indian consumer logic end to end (scs_rbwl_001..003);
+  # dwyer-patel (19 obj) is Hindi-cinema visual culture — darshan sk_dpci_0010, frontality
+  # sk_dpci_0020, costume/props codes sk_dpci_0040/0070; jain (18 obj) is Indian calendar-art
+  # image practice — frontal gaze sk_jgb_0010, saturation sk_jgb_0020, iconographic correctness
+  # sk_jgb_0130; pandey (10 obj) is Indian advertising craft — domestic multiculturalism
+  # sk_ppm_0030, Indian campaign cases sk_ppm_0011; parameswaran (32 obj) is Indian advertising
+  # history including clearance and regulation — scs_nnn_002, sk_nnn_0012, sk_nnn_0052 (Hindi
+  # copy origination). Observed source-declared labels across the five: indian_advertising 24,
+  # india 16, hindi_cinema 10, indian_calendar_art 3, indian_broadcast_clearance 2,
+  # indian_advertising_regulation 2 (recompute: count scope.domain_discussed_by_source over the
+  # five sources' source-knowledge.yaml).
+  contributors: [bijapurkar-we-are-like-that-only, dwyer-patel-cinema-india, jain-gods-in-the-bazaar, pandey-pandeymonium, parameswaran-nawabs-nudes-noodles]
+  gap: >
+    No longer empty, but what is present is register, iconography and consumer-logic priors from
+    2002-2016 cultural-history and practitioner sources. What the first product operationally
+    needs — festival codes by occasion, price framing conventions, current Hinglish/language-mixing
+    norms, current category conventions — is NOT in these five sources and probably not in any
+    book; the live19 verdict "expert + customer memory + empirical" still stands for that half.
+    All five sources carry technology_contingency applicable=true in their audit records: this is
+    the most dated part of the corpus, not the freshest.
+  state_override:
+    state: present_but_operationally_limited
+    reason: >
+      Five accepted sources contribute real Indian register/iconography/consumer-logic knowledge,
+      so "absent" is false; but they are 2002-2016 cultural-history material, not the operational
+      conventions (festival codes, price framing, Hinglish norms, current category conventions)
+      the domain exists to supply, so any computed "present" state would overstate the Canon.
+      Counting this as covered would repeat the C09 error the live19 map itself warned against.
+
+- id: C14
+  name: Effectiveness evidence
+  section: C
+  importance: useful
+  contributors: [binet-field-effectiveness-in-context-ch1, hopkins-scientific-advertising-ch1-7, ogilvy-ch2-advertising-that-sells]
+  gap: >
+    Materially improved by CANON-007: the v0 map's newest effectiveness source was Hopkins (1923).
+    Binet & Field (2013) brought aggregate econometric evidence. Two cautions from its own audit:
+    a chart's numbers survived extraction while the mapping of number to category did not
+    (`figure_semantic_binding_lost`), and its percentages are case-author self-gradings from a
+    declaredly biased sample — recorded as `mixed_own_and_third_party`, not treated as measurement.
+
+# ── D · Creative thinking ──────────────────────────────────────────────────────
+- id: D01
+  name: Concept development
+  section: D
+  importance: critical
+  contributors: [ogilvy-ch2-advertising-that-sells, heath-made-to-stick-introduction, catmull-creativity-inc-ch5, bayles-orland-art-and-fear]
+  gap: >
+    Ogilvy's big idea, Heath's transformation of an idea, Catmull's iterate-in-public, Bayles &
+    Orland's make-a-lot-of-work. Note that two of these are about sustaining a creative PRACTICE over
+    time, which a per-request pipeline cannot use directly.
+
+- id: D02
+  name: Metaphor & symbolism
+  section: D
+  importance: useful
+  # LIVE24 EDIT — added dwyer-patel-cinema-india.
+  # Justification: the live19 gap said no accepted source covers the semiotics of consumer
+  # imagery. dwyer-patel supplies exactly a semiotic system read by its audience: clothing as a
+  # grammar the audience already holds (sk_dpci_0070), props and vehicles as a conventional
+  # vocabulary for period, class and modernity (sk_dpci_0040), character types as a compression
+  # code (sk_dpci_0120; system scs_dpci_003).
+  contributors: [ondaatje-conversations-ch3, vignelli-canon-intangibles, heath-made-to-stick-introduction, dwyer-patel-cinema-india]
+  gap: >
+    Ondaatje's hat — an object carrying a character's state across a film — is a worked example of a
+    visual motif doing narrative work. dwyer-patel now covers the semiotics of Indian popular
+    imagery (costume, props, character types) as of 2002; the semiotics of contemporary consumer
+    imagery remains thin.
+
+- id: D03
+  name: Novelty & distinctiveness
+  section: D
+  importance: useful
+  contributors: [sutherland-alchemy-introduction, heath-made-to-stick-introduction, ogilvy-ch2-advertising-that-sells, vignelli-canon-intangibles]
+  gap: >
+    Unusually well balanced: Sutherland and Heath argue FOR the counterintuitive, Ogilvy warns
+    against "irrelevant brilliance" and Vignelli against "change for the sake of change". The Canon
+    holds both sides of this argument, which is exactly what makes trade-off reasoning possible.
+
+- id: D04
+  name: Working within constraints
+  section: D
+  importance: useful
+  contributors: [vignelli-canon-intangibles, bayles-orland-art-and-fear, ondaatje-conversations-ch3, murch-blink-p1-25]
+  gap: >
+    Strong. Ondaatje's "making a film from material that is missing" and Murch's "do the most with
+    the least" are both about producing an acceptable outcome from insufficient inputs — the normal
+    condition of a generated commercial.
+
+- id: D05
+  name: Trade-off reasoning
+  section: D
+  importance: critical
+  contributors: [murch-blink-p1-25, binet-field-effectiveness-in-context-ch1, grammar-of-the-shot-ch4, samara-making-breaking-grid-ch1, freeman-photographers-eye-graphic-guide]
+  gap: >
+    MATERIALLY BETTER THAN THE v0 MAP RECORDED. v0 called this weak and "scattered; no single
+    source". That is still true — no source teaches trade-off reasoning as a subject — but five
+    accepted sources now carry explicit trade-off machinery: Murch's ranked Rule of Six with sacrifice
+    rules, Binet & Field's budget shift toward the harder task, Grammar of the Shot's rules held
+    defeasible by creative intent, Samara's "regularity is the value and the danger", Freeman's
+    refusal of a placement rule. The raw material for cross-source synthesis (C7) is present. The
+    synthesis itself has NOT been done.
+
+- id: D06
+  name: Style & register
+  section: D
+  importance: useful
+  # LIVE24 EDIT — added parameswaran-nawabs-nudes-noodles.
+  # Justification: the live19 gap said no accepted source maps register to an Indian market.
+  # parameswaran records vernacular appropriation carried simultaneously by word, script and
+  # setting (sk_nnn_0019, member of scs_nnn_003) and the structural shift to Hindi-originated
+  # copy (sk_nnn_0052) — register mapping for the Indian market, dated to its period.
+  contributors: [vignelli-canon-intangibles, ogilvy-ch2-advertising-that-sells, samara-making-breaking-grid-ch1, parameswaran-nawabs-nudes-noodles]
+  gap: >
+    Samara's "structure read as signification" — that a layout structure itself signals a register —
+    is the most transferable piece. parameswaran now maps vernacular register devices for the
+    Indian market (sk_nnn_0019, sk_nnn_0052), as history; current register norms remain unmapped.
+
+- id: D07
+  name: Intentional rule-breaking
+  section: D
+  importance: peripheral
+  contributors: [samara-making-breaking-grid-ch1, grammar-of-the-shot-ch4, freeman-photographers-eye-graphic-guide, grammar-of-the-edit-ch3-5, murch-blink-p1-25]
+  gap: >
+    Better covered than v0 recorded, and important beyond its "peripheral" label: five sources state
+    when their own rules should be broken. That is what stops a Canon from becoming a rulebook that
+    over-prescribes — the exact failure mode the C5 value gate is designed to detect.
+
+# ── E · Evaluation & critique ──────────────────────────────────────────────────
+- id: E01
+  name: What to look for, by objective
+  section: E
+  importance: critical
+  contributors: [ogilvy-ch2-advertising-that-sells, binet-field-effectiveness-in-context-ch1, miller-storybrand-sb7, hopkins-scientific-advertising-ch1-7, grammar-of-the-edit-ch3-5]
+  gap: >
+    Present as several objective-specific tests — Hopkins's salesmanship test, Miller's grunt test,
+    Grammar of the Edit's six-element transition test. Not yet assembled into one inspection
+    procedure keyed by objective; that is C7/C8 work.
+
+- id: E02
+  name: Observational unit
+  section: E
+  importance: critical
+  contributors: [grammar-of-the-shot-ch4, grammar-of-the-edit-ch3-5, murch-blink-p1-25, freeman-photographers-eye-graphic-guide, samara-making-breaking-grid-ch1]
+  gap: >
+    MATERIALLY BETTER THAN v0 RECORDED — v0 rated this weak on Grammar of the Shot alone. Five
+    sources now establish that the unit of inspection varies: the frame (Freeman), the spread
+    (Samara), the transition PAIR (Grammar of the Edit's six-element test), the cut (Murch).
+    Grammar of the Shot's "defects with no within-frame signature" is the load-bearing insight for
+    Eval: some failures are invisible in any single frame and exist only across a pair. An evaluator
+    that scores frames one at a time cannot detect them by construction.
+  cross_stream_relevance: eval
+
+- id: E03
+  name: Diagnostic questions
+  section: E
+  importance: critical
+  contributors: [catmull-creativity-inc-ch5, grammar-of-the-edit-ch3-5, light-science-magic-ch3, miller-storybrand-sb7, vignelli-canon-intangibles]
+  gap: >
+    Catmull's "diagnose the cause, not the symptom" and the named failure of the unspecific and the
+    prescriptive note are directly applicable to designing a creative evaluator's output format.
+
+- id: E04
+  name: Common craft failures
+  section: E
+  importance: useful
+  contributors: [grammar-of-the-edit-ch3-5, samara-making-breaking-grid-ch1, freeman-photographers-eye-graphic-guide, hopkins-scientific-advertising-ch1-7, grammar-of-the-shot-ch4, alton-painting-with-light-ch2, light-science-magic-ch3, murch-blink-p1-25, miller-storybrand-sb7, heath-made-to-stick-introduction]
+  gap: >
+    The broadest domain in the Canon — ten of nineteen sources name failures explicitly, and the
+    ontology carries named failure terms throughout. This is the Canon's most immediately harvestable
+    asset for Eval's failure vocabulary, and it has never been consolidated.
+  cross_stream_relevance: eval
+
+- id: E05
+  name: Context dependence & exceptions
+  section: E
+  importance: useful
+  # LIVE24 EDIT — added bijapurkar-we-are-like-that-only.
+  # Justification: bijapurkar's analogy trap — a market does not replay another market's past
+  # (sk_rbwl_0090) — and hybrid adoption as the expected outcome (sk_rbwl_0120) are context-
+  # dependence arguments at market scale; scs_rbwl_001 is a system of such reasoning errors.
+  contributors: [binet-field-effectiveness-in-context-ch1, grammar-of-the-shot-ch4, freeman-photographers-eye-graphic-guide, samara-making-breaking-grid-ch1, light-science-magic-ch3, bijapurkar-we-are-like-that-only]
+  gap: >
+    Binet & Field's entire chapter is an argument that effectiveness rules are context-dependent;
+    bijapurkar makes the same argument at market scale for India. Strong raw material,
+    unsynthesised.
+
+- id: E06
+  name: Interaction among principles
+  section: E
+  importance: critical
+  contributors: [murch-blink-p1-25, albers-interaction-of-color, samara-making-breaking-grid-ch1, freeman-photographers-eye-graphic-guide, light-science-magic-ch3]
+  gap: >
+    MATERIALLY BETTER THAN v0 RECORDED (v0: weak). Albers is an entire source arguing that a colour
+    has no fixed appearance in isolation; Murch's Rule of Six ranks six criteria that routinely
+    conflict; Light Science & Magic's family of angles is a single control with several simultaneous
+    consequences. Still requires cross-source synthesis, which has not been done.
+
+- id: E07
+  name: Critique process & language
+  section: E
+  importance: peripheral
+  contributors: [catmull-creativity-inc-ch5, vignelli-canon-intangibles, light-science-magic-ch3]
+  gap: >
+    IMPORTANT CORRECTION: v0 rated this STRONG entirely on Discussing Design, which is NOT an
+    accepted source. The rating survives on completely different evidence — Catmull's Braintrust
+    compact and Light Science & Magic's terminological discipline (it refuses the ambiguous word
+    "specular" and names the concepts separately). Genuinely useful for evaluator design, which is
+    why "peripheral to creative output" understates it.
+
+- id: E08
+  name: Judgement quality & bias
+  section: E
+  importance: useful
+  # LIVE24 EDIT — added bijapurkar-we-are-like-that-only, pandey-pandeymonium,
+  # parameswaran-nawabs-nudes-noodles. Justification: bijapurkar's scs_rbwl_001 is literally a
+  # system of named reasoning errors (consistent-but-wrong data sk_rbwl_0050, proxy tracking the
+  # wrong variable sk_rbwl_0130, sampling error in a repeated claim sk_rbwl_0140). pandey rejects
+  # self-report pre-testing procedures in favour of behavioural observation (sk_ppm_0010, with
+  # named cases sk_ppm_0011). parameswaran names instrument bias — the pre-test selects for what
+  # it scores (sk_nnn_0040) — and depiction-read-as-prevalence (sk_nnn_0005).
+  contributors: [sutherland-alchemy-introduction, catmull-creativity-inc-ch5, bayles-orland-art-and-fear, binet-field-effectiveness-in-context-ch1, heath-made-to-stick-introduction, bijapurkar-we-are-like-that-only, pandey-pandeymonium, parameswaran-nawabs-nudes-noodles]
+  gap: >
+    IMPORTANT CORRECTION carried from live19: v0 rated this STRONG on Noise, Thinking Fast and Slow
+    and Superforecasting — none of which is accepted. It remains multi-origin on entirely different
+    evidence: Sutherland on post-rationalisation, Catmull on the creator losing perspective, Heath
+    on the curse of knowledge — now joined by three India sources naming measurement and judgement
+    errors from Indian market practice (sk_rbwl_0050/0130/0140, sk_ppm_0010, sk_nnn_0040,
+    sk_nnn_0005). This knowledge is aimed at OUR evaluator design, not at the customer's creative.
+  cross_stream_relevance: eval

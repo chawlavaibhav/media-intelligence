@@ -1,0 +1,164 @@
+# pack-triggers-v0.yaml — NR -> pack trigger table (total over 4 modalities x 7 operations).
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+#
+# Runtime is a table lookup, never a model choice: Normalized Request (NR) fields select pack ids;
+# pre-compiled byte-stable pack text is concatenated in canonical order. The single medium
+# authority is the frozen CANON-010 grammar
+# (canon/experiments/pre-execution-freeze/MEDIA-REQUEST-GRAMMAR-v1.yaml): modality = field R05
+# (enum of 4), requested_operation = field R01 (enum of 7). Totality over all 28 cells and the
+# per-request token bound are validator checks (canon/validation/validate_compiled_pack.py),
+# not conventions.
+#
+# Pack ids are the closed set of 10 from canon/planning/CANON-V1-LIVE24-COVERAGE.yaml `packs:`.
+# Only product_appearance and composition_and_attention are compiled today (REP-05 pilots);
+# every other pack's budget below is the uncommitted default envelope from
+# canon/packs/COMPILED-PACK-CONTRACT-v0.1.md §5 (16 KiB ~= 4096 tokens at 4 chars/token).
+
+artifact: pack-triggers-v0
+status: PROPOSED
+stream: canon
+task: REP-05
+addresses_gaps: [GAP-04, GAP-05]
+grammar: canon/experiments/pre-execution-freeze/MEDIA-REQUEST-GRAMMAR-v1.yaml
+contract: canon/packs/COMPILED-PACK-CONTRACT-v0.1.md
+injection_contract: canon/compilation/INJECTION-CONTRACT-v0.md
+
+pack_ids_closed_set:  # the 10 pack ids; every reference below must be one of these
+  - camera_and_spatial_grammar
+  - colour_and_visual_register
+  - commercial_communication
+  - composition_and_attention
+  - concept_and_distinctiveness
+  - critique_and_effectiveness
+  - editing_pacing_and_short_form
+  - indian_indic_context
+  - product_appearance
+  - typography_and_copy
+
+# Per-pack injected-size bounds in tokens (tokens = ceil(chars / 4)).
+# Compiled packs carry their enforced terse budget; uncompiled packs carry the default envelope.
+token_budgets:
+  camera_and_spatial_grammar: 4096
+  colour_and_visual_register: 4096
+  commercial_communication: 4096
+  composition_and_attention: 2500   # compiled: canon/compilation/PACK-composition_and_attention-v0.yaml
+  concept_and_distinctiveness: 4096
+  critique_and_effectiveness: 4096
+  editing_pacing_and_short_form: 4096
+  indian_indic_context: 4096
+  product_appearance: 2500          # compiled: canon/compilation/PACK-product_appearance-v0.yaml
+  typography_and_copy: 4096
+system_prompt_block_tokens: 300     # canon/compilation/INJECTION-CONTRACT-v0.md §2
+coverage_gap_notice_tokens: 120
+per_request_max_tokens: 45000       # uncached break-even envelope, COMPILED-PACK-CONTRACT §5
+
+# Universal packs appear in every cell's injection, first in canonical order.
+universal_packs:
+  - concept_and_distinctiveness
+  - critique_and_effectiveness
+
+# Base pack sets per modality (identical across the 7 operations of a modality; the operation
+# axis exists so the table is total over the grammar and so later revisions can differentiate
+# per-operation without changing the table's shape).
+modality_base_packs:
+  static_image:
+    - composition_and_attention
+    - colour_and_visual_register
+  video:
+    - composition_and_attention
+    - colour_and_visual_register
+    - camera_and_spatial_grammar
+    - editing_pacing_and_short_form
+  image_sequence:
+    - composition_and_attention
+    - colour_and_visual_register
+    - editing_pacing_and_short_form
+  audio: []   # zero packs and zero accepted sources cover audio; see coverage_gap_notice
+
+# Conditional packs, keyed to specific NR fields — never to model judgment.
+conditional_packs:
+  - condition: text_requirements_nonempty
+    nr_field: text_requirements
+    pack: typography_and_copy
+  - condition: product_or_packshot_entity_present
+    nr_field: entities
+    pack: product_appearance
+  - condition: language_topology_present_or_market_IN
+    nr_field: language_topology | market
+    pack: indian_indic_context
+  - condition: advertising_acceptance_intent
+    nr_field: acceptance_intent
+    pack: commercial_communication
+
+# Binding uncertain-classification fallback: when modality provenance is customer_implied AND
+# ambiguity_markers[] is non-empty, inject the UNION of the static_image and video base sets
+# plus the universal packs (a bounded superset, never guess-and-drop — the Gemma 0/18 lesson:
+# under uncertainty default to inclusion, because the model will not fetch what was omitted).
+# The union is still bounded by per_request_max_tokens; the validator proves the largest legal
+# combination fits.
+uncertainty_rule:
+  trigger: modality_provenance == customer_implied AND ambiguity_markers nonempty
+  action: inject_union_of_base_sets [static_image, video] plus universal_packs and any
+    triggered conditional_packs
+
+# The audio coverage-gap notice, injected verbatim in every audio cell instead of silence.
+coverage_gap_notice: >-
+  CANON COVERAGE GAP: no accepted Canon source covers audio production. Canon has no doctrine
+  for this cell — no defaults, no checks. Proceed on the brief alone, state this gap in
+  FAILURE_PREVENTION, and do not attribute audio decisions to Canon. Closing the gap requires
+  new source ingestion only the Controller can authorise.
+
+# ── The 28 cells ─────────────────────────────────────────────────────────────
+# Every (modality, requested_operation) pair from the grammar enums. base_packs resolves via
+# modality_base_packs; conditional packs apply in every cell; audio cells carry the notice.
+cells:
+  - {modality: static_image, requested_operation: generate, base_packs: static_image, conditionals_apply: true}
+  - {modality: static_image, requested_operation: edit, base_packs: static_image, conditionals_apply: true}
+  - {modality: static_image, requested_operation: animate, base_packs: static_image, conditionals_apply: true,
+     note: "animate on a static_image NR implies motion output; if the NR carries ambiguity_markers the uncertainty_rule already injects the video base set"}
+  - {modality: static_image, requested_operation: restore, base_packs: static_image, conditionals_apply: true}
+  - {modality: static_image, requested_operation: extend, base_packs: static_image, conditionals_apply: true}
+  - {modality: static_image, requested_operation: compose, base_packs: static_image, conditionals_apply: true}
+  - {modality: static_image, requested_operation: variants, base_packs: static_image, conditionals_apply: true}
+  - {modality: video, requested_operation: generate, base_packs: video, conditionals_apply: true}
+  - {modality: video, requested_operation: edit, base_packs: video, conditionals_apply: true}
+  - {modality: video, requested_operation: animate, base_packs: video, conditionals_apply: true}
+  - {modality: video, requested_operation: restore, base_packs: video, conditionals_apply: true}
+  - {modality: video, requested_operation: extend, base_packs: video, conditionals_apply: true}
+  - {modality: video, requested_operation: compose, base_packs: video, conditionals_apply: true}
+  - {modality: video, requested_operation: variants, base_packs: video, conditionals_apply: true}
+  - {modality: audio, requested_operation: generate, base_packs: audio, conditionals_apply: true,
+     coverage_gap_notice: mandatory}
+  - {modality: audio, requested_operation: edit, base_packs: audio, conditionals_apply: true,
+     coverage_gap_notice: mandatory}
+  - {modality: audio, requested_operation: animate, base_packs: audio, conditionals_apply: true,
+     coverage_gap_notice: mandatory}
+  - {modality: audio, requested_operation: restore, base_packs: audio, conditionals_apply: true,
+     coverage_gap_notice: mandatory}
+  - {modality: audio, requested_operation: extend, base_packs: audio, conditionals_apply: true,
+     coverage_gap_notice: mandatory}
+  - {modality: audio, requested_operation: compose, base_packs: audio, conditionals_apply: true,
+     coverage_gap_notice: mandatory}
+  - {modality: audio, requested_operation: variants, base_packs: audio, conditionals_apply: true,
+     coverage_gap_notice: mandatory}
+  - {modality: image_sequence, requested_operation: generate, base_packs: image_sequence, conditionals_apply: true}
+  - {modality: image_sequence, requested_operation: edit, base_packs: image_sequence, conditionals_apply: true}
+  - {modality: image_sequence, requested_operation: animate, base_packs: image_sequence, conditionals_apply: true}
+  - {modality: image_sequence, requested_operation: restore, base_packs: image_sequence, conditionals_apply: true}
+  - {modality: image_sequence, requested_operation: extend, base_packs: image_sequence, conditionals_apply: true}
+  - {modality: image_sequence, requested_operation: compose, base_packs: image_sequence, conditionals_apply: true}
+  - {modality: image_sequence, requested_operation: variants, base_packs: image_sequence, conditionals_apply: true}
+
+# Worst case (recompute: canon/validation/validate_compiled_pack.py does this mechanically):
+# the uncertainty union — universal (2) + union(static_image, video) bases (4) + all 4
+# conditionals = 10 packs = 8 x 4096 + 2 x 2500 = 37,768 tokens, + 300 system block + 120
+# notice = 38,188 <= 45,000. The table's largest legal combination fits the uncached
+# break-even envelope.
+notes: >-
+  This table selects packs; it asserts nothing about their quality or their fit to any brief.
+  Three packs compile thin today (typography_and_copy and editing_pacing_and_short_form are
+  critical_hole, indian_indic_context is critical_limited per
+  canon/planning/CANON-V1-LIVE24-COVERAGE.yaml); a thin pack compiles an explicit coverage
+  statement and never borrows HOLD candidate material. Adoption of this table is a Controller
+  decision.
