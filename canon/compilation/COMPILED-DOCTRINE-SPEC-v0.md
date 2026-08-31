@@ -58,6 +58,22 @@ validation failure. `generalises` / `specialises` / `member_of_system` /
 Regression case (frozen): a pack citing `sk_gos_c003_0012` must also carry
 `sk_gos_c003_0007`, `sk_gos_c003_0010` and `sk_gos_c003_0013`.
 
+**Closure is pack-granular, by contract.** "Cited in the same pack" means anywhere in the
+pack, not in the same decision: the unit of injection is the whole pack (the trigger table
+selects packs, never single decisions), so a guard partner compiled into any decision of the
+pack is present in every injected context that contains its counterpart. The declared
+assumption is that packs are consumed whole; per-decision consumption is NOT a supported
+mode of this spec. Concretely, eight guard edges in the pilots are satisfied at pack level
+but not inside the citing decision (adversarial decision-level recompute, tranche review):
+PA-D1 cites `sk_lsm_c003_0015` whose qualifiers `sk_lsm_c003_0017`/`sk_lsm_c003_0018` sit in
+PA-D8 (2 edges); PA-D2 cites `sk_lsm_c003_0006` qualified_by `sk_lsm_c003_0007` in PA-D3
+(1); PA-D3 cites `sk_lsm_c003_0014` qualified_by `sk_lsm_c003_0020` in PA-D1/D2/D10 (1);
+CA-D2 cites `sk_fre_c003_0019` which depends_on `sk_fre_c003_0010` in CA-D6 and
+`sk_fre_c003_0020` in CA-D1 (2); CA-D6 cites `sk_fre_c003_0010` which depends_on
+`sk_fre_c003_0019` in CA-D2 (1); CA-D7 cites `sk_gote_c003_0010` which depends_on
+`sk_gote_c003_0056` in CA-D9 (1). Any future per-decision consumer must first re-verify
+closure at its own granularity.
+
 Recompute the pilot closure: `python3 canon/compilation/compile_pilot_packs.py --check`
 (the compiler refuses to emit on any closure hole).
 
@@ -71,11 +87,14 @@ manufacturing agreement (`canon/findings/CANON-014-CROSS-SOURCE-OBSERVATIONS.md`
 shipping both without the rule would repeat the failure the contract exists to prevent.
 
 Cross-source tensions (kind `cross_source_tension`) carry accepted ontology term ids as
-members, rendered by id from `ontology-mappings.yaml`; the pairing is referenced from the
-REP-02 candidate ledger (`canon/candidates/ontology-join/cross-source-candidates-v0.yaml`,
-status proposed) **about** the tension — no HOLD content is consumed, and promotion of any
-ledger row remains a Controller review. Pilots carry T4 (whitespace, conditioned on artifact
-class; `xj_0022`) and T5 (speculars, resolved on deliberateness; `xj_0023`).
+members, rendered by id from `ontology-mappings.yaml`, and their `nature` and
+`resolution_rule` sentences derive from accepted-corpus ids only (the term definitions and
+already-cited claims). The `ledger_record`/`ledger_file` pointer to the REP-02 candidate
+ledger (`canon/candidates/ontology-join/cross-source-candidates-v0.yaml`) is a **candidate
+ledger cross-reference — unadopted, informational only**: no candidates-lane content is
+consumed, and promotion of any ledger row remains a Controller review. Pilots carry T4
+(whitespace terms scoped to their origin frames; `xj_0022`) and T5 (speculars, wanted vs
+unwanted per the accepted claims; `xj_0023`).
 
 ## 4. Decision-level confidence marker (REP-04 layer, aggregated)
 
@@ -103,6 +122,20 @@ under this deterministic rule (the validator recomputes it and fails on mismatch
    the coverage builder uses. Companion volumes therefore do not double-count (CA-D9, citing
    Grammar of the Shot and Grammar of the Edit, is `SINGLE-ORIGIN`). Claim-level cross-source
    consensus remains uncomputable (0 cross-source relations committed) and is not claimed.
+
+   **Override declaration (origin n).** Two committed artifacts on this branch bind origin
+   counts to different functions: `canon/context/confidence-marker-v0.yaml` (`origin_count`)
+   and the `decision_level_origin` tables of `canon/compilation/marker-map-v0.yaml` read n
+   from the coverage DOMAIN's `independent_origin_count` in
+   `canon/planning/CANON-V1-LIVE24-COVERAGE.yaml`; this spec and
+   `canon/validation/validate_compiled_pack.py` compute n over the decision's CITED source
+   ids only. For compiled packs the **cited-sources rule of this spec governs and overrides
+   the domain-level `origin_count` rule wherever the two differ** (a domain-level n credits
+   a decision with sources it does not cite — e.g. CA-D2 is `SINGLE-ORIGIN` by citation
+   though its domain lists 7 contributors). The domain/pack tables of the REP-04 artifacts
+   remain valid as coverage-level reporting; they are not the marker function of any
+   compiled decision. (REP-04's files are unmodified; this is a declared override, not an
+   edit.)
 
 Rendering: `[BASE{suffixes}|FLAGS...|MEDIUM-UNTESTED?|ORIGIN]`. Markers label evidence
 character; they never rank sources.
@@ -143,13 +176,13 @@ pilots (recompute: `counts` block of each pack, or rerun the compiler):
 
 | pack | decisions | cited sk objects | cited claim bytes | terse chars | terse tokens |
 |---|---|---|---|---|---|
-| product_appearance | 10 | 32 | 13,132 | 7,734 | 1,934 |
-| composition_and_attention | 11 | 65 | 26,857 | 9,983 | 2,496 |
+| product_appearance | 10 | 32 | 13,132 | 8,528 | 2,132 |
+| composition_and_attention | 11 | 69 | 28,012 | 9,986 | 2,497 |
 
-Union: 21 decisions, 97 distinct cited sk objects, 39,989 distinct-claim bytes (~10.0K tokens
+Union: 21 decisions, 101 distinct cited sk objects, 41,144 distinct-claim bytes (~10.3K tokens
 verbatim; recompute: sum `len(claim)` over the union of cited sk ids). Against the injection
 budget: the trigger table's largest legal combination — the uncertainty union of 10 packs —
-is 38,188 tokens ≤ 45,000 (`canon/packs/pack-triggers-v0.yaml`, recomputed mechanically by
+is 38,228 tokens ≤ 45,000 (`canon/packs/pack-triggers-v0.yaml`, recomputed mechanically by
 the validator). Terse doctrine is injected; verbatim claim text is reserved for CONTESTED
 pairs at a later, Controller-authorised fidelity step.
 

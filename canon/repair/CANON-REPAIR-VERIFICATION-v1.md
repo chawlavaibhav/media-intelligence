@@ -2,7 +2,15 @@
 
 **STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it; `coordination/CONTROL-STATE.md` governs.**
 
-> **DRAFT — dispositions marked "FIXED this session" describe the fix pass currently in flight; the follow-up commit that lands those fixes finalizes this document. If a disposition line survives into the final commit unchanged, the fix it describes was verified there.**
+> **FINAL.** Every disposition marked "FIXED this session" landed in the same commit as this
+> revision and was re-verified independently: `python3 canon/validation/validate_compiled_pack.py`
+> passes all five check families (double-compile byte-identical), the invented line-crossing
+> mechanism greps to zero hits, both packs carry the coverage-delta declaration, and the combined
+> suites (test_compiled_packs, test_canon_context_validator, test_assign_markers,
+> test_live24_coverage) run 92 tests OK. Quoted sizing figures in the adversary's evidence are the
+> PRE-fix packs (the historical record of the review); the post-fix figures are 10 decisions / 32 sk
+> objects (product_appearance) and 11 decisions / 69 sk objects (composition_and_attention) — the
+> spec's §7 table carries them.
 
 Two independent test agents ran after the seven executors: a **verifier** (every validator, every acceptance check, id-resolution and governance sweeps) and an **adversary** instructed to refute the compiled packs against committed corpus bytes. Verifier verdict: **pass_with_findings**. Adversary verdict: **fail** — its blocking and major findings were fixed in the same session (follow-up commit) by changing the compiler's decision definitions and re-rendering; dispositions below. The adversary failing the first render is the process working, not failing: every finding cites committed bytes.
 

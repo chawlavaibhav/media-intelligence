@@ -49,7 +49,7 @@ token_budgets:
   indian_indic_context: 4096
   product_appearance: 2500          # compiled: canon/compilation/PACK-product_appearance-v0.yaml
   typography_and_copy: 4096
-system_prompt_block_tokens: 300     # canon/compilation/INJECTION-CONTRACT-v0.md §2
+system_prompt_block_tokens: 340     # canon/compilation/INJECTION-CONTRACT-v0.md §2
 coverage_gap_notice_tokens: 120
 per_request_max_tokens: 45000       # uncached break-even envelope, COMPILED-PACK-CONTRACT §5
 
@@ -152,8 +152,8 @@ cells:
 
 # Worst case (recompute: canon/validation/validate_compiled_pack.py does this mechanically):
 # the uncertainty union — universal (2) + union(static_image, video) bases (4) + all 4
-# conditionals = 10 packs = 8 x 4096 + 2 x 2500 = 37,768 tokens, + 300 system block + 120
-# notice = 38,188 <= 45,000. The table's largest legal combination fits the uncached
+# conditionals = 10 packs = 8 x 4096 + 2 x 2500 = 37,768 tokens, + 340 system block + 120
+# notice = 38,228 <= 45,000. The table's largest legal combination fits the uncached
 # break-even envelope.
 notes: >-
   This table selects packs; it asserts nothing about their quality or their fit to any brief.

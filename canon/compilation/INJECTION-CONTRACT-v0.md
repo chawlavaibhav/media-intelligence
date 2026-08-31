@@ -23,7 +23,7 @@ coordination/CONTROL-STATE.md governs.
 - Nothing is retrievable at runtime (EVAL-037: 53 searches, 1 read). The pack text is the
   delivered read (R3), injected unconditionally per the trigger table — O(1) in corpus size.
 
-## 2. System-prompt block (~300 tokens; the invariant prefix)
+## 2. System-prompt block (~340 tokens; the invariant prefix)
 
 Injected once, before any pack text, verbatim:
 
@@ -31,7 +31,9 @@ Injected once, before any pack text, verbatim:
 CANON_DOCTRINE packs are compiled production decisions from an audited corpus. Each
 DEFAULT is a decision already made: accept it, or override it — legal only when a specific
 brief clause forces it — record it in DOCTRINE_DEVIATIONS with that clause. Never
-re-arbitrate a PRE-ARBITRATED CONFLICT: the stated rule decides. Answer every CHECK by
+re-arbitrate a PRE-ARBITRATED CONFLICT: the stated rule decides. A conflict rule inherits
+the confidence marker and override path of its decision_ref: a DOCTRINE_DEVIATIONS entry
+on that decision id covers its conflict rules. Answer every CHECK by
 decision id in FAILURE_PREVENTION as pass or fix: <what changed>.
 
 Marker legend. MEASURED = the source compares or measures. REASONED = a mechanism is given.
@@ -45,9 +47,9 @@ character, never rank sources. A weak marker is a reason for care, not silence: 
 default unless a brief clause forces otherwise.
 ```
 
-Size: the fenced block is 1,193 chars = 299 tokens at the repo's 4-chars/token estimate
+Size: the fenced block is 1,354 chars = 339 tokens at the repo's 4-chars/token estimate
 (recompute: extract the fenced block, `ceil(len/4)`); the trigger table budgets it at
-`system_prompt_block_tokens: 300`, and `canon/validation/validate_compiled_pack.py` verifies
+`system_prompt_block_tokens: 340`, and `canon/validation/validate_compiled_pack.py` verifies
 the block stays within that figure.
 
 Placement (COMPILED-PACK-CONTRACT §4): system prompt carries this block, then the selected
@@ -68,7 +70,11 @@ changes three things:
 Placed after FAILURE_PREVENTION. One line per overridden default:
 `<decision-id>: overridden because <verbatim brief clause>`. The literal value `none` is valid
 **only** when every injected default was accepted. An override with no brief clause, or a
-deviation that appears in the package body but not here, is a package defect.
+deviation that appears in the package body but not here, is a package defect. A deliverable
+parameter fixed by the brief (aspect ratio, duration, placement, format) is itself a forcing
+brief clause and takes precedence over any pack default it collides with: record the
+collision here as an override citing the brief's parameter clause — never fabricate a
+scene-based justification for a brief-fixed parameter.
 
 ### 3.2 FAILURE_PREVENTION becomes per-check-id
 

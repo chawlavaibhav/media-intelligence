@@ -88,6 +88,26 @@ CA_D6_ASPECT_LIMIT = (
     "No accepted source treats fixed 9:16 feed frames (A01/G2): every aspect and "
     "orientation claim here predates vertical-feed formats; transfer is untested."
 )
+PA_COVERAGE_DELTA_LIMIT = (
+    "Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists "
+    "dwyer-patel-cinema-india, jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide "
+    "as contributors to this pack's domains; none is compiled here — their doctrine "
+    "(frontality/darshan staging, iconographic correctness, props-as-vocabulary) is absent, "
+    "not arbitrated."
+)
+PA_CATEGORY_SURFACE_LIMIT = (
+    "Category-surface gap: no accepted claim covers watch conventions (hand positions) or "
+    "anisotropic brushed/sunburst surfaces — the diffuse/direct/glare contrast set (PA-D1) "
+    "does not model radial anisotropic glow; state the gap rather than force one of the "
+    "three types."
+)
+CA_COVERAGE_DELTA_LIMIT = (
+    "Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists "
+    "dwyer-patel-cinema-india, jain-gods-in-the-bazaar, samara-making-breaking-grid-ch1 "
+    "(term t_sam_c003_0018 only, CF-16) and alton-painting-with-light-ch2 for this pack's "
+    "domains; no claim of theirs is compiled — their doctrine (frontality/darshan attention "
+    "order, symmetry-as-authority, grid structure) is absent, not arbitrated."
+)
 
 # ── authored decision tables ─────────────────────────────────────────────────
 # Every id below must resolve in canon/knowledge/current/ (the compiler fails closed).
@@ -226,9 +246,9 @@ PA_CONFLICTS = [
     {"conflict_id": "CF-08", "decision_ref": "PA-D8", "kind": "cross_source_tension",
      "between": ["t_alt_c003_0021", "t_lsm_c003_0008"],
      "tension_ref": "T5", "ledger_record": "xj_0023",
-     "ledger_file": "canon/candidates/ontology-join/cross-source-candidates-v0.yaml (status: proposed; referenced about the tension, not consumed as admitted doctrine)",
-     "nature": "same physical mechanism — direct/specular reflection — with opposite valuation: Alton dresses sets with shiny props so speculars give life; LSM names the unplanned specular the unwanted direct reflection",
-     "resolution_rule": "The valuation turns on deliberateness: a specular placed on purpose is doctrine (declare it under PA-D8's check); an unplanned specular is a defect to remove. Alton's term is additionally contingent on antihalo film stock (DATED)."},
+     "ledger_file": "canon/candidates/ontology-join/cross-source-candidates-v0.yaml — candidate ledger cross-reference — unadopted, informational only (status: proposed; no candidates-lane content is consumed)",
+     "nature": "Alton dresses sets with highly reflective objects so specular highlights give the image life, contingent on antihalo film stock (t_alt_c003_0021); LSM names a mirror image of the source appearing where the photographer does not want it the unwanted direct reflection (t_lsm_c003_0008)",
+     "resolution_rule": "Apply PA-D8's check: every specular is declared wanted — a deliberately shiny prop keeps its highlights (sk_alt_c003_0004) — or identified and removed (sk_lsm_c003_0018, sk_lsm_c003_0019); technique serves the creative decision (sk_lsm_c003_0020). Alton's term is contingent on antihalo film stock (DATED)."},
 ]
 
 PA_WAIVERS = [
@@ -248,8 +268,8 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D1",
         "question": "What reads first, second, third?",
-        "default": "One dominant element by contrast — visual power is achieved by contrast, not 'impact' (sk_vig_c003_0009); eyes are the strongest attractor (sk_fre_c003_0020); never issue two competing cues for one beat (sk_ms_c003_0019); do not choreograph every glance — complete control of attention is self-defeating (sk_murch_c003_0018); misdirection (0033) is the scoped exception, only to set up a reveal.",
-        "check": "Name the intended 1st/2nd/3rd read; each is carried by exactly one dominant cue; no two cues compete for the same beat.",
+        "default": "One dominant element by contrast — visual power is achieved by contrast, not 'impact' (vig_0009); eyes attract more strongly than probably any other subject (fre_0020); competing cues confuse rather than direct (repeated focus-shifting is the type case, ms_0019); complete control of attention is self-defeating (murch_0018); misdirection (murch_0033) is the scoped exception, only to set up a reveal.",
+        "check": "Name the 1st/2nd/3rd read; each carried by exactly one dominant cue; no two cues compete for one beat.",
         "ids": ["sk_fre_c003_0020", "sk_vig_c003_0009", "sk_murch_c003_0018", "sk_ms_c003_0019",
                 "sk_murch_c003_0033"],
         "feeds": ["VISUAL_SYSTEM.attention_order", "MESSAGE_AND_INFORMATION_HIERARCHY",
@@ -259,7 +279,7 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D2",
         "question": "Where does the subject sit in frame?",
-        "default": "Off-centre within one of three approximate zones (scs_fre_c003_001; sk_fre_c003_0017, 0018); centre only when the scene already points inward (0019); extreme placement needs a visible reason (0021). The source rejects coordinate rules outright (0016, contradicting its own nod to classical proportion in 0028): treat zones as regions, never as grid coordinates or named ratios.",
+        "default": "Off-centre within one of three approximate zones (fre_001; fre_0017, 0018); centre only when the scene points inward (0019); extreme placement needs a visible reason (0021). The source rejects coordinate rules (0016, vs its nod to classical proportion, 0028): zones are regions, never grids or named ratios.",
         "check": "Placement is stated as a zone plus the reason for it; no placement is justified by a named ratio or grid line.",
         "ids": ["sk_fre_c003_0015", "sk_fre_c003_0016", "sk_fre_c003_0017", "sk_fre_c003_0018",
                 "sk_fre_c003_0019", "sk_fre_c003_0021", "sk_fre_c003_0028", "sk_fre_c003_0029",
@@ -270,7 +290,7 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D3",
         "question": "How does the frame hold the subject at its edges?",
-        "default": "Pick one edge treatment per shot from the contrast set scs_fre_c003_002: tight fit with a deliberate slight gap (sk_fre_c003_0006); or a busy scene whose edges stop mattering (0005); or deliberate halving of a symmetrical subject (0007). Watch straight subject edges near frame edges — they read as magnetic (0003) — and thin any bright framing element (0004).",
+        "default": "One edge treatment per shot (fre_002): tight fit with a slight deliberate gap (fre_0006); busy scene, edges stop mattering (0005); deliberate halving of a symmetrical subject (0007). Straight subject edges near frame edges read magnetic (0003); thin any bright framing element (0004).",
         "check": "The edge treatment is one of the three, named; no accidental near-tangency between a subject edge and a frame edge.",
         "ids": ["sk_fre_c003_0002", "sk_fre_c003_0005", "sk_fre_c003_0006", "sk_fre_c003_0007",
                 "sk_fre_c003_0003", "sk_fre_c003_0004", "sk_fre_c003_0030", "scs_fre_c003_002"],
@@ -280,8 +300,8 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D4",
         "question": "Use a frame within the frame?",
-        "default": "Yes when the scene offers one — it creates a near-universal timing reflex (sk_fre_c003_0022) — but a bright framing element must be thinned or it takes over (0004).",
-        "check": "If a frame-within-frame is used, the framing element is darker or thinner than the subject it frames.",
+        "default": "No compulsion (fre_0022); when a subject passes behind an opening, the near-universal reaction is to shoot the moment it sits cleanly inside, breaking no edges; thin a bright framing element or it takes over (0004).",
+        "check": "A framing element used is darker or thinner than the subject it frames.",
         "ids": ["sk_fre_c003_0022", "sk_fre_c003_0004"],
         "feeds": ["VISUAL_SYSTEM", "GENERATION_PROMPTS"],
         "limits": [],
@@ -289,8 +309,8 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D5",
         "question": "Balance the frame, or refuse the eye rest?",
-        "default": "Default to classical balance, which weighs size AND tone together (sk_fre_c003_0028, 0029; scs_fre_c003_005); refusing the eye a resting place (0032) is the deliberate energetic exception — declared, never accidental. Symmetry is for imposing order on a subject that has none (0030); diagonals divide cleanly only against strict horizontals and verticals (0033), and matching a rectilinear subject is unimaginative unless it matches the subject's spirit (0034).",
-        "check": "The frame is declared balanced or deliberately restless; if balanced, a grayscale check shows tonal weight agreeing with size weight.",
+        "default": "Classical balance is the default; it weighs size AND tone together (fre_0028, 0029; fre_005); refusing the eye a resting place (0032) is the declared energetic exception. Symmetry imposes order on a subject that has none (0030); diagonals need strict horizontals and verticals to divide against (0033, 0034 per CF-07).",
+        "check": "Declared balanced or deliberately restless; if balanced, a grayscale check shows tonal weight agreeing with size weight.",
         "ids": ["sk_fre_c003_0028", "sk_fre_c003_0029", "sk_fre_c003_0030", "sk_fre_c003_0032",
                 "sk_fre_c003_0033", "sk_fre_c003_0034", "sk_fre_c003_0007", "sk_fre_c003_0016",
                 "scs_fre_c003_005"],
@@ -300,7 +320,7 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D6",
         "question": "Which orientation and aspect?",
-        "default": "Choose by the scene's shapes (scs_fre_c003_003): a vertical frame is not the same as a sense of tallness (sk_fre_c003_0008); a square reads strict and draws the eye inward (0009, 0010); a wide frame needs shapes that call for it (0011).",
+        "default": "Choose by the scene's shapes (fre_003): a vertical frame is not itself tallness (fre_0008); a square reads strict and draws the eye inward (0009, 0010); a wide frame needs shapes that call for it (0011).",
         "check": "The stated aspect is justified by a named shape in the scene, not by the platform alone.",
         "ids": ["sk_fre_c003_0008", "sk_fre_c003_0009", "sk_fre_c003_0010", "sk_fre_c003_0011",
                 "scs_fre_c003_003"],
@@ -310,8 +330,8 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D7",
         "question": "How does attention travel across cuts (video)?",
-        "default": "Every new shot carries new information (sk_gote_c003_0004) and every departure is motivated (0006); drive eye-trace by alternating frame placement (0010) but keep its difficulty near the optimum (0011); composition must differ at the cut (0026) — the wipe waives that requirement (0035). Alternatives: move attention inside one continuous shot (sk_ms_c003_0010; scs_ms_c003_002), or direct it by blocking with a static wide (0017). One device per beat.",
-        "check": "Per cut: name the new information and the motivation. Per beat: the attention device is one of cut / camera move / blocking, stated.",
+        "default": "Every new shot carries new information (gote_0004) and every departure is motivated (0006); drive eye-trace by alternating frame placement (0010), keeping difficulty near the optimum (0011); composition must differ at the cut (0026) — the wipe waives it (0035). Alternatives: move attention inside one continuous shot (ms_0010; ms_002), or block with a static wide (0017). One device per beat.",
+        "check": "Per cut, name the new information and motivation; per beat, state the one device: cut, camera move, or blocking.",
         "ids": ["sk_gote_c003_0004", "sk_gote_c003_0006", "sk_gote_c003_0010", "sk_gote_c003_0011",
                 "sk_gote_c003_0026", "sk_ms_c003_0010", "sk_ms_c003_0017", "sk_gote_c003_0035",
                 "sk_ms_c003_0001", "sk_ms_c003_0004", "scs_ms_c003_002"],
@@ -321,9 +341,11 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D8",
         "question": "When cut criteria conflict, what is sacrificed first?",
-        "default": "Murch's Rule of Six (scs_murch_c003_001): emotion 51 > story 23 > rhythm 10 > eye-trace 7 > planarity 5 > 3D space 4 (sk_murch_c003_0019, 0020, 0023). Aim to satisfy all six (0031); when you cannot, sacrifice upward from the bottom (0027) — higher criteria obscure failures of lower ones, never the reverse (0028). The weights are hedged, the intervals are the point (0029); the top three bind tightly (0030); 'bad' is film-relative (0011); the list serves occupying the audience's position (0032).",
-        "check": "Any imperfect cut names which bottom-ranked criteria were sacrificed; emotion is never sacrificed to preserve eye-trace, planarity or spatial continuity.",
-        "ids": ["sk_murch_c003_0019", "sk_murch_c003_0020", "sk_murch_c003_0023",
+        "default": "Murch's Rule of Six (murch_001; murch_0019): emotion 51 (0020) > story 23 (0021) > rhythm 10 (0022) > eye-trace 7 (0023) > planarity 5 (0024) > 3D space 4 (0025). Aim to satisfy all six (0031); else sacrifice upward from the bottom (0027) — higher criteria obscure failures of lower ones, never the reverse (0028). Weights hedged, intervals the point (0029); top three bind tightly (0030); 'bad' is film-relative (0011); the list serves occupying the audience's position (0032).",
+        "check": "An imperfect cut names the bottom criteria sacrificed; never sacrifice emotion for eye-trace, planarity or 3D continuity.",
+        "ids": ["sk_murch_c003_0019", "sk_murch_c003_0020", "sk_murch_c003_0021",
+                "sk_murch_c003_0022", "sk_murch_c003_0023", "sk_murch_c003_0024",
+                "sk_murch_c003_0025",
                 "sk_murch_c003_0027", "sk_murch_c003_0028", "sk_murch_c003_0011",
                 "sk_murch_c003_0029", "sk_murch_c003_0030", "sk_murch_c003_0031",
                 "sk_murch_c003_0032", "scs_murch_c003_001"],
@@ -333,8 +355,8 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D9",
         "question": "Screen direction and the line?",
-        "default": "Frame edges are the audience's directional reference (sk_gos_c003_0005); keep setups within one 180-degree arc (0010; scs_gos_c003_001); movement and position persist across cuts (sk_gote_c003_0017, 0018; sk_gos_c003_0011); reciprocal coverage obeys the line (sk_gote_c003_0056); apparent size sets sound level (sk_gote_c003_0008). Exception: jumping the line is invisible within any single moving shot (sk_gos_c003_0012, contradicting 0007/0010, qualified by 0013 — deliberate exceptions permitted, declared).",
-        "check": "Subject screen direction and side-of-frame are constant across consecutive shots, or the change happens inside one shot, or it is declared deliberate in DOCTRINE_DEVIATIONS.",
+        "default": "Frame edges are the audience's directional reference (gos_0005); keep setups within one 180-degree arc (0010; gos_001); movement and position persist across cuts (gote_0017, 0018; gos_0011); reciprocal coverage obeys the line (gote_0056). A far-side setup is good in itself — the reversal shows only at the cut (gos_0012, contradicting 0007/0010); crossing needs a declared creative reason (0013).",
+        "check": "Screen direction and side-of-frame persist across consecutive shots, or something on screen shows the change (gos_0007), or the crossing is declared in DOCTRINE_DEVIATIONS.",
         "ids": ["sk_gos_c003_0005", "sk_gos_c003_0008", "sk_gos_c003_0011", "sk_gos_c003_0012",
                 "sk_gote_c003_0017", "sk_gote_c003_0018", "sk_gote_c003_0056", "sk_gos_c003_0007",
                 "sk_gos_c003_0010", "sk_gos_c003_0013", "sk_gote_c003_0008", "scs_gos_c003_001"],
@@ -344,7 +366,7 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D10",
         "question": "How long may a shot hold?",
-        "default": "Set length by describing the shot's contents aloud (sk_gote_c003_0053), bounded by the prevailing fast-cutting norm (0052).",
+        "default": "Set length by silently describing the shot's contents; the description's time is the shot's (gote_0053). The fast-cutting norm — which the source calls alarming — is the ambient pace (0052).",
         "check": "No shot outlasts its describable content; the stated pace names the prevailing norm it assumes.",
         "ids": ["sk_gote_c003_0053", "sk_gote_c003_0052"],
         "feeds": ["AUDIO_AND_EDIT", "GENERATION_PROMPTS"],
@@ -353,7 +375,7 @@ CA_DECISIONS = [
     {
         "decision_id": "CA-D11",
         "question": "Does the camera move, and why?",
-        "default": "Every move is motivated and stillness is chosen (sk_ms_c003_0002); an object in transit licenses a move across a location (0011); do the most with the least (sk_murch_c003_0015); the shared success criterion is that the audience does not notice the technique (sk_ms_c003_0018; scs_ms_c003_003).",
+        "default": "Every move is motivated and stillness is chosen (ms_0002); an object in transit licenses a move across a location (0011); do the most with the least (murch_0015); shared success criterion: the technique goes unnoticed (ms_0018; ms_003).",
         "check": "Each camera move names its motivation; unmotivated moves are replaced by stillness or a cut.",
         "ids": ["sk_ms_c003_0002", "sk_ms_c003_0011", "sk_murch_c003_0015", "sk_ms_c003_0018",
                 "scs_ms_c003_003"],
@@ -366,7 +388,7 @@ CA_CONFLICTS = [
     {"conflict_id": "CF-01", "decision_ref": "CA-D3", "kind": "contradicts",
      "between": ["sk_fre_c003_0002", "sk_fre_c003_0005"],
      "nature": "exact edge-proportioned framing against loose framing whose edges stop mattering",
-     "resolution_rule": "Scope by density: curve-proportioned cut in a sparse frame (0002); in a busy scene edges stop mattering (0005). Declare the case."},
+     "resolution_rule": "Curve-proportioned cut in a sparse frame (0002); in a busy scene edges stop mattering (0005). Declare the case."},
     {"conflict_id": "CF-02", "decision_ref": "CA-D3", "kind": "contradicts",
      "between": ["sk_fre_c003_0005", "sk_fre_c003_0006"],
      "nature": "busy-scene edge indifference against fragile tight fit",
@@ -374,7 +396,7 @@ CA_CONFLICTS = [
     {"conflict_id": "CF-03", "decision_ref": "CA-D3", "kind": "contradicts",
      "between": ["sk_fre_c003_0006", "sk_fre_c003_0007"],
      "nature": "the source presents deliberate frame break (halving) as the opposite of frame fit",
-     "resolution_rule": "Both are legal deliberate choices; halving (0007) needs a symmetrical subject and a stated reason, else fit-with-gap (0006)."},
+     "resolution_rule": "Halving (0007) needs a symmetrical subject and a stated reason; else fit-with-gap (0006)."},
     {"conflict_id": "CF-04", "decision_ref": "CA-D3", "kind": "contradicts",
      "between": ["sk_fre_c003_0007", "sk_fre_c003_0030"],
      "nature": "halving pulls the eye apart; centred symmetry draws it inward",
@@ -382,11 +404,11 @@ CA_CONFLICTS = [
     {"conflict_id": "CF-05", "decision_ref": "CA-D2", "kind": "contradicts",
      "between": ["sk_fre_c003_0016", "sk_fre_c003_0028"],
      "nature": "the source rejects placement rules outright yet elsewhere endorses classical proportion as innately satisfying",
-     "resolution_rule": "Classical balance is a disposition (0028) judged by eye with tone weighed (0029), never a coordinate rule (0016); no named ratio justifies a placement."},
+     "resolution_rule": "Balance is a disposition judged by eye with tone weighed (0028, 0029), never a coordinate rule (0016); no named ratio justifies a placement."},
     {"conflict_id": "CF-06", "decision_ref": "CA-D5", "kind": "contradicts",
      "between": ["sk_fre_c003_0028", "sk_fre_c003_0032"],
      "nature": "satisfying the eye against deliberately refusing it rest",
-     "resolution_rule": "Balance is the default; the restless mode is a declared, brief-driven exception (record it in DOCTRINE_DEVIATIONS)."},
+     "resolution_rule": "Balance is the default; restless is a declared, brief-driven exception (DOCTRINE_DEVIATIONS)."},
     {"conflict_id": "CF-07", "decision_ref": "CA-D5", "kind": "contradicts",
      "between": ["sk_fre_c003_0033", "sk_fre_c003_0034"],
      "nature": "the source's two adjacent cases take opposite positions on rectilinear treatment",
@@ -394,19 +416,19 @@ CA_CONFLICTS = [
     {"conflict_id": "CF-08", "decision_ref": "CA-D2", "kind": "trades_off_with",
      "between": ["sk_fre_c003_0018", "sk_fre_c003_0019"],
      "nature": "background as setting versus subject as sole statement",
-     "resolution_rule": "Off-centre shows subject and setting together (0018); centre when the scene points inward and the subject is the sole statement (0019)."},
+     "resolution_rule": "Off-centre shows subject and setting (0018); centre when the scene points inward and the subject is the sole statement (0019)."},
     {"conflict_id": "CF-09", "decision_ref": "CA-D2", "kind": "trades_off_with",
      "between": ["sk_fre_c003_0018", "sk_fre_c003_0021"],
      "nature": "off-centre placement against background dominance at the extreme",
      "resolution_rule": "Extreme placement only with a visible reason (0021); otherwise stay inside the three zones."},
     {"conflict_id": "CF-10", "decision_ref": "CA-D9", "kind": "contradicts",
      "between": ["sk_gos_c003_0007", "sk_gos_c003_0012"],
-     "nature": "jumping the line is the failure of the screen-direction rule — yet is invisible within a single shot",
-     "resolution_rule": "0007 governs cuts; 0012 governs movement inside one continuous shot. Cross the line in a moving shot freely; across a cut only per 0013 (declared intent)."},
+     "nature": "jumping the line is the failure of the screen-direction rule — yet the far-side shot is good in itself, the mistake appearing only once the shots are edited together",
+     "resolution_rule": "The far-side setup is not itself the error (0012): the mistake appears only at the cut (0007). Crossing needs a declared creative reason (0013)."},
     {"conflict_id": "CF-11", "decision_ref": "CA-D9", "kind": "contradicts",
      "between": ["sk_gos_c003_0010", "sk_gos_c003_0012"],
-     "nature": "the 180-degree arc rule against in-shot line crossing",
-     "resolution_rule": "As CF-10: the arc constrains setups joined by cuts; one travelling shot may cross and re-establish the line where it settles."},
+     "nature": "the 180-degree arc rule against the far-side setup whose error appears only at the edit",
+     "resolution_rule": "As CF-10: the arc rule (0010) binds setups that will be cut together; the far-side error appears at the edit (0012); deliberate exceptions per 0013."},
     {"conflict_id": "CF-12", "decision_ref": "CA-D7", "kind": "contradicts",
      "between": ["sk_gote_c003_0035", "sk_gote_c003_0026"],
      "nature": "the wipe suspends the composition-difference requirement at the cut",
@@ -414,11 +436,11 @@ CA_CONFLICTS = [
     {"conflict_id": "CF-13", "decision_ref": "CA-D7", "kind": "contradicts",
      "between": ["sk_gote_c003_0035", "sk_gote_c003_0012"],
      "nature": "the wipe also waives the camera-angle (thirty-degree) requirement; the partner claim is not compiled into this pack",
-     "resolution_rule": "0012 (the thirty-degree angle rule) is camera_and_spatial_grammar scope, named here so the wipe's waiver of it is visible; at a straight cut the angle rule stands."},
+     "resolution_rule": "The thirty-degree rule (0012) is camera_and_spatial_grammar scope, named so the wipe's waiver is visible; at a straight cut it stands."},
     {"conflict_id": "CF-14", "decision_ref": "CA-D7", "kind": "contradicts",
      "between": ["sk_ms_c003_0017", "sk_ms_c003_0010"],
      "nature": "blocking with a static wide solves the attention problem without a camera move, accepting a cut as fallback",
-     "resolution_rule": "One attention device per beat — cut, move, or blocking — stated; the pack does not rank them."},
+     "resolution_rule": "One attention device per beat — cut, move, or blocking; the pack does not rank them."},
     {"conflict_id": "CF-15", "decision_ref": "CA-D1", "kind": "contradicts",
      "between": ["sk_murch_c003_0033", "sk_murch_c003_0018"],
      "nature": "the editor misdirects attention as a magician does, against the warning that complete control of attention is self-defeating",
@@ -426,9 +448,13 @@ CA_CONFLICTS = [
     {"conflict_id": "CF-16", "decision_ref": "CA-D1", "kind": "cross_source_tension",
      "between": ["t_hop_sa_0009", "t_sam_c003_0018"],
      "tension_ref": "T4", "ledger_record": "xj_0022",
-     "ledger_file": "canon/candidates/ontology-join/cross-source-candidates-v0.yaml (status: proposed; referenced about the tension, not consumed as admitted doctrine)",
-     "nature": "unoccupied space as paid space wasted (Hopkins, 1923 newspaper inch) against negative space as shapes of equal importance (Samara, editorial/identity design)",
-     "resolution_rule": "Condition on artifact class: in direct-response bought space every element must sell; in brand/editorial work white space is a working element. Name the class first."},
+     "ledger_file": "canon/candidates/ontology-join/cross-source-candidates-v0.yaml — candidate ledger cross-reference — unadopted, informational only (status: proposed; no candidates-lane content is consumed)",
+     "nature": "Hopkins defines unoccupied_space as space paid for and not used to sell — borders, margins, enlarged type, half-page copy (t_hop_sa_0009); Samara defines negative_space as white space seen as shapes of equal importance to the positive elements (t_sam_c003_0018)",
+     "resolution_rule": "Each term binds in its origin frame — Hopkins: paid direct-response space; Samara: grid-organised design. Name the artifact's frame before applying either; neither is compiled as a default."},
+    {"conflict_id": "CF-17", "decision_ref": "CA-D8", "kind": "contradicts",
+     "between": ["sk_murch_c003_0025", "sk_murch_c003_0026"],
+     "nature": "the source ranks three-dimensional continuity last, deliberately and against the film-school tradition it reports (spatial continuity first)",
+     "resolution_rule": "3D space ranks last (0025); 0026 is the tradition the source argues against — named for closure, not doctrine."},
 ]
 
 CA_WAIVERS = [
@@ -450,7 +476,8 @@ PACKS = [
         "decisions": PA_DECISIONS,
         "conflicts": PA_CONFLICTS,
         "waivers": PA_WAIVERS,
-        "pack_limits": [DEVANAGARI_LIMIT, LSM_LATER_CHAPTERS_CAVEAT],
+        "pack_limits": [DEVANAGARI_LIMIT, LSM_LATER_CHAPTERS_CAVEAT,
+                        PA_COVERAGE_DELTA_LIMIT, PA_CATEGORY_SURFACE_LIMIT],
     },
     {
         "pack_id": "composition_and_attention",
@@ -459,7 +486,7 @@ PACKS = [
         "decisions": CA_DECISIONS,
         "conflicts": CA_CONFLICTS,
         "waivers": CA_WAIVERS,
-        "pack_limits": [DEVANAGARI_LIMIT],
+        "pack_limits": [DEVANAGARI_LIMIT, CA_COVERAGE_DELTA_LIMIT],
     },
 ]
 
@@ -696,7 +723,8 @@ def render_terse(pack: dict, decisions_out: list, digest: str) -> str:
         f"{len(decisions_out)} decisions. Each DEFAULT is a decision already made: accept it, "
         "or override it in DOCTRINE_DEVIATIONS citing the brief clause that forces the "
         "override. Answer every CHECK in FAILURE_PREVENTION as pass or fix, by decision id. "
-        "Markers label evidence character; they never rank sources.",
+        "Id legend: ids drop the sk_/scs_ prefix and _c003 infix (fre_0020 = sk_fre_c003_0020; "
+        "3-digit = scs_ system); bare NNNN continues the last-named source.",
         "",
     ]
     for d in decisions_out:
