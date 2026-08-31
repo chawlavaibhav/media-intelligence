@@ -8431,3 +8431,27 @@ Use frozen brief B05 from the top of this file.
 Apply the Stage-1 rubric. Choose exactly one A/B/C winner.
 
 ---
+
+# DIAGNOSTIC EXTRAS
+
+## D01 — B01
+
+
+
+### JUDGE D01
+Score /100 with the same rubric. Flag OPTIONAL_DIAGNOSTIC_PRODUCTION only if >=80 and no material hard-constraint violation.
+
+---
+
+## D02 — B04
+
+
+
+### JUDGE D02
+Score /100 with the same rubric. Flag OPTIONAL_DIAGNOSTIC_PRODUCTION only if >=80 and no material hard-constraint violation.
+
+---
+
+# END OF VIDEO INPUT
+
+Expected total: 54 primary packages + 2 diagnostic packages = **56**.
