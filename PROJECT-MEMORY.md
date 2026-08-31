@@ -5,7 +5,7 @@ itself.** Read this first, every session; then `coordination/CONTROL-STATE.md` f
 authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
-**Last refresh:** 30 Aug 2026 — CANON-014 integration refresh. The last full Governor
+**Last refresh:** 31 Aug 2026 — EVAL-037 conclusion refresh. The last full Governor
 reconciliation remains **GOV-006** against `main` at `91984f5`
 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`, PASS WITH NON-BLOCKING NOTES);
 CANON-014 received a bounded Level-1 review at
@@ -102,7 +102,7 @@ Current authorisation state always comes from `coordination/CONTROL-STATE.md`. T
 subjective/perceptual evaluator families · strict-exactness-qualified text evaluators (five
 configurations tested, five disqualified, unrewritten) · qualified temporal-video evaluators (no
 numeric pass mark exists) · **Capability Registry rows — a deliberate decision, not an absence** ·
-accepted evidence that Canon improves model outcomes · customer-outcome CpAO observations (Stage C
+customer-outcome CpAO observations (Stage C
 only; not authorised) · Production IR / Planner.
 
 **No longer zero:**
@@ -129,6 +129,7 @@ only; not authorised) · Production IR / Planner.
   negative-direction-only); RES-005 acquired 12 rights-cleared base clips (12/12 clean; only a
   representative **3/3** passed ingest — **not** 12/12; role `MAT-TEMPORAL-BASE`, not
   `PACK-AV-CLEAN`; content requirement is pack-level).
+- **EVAL-037:** the Controller accepts the bounded programme conclusion **Canon helps, but current retrieval/consumption is not mature**. This is enough to carry Canon forward, but not a universal treatment-effect estimate or a production retrieval design. See `eval/experiments/EVAL-037/CONCLUSION.md` and `coordination/decisions/CONTROLLER-EVAL-037-CONCLUSION-2026-08-31.md`.
 - **Canon:** **24 live accepted sources** plus **18 durable HOLD/candidate sources**. CANON-014 also
   preserves **1,028 grounded, ungraded, uncalibrated Q&A items** across 23 banks. HOLD material is
   not accepted Canon and current runtime retrieval still reads `canon/knowledge/current/**` only.
@@ -150,25 +151,14 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
 
 ## 6. Current direction and blockers
 
-**Read `coordination/CONTROL-STATE.md` for the live version.** The 29-Aug programme reset is in
-force under `coordination/decisions/CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md`.
+**Read `coordination/CONTROL-STATE.md` for the live version.**
 
-- **T2A / EVAL-036 is the authorised next execution task at USD 0:** import recovered Media Factory
-  evidence as provenance-preserving historical empirical priors. It creates no Registry row and
-  makes no current model-capability claim.
-- **T2B follows T2A:** freeze a reasoning-only comparison of the same model without Canon versus
-  with Canon access before any media-generation propagation. Exact model roster, call count,
-  retrieval interface and spend remain to be frozen/authorised; this document does not authorise
-  provider calls.
-- **CANON-014 is integrated independently of T2B:** 24 sources are accepted, 18 are durable HOLD
-  candidates, and 1,028 Q&A items are retained. If an experiment elects to expose HOLD material or
-  Q&A, it must name the exact full-corpus/Q&A fingerprints and preserve source status; ordinary
-  runtime retrieval remains accepted-only today.
-- **No paid tranche is currently authorised.** PILOT-001 is closed at USD 1.60 provisional consumed
-  / 0 accepted and no further provider call is authorised.
-- Persistent blockers include HED-1 (which human review time counts in fully loaded CpAO), the
-  empty Capability Registry by deliberate admission policy, stale stream handoffs noted by GOV-006,
-  and the temporal-spec human-adjudication correction noted by GOV-006.
+- **EVAL-037 / T2B is concluded for programme direction:** Canon helps; the current retrieval / consumption interface is not mature.
+- **The programme is back in Controller planning mode.** The next move is not another broad Canon-value experiment; it is a rebase of T3-T8 around the shortest route to an end-to-end accepted-outcome product.
+- **EVAL-036 remains authorised at USD 0** as a historical-prior import, but its sequencing must now be justified by outcome value rather than treated as an automatic gate.
+- **No new paid tranche is currently authorised.**
+- **Production IR, Planner, routing runtime, repair runtime and customer-facing API still do not exist.** They should be extracted/implemented from proven outcome-producing workflows, not designed abstractly first.
+- Persistent blockers include HED-1 for fully loaded CpAO and the empty Capability Registry by deliberate admission policy.
 
 ## 7. Critical traps for a fresh session
 

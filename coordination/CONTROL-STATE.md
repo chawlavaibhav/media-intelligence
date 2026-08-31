@@ -5,10 +5,10 @@ deferred, cancelled; the current empirical floor; Registry state; spend authorit
 next Controller gate. It is a synthesis backed by the durable Controller decisions it links — where
 it and any older prose disagree, the latest durable Controller decision governs.
 
-**Updated:** 30 Aug 2026 — CANON-014 integrated on top of the 29-Aug Media Factory programme reset.
-The current programme authority remains
-`coordination/decisions/CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md`; CANON-014
-integration is recorded in
+**Updated:** 31 Aug 2026 — EVAL-037 concluded for programme direction on top of the 29-Aug Media Factory programme reset.
+The current programme direction is governed by
+`coordination/decisions/CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md` plus the newer
+`coordination/decisions/CONTROLLER-EVAL-037-CONCLUSION-2026-08-31.md`; CANON-014 integration remains recorded in
 `coordination/decisions/CONTROLLER-CANON-014-INTEGRATION-2026-08-30.md`. The previous full text is
 preserved at `history/CONTROL-STATE-PRE-CONTEXT-MIGRATION-2026-08-28.md`; the last full Governor
 reconciliation remains GOV-006 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`).
@@ -55,7 +55,7 @@ Aight pilot.
 | EVAL-006 | **Paused — do not execute**; spend authority withdrawn | `CONTROLLER-PAUSE-EVAL-006-PENDING-MASTER-PLAN-2026-08-26.md` |
 | GOV-007 | **Not authorised** | `CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md` |
 | Historical E7 paid admission / E8 deep qualification | Blocked | pre-execution decisions |
-| Canon value gate | Unrun | — |
+| Canon value gate / EVAL-037 | **Concluded for programme direction:** Canon helps; retrieval/consumption is not mature | `CONTROLLER-EVAL-037-CONCLUSION-2026-08-31.md` |
 
 **No worker may infer authorisation from an old task file.** A task file is not an authorisation;
 where it disagrees with a newer Controller decision, the decision wins.
@@ -79,8 +79,7 @@ where it disagrees with a newer Controller decision, the decision wins.
 **Still zero:** qualified models/workflows · qualified subjective/perceptual evaluator families ·
 strict-exactness-qualified text evaluators (5 tested, 5 disqualified, unrewritten) · qualified
 temporal evaluators (pass mark `DOES_NOT_EXIST`) · **Capability Registry rows** (0 — deliberate;
-verified: 0 data rows, validator passes) · accepted Canon-improves-outcomes evidence ·
-customer-outcome CpAO observations · Production IR / Planner.
+verified: 0 data rows, validator passes) · customer-outcome CpAO observations · Production IR / Planner.
 
 **No longer zero:**
 
@@ -92,6 +91,7 @@ customer-outcome CpAO observations · Production IR / Planner.
 - **12 real temporal base clips**, rights-cleared, 12/12 clean.
 - **5 instrument configurations scientifically disqualified** under the strict standard, with the
   literalness mechanism finding attached (`history/EMP-001.md`).
+- **EVAL-037 programme conclusion:** Canon is worth carrying forward, while the current retrieval / consumption protocol is not mature. This is a bounded programme-direction conclusion, not a universal quantified treatment effect and not Registry evidence. See `eval/experiments/EVAL-037/CONCLUSION.md`.
 - **Canon corpus expanded:** 24 accepted sources plus 18 durable HOLD/candidate sources and 1,028
   grounded, ungraded, uncalibrated Q&A items. The separate accepted/full/Q&A fingerprints are in
   `canon/knowledge/CANON-CORPUS-INDEX.yaml`. HOLD material remains non-accepted and ordinary
@@ -162,28 +162,10 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-1. **Programme reset is in force.** The 28-Aug T2-T8 v1 plan is superseded for T2 onward by
-   `coordination/plans/2026-08-29-PROGRAMME-PLAN-T2-T8-v2-MEDIA-FACTORY-RESET.md`.
-   The declined USD 25 workflow/model screen remains declined and must not be re-pitched as-is.
-2. **T2A / EVAL-036 is authorised at zero spend:** import the recovered Media Factory package under
-   Eval ownership as a provenance-preserving **historical empirical prior** set. Task:
-   `eval/tasks/EVAL-036-MEDIA-FACTORY-HISTORICAL-PRIORS.md`. Preserve evidence tiers, dates,
-   hashes, contradictions and freshness risk. **Do not create Registry rows.**
-3. **T2B — after T2A:** freeze a reasoning-only controlled experiment comparing each selected
-   reasoning model without Canon versus the same model with Canon access, with repeated runs and
-   blind/brief-grounded human judgment. No media generation in the first experiment. CANON-014 is
-   already integrated independently. Any T2B treatment that exposes HOLD candidates and/or Q&A must
-   name the exact full-corpus/Q&A fingerprints and use a status-carrying experimental retrieval
-   interface; ordinary runtime retrieval remains accepted-only.
-4. **No paid tranche is active or authorised.** Exact model/call count/cost for T2B must be frozen
-   before seeking user approval.
-5. **PILOT-001 / T1 remains closed** with USD 1.60 provisional consumed / 0 accepted and no further
-   provider call authorised.
-6. **Historical priors are not current capability qualification.** Freshness-test only the routes a
-   real winning workflow needs; the Registry admission bar remains unchanged.
-7. **Production policy is requirement-specific, not dogmatic:** hard exact copy/logo remains
-   deterministic by default; generated non-critical still text may be inspected/accepted; exact
-   text through motion remains a deterministic/tracked prior until current evidence says otherwise.
-8. CANON-013's 8/8 split remains proposed, not frozen; freeze it only before holdout/architecture
-   media that depends on it.
-9. HED-1 remains undecided and must be resolved before fully-loaded holdout/Stage-C CpAO scoring.
+1. **EVAL-037 / T2B is concluded for programme direction.** Canon remains in the product thesis; the current retrieval / consumption mechanism is explicitly not accepted as production-ready.
+2. **Return to Controller planning mode before authorising more execution.** Rebase the T3-T8 path around the shortest route to a working end-to-end accepted-outcome system, rather than another broad research tranche.
+3. **No new paid execution, media propagation, retrieval experiment, Production IR implementation, or Planner implementation is authorised by the EVAL-037 conclusion.**
+4. **EVAL-036 / T2A remains an authorised USD-0 historical-prior import, but it is no longer an automatic prerequisite to every next product step.** Its place in the rebased programme must be decided for outcome value, not because an older sequence says so.
+5. **The next programme plan must preserve the final product chain:** customer request -> intelligence/Canon -> production specification -> route selection -> execution -> evaluation -> bounded repair -> accepted outcome -> empirical memory.
+6. **Primary decision metrics remain accepted-outcome rate, CpAO, repeatability, and incremental value over the strongest simpler baseline.**
+7. HED-1 remains undecided and must be resolved before fully-loaded holdout/Stage-C CpAO scoring.
