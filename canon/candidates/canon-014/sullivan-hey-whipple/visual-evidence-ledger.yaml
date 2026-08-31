@@ -1,0 +1,154 @@
+# REP-07 — visual-evidence ledger for Luke Sullivan, "Hey Whipple, Squeeze This" (6th ed.).
+#
+# INSPECT pass executed 2026-09-01: all 45 distinct cited figures opened from the EPUB's own
+# image files; the four never-read chapters (10, 13, 14, 17) read in full; the
+# shared_primary_informant test against live ogilvy-ch2 run with a full mention census.
+
+source_id: sullivan-hey-whipple
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: figure_carries_content
+
+hash_on_arrival:
+  path: ~/Downloads/Books/Hey Whipple, Squeeze This.epub
+  bytes: 144649816
+  sha256: b0a2630f368fb62c25f7f08d2135267e3ebe1e4165be253ce1056c391ec2095d
+  match: >
+    EXACT match to the brief-named identity hash (one of the two committed verbatim in the
+    runbook's identity set). The inspection looked at the same copy the extraction read.
+
+figure_mapping_note: >
+  Figure numbers map to image files systematically (Figure N.M -> OPS/images/cNNfMMM.png, with
+  'a' variants for three figures: 7.4, 9.3, 11.6); the mapping was verified against the figure
+  captions in the chapter xhtml before any figure was trusted. All 45 cited figures resolve; 33
+  of 70 objects carry figure_refs.
+
+# One row per distinct cited figure. Finding states what the image shows relative to the
+# caption/prose that cites it. evidence_time: rep07_pass on every row (nothing imported).
+figure_rows:
+  - {figure: 'Figure 1.1', finding: "Mr. Whipple Charmin commercial still framed in a vintage TV set - the book's founding example. Matches caption."}
+  - {figure: 'Figure 1.2', finding: "VW 'Think small.' full page - DDB's David-vs-Goliath exemplar, reproduced whole with body copy legible. Matches."}
+  - {figure: 'Figure 3.2', finding: "1955 Plymouth 'THE BIGGEST IS THE MOST GLAMOROUS, TOO!' - the say-it-does-not-make-it-so example. Matches."}
+  - {figure: 'Figure 3.3', finding: "Google Images results grid for 'happy woman with shopping bags' - the stock-cliche point performed. Matches."}
+  - {figure: 'Figure 3.4', finding: "Buckley's blind taste test vs 'Public Restroom Puddle' + 'It tastes awful. It works.' pack shot. Matches."}
+  - {figure: 'Figure 3.5', finding: "Facts-vs-truth pair: generic 'Milk Makes Your Bones Strong' vs got milk? girl-scout ad. Matches."}
+  - {figure: 'Figure 3.6', finding: "American Floral Marketing Council 'Exactly how mad is she?' three-bouquet ad. Matches."}
+  - {figure: 'Figure 4.5', finding: "Mitsubishi Space Wagon 'Society of Claustrophobics' - the caption's joke (no copy at all; the image assumes the responsibility). Matches."}
+  - {figure: 'Figure 4.6', finding: "Avis 'We try harder' page beside VW 'A rare photo.' - the deliberate-reversal-of-the-VW-look pair Krone describes. Matches."}
+  - {figure: 'Figure 4.7', finding: "Head golf 'NOW AVAILABLE IN A GOLF CLUB.' sledgehammer spread. Matches."}
+  - {figure: 'Figure 4.8', finding: "VW Golf 'quietest cabin' mimes ad - metaphor as ad. Matches."}
+  - {figure: 'Figure 4.9', finding: "Porsche Boxster 'What a dog feels when the leash breaks.' - verbal metaphor. Matches."}
+  - {figure: 'Figure 4.10', finding: "Land Rover China postcard ad: man photographed against the vehicle's shadow. Matches."}
+  - {figure: 'Figure 4.11', finding: "Range Rover ostrich-egg long-copy page, Gold One Show body copy visible. Matches."}
+  - {figure: 'Figure 4.12', finding: "Rolling Stone back cover 'Cover shot with Portrait mode on iPhone 7 Plus.' Matches."}
+  - {figure: 'Figure 4.13', finding: "Fisher-Price anti-slip skates: one standing kid, empty space where two fell - the painted mental image. Matches."}
+  - {figure: 'Figure 5.2', finding: "Author's own Art Center campaign thumbnails, pencil roughs on ruled paper. Matches."}
+  - {figure: 'Figure 5.3', finding: "CLEAR/CLEVER Venn with smiley in overlap, X/Y/Z labels exactly as the claim's sweet-spot rule states. Matches."}
+  - {figure: 'Figure 5.5', finding: "Ogilvy Brasil BandSports family photo (the delayed-get 'smile in the mind'). Matches."}
+  - {figure: 'Figure 5.6', finding: "VW Polo 'Small but tough.' King Kong painting. Matches."}
+  - {figure: 'Figure 5.7', finding: "Lung Association board 'For more information on lung cancer, keep smoking.' - the paraprosdokian example. Matches."}
+  - {figure: 'Figure 5.8', finding: "Four Corners honeymoon spread 'kiss your wife in places she's never been kissed before.' - the parallelism example. Matches."}
+  - {figure: 'Figure 5.9', finding: "Mt. Sinai pair: clever headline/straight visual vs clever visual/straight headline, as captioned. Matches."}
+  - {figure: 'Figure 5.10', finding: "Harley-Davidson 'Somewhere on an airplane...' word-picture marriage. Matches."}
+  - {figure: 'Figure 5.12', finding: "Taylor Guitars '27.4 seconds' - headline doing the work, visual finishing it. Matches."}
+  - {figure: 'Figure 6.2', finding: "Jeep: mud-caked boat on trailer, no headline, no product. Matches."}
+  - {figure: 'Figure 6.3', finding: "Ford Expedition rear-view camera: giant tricycle seen from garage. Matches."}
+  - {figure: 'Figure 6.5', finding: "Neil French's napkin reductionism sketch, five ads progressively simpler, Mercedes logo last. Matches."}
+  - {figure: 'Figure 6.6', finding: "Mercedes SLK: skid marks on the street beside the parked car - simple idea with stopping power. Matches."}
+  - {figure: 'Figure 6.7', finding: "Lee jeans changing-booth warning sign; the small type reads exactly as the caption transcribes. Matches."}
+  - {figure: 'Figure 6.8', finding: "Mystic Lake Casino board 'WALK IN A DEMOCRAT. WALK OUT A REPUBLICAN.' Matches."}
+  - {figure: 'Figure 6.9', finding: "Honda Civic 'Why gas stations sell food.' Matches."}
+  - {figure: 'Figure 7.2', finding: "Brand-archetype tarot cards (Magician/Disney, Innocent/Dove, Explorer/Patagonia, Jester/Skittles, Outlaw/Harley, Caregiver/Bayer). Matches."}
+  - {figure: 'Figure 7.4', finding: "Crispin Coke Zero 'sue their own company' improv stills. Matches."}
+  - {figure: 'Figure 7.3', finding: "VW Park Assist: police car parked beside bikers' motorcycles. Matches."}
+  - {figure: 'Figure 7.5', finding: "PetSmart napkin sketch 'The only thing cats and dogs agree on.' - small-space test. Matches."}
+  - {figure: 'Figure 8.2', finding: "Question-chain diagram (Question 1 -> Better Question -> Campaign Idea), hand-lettered. Matches."}
+  - {figure: 'Figure 8.3', finding: "L.L.Bean x Holidays word-galaxy Venn - the two-lists collision method. Matches."}
+  - {figure: 'Figure 9.2', finding: "McDonald's 'Big.Beefy.Bliss.' beside Burger King's Moldy Whopper - right way vs Rong. Matches."}
+  - {figure: 'Figure 9.3', finding: "IKEA 'The Human Catalogue' key art (Yanjaa Wintersoul). Matches."}
+  - {figure: 'Figure 9.5', finding: "AeroMexico 'DNA Discounts - there are no borders within us' key frame. Matches."}
+  - {figure: 'Figure 11.6', finding: "Heinz 'We asked people to draw ketchup.' boards + drawn-label bottles on shelf - customer-generated content in outdoor and packaging. Matches."}
+  - {figure: 'Figure 16.2', finding: "1930 engraving: client changing a writer's copy. Matches."}
+  - {figure: 'Figure 16.3', finding: "Focus-group-art-directed painting, George Washington beside a modern family. Matches."}
+  - {figure: 'Figure 16.4', finding: "Stock happy-family-dinner photo - the 'why can't you do something positive?' answer. Matches."}
+  - note: >
+      No figure contradicts, qualifies or under-delivers the claim citing it; the reproductions
+      are complete pages/frames with body copy legible at reproduction size wherever a claim
+      depends on wording.
+
+extraction_scope_statement:
+  chapters_read_by_extraction: >
+    Chapters 1-9, 11, 15, 16 in full, with platform material from chapter 12; the frozen
+    objects' provenance cites chapters 1-9, 11/12, 15, 16 only.
+  chapters_never_read_by_extraction: [10, 13, 14, 17]
+  rep07_read: >
+    All four chapters were read in full by this pass. Chapter 10 ("Advertising 2.0"): the
+    digital shift - branded content, brand actions and experiences, participatory/shareable
+    ideas, culture-riding, revised briefs. Chapter 13 ("Everything That Can Be Digital, Will
+    Be"): creative technologists and developers, goal-directed design, user personas,
+    wireframes/prototypes, mobile mechanics (NFC, geofencing, AR, native vs web apps). Chapter
+    14 ("Stopping People from Going to the Bathroom"): television/video craft - all-visual
+    solutions, the one-frame goal, three-act structure, the last-five-seconds rule (quoted from
+    Fowler's The Creative Companion), spare writing, dialogue craft. Chapter 17 ("Just Start
+    World War III"): portfolio, schools, job-search and career advice.
+  finding: >
+    NO frozen object cites any of the four chapters, and nothing in them contradicts any frozen
+    claim - they cover terrain the extraction's span deliberately excluded (digital/mobile
+    execution, TV craft, careers). The partial_extraction_recorded_as_whole defect is therefore
+    BOUNDED: the unread chapters contain real, extractable craft doctrine (especially ch. 14's
+    television rules), so the extraction is genuinely partial, but its recorded objects are not
+    contaminated by the gap. Any future extension of this source should start from chapters 10,
+    13, 14.
+
+informant_test:
+  question: >
+    Does sullivan-hey-whipple share a primary informant with live
+    ogilvy-ch2-advertising-that-sells (David Ogilvy), per the AUDIT-GATE-v0.2
+    shared_primary_informant definition?
+  census: >
+    16 occurrences of the string "Ogilvy" across the book, classified by reading each in
+    context: 8 are the OGILVY AGENCY as maker of campaigns discussed (Ogilvy Brasil/BandSports
+    Fig 5.5; Ogilvy London/British Airways Fig 6.12, twice; Ogilvy/AeroMexico Fig 9.5; Ogilvy
+    Frankfurt/DB railways, twice; Ogilvy Australia/KFC Secret Menu); 4 are endnote citations of
+    David Fowler's The Creative Companion (New York: Ogilvy, 2003) in chapters 4, 14, 15, 16 -
+    a different practitioner's book whose publisher-of-record is the agency; 1 is a David
+    Ogilvy aphorism quoted in ch. 16 (research used "the way a drunk uses a lamppost"); 1 is
+    Norman Berry, an Ogilvy & Mather creative director, quoted in ch. 1; 2 are the author's own
+    employment anecdote (ch. 18).
+  verdict: >
+    shared_primary_informant does NOT hold. David Ogilvy's own claims are incidental in this
+    book - one aphorism - and the gate's definition states incidental quotation of the same
+    person is not sufficient. The heavier dependency the extraction flagged is David Fowler's
+    Ogilvy-published book (cited across four chapters, and load-bearing for ch. 14's
+    last-five-seconds rule), but Fowler is not David Ogilvy and his book is not in the corpus;
+    the agency-campaign references are examples, not a practitioner's claims. The correct
+    lineage relation to ogilvy-ch2-advertising-that-sells is cites_source (one-directional,
+    does not defeat independence). Three frozen objects rest on OTHER named third parties
+    quoted approvingly (sk_whip_0007 McAlhone & Stuart; sk_whip_0016 Norman Berry;
+    sk_whip_0066 Bogusky), recorded in the audit's evidence_origin.
+
+observed_loss_patterns:
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable publisher EPUB; locators are chapter + section + figure number. Figure
+      numbering is stable and mechanically mapped to image files; no page number was invented.
+  - pattern: no_loss_detected
+    affects: "all 45 cited figures"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Every cited figure opened; reproductions are intact, correctly bound to their captions,
+      and legible down to body copy where claims depend on wording (Lee jeans warning sign,
+      Avis/VW pages, Range Rover long copy). Nothing visual the extraction relies on is
+      damaged or missing.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  The most expensive prose-heavy admission in the dock is now fully inspected: 45/45 figures
+  verified against their claims, the four unread chapters read and found non-contaminating
+  (bounding partial_extraction_recorded_as_whole), and the independence question resolved
+  against shared_primary_informant with a checkable census. What remains for admission is the
+  Controller's Audit Gate decision, not further material work.
