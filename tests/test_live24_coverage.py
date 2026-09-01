@@ -41,11 +41,11 @@ def load(path, name):
 
 
 class Live24CoverageTest(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.proc = subprocess.run(
-            [sys.executable, str(VALIDATOR)], capture_output=True, text=True,
-            cwd=str(REPO_ROOT))
+    # setUpClass used to run the live24 validator here. That validator re-runs the
+    # generator against the LIVE corpus, transiently rewriting the frozen live24
+    # coverage outputs — harmless when live24 was current, a mutation hazard now that
+    # it is history. Every test that consumed cls.proc is skipped (supersession note
+    # above), so the run is removed rather than guarded.
 
     @unittest.skip("superseded layer: validates against the live corpus, now 37 sources (see module docstring; current-layer checks live in tests/test_live37_coverage.py)")
     def test_validator_exits_zero(self):
