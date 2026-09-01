@@ -55,9 +55,12 @@ class DomainVocabularyValidatorTest(unittest.TestCase):
         self.assertEqual(self.check(self.mutate()), [])
 
     def test_census_totals_match_brief_figures(self):
-        self.assertEqual(sum(self.counts.values()), 1335)
-        self.assertEqual(len(self.counts), 331)
-        self.assertEqual(sum(1 for v in self.counts.values() if v == 1), 197)
+        # REP-03 brief figures were 1335/331/197 over 24 sources; the DN-06 admission
+        # batch (2026-09-01, canon/candidates/canon-014/REP-07-DECISION-NOTES.md) grew
+        # accepted Canon to 37 sources and the recorded census was refreshed with it.
+        self.assertEqual(sum(self.counts.values()), 2804)
+        self.assertEqual(len(self.counts), 636)
+        self.assertEqual(sum(1 for v in self.counts.values() if v == 1), 366)
 
     def test_coverage_target_met(self):
         covered = sum(self.counts[l] for l in self.doc["mapping"])
@@ -116,7 +119,8 @@ class DomainVocabularyValidatorTest(unittest.TestCase):
     def test_wrong_recorded_census_is_refused(self):
         doc = self.mutate()
         doc["census"]["accepted"]["mentions"] = 9999
-        self.assertRefused(self.check(doc), "recomputed value is 1335")
+        # recomputed total is 2804 after the DN-06 admission (was 1335 over 24 sources)
+        self.assertRefused(self.check(doc), "recomputed value is 2804")
 
     def test_wrong_per_label_count_is_refused(self):
         doc = self.mutate()

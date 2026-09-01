@@ -45,8 +45,13 @@ class LedgerPassesTest(unittest.TestCase):
         for row in imported:
             self.assertEqual(row["usable"], "involves_hold", row["record_id"])
 
-    def test_six_duplicate_terms_each_have_one_adjudication(self):
-        expected = {"darshan", "eye_trace", "jump_cut", "no_authored_page", "screen_direction", "story"}
+    def test_duplicate_terms_each_have_one_adjudication(self):
+        # Six duplicate terms at REP-02 authoring; the DN-06 admission batch (2026-09-01,
+        # 24 -> 37 sources) created seven more exact-duplicate term strings, adjudicated
+        # in ledger rows xj_0054-xj_0060.
+        expected = {"darshan", "eye_trace", "jump_cut", "no_authored_page", "screen_direction",
+                    "story", "blind_headline", "charging_for_the_sample", "irrelevant_brilliance",
+                    "keyed_advertising", "noise", "substitution", "traced_returns"}
         self.assertEqual(validator.duplicate_term_strings(), expected)
         seen = [r["adjudicates_duplicate_term"]
                 for r in self.ledger["records"] if r.get("adjudicates_duplicate_term")]
