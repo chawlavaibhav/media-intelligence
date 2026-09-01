@@ -1,21 +1,34 @@
-# REP-07 — Audit Gate v0.2 record for google-abcd-video-ads, authored IN THE CANDIDATE DIR.
-#
-# STATUS: PROPOSED — this file deliberately does NOT live in canon/audit/records/. Per REP-07's
-# acceptance rule a candidate dir must not gain a record there while it remains under
-# canon/candidates/; placing the record here records the completed gate work WITHOUT performing
-# admission, which is a Controller decision. On admission this file moves (unchanged) to
-# canon/audit/records/google-abcd-video-ads.audit.yaml.
-#
-# Pending Controller ruling (c): the admission boundary for platform-contingent guidance. This
-# record states the contingency facts (section technology_contingency) and asserts nothing about
-# admissibility.
+# Audit Gate v0.2 record — Google, "ABCDs of effective video ads" (three official pages).
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01), which
+# also resolved ruling (c) for this source: "Admit both, marked". The five fingerprinted
+# artifacts moved verbatim to canon/knowledge/current/ at admission; the digests below were
+# recomputed mechanically at the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_google_abcd
 source_id: google-abcd-video-ads
-knowledge_dir: canon/candidates/canon-014/google-abcd-video-ads
-recorded_at_commit: bbdd70b9e236bb204cefb27788ac6ca5b9066aea
+knowledge_dir: canon/knowledge/current/google-abcd-video-ads
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
+
+# Admission conditions — Controller ruling (c), recorded verbatim in REP-07-DECISION-NOTES.md
+# DN-06 ("Admit both, marked"). This is a KIND marker, not a score: it says what this source IS,
+# and downstream compilation must keep saying it.
+admission_conditions:
+  - condition: platform_contingent
+    ruling: >
+      DN-06 ruling (c), 2026-09-01: admitted marked platform_contingent — dated
+      platform guidance, and the marker "must keep compiled packs honest about what
+      each is".
+    meaning: >
+      Dated, platform-scoped official guidance: one publisher's advice about its own ad
+      products, valid relative to YouTube's formats, playback behaviour and measurement
+      products as they stood at the pages' stated dates, published by a party with a declared
+      commercial interest in the finding. Any compiled pack, retrieval surface or downstream
+      consumer that carries material from this source must surface this marker alongside it;
+      nothing from this source may be compiled as platform-neutral or evergreen doctrine. The
+      technology_contingency section below records the per-object facts this marker rests on.
 
 source_snapshot:
   algorithm: sha256-of-sorted-path-and-content
@@ -33,15 +46,17 @@ source_snapshot:
   combined_digest: 8d89dcbfea1bd057dfbfc0a866a7efd041b0337a0f21290f918d35013ac399b4
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/google-abcd-video-ads/source-knowledge.yaml
-  - canon/candidates/canon-014/google-abcd-video-ads/source-concept-systems.yaml
-  - canon/candidates/canon-014/google-abcd-video-ads/operational-bindings.yaml
-  - canon/candidates/canon-014/google-abcd-video-ads/ontology-mappings.yaml
-  - canon/candidates/canon-014/google-abcd-video-ads/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/google-abcd-video-ads/PROVENANCE.md
+  # The first seven entries moved verbatim from canon/candidates/canon-014/google-abcd-video-ads/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/google-abcd-video-ads/source-knowledge.yaml
+  - canon/knowledge/current/google-abcd-video-ads/source-concept-systems.yaml
+  - canon/knowledge/current/google-abcd-video-ads/operational-bindings.yaml
+  - canon/knowledge/current/google-abcd-video-ads/ontology-mappings.yaml
+  - canon/knowledge/current/google-abcd-video-ads/visual-evidence-ledger.yaml
+  - canon/knowledge/current/google-abcd-video-ads/PROVENANCE.md
+  - canon/knowledge/current/google-abcd-video-ads/snapshots/ (pinned pages, screenshots, images)
   - canon/candidates/canon-014/google-abcd-video-ads/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/google-abcd-video-ads/audit-assessment-HOLD.yaml
-  - canon/candidates/canon-014/google-abcd-video-ads/snapshots/ (pinned pages, screenshots, images)
+  - canon/candidates/canon-014/google-abcd-video-ads/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true
 
@@ -221,8 +236,10 @@ technology_contingency:
     The entire source is guidance about one company's ad products, on one platform, under one set
     of playback behaviours, at one time — the source itself dates its pages and its study, and
     the extraction carries a platform-contingency caveat on every object. The Controller's
-    admission-boundary ruling (c) for exactly this class of material is pending; this section
-    records the facts that ruling needs.
+    admission-boundary ruling (c) for exactly this class of material was resolved by DN-06
+    ("Admit both, marked"): the source is admitted carrying the explicit platform_contingent
+    admission condition at the head of this record, which rests on the facts this section
+    records.
   assessed: true
   classes:
     - class: technology_contingent
