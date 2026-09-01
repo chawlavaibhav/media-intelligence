@@ -45,7 +45,24 @@ LEAK_PATTERNS = [
     (re.compile(r"not_governed_by_injected_doctrine"), "the v2 not-governed literal"),
 ]
 
+SCRUB_TOKEN = re.compile(r"\(?\b(?:PA|CA)-D\d+\b\)?:?")
+SCRUB_LINE = re.compile(r"\bcanon\b|\bdoctrine\b|\bsk_[a-z]+_|"
+                        r"\b(?:composition_and_attention|product_appearance|"
+                        r"typography_and_copy|indian_indic_context|"
+                        r"commercial_communication|concept_and_distinctiveness|"
+                        r"critique_and_effectiveness|colour_and_visual_register|"
+                        r"camera_and_spatial_grammar|editing_pacing_and_short_form)\b",
+                        re.I)
+
 def strip_text(text):
+    """Uniform two-pass strip, applied identically to every package (v1 and v2):
+
+    1. drop the self-disclosing sections whole;
+    2. scrub treatment tokens the v2 contract forces into body prose — check-id
+       references are deleted in place, the not-governed literal is neutralised,
+       and any line still naming Canon/doctrine/pack/source-knowledge ids is
+       dropped entirely. v1 packages simply contain nothing to scrub.
+    """
     out, skipping = [], False
     for line in text.splitlines():
         m = SECTION_RE.match(line.strip())
@@ -53,8 +70,13 @@ def strip_text(text):
             skipping = m.group(1) in SECTIONS_TO_STRIP
             if skipping:
                 continue
-        if not skipping:
-            out.append(line)
+        if skipping:
+            continue
+        line = line.replace("not_governed_by_injected_doctrine", "not_specified")
+        line = SCRUB_TOKEN.sub("", line)
+        if SCRUB_LINE.search(line):
+            continue
+        out.append(line)
     res = "\n".join(out)
     return re.sub(r"\n{3,}", "\n\n", res).rstrip("\n") + "\n"
 
