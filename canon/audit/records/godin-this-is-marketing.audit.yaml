@@ -1,16 +1,14 @@
-# REP-07 — Audit Gate v0.2 record for godin-this-is-marketing, authored IN THE CANDIDATE DIR.
-#
-# STATUS: PROPOSED — this file deliberately does NOT live in canon/audit/records/. Per REP-07's
-# acceptance rule a candidate dir must not gain a record there while it remains under
-# canon/candidates/; placing the record here records the completed gate work WITHOUT performing
-# admission, which is a Controller decision. On admission this file moves (unchanged) to
-# canon/audit/records/godin-this-is-marketing.audit.yaml.
+# Audit Gate v0.2 record — Seth Godin, "This Is Marketing".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_godin_this_is_marketing
 source_id: godin-this-is-marketing
-knowledge_dir: canon/candidates/canon-014/godin-this-is-marketing
-recorded_at_commit: b665625ca7f192ca4b8722870397f65133b859b7
+knowledge_dir: canon/knowledge/current/godin-this-is-marketing
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
 
 source_snapshot:
@@ -29,14 +27,16 @@ source_snapshot:
   combined_digest: 17f101ae03bdd95d51c2525fea70a757833695504d8debb8b2d2492c951cb6f6
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/godin-this-is-marketing/source-knowledge.yaml
-  - canon/candidates/canon-014/godin-this-is-marketing/source-concept-systems.yaml
-  - canon/candidates/canon-014/godin-this-is-marketing/operational-bindings.yaml
-  - canon/candidates/canon-014/godin-this-is-marketing/ontology-mappings.yaml
-  - canon/candidates/canon-014/godin-this-is-marketing/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/godin-this-is-marketing/PROVENANCE.md
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/godin-this-is-marketing/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/godin-this-is-marketing/source-knowledge.yaml
+  - canon/knowledge/current/godin-this-is-marketing/source-concept-systems.yaml
+  - canon/knowledge/current/godin-this-is-marketing/operational-bindings.yaml
+  - canon/knowledge/current/godin-this-is-marketing/ontology-mappings.yaml
+  - canon/knowledge/current/godin-this-is-marketing/visual-evidence-ledger.yaml
+  - canon/knowledge/current/godin-this-is-marketing/PROVENANCE.md
   - canon/candidates/canon-014/godin-this-is-marketing/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/godin-this-is-marketing/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/godin-this-is-marketing/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true
 
