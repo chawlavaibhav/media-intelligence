@@ -9,6 +9,14 @@ checks that the validator's own machinery refuses breaches rather than merely de
 (a validator whose rules only exist in prose is a convention).
 
 Run: python3 -m unittest tests.test_live24_coverage
+
+SUPERSESSION NOTE (DN-06 admission, 2026-09-01): the live-24 layer is superseded by live-37
+(canon/planning/live37_domain_map.yaml). Its committed artifacts are frozen history — their
+byte-immutability is enforced here (test_live19_artifacts_untouched) and again in
+tests/test_live37_coverage.py — but its validator re-derives facts from the LIVE corpus, which
+has since grown to 37 sources, so the corpus-dependent checks below can no longer hold at HEAD
+and are skipped with this reason, mirroring how the live19 layer was retired when live24
+superseded it. The same checks run for the current layer in tests/test_live37_coverage.py.
 """
 import importlib.util
 import json
@@ -39,6 +47,7 @@ class Live24CoverageTest(unittest.TestCase):
             [sys.executable, str(VALIDATOR)], capture_output=True, text=True,
             cwd=str(REPO_ROOT))
 
+    @unittest.skip("superseded layer: validates against the live corpus, now 37 sources (see module docstring; current-layer checks live in tests/test_live37_coverage.py)")
     def test_validator_exits_zero(self):
         self.assertEqual(
             self.proc.returncode, 0,
@@ -46,6 +55,7 @@ class Live24CoverageTest(unittest.TestCase):
         payload = json.loads(self.proc.stdout)
         self.assertTrue(payload["ok"])
 
+    @unittest.skip("superseded layer: validates against the live corpus, now 37 sources (see module docstring; current-layer checks live in tests/test_live37_coverage.py)")
     def test_closure_baseline_matches_backfill_meta(self):
         rmod = load(REACH, "reach_t")
         base = rmod.compute()
@@ -54,6 +64,7 @@ class Live24CoverageTest(unittest.TestCase):
         self.assertEqual(base["total"], meta["total"])
         self.assertEqual(sum(len(v) for v in base["unreached"].values()), meta["unreached"])
 
+    @unittest.skip("superseded layer: validates against the live corpus, now 37 sources (see module docstring; current-layer checks live in tests/test_live37_coverage.py)")
     def test_simulated_adoption_closes_graph(self):
         rmod = load(REACH, "reach_t2")
         entries = yaml.safe_load(BACKFILL.read_text())["entries"]
@@ -84,6 +95,7 @@ class Live24CoverageTest(unittest.TestCase):
             else:
                 self.fail(f"unknown proposal type on {e['sk_id']}")
 
+    @unittest.skip("superseded layer: validates against the live corpus, now 37 sources (see module docstring; current-layer checks live in tests/test_live37_coverage.py)")
     def test_coverage_yaml_facts(self):
         cov = yaml.safe_load(
             (REPO_ROOT / "canon/planning/CANON-V1-LIVE24-COVERAGE.yaml").read_text())
