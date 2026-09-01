@@ -1,16 +1,14 @@
-# REP-07 — Audit Gate v0.2 record for carroll-read-this-photographs, authored IN THE CANDIDATE
-# DIR.
-#
-# STATUS: PROPOSED — deliberately NOT in canon/audit/records/ (a candidate dir must not gain a
-# record there while under canon/candidates/). On admission this file moves unchanged to
-# canon/audit/records/carroll-read-this-photographs.audit.yaml. Admission is a Controller
-# decision; nothing here performs it.
+# Audit Gate v0.2 record — Henry Carroll, "Read This If You Want to Take Great Photographs".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_carroll_photographs
 source_id: carroll-read-this-photographs
-knowledge_dir: canon/candidates/canon-014/carroll-read-this-photographs
-recorded_at_commit: b665625ca7f192ca4b8722870397f65133b859b7
+knowledge_dir: canon/knowledge/current/carroll-read-this-photographs
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
 
 source_snapshot:
@@ -29,14 +27,16 @@ source_snapshot:
   combined_digest: f7a9d5ca2d34f3a2f4e69b3fad34b8ec48fd3ed26a79bc7bdbadd50eb539c282
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/carroll-read-this-photographs/source-knowledge.yaml
-  - canon/candidates/canon-014/carroll-read-this-photographs/source-concept-systems.yaml
-  - canon/candidates/canon-014/carroll-read-this-photographs/operational-bindings.yaml
-  - canon/candidates/canon-014/carroll-read-this-photographs/ontology-mappings.yaml
-  - canon/candidates/canon-014/carroll-read-this-photographs/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/carroll-read-this-photographs/PROVENANCE.md
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/carroll-read-this-photographs/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/carroll-read-this-photographs/source-knowledge.yaml
+  - canon/knowledge/current/carroll-read-this-photographs/source-concept-systems.yaml
+  - canon/knowledge/current/carroll-read-this-photographs/operational-bindings.yaml
+  - canon/knowledge/current/carroll-read-this-photographs/ontology-mappings.yaml
+  - canon/knowledge/current/carroll-read-this-photographs/visual-evidence-ledger.yaml
+  - canon/knowledge/current/carroll-read-this-photographs/PROVENANCE.md
   - canon/candidates/canon-014/carroll-read-this-photographs/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/carroll-read-this-photographs/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/carroll-read-this-photographs/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/candidates/canon-014/INSPECTION-RUNBOOK.md
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
   - "~/Downloads/Books/Read This If You Want to Take Great Photographs.epub (hash-verified on arrival, unpacked to scratchpad, 73/79 images opened)"
