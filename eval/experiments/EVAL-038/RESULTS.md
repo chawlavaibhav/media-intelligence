@@ -47,19 +47,33 @@ never outranked even one of the three strong-baseline repetitions.
 
 Mapping: M01/V01 = haiku-packs; M02/V02 = sonnet-no-canon.
 
-- **B06 image:** reviewers DISAGREE on the winner — Controller: M02 (sonnet) slightly
-  better, both acceptable; agent: M01 (haiku) accept, M02 reject on close-inspection
-  artifacts. Recorded as a disagreement per the design. Notable: the haiku-package
-  image was at worst competitive with the strong baseline's at the pixel level —
-  the packages' large quality gap compressed after generation.
+- **B06 image:** initially a recorded disagreement — Controller (blind): M02 (sonnet)
+  slightly better; agent: M01 (haiku) accept, M02 reject on close-inspection
+  artifacts. **RESOLVED by the Controller's post-reveal revision** (reviewer-1 file):
+  after confirming M02's technical flaw, the Controller withdrew the blind preference —
+  **both reviewers' standing verdict is M01 (haiku-packs) wins the image pair.** The
+  packages' large quality gap not only compressed at the pixel level; on this pair it
+  inverted.
 - **B01 video:** unanimous V02 (sonnet) > V01 (haiku); Controller: neither is
   production grade. Consistent with the PILOT-001 root-cause lesson: text/UI baked
   into generated pixels (both clips) remains the salvageability blocker, and the
   deterministic-overlay discipline in the packages was the right call that the raw
   clips, judged alone, could not show.
 
+## Replay demonstration (post-judging, Controller-directed)
+
+Sonnet's frozen B06/B01 prompts were re-executed with zero Sonnet calls
+(`E038-media-*-sonnet-replay2.*`): request digests byte-identical to the originals,
+artifacts fresh. The Controller judged **both replays worse than all four original
+artifacts**, and the replay image spontaneously baked dial text ("ASTER MERIDIAN 38")
+into the pixels — a brief violation the first draw of the same prompt did not commit.
+Product learning: reasoning amortizes (the blueprint re-executes for pennies), but
+draw-to-draw variance is large enough to flip acceptability in either direction, so
+the durable pipeline asset is blueprint + mechanical inspection gate + cheap redraws,
+never a single trusted execution.
+
 ## Spend (final)
 
-Real consumed: **USD 1.793122** of the 10.00 cap (haiku 0.859122, gemma 0.000000,
-media 0.934000). Ledger conservatively counts 2.293122 including the annotated
+Real consumed: **USD 2.260122** of the 10.00 cap (haiku 0.859122, gemma 0.000000,
+media 1.401000, incl. the replay pair). Ledger conservatively counts 2.760122 including the annotated
 phantom 0.50 from the duplicate session. Retries: 0. Cap breaches: none.
