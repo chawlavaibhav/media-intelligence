@@ -388,11 +388,12 @@ def build_annex_text(objs, src_of, scheme) -> str:
         "notes": [
             "Claim-level cross-source consensus is uncomputable today (0 cross-source relations "
             "committed); nothing in this annex claims two sources agree on a claim.",
-            "Admission-context reference only, NOT consumable content: HOLD source "
-            "google-abcd-video-ads (sk_abcd_0014, canon/candidates/) warns that sound-off design "
-            "is platform-contingent (YouTube is largely sound-on). It bears on how a future "
-            "Controller admission decision would scope medium-transfer flags for audio claims; "
-            "no compiled or production artifact may consume it while it sits on HOLD.",
+            "Admission-context update (DN-06, 2026-09-01): google-abcd-video-ads entered "
+            "accepted Canon carrying the platform_contingent admission condition, so its "
+            "sound-off warning (sk_abcd_0014 — YouTube is largely sound-on, sound-off design is "
+            "platform-contingent) now resolves in canon/knowledge/current and is consumable "
+            "subject to that marker. It bears on how medium-transfer flags scope for audio "
+            "claims; compiled artifacts must surface the platform_contingent condition with it.",
         ],
     }
     return _dump(

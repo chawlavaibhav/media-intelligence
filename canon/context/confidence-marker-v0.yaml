@@ -2,7 +2,8 @@
 # STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
 # coordination/CONTROL-STATE.md governs.
 #
-# Deterministic confidence-marker decision table for the 677 accepted sk objects.
+# Deterministic confidence-marker decision table for the 1300 accepted sk objects
+# (677 at first authoring; refreshed for the DN-06 admission batch, 24 -> 37 sources).
 # Consumed by canon/compilation/assign_markers.py, which is the reference implementation;
 # every expected_count below is recomputed by tests/test_assign_markers.py from committed
 # yaml and any drift fails the build. This scheme LABELS evidence character. It never
@@ -14,7 +15,7 @@ status: PROPOSED
 stream: canon
 addresses_gap: GAP-12
 inputs:
-  - canon/knowledge/current/*/source-knowledge.yaml   # 24 accepted sources, 677 objects
+  - canon/knowledge/current/*/source-knowledge.yaml   # 37 accepted sources, 1300 objects
   - canon/planning/CANON-V1-LIVE24-COVERAGE.yaml      # decision-level origin counts only
 reference_implementation: canon/compilation/assign_markers.py
 outputs:
@@ -33,14 +34,14 @@ decision_table:
       - grade: MEASURED
         condition: >-
           evidence.characteristics intersects {controlled_comparison, empirical_within_source}
-        expected_count: 59
+        expected_count: 159
       - grade: REASONED
         condition: >-
           'mechanism_given' in evidence.characteristics
-        expected_count: 337
+        expected_count: 774
       - grade: ASSERTED
         condition: otherwise
-        expected_count: 281
+        expected_count: 367
 
   flags:
     evaluation: orthogonal_any_subset_render_in_listed_order
@@ -50,35 +51,35 @@ decision_table:
           an undirected in-source contradicts partner exists: the object is either end of any
           stored intra_source_relations edge with relation == contradicts whose target resolves
           in the same corpus (stored direction is extractor choice, so the edge is symmetrised)
-        expected_count: 85
+        expected_count: 149
       - flag: QUALIFIED
         condition: >-
           a qualifies/qualified_by partner exists that qualifies THIS object: the object is the
           target of a stored 'qualifies' edge, or the holder of a stored 'qualified_by' edge.
           The flag marks the qualified rule, not the qualifying exception (the exception is not
           itself narrowed by the relation)
-        expected_count: 167
+        expected_count: 372
       - flag: DATED
         condition: "'historical_claim' in evidence.characteristics"
-        expected_count: 110
+        expected_count: 296
       - flag: CULTURE-BOUND
         condition: "'culturally_bounded' in evidence.characteristics"
-        expected_count: 84
+        expected_count: 163
       - flag: FIGURE-UNVERIFIED
         condition: >-
           provenance.figure_refs is nonempty and provenance.inspected.figures is empty — the
           claim cites a figure that no inspection pass has verified
-        expected_count: 122
+        expected_count: 195
 
   suffixes:
     evaluation: append_to_base_grade_in_listed_order
     rules:
       - suffix: "-our_reading"
         condition: "claim_type == source_interpretation"
-        expected_count: 21
+        expected_count: 27
       - suffix: "-hedged"
         condition: "any caveats[].origin == extractor_observed"
-        expected_count: 634
+        expected_count: 1238
 
   origin_count:
     level: decision_only
@@ -88,19 +89,19 @@ decision_table:
       NEVER attached to an individual claim.
     uncomputable_note: >-
       Claim-level cross-source consensus is uncomputable today: the committed ontology holds
-      0 cross-source relations (0 of 189 relationship rows cross a source boundary, 0
-      cross_source_concept rows). No deterministic function of committed fields can say two
+      0 cross-source relations (0 of 422 relationship rows cross a source boundary, 0
+      cross_source_concept rows; the REP-02 join ledger remains proposed). No deterministic function of committed fields can say two
       sources agree at sk granularity, and no marker in this scheme claims it. The origin
       count is a DECISION-level proxy carried at the domain the decision compiles from.
 
 # ── Corpus context (recomputable; see marker_scheme_md for the commands) ─────
 corpus_context:
-  objects: 677
-  practitioner_assertion: {count: 503, share: "74.3%"}
-  controlled_comparison: {count: 25, share: "3.7%"}
-  caveats_total: 1408
-  caveats_extractor_observed: {count: 1082, share: "76.8%"}
-  caveats_source_stated: {count: 326}
+  objects: 1300
+  practitioner_assertion: {count: 896, share: "68.9%"}
+  controlled_comparison: {count: 68, share: "5.2%"}
+  caveats_total: 3156
+  caveats_extractor_observed: {count: 2400, share: "76.0%"}
+  caveats_source_stated: {count: 756}
 
 # ── Legend (injected once per system prompt; <=120 whitespace tokens) ────────
 legend: |
@@ -214,9 +215,10 @@ marker_scheme_md: |
 
   ## Why the corpus needs it
 
-  The accepted corpus is 677 objects across 24 sources. Its evidence profile:
-  503/677 (74.3%) carry practitioner_assertion; only 25/677 (3.7%) carry
-  controlled_comparison; 1082 of 1408 caveats (76.8%) were observed by the extractor
+  The accepted corpus is 1300 objects across 37 sources (677/24 before the DN-06
+  admission batch). Its evidence profile: 896/1300 (68.9%) carry
+  practitioner_assertion; only 68/1300 (5.2%) carry
+  controlled_comparison; 2400 of 3156 caveats (76.0%) were observed by the extractor
   rather than stated by the source. A compiled pack that presents this material
   unlabelled overstates it. Recompute: iterate yaml.safe_load over
   canon/knowledge/current/*/source-knowledge.yaml counting evidence.characteristics
@@ -227,30 +229,30 @@ marker_scheme_md: |
 
   Base grade — exactly one, first match wins:
   - MEASURED: evidence.characteristics intersects
-    {controlled_comparison, empirical_within_source} — 59/677.
-  - REASONED: 'mechanism_given' present — 337/677.
-  - ASSERTED: otherwise — 281/677.
+    {controlled_comparison, empirical_within_source} — 159/1300.
+  - REASONED: 'mechanism_given' present — 774/1300.
+  - ASSERTED: otherwise — 367/1300.
 
   Orthogonal flags — any subset, rendered in this order:
-  - CONTESTED (85): an undirected in-source contradicts partner exists. Stored
+  - CONTESTED (149): an undirected in-source contradicts partner exists. Stored
     direction is extractor choice, so the edge is symmetrised before testing.
-  - QUALIFIED (167): a qualifies/qualified_by partner qualifies THIS object (it is the
+  - QUALIFIED (372): a qualifies/qualified_by partner qualifies THIS object (it is the
     target of a stored 'qualifies' edge or the holder of a stored 'qualified_by' edge).
-  - DATED (110): 'historical_claim' in characteristics.
-  - CULTURE-BOUND (84): 'culturally_bounded' in characteristics.
-  - FIGURE-UNVERIFIED (122): provenance.figure_refs nonempty and
+  - DATED (296): 'historical_claim' in characteristics.
+  - CULTURE-BOUND (163): 'culturally_bounded' in characteristics.
+  - FIGURE-UNVERIFIED (195): provenance.figure_refs nonempty and
     provenance.inspected.figures empty.
 
   Suffixes on the base grade:
-  - '-our_reading' (21): claim_type == source_interpretation.
-  - '-hedged' (634): any caveat has origin extractor_observed.
+  - '-our_reading' (27): claim_type == source_interpretation.
+  - '-hedged' (1238): any caveat has origin extractor_observed.
 
   Origin count — DECISION level only:
   - SINGLE-ORIGIN / MULTI-ORIGIN(n) from the decision's domain
     independent_origin_count in canon/planning/CANON-V1-LIVE24-COVERAGE.yaml.
-  - Claim-level cross-source consensus is uncomputable today: 0 of 189 committed
+  - Claim-level cross-source consensus is uncomputable today: 0 of 422 committed
     ontology relationship rows cross a source boundary and 0 cross_source_concept
-    rows exist. No marker may claim that two sources agree on a claim, and none does.
+    rows exist (the REP-02 join ledger remains proposed, not committed ontology). No marker may claim that two sources agree on a claim, and none does.
     A later ontology join pass can upgrade this without changing the scheme's shape.
 
   ## Rendering
@@ -263,7 +265,7 @@ marker_scheme_md: |
   ## Companion annex
 
   canon/planning/PROPOSED-claim-dating-annex-v1.yaml joins the audit records'
-  technology_contingency classes onto sk ids (9 of 24 records applicable=true) and
+  technology_contingency classes onto sk ids (22 of 37 records applicable=true) and
   adds the distinct marker class medium_transfer_untested for film/print-era
   pacing/attention/hook claims whose transfer to 6-20s vertical feed video is
   untested per GAP-LEDGER G2/G5 — flagged as untested, not presumed false, and not

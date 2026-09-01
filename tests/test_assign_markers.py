@@ -19,15 +19,19 @@ from canon.compilation import assign_markers as am
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = REPO_ROOT / "tests/fixtures/rep04-mismarked-controlled-comparison.yaml"
 
-EXPECTED_BASE = {"MEASURED": 59, "REASONED": 337, "ASSERTED": 281}
+# Distribution over the post-DN-06 accepted corpus (admission batch 2026-09-01,
+# 24 -> 37 sources, 677 -> 1300 objects; canon/candidates/canon-014/REP-07-DECISION-NOTES.md).
+# Pre-admission values were MEASURED 59 / REASONED 337 / ASSERTED 281, flags 85/167/110/84/122,
+# suffixes 21/634.
+EXPECTED_BASE = {"MEASURED": 159, "REASONED": 774, "ASSERTED": 367}
 EXPECTED_FLAGS = {
-    "CONTESTED": 85,
-    "QUALIFIED": 167,
-    "DATED": 110,
-    "CULTURE-BOUND": 84,
-    "FIGURE-UNVERIFIED": 122,
+    "CONTESTED": 149,
+    "QUALIFIED": 372,
+    "DATED": 296,
+    "CULTURE-BOUND": 163,
+    "FIGURE-UNVERIFIED": 195,
 }
-EXPECTED_SUFFIXES = {"-our_reading": 21, "-hedged": 634}
+EXPECTED_SUFFIXES = {"-our_reading": 27, "-hedged": 1238}
 
 # The brief's explicit 32-id technology-contingency list (30 technology_contingent
 # + ogilvy's 2 uncertain). Must be a subset of the annex's technology_dating rows.
@@ -66,8 +70,9 @@ class MarkerRuleTest(unittest.TestCase):
         cls.committed_map = yaml.safe_load(am.MARKER_MAP_PATH.read_text())
         cls.annex = yaml.safe_load(am.ANNEX_PATH.read_text())
 
-    def test_corpus_is_677_objects(self):
-        self.assertEqual(len(self.objs), 677)
+    def test_corpus_is_1300_objects(self):
+        # 677 before the DN-06 admission batch grew accepted Canon 24 -> 37 sources.
+        self.assertEqual(len(self.objs), 1300)
 
     def test_every_object_has_exactly_one_base_grade(self):
         entries = self.committed_map["markers"]
@@ -115,9 +120,14 @@ class MarkerRuleTest(unittest.TestCase):
     def test_no_hold_or_qa_material_in_marker_map(self):
         """Every marked id resolves in canon/knowledge/current/ — HOLD (canon/candidates/)
         and Q&A banks never appear."""
+        # Fixture repointed after DN-06 admitted google-abcd (sk_abcd_ now resolves in
+        # accepted Canon): assert against the sources genuinely still on HOLD under
+        # canon/candidates/canon-014/ — airey (sk_logo_), desai (sk_dmpl_), freeman-beyond
+        # (sk_pex_), samara-ch2 (sk_sgb_) — and the retired ries (sk_r22_).
+        hold_prefixes = ("sk_logo_", "sk_dmpl_", "sk_pex_", "sk_sgb_", "sk_r22_")
         for sk in self.committed_map["markers"]:
             self.assertIn(sk, self.objs, f"{sk} does not resolve in canon/knowledge/current")
-            self.assertFalse(sk.startswith("sk_abcd"), sk)
+            self.assertFalse(sk.startswith(hold_prefixes), sk)
 
 
 class DeterminismTest(unittest.TestCase):
@@ -188,8 +198,10 @@ class DatingAnnexTest(unittest.TestCase):
                 by_class.setdefault(c["class"], set()).update(c.get("sk_refs") or [])
             cls.record_classes[rel] = by_class
 
-    def test_nine_records_applicable(self):
-        self.assertEqual(len(self.record_classes), 9)
+    def test_applicable_record_count(self):
+        # 9 before the DN-06 admission batch; 13 of the admitted records carry an
+        # applicable technology_contingency block, giving 22 of 37.
+        self.assertEqual(len(self.record_classes), 22)
         self.assertEqual(
             self.annex["technology_dating"]["records_applicable_true"],
             sorted(self.record_classes),
@@ -241,9 +253,11 @@ class DatingAnnexTest(unittest.TestCase):
         self.assertTrue((BRIEF_32_IDS - {"sk_ogl_c003_0013", "sk_ogl_c003_0019"}) <= tc_ids)
         self.assertTrue({"sk_ogl_c003_0013", "sk_ogl_c003_0019"} <= unc_ids)
 
-    def test_technology_contingent_count_is_30(self):
+    def test_technology_contingent_count(self):
+        # 30 before the DN-06 admission batch; the admitted records (google-abcd
+        # especially) carry heavy technology_contingent classing, giving 207.
         rows = self.annex["technology_dating"]["rows"]
-        self.assertEqual(sum(1 for r in rows if r["class"] == "technology_contingent"), 30)
+        self.assertEqual(sum(1 for r in rows if r["class"] == "technology_contingent"), 207)
 
 
 class MediumTransferTest(unittest.TestCase):
