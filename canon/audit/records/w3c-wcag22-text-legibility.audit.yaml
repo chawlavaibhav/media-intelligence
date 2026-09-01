@@ -1,15 +1,15 @@
-# REP-07 — Audit Gate v0.2 record for w3c-wcag22-text-legibility, authored IN THE CANDIDATE DIR.
-#
-# STATUS: PROPOSED — deliberately NOT in canon/audit/records/ (a candidate dir must not gain a
-# record there while under canon/candidates/). On admission this file moves unchanged to
-# canon/audit/records/w3c-wcag22-text-legibility.audit.yaml. Admission is a Controller decision;
-# nothing here performs it.
+# Audit Gate v0.2 record — W3C, WCAG 2.2 text-legibility success criteria (12 Dec 2024
+# Recommendation + cited Understanding documents). Authored by REP-07 in the candidate dir
+# against the exact bytes fingerprinted below; admitted to accepted Canon by Controller decision
+# DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The five fingerprinted artifacts moved verbatim
+# to canon/knowledge/current/ at admission; the digests below were recomputed mechanically at
+# the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_w3c_wcag22
 source_id: w3c-wcag22-text-legibility
-knowledge_dir: canon/candidates/canon-014/w3c-wcag22-text-legibility
-recorded_at_commit: 058e4f6f22e7c542a627b791f7bdff7fbb36265b
+knowledge_dir: canon/knowledge/current/w3c-wcag22-text-legibility
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
 
 source_snapshot:
@@ -28,15 +28,18 @@ source_snapshot:
   combined_digest: a95e35b85c8322de7c7f1553a85ff935d46e86e66e7c034cd417fa4e19df1a1e
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/w3c-wcag22-text-legibility/source-knowledge.yaml
-  - canon/candidates/canon-014/w3c-wcag22-text-legibility/source-concept-systems.yaml
-  - canon/candidates/canon-014/w3c-wcag22-text-legibility/operational-bindings.yaml
-  - canon/candidates/canon-014/w3c-wcag22-text-legibility/ontology-mappings.yaml
-  - canon/candidates/canon-014/w3c-wcag22-text-legibility/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/w3c-wcag22-text-legibility/PROVENANCE.md
+  # The first seven entries moved verbatim from canon/candidates/canon-014/
+  # w3c-wcag22-text-legibility/ to their current locations at admission (DN-06); they were read
+  # at their candidate paths.
+  - canon/knowledge/current/w3c-wcag22-text-legibility/source-knowledge.yaml
+  - canon/knowledge/current/w3c-wcag22-text-legibility/source-concept-systems.yaml
+  - canon/knowledge/current/w3c-wcag22-text-legibility/operational-bindings.yaml
+  - canon/knowledge/current/w3c-wcag22-text-legibility/ontology-mappings.yaml
+  - canon/knowledge/current/w3c-wcag22-text-legibility/visual-evidence-ledger.yaml
+  - canon/knowledge/current/w3c-wcag22-text-legibility/PROVENANCE.md
+  - canon/knowledge/current/w3c-wcag22-text-legibility/snapshots/ (pinned TR + Understanding docs, figure images)
   - canon/candidates/canon-014/w3c-wcag22-text-legibility/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/w3c-wcag22-text-legibility/audit-assessment-HOLD.yaml
-  - canon/candidates/canon-014/w3c-wcag22-text-legibility/snapshots/ (pinned TR + Understanding docs, figure images)
+  - canon/candidates/canon-014/w3c-wcag22-text-legibility/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true
 
