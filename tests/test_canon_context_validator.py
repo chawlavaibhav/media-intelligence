@@ -52,12 +52,19 @@ class CanonContextValidatorTest(unittest.TestCase):
         self.assertRefused(self.check(ctx), "not found in canon/knowledge/current")
 
     def test_hold_material_is_refused(self):
-        """A candidate-source id resolves nowhere in accepted Canon, so it fails closed."""
+        """A candidate-source id resolves nowhere in accepted Canon, so it fails closed.
+
+        The fixture must cite a source that is genuinely still held: the original one
+        (google-abcd) was admitted to accepted Canon by DN-06 on 2026-09-01, which made its
+        refs resolve and this test's premise false. airey-logo-design-love remains a HOLD
+        candidate (REPLACEMENT-COPY blocked per DN-01), so its refs still resolve nowhere
+        in canon/knowledge/current.
+        """
         ctx = self.mutate()
         ctx["source_trace"].append({
-            "ref": "sk_abcd_0001", "kind": "source_knowledge",
-            "source_dir": "google-abcd-video-ads", "source_id": "google_abcd_video_ads",
-            "locator": "ABCD", "audit_status": "complete"})
+            "ref": "sk_logo_0001", "kind": "source_knowledge",
+            "source_dir": "airey-logo-design-love", "source_id": "airey-logo-design-love",
+            "locator": "Logo Design Love", "audit_status": "complete"})
         self.assertRefused(self.check(ctx), "HOLD/candidate")
 
     def test_misdeclared_audit_status_is_refused(self):
