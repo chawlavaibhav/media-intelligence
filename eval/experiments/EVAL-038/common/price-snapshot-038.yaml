@@ -25,15 +25,21 @@ models:
 
   gemma-4-31b-it:
     provider: Google Gemini API
-    input: null
-    cached_input: null
-    output: null
-    source: null
+    input: 0.00
+    cached_input: 0.00
+    output: 0.00
+    source: >-
+      Official Gemini API pricing page, fetched and pinned 2026-09-01 under DN-07's
+      network authorisation: common/gemma-price-pin/gemini-api-pricing.html
+      (240,179 bytes, sha256
+      4752958931f5297cb502547a8c3a0ba386f96c2f3b52caf3e2cfe394b0bd690f). The page
+      lists Gemma 4 as "Free of charge" for input, output and context caching on the
+      free tier; the paid tier is "Not available".
     note: >-
-      Never established (EVAL-037 froze it null). DN-07 authorises one network fetch to
-      pin the official price as bytes+date; until that pin lands in
-      common/gemma-price-pin/ and these fields are set from it, the gemma lane refuses
-      to dispatch.
+      USD 0.00 is the established official unit price, not an absence of price. The
+      free tier is documented as "Used to improve our products: Yes" — acceptable
+      here because every payload is committed public-repo bytes (packs + briefs),
+      nothing sensitive.
 
 cost_rule: >-
   calculated_cost_usd = (input_tokens / 1e6) * input + (output_tokens / 1e6) * output,
