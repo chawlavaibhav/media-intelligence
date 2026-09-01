@@ -1,21 +1,33 @@
-# REP-07 — Audit Gate v0.2 record for sontag-on-photography, authored IN THE CANDIDATE DIR.
-#
-# STATUS: PROPOSED — this file deliberately does NOT live in canon/audit/records/. Per REP-07's
-# acceptance rule a candidate dir must not gain a record there while it remains under
-# canon/candidates/; placing the record here records the completed gate work WITHOUT performing
-# admission, which is a Controller decision. On admission this file moves (unchanged) to
-# canon/audit/records/sontag-on-photography.audit.yaml.
-#
-# Pending Controller ruling (c): the critique-not-craft admission boundary named for exactly this
-# source (REP-07-DECISION-NOTES.md, open rulings). This record states the facts that ruling needs
-# and asserts NOTHING about admissibility.
+# Audit Gate v0.2 record — Susan Sontag, "On Photography".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01), which
+# also resolved ruling (c) for this source: "Admit both, marked". The five fingerprinted
+# artifacts moved verbatim to canon/knowledge/current/ at admission; the digests below were
+# recomputed mechanically at the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_sontag_on_photography
 source_id: sontag-on-photography
-knowledge_dir: canon/candidates/canon-014/sontag-on-photography
-recorded_at_commit: b665625ca7f192ca4b8722870397f65133b859b7
+knowledge_dir: canon/knowledge/current/sontag-on-photography
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
+
+# Admission conditions — Controller ruling (c), recorded verbatim in REP-07-DECISION-NOTES.md
+# DN-06 ("Admit both, marked"). This is a KIND marker, not a score: it says what this source IS,
+# and downstream compilation must keep saying it.
+admission_conditions:
+  - condition: critique_context
+    ruling: >
+      DN-06 ruling (c), 2026-09-01: admitted marked critique_context — "never production
+      doctrine", and the marker "must keep compiled packs honest about what each is".
+    meaning: >
+      Critique of how photographs are read, circulate and act on viewers — admitted as context
+      for interpreting images and for framing units of evaluation, never as production doctrine.
+      Any compiled pack, retrieval surface or downstream consumer that carries material from
+      this source must surface this marker alongside it, and no claim from this source may be
+      compiled as advice about how to make anything — which restates, at the admission layer,
+      the extraction's own per-object rule (PROVENANCE.md §5: no critical observation converted
+      into production advice).
 
 source_snapshot:
   algorithm: sha256-of-sorted-path-and-content
@@ -33,14 +45,16 @@ source_snapshot:
   combined_digest: b5466e38b305f3001558473d83bb20bb3b1dd29af0f270404393ce18a6a7e8b6
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/sontag-on-photography/source-knowledge.yaml
-  - canon/candidates/canon-014/sontag-on-photography/source-concept-systems.yaml
-  - canon/candidates/canon-014/sontag-on-photography/operational-bindings.yaml
-  - canon/candidates/canon-014/sontag-on-photography/ontology-mappings.yaml
-  - canon/candidates/canon-014/sontag-on-photography/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/sontag-on-photography/PROVENANCE.md
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/sontag-on-photography/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/sontag-on-photography/source-knowledge.yaml
+  - canon/knowledge/current/sontag-on-photography/source-concept-systems.yaml
+  - canon/knowledge/current/sontag-on-photography/operational-bindings.yaml
+  - canon/knowledge/current/sontag-on-photography/ontology-mappings.yaml
+  - canon/knowledge/current/sontag-on-photography/visual-evidence-ledger.yaml
+  - canon/knowledge/current/sontag-on-photography/PROVENANCE.md
   - canon/candidates/canon-014/sontag-on-photography/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/sontag-on-photography/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/sontag-on-photography/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true
 
@@ -83,8 +97,9 @@ representation_integrity:
     the inspection provably examined the extraction's own copy, and the pass is the genuine
     desai-style null the runbook predicted - the only one of this batch's three that is. The
     shared CANON-014 blocker (no visual-evidence ledger) is closed by this pass. The
-    source-specific critique_rather_than_craft blocker is NOT closed by it and is not a visual
-    question; it awaits Controller ruling (c).
+    source-specific critique_rather_than_craft blocker was not a visual question and was not
+    closed by it; it was resolved at admission by Controller ruling (c) (DN-06, "Admit both,
+    marked") — the critique_context admission condition at the head of this record.
 
 evidence_origin:
   audit_scope: all_objects
@@ -153,8 +168,9 @@ application_fit:
       existing_binding_refs: []
       note: >
         No governance binding was made. The critique-not-craft warning that governs USE of this
-        source lives in the project's coverage map and in Controller ruling (c), which is
-        pending; this record manufactures no rule in its place.
+        source lives in the project's coverage map and, since admission, in this record's
+        critique_context admission condition (Controller ruling (c), DN-06); this finding
+        manufactures no rule in its place.
     - consumer: benchmark
       outcome: no_current_binding
       existing_binding_refs: []
@@ -177,9 +193,9 @@ application_fit:
         reads its own visual-evidence passes - and it currently binds to nothing.
   conclusion: >
     The narrowest honest fit in the batch: three unit-of-evaluation bindings and nothing else.
-    That thinness is the accurate shape of a critique source in a production corpus, and it is
-    the factual core of the pending admission-boundary question - recorded here as fit, not as a
-    verdict on admission.
+    That thinness is the accurate shape of a critique source in a production corpus, and it was
+    the factual core of the admission-boundary question ruling (c) resolved (DN-06: admitted,
+    marked critique_context) - recorded here as fit, not as a verdict on admission.
 
 lineage:
   authors: [Susan Sontag]
