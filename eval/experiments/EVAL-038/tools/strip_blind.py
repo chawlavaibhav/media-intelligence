@@ -86,9 +86,43 @@ def cmd_dryrun(paths):
     print("PASS: strip pipeline leaks no treatment marker" if ok else "FAIL")
     sys.exit(0 if ok else 1)
 
-def cmd_blind(outdir, pairs):
+def _blind(outdir, entries, prefix, writer):
+    """Shared blinding core. entries: [(label, source_path, payload_bytes_or_text)].
+
+    The off-repo key file is named after the outdir (one key PER blinding unit), so
+    blinding six briefs plus media as separate invocations can never clobber an
+    earlier unit's key — the fixed-filename clobber was a real substrate defect,
+    caught before first use.
+    """
     outdir = pathlib.Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
+    key = os.urandom(16).hex()
+    salt = os.urandom(16).hex()
+    order = sorted(range(len(entries)),
+                   key=lambda i: hashlib.sha256(f"{key}|{entries[i][0]}".encode()).hexdigest())
+    mapping = {}
+    for rank, i in enumerate(order, 1):
+        label, path, payload = entries[i]
+        bid = f"{prefix}{rank:02d}"
+        ext = writer(outdir, bid, payload)
+        digest = hashlib.sha256(payload.encode() if isinstance(payload, str)
+                                else payload).hexdigest()
+        mapping[bid + ext] = {"label": label, "source_path": path, "sha256": digest}
+    commitment = hashlib.sha256(f"{salt}|{key}".encode()).hexdigest()
+    (outdir / "BLINDING-COMMITMENT.json").write_text(json.dumps({
+        "commitment_sha256_of_salt_pipe_key": commitment,
+        "items": sorted(mapping),
+        "reveal_rule": "salt|key published only after all verdicts are committed",
+    }, indent=1, sort_keys=True))
+    unit = outdir.name if outdir.name not in (".", "") else "unit"
+    parent = outdir.parent.name
+    keyfile = pathlib.Path.home() / f".eval038-blinding-key-{parent}-{unit}.json"
+    keyfile.write_text(json.dumps({"key": key, "salt": salt, "mapping": mapping},
+                                  indent=1, sort_keys=True))
+    print(f"blinded {len(entries)} items into {outdir}")
+    print(f"commitment committed; KEY HELD OFF-REPO at {keyfile} — do not commit it")
+
+def cmd_blind(outdir, pairs):
     entries = []
     for pair in pairs:
         label, path = pair.split("=", 1)
@@ -97,29 +131,27 @@ def cmd_blind(outdir, pairs):
         if bad:
             sys.exit(f"LEAK in {path}: " + "; ".join(bad))
         entries.append((label, path, stripped))
-    key = os.urandom(16).hex()
-    salt = os.urandom(16).hex()
-    # deterministic shuffle under the secret key: sort by HMAC-ish digest
-    order = sorted(range(len(entries)),
-                   key=lambda i: hashlib.sha256(f"{key}|{entries[i][0]}".encode()).hexdigest())
-    mapping = {}
-    for rank, i in enumerate(order, 1):
-        label, path, stripped = entries[i]
-        bid = f"P{rank:02d}"
-        (outdir / f"{bid}.txt").write_text(stripped)
-        mapping[bid] = {"label": label, "source_path": path,
-                        "stripped_sha256": hashlib.sha256(stripped.encode()).hexdigest()}
-    commitment = hashlib.sha256(f"{salt}|{key}".encode()).hexdigest()
-    (outdir / "BLINDING-COMMITMENT.json").write_text(json.dumps({
-        "commitment_sha256_of_salt_pipe_key": commitment,
-        "packages": sorted(mapping),
-        "reveal_rule": "salt|key published only after all verdicts are committed",
-    }, indent=1, sort_keys=True))
-    keyfile = pathlib.Path.home() / ".eval038-blinding-key.json"
-    keyfile.write_text(json.dumps({"key": key, "salt": salt, "mapping": mapping},
-                                  indent=1, sort_keys=True))
-    print(f"blinded {len(entries)} packages into {outdir}")
-    print(f"commitment committed; KEY HELD OFF-REPO at {keyfile} — do not commit it")
+
+    def write_text(outdir, bid, payload):
+        (outdir / f"{bid}.txt").write_text(payload)
+        return ".txt"
+    _blind(outdir, entries, "P", write_text)
+
+def cmd_blindbin(outdir, prefix, pairs):
+    """Blind binary media files (no stripping — bytes copied verbatim)."""
+    entries = []
+    for pair in pairs:
+        label, path = pair.split("=", 1)
+        entries.append((label, path, pathlib.Path(path).read_bytes()))
+    exts = {pathlib.Path(p.split("=", 1)[1]).suffix for p in pairs}
+    if len(exts) != 1:
+        sys.exit("blindbin: all inputs in one unit must share an extension")
+    ext = exts.pop()
+
+    def write_bin(outdir, bid, payload):
+        (outdir / f"{bid}{ext}").write_bytes(payload)
+        return ext
+    _blind(outdir, entries, prefix, write_bin)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -131,5 +163,7 @@ if __name__ == "__main__":
         cmd_dryrun(sys.argv[2:])
     elif cmd == "blind":
         cmd_blind(sys.argv[2], sys.argv[3:])
+    elif cmd == "blindbin":
+        cmd_blindbin(sys.argv[2], sys.argv[3], sys.argv[4:])
     else:
         sys.exit(__doc__)
