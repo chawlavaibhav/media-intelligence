@@ -1,0 +1,41 @@
+# EVAL-038 — price reference snapshot. Pattern: EVAL-037 common/price-snapshot.yaml.
+#
+# Unlike EVAL-037, prices here DO gate dispatch: DN-07 requires execution-time
+# route/price verification before every paid call, and the runner refuses to dispatch a
+# lane whose model has a null price. A price that is not established is null; nothing is
+# estimated or inferred from a sibling model.
+
+snapshot_id: eval-038-price-snapshot-v1
+captured_on: '2026-09-01'
+currency: USD
+unit: per 1,000,000 tokens
+
+models:
+  claude-haiku-4-5-20251001:
+    provider: Anthropic
+    input: 1.00
+    cached_input: null
+    output: 5.00
+    source: >-
+      Anthropic first-party API pricing table (claude-api reference, cached 2026-06-24:
+      claude-haiku-4-5 input $1.00/MTok, output $5.00/MTok), agreeing with the committed
+      EVAL-037 snapshot (eval/experiments/EVAL-037/common/price-snapshot.yaml) and with
+      the empirical EVAL-037 haiku lane costs (USD 0.331358-0.400029 per 18 trials).
+    note: Cache-read pricing not established; cached tokens recorded, priced null.
+
+  gemma-4-31b-it:
+    provider: Google Gemini API
+    input: null
+    cached_input: null
+    output: null
+    source: null
+    note: >-
+      Never established (EVAL-037 froze it null). DN-07 authorises one network fetch to
+      pin the official price as bytes+date; until that pin lands in
+      common/gemma-price-pin/ and these fields are set from it, the gemma lane refuses
+      to dispatch.
+
+cost_rule: >-
+  calculated_cost_usd = (input_tokens / 1e6) * input + (output_tokens / 1e6) * output,
+  computed only when both prices and both token counts are non-null. Thinking tokens are
+  billed as output tokens by these providers and are not added twice.
