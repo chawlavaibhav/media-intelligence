@@ -1,17 +1,17 @@
-# REP-07 — Audit Gate v0.2 record for ogilvy-beyond-ch2, authored IN THE CANDIDATE DIR (a
-# candidate must not gain a record in canon/audit/records/ before admission; on admission this
-# file moves there unchanged). STATUS: PROPOSED — admission is a Controller decision.
-#
-# Pending Controller ruling (d) (DEFERRED per DN-04): the scope-extension admission
-# convention. This record states the dependence facts (same work as the live accepted
-# ogilvy_on_advertising_ch2) through lineage relations only, and asserts nothing about that
-# convention.
+# Audit Gate v0.2 record — David Ogilvy, "Ogilvy on Advertising", chapters 1 and 3-20 (the span
+# beyond the live accepted chapter 2). Authored by REP-07 in the candidate dir against the
+# exact bytes fingerprinted below; admitted to accepted Canon by Controller decision DN-06
+# (REP-07-DECISION-NOTES.md, 2026-09-01), which also resolved ruling (d): this span enters as
+# an EXPLICITLY SCOPED EXTENSION of the live ogilvy_on_advertising_ch2, never as an independent
+# origin — the two-sided lineage declaration is written here and, back, on the live record. The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_ogilvy_beyond_ch2
 source_id: ogilvy-beyond-ch2
-knowledge_dir: canon/candidates/canon-014/ogilvy-beyond-ch2
-recorded_at_commit: 5185fc40f444735b91a16e12808d5c0f6addb91c
+knowledge_dir: canon/knowledge/current/ogilvy-beyond-ch2
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
 
 source_snapshot:
@@ -30,14 +30,16 @@ source_snapshot:
   combined_digest: 19cf01da72159d09bc14b31a7c38eb5012ee80ea6541b19573851a2a286268ec
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/ogilvy-beyond-ch2/source-knowledge.yaml
-  - canon/candidates/canon-014/ogilvy-beyond-ch2/source-concept-systems.yaml
-  - canon/candidates/canon-014/ogilvy-beyond-ch2/operational-bindings.yaml
-  - canon/candidates/canon-014/ogilvy-beyond-ch2/ontology-mappings.yaml
-  - canon/candidates/canon-014/ogilvy-beyond-ch2/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/ogilvy-beyond-ch2/PROVENANCE.md
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/ogilvy-beyond-ch2/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/ogilvy-beyond-ch2/source-knowledge.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/source-concept-systems.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/operational-bindings.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/ontology-mappings.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/visual-evidence-ledger.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/PROVENANCE.md
   - canon/candidates/canon-014/ogilvy-beyond-ch2/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/ogilvy-beyond-ch2/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/ogilvy-beyond-ch2/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/audit/records/ogilvy-ch2-advertising-that-sells.audit.yaml
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true
@@ -198,8 +200,10 @@ lineage:
     candidate the span shares no author, series, publisher-dependence or primary informant
     and remains a usable origin pairwise. Note the mirror finding in
     sullivan-hey-whipple's REP-07 record: Sullivan cites this book (cites_source), which does
-    not defeat independence in either direction. Whether this span enters as a scoped
-    extension is ruling (d), deferred per DN-04; nothing here asserts that convention.
+    not defeat independence in either direction. ADMITTED PER DN-06 RULING (d) AS AN EXPLICITLY
+    SCOPED EXTENSION of ogilvy_on_advertising_ch2, never as an independent origin: the
+    two-sided lineage declaration is written on both records at admission, and agreement
+    between the two spans is one book agreeing with itself, worth zero as corroboration.
   extractor_exposure:
     spec_contains_examples_from_this_source: false
     evidence: >
