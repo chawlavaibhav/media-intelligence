@@ -20,6 +20,24 @@ budget:
   terse_max_tokens: 2500
   token_rule: tokens = ceil(chars / 4); the enforced quantity is bytes of the terse rendering
 closure_waivers:
+- partner: sk_lsmx_0008
+  reason: 0008 states the flat-subject tension (even vs glare-free illumination) that motivates cross-polarization;
+    PA-D8 consumes only the cost-of-last-resort ordering, which stands stated. The flat-copy staging doctrine
+    is deferred to the full live-37 compile.
+  ref: sk_lsmx_0009
+  relation: qualifies
+- partner: sk_lsmx_0006
+  reason: 0006 is the camera-distance/focal-length control on the family's size — one rung of the ladder
+    consumed here only as an ordering; the rung's mechanism is deferred to the full live-37 compile.
+  ref: sk_lsmx_0023
+  relation: depends_on
+- partner: sk_lsmx_0051
+  reason: '0051 qualifies cross-polarization for PEOPLE: skin''s small direct reflection is a resource
+    (especially on dark skin) and must not be removed. This pack''s scope is products; people-subject
+    doctrine is deferred to the full live-37 compile. Named so the qualification is visible before anyone
+    points PA-D8 at a person.'
+  ref: sk_lsmx_0009
+  relation: qualified_by
 - partner: sk_alt_c003_0007
   reason: 'vocabulary dependency: 0007 is the studio''s naming of light functions (keylight, crosslight,
     ...); the decision consumes only the shadow-quality criterion, which stands without the vocabulary.'
@@ -142,21 +160,57 @@ conflicts:
     technique serves the creative decision (sk_lsm_c003_0020). Alton''s term is contingent on antihalo
     film stock (DATED).'
   tension_ref: T5
+- between:
+  - sk_lsmx_0023
+  - sk_lsmx_0035
+  conflict_id: CF-09
+  decision_ref: PA-D8
+  kind: contradicts
+  nature: the glossy-box ladder suppresses direct reflection stepwise; on a polished METAL box the source
+    instead embraces it — the table becomes the light source and a light background is the easiest answer,
+    since polished metal reads as black without a reflection to carry
+  resolution_rule: 'Material decides: a glossy dielectric box works the suppression ladder (0023); a polished
+    metal box is lit by embracing direct reflection — treat the surroundings as the light source (0035,
+    not compiled into this pack; named so the boundary is visible).'
+- between:
+  - sk_lsmx_0057
+  - sk_lsmx_0036
+  conflict_id: CF-10
+  decision_ref: PA-D8
+  kind: contradicts
+  nature: black-on-black borrows the metal playbook (find and fill the family) but the source withdraws
+    the metal support tricks where polarization differs — the transparent/glossy-black support arrangements
+    are stated for metal boxes, not for black subjects generally
+  resolution_rule: Light black as if it were metal (0057); carry the metal SUPPORT arrangements (0036,
+    not compiled into this pack) across only for actual metal — where the subject's polarization behaviour
+    differs, the trick is withdrawn.
+- between:
+  - sk_lsmx_0009
+  - sk_lsmx_0038
+  conflict_id: CF-11
+  decision_ref: PA-D8
+  kind: contradicts
+  nature: cross-polarization removes direct reflection wholesale; metal rendering depends on direct reflection
+    — the purer the metal, the more its edges vanish without a controlled reflection to carry them (the
+    disappearing-edge failure)
+  resolution_rule: Cross-polarization (0009) is a dielectric-glare last resort only; never on metal, whose
+    edges the direct reflection constitutes (0038, not compiled into this pack; the metal finishing tools
+    are deferred to the full live-37 compile).
 consumption:
   contract: canon/compilation/INJECTION-CONTRACT-v0.md
   target_schema: FINAL_PRODUCTION_PACKAGE v2 (12 EVAL-037 sections + DOCTRINE_DEVIATIONS)
   trigger_table: canon/packs/pack-triggers-v0.yaml
-corpus_digest: a9cee40fb433adc08ac98ba7c87e1ead790f60aa71d184327cc5e97f59ed7eb9
+corpus_digest: 3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc
 corpus_digest_source: canon/knowledge/CANON-CORPUS-INDEX.yaml fingerprints.accepted_canon (recomputed
   from per-file sha256 entries and cross-checked against disk)
 counts:
-  cited_claim_bytes: 13132
-  cited_sk_objects: 32
-  closure_waivers: 5
-  conflicts: 8
+  cited_claim_bytes: 16632
+  cited_sk_objects: 35
+  closure_waivers: 8
+  conflicts: 11
   decisions: 10
-  terse_chars: 8528
-  terse_tokens: 2132
+  terse_chars: 9889
+  terse_tokens: 2473
 decisions:
 - check: Every key object has exactly one declared finish; two surfaces of the same tone still read differently
     by finish; no surface reads as both matte and mirror-glossy in one shot.
@@ -480,12 +534,30 @@ decisions:
     marker: '[REASONED]'
     ref: sk_lsm_c003_0019
     source_dir: light-science-magic-ch3
-  confidence_marker: '[ASSERTED-hedged|QUALIFIED|SINGLE-ORIGIN]'
+  - concept_label: cross_polarizing_source_and_lens_buys_freedom_from_geometry_at_a_large_cost
+    kind: source_knowledge
+    marker: '[MEASURED-hedged|CONTESTED|QUALIFIED|DATED]'
+    ref: sk_lsmx_0009
+    source_dir: light-science-magic-beyond-ch3
+  - concept_label: the_glossy_box_remedy_ladder_ordered_by_cost_with_the_polarizer_late
+    kind: source_knowledge
+    marker: '[REASONED|CONTESTED|FIGURE-UNVERIFIED]'
+    ref: sk_lsmx_0023
+    source_dir: light-science-magic-beyond-ch3
+  - concept_label: light_black_on_black_as_if_it_were_metal_and_the_metal_tricks_stop_where_polarization_differs
+    kind: source_knowledge
+    marker: '[MEASURED-hedged|CONTESTED]'
+    ref: sk_lsmx_0057
+    source_dir: light-science-magic-beyond-ch3
+  confidence_marker: '[ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]'
   decision_id: PA-D8
-  default: Dark subjects reveal direct reflection because they produce less diffuse reflection (sk_lsm_c003_0017);
-    use the diagnostic guidelines to identify polarized reflection (0018); polarizing the source makes
-    a reflection manageable (0019); polarized direct reflection is dimmer than ordinary direct reflection
-    (0015).
+  default: 'Dark subjects reveal direct reflection because they produce less diffuse reflection (sk_lsm_c003_0017);
+    on black-on-black, capitalize on it — light black as if it were metal, find and fill the family (sk_lsmx_0057).
+    Use the diagnostic guidelines to identify polarized reflection (0018). Polarizing the source makes
+    a reflection manageable (0019), but it sits late in the remedy ladder on cost grounds: try a darker
+    background, the source toward the camera, and camera height first (sk_lsmx_0023); cross-polarizing
+    source and lens buys freedom from geometry only at a large cost (sk_lsmx_0009). Polarized direct reflection
+    is dimmer than ordinary direct reflection (0015).'
   feeds_sections:
   - PRODUCTION_RECIPE
   - GENERATION_PROMPTS
@@ -537,9 +609,11 @@ pack_id: product_appearance
 pack_limits:
 - Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite
   text deterministically.
-- 'Coverage caveat (GAP-16): light-science-magic ch3 is the only admitted chapter of its source; the source''s
-  later chapters are HOLD (not admitted) and are recorded as qualifying and in places reversing ch3 guidance.
-  This pack cites that caveat''s existence only and consumes no HOLD content.'
+- 'Coverage note (GAP-16 resolved by the DN-06 admission): the source''s later chapters are accepted as
+  light-science-magic-beyond-ch3, a scoped extension of ch3. Its three self-qualification claims are compiled
+  where they bite (PA-D8: sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost grounds;
+  glossy-box remedy ladder ordered cheapest-first; black-on-black lit as if metal). The remainder of the
+  extension awaits the full live-37 pack compile.'
 - 'Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india,
   jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide as contributors to this pack''s
   domains; none is compiled here — their doctrine (frontality/darshan staging, iconographic correctness,
@@ -553,7 +627,7 @@ status: PROPOSED — Canon-stream worker output; no Controller decision adopts i
   governs.
 stream: canon
 task: REP-05
-terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpus a9cee40fb433). 10 decisions.
+terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpus 3f7e3fadb3fb). 10 decisions.
   Each DEFAULT is a decision already made: accept it, or override it in DOCTRINE_DEVIATIONS citing the
   brief clause that forces the override. Answer every CHECK in FAILURE_PREVENTION as pass or fix, by decision
   id. Id legend: ids drop the sk_/scs_ prefix and _c003 infix (fre_0020 = sk_fre_c003_0020; 3-digit =
@@ -644,14 +718,17 @@ terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpu
   image fails.
 
 
-  PA-D8 [ASSERTED-hedged|QUALIFIED|SINGLE-ORIGIN]
+  PA-D8 [ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]
 
   Q: Glass, dark or mirror-glossy object in frame — special handling?
 
   DEFAULT: Dark subjects reveal direct reflection because they produce less diffuse reflection (sk_lsm_c003_0017);
-  use the diagnostic guidelines to identify polarized reflection (0018); polarizing the source makes a
-  reflection manageable (0019); polarized direct reflection is dimmer than ordinary direct reflection
-  (0015).
+  on black-on-black, capitalize on it — light black as if it were metal, find and fill the family (sk_lsmx_0057).
+  Use the diagnostic guidelines to identify polarized reflection (0018). Polarizing the source makes a
+  reflection manageable (0019), but it sits late in the remedy ladder on cost grounds: try a darker background,
+  the source toward the camera, and camera height first (sk_lsmx_0023); cross-polarizing source and lens
+  buys freedom from geometry only at a large cost (sk_lsmx_0009). Polarized direct reflection is dimmer
+  than ordinary direct reflection (0015).
 
   CHECK: Every specular on glass, dark or glossy surfaces is declared wanted or removed; none is accidental.
 
@@ -712,15 +789,29 @@ terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpu
   technique serves the creative decision (sk_lsm_c003_0020). Alton''s term is contingent on antihalo film
   stock (DATED).
 
+  CF-09 lsmx_0023 vs lsmx_0035: Material decides: a glossy dielectric box works the suppression ladder
+  (0023); a polished metal box is lit by embracing direct reflection — treat the surroundings as the light
+  source (0035, not compiled into this pack; named so the boundary is visible).
+
+  CF-10 lsmx_0057 vs lsmx_0036: Light black as if it were metal (0057); carry the metal SUPPORT arrangements
+  (0036, not compiled into this pack) across only for actual metal — where the subject''s polarization
+  behaviour differs, the trick is withdrawn.
+
+  CF-11 lsmx_0009 vs lsmx_0038: Cross-polarization (0009) is a dielectric-glare last resort only; never
+  on metal, whose edges the direct reflection constitutes (0038, not compiled into this pack; the metal
+  finishing tools are deferred to the full live-37 compile).
+
 
   PACK LIMITS:
 
   - Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite
   text deterministically.
 
-  - Coverage caveat (GAP-16): light-science-magic ch3 is the only admitted chapter of its source; the
-  source''s later chapters are HOLD (not admitted) and are recorded as qualifying and in places reversing
-  ch3 guidance. This pack cites that caveat''s existence only and consumes no HOLD content.
+  - Coverage note (GAP-16 resolved by the DN-06 admission): the source''s later chapters are accepted
+  as light-science-magic-beyond-ch3, a scoped extension of ch3. Its three self-qualification claims are
+  compiled where they bite (PA-D8: sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost
+  grounds; glossy-box remedy ladder ordered cheapest-first; black-on-black lit as if metal). The remainder
+  of the extension awaits the full live-37 pack compile.
 
   - Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india,
   jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide as contributors to this pack''s

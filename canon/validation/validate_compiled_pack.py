@@ -88,10 +88,12 @@ DEVANAGARI_LIMIT = (
     "glyphs; composite text deterministically."
 )
 LSM_LATER_CHAPTERS_CAVEAT = (
-    "Coverage caveat (GAP-16): light-science-magic ch3 is the only admitted chapter of its "
-    "source; the source's later chapters are HOLD (not admitted) and are recorded as "
-    "qualifying and in places reversing ch3 guidance. This pack cites that caveat's "
-    "existence only and consumes no HOLD content."
+    "Coverage note (GAP-16 resolved by the DN-06 admission): the source's later chapters are "
+    "accepted as light-science-magic-beyond-ch3, a scoped extension of ch3. Its three "
+    "self-qualification claims are compiled where they bite (PA-D8: sk_lsmx_0009, "
+    "sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost grounds; glossy-box remedy "
+    "ladder ordered cheapest-first; black-on-black lit as if metal). The remainder of the "
+    "extension awaits the full live-37 pack compile."
 )
 GOS_REGRESSION = {
     "sk_gos_c003_0012": ["sk_gos_c003_0007", "sk_gos_c003_0010", "sk_gos_c003_0013"],

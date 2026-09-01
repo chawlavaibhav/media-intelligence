@@ -211,9 +211,11 @@ class CompiledPackValidatorTest(unittest.TestCase):
                 for field in ("question", "default", "check"):
                     self.assertTrue(str(d[field]).strip(), d["decision_id"])
 
-    def test_pilot_union_is_21_decisions_101_sk_objects(self):
+    def test_pilot_union_is_21_decisions_104_sk_objects(self):
         # 97 at first compile; +4 after the adversary-mandated CA-D8 Rule-of-Six
-        # weight citations (sk_murch_c003_0021/0022/0024/0025).
+        # weight citations (sk_murch_c003_0021/0022/0024/0025); +3 after the DN-06
+        # admission compiled lsm-beyond's self-qualifications into PA-D8
+        # (sk_lsmx_0009/0023/0057 — GAP-16 resolution).
         cited = set()
         n = 0
         for pack in (self.pa, self.ca):
@@ -222,7 +224,7 @@ class CompiledPackValidatorTest(unittest.TestCase):
                 cited.update(r["ref"] for r in d["compiled_from"]
                              if r["kind"] == "source_knowledge")
         self.assertEqual(n, 21)
-        self.assertEqual(len(cited), 101)
+        self.assertEqual(len(cited), 104)
 
 
 if __name__ == "__main__":

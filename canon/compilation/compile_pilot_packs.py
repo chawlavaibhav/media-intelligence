@@ -74,10 +74,12 @@ DEVANAGARI_LIMIT = (
     "glyphs; composite text deterministically."
 )
 LSM_LATER_CHAPTERS_CAVEAT = (
-    "Coverage caveat (GAP-16): light-science-magic ch3 is the only admitted chapter of its "
-    "source; the source's later chapters are HOLD (not admitted) and are recorded as "
-    "qualifying and in places reversing ch3 guidance. This pack cites that caveat's "
-    "existence only and consumes no HOLD content."
+    "Coverage note (GAP-16 resolved by the DN-06 admission): the source's later chapters are "
+    "accepted as light-science-magic-beyond-ch3, a scoped extension of ch3. Its three "
+    "self-qualification claims are compiled where they bite (PA-D8: sk_lsmx_0009, "
+    "sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost grounds; glossy-box remedy "
+    "ladder ordered cheapest-first; black-on-black lit as if metal). The remainder of the "
+    "extension awaits the full live-37 pack compile."
 )
 PA_D9_PACKSHOT_LIMIT = (
     "Packshot convention absent from Canon (A13 application_unbound): hero-angle, "
@@ -188,9 +190,9 @@ PA_DECISIONS = [
     {
         "decision_id": "PA-D8",
         "question": "Glass, dark or mirror-glossy object in frame — special handling?",
-        "default": "Dark subjects reveal direct reflection because they produce less diffuse reflection (sk_lsm_c003_0017); use the diagnostic guidelines to identify polarized reflection (0018); polarizing the source makes a reflection manageable (0019); polarized direct reflection is dimmer than ordinary direct reflection (0015).",
+        "default": "Dark subjects reveal direct reflection because they produce less diffuse reflection (sk_lsm_c003_0017); on black-on-black, capitalize on it — light black as if it were metal, find and fill the family (sk_lsmx_0057). Use the diagnostic guidelines to identify polarized reflection (0018). Polarizing the source makes a reflection manageable (0019), but it sits late in the remedy ladder on cost grounds: try a darker background, the source toward the camera, and camera height first (sk_lsmx_0023); cross-polarizing source and lens buys freedom from geometry only at a large cost (sk_lsmx_0009). Polarized direct reflection is dimmer than ordinary direct reflection (0015).",
         "check": "Every specular on glass, dark or glossy surfaces is declared wanted or removed; none is accidental.",
-        "ids": ["sk_lsm_c003_0015", "sk_lsm_c003_0017", "sk_lsm_c003_0018", "sk_lsm_c003_0019"],
+        "ids": ["sk_lsm_c003_0015", "sk_lsm_c003_0017", "sk_lsm_c003_0018", "sk_lsm_c003_0019", "sk_lsmx_0009", "sk_lsmx_0023", "sk_lsmx_0057"],
         "feeds": ["PRODUCTION_RECIPE", "GENERATION_PROMPTS", "FAILURE_PREVENTION"],
         "limits": [],
     },
@@ -249,9 +251,27 @@ PA_CONFLICTS = [
      "ledger_file": "canon/candidates/ontology-join/cross-source-candidates-v0.yaml — candidate ledger cross-reference — unadopted, informational only (status: proposed; no candidates-lane content is consumed)",
      "nature": "Alton dresses sets with highly reflective objects so specular highlights give the image life, contingent on antihalo film stock (t_alt_c003_0021); LSM names a mirror image of the source appearing where the photographer does not want it the unwanted direct reflection (t_lsm_c003_0008)",
      "resolution_rule": "Apply PA-D8's check: every specular is declared wanted — a deliberately shiny prop keeps its highlights (sk_alt_c003_0004) — or identified and removed (sk_lsm_c003_0018, sk_lsm_c003_0019); technique serves the creative decision (sk_lsm_c003_0020). Alton's term is contingent on antihalo film stock (DATED)."},
+    {"conflict_id": "CF-09", "decision_ref": "PA-D8", "kind": "contradicts",
+     "between": ["sk_lsmx_0023", "sk_lsmx_0035"],
+     "nature": "the glossy-box ladder suppresses direct reflection stepwise; on a polished METAL box the source instead embraces it — the table becomes the light source and a light background is the easiest answer, since polished metal reads as black without a reflection to carry",
+     "resolution_rule": "Material decides: a glossy dielectric box works the suppression ladder (0023); a polished metal box is lit by embracing direct reflection — treat the surroundings as the light source (0035, not compiled into this pack; named so the boundary is visible)."},
+    {"conflict_id": "CF-10", "decision_ref": "PA-D8", "kind": "contradicts",
+     "between": ["sk_lsmx_0057", "sk_lsmx_0036"],
+     "nature": "black-on-black borrows the metal playbook (find and fill the family) but the source withdraws the metal support tricks where polarization differs — the transparent/glossy-black support arrangements are stated for metal boxes, not for black subjects generally",
+     "resolution_rule": "Light black as if it were metal (0057); carry the metal SUPPORT arrangements (0036, not compiled into this pack) across only for actual metal — where the subject's polarization behaviour differs, the trick is withdrawn."},
+    {"conflict_id": "CF-11", "decision_ref": "PA-D8", "kind": "contradicts",
+     "between": ["sk_lsmx_0009", "sk_lsmx_0038"],
+     "nature": "cross-polarization removes direct reflection wholesale; metal rendering depends on direct reflection — the purer the metal, the more its edges vanish without a controlled reflection to carry them (the disappearing-edge failure)",
+     "resolution_rule": "Cross-polarization (0009) is a dielectric-glare last resort only; never on metal, whose edges the direct reflection constitutes (0038, not compiled into this pack; the metal finishing tools are deferred to the full live-37 compile)."},
 ]
 
 PA_WAIVERS = [
+    {"ref": "sk_lsmx_0009", "relation": "qualifies", "partner": "sk_lsmx_0008",
+     "reason": "0008 states the flat-subject tension (even vs glare-free illumination) that motivates cross-polarization; PA-D8 consumes only the cost-of-last-resort ordering, which stands stated. The flat-copy staging doctrine is deferred to the full live-37 compile."},
+    {"ref": "sk_lsmx_0023", "relation": "depends_on", "partner": "sk_lsmx_0006",
+     "reason": "0006 is the camera-distance/focal-length control on the family's size — one rung of the ladder consumed here only as an ordering; the rung's mechanism is deferred to the full live-37 compile."},
+    {"ref": "sk_lsmx_0009", "relation": "qualified_by", "partner": "sk_lsmx_0051",
+     "reason": "0051 qualifies cross-polarization for PEOPLE: skin's small direct reflection is a resource (especially on dark skin) and must not be removed. This pack's scope is products; people-subject doctrine is deferred to the full live-37 compile. Named so the qualification is visible before anyone points PA-D8 at a person."},
     {"ref": "sk_alt_c003_0006", "relation": "depends_on", "partner": "sk_alt_c003_0007",
      "reason": "vocabulary dependency: 0007 is the studio's naming of light functions (keylight, crosslight, ...); the decision consumes only the shadow-quality criterion, which stands without the vocabulary."},
     {"ref": "sk_hop_sa_0026", "relation": "depends_on", "partner": "sk_hop_sa_0021",
