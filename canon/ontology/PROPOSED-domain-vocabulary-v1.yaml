@@ -4,8 +4,9 @@
 # PROPOSED-domain-vocabulary-v1 — controlled two-axis vocabulary for
 # scope.domain_discussed_by_source, plus a mechanical label->term mapping and a review queue.
 #
-# Problem (GAP-13 / CD-domain-label-chaos): the field is free text — 1,335 mentions across the
-# accepted corpus resolve to 331 unique labels, 197 of them singletons (59.5%). Free text cannot
+# Problem (GAP-13 / CD-domain-label-chaos): the field is free text — 2,804 mentions (figures
+# refreshed after the DN-06 admission, 24 -> 37 sources) across the accepted corpus resolve to
+# 636 unique labels, 366 of them singletons (57.5%). Free text cannot
 # drive pack routing or coverage counting. This file replaces it with a closed 22-term enum
 # (11 medium + 11 subject) and maps every accepted label to terms or, when a label is a homonym,
 # a method, or out of scope, into an explicit review queue. No label is silently dropped.
@@ -18,9 +19,9 @@ census:
   field: scope.domain_discussed_by_source
   corpus: canon/knowledge/current/*/source-knowledge.yaml (accepted sources only)
   accepted:
-    mentions: 1335
-    unique_labels: 331
-    singletons: 197
+    mentions: 2804
+    unique_labels: 636
+    singletons: 366
   full_corpus_including_hold_informational_only:
     mentions: 3305
     unique_labels: 711
@@ -34,14 +35,14 @@ census:
   recompute: 'python3 -c "import yaml,glob,collections; c=collections.Counter(); [c.update(dm for o in
     yaml.safe_load(open(f))[''source_knowledge''] for dm in (o.get(''scope'') or {}).get(''domain_discussed_by_source'')
     or []) for f in glob.glob(''canon/knowledge/current/*/source-knowledge.yaml'')]; print(sum(c.values()),
-    len(c), sum(1 for v in c.values() if v==1))"  # expect 1335 331 197'
+    len(c), sum(1 for v in c.values() if v==1))"  # expect 2804 636 366'
 coverage:
-  mapped_labels: 295
-  mapped_mentions: 1283
-  mapped_mention_share: 0.961
-  review_queue_labels: 36
-  review_queue_mentions: 52
-  note: 'Every one of the 331 accepted labels appears exactly once: in `mapping` or in `review_queue`.
+  mapped_labels: 583
+  mapped_mentions: 2691
+  mapped_mention_share: 0.9597
+  review_queue_labels: 53
+  review_queue_mentions: 113
+  note: 'Every one of the 636 accepted labels appears exactly once: in `mapping` or in `review_queue`.
     No silent drops. All four figures above are recomputed, not trusted, by canon/validation/validate_domain_vocabulary.py.'
 vocabulary:
   axes:
@@ -75,13 +76,13 @@ vocabulary:
   - term: m_short_form_feed_video
     definition: feed-native short-form video (6-60s, usually vertical, platform-distributed)
     reserved: true
-    rationale: 'Zero accepted labels map here and that is the point: no accepted source discusses feed-native
-      short-form video. The newest accepted moving-image source is 2011 (kenworthy; grammar-of-the-edit
-      2009, murch 2001, ondaatje 2002 per their PROVENANCE.md), and the only feed-native source in the
-      corpus, google-abcd-video-ads, is HOLD (canon/candidates/) and therefore not mappable. The term
-      is kept in the closed enum so coverage tooling reports the hole explicitly instead of absorbing
-      feed-video demand into film-era terms. It becomes populatable only by Controller admission of a
-      feed-native source.'
+    rationale: 'Zero accepted labels map here and that is still the point. The one feed-native source,
+      google-abcd-video-ads, entered accepted Canon via DN-06 marked platform-contingent, so its
+      feed-video labels (youtube_video_advertising, short_form_video_advertising, and sullivan''s
+      short_form) now sit in the review_queue: admission of the source populates the corpus, but
+      populating this reserved term is an explicit Controller decision on the vocabulary itself,
+      which no mapping-layer edit can take. The term is kept in the closed enum so coverage tooling
+      reports the hole explicitly instead of absorbing feed-video demand into film-era terms.'
   subject:
   - term: s_advertising_craft
     definition: 'how advertisements are made: copy, campaigns, endorsement, selling technique'
@@ -121,7 +122,7 @@ mapping:
     terms:
     - m_moving_image_editing
   advertising:
-    count: 81
+    count: 223
     terms:
     - s_advertising_craft
   television_editing:
@@ -137,15 +138,15 @@ mapping:
     terms:
     - m_graphic_print_design
   advertising_effectiveness:
-    count: 28
+    count: 29
     terms:
     - s_advertising_effectiveness
   graphic_design:
-    count: 28
+    count: 38
     terms:
     - m_graphic_print_design
   photography:
-    count: 26
+    count: 46
     terms:
     - m_photography
   indian_advertising:
@@ -154,7 +155,7 @@ mapping:
     - s_india_market_culture
     note: advertising sense retained via co-occurring labels; one subject term max
   marketing:
-    count: 24
+    count: 49
     terms:
     - s_marketing_strategy
   communication:
@@ -168,11 +169,11 @@ mapping:
     - m_fine_art
     - s_creative_practice_process
   typography:
-    count: 22
+    count: 24
     terms:
     - m_typography
   photographic_lighting:
-    count: 20
+    count: 80
     terms:
     - m_cinematography_lighting
   web_design:
@@ -208,21 +209,21 @@ mapping:
     terms:
     - m_graphic_print_design
   film_production:
-    count: 13
+    count: 14
     terms:
     - m_moving_image_production
   branding:
-    count: 12
+    count: 13
     terms:
     - s_marketing_strategy
   product_design:
-    count: 12
+    count: 14
     terms:
     - s_marketing_strategy
     note: 'majority-usage rule: bijapurkar/sutherland treat it as a market-offer decision; the vignelli
       minority usage is design craft'
   mail_order_advertising:
-    count: 11
+    count: 31
     terms:
     - s_advertising_effectiveness
     note: 'hopkins: the measured-response channel, not a layout craft'
@@ -244,7 +245,7 @@ mapping:
     terms:
     - s_persuasion_psychology
   painting:
-    count: 8
+    count: 11
     terms:
     - m_fine_art
   sound_editing:
@@ -281,7 +282,7 @@ mapping:
     terms:
     - m_web_interactive
   persuasion:
-    count: 6
+    count: 16
     terms:
     - s_persuasion_psychology
   blocking:
@@ -311,7 +312,7 @@ mapping:
     - m_fine_art
     - s_india_market_culture
   landscape_photography:
-    count: 5
+    count: 14
     terms:
     - m_photography
   management:
@@ -323,7 +324,7 @@ mapping:
     terms:
     - s_narrative_storytelling
   personal_selling:
-    count: 5
+    count: 8
     terms:
     - s_advertising_craft
     note: 'hopkins: selling technique as the model for ad craft'
@@ -332,7 +333,7 @@ mapping:
     terms:
     - s_marketing_strategy
   storytelling:
-    count: 5
+    count: 7
     terms:
     - s_narrative_storytelling
   studio_production:
@@ -345,7 +346,7 @@ mapping:
     terms:
     - s_advertising_craft
   composition:
-    count: 4
+    count: 11
     terms:
     - s_composition_attention
   human_visual_perception:
@@ -357,7 +358,7 @@ mapping:
     terms:
     - m_graphic_print_design
   music:
-    count: 4
+    count: 5
     terms:
     - s_creative_practice_process
     note: 'bayles-orland: music-making as art practice, not a media craft here'
@@ -371,7 +372,7 @@ mapping:
     terms:
     - m_outdoor_print_media
   pricing:
-    count: 4
+    count: 7
     terms:
     - s_marketing_strategy
   sound_design:
@@ -400,7 +401,7 @@ mapping:
     terms:
     - s_creative_practice_process
   direct_marketing:
-    count: 3
+    count: 5
     terms:
     - s_advertising_effectiveness
   emerging_markets:
@@ -443,7 +444,7 @@ mapping:
     - m_outdoor_print_media
     - s_advertising_craft
   politics:
-    count: 3
+    count: 16
     terms:
     - s_persuasion_psychology
     note: 'sutherland usage: persuasion in political behaviour'
@@ -488,7 +489,7 @@ mapping:
     - m_fine_art
     - s_creative_practice_process
   behaviour_change:
-    count: 2
+    count: 4
     terms:
     - s_persuasion_psychology
   behavioural_science:
@@ -508,11 +509,11 @@ mapping:
     terms:
     - m_cinematography_lighting
   colour:
-    count: 2
+    count: 6
     terms:
     - m_colour
   consumer_behaviour:
-    count: 2
+    count: 4
     terms:
     - s_persuasion_psychology
   craft_learning:
@@ -541,7 +542,7 @@ mapping:
     terms:
     - s_marketing_strategy
   exposure:
-    count: 2
+    count: 6
     terms:
     - m_cinematography_lighting
   film_advertising_history:
@@ -549,7 +550,7 @@ mapping:
     terms:
     - s_india_market_culture
   forecasting:
-    count: 2
+    count: 12
     terms:
     - s_marketing_strategy
   image_efficacy:
@@ -558,7 +559,7 @@ mapping:
     - s_india_market_culture
     note: jain-only label, argued inside Indian visual-culture material
   image_theory:
-    count: 2
+    count: 3
     terms:
     - s_india_market_culture
     note: jain-only label, argued inside Indian visual-culture material
@@ -618,7 +619,7 @@ mapping:
     terms:
     - m_photography
   sales:
-    count: 2
+    count: 4
     terms:
     - s_marketing_strategy
   set_dressing:
@@ -634,11 +635,11 @@ mapping:
     terms:
     - s_category_specific
   television:
-    count: 2
+    count: 3
     terms:
     - m_moving_image_production
   television_advertising:
-    count: 2
+    count: 23
     terms:
     - m_moving_image_production
     - s_advertising_craft
@@ -691,7 +692,7 @@ mapping:
     terms:
     - s_category_specific
   awards:
-    count: 1
+    count: 2
     terms:
     - s_creative_practice_process
   b2b:
@@ -737,7 +738,7 @@ mapping:
     terms:
     - m_cinematography_lighting
   campaign_design:
-    count: 1
+    count: 2
     terms:
     - m_graphic_print_design
     - s_advertising_craft
@@ -841,7 +842,7 @@ mapping:
     terms:
     - s_india_market_culture
   cultural_change:
-    count: 1
+    count: 3
     terms:
     - s_india_market_culture
   dance:
@@ -910,7 +911,7 @@ mapping:
     - s_org_management
     note: 'catmull usage: the industry as an organisational environment'
   film_marketing:
-    count: 1
+    count: 2
     terms:
     - s_marketing_strategy
   fmcg:
@@ -1088,7 +1089,7 @@ mapping:
     - s_india_market_culture
     note: 'jain usage: mass media inside Indian visual culture'
   media_planning:
-    count: 1
+    count: 17
     terms:
     - s_marketing_strategy
   media_scheduling:
@@ -1135,7 +1136,7 @@ mapping:
     terms:
     - s_category_specific
   political_communication:
-    count: 1
+    count: 2
     terms:
     - s_persuasion_psychology
   political_economy_of_culture:
@@ -1151,7 +1152,7 @@ mapping:
     terms:
     - m_cinematography_lighting
   portraiture:
-    count: 1
+    count: 3
     terms:
     - m_photography
     - s_india_market_culture
@@ -1195,7 +1196,7 @@ mapping:
     terms:
     - s_creative_practice_process
   promotions:
-    count: 1
+    count: 6
     terms:
     - s_marketing_strategy
   public_communication:
@@ -1203,7 +1204,7 @@ mapping:
     terms:
     - s_persuasion_psychology
   public_health_communication:
-    count: 1
+    count: 9
     terms:
     - s_persuasion_psychology
   re_release_advertising:
@@ -1215,7 +1216,7 @@ mapping:
     terms:
     - s_india_market_culture
   retail:
-    count: 1
+    count: 10
     terms:
     - s_category_specific
   sales_copy:
@@ -1231,7 +1232,7 @@ mapping:
     terms:
     - m_fine_art
   services:
-    count: 1
+    count: 2
     terms:
     - s_category_specific
   set_lighting:
@@ -1289,7 +1290,7 @@ mapping:
     terms:
     - m_photography
   still_photography:
-    count: 1
+    count: 27
     terms:
     - m_photography
   stock_photography:
@@ -1360,6 +1361,1217 @@ mapping:
     count: 1
     terms:
     - s_marketing_strategy
+  # ── labels added by the DN-06 admission batch (24 -> 37 sources) — assignments authored
+  # post-admission; grouped notes justify the non-obvious calls, precedent rows the rest ──
+  academic_prediction:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  accessibility_legibility:
+    count: 2
+    terms:
+    - m_typography
+    note: 'text legibility as a typographic concern in both usages (google-abcd on-screen supers, hopkins ad text)'
+  advertising_concept_development:
+    count: 41
+    terms:
+    - s_advertising_craft
+  advertising_placement:
+    count: 1
+    terms:
+    - s_marketing_strategy
+    note: 'media_planning precedent'
+  advice:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  anti_drug_campaigns:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'public_health_communication precedent'
+  any_artifact_made_toward_an_objective:
+    count: 1
+    terms:
+    - s_creative_practice_process
+    note: 'connor-irizarry: their definition of design as deliberate making'
+  any_deliberate_making:
+    count: 1
+    terms:
+    - s_creative_practice_process
+    note: 'connor-irizarry: their definition of design as deliberate making'
+  apparel:
+    count: 1
+    terms:
+    - s_category_specific
+  architectural_subjects:
+    count: 1
+    terms:
+    - m_photography
+  art_criticism:
+    count: 9
+    terms:
+    - m_fine_art
+    note: 'sontag: photography argued for/against within the fine-art frame; DN-06 critique_context marker applies'
+  asylum_adjudication:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  automobile_purchase:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'consumer_behaviour precedent'
+  automotive:
+    count: 2
+    terms:
+    - s_category_specific
+  b2b_purchasing:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  bail_decisions:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  behaviour_adoption:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  book_publishing:
+    count: 1
+    terms:
+    - s_category_specific
+  brainstorms:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  brand_communication:
+    count: 62
+    terms:
+    - s_advertising_craft
+    note: 'how brand advertising/communication is made across five ad sources'
+  brand_design:
+    count: 1
+    terms:
+    - m_graphic_print_design
+    note: 'identity design per the m_graphic_print_design definition'
+  brand_marketing:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  branded_content:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  business_post_mortems:
+    count: 1
+    terms:
+    - s_org_management
+  business_to_business_advertising:
+    count: 6
+    terms:
+    - s_category_specific
+    note: 'ogilvy: B2B as a category with its own conventions'
+  camera_operation:
+    count: 2
+    terms:
+    - m_cinematography_lighting
+    note: 'exposure precedent: camera craft'
+  career_choice:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  catalogue_retail:
+    count: 1
+    terms:
+    - s_category_specific
+  cause_advertising:
+    count: 1
+    terms:
+    - s_category_specific
+  child_protection:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  civic_participation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  claims_adjusting:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  client_and_stakeholder_review:
+    count: 3
+    terms:
+    - s_creative_practice_process
+  client_and_team_reviews:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  clinical_diagnosis:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  clinical_recommendation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  cognitive_disability:
+    count: 1
+    terms:
+    - s_regulation_compliance
+    note: 'wcag: reader population the conformance standard protects'
+  collaborative_design_activities:
+    count: 2
+    terms:
+    - s_creative_practice_process
+  college_drinking:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  colour_vision_deficiency:
+    count: 2
+    terms:
+    - s_regulation_compliance
+    note: 'wcag: reader population the conformance standard protects'
+  comedy:
+    count: 3
+    terms:
+    - s_category_specific
+    note: 'godin: comedians as worked market example, not narrative genre analysis'
+  community_organisations:
+    count: 1
+    terms:
+    - s_category_specific
+  community_organising:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+    note: 'godin: mobilising people to act — persuasion, not market structure'
+  concept_development:
+    count: 13
+    terms:
+    - s_advertising_craft
+    note: 'advertising concept work in all three sources'
+  conservation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'berger: getting people to conserve — behaviour change'
+  consumer_choice:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+    note: 'consumer_behaviour precedent'
+  consumer_goods:
+    count: 2
+    terms:
+    - s_category_specific
+  consumer_marketing:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  consumer_packaged_goods:
+    count: 18
+    terms:
+    - s_category_specific
+  consumer_products:
+    count: 6
+    terms:
+    - s_category_specific
+  consumer_ratings:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  consumer_status_systems:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  content_design:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  content_marketing:
+    count: 3
+    terms:
+    - s_marketing_strategy
+  content_moderation:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  contests:
+    count: 1
+    terms:
+    - s_marketing_strategy
+    note: 'promotions precedent'
+  context_effects:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  conversation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  copy_work:
+    count: 5
+    terms:
+    - m_cinematography_lighting
+    note: 'lsm: lighting flat originals for reproduction — lighting craft, photographic_lighting precedent'
+  copyright_enforcement:
+    count: 1
+    terms:
+    - s_regulation_compliance
+  copywriting:
+    count: 37
+    terms:
+    - s_advertising_craft
+  corporate_acquisitions:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  corporate_advertising:
+    count: 1
+    terms:
+    - s_category_specific
+  corporate_boards:
+    count: 1
+    terms:
+    - s_org_management
+  corporate_decision_making:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  corporate_meetings:
+    count: 1
+    terms:
+    - s_org_management
+  corporate_policy:
+    count: 2
+    terms:
+    - s_org_management
+  corporate_strategy:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  creative_process:
+    count: 19
+    terms:
+    - s_creative_practice_process
+  creative_work:
+    count: 3
+    terms:
+    - s_creative_practice_process
+  criminal_justice:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  criminal_sentencing:
+    count: 10
+    terms:
+    - s_persuasion_psychology
+  critique_sessions:
+    count: 3
+    terms:
+    - s_creative_practice_process
+  cross_cultural_teams:
+    count: 1
+    terms:
+    - s_org_management
+  cultural_learning:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  cultural_transmission:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  delivering_negative_feedback:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  design_and_development_organisations:
+    count: 1
+    terms:
+    - s_org_management
+  design_and_development_process:
+    count: 3
+    terms:
+    - s_creative_practice_process
+  design_artifacts_of_any_kind:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  design_principles:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  design_reviews:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  design_studio_sessions:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  design_studio_workshops:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  design_team_conversation:
+    count: 19
+    terms:
+    - s_creative_practice_process
+  diffusion:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  direct_mail:
+    count: 1
+    terms:
+    - s_advertising_effectiveness
+    note: 'direct_marketing precedent'
+  direct_response_advertising:
+    count: 11
+    terms:
+    - s_advertising_effectiveness
+    note: 'direct_marketing precedent'
+  documentary_photography:
+    count: 12
+    terms:
+    - m_photography
+  editing:
+    count: 1
+    terms:
+    - m_moving_image_editing
+  editorial_form:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'berger: how content form enables transmission'
+  effectiveness:
+    count: 9
+    terms:
+    - s_advertising_effectiveness
+  email_and_design_commenting_tools:
+    count: 1
+    terms:
+    - s_creative_practice_process
+    note: 'connor-irizarry: channels critique travels through'
+  email_marketing:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  emailed_and_asynchronous_feedback_collection:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  employee_motivation:
+    count: 1
+    terms:
+    - s_org_management
+  employment:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  entrepreneurship:
+    count: 3
+    terms:
+    - s_marketing_strategy
+  essay_grading:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  evaluation_diagnosis:
+    count: 6
+    terms:
+    - s_advertising_effectiveness
+    note: 'judging why an ad worked or failed — response-evidence frame'
+  everyday_explanation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  everyday_word_of_mouth:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  executive_intuition:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  executive_selection:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  facilitated_workshops:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  family_photography:
+    count: 2
+    terms:
+    - m_photography
+  fashion:
+    count: 1
+    terms:
+    - s_category_specific
+  fashion_photography:
+    count: 3
+    terms:
+    - m_photography
+  fast_food:
+    count: 1
+    terms:
+    - s_category_specific
+  feedback_on_work_in_progress:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  film:
+    count: 2
+    terms:
+    - m_moving_image_production
+    note: 'television precedent; godin names the film industry, sontag cinema as a medium'
+  fingerprint_analysis:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  food_and_drink:
+    count: 1
+    terms:
+    - s_category_specific
+  food_culture:
+    count: 1
+    terms:
+    - s_category_specific
+  forensic_examination:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  formal_and_informal_meetings:
+    count: 1
+    terms:
+    - s_org_management
+  formal_critique_sessions:
+    count: 7
+    terms:
+    - s_creative_practice_process
+  freelancing:
+    count: 1
+    terms:
+    - s_category_specific
+  geopolitical_forecasting:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  glass_and_transparent_subjects:
+    count: 11
+    terms:
+    - m_cinematography_lighting
+  group_behaviour:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  group_critique_sessions:
+    count: 10
+    terms:
+    - s_creative_practice_process
+  groups_new_to_critique:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  guerrilla_marketing:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  health_information:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'public_health_communication precedent'
+  hierarchical_organisations:
+    count: 1
+    terms:
+    - s_org_management
+  hierarchy:
+    count: 1
+    terms:
+    - s_composition_attention
+    note: 'google-abcd: visual hierarchy within the frame'
+  hiring:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  hiring_committees:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  hospitality:
+    count: 3
+    terms:
+    - s_category_specific
+  human_professional_judgment:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  individual_design_work:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  informal_critiques:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  insurance_underwriting:
+    count: 6
+    terms:
+    - s_persuasion_psychology
+  interface_and_product_design:
+    count: 4
+    terms:
+    - m_web_interactive
+  internal_persuasion:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  investment_evaluation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  iterative_design_processes:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  juries:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  jury_awards:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  law:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  legal_standards_of_proof:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  lending:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  life_satisfaction:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  lighting:
+    count: 1
+    terms:
+    - m_cinematography_lighting
+  low_vision_readership:
+    count: 2
+    terms:
+    - s_regulation_compliance
+    note: 'wcag: reader population the conformance standard protects'
+  loyalty_pricing:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  loyalty_programmes:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  luxury_goods:
+    count: 2
+    terms:
+    - s_category_specific
+  macro_photography:
+    count: 3
+    terms:
+    - m_photography
+  management_practice:
+    count: 1
+    terms:
+    - s_org_management
+  marketing_communication:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  markets:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  matters_of_taste:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  measurement_of_error:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  medical_admission:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  medical_advertising:
+    count: 4
+    terms:
+    - s_category_specific
+  medical_decision_making:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  medical_diagnosis:
+    count: 4
+    terms:
+    - s_persuasion_psychology
+  medicine:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+    note: 'kahneman arena label, not a product category here'
+  membership_commerce:
+    count: 1
+    terms:
+    - s_category_specific
+  metal_surfaces:
+    count: 14
+    terms:
+    - m_cinematography_lighting
+  military_command:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  misinformation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  night_photography:
+    count: 1
+    terms:
+    - m_photography
+  noise_audits:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  nonprofit_advocacy:
+    count: 2
+    terms:
+    - s_category_specific
+  nonprofit_and_public_health_communication:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'public_health_communication precedent'
+  nonprofit_campaigns:
+    count: 1
+    terms:
+    - s_category_specific
+  nonprofit_fundraising:
+    count: 4
+    terms:
+    - s_category_specific
+  one_to_one_and_group_critique:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  one_to_one_feedback:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  online_articles:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'berger arena: content whose sharing is studied'
+  online_content:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+    note: 'berger arena: content whose sharing is studied'
+  online_news:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+    note: 'berger arena: content whose sharing is studied'
+  online_ratings:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  oral_transmission:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  organisational_behaviour:
+    count: 1
+    terms:
+    - s_org_management
+  organisational_change:
+    count: 1
+    terms:
+    - s_org_management
+  organisational_decision_making:
+    count: 8
+    terms:
+    - s_persuasion_psychology
+  out_of_home_advertising:
+    count: 4
+    terms:
+    - m_outdoor_print_media
+    - s_advertising_craft
+    note: 'television_advertising precedent: medium plus craft'
+  oversharing:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  patent_examination:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  performance_appraisal:
+    count: 10
+    terms:
+    - s_persuasion_psychology
+  personal_decisions:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  personnel_decisions:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  personnel_selection:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  philanthropy:
+    count: 1
+    terms:
+    - s_category_specific
+  photographic_books:
+    count: 1
+    terms:
+    - m_photography
+  photojournalism:
+    count: 8
+    terms:
+    - m_photography
+  podcasting:
+    count: 1
+    terms:
+    - s_category_specific
+  political_analysis:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  political_decision_making:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  political_forecasting:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  political_opinion:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  political_prediction:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  portrait_photography:
+    count: 10
+    terms:
+    - m_photography
+  post_critique_follow_up:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  predictive_judgment:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  pricing_communication:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  print_advertising:
+    count: 48
+    terms:
+    - m_graphic_print_design
+    - s_advertising_craft
+    note: 'television_advertising precedent: medium plus craft'
+  probability_expressions:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  probability_judgment:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  product_and_interface_design_projects:
+    count: 2
+    terms:
+    - m_web_interactive
+  product_development:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  product_launch:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  product_marketing:
+    count: 2
+    terms:
+    - s_marketing_strategy
+  product_positioning:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  product_rendering:
+    count: 36
+    terms:
+    - m_cinematography_lighting
+    note: 'lsm: how lighting renders product surfaces; photographic_lighting precedent'
+  product_reviews:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  production_reasoning:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'hopkins-sa8: the reader inference from visible production expense — audience psychology, not production craft'
+  professional_judgment:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  professional_services:
+    count: 2
+    terms:
+    - s_category_specific
+  professional_teams:
+    count: 1
+    terms:
+    - s_org_management
+  project_governance:
+    count: 1
+    terms:
+    - s_org_management
+  project_kickoff:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  promotional_merchandise:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  proprietary_medicines:
+    count: 1
+    terms:
+    - s_category_specific
+  psychiatry:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  public_health:
+    count: 1
+    terms:
+    - s_category_specific
+    note: 'godin: sector marketed to; the communication label maps to persuasion'
+  publicity:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  publishing:
+    count: 7
+    terms:
+    - s_category_specific
+  punitive_damages:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  radio_advertising:
+    count: 1
+    terms:
+    - s_advertising_craft
+    note: 'no audio medium term in the closed enum; craft subject only'
+  recommendations:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  recruitment:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  referral_programmes:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  regulation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'kahneman: variability of regulatory judgements, not ad clearance'
+  restaurant_and_singer_ratings:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  restaurants:
+    count: 3
+    terms:
+    - s_category_specific
+  retail_distribution:
+    count: 1
+    terms:
+    - s_marketing_strategy
+    note: 'go-to-market distribution'
+  retail_environment:
+    count: 1
+    terms:
+    - s_category_specific
+  retail_loyalty_schemes:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  risk_perception:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  rumour:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  sales_forecasting:
+    count: 1
+    terms:
+    - s_marketing_strategy
+    note: 'forecasting precedent'
+  self_presentation:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  shot_design:
+    count: 1
+    terms:
+    - m_moving_image_production
+  small_business:
+    count: 2
+    terms:
+    - s_category_specific
+  small_business_marketing:
+    count: 1
+    terms:
+    - s_marketing_strategy
+  social_change:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  social_enterprise:
+    count: 1
+    terms:
+    - s_category_specific
+  social_media:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'berger arena: channel of social transmission, not interface craft'
+  social_media_commentary_on_products:
+    count: 1
+    terms:
+    - s_creative_practice_process
+    note: 'connor-irizarry: unsolicited public feedback on design work'
+  social_media_responses_to_products:
+    count: 1
+    terms:
+    - s_creative_practice_process
+    note: 'connor-irizarry: unsolicited public feedback on design work'
+  social_science_prediction:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  social_transmission:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  software:
+    count: 2
+    terms:
+    - s_category_specific
+  software_estimation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  software_products:
+    count: 1
+    terms:
+    - s_category_specific
+  solicited_and_unsolicited_feedback:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  speaking:
+    count: 1
+    terms:
+    - s_category_specific
+    note: 'godin: professional speaking as a market example'
+  sport:
+    count: 1
+    terms:
+    - s_category_specific
+  sports_photography:
+    count: 2
+    terms:
+    - m_photography
+  staged_photography:
+    count: 2
+    terms:
+    - m_photography
+  stakeholder_and_client_feedback:
+    count: 2
+    terms:
+    - s_creative_practice_process
+  stakeholder_and_client_review:
+    count: 2
+    terms:
+    - s_creative_practice_process
+  strategic_decision_making:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+  street_photography:
+    count: 14
+    terms:
+    - m_photography
+  surface_rendering:
+    count: 9
+    terms:
+    - m_cinematography_lighting
+  taxation:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'kahneman: fine/penalty judgements as an arena'
+  team_culture:
+    count: 2
+    terms:
+    - s_org_management
+  team_feedback:
+    count: 2
+    terms:
+    - s_creative_practice_process
+  team_practice:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  team_processes_and_methods:
+    count: 1
+    terms:
+    - s_org_management
+  technology:
+    count: 1
+    terms:
+    - s_category_specific
+  technology_adoption:
+    count: 2
+    terms:
+    - s_persuasion_psychology
+    note: 'why people adopt — diffusion psychology'
+  technology_brands:
+    count: 1
+    terms:
+    - s_category_specific
+  testing_method:
+    count: 25
+    terms:
+    - s_advertising_effectiveness
+    note: 'hopkins/ogilvy/sullivan: pre-testing and measured response; mail_order_advertising precedent'
+  trade_distribution:
+    count: 5
+    terms:
+    - s_marketing_strategy
+    note: 'go-to-market distribution'
+  travel_advertising:
+    count: 1
+    terms:
+    - s_category_specific
+  underwriting:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  university_admissions:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  university_conduct_codes:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  unsolicited_feedback:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  venture_investment:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  video_content:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+    note: 'berger arena: content whose sharing is studied'
+  visual_design_discussions:
+    count: 1
+    terms:
+    - s_creative_practice_process
+  voting_behaviour:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  war_reporting:
+    count: 1
+    terms:
+    - m_photography
+    note: 'sontag: war photography as a photographic practice, not press-sector analysis'
+  web_content_accessibility_conformance:
+    count: 39
+    terms:
+    - m_web_interactive
+    - s_regulation_compliance
+    note: 'wcag: screen-interface standard plus conformance/regulation subject'
+  wildlife_photography:
+    count: 2
+    terms:
+    - m_photography
+  willingness_to_pay:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  wine_judging:
+    count: 3
+    terms:
+    - s_persuasion_psychology
+  wine_tasting:
+    count: 1
+    terms:
+    - s_persuasion_psychology
+  word_of_mouth:
+    count: 5
+    terms:
+    - s_persuasion_psychology
+  word_of_mouth_marketing:
+    count: 6
+    terms:
+    - s_marketing_strategy
+  workshops:
+    count: 1
+    terms:
+    - s_creative_practice_process
 review_queue:
 - label: method
   count: 5
@@ -1381,11 +2593,13 @@ review_queue:
   - vignelli-canon-intangibles
   reason: vignelli 3D/spatial design; same out-of-scope reason as exhibition_design
 - label: sampling
-  count: 3
+  count: 5
   source_dirs:
   - bijapurkar-we-are-like-that-only
   - hopkins-scientific-advertising-ch1-7
-  reason: 'cross-source homonym: statistical sampling (bijapurkar) vs product-sample promotion (hopkins);
+  - hopkins-scientific-advertising-ch8-21
+  reason: 'cross-source homonym: statistical sampling (bijapurkar) vs product-sample promotion (hopkins,
+    both volumes after DN-06);
     a single label->term row would be wrong for one of them'
 - label: automated_systems
   count: 2
@@ -1399,11 +2613,13 @@ review_queue:
   - jain-gods-in-the-bazaar
   reason: jain scholarly critique — a method of analysis, not a domain
 - label: design
-  count: 2
+  count: 3
   source_dirs:
   - bayles-orland-art-and-fear
+  - godin-this-is-marketing
   - sutherland-alchemy-introduction
-  reason: 'generic homonym: art practice (bayles-orland) vs behavioural design (sutherland)'
+  reason: 'generic homonym: art practice (bayles-orland) vs behavioural design (sutherland) vs
+    visual form of marketing artifacts (godin, added by the DN-06 admission)'
 - label: evaluation_of_practices
   count: 2
   source_dirs:
@@ -1436,10 +2652,11 @@ review_queue:
   - jain-gods-in-the-bazaar
   reason: jain cultural-theory concept; no subject term fits without distortion
 - label: aviation
-  count: 1
+  count: 2
   source_dirs:
+  - kahneman-sibony-sunstein-noise
   - sutherland-alchemy-introduction
-  reason: sutherland anecdote domain; unclear whether category or example — needs the object read
+  reason: sutherland anecdote domain plus kahneman judgement-arena usage (DN-06); still needs the object read before a single row can be right for both
 - label: biology
   count: 1
   source_dirs:
@@ -1469,7 +2686,7 @@ review_queue:
   count: 1
   source_dirs:
   - sutherland-alchemy-introduction
-  reason: sutherland foil discipline; not a media or subject domain
+  reason: sutherland foil discipline plus kahneman research-field usage (DN-06); not a media or subject domain
 - label: engineering
   count: 1
   source_dirs:
@@ -1537,10 +2754,11 @@ review_queue:
   - miller-storybrand-sb7
   reason: miller presentation-format label; no term fits (see keynote/keynotes)
 - label: social_science
-  count: 1
+  count: 2
   source_dirs:
+  - kahneman-sibony-sunstein-noise
   - sutherland-alchemy-introduction
-  reason: sutherland foil discipline; not a media or subject domain
+  reason: sutherland foil discipline plus kahneman research-field usage (DN-06); not a media or subject domain
 - label: source_representation
   count: 1
   source_dirs:
@@ -1551,3 +2769,90 @@ review_queue:
   source_dirs:
   - sutherland-alchemy-introduction
   reason: sutherland behavioural-design example; no term fits — see automated_systems
+- label: youtube_video_advertising
+  count: 26
+  source_dirs:
+  - google-abcd-video-ads
+  reason: 'feed-native short-form video; the matching term m_short_form_feed_video is reserved with zero members. DN-06 admitted google-abcd-video-ads (marked platform-contingent), but populating the reserved term is an explicit Controller vocabulary decision this mapping layer cannot take'
+- label: short_form_video_advertising
+  count: 4
+  source_dirs:
+  - google-abcd-video-ads
+  reason: 'feed-native short-form video; same reserved-term block as youtube_video_advertising'
+- label: short_form
+  count: 2
+  source_dirs:
+  - sullivan-hey-whipple
+  reason: 'sullivan''s brevity-across-media constraint (roadside boards to scrolling feeds); no medium term covers it and m_short_form_feed_video stays reserved'
+- label: consumer_culture
+  count: 4
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label (DN-06 admission_conditions): photography feeding consumer culture — cultural criticism, not a media craft or corpus subject term'
+- label: history
+  count: 1
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: photography and historical consciousness; no subject term for cultural criticism'
+- label: information
+  count: 2
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: photographs as information versus experience; no subject term for cultural criticism'
+- label: journalism
+  count: 4
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: photographic authority contrasted with written journalism; the practice labels (photojournalism, war_reporting) are mapped, the field-of-discourse label is not'
+- label: modernism
+  count: 1
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: art-historical frame; no subject term for cultural criticism'
+- label: news_media
+  count: 1
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: the press as social institution; no subject term for cultural criticism'
+- label: policing
+  count: 1
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: photography as instrument of state control; no subject term for cultural criticism'
+- label: public_opinion
+  count: 1
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: how photographs shape public sentiment as a social claim, not a persuasion-mechanism claim'
+- label: realism
+  count: 1
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: art-historical frame; no subject term for cultural criticism'
+- label: surveillance
+  count: 1
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: photography as instrument of state control; no subject term for cultural criticism'
+- label: tourism
+  count: 2
+  source_dirs:
+  - sontag-on-photography
+  reason: 'sontag critique-context label: photography and tourist experience — social criticism, not category-advertising conventions'
+- label: education
+  count: 3
+  source_dirs:
+  - godin-this-is-marketing
+  - kahneman-sibony-sunstein-noise
+  - sontag-on-photography
+  reason: 'three unrelated frames in one label: godin (sector marketed to), kahneman (grading/judgement arena), sontag (photography in schooling); a single label->term row would be wrong for two of them — ''design'' homonym precedent'
+- label: framework_application
+  count: 1
+  source_dirs:
+  - berger-contagious
+  reason: 'berger method-of-study label (applying the STEPPS framework), not a domain — ''method'' queue precedent'
+- label: research_method
+  count: 1
+  source_dirs:
+  - berger-contagious
+  reason: 'berger method-of-study label, not a domain — ''method'' queue precedent'
