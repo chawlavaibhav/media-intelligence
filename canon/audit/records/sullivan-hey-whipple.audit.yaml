@@ -1,12 +1,14 @@
-# REP-07 — Audit Gate v0.2 record for sullivan-hey-whipple, authored IN THE CANDIDATE DIR (a
-# candidate must not gain a record in canon/audit/records/ before admission; on admission this
-# file moves there unchanged). STATUS: PROPOSED — admission is a Controller decision.
+# Audit Gate v0.2 record — Luke Sullivan, "Hey Whipple, Squeeze This".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_sullivan_hey_whipple
 source_id: sullivan-hey-whipple
-knowledge_dir: canon/candidates/canon-014/sullivan-hey-whipple
-recorded_at_commit: 76de386fd6bf46aaae8eb3b4cd41e453252fa704
+knowledge_dir: canon/knowledge/current/sullivan-hey-whipple
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
 
 source_snapshot:
@@ -25,14 +27,16 @@ source_snapshot:
   combined_digest: 8b1bd08f996f15c2ebe95032eb5b8935d62f8841305adfdf24d89129691cbbd6
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/sullivan-hey-whipple/source-knowledge.yaml
-  - canon/candidates/canon-014/sullivan-hey-whipple/source-concept-systems.yaml
-  - canon/candidates/canon-014/sullivan-hey-whipple/operational-bindings.yaml
-  - canon/candidates/canon-014/sullivan-hey-whipple/ontology-mappings.yaml
-  - canon/candidates/canon-014/sullivan-hey-whipple/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/sullivan-hey-whipple/PROVENANCE.md
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/sullivan-hey-whipple/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/sullivan-hey-whipple/source-knowledge.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/source-concept-systems.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/operational-bindings.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/ontology-mappings.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/visual-evidence-ledger.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/PROVENANCE.md
   - canon/candidates/canon-014/sullivan-hey-whipple/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/sullivan-hey-whipple/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/sullivan-hey-whipple/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/audit/records/ogilvy-ch2-advertising-that-sells.audit.yaml
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true
