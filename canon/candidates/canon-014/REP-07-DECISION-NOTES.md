@@ -99,9 +99,46 @@ the candidate dir) is an admission-time/Writer task, not this executor's.
 
 ---
 
+## DN-06 — Admission batch authorised; rulings (c) and (d) resolved — 2026-09-01
+
+**Question put to the Controller:** the 13 completed inspection passes are independently
+re-verified (repo-wide Audit Gate 0 errors; 13/13 candidate records 0 errors, PR #85).
+Proceed to admission? And ruling (c): how do google-abcd-video-ads (platform-contingent
+official guidance) and sontag-on-photography (critique, not production technique) enter?
+
+**Controller answer (verbatim, session `session_01MTzh8gGKkyN31UruDXHcZo`):** "I am good.
+Proceed. Continue from where you left off." — and, on ruling (c): **"Admit both, marked"** —
+both enter accepted Canon carrying explicit markers: google-abcd as platform-contingent/dated
+guidance, sontag as critique context, never production doctrine; markers must keep compiled
+packs honest about what each is.
+
+**Consequences applied:**
+1. All 13 inspected candidates are admitted into `canon/knowledge/current/`, records promoted
+   into `canon/audit/records/` with digests recomputed; the repo-wide validator stays at 0
+   errors throughout.
+2. Ruling (c): the google-abcd and sontag records carry explicit `admission_conditions`
+   (platform_contingent / critique_context) that downstream compilation must surface.
+3. Ruling (d), resolved per the standing recommendation: the same-work extensions
+   (hopkins-ch8-21, lsm-beyond-ch3, ogilvy-beyond-ch2) enter as explicitly scoped extensions
+   of their live sources, never as independent origins; two-sided lineage declarations are
+   written on the live records at admission.
+4. Ries retirement paperwork per DN-05: marked retired, retained as source evidence only.
+5. Post-admission rebuilds per the REP-07 acceptance checks: corpus index/fingerprints,
+   coverage layer extended with authored assignments for the 13 sources, marker map, and the
+   compiled pilot packs recompiled (LSM coverage caveat updated to accepted status).
+
+**Not authorised:** spend; Registry rows; Production IR/Planner; changes to frozen historical
+artifacts; admission of desai/airey/freeman-beyond/samara-ch2 (still blocked) or ries
+(retired); adoption of the still-PROPOSED tranche-A artifacts beyond what admission
+mechanically requires.
+
+**Note on recording location:** this ruling belongs in `coordination/decisions/` by repo
+convention; this session's permission policy blocks workers from writing there, so it is
+recorded here (the REP-07 rulings file) for the Controller to promote at merge.
+
+---
+
 ## Open rulings awaited (runbook items)
 
-- (c) platform-contingent (google-abcd) / critique-not-craft (sontag) admission boundary —
-  inspection passes may still run; admission language waits.
-- (d) scope-extension admission convention — DEFERRED per DN-04; passes run, admission language
-  waits.
+- ~~(c)~~ RESOLVED by DN-06.
+- ~~(d)~~ RESOLVED by DN-06.
