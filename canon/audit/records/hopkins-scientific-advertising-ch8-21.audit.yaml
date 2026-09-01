@@ -1,20 +1,18 @@
-# REP-07 — Audit Gate v0.2 record for hopkins-scientific-advertising-ch8-21, authored IN THE
-# CANDIDATE DIR.
-#
-# STATUS: PROPOSED — deliberately NOT in canon/audit/records/ (a candidate dir must not gain a
-# record there while under canon/candidates/). On admission this file moves unchanged to
-# canon/audit/records/hopkins-scientific-advertising-ch8-21.audit.yaml. Admission is a
-# Controller decision; nothing here performs it.
-#
-# Ruling (d) is DEFERRED per DN-04: this record asserts NOTHING about the scoped-extension
-# admission convention. The dependence facts are stated where v0.2 requires them anyway - as
-# lineage relations - and nowhere else.
+# Audit Gate v0.2 record — Claude C. Hopkins, "Scientific Advertising", chapters 8-21 (the span
+# beyond the live accepted chapters 1-7). Authored by REP-07 in the candidate dir against the
+# exact bytes fingerprinted below; admitted to accepted Canon by Controller decision DN-06
+# (REP-07-DECISION-NOTES.md, 2026-09-01), which also resolved ruling (d): this span enters as
+# an EXPLICITLY SCOPED EXTENSION of the live hopkins_scientific_advertising_ch1_7, never as an
+# independent origin — the two-sided lineage declaration is written here and, back, on the live
+# record. The five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at
+# admission; the digests below were recomputed mechanically at the new location and are
+# unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_hopkins_sa_ch8_21
 source_id: hopkins-scientific-advertising-ch8-21
-knowledge_dir: canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21
-recorded_at_commit: 09d9c5e14e80191c961b27101234debffa7c6ecc
+knowledge_dir: canon/knowledge/current/hopkins-scientific-advertising-ch8-21
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
 
 source_snapshot:
@@ -33,14 +31,16 @@ source_snapshot:
   combined_digest: 60c73ef7efe3892a22ecfddeee2eed37710c27308ce1e70f9404211c7e471c7c
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/source-knowledge.yaml
-  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/source-concept-systems.yaml
-  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/operational-bindings.yaml
-  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/ontology-mappings.yaml
-  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/PROVENANCE.md
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/hopkins-scientific-advertising-ch8-21/source-knowledge.yaml
+  - canon/knowledge/current/hopkins-scientific-advertising-ch8-21/source-concept-systems.yaml
+  - canon/knowledge/current/hopkins-scientific-advertising-ch8-21/operational-bindings.yaml
+  - canon/knowledge/current/hopkins-scientific-advertising-ch8-21/ontology-mappings.yaml
+  - canon/knowledge/current/hopkins-scientific-advertising-ch8-21/visual-evidence-ledger.yaml
+  - canon/knowledge/current/hopkins-scientific-advertising-ch8-21/PROVENANCE.md
   - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/audit/records/hopkins-scientific-advertising-ch1-7.audit.yaml
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true
@@ -235,6 +235,12 @@ lineage:
         worth exactly zero as corroboration. Eighteen objects carry caveats naming the live
         sk_hop_sa_ id they extend or are distinct from; six ontology relationships point at live
         terms, all labelled observations.
+  # Relation to a source that is a CANON-014 candidate rather than accepted Canon at this
+  # record's admission. A candidate carries no record in canon/audit/records/, so it cannot sit
+  # in related_sources_in_corpus, whose entries the Gate resolves against existing records
+  # (jain-gods-in-the-bazaar precedent). The entry moves up into related_sources_in_corpus,
+  # symmetrically, at that source's own admission.
+  related_candidate_sources_outside_accepted_corpus:
     - source_id: hopkins-my-life-in-advertising
       relation: shared_author
       evidence: >
@@ -247,8 +253,12 @@ lineage:
   independence_basis: >
     Not independent of the two named Hopkins sources, per the pairwise entries above - against
     hopkins_scientific_advertising_ch1_7 the dependence is same-volume, the strongest in the
-    corpus. Independence is a property of a pair: nothing here impugns this source's standing
-    against any non-Hopkins source, and no such pair was assessed as dependent.
+    corpus. ADMITTED PER DN-06 RULING (d) AS AN EXPLICITLY SCOPED EXTENSION of
+    hopkins_scientific_advertising_ch1_7, never as an independent origin: the two-sided lineage
+    declaration is written on both records at admission, and agreement between the two spans is
+    one author restating himself inside one book, worth zero as corroboration. Independence is
+    a property of a pair: nothing here impugns this source's standing against any non-Hopkins
+    source, and no such pair was assessed as dependent.
   extractor_exposure:
     spec_contains_examples_from_this_source: false
     evidence: >
