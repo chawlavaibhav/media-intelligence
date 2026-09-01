@@ -1278,3 +1278,181 @@ records:
     message to what can be read in passing; Ogilvy reasons from exposure duration in the opposite direction
     and warns explicitly against designing a transit card like a billboard. Both are about out-of-home
     and they are not the same claim
+
+# ── Post-DN-06 duplicate-term adjudications ──────────────────────────────────────────────────
+# The DN-06 admission batch (canon/candidates/canon-014/REP-07-DECISION-NOTES.md) grew the
+# accepted corpus 24 -> 37 sources and created seven new exact-duplicate term strings across
+# accepted directories. One adjudication row each, per the ledger-completeness rule. Same-author
+# pairs follow ruling (d): a Hopkins work extension is never an independent second origin.
+
+- record_id: xj_0054
+  kind: convergence
+  label: blind_headline_adjudication
+  status: proposed
+  relation: maps_to
+  usable: accepted_only
+  confidence: medium
+  adjudicates_duplicate_term: blind_headline
+  members:
+  - id: t_hop_sa_0003
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'blind_headline: "A headline that does not say who the advertisement is for" — attracts many readers who could never buy while intended buyers never realise the ad concerns them'
+  - id: t_ogx_0002
+    source_dir: ogilvy-beyond-ch2
+    evidence: 'blind_headline: "A headline that does not say what the product is or what it will do for the reader. Reported at about twenty per cent below average in recall."'
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: ogilvy-beyond-ch2, audit_relation: no_entry_in_either_audit_record}
+  independent_origins: 2
+  note: >
+    The same trade term for the same named failure — a headline that withholds what the
+    advertisement concerns — but the two glosses pick out different missing information:
+    Hopkins the intended buyer (wrong readers selected), Ogilvy the product and its promise
+    (recall penalty measured). Graded medium, not high, for that difference in emphasis.
+    Different authors; no audit-record entry for the pair, so independence stands under
+    independent_origins_ok(). Ruling (d) scopes ogilvy-beyond-ch2 against its OWN live source
+    only; it does not touch a cross-author pair.
+
+- record_id: xj_0055
+  kind: dependent_pair
+  label: charging_for_the_sample_shared_author
+  status: proposed
+  relation: potentially_equivalent_to
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: charging_for_the_sample
+  independence_not_established: true
+  members:
+  - id: t_mla_0016
+    source_dir: hopkins-my-life-in-advertising
+    evidence: 'charging_for_the_sample: "Asking the interested buyer to pay part of the cost of trying" — 25 cents per inquiry free against $1.25 or more at a ten-cent charge'
+  - id: t_sa8_0019
+    source_dir: hopkins-scientific-advertising-ch8-21
+    evidence: 'charging_for_the_sample: "Putting a price on a sample greatly retards replies. Then it prohibits you from using the word ''Free'' in your ads." — 40 cents to $1 added to each reply'
+  independence:
+  - {a: hopkins-my-life-in-advertising, b: hopkins-scientific-advertising-ch8-21, audit_relation: shared_author}
+  note: >
+    Same concept — pricing the trial suppresses replies — stated by the same author (Hopkins) in
+    two works, with the same shape of cost evidence. shared_author: one authorial position stated
+    twice, never two independent origins (ruling (d), DN-06; xj_0030 precedent).
+    potentially_equivalent_to only; may not be used for aggregation.
+
+- record_id: xj_0056
+  kind: convergence
+  label: irrelevant_brilliance_adjudication
+  status: proposed
+  relation: same_failure_family
+  usable: accepted_only
+  confidence: medium
+  adjudicates_duplicate_term: irrelevant_brilliance
+  members:
+  - id: t_ogl_c003_0001
+    source_dir: ogilvy-ch2-advertising-that-sells
+    evidence: 'irrelevant_brilliance: work that is striking but not grounded in knowledge of the product — "the slippery surface of irrelevant brilliance", attributed to Francis Ogilvy, the risk of skipping preparation'
+  - id: t_whip_0014
+    source_dir: sullivan-hey-whipple
+    evidence: 'irrelevant_brilliance: quoted from Bernbach as the counterpart of dullness — work that is interesting and has no meaning for the audience; never get so far out that you stop being relevant'
+  independence:
+  - {a: ogilvy-ch2-advertising-that-sells, b: sullivan-hey-whipple, audit_relation: cites_source}
+  independent_origins: 2
+  note: >
+    One failure family — brilliance detached from relevance — under the same phrase, but the two
+    sources attribute it to DIFFERENT originators (Francis Ogilvy vs Bernbach) and ground it
+    differently: Ogilvy in missing product knowledge, Sullivan/Bernbach in missing audience
+    meaning. same_failure_family, not maps_to, and medium confidence for that reason.
+    cites_source does not defeat independence per SPEC-05 Governance rule 5 (xj_0002 precedent).
+
+- record_id: xj_0057
+  kind: dependent_pair
+  label: keyed_advertising_shared_author
+  status: proposed
+  relation: potentially_equivalent_to
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: keyed_advertising
+  independence_not_established: true
+  members:
+  - id: t_mla_0001
+    source_dir: hopkins-my-life-in-advertising
+    evidence: 'keyed_advertising (property): an ad carrying a coded coupon or reply device so responses can be attributed and counted — cost per reply and cost per sale computable'
+  - id: t_hop_sa_0016
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'keyed_advertising (remedy): marking each version of an ad so responses can be attributed to it alone, making one version comparable with another'
+  independence:
+  - {a: hopkins-my-life-in-advertising, b: hopkins-scientific-advertising-ch1-7, audit_relation: shared_author}
+  note: >
+    The same device — the coded reply key enabling attribution — from the same author in two
+    works. The extractions differ in kind (property vs remedy) because the books use it
+    differently (autobiographical practice vs prescribed method), not because the concept
+    differs. shared_author: counts once (ruling (d), DN-06). potentially_equivalent_to only.
+
+- record_id: xj_0058
+  kind: negative
+  label: noise_homonym
+  status: proposed
+  relation: distinct_from
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: noise
+  members:
+  - id: t_nse_0001
+    source_dir: kahneman-sibony-sunstein-noise
+    evidence: 'noise: "Unwanted variability in judgements that should be identical. Scatter with no direction to it, as opposed to bias" — a property of a SET of judgements'
+  - id: t_sb_c003_0001
+    source_dir: miller-storybrand-sb7
+    evidence: 'noise: "Clutter and confusion in a company''s own marketing — information the customer did not ask for and cannot use" — the enemy of a business'
+  independence:
+  - {a: kahneman-sibony-sunstein-noise, b: miller-storybrand-sb7, audit_relation: no_entry_in_either_audit_record}
+  note: >
+    Homonym. Kahneman/Sibony/Sunstein's noise is a statistical property of a set of judgements
+    (scatter, the complement of bias); Miller's noise is excess content in a marketing message.
+    Different object (judgements vs messages), different discipline (judgement science vs
+    message design), no shared mechanism. A string join would merge a measurement concept with
+    a copywriting failure. Checked and rejected; recorded per SPEC-05 Governance rule 4
+    (xj_0026 precedent).
+
+- record_id: xj_0059
+  kind: negative
+  label: substitution_homonym
+  status: proposed
+  relation: distinct_from
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: substitution
+  members:
+  - id: t_hop_sa_0010
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'substitution: "A dealer supplying a different brand when the buyer asks for the advertised one" — warnings against it had no effect, being selfish appeals'
+  - id: t_nse_0020
+    source_dir: kahneman-sibony-sunstein-noise
+    evidence: 'substitution: "Answering an easier question in place of the hard one asked, without noticing" — produces noise when the substitute varies between judges'
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: kahneman-sibony-sunstein-noise, audit_relation: no_entry_in_either_audit_record}
+  note: >
+    Homonym. Hopkins' substitution is a retail-channel event — a dealer switching the physical
+    product at point of sale; Kahneman's is a cognitive heuristic — a judge unconsciously
+    swapping the question. Different actor, different object, different mechanism; only the
+    word is shared. Checked and rejected so a string merge is never re-proposed.
+
+- record_id: xj_0060
+  kind: dependent_pair
+  label: traced_returns_shared_author
+  status: proposed
+  relation: potentially_equivalent_to
+  usable: accepted_only
+  confidence: high
+  adjudicates_duplicate_term: traced_returns
+  independence_not_established: true
+  members:
+  - id: t_mla_0002
+    source_dir: hopkins-my-life-in-advertising
+    evidence: 'traced_returns (property): responses whose origin is known, so an ad can be held responsible for cost and result — the dividing line between advertising that teaches and advertising that does not'
+  - id: t_hop_sa_0017
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'traced_returns (remedy): the recorded responses themselves, followed back to the ad that produced them — "Mail order advertising is traced down to the fraction of a penny"'
+  independence:
+  - {a: hopkins-my-life-in-advertising, b: hopkins-scientific-advertising-ch1-7, audit_relation: shared_author}
+  note: >
+    The same idea — attributed responses as the unit of advertising accountability — from the
+    same author in two works (companion concept to keyed_advertising, xj_0057: the key is the
+    device, traced returns the record it yields). shared_author: one authorial position stated
+    twice, counts once (ruling (d), DN-06). potentially_equivalent_to only.
