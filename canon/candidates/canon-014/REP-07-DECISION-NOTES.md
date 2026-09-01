@@ -138,6 +138,81 @@ recorded here (the REP-07 rulings file) for the Controller to promote at merge.
 
 ---
 
+## DN-07 · 2026-09-01 · EVAL-038 approved, EXTENDED TO MEDIA GENERATION — spend authority
+
+**Context:** the Controller instructed a continuation session to pull
+`claude/canon-context-guidance-ohi1i9` (PR #83), read this file through DN-06,
+`canon/findings/PROPOSED-EVAL-038-SUBSTITUTION-DESIGN.md`,
+`canon/compilation/INJECTION-CONTRACT-v0.md`, and the merged EVAL-035 / PILOT-001 generation
+machinery and its spend conventions, then execute. This note records the approval verbatim
+before any paid call, as instructed.
+
+**Controller approval (verbatim):**
+
+> I am the Controller. I approve EVAL-038 EXTENDED TO MEDIA GENERATION with a
+> HARD max consumed API spend of USD 10.00 total, 0 retries, execution-time
+> route/price verification before every paid call, keys from this machine.
+> Record this approval verbatim as DN-07 in the REP-07 decision-notes file
+> before any paid call. Media generation here is product learning — not
+> Capability Registry evidence.
+
+**Execution directives (verbatim):**
+
+> Execute on a new branch off claude/canon-context-guidance-ohi1i9:
+> 1. USD-0 retro-test from the EVAL-038 design (replay my two rejected
+>    PILOT-001 candidates against the compiled packs).
+> 2. Reasoning arms over ALL SIX EVAL-037 briefs — image and video both:
+>    Haiku+packs x2 reps, unconditional injection per the injection contract;
+>    then pin Gemma's official price (bytes+date, snapshot pattern — network
+>    fetch authorised) and run Gemma+packs with remaining reasoning budget.
+>    Baseline = the committed Sonnet NO_CANON packages; never re-run Sonnet.
+> 3. Generation: for B06 (image) and B01 (video), execute BOTH the best
+>    Haiku+packs package and the committed Sonnet NO_CANON package into real
+>    media — 2 images + 2 videos — using the cheapest verified route.
+> 4. Seal everything as committed bytes per the repo's sealed-evidence
+>    conventions (EVAL-024 pattern), push, and hand me the blinded judging
+>    protocol: I judge packages and media; models never judge themselves.
+>
+> Stop at the cap without exception; if video pricing makes step 3 exceed
+> remaining budget, generate the image pair, report the exact video quote,
+> and stop for my approval rather than guessing.
+
+**Machine-readable authority (EVAL-038 extended):**
+
+```yaml
+machine_authorisation:
+  tranche_id: EVAL-038-MEDIA-EXT
+  authorised: true
+  max_consumed_api_spend_usd: "10.00"
+  retries_authorised: 0
+  execution_time_route_price_verification: required_before_every_paid_call
+  approved_by: "Vaibhav Chawla (Controller)"
+  approved_at: "2026-09-01"
+  scope:
+    - haiku-plus-packs reasoning trials, 6 briefs x 2 reps, unconditional injection
+    - gemma-plus-packs reasoning trials, contingent on a pinned official price snapshot
+    - media generation for B06 (image pair) and B01 (video pair), best haiku+packs
+      package vs committed sonnet NO_CANON package, cheapest verified route
+  comparators_reused_usd0: committed Sonnet NO_CANON packages (never re-run)
+  media_generation_role: product learning only — NOT Capability Registry evidence
+  overrides:
+    - EVAL-038 design 3-rep default -> 2 reps (Controller directive)
+    - EVAL-038 design USD 1.00 reasoning ceiling -> subsumed under the USD 10.00 total cap
+  stop_rule: hard stop at USD 10.00; if the video pair cannot fit remaining budget,
+    generate the image pair, report the exact video quote, stop for approval
+```
+
+**Consequence applied:** DN-07 is recorded and committed before any paid call. All spend under
+this authority is recorded per call as committed bytes; the PILOT-001 closure's "no further
+PILOT-001 provider call" stands — media generation here runs under this NEW authority against
+EVAL-037/EVAL-038 packages, not as a PILOT-001 attempt.
+
+**Note on recording location:** as with DN-06, repo convention places rulings in
+`coordination/decisions/`; the worker permission policy blocks writes there, so it is recorded
+here for the Controller to promote at merge.
+
+---
+
 ## Open rulings awaited (runbook items)
 
 - ~~(c)~~ RESOLVED by DN-06.
