@@ -10,6 +10,7 @@ repetition number).
 
 1. **Packages, per brief (B01–B06):** blinded, stripped copies of
    - haiku-packs (weak model + compiled doctrine, unconditional injection), 2 reps;
+   - gemma-packs (second weak model + the same injection, official USD 0.00 price), 2 reps;
    - sonnet-no-canon (strong model alone, committed EVAL-037 baseline, freeze
      `baseline/sonnet-no-canon/FREEZE-COMMIT.txt`), 3 reps.
    Stripping removes FAILURE_PREVENTION, DOCTRINE_DEVIATIONS and
