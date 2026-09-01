@@ -138,6 +138,11 @@ def main():
             continue
         c = counts(p)
         files = [os.path.join(p, a) for a in ARTIFACTS if os.path.isfile(os.path.join(p, a))]
+        if not files:
+            # Residual dir of an admitted source: the extraction artifacts moved to
+            # canon/knowledge/current under a Controller admission decision, leaving only
+            # source-evidence notes behind. Not a candidate; not listed.
+            continue
         cand_files += files
         entries.append({"source_dir": d, "epistemic_status": "hold",
                         "location": p, **c, "visual_evidence": visual(p),
