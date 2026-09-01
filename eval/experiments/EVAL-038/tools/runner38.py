@@ -120,7 +120,14 @@ def run_trial(lane, lane_id, brief_id, rep, price_in, price_out, outdir, manifes
         adapter = providers.GeminiAdapter(lane["model_id"], tool_schemas=None)
     request = adapter.build_request(system, user)
 
-    max_out = providers.MAX_TOKENS[lane["model_key"]]
+    # EVAL-038 substrate correction (run 2): EVAL-037's 16k haiku ceiling is shared
+    # with the 8k thinking budget and deterministically truncates v2 packages
+    # (B01-R1 run 1: stop_reason max_tokens at exactly 16000 output tokens, evidence
+    # in raw-run1-ceiling16000/). v2 adds DOCTRINE_DEVIATIONS + per-check-id lines,
+    # so the ceiling is lifted to 32000 (EVAL-037's sonnet ceiling) for this lane.
+    max_out = 32000 if lane["model_key"] == "haiku" else providers.MAX_TOKENS[lane["model_key"]]
+    if lane["adapter"] == "anthropic":
+        request["max_tokens"] = max_out
     est_in = mrec["input_tokens_estimate"]
     reservation = (est_in / 1e6) * price_in + (max_out / 1e6) * price_out
     committed = ledger_totals()
