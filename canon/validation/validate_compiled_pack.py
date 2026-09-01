@@ -32,8 +32,10 @@ canon/compilation/COMPILED-DOCTRINE-SPEC-v0.md and the REP-05 acceptance list:
       other and to the committed pack files;
   (8) both packs contain the Devanagari limit line and product_appearance contains the LSM
       later-chapters caveat, by exact-string match;
-  (9) zero occurrences of any sk_abcd_/HOLD-lane id in any REP-05 deliverable (every
-      sk_/scs_-shaped token in every deliverable must resolve in accepted Canon).
+  (9) zero occurrences of any HOLD-lane id in any REP-05 deliverable (every
+      sk_/scs_-shaped token in every deliverable must resolve in accepted Canon; the
+      HOLD lane is read dynamically from canon/candidates/ — the former sk_abcd_
+      hardcode retired when DN-06 admitted google-abcd-video-ads).
 
 A PASS establishes structure over committed bytes. It does NOT establish relevance, doctrine
 quality, outcome improvement, or adoption.
@@ -258,10 +260,10 @@ def validate_pack(path: pathlib.Path, env: dict, digest: str | None) -> list:
     pack = yaml.safe_load(raw) or {}
     pack_id = pack.get("pack_id")
 
-    # (9) every id-shaped token anywhere in the file must resolve in accepted Canon,
-    # and sk_abcd_* (the HOLD lane's id space) must not appear at all.
-    if re.search(r"sk_abcd_\d+", raw):
-        err("contains an sk_abcd_ (HOLD) id — forbidden in any deliverable")
+    # (9) every id-shaped token anywhere in the file must resolve in accepted Canon.
+    # The HOLD lane is detected dynamically from canon/candidates/ — the earlier sk_abcd_
+    # prefix hardcode was removed when DN-06 (2026-09-01) admitted google-abcd-video-ads
+    # into accepted Canon, making that id space legitimate (platform_contingent marked).
     for token in sorted(set(re.findall(r"\b(?:sk|scs)_[a-z0-9_]+\b", raw))):
         if token in env["candidate_ids"]:
             err(f"{token}: resolves under canon/candidates/ (HOLD lane) — fail closed")
@@ -508,8 +510,6 @@ def validate_no_hold_ids(env: dict) -> list:
             errors.append(f"{path.name}: deliverable missing")
             continue
         raw = path.read_text()
-        if re.search(r"sk_abcd_\d+", raw):
-            errors.append(f"{path.name}: contains an sk_abcd_ (HOLD) id")
         for token in sorted(set(re.findall(r"\b(?:sk|scs)_[a-z0-9_]*\d\b", raw))):
             if token in env["candidate_ids"] or token not in env["owner"]:
                 errors.append(f"{path.name}: id-shaped token {token} does not resolve in "

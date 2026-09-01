@@ -76,11 +76,15 @@ class CompiledPackValidatorTest(unittest.TestCase):
         self.assertRefused(self.check_pack(doc), "does not resolve")
 
     def test_hold_lane_id_is_refused(self):
+        # Fixture repointed after DN-06 admitted google-abcd (its sk_abcd_ ids now resolve
+        # in accepted Canon, so they no longer exercise the HOLD path). airey-logo-design-love
+        # remains a HOLD candidate (REPLACEMENT-COPY blocked per DN-01) — precedent: the same
+        # repoint in tests/test_canon_context_validator.py (commit 649e685).
         doc = self.mutate(self.pa)
         doc["decisions"][0]["compiled_from"].append({
-            "ref": "sk_abcd_0001", "kind": "source_knowledge",
-            "source_dir": "google-abcd-video-ads", "concept_label": "x", "marker": None})
-        self.assertRefused(self.check_pack(doc), "sk_abcd_")
+            "ref": "sk_logo_0001", "kind": "source_knowledge",
+            "source_dir": "airey-logo-design-love", "concept_label": "x", "marker": None})
+        self.assertRefused(self.check_pack(doc), "sk_logo_")
 
     def test_wrong_source_dir_is_refused(self):
         doc = self.mutate(self.pa)
