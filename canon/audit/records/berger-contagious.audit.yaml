@@ -1,16 +1,14 @@
-# REP-07 — Audit Gate v0.2 record for berger-contagious, authored IN THE CANDIDATE DIR.
-#
-# STATUS: PROPOSED — this file deliberately does NOT live in canon/audit/records/. Per REP-07's
-# acceptance rule a candidate dir must not gain a record there while it remains under
-# canon/candidates/; placing the record here records the completed gate work WITHOUT performing
-# admission, which is a Controller decision. On admission this file moves (unchanged) to
-# canon/audit/records/berger-contagious.audit.yaml.
+# Audit Gate v0.2 record — Jonah Berger, "Contagious: Why Things Catch On".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_berger_contagious
 source_id: berger-contagious
-knowledge_dir: canon/candidates/canon-014/berger-contagious
-recorded_at_commit: b665625ca7f192ca4b8722870397f65133b859b7
+knowledge_dir: canon/knowledge/current/berger-contagious
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
 
 source_snapshot:
@@ -29,14 +27,16 @@ source_snapshot:
   combined_digest: ff795e9f73e97b24e5e2e15736c3434e5a7ff7d4ce03abced7f199c4e460511c
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/berger-contagious/source-knowledge.yaml
-  - canon/candidates/canon-014/berger-contagious/source-concept-systems.yaml
-  - canon/candidates/canon-014/berger-contagious/operational-bindings.yaml
-  - canon/candidates/canon-014/berger-contagious/ontology-mappings.yaml
-  - canon/candidates/canon-014/berger-contagious/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/berger-contagious/PROVENANCE.md
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/berger-contagious/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/berger-contagious/source-knowledge.yaml
+  - canon/knowledge/current/berger-contagious/source-concept-systems.yaml
+  - canon/knowledge/current/berger-contagious/operational-bindings.yaml
+  - canon/knowledge/current/berger-contagious/ontology-mappings.yaml
+  - canon/knowledge/current/berger-contagious/visual-evidence-ledger.yaml
+  - canon/knowledge/current/berger-contagious/PROVENANCE.md
   - canon/candidates/canon-014/berger-contagious/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/berger-contagious/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/berger-contagious/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/audit/records/heath-made-to-stick-introduction.audit.yaml
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true
