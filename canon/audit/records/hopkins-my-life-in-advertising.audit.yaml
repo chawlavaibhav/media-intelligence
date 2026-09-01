@@ -1,16 +1,17 @@
-# REP-07 — Audit Gate v0.2 record for hopkins-my-life-in-advertising, authored IN THE
-# CANDIDATE DIR.
-#
-# STATUS: PROPOSED — deliberately NOT in canon/audit/records/ (a candidate dir must not gain a
-# record there while under canon/candidates/). On admission this file moves unchanged to
-# canon/audit/records/hopkins-my-life-in-advertising.audit.yaml. Admission is a Controller
-# decision; nothing here performs it.
+# Audit Gate v0.2 record — Claude C. Hopkins, "My Life in Advertising" (1927 memoir).
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). Not a
+# same-work extension — a distinct 1927 work by the author of the live Scientific Advertising
+# spans — but one origin with them: the shared_author dependences are declared two-sidedly
+# below and on both Scientific Advertising records. The five fingerprinted artifacts moved
+# verbatim to canon/knowledge/current/ at admission; the digests below were recomputed
+# mechanically at the new location and are unchanged.
 
 audit_record_version: v0.2
 audit_id: aud_hopkins_my_life
 source_id: hopkins-my-life-in-advertising
-knowledge_dir: canon/candidates/canon-014/hopkins-my-life-in-advertising
-recorded_at_commit: 09d9c5e14e80191c961b27101234debffa7c6ecc
+knowledge_dir: canon/knowledge/current/hopkins-my-life-in-advertising
+recorded_at_commit: work-branch-rep-07-admission
 audit_status: complete
 
 source_snapshot:
@@ -29,14 +30,16 @@ source_snapshot:
   combined_digest: c08700e67ebedab41c00dda0156d87251242689e4c310073581b1daaaa5d9f9b
 
 evidence_basis_for_this_audit:
-  - canon/candidates/canon-014/hopkins-my-life-in-advertising/source-knowledge.yaml
-  - canon/candidates/canon-014/hopkins-my-life-in-advertising/source-concept-systems.yaml
-  - canon/candidates/canon-014/hopkins-my-life-in-advertising/operational-bindings.yaml
-  - canon/candidates/canon-014/hopkins-my-life-in-advertising/ontology-mappings.yaml
-  - canon/candidates/canon-014/hopkins-my-life-in-advertising/visual-evidence-ledger.yaml
-  - canon/candidates/canon-014/hopkins-my-life-in-advertising/PROVENANCE.md
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/hopkins-my-life-in-advertising/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/hopkins-my-life-in-advertising/source-knowledge.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/source-concept-systems.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/operational-bindings.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/ontology-mappings.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/visual-evidence-ledger.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/PROVENANCE.md
   - canon/candidates/canon-014/hopkins-my-life-in-advertising/EXTRACTION-NOTES.md
-  - canon/candidates/canon-014/hopkins-my-life-in-advertising/audit-assessment-HOLD.yaml
+  - canon/candidates/canon-014/hopkins-my-life-in-advertising/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
   - canon/audit/records/hopkins-scientific-advertising-ch1-7.audit.yaml
   - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
 source_reopened: true

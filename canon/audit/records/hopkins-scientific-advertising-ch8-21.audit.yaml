@@ -235,12 +235,10 @@ lineage:
         worth exactly zero as corroboration. Eighteen objects carry caveats naming the live
         sk_hop_sa_ id they extend or are distinct from; six ontology relationships point at live
         terms, all labelled observations.
-  # Relation to a source that is a CANON-014 candidate rather than accepted Canon at this
-  # record's admission. A candidate carries no record in canon/audit/records/, so it cannot sit
-  # in related_sources_in_corpus, whose entries the Gate resolves against existing records
-  # (jain-gods-in-the-bazaar precedent). The entry moves up into related_sources_in_corpus,
-  # symmetrically, at that source's own admission.
-  related_candidate_sources_outside_accepted_corpus:
+    # This entry sat in the jain-precedent related_candidate_sources_outside_accepted_corpus
+    # block for the one commit during which the memoir was admitted after this span; it moved
+    # up into related_sources_in_corpus, symmetrically, at the memoir's own admission
+    # (DN-06 batch, 2026-09-01).
     - source_id: hopkins-my-life-in-advertising
       relation: shared_author
       evidence: >
