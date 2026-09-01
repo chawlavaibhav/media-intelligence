@@ -1,0 +1,59 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+- One (1) premium advertising still image, aspect ratio 4:5, delivered at 4000×5000 px (300 dpi equivalent), RGB, retouched to print/social ad quality.
+- Clean top-third negative space reserved for brand logo/tagline to be composited in post (not baked into the generative output).
+
+OBJECTIVE_INTERPRETATION
+The client is launching a modern Indian sparkling beverage (mosambi + sparkling water) targeting urban 22–35 year-olds who associate "premium" with restraint, texture, and craft rather than logos or heritage motifs. The image must instantly read as a serious, adult beverage-brand product shot — closer to a boutique tonic/craft-soda or premium cold-pressed juice campaign than a mass-market soft drink — while the fruit itself (mosambi) remains visually identifiable so the flavor promise isn't lost. No stereotypical "Indian-ness" (no paisley, henna, marigolds, elephants, flags, saris, temples). No celebrity, no third-party branding, no external references.
+
+CORE_CREATIVE_IDEA
+"Quiet Fizz" — a single frozen moment of understated luxury: a slim glass bottle of the drink standing on warm travertine stone, condensation beading on the glass, a halved mosambi resting beside it with visible juicy flesh, and a filled glass mid-fizz catching soft window light. The mood is that of a design-forward café or a minimalist kitchen counter in a contemporary Indian home — natural materials (stone, linen, brass, matte ceramic) replace clichéd cultural signifiers, doing the cultural work through material and color sensibility rather than iconography. The mosambi itself becomes the only "Indian" cue needed — familiar, unforced, and appetizing.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Product bottle (hero, largest, sharpest focus, brightest highlight) — communicates "premium sparkling mosambi drink."
+2. Halved mosambi fruit + juice glass — communicates flavor authenticity and refreshment.
+3. Condensation, bubbles, light — communicate coldness/carbonation/craft.
+4. Negative space top-third — reserved for wordmark/tagline (added later, not generated).
+5. Background props (stone, linen, brass) — support premium/contemporary mood, never compete with product.
+
+VISUAL_SYSTEM
+- Palette: warm stone beige/travertine background, muted terracotta shadows, mosambi's pale green-yellow flesh as the accent "pop" color, brushed brass/copper for warm metallic accents, off-white linen texture. No neon, no primary red/blue soda colors.
+- Materials: honed stone slab surface, linen napkin with visible weave, brushed brass small dish or spoon, matte-finish glass bottle (not glossy plastic-shiny), thin crown cap or cork-topped closure in matte bronze.
+- Bottle design: tall slim glass silhouette (mineral-water proportions, not cola-bottle curves), subtle pale sage-tinted glass, minimal wraparound label covering roughly the middle third, thin embossed line-art of a mosambi leaf/branch as the only decorative motif, small clean wordmark space (left blank/placeholder for logo lock-up).
+- Lighting: single soft directional key light (simulating window light) from upper left, gentle rim light upper right to separate bottle edge from background, soft natural shadow falling right, no harsh studio glare, no theatrical colored gels.
+- Composition: vertical 4:5 frame; bottle placed on right-of-center vertical third, filling ~65–70% of frame height; glass with drink positioned lower-left, slightly out of crisp focus (shallow depth via longer lens compression); halved mosambi fruit in the immediate foreground bottom edge, partially cropped for intimacy; top third left largely negative/soft-focus stone texture for logo placement.
+- Depth of field: product bottle tack-sharp, foreground fruit slightly soft, background very soft bokeh — simulating macro/product lens (~100mm equivalent, f/6.3–f/8).
+
+PRODUCTION_RECIPE
+- Style reference: contemporary editorial beverage/product photography (think boutique tonic or artisanal soda campaigns), not soft-drink advertising, not food-blog flat-lay.
+- Camera behavior: product-photography macro lens simulation, eye-level to slightly elevated angle (~15° above horizontal), tripod-stable framing, no wide-angle distortion.
+- Lighting behavior: single large soft key (softbox/window simulation) camera-left, subtle bounce fill camera-right, controlled specular highlight on bottle shoulder and cap only.
+- Styling detail: condensation droplets realistic and physically consistent with light direction; bubbles in glass fine and natural (not cartoon-large); mosambi rendered anatomically correct — larger and more oblate than a lime, pale yellow-green mottled skin, pithy white interior, pale straw-yellow juicy segments (must not look like an orange or lemon).
+- Color grade: warm neutral grade, slightly desaturated background, saturation boost reserved only for the mosambi flesh and drink liquid to keep eye on product.
+
+GENERATION_PROMPTS
+Single final prompt (image generation):
+
+"Premium advertising product photograph, vertical 4:5 composition, ultra-high detail. A tall slim matte pale-sage glass bottle of a modern sparkling mosambi (sweet lime) drink stands on a honed warm travertine stone surface, condensation droplets beading realistically on the glass, catching soft directional window light from upper left with a subtle rim light on the right edge. The bottle has a minimal label covering the middle third with a delicate embossed line-art motif of a mosambi leaf and branch, and blank clean space reserved for a small wordmark (no readable text, no logo). Beside it, slightly softer focus, a short glass filled with the pale golden-green sparkling drink, fine natural bubbles rising, condensation on the glass. In the immediate foreground, a halved mosambi (sweet lime) fruit, anatomically correct — thick pale yellow-green mottled skin, white pith, juicy pale straw-colored segments glistening — partially cropped at frame edge. Background is a softly blurred warm stone and linen surface in muted terracotta and beige tones, with a small brushed brass dish or spoon slightly out of focus for material richness. Composition: bottle on right third, filling roughly two-thirds of frame height, tack-sharp focus on bottle, shallow depth of field, soft bokeh background, generous negative space in upper third for later logo placement. Lighting: soft single-source natural key light, gentle shadow falling right, no harsh glare, no colored gels. Mood: sophisticated, contemporary, refreshing, adult beverage brand aesthetic — comparable to premium artisanal tonic or cold-pressed juice advertising, NOT a mass-market soda. Color palette: warm stone beige, muted terracotta, brushed brass, pale sage glass, golden-green citrus tones. Photorealistic, editorial commercial photography, 100mm macro-style lens compression, f/7 depth of field, clean premium finish, no clutter, no extra bottles, no people, no hands, no text, no logos, no cultural iconography."
+
+Negative prompt:
+"paisley, henna, marigold garlands, elephant, temple, sari, Indian flag, Taj Mahal, mango, lemon, lime confusion, orange fruit substituted for mosambi, plastic bottle sheen, glossy soda-can aesthetic, neon colors, cartoon bubbles, oversized bubbles, exaggerated splash, celebrity, human hands, human face, multiple duplicate bottles, blurry label smear, distorted text, gibberish typography, cluttered background, harsh flash, overexposed highlights, low-detail render, plastic-looking condensation, unrealistic reflections, watermark."
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- Actual brand wordmark, logo mark, and any on-bottle typography must NOT be relied upon from the generative model (text rendering is unreliable). These will be designed as vector assets and composited in post-production onto the pre-reserved blank label area and top-third negative space.
+- Final tagline/typography placement, kerning, and brand color-lock (if a specific Pantone/brand palette exists) to be applied deterministically in post via a design tool, not regenerated.
+- Any regulatory text (net quantity, FSSAI mark, nutritional info) must be added as a deterministic overlay, never generated.
+
+AUDIO_AND_EDIT
+Not applicable — static image deliverable only.
+
+HARD_CONSTRAINT_CHECK
+- 4:5 aspect ratio image: satisfied.
+- Premium, refreshing, sophisticated, culturally contemporary feel: satisfied via material/lighting/color system.
+- Retains familiarity of mosambi: satisfied via accurate fruit rendering as key visual anchor.
+- Avoids clichéd "Indian" visual shorthand: satisfied via explicit exclusion list and material-led design language.
+- Avoids cheap soft-drink look: satisfied via matte glass, muted palette, editorial lighting, no neon/plastic cues.
+- Product is unmistakable hero: satisfied via compositional dominance, sharpest focus, largest scale.
+- No celebrity: satisfied, no human figures included at all.
+- No external website reference: satisfied, no third-party site or brand referenced.
