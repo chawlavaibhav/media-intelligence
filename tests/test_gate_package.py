@@ -211,6 +211,49 @@ class ShotAndDeclarationTest(unittest.TestCase):
         self.assertIsNone(package.declared_min_dimensions(self.h06))
         self.assertIsNone(package.declared_min_dimensions(self.s01))
 
+    def test_f04_find_aspect_ignores_clock_times(self):
+        fa = package.find_aspect
+        self.assertEqual(fa("Vertical 9:16 handheld video"), "9:16")
+        self.assertEqual(fa("4:5 aspect ratio (e.g., 1600×2000 px minimum"), "4:5")
+        self.assertEqual(fa("One vertical (9:16) commercial video"), "9:16")
+        self.assertEqual(fa("Deliverable: 3:4."), "3:4")            # no context: an aspect
+        self.assertEqual(fa("Hands set to 10:10 as convention. 4:5 aspect"), "4:5")
+        self.assertIsNone(fa("Hands set to 10:10 as convention."))
+        self.assertIsNone(fa("Time must read ~10:10."))
+        self.assertIsNone(fa("the logo holds for the last 0:03"))
+        self.assertIsNone(fa("shot runs 0:05–0:12"))
+        self.assertIsNone(fa("at 10:10 sharp"))
+        self.assertEqual(fa("at 16:9 aspect"), "16:9")               # aspect context wins
+
+    def test_f14_exclamation_inside_a_clause_does_not_split(self):
+        split = package.split_sentences
+        self.assertEqual(split("a spreadsheet with a visible #REF! error as a cursor clicks. Next."),
+                         ["a spreadsheet with a visible #REF! error as a cursor clicks", "Next."])
+        # the delimiter is consumed, as `.` and `;` already are
+        self.assertEqual(split("Really! The next shot"), ["Really", "The next shot"])
+        self.assertEqual(split("Why? Because."), ["Why", "Because."])
+        self.assertEqual(split("go! 9:16 frame"), ["go", "9:16 frame"])
+        self.assertEqual(split("Cut; then hold. Done"), ["Cut", "then hold", "Done"])
+
+    def test_f12_inch_mark_before_the_prompts_does_not_shift_pairing(self):
+        body = "x" * 130
+        pkg = package.parse_package(
+            'GENERATION_PROMPTS\nNote: the 5" screen is the hero.\n\n"' + body + '"\n')
+        prompts = package.extract_prompts(pkg)
+        self.assertEqual([p.text for p in prompts], [body])
+        # and between prompts, and a genuine closing quote after a digit still closes
+        pkg = package.parse_package(
+            'GENERATION_PROMPTS\n"' + body + '"\nthe 5" screen\n"' + body + ' 99"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], [body, body + " 99"])
+
+    def test_f12_sonnet_b01_prompts_survive_an_inch_mark_above_them(self):
+        text = SONNET_B01.read_text().replace(
+            "**Shot 1–5 (Chaos block)", 'Note: the 5" screen is the hero.\n\n**Shot 1–5 (Chaos block)')
+        before = [p.text for p in package.extract_prompts(package.parse_package(SONNET_B01.read_text()))]
+        after = [p.text for p in package.extract_prompts(package.parse_package(text))]
+        self.assertEqual(len(before), 4)
+        self.assertEqual(after, before)
+
     def test_duration_pattern_forms(self):
         self.assertEqual(package.parse_duration("2s"), (2.0, 2.0))
         self.assertEqual(package.parse_duration("~30 seconds"), (30.0, 30.0))

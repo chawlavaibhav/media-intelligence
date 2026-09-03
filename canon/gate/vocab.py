@@ -12,6 +12,15 @@ change: append a line to CHANGELOG with the date, the constant and the reason.
 
 CHANGELOG = [
     "2026-09-03 v0: constants transcribed from GATE-BUILD-PLAN-v0 §B.1 and §D as written.",
+    "2026-09-03 F-04: ASPECT_CONTEXT_WORDS / TIME_CONTEXT_BEFORE / TIME_CONTEXT_AFTER added — "
+    "a `\\d:\\d` pair with clock-time context ('Hands set to 10:10 as convention.', 'the "
+    "logo holds for the last 0:03', 'Time must read ~10:10') is not an aspect; aspect context "
+    "('4:5 aspect ratio', 'Vertical 9:16', '(9:16)') wins over time context.",
+    "2026-09-03 F-07: NEGATED_AFTER added for CA-D2 clause 2 — the negation window for a named "
+    "ratio is the whole sentence before the term plus an 'is not / is avoided' disclaimer right "
+    "after it ('We will not compose this using the rule of thirds.', 'Avoid any reliance on the "
+    "classic rule of thirds.', 'The rule of thirds is not used here.'). T2/T3 keep the 4-token "
+    "window.",
 ]
 
 # ── §B.1 recognisers for the partial pre-dispatch checks ────────────────────────────────
@@ -66,6 +75,21 @@ BALANCE_TERMS = ("balanced", "balance", "restless", "unbalanced", "off-balance",
                  r"refuse\s+the\s+eye")
 # CA-D6 — alongside package.ASPECT_RATIO (`\b\d{1,2}:\d{1,2}\b`).
 ASPECT_WORDS = ("square", "portrait", "landscape", "vertical", "horizontal")
+# CA-D6 / DISPATCH-ASPECT (F-04): a `\d:\d` pair is an aspect unless it reads as a clock time.
+# Within 3 tokens either side, an aspect-context word accepts it; otherwise a time-context
+# word before it (or a time suffix after it), a leading zero, or a zero numerator rejects it.
+ASPECT_CONTEXT_WORDS = frozenset((
+    "aspect", "ratio", "vertical", "portrait", "landscape", "horizontal", "square", "format",
+    "frame", "framing", "crop", "cropped", "video", "image", "still", "hero", "composition",
+    "deliverable", "delivered", "execute",
+))
+TIME_CONTEXT_BEFORE = frozenset((
+    "to", "set", "hands", "hand", "read", "reads", "reading", "showing", "shows", "show",
+    "time", "times", "timestamp", "clock", "last", "first", "until", "till", "mark", "minute",
+    "minutes", "second", "seconds", "hour", "hours", "o'clock", "around", "approx",
+    "approximately", "by", "since", "before", "after", "between", "runs", "from", "at",
+))
+TIME_CONTEXT_AFTER = frozenset(("am", "pm", "o'clock", "mark", "timestamp", "sharp", "as"))
 # PA-D10 — a DOCTRINE_DEVIATIONS entry names a decision id and carries a forcing clause.
 DEVIATION_ID = r"\b(?:PA|CA)-D\d+\b"
 DEVIATION_CLAUSE_WORDS = ("because", "brief")
@@ -86,6 +110,12 @@ TEXT_REQUEST_TERMS = (
 # A negator within 4 tokens before a T2 term clears it.
 NEGATORS = ("no", "not", "never", "without", "avoid", "zero")
 NEGATOR_PHRASES = ("rather than", "never a")
+# CA-D2 clause 2 only (F-07): a disclaimer immediately after a named-ratio term also clears
+# it — "The rule of thirds is not used here." / "The golden ratio is deliberately avoided."
+NEGATED_AFTER = (
+    r"^\s*(?:is|are|was|were|will\s+be|be|gets?|remains?)\s+(?:\w+ly\s+)?"
+    r"(?:not|never|avoided|rejected|ignored|unused|forbidden|banned|excluded|abandoned|dropped)\b"
+)
 # A deferral term anywhere in the sentence clears T2 (the text is composited, not drawn).
 DEFERRAL_TERMS = (
     r"added\s+in\s+post", r"in\s+post", "post-production", "composited", "composite",

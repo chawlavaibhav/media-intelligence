@@ -23,6 +23,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
+from canon.gate import vocab
+
 SECTION_RE = re.compile(r"^(?:#{1,4}\s+)?(?:\*\*)?([A-Z][A-Z_]{3,})(?:\*\*)?:?$")
 TYPED_SUBFIELDS = ("surface_finish_per_key_object", "implied_light_source", "placement_zone",
                    "attention_order")
@@ -38,7 +40,10 @@ DURATION_PATTERN = re.compile(
 ASPECT_RATIO = re.compile(r"\b(\d{1,2}):(\d{1,2})\b")
 DIMENSIONS = re.compile(r"(\d{3,5})\s*[×x*]\s*(\d{3,5})")
 MINIMUM_WORDS = re.compile(r"\b(?:minimum|min|at least)\b", re.I)
-SENTENCE_SPLIT = re.compile(r"[.;!?]\s+|\n")
+# `.` and `;` split at whitespace; `!` and `?` split only when the next character is not a
+# lowercase letter, so "a visible #REF! error" stays one clause (F-14).
+SENTENCE_SPLIT = re.compile(r"[.;]\s+|[!?]\s+(?=[^a-z])|\n")
+WORD = re.compile(r"[A-Za-z']+")
 
 
 @dataclass
@@ -142,16 +147,34 @@ def scope_text(pkg: Package, feeds_sections) -> Scope:
 
 # ── generation prompts ───────────────────────────────────────────────────────
 
-def _quoted_runs(text: str) -> list:
-    """(start, body) for every quoted run >= PROMPT_MIN_CHARS. Straight quotes are paired
-    sequentially (open, close, open, close…) so the text between two prompts is never
-    mistaken for a third; curly quotes pair each “ with the next ”."""
+def _straight_runs(text: str) -> list:
+    """(start, body) between paired straight quotes. A quote opens a run only when nothing
+    alphanumeric precedes it and something non-blank follows; it closes a run only when
+    nothing alphanumeric follows. A quote that can neither open nor close where it stands —
+    an inch mark such as `the 5" screen` (digit before, lowercase word after) or a stray
+    closer with no run open — is skipped instead of shifting every later pair (F-12)."""
     runs = []
-    straight = [m.start() for m in re.finditer(r'"', text)]
-    for i in range(0, len(straight) - 1, 2):
-        body = text[straight[i] + 1:straight[i + 1]]
-        if len(body) >= PROMPT_MIN_CHARS:
-            runs.append((straight[i], body))
+    open_at = None
+    for m in re.finditer(r'"', text):
+        i = m.start()
+        prev = text[i - 1] if i else ""
+        nxt = text[i + 1] if i + 1 < len(text) else ""
+        if prev.isdigit() and re.match(r"[ \t]*[a-z]", text[i + 1:i + 3]):
+            continue   # inch mark
+        if open_at is None:
+            if not (prev.isalnum() or prev == '"') and nxt and not nxt.isspace():
+                open_at = i
+        elif not nxt.isalnum() and not prev.isspace():
+            runs.append((open_at, text[open_at + 1:i]))
+            open_at = None
+    return runs
+
+
+def _quoted_runs(text: str) -> list:
+    """(start, body) for every quoted run >= PROMPT_MIN_CHARS. Straight quotes pair by
+    `_straight_runs`; curly quotes pair each “ with the next ”."""
+    runs = [(start, body) for start, body in _straight_runs(text)
+            if len(body) >= PROMPT_MIN_CHARS]
     for m in re.finditer(r"“([^“”]*)”", text, re.S):
         if len(m.group(1)) >= PROMPT_MIN_CHARS:
             runs.append((m.start(), m.group(1)))
@@ -229,15 +252,40 @@ def shot_sum_s(shots) -> float:
     return float(sum(s.duration_s_max for s in shots if s.duration_s_max is not None))
 
 
+def find_aspect(text: str):
+    """The first `a:b` in `text` that reads as an aspect, normalised ("4:5"), else None. A
+    pair with an ASPECT_CONTEXT word within three tokens on either side is an aspect; failing
+    that, a pair with a zero numerator, a leading-zero denominator, a TIME_CONTEXT word within
+    three tokens before it or a time suffix within two after it is a clock time and is
+    skipped (F-04: "Hands set to 10:10 as convention.", "the last 0:03")."""
+    for m in ASPECT_RATIO.finditer(text):
+        a, b = m.group(1), m.group(2)
+        # context windows stop at a sentence boundary so "… 10:10 as convention. 4:5 aspect"
+        # does not lend the next sentence's "aspect" to the clock time
+        head = re.split(r"[.;!?\n]", text[max(0, m.start() - 60):m.start()])[-1]
+        tail = re.split(r"[.;!?\n]", text[m.end():m.end() + 40])[0]
+        before = [t.lower() for t in WORD.findall(head)][-3:]
+        after = [t.lower() for t in WORD.findall(tail)][:3]
+        if any(t in vocab.ASPECT_CONTEXT_WORDS for t in before + after):
+            return f"{int(a)}:{int(b)}"
+        if a == "0" or (len(b) == 2 and b[0] == "0"):
+            continue
+        if any(t in vocab.TIME_CONTEXT_BEFORE for t in before) \
+                or any(t in vocab.TIME_CONTEXT_AFTER for t in after[:2]):
+            continue
+        return f"{int(a)}:{int(b)}"
+    return None
+
+
 def declared_aspect(pkg: Package):
     for name in ("DELIVERABLE", "VISUAL_SYSTEM"):
-        m = ASPECT_RATIO.search(pkg.sections.get(name, ""))
-        if m:
-            return f"{int(m.group(1))}:{int(m.group(2))}"
+        found = find_aspect(pkg.sections.get(name, ""))
+        if found:
+            return found
     for p in extract_prompts(pkg):
-        m = ASPECT_RATIO.search(p.text)
-        if m:
-            return f"{int(m.group(1))}:{int(m.group(2))}"
+        found = find_aspect(p.text)
+        if found:
+            return found
     return None
 
 

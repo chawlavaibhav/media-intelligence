@@ -79,6 +79,23 @@ def negated(sentence: str, start: int) -> bool:
     return any(p in joined for p in vocab.NEGATOR_PHRASES)
 
 
+NEGATED_AFTER = re.compile(vocab.NEGATED_AFTER, re.I)
+
+
+def negated_in_sentence(sentence: str, start: int, end: int) -> bool:
+    """CA-D2 clause 2 (F-07): a NEGATOR anywhere earlier in the sentence, or an `is not` /
+    `is avoided` disclaimer immediately after the term at sentence[start:end], clears a
+    named-ratio mention. Wider than `negated` on purpose: the check is whether placement is
+    *justified by* the ratio, and a sentence that names it only to disclaim it is not."""
+    tokens = [t.lower().strip("'") for t in TOKEN.findall(sentence[:start])]
+    if any(t in vocab.NEGATORS for t in tokens):
+        return True
+    joined = " ".join(tokens)
+    if any(p in joined for p in vocab.NEGATOR_PHRASES):
+        return True
+    return bool(NEGATED_AFTER.match(sentence[end:]))
+
+
 def _matches(compiled, sentence: str, *, skip_negated: bool) -> list:
     found = []
     for _, rx in compiled:

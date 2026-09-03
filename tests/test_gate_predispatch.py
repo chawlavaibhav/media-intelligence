@@ -247,6 +247,74 @@ class MutationTest(_Base):
         r = self.run_gate(SONNET_B06, "static_image", True, text=text)
         self.assertEqual(self.status(r, "CA-D2-check"), S.PASS)
 
+    def ca_d2_with(self, sentence):
+        text = SONNET_B06.read_text().replace(
+            "Aspect ratio: 4:5, vertical.", f"Aspect ratio: 4:5, vertical. {sentence}")
+        return self.row(self.run_gate(SONNET_B06, "static_image", True, text=text), "CA-D2-check")
+
+    def test_f07_negated_named_ratio_outside_a_four_token_window_still_passes(self):
+        # checker F-07: the negator sits more than 4 tokens before the term, or after it
+        for sentence in ("We will not compose this using the rule of thirds.",
+                         "Avoid any reliance on the classic rule of thirds.",
+                         "The rule of thirds is not used here.",
+                         "Not the rule of thirds.",
+                         "The golden ratio is deliberately avoided here."):
+            row = self.ca_d2_with(sentence)
+            self.assertEqual(row.status, S.PASS, sentence)
+
+    def test_f07_named_ratio_with_an_unrelated_negator_still_fails(self):
+        # the negator does not govern the term: still a justification by a named ratio
+        for sentence in ("Placement follows the golden ratio.",
+                         "Dial on the rule of thirds line, not centred.",
+                         "Rule of thirds, no exceptions."):
+            row = self.ca_d2_with(sentence)
+            self.assertEqual(row.status, S.FAIL, sentence)
+            self.assertTrue(row.blocking, sentence)
+
+    def test_f04_a_clock_time_in_the_deliverable_is_not_an_aspect(self):
+        # checker F-04: watch briefs conventionally state 10:10; a timestamp is not an aspect
+        for lead in ("Hands set to 10:10 as convention. ", "The logo holds for the last 0:03. "):
+            text = SONNET_B06.read_text().replace(
+                "One premium, commercially usable", lead + "One premium, commercially usable")
+            r = self.run_gate(SONNET_B06, "static_image", True, text=text,
+                              dispatch_doc=dispatch("E038-media-B06-sonnet-no-canon"))
+            self.assertIn("aspect stated: 4:5", self.row(r, "CA-D6-check").detail, lead)
+            self.assertEqual(self.status(r, "DISPATCH-ASPECT"), S.PASS, lead)
+            self.assertEqual(r.verdict(), "PASS", lead)
+
+    def test_f12_an_inch_mark_before_the_prompts_does_not_shift_extraction(self):
+        # checker F-12: one unbalanced straight quote in product copy above the prompts
+        text = SONNET_B01.read_text().replace(
+            "**Shot 1–5 (Chaos block)", 'Note: the 5" screen is the hero.\n\n**Shot 1–5 (Chaos block)')
+        self.assertNotEqual(text, SONNET_B01.read_text())
+        r = self.run_gate(SONNET_B01, "video", False, text=text)
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertEqual(lt.status, S.FAIL)
+        self.assertTrue(lt.detail.startswith("prompt 1, sentence 2"))
+        hit_prompts = {e.split(",")[0] for e in lt.evidence}
+        self.assertTrue({"prompt 1", "prompt 3"} <= hit_prompts, hit_prompts)
+
+    def test_f11_a_prose_lead_in_before_the_deviation_entries_is_not_an_entry(self):
+        text = HAIKU_B06.read_text().replace(
+            "## DOCTRINE_DEVIATIONS\n",
+            "## DOCTRINE_DEVIATIONS\n\nThe following deviations were forced by the brief:\n")
+        r = self.run_gate(HAIKU_B06, "static_image", True, text=text)
+        row = self.row(r, "PA-D10-check")
+        self.assertEqual(row.status, S.PASS, row.detail)
+        self.assertIn("2 entries", row.detail)
+
+    def test_f11_prose_after_an_entry_is_its_continuation(self):
+        pkg = ("## VISUAL_SYSTEM\nkey light from upper-left; brushed case; centre zone; balanced\n"
+               "## DELIVERABLE\none 4:5 image\n## GENERATION_PROMPTS\n\""
+               + "A matte plate, no text. " * 8 + "\"\n## DOCTRINE_DEVIATIONS\n"
+               "Deviations forced by the brief:\n\n"
+               "- PA-D4 (single source)\n"
+               "  Overridden because the brief fixes a two-window room.\n")
+        r = self.run_gate(Path("synthetic.txt"), "static_image", True, text=pkg)
+        row = self.row(r, "PA-D10-check")
+        self.assertEqual(row.status, S.PASS, row.detail)
+        self.assertIn("1 entries", row.detail)
+
     def test_deleting_finish_words_fails_pa_d1_non_blocking(self):
         text = SONNET_B06.read_text()
         for w in ("brushed", "polished", "Brushed", "Polished", "glossy", "gloss", "matte",

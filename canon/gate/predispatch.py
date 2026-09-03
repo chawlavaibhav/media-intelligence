@@ -167,7 +167,7 @@ def check_ca_d2(ctx: Ctx, line) -> CheckResult:
         for sentence in package.split_sentences(body):
             for _, rx in NAMED_RATIO:
                 for m in rx.finditer(sentence):
-                    if not textscan.negated(sentence, m.start()):
+                    if not textscan.negated_in_sentence(sentence, m.start(), m.end()):
                         return _doctrine(
                             line, Status.FAIL, clause,
                             f"placement justified by a named ratio or grid line "
@@ -261,9 +261,18 @@ def check_pa_d8(ctx: Ctx, line) -> CheckResult:
                      "no specular declaration (either polarity)")
 
 
+ENTRY_SHAPE = re.compile(r"^(?:\||[-*•]\s|\d+[.)]\s|\*\*|(?:PA|CA)-D\d+\b)")
+NONE_LITERALS = ("none", "nootherdeviations", "nofurtherdeviations", "noadditionaldeviations")
+
+
 def _deviation_entries(section: str) -> tuple:
-    """(entries, none_literal): non-blank lines minus table header/separator rows, headings,
-    rules and the literal `none`."""
+    """(entries, none_literal). An entry is a line shaped like one — a table row, a bullet,
+    a numbered item, a bold lead or a line opening with a decision id. A line ending in a
+    colon is a lead-in and is skipped ("The following deviations were forced by the
+    brief:" — F-11); other prose continues the entry above it, or opens one when nothing
+    precedes it (a deviation stated in bare prose must still name its id). Table
+    header/separator rows, headings, rules and the literal `none` (or "No other
+    deviations") are not entries."""
     lines = section.splitlines()
     entries, none_literal = [], False
     for i, raw in enumerate(lines):
@@ -275,10 +284,15 @@ def _deviation_entries(section: str) -> tuple:
         if i + 1 < len(lines) and TABLE_SEPARATOR.match(lines[i + 1].strip()):
             continue  # a table header row
         bare = re.sub(r"[*_`|.\s]", "", line).lower()
-        if bare == "none":
+        if bare in NONE_LITERALS or any(bare.startswith(n) for n in NONE_LITERALS[1:]):
             none_literal = True
             continue
-        entries.append(line)
+        if re.sub(r"[*_\s]+$", "", line).endswith(":"):
+            continue  # a lead-in, not a deviation
+        if ENTRY_SHAPE.match(line) or not entries:
+            entries.append(line)
+        else:
+            entries[-1] += " " + line
     return entries, none_literal
 
 
@@ -319,10 +333,9 @@ def check_ca_d6(ctx: Ctx, line) -> CheckResult:
     if ctx.prompts:
         parts.append(("GENERATION_PROMPTS", "\n".join(ctx.prompts)))
     for source, body in parts:
-        m = package.ASPECT_RATIO.search(body)
-        if m:
-            return _doctrine(line, Status.PASS, clause,
-                             f"aspect stated: {int(m.group(1))}:{int(m.group(2))} ({source})")
+        found = package.find_aspect(body)
+        if found:
+            return _doctrine(line, Status.PASS, clause, f"aspect stated: {found} ({source})")
         words = _found(ASPECT_WORDS, body)
         if words:
             return _doctrine(line, Status.PASS, clause, f"aspect stated: {words[0]} ({source})")
