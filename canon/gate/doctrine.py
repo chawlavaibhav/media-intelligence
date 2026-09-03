@@ -76,6 +76,10 @@ class Registry:
     limit_text: str       # the verbatim Devanagari limit line (LIMIT-TEXT source)
     triggers: dict        # the trigger table document
 
+    def checks_by_pack(self) -> list:
+        """Pack ids in registry (pack file) order."""
+        return list(dict.fromkeys(line.pack_id for line in self.checks.values()))
+
     def select_packs(self, modality: str, product_entity: bool) -> list:
         """Mirror canon/packs/pack-triggers-v0.yaml, restricted to the compiled packs."""
         bases = self.triggers.get("modality_base_packs") or {}

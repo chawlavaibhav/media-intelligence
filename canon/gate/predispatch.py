@@ -413,17 +413,26 @@ def check_dispatch_shot_sum(ctx: Ctx) -> CheckResult:
 
 # ── runner ───────────────────────────────────────────────────────────────────
 
-def not_selected_reason(pack_id: str, modality: str) -> str:
+def not_selected_reason(pack_id: str, modality: str, override: bool = False) -> str:
+    if override:
+        return f"{pack_id} not selected (--packs override)"
     if pack_id == "product_appearance":
         return f"{pack_id} not selected (trigger table: no product/packshot entity)"
     return f"{pack_id} not selected (trigger table: {modality} selects no pack)"
 
 
+def select(registry, modality: str, product_entity: bool, packs):
+    """(selected pack ids, override flag): the trigger table unless --packs names the set."""
+    if packs is not None:
+        return [p for p in registry.checks_by_pack() if p in packs], True
+    return registry.select_packs(modality, product_entity), False
+
+
 def run_predispatch(package_text: str, prompts, dispatch, modality: str, product_entity: bool,
-                    registry, label: str = "package") -> Report:
+                    registry, label: str = "package", packs=None) -> Report:
     pkg = package.parse_package(package_text)
     sha = hashlib.sha256(package_text.encode("utf-8")).hexdigest()
-    packs = registry.select_packs(modality, product_entity)
+    packs, override = select(registry, modality, product_entity, packs)
     if prompts is None:
         prompts = [p.text for p in package.extract_prompts(pkg)]
     ctx = Ctx(pkg=pkg, prompts=list(prompts), modality=modality, registry=registry)
@@ -441,7 +450,7 @@ def run_predispatch(package_text: str, prompts, dispatch, modality: str, product
     for check_id, line in registry.checks.items():
         if line.pack_id not in packs:
             results.append(_doctrine(line, Status.NOT_APPLICABLE, "",
-                                     not_selected_reason(line.pack_id, modality)))
+                                     not_selected_reason(line.pack_id, modality, override)))
         elif not registry.applicable(check_id, modality):
             results.append(_doctrine(line, Status.NOT_APPLICABLE, "",
                                      registry.applicability_reason(check_id, modality)))

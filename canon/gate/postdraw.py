@@ -18,7 +18,7 @@ from canon.gate import artifact as probes
 from canon.gate import package
 from canon.gate.findings import TOLERANCES, CheckResult, Report, Status
 from canon.gate.predispatch import (DISPATCH_SOURCE, dispatched_aspect, limit_source_tail,
-                                    not_selected_reason)
+                                    not_selected_reason, select)
 
 GATE = "post_draw"
 INFRA_SOURCE = "plan §E INFRA rows — container, video track, record sha256; not doctrine"
@@ -197,14 +197,14 @@ def check_dispatch_duration(info, declared):
 
 def run_postdraw(artifact_bytes: bytes, dispatch: dict, package_text, detector, frames,
                  modality: str, product_entity: bool, registry, label: str = "artifact",
-                 record=None) -> Report:
+                 record=None, packs=None) -> Report:
     sha = hashlib.sha256(artifact_bytes).hexdigest()
     inputs = {label: sha}
     pkg = None
     if package_text:
         inputs["package"] = hashlib.sha256(package_text.encode("utf-8")).hexdigest()
         pkg = package.parse_package(package_text)
-    packs = registry.select_packs(modality, product_entity)
+    packs, override = select(registry, modality, product_entity, packs)
     results = []
 
     try:
@@ -229,7 +229,7 @@ def run_postdraw(artifact_bytes: bytes, dispatch: dict, package_text, detector, 
     for check_id, line in registry.checks.items():
         if line.pack_id not in packs:
             results.append(_doctrine(line, Status.NOT_APPLICABLE, "",
-                                     not_selected_reason(line.pack_id, modality)))
+                                     not_selected_reason(line.pack_id, modality, override)))
         elif not registry.applicable(check_id, modality):
             results.append(_doctrine(line, Status.NOT_APPLICABLE, "",
                                      registry.applicability_reason(check_id, modality)))
