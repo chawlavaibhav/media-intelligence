@@ -16,7 +16,7 @@ import unittest
 from pathlib import Path
 
 from canon.gate import doctrine, findings, postdraw, textscan
-from tests.test_gate_artifact import audio_trak, box, jpeg, mp4, mvhd
+from tests.test_gate_artifact import audio_trak, box, exif_app1, jpeg, mdat_to_eof_mp4, mp4, mvhd
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 E38 = REPO_ROOT / "eval/experiments/EVAL-038"
@@ -203,6 +203,39 @@ class VideoTest(_Base):
         for cid in [f"PA-D{i}-check" for i in range(1, 11)]:
             self.assertEqual(self.status(r, cid), S.NOT_APPLICABLE)
         self.assertEqual(r.verdict(), "PASS")
+
+    def test_f08_frame_scan_names_frames_scanned_against_duration(self):
+        # checker F-08 / condition 4: frames are caller-supplied, never derived from the
+        # artifact bytes; a PASS says how many were scanned against the artifact's duration
+        frames = [b"frame-one", b"frame-two", b"frame-three"]
+        det = textscan.ScriptedDetector({hashlib.sha256(f).hexdigest(): td("no_text")
+                                         for f in frames})
+        r = self.run_post("E038-media-B01-haiku-packs", "video", False, frames=frames,
+                          detector=det)
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertEqual(lt.status, S.PASS)
+        self.assertIn("3 caller-supplied frames", lt.detail)
+        self.assertIn("8.00 s", lt.detail)
+        self.assertIn("not derived from the artifact bytes", lt.detail)
+        self.assertIn("coverage of the duration is unverified", lt.detail)
+        # the caveat travels with a NOT_RUN over unavailable frames too
+        r = self.run_post("E038-media-B01-haiku-packs", "video", False, frames=[b"unknown"])
+        self.assertIn("not derived from the artifact bytes", self.row(r, "LIMIT-TEXT").detail)
+
+    def test_f09_to_eof_mdat_note_reaches_the_container_row(self):
+        r = self.run_post("E038-media-B01-haiku-packs", "video", False,
+                          artifact_bytes=mdat_to_eof_mp4(cut=1000))
+        row = self.row(r, "INFRA-CONTAINER")
+        self.assertEqual(row.status, S.PASS)
+        self.assertIn("mdat declared to-EOF (size 0)", row.detail)
+        self.assertEqual(self.status(r, "DISPATCH-DURATION"), S.PASS)
+
+    def test_f10_exif_rotated_jpeg_matches_the_dispatched_aspect(self):
+        data = jpeg(1152, 928, exif=exif_app1(6))
+        r = self.run_post("E038-media-B06-haiku-packs", "static_image", True, artifact_bytes=data)
+        self.assertEqual(self.status(r, "DISPATCH-ASPECT"), S.PASS)
+        self.assertIn("928×1152", self.row(r, "DISPATCH-ASPECT").detail)
+        self.assertIn("EXIF orientation 6 applied", self.row(r, "INFRA-CONTAINER").detail)
 
     def test_frames_all_unavailable_is_not_run(self):
         r = self.run_post("E038-media-B01-sonnet-replay2", "video", False,

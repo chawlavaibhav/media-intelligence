@@ -161,7 +161,12 @@ class PostDrawCliTest(unittest.TestCase):
                              "--detector", f"scripted:{spec}"])
         self.assertEqual(code, 1)
         self.assertIn("frame 2: text detected ('Whatsapp')", out)
-        # the dir's eight JPEGs are scanned in sorted order; V01-frame-2.jpg is the second
+        # the dir's eight JPEGs are scanned in sorted order; V01-frame-2.jpg is the second.
+        # F-08: the report names the files scanned and that they were not extracted from
+        # the artifact — the directory holds V02 frames as well, and the gate cannot tell
+        self.assertIn("frames: 8 files read from", out)
+        self.assertIn("V01-frame-1.jpg", out)
+        self.assertIn("not extracted from E038-media-B01-haiku-packs.mp4", out)
         self.assertIn("PASS            DISPATCH-DURATION", out)
 
     def test_video_without_frames_passes_geometry(self):

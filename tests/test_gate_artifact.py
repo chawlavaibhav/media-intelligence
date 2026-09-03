@@ -105,11 +105,28 @@ def png(width, height):
             + struct.pack(">I", 0) + b"IEND" + b"\0\0\0\0")
 
 
-def jpeg(width, height, sof=0xC0):
+def mdat_to_eof_mp4(cut=None):
+    """ftyp + moov + an mdat whose size field is 0 (to-EOF); `cut` truncates the bytes."""
+    ftyp = box("ftyp", b"isom" + struct.pack(">I", 512) + b"isomiso2avc1mp41")
+    moov = box("moov", mvhd(1000, 8000) + video_trak(720, 1280) + audio_trak())
+    data = ftyp + moov + struct.pack(">I4s", 0, b"mdat") + b"\0" * 4096
+    return data[:cut] if cut else data
+
+
+def exif_app1(orientation, order=b"MM"):
+    fmt = ">" if order == b"MM" else "<"
+    tiff = (order + struct.pack(fmt + "HI", 42, 8) + struct.pack(fmt + "H", 1)
+            + struct.pack(fmt + "HHI", 0x0112, 3, 1) + struct.pack(fmt + "H", orientation)
+            + b"\0\0" + struct.pack(fmt + "I", 0))
+    payload = b"Exif\0\0" + tiff
+    return b"\xff\xe1" + struct.pack(">H", len(payload) + 2) + payload
+
+
+def jpeg(width, height, sof=0xC0, exif=b""):
     app0 = b"\xff\xe0" + struct.pack(">H", 16) + b"JFIF\0" + bytes(9)
     sof_seg = b"\xff" + bytes([sof]) + struct.pack(">HBHHB", 17, 8, height, width, 3) + bytes(9)
     # a fill byte, RST0 and TEM (standalone markers, no length) sit between APP0 and SOF
-    return (b"\xff\xd8" + app0 + b"\xff\xff\xd0\xff\x01" + sof_seg + b"\xff\xda"
+    return (b"\xff\xd8" + app0 + exif + b"\xff\xff\xd0\xff\x01" + sof_seg + b"\xff\xda"
             + struct.pack(">H", 12) + bytes(10))
 
 
@@ -146,6 +163,36 @@ class SyntheticTest(unittest.TestCase):
         for sof in (0xC0, 0xC1, 0xC2):
             info = artifact.probe(jpeg(640, 480, sof))
             self.assertEqual((info.width, info.height), (640, 480), hex(sof))
+
+    def test_f10_exif_orientation_is_applied(self):
+        # checker F-10: stored 1152×928 with orientation 6 is a 928×1152 image
+        for order in (b"MM", b"II"):
+            info = artifact.probe(jpeg(1152, 928, exif=exif_app1(6, order)))
+            self.assertEqual((info.width, info.height), (928, 1152), order)
+            self.assertIn("EXIF orientation 6 applied", " ".join(info.notes))
+        for o in (5, 7, 8):
+            self.assertEqual(artifact.probe(jpeg(1152, 928, exif=exif_app1(o))).width, 928, o)
+        info = artifact.probe(jpeg(1152, 928, exif=exif_app1(1)))
+        self.assertEqual((info.width, info.height), (1152, 928))
+        self.assertIn("EXIF orientation 1", " ".join(info.notes))
+        info = artifact.probe(jpeg(1152, 928))
+        self.assertEqual((info.width, info.height), (1152, 928))
+        self.assertIn("no EXIF orientation tag", " ".join(info.notes))
+        for path in JPEGS:   # the committed JPEGs carry no APP1 and still read 928×1152
+            info = artifact.probe(path.read_bytes())
+            self.assertEqual((info.width, info.height), (928, 1152))
+            self.assertIn("no EXIF orientation tag", " ".join(info.notes))
+
+    def test_f09_an_mdat_declared_to_eof_is_reported(self):
+        # checker F-09: a header-only probe cannot tell a to-EOF mdat cut short from a whole
+        # one; the limitation is made visible in the notes (condition 4)
+        info = artifact.probe(mdat_to_eof_mp4(cut=1000))
+        self.assertEqual((info.width, info.height, info.duration_s), (720, 1280, 8.0))
+        self.assertIn("mdat declared to-EOF (size 0)", " ".join(info.notes))
+        self.assertIn("completeness cannot be verified", " ".join(info.notes))
+        info = artifact.probe(mdat_to_eof_mp4())
+        self.assertIn("mdat declared to-EOF", " ".join(info.notes))
+        self.assertNotIn("to-EOF", " ".join(artifact.probe(mp4()).notes))
 
     def test_mp4_tkhd_v0_and_v1_and_mvhd_v1(self):
         for tk, mv in ((0, 0), (1, 0), (0, 1), (1, 1)):

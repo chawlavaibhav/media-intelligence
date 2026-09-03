@@ -80,7 +80,18 @@ def _not_run_detector(detection, registry_tail):
             + registry_tail)
 
 
-def check_limit_text_post(artifact_bytes: bytes, frames, modality: str, detector, registry):
+def _frames_caveat(frames, info) -> str:
+    """F-08 / condition 4: frames are caller-supplied, never derived from the artifact
+    bytes, so the report says how many were scanned against what duration."""
+    duration = (f"{info.duration_s:.2f} s" if info is not None and info.duration_s is not None
+                else "unknown-duration")
+    return (f" — {len(frames)} caller-supplied frame{'s' if len(frames) != 1 else ''} scanned "
+            f"against a {duration} artifact; the frames are not derived from the artifact "
+            "bytes, so coverage of the duration is unverified")
+
+
+def check_limit_text_post(artifact_bytes: bytes, frames, modality: str, detector, registry,
+                          info=None):
     base = dict(check_id="LIMIT-TEXT", family="limit", gate=GATE, coverage="full", clause="",
                 source_text=registry.limit_text, blocking=True)
     tail = f" — source: {limit_source_tail(registry.limit_text)}"
@@ -89,6 +100,7 @@ def check_limit_text_post(artifact_bytes: bytes, frames, modality: str, detector
             return CheckResult(status=Status.NOT_RUN, evidence=(), **base,
                                detail="frame extraction not available in stdlib; supply "
                                       "--frames DIR of JPEG/PNG frames to scan" + tail)
+        tail = _frames_caveat(frames, info) + tail
         unavailable, texts = [], []
         for i, frame in enumerate(frames, 1):
             d = detector.detect(frame)
@@ -203,7 +215,7 @@ def check_dispatch_duration(info, declared):
 
 def run_postdraw(artifact_bytes: bytes, dispatch: dict, package_text, detector, frames,
                  modality: str, product_entity: bool, registry, label: str = "artifact",
-                 record=None, packs=None) -> Report:
+                 record=None, packs=None, notes=None) -> Report:
     sha = hashlib.sha256(artifact_bytes).hexdigest()
     inputs = {label: sha}
     pkg = None
@@ -222,7 +234,7 @@ def run_postdraw(artifact_bytes: bytes, dispatch: dict, package_text, detector, 
     # 1. baked text first
     if packs:
         results.append(check_limit_text_post(artifact_bytes, frames, modality, detector,
-                                             registry))
+                                             registry, info))
     else:
         results.append(CheckResult(
             check_id="LIMIT-TEXT", family="limit", gate=GATE, status=Status.NOT_APPLICABLE,
@@ -295,4 +307,4 @@ def run_postdraw(artifact_bytes: bytes, dispatch: dict, package_text, detector, 
                                 f"{recorded[:12] or '(missing)'}…"))
 
     return Report(gate=GATE, inputs=inputs, packs_selected=packs, results=results,
-                  label=f"artifact {label} (sha256 {sha[:12]})")
+                  label=f"artifact {label} (sha256 {sha[:12]})", notes=list(notes or ()))

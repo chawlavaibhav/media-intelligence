@@ -6,8 +6,11 @@ coordination/CONTROL-STATE.md governs.
 
 PNG: signature + IHDR. JPEG: marker walk to the first SOF (C0–C3, C5–C7, C9–CB, CD–CF);
 standalone markers D0–D7, D8, 01 and fill bytes carry no length; SOS before SOF is a
-ProbeError. EXIF orientation is not applied (documented limitation). MP4 / ISO-BMFF: box walk
-(32-bit size, size==1 largesize, size==0 to-EOF); `ftyp` required; `moov` may follow `mdat`;
+ProbeError. EXIF orientation (APP1 tag 0x0112, a small TIFF parse) is applied: values 5–8
+swap width and height; the absence of a tag is noted. MP4 / ISO-BMFF: box walk (32-bit size,
+size==1 largesize, size==0 to-EOF — a top-level box declared to-EOF is noted, because a
+header-only probe cannot tell a file cut short from a whole one); `ftyp` required; `moov`
+may follow `mdat`;
 mvhd v0/v1 -> timescale, duration; per trak: hdlr handler (vide/soun), stsd first sample
 entry -> codec and width/height at entry offset +32/+34, tkhd matrix for a 90°/270°
 rotation (dimensions swapped), mdhd as a duration cross-check. Fragmented input (`moof`,
@@ -78,9 +81,33 @@ def probe_png(data: bytes) -> ArtifactInfo:
 
 # ── JPEG ─────────────────────────────────────────────────────────────────────
 
+def exif_orientation(app1: bytes):
+    """The EXIF Orientation (tag 0x0112) from an APP1 payload, or None. Stdlib TIFF walk:
+    'Exif\\0\\0', byte order II/MM, magic 42, IFD0 offset, then IFD0's 12-byte entries."""
+    if not app1.startswith(b"Exif\0\0"):
+        return None
+    tiff = app1[6:]
+    if len(tiff) < 8 or tiff[:2] not in (b"II", b"MM"):
+        return None
+    fmt = "<" if tiff[:2] == b"II" else ">"
+    magic, ifd = struct.unpack(fmt + "HI", tiff[2:8])
+    if magic != 42 or ifd + 2 > len(tiff):
+        return None
+    count = struct.unpack(fmt + "H", tiff[ifd:ifd + 2])[0]
+    for i in range(count):
+        at = ifd + 2 + 12 * i
+        if at + 12 > len(tiff):
+            return None
+        tag, kind, n = struct.unpack(fmt + "HHI", tiff[at:at + 8])
+        if tag == 0x0112 and kind == 3 and n == 1:
+            return struct.unpack(fmt + "H", tiff[at + 8:at + 10])[0]
+    return None
+
+
 def probe_jpeg(data: bytes) -> ArtifactInfo:
     pos = 2
     n = len(data)
+    orientation = None
     while True:
         if pos + 2 > n:
             raise ProbeError("JPEG: truncated before any SOF marker")
@@ -101,15 +128,23 @@ def probe_jpeg(data: bytes) -> ArtifactInfo:
         if pos + 4 > n:
             raise ProbeError("JPEG: truncated segment header")
         length = struct.unpack(">H", data[pos + 2:pos + 4])[0]
+        if marker == 0xE1 and orientation is None:
+            orientation = exif_orientation(data[pos + 4:pos + 2 + length])
         if marker in SOF_MARKERS:
             if pos + 9 > n or length < 7:
                 raise ProbeError("JPEG: truncated SOF segment")
             precision, height, width, components = struct.unpack(">BHHB", data[pos + 4:pos + 10])
             if not width or not height:
                 raise ProbeError("JPEG: zero dimension in SOF")
-            return ArtifactInfo("image", "jpeg", width, height,
-                                notes=(f"SOF{marker - 0xC0}, {precision}-bit, {components} "
-                                       "components; EXIF orientation not applied",))
+            notes = [f"SOF{marker - 0xC0}, {precision}-bit, {components} components"]
+            if orientation is None:
+                notes.append("no EXIF orientation tag")
+            elif orientation in (5, 6, 7, 8):
+                width, height = height, width
+                notes.append(f"EXIF orientation {orientation} applied: dimensions swapped")
+            else:
+                notes.append(f"EXIF orientation {orientation} (no swap)")
+            return ArtifactInfo("image", "jpeg", width, height, notes=tuple(notes))
         pos += 2 + length
 
 
@@ -190,6 +225,24 @@ def _stsd_entry(data: bytes, start: int, end: int):
     return None
 
 
+def _to_eof_boxes(data: bytes) -> list:
+    """Kinds of top-level boxes whose size field is 0 (to-EOF)."""
+    found, pos = [], 0
+    while pos + 8 <= len(data):
+        size, kind = struct.unpack(">I4s", data[pos:pos + 8])
+        if size == 0:
+            found.append(kind.decode("latin-1"))
+            break
+        if size == 1:
+            if pos + 16 > len(data):
+                break
+            size = struct.unpack(">Q", data[pos + 8:pos + 16])[0]
+        if size < 8:
+            break
+        pos += size
+    return found
+
+
 def probe_mp4(data: bytes) -> ArtifactInfo:
     top = list(_boxes(data, 0, len(data)))
     kinds = [k for k, _, _ in top]
@@ -203,7 +256,8 @@ def probe_mp4(data: bytes) -> ArtifactInfo:
             return ArtifactInfo("unknown", "mov", notes=("unsupported container: mov without moov",))
         raise ProbeError("ISO-BMFF: no moov box (truncated or not a finished file)")
     ms, me = moov
-    notes = []
+    notes = [f"{k} declared to-EOF (size 0): file completeness cannot be verified from "
+             "headers" for k in _to_eof_boxes(data)]
     mv = _first(data, ms, me, "mvhd")
     if mv is None:
         raise ProbeError("ISO-BMFF: moov without mvhd")

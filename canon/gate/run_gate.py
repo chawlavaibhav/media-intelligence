@@ -81,11 +81,20 @@ def load_detector(spec: str, parser):
 
 
 def load_frames(directory):
+    """(frame bytes, file names) from --frames DIR, or (None, [])."""
     if not directory:
-        return None
+        return None, []
     files = sorted(p for p in pathlib.Path(directory).iterdir()
                    if p.suffix.lower() in FRAME_SUFFIXES)
-    return [p.read_bytes() for p in files]
+    return [p.read_bytes() for p in files], [p.name for p in files]
+
+
+def frames_note(directory, names, artifact_name) -> str:
+    """F-08: the report names every file scanned and that none was extracted from the
+    artifact — the gate cannot couple a directory of frames to the MP4 it is given."""
+    return (f"frames: {len(names)} file{'s' if len(names) != 1 else ''} read from {directory} "
+            f"({', '.join(names)}) — supplied by the caller, not extracted from "
+            f"{artifact_name}; their provenance is not verified")
 
 
 def validate_packs() -> int:
@@ -136,10 +145,13 @@ def main(argv=None) -> int:
                         if args.package else None)
         record = (json.loads(pathlib.Path(args.record).read_text(encoding="utf-8"))
                   if args.record else None)
+        frames, names = load_frames(args.frames)
+        notes = [frames_note(args.frames, names, artifact_path.name)] if args.frames else []
         report = postdraw.run_postdraw(
             artifact_path.read_bytes(), dispatch, package_text,
-            load_detector(args.detector, parser), load_frames(args.frames), args.modality,
-            args.product, registry, label=artifact_path.name, record=record, packs=packs)
+            load_detector(args.detector, parser), frames, args.modality,
+            args.product, registry, label=artifact_path.name, record=record, packs=packs,
+            notes=notes)
 
     print(report.render_text())
     if args.json:
