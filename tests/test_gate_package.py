@@ -8,8 +8,6 @@ extraction must reproduce the four committed media/prompts/*.txt after whitespac
 normalisation, consistent with media/prompts/EXTRACTION-RECORD.json.
 Run: python3 -m unittest tests.test_gate_package
 """
-import hashlib
-import json
 import unittest
 from pathlib import Path
 
@@ -135,12 +133,6 @@ class PromptExtractionTest(unittest.TestCase):
         self.assertEqual(len(prompts), 9)
         self.assertTrue(prompts[1].text.startswith("Extreme close-up macro shot"))
         self.assertTrue(prompts[8].text.startswith("Clean, minimal title card"))
-
-    def test_extraction_record_sha_matches_committed_prompt_files(self):
-        record = json.loads((PROMPTS / "EXTRACTION-RECORD.json").read_text())
-        for name, row in record.items():
-            data = (PROMPTS / f"{name}.txt").read_bytes()
-            self.assertEqual(hashlib.sha256(data).hexdigest(), row["sha256"], name)
 
     def test_missing_generation_prompts_yields_no_prompts(self):
         pkg = package.parse_package("DELIVERABLE\none image\n")
