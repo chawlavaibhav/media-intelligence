@@ -70,6 +70,13 @@ class Scope:
     text: str
     sources: list = field(default_factory=list)          # section / subfield names used
     empty_subfields: list = field(default_factory=list)  # typed subfields present but empty
+    parts: list = field(default_factory=list)            # (source, text) in scope order
+
+    def add(self, source: str, body: str) -> None:
+        if source not in self.sources:
+            self.sources.append(source)
+            self.parts.append((source, body))
+            self.text = "\n".join(t for _, t in self.parts)
 
 
 def split_sentences(text: str) -> list:
@@ -115,28 +122,22 @@ def scope_text(pkg: Package, feeds_sections) -> Scope:
     """Resolve a decision's committed feeds_sections over this package (Ruling 3): a typed
     subfield is read first when present; present-but-empty is recorded as a declaration gap
     and does not fall back; an absent subfield falls back to the parent section's prose."""
-    parts, sources, empty = [], [], []
-
-    def add(name, body):
-        if name not in sources:
-            sources.append(name)
-            parts.append(body)
-
+    scope = Scope(text="")
     for name in feeds_sections:
         if "." in name:
             section, sub = name.split(".", 1)
             if sub in pkg.subfields:
                 if pkg.subfields[sub].strip():
-                    add(name, pkg.subfields[sub])
+                    scope.add(name, pkg.subfields[sub])
                 else:
-                    empty.append(name)
+                    scope.empty_subfields.append(name)
                 continue
             if section in pkg.sections:
-                add(section, pkg.sections[section])
+                scope.add(section, pkg.sections[section])
             continue
         if name in pkg.sections:
-            add(name, pkg.sections[name])
-    return Scope(text="\n".join(parts), sources=sources, empty_subfields=empty)
+            scope.add(name, pkg.sections[name])
+    return scope
 
 
 # ── generation prompts ───────────────────────────────────────────────────────

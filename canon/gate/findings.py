@@ -17,6 +17,12 @@ import enum
 from dataclasses import dataclass, field
 
 FAMILIES = ("doctrine", "limit", "dispatch", "infra")
+
+# Uncalibrated v0 tolerances (plan §E / §G-7), in one place so tuning is visible:
+#   aspect: 928/1152 = 0.8056 vs 4:5 = 0.8 -> delta 0.0056 must PASS, so 0.01 absolute on the
+#   ratio; duration: mvhd vs durationSeconds within half a second; shot sum: Sonnet B01's
+#   26 s vs "~30 s" passes and Haiku B01's 17.5 s fails at 20 % relative.
+TOLERANCES = {"aspect_ratio_abs": 0.01, "duration_s_abs": 0.5, "shot_sum_rel": 0.20}
 GATES = ("pre_dispatch", "post_draw")
 COVERAGES = ("full", "partial", "none")
 GATE_LABEL = {"pre_dispatch": "pre-dispatch", "post_draw": "post-draw"}
@@ -117,7 +123,8 @@ class Report:
     @staticmethod
     def _row(r: CheckResult) -> str:
         label = r.status_label()
-        return f"{label}{' ' * max(1, 16 - len(label))}{r.check_id:<16}{r.rendered_detail()}"
+        return (f"{label}{' ' * max(1, 16 - len(label))}"
+                f"{r.check_id}{' ' * max(1, 16 - len(r.check_id))}{r.rendered_detail()}")
 
     def final_line(self) -> str:
         S = Status

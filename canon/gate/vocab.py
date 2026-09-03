@@ -14,6 +14,62 @@ CHANGELOG = [
     "2026-09-03 v0: constants transcribed from GATE-BUILD-PLAN-v0 §B.1 and §D as written.",
 ]
 
+# ── §B.1 recognisers for the partial pre-dispatch checks ────────────────────────────────
+# PA-D1 — pack words: diffuse, matte, direct, glossy, glare — extended per the plan.
+FINISH_TERMS = (
+    "diffuse", "matte", "direct", "glossy", "glare",
+    "gloss", "polished", "brushed", "satin", "mirror", "sheen", "specular", "reflective",
+    "frosted", "lacquer", "metallic",
+)
+# PA-D4 — a LIGHT term and a DIRECTION term in one sentence.
+LIGHT_TERMS = (
+    r"key\s+light", "key", r"light\s+source", "softbox", r"soft\s+box", r"window\s+light",
+    "daylight", "sunlight", "tube-light", "tubelight", "lamp", "practical", "backlight",
+    r"rim\s+light", "kicker", "fill", "spotlight", r"overhead\s+light", r"lit\s+from",
+    r"light\s+from",
+)
+DIRECTION_TERMS = (
+    "upper-left", r"upper\s+left", "top-left", r"top\s+left", "upper-right", r"upper\s+right",
+    "top-right", r"from\s+the\s+left", r"from\s+the\s+right", r"from\s+above", r"from\s+behind",
+    r"from\s+the\s+side", "camera-left", "camera-right", "overhead", "behind", "side", "front",
+    r"\d+\s*°", r"\d+\s*degrees", "window",
+)
+# PA-D8 — conditional: a GLOSSY-SURFACE term requires a SPECULAR-DECLARATION term.
+GLOSSY_SURFACE_TERMS = (
+    "glass", "crystal", "sapphire", "bottle", "mirror", "chrome", "polished", "glossy",
+    "lacquer", "black", r"dark\s+surface", r"dark\s+background",
+)
+SPECULAR_DECLARATION_TERMS = (
+    "reflection", "reflections", "specular", "speculars", "highlight", "highlights", "glint",
+    "glare",
+)
+# CA-D1 — an ordered enumeration of >= 3 reads (each family must show all three ranks).
+READ_ORDER_NUMBERED = r"^\s*(?:[-*]\s*)?(?:\*\*)?{n}[.)]"
+READ_ORDER_ORDINAL = r"\b{n}\s+read"                   # 1st / 2nd / 3rd read
+READ_ORDER_RANK = r"\b{n}\b"                           # Primary / Secondary / Tertiary
+# CA-D2 clause 2 — deliberately excludes bare "third" / "lower third" / "upper-middle third"
+# (zone descriptions in the accepted B06 package).
+NAMED_RATIO_GRID_TERMS = (
+    r"rule\s+of\s+thirds", "rule-of-thirds", r"thirds\s+grid", r"golden\s+ratio",
+    r"golden\s+section", r"golden\s+mean", r"golden\s+spiral", r"divine\s+proportion",
+    "fibonacci", r"phi\s+grid", r"grid\s+line", "gridline", r"intersection\s+of\s+the\s+thirds",
+    r"power\s+point", r"power\s+points",
+)
+# CA-D2 clause 1.
+PLACEMENT_TERMS = (
+    "centre", "center", "off-centre", "off-center", r"left\s+of\s+centre", r"left\s+of\s+center",
+    r"right\s+of\s+centre", r"right\s+of\s+center", "upper", "lower", "zone", "positioned",
+    "placed", "placement",
+)
+# CA-D5 — deliberately excludes "symmetrical" ("clean symmetrical dial layout" is the dial).
+BALANCE_TERMS = ("balanced", "balance", "restless", "unbalanced", "off-balance",
+                 r"refuse\s+the\s+eye")
+# CA-D6 — alongside package.ASPECT_RATIO (`\b\d{1,2}:\d{1,2}\b`).
+ASPECT_WORDS = ("square", "portrait", "landscape", "vertical", "horizontal")
+# PA-D10 — a DOCTRINE_DEVIATIONS entry names a decision id and carries a forcing clause.
+DEVIATION_ID = r"\b(?:PA|CA)-D\d+\b"
+DEVIATION_CLAUSE_WORDS = ("because", "brief")
+
 # ── §D baked-text guard (LIMIT-TEXT; source: the verbatim pack limit line) ──────────────
 # T2 (a): a quoted string of >= 2 word characters together with one of these verbs.
 TEXT_VERBS = (

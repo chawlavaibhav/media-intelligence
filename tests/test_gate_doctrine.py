@@ -228,6 +228,10 @@ class FindingsTest(unittest.TestCase):
         lines = text.splitlines()
         self.assertTrue(lines[1].startswith("FAIL            LIMIT-TEXT      prompt 1 requests text"))
         self.assertIn("dispatch", lines)   # the DISPATCH family prints under its own heading
+        # a check id longer than the 16-column field still gets a separator
+        long_id = self.report([row("DISPATCH-SHOT-SUM", S.PASS, family="dispatch",
+                                   coverage="full", clause="", detail="11 shots")]).render_text()
+        self.assertIn("PASS            DISPATCH-SHOT-SUM 11 shots", long_id)
         self.assertEqual(
             lines[-1],
             "GATE FAIL (1 failing checks; 1 non-blocking FAIL on record). 2 checks mechanised "
