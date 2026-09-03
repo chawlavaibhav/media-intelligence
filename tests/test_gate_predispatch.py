@@ -250,7 +250,8 @@ class MutationTest(_Base):
         return self.row(self.run_gate(SONNET_B06, "static_image", True, text=text), "CA-D2-check")
 
     def test_f07_negated_named_ratio_outside_a_four_token_window_still_passes(self):
-        # checker F-07: the negator sits more than 4 tokens before the term, or after it
+        # checker F-07: the negator sits more than 4 tokens before the term (within the
+        # 6-token CA-D2 window of Ruling 6 condition 1), or after it as a disclaimer
         for sentence in ("We will not compose this using the rule of thirds.",
                          "Avoid any reliance on the classic rule of thirds.",
                          "The rule of thirds is not used here.",
@@ -258,6 +259,22 @@ class MutationTest(_Base):
                          "The golden ratio is deliberately avoided here."):
             row = self.ca_d2_with(sentence)
             self.assertEqual(row.status, S.PASS, sentence)
+
+    def test_k01_an_unrelated_negator_earlier_in_the_sentence_does_not_clear_a_named_ratio(self):
+        # checker K-01: sentence-wide negation is withdrawn (Ruling 6 condition 1). A negator
+        # seven or more tokens before the term governs something else; the placement is
+        # still justified by the named ratio and the row FAILs, blocking.
+        for sentence in ("Without clutter, the watch sits on the golden ratio point.",
+                         "No hard shadows, dial placed on the rule of thirds line.",
+                         "Not too tight, the crown sits at the intersection of the thirds."):
+            row = self.ca_d2_with(sentence)
+            self.assertEqual(row.status, S.FAIL, sentence)
+            self.assertTrue(row.blocking, sentence)
+            self.assertEqual(self.run_gate(SONNET_B06, "static_image", True,
+                                           text=SONNET_B06.read_text().replace(
+                                               "Aspect ratio: 4:5, vertical.",
+                                               f"Aspect ratio: 4:5, vertical. {sentence}")).verdict(),
+                             "FAIL", sentence)
 
     def test_f07_named_ratio_with_an_unrelated_negator_still_fails(self):
         # the negator does not govern the term: still a justification by a named ratio

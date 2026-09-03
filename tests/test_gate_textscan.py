@@ -157,6 +157,28 @@ class PromptGuardTest(unittest.TestCase):
         hits = textscan.scan_prompt("No clutter, a bright bold tagline.").hits
         self.assertEqual([h.subcheck for h in hits], ["T2"])
 
+    def test_k01_named_ratio_negation_window_is_six_tokens_before_plus_a_disclaimer_after(self):
+        # Ruling 6 condition 1: CA-D2 clause 2 clears a named-ratio term on a NEGATOR within
+        # six tokens before it, or an "is not / is avoided" disclaimer right after it —
+        # never on a negator anywhere earlier in the sentence (K-01). Both directions.
+        def cleared(sentence):
+            m = re.search(r"rule of thirds|golden ratio", sentence, re.I)
+            return textscan.negated_named_ratio(sentence, m.start(), m.end())
+        self.assertEqual(textscan.CA_D2_NEGATION_WINDOW, 6)
+        self.assertEqual(textscan.NEGATION_WINDOW, 4)
+        # the negator is the sixth token before the term: cleared
+        self.assertTrue(cleared("We will not compose this using the rule of thirds."))
+        self.assertTrue(cleared("not one two three four five rule of thirds"))
+        # the seventh: not cleared
+        self.assertFalse(cleared("not one two three four five six rule of thirds"))
+        self.assertFalse(cleared("Without clutter, the watch sits on the golden ratio point."))
+        self.assertFalse(cleared("No hard shadows, dial placed on the rule of thirds line."))
+        # a disclaimer after the term clears; an unrelated negator after it does not
+        self.assertTrue(cleared("The rule of thirds is not used here."))
+        self.assertTrue(cleared("The golden ratio is deliberately avoided here."))
+        self.assertFalse(cleared("Dial on the rule of thirds line, not centred."))
+        self.assertFalse(cleared("Rule of thirds, no exceptions."))
+
     def test_deferral_clears_a_text_request_in_the_same_sentence(self):
         hits = textscan.scan_prompt("Logo animates in, tagline and CTA text to be added in post.").hits
         self.assertEqual(hits, [])

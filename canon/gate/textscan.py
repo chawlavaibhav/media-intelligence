@@ -37,7 +37,8 @@ from canon.gate.package import split_sentences
 DEVANAGARI = re.compile(r"[ऀ-ॿ꣠-ꣿ]+")
 QUOTED = re.compile(r"(?<!\w)([\"'“‘])(.+?)([\"'”’])(?!\w)")
 TOKEN = re.compile(r"[A-Za-z']+")
-NEGATION_WINDOW = 4
+NEGATION_WINDOW = 4          # T2 / T3: plan §D
+CA_D2_NEGATION_WINDOW = 6    # CA-D2 clause 2: Ruling 6 condition 1 (K-01) amends plan §B.1's 4
 
 
 def compile_terms(terms) -> list:
@@ -73,9 +74,9 @@ def devanagari_spans(text: str) -> list:
     return DEVANAGARI.findall(text)
 
 
-def negated(sentence: str, start: int) -> bool:
-    """A NEGATOR within NEGATION_WINDOW tokens before position `start`."""
-    tokens = [t.lower().strip("'") for t in TOKEN.findall(sentence[:start])][-NEGATION_WINDOW:]
+def negated(sentence: str, start: int, window: int = NEGATION_WINDOW) -> bool:
+    """A NEGATOR within `window` tokens before position `start`."""
+    tokens = [t.lower().strip("'") for t in TOKEN.findall(sentence[:start])][-window:]
     if any(t in vocab.NEGATORS for t in tokens):
         return True
     joined = " ".join(tokens)
@@ -85,16 +86,14 @@ def negated(sentence: str, start: int) -> bool:
 NEGATED_AFTER = re.compile(vocab.NEGATED_AFTER, re.I)
 
 
-def negated_in_sentence(sentence: str, start: int, end: int) -> bool:
-    """CA-D2 clause 2 (F-07): a NEGATOR anywhere earlier in the sentence, or an `is not` /
-    `is avoided` disclaimer immediately after the term at sentence[start:end], clears a
-    named-ratio mention. Wider than `negated` on purpose: the check is whether placement is
-    *justified by* the ratio, and a sentence that names it only to disclaim it is not."""
-    tokens = [t.lower().strip("'") for t in TOKEN.findall(sentence[:start])]
-    if any(t in vocab.NEGATORS for t in tokens):
-        return True
-    joined = " ".join(tokens)
-    if any(p in joined for p in vocab.NEGATOR_PHRASES):
+def negated_named_ratio(sentence: str, start: int, end: int) -> bool:
+    """CA-D2 clause 2 (F-07, K-01): a NEGATOR within CA_D2_NEGATION_WINDOW tokens before the
+    term at sentence[start:end] — six, enough for "we will not compose this using the rule
+    of thirds" — or an `is not` / `is avoided` disclaimer immediately after it, clears a
+    named-ratio mention. Bounded, not sentence-wide (Ruling 6 condition 1): in "No hard
+    shadows, dial placed on the rule of thirds line." the negator governs the shadows and
+    the placement is still justified by the ratio."""
+    if negated(sentence, start, CA_D2_NEGATION_WINDOW):
         return True
     return bool(NEGATED_AFTER.match(sentence[end:]))
 

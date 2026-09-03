@@ -80,6 +80,12 @@ CHANGELOG = [
     "no surface term is not a hit by design. Recorded over-fires: `label` fires on 'a wine "
     "bottle with its label' and `letters` on 'love letters on the desk' — both text-bearing, "
     "accepted; `written` fires on any 'written' outside a negation window.",
+    "2026-09-03 K-01: CA-D2 clause-2 negation window bounded — the F-07 sentence-wide window "
+    "is withdrawn; textscan.CA_D2_NEGATION_WINDOW = 6 tokens before the term (plan §B.1's 4 "
+    "amended by Ruling 6 condition 1) plus NEGATED_AFTER. 'Without clutter, the watch sits on "
+    "the golden ratio point.', 'No hard shadows, dial placed on the rule of thirds line.', "
+    "'Not too tight, the crown sits at the intersection of the thirds.' FAIL; the F-07 "
+    "phrasings still PASS.",
 ]
 
 # ── §B.1 recognisers for the partial pre-dispatch checks ────────────────────────────────

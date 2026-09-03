@@ -167,7 +167,7 @@ def check_ca_d2(ctx: Ctx, line) -> CheckResult:
         for sentence in package.split_sentences(body):
             for _, rx in NAMED_RATIO:
                 for m in rx.finditer(sentence):
-                    if not textscan.negated_in_sentence(sentence, m.start(), m.end()):
+                    if not textscan.negated_named_ratio(sentence, m.start(), m.end()):
                         return _doctrine(
                             line, Status.FAIL, clause,
                             f"placement justified by a named ratio or grid line "
