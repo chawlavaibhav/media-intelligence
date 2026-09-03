@@ -5,13 +5,12 @@ itself.** Read this first, every session; then `coordination/CONTROL-STATE.md` f
 authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
-**Last refresh:** 1 Sep 2026 — REP-07 admission batch, EVAL-038 and CANON-SHAPE-v1 refresh. The
-last full Governor reconciliation remains **GOV-006** against `main` at `91984f5`
+**Last refresh:** 31 Aug 2026 — EVAL-037 conclusion refresh. The last full Governor
+reconciliation remains **GOV-006** against `main` at `91984f5`
 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`, PASS WITH NON-BLOCKING NOTES);
 CANON-014 received a bounded Level-1 review at
-`governance/reviews/GOV-L1-CANON-014-FULL-CORPUS.md`. The text immediately before this refresh is
-preserved byte-for-byte at `history/PROJECT-MEMORY-PRE-EVAL-038-REFRESH-2026-09-01.md`, and the
-full pre-migration text at
+`governance/reviews/GOV-L1-CANON-014-FULL-CORPUS.md`. The
+full pre-migration text is preserved byte-for-byte at
 `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md`; detailed narrative now lives under
 `history/` (see §8).
 
@@ -104,15 +103,7 @@ subjective/perceptual evaluator families · strict-exactness-qualified text eval
 configurations tested, five disqualified, unrewritten) · qualified temporal-video evaluators (no
 numeric pass mark exists) · **Capability Registry rows — a deliberate decision, not an absence** ·
 customer-outcome CpAO observations (Stage C
-only; not authorised) · Production IR / Planner · **the mechanical acceptance gate** (pre-dispatch
-and post-draw checks as code — designed in `canon/CANON-SHAPE-v1.md` §4, **not built**) ·
-**accepted-outcome-rate measurements** (no acceptance-rate run has ever been commissioned) ·
-**8 of the 10 compiled packs**.
-
-**EVAL-038 did not move any of those zeros.** It generated real media (2 images + 2 videos + a
-replay pair) and the Controller judged it, but that authority labelled media generation **product
-learning only — never Capability Registry evidence**. Do not read EVAL-038 artifacts as a qualified
-model, a qualified evaluator, a Registry row, or a customer-outcome CpAO observation.
+only; not authorised) · Production IR / Planner.
 
 **No longer zero:**
 
@@ -139,29 +130,7 @@ model, a qualified evaluator, a Registry row, or a customer-outcome CpAO observa
   representative **3/3** passed ingest — **not** 12/12; role `MAT-TEMPORAL-BASE`, not
   `PACK-AV-CLEAN`; content requirement is pack-level).
 - **EVAL-037:** the Controller accepts the bounded programme conclusion **Canon helps, but current retrieval/consumption is not mature**. This is enough to carry Canon forward, but not a universal treatment-effect estimate or a production retrieval design. See `eval/experiments/EVAL-037/CONCLUSION.md` and `coordination/decisions/CONTROLLER-EVAL-037-CONCLUSION-2026-08-31.md`.
-- **EVAL-038 — a committed negative result, and the verdict is reserved.** Weak model + the two
-  compiled packs did not match a strong model alone on any of six briefs: **0/6**, all 18 top-3
-  slots to the Sonnet NO_CANON baseline, judged blind against a decision rule fixed before
-  execution. The cheap arm also cost **more** per package (USD 0.072 vs 0.063). **The tested
-  substitution configuration is closed — do not rerun it.** Spend: **USD 2.260122** of a USD 10.00
-  cap, 0 retries. Media generated here is **product learning only, never Registry evidence**.
-  Observations recorded without verdict: the compiled doctrine forbids both PILOT-001 candidates
-  the Controller rejected, on the Controller's own grounds; the pack-guided image won the B06 pair;
-  both videos failed on baked-in text, the exact defect the packs guard against. **Whether Canon
-  works is the Controller's call and is explicitly reserved** —
-  `canon/findings/PROPOSED-EVAL-038-CONCLUSION.md` is a worker proposal, not an adopted finding.
-  Evidence `eval/experiments/EVAL-038/`; authority
-  `coordination/decisions/CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md`.
-- **Canon:** **37 live accepted sources** · **1,300 SourceKnowledge objects** · 132 concept
-  systems · 291 bindings, with **5 HOLD** (desai, airey, freeman-beyond, samara-ch2; ries retired).
-  Grew 24 → 37 under the REP-07 admission batch
-  (`coordination/decisions/CONTROLLER-REP-07-ADMISSION-BATCH-2026-09-01.md`); `google-abcd` carries
-  a `platform_contingent` marker and `sontag` a `critique_context` marker, and three same-work
-  extensions entered as scoped extensions, never independent origins. Recompute the count with
-  `python3 canon/validation/validate_audit_gate_v02.py` (37 records, 0 errors). **Two numbers that
-  must never be confused:** live accepted Canon = **37**; the CANON-003 method-test corpus =
-  **16, fixed forever**. **2 of 10 compiled packs** exist (`product_appearance`,
-  `composition_and_attention`). CANON-014 also
+- **Canon:** **24 live accepted sources** plus **18 durable HOLD/candidate sources**. CANON-014 also
   preserves **1,028 grounded, ungraded, uncalibrated Q&A items** across 23 banks. HOLD material is
   not accepted Canon and current runtime retrieval still reads `canon/knowledge/current/**` only.
   The corpus index and separate accepted/full/Q&A fingerprints are under
@@ -185,18 +154,6 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
 **Read `coordination/CONTROL-STATE.md` for the live version.**
 
 - **EVAL-037 / T2B is concluded for programme direction:** Canon helps; the current retrieval / consumption interface is not mature.
-- **EVAL-038 is a settled lane.** The substitution question is closed for the configuration tested
-  (0/6, refuted). **The verdict on whether Canon works is reserved to the Controller** and is not to
-  be concluded further by any worker.
-- **`canon/CANON-SHAPE-v1.md` is the governing consumption shape for Canon** — adopted by the
-  Controller ("Let's stick with that") under
-  `coordination/decisions/CONTROLLER-CANON-SHAPE-V1-DIRECTION-2026-09-01.md`. It settles what Canon
-  is, what it is for, and how it is consumed: packs injected unconditionally as a cached prefix, no
-  forced-consumption receipts, mechanical gates in code, blueprints amortised over cheap redraws.
-  **Adopting the shape authorises no build.**
-- **The next gate is the gate build** — pre-dispatch and post-draw checks derived as code from
-  PA-D1..D10 / CA-D1..D11, baked-text scan first (`canon/CANON-SHAPE-v1.md` §7 item 1). It is the
-  next build **when the Controller directs it**; it is not yet authorised.
 - **The programme is back in Controller planning mode.** The next move is not another broad Canon-value experiment; it is a rebase of T3-T8 around the shortest route to an end-to-end accepted-outcome product.
 - **EVAL-036 remains authorised at USD 0** as a historical-prior import, but its sequencing must now be justified by outcome value rather than treated as an automatic gate.
 - **No new paid tranche is currently authorised.**
@@ -208,7 +165,7 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
 1. **Do not conclude paid execution is unauthorised or nothing was generated** because a task file
    or handoff says so — `eval/HANDOFF.md` still claims ₹0 spend. `CONTROL-STATE.md` governs.
 2. **Do not treat settled lanes as open work.** CANON-011, EVAL-024, EVAL-029, EVAL-026, EVAL-030,
-   RES-005, REP-07 and **EVAL-038** are merged and closed; a task file is never an authorisation.
+   RES-005 are merged and closed; a task file is never an authorisation.
 3. **Do not regenerate the 16 sealed A-TEXT images.** They are durable evidence, verified by hash.
 4. **Do not add a Registry row from the 7/16 result or weaken admission to allow one.**
 5. **Always name the standard a text result was measured against** (strict vs benchmark); never
@@ -221,16 +178,10 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
    imported. No mandatory human-in-the-loop step exists in the production API architecture.
 9. **Cancelled work stays cancelled** (EVAL-028, EVAL-034; EVAL-006 paused) unless a **newer**
    Controller decision reopens it.
-10. **Do not conclude EVAL-038 any further, and do not rerun the refuted configuration.** The
-    Controller has reserved the judgment of whether Canon works. Record observations; never issue a
-    verdict. `canon/findings/PROPOSED-EVAL-038-CONCLUSION.md` is a proposal, not a finding.
-11. **Do not read EVAL-038 media as capability evidence.** It was authorised as product learning
-    only. No Registry row and no qualification claim comes from it.
-12. **Do not treat HOLD/candidate material as accepted Canon merely because it is durable.**
+10. **Do not treat CANON-014 HOLD/candidate material as accepted Canon merely because it is durable.**
     Runtime retrieval remains accepted-only unless a separately frozen experiment explicitly exposes
-    the status-carrying full corpus. After the REP-07 admission batch, **HOLD is 5, not 18** — 13 of
-    the former candidates were admitted; `ries` is retired and must never be put to the Audit Gate.
-13. Longer lessons list (paid for, do not rediscover): `history/EMP-001.md` §Lessons and
+    the status-carrying full corpus.
+11. Longer lessons list (paid for, do not rediscover): `history/EMP-001.md` §Lessons and
     `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md` §6.
 
 ## 8. History — where the narrative went
@@ -244,9 +195,6 @@ Detailed chronology moved out of this file on 28 Aug 2026 (nothing was lost):
 - `history/PROJECT-MILESTONES.md` — dated milestone table with evidence pointers.
 - `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md` — byte-for-byte pre-migration
   snapshot (the completeness guarantee).
-- `history/PROJECT-MEMORY-PRE-EVAL-038-REFRESH-2026-09-01.md` and
-  `history/CONTROL-STATE-PRE-EVAL-038-REFRESH-2026-09-01.md` — byte-for-byte snapshots of both
-  current-state documents immediately before the 1 Sep 2026 refresh.
 
 ## 9. Authority map — which file proves what
 
@@ -273,11 +221,7 @@ Detailed chronology moved out of this file on 28 Aug 2026 (nothing was lost):
 | v2 contracts (request, capability, condition, topology, CpAO) | `canon/experiments/pre-execution-freeze/`, `eval/pre-execution-freeze/`, `eval/pre-execution-integration/`, `resources/pre-execution-freeze/` — merged and in force despite stale status headers |
 | The 36 capabilities, 100-item bank, 30 briefs, persistence contract (V1 historical baselines) | `eval/v1/capability-contract.yaml`, `eval/v1/bank/`, `canon/experiments/v1/brief-bank/`, `resources/v1/EMPIRICAL-ARTIFACT-MANIFEST-SCHEMA.yaml` |
 | Canon admission method | `canon/audit/AUDIT-GATE-v0.2.md` |
-| Which Canon sources are live (**37**) | `canon/audit/records/` + `canon/knowledge/current/`; recompute with `canon/validation/validate_audit_gate_v02.py` |
-| What Canon is, what it is for, and how it is consumed | `canon/CANON-SHAPE-v1.md` — the governing shape |
-| Which Canon sources were admitted, and on what markers | `coordination/decisions/CONTROLLER-REP-07-ADMISSION-BATCH-2026-09-01.md` |
-| What EVAL-038 established, and who owns the verdict | `coordination/decisions/CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md`; evidence `eval/experiments/EVAL-038/` |
-| Why CANON-SHAPE-v1 governs and what it does not authorise | `coordination/decisions/CONTROLLER-CANON-SHAPE-V1-DIRECTION-2026-09-01.md` |
+| Which Canon sources are live (24) | `canon/audit/records/` + `canon/knowledge/current/` |
 | Full Canon map, HOLD candidates and corpus fingerprints | `canon/knowledge/CANON-CORPUS-INDEX.yaml` + `canon/candidates/canon-014/` |
 | CANON-014 grounded Q&A corpus | `canon/qa/canon-014/` |
 | The authoritative Eval battery (96-item validated view) | `eval/battery/devanagari-exactness/human-validation/` |
