@@ -168,6 +168,26 @@ class PromptGuardTest(unittest.TestCase):
                      "a bag with no slogan", "signs of wear on the strap"):
             self.assertEqual(textscan.scan_prompt(text).hits, [], text)
 
+    def test_k06_watch_category_numerals_and_props_clear(self):
+        # checker K-06 / Ruling 6 condition 6: the F-03 additions must not fire on watch copy
+        for text in ("Arabic numerals at 12, 3, 6 and 9 on the dial",
+                     "the date digits at 3 o'clock",
+                     "Roman numerals, no other markings",
+                     "a label-free bottle",
+                     "a quiet storefront at dusk, shutters down"):
+            self.assertEqual(textscan.scan_prompt(text).hits, [], text)
+        # the motivating F-03 phrasings still hit
+        for text in ("a wall clock with clear numerals",
+                     "the phone number 98765 43210 painted across the shutter",
+                     "storefront lettering", "a storefront sign in Devanagari script",
+                     "large printed digits on the scoreboard", "a label that says Aster"):
+            self.assertTrue(textscan.scan_prompt(text).hits, text)
+        # recorded misses (vocab.CHANGELOG K-06): the qualifier is the watch-category
+        # vocabulary and the gate cannot tell a dial from a wall clock lexically; a bare
+        # storefront no longer names a surface
+        for text in ("a wall clock with Roman numerals", "a busy storefront"):
+            self.assertEqual(textscan.scan_prompt(text).hits, [], text)
+
     # ── windows ─────────────────────────────────────────────────────────
     def test_negation_window_clears_a_text_request(self):
         self.assertEqual(textscan.scan_prompt("A clean plate, no logo, no watermark.").hits, [])

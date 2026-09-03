@@ -93,6 +93,17 @@ CHANGELOG = [
     "around the invoice' HIT; 'no chat bubbles', 'no visible signage', 'not a dashboard', "
     "'a plate free of labels' still CLEAR). T2 keeps the plain window. Recorded over-fires: an "
     "adjectival gerund ('no glowing notifications') and 'avoid showing the receipt' now HIT.",
+    "2026-09-03 K-06: TEXT_REQUEST_TERMS — `numerals?` / `digits` no longer fire after a "
+    "DIAL_NUMERAL_QUALIFIER (arabic|roman|hour|date|dial|applied|luminous|minute|index): "
+    "'Arabic numerals at 12, 3, 6 and 9 on the dial', 'the date digits at 3 o'clock', 'Roman "
+    "numerals, no other markings' CLEAR; 'a wall clock with clear numerals' still HITs. "
+    "TEXT_SURFACE_TERMS — `labels?` excludes `label-free` / `label-less` ('a label-free "
+    "bottle' CLEARs); bare `storefront` narrowed to `storefront sign|signage|signboard|"
+    "lettering|name|text|board` ('a quiet storefront at dusk, shutters down' CLEARs; 'storefront "
+    "lettering' and 'the phone number … painted across the shutter' still HIT). Recorded "
+    "misses, pinned: 'a wall clock with Roman numerals' and 'a busy storefront' CLEAR — the "
+    "qualifier is the watch category's dial vocabulary and the gate cannot tell a dial from a "
+    "wall clock lexically; the blocking direction is kept for unqualified numerals.",
 ]
 
 # ── §B.1 recognisers for the partial pre-dispatch checks ────────────────────────────────
@@ -185,6 +196,12 @@ TEXT_VERBS = (
 # ("the phone screen shows … 'Tenant Complaint Pending'"), never on a bare quoted name
 # ("a model showing the 'Aster Meridian 38' on her wrist").
 DISPLAY_VERBS = ("displays", "displaying", "showing", "shows")
+# K-06: a numeral/digit term is the watch's own dial furniture, not requested text, when one
+# of these qualifies it ("Arabic numerals at 12, 3, 6 and 9", "the date digits at 3 o'clock",
+# "Roman numerals, no other markings"). Fixed-width lookbehinds, one per qualifier.
+DIAL_NUMERAL_QUALIFIERS = ("arabic", "roman", "hour", "date", "dial", "applied", "luminous",
+                           "minute", "index")
+NOT_AFTER_DIAL_QUALIFIER = "".join(rf"(?<!{q}\s)" for q in DIAL_NUMERAL_QUALIFIERS)
 # T2 (b): a request for rendered text.
 TEXT_REQUEST_TERMS = (
     "captions?", "subtitles?", "headlines?", "taglines?", r"title\s+cards?", "typography",
@@ -195,7 +212,9 @@ TEXT_REQUEST_TERMS = (
     r"(?:add|adds|adding|place|placed|placing|render|rendered|rendering|include|includes|"
     r"including|put|print|printed|printing|write|set|with|featuring|feature|features|bearing|"
     r"bears|carrying|carries)\s+(?:\w+\s+){0,2}?text(?!-free)\b",
-    r"the\s+words?\b", "letters", r"spell(?:s|ed|ing)?\s+out", "numerals?", "digits",
+    r"the\s+words?\b", "letters", r"spell(?:s|ed|ing)?\s+out",
+    # K-06: not the watch category's own dial vocabulary ("Arabic numerals", "date digits")
+    NOT_AFTER_DIAL_QUALIFIER + "numerals?", NOT_AFTER_DIAL_QUALIFIER + "digits",
     r"(?:model|brand|product|company|shop|store|business)\s+names?",
     r"(?:owner|manager|tenant|customer|founder)(?:'s)?\s+names?",
     r"bearing\s+(?:\w+(?:'s)?\s+){0,4}names?\b",
@@ -249,9 +268,12 @@ TEXT_SURFACE_TERMS = (
     r"banner\s+(?:ads?|text)", r"phone\s+screens?", r"smartphone\s+screens?",
     r"laptop\s+screens?", r"screen\s+showing", r"screen\s+shows", r"screen\s+filling",
     r"screens\s+showing",
-    # F-03 additions
-    "labels?", "placards?", "calendars?", r"(?:licen[cs]e|number|registration)\s+plates?",
-    "nameplates?", r"name\s+(?:plates?|boards?)", "billboards?", "hoardings?", "storefront",
+    # F-03 additions; K-06: `label-free`/`label-less` is the absence of one, and a storefront
+    # names a surface only with its sign/lettering/name/board
+    r"labels?(?!-free)(?!-less)", "placards?", "calendars?",
+    r"(?:licen[cs]e|number|registration)\s+plates?",
+    "nameplates?", r"name\s+(?:plates?|boards?)", "billboards?", "hoardings?",
+    r"storefronts?\s+(?:signs?|signage|signboards?|lettering|names?|text|boards?)",
 )
 ILLEGIBILITY_TERMS = (
     "illegible", "unreadable", "blurred", r"out\s+of\s+focus", "blank", r"dark\s+screen",
