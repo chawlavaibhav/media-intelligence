@@ -10,10 +10,12 @@ draws, never final composites.
 
 Pre-dispatch (over each generation prompt, sentence-split on `[.;!?]\\s+|\\n`):
   T1 Devanagari codepoints (U+0900–U+097F, U+A8E0–U+A8FF) — full;
-  T2 requested rendered text — a quoted string (>= 2 word characters) with a TEXT_VERB, or a
-     TEXT_REQUEST term — unless a NEGATOR sits within 4 tokens before the term or the
-     sentence carries a DEFERRAL term;
-  T3 a TEXT_SURFACE term with no ILLEGIBILITY/DEFERRAL term in the same sentence.
+  T2 requested rendered text — a quoted string (>= 2 word characters) with a TEXT_VERB (or
+     a DISPLAY_VERB when the sentence also names a TEXT_SURFACE), or a TEXT_REQUEST term —
+     unless a NEGATOR sits within 4 tokens before the term or the sentence carries a
+     DEFERRAL term;
+  T3 a TEXT_SURFACE term outside the same negation window, with no ILLEGIBILITY/DEFERRAL
+     term in the same sentence.
 
 Post-draw: a TextDetector over the artifact (or supplied video frames). `NoDetector` is the
 default and yields `unavailable` (NOT_RUN). `CloudVisionTextDetection` mirrors the request and
@@ -44,6 +46,7 @@ def compile_terms(terms) -> list:
 
 
 TEXT_VERBS = compile_terms(vocab.TEXT_VERBS)
+DISPLAY_VERBS = compile_terms(vocab.DISPLAY_VERBS)
 TEXT_REQUEST_TERMS = compile_terms(vocab.TEXT_REQUEST_TERMS)
 DEFERRAL_TERMS = compile_terms(vocab.DEFERRAL_TERMS)
 TEXT_SURFACE_TERMS = compile_terms(vocab.TEXT_SURFACE_TERMS)
@@ -124,12 +127,15 @@ def scan_prompt(text: str) -> PromptScan:
             quoted = _quoted_strings(sentence)
             if quoted:
                 verbs = _matches(TEXT_VERBS, sentence, skip_negated=True)
+                # F-02: a display verb needs a text-bearing surface in the same sentence
+                if not verbs and _matches(TEXT_SURFACE_TERMS, sentence, skip_negated=False):
+                    verbs = _matches(DISPLAY_VERBS, sentence, skip_negated=True)
                 if verbs:
                     terms += verbs + [f"'{q}'" for q in quoted]
             terms += _matches(TEXT_REQUEST_TERMS, sentence, skip_negated=True)
             if terms:
                 scan.hits.append(TextHit("T2", i, sentence, tuple(dict.fromkeys(terms))))
-        surfaces = _matches(TEXT_SURFACE_TERMS, sentence, skip_negated=False)
+        surfaces = _matches(TEXT_SURFACE_TERMS, sentence, skip_negated=True)   # F-02 window
         if surfaces and not _matches(ILLEGIBILITY_TERMS, sentence, skip_negated=False):
             scan.hits.append(TextHit("T3", i, sentence, tuple(dict.fromkeys(surfaces))))
     return scan

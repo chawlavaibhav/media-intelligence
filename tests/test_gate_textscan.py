@@ -15,11 +15,12 @@ import sys
 import unittest
 from pathlib import Path
 
-from canon.gate import doctrine, findings, predispatch, textscan
+from canon.gate import doctrine, findings, package, predispatch, textscan
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 E38 = REPO_ROOT / "eval/experiments/EVAL-038"
 PROMPTS = E38 / "media/prompts"
+HAIKU_B01 = E38 / "runs/haiku-packs/packages/E038-haiku-packs-B01-R1.txt"
 GATE_DIR = REPO_ROOT / "canon/gate"
 FIXED_IMAGE = b"\xff\xd8\xff\xe0" + bytes(range(64)) + b"\xff\xd9"
 
@@ -81,14 +82,70 @@ class PromptGuardTest(unittest.TestCase):
         self.assertEqual([h.sentence_index for h in scan.hits][0], 2)
 
     def test_haiku_b01_shot_2_and_6_fail_on_requested_text(self):
-        shot2 = ("Extreme close-up macro shot of a male hand holding a smartphone. The phone "
-                 "screen shows a notification alert: 'Tenant Complaint Pending' and '3 Rents "
-                 "Due' with red badge numbers.")
+        # condition 6: shots 2 and 6 are the committed package's quoted prompts 2 and 9, read
+        # in place (the dispatched media/prompts/ file carries shot 1 only)
+        prompts = package.extract_prompts(package.parse_package(HAIKU_B01.read_text()))
+        shot2, shot6 = prompts[1].text, prompts[8].text
+        self.assertTrue(shot2.startswith("Extreme close-up macro shot"))
+        self.assertTrue(shot6.startswith("Clean, minimal title card"))
+        self.assertIn("Background is soft white or light gray (very subtle texture, not pure "
+                      "white)", shot6)
         self.assertIn("T2", subchecks(textscan.scan_prompt(shot2)))
-        shot6 = ("Clean, minimal title card. Bold, modern sans-serif headline text (white or dark "
-                 "gray on the light background), reading one of the following (verbatim from "
-                 "RentOK website): 'Join 15,000+ Property Owners' OR 'Save Time. Work Less.'")
         self.assertIn("T2", subchecks(textscan.scan_prompt(shot6)))
+        # shot 6's "No background clutter, no secondary messages" is negated (F-02) — the
+        # headline / tagline / logo / CTA sentences are the hits
+        hits = textscan.scan_prompt(shot6).hits
+        self.assertTrue(hits)
+        self.assertFalse([h for h in hits if "secondary messages" in h.sentence], hits)
+
+    # ── F-02: false FAILs the checker reported must clear ────────────────
+    def test_f02_negation_and_narrowed_surfaces_clear(self):
+        for text in ("A tidy desk, no secondary messages.",
+                     "Two friends in conversation over chai.",
+                     "A warm banner of cloud over the ridge.",
+                     "A menu of soft greens in the foliage.",
+                     "Hands rest on the counter of the kitchen island.",
+                     "A thumb pressing the crown button.",
+                     "The user interface is not visible; screen off.",
+                     "A model showing the 'Aster Meridian 38' on her wrist, no text anywhere.",
+                     "A phone face down, no chat bubbles, no notifications visible.",
+                     "Clean walls, no visible signage."):
+            self.assertEqual(textscan.scan_prompt(text).hits, [], text)
+
+    def test_f02_display_verbs_still_hit_on_a_text_surface(self):
+        # the committed Haiku B01 shot 2 shape: a screen shows a quoted string
+        text = "The phone screen shows a notification alert: 'Tenant Complaint Pending'."
+        self.assertIn("T2", subchecks(textscan.scan_prompt(text)))
+        text = "Cut to him tapping a 'Verify KYC' button on the same app."
+        self.assertIn("T2", subchecks(textscan.scan_prompt(text)))
+
+    # ── F-03: false PASSes the checker reported must hit ─────────────────
+    def test_f03_baked_text_phrasings_hit(self):
+        for text in ("elegant text on the dial",
+                     "add text across the top third",
+                     "the word RENT in bold red letters",
+                     "the dial shows the model name below 12 o'clock",
+                     "caseback engraved with the model name",
+                     "a label that says Aster",
+                     "a placard with the words Save Time",
+                     "a wall clock with clear numerals",
+                     "a calendar with dates circled",
+                     "license plate clearly visible",
+                     "a nameplate bearing the manager's name",
+                     "the phone number 98765 43210 painted across the shutter",
+                     "a billboard with the URL www.rentok.com",
+                     "written in Hindi on the wall",
+                     "a t-shirt with a slogan",
+                     # the checker's existing HITs stay HITs
+                     "a sign reads OPEN", "storefront lettering", "a tagline underneath",
+                     "a shop sign in Devanagari script"):
+            self.assertTrue(textscan.scan_prompt(text).hits, text)
+
+    def test_f03_new_terms_respect_negation_and_deferral(self):
+        for text in ("no text on the dial", "a plate free of text", "no numerals, baton markers",
+                     "no license plate in frame", "a blank label", "text on the plate is added in post",
+                     "a bag with no slogan", "signs of wear on the strap"):
+            self.assertEqual(textscan.scan_prompt(text).hits, [], text)
 
     # ── windows ─────────────────────────────────────────────────────────
     def test_negation_window_clears_a_text_request(self):
