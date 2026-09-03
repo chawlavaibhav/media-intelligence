@@ -238,6 +238,31 @@ class ShotAndDeclarationTest(unittest.TestCase):
             'GENERATION_PROMPTS\n"' + body + '"\nthe 5" screen\n"' + body + ' 99"\n')
         self.assertEqual([p.text for p in package.extract_prompts(pkg)], [body, body + " 99"])
 
+    def test_k02_whitespace_inside_the_quotes_still_pairs(self):
+        # checker K-02 / Ruling 6 condition 2: a closing quote preceded by whitespace and an
+        # opening quote followed by whitespace pair normally
+        body = "A matte plate, no text. " * 8            # 192 chars, trailing space
+        pkg = package.parse_package('GENERATION_PROMPTS\n"' + body + '"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], [body.strip()])
+        pkg = package.parse_package('GENERATION_PROMPTS\n" ' + body.strip() + '"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], [body.strip()])
+        pkg = package.parse_package('GENERATION_PROMPTS\n" ' + body + '"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], [body.strip()])
+
+    def test_k05_an_inch_mark_inside_a_prompt_does_not_truncate_it(self):
+        # checker K-05 / Ruling 6 condition 5: a digit-preceded quote mid-line inside an open
+        # run is a measurement; the run closes at the end-of-line quote
+        lead = "Vertical 9:16, a young man at a desk in a cramped PG office, harsh tube-light. "
+        for tail in ('A 6" OLED panel showing chat bubbles and a notification counter.',
+                     'The panel is 6". It shows chat bubbles and a notification counter.'):
+            pkg = package.parse_package('GENERATION_PROMPTS\n"' + lead + tail + '"\n')
+            prompts = package.extract_prompts(pkg)
+            self.assertEqual([p.text for p in prompts], [lead + tail], tail)
+        # a digit-preceded quote followed by a bracket or end-of-line still closes
+        body = "x" * 130
+        pkg = package.parse_package('GENERATION_PROMPTS\n(see "' + body + ' 38") then\n"' + body + ' 99"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], [body + " 38", body + " 99"])
+
     def test_f12_sonnet_b01_prompts_survive_an_inch_mark_above_them(self):
         text = SONNET_B01.read_text().replace(
             "**Shot 1–5 (Chaos block)", 'Note: the 5" screen is the hero.\n\n**Shot 1–5 (Chaos block)')

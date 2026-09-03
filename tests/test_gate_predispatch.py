@@ -336,6 +336,31 @@ class MutationTest(_Base):
                "## DOCTRINE_DEVIATIONS\n" + deviations + "\n")
         return self.run_gate(Path("synthetic.txt"), "static_image", True, text=pkg)
 
+    def test_k02_the_synthetic_prompt_is_extracted_not_limit_text_error(self):
+        # checker K-02: the fixture prompt above ends "no text. " + '"' — whitespace before
+        # the closing quote — and must be one extracted prompt, never LIMIT-TEXT ERROR
+        r = self.synthetic("key light from upper-left; brushed case; centre zone; balanced")
+        row = self.row(r, "LIMIT-TEXT")
+        self.assertNotEqual(row.status, S.ERROR, row.detail)
+        self.assertEqual(row.status, S.PASS, row.detail)
+        self.assertIn("1 prompt(s)", row.detail)
+        r = self.synthetic("key light from upper-left; brushed case; centre zone; balanced",
+                           deviations="- PA-D4 because the brief fixes a two-window room")
+        self.assertNotEqual(self.status(r, "LIMIT-TEXT"), S.ERROR)
+
+    def test_k05_an_inch_mark_inside_a_prompt_still_reaches_limit_text(self):
+        # checker K-05 / Ruling 6 condition 5: the remainder after the inch mark is scanned
+        lead = "Vertical 9:16, a young man at a desk in a cramped PG office, harsh tube-light. "
+        for tail in ('A 6" OLED panel showing chat bubbles and a notification counter.',
+                     'The panel is 6". It shows chat bubbles and a notification counter.'):
+            pkg = ("## VISUAL_SYSTEM\nkey light from upper-left; centre zone\n"
+                   "## DELIVERABLE\none 9:16 video\n## GENERATION_PROMPTS\n\"" + lead + tail + "\"\n")
+            r = self.run_gate(Path("synthetic.txt"), "video", False, text=pkg)
+            row = self.row(r, "LIMIT-TEXT")
+            self.assertEqual(row.status, S.FAIL, tail)
+            self.assertIn("chat bubbles", row.detail, tail)
+            self.assertEqual(r.verdict(), "FAIL", tail)
+
     def test_f05_checkers_junk_visual_system(self):
         # checker F-05: the junk VISUAL_SYSTEM that satisfied seven presence partials. After
         # narrowing, bare "balance" no longer declares balance (CA-D5 FAIL). The rows that

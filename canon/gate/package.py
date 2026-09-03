@@ -147,26 +147,36 @@ def scope_text(pkg: Package, feeds_sections) -> Scope:
 
 # ── generation prompts ───────────────────────────────────────────────────────
 
+CLOSER_TAIL = re.compile(r"[ \t]*[.)\],;:!?]*[ \t]*(?:\n|$)")
+
+
 def _straight_runs(text: str) -> list:
-    """(start, body) between paired straight quotes. A quote opens a run only when nothing
-    alphanumeric precedes it and something non-blank follows; it closes a run only when
-    nothing alphanumeric follows. A quote that can neither open nor close where it stands —
-    an inch mark such as `the 5" screen` (digit before, lowercase word after) or a stray
-    closer with no run open — is skipped instead of shifting every later pair (F-12)."""
+    """(start, body) between paired straight quotes. A quote opens a run when nothing
+    alphanumeric (and no quote) precedes it; it closes the open run when nothing
+    alphanumeric follows it. Whitespace just inside either quote is accepted (K-02).
+    Inside an open run a quote immediately preceded by a digit is a measurement — `6" OLED
+    panel`, `is 6". It shows` — unless a bracket or separator follows it or the rest of its
+    line is blank/punctuation, where it closes (K-05; `"… past 99"` at end of line, `"Aspect
+    ratio: 9:16")`). Outside a run a digit-preceded quote can never open one, so `the 5"
+    screen` between prompts is skipped instead of shifting every later pair (F-12). Recorded
+    limitation: a genuine closer preceded by a digit and followed by prose on the same line
+    (`… 99" then the next shot`) is read as an inch mark."""
     runs = []
     open_at = None
     for m in re.finditer(r'"', text):
         i = m.start()
         prev = text[i - 1] if i else ""
         nxt = text[i + 1] if i + 1 < len(text) else ""
-        if prev.isdigit() and re.match(r"[ \t]*[a-z]", text[i + 1:i + 3]):
-            continue   # inch mark
         if open_at is None:
-            if not (prev.isalnum() or prev == '"') and nxt and not nxt.isspace():
+            if not (prev.isalnum() or prev == '"'):
                 open_at = i
-        elif not nxt.isalnum() and not prev.isspace():
-            runs.append((open_at, text[open_at + 1:i]))
-            open_at = None
+            continue
+        if nxt.isalnum():
+            continue   # glued to a following word: not a closer
+        if prev.isdigit() and nxt not in ")],;:" and not CLOSER_TAIL.match(text, i + 1):
+            continue   # inch mark
+        runs.append((open_at, text[open_at + 1:i]))
+        open_at = None
     return runs
 
 
