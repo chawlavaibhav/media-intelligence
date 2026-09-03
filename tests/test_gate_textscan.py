@@ -119,6 +119,27 @@ class PromptGuardTest(unittest.TestCase):
         text = "Cut to him tapping a 'Verify KYC' button on the same app."
         self.assertIn("T2", subchecks(textscan.scan_prompt(text)))
 
+    def test_k03_a_negator_governing_something_else_does_not_clear_a_text_surface(self):
+        # checker K-03 / Ruling 6 condition 3: T3's negation window clears a surface only when
+        # the negator governs it directly — nothing but plain modifiers between them. A
+        # comma, a gerund or a preposition in the gap means the negator governs something
+        # else and the surface is still drawn: HIT.
+        for text in ("Avoid cluttering the dashboard",
+                     "never crowded, the poster on the wall",
+                     "A tidy, not busy, receipt on the table",
+                     "zero clutter around the invoice"):
+            self.assertEqual(subchecks(textscan.scan_prompt(text)), ["T3"], text)
+        # the other direction: attributive negation still clears (F-02 shapes)
+        for text in ("no chat bubbles", "Clean walls, no visible signage.",
+                     "no license plate in frame", "a plate free of labels",
+                     "not a dashboard", "without any visible dashboard",
+                     "A phone face down, no chat bubbles, no notifications visible."):
+            self.assertEqual(textscan.scan_prompt(text).hits, [], text)
+        # recorded over-fires (vocab.CHANGELOG K-03): a gerund in the gap always breaks
+        # governance, so an adjectival -ing and "avoid showing" hit — blocking direction kept
+        for text in ("no glowing notifications", "avoid showing the receipt"):
+            self.assertEqual(subchecks(textscan.scan_prompt(text)), ["T3"], text)
+
     # ── F-03: false PASSes the checker reported must hit ─────────────────
     def test_f03_baked_text_phrasings_hit(self):
         for text in ("elegant text on the dial",

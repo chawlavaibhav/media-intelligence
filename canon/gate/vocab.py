@@ -86,6 +86,13 @@ CHANGELOG = [
     "the golden ratio point.', 'No hard shadows, dial placed on the rule of thirds line.', "
     "'Not too tight, the crown sits at the intersection of the thirds.' FAIL; the F-07 "
     "phrasings still PASS.",
+    "2026-09-03 K-03: GOVERNANCE_BREAK / GOVERNANCE_STOP_WORDS added — T3's 4-token negation "
+    "window (F-02) clears a surface only when the negator governs it directly: no punctuation, "
+    "gerund or preposition/conjunction between them ('Avoid cluttering the dashboard', 'never "
+    "crowded, the poster on the wall', 'A tidy, not busy, receipt on the table', 'zero clutter "
+    "around the invoice' HIT; 'no chat bubbles', 'no visible signage', 'not a dashboard', "
+    "'a plate free of labels' still CLEAR). T2 keeps the plain window. Recorded over-fires: an "
+    "adjectival gerund ('no glowing notifications') and 'avoid showing the receipt' now HIT.",
 ]
 
 # ── §B.1 recognisers for the partial pre-dispatch checks ────────────────────────────────
@@ -204,6 +211,15 @@ TEXT_REQUEST_TERMS = (
 # A negator within 4 tokens before a T2 / T3 term clears it.
 NEGATORS = ("no", "not", "never", "without", "avoid", "zero")
 NEGATOR_PHRASES = ("rather than", "never a", "free of", "devoid of", "absence of")
+# T3 only (K-03): the negator governs the surface term only when the gap between them holds
+# no punctuation, no gerund (-ing) and none of these words — otherwise it governs something
+# else ("Avoid cluttering the dashboard", "zero clutter around the invoice") and the surface
+# is still drawn.
+GOVERNANCE_BREAK = r"[,;:()\[\]—–]"
+GOVERNANCE_STOP_WORDS = frozenset((
+    "around", "on", "in", "of", "at", "over", "under", "near", "beside", "behind", "across",
+    "with", "from", "to", "into", "onto", "for", "by", "through", "against", "and", "but", "or",
+))
 # CA-D2 clause 2 only (F-07): a disclaimer immediately after a named-ratio term also clears
 # it — "The rule of thirds is not used here." / "The golden ratio is deliberately avoided."
 NEGATED_AFTER = (

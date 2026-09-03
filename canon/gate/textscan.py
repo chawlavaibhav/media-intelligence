@@ -14,8 +14,10 @@ Pre-dispatch (over each generation prompt, sentence-split on `[.;!?]\\s+|\\n`):
      a DISPLAY_VERB when the sentence also names a TEXT_SURFACE), or a TEXT_REQUEST term —
      unless a NEGATOR sits within 4 tokens before the term or the sentence carries a
      DEFERRAL term;
-  T3 a TEXT_SURFACE term outside the same negation window, with no ILLEGIBILITY/DEFERRAL
-     term in the same sentence.
+  T3 a TEXT_SURFACE term with no ILLEGIBILITY/DEFERRAL term in the same sentence, unless a
+     NEGATOR within 4 tokens before it governs it directly (K-03: nothing but plain
+     modifiers in between — a comma, a gerund or a preposition means the negator governs
+     something else and the surface is still drawn).
 
 Post-draw: a TextDetector over the artifact (or supplied video frames). `NoDetector` is the
 default and yields `unavailable` (NOT_RUN). `CloudVisionTextDetection` mirrors the request and
@@ -84,6 +86,28 @@ def negated(sentence: str, start: int, window: int = NEGATION_WINDOW) -> bool:
 
 
 NEGATED_AFTER = re.compile(vocab.NEGATED_AFTER, re.I)
+GOVERNANCE_BREAK = re.compile(vocab.GOVERNANCE_BREAK)
+
+
+def negated_surface(sentence: str, start: int) -> bool:
+    """T3 (K-03, Ruling 6 condition 3): the nearest NEGATOR within NEGATION_WINDOW tokens
+    before the surface term clears it only when it governs the term directly — the gap
+    between them holds no punctuation, no gerund and no word in GOVERNANCE_STOP_WORDS.
+    "no visible signage" / "not a dashboard" clear; "Avoid cluttering the dashboard",
+    "never crowded, the poster", "not busy, receipt", "zero clutter around the invoice" hit."""
+    head = sentence[:start]
+    tokens = list(TOKEN.finditer(head))[-NEGATION_WINDOW:]
+    for k in range(len(tokens) - 1, -1, -1):
+        word = tokens[k].group(0).lower().strip("'")
+        phrase = (tokens[k - 1].group(0).lower() + " " + word) if k else ""
+        if word not in vocab.NEGATORS and phrase not in vocab.NEGATOR_PHRASES:
+            continue
+        gap = head[tokens[k].end():]
+        if GOVERNANCE_BREAK.search(gap):
+            return False
+        return not any(t.lower() in vocab.GOVERNANCE_STOP_WORDS or t.lower().endswith("ing")
+                       for t in TOKEN.findall(gap))
+    return False
 
 
 def negated_named_ratio(sentence: str, start: int, end: int) -> bool:
@@ -98,11 +122,11 @@ def negated_named_ratio(sentence: str, start: int, end: int) -> bool:
     return bool(NEGATED_AFTER.match(sentence[end:]))
 
 
-def _matches(compiled, sentence: str, *, skip_negated: bool) -> list:
+def _matches(compiled, sentence: str, *, skip_negated: bool, negation=negated) -> list:
     found = []
     for _, rx in compiled:
         for m in rx.finditer(sentence):
-            if skip_negated and negated(sentence, m.start()):
+            if skip_negated and negation(sentence, m.start()):
                 continue
             found.append(m.group(0).lower())
     return found
@@ -134,7 +158,9 @@ def scan_prompt(text: str) -> PromptScan:
             terms += _matches(TEXT_REQUEST_TERMS, sentence, skip_negated=True)
             if terms:
                 scan.hits.append(TextHit("T2", i, sentence, tuple(dict.fromkeys(terms))))
-        surfaces = _matches(TEXT_SURFACE_TERMS, sentence, skip_negated=True)   # F-02 window
+        # F-02: the negation window; K-03: only when the negator governs the surface
+        surfaces = _matches(TEXT_SURFACE_TERMS, sentence, skip_negated=True,
+                            negation=negated_surface)
         if surfaces and not _matches(ILLEGIBILITY_TERMS, sentence, skip_negated=False):
             scan.hits.append(TextHit("T3", i, sentence, tuple(dict.fromkeys(surfaces))))
     return scan
