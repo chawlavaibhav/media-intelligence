@@ -16,6 +16,7 @@ import unittest
 from pathlib import Path
 
 from canon.gate import doctrine, findings, postdraw, textscan
+from tests.test_gate_artifact import audio_trak, box, jpeg, mp4, mvhd
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 E38 = REPO_ROOT / "eval/experiments/EVAL-038"
@@ -158,6 +159,8 @@ class ImageTest(_Base):
         row = self.row(r, "INFRA-RECORD-SHA")
         self.assertEqual(row.status, S.FAIL)
         self.assertIn("record.json", row.detail)
+        self.assertTrue(row.blocking)
+        self.assertEqual(r.verdict(), "FAIL")
 
 
 class VideoTest(_Base):
@@ -214,6 +217,62 @@ class VideoTest(_Base):
         self.assertEqual(r.verdict(), "FAIL")
 
 
+class InfraVerdictTest(_Base):
+    """Ruling 4 / condition 7: every INFRA row is blocking, and each one, failing alone,
+    turns the verdict — not only its own status (checker F-01)."""
+
+    def failing_ids(self, report):
+        return [r.check_id for r in report.results if r.failing]
+
+    def test_every_infra_row_is_blocking(self):
+        r = self.run_post("E038-media-B01-haiku-packs", "video", False,
+                          rec=record("E038-media-B01-haiku-packs"))
+        infra = [x for x in r.results if x.family == "infra"]
+        self.assertEqual([x.check_id for x in infra],
+                         ["INFRA-CONTAINER", "INFRA-VIDEO-TRACK", "INFRA-RECORD-SHA"])
+        for x in infra:
+            self.assertTrue(x.blocking, x.check_id)
+
+    def test_record_sha_mismatch_alone_flips_the_verdict(self):
+        # M01 passes in full with its committed record; the zeroed sha is the only change
+        rec = record("E038-media-B06-haiku-packs")
+        rec["sha256"] = "0" * 64
+        r = self.run_post("E038-media-B06-haiku-packs", "static_image", True, package=HAIKU_B06,
+                          rec=rec)
+        self.assertEqual(self.failing_ids(r), ["INFRA-RECORD-SHA"])
+        self.assertEqual(r.verdict(), "FAIL")
+        self.assertTrue(r.render_text().splitlines()[-1].startswith("GATE FAIL ("))
+        self.assertIn("FAIL            INFRA-RECORD-SHA", r.render_text())
+
+    def test_image_under_a_video_dispatch_alone_flips_the_verdict(self):
+        # a 9:16 JPEG satisfies DISPATCH-ASPECT against the committed B01 dispatch, so the
+        # missing video track is the only failing row
+        r = self.run_post("E038-media-B01-haiku-packs", "video", False,
+                          artifact_bytes=jpeg(720, 1280))
+        self.assertEqual(self.status(r, "DISPATCH-ASPECT"), S.PASS)
+        self.assertEqual(self.failing_ids(r), ["INFRA-VIDEO-TRACK"])
+        self.assertEqual(r.verdict(), "FAIL")
+
+    def test_audio_only_mp4_under_a_video_dispatch_flips_the_verdict(self):
+        ftyp = box("ftyp", b"isom" + bytes(4) + b"isomiso2avc1mp41")
+        data = ftyp + box("moov", mvhd(1000, 8000) + audio_trak()) + box("mdat", bytes(32))
+        r = self.run_post("E038-media-B01-haiku-packs", "video", False, artifact_bytes=data)
+        track = self.row(r, "INFRA-VIDEO-TRACK")
+        self.assertEqual(track.status, S.FAIL)
+        self.assertIn("no video track", track.detail)
+        self.assertIn("INFRA-VIDEO-TRACK", self.failing_ids(r))
+        self.assertEqual(r.verdict(), "FAIL")
+
+    def test_unparsable_container_alone_flips_the_verdict(self):
+        r = self.run_post("E038-media-B06-haiku-packs", "static_image", True,
+                          artifact_bytes=b"\xff\xd8\xff\xe0\x00\x10JFIF")
+        row = self.row(r, "INFRA-CONTAINER")
+        self.assertEqual(row.status, S.ERROR)
+        self.assertTrue(row.blocking)
+        self.assertEqual(self.failing_ids(r), ["INFRA-CONTAINER"])
+        self.assertEqual(r.verdict(), "FAIL")
+
+
 class SyntheticTest(_Base):
     PNG_1000 = (b"\x89PNG\r\n\x1a\n\x00\x00\x00\x0dIHDR\x00\x00\x03\xe8\x00\x00\x03\xe8"
                 b"\x08\x06\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00IEND\x00\x00\x00\x00")
@@ -254,7 +313,9 @@ class SyntheticTest(_Base):
                           dispatch_doc=dispatch("E038-media-B01-haiku-packs"))
         row = self.row(r, "INFRA-VIDEO-TRACK")
         self.assertEqual(row.status, S.FAIL)
+        self.assertTrue(row.blocking)
         self.assertEqual(self.status(r, "DISPATCH-DURATION"), S.NOT_RUN)
+        self.assertEqual(r.verdict(), "FAIL")
 
     def test_json_carries_every_row(self):
         r = self.run_post("E038-media-B06-haiku-packs", "static_image", True)

@@ -1,5 +1,5 @@
 """Post-draw gate: baked-text scan first, then the artifact's header facts against the
-dispatch descriptor and the package (CANON-GATE-001 plan §D post-draw, §E, Rulings 1–2).
+dispatch descriptor and the package (CANON-GATE-001 plan §D post-draw, §E, Rulings 1–2, 4).
 
 STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
 coordination/CONTROL-STATE.md governs.
@@ -9,6 +9,8 @@ detector — baked text are checkable, so every doctrine line but CA-D6 reports 
 here with its reason. The text scan runs over the artifact (image) or over supplied frames
 (video; stdlib cannot decode H.264, so no frames means NOT_RUN, never PASS). A `no_text`
 result is a detector's answer about one output, never a certification (EVAL-029).
+Blocking rows here (Rulings 2 and 4): LIMIT-TEXT, every DISPATCH-*, every INFRA-*, any ERROR;
+the CA-D6 post partial is reported, not blocking.
 """
 from __future__ import annotations
 
@@ -58,7 +60,11 @@ def _doctrine(line, status, clause, detail, *, blocking=False):
                        source_text=line.text, detail=detail, evidence=(), blocking=blocking)
 
 
-def _row(check_id, family, status, detail, *, blocking=False, source=INFRA_SOURCE, evidence=()):
+def _row(check_id, family, status, detail, *, blocking=True, source=INFRA_SOURCE, evidence=()):
+    """A limit / dispatch / infra row. Blocking by default: every DISPATCH-* and INFRA-* row
+    turns the verdict (Ruling 4 — the evidence-chain checks block; an artifact whose sha256
+    does not match its record.json, or that carries no video track under a video dispatch,
+    exits 1)."""
     return CheckResult(check_id=check_id, family=family, gate=GATE, status=status,
                        coverage="full", clause="", source_text=source, detail=detail,
                        evidence=tuple(evidence), blocking=blocking)

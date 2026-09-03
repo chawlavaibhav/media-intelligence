@@ -7,7 +7,9 @@ Statuses: PASS (the tested clause holds), FAIL (it does not), NOT_MECHANISED (co
 test the line; reason mandatory), NOT_APPLICABLE (pack not selected or modality excludes the
 check), NOT_RUN (mechanisable but an input is missing), ERROR (input unparsable — fails closed).
 
-Verdict (Ruling 2): FAIL iff any row with blocking=True is FAIL, or any row is ERROR. A
+Verdict (Rulings 2 and 4): FAIL iff any row with blocking=True is FAIL, or any row is ERROR —
+the blocking set is LIMIT-TEXT, every DISPATCH-*, every INFRA-*, CA-D2 clause 2; the
+declaration-presence partials are reported, not blocking. A
 non-blocking FAIL is printed as `FAIL (non-blocking)` and counted on the final line; it is
 never folded into a pass count. A partial PASS always prints its clause in brackets.
 """
@@ -48,7 +50,7 @@ class CheckResult:
     source_text: str       # the committed pack `check` / limit line, verbatim
     detail: str            # reason (mandatory when not PASS) or evidence summary
     evidence: tuple = ()
-    blocking: bool = False  # Ruling 2: only LIMIT-TEXT, DISPATCH-*, CA-D2 clause 2 block
+    blocking: bool = False  # Rulings 2 + 4: LIMIT-TEXT, DISPATCH-*, INFRA-*, CA-D2 clause 2 block
 
     def __post_init__(self):
         if self.family not in FAMILIES:
