@@ -13,7 +13,7 @@ import json
 import unittest
 from pathlib import Path
 
-from canon.gate import doctrine, findings, predispatch
+from canon.gate import doctrine, findings, package, predispatch, textscan
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 E38 = REPO_ROOT / "eval/experiments/EVAL-038"
@@ -27,6 +27,20 @@ ALL_IDS = [f"PA-D{i}-check" for i in range(1, 11)] + [f"CA-D{i}-check" for i in 
 NOT_MECH_PRE = ["PA-D2-check", "PA-D3-check", "PA-D5-check", "PA-D6-check", "PA-D7-check",
                 "PA-D9-check", "CA-D3-check", "CA-D4-check", "CA-D8-check", "CA-D9-check",
                 "CA-D11-check"]
+# K-04: the pre-F-05 PA-D4 vocabularies, verbatim from `git show 3baa673:canon/gate/vocab.py`,
+# so the narrowing is pinned against the terms that produced the false PASS.
+OLD_LIGHT_TERMS_3BAA673 = (
+    r"key\s+light", "key", r"light\s+source", "softbox", r"soft\s+box", r"window\s+light",
+    "daylight", "sunlight", "tube-light", "tubelight", "lamp", "practical", "backlight",
+    r"rim\s+light", "kicker", "fill", "spotlight", r"overhead\s+light", r"lit\s+from",
+    r"light\s+from",
+)
+OLD_DIRECTION_TERMS_3BAA673 = (
+    "upper-left", r"upper\s+left", "top-left", r"top\s+left", "upper-right", r"upper\s+right",
+    "top-right", r"from\s+the\s+left", r"from\s+the\s+right", r"from\s+above", r"from\s+behind",
+    r"from\s+the\s+side", "camera-left", "camera-right", "overhead", "behind", "side", "front",
+    r"\d+\s*°", r"\d+\s*degrees", "window",
+)
 
 
 def dispatch(name):
@@ -397,13 +411,47 @@ class MutationTest(_Base):
         r = self.synthetic("**implied_light_source:**\nkey light, fill from the left\n")
         self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
 
-    def test_f05_bare_degree_sign_is_not_a_direction(self):
-        r = self.synthetic("**implied_light_source:**\nkey light; dial tilted 5° toward camera.\n")
-        self.assertEqual(self.status(r, "PA-D4-check"), S.FAIL)
-        r = self.synthetic("**implied_light_source:**\nkey light at 45° above horizontal.\n")
-        self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
-        r = self.synthetic("**implied_light_source:**\nkey light 45 degrees camera-left.\n")
-        self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
+    # ── K-04: every narrowed bare term pinned in the failing direction ─────
+    # Each fixture is one sentence with no splitter boundary (`. `, `; `, newline) between
+    # the light term and the direction term. OLD_* are the F-05-era tuples transcribed
+    # verbatim from `git show 3baa673:canon/gate/vocab.py`; the test asserts PA-D4 would
+    # PASS on them (the false PASS the checker reported) and FAILs on the narrowed vocabulary.
+    K04_FIXTURES = (
+        ("fill", "the fill of the frame is the watch itself, shown from upper left"),
+        ("side", "key light kept soft, crown on the right side of the case"),
+        ("behind", "key light kept soft, the strap tucked behind the case"),
+        ("°", "key light kept soft, dial tilted 5° toward camera"),
+        ("key/front", "the key is the product itself, shown from the front"),
+        ("window", "Soft window light"),
+    )
+    K04_NARROWED_PASS = (
+        ("fill", "gentle fill from the left"),
+        ("side", "key light kept soft, side-lit from camera-left"),
+        ("behind", "key light from behind the watch"),
+        ("°", "key light at 45° above horizontal"),
+        ("°", "key light 45 degrees camera-left"),
+        ("key/front", "soft key from the front"),
+        ("window", "Soft window light from the left"),
+    )
+
+    def _old_pa_d4(self, sentence):
+        lights = predispatch._found(textscan.compile_terms(OLD_LIGHT_TERMS_3BAA673), sentence)
+        directions = predispatch._found(textscan.compile_terms(OLD_DIRECTION_TERMS_3BAA673),
+                                        sentence)
+        return S.PASS if lights and directions else S.FAIL
+
+    def test_k04_each_narrowed_bare_term_fails_where_the_old_term_passed(self):
+        for term, sentence in self.K04_FIXTURES:
+            self.assertEqual(len(package.split_sentences(sentence)), 1, sentence)
+            self.assertEqual(self._old_pa_d4(sentence), S.PASS, f"{term}: {sentence}")
+            r = self.synthetic("**implied_light_source:**\n" + sentence + "\n")
+            row = self.row(r, "PA-D4-check")
+            self.assertEqual(row.status, S.FAIL, f"{term}: {sentence} — {row.detail}")
+
+    def test_k04_the_narrowed_forms_still_declare_a_source_with_a_direction(self):
+        for term, sentence in self.K04_NARROWED_PASS:
+            r = self.synthetic("**implied_light_source:**\n" + sentence + "\n")
+            self.assertEqual(self.status(r, "PA-D4-check"), S.PASS, f"{term}: {sentence}")
 
     def test_f05_white_balance_is_not_a_balance_declaration(self):
         r = self.synthetic("brighter neutral daylight balance; brushed case; centre zone.")
