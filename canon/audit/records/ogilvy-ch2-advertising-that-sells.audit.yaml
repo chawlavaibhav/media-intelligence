@@ -142,9 +142,21 @@ lineage:
         and how thin the evidence for a relation is. If a citation were found in the source, the
         correct relation would be cites_source, which under the candidate rule still does not
         defeat independence.
-  independence_verdict: independent_origin
+    # Back-declaration written at admission of the chapters-1-and-3-20 span (DN-06 ruling (d),
+    # 2026-09-01): a dependence must be declared from both sides.
+    - source_id: ogilvy-beyond-ch2
+      relation: shared_author
+      evidence: >
+        The same work: that source is chapters 1 and 3-20 of the identical book whose chapter 2
+        is this record's span, admitted per DN-06 ruling (d) as an explicitly scoped extension
+        of this source, never an independent origin. The pair can never support a cross-source
+        promotion; the book agreeing with itself is not evidence.
+  independence_verdict: not_independent_of_named_sources
   independence_basis: >
-    No shared author, publisher, series or derivation established from the repository record.
+    No shared author, publisher, series or derivation established from the repository record
+    other than the same-work chapters-1-and-3-20 span declared above (admitted 2026-09-01 per
+    DN-06 ruling (d) as a scoped extension of this source). Independence is pairwise: against
+    every other corpus source this chapter remains an independent origin.
   extractor_exposure:
     spec_contains_examples_from_this_source: false
     evidence: >

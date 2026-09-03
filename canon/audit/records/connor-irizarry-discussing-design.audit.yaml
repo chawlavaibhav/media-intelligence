@@ -1,0 +1,215 @@
+# Audit Gate v0.2 record — Adam Connor & Aaron Irizarry, "Discussing Design".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_connor_discussing_design
+source_id: connor-irizarry-discussing-design
+knowledge_dir: canon/knowledge/current/connor-irizarry-discussing-design
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 841cad1198c3600b624fd32135f73585e1af53a3f7d0456ac3b8b27d6809da46
+    - path: operational-bindings.yaml
+      digest: cd24524f36fe53256d80edf1b0cfdba454afc37f4750a459dd2533a071879ed4
+    - path: source-concept-systems.yaml
+      digest: 55d921b7a570dfd1cd48081fc3716903dea5f824c23f57274931d52bb40e3102
+    - path: source-knowledge.yaml
+      digest: b6344f6c250b28a9a1c410aa27bad7aa7a72b93f3031e694bc4f8dfaeb4c5203
+    - path: visual-evidence-ledger.yaml
+      digest: b2ba8d9441cb9d0ca090c3902b74e37a72130e4f09994837ff66c53e8b3fafb5
+  combined_digest: ec8af01a0ae82683d11f42dd239b5d76204d2b5054457b173d59d73cd1a00cbe
+
+evidence_basis_for_this_audit:
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/connor-irizarry-discussing-design/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/connor-irizarry-discussing-design/source-knowledge.yaml
+  - canon/knowledge/current/connor-irizarry-discussing-design/source-concept-systems.yaml
+  - canon/knowledge/current/connor-irizarry-discussing-design/operational-bindings.yaml
+  - canon/knowledge/current/connor-irizarry-discussing-design/ontology-mappings.yaml
+  - canon/knowledge/current/connor-irizarry-discussing-design/visual-evidence-ledger.yaml
+  - canon/knowledge/current/connor-irizarry-discussing-design/PROVENANCE.md
+  - canon/candidates/canon-014/connor-irizarry-discussing-design/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/connor-irizarry-discussing-design/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: native_digital_pdf
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    Native-digital O'Reilly PDF with printed folios; the copy-specific printed=PDF-18 offset
+    is verified by the mandatory 5-locator sample (no original-file hash was recorded), with
+    the runbook's two named locators (Fig 5-3 printed p.120, Fig 5-4 printed p.123) landing
+    exactly (ledger, locator_verification_sample).
+  inspection_state: inspected_figure_level
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: no_loss_detected
+      affects: "all 25 cited figures"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        Every cited figure opened (25/25, all fresh in this pass): illustrations of stated
+        propositions - creature dialogues, annotated timelines, framework restatements, worked
+        persona/goal/principle examples. No figure carries content the prose does not state;
+        none contradicts a frozen claim.
+    - pattern: in_figure_text_absent
+      affects: "the PDF text layer for several figure captions and all in-balloon dialogue text"
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        Caption and balloon text does not extract for several figures; the content was
+        recovered in this copy by rendering the pages and reading the figures directly. The
+        printed page itself is undamaged.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    The figure pass and locator sample close the candidate's inspection gap without changing
+    any frozen claim; the extraction's printed-page citations are trustworthy in this copy.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    55 objects. Two practitioners' workshop doctrine on design critique, stated in their own
+    voice, with a small number of signed guest sidebars by other practitioners carried inside
+    the book.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_disc_0001, sk_disc_0002, sk_disc_0003, sk_disc_0004, sk_disc_0005,
+                sk_disc_0006, sk_disc_0007, sk_disc_0008, sk_disc_0009, sk_disc_0010,
+                sk_disc_0011, sk_disc_0012, sk_disc_0013, sk_disc_0014, sk_disc_0015,
+                sk_disc_0016, sk_disc_0017, sk_disc_0018, sk_disc_0019, sk_disc_0020,
+                sk_disc_0021, sk_disc_0022, sk_disc_0023, sk_disc_0024, sk_disc_0026,
+                sk_disc_0027, sk_disc_0028, sk_disc_0029, sk_disc_0030, sk_disc_0031,
+                sk_disc_0032, sk_disc_0033, sk_disc_0034, sk_disc_0035, sk_disc_0036,
+                sk_disc_0037, sk_disc_0038, sk_disc_0039, sk_disc_0040, sk_disc_0041,
+                sk_disc_0042, sk_disc_0043, sk_disc_0044, sk_disc_0045, sk_disc_0046,
+                sk_disc_0048, sk_disc_0049, sk_disc_0050, sk_disc_0051, sk_disc_0052,
+                sk_disc_0053, sk_disc_0054, sk_disc_0055]
+      evidence: >
+        Connor & Irizarry stating critique doctrine from their own workshop practice. Where a
+        guest sidebar merely reinforces an authorial claim (sk_disc_0009 Hoffman/Cashdollar,
+        sk_disc_0050 Erb, sk_disc_0053's internal corroboration by Goodwin), the claim itself
+        is the authors' and the sidebar dependence is recorded in the frozen object's caveat.
+        No object carries empirical_within_source; no study with supplied results appears
+        anywhere in the span.
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_disc_0025, sk_disc_0047]
+      evidence: >
+        Two objects rest entirely on signed guest sidebars by identified practitioners quoted
+        approvingly: Kim Goodwin (printed pp. 61-62) and Brad Nunnally (printed pp. 125-126).
+        The frozen objects' claims and caveats name the sidebar authorship explicitly.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record: the empirical_within_source set is empty and no
+    category here asserts a supplied measurement.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: The doctrine governs conversations about designs, not fields of a representation.
+    - consumer: production_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No physical production procedure is prescribed.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_disc_006]
+      note: One evaluation binding (critique-structure conformance of a feedback utterance).
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_disc_001, bnd_disc_002, bnd_disc_003, bnd_disc_004,
+                              bnd_disc_005, bnd_disc_007, bnd_disc_008, bnd_disc_009,
+                              bnd_disc_010, bnd_disc_011, bnd_disc_012]
+      note: >
+        Eleven governance bindings - the heaviest governance skew in the HOLD dock, matching a
+        source whose subject is how feedback conversations should be interpreted, scoped and
+        run (evidence_interpretation x6, conflict_resolution x2, rule_application x2,
+        taxonomy_governance x1).
+    - consumer: benchmark
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: Nothing here is a benchmarkable artifact property.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        The critique frameworks, facilitation rules and session procedures are working
+        procedure for people - the runbook's own classification of this candidate
+        (human_workflow consumer, low weak-model runtime value); no workflow binding was made
+        and none is manufactured here.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: Nothing exactly executable.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_disc_0024]
+      observation: >
+        The discriminating-power test for design principles (a good principle eliminates more
+        design ideas than it retains) is the span's most reusable evaluation idea and
+        currently binds only through governance.
+  conclusion: >
+    Fit matches the source's nature: governance-dominant doctrine about running critique,
+    with human workflow as the real consumer and near-zero direct runtime value for a weak
+    model - exactly the runbook's rank rationale for scheduling it late.
+
+lineage:
+  authors: ["Adam Connor", "Aaron Irizarry"]
+  publisher: O'Reilly Media
+  series: null
+  first_published: 2015
+  copy_edition: >
+    Native-digital PDF, 206 PDF pages, 17,219,889 bytes, sha256
+    b731d78811ce7d167c7ef61618d0069e7a1ed02eed0f6fea8c73b7caf2e5687b (hashed on arrival;
+    PROVENANCE.md recorded no original-file hash).
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, publisher-dependence, derivation or primary informant with any
+    live source or canon-014 candidate. The guest-sidebar practitioners (Goodwin, Nunnally,
+    Hoffman/Cashdollar, Erb) have no works in the corpus, and their contributions are scoped
+    inside two objects plus caveats.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other sources; none
+      quotes Discussing Design.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    Critique-conversation doctrine rests on how people talk and listen, which does not date;
+    one object ties to a particular era's tooling landscape and carries historical_claim.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_disc_0001, sk_disc_0002, sk_disc_0003, sk_disc_0004, sk_disc_0005,
+                sk_disc_0006, sk_disc_0007, sk_disc_0008, sk_disc_0009, sk_disc_0010,
+                sk_disc_0011, sk_disc_0012, sk_disc_0013, sk_disc_0014, sk_disc_0015,
+                sk_disc_0016, sk_disc_0017, sk_disc_0018, sk_disc_0020, sk_disc_0021,
+                sk_disc_0022, sk_disc_0023, sk_disc_0024, sk_disc_0025, sk_disc_0026,
+                sk_disc_0027, sk_disc_0028, sk_disc_0029, sk_disc_0030, sk_disc_0031,
+                sk_disc_0032, sk_disc_0033, sk_disc_0034, sk_disc_0035, sk_disc_0036,
+                sk_disc_0037, sk_disc_0038, sk_disc_0039, sk_disc_0040, sk_disc_0041,
+                sk_disc_0042, sk_disc_0043, sk_disc_0044, sk_disc_0045, sk_disc_0046,
+                sk_disc_0047, sk_disc_0048, sk_disc_0049, sk_disc_0050, sk_disc_0051,
+                sk_disc_0052, sk_disc_0053, sk_disc_0054, sk_disc_0055]
+      evidence: >
+        Feedback taxonomy, critique anatomy, facilitation and timing rules rest on
+        conversational and cognitive mechanics, not on any tool generation; the sidebar-borne
+        objects share this character.
+    - class: technology_contingent
+      sk_refs: [sk_disc_0019]
+      evidence: >
+        The one object carrying historical_claim in the frozen record: its claim is tied to
+        the collaboration-tooling environment of the book's writing (2015) and can date as
+        tools change; the object's own caveat states this.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

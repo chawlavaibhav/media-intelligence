@@ -1,0 +1,23 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+# Negative fixture: t_pex_0012 resolves only under canon/candidates/ (HOLD lane), so it is
+# illegal on a row marked usable: accepted_only. Must fail with E_HOLD_ID_ON_ACCEPTED_ROW.
+schema: cross_source_candidate_ledger_v0
+task: REP-02-fixture
+status: proposed
+ledger_complete: false
+records:
+- record_id: fx_hold_leak
+  kind: convergence
+  label: hold_leak_fixture
+  status: proposed
+  relation: related_to
+  usable: accepted_only
+  confidence: low
+  members:
+  - id: t_pex_0012
+    source_dir_or_candidate: freeman-photographers-eye-beyond-parts1-3
+    evidence: 'HOLD-lane term on an accepted_only row — the leak this fixture pins'
+  - id: t_fre_c003_0043
+    source_dir: freeman-photographers-eye-graphic-guide
+    evidence: 'accepted term'

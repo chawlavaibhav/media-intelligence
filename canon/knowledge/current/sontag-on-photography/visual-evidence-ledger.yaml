@@ -1,0 +1,97 @@
+# REP-07 — visual-evidence ledger for Sontag, "On Photography".
+#
+# The visual pass RAN and COMPLETED, and its finding is the genuine null the runbook predicted:
+# there is no visual argument to inspect. A book about photographs that reproduces none.
+# That is a real result and is recorded as one rather than as a gap. Follows the
+# desai-mother-pious-lady null-result template.
+
+source_id: sontag-on-photography
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: no_visual_argument
+
+hash_on_arrival:
+  file: "/Users/vaibhavchawla/Downloads/Books/On Photography.epub"
+  bytes: 210160
+  sha256_recomputed: edd6d37e3f765f5d2892a93c9f9069c0db4c0edf75a82a02b6fa15975298db57
+  sha256_recorded: edd6d37e3f765f5d2892a93c9f9069c0db4c0edf75a82a02b6fa15975298db57
+  match: true
+  consequence: >
+    The on-arrival SHA-256 matches the hash recorded in PROVENANCE.md §3, so this inspection
+    provably looked at the same copy the extraction read. The runbook's 5-locator sample is
+    required only where the hash does not match or none is recorded; neither holds here.
+
+inspection:
+  method: >
+    The EPUB was unpacked outside the repository and all 37 image assets enumerated and measured.
+    Every image large enough to carry content was opened: the cover (25,407 bytes), the scanned
+    title page (e9781429957113_i0001.jpg, 19,266 bytes) and the two cover thumbnails (thumb.jpg
+    2,351 bytes, thumbPPC.jpg 1,489 bytes). The 33 images under 600 bytes were measured, three of
+    them spanning the numeric range (i0002, i0015, i0033) were opened and are the same tiny black
+    ornamental mark, and their placements were read in context: they recur at essay openings and
+    at internal section breaks across the six essays and the title-page spread. Every img tag in
+    every spine document was located; the full text was searched for figure-pointing language
+    ('see figure/plate/illustration', 'graph/chart below', 'pictured/reproduced here') and for
+    caption classes, with zero hits.
+  images_in_archive: 37
+  figures: 0
+  decorative_ornaments: 33
+  ornament_evidence: >
+    Images e9781429957113_i0002.jpg through i0034.jpg are 495-531 bytes each - a single repeated
+    ornamental mark used as essay-opening and section-break furniture in c01-c06 (6+6+6+4+6+5
+    placements). No essay text refers to any image, anywhere in the book. PROVENANCE.md §3 states
+    'No photograph is reproduced anywhere in this book' and this pass confirms it by enumeration:
+    there is not one photograph, diagram or chart in the archive.
+  remaining_images:
+    - {file: "OEBPS/e9781429957113_cover.jpg", size: 25407, opened: true, identified_as: "Picador publisher cover, not evidence"}
+    - {file: "OEBPS/e9781429957113_i0001.jpg", size: 19266, opened: true, identified_as: "scanned title page (Susan Sontag / ON PHOTOGRAPHY / Picador, Farrar, Straus and Giroux)"}
+    - {file: "OEBPS/thumb.jpg", size: 2351, opened: true, identified_as: "cover thumbnail"}
+    - {file: "OEBPS/thumbPPC.jpg", size: 1489, opened: true, identified_as: "cover thumbnail (PPC variant)"}
+
+observed_loss_patterns:
+
+  # NOTE ON VOCABULARY: `no_visual_argument` is an Audit Gate `visual_argument_role` value, not a
+  # loss pattern, and is recorded as such at the head of this file. The fact that the pass ran and
+  # found nothing missing is a `no_loss_detected` entry.
+  - pattern: no_loss_detected
+    affects: "the visual dimension - nothing visual was lost because there is nothing visual to lose"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      Six verbal essays about how photographs are read, arguing entirely in prose about images the
+      book never reproduces - the famous photographs it discusses (Arbus, Evans, the war
+      photographs) are named and described, never shown. No sentence directs the reader to look at
+      anything in the book. A text-only representation therefore loses NOTHING of the argument.
+      This is the corpus's purest case of the desai null: a book whose subject is images and whose
+      evidence is entirely verbal.
+
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB, no page map, no folio in the text. Sontag's essays have no section
+      headings, so per PROVENANCE.md §2 every locator names the essay by title plus a short
+      distinguishing phrase identifying the passage (e.g. '"In Plato's Cave", the passage on
+      photographs furnishing evidence'); page_start/page_end are null on every object and no page
+      number was invented. Essay titles are unique and the distinguishing phrases were chosen to
+      be findable by search, so the locators are stable in this copy. Endnotes are cited by their
+      own numbers where used, which are the author's numbering, not pages.
+
+demonstrations: []
+visual_only_observations: []
+
+extraction_constraint_applied: >
+  Checked programmatically against the frozen source-knowledge.yaml: no object carries
+  source_support: visual or text_and_visual (all 22 are source_support: text), and
+  provenance.inspected.figures is empty on every object, correctly, because there are no figures.
+  No claim anywhere in the frozen record depends on an image.
+
+claim_resolution_after_inspection: not_applicable
+consequence: >
+  The visual pass changed nothing about this extraction and could not have, because the source
+  makes no visual argument. Recording that as a completed inspection with a null result
+  distinguishes 'we looked and there is nothing to see' from 'we did not look', which is the
+  separation the Audit Gate vocabulary was designed for. Note that this ledger asserts nothing
+  about admissibility: the critique-not-craft admission boundary (Controller ruling (c)) is
+  pending and is a separate question from the visual evidence recorded here.

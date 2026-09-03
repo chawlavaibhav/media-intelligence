@@ -1,0 +1,29 @@
+# Negative fixture for the confidence-marker rule (REP-04).
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+#
+# The object below carries controlled_comparison, so the decision table in
+# canon/context/confidence-marker-v0.yaml requires base grade MEASURED. The claimed
+# marker entry mis-marks it ASSERTED; assign_markers.check_entries must refuse it.
+# Ids are fixture-local and resolve nowhere in canon/knowledge/current/ on purpose.
+objects:
+  sk_fixture_neg_0001:
+    sk_id: sk_fixture_neg_0001
+    claim_type: explicit_source_claim
+    claim: >-
+      A fixture claim backed by an in-source controlled comparison; its base grade
+      must be MEASURED under the committed decision table.
+    caveats: []
+    intra_source_relations: []
+    evidence:
+      characteristics: [controlled_comparison, explicitly_stated]
+    provenance:
+      figure_refs: []
+      inspected:
+        figures: []
+claimed_markers:
+  sk_fixture_neg_0001:
+    base: ASSERTED
+    flags: []
+    suffixes: []
+    marker: "[ASSERTED]"

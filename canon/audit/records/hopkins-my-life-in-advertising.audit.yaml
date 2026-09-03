@@ -1,0 +1,330 @@
+# Audit Gate v0.2 record — Claude C. Hopkins, "My Life in Advertising" (1927 memoir).
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). Not a
+# same-work extension — a distinct 1927 work by the author of the live Scientific Advertising
+# spans — but one origin with them: the shared_author dependences are declared two-sidedly
+# below and on both Scientific Advertising records. The five fingerprinted artifacts moved
+# verbatim to canon/knowledge/current/ at admission; the digests below were recomputed
+# mechanically at the new location and are unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_hopkins_my_life
+source_id: hopkins-my-life-in-advertising
+knowledge_dir: canon/knowledge/current/hopkins-my-life-in-advertising
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: c425183de91a299b5ed1be6d6a1a8750af9468da607eabb24d5ed6a54c05a431
+    - path: operational-bindings.yaml
+      digest: e6464ce992e29de0c0a9deccb4edf81454629526cf142dc9b6fd478618dea4fd
+    - path: source-concept-systems.yaml
+      digest: 60d5283b52298800ac111bd6d596d17c3dc092098aa798f4ee0afe8818f8437c
+    - path: source-knowledge.yaml
+      digest: 0676ba51ad7fd84df75ab78a1a43fe0c8b8195d5dd051ef09a3b3ccba1fedbb8
+    - path: visual-evidence-ledger.yaml
+      digest: 0d434a7996138fdad50671d109da5b8758f9f0e05f5eec22044c79942558621a
+  combined_digest: c08700e67ebedab41c00dda0156d87251242689e4c310073581b1daaaa5d9f9b
+
+evidence_basis_for_this_audit:
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/hopkins-my-life-in-advertising/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/hopkins-my-life-in-advertising/source-knowledge.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/source-concept-systems.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/operational-bindings.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/ontology-mappings.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/visual-evidence-ledger.yaml
+  - canon/knowledge/current/hopkins-my-life-in-advertising/PROVENANCE.md
+  - canon/candidates/canon-014/hopkins-my-life-in-advertising/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/hopkins-my-life-in-advertising/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/audit/records/hopkins-scientific-advertising-ch1-7.audit.yaml
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: authored_print_scan
+  page_addressability: authored_pages
+  page_addressability_evidence: >
+    Internet Archive scan of the 1927 Harper & Brothers first edition, 232 PDF pages with real
+    printed folios; printed = PDF - 14. The REP-07 scan-page pass confirmed the mapping on all
+    66 opened renders and mechanically located all 19 chapter openers at exactly the printed
+    pages the extraction's chapter table records (1, 15, 27, 37, 50, 63, 73, 86, 96, 109, 123,
+    131, 143, 151, 157, 167, 175, 189, 199), "THE END" on printed 206, and the Harper
+    announcements tail at printed 207-210. false_page_affordance does not arise - the folios
+    are the author's publisher's, printed on the pages.
+  inspection_state: inspected_page_level
+  visual_argument_role: no_visual_argument
+  observed_loss_patterns:
+    - pattern: no_loss_detected
+      affects: "the visual dimension of printed pp.1-206"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        66 pages opened (every chapter boundary, a systematic 1-in-5 sample of the whole span,
+        and the extraction-critical pages), with the full range covered mechanically page by
+        page: zero figures, plates, diagrams, tables or reproduced advertisements anywhere. The
+        sampling rule is declared in the ledger. Every load-bearing figure re-read on its page
+        render matches the extraction (18c Liquozone inquiries p.92, $700 Benton Harbor p.135,
+        25c vs $1.25 p.147, 90% Quick Quaker p.150, divided-by-four p.154, 85c/$2.50/$14.20/42c
+        p.158, $1.78 p.197, and the rest - full list in the ledger).
+    - pattern: source_evidence_never_printed
+      affects: >
+        Every campaign artifact the memoir argues from - the "We Will Buy" and Palmolive coupon
+        advertisements, the No-Rim-Cut and All-Weather campaigns, the Schlitz copy, the two
+        mail-order advertisements whose costs per reply differ 34-fold. None is reproduced.
+      detectability: named_by_text
+      recoverability: not_applicable
+      evidence: >
+        Confirmed across the sampled sweep of all 19 chapters: the book argues entirely in
+        prose. A 1927 reader was in the same position; authorial, not digitisation, loss.
+    - pattern: display_type_ocr_damage
+      affects: >
+        The text layer only: chapter-opening display type, quoted display-type headlines
+        (printed p.134), running heads, and folios OCR'd as lookalikes on 41 of 206 pages.
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The pass's material finding: the one load-bearing string the extraction flagged as an
+        unrecoverable reconstruction - the rejected headline on printed p.134, garbage in every
+        text-layer pass - is FULLY LEGIBLE in the page image, reading verbatim '"We Will Buy"
+        is a much better headline than "10-Cent Cake Free."'. The reconstruction in
+        qa_mla_0065's disclosure is confirmed correct against the page. All 41 garbled folios
+        likewise read correctly in their renders. The scan image is the recovery path
+        throughout; nothing was found that is illegible in the image itself.
+    - pattern: text_layer_order_damage
+      affects: "text-layer interleaving of running heads (sometimes with folio attached) into body paragraphs"
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The OCR drops running heads mid-paragraph ("AUTOMOBILE ADVERTISING 119g"), as the
+        extraction recorded and defended against (locators parse only p./pp. markers). The page
+        images show reading order intact; the damage is a linearisation artifact of the text
+        layer only.
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    The copy is a complete, ordered, legible authored-page scan; every locator is trustworthy at
+    page granularity; and the single flagged reconstruction is now confirmed against the page.
+    The governing pattern for downstream use is source_evidence_never_printed: the memoir's
+    campaigns are told, never shown, and its claimed results are recollections - which is the
+    evidence_origin section's subject, not a representation defect.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    70 objects. A practitioner memoir that claims a measurement discipline and reports the
+    actual numbers about a dozen times - the gap between 70 practitioner assertions and 11
+    reported returns is the source's central evidential fact (EXTRACTION-NOTES.md, "Evidence
+    origin"). Categorised from the frozen objects.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_mla_0013, sk_mla_0020, sk_mla_0025, sk_mla_0039, sk_mla_0041, sk_mla_0044,
+                sk_mla_0045, sk_mla_0050, sk_mla_0054, sk_mla_0056, sk_mla_0057]
+      evidence: >
+        The eleven places where the source states a quantity or directional comparison it says
+        it obtained, such that the claim could have come out the other way: the Liquozone
+        guaranty economics and the test-cities chain (18c per inquiry, the wait, the national
+        reproduction); the Van Camp coupon arithmetic (1,460,000 coupons, $146,000, $175,000,
+        nine-month payback); the Benton Harbor $700 repeat-purchase read; the collected-wants
+        procedure; 25c vs >=$1.25 trial pricing; the Quick Quaker reversal on existing users;
+        the free-offer reversal (divided by four); the 85c/$2.50/$14.20/42c pair held over
+        250,000 replies; the $1.78 auxiliaries margin; the catalogue-cost decision. All eleven
+        carry empirical_within_source; three (sk_mla_0045, 0050, 0054) carry
+        controlled_comparison, and even those are single-arm-at-a-time field comparisons
+        reported from memory years later.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: [sk_mla_0046, sk_mla_0052, sk_mla_0053, sk_mla_0061, sk_mla_0063, sk_mla_0065]
+      evidence: >
+        Six objects where the source asserts that tests happened and supplies no return: the
+        weekly keyed reporting loop whose wrecking series is described but never specified
+        (0046); "thousands of tests on hundreds of lines" for the space-economy principle
+        (0052, p.158, re-read on the page render this pass); the eight-or-ten headline
+        multiplication with no pair, line, date or volume anywhere in the book (0053); the
+        book's own foundational claim about its evidential base - thirty-six years of traced
+        advertising it never exhibits (0061); coupon tests the source says it has seen
+        mail-order houses make, no figures (0063); "tracing quickly proves" oversize type does
+        not pay, without a single traced comparison (0065). None carries
+        empirical_within_source, consistently.
+    - category: origin_unresolved
+      sk_refs: [sk_mla_0022]
+      evidence: >
+        The 94% home-baking-versus-canned figure is attributed to investigators the source sent
+        out, with no method, sample, geography or date. A result is supplied, so
+        measurement-claimed does not fit; the frozen record withholds empirical_within_source
+        because the provenance of the number cannot be established from the text, so
+        own-measurement-reported may not be asserted either. The source does not permit a
+        stronger statement.
+    - category: source_author_assertion
+      sk_refs: [sk_mla_0001, sk_mla_0002, sk_mla_0003, sk_mla_0004, sk_mla_0005, sk_mla_0006,
+                sk_mla_0007, sk_mla_0008, sk_mla_0009, sk_mla_0010, sk_mla_0011, sk_mla_0012,
+                sk_mla_0014, sk_mla_0015, sk_mla_0016, sk_mla_0017, sk_mla_0018, sk_mla_0019,
+                sk_mla_0021, sk_mla_0023, sk_mla_0024, sk_mla_0026, sk_mla_0027, sk_mla_0028,
+                sk_mla_0029, sk_mla_0030, sk_mla_0031, sk_mla_0032, sk_mla_0033, sk_mla_0034,
+                sk_mla_0035, sk_mla_0036, sk_mla_0037, sk_mla_0038, sk_mla_0040, sk_mla_0042,
+                sk_mla_0043, sk_mla_0047, sk_mla_0048, sk_mla_0049, sk_mla_0051, sk_mla_0055,
+                sk_mla_0058, sk_mla_0059, sk_mla_0060, sk_mla_0062, sk_mla_0064, sk_mla_0066,
+                sk_mla_0067, sk_mla_0068, sk_mla_0069, sk_mla_0070]
+      evidence: >
+        The remaining 52 objects: doctrine and diagnosis in the practitioner's own voice, mostly
+        with mechanism (mechanism was the admission criterion) and very often with an outcome
+        claimed but not evidenced (47 of 70 carry outcome_claimed; 46 anecdotal). Includes the
+        borderline cases the audit examined individually: sk_mla_0021 (1911 figures the source
+        itself flags as possibly inexact), sk_mla_0029 (a margin claim derived from the
+        client's own historical figures, unverified - reported numbers inside an assertion
+        object), sk_mla_0005 ("four times in five", no basis - re-read on the p.20 render this
+        pass), and sk_mla_0062, the refusal rule that cuts against most of the book's own
+        narratives. Hopkins hedges almost never (63 of 70 source_uncertainty none), and that
+        near-absence of hedging is itself part of the record.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record: empirical_within_source on exactly the eleven
+    own-measurement objects and on nothing else; no object in the measurement-claimed or
+    unresolved categories carries it. The audit adds the origin fact the single frozen
+    characteristic cannot hold - that this source CLAIMS a vast empirical basis (sk_mla_0061)
+    while its foundational claim about its own rigour is unevidenced within the book.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No creative_ir binding exists; SPEC-01 was not supplied to the lane and no path was guessed.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_mla_011, bnd_mla_012, bnd_mla_013, bnd_mla_014, bnd_mla_015]
+      note: >
+        Five production candidates, all status production_candidate with target_path null,
+        recording the coupon introduction sequence, distribution mechanisms, risk-transfer
+        devices, typographic rules and test procedures in the source's own physical frame -
+        nothing rewritten as a generative-media instruction.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_mla_001, bnd_mla_002, bnd_mla_003, bnd_mla_004]
+      note: >
+        Four evaluation bindings over the surface-detectable failure descriptions, the
+        completeness claim (a property of a set of assets), the conditional checks, and the
+        excellent-response/ruinous-outcome trap (Mitchell).
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_mla_007, bnd_mla_008, bnd_mla_009, bnd_mla_010]
+      note: >
+        The refusal rule for untraced successes (directly usable as an evidence-interpretation
+        precedent), the source's own method-versus-narrative split, the mutually qualifying
+        trial-offer rules, and the unresolved habit-change contradiction held open rather than
+        resolved.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_mla_005, bnd_mla_006]
+      note: The accidental free-offer minimal pair and the plain-vs-attractive advertisement comparison structures.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No exactly executable geometry or composition rule; the typographic advice is judgemental and era-bound.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        The weekly keyed reporting loop (sk_mla_0046), the advisory-board screen (sk_mla_0037)
+        and the test-before-committing discipline are organisational working methods - how a
+        team learns, not what an asset contains. No workflow binding was made and none is
+        manufactured here.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_mla_0059]
+      observation: >
+        The three-interests analysis and its asymmetry of who actually bears test risk is a
+        structural claim about incentive alignment in agency work that binds to nothing and
+        would matter to any future account-governance doctrine.
+    - sk_refs: [sk_mla_0058]
+      observation: >
+        The art-and-colour open question is the one place Hopkins says a question is open and
+        he has no proof (source_asks_open_question) - an epistemic marker worth preserving
+        unbound, and the more cautious counterpart of the ch8-21 lane's chapter-9 position.
+  conclusion: >
+    Four consumer kinds bound with honest limits; the production content held as candidates in
+    the source's own frame. What this source adds beyond the sibling manual is concrete
+    campaign-level economics (the eleven reported returns) and the failure material of chapter
+    18 - and the governance binding over the refusal rule keeps the memoir's own narratives
+    from being consumed as evidence.
+
+lineage:
+  authors: [Claude C. Hopkins]
+  publisher: Harper & Brothers
+  series: null
+  first_published: 1927
+  copy_edition: First edition, Internet Archive scan (232 PDF pages)
+  related_sources_in_corpus:
+    - source_id: hopkins_scientific_advertising_ch1_7
+      relation: shared_author
+      evidence: >
+        Same author as the live accepted source, and the dependence is tighter than
+        bibliography: chapter 17 of this book is literally about that book - it opens by naming
+        Scientific Advertising (printed p.175, re-read on the page render this pass) and
+        restates its doctrine across pp.175-188, supplying nine of this lane's seventy objects;
+        Hopkins records at p.170 that Lasker paid him $10,000 for writing it; load-bearing
+        claims recur near-verbatim across the two works. Counting them as two witnesses would
+        count a summary of a document as corroboration of the document.
+    - source_id: hopkins-scientific-advertising-ch8-21
+      relation: shared_author
+      evidence: >
+        Same practitioner; that candidate is chapters 8-21 of the same 1923 volume as the live
+        source. EXTRACTION-NOTES.md tabulates twelve near-identical doctrine pairs across the
+        two lanes, flags that sk_mla_0045 and sk_sa8_0035 are probably the same episode told
+        twice, and that sk_mla_0020 supplies the exact measurement chain chapter 15 of the
+        manual withholds - one man supplying in a memoir the returns his manual omitted, not
+        corroboration.
+  independence_verdict: not_independent_of_named_sources
+  independence_basis: >
+    Not independent of the two named Hopkins sources per the pairwise entries; any triangle
+    drawn between this book, ch1-7 and ch8-21 has one author and two books at its corners, not
+    three sources. Independence is pairwise: nothing here is a finding about this source's
+    standing against any non-Hopkins source, and no such pair was assessed as dependent.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      No SPEC quotes My Life in Advertising; SPEC worked examples come from Light: Science &
+      Magic and other sources. The lane read the ch8-21 lane's output only after its own
+      extraction was complete, specifically to write the cross-source observations section, and
+      wrote no cross-lane relationship.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    A 1927 memoir of a career run on redeemable paper coupons, independent grocers and jobbers,
+    general-circulation print with no targeting, publisher-paid agency commissions, and 1900s-20s
+    class and gender structures. Thirty-seven of seventy objects carry historical_claim and
+    eleven carry culturally_bounded.
+  assessed: true
+  classes:
+    - class: technology_contingent
+      sk_refs: [sk_mla_0008, sk_mla_0013, sk_mla_0015, sk_mla_0020, sk_mla_0021, sk_mla_0024,
+                sk_mla_0025, sk_mla_0028, sk_mla_0029, sk_mla_0030, sk_mla_0031, sk_mla_0035,
+                sk_mla_0036, sk_mla_0037, sk_mla_0038, sk_mla_0042, sk_mla_0044, sk_mla_0049,
+                sk_mla_0051, sk_mla_0052, sk_mla_0058, sk_mla_0059, sk_mla_0060, sk_mla_0061,
+                sk_mla_0063, sk_mla_0065, sk_mla_0066, sk_mla_0067, sk_mla_0069]
+      evidence: >
+        Carry historical_claim (without culturally_bounded, except as the next class notes):
+        mechanisms and economics that run on the era's machinery - coupon redemption at retail,
+        dealer-privilege distribution, margin structures that cannot carry both consumer and
+        trade selling, area-priced space and word rates, 8-point/6-point conventions, the
+        keyed-return apparatus itself. The extraction deliberately blocked digital-media
+        transfer in the Q&A confounders rather than modernising any of these.
+    - class: historical_convention
+      sk_refs: [sk_mla_0002, sk_mla_0003, sk_mla_0010, sk_mla_0014, sk_mla_0022, sk_mla_0043,
+                sk_mla_0055, sk_mla_0057, sk_mla_0060, sk_mla_0064, sk_mla_0070]
+      evidence: >
+        Carry culturally_bounded: the class/mass media distinction, the 1910s American
+        household with the woman as decider, the patent-medicine world Hopkins himself
+        repudiates (sk_mla_0014 records the repudiation as the frame), period attitudes to
+        women and economy appeals, and the source's own claim that its principles will not
+        date (sk_mla_0070) - a durability claim that is itself a period position.
+    - class: durable_mechanism
+      sk_refs: [sk_mla_0005, sk_mla_0047, sk_mla_0062]
+      evidence: >
+        Carry neither characteristic: never judge the market by the decider's own preferences,
+        experience does not substitute for a test on the new problem, and an untraced success
+        is not evidence about its advertising. Reasoning patterns about evidence and
+        self-deception, not about a medium; their durability is separate from the fact that
+        each remains the practitioner's assertion.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

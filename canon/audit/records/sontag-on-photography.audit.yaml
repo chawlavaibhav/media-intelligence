@@ -1,0 +1,269 @@
+# Audit Gate v0.2 record — Susan Sontag, "On Photography".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01), which
+# also resolved ruling (c) for this source: "Admit both, marked". The five fingerprinted
+# artifacts moved verbatim to canon/knowledge/current/ at admission; the digests below were
+# recomputed mechanically at the new location and are unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_sontag_on_photography
+source_id: sontag-on-photography
+knowledge_dir: canon/knowledge/current/sontag-on-photography
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+# Admission conditions — Controller ruling (c), recorded verbatim in REP-07-DECISION-NOTES.md
+# DN-06 ("Admit both, marked"). This is a KIND marker, not a score: it says what this source IS,
+# and downstream compilation must keep saying it.
+admission_conditions:
+  - condition: critique_context
+    ruling: >
+      DN-06 ruling (c), 2026-09-01: admitted marked critique_context — "never production
+      doctrine", and the marker "must keep compiled packs honest about what each is".
+    meaning: >
+      Critique of how photographs are read, circulate and act on viewers — admitted as context
+      for interpreting images and for framing units of evaluation, never as production doctrine.
+      Any compiled pack, retrieval surface or downstream consumer that carries material from
+      this source must surface this marker alongside it, and no claim from this source may be
+      compiled as advice about how to make anything — which restates, at the admission layer,
+      the extraction's own per-object rule (PROVENANCE.md §5: no critical observation converted
+      into production advice).
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 8efa4c97a494ed0af3543eefc11290d3c66dbdcfd382e02c8d74f5bbc47599e1
+    - path: operational-bindings.yaml
+      digest: 525d35118de674a6e20696ada5d5723c138c896174ffc684975e952e8e5e3fe0
+    - path: source-concept-systems.yaml
+      digest: e3ae55a3f9a94f3461de7c45242e415a0fb92ef6ecccfb565c0b97fe7e438d0f
+    - path: source-knowledge.yaml
+      digest: e191e491484f09a55a3d3c67a8e647d55b3af40f8b62a4d71ece1cdf2f096d26
+    - path: visual-evidence-ledger.yaml
+      digest: 8e2f5f9eb8ca5b50555e0a92b5d386981e580d1d0bf1d1d8fb58621737a7f8a1
+  combined_digest: b5466e38b305f3001558473d83bb20bb3b1dd29af0f270404393ce18a6a7e8b6
+
+evidence_basis_for_this_audit:
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/sontag-on-photography/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/sontag-on-photography/source-knowledge.yaml
+  - canon/knowledge/current/sontag-on-photography/source-concept-systems.yaml
+  - canon/knowledge/current/sontag-on-photography/operational-bindings.yaml
+  - canon/knowledge/current/sontag-on-photography/ontology-mappings.yaml
+  - canon/knowledge/current/sontag-on-photography/visual-evidence-ledger.yaml
+  - canon/knowledge/current/sontag-on-photography/PROVENANCE.md
+  - canon/candidates/canon-014/sontag-on-photography/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/sontag-on-photography/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable Picador ebook (first eBook edition June 2011, eISBN 9781429957113). Sontag's
+    essays have no section headings, so per PROVENANCE.md §2 every locator names the essay by
+    title plus a short distinguishing phrase identifying the passage - the locator addendum
+    requires the phrase because a bare title is too coarse for a forty-page essay;
+    page_start/page_end are null on every object, spine numbers are secondary aids, and no page
+    number was invented. Endnotes are cited by the author's own note numbers where used.
+  inspection_state: inspected_figure_level
+  visual_argument_role: no_visual_argument
+  observed_loss_patterns:
+    - pattern: no_loss_detected
+      affects: "the visual dimension - nothing visual was lost because there is nothing visual to lose"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        The REP-07 pass enumerated all 37 image assets and opened everything large enough to
+        carry content (ledger, inspection): a cover, a scanned title page, two cover thumbnails,
+        and 33 copies of a single ~500-byte ornamental mark used as essay-opening and
+        section-break furniture. Not one photograph, diagram or chart exists in the archive - a
+        book about photographs that reproduces none, confirming PROVENANCE.md §3's statement by
+        enumeration. No sentence in the book directs the reader to look at anything in it, so a
+        text-only representation loses nothing of the argument.
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        The format has no page at all; essay-title-plus-passage-phrase locators are the stable
+        citation unit, essay titles being unique and the phrases findable by search (ledger,
+        no_authored_page).
+  claim_resolution_after_inspection: not_applicable
+  consequence: >
+    Hash-on-arrival matched the SHA-256 recorded in PROVENANCE.md (ledger, hash_on_arrival), so
+    the inspection provably examined the extraction's own copy, and the pass is the genuine
+    desai-style null the runbook predicted - the only one of this batch's three that is. The
+    shared CANON-014 blocker (no visual-evidence ledger) is closed by this pass. The
+    source-specific critique_rather_than_craft blocker was not a visual question and was not
+    closed by it; it was resolved at admission by Controller ruling (c) (DN-06, "Admit both,
+    marked") — the critique_context admission condition at the head of this record.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 22 objects categorised. Critical essays: every claim is Sontag arguing in her own voice
+    from readings of named photographs, historical episodes and her own experience; nothing in
+    the book is measured, and the frozen record credits no measurement anywhere.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_snt_0001, sk_snt_0002, sk_snt_0003, sk_snt_0004, sk_snt_0005, sk_snt_0006,
+                sk_snt_0007, sk_snt_0008, sk_snt_0010, sk_snt_0012, sk_snt_0013, sk_snt_0014,
+                sk_snt_0015, sk_snt_0016, sk_snt_0017, sk_snt_0018, sk_snt_0019, sk_snt_0020,
+                sk_snt_0021]
+      evidence: >
+        Nineteen objects argued in the author's own critical voice - by analogy (footprint,
+        death mask, relic on sk_snt_0003), by readings of single cases doing the work of general
+        claims (the wartime photograph and caption on sk_snt_0008), and by her own reported
+        experience (the operation watched and the operation filmed on sk_snt_0013). Where she
+        engages another writer adversarially - the Benjamin captioning proposal she argues
+        against inside sk_snt_0008 - that is not approving quotation and stays here. sk_snt_0020
+        directly contradicts what the photographers she discusses said about themselves,
+        offering argument rather than evidence for preferring her account, which the frozen
+        caveat records.
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_snt_0009, sk_snt_0011, sk_snt_0022]
+      evidence: >
+        Objects where an identified other author's words are carried approvingly and do real
+        supporting work: Brecht's Krupp remark inside sk_snt_0009, Benjamin's 1934 address
+        inside sk_snt_0011, and a novelist of 1901's remark that you cannot claim to have really
+        seen something until you have photographed it inside sk_snt_0022. In each the frozen
+        caveat records the attribution and asserts nothing about the relationship between the
+        two writers.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record, mechanically checked: empirical_within_source appears on
+    zero of 22 objects, and no category here asserts a supplied measurement. The dominant frozen
+    characteristics are argued plus historical_claim (19 objects) and culturally_bounded (19
+    objects), which is the extraction's per-object enforcement of the 1977 premise rule
+    (PROVENANCE.md §6) and is relied on by the technology_contingency section below.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        Deliberate and doubly enforced: the extraction's load-bearing rule was that no critical
+        observation is converted into production advice (PROVENANCE.md §5), and several frozen
+        caveats say per object 'THIS IS NOT PRODUCTION ADVICE'. Nothing here describes fields of
+        an intermediate representation.
+    - consumer: production_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: The source prescribes nothing about making anything.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_snt_001, bnd_snt_002, bnd_snt_003]
+      note: >
+        Three evaluation bindings, all about the UNIT of evaluation rather than about scoring:
+        the caption claim's consequence that image-plus-placed-text is the unit of observation
+        (bnd_snt_001), the attrition claims' consequence that response is a function of what
+        preceded the image, so sequence position matters (bnd_snt_002), and the
+        conditions-on-the-assessor claims (bnd_snt_003). Each flags; none scores.
+    - consumer: governance
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        No governance binding was made. The critique-not-craft warning that governs USE of this
+        source lives in the project's coverage map and, since admission, in this record's
+        critique_context admission condition (Controller ruling (c), DN-06); this finding
+        manufactures no rule in its place.
+    - consumer: benchmark
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: Nothing in the source yields a checkable case with a right answer.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No executable geometry or procedure of any kind.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The source describes viewers' habits, not working procedure; its assessor-side
+        conditions are already carried by bnd_snt_003 as evaluation preconditions.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_snt_0002]
+      observation: >
+        Selection-imposes-a-standard-while-appearing-to-impose-none is the sharpest thing in the
+        book for anyone treating images as evidence - directly relevant to how this project
+        reads its own visual-evidence passes - and it currently binds to nothing.
+  conclusion: >
+    The narrowest honest fit in the batch: three unit-of-evaluation bindings and nothing else.
+    That thinness is the accurate shape of a critique source in a production corpus, and it was
+    the factual core of the admission-boundary question ruling (c) resolved (DN-06: admitted,
+    marked critique_context) - recorded here as fit, not as a verdict on admission.
+
+lineage:
+  authors: [Susan Sontag]
+  publisher: Farrar, Straus and Giroux (Picador imprint in this copy)
+  series: null
+  first_published: 1977
+  copy_edition: >
+    Picador ebook, first eBook edition June 2011, eISBN 9781429957113; essays © 1973, 1974, 1977
+    Susan Sontag, earlier versions in The New York Review of Books 1973-1977; 210,160 bytes,
+    SHA-256 edd6d37e3f765f5d2892a93c9f9069c0db4c0edf75a82a02b6fa15975298db57, re-verified on
+    arrival by the REP-07 pass (ledger, hash_on_arrival).
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, publisher or primary informant with any live source or canon-014
+    candidate. PROVENANCE.md §4 records that nothing in canon/knowledge/current/ does what this
+    book does: the live photography sources (freeman, light-science-magic, alton) are about
+    making photographs; this one is about how photographs are read, and it argues the two
+    questions are related only distantly. Writers quoted inside objects (Benjamin, Brecht) are
+    not corpus sources. The photographers whose self-accounts she disputes are discussed, not
+    load-bearing informants of her claims.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other corpus sources; no
+      SPEC quotes On Photography.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    Date matters more for this source than for any other in its extraction run (PROVENANCE.md
+    §1): almost every claim rests on premises of 1973-77 - film, the material scarcity of
+    images, the picture magazine, the camera-made image as the only photographic-looking image -
+    and the extraction enforced two rules: no claim modernised, no assertion of what has changed
+    since. This section classes the claims against those premises without updating any of them.
+  assessed: true
+  classes:
+    - class: technology_contingent
+      sk_refs: [sk_snt_0001, sk_snt_0003, sk_snt_0004, sk_snt_0005, sk_snt_0014, sk_snt_0017,
+                sk_snt_0018, sk_snt_0022]
+      evidence: >
+        Claims whose stated premise is the film-era technology and circulation environment
+        itself: reception of the photograph as a piece of the world and its trace authority both
+        rest on the premise, stated by the frozen caveats, that in 1977 an image which looked
+        photographic was made by a camera (sk_snt_0001, sk_snt_0003); the retouching-era
+        falsification and portrait claims are period evidence (sk_snt_0004, sk_snt_0005); the
+        saturation and threshold claim is stated within the 1977 curated image flow
+        (sk_snt_0014); the still/flow contrast is about broadcast television as she encountered
+        it (sk_snt_0017); acquisition-as-knowledge rests on the photograph being a light-weight
+        physical object (sk_snt_0018); and the photograph-as-standard-of-reality claim rests on
+        the 1977 abundance premise (sk_snt_0022). All eight carry historical_claim.
+    - class: durable_mechanism
+      sk_refs: [sk_snt_0002, sk_snt_0006, sk_snt_0008, sk_snt_0010]
+      evidence: >
+        Claims resting on structural properties of any selective, framed, captioned image rather
+        than on film-era technology: selection imposes a standard while appearing to impose none
+        (sk_snt_0002), framing severs the subject from its circumstances (sk_snt_0006), the
+        caption speaks for the mute image and still cannot fix its meaning (sk_snt_0008), and
+        what an image is of dominates how it is seen (sk_snt_0010). Their evidence remains
+        unmeasured criticism - durable in mechanism, not thereby verified.
+    - class: uncertain
+      sk_refs: [sk_snt_0007, sk_snt_0009, sk_snt_0011, sk_snt_0012, sk_snt_0013, sk_snt_0015,
+                sk_snt_0016, sk_snt_0019, sk_snt_0020, sk_snt_0021]
+      evidence: >
+        Cultural-reception claims - meaning-as-use, beautification, convention exhaustion,
+        aestheticisation's neutralising effect, the interesting-by-recycling - argued about a
+        particular image culture at a particular date with no measurement; whether they describe
+        durable facts about viewers or artefacts of the 1970s Western image economy cannot be
+        classed from this source, and the extraction deliberately recorded no view on what has
+        changed since.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

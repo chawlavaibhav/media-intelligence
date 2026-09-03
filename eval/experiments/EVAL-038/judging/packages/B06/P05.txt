@@ -1,0 +1,55 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+One premium 4:5 (1080×1350 px minimum, deliver at 4000×5000 px) static e-commerce hero image of the Aster Meridian 38 wristwatch. Single final image, no variants, print/web dual-purpose resolution, sRGB with a CMYK-safe color range for potential print catalog reuse.
+
+OBJECTIVE_INTERPRETATION
+The image's job is to sell desirability and perceived craftsmanship in a single frame on a product listing page, where shoppers scan fast and zoom into dial/case detail before purchase. Success = the shopper immediately reads "precision mechanical watch, quality materials" without needing copy, and the image survives close inspection (dial texture, hand shapes, crystal dome, strap grain) since e-commerce shoppers pixel-peep before buying a $ item like this. Constraint: this is a real product with fixed geometry — the image must look like an actual photograph of that specific watch, not a stylized or reinterpreted CGI object.
+
+CORE_CREATIVE_IDEA
+A tightly-composed three-quarter studio product shot — the watch resting at a slight angle on a dark, softly lit surface, strap curving naturally into frame — lit the way high-end watch catalogs (the kind used by real Swiss brands) light steel and sunburst dials: one raking key light to draw out the sunburst brushing on the dial and the brushed-steel case flanks, a controlled highlight arc on the domed sapphire crystal that reveals depth without blowing out the hour markers, and a soft gradient dark background that keeps all visual attention on the watch. No lifestyle props, no wrist, no floating CGI — just an honest, expensive-looking macro-leaning studio photograph.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Primary read (first 0.5s): "This is a serious mechanical watch" — silhouette, proportion, case-to-strap relationship.
+2. Secondary read: dial craftsmanship — sunburst blue finish, silver baton markers and dauphine hands catching light, clean dial (no date window) signaling deliberate, uncluttered design.
+3. Tertiary read: material quality — brushed steel texture on case flank/lugs, sapphire crystal dome causing a controlled light bend, leather grain on the strap.
+4. Background/composition stays fully subordinate — dark, non-competing, providing negative space in the upper third usable for a logo/price overlay if the page template needs it, without that being the image's main content.
+
+VISUAL_SYSTEM
+- Framing: three-quarter front-left angle, watch face tilted ~20–25° toward camera, case slightly elevated on the far side so the dial's sunburst pattern catches a visible gradient sweep.
+- Lens/optics language: macro-photography feel, ~100mm macro equivalent, f/7.1–f/8 so the whole watch face and near case edge are crisp while the strap tail and background fall into soft, shallow bokeh.
+- Lighting: one large soft key light upper-left at ~45°, raking across the dial to reveal sunburst brushing; a narrow strip light/reflector on the right to trace a clean highlight along the case's brushed flank and crystal dome edge; soft fill from below to prevent the underside of the lugs and strap from going full black; a small rim light behind to separate the case silhouette from the background.
+- Background: seamless dark charcoal-to-black gradient, warm-neutral, no texture, no props, no hands/wrist, no water/rocks/other generic CGI staging.
+- Surface: watch rests on a dark walnut or matte black solid surface with a very subtle reflection of the case underside (not mirror-glossy, just enough to ground the object physically).
+- Color grading: rich deep navy dial blues, cool brushed-steel silvers, warm dark-brown leather, neutral-to-slightly-warm background — contrast tuned so blue dial and silver hands are the brightest saturated elements.
+- Composition/negative space: watch occupies center-to-lower two-thirds of frame; upper third kept darker/emptier for optional page overlay use without cropping the product.
+
+PRODUCTION_RECIPE
+Single AI-generated still image, generated at high resolution in 4:5 native aspect ratio (no post-crop from a square or 16:9 source, to avoid losing detail). One generation pass targeting photorealistic studio product photography, followed by light retouch-style post-processing (contrast/dodge-burn refinement, dust/spec cleanup, color calibration) treated as standard e-commerce retouching, not content alteration. No compositing of multiple watches or props; single coherent scene, single subject.
+
+GENERATION_PROMPTS
+Final single generation prompt (image):
+
+"Ultra-detailed, photorealistic studio product photograph of a luxury men's mechanical wristwatch, the 'Aster Meridian 38.' Exact product specs, must be rendered precisely and not altered: 38mm brushed stainless-steel round case with visible fine brushed-metal grain on the case flanks and lugs; deep blue sunburst dial with radial brushed sunburst pattern catching light; silver polished baton-style hour markers evenly spaced; silver dauphine-style hands (hour, minute, thin sweep second hand) polished and faceted; completely clean dial with no date window or date complication; a clear domed sapphire crystal over the dial showing subtle realistic curvature, light refraction and a controlled specular highlight arc without obscuring the hour markers; dark brown genuine leather strap with visible natural grain texture, stitched edges, curving naturally out of frame. Watch positioned at a three-quarter front-left angle, tilted about 20-25 degrees toward camera, resting on a dark walnut wood or matte black surface with a soft, subtle reflection beneath the case. Studio lighting: large soft key light from upper-left raking across the dial to reveal sunburst texture, narrow highlight/rim light along the right case edge and crystal dome, soft fill light to retain detail in shadow areas under the lugs and strap, gentle rim light separating the case from the background. Background: seamless dark charcoal-to-black gradient, no props, no hands, no wrist, no water or rocks, no text, no logos. Shot as if with a 100mm macro lens at f/8, tack-sharp focus on the dial and near case edge, soft gradual falloff toward the strap tail. Color grading: deep saturated navy-blue dial, cool brushed silver metal tones, warm dark-brown leather, neutral dark background. Composition: vertical 4:5 aspect ratio, watch centered in lower two-thirds of frame, subtle empty dark space in upper third. Style: premium Swiss watch catalog photography, honest material representation, high commercial polish, no stylization, no fantasy elements, no floating or CGI-glossy rendering artifacts."
+
+Negative/avoidance direction to include in the same generation instruction: "no date window, no additional dial complications, no extra hands, no distorted case shape, no oversized or undersized case proportions, no plastic-looking crystal, no cartoonish reflections, no visible watch brand logos or text, no wrist or skin, no lifestyle background, no multiple watches."
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+None required as separate layers — this is a single-shot generated hero image with no overlay text, no logo, no UI chrome specified by the brief. If the e-commerce template later requires logo/price/CTA overlay, the upper-third negative space is reserved deterministically in the composition for that non-generative overlay to be added in a separate templating step (not part of this image generation).
+
+AUDIO_AND_EDIT
+Not applicable — static image deliverable only.
+
+HARD_CONSTRAINT_CHECK
+- 4:5 aspect ratio: specified and enforced in prompt and deliverable spec. ✔
+- 38mm brushed stainless-steel case: explicitly specified. ✔
+- Deep blue sunburst dial: explicitly specified. ✔
+- Silver baton hour markers: explicitly specified. ✔
+- Silver dauphine hands: explicitly specified. ✔
+- No date window: explicitly forbidden in prompt and failure-prevention. ✔
+- Domed sapphire crystal: explicitly specified with realistic refraction. ✔
+- Dark brown leather strap: explicitly specified with grain/stitching detail. ✔
+- Craftsmanship/dial detail/material quality/desirability communicated: addressed via lighting system, macro-level detail rendering, and composition hierarchy. ✔
+- Product geometry not casually altered: locked via explicit spec list and rejection criteria. ✔
+- No generic floating-product CGI: explicitly avoided via grounded studio-photo treatment; creative idea does not require floating CGI. ✔
+- No external website: no web sources used or referenced. ✔

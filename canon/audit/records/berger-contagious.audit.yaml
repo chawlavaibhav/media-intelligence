@@ -1,0 +1,334 @@
+# Audit Gate v0.2 record — Jonah Berger, "Contagious: Why Things Catch On".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_berger_contagious
+source_id: berger-contagious
+knowledge_dir: canon/knowledge/current/berger-contagious
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 104372b3fbac79cfdda610434284d56568d70fa8fecd96f0bf2f5eea957bf09f
+    - path: operational-bindings.yaml
+      digest: a909e973b7238260173743a326d8dcf6f5e922fc190661a40565fad0a4244afc
+    - path: source-concept-systems.yaml
+      digest: cb37bed45340d9c9b92a5cbd2f34a627100bf00b6cc5c1a7ad0b474d40bf0bab
+    - path: source-knowledge.yaml
+      digest: 4c0354074326e4312e1437c94030f1941d9e4168c3513c4aba5e016ea32a4e12
+    - path: visual-evidence-ledger.yaml
+      digest: 6dd3a2d986b8ca70b18e3d698ffee8feab3f0f68753becc5d5cc4df433c07fbc
+  combined_digest: ff795e9f73e97b24e5e2e15736c3434e5a7ff7d4ce03abced7f199c4e460511c
+
+evidence_basis_for_this_audit:
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/berger-contagious/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/berger-contagious/source-knowledge.yaml
+  - canon/knowledge/current/berger-contagious/source-concept-systems.yaml
+  - canon/knowledge/current/berger-contagious/operational-bindings.yaml
+  - canon/knowledge/current/berger-contagious/ontology-mappings.yaml
+  - canon/knowledge/current/berger-contagious/visual-evidence-ledger.yaml
+  - canon/knowledge/current/berger-contagious/PROVENANCE.md
+  - canon/candidates/canon-014/berger-contagious/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/berger-contagious/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/audit/records/heath-made-to-stick-introduction.audit.yaml
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable Simon & Schuster EPUB; the extraction's own header states there are no authored
+    page numbers in this format. Every locator is chapter plus named section per the locator
+    addendum's Case 3, spine number as secondary aid; page_start/page_end are null on every
+    object. The endnotes are dense with page numbers that are all ranges inside OTHER works and
+    none was used as a locator (PROVENANCE.md §3). The REP-07 pass re-verified the copy's
+    identity by hash before trusting any locator convention.
+  inspection_state: inspected_figure_level
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        The format has no page at all; chapter-plus-section locators are the stable citation
+        unit, section headings being unique within their chapters (ledger, no_authored_page).
+    - pattern: in_figure_text_absent
+      affects: "axis labels, tick values and legends of the two data charts"
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The Rebecca Black search chart and the Cheerios Twitter chart are raster images whose
+        axis text exists only inside the JPEGs; the chart title lines are present as text and the
+        adjacent prose states each chart's pattern. The REP-07 pass opened both charts and
+        confirms the prose statements match the plotted data; no frozen object cites an in-figure
+        value (ledger, in_figure_text_absent).
+    - pattern: no_loss_detected
+      affects: "the argument carried by the extraction"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        All 11 images in the archive were opened (ledger, inspection): five in-body images - two
+        charts the prose points at and immediately narrates, two campaign reproductions described
+        and quoted in the text, one described photograph - plus cover, title page, colophon,
+        author photo, an inline emoticon and one orphaned cover duplicate. Every one restates or
+        decorates a stated proposition; no extracted claim depends on any image.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    Hash-on-arrival matched the MD5 recorded in PROVENANCE.md and named in the REP-07 brief
+    (ledger, hash_on_arrival), so the inspection provably examined the extraction's own copy. The
+    runbook's expectation of a desai-style imageless null was corrected: the book carries five
+    in-body images, two of them charts the text directs the reader to - but every figure's
+    content is stated in prose, the extraction's empty figure_refs are confirmed correct as a
+    statement of dependence, and no frozen claim changes. The shared CANON-014 blocker (no
+    visual-evidence ledger) is closed by this pass.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 54 objects categorised, using the extraction's own own-versus-third-party ledger
+    (EXTRACTION-NOTES.md §4) as the map and the frozen objects' caveats as the evidence. This
+    source is the corpus's strongest carrier of genuinely own measurement - roughly 45% of the
+    identifiable measurement in the book is Berger's - which is precisely why the split had to be
+    done carefully rather than generously.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_ctg_0009, sk_ctg_0011, sk_ctg_0018, sk_ctg_0019, sk_ctg_0021, sk_ctg_0022,
+                sk_ctg_0023, sk_ctg_0026, sk_ctg_0027, sk_ctg_0028, sk_ctg_0029, sk_ctg_0030,
+                sk_ctg_0031, sk_ctg_0032, sk_ctg_0036, sk_ctg_0042, sk_ctg_0043]
+      evidence: >
+        Studies Berger conducted or co-authored, with reported results: the Berger & Iyengar
+        remarkability correlation, the Berger & Schwartz BzzAgent analyses and Boston Market
+        experiment, the Berger & Fitzsimons tray-slogan and Halloween studies, the polling-place
+        study, the negative-publicity study, the Berger & Milkman NYT programme and arousal
+        manipulations, the jogging experiment, the car-sales social-influence model, and his own
+        administration of the two Thaler-derived scenario pairs. Every one carries
+        empirical_within_source in the frozen record. The extraction's caveats mark, per object,
+        which designs are correlational or thinly reported; that qualification is preserved, not
+        overwritten, by this categorisation. sk_ctg_0009's minivan/Mohawk demonstration is one of
+        the three informal demonstrations the extraction flags as the boundary of the
+        characteristic (EXTRACTION-NOTES §4b).
+    - category: mixed_own_and_third_party
+      sk_refs: [sk_ctg_0001, sk_ctg_0035]
+      evidence: >
+        Both measurements inside one object's evidence: sk_ctg_0001 pairs the Keller Fay Group's
+        7% online figure (third-party, reported) with Berger's own informal classroom poll
+        (~50%); sk_ctg_0035 pairs Juanjuan Zhang's kidney-market study (third-party, Marketing
+        Science 2010) with Berger's own MBA split-question exercise. Both carry
+        empirical_within_source for the own half, and both own halves are informal
+        demonstrations, flagged as such in the frozen caveats.
+    - category: third_party_measurement_reported
+      sk_refs: [sk_ctg_0010, sk_ctg_0012, sk_ctg_0020, sk_ctg_0037, sk_ctg_0040, sk_ctg_0044,
+                sk_ctg_0045, sk_ctg_0046, sk_ctg_0054]
+      evidence: >
+        Named outside studies with reported designs and results, carried by the source: Tamir &
+        Mitchell's self-disclosure scans plus Dunbar and Naaman's conversation/tweet shares
+        (sk_ctg_0010); the University of Illinois cockroach retelling experiment (sk_ctg_0012);
+        North, Hargreaves & McKendrick's supermarket-music study in Nature (sk_ctg_0020); the
+        Arizona pluralistic-ignorance intervention with Schroeder & Prentice (sk_ctg_0037);
+        Hornik's anti-drug evaluation and Cialdini's Petrified Forest comparison (sk_ctg_0040);
+        Anderson & Simester's sale-sign study (sk_ctg_0044); Inman/Schindler's restriction
+        findings (sk_ctg_0045); Chen, Monroe & Lou behind the Rule of 100 (sk_ctg_0046); Allport
+        & Postman's rumour chains (sk_ctg_0054). None carries empirical_within_source, correctly:
+        the extraction recorded every one in an extractor_observed caveat naming the researcher.
+    - category: measurement_claimed_result_not_supplied
+      sk_refs: [sk_ctg_0052]
+      evidence: >
+        Chapter 6's central claim rests on Akpinar & Berger's 'Valuable Virality' working paper,
+        cited only in the Notes; the book reports its conclusion without any design or figure
+        (EXTRACTION-NOTES §4a note). The body-text support is press-reported outcome figures for
+        the Evian and casino cases, neither a controlled test. A measurement is invoked and what
+        it returned is never supplied; the frozen object correctly carries no
+        empirical_within_source.
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_ctg_0016]
+      evidence: >
+        The achievable-access boundary and the 'no, but' rule are a named practitioner's
+        operating procedure - Jim Meehan's - reported approvingly by the author with no evidence
+        offered for either; the frozen object carries practitioner_assertion.
+    - category: source_quotes_unnamed_third_party
+      sk_refs: [sk_ctg_0014]
+      evidence: >
+        The load-bearing relative-standing experiment (the $50,000/$100,000 choice) is reported
+        with no source cited at all - the extraction's caveat and EXTRACTION-NOTES §4c both note
+        Berger cites nothing for it - and the rest of the object's support is constructed
+        contrasts and company-reported outcomes.
+    - category: source_author_assertion
+      sk_refs: [sk_ctg_0002, sk_ctg_0003, sk_ctg_0004, sk_ctg_0005, sk_ctg_0006, sk_ctg_0007,
+                sk_ctg_0008, sk_ctg_0013, sk_ctg_0015, sk_ctg_0017, sk_ctg_0024, sk_ctg_0025,
+                sk_ctg_0033, sk_ctg_0034, sk_ctg_0038, sk_ctg_0039, sk_ctg_0041, sk_ctg_0047,
+                sk_ctg_0048, sk_ctg_0049, sk_ctg_0050, sk_ctg_0051, sk_ctg_0053]
+      evidence: >
+        Claims argued in the author's own voice from anecdote, recounted business cases and
+        constructed contrasts - the STEPPS framework itself and its independence claim
+        (sk_ctg_0007, sk_ctg_0008), the framework-shaped guidance objects, and the Stories
+        chapter's carrier/cargo machinery. Several carry third-party figures or citations in
+        caveats (Notes-only citations on sk_ctg_0003 and sk_ctg_0004, the Heaths' Three Whys
+        credit on sk_ctg_0033, Gosling's term on sk_ctg_0039, Kardes/Baumeister on sk_ctg_0051),
+        but in each the citation is attribution or Notes-level support rather than a measurement
+        the body text reports; sk_ctg_0048 is offered with no evidence at all and is hedged by
+        the source. None carries empirical_within_source.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record, mechanically checked: empirical_within_source appears on
+    exactly 19 objects - the 17 under source_own_measurement_reported plus the two mixed objects
+    whose own halves are informal demonstrations - and on no object in
+    third_party_measurement_reported or measurement_claimed_result_not_supplied. The extraction's
+    own flagged boundary stands: three of the 19 (sk_ctg_0001, sk_ctg_0009, sk_ctg_0035) are
+    informal demonstrations, factually the author's own reported measurements but not studies,
+    and a stricter reviewer could drop them to 16 (EXTRACTION-NOTES §4b). This audit records the
+    boundary; it does not move it.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        Deliberate extraction decision, re-affirmed here: the source is about transmission
+        between people, and PROVENANCE.md §10 states that nothing in it is evidence about what
+        any generative system can do. No Creative IR field is inferred from it.
+    - consumer: production_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: The source prescribes no physical production procedure.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ctg_001, bnd_ctg_002, bnd_ctg_003, bnd_ctg_004, bnd_ctg_005, bnd_ctg_006]
+      note: >
+        Six evaluation bindings over the single-artefact-checkable properties (remarkability as
+        worthiness of remark, the arousal grid replacing a positive/negative axis, visible
+        behaviour, visible bounded usefulness). bnd_ctg_004 is deliberately a negative result:
+        trigger value is a property of the artefact-environment relationship, not of the
+        artefact, and the binding exists to stop single-asset evaluation pretending otherwise.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ctg_011, bnd_ctg_012, bnd_ctg_013, bnd_ctg_014]
+      note: >
+        Four governance bindings: sampling-on-the-dependent-variable guard (bnd_ctg_011), the
+        framework-is-a-menu-not-a-checklist rule (bnd_ctg_012), the guard against both garbled
+        forms of the emotion findings (bnd_ctg_013), and the signed, reversing
+        publicising-a-behaviour rule (bnd_ctg_014).
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ctg_007, bnd_ctg_008, bnd_ctg_009, bnd_ctg_010]
+      note: >
+        Four benchmark bindings built on the source's own minimal-pair manipulations (arousal
+        pairs, the Panda counterfactual, the signed negative-publicity moderator, the
+        deal-framing pairs with a right answer stated in advance).
+    - consumer: deterministic_composition
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        The Rule of 100 (sk_ctg_0046) is an exactly computable framing rule (percentage below
+        100, absolute above), but its threshold is an artefact of currency arithmetic and the
+        underlying finding is third-party; no binding was made in the extraction and none is
+        manufactured here.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The source addresses message and product properties, not working procedure; no workflow
+        binding exists.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_ctg_0021]
+      observation: >
+        The tray-slogan study's self-prediction result - audiences rated the winning message
+        worse and predicted it would fail, and it worked - bears directly on any evaluation
+        methodology that asks audiences or reviewers to predict effectiveness, and currently
+        binds to nothing.
+  conclusion: >
+    Right-shaped fit for a transmission-mechanics source: evaluation, benchmark and governance
+    bindings exist, several of them guards rather than scores, and nothing binds to creative or
+    production IR, deliberately. The bindings inherit the extraction's refusal to import the
+    author's confidence.
+
+lineage:
+  authors: [Jonah Berger]
+  publisher: Simon & Schuster
+  series: null
+  first_published: 2013
+  copy_edition: >
+    Reflowable EPUB, 'Contagious: Why Things Catch On', jacket copyright © 2013 Simon &
+    Schuster; 592,807 bytes, MD5 625aba06ceed728ba573dad60a52b3ed, re-verified on arrival by the
+    REP-07 pass (ledger, hash_on_arrival).
+  related_sources_in_corpus:
+    - source_id: heath_made_to_stick_introduction
+      relation: cites_source
+      evidence: >
+        Berger cites the Heaths' Made to Stick by name inside his own text - the 'Three Whys'
+        technique in the Emotion chapter is credited to it (sk_ctg_0033's caveat; PROVENANCE.md
+        §6.3). cites_source is one-directional and does not by itself defeat independence.
+  independence_verdict: independent_origin
+  independence_basis: >
+    Different authors, publishers and frameworks from every live source and canon-014 candidate.
+    The nearest live neighbour is heath-made-to-stick-introduction, and the relation is a
+    citation, not a dependence: the two frameworks address different dependent variables on the
+    source's own testimony (remembering vs passing on; PROVENANCE.md §6.1), the apparent
+    unexpectedness/remarkability overlap is recorded as distinct_from in ontology-mappings.yaml,
+    and the two books have opposite evidence profiles. Two disclosed facts fall short of any
+    dependence relation and are recorded so the reviewer sees them rather than discovers them:
+    Chip Heath was Berger's graduate mentor, and the identity-signalling research behind
+    sk_ctg_0009 is Berger & Heath co-authored work cited in the Notes. Neither makes Heath's own
+    claims a primary or substantial knowledge source of Contagious, so
+    shared_primary_informant's threshold - load-bearing in both works - is not met.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other corpus sources; no
+      SPEC quotes Contagious. The extraction lane read the live Heath record in full before
+      drafting - disclosed in PROVENANCE.md §6 - which is exposure to a NEIGHBOUR's record, used
+      to refuse restatement, not exposure to this source's own findings via the specs.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The book's mechanisms are psychological, but a distinct minority of its claims are stated
+    over the 2011-2012 US platform environment (Foursquare mayorships, the pre-algorithmic
+    Twitter timeline, the NYT Most E-Mailed list as a scarce ranking surface, catalogue retail),
+    and the extraction period-bounded them per object. The question therefore has to be asked
+    class by class rather than answered once.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_ctg_0005, sk_ctg_0006, sk_ctg_0007, sk_ctg_0008, sk_ctg_0009, sk_ctg_0010,
+                sk_ctg_0011, sk_ctg_0012, sk_ctg_0013, sk_ctg_0015, sk_ctg_0016, sk_ctg_0017,
+                sk_ctg_0018, sk_ctg_0019, sk_ctg_0020, sk_ctg_0021, sk_ctg_0022, sk_ctg_0023,
+                sk_ctg_0024, sk_ctg_0025, sk_ctg_0026, sk_ctg_0027, sk_ctg_0028, sk_ctg_0029,
+                sk_ctg_0030, sk_ctg_0031, sk_ctg_0032, sk_ctg_0033, sk_ctg_0034, sk_ctg_0035,
+                sk_ctg_0036, sk_ctg_0037, sk_ctg_0040, sk_ctg_0041, sk_ctg_0042, sk_ctg_0043,
+                sk_ctg_0045, sk_ctg_0047, sk_ctg_0048, sk_ctg_0049, sk_ctg_0050, sk_ctg_0051,
+                sk_ctg_0052, sk_ctg_0053, sk_ctg_0054]
+      evidence: >
+        Claims whose stated mechanism is human psychology - self-presentation, accessibility and
+        triggering, arousal, observability and social proof, reference-point framing, narrative
+        carriage - not any device generation. Several rest on period-bound datasets or examples
+        (six of these carry historical_claim for exactly that reason: sk_ctg_0013, sk_ctg_0022,
+        sk_ctg_0026, sk_ctg_0040, sk_ctg_0049, sk_ctg_0054), and the frozen caveats bound the
+        evidence without expiring the claimed mechanism.
+    - class: technology_contingent
+      sk_refs: [sk_ctg_0001, sk_ctg_0002, sk_ctg_0003, sk_ctg_0004, sk_ctg_0014, sk_ctg_0038,
+                sk_ctg_0039, sk_ctg_0044]
+      evidence: >
+        Claims stated over a media or platform environment that has since changed: the
+        online/offline word-of-mouth ratio and channel comparison (sk_ctg_0001, sk_ctg_0004),
+        the 2011-2012 social-media configuration and its base rates (sk_ctg_0002, sk_ctg_0003),
+        Foursquare-era game mechanics (sk_ctg_0014), Hotmail/iPod-era built-in signalling and
+        behavioural residue (sk_ctg_0038, sk_ctg_0039), and the pre-2001 catalogue-retail
+        sale-sign result (sk_ctg_0044). All eight carry historical_claim in the frozen record;
+        the extraction's period-bounding is the evidence for this class.
+    - class: historical_convention
+      sk_refs: [sk_ctg_0046]
+      evidence: >
+        The Rule of 100's threshold is an artefact of arithmetic in a currency quoted in units
+        of one, not a psychological constant - the frozen caveat says exactly this - so the rule
+        is convention-bound in a way the underlying framing mechanism is not.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

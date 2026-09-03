@@ -1,0 +1,250 @@
+# Audit Gate v0.2 record — Hunter, Biver & Fuqua, "Light: Science & Magic", chapters 4-11
+# (the span beyond the live accepted chapter 3). Authored by REP-07 in the candidate dir
+# against the exact bytes fingerprinted below; admitted to accepted Canon by Controller decision
+# DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01), which also resolved ruling (d): this span
+# enters as an EXPLICITLY SCOPED EXTENSION of the live light_science_and_magic_ch3, never as an
+# independent origin — the two-sided lineage declaration is written here and, back, on the live
+# record. The five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at
+# admission; the digests below were recomputed mechanically at the new location and are
+# unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_lsm_beyond_ch3
+source_id: light-science-magic-beyond-ch3
+knowledge_dir: canon/knowledge/current/light-science-magic-beyond-ch3
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 651fc3c526e21dd91f7e0d917fc82ed88129eb633f9a86867dfeb21de9b1c4fc
+    - path: operational-bindings.yaml
+      digest: 292cbb65a78d2596335d63c6af14817a2e46c313a175216eec6d933a1889bd1e
+    - path: source-concept-systems.yaml
+      digest: 6e7ae3db58e954e9446c4f475711405d6d386a0e38493758b147a3853e8a52e8
+    - path: source-knowledge.yaml
+      digest: b94c19ff3b2d00e2730c78c2420f8841a6f52786bc2e4bbfa3116e9e8574d699
+    - path: visual-evidence-ledger.yaml
+      digest: 645f099cf50321ec2c33090f3ffc9cb682ebbca303160311b48e1afbf5ba0789
+  combined_digest: 0d00eabf5a7ad3fc80d794434843f6a21e34244700d7d1c28ca81e3b46906877
+
+evidence_basis_for_this_audit:
+  # The first six entries moved verbatim from canon/candidates/canon-014/
+  # light-science-magic-beyond-ch3/ to their current locations at admission (DN-06); they were
+  # read at their candidate paths.
+  - canon/knowledge/current/light-science-magic-beyond-ch3/source-knowledge.yaml
+  - canon/knowledge/current/light-science-magic-beyond-ch3/source-concept-systems.yaml
+  - canon/knowledge/current/light-science-magic-beyond-ch3/operational-bindings.yaml
+  - canon/knowledge/current/light-science-magic-beyond-ch3/ontology-mappings.yaml
+  - canon/knowledge/current/light-science-magic-beyond-ch3/visual-evidence-ledger.yaml
+  - canon/knowledge/current/light-science-magic-beyond-ch3/PROVENANCE.md
+  - canon/candidates/canon-014/light-science-magic-beyond-ch3/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/light-science-magic-beyond-ch3/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/audit/records/light-science-magic-ch3.audit.yaml
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable publisher EPUB with no authored page. Locators are chapter + section + figure
+    number; figure numbering is stable and byte-verifiable (systematic image naming figN_M.jpg
+    matches caption numbering), and the mandatory 5-locator sample (no original-file hash was
+    recorded; byte size matches) passed 5 of 5 (ledger, locator_verification_sample).
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        The EPUB has no page; every locator is chapter/section/figure, which this pass
+        re-resolved. No page number was invented anywhere in the extraction.
+    - pattern: figure_semantic_binding_lost
+      affects: "designed page-level pairing of matched before/after photographs"
+      detectability: named_by_text
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        The book argues through matched pairs and diagrams; the reflowable copy severs figures
+        from the designed page geometry. The REP-07 pass bounded the damage: all 129 cited
+        figures are now opened across the two passes (53 extraction-time rows imported under
+        DN-03 + 76 fresh), every figure's internal content is intact and correctly bound to its
+        caption, so the loss is page-layout pairing only, not figure content.
+    - pattern: no_loss_detected
+      affects: "the internal content of all 129 cited figures"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        Every one of the 76 previously unopened figures shows what its caption and citing prose
+        state; none contradicts a claim; no image is corrupted or misbound. The 18 objects with
+        extraction_uncertainty: figure_not_inspected have their figures inspected with no frozen
+        claim qualified or overturned. The one prose-vs-picture gap remains the extraction's own
+        catch (7.24/7.25 improvement subtler than the text implies, sk_lsmx_0049), imported
+        unchanged.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    This candidate is now the corpus's most fully visually verified Light: Science & Magic span
+    — the inverse of the live ch3 record, whose 14 figures were never seen
+    (blocked_visual_validation during CANON-003). Any later pooling of the two spans should note
+    the live span is the text-only one; the asymmetry EXTRACTION-NOTES §3 insists on still
+    travels with this lane, with its direction reversed.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    60 objects. Practitioner doctrine by one author team, argued from optical mechanism and
+    demonstrated in the authors' own photographs. Demonstrations are performances of the claims,
+    not reported measurements; no object reports a measured result.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_lsmx_0001, sk_lsmx_0002, sk_lsmx_0003, sk_lsmx_0004, sk_lsmx_0005,
+                sk_lsmx_0006, sk_lsmx_0007, sk_lsmx_0008, sk_lsmx_0009, sk_lsmx_0010,
+                sk_lsmx_0011, sk_lsmx_0012, sk_lsmx_0013, sk_lsmx_0014, sk_lsmx_0015,
+                sk_lsmx_0016, sk_lsmx_0017, sk_lsmx_0018, sk_lsmx_0019, sk_lsmx_0020,
+                sk_lsmx_0021, sk_lsmx_0022, sk_lsmx_0023, sk_lsmx_0024, sk_lsmx_0025,
+                sk_lsmx_0026, sk_lsmx_0027, sk_lsmx_0028, sk_lsmx_0029, sk_lsmx_0030,
+                sk_lsmx_0031, sk_lsmx_0032, sk_lsmx_0033, sk_lsmx_0034, sk_lsmx_0035,
+                sk_lsmx_0036, sk_lsmx_0037, sk_lsmx_0038, sk_lsmx_0039, sk_lsmx_0040,
+                sk_lsmx_0041, sk_lsmx_0042, sk_lsmx_0043, sk_lsmx_0044, sk_lsmx_0045,
+                sk_lsmx_0046, sk_lsmx_0047, sk_lsmx_0048, sk_lsmx_0049, sk_lsmx_0050,
+                sk_lsmx_0051, sk_lsmx_0052, sk_lsmx_0053, sk_lsmx_0054, sk_lsmx_0055,
+                sk_lsmx_0056, sk_lsmx_0057, sk_lsmx_0058, sk_lsmx_0059, sk_lsmx_0060]
+      evidence: >
+        Every object is Hunter/Biver/Fuqua/Reid stating optical geometry, remedy procedure or
+        prescription in their own voice, frequently demonstrated by their own photographs (28
+        objects carry visually_demonstrated; the ledger verifies the demonstrations perform the
+        claims). No object carries empirical_within_source in the frozen record, and no external
+        study or third party is load-bearing anywhere in the span; where the authors qualify
+        their own earlier chapter-3/4 statements the qualification is likewise their assertion
+        (EXTRACTION-NOTES §4, bnd_lsmx_011).
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record: the empirical_within_source set is empty, and no origin
+    category here asserts a supplied measurement. visually_demonstrated marks demonstration, not
+    measurement, and stays in the extraction layer.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsmx_001, bnd_lsmx_002]
+      note: Two creative-IR bindings over appearance-goal vocabulary (bright/dark/compromise surface renderings).
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsmx_010]
+      note: One production binding; the span prescribes physical set geometry (lights, gobos, diffusion, tents).
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsmx_003, bnd_lsmx_004, bnd_lsmx_005, bnd_lsmx_006, bnd_lsmx_007, bnd_lsmx_008, bnd_lsmx_009]
+      note: >
+        Seven evaluation bindings over checkable appearance outcomes (metal rendering, glass
+        edge definition, texture legibility, packshot label glare — bnd_lsmx_007 carries the
+        7.24/7.25 subtlety caveat).
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsmx_011, bnd_lsmx_012]
+      note: >
+        bnd_lsmx_011 (conflict_resolution) governs the three places the later chapters qualify
+        or reverse chapter-3/4 guidance — one author team revising itself, never cross-source
+        disagreement; bnd_lsmx_012 (rule_application) scopes application.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_lsmx_013]
+      note: One benchmark binding.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The family-of-angles geometry is exactly constructible in principle, but no binding was
+        made and none is manufactured here.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: The find-the-family test procedures act on a set, not on a person; no workflow binding exists.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0057]
+      observation: >
+        The three self-qualification objects (polarizer demoted to last resort; remedy order
+        reversed for glossy boxes; glass-support trick withdrawn for black subjects) are the
+        span's live-corpus correctness payload: they QUALIFY the accepted
+        light-science-magic-ch3 guidance, and nothing downstream consumes them until admission.
+  conclusion: >
+    The fullest binding coverage in the HOLD dock (13 bindings across 5 consumers), matching the
+    span's role as the convention half of product/packshot appearance. The governance binding
+    over self-qualification is the piece that makes admitting this span a correctness fix for
+    the live corpus, not just an extension.
+
+lineage:
+  authors: ["Fil Hunter", "Steven Biver", "Paul Fuqua"]
+  publisher: Focal Press (Taylor & Francis)
+  series: null
+  first_published: 2015
+  copy_edition: >
+    Light: Science & Magic, 5th edition EPUB ("First published 2015", copyright page in this
+    copy), 9,692,005 bytes, sha256
+    5ca2f0d7180cdacd34fe5515651c15185caf74678a58f646c3cd36d3dbb07a64 (hashed on arrival by
+    REP-07; PROVENANCE.md recorded path + size only).
+  related_sources_in_corpus:
+    - source_id: light_science_and_magic_ch3
+      relation: shared_author
+      evidence: >
+        The same work: chapters 4-11 of the identical 5th-edition file whose chapter 3 is the
+        live accepted light-science-magic-ch3. Same author team, same book, same copy. This is
+        the strongest possible dependence short of identity; twelve objects carry
+        extractor_observed caveats naming the live sk_lsm_c003_* object they build on, and the
+        extraction wrote no ontology relationship to the live terms precisely because the book
+        agreeing with itself is not evidence (EXTRACTION-NOTES §5).
+  independence_verdict: not_independent_of_named_sources
+  independence_basis: >
+    Not an independent origin against light_science_and_magic_ch3 (same work, same authors) — the
+    pair can never support a cross-source promotion. Against every other live source and
+    candidate the span has no shared author, series, publisher-dependence or primary informant,
+    and remains a usable origin pairwise. ADMITTED PER DN-06 RULING (d) AS AN EXPLICITLY SCOPED
+    EXTENSION of light_science_and_magic_ch3, never as an independent origin: the two-sided
+    lineage declaration is written on both records at admission, and agreement between the two
+    spans is one book agreeing with itself, worth zero as corroboration.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: true
+    evidence: >
+      SPEC-04 and SPEC-05 quote this book's "specular" refusal as a worked example (the
+      CANON-004 B-17 finding concerned exactly this title). The extraction lane read the specs
+      before extracting, so apparent convergence between this span and spec examples is not
+      independent; recorded here so no later reader counts it as corroboration.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The span mixes optical geometry (which does not date) with film-era process and gear claims
+    (which have dated); EXTRACTION-NOTES §6 keeps them apart deliberately and this audit
+    preserves the split.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_lsmx_0001, sk_lsmx_0002, sk_lsmx_0003, sk_lsmx_0004, sk_lsmx_0005,
+                sk_lsmx_0006, sk_lsmx_0007, sk_lsmx_0008, sk_lsmx_0010, sk_lsmx_0011,
+                sk_lsmx_0012, sk_lsmx_0013, sk_lsmx_0014, sk_lsmx_0015, sk_lsmx_0016,
+                sk_lsmx_0017, sk_lsmx_0018, sk_lsmx_0019, sk_lsmx_0020, sk_lsmx_0021,
+                sk_lsmx_0022, sk_lsmx_0023, sk_lsmx_0024, sk_lsmx_0025, sk_lsmx_0026,
+                sk_lsmx_0027, sk_lsmx_0028, sk_lsmx_0029, sk_lsmx_0030, sk_lsmx_0031,
+                sk_lsmx_0032, sk_lsmx_0033, sk_lsmx_0035, sk_lsmx_0036, sk_lsmx_0037,
+                sk_lsmx_0038, sk_lsmx_0039, sk_lsmx_0040, sk_lsmx_0041, sk_lsmx_0042,
+                sk_lsmx_0043, sk_lsmx_0044, sk_lsmx_0045, sk_lsmx_0046, sk_lsmx_0047,
+                sk_lsmx_0048, sk_lsmx_0049, sk_lsmx_0050, sk_lsmx_0051, sk_lsmx_0054,
+                sk_lsmx_0055, sk_lsmx_0056, sk_lsmx_0057, sk_lsmx_0059]
+      evidence: >
+        Family-of-angles geometry, effective source size, bright/dark-field mechanics,
+        polarization behaviour and the perception claims rest on optics and human vision, not on
+        any capture technology; the ledger's diagram pass confirms the figures state geometry,
+        not gear.
+    - class: technology_contingent
+      sk_refs: [sk_lsmx_0009, sk_lsmx_0034, sk_lsmx_0052, sk_lsmx_0053, sk_lsmx_0058, sk_lsmx_0060]
+      evidence: >
+        The six objects carrying historical_claim in the frozen record: film-era
+        characteristic-curve and compression claims, polarizer stop-loss practice figures, and
+        flash/fluorescent mixed-lighting colour behaviour tied to particular lamp technologies.
+        Each object's own caveat states what part is contingent.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

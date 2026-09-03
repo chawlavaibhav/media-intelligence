@@ -1,0 +1,160 @@
+# REP-07 — visual-evidence ledger for David Ogilvy, "Ogilvy on Advertising", chapters beyond
+# ch. 2 (Vintage 1985 ebook of the 1983 original).
+#
+# INSPECT pass executed 2026-09-01 per INSPECTION-RUNBOOK.md §15: the reproduced
+# advertisements across the print-craft / TV / direct-response / research chapters (and every
+# other chapter the extraction drew from) were opened from the EPUB's own image files.
+
+source_id: ogilvy-beyond-ch2
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: figure_carries_content
+
+hash_on_arrival:
+  path: ~/Downloads/Books/Ogilvy on Advertising.epub
+  bytes: 47960301
+  sha256: 0583d58371c21b238f464b4211c2eefd2156150c03dff7a70c64b7c19c9e6148
+  recorded_original_hash: >
+    NONE recorded (PROVENANCE.md identifies the copy by edition/ISBN only; the runbook's
+    file-identity block says no hash or size was recorded). Hash-on-arrival above is therefore
+    the first byte identity for this candidate, and the locator sample below was mandatory.
+
+locator_verification_sample:
+  rule: >
+    Locators in this extraction are chapter number + title + the book's own section heading.
+    Thirteen cited section headings were re-resolved against the unpacked spine documents
+    (exceeding the 5-sample minimum): ch7 'Headlines', 'Illustrations', 'Short copy or long?',
+    'Layouts', 'Typography', 'Posters', 'Subway cards'; ch8 'Sixteen tips'; ch9 'Alphabet
+    soup', 'Container Corporation'; ch10 'Puerto Rico'; ch13 'Teenage alcoholism in Norway',
+    'Raising money'.
+  outcome: PASS - 13 of 13
+
+central_finding_reclassification: >
+  THE RECORDED VISUAL LOSS IS A PROPERTY OF THE EXTRACTION'S TEXT DUMP, NOT OF THIS COPY.
+  PROVENANCE.md §7 records that "in this copy those reproductions are absent and replaced by 39
+  literal placeholders", with only the Appendix's transcribed text recoverable and "the layout,
+  typography and image are not". Unpacking the EPUB shows otherwise: the chapters carry 241
+  inline <img> references to 243 image files, which ARE the reproduced advertisements — 54 in
+  the print chapter alone — and the 39 "Click here for hi-res image" lines are hyperlinks from
+  chapter positions to an Appendix (spine bm2) carrying 39 hi-res duplicates with transcribed
+  text. The extraction read a plain-text conversion in which images vanish and only the
+  placeholder link-texts survive, so its report was faithful to its representation but wrong
+  about the copy. Consequence: the reproduced ads, their layouts and their typography are
+  present and legible in this copy, and the inspection below was run directly on them. This
+  also bears on the live ch-2 audit's parallel note (an admission-time cross-check for the
+  Controller, not something this ledger edits).
+
+inspection:
+  method: >
+    Every distinct image file referenced by the chapters the extraction drew from was opened
+    and identified: ch7 print craft (41 distinct files, all opened), ch8 TV (26, all), ch9
+    corporate (12, all), ch10 travel (11, all), ch11 B2B (4, all), ch12 direct (5, all), ch13
+    good causes (5, all), ch15 research (11, all) — 115 distinct content images viewed in
+    total. The Appendix's 39 hi-res files are duplicates of ads among these and were not
+    separately opened. Front-matter/portrait items were identified in passing.
+  chapters_covered: [7, 8, 9, 10, 11, 12, 13, 15]
+  distinct_images_opened: 115
+  figure_rows_by_chapter:
+    - chapter: 7 (print craft)
+      finding: >
+        The full run of classic reproductions is present and legible down to body copy:
+        Campbell's "Soup on the rocks"; Dove "Darling, I'm having the most extraordinary
+        experience"; Shell "For Minneapolis: 2 below zero!"; VW "Lemon."; Sears "their profit
+        is less than 5%" long copy; Rinso "How to take out stains" how-to; Casals Puerto Rico;
+        the chef-portrait curiosity pair; Rochas; the Baysol before/after geranium pair;
+        Hathaway; Zippo; Caples' "They Laughed When I Sat Down At the Piano"; Ogilvy's own
+        Austin "Groton" ad; Chubb ex-safecracker; WWF long copy; Merrill Lynch's 6,450-word
+        page; Viyella; Schweppes Whitehead; KLM numbered facts; the editorial-layout run
+        (Guinness newspaper pages, advertorials); Sears free-hammer; the Guinness "FOR
+        STRENGTH" and Araldite car posters; the typography-sins montage (vertical set type,
+        psychedelic layouts, overprint); Porsche/Oldsmobile type-over-image; the Save the
+        Children A/B layout pair; and the reverse-type vs black-on-white legibility pair.
+    - chapter: 8 (TV)
+      finding: >
+        Storyboard still-pairs with supers/VO transcribed under each frame: American Express
+        "Do you know me?" (Michener); the full Hovis "Boy on the Bike" sequence; Super Glue 3
+        ceiling stunt ("filmed without editing") + pack shot; Pepperidge Farm Titus Moody
+        wagon and wheat-bread appetite frames; VW's Maxwell Snavely funeral will; Eleanor
+        Roosevelt (the margarine celebrity case); Blitz-Weinhard Ottley rancher sequence.
+    - chapter: 9 (corporate)
+      finding: >
+        McGraw-Hill "I don't know who you are" man-in-the-chair; Sears mink; Bethlehem Steel
+        "looking for a fight"; Wallachs service ads; General Foods "Sane talk about food";
+        Mobil "Windfall profits or windfall tax?"; Sears money-back; IBM New York traffic;
+        Esso Japan editorial; C&O "A Hog Can Cross the Country"; Armco Houston porpoises;
+        Container Corporation "Great Ideas of Western Man" pair (the Alphabet-soup case
+        sk_ogx_0044 discusses).
+    - chapter: 10 (travel)
+      finding: >
+        "Girl by a gate - in old San Juan" (the Puerto Rico image ad sk_ogx_0045's passage
+        rests on) plus Singapore, "Britain is ablaze with lights again!", the Life Guards and
+        "Tread softly past the long, long sleep of kings", Bermuda testimonial, the France
+        baguette-bicycle unique-subject photograph, Jamaica living-room spread, Faucett Peru
+        headhunter, Britain price-list, French events pair with coupons.
+    - chapter: 11 (B2B)
+      finding: >
+        Shell Caprinus testimonial and Rotella fleet-savings data spread; Owens-Corning "Try
+        the quarter test"; Hercules chorus-line "The longest line just got longer" (the
+        gimmick counter-case). Supports sk_ogx_0046's promise-important-to-the-customer
+        material.
+    - chapter: 12 (direct)
+      finding: >
+        Olympic coins solid-silver offer; handwoven New Mexico ties mail-order; children's
+        books offer; Dale Carnegie coupon page; the O&M Direct Response house ad.
+    - chapter: 13 (good causes)
+      finding: >
+        WWF Giant Panda; United Negro College Fund letter; Sierra Club "Should we also flood
+        the Sistine Chapel"; NY Philharmonic season listing; and the Norwegian teenage
+        alcoholism pair ("Unni, 14 ar: Jeg spyr nesten hver gang jeg drikker" / "Den norske
+        16/17-aring drakk 155 flasker i fjor") — the exact case sk_ogx_0057 cites.
+    - chapter: 15 (research)
+      finding: >
+        The Ronald Reagan star-audience research chart (per-demographic ticket-buyer
+        percentages, Oct 1941-Jan 1942) beside his cowboy still; the street-interview
+        photograph; the American Business Press recession sales/net-income bar charts; Shell
+        pipeline spread; Metropolitan Police "Last Saturday we were robbed"; Hotel Excelsior
+        Rome; Lacroix lobster (German). The research chapter's argument-bearing charts are
+        present with their numbers legible.
+  figure_not_inspected_resolution: >
+    All 14 objects carrying figure_not_inspected (sk_ogx_0005, 0012, 0013, 0015, 0023, 0026,
+    0028, 0029, 0030, 0041, 0044, 0045, 0046, 0057) now have the reproductions behind their
+    passages opened. In every case the ads illustrate the craft claim exactly as the prose
+    states it (e.g. the before/after geranium pair for 0013; the typography-sins montage and
+    legibility pair for 0028; the Guinness and Araldite posters for 0030; the Puerto Rico
+    girl-by-gate for 0045; the Norway pair for 0057). No reproduction contradicts or
+    underdetermines a frozen claim.
+
+observed_loss_patterns:
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB; the extraction's locators are chapter + section heading, and 13 of 13
+      sampled headings resolve. No page number was invented anywhere.
+  - pattern: announced_loss_placeholder
+    affects: "the extraction's plain-text representation only (39 'Click here for hi-res image' lines)"
+    detectability: announced_by_placeholder
+    recoverability: recovered_in_this_copy
+    evidence: >
+      See central_finding_reclassification: the placeholders are hyperlinks, not absences; the
+      reproduced advertisements are inline in the chapters and duplicated hi-res in the
+      Appendix. The loss existed only in the text dump the extraction read and is fully
+      recovered by opening the EPUB itself.
+  - pattern: no_loss_detected
+    affects: "the reproduced advertisements and charts across all extracted chapters"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      115 distinct content images opened; reproductions are complete, correctly placed in
+      their chapters, and legible down to body copy and chart values where claims turn on
+      wording or numbers. Nothing visual the extraction relies on is absent or damaged in
+      this copy.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  The candidate's blocking visual gap inverts: far from lacking its reproductions, this copy
+  contains them all, and the craft doctrine now has its evidence base opened and verified.
+  What changes downstream is bookkeeping, not content — the audit-assessment's
+  announced_loss_placeholder framing, and the parallel note in the live ch-2 audit, should be
+  re-read against this ledger at admission time.

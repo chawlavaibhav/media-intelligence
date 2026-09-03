@@ -1,0 +1,249 @@
+# Audit Gate v0.2 record — David Ogilvy, "Ogilvy on Advertising", chapters 1 and 3-20 (the span
+# beyond the live accepted chapter 2). Authored by REP-07 in the candidate dir against the
+# exact bytes fingerprinted below; admitted to accepted Canon by Controller decision DN-06
+# (REP-07-DECISION-NOTES.md, 2026-09-01), which also resolved ruling (d): this span enters as
+# an EXPLICITLY SCOPED EXTENSION of the live ogilvy_on_advertising_ch2, never as an independent
+# origin — the two-sided lineage declaration is written here and, back, on the live record. The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_ogilvy_beyond_ch2
+source_id: ogilvy-beyond-ch2
+knowledge_dir: canon/knowledge/current/ogilvy-beyond-ch2
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: a82021fa06e17b1059e37fee9c07bde815fe15ed653123004791c34fa191572d
+    - path: operational-bindings.yaml
+      digest: 5d3c69afd8333ced3302778c0847ffe9943b425cf1f8dc9dc086c66fb8ae3dbf
+    - path: source-concept-systems.yaml
+      digest: ff835091509705fe71cfea8e3c7c1311d539cedacdbafead5b643971c7f683e5
+    - path: source-knowledge.yaml
+      digest: 162cd9beeeecdcd41ef8ce7a640bbcaf2c622a1c7b07821616a01b7abea4e6ca
+    - path: visual-evidence-ledger.yaml
+      digest: 08e1c565840ea9be129fd53c0a76784ee64c27b45339d13bbb86c4194c8ace47
+  combined_digest: 19cf01da72159d09bc14b31a7c38eb5012ee80ea6541b19573851a2a286268ec
+
+evidence_basis_for_this_audit:
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/ogilvy-beyond-ch2/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/ogilvy-beyond-ch2/source-knowledge.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/source-concept-systems.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/operational-bindings.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/ontology-mappings.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/visual-evidence-ledger.yaml
+  - canon/knowledge/current/ogilvy-beyond-ch2/PROVENANCE.md
+  - canon/candidates/canon-014/ogilvy-beyond-ch2/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/ogilvy-beyond-ch2/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/audit/records/ogilvy-ch2-advertising-that-sells.audit.yaml
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable Vintage 1985 ebook; no authored page exists and the extraction invented none.
+    Locators are chapter + section heading; 13 of 13 sampled cited headings resolve on the
+    unpacked spine (ledger, locator_verification_sample). No original-file hash was recorded;
+    the on-arrival hash in the ledger is the first byte identity for this candidate.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: Reflowable format; section-heading locators are the stable citation unit.
+    - pattern: announced_loss_placeholder
+      affects: "the extraction's plain-text representation only"
+      detectability: announced_by_placeholder
+      recoverability: recovered_in_this_copy
+      evidence: >
+        The REP-07 pass's central finding (ledger): the recorded absence of the reproduced
+        advertisements — 39 'Click here for hi-res image' placeholders — is a property of the
+        text dump the extraction read, not of the copy. The EPUB's chapters carry 241 inline
+        image references (243 files): the reproductions themselves, plus an Appendix of 39
+        hi-res duplicates the placeholders hyperlink to. The loss is fully recovered by
+        opening the EPUB, which is what this pass did.
+    - pattern: no_loss_detected
+      affects: "the reproduced advertisements and charts across all extracted chapters"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        115 distinct content images opened across chapters 7-13 and 15: complete, correctly
+        placed, legible down to body copy and chart values. All 14 figure_not_inspected
+        objects have the reproductions behind their passages opened, and none is contradicted
+        or underdetermined (ledger, figure_not_inspected_resolution).
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    The candidate's visual standing inverts: the copy contains its full evidence base of
+    reproduced advertisements, and the craft doctrine is now figure-verified. The
+    audit-assessment's placeholder framing, and the parallel note in the live ch-2 audit
+    record, should be re-read against this ledger at admission time (an admission-time task;
+    this record edits neither).
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    70 objects. Ogilvy argues from his own and his agency's research constantly and supplies
+    figures for much of it; the extraction marked exactly 30 objects empirical_within_source,
+    and the split below follows the frozen record.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_ogx_0004, sk_ogx_0005, sk_ogx_0006, sk_ogx_0008, sk_ogx_0010,
+                sk_ogx_0013, sk_ogx_0014, sk_ogx_0018, sk_ogx_0025, sk_ogx_0026,
+                sk_ogx_0027, sk_ogx_0028, sk_ogx_0029, sk_ogx_0030, sk_ogx_0031,
+                sk_ogx_0035, sk_ogx_0038, sk_ogx_0042, sk_ogx_0043, sk_ogx_0044,
+                sk_ogx_0046, sk_ogx_0047, sk_ogx_0048, sk_ogx_0051, sk_ogx_0057,
+                sk_ogx_0060, sk_ogx_0063, sk_ogx_0064, sk_ogx_0066, sk_ogx_0067]
+      evidence: >
+        Readership figures, split-run and direct-response results, and campaign outcomes that
+        the source reports with results supplied, from research Ogilvy treats as his own or
+        his agency's (including the Gallup-tradition work he ran and O&M Direct's keyed
+        returns). Each of these objects carries empirical_within_source in the frozen record,
+        and the research chapter's charts behind several of them are now opened (ledger,
+        chapter 15 row).
+    - category: source_author_assertion
+      sk_refs: [sk_ogx_0001, sk_ogx_0002, sk_ogx_0003, sk_ogx_0007, sk_ogx_0009,
+                sk_ogx_0011, sk_ogx_0012, sk_ogx_0015, sk_ogx_0016, sk_ogx_0017,
+                sk_ogx_0019, sk_ogx_0020, sk_ogx_0021, sk_ogx_0022, sk_ogx_0023,
+                sk_ogx_0024, sk_ogx_0032, sk_ogx_0033, sk_ogx_0034, sk_ogx_0036,
+                sk_ogx_0037, sk_ogx_0039, sk_ogx_0040, sk_ogx_0041, sk_ogx_0045,
+                sk_ogx_0049, sk_ogx_0050, sk_ogx_0052, sk_ogx_0053, sk_ogx_0054,
+                sk_ogx_0055, sk_ogx_0056, sk_ogx_0058, sk_ogx_0059, sk_ogx_0061,
+                sk_ogx_0062, sk_ogx_0065, sk_ogx_0068, sk_ogx_0069, sk_ogx_0070]
+      evidence: >
+        Craft prescription and professional judgement in Ogilvy's own voice — including the
+        many places he asserts that research supports him without supplying the result, which
+        the frozen record correctly leaves without empirical_within_source. None of these 40
+        objects carries the characteristic.
+  relation_to_evidence_characteristics: >
+    Exactly consistent with the frozen record by construction: the own-measurement category is
+    the frozen empirical_within_source set, and no other category contains any of its members.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: The doctrine evaluates and prescribes finished communication; no IR field is bound.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ogx_014, bnd_ogx_015]
+      note: Two production bindings (procedural craft steps parked as process).
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ogx_001, bnd_ogx_002, bnd_ogx_003, bnd_ogx_004, bnd_ogx_005, bnd_ogx_006, bnd_ogx_007, bnd_ogx_008, bnd_ogx_009]
+      note: >
+        Nine evaluation bindings over checkable properties of finished ads (headline promise,
+        illustration curiosity, layout order, typography legibility, long-copy fitness),
+        whose evidential reproductions the ledger now verifies.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ogx_012, bnd_ogx_013]
+      note: >
+        bnd_ogx_012 (evidence_interpretation) governs reading Ogilvy's reported-research
+        claims; bnd_ogx_013 (rule_application) scopes application.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_ogx_010, bnd_ogx_011]
+      note: Two benchmark bindings.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: Nothing exactly executable; even the typography rules are habit-based judgements.
+    - consumer: human_workflow
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No workflow binding exists and none is manufactured here.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_ogx_0056, sk_ogx_0063, sk_ogx_0065]
+      observation: >
+        The places where later chapters qualify live chapter-2 doctrine (wear-out under
+        repetition against ch2's readership persistence; the operational stopping rule; the
+        limit on research predicting long-run campaign value) are this span's live-corpus
+        correctness payload and currently bind to nothing.
+  conclusion: >
+    Evaluation-heavy craft doctrine with production, benchmark and governance support —
+    matching a book that teaches by reproduced example; the reproductions are now opened, so
+    the bindings' evidential basis no longer rests on say-so.
+
+lineage:
+  authors: ["David Ogilvy"]
+  publisher: Vintage Books (1985 ebook edition of the 1983 Crown/Pan-Orbis original)
+  series: null
+  first_published: 1983
+  copy_edition: >
+    First Vintage edition March 1985 ebook (eBook ISBN 978-0-8041-7005-5), EPUB, 47,960,301
+    bytes, sha256 0583d58371c21b238f464b4211c2eefd2156150c03dff7a70c64b7c19c9e6148 (hashed on
+    arrival by REP-07; no prior hash existed).
+  related_sources_in_corpus:
+    - source_id: ogilvy_on_advertising_ch2
+      relation: shared_author
+      evidence: >
+        The same work: this span is chapters 1 and 3-20 of the identical book whose chapter 2
+        is the live accepted ogilvy_on_advertising_ch2. Same author, same year, same copy
+        lineage. Eight objects name the live chapter-2 object they extend or qualify
+        (PROVENANCE.md §2), and the extraction wrote no ontology relationship to the live
+        terms because the book agreeing with itself is not evidence.
+  independence_verdict: not_independent_of_named_sources
+  independence_basis: >
+    Not an independent origin against ogilvy_on_advertising_ch2 (same work, same author); the
+    pair can never support a cross-source promotion. Against every other live source and
+    candidate the span shares no author, series, publisher-dependence or primary informant
+    and remains a usable origin pairwise. Note the mirror finding in
+    sullivan-hey-whipple's REP-07 record: Sullivan cites this book (cites_source), which does
+    not defeat independence in either direction. ADMITTED PER DN-06 RULING (d) AS AN EXPLICITLY
+    SCOPED EXTENSION of ogilvy_on_advertising_ch2, never as an independent origin: the
+    two-sided lineage declaration is written on both records at admission, and agreement
+    between the two spans is one book agreeing with itself, worth zero as corroboration.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other sources, not this
+      book; the extraction lane's exposure was to the live chapter-2 record, which it read
+      deliberately before extracting and discloses in PROVENANCE.md §2 — recorded there as
+      diff-checked (zero concept-label collisions) rather than as independent convergence.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    1983 craft doctrine spanning durable attention/persuasion mechanics and claims tied to the
+    media economics, research instruments and production technology of its era; 27 objects
+    carry historical_claim and the extraction's own notes keep the axes apart.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_ogx_0001, sk_ogx_0003, sk_ogx_0005, sk_ogx_0006, sk_ogx_0007,
+                sk_ogx_0008, sk_ogx_0009, sk_ogx_0010, sk_ogx_0012, sk_ogx_0013,
+                sk_ogx_0015, sk_ogx_0016, sk_ogx_0017, sk_ogx_0019, sk_ogx_0020,
+                sk_ogx_0021, sk_ogx_0023, sk_ogx_0024, sk_ogx_0029, sk_ogx_0031,
+                sk_ogx_0033, sk_ogx_0034, sk_ogx_0036, sk_ogx_0037, sk_ogx_0039,
+                sk_ogx_0041, sk_ogx_0042, sk_ogx_0045, sk_ogx_0046, sk_ogx_0050,
+                sk_ogx_0051, sk_ogx_0052, sk_ogx_0053, sk_ogx_0054, sk_ogx_0060,
+                sk_ogx_0061, sk_ogx_0062, sk_ogx_0063, sk_ogx_0064, sk_ogx_0065,
+                sk_ogx_0066, sk_ogx_0067, sk_ogx_0070]
+      evidence: >
+        Curiosity, benefit-promise, story appeal, the primacy of the subject choice, and the
+        reader-behaviour mechanics rest on how people attend and read, not on any delivery
+        technology; the opened reproductions demonstrate them across five decades of ads.
+    - class: technology_contingent
+      sk_refs: [sk_ogx_0002, sk_ogx_0004, sk_ogx_0011, sk_ogx_0014, sk_ogx_0018,
+                sk_ogx_0022, sk_ogx_0025, sk_ogx_0026, sk_ogx_0027, sk_ogx_0028,
+                sk_ogx_0030, sk_ogx_0032, sk_ogx_0035, sk_ogx_0038, sk_ogx_0040,
+                sk_ogx_0043, sk_ogx_0044, sk_ogx_0047, sk_ogx_0048, sk_ogx_0049,
+                sk_ogx_0055, sk_ogx_0056, sk_ogx_0057, sk_ogx_0058, sk_ogx_0059,
+                sk_ogx_0068, sk_ogx_0069]
+      evidence: >
+        The 27 objects carrying historical_claim in the frozen record: readership magnitudes,
+        media-cost and channel economics, research-instrument capabilities and
+        era-typographic conventions measured on 1930s-1980s print and broadcast audiences,
+        each with its contingency stated in the object's own caveat.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

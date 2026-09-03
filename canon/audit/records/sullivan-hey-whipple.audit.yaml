@@ -1,0 +1,243 @@
+# Audit Gate v0.2 record — Luke Sullivan, "Hey Whipple, Squeeze This".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_sullivan_hey_whipple
+source_id: sullivan-hey-whipple
+knowledge_dir: canon/knowledge/current/sullivan-hey-whipple
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 4d5c6fcf8f86222b12948224fee611044e2386ccfae2178304e311bd43c339b5
+    - path: operational-bindings.yaml
+      digest: 2397f5c3c35fae7b788ed2775528fc5264f1c068e13e155aaf01d0a8d09ca527
+    - path: source-concept-systems.yaml
+      digest: e993fa8783b2b0f084b459edfb3ee025f5cacd87b652446cadce51f44711cd8f
+    - path: source-knowledge.yaml
+      digest: 9ee3ccf365202ddf3d59e85891234ef79f9d12beeb2f2ce00eb59ed31d3f276a
+    - path: visual-evidence-ledger.yaml
+      digest: c1d6ee9223c4072313724e863859b6715233f932803925be9c23ab885e8dba18
+  combined_digest: 8b1bd08f996f15c2ebe95032eb5b8935d62f8841305adfdf24d89129691cbbd6
+
+evidence_basis_for_this_audit:
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/sullivan-hey-whipple/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/sullivan-hey-whipple/source-knowledge.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/source-concept-systems.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/operational-bindings.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/ontology-mappings.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/visual-evidence-ledger.yaml
+  - canon/knowledge/current/sullivan-hey-whipple/PROVENANCE.md
+  - canon/candidates/canon-014/sullivan-hey-whipple/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/sullivan-hey-whipple/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/audit/records/ogilvy-ch2-advertising-that-sells.audit.yaml
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable publisher EPUB (144,649,816 bytes; on-arrival SHA-256 exactly matches the
+    brief-named identity hash, so the inspected copy is the extracted copy). Locators are
+    chapter + section + figure number; figure numbers map mechanically to image files and the
+    ledger verified the mapping against captions before trusting it.
+  inspection_state: inspected_figure_level
+  visual_argument_role: figure_carries_content
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        No authored page exists in the reflowable copy; chapter/section/figure locators are the
+        stable citation unit and all resolve.
+    - pattern: no_loss_detected
+      affects: "all 45 cited figures and the four previously unread chapters"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        The REP-07 pass opened every cited figure (45/45): reproductions intact, correctly
+        caption-bound, legible down to body copy where claims depend on wording. It also read
+        chapters 10, 13, 14 and 17 in full: no frozen object cites them and nothing in them
+        contradicts a frozen claim, which bounds the partial_extraction_recorded_as_whole
+        defect — the extraction is genuinely partial (those chapters hold real unextracted
+        craft doctrine, especially ch. 14's television rules), but its recorded objects are
+        uncontaminated by the gap.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    Every named-campaign claim that previously rested on say-so now has its reproduction
+    verified in the ledger; the scope of the extraction is stated honestly (chapters 1-9,
+    11/12, 15, 16) instead of recorded as whole; and the copy identity is hash-proven.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    70 objects. A practitioner's craft book: the dominant origin is Sullivan stating doctrine
+    in his own voice from thirty-plus years of practice; a minority of claims are carried by
+    named third parties he quotes approvingly.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_whip_0001, sk_whip_0002, sk_whip_0003, sk_whip_0004, sk_whip_0005,
+                sk_whip_0006, sk_whip_0008, sk_whip_0009, sk_whip_0010, sk_whip_0011,
+                sk_whip_0012, sk_whip_0013, sk_whip_0014, sk_whip_0015, sk_whip_0017,
+                sk_whip_0018, sk_whip_0019, sk_whip_0020, sk_whip_0021, sk_whip_0022,
+                sk_whip_0023, sk_whip_0024, sk_whip_0025, sk_whip_0026, sk_whip_0027,
+                sk_whip_0028, sk_whip_0029, sk_whip_0030, sk_whip_0031, sk_whip_0032,
+                sk_whip_0033, sk_whip_0034, sk_whip_0035, sk_whip_0036, sk_whip_0037,
+                sk_whip_0038, sk_whip_0039, sk_whip_0040, sk_whip_0041, sk_whip_0042,
+                sk_whip_0043, sk_whip_0044, sk_whip_0045, sk_whip_0046, sk_whip_0047,
+                sk_whip_0048, sk_whip_0049, sk_whip_0050, sk_whip_0051, sk_whip_0052,
+                sk_whip_0053, sk_whip_0054, sk_whip_0055, sk_whip_0056, sk_whip_0057,
+                sk_whip_0058, sk_whip_0059, sk_whip_0060, sk_whip_0061, sk_whip_0062,
+                sk_whip_0063, sk_whip_0064, sk_whip_0065, sk_whip_0067, sk_whip_0068,
+                sk_whip_0069, sk_whip_0070]
+      evidence: >
+        Craft doctrine stated in Sullivan's own voice, frequently illustrated by reproduced
+        campaigns (the ledger verifies the reproductions). Includes sk_whip_0042, where the
+        book's founding argument reports the Whipple campaign's market success against its own
+        thesis — an outcome Sullivan asserts without supplying a study, method or figures, so
+        it stays an author assertion rather than a reported measurement; the frozen object
+        carries no empirical_within_source, consistently.
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_whip_0007, sk_whip_0016, sk_whip_0066]
+      evidence: >
+        Three claims are carried by identified people quoted approvingly: McAlhone & Stuart's
+        account of wit making the audience travel (sk_whip_0007), Norman Berry's
+        vague-strategies-inhibit / precise-strategies-liberate rule (sk_whip_0016), and
+        Bogusky's would-anyone-tell-a-friend test (sk_whip_0066). None of the quoted parties'
+        works are in the corpus.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record: the empirical_within_source set is empty and no
+    category here asserts a supplied measurement.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The doctrine evaluates and generates finished communication concepts; no intermediate
+        representation field is prescribed and no binding was made.
+    - consumer: production_ir
+      outcome: binding_exists
+      existing_binding_refs: [bnd_whip_010, bnd_whip_011]
+      note: Two production bindings (concepting/refinement procedure parked as process steps).
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_whip_001, bnd_whip_002, bnd_whip_003, bnd_whip_004, bnd_whip_006, bnd_whip_007, bnd_whip_008, bnd_whip_009, bnd_whip_012]
+      note: >
+        Nine evaluation bindings over checkable properties of finished work (clear-vs-clever
+        sweet spot, see-say redundancy, single-boss layout dominance, simplicity tests).
+    - consumer: governance
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No governance binding exists in the frozen record.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_whip_005]
+      note: One benchmark binding.
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: Nothing here is exactly executable; the rules are judgemental.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        The two-phase search, list-collision method and repair moves (sk_whip_0019,
+        sk_whip_0024, sk_whip_0069) are working procedures that act on a person's process; no
+        workflow binding was made and none is manufactured here.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_whip_0042]
+      observation: >
+        The founding argument — an irritating campaign that measurably sold, stated against
+        the book's own thesis — is the corpus's sharpest internal check on
+        creativity-as-effectiveness assumptions and currently binds to nothing.
+  conclusion: >
+    Binding coverage matches the source's shape: evaluation-heavy craft doctrine with two
+    process bindings and one benchmark; the governance-shaped tension material (what sells vs
+    what is good) is recorded in objects and QA rather than bound.
+
+lineage:
+  authors: ["Luke Sullivan (with Edward Boches, prior edition contributor)"]
+  publisher: Wiley
+  series: null
+  first_published: 1998
+  copy_edition: >
+    6th edition EPUB, 144,649,816 bytes, SHA-256
+    b0a2630f368fb62c25f7f08d2135267e3ebe1e4165be253ce1056c391ec2095d (matches the brief-named
+    identity hash on arrival).
+  related_sources_in_corpus:
+    - source_id: ogilvy_on_advertising_ch2
+      relation: cites_source
+      evidence: >
+        The REP-07 informant test (ledger, informant_test) ran a full census of all 16 Ogilvy
+        occurrences: 8 are the Ogilvy AGENCY as maker of discussed campaigns, 4 are endnote
+        citations of David Fowler's Ogilvy-published The Creative Companion, 1 is a single
+        David Ogilvy aphorism, 1 is a quotation of Norman Berry (an Ogilvy & Mather creative
+        director), 2 are the author's employment anecdote. David Ogilvy's own claims are
+        incidental quotation — explicitly insufficient for shared_primary_informant under the
+        adopted definition — and the heavier Fowler dependency is a different practitioner not
+        in the corpus. cites_source is one-directional and does not defeat independence.
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, companion volume, derivative relation or shared primary
+    informant with any live source or canon-014 candidate; the one corpus relation is the
+    non-defeating cites_source above. The extraction's own diff of concept labels against live
+    ogilvy-ch2 found tensions and correspondences but no shared origin; the informant question
+    it deferred is now resolved by the census.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other sources; none
+      quotes Hey Whipple.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    Craft doctrine for media that change: the book spans print-era mechanics and current
+    digital platforms, and seven objects carry historical_claim where advice is tied to a
+    media environment that has moved or is moving.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_whip_0001, sk_whip_0002, sk_whip_0003, sk_whip_0004, sk_whip_0005,
+                sk_whip_0006, sk_whip_0007, sk_whip_0008, sk_whip_0009, sk_whip_0010,
+                sk_whip_0011, sk_whip_0012, sk_whip_0013, sk_whip_0014, sk_whip_0015,
+                sk_whip_0016, sk_whip_0017, sk_whip_0018, sk_whip_0019, sk_whip_0020,
+                sk_whip_0022, sk_whip_0023, sk_whip_0024, sk_whip_0025, sk_whip_0027,
+                sk_whip_0028, sk_whip_0029, sk_whip_0030, sk_whip_0031, sk_whip_0032,
+                sk_whip_0033, sk_whip_0034, sk_whip_0036, sk_whip_0037, sk_whip_0038,
+                sk_whip_0039, sk_whip_0040, sk_whip_0041, sk_whip_0043, sk_whip_0044,
+                sk_whip_0045, sk_whip_0046, sk_whip_0047, sk_whip_0048, sk_whip_0050,
+                sk_whip_0051, sk_whip_0052, sk_whip_0053, sk_whip_0054, sk_whip_0055,
+                sk_whip_0056, sk_whip_0057, sk_whip_0058, sk_whip_0059, sk_whip_0061,
+                sk_whip_0062, sk_whip_0063, sk_whip_0064, sk_whip_0065, sk_whip_0066,
+                sk_whip_0067, sk_whip_0068, sk_whip_0069]
+      evidence: >
+        Attention, tension, wit, simplicity, word-picture interplay and working procedure rest
+        on how people read and feel, not on a delivery technology; the reproduced evidence
+        spans 1955-2020 and the mechanisms carry across it.
+    - class: technology_contingent
+      sk_refs: [sk_whip_0021, sk_whip_0026, sk_whip_0035, sk_whip_0049, sk_whip_0060, sk_whip_0070]
+      evidence: >
+        Six of the seven historical_claim objects: advice tied to particular media economics
+        or platform behaviour (print-page conventions, broadcast-era attention patterns,
+        current platform mechanics) that a shifted media environment can date. Each object's
+        caveat states the contingency.
+    - class: historical_convention
+      sk_refs: [sk_whip_0042]
+      evidence: >
+        The Whipple campaign's success is a claim about a 1960s-70s media monopoly moment —
+        the book itself argues the conditions that let irritation work have changed; the
+        frozen object carries historical_claim.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

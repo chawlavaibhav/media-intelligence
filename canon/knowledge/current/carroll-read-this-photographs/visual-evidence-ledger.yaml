@@ -1,0 +1,691 @@
+# REP-07 — visual-evidence ledger for Henry Carroll, "Read This If You Want to Take Great
+# Photographs" (Laurence King, 2014). EPUB figure-inspection pass, executed 2026-09-01 per
+# INSPECTION-RUNBOOK.md §14 (verdict INSPECT: "the reproduced photograph behind each lesson;
+# 14/30 objects carry figure_not_inspected").
+#
+# Every row below records a photograph that was actually opened and looked at in this pass.
+# Nothing is transcribed from the extraction's prose self-report.
+
+source_id: carroll-read-this-photographs
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: figure_carries_content
+
+hash_on_arrival:
+  original_file: "/Users/vaibhavchawla/Downloads/Books/Read This If You Want to Take Great Photographs.epub"
+  bytes: 5142000
+  sha256: c0a69021c14f2852c0235851ff7b45cf15676d25e6237144627f6e1936faa60a
+  matches_recorded: true
+  recorded_in: "PROVENANCE.md §3 (SHA-256 and byte size identical)"
+  note: >
+    A second file "Read This If You Want to Take Great Photographs (1).epub" sits in the same
+    folder; it was hashed too and is byte-identical (same SHA-256, same 5,142,000 bytes). The
+    un-suffixed copy was used. Because the on-arrival hash matches the recorded original-file
+    hash, this pass inspected the same copy the extraction read, and the universal protocol's
+    5-locator re-derivation sample was not triggered; locators were nevertheless re-resolved
+    wholesale (see locator_verification).
+  unpacked_to: "scratchpad (outside the repository); nothing from the EPUB was copied into the repo"
+
+locator_verification:
+  method: >
+    The OPF spine was parsed and every spine item's spread title (p.chap) and sub-heading
+    (p.textstyle6) extracted. All 30 objects' provenance.chapter locators (spread title +
+    sub-heading + spine number) were checked against that map.
+  result: >
+    30/30 resolve exactly. Examples: 'Ch. "Symmetry", sub-heading "It''s a primal instinct"
+    (spine 13)' lands on spine item 13 = 11_chapter-title-8.html carrying exactly those strings;
+    'Ch. "Decisive moments" (spine 56)' lands on 54_chapter-title-51.html at spine position 56.
+    The Troubleshooting appendix cited as spine 67 is spine item 67 (65_conclusion-title.html).
+
+inspection:
+  method: >
+    The EPUB was unpacked and all 79 image assets enumerated, measured (bytes and pixel
+    dimensions) and mapped to their spreads by parsing the xhtml spine: each spread file carries
+    its title (p.chap), sub-heading (p.textstyle6), figure images (p.fig) and the printed credit
+    lines that follow each photograph (p.textstyle5: title / photographer / year). 73 of the 79
+    images were opened and viewed, including the photograph behind every one of the 30 extracted
+    objects and every image over 5 KB. The 6 not individually opened are interface icons under
+    4 KB (three mode-dial variants and three sub-25px inline glyphs) whose families were opened
+    and identified (pg32_1, pg33_1, pg34_1, pg42_1, pg54_1 are the same mode-dial graphic
+    highlighting P/S/A/M in turn).
+  images_in_archive: 79
+  images_opened: 73
+  images_measured_not_opened: 6
+  total_image_bytes: 5127647
+  size_histogram:
+    under_1KB: 4     # pg32_3, pg55_2, pg78_1, pg80_1 - inline icons 15-37px
+    1KB_to_5KB: 7    # mode-dial icons (80x161) + pg23_2 thirds-grid diagram
+    5KB_to_20KB: 12  # small diagram/eye-path variants, scale strips, WB icons, focal tables
+    20KB_to_60KB: 14
+    60KB_to_120KB: 31
+    over_120KB: 11
+  image_classes:
+    reproduced_photographs: 49
+    instructional_diagrams: >
+      12 - the book prints its own mechanism diagrams: grey eye-path variants of four
+      photographs with drawn arrows/grids (pg10_1 leading-line arrow on the Cartier-Bresson,
+      pg13_2 horizontal eye-path arrow on the Asnin, pg21_2 converging-lines construction on the
+      Hassan, pg23_2 rule-of-thirds grid on the Bourdin), the four-band exposure reference chart
+      (pg30_1), scale strips for shutter (pg35_1), aperture (pg43_1), ISO (pg50_1) and exposure
+      compensation (pg55_1), the focal-length field-of-view diagram (pg84_1), the focal-length
+      table (pg85_1), and the white-balance preset icons (pg76_1).
+    interface_icons: 10  # mode-dial variants and tiny inline glyphs
+    front_matter_typography: 4  # cover.jpg, pg1_1, pg3_1, pg6_1 (box-camera line drawing)
+    film_still: 1  # pg82_1 Rear Window still (the refused Hitchcock aside)
+    contact_sheet_strip: 1  # pg114_1 - four progressive Lange frames ("How to capture the shot")
+    lange_final_frame_and_second_examples: 2  # pg115_1, pg116_1
+  print_page_recovery: >
+    NEW FACT this pass adds: every image file is named for its PRINT page (pg21_1.jpg is the
+    photograph printed on p.21 of the paper edition). Checked against the book's own
+    cross-references: "Alkan Hassan p. 21" resolves to pg21_1.jpg (it is the Hassan), "the Ansel
+    Adams image on page 8" resolves to pg8_1.jpg (it is Monolith, 1927), "Sebastião Salgado
+    p. 45" resolves to pg45_1.jpg (the Dinka portrait). The false_page_affordance recorded by the
+    extraction stands for TEXT locations (prose pages have no anchors in the reflowable copy),
+    but the "For other examples: <name> p. N" lists and the image-page cross-references are
+    mechanically resolvable to image files in this copy. This recovers content the extraction
+    recorded as lost - see rows sk_crl_0019 and sk_crl_0021 below.
+
+# ── per-lesson figure rows ──────────────────────────────────────────────────────────────────
+# One row per SourceKnowledge object. photograph = printed credit as it appears in the file.
+# fni = the object carries extraction_uncertainty: figure_not_inspected in the frozen record.
+# verdict values used: claim_visible_in_photograph | claim_visible_with_noted_limit |
+# no_photograph_behind_lesson | claim_underdetermined_by_figure.
+
+lesson_rows:
+
+  - sk_ref: sk_crl_0001
+    fni: false
+    lesson: 'Leading lines (spine 8)'
+    files: [images/pg11_1.jpg, images/pg10_1.jpg]
+    photograph: "The Var department. Hyères. France / Henri Cartier-Bresson / 1932"
+    what_it_shows: >
+      From above a spiral staircase: the handrail sweeps in from the right frame edge and coils
+      down toward a cobbled street where a blurred cyclist passes lower left. pg10_1 is the
+      book's own diagram of the same image with a drawn arrow tracing the rail down and around
+      to the cyclist.
+    verdict: claim_visible_in_photograph
+    finding: >
+      One dominant line, entering from the frame edge, carrying the eye to the cyclist - all
+      three of Carroll's operating rules are visible, and the printed arrow diagram states the
+      claimed eye-path explicitly in the artifact itself.
+
+  - sk_ref: sk_crl_0002
+    fni: true
+    lesson: 'Framing (spine 10)'
+    files: [images/pg15_1.jpg]
+    photograph: "Burning Man Festival, Black Rock City. Nevada, USA / Cristina Garcia Rodero / 1999"
+    what_it_shows: >
+      A masked figure leaps mid-air inside a large hoop, hoop and figure set against a truck
+      crowded with festival-goers and a busy playa behind.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The claimed ordering of attention is visible: the hoop encloses the leaping figure and
+      separates it from a genuinely anarchic scene; the eye lands inside the hoop first. The
+      "photograph within your photograph" description matches what the frame does.
+
+  - sk_ref: sk_crl_0003
+    fni: true
+    lesson: 'Foreground interest (spine 11)'
+    files: [images/pg17_1.jpg, images/pg16_1.jpg]
+    photograph: "Shipbreaking #31, Chittagong, Bangladesh / Edward Burtynsky / 2001"
+    what_it_shows: >
+      Textured oily mud fills the very foreground, a wet reflection of the beached ship runs
+      through the middle distance, the ship itself stands at the top. pg16_1 is the book's
+      diagram variant: a baseline with an upward arrow from the mud to the ship.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The layered near-to-far chain the claim describes is present: mud, reflection, ship.
+      Carroll's occlusion test was checked as literally as an inspection can - masking the
+      bottom band of the frame does leave the eye jumping straight to the ship with the depth
+      chain gone.
+
+  - sk_ref: sk_crl_0004
+    fni: false
+    lesson: 'Getting close (spine 12)'
+    files: [images/pg18_1.jpg]
+    photograph: "Benidorm, Spain / Martin Parr / 1997"
+    what_it_shows: >
+      A very close, frame-filling portrait of a sunbathing woman: scarlet lipstick on pursed
+      lips, gold chain and bracelet, blue oval tanning goggles with small eyeholes.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Every small telling detail the prose names (lipstick, jewellery, goggles) is unavoidable
+      at this framing, exactly as claimed. Note the image file sits at the end of the PREVIOUS
+      spine document (the Foreground interest file) - the photograph-to-lesson binding crosses
+      file boundaries in this EPUB and was re-established from the printed credit and print-page
+      filename. The relational half of the claim (a crop would read differently) is an assertion
+      no single photograph can show; recorded as such in the frozen caveat already.
+
+  - sk_ref: sk_crl_0005
+    fni: true
+    lesson: 'Symmetry (spine 13)'
+    files: [images/pg21_1.jpg, images/pg21_2.jpg]
+    photograph: "Above the City / Alkan Hassan / 2010"
+    what_it_shows: >
+      A man sits centred on a ledge, back to camera, city beyond; a plastic bag sits beside him
+      lower left. pg21_2 is the book's construction-line diagram: converging diagonals meeting
+      at the figure "like the triangle of a sealed envelope".
+    verdict: claim_visible_in_photograph
+    finding: >
+      The centred subject, the converging building lines, and the one saving asymmetric element
+      (the bag) are all present and identifiable. The dose claim - that the bag is what keeps
+      the balance from feeling phony - is an aesthetic reading, but the elements it is made of
+      are exactly as described.
+
+  - sk_ref: sk_crl_0006
+    fni: false
+    lesson: 'The rule of thirds (spine 14)'
+    files: [images/pg23_1.jpg, images/pg23_2.jpg]
+    photograph: "Charles Jourdan campaign / Guy Bourdin / Spring, 1979"
+    what_it_shows: >
+      A vast yellow wall and red floor with a pair of stockinged legs in heels emerging at the
+      lower right. pg23_2 overlays the book's own 3x3 grid on the image: the legs sit on the
+      right-third line at the lower-third band.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The off-centre placement holding balance is visible, and the book's own printed grid
+      diagram binds the subject to the thirds intersection - the figure states the rule about
+      itself.
+
+  - sk_ref: sk_crl_0007
+    fni: false
+    lesson: 'Working the frame (spine 15)'
+    files: [images/pg24_1.jpg]
+    photograph: "42nd Street and Eighth Avenue / Lars Tunbjörk / 1997"
+    what_it_shows: >
+      A colour street scene through a chain-link fence: a grey foreground fencepost standing
+      vertical, a yellow taxi passing fully visible in the gap between fence sections, a yellow
+      box in the near foreground, orange/purple/red building faces behind, DKNY billboard top
+      left.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Carroll's three concrete checks were each checked against the frame: the foreground post
+      IS vertical; the taxi IS framed whole rather than cut in two; the colour masses (two
+      yellows, orange, purple) do balance without one overpowering. The photograph performs the
+      checklist the prose derives from it. Image emitted in the previous spine file; binding
+      re-established as for sk_crl_0004.
+
+  - sk_ref: sk_crl_0008
+    fni: true
+    lesson: 'Reducing it down (spine 16)'
+    files: [images/pg27_1.jpg]
+    photograph: "West Wall, Business Systems Division, Pertec, 1881 Langley, Costa Mesa from 'New Industrial Parks' / Lewis Baltz / 1974"
+    what_it_shows: >
+      A light brick wall occupying most of the frame, a dark garage door and entry door right of
+      centre, a strip of near-black tarmac along the bottom with a small white diamond-shaped
+      patch cut into it at lower left.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Every element the prose describes is present and locatable: the dark ground is given far
+      less area than the light wall (consistent with the dark-reads-heavier claim as a
+      proportioning decision), and the white diamond in the tarmac that the prose says
+      counterbalances the grey door is exactly there. Whether the spacing produces "absolute
+      equilibrium" is an aesthetic judgement the figure cannot settle; the compositional facts
+      it rests on are all verifiably in the image.
+
+  - sk_ref: sk_crl_0009
+    fni: true
+    lesson: 'Breaking the rules (spine 17)'
+    files: [images/pg29_1.jpg]
+    photograph: "Francis Bacon, Primrose Hill / Bill Brandt / 1963"
+    what_it_shows: >
+      Bacon stands at the extreme left edge, gazing left OUT of the frame with almost no room
+      before the edge; a lamp post runs up to make contact near the top edge; the path sweeps
+      down the right side and out of the picture; the hill's horizon passes behind his head at
+      eye level.
+    verdict: claim_visible_in_photograph
+    finding: >
+      All four named rule-violations are individually visible in the reproduction: eye led out
+      of frame by the path, element awkwardly meeting the top edge (lamp), subject at the
+      extreme edge with gaze cut short, horizon through the head. Whether their combined
+      discomfort "suits the sitter" is the unfalsifiable half the frozen caveat already names;
+      the inventory itself checks out completely.
+
+  - sk_ref: sk_crl_0010
+    fni: false
+    lesson: 'EXPOSURE section opener (spine 18)'
+    files: [images/pg30_1.jpg]
+    photograph: "none - no reproduced photograph on this spread"
+    what_it_shows: >
+      The spread is prose plus the book's four-band exposure reference chart (printed p.30,
+      emitted in the preceding spine file): SHUTTER SPEED/MOVEMENT scale 1" to 1/2000 with "Any
+      slower and risk camera shake" under the 1/30-1/60 region; APERTURE/FOCUS f/2.8-f/22 with
+      shallow/deep annotations; ISO/SENSITIVITY 100-1600 with "400 Suitable for an overcast
+      day" and "More image noise" toward 800-1600; EXPOSURE COMPENSATION -3 to +3 with "Always
+      reset to zero".
+    verdict: no_photograph_behind_lesson
+    finding: >
+      The lesson is verbal; its visual support is an instructional chart, not a photograph. The
+      chart's printed values corroborate the extraction's thresholds verbatim (about 1/60 shake
+      onset, noise rising from ISO 800, ISO 400 for overcast, reset compensation to zero).
+
+  - sk_ref: sk_crl_0011
+    fni: false
+    lesson: 'Slow shutter speeds / at night (spines 22-23)'
+    files: [images/pg37_1.jpg, images/pg38_1.jpg]
+    photograph: "George Balanchine, New York City Ballet / Ernst Haas / 1960s; and Bangkok from 'Cityscapes' / Luca Campigotto / 2006"
+    what_it_shows: >
+      Haas: dancers rendered as translucent flowing blur sweeping around a pin-sharp, motionless
+      seated Balanchine. Campigotto: night city under elevated roads, passing traffic reduced to
+      red and white light trails while every structure is pin sharp.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Both claimed demonstrations are exactly visible: moving subjects blur while the still
+      subject (and the tripod-held architecture) stay sharp - the subject-motion versus
+      camera-motion distinction the differential diagnosis depends on is legible across the
+      pair.
+
+  - sk_ref: sk_crl_0012
+    fni: false
+    lesson: 'Fast shutter speeds (spine 24)'
+    files: [images/pg41_1.jpg]
+    photograph: "Blast #8316 / Naoya Hatakeyama / 1997"
+    what_it_shows: >
+      A quarry blast arrested mid-explosion: individual rocks and debris hang suspended sharp
+      against a blue sky.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The freeze claim is visible - debris that must have been moving fast is rendered
+      motionless and sharp. The 1/2000 figure is the prose's report and cannot be read off the
+      image; the effect it names can.
+
+  - sk_ref: sk_crl_0013
+    fni: false
+    lesson: 'Aperture: shallow and deep (spines 25-26, 28)'
+    files: [images/pg45_1.jpg, images/pg49_1.jpg, images/pg43_1.jpg]
+    photograph: "Dinka man, Southern Sudan / Sebastião Salgado / 2006; and Bomb Crater and Destroyed Convoy, Bravo 20 Bombing Range, Nevada / Richard Misrach / 1986"
+    what_it_shows: >
+      Salgado: ash-painted man pin sharp against a fully defocused camp background - the
+      removal-of-detail mechanism visible as claimed. Misrach: desert with a pink-red crater
+      pool, sharp from the near crater rim through wrecked vehicles to distant mountains -
+      front-to-back sharpness carrying scale. pg43_1 is the aperture scale strip (f/2.8 wide to
+      f/22 narrow), the printed memory aid.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Both ends of the aperture-as-attention-control claim are demonstrated in the reproduced
+      pair, one photograph per end, exactly as the prose assigns them.
+
+  - sk_ref: sk_crl_0014
+    fni: false
+    lesson: 'Compelling close-ups (spine 27)'
+    files: [images/pg46_1.jpg]
+    photograph: "Hide and Seek / Slinkachu / 2013"
+    what_it_shows: >
+      Miniature figures beside a banana peel bearing a "Refugee tent" sticker on blue
+      playground tarmac; the plane of sharpness is millimetres deep - figures and sticker sharp,
+      ground blurring within centimetres before and behind, playground fully dissolved.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The boundary condition is visible in its positive form: there is depth behind and in front
+      of the subject, and it visibly falls out of focus. The shallowest depth of field in the
+      book appears exactly where the claim says it should - at closest approach.
+
+  - sk_ref: sk_crl_0015
+    fni: false
+    lesson: 'Manual (spine 31); Modes (spine 19)'
+    files: [images/pg54_1.jpg]
+    photograph: "none - no reproduced photograph on either spread"
+    what_it_shows: >
+      The only images are mode-dial interface icons (80x161px): pg33_1 highlights P, pg34_1
+      S(Tv), pg42_1 A(Av), pg54_1 M, plus the three dial variants on the Modes spread. No
+      photograph accompanies the manual-mode argument.
+    verdict: no_photograph_behind_lesson
+    finding: >
+      Consistent with the claim's nature: it is an argument about workflow, and the book
+      supports it with interface graphics only. Nothing visual to verify; nothing visual lost.
+
+  - sk_ref: sk_crl_0016
+    fni: false
+    lesson: 'Exposure compensation (spines 32-34)'
+    files: [images/pg57_1.jpg, images/pg59_1.jpg, images/pg55_1.jpg]
+    photograph: "Laura Veazey in her Fox Costume, National Youth Ballet / Jo Metson Scott / 2010; and Divers / Adam Pretty / 2011"
+    what_it_shows: >
+      Metson Scott: girl in a fox costume seated beside a bright window; her face, costume and
+      the room's shadow side hold full detail while the window panes are blown toward white.
+      Pretty: divers on and above a platform reduced to clean black silhouettes against a
+      textured grey sky. pg55_1 is the compensation scale strip (-3 to +3).
+    verdict: claim_visible_in_photograph
+    finding: >
+      Both directions of the compensation claim are demonstrated: + trading blown highlights for
+      subject detail (visible in the window), and - producing deliberate silhouette (visible in
+      the divers, whose sky keeps its texture). The direction-of-error claims about metering are
+      prose; their taught corrections are what the photographs show.
+
+  - sk_ref: sk_crl_0017
+    fni: true
+    lesson: 'Hard light creates contrast / depth (spines 36, 38)'
+    files: [images/pg63_1.jpg, images/pg67_1.jpg]
+    photograph: "Heinley Street, Adelaide / Trent Parke / 2006; and Callanish after Hailstorm, Lewis / Fay Godwin / 1980"
+    what_it_shows: >
+      Parke: a city crossing where deep black shadow masses swallow most of the frame and a
+      couple stand in a brilliant island of sun, motel and fast-food signs sharing the
+      highlight - the eye goes straight to the lit island. Godwin: standing stones under a
+      stormy sky with a sudden swath of sun; each stone's sunward face is bright against its
+      dark face, the modelling giving the stones individual shape and presence.
+    verdict: claim_visible_with_noted_limit
+    finding: >
+      The contrast half is fully visible in the Parke: shadows as large masking masses, detail
+      alive only in the highlights, exactly the simplification mechanism claimed. The depth half
+      is visible in the Godwin as strong directional modelling of the stones; the prose's
+      "razor-sharp" shadow EDGES are at the limit of what this ~691px reproduction resolves, so
+      that adjective is taken from the prose, not confirmed at pixel level.
+
+  - sk_ref: sk_crl_0018
+    fni: true
+    lesson: 'Soft light is more even / flattering; Hard light is brutal (spines 37, 40, 41)'
+    files: [images/pg65_1.jpg, images/pg73_1.jpg, images/pg71_1.jpg]
+    photograph: "Wes (Gator) / Ryan McGinley / 2010; Jemma on Mirror / Richard Learoyd / 2010; Oregon / Lee Friedlander / 1997"
+    what_it_shows: >
+      McGinley: a figure in even soft light - no stark divide anywhere, shadow detail fully
+      visible. Learoyd: a seated nude from behind in extremely soft light, shadow edges fading
+      gradually as they curve around the back and arms rather than stopping abruptly. Friedlander:
+      a self-portrait facing straight into hard sun - half the face lit hard, cord shadows cast
+      across the shirt, every crease and blemish exposed.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The claimed contrast between the two instruments is visible across the trio, including the
+      book's own counter-case: the Friedlander is demonstrably unflattering and deliberately so,
+      which is exactly the intent-matching point of the frozen caveat. The viewer-response claims
+      (slower, contemplative) are not testable in a figure and are not endorsed by this row.
+
+  - sk_ref: sk_crl_0019
+    fni: true
+    lesson: 'Soft light can be flat (spine 39)'
+    files: [images/pg68_1.jpg]
+    photograph: "McLean, Virginia / Joel Sternfeld / December 1978"
+    what_it_shows: >
+      A farm market under overcast light: pumpkins scattered across the near field, the market
+      stand at the left third with a fireman choosing a pumpkin, a house burning in the upper
+      right distance with a ladder truck at work; there are no cast shadows anywhere and the
+      light is without direction - the drama is entirely flattened, as claimed.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The flat-light claim is fully visible: shadowless, low-contrast, everyday in register
+      despite a burning house. ADDITIONAL RECOVERY: the exercise the extraction recorded as
+      unrecoverable ("I can spot three [classic techniques]... turn back to pages 10, 16 and
+      22") resolves in this copy through the print-page image filenames: p.10 is the Leading
+      lines spread, p.16 Foreground interest, p.22 the Rule of thirds spread. All three are then
+      checkable in the Sternfeld: pumpkin foreground interest, the stand/house on third
+      positions, and the receding fence/pumpkin line leading in from the frame edge. The frozen
+      caveat's "not recoverable from this copy" is superseded for the page IDENTITIES (which
+      spreads he means); reading the three techniques in the image remains an interpretive act.
+
+  - sk_ref: sk_crl_0020
+    fni: true
+    lesson: 'Inbuilt flash / Fill flash (spines 44-45)'
+    files: [images/pg79_1.jpg, images/pg81_1.jpg]
+    photograph: "Untitled (woman in white dress running in Yokosuka) / Daido Moriyama / 1971; and Seagull and Chips / Elaine Constantine / 2007"
+    what_it_shows: >
+      Moriyama: a woman in white glimpsed from behind in a dark alley by direct on-camera flash -
+      frontal light flattening her against the dark, near rubble bright, rapid falloff, the
+      menacing snapshot register the prose describes. Constantine: daylight beach shot where fill
+      flash holds the laughing girl and lunging seagull bright and separated against a darker
+      blue sky - the added-energy case.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Both faces of the flash claim are visible, including the opposing readings the frozen
+      caveat flags (menace in one, energy in the other) - the pair genuinely pulls in opposite
+      directions, which is the caveat's point, now confirmed by inspection. Forward-thrown
+      shadow geometry is visible in the Moriyama's flat frontal illumination; the freeze-by-flash
+      diagnostic is prose, not readable off a still.
+
+  - sk_ref: sk_crl_0021
+    fni: false
+    lesson: 'LENSES opener; Standard focal length (spines 46, 52)'
+    files: [images/pg95_1.jpg, images/pg96_1.jpg, images/pg85_1.jpg, images/pg84_1.jpg]
+    photograph: "Inside the Bluehouse / Union City Blues from 'Pull Back the Shade' / Muzi Quawson / 2002-06; From 'I'm Koo' / Youngjun Koo / 2013"
+    what_it_shows: >
+      Quawson: two intimate domestic/street frames made close but unforced - the
+      close-without-intrusion register claimed for the standard lens. Koo: three street-style
+      portraits at natural perspective. pg84_1: the field-of-view diagram (short = wide beach
+      scene, long = narrow crop). pg85_1: THE FOCAL LENGTH TABLE the extraction could not
+      inspect - now opened and read: rows Wide angle / Standard / Telephoto against sensor
+      columns Full Frame / APS-C / Four Thirds, values <35mm, <24mm, <18mm; 50mm, 30mm, 25mm;
+      >70mm, >50mm, >40mm.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The relational reading of the standard lens is illustrated as claimed. RESOLUTION of the
+      frozen caveat "the numeric table he supplies could not be inspected": the table exists,
+      was opened, and supplies the frame of reference for "wide"/"standard"/"long" per sensor
+      format that the extraction refused to guess. Its content is recorded here verbatim so a
+      later pass need not reopen the book for it.
+
+  - sk_ref: sk_crl_0022
+    fni: true
+    lesson: 'Wide angle (spines 48-49)'
+    files: [images/pg87_1.jpg, images/pg88_1.jpg]
+    photograph: "Wonder from 'Full of Grace' / Holly Andres / 2009; and Lanzarote / Jeanloup Sieff / 1975"
+    what_it_shows: >
+      Andres: staged wide-angle scene shot from inside a car boot - the near man's reaching hand
+      looms large, the distressed woman in orange and the Hostess/Retail Outlet signage populate
+      the edges, every peripheral prop legible and story-bearing. Sieff: black volcanic plain
+      with white-edged lines converging from the immediate foreground to a tiny distant house
+      and mountains - near enormous, far shrunk to insignificance.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Both wide-angle consequences are visible: load-bearing periphery (Andres - the narrative
+      props sit at the edges and read clearly) and apparent elongation of distance (Sieff - the
+      house that would dominate a long-lens frame is a speck, and the converging lines visibly
+      do the work of holding the space together, as the prose prescribes).
+
+  - sk_ref: sk_crl_0023
+    fni: true
+    lesson: 'Telephoto (spines 50-51)'
+    files: [images/pg91_1.jpg, images/pg93_1.jpg]
+    photograph: "Head #6 / Philip-Lorca diCorcia / 2001; and São Paulo, Brazil / René Burri / 1960"
+    what_it_shows: >
+      diCorcia: a middle-aged man in a suit isolated by strobe against blackness, unaware,
+      photographed from far off past an out-of-focus foreground head - the concealed-observer
+      condition made visible. Burri: from a rooftop, four men walk a roof deck while the avenue
+      below reads as a flat vertical strip and the towers stack like layered cut-outs - depth
+      visibly compressed, the image graphic rather than receding.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Both halves of the claim are demonstrated: subjects taken unaware at distance, and the
+      flattening signature - the Burri's avenue genuinely reads as a strip laid flat on the
+      picture plane. The "predatory" reading is a viewer-response claim outside what a figure
+      can settle, as the frozen caveat already records.
+
+  - sk_ref: sk_crl_0024
+    fni: true
+    lesson: 'Decisive moments (spine 56)'
+    files: [images/pg103_1.jpg]
+    photograph: "Spring Corner, New York / Melanie Einzig / 2000"
+    what_it_shows: >
+      A street corner at one instant: a courier bent under a bag in the foreground, a couple
+      embracing behind him, a man crossing with a white cockatoo perched on his back, and a dog
+      trotting through at the left - four unrelated elements coinciding in one frame.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The "beautifully odd quartet" is countable in the reproduction - four separate, unrelated
+      elements visibly converging for a single moment, which is precisely the convergence
+      definition the object extracts. That the arrangement dissolved a second later is a claim
+      about time no still can show; the improbability of the caught arrangement is what the
+      photograph itself carries.
+
+  - sk_ref: sk_crl_0025
+    fni: false
+    lesson: 'The dangers of perfection (spine 57)'
+    files: [images/pg105_1.jpg]
+    photograph: "Landing of the American troops on Omaha Beach. Normandy, France. / Robert Capa / June 6th, 1944"
+    what_it_shows: >
+      A soldier low in the surf among beach obstacles; the frame is motion-blurred, grain-rough,
+      tilted, with no considered composition - the technical flaws the argument rests on are
+      plainly visible.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The photograph is exactly as described: technically failed and viscerally charged. Whether
+      the flaws CAUSE the power is an interpretive claim; that the celebrated image carries
+      every flaw named is verified. The frozen survivorship caveat (famous-case-only evidence)
+      stands untouched by inspection.
+
+  - sk_ref: sk_crl_0026
+    fni: false
+    lesson: 'Photographs without excuses (spine 61)'
+    files: [images/pg113_1.jpg]
+    photograph: "NASA picture of the Earth / Apollo 17 / 1972"
+    what_it_shows: >
+      The whole Earth centred against black space - the Blue Marble frame, complete and
+      self-sufficient.
+    verdict: claim_visible_in_photograph
+    finding: >
+      As the exemplar of a picture "without any excuses" the choice is legible: everything the
+      image claims is in the frame. The test itself is a self-assessment procedure, not a visual
+      proposition; the figure's role is exemplary and it fills that role.
+
+  - sk_ref: sk_crl_0027
+    fni: true
+    lesson: 'A different point of view (spine 60)'
+    files: [images/pg111_1.jpg]
+    photograph: "Felix, Gladys and Rover / Elliott Erwitt / 1974"
+    what_it_shows: >
+      Ground-level view: a great dane's legs and its owner's boots tower beside a tiny chihuahua
+      in a knitted hat looking into the lens; the camera is at the small dog's eye height on the
+      pavement.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The joke visibly depends on the vantage: at head height this is a person walking two dogs;
+      at ground level it is a portrait among legs. The claimed dependence of the double take on
+      the unfamiliar height is directly demonstrated.
+
+  - sk_ref: sk_crl_0028
+    fni: false
+    lesson: 'Unexpected beauty (spine 58)'
+    files: [images/pg107_1.jpg, images/pg108_1.jpg]
+    photograph: "Where my Grandfather Drank #1 / Stephen J. Morgan / 2002; and Pepper #30 / Edward Weston / 1930"
+    what_it_shows: >
+      Morgan: the corner of a run-down social club - worn patterned wallpaper, violet banquette,
+      ashtrays and a stout glass, a haze of smoky light drifting across - an unpromising subject
+      rendered with evident care. Weston: a pepper photographed into sculptural monumentality.
+    verdict: claim_visible_in_photograph
+    finding: >
+      Both reproductions are of conventionally unbeautiful subjects made compelling by the
+      photograph's own means, which is the narrow claim extracted. The inverse claim (that
+      sunsets defeat photographers) has no figure and is not visually testable - the book shows
+      no failed sunset, consistent with the survivorship caveat.
+
+  - sk_ref: sk_crl_0029
+    fni: true
+    lesson: 'The importance of intrigue (spine 64)'
+    files: [images/pg119_1.jpg]
+    photograph: "Sugar's, Davenport / Alec Soth / 2002"
+    what_it_shows: >
+      An unpeopled green room: floral armchair, brick fireplace with lamp, a mirror cut into the
+      wall, a blind patched with tape, and a Hustler magazine face-up on the rug - objects that
+      accumulate into an implied occupant and an unanswered story.
+    verdict: claim_visible_in_photograph
+    finding: >
+      The "portrait with no person in it" is demonstrably that: the room withholds its occupant
+      while its oddities (the magazine, the taped blind, the cut mirror) pose exactly the
+      questions the prose says the picture poses. The mechanism claim about viewer retention is
+      not figure-testable; the withholding construction is visible.
+
+  - sk_ref: sk_crl_0030
+    fni: false
+    lesson: 'The power of a project (spine 65)'
+    files: [images/pg121_1.jpg]
+    photograph: "The Americans / Robert Frank / First published in 1958"
+    what_it_shows: >
+      The COVER of Frank's book (the New Orleans trolley photograph under the title and the
+      Kerouac introduction credit) - a single reproduced artifact standing in for an 83-image
+      sequence.
+    verdict: claim_underdetermined_by_figure
+    finding: >
+      Reported honestly as the runbook asks: this is the one lesson whose claim CANNOT be
+      demonstrated by its own reproduction. The claim is that meaning lives in the series'
+      style-consistency and ORDER; one cover image cannot exhibit either property, and no
+      sequence of frames from the book is reproduced. The figure identifies the case; it cannot
+      carry the claim. The object's evidence remains Carroll's autobiographical report, exactly
+      as the frozen caveats state.
+
+figure_not_inspected_resolution: >
+  All 14 objects carrying extraction_uncertainty: figure_not_inspected (sk_crl_0002, 0003, 0005,
+  0008, 0009, 0017, 0018, 0019, 0020, 0022, 0023, 0024, 0027, 0029) now have their photographs
+  opened and checked. 13 of 14 resolve as claim_visible_in_photograph; sk_crl_0017 resolves as
+  claim_visible_with_noted_limit (the Godwin's shadow-edge sharpness is below this
+  reproduction's resolution; the directional modelling the depth claim needs is visible). No
+  frozen claim is contradicted by any photograph. Separately, two named recoveries land on
+  objects NOT carrying the flag: sk_crl_0019's unresolvable exercise pages are now identified,
+  and sk_crl_0021's uninspected focal-length table is now read (contents in its row). The one
+  underdetermination found (sk_crl_0030, series claim vs cover reproduction) is on an object
+  that never carried the flag, because its support really is prose - the figure adds identity,
+  not evidence.
+
+observed_loss_patterns:
+
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB, no page map, no anchors for the print edition's pages. Text locations
+      remain unaddressable by page; the extraction's spread-title locators stay the right
+      citation unit and all 30 re-resolve (locator_verification above).
+
+  - pattern: false_page_affordance
+    affects: "the book's own print-page cross-references, Index and Credits"
+    detectability: named_by_text
+    recoverability: recovered_in_this_copy
+    evidence: >
+      The file carries print-edition page references ("Alkan Hassan p. 21", "turn back to pages
+      10, 16 and 22") with no page anchors - the trap the extraction recorded. This pass found
+      the recovery route the text route could not see: image files are NAMED for their print
+      pages, so every cross-reference to a PHOTOGRAPH's page resolves mechanically to an image
+      file, verified on three independent references. References to prose pages remain
+      unresolvable. The two content losses the extraction charged to this pattern are both
+      recovered: the pages-10/16/22 exercise (row sk_crl_0019) and the focal-length table (row
+      sk_crl_0021).
+
+  - pattern: no_loss_detected
+    affects: "the visual dimension of the extracted span"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      All 79 images are present, intact and openable; 73 were opened including the photograph
+      behind every extracted object. Every printed credit (photographer, title, year) matches
+      the caption facts the extraction recorded from the text stream. No image is missing, no
+      placeholder appears, and no photograph contradicts the lesson written against it.
+
+  - pattern: figure_inspected_claim_underdetermined
+    affects: "sk_crl_0030 (a series says what no single photograph can)"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      The figure behind the lesson is the cover of The Americans. The claim is about properties
+      of an ordered sequence; the copy reproduces one image and no sequence, so looking at the
+      figure cannot settle the claim in principle. Not a defect of the copy so much as of the
+      lesson's own evidence form; recorded so no later pass mistakes it for pending work.
+
+demonstrations: []
+visual_only_observations:
+  - >
+    The book argues visually in its own artifact: four photographs are reprinted as grey
+    diagram variants with drawn eye-path arrows, construction lines or a thirds grid (pg10_1,
+    pg13_2, pg21_2, pg23_2). For those spreads the claimed mechanism is not only asserted about
+    the photograph - it is drawn onto it. The extraction, working text-only, could not know
+    these diagrams exist; they strengthen the text-figure binding for sk_crl_0001, 0005 and
+    0006 and add nothing that contradicts any object.
+  - >
+    Photograph-to-file binding drifts across spine boundaries: six spreads' photographs are
+    emitted at the end of the preceding spine document (Getting close, Working the frame, Slow
+    shutter at night, Compelling close-ups, Soft light can be flat, Composition is the key).
+    Harmless once known - bindings were re-established from printed credits and print-page
+    filenames - but a naive file-per-spread pass would mis-attribute six photographs.
+
+extraction_constraint_check: >
+  The frozen record's constraint holds as written: every object carries source_support: text,
+  inspected.figures is empty everywhere, and no figure_refs are populated - correct for the
+  extraction, which opened nothing. This ledger is the first figure-level record for the source
+  and does not modify the frozen files.
+
+claim_resolution_after_inspection: some_underdetermined
+consequence: >
+  The photographs are the book's evidence, and they check out: 29 of 30 lessons have their
+  claimed demonstrations visible in the reproduced photographs (two of those as instructional
+  charts/none-needed cases recorded as no_photograph_behind_lesson, one with a resolution
+  limit noted), and one lesson (sk_crl_0030) is underdetermined by its figure in principle.
+  The pass also recovered two pieces of content the extraction recorded as lost (the exercise
+  page identities and the focal-length table) via the print-page image filenames. The central
+  extraction hazard - half the bank resting on uninspected photographs - is resolved in the
+  direction favourable to the source: Carroll's descriptions of his examples are accurate in
+  every checked instance.

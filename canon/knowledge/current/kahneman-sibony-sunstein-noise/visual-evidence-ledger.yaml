@@ -1,0 +1,121 @@
+# REP-07 — visual-evidence ledger for Kahneman, Sibony & Sunstein, Noise: A Flaw in Human
+# Judgment (Little, Brown Spark, first ebook edition, May 2021).
+#
+# Small figure pass (INSPECTION-RUNBOOK.md §8), executed 2026-09-01: open Figures 16 and 18 plus
+# every other figure cited in the extraction's slice, and enumerate all images per the desai
+# template (mostly-prose book). In practice ALL nineteen numbered figures were opened.
+
+source_id: kahneman-sibony-sunstein-noise
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: illustrative_only
+
+file_identity:
+  path: "/Users/vaibhavchawla/Downloads/Books/Noise_ A Flaw in Human Judgment.epub"
+  bytes: 2761980
+  sha256: 2fae4d85f000122401b780edbfcb27d1191308c3fc757af4b8cf7ef57386f7a6
+  hash_on_arrival: >
+    Recomputed 2026-09-01 with shasum -a 256; byte size and SHA-256 both match PROVENANCE.md
+    exactly, so this pass inspected the same copy the extraction read. The unpacked EPUB carries
+    the copyright page with ISBN 978-0-316-45138-3 and build identifier E3-20210415-JV-NF-ORI,
+    matching the recorded identity. 52 xhtml spine documents, 26 in-package images + cover.
+
+inspection:
+  method: >
+    The EPUB was unpacked and all 27 image assets (26 OEBPS image_rsrc*.jpg + cover.jpeg)
+    enumerated and measured. Every numbered figure was located by matching its in-flow caption
+    ("FIGURE n: ...") to the img element adjacent to it in the xhtml, giving a complete Figure
+    1-19 -> image-file map. Every one of the 20 figure-backing image files was opened and read.
+    The four sub-KB assets were opened and identified as typographic furniture. Each opened
+    figure was checked against the frozen objects that cite figures (the nine objects carrying
+    extraction_uncertainty: figure_not_inspected, and every caveat naming a figure).
+  images_in_archive: 27
+  figures: 19
+  figure_backing_image_files_opened: 20
+  decorative_or_furniture_images: 7
+  furniture_evidence: >
+    image_rsrc31A (162 B, thin rule), image_rsrc31Y (275 B, rule), image_rsrc31K (423 B, small
+    black square used as a section-end mark), image_rsrc31P (625 B, dotted rule) - each opened,
+    each a reused typographic ornament appearing at section breaks throughout the spine.
+    image_rsrc316 (112,307 B) is the typeset title page, image_rsrc317 (21,980 B) the Little,
+    Brown Spark logo on the promotional pages, cover.jpeg (624,418 B) the publisher cover. None
+    is evidence.
+
+figure_map_and_findings:
+  - {figure: "Figure 1 (Introduction)", file: OEBPS/image_rsrc318.jpg, caption: "Four teams", finding: "Four target diagrams, Teams A-D: accurate, biased, noisy, biased-and-noisy shot patterns. Illustrates the bias/noise distinction exactly as the prose states it (sk_nse_0001)."}
+  - {figure: "Figure 2 (Introduction)", file: OEBPS/image_rsrc319.jpg, caption: "Looking at the back of the target", finding: "Same shot patterns with the target removed: noise is visible with no true value, the argument sk_nse_0002 records. Figure shows precisely what the prose argues."}
+  - {figure: "Figure 3 (Ch.5)", file: OEBPS/image_rsrc31B.jpg, caption: "Distribution of GoodSell's market share forecasts", finding: "Normal curve, mean 44%, +/-1SD arrows, SD 10 points readable off the axis; prose states the numbers."}
+  - {figure: "Figure 4 (Ch.5)", file: OEBPS/image_rsrc31C.jpg, caption: "Distribution of errors in GoodSell's forecasts", finding: "Same curve re-centred on error scale with Bias arrow between zero error and mean +10; prose states both quantities."}
+  - {figure: "Figure 5 (Ch.5)", file: OEBPS/image_rsrc31D.jpg, caption: "Five measurements of the same length", finding: "Number line 970-980 mm, five grey triangles (971-980 span), best estimate marked at 975; matches prose."}
+  - {figure: "Figure 6 (Ch.5)", file: OEBPS/image_rsrc31E.jpg, caption: "Mean squared error for ten possible values", finding: "Bar chart of MSE values 30/23/18/15/14/15/18/23/30/39 over 971-980; the minimised-at-the-mean argument is visible and the values legible."}
+  - {figure: "Figure 7 (Ch.5)", file: OEBPS/image_rsrc31F.jpg, caption: "Two decompositions of MSE", finding: "Two Pythagorean square-sum diagrams: MSE = Bias^2 + Noise^2 with the two panels trading bias against noise at equal MSE, exactly the error-equation rendering sk_nse_0005's caveat describes."}
+  - {figure: "Figure 8 (Ch.5)", file: OEBPS/image_rsrc31G.jpg, caption: "Errors with bias reduced by half vs noise reduced by half", finding: "The two-panel before/after comparison sk_nse_0006's caveat names (Panel A same noise less bias; Panel B same bias less noise). Visual comparison confirms, and nothing in it qualifies, the frozen claim that noise reduction is valuable independent of bias."}
+  - {figure: "Figure 9 (Ch.6)", file: OEBPS/image_rsrc31H.jpg, caption: "A representation of the sentencing study", finding: "208-judges-by-16-cases matrix excerpt with SD in typical case 3.4 y and SD of judge means 2.4 y printed inside the figure - the 2.4-year quantity sk_nse_0007 relies on, stated in the prose and confirmed in-figure."}
+  - {figure: "Figure 10 (Ch.6)", file: OEBPS/image_rsrc31J.jpg, caption: "Decomposing System Noise", finding: "Pythagorean diagram System Noise^2 = Level Noise^2 + Pattern Noise^2; matches the equations the prose states (sk_nse_0010's system)."}
+  - {figure: "Figure 11 (Ch.10)", file: OEBPS/image_rsrc31M.jpg, caption: "Four types of rules and algorithms", finding: "Simplicity-to-sophistication spectrum: simple rules, improper linear models, linear regression, machine learning. Illustrative taxonomy only."}
+  - {figure: "Figure 12 (Ch.13)", file: OEBPS/image_rsrc31N.jpg, caption: "A look at the back of the target in an experiment to test for bias", finding: "Two panels of A/B letters: shared-bias vs unshared-error configurations; illustrates the prose's argument about biases shared across judges."}
+  - {figure: "Figure 13 (Ch.15)", file: OEBPS/image_rsrc31R.jpg, caption: "Components of judgment variance", finding: "Stacked decomposition for punitive intent / outrage / dollar award with 49-19-32, 29-27-44 and 6-37-57 splits and noise totals 51% / 71% / 94% printed in-figure - the exact percentages sk_nse_0031 records from the prose."}
+  - {figure: "Figure 14 (Ch.15)", file: OEBPS/image_rsrc31S.jpg, caption: "Noise in value vs. noise in ranking", finding: "Dollar-award noise (94%: 57 pattern + 37 level) against rank-of-dollar-award (49% pattern, 0% level) - the 94%->49% rank transformation sk_nse_0032 records."}
+  - {figure: "Figure 15 (Ch.16)", file: OEBPS/image_rsrc31T.jpg, caption: "Decomposing Pattern Noise", finding: "Pythagorean diagram Pattern Noise^2 = Stable Pattern Noise^2 + Occasion Noise^2; matches the prose equation."}
+  - {figure: "Figure 16 (Ch.17)", file: OEBPS/image_rsrc31U.jpg, caption: "Error, bias, and the components of noise", finding: "RUNBOOK-NAMED. The combined graphical decomposition sk_nse_0010's caveat describes: nested right triangles giving MSE = Bias^2 + (Level^2 + (Stable Pattern^2 + Occasion^2)). All content is in the three equations the prose states; the figure presents them as one nested picture and adds no unstated quantity."}
+  - {figure: "Figure 17 (Ch.23)", file: "OEBPS/image_rsrc31V.jpg + OEBPS/image_rsrc31W.jpg", caption: "Examples of absolute and relative rating scales", finding: "Two-panel figure across two image files: Panel A a 1-5 verbal absolute scale, Panel B a 0-100 percentile relative scale with subordinates marked (BN, MN, RF). Illustrative of the relative-vs-absolute argument."}
+  - {figure: "Figure 18 (Ch.23)", file: OEBPS/image_rsrc31X.jpg, caption: "Example of a behaviorally anchored rating scale (left) and case scale (right)", finding: "RUNBOOK-NAMED. Left: BARS for Customer Relations with behavioural anchors at levels 1-5. Right: case scale with anchor cases (Jenny P. at 4, Dan P. at 2) and ratees placed against them - exactly the contrast sk_nse_0040's caveat describes; the prose states the distinction and the figure adds no unstated content. Minor in-figure typo, present in the publisher file: 'Anchot case:' for 'Anchor case:'."}
+  - {figure: "Figure 19 (Appendix C)", file: OEBPS/image_rsrc31Z.jpg, caption: "Adjusting an intuitive prediction for regression to the mean", finding: "GPA example: intuitive guess 3.8, mean 3.2, correlation .2, corrected forecast 3.3 on a correlation-scaled line - the correction procedure sk_nse_0029 records as a procedure. Figure illustrates the worked example the prose walks through."}
+
+figure_not_inspected_resolution: >
+  Nine frozen objects carry extraction_uncertainty: figure_not_inspected (sk_nse_0001, 0002,
+  0005, 0006, 0010, 0029, 0031, 0032, 0040 - counted mechanically; EXTRACTION-NOTES.md §5 says
+  "seven", a small undercount recorded here for the audit). Every figure those objects point at
+  was opened in this pass. In every case the figure shows what the caption and surrounding prose
+  state - the equations, percentages and scale contrasts are all in the text - and NO figure
+  carries content that qualifies or contradicts any frozen claim. The extraction's decision to
+  rest these objects on text support was correct.
+
+slice_discrepancy_note: >
+  PROVENANCE.md says the extraction encountered "Figures 3-19". The book also contains Figures 1
+  and 2 in the Introduction, which is inside the processed span; both were opened here and both
+  are the bias/noise target illustrations underlying sk_nse_0001/0002. Nothing substantive
+  changes - the two figures illustrate exactly what those objects record - but the figure
+  inventory is 1-19, not 3-19.
+
+observed_loss_patterns:
+
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable publisher EPUB; no authored pagination of any kind. Every locator in the
+      extraction is chapter title + named section (+ spine position as a secondary aid), and
+      page_start/page_end are null on all objects. Confirmed against the unpacked spine.
+
+  - pattern: no_loss_detected
+    affects: "the visual dimension of the extracted spans"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      All nineteen figures were opened and every quantitative element in them (percentage
+      splits, SDs, MSE bars, decomposition equations) is stated in the surrounding prose the
+      extraction read. figure_semantic_binding_lost does not apply: the figures render the
+      argument, they do not carry meaning the text withholds. The seven furniture/branding
+      images carry no content.
+
+demonstrations: []
+visual_only_observations:
+  - >
+    Figure 18 contains an in-figure typo ("Anchot case:") in the publisher file. Cosmetic;
+    no frozen claim touches it.
+
+extraction_constraint_applied: >
+  The nine figure_not_inspected markings were the extraction's honest record that it had not
+  opened the figures. This pass opened them all and resolves the markings with zero changes to
+  any frozen claim. Nothing in this ledger writes to source-knowledge.yaml; the resolution lives
+  here and in the audit record.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  The figure pass confirms the extraction's own assessment from the other side: this book's
+  figures are subordinate renderings of stated equations and reported percentages. The two
+  runbook-named figures (16 and 18) and all seventeen others match their captions and the frozen
+  objects that cite them. The remaining representation fact of note is the absence of authored
+  pages, which the extraction already recorded and worked around with section locators.

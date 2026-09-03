@@ -1,0 +1,25 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+# Negative fixture: `contradicts` is SPEC-03 intra-source vocabulary, not in the Layer-2
+# closed enum. Must fail with E_RELATION_ENUM.
+schema: cross_source_candidate_ledger_v0
+task: REP-02-fixture
+status: proposed
+ledger_complete: false
+records:
+- record_id: fx_bad_enum
+  kind: tension
+  label: bad_enum_fixture
+  status: proposed
+  relation: contradicts
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_hop_sa_0009
+    source_dir: hopkins-scientific-advertising-ch1-7
+    evidence: 'unoccupied_space'
+  - id: t_sam_c003_0018
+    source_dir: samara-making-breaking-grid-ch1
+    evidence: 'negative_space'
+  independence:
+  - {a: hopkins-scientific-advertising-ch1-7, b: samara-making-breaking-grid-ch1, audit_relation: no_entry_in_either_audit_record}

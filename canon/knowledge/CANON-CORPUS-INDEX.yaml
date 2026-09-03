@@ -10,8 +10,8 @@
 
 index_version: canon-corpus-index-v1
 generated_by: CANON-014 final full-corpus reconciliation
-generated_on: '2026-08-30'
-git_commit: e281059d0742c16d36109813b697a3aa8c23ce16
+generated_on: '2026-09-01'
+git_commit: 649e685da0508d59389aa4ca5548e961dbaf7bc1
 what_this_is: 'A complete machine-readable map of every source the Canon represents, in either epistemic
   state. It is DERIVED from the artifacts and edits none of them. Read it to answer: what knowledge exists,
   where does it live, is it accepted or held, what established that, and what would change it.'
@@ -28,8 +28,8 @@ retrieval_note: Runtime retrieval today reads canon/knowledge/current/** only. T
   for accepted Canon.
 totals:
   sources_represented: 42
-  accepted: 24
-  hold: 18
+  accepted: 37
+  hold: 5
   source_knowledge: 1516
   concept_systems: 150
   operational_bindings: 340
@@ -37,32 +37,32 @@ totals:
   ontology_concepts: 185
   ontology_relationships: 514
   qa_items: 1028
-  sources_with_a_visual_evidence_ledger: 25
-  sources_with_no_inspection_ever_run: 17
+  sources_with_a_visual_evidence_ledger: 38
+  sources_with_no_inspection_ever_run: 4
 totals_accepted_only:
-  sources: 24
-  source_knowledge: 677
-  concept_systems: 78
-  operational_bindings: 152
-  ontology_terms: 589
-  ontology_concepts: 67
-  qa_items: 108
+  sources: 37
+  source_knowledge: 1300
+  concept_systems: 132
+  operational_bindings: 291
+  ontology_terms: 1191
+  ontology_concepts: 151
+  qa_items: 796
 totals_hold_only:
-  sources: 18
-  source_knowledge: 839
-  concept_systems: 72
-  operational_bindings: 188
-  ontology_terms: 841
-  ontology_concepts: 118
-  qa_items: 920
+  sources: 5
+  source_knowledge: 216
+  concept_systems: 18
+  operational_bindings: 49
+  ontology_terms: 239
+  ontology_concepts: 34
+  qa_items: 232
 fingerprints:
   note: Three separate fingerprints. A future Canon-vs-no-Canon experiment MUST name which one it used;
     they are not interchangeable and an experiment that ran against held knowledge is not an experiment
     about accepted Canon.
   accepted_canon:
     algorithm: sha256-of-sorted-path-and-content
-    file_count: 120
-    combined_digest: a9cee40fb433adc08ac98ba7c87e1ead790f60aa71d184327cc5e97f59ed7eb9
+    file_count: 185
+    combined_digest: 3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc
     files:
     - path: canon/knowledge/current/albers-interaction-of-color/ontology-mappings.yaml
       sha256: 311add20999e93aa480df1ad0758f37a4ab1005622e31a8e78a59adeb80f3d93
@@ -94,6 +94,16 @@ fingerprints:
       sha256: 40b9c245c9d1ef3ce4b7862fe0e6b3273b419bfe671c40614717ecf8d5f51cef
     - path: canon/knowledge/current/bayles-orland-art-and-fear/visual-evidence-ledger.yaml
       sha256: 7013a3160aa1cc416075d7cfc0d92cd3e4583641cdee7a0dec2ae608e7737393
+    - path: canon/knowledge/current/berger-contagious/ontology-mappings.yaml
+      sha256: 104372b3fbac79cfdda610434284d56568d70fa8fecd96f0bf2f5eea957bf09f
+    - path: canon/knowledge/current/berger-contagious/operational-bindings.yaml
+      sha256: a909e973b7238260173743a326d8dcf6f5e922fc190661a40565fad0a4244afc
+    - path: canon/knowledge/current/berger-contagious/source-concept-systems.yaml
+      sha256: cb37bed45340d9c9b92a5cbd2f34a627100bf00b6cc5c1a7ad0b474d40bf0bab
+    - path: canon/knowledge/current/berger-contagious/source-knowledge.yaml
+      sha256: 4c0354074326e4312e1437c94030f1941d9e4168c3513c4aba5e016ea32a4e12
+    - path: canon/knowledge/current/berger-contagious/visual-evidence-ledger.yaml
+      sha256: 6dd3a2d986b8ca70b18e3d698ffee8feab3f0f68753becc5d5cc4df433c07fbc
     - path: canon/knowledge/current/bijapurkar-we-are-like-that-only/ontology-mappings.yaml
       sha256: 238f1cc87f7d9abedb9837709384c428ae749634e24d0d7c6d8fed647f89f815
     - path: canon/knowledge/current/bijapurkar-we-are-like-that-only/operational-bindings.yaml
@@ -114,6 +124,16 @@ fingerprints:
       sha256: 67fd476878631b51aa5d870cf3938e6fe8f9ae47516dd4c2d4227223519587b3
     - path: canon/knowledge/current/binet-field-effectiveness-in-context-ch1/visual-evidence-ledger.yaml
       sha256: 902258e287bdafb98cd5bfeebee5590b1b52e526483a488e15164b3c511f299b
+    - path: canon/knowledge/current/carroll-read-this-photographs/ontology-mappings.yaml
+      sha256: 8678c962d82404736cecf4f3e0bbcb2a51ce9f9a94f9c0ace607525035102586
+    - path: canon/knowledge/current/carroll-read-this-photographs/operational-bindings.yaml
+      sha256: 50ae194187c17abeb8fd0d09c180aa43a1f28df4db087badaf94f4d63e317e6f
+    - path: canon/knowledge/current/carroll-read-this-photographs/source-concept-systems.yaml
+      sha256: 41bd8ff5fb2d237762bcb2c7a71a86e6af8c2135f158152b2b7d78f54a0b057f
+    - path: canon/knowledge/current/carroll-read-this-photographs/source-knowledge.yaml
+      sha256: 949778c4abfa6bc75f3c17dea065b65f6ca1c8566dff5a2012d6a211a429bd46
+    - path: canon/knowledge/current/carroll-read-this-photographs/visual-evidence-ledger.yaml
+      sha256: d6d425d52725f76d8236f7968696f548ee072fae1fb15bc4889e50393d18f229
     - path: canon/knowledge/current/catmull-creativity-inc-ch5/ontology-mappings.yaml
       sha256: 7459e41f773a7ae5150d301c92d627f2abcc873b4ae14fad8e91575638cbcb4b
     - path: canon/knowledge/current/catmull-creativity-inc-ch5/operational-bindings.yaml
@@ -124,6 +144,16 @@ fingerprints:
       sha256: 65fdf87141dcc3221e93935b3618b3fa19c0bc8bb2ff164791f0419f04b4c02b
     - path: canon/knowledge/current/catmull-creativity-inc-ch5/visual-evidence-ledger.yaml
       sha256: 735b1b88fd9a6553a0b5dca6a23bef51ae6e0edc72fe4354484477366bc56a82
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/ontology-mappings.yaml
+      sha256: 841cad1198c3600b624fd32135f73585e1af53a3f7d0456ac3b8b27d6809da46
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/operational-bindings.yaml
+      sha256: cd24524f36fe53256d80edf1b0cfdba454afc37f4750a459dd2533a071879ed4
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/source-concept-systems.yaml
+      sha256: 55d921b7a570dfd1cd48081fc3716903dea5f824c23f57274931d52bb40e3102
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/source-knowledge.yaml
+      sha256: b6344f6c250b28a9a1c410aa27bad7aa7a72b93f3031e694bc4f8dfaeb4c5203
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/visual-evidence-ledger.yaml
+      sha256: b2ba8d9441cb9d0ca090c3902b74e37a72130e4f09994837ff66c53e8b3fafb5
     - path: canon/knowledge/current/dwyer-patel-cinema-india/ontology-mappings.yaml
       sha256: 0b2bbee6826e599df0213db2ad4067ae957db9524929db6eeb9d32c52a0ad2fd
     - path: canon/knowledge/current/dwyer-patel-cinema-india/operational-bindings.yaml
@@ -144,6 +174,26 @@ fingerprints:
       sha256: c8793947b8d37f16fa99c3e7ec8acfe649e84718edcf3f06327aac7f4c913c9c
     - path: canon/knowledge/current/freeman-photographers-eye-graphic-guide/visual-evidence-ledger.yaml
       sha256: aa5b238fb98df27772e644e937fa38b45ffdd741a8c530dfc1d5b37c86c78346
+    - path: canon/knowledge/current/godin-this-is-marketing/ontology-mappings.yaml
+      sha256: 66bd6757e0a4ce31f3a8bfbd0fec444a83809dfae8f76398249873109a7337e1
+    - path: canon/knowledge/current/godin-this-is-marketing/operational-bindings.yaml
+      sha256: 4933ba1d0cf8bdec4067ab178632d2d4f4fbb089d4b1732e1b35ea6e062b3bbb
+    - path: canon/knowledge/current/godin-this-is-marketing/source-concept-systems.yaml
+      sha256: a1c520438dc54745d231fc246e2f1aed340e3f0caa1900ba1374d0f44ec6d7fe
+    - path: canon/knowledge/current/godin-this-is-marketing/source-knowledge.yaml
+      sha256: 50cd969ae4456034d71a85f467d720b3aa0767ba2d88aed9352ce8c5b654f73a
+    - path: canon/knowledge/current/godin-this-is-marketing/visual-evidence-ledger.yaml
+      sha256: 6c96901c81b9b8020319a9ebd596ea722b5cfd264b28085d5ddfd9936c31e6bc
+    - path: canon/knowledge/current/google-abcd-video-ads/ontology-mappings.yaml
+      sha256: ec853d42aba9177c2dc1fc01767349f09ea489312293af4be845435568a6a3bc
+    - path: canon/knowledge/current/google-abcd-video-ads/operational-bindings.yaml
+      sha256: ebedd0b3c1bab0de9ac217f3a4cbc5a336acee1451702a1024cd763438eee325
+    - path: canon/knowledge/current/google-abcd-video-ads/source-concept-systems.yaml
+      sha256: d36e67c03e01ea30563a80622873e3d3688151f2cc770c00f435dfa263d99780
+    - path: canon/knowledge/current/google-abcd-video-ads/source-knowledge.yaml
+      sha256: 36bc44b18f60ba61d29bc5761deed7f2b06c78074322664013b8967190c9a054
+    - path: canon/knowledge/current/google-abcd-video-ads/visual-evidence-ledger.yaml
+      sha256: 169b348263060cd5a3ad3836a3b35d8e0b0e93e104de8ae6c7d64c7d47c678f2
     - path: canon/knowledge/current/grammar-of-the-edit-ch3-5/ontology-mappings.yaml
       sha256: 160952d8a9c05f3a3188eb26c9b983ae78b02a146c9b9d25859f74628fcc082d
     - path: canon/knowledge/current/grammar-of-the-edit-ch3-5/operational-bindings.yaml
@@ -174,6 +224,16 @@ fingerprints:
       sha256: 506aec70420ab9d277dbde2cd98195397a6cded7f97ce08953fda188ac329114
     - path: canon/knowledge/current/heath-made-to-stick-introduction/visual-evidence-ledger.yaml
       sha256: 5c6a39fe2fb35da1035244d18101f0aa1e3ab479e33e3f6fda1d958e65114a7a
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/ontology-mappings.yaml
+      sha256: c425183de91a299b5ed1be6d6a1a8750af9468da607eabb24d5ed6a54c05a431
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/operational-bindings.yaml
+      sha256: e6464ce992e29de0c0a9deccb4edf81454629526cf142dc9b6fd478618dea4fd
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/source-concept-systems.yaml
+      sha256: 60d5283b52298800ac111bd6d596d17c3dc092098aa798f4ee0afe8818f8437c
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/source-knowledge.yaml
+      sha256: 0676ba51ad7fd84df75ab78a1a43fe0c8b8195d5dd051ef09a3b3ccba1fedbb8
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/visual-evidence-ledger.yaml
+      sha256: 0d434a7996138fdad50671d109da5b8758f9f0e05f5eec22044c79942558621a
     - path: canon/knowledge/current/hopkins-scientific-advertising-ch1-7/ontology-mappings.yaml
       sha256: 6f83eb0fdd05783ed99690ecd9fa02bbad5cbf5f2c41c722de3ae8118720b6f4
     - path: canon/knowledge/current/hopkins-scientific-advertising-ch1-7/operational-bindings.yaml
@@ -184,6 +244,16 @@ fingerprints:
       sha256: a04770464422d851fda78f04504b6d65491814c2d0e374ce64ccd153b56f96a2
     - path: canon/knowledge/current/hopkins-scientific-advertising-ch1-7/visual-evidence-ledger.yaml
       sha256: bb96e483bc010a4fabe4b50997c01cb2276f715f843fa7feb597cd5167a7e600
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/ontology-mappings.yaml
+      sha256: ffa30c34be7ce44b90e27e8eac450af5273ab497620c0e5b87b29308b9f0a508
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/operational-bindings.yaml
+      sha256: 637587386e34fd7c5096001792325760e5dcfe91003ee554e2cf7d232d798a79
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/source-concept-systems.yaml
+      sha256: f177dd75033342714b6fbe66058c5ea91c13dc697adeb80deb5f82acc44c1bb8
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/source-knowledge.yaml
+      sha256: 28501c8fbd8ad683086b0c7949ba0dde59fa2e1df7c9367666459e80a1a641ee
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/visual-evidence-ledger.yaml
+      sha256: 9f9bddf45315becbbe972c7a171d4c949ef71b03f7335dda7e806196cc224ee8
     - path: canon/knowledge/current/jain-gods-in-the-bazaar/ontology-mappings.yaml
       sha256: 4f0ccbb061e01e9136bfa3dad86fffa6db0d8864b2dc3933bae867264bfdb426
     - path: canon/knowledge/current/jain-gods-in-the-bazaar/operational-bindings.yaml
@@ -194,6 +264,16 @@ fingerprints:
       sha256: ee12f262832e7cad6df837dc4f8fd7577851b99adab1f0e842c4583df8e6e62e
     - path: canon/knowledge/current/jain-gods-in-the-bazaar/visual-evidence-ledger.yaml
       sha256: 48ea27149289beca251bdccd64d91a3e5fc86a781ed155c9f749a950822ef109
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/ontology-mappings.yaml
+      sha256: f89f10293e331416ede03c7e2582075f76d6d453e1d0817de711e6f70686dadc
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/operational-bindings.yaml
+      sha256: 12d41b32ed6fe31c7c8d9077e5388e8810d32e3f659cf4399b7ea027e6d486cd
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/source-concept-systems.yaml
+      sha256: 511fb1f1fa21011ae60775dc4f4b4969f991ec9663931461fbf724bf50e753a0
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/source-knowledge.yaml
+      sha256: 4d0258c3629ec2aea59d7cf72f8ce2b729144529e606abf26d082366cd2dc889
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/visual-evidence-ledger.yaml
+      sha256: b51fe78227a2d56597f8dd8cc249aa8ea10fdd8e3270232b9952c5ca65e9909a
     - path: canon/knowledge/current/kenworthy-master-shots-ch8/ontology-mappings.yaml
       sha256: d8c51fa562eabed6bd4d5c02ea92c51117b04d2d36433a6a80922ab763f9a39b
     - path: canon/knowledge/current/kenworthy-master-shots-ch8/operational-bindings.yaml
@@ -204,6 +284,16 @@ fingerprints:
       sha256: a4e136ca26d3643a4e76a50f8f68168462acd29cc6fc5d1f70a42c4c59ebaf1e
     - path: canon/knowledge/current/kenworthy-master-shots-ch8/visual-evidence-ledger.yaml
       sha256: 8ed07235355d5320356db5602f81b54f044b6b4e6a7b79c132e8144c6fba2c43
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/ontology-mappings.yaml
+      sha256: 651fc3c526e21dd91f7e0d917fc82ed88129eb633f9a86867dfeb21de9b1c4fc
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/operational-bindings.yaml
+      sha256: 292cbb65a78d2596335d63c6af14817a2e46c313a175216eec6d933a1889bd1e
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/source-concept-systems.yaml
+      sha256: 6e7ae3db58e954e9446c4f475711405d6d386a0e38493758b147a3853e8a52e8
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/source-knowledge.yaml
+      sha256: b94c19ff3b2d00e2730c78c2420f8841a6f52786bc2e4bbfa3116e9e8574d699
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/visual-evidence-ledger.yaml
+      sha256: 645f099cf50321ec2c33090f3ffc9cb682ebbca303160311b48e1afbf5ba0789
     - path: canon/knowledge/current/light-science-magic-ch3/ontology-mappings.yaml
       sha256: 384b27a0632289c1dc1f480609b26a630f7e5d18aee84f0addacc0f4bf9cd87f
     - path: canon/knowledge/current/light-science-magic-ch3/operational-bindings.yaml
@@ -234,6 +324,16 @@ fingerprints:
       sha256: aaea2c787b41ba03727879b1d3a0762c4f99e2952f5cecfda82a27f07b46f28e
     - path: canon/knowledge/current/murch-blink-p1-25/visual-evidence-ledger.yaml
       sha256: e70dac6c8f73b1076bfc0435001d0c0f394d8520079cff09902c8e675f4f9de1
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/ontology-mappings.yaml
+      sha256: a82021fa06e17b1059e37fee9c07bde815fe15ed653123004791c34fa191572d
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/operational-bindings.yaml
+      sha256: 5d3c69afd8333ced3302778c0847ffe9943b425cf1f8dc9dc086c66fb8ae3dbf
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/source-concept-systems.yaml
+      sha256: ff835091509705fe71cfea8e3c7c1311d539cedacdbafead5b643971c7f683e5
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/source-knowledge.yaml
+      sha256: 162cd9beeeecdcd41ef8ce7a640bbcaf2c622a1c7b07821616a01b7abea4e6ca
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/visual-evidence-ledger.yaml
+      sha256: 08e1c565840ea9be129fd53c0a76784ee64c27b45339d13bbb86c4194c8ace47
     - path: canon/knowledge/current/ogilvy-ch2-advertising-that-sells/ontology-mappings.yaml
       sha256: 5f59cc190ebcc341155de1295aaede4bdd8b7490e1e3e17550bf31a060c210db
     - path: canon/knowledge/current/ogilvy-ch2-advertising-that-sells/operational-bindings.yaml
@@ -284,6 +384,26 @@ fingerprints:
       sha256: faced3b3f4169a5a129d483b46dd889abecedcb19c23ffec089b3a6e0017e8e4
     - path: canon/knowledge/current/samara-making-breaking-grid-ch1/visual-evidence-ledger.yaml
       sha256: 4281da5ffa27927084dcf0cdee807ca33726025eb7cf886d3833057658eab5af
+    - path: canon/knowledge/current/sontag-on-photography/ontology-mappings.yaml
+      sha256: 8efa4c97a494ed0af3543eefc11290d3c66dbdcfd382e02c8d74f5bbc47599e1
+    - path: canon/knowledge/current/sontag-on-photography/operational-bindings.yaml
+      sha256: 525d35118de674a6e20696ada5d5723c138c896174ffc684975e952e8e5e3fe0
+    - path: canon/knowledge/current/sontag-on-photography/source-concept-systems.yaml
+      sha256: e3ae55a3f9a94f3461de7c45242e415a0fb92ef6ecccfb565c0b97fe7e438d0f
+    - path: canon/knowledge/current/sontag-on-photography/source-knowledge.yaml
+      sha256: e191e491484f09a55a3d3c67a8e647d55b3af40f8b62a4d71ece1cdf2f096d26
+    - path: canon/knowledge/current/sontag-on-photography/visual-evidence-ledger.yaml
+      sha256: 8e2f5f9eb8ca5b50555e0a92b5d386981e580d1d0bf1d1d8fb58621737a7f8a1
+    - path: canon/knowledge/current/sullivan-hey-whipple/ontology-mappings.yaml
+      sha256: 4d5c6fcf8f86222b12948224fee611044e2386ccfae2178304e311bd43c339b5
+    - path: canon/knowledge/current/sullivan-hey-whipple/operational-bindings.yaml
+      sha256: 2397f5c3c35fae7b788ed2775528fc5264f1c068e13e155aaf01d0a8d09ca527
+    - path: canon/knowledge/current/sullivan-hey-whipple/source-concept-systems.yaml
+      sha256: e993fa8783b2b0f084b459edfb3ee025f5cacd87b652446cadce51f44711cd8f
+    - path: canon/knowledge/current/sullivan-hey-whipple/source-knowledge.yaml
+      sha256: 9ee3ccf365202ddf3d59e85891234ef79f9d12beeb2f2ce00eb59ed31d3f276a
+    - path: canon/knowledge/current/sullivan-hey-whipple/visual-evidence-ledger.yaml
+      sha256: c1d6ee9223c4072313724e863859b6715233f932803925be9c23ab885e8dba18
     - path: canon/knowledge/current/sutherland-alchemy-introduction/ontology-mappings.yaml
       sha256: 29865c7a4f197cabca9636f107248652fb7f8ecb1786666938c2a3ca07f1d6ad
     - path: canon/knowledge/current/sutherland-alchemy-introduction/operational-bindings.yaml
@@ -304,10 +424,20 @@ fingerprints:
       sha256: cfb91621e31f51459d024fe6eda836d20b2244b21fc2389f428a000f7981a114
     - path: canon/knowledge/current/vignelli-canon-intangibles/visual-evidence-ledger.yaml
       sha256: 959a6ffbe6c84af68d46804bdd6060a3b8a5845e7a771b10c251fd77c5e2147f
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/ontology-mappings.yaml
+      sha256: 06b07175b601444ac3e6c2bf60e016c75e8922d9312ef97d97bd44fb87695b25
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/operational-bindings.yaml
+      sha256: a50fb7571710e9f26c05eb39fa221b0beb9c81824c5229df53e0aba478c764d9
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/source-concept-systems.yaml
+      sha256: 9d280e0418eaae709e66cb0c6be5ea90a14b9bb6f4eb09a4cfdbd05ba12fc148
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/source-knowledge.yaml
+      sha256: 7ebf0e6c021f48cdafd86f0473cd72eacb711353984484661bcd76f693143946
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/visual-evidence-ledger.yaml
+      sha256: 9bc926ed91a98a7c2a812cc37d081533acf75400c2c98877e09b8eb998164dda
   full_knowledge_corpus:
     algorithm: sha256-of-sorted-path-and-content
-    file_count: 193
-    combined_digest: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+    file_count: 206
+    combined_digest: 7e1c259c41981ec3d5f50c76e375603cbc2783a6b02f59a5185029204cf028f1
     files:
     - path: canon/candidates/canon-014/airey-logo-design-love/ontology-mappings.yaml
       sha256: 33128925e0ec6199aeaccec85b3df2112a4a5976ab9c21aa69f30ca09c4709fe
@@ -317,30 +447,6 @@ fingerprints:
       sha256: c70aed368c79e16ec1b4176ce7caaa885db0d980b3fd7673d433b9e4b058cc63
     - path: canon/candidates/canon-014/airey-logo-design-love/source-knowledge.yaml
       sha256: 180207969108e37ddd2d67a778b23add349ae26706ae267566b3ac37fef7667a
-    - path: canon/candidates/canon-014/berger-contagious/ontology-mappings.yaml
-      sha256: 104372b3fbac79cfdda610434284d56568d70fa8fecd96f0bf2f5eea957bf09f
-    - path: canon/candidates/canon-014/berger-contagious/operational-bindings.yaml
-      sha256: a909e973b7238260173743a326d8dcf6f5e922fc190661a40565fad0a4244afc
-    - path: canon/candidates/canon-014/berger-contagious/source-concept-systems.yaml
-      sha256: cb37bed45340d9c9b92a5cbd2f34a627100bf00b6cc5c1a7ad0b474d40bf0bab
-    - path: canon/candidates/canon-014/berger-contagious/source-knowledge.yaml
-      sha256: 4c0354074326e4312e1437c94030f1941d9e4168c3513c4aba5e016ea32a4e12
-    - path: canon/candidates/canon-014/carroll-read-this-photographs/ontology-mappings.yaml
-      sha256: 8678c962d82404736cecf4f3e0bbcb2a51ce9f9a94f9c0ace607525035102586
-    - path: canon/candidates/canon-014/carroll-read-this-photographs/operational-bindings.yaml
-      sha256: 50ae194187c17abeb8fd0d09c180aa43a1f28df4db087badaf94f4d63e317e6f
-    - path: canon/candidates/canon-014/carroll-read-this-photographs/source-concept-systems.yaml
-      sha256: 41bd8ff5fb2d237762bcb2c7a71a86e6af8c2135f158152b2b7d78f54a0b057f
-    - path: canon/candidates/canon-014/carroll-read-this-photographs/source-knowledge.yaml
-      sha256: 949778c4abfa6bc75f3c17dea065b65f6ca1c8566dff5a2012d6a211a429bd46
-    - path: canon/candidates/canon-014/connor-irizarry-discussing-design/ontology-mappings.yaml
-      sha256: 841cad1198c3600b624fd32135f73585e1af53a3f7d0456ac3b8b27d6809da46
-    - path: canon/candidates/canon-014/connor-irizarry-discussing-design/operational-bindings.yaml
-      sha256: cd24524f36fe53256d80edf1b0cfdba454afc37f4750a459dd2533a071879ed4
-    - path: canon/candidates/canon-014/connor-irizarry-discussing-design/source-concept-systems.yaml
-      sha256: 55d921b7a570dfd1cd48081fc3716903dea5f824c23f57274931d52bb40e3102
-    - path: canon/candidates/canon-014/connor-irizarry-discussing-design/source-knowledge.yaml
-      sha256: b6344f6c250b28a9a1c410aa27bad7aa7a72b93f3031e694bc4f8dfaeb4c5203
     - path: canon/candidates/canon-014/desai-mother-pious-lady/ontology-mappings.yaml
       sha256: e7093aa1732afecd92b75d464059bd7b7e1e9881f554e8c2f5eb89507f722094
     - path: canon/candidates/canon-014/desai-mother-pious-lady/operational-bindings.yaml
@@ -359,62 +465,6 @@ fingerprints:
       sha256: 82e9afdb211215d00a46535cc27737d13a2e33a142cf5dbac4c9439abf09b660
     - path: canon/candidates/canon-014/freeman-photographers-eye-beyond-parts1-3/source-knowledge.yaml
       sha256: 71ae9a41d12f14a49c967022e29b10db7370dcd6f8d769d09054a980bc57cc07
-    - path: canon/candidates/canon-014/godin-this-is-marketing/ontology-mappings.yaml
-      sha256: 66bd6757e0a4ce31f3a8bfbd0fec444a83809dfae8f76398249873109a7337e1
-    - path: canon/candidates/canon-014/godin-this-is-marketing/operational-bindings.yaml
-      sha256: 4933ba1d0cf8bdec4067ab178632d2d4f4fbb089d4b1732e1b35ea6e062b3bbb
-    - path: canon/candidates/canon-014/godin-this-is-marketing/source-concept-systems.yaml
-      sha256: a1c520438dc54745d231fc246e2f1aed340e3f0caa1900ba1374d0f44ec6d7fe
-    - path: canon/candidates/canon-014/godin-this-is-marketing/source-knowledge.yaml
-      sha256: 50cd969ae4456034d71a85f467d720b3aa0767ba2d88aed9352ce8c5b654f73a
-    - path: canon/candidates/canon-014/google-abcd-video-ads/ontology-mappings.yaml
-      sha256: ec853d42aba9177c2dc1fc01767349f09ea489312293af4be845435568a6a3bc
-    - path: canon/candidates/canon-014/google-abcd-video-ads/operational-bindings.yaml
-      sha256: ebedd0b3c1bab0de9ac217f3a4cbc5a336acee1451702a1024cd763438eee325
-    - path: canon/candidates/canon-014/google-abcd-video-ads/source-concept-systems.yaml
-      sha256: d36e67c03e01ea30563a80622873e3d3688151f2cc770c00f435dfa263d99780
-    - path: canon/candidates/canon-014/google-abcd-video-ads/source-knowledge.yaml
-      sha256: 36bc44b18f60ba61d29bc5761deed7f2b06c78074322664013b8967190c9a054
-    - path: canon/candidates/canon-014/hopkins-my-life-in-advertising/ontology-mappings.yaml
-      sha256: c425183de91a299b5ed1be6d6a1a8750af9468da607eabb24d5ed6a54c05a431
-    - path: canon/candidates/canon-014/hopkins-my-life-in-advertising/operational-bindings.yaml
-      sha256: e6464ce992e29de0c0a9deccb4edf81454629526cf142dc9b6fd478618dea4fd
-    - path: canon/candidates/canon-014/hopkins-my-life-in-advertising/source-concept-systems.yaml
-      sha256: 60d5283b52298800ac111bd6d596d17c3dc092098aa798f4ee0afe8818f8437c
-    - path: canon/candidates/canon-014/hopkins-my-life-in-advertising/source-knowledge.yaml
-      sha256: 0676ba51ad7fd84df75ab78a1a43fe0c8b8195d5dd051ef09a3b3ccba1fedbb8
-    - path: canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/ontology-mappings.yaml
-      sha256: ffa30c34be7ce44b90e27e8eac450af5273ab497620c0e5b87b29308b9f0a508
-    - path: canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/operational-bindings.yaml
-      sha256: 637587386e34fd7c5096001792325760e5dcfe91003ee554e2cf7d232d798a79
-    - path: canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/source-concept-systems.yaml
-      sha256: f177dd75033342714b6fbe66058c5ea91c13dc697adeb80deb5f82acc44c1bb8
-    - path: canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/source-knowledge.yaml
-      sha256: 28501c8fbd8ad683086b0c7949ba0dde59fa2e1df7c9367666459e80a1a641ee
-    - path: canon/candidates/canon-014/kahneman-sibony-sunstein-noise/ontology-mappings.yaml
-      sha256: f89f10293e331416ede03c7e2582075f76d6d453e1d0817de711e6f70686dadc
-    - path: canon/candidates/canon-014/kahneman-sibony-sunstein-noise/operational-bindings.yaml
-      sha256: 12d41b32ed6fe31c7c8d9077e5388e8810d32e3f659cf4399b7ea027e6d486cd
-    - path: canon/candidates/canon-014/kahneman-sibony-sunstein-noise/source-concept-systems.yaml
-      sha256: 511fb1f1fa21011ae60775dc4f4b4969f991ec9663931461fbf724bf50e753a0
-    - path: canon/candidates/canon-014/kahneman-sibony-sunstein-noise/source-knowledge.yaml
-      sha256: 4d0258c3629ec2aea59d7cf72f8ce2b729144529e606abf26d082366cd2dc889
-    - path: canon/candidates/canon-014/light-science-magic-beyond-ch3/ontology-mappings.yaml
-      sha256: 651fc3c526e21dd91f7e0d917fc82ed88129eb633f9a86867dfeb21de9b1c4fc
-    - path: canon/candidates/canon-014/light-science-magic-beyond-ch3/operational-bindings.yaml
-      sha256: 292cbb65a78d2596335d63c6af14817a2e46c313a175216eec6d933a1889bd1e
-    - path: canon/candidates/canon-014/light-science-magic-beyond-ch3/source-concept-systems.yaml
-      sha256: 6e7ae3db58e954e9446c4f475711405d6d386a0e38493758b147a3853e8a52e8
-    - path: canon/candidates/canon-014/light-science-magic-beyond-ch3/source-knowledge.yaml
-      sha256: b94c19ff3b2d00e2730c78c2420f8841a6f52786bc2e4bbfa3116e9e8574d699
-    - path: canon/candidates/canon-014/ogilvy-beyond-ch2/ontology-mappings.yaml
-      sha256: a82021fa06e17b1059e37fee9c07bde815fe15ed653123004791c34fa191572d
-    - path: canon/candidates/canon-014/ogilvy-beyond-ch2/operational-bindings.yaml
-      sha256: 5d3c69afd8333ced3302778c0847ffe9943b425cf1f8dc9dc086c66fb8ae3dbf
-    - path: canon/candidates/canon-014/ogilvy-beyond-ch2/source-concept-systems.yaml
-      sha256: ff835091509705fe71cfea8e3c7c1311d539cedacdbafead5b643971c7f683e5
-    - path: canon/candidates/canon-014/ogilvy-beyond-ch2/source-knowledge.yaml
-      sha256: 162cd9beeeecdcd41ef8ce7a640bbcaf2c622a1c7b07821616a01b7abea4e6ca
     - path: canon/candidates/canon-014/ries-22-immutable-laws-branding/ontology-mappings.yaml
       sha256: 26293889c5d8537d3ba1016daa207841b5608ded1841c0fb0e90eeff9a0bed45
     - path: canon/candidates/canon-014/ries-22-immutable-laws-branding/operational-bindings.yaml
@@ -431,30 +481,6 @@ fingerprints:
       sha256: ad715535e9aef2b054bbf6d8c7a1e1a101619c7fab7261e8141fc4eb173c835f
     - path: canon/candidates/canon-014/samara-breaking-the-grid-ch2/source-knowledge.yaml
       sha256: 2845c1d7c22baa85c176e82d4394efa1eefc955086c8dca93dd78a1d9acac384
-    - path: canon/candidates/canon-014/sontag-on-photography/ontology-mappings.yaml
-      sha256: 8efa4c97a494ed0af3543eefc11290d3c66dbdcfd382e02c8d74f5bbc47599e1
-    - path: canon/candidates/canon-014/sontag-on-photography/operational-bindings.yaml
-      sha256: 525d35118de674a6e20696ada5d5723c138c896174ffc684975e952e8e5e3fe0
-    - path: canon/candidates/canon-014/sontag-on-photography/source-concept-systems.yaml
-      sha256: e3ae55a3f9a94f3461de7c45242e415a0fb92ef6ecccfb565c0b97fe7e438d0f
-    - path: canon/candidates/canon-014/sontag-on-photography/source-knowledge.yaml
-      sha256: e191e491484f09a55a3d3c67a8e647d55b3af40f8b62a4d71ece1cdf2f096d26
-    - path: canon/candidates/canon-014/sullivan-hey-whipple/ontology-mappings.yaml
-      sha256: 4d5c6fcf8f86222b12948224fee611044e2386ccfae2178304e311bd43c339b5
-    - path: canon/candidates/canon-014/sullivan-hey-whipple/operational-bindings.yaml
-      sha256: 2397f5c3c35fae7b788ed2775528fc5264f1c068e13e155aaf01d0a8d09ca527
-    - path: canon/candidates/canon-014/sullivan-hey-whipple/source-concept-systems.yaml
-      sha256: e993fa8783b2b0f084b459edfb3ee025f5cacd87b652446cadce51f44711cd8f
-    - path: canon/candidates/canon-014/sullivan-hey-whipple/source-knowledge.yaml
-      sha256: 9ee3ccf365202ddf3d59e85891234ef79f9d12beeb2f2ce00eb59ed31d3f276a
-    - path: canon/candidates/canon-014/w3c-wcag22-text-legibility/ontology-mappings.yaml
-      sha256: 06b07175b601444ac3e6c2bf60e016c75e8922d9312ef97d97bd44fb87695b25
-    - path: canon/candidates/canon-014/w3c-wcag22-text-legibility/operational-bindings.yaml
-      sha256: a50fb7571710e9f26c05eb39fa221b0beb9c81824c5229df53e0aba478c764d9
-    - path: canon/candidates/canon-014/w3c-wcag22-text-legibility/source-concept-systems.yaml
-      sha256: 9d280e0418eaae709e66cb0c6be5ea90a14b9bb6f4eb09a4cfdbd05ba12fc148
-    - path: canon/candidates/canon-014/w3c-wcag22-text-legibility/source-knowledge.yaml
-      sha256: 7ebf0e6c021f48cdafd86f0473cd72eacb711353984484661bcd76f693143946
     - path: canon/knowledge/current/albers-interaction-of-color/ontology-mappings.yaml
       sha256: 311add20999e93aa480df1ad0758f37a4ab1005622e31a8e78a59adeb80f3d93
     - path: canon/knowledge/current/albers-interaction-of-color/operational-bindings.yaml
@@ -485,6 +511,16 @@ fingerprints:
       sha256: 40b9c245c9d1ef3ce4b7862fe0e6b3273b419bfe671c40614717ecf8d5f51cef
     - path: canon/knowledge/current/bayles-orland-art-and-fear/visual-evidence-ledger.yaml
       sha256: 7013a3160aa1cc416075d7cfc0d92cd3e4583641cdee7a0dec2ae608e7737393
+    - path: canon/knowledge/current/berger-contagious/ontology-mappings.yaml
+      sha256: 104372b3fbac79cfdda610434284d56568d70fa8fecd96f0bf2f5eea957bf09f
+    - path: canon/knowledge/current/berger-contagious/operational-bindings.yaml
+      sha256: a909e973b7238260173743a326d8dcf6f5e922fc190661a40565fad0a4244afc
+    - path: canon/knowledge/current/berger-contagious/source-concept-systems.yaml
+      sha256: cb37bed45340d9c9b92a5cbd2f34a627100bf00b6cc5c1a7ad0b474d40bf0bab
+    - path: canon/knowledge/current/berger-contagious/source-knowledge.yaml
+      sha256: 4c0354074326e4312e1437c94030f1941d9e4168c3513c4aba5e016ea32a4e12
+    - path: canon/knowledge/current/berger-contagious/visual-evidence-ledger.yaml
+      sha256: 6dd3a2d986b8ca70b18e3d698ffee8feab3f0f68753becc5d5cc4df433c07fbc
     - path: canon/knowledge/current/bijapurkar-we-are-like-that-only/ontology-mappings.yaml
       sha256: 238f1cc87f7d9abedb9837709384c428ae749634e24d0d7c6d8fed647f89f815
     - path: canon/knowledge/current/bijapurkar-we-are-like-that-only/operational-bindings.yaml
@@ -505,6 +541,16 @@ fingerprints:
       sha256: 67fd476878631b51aa5d870cf3938e6fe8f9ae47516dd4c2d4227223519587b3
     - path: canon/knowledge/current/binet-field-effectiveness-in-context-ch1/visual-evidence-ledger.yaml
       sha256: 902258e287bdafb98cd5bfeebee5590b1b52e526483a488e15164b3c511f299b
+    - path: canon/knowledge/current/carroll-read-this-photographs/ontology-mappings.yaml
+      sha256: 8678c962d82404736cecf4f3e0bbcb2a51ce9f9a94f9c0ace607525035102586
+    - path: canon/knowledge/current/carroll-read-this-photographs/operational-bindings.yaml
+      sha256: 50ae194187c17abeb8fd0d09c180aa43a1f28df4db087badaf94f4d63e317e6f
+    - path: canon/knowledge/current/carroll-read-this-photographs/source-concept-systems.yaml
+      sha256: 41bd8ff5fb2d237762bcb2c7a71a86e6af8c2135f158152b2b7d78f54a0b057f
+    - path: canon/knowledge/current/carroll-read-this-photographs/source-knowledge.yaml
+      sha256: 949778c4abfa6bc75f3c17dea065b65f6ca1c8566dff5a2012d6a211a429bd46
+    - path: canon/knowledge/current/carroll-read-this-photographs/visual-evidence-ledger.yaml
+      sha256: d6d425d52725f76d8236f7968696f548ee072fae1fb15bc4889e50393d18f229
     - path: canon/knowledge/current/catmull-creativity-inc-ch5/ontology-mappings.yaml
       sha256: 7459e41f773a7ae5150d301c92d627f2abcc873b4ae14fad8e91575638cbcb4b
     - path: canon/knowledge/current/catmull-creativity-inc-ch5/operational-bindings.yaml
@@ -515,6 +561,16 @@ fingerprints:
       sha256: 65fdf87141dcc3221e93935b3618b3fa19c0bc8bb2ff164791f0419f04b4c02b
     - path: canon/knowledge/current/catmull-creativity-inc-ch5/visual-evidence-ledger.yaml
       sha256: 735b1b88fd9a6553a0b5dca6a23bef51ae6e0edc72fe4354484477366bc56a82
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/ontology-mappings.yaml
+      sha256: 841cad1198c3600b624fd32135f73585e1af53a3f7d0456ac3b8b27d6809da46
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/operational-bindings.yaml
+      sha256: cd24524f36fe53256d80edf1b0cfdba454afc37f4750a459dd2533a071879ed4
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/source-concept-systems.yaml
+      sha256: 55d921b7a570dfd1cd48081fc3716903dea5f824c23f57274931d52bb40e3102
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/source-knowledge.yaml
+      sha256: b6344f6c250b28a9a1c410aa27bad7aa7a72b93f3031e694bc4f8dfaeb4c5203
+    - path: canon/knowledge/current/connor-irizarry-discussing-design/visual-evidence-ledger.yaml
+      sha256: b2ba8d9441cb9d0ca090c3902b74e37a72130e4f09994837ff66c53e8b3fafb5
     - path: canon/knowledge/current/dwyer-patel-cinema-india/ontology-mappings.yaml
       sha256: 0b2bbee6826e599df0213db2ad4067ae957db9524929db6eeb9d32c52a0ad2fd
     - path: canon/knowledge/current/dwyer-patel-cinema-india/operational-bindings.yaml
@@ -535,6 +591,26 @@ fingerprints:
       sha256: c8793947b8d37f16fa99c3e7ec8acfe649e84718edcf3f06327aac7f4c913c9c
     - path: canon/knowledge/current/freeman-photographers-eye-graphic-guide/visual-evidence-ledger.yaml
       sha256: aa5b238fb98df27772e644e937fa38b45ffdd741a8c530dfc1d5b37c86c78346
+    - path: canon/knowledge/current/godin-this-is-marketing/ontology-mappings.yaml
+      sha256: 66bd6757e0a4ce31f3a8bfbd0fec444a83809dfae8f76398249873109a7337e1
+    - path: canon/knowledge/current/godin-this-is-marketing/operational-bindings.yaml
+      sha256: 4933ba1d0cf8bdec4067ab178632d2d4f4fbb089d4b1732e1b35ea6e062b3bbb
+    - path: canon/knowledge/current/godin-this-is-marketing/source-concept-systems.yaml
+      sha256: a1c520438dc54745d231fc246e2f1aed340e3f0caa1900ba1374d0f44ec6d7fe
+    - path: canon/knowledge/current/godin-this-is-marketing/source-knowledge.yaml
+      sha256: 50cd969ae4456034d71a85f467d720b3aa0767ba2d88aed9352ce8c5b654f73a
+    - path: canon/knowledge/current/godin-this-is-marketing/visual-evidence-ledger.yaml
+      sha256: 6c96901c81b9b8020319a9ebd596ea722b5cfd264b28085d5ddfd9936c31e6bc
+    - path: canon/knowledge/current/google-abcd-video-ads/ontology-mappings.yaml
+      sha256: ec853d42aba9177c2dc1fc01767349f09ea489312293af4be845435568a6a3bc
+    - path: canon/knowledge/current/google-abcd-video-ads/operational-bindings.yaml
+      sha256: ebedd0b3c1bab0de9ac217f3a4cbc5a336acee1451702a1024cd763438eee325
+    - path: canon/knowledge/current/google-abcd-video-ads/source-concept-systems.yaml
+      sha256: d36e67c03e01ea30563a80622873e3d3688151f2cc770c00f435dfa263d99780
+    - path: canon/knowledge/current/google-abcd-video-ads/source-knowledge.yaml
+      sha256: 36bc44b18f60ba61d29bc5761deed7f2b06c78074322664013b8967190c9a054
+    - path: canon/knowledge/current/google-abcd-video-ads/visual-evidence-ledger.yaml
+      sha256: 169b348263060cd5a3ad3836a3b35d8e0b0e93e104de8ae6c7d64c7d47c678f2
     - path: canon/knowledge/current/grammar-of-the-edit-ch3-5/ontology-mappings.yaml
       sha256: 160952d8a9c05f3a3188eb26c9b983ae78b02a146c9b9d25859f74628fcc082d
     - path: canon/knowledge/current/grammar-of-the-edit-ch3-5/operational-bindings.yaml
@@ -565,6 +641,16 @@ fingerprints:
       sha256: 506aec70420ab9d277dbde2cd98195397a6cded7f97ce08953fda188ac329114
     - path: canon/knowledge/current/heath-made-to-stick-introduction/visual-evidence-ledger.yaml
       sha256: 5c6a39fe2fb35da1035244d18101f0aa1e3ab479e33e3f6fda1d958e65114a7a
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/ontology-mappings.yaml
+      sha256: c425183de91a299b5ed1be6d6a1a8750af9468da607eabb24d5ed6a54c05a431
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/operational-bindings.yaml
+      sha256: e6464ce992e29de0c0a9deccb4edf81454629526cf142dc9b6fd478618dea4fd
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/source-concept-systems.yaml
+      sha256: 60d5283b52298800ac111bd6d596d17c3dc092098aa798f4ee0afe8818f8437c
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/source-knowledge.yaml
+      sha256: 0676ba51ad7fd84df75ab78a1a43fe0c8b8195d5dd051ef09a3b3ccba1fedbb8
+    - path: canon/knowledge/current/hopkins-my-life-in-advertising/visual-evidence-ledger.yaml
+      sha256: 0d434a7996138fdad50671d109da5b8758f9f0e05f5eec22044c79942558621a
     - path: canon/knowledge/current/hopkins-scientific-advertising-ch1-7/ontology-mappings.yaml
       sha256: 6f83eb0fdd05783ed99690ecd9fa02bbad5cbf5f2c41c722de3ae8118720b6f4
     - path: canon/knowledge/current/hopkins-scientific-advertising-ch1-7/operational-bindings.yaml
@@ -575,6 +661,16 @@ fingerprints:
       sha256: a04770464422d851fda78f04504b6d65491814c2d0e374ce64ccd153b56f96a2
     - path: canon/knowledge/current/hopkins-scientific-advertising-ch1-7/visual-evidence-ledger.yaml
       sha256: bb96e483bc010a4fabe4b50997c01cb2276f715f843fa7feb597cd5167a7e600
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/ontology-mappings.yaml
+      sha256: ffa30c34be7ce44b90e27e8eac450af5273ab497620c0e5b87b29308b9f0a508
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/operational-bindings.yaml
+      sha256: 637587386e34fd7c5096001792325760e5dcfe91003ee554e2cf7d232d798a79
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/source-concept-systems.yaml
+      sha256: f177dd75033342714b6fbe66058c5ea91c13dc697adeb80deb5f82acc44c1bb8
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/source-knowledge.yaml
+      sha256: 28501c8fbd8ad683086b0c7949ba0dde59fa2e1df7c9367666459e80a1a641ee
+    - path: canon/knowledge/current/hopkins-scientific-advertising-ch8-21/visual-evidence-ledger.yaml
+      sha256: 9f9bddf45315becbbe972c7a171d4c949ef71b03f7335dda7e806196cc224ee8
     - path: canon/knowledge/current/jain-gods-in-the-bazaar/ontology-mappings.yaml
       sha256: 4f0ccbb061e01e9136bfa3dad86fffa6db0d8864b2dc3933bae867264bfdb426
     - path: canon/knowledge/current/jain-gods-in-the-bazaar/operational-bindings.yaml
@@ -585,6 +681,16 @@ fingerprints:
       sha256: ee12f262832e7cad6df837dc4f8fd7577851b99adab1f0e842c4583df8e6e62e
     - path: canon/knowledge/current/jain-gods-in-the-bazaar/visual-evidence-ledger.yaml
       sha256: 48ea27149289beca251bdccd64d91a3e5fc86a781ed155c9f749a950822ef109
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/ontology-mappings.yaml
+      sha256: f89f10293e331416ede03c7e2582075f76d6d453e1d0817de711e6f70686dadc
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/operational-bindings.yaml
+      sha256: 12d41b32ed6fe31c7c8d9077e5388e8810d32e3f659cf4399b7ea027e6d486cd
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/source-concept-systems.yaml
+      sha256: 511fb1f1fa21011ae60775dc4f4b4969f991ec9663931461fbf724bf50e753a0
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/source-knowledge.yaml
+      sha256: 4d0258c3629ec2aea59d7cf72f8ce2b729144529e606abf26d082366cd2dc889
+    - path: canon/knowledge/current/kahneman-sibony-sunstein-noise/visual-evidence-ledger.yaml
+      sha256: b51fe78227a2d56597f8dd8cc249aa8ea10fdd8e3270232b9952c5ca65e9909a
     - path: canon/knowledge/current/kenworthy-master-shots-ch8/ontology-mappings.yaml
       sha256: d8c51fa562eabed6bd4d5c02ea92c51117b04d2d36433a6a80922ab763f9a39b
     - path: canon/knowledge/current/kenworthy-master-shots-ch8/operational-bindings.yaml
@@ -595,6 +701,16 @@ fingerprints:
       sha256: a4e136ca26d3643a4e76a50f8f68168462acd29cc6fc5d1f70a42c4c59ebaf1e
     - path: canon/knowledge/current/kenworthy-master-shots-ch8/visual-evidence-ledger.yaml
       sha256: 8ed07235355d5320356db5602f81b54f044b6b4e6a7b79c132e8144c6fba2c43
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/ontology-mappings.yaml
+      sha256: 651fc3c526e21dd91f7e0d917fc82ed88129eb633f9a86867dfeb21de9b1c4fc
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/operational-bindings.yaml
+      sha256: 292cbb65a78d2596335d63c6af14817a2e46c313a175216eec6d933a1889bd1e
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/source-concept-systems.yaml
+      sha256: 6e7ae3db58e954e9446c4f475711405d6d386a0e38493758b147a3853e8a52e8
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/source-knowledge.yaml
+      sha256: b94c19ff3b2d00e2730c78c2420f8841a6f52786bc2e4bbfa3116e9e8574d699
+    - path: canon/knowledge/current/light-science-magic-beyond-ch3/visual-evidence-ledger.yaml
+      sha256: 645f099cf50321ec2c33090f3ffc9cb682ebbca303160311b48e1afbf5ba0789
     - path: canon/knowledge/current/light-science-magic-ch3/ontology-mappings.yaml
       sha256: 384b27a0632289c1dc1f480609b26a630f7e5d18aee84f0addacc0f4bf9cd87f
     - path: canon/knowledge/current/light-science-magic-ch3/operational-bindings.yaml
@@ -625,6 +741,16 @@ fingerprints:
       sha256: aaea2c787b41ba03727879b1d3a0762c4f99e2952f5cecfda82a27f07b46f28e
     - path: canon/knowledge/current/murch-blink-p1-25/visual-evidence-ledger.yaml
       sha256: e70dac6c8f73b1076bfc0435001d0c0f394d8520079cff09902c8e675f4f9de1
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/ontology-mappings.yaml
+      sha256: a82021fa06e17b1059e37fee9c07bde815fe15ed653123004791c34fa191572d
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/operational-bindings.yaml
+      sha256: 5d3c69afd8333ced3302778c0847ffe9943b425cf1f8dc9dc086c66fb8ae3dbf
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/source-concept-systems.yaml
+      sha256: ff835091509705fe71cfea8e3c7c1311d539cedacdbafead5b643971c7f683e5
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/source-knowledge.yaml
+      sha256: 162cd9beeeecdcd41ef8ce7a640bbcaf2c622a1c7b07821616a01b7abea4e6ca
+    - path: canon/knowledge/current/ogilvy-beyond-ch2/visual-evidence-ledger.yaml
+      sha256: 08e1c565840ea9be129fd53c0a76784ee64c27b45339d13bbb86c4194c8ace47
     - path: canon/knowledge/current/ogilvy-ch2-advertising-that-sells/ontology-mappings.yaml
       sha256: 5f59cc190ebcc341155de1295aaede4bdd8b7490e1e3e17550bf31a060c210db
     - path: canon/knowledge/current/ogilvy-ch2-advertising-that-sells/operational-bindings.yaml
@@ -675,6 +801,26 @@ fingerprints:
       sha256: faced3b3f4169a5a129d483b46dd889abecedcb19c23ffec089b3a6e0017e8e4
     - path: canon/knowledge/current/samara-making-breaking-grid-ch1/visual-evidence-ledger.yaml
       sha256: 4281da5ffa27927084dcf0cdee807ca33726025eb7cf886d3833057658eab5af
+    - path: canon/knowledge/current/sontag-on-photography/ontology-mappings.yaml
+      sha256: 8efa4c97a494ed0af3543eefc11290d3c66dbdcfd382e02c8d74f5bbc47599e1
+    - path: canon/knowledge/current/sontag-on-photography/operational-bindings.yaml
+      sha256: 525d35118de674a6e20696ada5d5723c138c896174ffc684975e952e8e5e3fe0
+    - path: canon/knowledge/current/sontag-on-photography/source-concept-systems.yaml
+      sha256: e3ae55a3f9a94f3461de7c45242e415a0fb92ef6ecccfb565c0b97fe7e438d0f
+    - path: canon/knowledge/current/sontag-on-photography/source-knowledge.yaml
+      sha256: e191e491484f09a55a3d3c67a8e647d55b3af40f8b62a4d71ece1cdf2f096d26
+    - path: canon/knowledge/current/sontag-on-photography/visual-evidence-ledger.yaml
+      sha256: 8e2f5f9eb8ca5b50555e0a92b5d386981e580d1d0bf1d1d8fb58621737a7f8a1
+    - path: canon/knowledge/current/sullivan-hey-whipple/ontology-mappings.yaml
+      sha256: 4d5c6fcf8f86222b12948224fee611044e2386ccfae2178304e311bd43c339b5
+    - path: canon/knowledge/current/sullivan-hey-whipple/operational-bindings.yaml
+      sha256: 2397f5c3c35fae7b788ed2775528fc5264f1c068e13e155aaf01d0a8d09ca527
+    - path: canon/knowledge/current/sullivan-hey-whipple/source-concept-systems.yaml
+      sha256: e993fa8783b2b0f084b459edfb3ee025f5cacd87b652446cadce51f44711cd8f
+    - path: canon/knowledge/current/sullivan-hey-whipple/source-knowledge.yaml
+      sha256: 9ee3ccf365202ddf3d59e85891234ef79f9d12beeb2f2ce00eb59ed31d3f276a
+    - path: canon/knowledge/current/sullivan-hey-whipple/visual-evidence-ledger.yaml
+      sha256: c1d6ee9223c4072313724e863859b6715233f932803925be9c23ab885e8dba18
     - path: canon/knowledge/current/sutherland-alchemy-introduction/ontology-mappings.yaml
       sha256: 29865c7a4f197cabca9636f107248652fb7f8ecb1786666938c2a3ca07f1d6ad
     - path: canon/knowledge/current/sutherland-alchemy-introduction/operational-bindings.yaml
@@ -695,6 +841,16 @@ fingerprints:
       sha256: cfb91621e31f51459d024fe6eda836d20b2244b21fc2389f428a000f7981a114
     - path: canon/knowledge/current/vignelli-canon-intangibles/visual-evidence-ledger.yaml
       sha256: 959a6ffbe6c84af68d46804bdd6060a3b8a5845e7a771b10c251fd77c5e2147f
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/ontology-mappings.yaml
+      sha256: 06b07175b601444ac3e6c2bf60e016c75e8922d9312ef97d97bd44fb87695b25
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/operational-bindings.yaml
+      sha256: a50fb7571710e9f26c05eb39fa221b0beb9c81824c5229df53e0aba478c764d9
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/source-concept-systems.yaml
+      sha256: 9d280e0418eaae709e66cb0c6be5ea90a14b9bb6f4eb09a4cfdbd05ba12fc148
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/source-knowledge.yaml
+      sha256: 7ebf0e6c021f48cdafd86f0473cd72eacb711353984484661bcd76f693143946
+    - path: canon/knowledge/current/w3c-wcag22-text-legibility/visual-evidence-ledger.yaml
+      sha256: 9bc926ed91a98a7c2a812cc37d081533acf75400c2c98877e09b8eb998164dda
   qa_corpus:
     algorithm: sha256-of-sorted-path-and-content
     file_count: 23
@@ -831,6 +987,36 @@ sources:
     bank: null
     qa_items: 0
   artifact_count: 5
+- source_dir: berger-contagious
+  epistemic_status: accepted
+  location: canon/knowledge/current/berger-contagious
+  source_id: berger-contagious
+  source_knowledge: 54
+  concept_systems: 5
+  operational_bindings: 14
+  ontology_terms: 66
+  ontology_concepts: 7
+  ontology_relationships: 15
+  extraction_date: 2026-08-30
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: illustrative_only
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/berger-contagious.audit.yaml
+    audit_id: aud_berger_contagious
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: ff795e9f73e97b24e5e2e15736c3434e5a7ff7d4ce03abced7f199c4e460511c
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/berger-contagious-qa-bank.yaml
+    qa_items: 60
+    requires_application: 20
+    source_status: hold
+  artifact_count: 5
 - source_dir: bijapurkar-we-are-like-that-only
   epistemic_status: accepted
   location: canon/knowledge/current/bijapurkar-we-are-like-that-only
@@ -889,6 +1075,36 @@ sources:
     bank: null
     qa_items: 0
   artifact_count: 5
+- source_dir: carroll-read-this-photographs
+  epistemic_status: accepted
+  location: canon/knowledge/current/carroll-read-this-photographs
+  source_id: carroll-read-this-photographs
+  source_knowledge: 30
+  concept_systems: 4
+  operational_bindings: 6
+  ontology_terms: 38
+  ontology_concepts: 6
+  ontology_relationships: 12
+  extraction_date: null
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: figure_carries_content
+    claim_resolution_after_inspection: some_underdetermined
+  audit:
+    record: canon/audit/records/carroll-read-this-photographs.audit.yaml
+    audit_id: aud_carroll_photographs
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: f7a9d5ca2d34f3a2f4e69b3fad34b8ec48fd3ed26a79bc7bdbadd50eb539c282
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/carroll-read-this-photographs-qa-bank.yaml
+    qa_items: 35
+    requires_application: 14
+    source_status: hold
+  artifact_count: 5
 - source_dir: catmull-creativity-inc-ch5
   epistemic_status: accepted
   location: canon/knowledge/current/catmull-creativity-inc-ch5
@@ -916,6 +1132,36 @@ sources:
   qa:
     bank: null
     qa_items: 0
+  artifact_count: 5
+- source_dir: connor-irizarry-discussing-design
+  epistemic_status: accepted
+  location: canon/knowledge/current/connor-irizarry-discussing-design
+  source_id: connor-irizarry-discussing-design
+  source_knowledge: 55
+  concept_systems: 6
+  operational_bindings: 12
+  ontology_terms: 76
+  ontology_concepts: 9
+  ontology_relationships: 16
+  extraction_date: 2026-08-30
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: illustrative_only
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/connor-irizarry-discussing-design.audit.yaml
+    audit_id: aud_connor_discussing_design
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: ec8af01a0ae82683d11f42dd239b5d76204d2b5054457b173d59d73cd1a00cbe
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/connor-irizarry-discussing-design-qa-bank.yaml
+    qa_items: 51
+    requires_application: 17
+    source_status: hold
   artifact_count: 5
 - source_dir: dwyer-patel-cinema-india
   epistemic_status: accepted
@@ -974,6 +1220,66 @@ sources:
   qa:
     bank: null
     qa_items: 0
+  artifact_count: 5
+- source_dir: godin-this-is-marketing
+  epistemic_status: accepted
+  location: canon/knowledge/current/godin-this-is-marketing
+  source_id: godin-this-is-marketing
+  source_knowledge: 29
+  concept_systems: 3
+  operational_bindings: 5
+  ontology_terms: 39
+  ontology_concepts: 6
+  ontology_relationships: 14
+  extraction_date: null
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: illustrative_only
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/godin-this-is-marketing.audit.yaml
+    audit_id: aud_godin_this_is_marketing
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: 17f101ae03bdd95d51c2525fea70a757833695504d8debb8b2d2492c951cb6f6
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/godin-this-is-marketing-qa-bank.yaml
+    qa_items: 37
+    requires_application: 12
+    source_status: hold
+  artifact_count: 5
+- source_dir: google-abcd-video-ads
+  epistemic_status: accepted
+  location: canon/knowledge/current/google-abcd-video-ads
+  source_id: google-abcd-video-ads
+  source_knowledge: 26
+  concept_systems: 2
+  operational_bindings: 9
+  ontology_terms: 28
+  ontology_concepts: 4
+  ontology_relationships: 32
+  extraction_date: null
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: illustrative_only
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/google-abcd-video-ads.audit.yaml
+    audit_id: aud_google_abcd
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: 8d89dcbfea1bd057dfbfc0a866a7efd041b0337a0f21290f918d35013ac399b4
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/google-abcd-video-ads-qa-bank.yaml
+    qa_items: 26
+    requires_application: 13
+    source_status: hold
   artifact_count: 5
 - source_dir: grammar-of-the-edit-ch3-5
   epistemic_status: accepted
@@ -1059,6 +1365,36 @@ sources:
     bank: null
     qa_items: 0
   artifact_count: 5
+- source_dir: hopkins-my-life-in-advertising
+  epistemic_status: accepted
+  location: canon/knowledge/current/hopkins-my-life-in-advertising
+  source_id: hopkins-my-life-in-advertising
+  source_knowledge: 70
+  concept_systems: 5
+  operational_bindings: 15
+  ontology_terms: 40
+  ontology_concepts: 10
+  ontology_relationships: 22
+  extraction_date: null
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_page_level
+    visual_argument_role: no_visual_argument
+    claim_resolution_after_inspection: not_applicable
+  audit:
+    record: canon/audit/records/hopkins-my-life-in-advertising.audit.yaml
+    audit_id: aud_hopkins_my_life
+    audit_status: complete
+    independence_verdict: not_independent_of_named_sources
+    combined_digest: c08700e67ebedab41c00dda0156d87251242689e4c310073581b1daaaa5d9f9b
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/hopkins-my-life-in-advertising-qa-bank.yaml
+    qa_items: 80
+    requires_application: 38
+    source_status: hold
+  artifact_count: 5
 - source_dir: hopkins-scientific-advertising-ch1-7
   epistemic_status: accepted
   location: canon/knowledge/current/hopkins-scientific-advertising-ch1-7
@@ -1080,12 +1416,42 @@ sources:
     record: canon/audit/records/hopkins-scientific-advertising-ch1-7.audit.yaml
     audit_id: aud_hopkins_scientific_advertising
     audit_status: complete
-    independence_verdict: independent_origin
+    independence_verdict: not_independent_of_named_sources
     combined_digest: dba48683b7ff7c0c10b026c3cf18a65cd78ac0965f5f4471f91194462eb358ac
   candidate_blocker: null
   qa:
     bank: null
     qa_items: 0
+  artifact_count: 5
+- source_dir: hopkins-scientific-advertising-ch8-21
+  epistemic_status: accepted
+  location: canon/knowledge/current/hopkins-scientific-advertising-ch8-21
+  source_id: hopkins-scientific-advertising-ch8-21
+  source_knowledge: 48
+  concept_systems: 4
+  operational_bindings: 11
+  ontology_terms: 46
+  ontology_concepts: 6
+  ontology_relationships: 8
+  extraction_date: 2026-08-30
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_page_level
+    visual_argument_role: no_visual_argument
+    claim_resolution_after_inspection: not_applicable
+  audit:
+    record: canon/audit/records/hopkins-scientific-advertising-ch8-21.audit.yaml
+    audit_id: aud_hopkins_sa_ch8_21
+    audit_status: complete
+    independence_verdict: not_independent_of_named_sources
+    combined_digest: 60c73ef7efe3892a22ecfddeee2eed37710c27308ce1e70f9404211c7e471c7c
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/hopkins-scientific-advertising-ch8-21-qa-bank.yaml
+    qa_items: 57
+    requires_application: 23
+    source_status: hold
   artifact_count: 5
 - source_dir: jain-gods-in-the-bazaar
   epistemic_status: accepted
@@ -1117,6 +1483,36 @@ sources:
     requires_application: 3
     source_status: accepted
   artifact_count: 5
+- source_dir: kahneman-sibony-sunstein-noise
+  epistemic_status: accepted
+  location: canon/knowledge/current/kahneman-sibony-sunstein-noise
+  source_id: kahneman-sibony-sunstein-noise
+  source_knowledge: 50
+  concept_systems: 3
+  operational_bindings: 14
+  ontology_terms: 41
+  ontology_concepts: 7
+  ontology_relationships: 34
+  extraction_date: null
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: illustrative_only
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/kahneman-sibony-sunstein-noise.audit.yaml
+    audit_id: aud_kss_noise
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: 2e58f4cd0447219a97aef4bec42cfff48de62758964759fa00d7268207d2e8cd
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/kahneman-sibony-sunstein-noise-qa-bank.yaml
+    qa_items: 57
+    requires_application: 16
+    source_status: hold
+  artifact_count: 5
 - source_dir: kenworthy-master-shots-ch8
   epistemic_status: accepted
   location: canon/knowledge/current/kenworthy-master-shots-ch8
@@ -1145,6 +1541,36 @@ sources:
     bank: null
     qa_items: 0
   artifact_count: 5
+- source_dir: light-science-magic-beyond-ch3
+  epistemic_status: accepted
+  location: canon/knowledge/current/light-science-magic-beyond-ch3
+  source_id: light-science-magic-beyond-ch3
+  source_knowledge: 60
+  concept_systems: 5
+  operational_bindings: 13
+  ontology_terms: 47
+  ontology_concepts: 5
+  ontology_relationships: 16
+  extraction_date: 2026-08-30
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: figure_carries_content
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/light-science-magic-beyond-ch3.audit.yaml
+    audit_id: aud_lsm_beyond_ch3
+    audit_status: complete
+    independence_verdict: not_independent_of_named_sources
+    combined_digest: 0d00eabf5a7ad3fc80d794434843f6a21e34244700d7d1c28ca81e3b46906877
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/light-science-magic-beyond-ch3-qa-bank.yaml
+    qa_items: 62
+    requires_application: 31
+    source_status: hold
+  artifact_count: 5
 - source_dir: light-science-magic-ch3
   epistemic_status: accepted
   location: canon/knowledge/current/light-science-magic-ch3
@@ -1166,7 +1592,7 @@ sources:
     record: canon/audit/records/light-science-magic-ch3.audit.yaml
     audit_id: aud_light_science_magic_ch3
     audit_status: complete
-    independence_verdict: independent_origin
+    independence_verdict: not_independent_of_named_sources
     combined_digest: e723ceef2bdc23df9fe3c9dec5738a77185aa70862dad0e143376e4735b096c1
   candidate_blocker: null
   qa:
@@ -1229,6 +1655,36 @@ sources:
     bank: null
     qa_items: 0
   artifact_count: 5
+- source_dir: ogilvy-beyond-ch2
+  epistemic_status: accepted
+  location: canon/knowledge/current/ogilvy-beyond-ch2
+  source_id: ogilvy-beyond-ch2
+  source_knowledge: 70
+  concept_systems: 3
+  operational_bindings: 15
+  ontology_terms: 68
+  ontology_concepts: 5
+  ontology_relationships: 10
+  extraction_date: null
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: figure_carries_content
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/ogilvy-beyond-ch2.audit.yaml
+    audit_id: aud_ogilvy_beyond_ch2
+    audit_status: complete
+    independence_verdict: not_independent_of_named_sources
+    combined_digest: 19cf01da72159d09bc14b31a7c38eb5012ee80ea6541b19573851a2a286268ec
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/ogilvy-beyond-ch2-qa-bank.yaml
+    qa_items: 76
+    requires_application: 35
+    source_status: hold
+  artifact_count: 5
 - source_dir: ogilvy-ch2-advertising-that-sells
   epistemic_status: accepted
   location: canon/knowledge/current/ogilvy-ch2-advertising-that-sells
@@ -1250,7 +1706,7 @@ sources:
     record: canon/audit/records/ogilvy-ch2-advertising-that-sells.audit.yaml
     audit_id: aud_ogilvy_ch2
     audit_status: complete
-    independence_verdict: independent_origin
+    independence_verdict: not_independent_of_named_sources
     combined_digest: 8ccec15e8c8f576053c8c8996398af1cb442b27c6934d4b9edf40088cb3af688
   candidate_blocker: null
   qa:
@@ -1373,6 +1829,66 @@ sources:
     bank: null
     qa_items: 0
   artifact_count: 5
+- source_dir: sontag-on-photography
+  epistemic_status: accepted
+  location: canon/knowledge/current/sontag-on-photography
+  source_id: sontag-on-photography
+  source_knowledge: 22
+  concept_systems: 3
+  operational_bindings: 3
+  ontology_terms: 29
+  ontology_concepts: 6
+  ontology_relationships: 16
+  extraction_date: null
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: no_visual_argument
+    claim_resolution_after_inspection: not_applicable
+  audit:
+    record: canon/audit/records/sontag-on-photography.audit.yaml
+    audit_id: aud_sontag_on_photography
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: b5466e38b305f3001558473d83bb20bb3b1dd29af0f270404393ce18a6a7e8b6
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/sontag-on-photography-qa-bank.yaml
+    qa_items: 28
+    requires_application: 10
+    source_status: hold
+  artifact_count: 5
+- source_dir: sullivan-hey-whipple
+  epistemic_status: accepted
+  location: canon/knowledge/current/sullivan-hey-whipple
+  source_id: sullivan-hey-whipple
+  source_knowledge: 70
+  concept_systems: 7
+  operational_bindings: 12
+  ontology_terms: 58
+  ontology_concepts: 8
+  ontology_relationships: 24
+  extraction_date: 2026-08-30
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: figure_carries_content
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/sullivan-hey-whipple.audit.yaml
+    audit_id: aud_sullivan_hey_whipple
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: 8b1bd08f996f15c2ebe95032eb5b8935d62f8841305adfdf24d89129691cbbd6
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/sullivan-hey-whipple-qa-bank.yaml
+    qa_items: 78
+    requires_application: 34
+    source_status: hold
+  artifact_count: 5
 - source_dir: sutherland-alchemy-introduction
   epistemic_status: accepted
   location: canon/knowledge/current/sutherland-alchemy-introduction
@@ -1429,6 +1945,36 @@ sources:
     bank: null
     qa_items: 0
   artifact_count: 5
+- source_dir: w3c-wcag22-text-legibility
+  epistemic_status: accepted
+  location: canon/knowledge/current/w3c-wcag22-text-legibility
+  source_id: w3c-wcag22-text-legibility
+  source_knowledge: 39
+  concept_systems: 4
+  operational_bindings: 10
+  ontology_terms: 26
+  ontology_concepts: 5
+  ontology_relationships: 14
+  extraction_date: 2026-08-30
+  visual_evidence:
+    ledger: true
+    pass: attempted_and_completed
+    inspection_state: inspected_figure_level
+    visual_argument_role: illustrative_only
+    claim_resolution_after_inspection: all_resolved
+  audit:
+    record: canon/audit/records/w3c-wcag22-text-legibility.audit.yaml
+    audit_id: aud_w3c_wcag22
+    audit_status: complete
+    independence_verdict: independent_origin
+    combined_digest: a95e35b85c8322de7c7f1553a85ff935d46e86e66e7c034cd417fa4e19df1a1e
+  candidate_blocker: null
+  qa:
+    bank: canon/qa/canon-014/w3c-wcag22-text-legibility-qa-bank.yaml
+    qa_items: 41
+    requires_application: 17
+    source_status: hold
+  artifact_count: 5
 - source_dir: airey-logo-design-love
   epistemic_status: hold
   location: canon/candidates/canon-014/airey-logo-design-love
@@ -1457,91 +2003,6 @@ sources:
     bank: canon/qa/canon-014/airey-logo-design-love-qa-bank.yaml
     qa_items: 57
     requires_application: 30
-    source_status: hold
-  artifact_count: 4
-- source_dir: berger-contagious
-  epistemic_status: hold
-  location: canon/candidates/canon-014/berger-contagious
-  source_id: berger-contagious
-  source_knowledge: 54
-  concept_systems: 5
-  operational_bindings: 14
-  ontology_terms: 66
-  ontology_concepts: 7
-  ontology_relationships: 15
-  extraction_date: 2026-08-30
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/berger-contagious/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers: none beyond the shared blocker
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/berger-contagious-qa-bank.yaml
-    qa_items: 60
-    requires_application: 20
-    source_status: hold
-  artifact_count: 4
-- source_dir: carroll-read-this-photographs
-  epistemic_status: hold
-  location: canon/candidates/canon-014/carroll-read-this-photographs
-  source_id: carroll-read-this-photographs
-  source_knowledge: 30
-  concept_systems: 4
-  operational_bindings: 6
-  ontology_terms: 38
-  ontology_concepts: 6
-  ontology_relationships: 12
-  extraction_date: null
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/carroll-read-this-photographs/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - half_the_knowledge_rests_on_uninspected_photographs
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/carroll-read-this-photographs-qa-bank.yaml
-    qa_items: 35
-    requires_application: 14
-    source_status: hold
-  artifact_count: 4
-- source_dir: connor-irizarry-discussing-design
-  epistemic_status: hold
-  location: canon/candidates/canon-014/connor-irizarry-discussing-design
-  source_id: connor-irizarry-discussing-design
-  source_knowledge: 55
-  concept_systems: 6
-  operational_bindings: 12
-  ontology_terms: 76
-  ontology_concepts: 9
-  ontology_relationships: 16
-  extraction_date: 2026-08-30
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/connor-irizarry-discussing-design/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers: none beyond the shared blocker
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/connor-irizarry-discussing-design-qa-bank.yaml
-    qa_items: 51
-    requires_application: 17
     source_status: hold
   artifact_count: 4
 - source_dir: desai-mother-pious-lady
@@ -1604,212 +2065,6 @@ sources:
     requires_application: 27
     source_status: hold
   artifact_count: 4
-- source_dir: godin-this-is-marketing
-  epistemic_status: hold
-  location: canon/candidates/canon-014/godin-this-is-marketing
-  source_id: godin-this-is-marketing
-  source_knowledge: 29
-  concept_systems: 3
-  operational_bindings: 5
-  ontology_terms: 39
-  ontology_concepts: 6
-  ontology_relationships: 14
-  extraction_date: null
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/godin-this-is-marketing/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers: none beyond the shared blocker
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/godin-this-is-marketing-qa-bank.yaml
-    qa_items: 37
-    requires_application: 12
-    source_status: hold
-  artifact_count: 4
-- source_dir: google-abcd-video-ads
-  epistemic_status: hold
-  location: canon/candidates/canon-014/google-abcd-video-ads
-  source_id: google-abcd-video-ads
-  source_knowledge: 26
-  concept_systems: 2
-  operational_bindings: 9
-  ontology_terms: 28
-  ontology_concepts: 4
-  ontology_relationships: 32
-  extraction_date: null
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/google-abcd-video-ads/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - living_artifact_not_fingerprinted
-    - technology_and_platform_contingent_throughout
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/google-abcd-video-ads-qa-bank.yaml
-    qa_items: 26
-    requires_application: 13
-    source_status: hold
-  artifact_count: 4
-- source_dir: hopkins-my-life-in-advertising
-  epistemic_status: hold
-  location: canon/candidates/canon-014/hopkins-my-life-in-advertising
-  source_id: hopkins-my-life-in-advertising
-  source_knowledge: 70
-  concept_systems: 5
-  operational_bindings: 15
-  ontology_terms: 40
-  ontology_concepts: 10
-  ontology_relationships: 22
-  extraction_date: null
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/hopkins-my-life-in-advertising/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - lineage_dependence_on_a_live_source
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/hopkins-my-life-in-advertising-qa-bank.yaml
-    qa_items: 80
-    requires_application: 38
-    source_status: hold
-  artifact_count: 4
-- source_dir: hopkins-scientific-advertising-ch8-21
-  epistemic_status: hold
-  location: canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21
-  source_id: hopkins-scientific-advertising-ch8-21
-  source_knowledge: 48
-  concept_systems: 4
-  operational_bindings: 11
-  ontology_terms: 46
-  ontology_concepts: 6
-  ontology_relationships: 8
-  extraction_date: 2026-08-30
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/hopkins-scientific-advertising-ch8-21/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - scope_extension_of_a_live_source
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/hopkins-scientific-advertising-ch8-21-qa-bank.yaml
-    qa_items: 57
-    requires_application: 23
-    source_status: hold
-  artifact_count: 4
-- source_dir: kahneman-sibony-sunstein-noise
-  epistemic_status: hold
-  location: canon/candidates/canon-014/kahneman-sibony-sunstein-noise
-  source_id: kahneman-sibony-sunstein-noise
-  source_knowledge: 50
-  concept_systems: 3
-  operational_bindings: 14
-  ontology_terms: 41
-  ontology_concepts: 7
-  ontology_relationships: 34
-  extraction_date: null
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/kahneman-sibony-sunstein-noise/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - partial_extraction_by_topic
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/kahneman-sibony-sunstein-noise-qa-bank.yaml
-    qa_items: 57
-    requires_application: 16
-    source_status: hold
-  artifact_count: 4
-- source_dir: light-science-magic-beyond-ch3
-  epistemic_status: hold
-  location: canon/candidates/canon-014/light-science-magic-beyond-ch3
-  source_id: light-science-magic-beyond-ch3
-  source_knowledge: 60
-  concept_systems: 5
-  operational_bindings: 13
-  ontology_terms: 47
-  ontology_concepts: 5
-  ontology_relationships: 16
-  extraction_date: 2026-08-30
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/light-science-magic-beyond-ch3/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - scope_extension_of_a_live_source
-    - figures_are_load_bearing_and_uninspected
-    - qualifies_a_live_accepted_source
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/light-science-magic-beyond-ch3-qa-bank.yaml
-    qa_items: 62
-    requires_application: 31
-    source_status: hold
-  artifact_count: 4
-- source_dir: ogilvy-beyond-ch2
-  epistemic_status: hold
-  location: canon/candidates/canon-014/ogilvy-beyond-ch2
-  source_id: ogilvy-beyond-ch2
-  source_knowledge: 70
-  concept_systems: 3
-  operational_bindings: 15
-  ontology_terms: 68
-  ontology_concepts: 5
-  ontology_relationships: 10
-  extraction_date: null
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/ogilvy-beyond-ch2/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - scope_extension_of_a_live_source
-    - reproduced_advertisement_evidence_absent
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/ogilvy-beyond-ch2-qa-bank.yaml
-    qa_items: 76
-    requires_application: 35
-    source_status: hold
-  artifact_count: 4
 - source_dir: ries-22-immutable-laws-branding
   epistemic_status: hold
   location: canon/candidates/canon-014/ries-22-immutable-laws-branding
@@ -1867,94 +2122,5 @@ sources:
     bank: canon/qa/canon-014/samara-breaking-the-grid-ch2-qa-bank.yaml
     qa_items: 46
     requires_application: 23
-    source_status: hold
-  artifact_count: 4
-- source_dir: sontag-on-photography
-  epistemic_status: hold
-  location: canon/candidates/canon-014/sontag-on-photography
-  source_id: sontag-on-photography
-  source_knowledge: 22
-  concept_systems: 3
-  operational_bindings: 3
-  ontology_terms: 29
-  ontology_concepts: 6
-  ontology_relationships: 16
-  extraction_date: null
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/sontag-on-photography/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - critique_rather_than_craft
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/sontag-on-photography-qa-bank.yaml
-    qa_items: 28
-    requires_application: 10
-    source_status: hold
-  artifact_count: 4
-- source_dir: sullivan-hey-whipple
-  epistemic_status: hold
-  location: canon/candidates/canon-014/sullivan-hey-whipple
-  source_id: sullivan-hey-whipple
-  source_knowledge: 70
-  concept_systems: 7
-  operational_bindings: 12
-  ontology_terms: 58
-  ontology_concepts: 8
-  ontology_relationships: 24
-  extraction_date: 2026-08-30
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/sullivan-hey-whipple/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - independence_not_established
-    - partial_extraction_recorded_as_whole
-    - reproduced_advertisement_evidence_never_inspected
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/sullivan-hey-whipple-qa-bank.yaml
-    qa_items: 78
-    requires_application: 34
-    source_status: hold
-  artifact_count: 4
-- source_dir: w3c-wcag22-text-legibility
-  epistemic_status: hold
-  location: canon/candidates/canon-014/w3c-wcag22-text-legibility
-  source_id: w3c-wcag22-text-legibility
-  source_knowledge: 39
-  concept_systems: 4
-  operational_bindings: 10
-  ontology_terms: 26
-  ontology_concepts: 5
-  ontology_relationships: 14
-  extraction_date: 2026-08-30
-  visual_evidence:
-    ledger: false
-    status: NO INSPECTION HAS EVER BEEN RUN. No visual-evidence ledger exists, which is why the Audit
-      Gate cannot be completed for this source.
-  audit: null
-  candidate_blocker:
-    assessment: canon/candidates/canon-014/w3c-wcag22-text-legibility/audit-assessment-HOLD.yaml
-    status: HOLD
-    status_reason: evidence_insufficient
-    source_specific_blockers:
-    - living_artifact_not_fingerprinted
-    audit_gate_record: none
-  qa:
-    bank: canon/qa/canon-014/w3c-wcag22-text-legibility-qa-bank.yaml
-    qa_items: 41
-    requires_application: 17
     source_status: hold
   artifact_count: 4

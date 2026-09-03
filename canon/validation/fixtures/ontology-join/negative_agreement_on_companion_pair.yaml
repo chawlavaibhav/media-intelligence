@@ -1,0 +1,28 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+# Negative fixture: an agreement claim (same_observed_effect) whose only two origins are the
+# Grammar of the Shot / Grammar of the Edit companion volumes — one authorial position stated
+# twice. Must fail with E_AGREEMENT_WITHOUT_INDEPENDENT_ORIGINS (and E_ORIGIN_COUNT for the
+# declared count of 2).
+schema: cross_source_candidate_ledger_v0
+task: REP-02-fixture
+status: proposed
+ledger_complete: false
+records:
+- record_id: fx_companion_agreement
+  kind: convergence
+  label: companion_agreement_fixture
+  status: proposed
+  relation: same_observed_effect
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_gote_c003_0031
+    source_dir: grammar-of-the-edit-ch3-5
+    evidence: 'jump_cut (Grammar of the Edit)'
+  - id: t_gos_c003_0002
+    source_dir: grammar-of-the-shot-ch4
+    evidence: 'jump_cut (Grammar of the Shot)'
+  independence:
+  - {a: grammar-of-the-edit-ch3-5, b: grammar-of-the-shot-ch4, audit_relation: companion_volume}
+  independent_origins: 2

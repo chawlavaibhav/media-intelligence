@@ -1,0 +1,198 @@
+# REP-07 — visual-evidence ledger for Light: Science & Magic, 5th ed., chapters beyond ch. 3.
+#
+# INSPECT pass executed 2026-09-01. Composition rule (Controller ruling DN-03,
+# REP-07-DECISION-NOTES.md): rows marked evidence_time: extraction_pass are imported from the
+# extraction run's contemporaneous first-hand record (EXTRACTION-NOTES.md §3 +
+# provenance.inspected.figures on the frozen objects); rows marked evidence_time: rep07_pass were
+# opened fresh in this pass. Every cited figure in the extraction now has a ledger row.
+
+source_id: light-science-magic-beyond-ch3
+pass: attempted_and_completed
+inspection_state: inspected_figure_level
+visual_argument_role: figure_carries_content
+
+hash_on_arrival:
+  path: ~/Downloads/Books/Light Science & Magic, 5th Edition.epub
+  bytes: 9692005
+  sha256: 5ca2f0d7180cdacd34fe5515651c15185caf74678a58f646c3cd36d3dbb07a64
+  recorded_original_hash: >
+    NONE recorded in PROVENANCE.md (path + size only). Byte size matches the recorded 9,692,005
+    exactly. Because no original hash exists, the 5-locator verification sample below was
+    mandatory before trusting figure refs (runbook, Universal protocol).
+
+locator_verification_sample:
+  rule: open 5 cited figure locators spread across the extraction's range; all 5 must land on the described content
+  outcome: PASS - 5 of 5
+  samples:
+    - {figure: "4.17", expected: "black leather book cover losing embossed detail under the sponge's lighting", found: "black leather organiser with pen, embossing barely visible - matches caption and EXTRACTION-NOTES description"}
+    - {figure: "6.23", expected: "metal box on dark table, bottom nearly disappearing", found: "gold-wrapped box on near-black table, lower front merging into the dark - matches"}
+    - {figure: "7.21", expected: "light amber beer looking unattractively dark and murky", found: "pint glass, beer rendering dark red-brown - matches"}
+    - {figure: "9.24", expected: "black paper unable to render black when flashlight properly exposed", found: "black flashlight properly exposed on paper rendering grey - matches"}
+    - {figure: "7.25", expected: "gobo removing direct reflections from bottle label", found: "wine bottle with label clean of glare - matches"}
+
+counts:
+  distinct_figures_cited_across_objects: 129
+  rows_imported_from_extraction_pass: 53
+  rows_opened_fresh_this_pass: 76
+  extraction_claim_note: >
+    EXTRACTION-NOTES.md §3 records 54 figures opened during extraction, of which 53 appear in
+    provenance.inspected.figures. Only the 53 recorded ones are imported as rows; the unrecorded
+    54th cannot be identified from the committed record and is not imported.
+
+# ── Imported rows (evidence_time: extraction_pass, per DN-03) ────────────────────────────────
+# The 53 figures recorded first-hand in the frozen objects' provenance.inspected.figures.
+# Import basis: the extraction's contemporaneous record, including the matched-pair checks it
+# describes (EXTRACTION-NOTES §3). The renders themselves did not survive (DN-01); what is
+# imported is the recorded fact and finding of inspection, marked as such.
+imported_rows:
+  evidence_time: extraction_pass
+  figures: ['4.2', '4.3', '4.9', '4.11', '4.13', '4.14', '4.16', '4.17', '4.18', '4.19',
+            '4.20', '4.22', '6.7', '6.9', '6.12', '6.17', '6.23', '6.24', '6.26', '6.27',
+            '6.29', '6.31', '6.33', '7.1', '7.2', '7.5', '7.8', '7.9', '7.10', '7.11',
+            '7.12', '7.13', '7.14', '7.16', '7.17', '7.19', '7.20', '7.21', '7.23', '7.24',
+            '7.25', '9.11', '9.12', '9.14', '9.15', '9.16', '9.18', '9.20', '9.21', '9.22',
+            '9.23', '9.24', '9.25']
+  matched_pair_findings_imported:
+    - "4.17/4.19: raking light vs large source filling the family of angles on black leather - embossed pattern invisible in one, fully legible in the other; confirms the prose."
+    - "6.7/6.9/6.12/6.17: bright, dark and compromise metal, and the light-distance pair where the background lifts while the blade does not move."
+    - "6.23/6.24: metal box losing front and bottom on a dark table, and not on a light one."
+    - "6.26/6.27: polarizer blacking the glass support and leaving the metal."
+    - "7.1/7.2 and 7.5: the failed glass shot, bright field, dark field."
+    - "7.21/7.23: murky beer and the cut secondary background remedy."
+    - "9.11/9.12 and 9.22/9.23: the key asymmetry demonstrated in both directions."
+    - "9.24/9.25: black paper vs black velvet at identical exposure."
+    - "7.24/7.25: the one caught over-claim - the gobo improvement on the labelled bottle is real but subtler than the text implies; recorded in sk_lsmx_0049 (extractor_observed) and bnd_lsmx_007. Imported unchanged."
+  fidelity_note: >
+    The 5-figure re-opening overlap in this pass (4.17, 6.23, 7.21, 9.24, 7.25 - the locator
+    sample) found each exactly as the extraction recorded it, which is direct evidence the
+    imported record is faithful.
+
+# ── Fresh rows (evidence_time: rep07_pass) ───────────────────────────────────────────────────
+# All 76 cited-but-unopened figures were opened in this pass from the EPUB's own image files
+# (systematic naming Images/figN_M.jpg verified against captions). Finding per figure states
+# what the image shows relative to the caption/prose that cites it.
+fresh_rows:
+  evidence_time: rep07_pass
+  chapter_4:
+    - {figure: '4.1', finding: "Family-of-angles diagram for a copy set-up: camera, white ellipse, X on the light inside the family, check on the light outside. Matches prose exactly."}
+    - {figure: '4.4', finding: "Wide-angle lens under a display case: visibly larger family, small range of acceptable light positions. Matches caption."}
+    - {figure: '4.5', finding: "Long-lens copy set-up between walls: small family, easy light placement. Matches."}
+    - {figure: '4.6', finding: "The 'standard' 45-degree copy set-up with both lights at 45. Matches."}
+    - {figure: '4.7', finding: "Two lights both at 45 degrees but at different distances; the near one falls inside the family (X), the far one outside (check). States the distance point the object cites."}
+    - {figure: '4.8', finding: "Shallow-angle light with 55in/24in distance annotations - the uneven-illumination risk. Matches."}
+    - {figure: '4.10', finding: "The 'impossible' situation: barrier forces the light inside the family. Matches."}
+    - {figure: '4.12', finding: "The polarizer solution: labelled lens polarizer + light polarizer with the barrier. Matches, including the axis note in the caption."}
+    - {figure: '4.15', finding: "Small light at very low raking angle to a textured strip, camera overhead. Matches the texture prescription."}
+    - {figure: '4.21', finding: "Diffusion sheet + gobo arrangement for the wood box (both direct and diffuse reflections). Matches."}
+  chapter_5:
+    - {figure: '5.1', finding: "Line-drawing cube with no depth cues - reads flat, as claimed."}
+    - {figure: '5.2', finding: "Same cube shaded with cast shadow - reads as 3D. The pair performs the claim."}
+    - {figure: '5.3', finding: "Muller-Lyer arrows: equal verticals, one looks longer. Matches."}
+    - {figure: '5.4', finding: "Chessboard photograph with perspective depth. Matches."}
+    - {figure: '5.5', finding: "Close camera: strong convergence of parallels. Matches."}
+    - {figure: '5.6', finding: "Far camera: weaker convergence. Matches the pair-claim with 5.5."}
+    - {figure: '5.7', finding: "Diagram: large source close, rays striking from many angles (soft shadows). Matches."}
+    - {figure: '5.8', finding: "Diagram: same source far, rays nearly parallel (harder shadows). Matches."}
+    - {figure: '5.9', finding: "Gourd with hard obtrusive side shadow. Matches."}
+    - {figure: '5.10', finding: "Small overhead light: smaller grounding shadow, still hard. Matches."}
+    - {figure: '5.11', finding: "Soft-box + seamless background diagram. Matches."}
+    - {figure: '5.12', finding: "Result photo: soft unobtrusive shadow under gourd. Matches."}
+    - {figure: '5.13', finding: "Fill card lightening the gourd front - visible in the photo. Matches."}
+    - {figure: '5.14', finding: "Background falloff photo: darker upward, subject separates. Matches."}
+    - {figure: '5.15', finding: "Falloff diagram: light aimed toward camera, gobo flagged as essential against flare. Matches."}
+    - {figure: '5.16A', finding: "Backlit portrait with visible uneven flare streak. Matches."}
+    - {figure: '5.16B', finding: "Flare diagram: sun outside field of view, gobo blocking light before the lens. Matches."}
+    - {figure: '5.17', finding: "Rocket model under flat frontal light - cylinder reads flat. Matches."}
+    - {figure: '5.18', finding: "Side-lit rocket with pronounced tonal gradation - depth restored. Matches."}
+    - {figure: '5.19', finding: "Two colour-coded families of angles for a box (top and front). Matches sk objects on box lighting."}
+    - {figure: '5.20', finding: "Box-top detail obscured by direct reflection (glare band across the red top). Matches."}
+    - {figure: '5.21', finding: "Annotated remedies diagram: move camera / remove light from family / gobo. Matches the remedy-menu claim."}
+    - {figure: '5.22', finding: "Soft box moved forward: box-top wood grain fully visible. Matches."}
+    - {figure: '5.23', finding: "Candy box with dark card at camera right: reflections killed, detail restored. Matches."}
+    - {figure: '5.24', finding: "Long-lens diagram: farther camera, smaller family, compare 5.19. Matches."}
+  chapter_6:
+    - {figure: '6.1', finding: "Family of angles determined by camera position; subject size/shape determines it too (both labelled). Matches."}
+    - {figure: '6.2', finding: "Possible diffusion-material positions spanning the family. Matches."}
+    - {figure: '6.3', finding: "Test light replacing the camera with near/far limit marks (plus the laser-pointer reader tip in the caption). Matches the find-the-family procedure."}
+    - {figure: '6.8', finding: "Light outside the family keeping metal dark. Matches."}
+    - {figure: '6.10', finding: "Large light + gobo filling the family to keep metal dark. Matches."}
+    - {figure: '6.11', finding: "Photo: gobo'd spatula rendering dark. Matches."}
+    - {figure: '6.13', finding: "Main light inside the family via diffusion + fill light diagram for the bright spatula. Matches."}
+    - {figure: '6.14', finding: "Reflector card A/B with gobo partly blocking the in-family part. Matches its object's A/B geometry."}
+    - {figure: '6.15', finding: "Soft box part A in family lights the metal, part B only the background. Matches."}
+    - {figure: '6.16', finding: "Two soft-box positions lighting metal identically, nearer one brightening the background. Matches."}
+    - {figure: '6.18', finding: "Two-panel A/B: long-lens camera far = narrow family; short-lens close = wide family. Matches the effective-size claim."}
+    - {figure: '6.20', finding: "View-camera arrangement: camera outside the family, metal parallel to image plane. Matches."}
+    - {figure: '6.21', finding: "White paper with lens hole: camera will not reflect, hole will. Matches."}
+    - {figure: '6.22', finding: "Photo-style diagram of the two families for a box seen top+front. Matches."}
+    - {figure: '6.25', finding: "Transparent sheet + white card lighting a metal box front without a light in scene, dark background. Matches."}
+    - {figure: '6.28', finding: "Glossy black acrylic bouncing 'invisible' light to the metal, none reaching the camera. Matches."}
+    - {figure: '6.30', finding: "Round metal: family of angles is the entire surrounding circle including the camera. Matches."}
+    - {figure: '6.32', finding: "Tent with camera hole around round metal. Matches."}
+  chapter_7:
+    - {figure: '7.3', finding: "Glass subject with family limits marked L - the two points defining edge appearance. Matches."}
+    - {figure: '7.4', finding: "Bright-field set-up: light positions for opaque vs translucent background (either, rarely both). Matches."}
+    - {figure: '7.6', finding: "Dark-field set-up: diffusion + black card directly behind the glass. Matches."}
+    - {figure: '7.7', finding: "Variant lighting an opaque reflective surface brightly without lighting the visible background. Matches."}
+    - {figure: '7.15', finding: "Photo of the curved black paper strip rig holding a cocktail glass - horizon eliminated, edge definition kept. Matches."}
+    - {figure: '7.22', finding: "Secondary-background tracing set-up: test light replacing camera, shadow tracing the needed card. Matches."}
+  chapter_8:
+    - {figure: '8.13', finding: "Short-lit portrait: glare visible on the far lens of the eyeglasses. Matches the caption's point, though the glare is modest at reproduction size."}
+    - {figure: '8.14', finding: "Broad-lit companion: glare gone. The pair performs the broad-vs-short eyeglasses claim."}
+    - {figure: '8.35', finding: "Portrait of a weathered face where bright skin highlights from direct reflection carry the 'readability'. Matches."}
+  chapter_9:
+    - {figure: '9.1', finding: "Ideal straight-line characteristic curve, image steps 1:1 with exposure steps. Matches."}
+    - {figure: '9.3', finding: "Bad S-curve: highlights and shadows both compressed. Matches."}
+    - {figure: '9.5', finding: "Overexposure curve: shadow compression relieved, highlight compression much worse. Matches."}
+    - {figure: '9.7', finding: "The 'corrected' overexposed photo (Alcatraz sign): highlights stay undifferentiated. Matches the unrecoverability claim."}
+    - {figure: '9.8', finding: "Underexposure curve: shadows badly compressed. Matches."}
+    - {figure: '9.10', finding: "Lighter print of the underexposed image: shadow detail not restored. Matches."}
+    - {figure: '9.13', finding: "White-on-white arrangement diagram (gobo above, reflector, bust, seamless). Matches; pairs with 9.14/9.15 as caption states."}
+    - {figure: '9.17', finding: "Translucent background lit from behind photographing whiter than a white subject. Matches."}
+    - {figure: '9.19', finding: "Manufactured ground-shadow set-up. Matches."}
+    - {figure: '9.26', finding: "Black acrylic background with sharply outlined flashlight reflection - the is-it-black-on-black question the caption poses. Matches."}
+    - {figure: '9.27', finding: "Black hand subject several feet from the background, lit without light reaching it. Matches."}
+  chapter_10:
+    - {figure: '10.12', finding: "Mixed flash + fluorescent diagram: generally even illumination. Matches."}
+    - {figure: '10.13', finding: "Flash aimed at near subject: figures shade from yellow to green with distance - differently coloured light per subject, the colour-issue claim. Matches."}
+    - {figure: '10.14', finding: "Fluorescent filling the flash's wall shadow, which will render yellow-green. Matches."}
+
+observed_loss_patterns:
+  - pattern: no_authored_page
+    affects: "the whole source"
+    detectability: detected_by_independent_check
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      Reflowable EPUB; no authored page exists. Locators in the extraction are chapter + section
+      + figure number; figure numbers are stable (systematic image naming figN_M.jpg matches
+      caption numbering throughout) and the locator sample verified 5 of 5.
+  - pattern: figure_semantic_binding_lost
+    affects: "figure-to-page-layout relationships; matched pairs no longer sit on facing pages"
+    detectability: named_by_text
+    recoverability: unrecoverable_in_this_copy
+    evidence: >
+      The audit caution recorded at extraction stands: the book argues through diagrams and
+      matched before/after pairs, and the reflowable EPUB delivers figures without the designed
+      page layout. This pass found the damage bounded exactly as EXTRACTION-NOTES §3 reported:
+      every figure's own content is intact (all 129 cited figures now opened across the two
+      passes, none damaged, captions bound correctly to images by the systematic file naming),
+      so what is lost is the page-level pairing geometry, not any figure's internal content.
+  - pattern: no_loss_detected
+    affects: "the internal content of every cited figure"
+    detectability: detected_by_independent_check
+    recoverability: not_applicable
+    evidence: >
+      All 76 previously unopened figures were opened in this pass. Every one shows what the
+      caption and citing prose state; no diagram contradicts a claim, no image is corrupted,
+      truncated or misbound. The 18 objects carrying extraction_uncertainty:
+      figure_not_inspected now have their figures inspected, and in no case does the figure
+      qualify or overturn the frozen claim.
+
+claim_resolution_after_inspection: all_resolved
+consequence: >
+  With DN-03's import plus this pass, all 129 cited figures carry ledger rows and none
+  underdetermines its claim. The evidential asymmetry EXTRACTION-NOTES §3 insists on is now
+  reversed in this candidate's favour relative to live chapter 3 (whose 14 figures were never
+  seen): any later pooling of the two spans should note that it is now the LIVE span that is
+  text-only. The one prose-vs-picture gap remains 7.24/7.25 (improvement subtler than the text
+  implies), imported unchanged from the extraction record.

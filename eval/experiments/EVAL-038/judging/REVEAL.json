@@ -1,0 +1,101 @@
+{
+ "reveal_rule_satisfied": "all verdicts recorded first: reviewer-2 (agent, packages+media) and reviewer-1 (Controller, media; packages abstained)",
+ "revealed_at": "2026-09-01",
+ "units": {
+  "media-B01-video": {
+   "key": "1cb6bc53f60c07650771a81a59c6498b",
+   "mapping": {
+    "V01.mp4": "haiku-packs",
+    "V02.mp4": "sonnet-no-canon"
+   },
+   "salt": "9bcfbf4353cfbf4623ff338aa3eb4323"
+  },
+  "media-B06-image": {
+   "key": "db94893643fb2fb049e0a3befe8efb2e",
+   "mapping": {
+    "M01.jpg": "haiku-packs",
+    "M02.jpg": "sonnet-no-canon"
+   },
+   "salt": "ebf29831573fa94d8b210c49fe153aef"
+  },
+  "packages-B01": {
+   "key": "e489497373b4276ab520f79ed3ce8862",
+   "mapping": {
+    "P01.txt": "sonnet-R1",
+    "P02.txt": "gemma-R2",
+    "P03.txt": "sonnet-R2",
+    "P04.txt": "sonnet-R3",
+    "P05.txt": "haiku-R2",
+    "P06.txt": "gemma-R1",
+    "P07.txt": "haiku-R1"
+   },
+   "salt": "db562d0fd167a6cefb7c252271e31e95"
+  },
+  "packages-B02": {
+   "key": "1160e7924948f696a01d030e817d106d",
+   "mapping": {
+    "P01.txt": "sonnet-R3",
+    "P02.txt": "gemma-R2",
+    "P03.txt": "sonnet-R2",
+    "P04.txt": "haiku-R1",
+    "P05.txt": "haiku-R2",
+    "P06.txt": "gemma-R1",
+    "P07.txt": "sonnet-R1"
+   },
+   "salt": "7e82a1a01d51aeed6e1c8995c7a2df9d"
+  },
+  "packages-B03": {
+   "key": "f766f39e97164fbcdb92944d911c5c40",
+   "mapping": {
+    "P01.txt": "sonnet-R1",
+    "P02.txt": "haiku-R1",
+    "P03.txt": "gemma-R2",
+    "P04.txt": "sonnet-R2",
+    "P05.txt": "sonnet-R3",
+    "P06.txt": "gemma-R1",
+    "P07.txt": "haiku-R2"
+   },
+   "salt": "42c3f342fd0614905a6425d8c7a95c71"
+  },
+  "packages-B04": {
+   "key": "b0ec9431fe383520e0ba1f82bf80a0ac",
+   "mapping": {
+    "P01.txt": "haiku-R1",
+    "P02.txt": "sonnet-R2",
+    "P03.txt": "gemma-R1",
+    "P04.txt": "sonnet-R3",
+    "P05.txt": "gemma-R2",
+    "P06.txt": "sonnet-R1",
+    "P07.txt": "haiku-R2"
+   },
+   "salt": "ef064659e865e195ca945065eb447c09"
+  },
+  "packages-B05": {
+   "key": "44a5dfaf0edd0fcddd61a76397afbec9",
+   "mapping": {
+    "P01.txt": "haiku-R1",
+    "P02.txt": "gemma-R2",
+    "P03.txt": "gemma-R1",
+    "P04.txt": "sonnet-R2",
+    "P05.txt": "haiku-R2",
+    "P06.txt": "sonnet-R3",
+    "P07.txt": "sonnet-R1"
+   },
+   "salt": "7a842a16d047a61b009d80e7611b0331"
+  },
+  "packages-B06": {
+   "key": "b80f22ef58009bd9fb2a59346b130965",
+   "mapping": {
+    "P01.txt": "sonnet-R1",
+    "P02.txt": "gemma-R2",
+    "P03.txt": "haiku-R2",
+    "P04.txt": "gemma-R1",
+    "P05.txt": "sonnet-R2",
+    "P06.txt": "haiku-R1",
+    "P07.txt": "sonnet-R3"
+   },
+   "salt": "cca28d3b0a0563d12ffce167efb1f43e"
+  }
+ },
+ "verify": "sha256(salt|key) must equal each unit's committed commitment_sha256_of_salt_pipe_key"
+}

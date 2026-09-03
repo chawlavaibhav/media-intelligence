@@ -1,0 +1,89 @@
+# CANON_CONTEXT — field schema v0.1
+#
+# Companion to canon/context/CANON-CONTEXT-SPEC-v0.1.md. Descriptive: the enforcing artifact is
+# canon/validation/validate_canon_context.py, and where the two disagree the validator is the fact.
+#
+# Status: Canon-stream proposal. Adopts nothing. coordination/CONTROL-STATE.md governs.
+
+schema_version: v0.1
+schema_id: canon_context_v0_1
+
+top_level:
+  canon_context_version: {type: string, required: true, const: v0.1}
+  context_id:            {type: string, required: true, note: "stable slug, unique per built context"}
+  built_for:             {type: map,    required: true}
+  budget:                {type: map,    required: true}
+  production_questions:  {type: list,   required: true, min_items: 1}
+  key_guidance:          {type: list,   required: true, min_items: 1}
+  conflicts:             {type: list,   required: true, note: "may be empty; the key may not be absent"}
+  do_not_overgeneralize: {type: list,   required: true, min_items: 1, note: "R8 — never empty"}
+  source_trace:          {type: list,   required: true, min_items: 1}
+
+built_for:
+  request_ref:     {type: string, required: true, note: "brief id / Normalized Request ref this was built for"}
+  outcome_kind:    {type: string, required: true, note: "free text; the kind of accepted outcome sought"}
+  built_at_commit: {type: [string, "null"], required: true, note: "repo commit the Canon was read at; null if unrecorded"}
+
+budget:
+  max_guidance_entries: {type: int, required: true, default: 8}
+  max_principle_bytes:  {type: int, required: true, default: 4096, note: "verbatim claim payload only — the dimension the oracle precedent bounds"}
+  max_serialized_bytes: {type: int, required: true, default: 16384, note: "the whole object, principles plus six-field scaffolding"}
+  basis:                {type: string, required: true, note: "why these numbers — see spec R1"}
+
+production_questions[]:
+  question_id:   {type: string, required: true, pattern: "^PQ-[0-9]{2}$"}
+  question:      {type: string, required: true, note: "an outcome decision, not a topic"}
+  why_it_matters:{type: string, required: true, note: "what goes wrong in the outcome if this is answered badly"}
+  answered_by:   {type: list_of_string, required: true, min_items: 1, note: "guidance_ids; each must exist"}
+
+key_guidance[]:
+  guidance_id:          {type: string, required: true, pattern: "^KG-[0-9]{2}$"}
+  principle:            {type: string, required: true, note: "the claim itself"}
+  render_mode:          {type: string, required: true, enum: [verbatim_claim, condensed]}
+  rendered_from:        {type: map,    required: true}
+  applicability:        {type: string, required: true, note: "when this holds — from scope.conditions"}
+  concrete_implication: {type: string, required: true, note: "what to actually do in this production"}
+  failure_mode:         {type: string, required: true, note: "what goes wrong when it is ignored"}
+  evidence:             {type: map,    required: true}
+  uncertainty:          {type: string, required: true, note: "R6 — 'none recorded' is valid, empty is a defect"}
+
+key_guidance[].rendered_from:
+  ref:               {type: string, required: true, note: "sk_* / scs_* id in canon/knowledge/current"}
+  field:             {type: string, required: true, note: "SPEC-03 field the principle came from, e.g. claim"}
+  source_digest:     {type: string, required: false, note: "sha256 of the normalized source field; required when render_mode is condensed"}
+  condensed_review:  {type: string, required: false, enum: [human], note: "required when render_mode is condensed"}
+
+key_guidance[].evidence:
+  source_dir:      {type: string, required: true, note: "directory under canon/knowledge/current"}
+  refs:            {type: list_of_string, required: true, min_items: 1, note: "every ref must appear in source_trace"}
+  characteristics: {type: list_of_string, required: true, note: "copied from SPEC-03 evidence.characteristics"}
+
+conflicts[]:
+  conflict_id:     {type: string, required: true, pattern: "^CF-[0-9]{2}$"}
+  between:         {type: list_of_string, required: true, min_items: 2, note: "distinct refs, all in source_trace"}
+  nature:          {type: string, required: true, note: "what the disagreement actually is"}
+  resolution_rule: {type: [string, "null"], required: true, note: "how a producer proceeds; null only with unresolved: true"}
+  unresolved:      {type: bool, required: true, note: "R7 — true is honest, silence is not"}
+
+do_not_overgeneralize[]:
+  guidance_id: {type: string, required: true, note: "must exist in key_guidance"}
+  limit:       {type: string, required: true, note: "what this guidance does NOT license"}
+  why:         {type: string, required: true, note: "the recorded basis for the limit"}
+
+source_trace[]:
+  ref:          {type: string, required: true}
+  kind:         {type: string, required: true, enum: [source_knowledge, concept_system]}
+  source_dir:   {type: string, required: true}
+  source_id:    {type: string, required: true}
+  locator:      {type: string, required: true, note: "provenance.locator from the extraction"}
+  audit_status: {type: string, required: true, const: complete, note: "R4 — anything else fails closed"}
+
+forbidden:
+  - "any ref not resolvable under canon/knowledge/current/"
+  - "any source_dir under canon/candidates/ (HOLD material)"
+  - "any ref from canon/qa/ (Q&A banks)"
+  - "a guidance entry answering no production question"
+  - "a production question with no answering guidance entry"
+  - "an empty do_not_overgeneralize list"
+  - "an empty uncertainty string"
+  - "a conflict with neither a resolution_rule nor unresolved: true"

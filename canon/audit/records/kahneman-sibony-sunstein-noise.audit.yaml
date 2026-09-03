@@ -1,0 +1,290 @@
+# Audit Gate v0.2 record — Kahneman, Sibony & Sunstein, "Noise: A Flaw in Human Judgment".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_kss_noise
+source_id: kahneman-sibony-sunstein-noise
+knowledge_dir: canon/knowledge/current/kahneman-sibony-sunstein-noise
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: f89f10293e331416ede03c7e2582075f76d6d453e1d0817de711e6f70686dadc
+    - path: operational-bindings.yaml
+      digest: 12d41b32ed6fe31c7c8d9077e5388e8810d32e3f659cf4399b7ea027e6d486cd
+    - path: source-concept-systems.yaml
+      digest: 511fb1f1fa21011ae60775dc4f4b4969f991ec9663931461fbf724bf50e753a0
+    - path: source-knowledge.yaml
+      digest: 4d0258c3629ec2aea59d7cf72f8ce2b729144529e606abf26d082366cd2dc889
+    - path: visual-evidence-ledger.yaml
+      digest: b51fe78227a2d56597f8dd8cc249aa8ea10fdd8e3270232b9952c5ca65e9909a
+  combined_digest: 2e58f4cd0447219a97aef4bec42cfff48de62758964759fa00d7268207d2e8cd
+
+evidence_basis_for_this_audit:
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/kahneman-sibony-sunstein-noise/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/kahneman-sibony-sunstein-noise/source-knowledge.yaml
+  - canon/knowledge/current/kahneman-sibony-sunstein-noise/source-concept-systems.yaml
+  - canon/knowledge/current/kahneman-sibony-sunstein-noise/operational-bindings.yaml
+  - canon/knowledge/current/kahneman-sibony-sunstein-noise/ontology-mappings.yaml
+  - canon/knowledge/current/kahneman-sibony-sunstein-noise/visual-evidence-ledger.yaml
+  - canon/knowledge/current/kahneman-sibony-sunstein-noise/PROVENANCE.md
+  - canon/candidates/canon-014/kahneman-sibony-sunstein-noise/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/kahneman-sibony-sunstein-noise/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Publisher's first ebook edition (Little, Brown Spark, May 2021; ISBN 978-0-316-45138-3,
+    build E3-20210415-JV-NF-ORI, both re-verified in the unpacked copy this pass). Reflowable
+    EPUB with no authored pagination of any kind; every locator is chapter title + named
+    section, page_start/page_end null on all objects, and no page number invented. The only
+    page numbers in the book are in its Notes, citing other works; none was used.
+  inspection_state: inspected_figure_level
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        The format has no page at all; not a fault, and unfixable in this copy. Section-heading
+        locators are the stable citation unit and the extraction verified them against the
+        spine.
+    - pattern: no_loss_detected
+      affects: "the visual dimension of the extracted spans"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        The REP-07 figure pass (visual-evidence-ledger.yaml) enumerated all 27 image assets and
+        opened all nineteen numbered figures, including the two runbook-named ones (Figure 16,
+        the combined error decomposition; Figure 18, the behaviourally anchored scale vs case
+        scale). Every quantitative element in every figure - the 51%/71%/94% noise shares and
+        their 49-19-32 / 29-27-44 / 6-37-57 splits (Fig 13), the 94%->49% rank transformation
+        (Fig 14), the 3.4y/2.4y sentencing SDs (Fig 9), the nested decomposition equations
+        (Figs 7, 10, 15, 16), the correction procedure's 3.8/3.2/.2/3.3 worked example
+        (Fig 19) - is stated in the prose the extraction read. The nine frozen objects carrying
+        extraction_uncertainty figure_not_inspected are resolved with zero change to any claim.
+        figure_semantic_binding_lost does not apply.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    The figures render the argument and carry nothing the text withholds, so the text-only
+    extraction lost nothing; the enduring representation fact is the absence of authored pages,
+    already recorded and worked around. Two bookkeeping corrections from the pass, noted in the
+    ledger without touching the frozen files: the figure inventory is 1-19, not the "3-19" the
+    extraction reported (Figures 1-2 sit in the Introduction, inside the processed span, and
+    illustrate sk_nse_0001/0002 exactly), and nine objects - not the notes' "seven" - carry
+    figure_not_inspected.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    50 objects. The book reports a great deal of measurement and most of it is other people's;
+    the extraction tracked the distinction object by object and this audit categorises from the
+    frozen record. Replication status remains outside scope on both layers: these categories
+    say whose measurement a claim rests on, not whether it has held up.
+  categories:
+    - category: source_own_measurement_reported
+      sk_refs: [sk_nse_0003, sk_nse_0013, sk_nse_0015, sk_nse_0017, sk_nse_0022, sk_nse_0026,
+                sk_nse_0031]
+      evidence: >
+        Studies the authors themselves conducted, with results supplied: the insurance noise
+        audit (55%/43% medians) and its use as the worked audit design; the 828-executive poll
+        against the audit result; the Gambardi demonstration (115 MBA students - the frozen
+        caveat records that it is a classroom demonstration built to produce the effect it
+        illustrates); the statistical-vs-deliberating jury experiments; the outrage-hypothesis
+        study (Kahneman, Schkade & Sunstein, 899 mock jurors); the three-scale noise comparison
+        (51%/71%/94%). All seven carry empirical_within_source.
+    - category: mixed_own_and_third_party
+      sk_refs: [sk_nse_0011, sk_nse_0032]
+      evidence: >
+        Both carry empirical_within_source and both rest on split origins the frozen caveats
+        enumerate: sk_nse_0011 combines the authors' own 20%-level/80%-pattern insurance split
+        with the third-party 208-judge sentencing split and the Todorov results; sk_nse_0032's
+        rank transformation is the authors' own study while the Stevens brightness results and
+        the anchoring demonstration it leans on are third parties'.
+    - category: third_party_measurement_reported
+      sk_refs: [sk_nse_0007, sk_nse_0008, sk_nse_0009, sk_nse_0012, sk_nse_0023, sk_nse_0025,
+                sk_nse_0027, sk_nse_0028, sk_nse_0030, sk_nse_0033, sk_nse_0036, sk_nse_0037,
+                sk_nse_0038, sk_nse_0039, sk_nse_0040, sk_nse_0041, sk_nse_0043, sk_nse_0045,
+                sk_nse_0049, sk_nse_0050]
+      evidence: >
+        Named outside work reported by the source, each object's caveats naming whose: the 1981
+        208-judge sentencing study; Mullainathan's bail decomposition (run at the authors'
+        request BY the original researchers on their own data - the single most tempting
+        misfile, deliberately excluded from own-measurement); Vul & Pashler, Herzog & Hertwig,
+        Forgas and the occasion-noise literature; Salganik, Macy and Muchnik on groups; Meehl,
+        the 136-study review, Goldberg and Dawes on models vs judges; Dror and the FBI
+        forensics studies; Tetlock and the Good Judgment Project; the Fragile Families
+        challenge; Apgar/Centor/BI-RADS and the psychiatric reliability literature; the
+        selection and frame-of-reference-training literatures. None of the twenty carries
+        empirical_within_source, consistently.
+    - category: source_author_assertion
+      sk_refs: [sk_nse_0001, sk_nse_0002, sk_nse_0004, sk_nse_0005, sk_nse_0006, sk_nse_0010,
+                sk_nse_0014, sk_nse_0016, sk_nse_0018, sk_nse_0019, sk_nse_0020, sk_nse_0021,
+                sk_nse_0024, sk_nse_0029, sk_nse_0034, sk_nse_0035, sk_nse_0042, sk_nse_0044,
+                sk_nse_0046, sk_nse_0047, sk_nse_0048]
+      evidence: >
+        Conceptual and definitional structure stated in the authors' voice: the bias/noise
+        framing and its target metaphor, the error equation and its decompositions (mathematical
+        argument, not empirical finding - the frozen caveat on sk_nse_0006 says exactly this),
+        the taxonomy definitions, the audit-design generalisation from their own two audits, the
+        internal-signal construct, the broken-leg principle, the mediating assessments protocol
+        (illustrated with a stylised composite, no measured effect - the authors say so), and
+        the values-side objections (dignity, gaming, rules vs standards, costs).
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record: empirical_within_source appears on exactly nine objects -
+    the seven under own-measurement plus the two categorised mixed because their frozen caveats
+    split the supporting figures by origin - and on no object in the third-party or assertion
+    categories. The validator's cross-check passes in both directions, and the extraction's own
+    hardest calls (the bail decomposition out, the Gambardi demonstration in with a caveat) are
+    preserved rather than re-litigated.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        The book is about human judgement, not creative artifacts; no object describes a field
+        of an intermediate representation and no binding was made. The lane's central caution
+        stands: nothing here claims anything about model or AI evaluator behaviour.
+    - consumer: production_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No physical production procedure is prescribed.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_nse_001, bnd_nse_006, bnd_nse_007, bnd_nse_008]
+      note: >
+        The noise-audit design bound to auditing THIS PROJECT'S HUMAN adjudicators (transfer
+        beyond that explicitly untested), scale-ambiguity and case-scale remedies for human
+        rubrics, and structured decomposition against halo. All four carry observation_unit
+        asset_set_over_time - noise is a property of a set of judgements, never of one asset -
+        and their limits say so in words.
+    - consumer: governance
+      outcome: binding_exists
+      existing_binding_refs: [bnd_nse_002, bnd_nse_003, bnd_nse_004, bnd_nse_005, bnd_nse_009,
+                              bnd_nse_010, bnd_nse_012, bnd_nse_011, bnd_nse_014]
+      note: >
+        Nine governance bindings over evidence_interpretation, conflict_resolution and
+        rule_application: the illusion-of-agreement reading of absent disagreement, the
+        nesting's consequence for consistency statistics, independence-before-aggregation, the
+        group-deliberation hazard, the broken-leg override rule, process-not-single-outcome,
+        the costs-of-noise-reduction counterweight, the predictive/evaluative declaration, and
+        the causal-thinking explanation of noise's invisibility.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_nse_013]
+      note: The aggregation arithmetic (noise reduction as a function of the number of independent judgements) as a checkable relation.
+    - consumer: deterministic_composition
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        Two procedures are stated exactly enough to execute - the Appendix C prediction
+        correction (sk_nse_0029, rendered as Figure 19's worked example) and the aggregation
+        arithmetic (sk_nse_0037) - but they compose judgements, not media, and no binding was
+        made; none is manufactured here.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        Decision hygiene, information sequencing, the mediating assessments protocol and the
+        Appendix B decision-observer checklist are team working procedure - the clearest
+        human_workflow material in the whole canon-014 dock - but the lane's permitted
+        consumers did not include a workflow target and no binding was made. Recorded as
+        candidate for whoever holds that authority later.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_nse_0005, sk_nse_0049, sk_nse_0048, sk_nse_0046, sk_nse_0047]
+      observation: >
+        The bindings file's own header names the deliberately unbound material and the audit
+        confirms the reasons hold: the error equation's MSE arithmetic (ruled out by the source
+        itself for evaluative judgements, which is most of what this project's acceptance steps
+        are), objective ignorance (binding it would require an unsupported claim about this
+        project's prediction ceilings), and the rules-vs-standards / dignity / changing-values
+        material (institutional and legal, no permitted consumer).
+    - sk_refs: [sk_nse_0018]
+      observation: >
+        The predictive-vs-evaluative distinction is load-bearing for which parts of the book
+        apply here at all; bnd_nse_012 proposes declaring it per rubric dimension and the
+        question is recorded as open in EXTRACTION-NOTES.md §4.
+  conclusion: >
+    The right consumers are bound for a judgement-science source feeding an evaluation
+    programme: evaluation and governance carry the weight, one benchmark relation is checkable,
+    and everything that would have required a claim about machine evaluators or about this
+    project's prediction ceilings was left unbound with the refusal documented. The open
+    questions (occasion/level/pattern analogues in automated evaluators) live in
+    EXTRACTION-NOTES.md §4 and nowhere normative.
+
+lineage:
+  authors: [Daniel Kahneman, Olivier Sibony, Cass R. Sunstein]
+  publisher: Little, Brown Spark (Hachette Book Group)
+  series: null
+  first_published: 2021
+  copy_edition: First ebook edition, May 2021; ISBN 978-0-316-45138-3; build E3-20210415-JV-NF-ORI
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, publisher, derivation or primary informant with any live source or
+    any canon-014 candidate. The live corpus holds design, photography, film craft and
+    advertising practice; nothing addresses human judgement or the statistics of error, and no
+    live source cites or is cited by this one in the extracted spans. The extraction checked
+    and declined the scope-extension framing explicitly.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other craft sources; no
+      SPEC quotes Noise, and noise-taxonomy vocabulary appears in this repository only
+      downstream of this extraction.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The book's subject is human professional judgement - largely mechanism-level psychology and
+    arithmetic that does not date - but several of its strongest results are about specific
+    institutional and technical practices (linear models of its studied era, algorithmic
+    decision tools, performance-management and interview practice), and its values-side
+    objections are bound to a legal-political culture. The frozen record carries
+    culturally_bounded on three objects and historical_claim on none, so this section leans on
+    the caveats where the characteristic vocabulary is silent.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_nse_0001, sk_nse_0002, sk_nse_0005, sk_nse_0010, sk_nse_0026, sk_nse_0027,
+                sk_nse_0030]
+      evidence: >
+        Arithmetic identities (the error equation and its nested decompositions are mathematics;
+        the figures render them as sums of squares) and psychological mechanisms (substitution,
+        excessive coherence, the relative-vs-absolute judgement advantage grounded in
+        psychophysics) that do not expire with a technology generation. Durability here is
+        about the mechanism class, not a claim that any particular measured magnitude
+        generalises - the frozen hedges (e.g. on sk_nse_0011) are untouched.
+    - class: technology_contingent
+      sk_refs: [sk_nse_0033, sk_nse_0045, sk_nse_0039]
+      evidence: >
+        Results stated over the tools and practices the studies used: mechanical-aggregation
+        superiority rests on linear regression, models-of-the-judge and random linear models
+        (the frozen caveat records the source's "consistently better, but not much better" and
+        its refusal of a replacement conclusion); the noiseless-but-biased-algorithm objection
+        and its favourable third-party results are claims about particular deployed systems;
+        the structured-interview validity range is a finding about a hiring technology as
+        practised. A different generation of models or practices can move all three.
+    - class: uncertain
+      sk_refs: [sk_nse_0046, sk_nse_0047, sk_nse_0048]
+      evidence: >
+        The three culturally_bounded objects: dignity and individualised treatment, noise as
+        room for changing values / gaming / morale, and rules versus standards. Value-laden
+        institutional positions whose durability depends on legal and political culture rather
+        than on any technology; the audit cannot class them as durable or dated from the
+        repository record.
+  existing_characteristics_relied_on: [culturally_bounded]

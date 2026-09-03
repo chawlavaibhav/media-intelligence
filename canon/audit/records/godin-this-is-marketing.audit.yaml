@@ -1,0 +1,273 @@
+# Audit Gate v0.2 record — Seth Godin, "This Is Marketing".
+# Authored by REP-07 in the candidate dir against the exact bytes fingerprinted below; admitted
+# to accepted Canon by Controller decision DN-06 (REP-07-DECISION-NOTES.md, 2026-09-01). The
+# five fingerprinted artifacts moved verbatim to canon/knowledge/current/ at admission; the
+# digests below were recomputed mechanically at the new location and are unchanged.
+
+audit_record_version: v0.2
+audit_id: aud_godin_this_is_marketing
+source_id: godin-this-is-marketing
+knowledge_dir: canon/knowledge/current/godin-this-is-marketing
+recorded_at_commit: work-branch-rep-07-admission
+audit_status: complete
+
+source_snapshot:
+  algorithm: sha256-of-sorted-path-and-content
+  files:
+    - path: ontology-mappings.yaml
+      digest: 66bd6757e0a4ce31f3a8bfbd0fec444a83809dfae8f76398249873109a7337e1
+    - path: operational-bindings.yaml
+      digest: 4933ba1d0cf8bdec4067ab178632d2d4f4fbb089d4b1732e1b35ea6e062b3bbb
+    - path: source-concept-systems.yaml
+      digest: a1c520438dc54745d231fc246e2f1aed340e3f0caa1900ba1374d0f44ec6d7fe
+    - path: source-knowledge.yaml
+      digest: 50cd969ae4456034d71a85f467d720b3aa0767ba2d88aed9352ce8c5b654f73a
+    - path: visual-evidence-ledger.yaml
+      digest: 6c96901c81b9b8020319a9ebd596ea722b5cfd264b28085d5ddfd9936c31e6bc
+  combined_digest: 17f101ae03bdd95d51c2525fea70a757833695504d8debb8b2d2492c951cb6f6
+
+evidence_basis_for_this_audit:
+  # The six extraction artifacts moved verbatim from canon/candidates/canon-014/godin-this-is-marketing/
+  # to their current locations at admission (DN-06); they were read at their candidate paths.
+  - canon/knowledge/current/godin-this-is-marketing/source-knowledge.yaml
+  - canon/knowledge/current/godin-this-is-marketing/source-concept-systems.yaml
+  - canon/knowledge/current/godin-this-is-marketing/operational-bindings.yaml
+  - canon/knowledge/current/godin-this-is-marketing/ontology-mappings.yaml
+  - canon/knowledge/current/godin-this-is-marketing/visual-evidence-ledger.yaml
+  - canon/knowledge/current/godin-this-is-marketing/PROVENANCE.md
+  - canon/candidates/canon-014/godin-this-is-marketing/EXTRACTION-NOTES.md
+  - canon/candidates/canon-014/godin-this-is-marketing/audit-assessment-HOLD.yaml (superseded by this record's admission; retained in git history)
+  - canon/candidates/canon-014/REP-07-DECISION-NOTES.md
+source_reopened: true
+
+representation_integrity:
+  delivery_format: publisher_epub
+  page_addressability: no_pages_reflowable
+  page_addressability_evidence: >
+    Reflowable Portfolio/Penguin EPUB (ebook ISBN 9780525540847). Every locator is chapter number
+    and title plus Godin's own bold section heading, which occurs every few hundred words and so
+    gives a genuinely fine locator without any page (PROVENANCE.md §2, Case 3);
+    page_start/page_end are null on every object, spine numbers are secondary aids, and no page
+    number was invented. Image asset names echoing print folios (page_246.png) are file names,
+    not a page map.
+  inspection_state: inspected_figure_level
+  visual_argument_role: illustrative_only
+  observed_loss_patterns:
+    - pattern: no_authored_page
+      affects: "the whole source"
+      detectability: detected_by_independent_check
+      recoverability: unrecoverable_in_this_copy
+      evidence: >
+        The format has no page at all; chapter-plus-bold-section locators are the stable
+        citation unit (ledger, no_authored_page).
+    - pattern: in_figure_text_absent
+      affects: "the internal text of all 16 figures"
+      detectability: detected_by_independent_check
+      recoverability: recovered_in_this_copy
+      evidence: >
+        Every figure is a raster image whose internal text (axis and quadrant labels, the
+        standard-deviation percentages, the ~130 logo names of the Helvetica clip sheet) is
+        absent from the text layer. The REP-07 pass opened all 16 and confirms that for every
+        figure adjacent to an extracted claim the prose states the semantic binding the figure
+        carries; no frozen object cites an in-figure value the prose does not also state
+        (ledger, in_figure_text_absent).
+    - pattern: no_loss_detected
+      affects: "the argument carried by the extraction"
+      detectability: detected_by_independent_check
+      recoverability: not_applicable
+      evidence: >
+        All 22 images in the archive were opened (ledger, inspection): 16 in-body figures -
+        quadrant grids, positioning maps, the Metcalfe and long-tail charts, the Rogers-curve
+        distribution, the Hype Cycle - plus cover, title page, two chevron ornaments, publisher
+        logos and back-matter promo. Every figure illustrates a proposition the adjacent prose
+        states in full, and the material where a figure comes closest to carrying a claim alone
+        (the logo sheet, the Hype Cycle, the long-tail t-shirt) was refused by the extraction on
+        independent grounds, so no frozen claim depends on any image.
+  claim_resolution_after_inspection: all_resolved
+  consequence: >
+    Hash-on-arrival matched the SHA-256 recorded in PROVENANCE.md (ledger, hash_on_arrival), so
+    the inspection provably examined the extraction's own copy. The runbook's expectation of a
+    cheap null-visual pass was corrected: the book carries sixteen real figures, several pointed
+    at by the prose - and every one is illustrative of stated propositions. The pass also closed,
+    by inspection, the figure_semantic_binding_lost question PROVENANCE.md §2 raised and
+    EXTRACTION-NOTES.md never recorded (ledger, visual_only_observations): no figure whose
+    semantic binding an extracted claim needs is missing it. The shared CANON-014 blocker (no
+    visual-evidence ledger) is closed by this pass.
+
+evidence_origin:
+  audit_scope: all_objects
+  audit_scope_note: >
+    All 29 objects categorised. A practitioner's book: the dominant origin by far is the author
+    asserting from his own practice and constructed illustrations, with no measurement of his
+    own credited anywhere in the frozen record - the extraction's central discipline was the
+    aphorism test (what would it mean for this to be false?), not an evidence ledger.
+  categories:
+    - category: source_author_assertion
+      sk_refs: [sk_god_0001, sk_god_0002, sk_god_0003, sk_god_0004, sk_god_0005, sk_god_0006,
+                sk_god_0007, sk_god_0008, sk_god_0009, sk_god_0010, sk_god_0011, sk_god_0012,
+                sk_god_0013, sk_god_0014, sk_god_0015, sk_god_0016, sk_god_0017, sk_god_0018,
+                sk_god_0019, sk_god_0020, sk_god_0021, sk_god_0022, sk_god_0026, sk_god_0027,
+                sk_god_0028, sk_god_0029]
+      evidence: >
+        Twenty-six objects stated in the author's own voice and argued from analogy, worked
+        cases and his own practice; nearly all carry practitioner_assertion. This category
+        includes the objects where Godin reports his own figures - the village solar-lantern
+        afternoon (sk_god_0011, 'doubled', one observer, no counts), the JCPenney-era retail
+        outcome (sk_god_0009, a fifty-per-cent figure reported unsourced), and his 1990s
+        company's open and response rates (sk_god_0027) - because the frozen record deliberately
+        credits none of them as measurement: they are recalled, uncontrolled business outcomes,
+        and the extraction recorded them as outcome_claimed anecdote rather than
+        empirical_within_source. Attribution credits inside these objects (Keith Johnstone's
+        status vocabulary on sk_god_0017) are vocabulary credits, not quoted claims doing
+        evidential work.
+    - category: source_quotes_named_third_party
+      sk_refs: [sk_god_0024, sk_god_0025]
+      evidence: >
+        Objects whose load-bearing support is an identified other author's material, carried
+        approvingly: Geoffrey Moore's chasm and Gartner's hype cycle inside sk_god_0024 (the
+        frozen caveat says plainly they are cited frameworks, not findings of this book), and
+        Jay Levinson's quoted maxim ('change them when your accountant is tired of them') inside
+        sk_god_0025.
+    - category: source_quotes_unnamed_third_party
+      sk_refs: [sk_god_0023]
+      evidence: >
+        The neophiliac-motive claim cites 'a study' of conspiracy believers with no researcher,
+        venue or design named, and the object's other numeric support - the Rogers-curve
+        proportions - is a normal distribution's percentages presented as though they were
+        measurements of adoption behaviour, per the frozen caveat.
+  relation_to_evidence_characteristics: >
+    Consistent with the frozen record, mechanically checked: empirical_within_source appears on
+    zero of 29 objects, and no category here asserts a supplied measurement. The near-misses are
+    inside source_author_assertion by design: sk_god_0011 and sk_god_0027 are the author's own
+    reported figures that the extraction refused to credit as measurement because they are
+    uncontrolled recollections; this audit follows the frozen file's refusal rather than
+    upgrading them, which is what the cross-check rule is for.
+
+application_fit:
+  audited: true
+  findings:
+    - consumer: creative_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        None attempted, per EXTRACTION-NOTES §8: nothing about a Creative IR path is inferred
+        from a trade book about positioning, and the task forbids it.
+    - consumer: production_ir
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: The source prescribes no physical production procedure.
+    - consumer: evaluation
+      outcome: binding_exists
+      existing_binding_refs: [bnd_god_002, bnd_god_003, bnd_god_004]
+      note: >
+        Three evaluation bindings over inspectable properties of finished work: the
+        made-to-offend-no-one flatness that pursuing mass produces, the two constraints on
+        being talked about (gives the sharer something to say about themselves, buildable in),
+        and the tension-versus-fear boundary (does the asset present a route forward).
+    - consumer: governance
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: >
+        No governance binding was made. The nearest governance-shaped knowledge - the
+        survivor-only support behind the smallest-viable-market cases (sk_god_0003's caveat) -
+        is carried as caveats rather than as a rule, and none is manufactured here.
+    - consumer: benchmark
+      outcome: binding_exists
+      existing_binding_refs: [bnd_god_001, bnd_god_005]
+      note: >
+        bnd_god_001 wraps the only ready-made brief specification in this lane group - Godin's
+        thirteen-question worksheet - and bnd_god_005 uses the XY positioning method's
+        by-construction minimal pairs (same offering, opposite extremes).
+    - consumer: deterministic_composition
+      outcome: no_current_binding
+      existing_binding_refs: []
+      note: No exactly-executable geometry or composition rule; the guidance is judgemental.
+    - consumer: human_workflow
+      outcome: candidate_no_binding_made
+      existing_binding_refs: []
+      note: >
+        The XY positioning method (sk_god_0014) and the two-questions discipline (sk_god_0002)
+        are procedures that act on a person's decision process, executable by a human before any
+        artefact exists; no workflow binding was made in the extraction and none is manufactured
+        here.
+  unbound_knowledge_of_note:
+    - sk_refs: [sk_god_0002]
+      observation: >
+        'Who's it for? What's it for?' with its two named failure modes is the
+        questions-with-defaults shape the compiled-pack work (REP-05) wants for brief intake,
+        and it currently binds only indirectly through the worksheet benchmark.
+  conclusion: >
+    A thin, honest fit for an assertive positioning book: three evaluation bindings and two
+    benchmark bindings, five bindings from twenty-nine objects - the extraction calls that a
+    refusal rate, and this audit agrees. Nothing binds to creative or production IR, and the
+    unfalsifiable-aphorism hazard the extraction named is kept out of the bindings.
+
+lineage:
+  authors: [Seth Godin]
+  publisher: Portfolio / Penguin (Penguin Random House LLC)
+  series: null
+  first_published: 2018
+  copy_edition: >
+    EPUB ebook edition, ISBN 9780525540847 (ebook), © 2018 Seth Godin; 2,377,250 bytes, SHA-256
+    c8f464e184f1903923462c5a0820f031d83d87f9ba9fb7f54ce67146e7303c1b, re-verified on arrival by
+    the REP-07 pass (ledger, hash_on_arrival).
+  related_sources_in_corpus: []
+  independence_verdict: independent_origin
+  independence_basis: >
+    No shared author, series, publisher or primary informant with any live source or canon-014
+    candidate. The nearest live neighbour, read before extracting, is miller-storybrand-sb7 -
+    both 2010s US trade-press marketing frameworks - and PROVENANCE.md §4 records that the
+    comparison changed what was extracted (Miller-restating material was refused) while no
+    relationship, equivalence or agreement is asserted anywhere in the YAML. That is an
+    adjacency of genre answering different questions (message structure vs audience selection),
+    not a lineage relation. Cited frameworks inside objects (Moore, Gartner, Levinson,
+    Johnstone) are not corpus sources.
+  extractor_exposure:
+    spec_contains_examples_from_this_source: false
+    evidence: >
+      SPEC-03/04/05's worked examples quote Light: Science & Magic and other corpus sources; no
+      SPEC quotes This Is Marketing. The extraction lane's disclosed neighbour-reading (the live
+      Miller record) is exposure to another source's record, used to refuse restatement, not
+      exposure to this source's findings via the specs.
+
+technology_contingency:
+  applicable: true
+  applicability_basis: >
+    The book's machinery is psychological and sociological (status, tension, worldview,
+    smallest viable market), but a minority of claims are stated over the 2018 attention
+    economy - platform permission, the advertising duopoly's economics, a specific retail
+    episode - and the extraction period-bounded them per object. The question is answered class
+    by class.
+  assessed: true
+  classes:
+    - class: durable_mechanism
+      sk_refs: [sk_god_0001, sk_god_0002, sk_god_0003, sk_god_0004, sk_god_0005, sk_god_0006,
+                sk_god_0007, sk_god_0008, sk_god_0010, sk_god_0011, sk_god_0012, sk_god_0013,
+                sk_god_0014, sk_god_0015, sk_god_0016, sk_god_0017, sk_god_0019, sk_god_0020,
+                sk_god_0021, sk_god_0022, sk_god_0023, sk_god_0024, sk_god_0025, sk_god_0026,
+                sk_god_0029]
+      evidence: >
+        Claims whose stated mechanism is human choice, status-seeking, belief-grouping and
+        tension - not any platform generation. Where such an object carries historical_claim or
+        culturally_bounded (several do), the frozen caveats bound the supporting examples and
+        the 2018 framing rather than the claimed mechanism; sk_god_0014's asserted historical
+        shift in what positioning requires (truth and generosity now) is recorded there as
+        unevidenced and stays a caveat, not a reclassification.
+    - class: technology_contingent
+      sk_refs: [sk_god_0009, sk_god_0027, sk_god_0028]
+      evidence: >
+        Claims whose validity is tied to a media-economic environment that changes: the JCPenney
+        episode's 2011-13 US department-store retail environment (sk_god_0009, the frozen caveat
+        says that environment no longer exists in that form), the permission-asset and
+        platform-sharecropper claims stated over 2018 platform incentives with supporting
+        numbers from 1990s email (sk_god_0027), and the direct/brand economics stated over the
+        named ad duopoly's 2018 CPMs and spend share (sk_god_0028). All three carry
+        historical_claim in the frozen record.
+    - class: uncertain
+      sk_refs: [sk_god_0018]
+      evidence: >
+        The claim that modern urban, internet, arts and innovation culture is built primarily on
+        affiliation rather than dominion is a broad cultural assertion of 2018 offered with no
+        support (frozen caveat); whether it is a durable observation about those cultures or an
+        artefact of its moment cannot be classed from this source.
+  existing_characteristics_relied_on: [historical_claim, culturally_bounded]

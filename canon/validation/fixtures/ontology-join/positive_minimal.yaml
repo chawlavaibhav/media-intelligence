@@ -1,0 +1,27 @@
+# STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+# coordination/CONTROL-STATE.md governs.
+# Positive fixture: one well-formed convergence row. ledger_complete: false, so the
+# whole-ledger completeness checks (duplicate adjudications, CANON-014 imports) do not apply.
+schema: cross_source_candidate_ledger_v0
+task: REP-02-fixture
+status: proposed
+ledger_complete: false
+records:
+- record_id: fx_0001
+  kind: convergence
+  label: darshan_fixture
+  status: proposed
+  relation: maps_to
+  usable: accepted_only
+  confidence: high
+  members:
+  - id: t_dpci_0001
+    source_dir: dwyer-patel-cinema-india
+    evidence: 'darshan: two-way look; the image holds the power'
+  - id: t_jgb_0005
+    source_dir: jain-gods-in-the-bazaar
+    evidence: 'darshan: the devotee must be seen by the deity to receive its blessing'
+  independence:
+  - {a: dwyer-patel-cinema-india, b: jain-gods-in-the-bazaar, audit_relation: cites_source}
+  independent_origins: 2
+  note: cites_source does not defeat independence (SPEC-05 Governance rule 5).

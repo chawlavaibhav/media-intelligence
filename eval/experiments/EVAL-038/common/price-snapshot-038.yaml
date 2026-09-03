@@ -1,0 +1,47 @@
+# EVAL-038 — price reference snapshot. Pattern: EVAL-037 common/price-snapshot.yaml.
+#
+# Unlike EVAL-037, prices here DO gate dispatch: DN-07 requires execution-time
+# route/price verification before every paid call, and the runner refuses to dispatch a
+# lane whose model has a null price. A price that is not established is null; nothing is
+# estimated or inferred from a sibling model.
+
+snapshot_id: eval-038-price-snapshot-v1
+captured_on: '2026-09-01'
+currency: USD
+unit: per 1,000,000 tokens
+
+models:
+  claude-haiku-4-5-20251001:
+    provider: Anthropic
+    input: 1.00
+    cached_input: null
+    output: 5.00
+    source: >-
+      Anthropic first-party API pricing table (claude-api reference, cached 2026-06-24:
+      claude-haiku-4-5 input $1.00/MTok, output $5.00/MTok), agreeing with the committed
+      EVAL-037 snapshot (eval/experiments/EVAL-037/common/price-snapshot.yaml) and with
+      the empirical EVAL-037 haiku lane costs (USD 0.331358-0.400029 per 18 trials).
+    note: Cache-read pricing not established; cached tokens recorded, priced null.
+
+  gemma-4-31b-it:
+    provider: Google Gemini API
+    input: 0.00
+    cached_input: 0.00
+    output: 0.00
+    source: >-
+      Official Gemini API pricing page, fetched and pinned 2026-09-01 under DN-07's
+      network authorisation: common/gemma-price-pin/gemini-api-pricing.html
+      (240,179 bytes, sha256
+      4752958931f5297cb502547a8c3a0ba386f96c2f3b52caf3e2cfe394b0bd690f). The page
+      lists Gemma 4 as "Free of charge" for input, output and context caching on the
+      free tier; the paid tier is "Not available".
+    note: >-
+      USD 0.00 is the established official unit price, not an absence of price. The
+      free tier is documented as "Used to improve our products: Yes" — acceptable
+      here because every payload is committed public-repo bytes (packs + briefs),
+      nothing sensitive.
+
+cost_rule: >-
+  calculated_cost_usd = (input_tokens / 1e6) * input + (output_tokens / 1e6) * output,
+  computed only when both prices and both token counts are non-null. Thinking tokens are
+  billed as output tokens by these providers and are not added twice.
