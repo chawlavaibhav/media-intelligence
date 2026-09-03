@@ -214,18 +214,15 @@ class SonnetB01Test(_Base):
         self.assertEqual(r.verdict(), "FAIL")
         self.assertInvariants(r)
 
-    @unittest.expectedFailure
     def test_ca_d5_fails_as_the_plan_states(self):
-        # DISCREPANCY recorded for the checker. Plan §F expects CA-D5 FAIL ("no declaration")
-        # on Sonnet B01. Its VISUAL_SYSTEM says "brighter neutral daylight balance" and the
-        # plan's BALANCE_TERMS carry bare "balance", so the presence clause is met by a
-        # white-balance phrase — a false pass the plan did not foresee. Not tuned.
-        self.assertEqual(self.status(self.rep, "CA-D5-check"), S.FAIL)
-
-    def test_ca_d5_observed(self):
+        # Plan §F: CA-D5 FAIL ("no declaration") on Sonnet B01. Its VISUAL_SYSTEM says
+        # "brighter neutral daylight balance" — a white-balance phrase; bare "balance" was
+        # narrowed out of BALANCE_TERMS (F-05, condition 2) and the plan's value is restored.
         row = self.row(self.rep, "CA-D5-check")
-        self.assertEqual(row.status, S.PASS)
-        self.assertIn("balance", row.detail)
+        self.assertEqual(row.status, S.FAIL)
+        self.assertFalse(row.blocking)
+        self.assertIn("no balance/restless declaration", row.detail)
+        self.assertIn("1 non-blocking FAIL on record", self.rep.render_text().splitlines()[-1])
 
 
 class MutationTest(_Base):
@@ -314,6 +311,65 @@ class MutationTest(_Base):
         row = self.row(r, "PA-D10-check")
         self.assertEqual(row.status, S.PASS, row.detail)
         self.assertIn("1 entries", row.detail)
+
+    # ── F-05: bare terms narrowed (condition 2) ──────────────────────────
+    def synthetic(self, visual_system, deviations="none"):
+        pkg = ("## VISUAL_SYSTEM\n" + visual_system + "\n## DELIVERABLE\none 4:5 image\n"
+               "## GENERATION_PROMPTS\n\"" + "A matte plate, no text. " * 8 + "\"\n"
+               "## DOCTRINE_DEVIATIONS\n" + deviations + "\n")
+        return self.run_gate(Path("synthetic.txt"), "static_image", True, text=pkg)
+
+    def test_f05_checkers_junk_visual_system(self):
+        # checker F-05: the junk VISUAL_SYSTEM that satisfied seven presence partials. After
+        # narrowing, bare "balance" no longer declares balance (CA-D5 FAIL). The rows that
+        # still PASS do so on the plan's necessary-condition clauses, lexically met: a
+        # LIGHT term with a DIRECTION term ("key light from the side"), a FINISH term
+        # ("brushed"), a PLACEMENT term ("center") and an ordered 1/2/3 list. The plan says
+        # these are presence checks. PA-D8's committed feeds_sections do not include
+        # VISUAL_SYSTEM, so "glass, highlight" there is out of scope: NOT_RUN, not PASS.
+        r = self.synthetic("balance, key light from the side, center, brushed.\n"
+                           "1. a\n2. b\n3. c\nglass, highlight.")
+        ca5 = self.row(r, "CA-D5-check")
+        self.assertEqual(ca5.status, S.FAIL)
+        self.assertIn("no balance/restless declaration", ca5.detail)
+        for cid in ("PA-D1-check", "PA-D4-check", "CA-D1-check", "CA-D2-check"):
+            self.assertEqual(self.status(r, cid), S.PASS, cid)
+        self.assertEqual(self.status(r, "PA-D8-check"), S.NOT_RUN)
+        self.assertNotIn("VISUAL_SYSTEM", self.reg.checks["PA-D8-check"].feeds_sections)
+
+    def test_f05_soft_window_light_is_not_a_direction(self):
+        r = self.synthetic("**implied_light_source:**\nSoft window light.\n")
+        row = self.row(r, "PA-D4-check")
+        self.assertEqual(row.status, S.FAIL, row.detail)
+        r = self.synthetic("**implied_light_source:**\nSoft window light from the left.\n")
+        self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
+        r = self.synthetic("**implied_light_source:**\nNatural daylight from the office window.\n")
+        self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
+
+    def test_f05_bare_key_and_front_are_not_a_light_and_a_direction(self):
+        r = self.synthetic("**implied_light_source:**\n"
+                           "the key is the product itself, shown from the front\n")
+        self.assertEqual(self.status(r, "PA-D4-check"), S.FAIL)
+        r = self.synthetic("**implied_light_source:**\nsoft key from the front\n")
+        self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
+        r = self.synthetic("**implied_light_source:**\nkey light, fill from the left\n")
+        self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
+
+    def test_f05_bare_degree_sign_is_not_a_direction(self):
+        r = self.synthetic("**implied_light_source:**\nkey light; dial tilted 5° toward camera.\n")
+        self.assertEqual(self.status(r, "PA-D4-check"), S.FAIL)
+        r = self.synthetic("**implied_light_source:**\nkey light at 45° above horizontal.\n")
+        self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
+        r = self.synthetic("**implied_light_source:**\nkey light 45 degrees camera-left.\n")
+        self.assertEqual(self.status(r, "PA-D4-check"), S.PASS)
+
+    def test_f05_white_balance_is_not_a_balance_declaration(self):
+        r = self.synthetic("brighter neutral daylight balance; brushed case; centre zone.")
+        self.assertEqual(self.status(r, "CA-D5-check"), S.FAIL)
+        for phrase in ("the frame is balanced", "compositional balance holds",
+                       "deliberately unbalanced and restless", "an off-balance frame"):
+            r = self.synthetic(phrase + "; brushed case; centre zone.")
+            self.assertEqual(self.status(r, "CA-D5-check"), S.PASS, phrase)
 
     def test_deleting_finish_words_fails_pa_d1_non_blocking(self):
         text = SONNET_B06.read_text()

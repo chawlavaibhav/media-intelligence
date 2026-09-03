@@ -21,6 +21,20 @@ CHANGELOG = [
     "after it ('We will not compose this using the rule of thirds.', 'Avoid any reliance on the "
     "classic rule of thirds.', 'The rule of thirds is not used here.'). T2/T3 keep the 4-token "
     "window.",
+    "2026-09-03 F-05: LIGHT_TERMS — bare `key` and `fill` removed ('the key is the product "
+    "itself, shown from the front'); `key source`, `soft key`, `hard key`, `fill light`, "
+    "`fill from`, `fill source` added so Sonnet B06's 'single large soft key … gentle fill "
+    "from camera-right' still declares a source.",
+    "2026-09-03 F-05: DIRECTION_TERMS — bare `side`, `front`, `behind`, `window` and bare "
+    "`\\d°` / `\\d degrees` removed ('Soft window light.', 'shown from the front', 'dial "
+    "tilted 5°'); `from the/a left|right|front|back|rear|top|bottom`, `from … window`, "
+    "`side-lit`, `side light`, `front-lit`, `backlit`, `behind the <subject>` and "
+    "`\\d° <above|below|from|camera-…>` added ('45° above horizontal', '45 degrees "
+    "camera-left').",
+    "2026-09-03 F-05: BALANCE_TERMS — bare `balance` removed ('brighter neutral daylight "
+    "balance' is white balance; Sonnet B01 CA-D5 returns to the plan's FAIL); "
+    "`compositional|visual|tonal|formal balance`, `balance of/in the frame|composition`, "
+    "`in balance`, `imbalance` added.",
 ]
 
 # ── §B.1 recognisers for the partial pre-dispatch checks ────────────────────────────────
@@ -31,17 +45,23 @@ FINISH_TERMS = (
     "frosted", "lacquer", "metallic",
 )
 # PA-D4 — a LIGHT term and a DIRECTION term in one sentence.
+# F-05: bare `key` / `fill` narrowed to lighting phrases.
 LIGHT_TERMS = (
-    r"key\s+light", "key", r"light\s+source", "softbox", r"soft\s+box", r"window\s+light",
-    "daylight", "sunlight", "tube-light", "tubelight", "lamp", "practical", "backlight",
-    r"rim\s+light", "kicker", "fill", "spotlight", r"overhead\s+light", r"lit\s+from",
-    r"light\s+from",
+    r"key\s+light", r"key\s+source", r"soft\s+key", r"hard\s+key", r"light\s+source", "softbox",
+    r"soft\s+box", r"window\s+light", "daylight", "sunlight", "tube-light", "tubelight", "lamp",
+    "practical", "backlight", r"rim\s+light", "kicker", r"fill\s+light", r"fill\s+from",
+    r"fill\s+source", "spotlight", r"overhead\s+light", r"lit\s+from", r"light\s+from",
 )
+# F-05: bare `side` / `front` / `behind` / `window` / `°` narrowed to direction phrases.
 DIRECTION_TERMS = (
     "upper-left", r"upper\s+left", "top-left", r"top\s+left", "upper-right", r"upper\s+right",
     "top-right", r"from\s+the\s+left", r"from\s+the\s+right", r"from\s+above", r"from\s+behind",
-    r"from\s+the\s+side", "camera-left", "camera-right", "overhead", "behind", "side", "front",
-    r"\d+\s*°", r"\d+\s*degrees", "window",
+    r"from\s+the\s+side", r"from\s+(?:the\s+|a\s+)?(?:left|right|front|back|rear|top|bottom)\b",
+    r"from\s+(?:the\s+|a\s+)?(?:[\w/-]+\s+){0,2}windows?\b", "camera-left", "camera-right",
+    "overhead", "side-lit", r"side\s*light(?:ing)?", "front-lit", "backlit",
+    r"behind\s+the\s+(?:subject|product|watch|bottle|talent|set|dial)",
+    r"\d+\s*(?:°|degrees)\s*(?:above|below|from|off|to\s+the|camera-?|left|right|top|upper|"
+    r"lower|front|back|side|elevation|azimuth|high|up)",
 )
 # PA-D8 — conditional: a GLOSSY-SURFACE term requires a SPECULAR-DECLARATION term.
 GLOSSY_SURFACE_TERMS = (
@@ -70,9 +90,12 @@ PLACEMENT_TERMS = (
     r"right\s+of\s+centre", r"right\s+of\s+center", "upper", "lower", "zone", "positioned",
     "placed", "placement",
 )
-# CA-D5 — deliberately excludes "symmetrical" ("clean symmetrical dial layout" is the dial).
-BALANCE_TERMS = ("balanced", "balance", "restless", "unbalanced", "off-balance",
-                 r"refuse\s+the\s+eye")
+# CA-D5 — deliberately excludes "symmetrical" ("clean symmetrical dial layout" is the dial)
+# and, since F-05, bare "balance" ("daylight balance" is white balance).
+BALANCE_TERMS = ("balanced", "restless", "unbalanced", "off-balance", r"refuse\s+the\s+eye",
+                 r"(?:compositional|visual|tonal|formal)\s+balance",
+                 r"balance\s+(?:of|in|across)\s+the\s+(?:frame|composition|image)",
+                 r"in\s+balance", "imbalance")
 # CA-D6 — alongside package.ASPECT_RATIO (`\b\d{1,2}:\d{1,2}\b`).
 ASPECT_WORDS = ("square", "portrait", "landscape", "vertical", "horizontal")
 # CA-D6 / DISPATCH-ASPECT (F-04): a `\d:\d` pair is an aspect unless it reads as a clock time.
