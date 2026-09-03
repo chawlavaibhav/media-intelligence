@@ -132,6 +132,14 @@ class Report:
         n_pass = sum(1 for r in self.results if r.status is S.PASS)
         nb = sum(1 for r in self.results if r.status is S.FAIL and not r.blocking)
         nb_text = f"{nb} non-blocking FAIL{'s' if nb != 1 else ''} on record"
+        # Non-doctrine rows (limit / dispatch / infra) that did not run are named here: the
+        # plan's j below counts doctrine lines only, and a PASS with LIMIT-TEXT not run must
+        # not read as a clean report.
+        other_nr = [r.check_id for r in self.results
+                    if r.family != "doctrine" and r.status is S.NOT_RUN]
+        if other_nr:
+            nb_text += (f"; {len(other_nr)} non-doctrine row{'s' if len(other_nr) != 1 else ''} "
+                        f"not run: {', '.join(other_nr)}")
         m = sum(1 for r in doctrine if r.status is S.NOT_MECHANISED)
         k = sum(1 for r in doctrine if r.status is S.NOT_APPLICABLE)
         j = sum(1 for r in doctrine if r.status is S.NOT_RUN)
