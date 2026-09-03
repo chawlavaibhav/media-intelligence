@@ -60,6 +60,10 @@ class _Base(unittest.TestCase):
                 self.assertIn(r.coverage, ("partial", "none"))
             if r.status in (S.PASS, S.FAIL) and r.family == "doctrine":
                 self.assertTrue(r.clause, r.check_id)
+            if r.family == "doctrine" and r.clause:
+                # condition 5: every clause fragment is a verbatim substring of the pack line
+                for fragment in r.clause.split(" … "):
+                    self.assertIn(fragment, r.source_text, f"{r.check_id}: {fragment!r}")
         text = report.render_text()
         self.assertNotIn("doctrine satisfied", text)
         for cid in ALL_IDS:
@@ -129,6 +133,8 @@ class SonnetB06Test(_Base):
         self.assertIn("no DOCTRINE_DEVIATIONS section", self.row(r, "PA-D10-check").detail)
         self.assertEqual(self.status(r, "CA-D1-check"), S.PASS)
         self.assertEqual(self.status(r, "CA-D2-check"), S.PASS)
+        self.assertIn('[partial: "Placement is stated as a zone" … "no placement is justified '
+                      'by a named ratio or grid line"]', r.render_text())
         # the true declaration gap: FAIL, non-blocking (Ruling 2), on record
         ca5 = self.row(r, "CA-D5-check")
         self.assertEqual(ca5.status, S.FAIL)
@@ -139,7 +145,7 @@ class SonnetB06Test(_Base):
         self.assertEqual(r.verdict(), "PASS")
         text = r.render_text()
         self.assertIn("FAIL (non-blocking) CA-D5-check", text)
-        self.assertIn("(1 non-blocking FAIL on record)", text.splitlines()[-1])
+        self.assertIn("; 1 non-blocking FAIL on record)", text.splitlines()[-1])
         self.assertInvariants(r)
 
 

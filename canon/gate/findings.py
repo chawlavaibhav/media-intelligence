@@ -28,6 +28,7 @@ TOLERANCES = {"aspect_ratio_abs": 0.01, "duration_s_abs": 0.5, "shot_sum_rel": 0
 GATES = ("pre_dispatch", "post_draw")
 COVERAGES = ("full", "partial", "none")
 GATE_LABEL = {"pre_dispatch": "pre-dispatch", "post_draw": "post-draw"}
+CLAUSE_JOIN = " … "   # separates verbatim fragments inside CheckResult.clause
 
 
 class Status(enum.Enum):
@@ -78,8 +79,14 @@ class CheckResult:
         if self.status is Status.NOT_MECHANISED:
             return f"{self.detail} — not counted as satisfied"
         if self.status in (Status.PASS, Status.FAIL) and self.coverage == "partial" and self.clause:
-            return f'[partial: "{self.clause}"] {self.detail}'.rstrip()
+            return f"[partial: {self.quoted_clause()}] {self.detail}".rstrip()
         return self.detail
+
+    def quoted_clause(self) -> str:
+        """The clause is one or more verbatim fragments of `source_text` joined by
+        CLAUSE_JOIN; each fragment is rendered inside its own quotation marks so nothing
+        non-verbatim ever appears in quotes attributed to a pack (condition 5)."""
+        return CLAUSE_JOIN.join(f'"{f}"' for f in self.clause.split(CLAUSE_JOIN))
 
 
 @dataclass
@@ -128,10 +135,20 @@ class Report:
         return (f"{label}{' ' * max(1, 16 - len(label))}"
                 f"{r.check_id}{' ' * max(1, 16 - len(r.check_id))}{r.rendered_detail()}")
 
+    @staticmethod
+    def _scope(rows) -> str:
+        """'<d> doctrine partial(s) + <o> limit/dispatch/infra row(s)' — the numerator of
+        both final lines says what it counts (F-13): every family, doctrine named apart."""
+        d = sum(1 for r in rows if r.family == "doctrine")
+        o = len(rows) - d
+        return (f"{d} doctrine partial{'s' if d != 1 else ''} + {o} limit/dispatch/infra "
+                f"row{'s' if o != 1 else ''}")
+
     def final_line(self) -> str:
         S = Status
         doctrine = self.rows("doctrine")
-        n_pass = sum(1 for r in self.results if r.status is S.PASS)
+        held = [r for r in self.results if r.status is S.PASS]
+        ran = [r for r in self.results if r.status in (S.PASS, S.FAIL)]
         nb = sum(1 for r in self.results if r.status is S.FAIL and not r.blocking)
         nb_text = f"{nb} non-blocking FAIL{'s' if nb != 1 else ''} on record"
         # Non-doctrine rows (limit / dispatch / infra) that did not run are named here: the
@@ -146,18 +163,15 @@ class Report:
         k = sum(1 for r in doctrine if r.status is S.NOT_APPLICABLE)
         j = sum(1 for r in doctrine if r.status is S.NOT_RUN)
         if self.verdict() == "PASS":
-            return (f"GATE PASS: {n_pass} mechanised checks hold over the submitted bytes "
-                    f"({nb_text}); {m} doctrine check lines NOT mechanised, {k} not applicable, "
-                    f"{j} not run — none counted as satisfied. This establishes structure over "
-                    "the prompt/artifact bytes — not doctrine satisfaction, quality, outcomes, "
-                    "or adoption.")
+            return (f"GATE PASS: {len(held)} mechanised checks hold over the submitted bytes "
+                    f"({self._scope(held)}; {nb_text}); {m} doctrine check lines NOT "
+                    f"mechanised, {k} not applicable, {j} not run — none counted as satisfied. "
+                    "This establishes structure over the prompt/artifact bytes — not doctrine "
+                    "satisfaction, quality, outcomes, or adoption.")
         failing = sum(1 for r in self.results if r.failing)
-        ran = [r for r in doctrine if r.status in (S.PASS, S.FAIL)]
-        partial = sum(1 for r in ran if r.coverage == "partial")
-        cov = "all partial" if partial == len(ran) else f"{partial} partial"
         return (f"GATE FAIL ({failing} failing checks; {nb_text}). {len(ran)} checks mechanised "
-                f"({cov}) over {len(doctrine)} doctrine check lines; {m + k + j} lines NOT "
-                "mechanised, not applicable or not run — never counted as satisfied.")
+                f"({self._scope(ran)}) over {len(doctrine)} doctrine check lines; {m + k + j} "
+                "lines NOT mechanised, not applicable or not run — never counted as satisfied.")
 
     # ── JSON ────────────────────────────────────────────────────────────
     def to_json(self) -> dict:

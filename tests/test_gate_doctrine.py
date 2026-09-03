@@ -206,12 +206,15 @@ class FindingsTest(unittest.TestCase):
         self.assertIn("NOT-MECHANISED  PA-D2-check     needs pixels — not counted as satisfied", text)
         self.assertIn("NOT-APPLICABLE  CA-D7-check     video decision", text)
         self.assertIn("NOT-RUN         PA-D10-check    no DOCTRINE_DEVIATIONS section", text)
+        # F-13: the numerator says what it counts — doctrine partials and the
+        # limit/dispatch/infra rows, the same scope on the PASS and the FAIL line
         self.assertEqual(
             lines[-1],
-            "GATE PASS: 1 mechanised checks hold over the submitted bytes (1 non-blocking FAIL on "
-            "record); 1 doctrine check lines NOT mechanised, 1 not applicable, 1 not run — none "
-            "counted as satisfied. This establishes structure over the prompt/artifact bytes — "
-            "not doctrine satisfaction, quality, outcomes, or adoption.")
+            "GATE PASS: 1 mechanised checks hold over the submitted bytes (1 doctrine partial + "
+            "0 limit/dispatch/infra rows; 1 non-blocking FAIL on record); 1 doctrine check lines "
+            "NOT mechanised, 1 not applicable, 1 not run — none counted as satisfied. This "
+            "establishes structure over the prompt/artifact bytes — not doctrine satisfaction, "
+            "quality, outcomes, or adoption.")
         self.assertNotIn("doctrine satisfied", text)
 
     def test_render_fail_line_idiom(self):
@@ -232,11 +235,40 @@ class FindingsTest(unittest.TestCase):
         long_id = self.report([row("DISPATCH-SHOT-SUM", S.PASS, family="dispatch",
                                    coverage="full", clause="", detail="11 shots")]).render_text()
         self.assertIn("PASS            DISPATCH-SHOT-SUM 11 shots", long_id)
+        # F-13: LIMIT-TEXT, CA-D1, CA-D5 and DISPATCH-ASPECT reached PASS/FAIL — four rows
+        # mechanised, two of them doctrine partials; the PASS line counts the same families
         self.assertEqual(
             lines[-1],
-            "GATE FAIL (1 failing checks; 1 non-blocking FAIL on record). 2 checks mechanised "
-            "(all partial) over 3 doctrine check lines; 1 lines NOT mechanised, not applicable "
-            "or not run — never counted as satisfied.")
+            "GATE FAIL (1 failing checks; 1 non-blocking FAIL on record). 4 checks mechanised "
+            "(2 doctrine partials + 2 limit/dispatch/infra rows) over 3 doctrine check lines; "
+            "1 lines NOT mechanised, not applicable or not run — never counted as satisfied.")
+
+    def test_pass_line_counts_limit_dispatch_and_infra_rows_in_the_same_scope(self):
+        S = findings.Status
+        text = self.report([
+            row("LIMIT-TEXT", S.PASS, family="limit", blocking=True, coverage="full", clause=""),
+            row("CA-D1-check", S.PASS, clause="Name the 1st/2nd/3rd read"),
+            row("DISPATCH-ASPECT", S.PASS, family="dispatch", blocking=True, coverage="full",
+                clause=""),
+            row("INFRA-CONTAINER", S.PASS, family="infra", blocking=True, coverage="full",
+                clause=""),
+        ]).render_text()
+        self.assertTrue(text.splitlines()[-1].startswith(
+            "GATE PASS: 4 mechanised checks hold over the submitted bytes (1 doctrine partial + "
+            "3 limit/dispatch/infra rows; 0 non-blocking FAILs on record); "))
+
+    def test_partial_clause_fragments_render_each_in_their_own_quotes(self):
+        # F-06 / condition 5: a clause made of two verbatim pack fragments is joined with
+        # " … " and rendered as two quoted fragments — never one paraphrase in quotes
+        r = row("CA-D2-check", findings.Status.PASS,
+                clause="Placement is stated as a zone … no placement is justified by a named "
+                       "ratio or grid line")
+        self.assertEqual(
+            r.rendered_detail(),
+            '[partial: "Placement is stated as a zone" … "no placement is justified by a named '
+            'ratio or grid line"]')
+        self.assertEqual(row("PA-D1-check", findings.Status.PASS, clause="one finish",
+                             detail="x").rendered_detail(), '[partial: "one finish"] x')
 
     def test_error_row_renders_and_fails(self):
         rep = self.report([row("LIMIT-TEXT", findings.Status.ERROR, family="limit",

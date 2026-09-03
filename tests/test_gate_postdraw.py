@@ -85,6 +85,8 @@ class _Base(unittest.TestCase):
                 self.assertTrue(r.detail.strip(), r.check_id)
             if r.family == "doctrine":
                 self.assertEqual(r.source_text, self.reg.checks[r.check_id].text)
+                for fragment in (r.clause.split(" … ") if r.clause else ()):
+                    self.assertIn(fragment, r.source_text, f"{r.check_id}: {fragment!r}")
         text = report.render_text()
         self.assertNotIn("doctrine satisfied", text)
         self.assertEqual(report.gate, "post_draw")

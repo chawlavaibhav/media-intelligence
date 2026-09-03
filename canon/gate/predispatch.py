@@ -18,7 +18,7 @@ import re
 from dataclasses import dataclass
 
 from canon.gate import package, textscan, vocab
-from canon.gate.findings import TOLERANCES, CheckResult, Report, Status
+from canon.gate.findings import CLAUSE_JOIN, TOLERANCES, CheckResult, Report, Status
 
 GATE = "pre_dispatch"
 
@@ -158,7 +158,10 @@ def check_limit_text(prompts: list, registry) -> CheckResult:
 def check_ca_d2(ctx: Ctx, line) -> CheckResult:
     """Clause 2 (full, blocking): no named ratio / grid line outside a negation window.
     Clause 1 (partial): a placement term occurs in scope."""
-    clause = "Placement is stated as a zone; no placement is justified by a named ratio or grid line"
+    # two verbatim fragments of the pack line (condition 5); "plus the reason for it" is not
+    # tested and is therefore not quoted
+    clause = ("Placement is stated as a zone" + CLAUSE_JOIN
+              + "no placement is justified by a named ratio or grid line")
     scope = _scope(ctx, line)
     for source, body in scope.parts:
         for sentence in package.split_sentences(body):
