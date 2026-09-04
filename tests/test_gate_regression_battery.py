@@ -228,6 +228,13 @@ ROWS = [
     ("N-01 K17 opener + TAB", "LIMIT-TEXT raw", f'"{CLEAN} she holds "\tAster\t" {TAIL}"\n', "ERROR"),
     ("N-05 K16 short 2nd prompt", "LIMIT-TEXT raw",
      f'"{CLEAN}"\n"chat bubbles and a notification counter on screen"\n', "ERROR"),
+    # a run nested inside a prompt of the other quote style is scanned with that prompt
+    ("N-01 A5 curly inner name", "LIMIT-TEXT raw",
+     f'"{CLEAN} the \u201cAster Meridian\u201d on her wrist, chat bubbles and a notification counter"\n',
+     "FAIL"),
+    ("N-01 straight inner in curly", "LIMIT-TEXT raw",
+     f'\u201c{CLEAN} the "Aster Meridian" on her wrist, chat bubbles and a notification counter\u201d\n',
+     "FAIL"),
 ]
 
 

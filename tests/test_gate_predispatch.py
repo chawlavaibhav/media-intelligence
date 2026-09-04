@@ -736,6 +736,21 @@ class N01SubFloorRunTest(_Base):
     def test_n05_k16_a_short_second_prompt_is_an_error(self):
         self.assertFloorError(K16_SHORT_SECOND_PROMPT, "K16")
 
+    def test_n01_a_run_nested_inside_a_prompt_is_scanned_with_it(self):
+        # the fourth checker's A5 and its mirror: the inner name is covered by the prompt
+        # that contains it; the prompt is whole and FAILs on its tail, not ERROR
+        for name, section in (
+                ("A5 curly inner", f'"{CLEAN} the \u201cAster Meridian\u201d on her wrist, chat '
+                                   f'bubbles and a notification counter"\n'),
+                ("straight inner in curly", f'\u201c{CLEAN} the "Aster Meridian" on her wrist, '
+                                            f'chat bubbles and a notification counter\u201d\n')):
+            with self.subTest(name):
+                r = self.run_gate(Path("synthetic.txt"), "video", False, text=self.synthetic(section))
+                lt = self.row(r, "LIMIT-TEXT")
+                self.assertEqual(lt.status, S.FAIL, (name, lt.detail))
+                self.assertTrue(lt.detail.startswith("prompt 1, sentence"), (name, lt.detail))
+                self.assertEqual(r.verdict(), "FAIL")
+
     def test_n01_a_supplied_prompt_file_still_bypasses_extraction(self):
         r = self.run_gate(Path("synthetic.txt"), "video", False,
                           text=self.synthetic(K16_SHORT_SECOND_PROMPT), prompts=[CLEAN])

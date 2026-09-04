@@ -304,18 +304,30 @@ def _quoted_runs(text: str) -> list:
     content, all of it is scanned or the section errors; a package that wants a short
     quoted label in this section carries it in another section or unquoted, and a short
     prompt is supplied via --prompt-file or lengthened. The class-3 reading itself is left
-    as it is: its worst case is now this error, not a PASS."""
+    as it is: its worst case is now this error, not a PASS.
+
+    One run inside another. A run whose span lies strictly inside another run's span — a
+    curly-quoted name inside a straight-quoted prompt (`"… the “Aster Meridian” on her
+    wrist …"`, the fourth checker's A5) or the mirror — is nested: its bytes are scanned as
+    part of the prompt that contains it, so it is neither a prompt of its own nor subject to
+    the floor. This is the cross-style twin of the depth rule `_straight_runs` already
+    applies to a straight string inside a straight prompt (M-01); it is decided by the
+    spans alone, never by what the inner run looks like. Only runs that no other run
+    contains are prompts, and only those face the floor."""
     runs = list(_straight_runs(text))
     runs += [(m.start(), m.group(1)) for m in re.finditer(r"“([^“”]*)”", text, re.S)]
     runs.sort(key=lambda r: r[0])
-    short = [(start, body) for start, body in runs if len(body) < PROMPT_MIN_CHARS]
+    spans = [(start, start + 1 + len(body)) for start, body in runs]   # opener .. closer
+    outer = [run for run, (s, e) in zip(runs, spans)
+             if not any(s2 < s and e < e2 for s2, e2 in spans)]
+    short = [(start, body) for start, body in outer if len(body) < PROMPT_MIN_CHARS]
     if short:
         start, body = short[0]
         more = f" (+{len(short) - 1} more under the floor)" if len(short) > 1 else ""
         raise PromptBelowFloor(
             f"the run at offset {start} ({' '.join(body.split())!r}) is {len(body)} chars, "
             f"under the {PROMPT_MIN_CHARS}-char floor{more}")
-    return runs
+    return outer
 
 
 def _blockquote_runs(text: str) -> list:

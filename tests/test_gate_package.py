@@ -490,6 +490,26 @@ class N01SubFloorRunTest(unittest.TestCase):
             self.prompts(f'"{CLEAN}"\n\u201cchat bubbles on screen\u201d\n')
         self.assertEqual(self.prompts(f'"{CLEAN}"\n\u201c{CLEAN}\u201d\n'), [CLEAN, CLEAN])
 
+    def test_n01_a_run_nested_inside_another_is_covered_not_an_error(self):
+        # the fourth checker's A5 (a curly-quoted name inside a straight prompt) and its
+        # mirror: the inner run's bytes are scanned as part of the outer prompt, so the floor
+        # does not apply to it — only to runs that no other run contains. This is the same
+        # fact `_straight_runs` already applies to a straight string nested in a straight
+        # prompt (M-01); it is not a guess about what the inner run "looks like".
+        inner_curly = (f'{CLEAN} the \u201cAster Meridian\u201d on her wrist, chat bubbles and a '
+                       f'notification counter')
+        self.assertEqual(self.prompts(f'"{inner_curly}"\n'), [inner_curly])
+        inner_straight = (f'{CLEAN} the "Aster Meridian" on her wrist, chat bubbles and a '
+                          f'notification counter')
+        self.assertEqual(self.prompts(f'\u201c{inner_straight}\u201d\n'), [inner_straight])
+        # a nested run over the floor is not a second prompt either: it is scanned once, as
+        # part of the prompt that contains it
+        long_inner = f'{CLEAN} she reads \u201c{CLEAN}\u201d on the card, chat bubbles on screen'
+        self.assertEqual(self.prompts(f'"{long_inner}"\n'), [long_inner])
+        # but a sub-floor run that is not contained by any other still errors
+        with self.assertRaises(package.PromptBelowFloor):
+            self.prompts(f'"{inner_curly}"\n\u201cAster\u201d\n')
+
     def test_n01_pairing_errors_still_come_first(self):
         # a section that both fails to pair and carries a short run reports the pairing error
         with self.assertRaises(package.UnbalancedQuotes):
@@ -547,10 +567,28 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
             ("M-01 orphan closer", f'"{CLEAN}"\nchat bubbles on screen" then\n'),
             ("short label in prose", 'say "hello there" and "' + "x" * 119 + '"\n'),
             ("curly short", f'"{CLEAN}"\n\u201cchat bubbles on screen\u201d\n'),
+            ("A5 curly inner in straight", f'"{CLEAN} the \u201cAster Meridian\u201d on her wrist, '
+                                           f'chat bubbles and a notification counter"\n'),
+            ("straight inner in curly", f'\u201c{CLEAN} the "Aster Meridian" on her wrist, chat '
+                                        f'bubbles and a notification counter\u201d\n'),
+            ("long curly inner in straight",
+             f'"{CLEAN} she reads \u201c{CLEAN}\u201d on the card, chat bubbles on screen"\n'),
+            ("A4 curly outer, inch mark inside",
+             f'\u201c{CLEAN} a 6" OLED panel showing chat bubbles and a notification counter\u201d\n'),
         ]
         for name, section in synthetic:
             out.append((name, package.parse_package("GENERATION_PROMPTS\n" + section)))
         return out
+
+    @staticmethod
+    def spans(section):
+        """Every quoted run of the section as (start, end, body): straight runs from
+        `_straight_runs` (raises UnbalancedQuotes), curly runs from the same regex
+        `_quoted_runs` uses. `end` is the offset of the closing quote."""
+        runs = list(package._straight_runs(section))
+        runs += [(m.start(), m.group(1))
+                 for m in re.finditer(r"\u201c([^\u201c\u201d]*)\u201d", section, re.S)]
+        return sorted((s, s + 1 + len(b), b) for s, b in runs)
 
     def test_every_quoted_run_is_extracted_or_the_section_errors(self):
         cases = self.sections()
@@ -560,24 +598,39 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
             with self.subTest(name):
                 section = pkg.sections["GENERATION_PROMPTS"]
                 try:
-                    runs = package._straight_runs(section)
+                    runs = self.spans(section)
                 except package.UnbalancedQuotes:
                     with self.assertRaises(package.UnbalancedQuotes):
                         package.extract_prompts(pkg)
                     outcomes["unbalanced"] += 1
                     continue
-                runs += [(m.start(), m.group(1))
-                         for m in re.finditer(r"\u201c([^\u201c\u201d]*)\u201d", section, re.S)]
-                try:
-                    prompts = package.extract_prompts(pkg)
-                except package.PromptBelowFloor:
-                    # the error must rest on a run the section really contains
-                    self.assertTrue(any(len(b) < package.PROMPT_MIN_CHARS for _, b in runs), name)
+                # a run strictly inside another run's span is nested: its bytes are scanned
+                # as part of the run that contains it (computed here, independently of
+                # `_quoted_runs`, from the spans alone)
+                outer = [(s, e, b) for s, e, b in runs
+                         if not any(s2 < s and e < e2 for s2, e2, _ in runs)]
+                nested = [r for r in runs if r not in outer]
+                short_outer = [b for _, _, b in outer if len(b) < package.PROMPT_MIN_CHARS]
+                if short_outer:
+                    # exactly one admitted outcome: the floor error, and it must name a run
+                    # the section really contains
+                    with self.assertRaises(package.PromptBelowFloor) as cm:
+                        package.extract_prompts(pkg)
+                    self.assertTrue(any(" ".join(b.split()) in str(cm.exception)
+                                        for b in short_outer), (name, str(cm.exception)))
                     outcomes["floor"] += 1
                     continue
+                # otherwise extraction must succeed and cover every outermost run exactly,
+                # and every nested run through the outermost run that contains it
+                prompts = package.extract_prompts(pkg)
                 texts = [p.text for p in prompts]
-                for start, body in runs:
+                for start, _, body in outer:
                     self.assertIn(body.strip(), texts, (name, start))
+                for s, e, body in nested:
+                    holder = [b for s2, e2, b in outer if s2 < s and e < e2]
+                    self.assertTrue(holder, (name, s))
+                    self.assertTrue(any(body in b for b in holder), (name, s))
+                    self.assertNotIn(body.strip(), texts, (name, s, "nested run extracted twice"))
                 outcomes["extracted"] += 1
         # the set exercises all three admitted outcomes
         self.assertTrue(all(outcomes.values()), outcomes)
