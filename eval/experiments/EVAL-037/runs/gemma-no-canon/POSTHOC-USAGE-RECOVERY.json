@@ -1,0 +1,1600 @@
+{
+  "artifact": "POSTHOC-USAGE-RECOVERY",
+  "experiment": "EVAL-037",
+  "lane_id": "gemma-no-canon",
+  "model": "gemma-4-31b-it",
+  "condition": "NO_CANON",
+  "derived_from": {
+    "attempt_ledger": "attempt-ledger.json",
+    "attempt_ledger_sha256": "43689250f1248445c82976e191c4824fff61c232c80560ac74b8021ffcb3dc8d",
+    "result": "result.json",
+    "result_sha256": "a8751ed2ddc6a6399cb06d26c229b72db54ca0eac31453075c6c6bd8e01b0828",
+    "raw_response_files": 20
+  },
+  "substrate": {
+    "freeze_fingerprint": "5fc021d96d23299e977600735cc8cf0f950f61d6ed7cd8b39099f9a10aa189ee",
+    "canon_base_commit": "c6f8d910f7a3cdaaeafa2280313abfb9b898cddd",
+    "execution_commit": "4a7ee50bfc542416bcfadaeecf35f726c9aec2af"
+  },
+  "status": "DERIVED EVIDENCE \u2014 not a rerun, not a correction of the sealed record",
+  "method": "For every provider turn recorded in attempt-ledger.json, the retained raw response carrying the same provider response_id is located and its usage_metadata block is read verbatim. No value is computed, estimated, interpolated or carried across turns. A turn with no retained raw response is reported as UNKNOWN and contributes to no total.",
+  "defect_being_worked_around": "tools/providers.py turn_record reads `usage` on the Gemini response, but the google-genai SDK exposes `usage_metadata`. Every Gemini turn therefore recorded null tokens and null provider_reported_usage in the sealed evidence. The frozen substrate is NOT modified here; this file is derived alongside it.",
+  "fields_recovered": [
+    "prompt_token_count",
+    "candidates_token_count",
+    "thoughts_token_count",
+    "cached_content_token_count",
+    "total_token_count"
+  ],
+  "totals_are_partial": true,
+  "recovery_summary": {
+    "provider_turns_in_ledger": 26,
+    "provider_turns_recovered": 20,
+    "provider_turns_unknown": 6,
+    "trials_with_complete_usage": 12,
+    "trials_with_any_unknown_turn": 6
+  },
+  "lane_recovered_totals": {
+    "prompt_token_count": 28170,
+    "prompt_token_count_turns_reporting": 20,
+    "candidates_token_count": 20504,
+    "candidates_token_count_turns_reporting": 20,
+    "thoughts_token_count": 11543,
+    "thoughts_token_count_turns_reporting": 20,
+    "cached_content_token_count": null,
+    "cached_content_token_count_turns_reporting": 0,
+    "total_token_count": 60217,
+    "total_token_count_turns_reporting": 20
+  },
+  "lane_totals_completeness": "PARTIAL \u2014 these sums cover only the 20 of 26 provider turns whose raw response was retained. They are a lower bound on true lane usage, not a lane total.",
+  "cost": null,
+  "cost_basis": "UNKNOWN. Two independent reasons, either alone sufficient: (1) common/price-snapshot.yaml records no established input/output price for gemma-4-31b-it at freeze time; (2) 6 provider turns have unrecoverable usage. No price is inferred and no usage is estimated.",
+  "trials": [
+    {
+      "trial_id": "E037-gemma-no-canon-B03-R2",
+      "brief_id": "B03",
+      "repetition": 2,
+      "order_index": 1,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 360,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 912,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 557,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 1829,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R2",
+      "brief_id": "B02",
+      "repetition": 2,
+      "order_index": 2,
+      "status": "complete",
+      "provider_turns_in_ledger": 2,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 1,
+      "trial_usage_complete": false,
+      "recovered_totals": {
+        "prompt_token_count": 3707,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 910,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 559,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 5176,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": [
+        "VVSUaoPsD7jQg8UPsLCayAE"
+      ]
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R3",
+      "brief_id": "B02",
+      "repetition": 3,
+      "order_index": 3,
+      "status": "complete",
+      "provider_turns_in_ledger": 2,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 1,
+      "trial_usage_complete": false,
+      "recovered_totals": {
+        "prompt_token_count": 2415,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 940,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 772,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 4127,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": [
+        "l1SUarKWCIbVqfkPg6Wh0QE"
+      ]
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B04-R3",
+      "brief_id": "B04",
+      "repetition": 3,
+      "order_index": 4,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 383,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 1136,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 474,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 1993,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R1",
+      "brief_id": "B02",
+      "repetition": 1,
+      "order_index": 5,
+      "status": "complete",
+      "provider_turns_in_ledger": 2,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 1,
+      "trial_usage_complete": false,
+      "recovered_totals": {
+        "prompt_token_count": 3087,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 968,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 541,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 4596,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": [
+        "_FSUaou3M53Rg8UP7qjs4Ag"
+      ]
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B06-R1",
+      "brief_id": "B06",
+      "repetition": 1,
+      "order_index": 6,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 393,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 1027,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 473,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 1893,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R3",
+      "brief_id": "B01",
+      "repetition": 3,
+      "order_index": 7,
+      "status": "complete",
+      "provider_turns_in_ledger": 2,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 1,
+      "trial_usage_complete": false,
+      "recovered_totals": {
+        "prompt_token_count": 3632,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 1367,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 592,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 5591,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": [
+        "YVWUatvkCciN4-EPs-zu8QU"
+      ]
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B03-R3",
+      "brief_id": "B03",
+      "repetition": 3,
+      "order_index": 8,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 360,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 808,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 457,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 1625,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B06-R3",
+      "brief_id": "B06",
+      "repetition": 3,
+      "order_index": 9,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 393,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 820,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 529,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 1742,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B05-R2",
+      "brief_id": "B05",
+      "repetition": 2,
+      "order_index": 10,
+      "status": "format_repaired",
+      "provider_turns_in_ledger": 2,
+      "provider_turns_recovered": 2,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 1760,
+        "prompt_token_count_turns_reporting": 2,
+        "candidates_token_count": 1918,
+        "candidates_token_count_turns_reporting": 2,
+        "thoughts_token_count": 1178,
+        "thoughts_token_count_turns_reporting": 2,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 4856,
+        "total_token_count_turns_reporting": 2
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B04-R1",
+      "brief_id": "B04",
+      "repetition": 1,
+      "order_index": 11,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 383,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 1135,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 612,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 2130,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B06-R2",
+      "brief_id": "B06",
+      "repetition": 2,
+      "order_index": 12,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 393,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 869,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 546,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 1808,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B03-R1",
+      "brief_id": "B03",
+      "repetition": 1,
+      "order_index": 13,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 360,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 864,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 543,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 1767,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B05-R3",
+      "brief_id": "B05",
+      "repetition": 3,
+      "order_index": 14,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 364,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 1013,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 727,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 2104,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B04-R2",
+      "brief_id": "B04",
+      "repetition": 2,
+      "order_index": 15,
+      "status": "complete",
+      "provider_turns_in_ledger": 1,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 383,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 1072,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 361,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 1816,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": []
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R1",
+      "brief_id": "B01",
+      "repetition": 1,
+      "order_index": 16,
+      "status": "complete",
+      "provider_turns_in_ledger": 2,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 1,
+      "trial_usage_complete": false,
+      "recovered_totals": {
+        "prompt_token_count": 3756,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 1293,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 624,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 5673,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": [
+        "KVeUaqKuI_Gvg8UPrdvNEQ"
+      ]
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R2",
+      "brief_id": "B01",
+      "repetition": 2,
+      "order_index": 17,
+      "status": "complete",
+      "provider_turns_in_ledger": 2,
+      "provider_turns_recovered": 1,
+      "provider_turns_unknown": 1,
+      "trial_usage_complete": false,
+      "recovered_totals": {
+        "prompt_token_count": 4244,
+        "prompt_token_count_turns_reporting": 1,
+        "candidates_token_count": 1459,
+        "candidates_token_count_turns_reporting": 1,
+        "thoughts_token_count": 673,
+        "thoughts_token_count_turns_reporting": 1,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 6376,
+        "total_token_count_turns_reporting": 1
+      },
+      "unknown_turn_request_ids": [
+        "cFeUatONDJemg8UPkuWFMQ"
+      ]
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B05-R1",
+      "brief_id": "B05",
+      "repetition": 1,
+      "order_index": 18,
+      "status": "format_repaired",
+      "provider_turns_in_ledger": 2,
+      "provider_turns_recovered": 2,
+      "provider_turns_unknown": 0,
+      "trial_usage_complete": true,
+      "recovered_totals": {
+        "prompt_token_count": 1797,
+        "prompt_token_count_turns_reporting": 2,
+        "candidates_token_count": 1993,
+        "candidates_token_count_turns_reporting": 2,
+        "thoughts_token_count": 1325,
+        "thoughts_token_count_turns_reporting": 2,
+        "cached_content_token_count": null,
+        "cached_content_token_count_turns_reporting": 0,
+        "total_token_count": 5115,
+        "total_token_count_turns_reporting": 2
+      },
+      "unknown_turn_request_ids": []
+    }
+  ],
+  "turns": [
+    {
+      "trial_id": "E037-gemma-no-canon-B03-R2",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "KlSUarerDLC6g8UPjuSi2AE",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B03-R2-a0.response.json",
+      "raw_file_sha256": "06fbf4109e92282063850a19eec5b489a9bd421d9ef04e247c1fa9677f9ebfbb",
+      "recovered_usage": {
+        "prompt_token_count": 360,
+        "candidates_token_count": 912,
+        "thoughts_token_count": 557,
+        "cached_content_token_count": null,
+        "total_token_count": 1829
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 912,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 360,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 360
+          }
+        ],
+        "thoughts_token_count": 557,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1829,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R2",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "VVSUaoPsD7jQg8UPsLCayAE",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "UNKNOWN_RAW_RESPONSE_NOT_RETAINED",
+      "raw_response_retained": false,
+      "raw_file": null,
+      "raw_file_sha256": null,
+      "recovered_usage": {
+        "prompt_token_count": null,
+        "candidates_token_count": null,
+        "thoughts_token_count": null,
+        "cached_content_token_count": null,
+        "total_token_count": null
+      },
+      "usage_metadata_verbatim": null,
+      "reason": "this provider turn is an intermediate tool-call turn; the frozen runner writes one raw response per ATTEMPT (the final turn), so this turn's raw response was never retained and its usage is not recoverable"
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R2",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 1,
+      "provider_request_id": "bFSUaqWwEJyng8UPuonE6A4",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B02-R2-a0.response.json",
+      "raw_file_sha256": "c15980757d29dc429bfa1eda5fa4d5948ae4fdf9f6823062c63893d8b7da4fce",
+      "recovered_usage": {
+        "prompt_token_count": 3707,
+        "candidates_token_count": 910,
+        "thoughts_token_count": 559,
+        "cached_content_token_count": null,
+        "total_token_count": 5176
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 910,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 3707,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 3707
+          }
+        ],
+        "thoughts_token_count": 559,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 5176,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R3",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "l1SUarKWCIbVqfkPg6Wh0QE",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "UNKNOWN_RAW_RESPONSE_NOT_RETAINED",
+      "raw_response_retained": false,
+      "raw_file": null,
+      "raw_file_sha256": null,
+      "recovered_usage": {
+        "prompt_token_count": null,
+        "candidates_token_count": null,
+        "thoughts_token_count": null,
+        "cached_content_token_count": null,
+        "total_token_count": null
+      },
+      "usage_metadata_verbatim": null,
+      "reason": "this provider turn is an intermediate tool-call turn; the frozen runner writes one raw response per ATTEMPT (the final turn), so this turn's raw response was never retained and its usage is not recoverable"
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R3",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 1,
+      "provider_request_id": "nFSUasfnG_jEg8UPgoTVEA",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B02-R3-a0.response.json",
+      "raw_file_sha256": "41766a156af775cabf3b0c585cd8e29843ca8e02fb7de61eac1407ad7fc44bb1",
+      "recovered_usage": {
+        "prompt_token_count": 2415,
+        "candidates_token_count": 940,
+        "thoughts_token_count": 772,
+        "cached_content_token_count": null,
+        "total_token_count": 4127
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 940,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 2415,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 2415
+          }
+        ],
+        "thoughts_token_count": 772,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 4127,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B04-R3",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "zVSUarftBpzeg8UPtciagQw",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B04-R3-a0.response.json",
+      "raw_file_sha256": "dd0c0de00856c635c4e266d29b94eebdad061b873bcb53cab9815a9919cde33e",
+      "recovered_usage": {
+        "prompt_token_count": 383,
+        "candidates_token_count": 1136,
+        "thoughts_token_count": 474,
+        "cached_content_token_count": null,
+        "total_token_count": 1993
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1136,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 383,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 383
+          }
+        ],
+        "thoughts_token_count": 474,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1993,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R1",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "_FSUaou3M53Rg8UP7qjs4Ag",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "UNKNOWN_RAW_RESPONSE_NOT_RETAINED",
+      "raw_response_retained": false,
+      "raw_file": null,
+      "raw_file_sha256": null,
+      "recovered_usage": {
+        "prompt_token_count": null,
+        "candidates_token_count": null,
+        "thoughts_token_count": null,
+        "cached_content_token_count": null,
+        "total_token_count": null
+      },
+      "usage_metadata_verbatim": null,
+      "reason": "this provider turn is an intermediate tool-call turn; the frozen runner writes one raw response per ATTEMPT (the final turn), so this turn's raw response was never retained and its usage is not recoverable"
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B02-R1",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 1,
+      "provider_request_id": "C1WUaqqmK-O2g8UPpL3i2Qs",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B02-R1-a0.response.json",
+      "raw_file_sha256": "b240b4f92b378805e2dfde0c5be6917062443e8c11c0e9c7e3685bb885d5689a",
+      "recovered_usage": {
+        "prompt_token_count": 3087,
+        "candidates_token_count": 968,
+        "thoughts_token_count": 541,
+        "cached_content_token_count": null,
+        "total_token_count": 4596
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 968,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 3087,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 3087
+          }
+        ],
+        "thoughts_token_count": 541,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 4596,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B06-R1",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "NlWUaoDaPK27g8UP3fPxgAY",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B06-R1-a0.response.json",
+      "raw_file_sha256": "960e2c75079018781622c436d2c2ffadcddace2c547ec775ece158cf305f7097",
+      "recovered_usage": {
+        "prompt_token_count": 393,
+        "candidates_token_count": 1027,
+        "thoughts_token_count": 473,
+        "cached_content_token_count": null,
+        "total_token_count": 1893
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1027,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 393,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 393
+          }
+        ],
+        "thoughts_token_count": 473,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1893,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R3",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "YVWUatvkCciN4-EPs-zu8QU",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "UNKNOWN_RAW_RESPONSE_NOT_RETAINED",
+      "raw_response_retained": false,
+      "raw_file": null,
+      "raw_file_sha256": null,
+      "recovered_usage": {
+        "prompt_token_count": null,
+        "candidates_token_count": null,
+        "thoughts_token_count": null,
+        "cached_content_token_count": null,
+        "total_token_count": null
+      },
+      "usage_metadata_verbatim": null,
+      "reason": "this provider turn is an intermediate tool-call turn; the frozen runner writes one raw response per ATTEMPT (the final turn), so this turn's raw response was never retained and its usage is not recoverable"
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R3",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 1,
+      "provider_request_id": "b1WUatbSOse3g8UP9beYgQo",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B01-R3-a0.response.json",
+      "raw_file_sha256": "5c59334ff241d0dda64705a08d2cfa2ffea9b2b9b663fb952ec6fb1aca0897d9",
+      "recovered_usage": {
+        "prompt_token_count": 3632,
+        "candidates_token_count": 1367,
+        "thoughts_token_count": 592,
+        "cached_content_token_count": null,
+        "total_token_count": 5591
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1367,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 3632,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 3632
+          }
+        ],
+        "thoughts_token_count": 592,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 5591,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B03-R3",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "p1WUapbvLKn0g8UPzpbKwQE",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B03-R3-a0.response.json",
+      "raw_file_sha256": "c1c35848a77597222e619ccebb3a90db0a1fd86e63e8d2c1c1fa879c52647163",
+      "recovered_usage": {
+        "prompt_token_count": 360,
+        "candidates_token_count": 808,
+        "thoughts_token_count": 457,
+        "cached_content_token_count": null,
+        "total_token_count": 1625
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 808,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 360,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 360
+          }
+        ],
+        "thoughts_token_count": 457,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1625,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B06-R3",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "y1WUasPjGsuqg8UPj-K_-QE",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B06-R3-a0.response.json",
+      "raw_file_sha256": "cfff9831106220e68ff5b1ebf1a1198eb250ae330235810bb8acfbdbcec8c8e7",
+      "recovered_usage": {
+        "prompt_token_count": 393,
+        "candidates_token_count": 820,
+        "thoughts_token_count": 529,
+        "cached_content_token_count": null,
+        "total_token_count": 1742
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 820,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 393,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 393
+          }
+        ],
+        "thoughts_token_count": 529,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1742,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B05-R2",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "8lWUaqnLJea2g8UPpqy0oQ0",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B05-R2-a0.response.json",
+      "raw_file_sha256": "872ac1913bdda2d3fcd5b40cd323f387b344fcc53e57c78bd054ed44d17fbbb5",
+      "recovered_usage": {
+        "prompt_token_count": 364,
+        "candidates_token_count": 959,
+        "thoughts_token_count": 687,
+        "cached_content_token_count": null,
+        "total_token_count": 2010
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 959,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 364,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 364
+          }
+        ],
+        "thoughts_token_count": 687,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 2010,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B05-R2",
+      "attempt_index": 1,
+      "attempt_kind": "format_repair",
+      "phase": "repair",
+      "turn_index": 0,
+      "provider_request_id": "IVaUasDOFd-2g8UPka3FyQE",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B05-R2-a1.response.json",
+      "raw_file_sha256": "25aa93e3a5bdf210bd8e8da0660a6a9e848a69f92a5301191356b14854f9720b",
+      "recovered_usage": {
+        "prompt_token_count": 1396,
+        "candidates_token_count": 959,
+        "thoughts_token_count": 491,
+        "cached_content_token_count": null,
+        "total_token_count": 2846
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 959,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1396,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 1396
+          }
+        ],
+        "thoughts_token_count": 491,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 2846,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B04-R1",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "S1aUavuSE6jQg8UPycbPaA",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B04-R1-a0.response.json",
+      "raw_file_sha256": "981b366f2a3bec84429f926a2c089c0db6b64fd8aa792eeb0a9097f71422a4dc",
+      "recovered_usage": {
+        "prompt_token_count": 383,
+        "candidates_token_count": 1135,
+        "thoughts_token_count": 612,
+        "cached_content_token_count": null,
+        "total_token_count": 2130
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1135,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 383,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 383
+          }
+        ],
+        "thoughts_token_count": 612,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 2130,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B06-R2",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "fVaUaraoJOa2g8UPpqy0oQ0",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B06-R2-a0.response.json",
+      "raw_file_sha256": "5c68376df15a47f43ff5ad882966c2a95c5933c6ea95762821c14a07c35629a3",
+      "recovered_usage": {
+        "prompt_token_count": 393,
+        "candidates_token_count": 869,
+        "thoughts_token_count": 546,
+        "cached_content_token_count": null,
+        "total_token_count": 1808
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 869,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 393,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 393
+          }
+        ],
+        "thoughts_token_count": 546,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1808,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B03-R1",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "plaUatrZAsSkqfkPmdnG8AE",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B03-R1-a0.response.json",
+      "raw_file_sha256": "ec3259fdaf2fece727fab8ff55ab8f9277fa5138404062d0cea1d944e0c0f0af",
+      "recovered_usage": {
+        "prompt_token_count": 360,
+        "candidates_token_count": 864,
+        "thoughts_token_count": 543,
+        "cached_content_token_count": null,
+        "total_token_count": 1767
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 864,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 360,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 360
+          }
+        ],
+        "thoughts_token_count": 543,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1767,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B05-R3",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "zlaUapDIF_D_4-EPu6XVoQc",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B05-R3-a0.response.json",
+      "raw_file_sha256": "da34ea9f0d8152571194ac0506171251b87955e20094f40e8575339a1b57e0d6",
+      "recovered_usage": {
+        "prompt_token_count": 364,
+        "candidates_token_count": 1013,
+        "thoughts_token_count": 727,
+        "cached_content_token_count": null,
+        "total_token_count": 2104
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1013,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 364,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 364
+          }
+        ],
+        "thoughts_token_count": 727,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 2104,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B04-R2",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "_1aUatWNMMr1g8UP_7yawAo",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B04-R2-a0.response.json",
+      "raw_file_sha256": "0dd334b5870945548fc86c34a06206cb2eb99543ae0e7142abca71da3b9c17e2",
+      "recovered_usage": {
+        "prompt_token_count": 383,
+        "candidates_token_count": 1072,
+        "thoughts_token_count": 361,
+        "cached_content_token_count": null,
+        "total_token_count": 1816
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1072,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 383,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 383
+          }
+        ],
+        "thoughts_token_count": 361,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1816,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R1",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "KVeUaqKuI_Gvg8UPrdvNEQ",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "UNKNOWN_RAW_RESPONSE_NOT_RETAINED",
+      "raw_response_retained": false,
+      "raw_file": null,
+      "raw_file_sha256": null,
+      "recovered_usage": {
+        "prompt_token_count": null,
+        "candidates_token_count": null,
+        "thoughts_token_count": null,
+        "cached_content_token_count": null,
+        "total_token_count": null
+      },
+      "usage_metadata_verbatim": null,
+      "reason": "this provider turn is an intermediate tool-call turn; the frozen runner writes one raw response per ATTEMPT (the final turn), so this turn's raw response was never retained and its usage is not recoverable"
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R1",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 1,
+      "provider_request_id": "OVeUasbKJeO2g8UPpL3i2Qs",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B01-R1-a0.response.json",
+      "raw_file_sha256": "05aa990a1029ea1015a2486d49fa6c373aca47b727810f6a9dbfc06667f1f753",
+      "recovered_usage": {
+        "prompt_token_count": 3756,
+        "candidates_token_count": 1293,
+        "thoughts_token_count": 624,
+        "cached_content_token_count": null,
+        "total_token_count": 5673
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1293,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 3756,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 3756
+          }
+        ],
+        "thoughts_token_count": 624,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 5673,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R2",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "cFeUatONDJemg8UPkuWFMQ",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "UNKNOWN_RAW_RESPONSE_NOT_RETAINED",
+      "raw_response_retained": false,
+      "raw_file": null,
+      "raw_file_sha256": null,
+      "recovered_usage": {
+        "prompt_token_count": null,
+        "candidates_token_count": null,
+        "thoughts_token_count": null,
+        "cached_content_token_count": null,
+        "total_token_count": null
+      },
+      "usage_metadata_verbatim": null,
+      "reason": "this provider turn is an intermediate tool-call turn; the frozen runner writes one raw response per ATTEMPT (the final turn), so this turn's raw response was never retained and its usage is not recoverable"
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B01-R2",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 1,
+      "provider_request_id": "h1eUavT0GNOlg8UPmaGQyAI",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B01-R2-a0.response.json",
+      "raw_file_sha256": "fa594148275a417395e6854ba4d0f4cca04e4e8d2b39c175e5bb12392e56d454",
+      "recovered_usage": {
+        "prompt_token_count": 4244,
+        "candidates_token_count": 1459,
+        "thoughts_token_count": 673,
+        "cached_content_token_count": null,
+        "total_token_count": 6376
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1459,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 4244,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 4244
+          }
+        ],
+        "thoughts_token_count": 673,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 6376,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B05-R1",
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "turn_index": 0,
+      "provider_request_id": "w1eUatCqFP2_g8UPh627sA8",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B05-R1-a0.response.json",
+      "raw_file_sha256": "ce7c60f4d559e9504fa2f9b8f66e6c86c87fa2c9134cce9a16d7ac384d923294",
+      "recovered_usage": {
+        "prompt_token_count": 364,
+        "candidates_token_count": 996,
+        "thoughts_token_count": 506,
+        "cached_content_token_count": null,
+        "total_token_count": 1866
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 996,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 364,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 364
+          }
+        ],
+        "thoughts_token_count": 506,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 1866,
+        "traffic_type": null
+      }
+    },
+    {
+      "trial_id": "E037-gemma-no-canon-B05-R1",
+      "attempt_index": 1,
+      "attempt_kind": "format_repair",
+      "phase": "repair",
+      "turn_index": 0,
+      "provider_request_id": "7VeUauWYNtr1g8UP0JrhyAE",
+      "provider_model_version": "gemma-4-31b-it",
+      "stop_reason": "FinishReason.STOP",
+      "ledger_recorded_usage": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null
+      },
+      "ledger_provider_reported_usage": null,
+      "recovery_status": "RECOVERED",
+      "raw_response_retained": true,
+      "raw_file": "raw/E037-gemma-no-canon-B05-R1-a1.response.json",
+      "raw_file_sha256": "329f51bdac05f98293e7ddd2f0db066ca0b327c19c16ce06bd1f8f1360738888",
+      "recovered_usage": {
+        "prompt_token_count": 1433,
+        "candidates_token_count": 997,
+        "thoughts_token_count": 819,
+        "cached_content_token_count": null,
+        "total_token_count": 3249
+      },
+      "usage_metadata_verbatim": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 997,
+        "candidates_tokens_details": null,
+        "prompt_token_count": 1433,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 1433
+          }
+        ],
+        "thoughts_token_count": 819,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 3249,
+        "traffic_type": null
+      }
+    }
+  ]
+}
