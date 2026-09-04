@@ -9,7 +9,9 @@ Rows cover the second checker's K-01, K-02, K-03, K-05, K-06 phrases, the first 
 F-02 (10), F-03 (15 + the existing HITs), F-04 (the two clock-time insertions), F-05 (the
 junk VISUAL_SYSTEM, "Soft window light.", "the key is the product itself, shown from the
 front", "brighter neutral daylight balance") and F-07 phrases, the K-04 narrowed-term
-fixtures, and the EVAL-038 defect phrases ("chat bubbles", "notification counter").
+fixtures, the EVAL-038 defect phrases ("chat bubbles", "notification counter"), and the
+third checker's L-01 shapes (the Gemma B02-R1 `"₹9" (massive …)` idiom read in place, the six
+tails after a digit-ending closer, the end-of-line closer, an unclosed run).
 
 Each row is (finding, check, phrase, intended). Checks:
   T-scan      textscan.scan_prompt over the phrase              → HIT | CLEAR
@@ -22,6 +24,11 @@ Each row is (finding, check, phrase, intended). Checks:
                                                                    verdict PASS) | FAIL
   LIMIT-TEXT  the phrase as the only quoted generation prompt of
               a synthetic package                                → PASS | FAIL | ERROR
+  LIMIT-TEXT raw  the phrase is the whole GENERATION_PROMPTS
+              section of a synthetic video package, verbatim     → PASS | FAIL | ERROR
+  LIMIT-TEXT pkg  the phrase names a committed EVAL-038 package
+              (relative to eval/experiments/EVAL-038), read in
+              place                                              → PASS | FAIL | ERROR
 
 Run: python3 -m unittest tests.test_gate_regression_battery
 Table: python3 -m tests.test_gate_regression_battery --table   (prints every row with the
@@ -44,6 +51,11 @@ JUNK_VISUAL_SYSTEM = ("balance, key light from the side, center, brushed.\n"
                       "1. a\n2. b\n3. c\nglass, highlight.")
 PROMPT_LEAD = ("Vertical 9:16, a young man at a desk in a cramped PG office, harsh "
                "tube-light. ")
+# L-01 (Ruling 7): a clean prompt, a text-bearing prompt ending in a digit, the six tails
+CLEAN = PLATE.strip()
+DIRTY = ("Vertical 9:16, a smartphone screen filling with WhatsApp rent-reminder chat bubbles "
+         "and a notification counter climbing past 99")
+TAILS = (" (8 s)", " — 4 s", " | 4 s |", ". Then the next shot.", " 8 s", " then the next shot")
 
 # (finding, check, phrase, intended)
 ROWS = [
@@ -167,6 +179,16 @@ ROWS = [
     ("K-04 °", "PA-D4", "key light 45 degrees camera-left", "PASS"),
     ("K-04 window", "PA-D4", "Soft window light from the left", "PASS"),
     ("K-04 key/front", "PA-D4", "soft key from the front", "PASS"),
+    # ── L-01 / Ruling 7: a quote run the gate cannot pair fails closed ──
+    ("L-01 Gemma B02-R1", "LIMIT-TEXT pkg",
+     "runs/gemma-packs/packages/E038-gemma-packs-B02-R1.txt", "ERROR"),
+    ("L-01 EOL closer", "LIMIT-TEXT raw", f'"{CLEAN}"\n"{DIRTY}"\n', "FAIL"),
+    ("L-01 bracket closer", "LIMIT-TEXT raw", f'"{CLEAN}"\n"{DIRTY}")\n"{CLEAN}"\n', "FAIL"),
+    ("L-01 unclosed run", "LIMIT-TEXT raw", f'"{CLEAN}"\n"{CLEAN}\n', "ERROR"),
+    *[("L-01 tail, last", "LIMIT-TEXT raw", f'"{CLEAN}"\n"{DIRTY}"{tail}\n', "ERROR")
+      for tail in TAILS],
+    *[("L-01 tail, then prompt", "LIMIT-TEXT raw", f'"{CLEAN}"\n"{DIRTY}"{tail}\n"{CLEAN}"\n',
+       "ERROR") for tail in TAILS],
 ]
 
 
@@ -225,6 +247,14 @@ class Observer:
             r = self._synthetic("key light from upper-left; centre zone", prompt=phrase,
                                 deliverable="one 9:16 video", modality="video", product=False)
             return self._name(self._row(r, "LIMIT-TEXT").status)
+        if check == "LIMIT-TEXT raw":
+            pkg = ("## VISUAL_SYSTEM\nkey light from upper-left; centre zone\n## DELIVERABLE\n"
+                   "one 9:16 video\n## GENERATION_PROMPTS\n" + phrase
+                   + "## DOCTRINE_DEVIATIONS\nnone\n")
+            return self._name(self._row(self._run(pkg, "video", False), "LIMIT-TEXT").status)
+        if check == "LIMIT-TEXT pkg":
+            r = self._run((E38 / phrase).read_text())
+            return self._name(self._row(r, "LIMIT-TEXT").status)
         raise ValueError(check)
 
 
@@ -235,11 +265,11 @@ def observe_all(observer=None):
 
 
 def render(results) -> str:
-    lines = [f"{'ok':2} | {'finding':24} | {'check':10} | {'intended':8} | {'observed':8} | phrase"]
+    lines = [f"{'ok':2} | {'finding':24} | {'check':14} | {'intended':8} | {'observed':8} | phrase"]
     for f, c, p, i, o in results:
         shown = p.replace("\n", "⏎")
         shown = shown if len(shown) <= 72 else shown[:69] + "…"
-        lines.append(f"{'ok' if i == o else 'XX':2} | {f:24} | {c:10} | {i:8} | {o:8} | {shown}")
+        lines.append(f"{'ok' if i == o else 'XX':2} | {f:24} | {c:14} | {i:8} | {o:8} | {shown}")
     return "\n".join(lines)
 
 
@@ -252,7 +282,8 @@ class RegressionBatteryTest(unittest.TestCase):
         self.assertGreaterEqual(len(ROWS), 100)
         self.assertEqual(len({(c, p) for _, c, p, _ in ROWS}), len(ROWS), "duplicate row")
         for f, c, p, i in ROWS:
-            self.assertIn(c, ("T-scan", "CA-D2", "PA-D4", "CA-D5", "CA-D6", "LIMIT-TEXT"), f)
+            self.assertIn(c, ("T-scan", "CA-D2", "PA-D4", "CA-D5", "CA-D6", "LIMIT-TEXT",
+                              "LIMIT-TEXT raw", "LIMIT-TEXT pkg"), f)
             self.assertIn(i, ("HIT", "CLEAR", "PASS", "FAIL", "ERROR"), f)
 
     def test_every_row_individually(self):

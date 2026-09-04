@@ -20,6 +20,13 @@ SONNET_B06 = E38 / "baseline/sonnet-no-canon/E037-sonnet-no-canon-B06-R1.txt"
 HAIKU_B01 = E38 / "runs/haiku-packs/packages/E038-haiku-packs-B01-R1.txt"
 HAIKU_B06 = E38 / "runs/haiku-packs/packages/E038-haiku-packs-B06-R1.txt"
 PROMPTS = E38 / "media/prompts"
+GEMMA_B02 = E38 / "runs/gemma-packs/packages/E038-gemma-packs-B02-R1.txt"
+# L-01 fixtures: a clean 144-char prompt, a text-bearing prompt that ends in a digit, and the
+# six tail shapes the third checker listed after a digit-ending closer.
+CLEAN = ("A matte plate, no text. " * 6).strip()
+DIRTY = ("Vertical 9:16, a smartphone screen filling with WhatsApp rent-reminder chat bubbles "
+         "and a notification counter climbing past 99")
+TAILS = (" (8 s)", " — 4 s", " | 4 s |", ". Then the next shot.", " 8 s", " then the next shot")
 
 V1_SECTIONS = ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
                "MESSAGE_AND_INFORMATION_HIERARCHY", "VISUAL_SYSTEM", "PRODUCTION_RECIPE",
@@ -270,6 +277,58 @@ class ShotAndDeclarationTest(unittest.TestCase):
         after = [p.text for p in package.extract_prompts(package.parse_package(text))]
         self.assertEqual(len(before), 4)
         self.assertEqual(after, before)
+
+    def test_l01_a_run_still_open_at_the_end_of_the_section_is_an_error(self):
+        # Ruling 7 condition 1: a run still open at the end of GENERATION_PROMPTS is an
+        # extraction error — the gate never guesses a closer
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n"{CLEAN}"\n"{DIRTY}" (8 s)\n')
+        with self.assertRaises(package.UnbalancedQuotes) as cm:
+            package.extract_prompts(pkg)
+        self.assertIn("unbalanced quotes", str(cm.exception))
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n"{CLEAN}"\n"{CLEAN}\n')
+        with self.assertRaises(package.UnbalancedQuotes):
+            package.extract_prompts(pkg)
+
+    def test_l01_the_gemma_price_idiom_is_an_error_not_a_phantom_prompt(self):
+        # Ruling 7 condition 3(a): `"₹9" (massive …)` — a digit-preceded quote followed by
+        # prose, then a quote that opens a new string; two pairings are possible, so neither
+        # is chosen. The committed package is read in place.
+        with self.assertRaises(package.UnbalancedQuotes) as cm:
+            package.extract_prompts(package.parse_package(GEMMA_B02.read_text()))
+        self.assertIn("unbalanced quotes", str(cm.exception))
+        idiom = ('The text "IMAGE" (small) is paired with "₹9" (massive, bold, gold). Below it, '
+                 '"VIDEO" (small) is paired with "₹99" (massive, bold, gold). ' + "x" * 200
+                 + ' No "sale" badges.')
+        with self.assertRaises(package.UnbalancedQuotes):
+            package.extract_prompts(package.parse_package("GENERATION_PROMPTS\n" + idiom + "\n"))
+
+    def test_l01_six_tails_after_a_digit_ending_closer_are_errors_not_drops(self):
+        # Ruling 7 condition 3(b): after `…99"` + tail the run is in doubt; with nothing after
+        # it the run never closes, with another prompt after it the next quote could open or
+        # close — both are errors. The dirty prompt is never silently dropped or merged.
+        for tail in TAILS:
+            for follow in ("", f'"{CLEAN}"\n'):
+                section = f'"{CLEAN}"\n"{DIRTY}"{tail}\n{follow}'
+                pkg = package.parse_package("GENERATION_PROMPTS\n" + section)
+                with self.assertRaises(package.UnbalancedQuotes, msg=(tail, follow)):
+                    package.extract_prompts(pkg)
+
+    def test_l01_a_digit_ending_closer_at_end_of_line_or_before_a_bracket_still_closes(self):
+        # Ruling 7 condition 3(c)
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n"{CLEAN}"\n"{DIRTY}"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], [CLEAN, DIRTY])
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n"{CLEAN}"\n"{DIRTY}")\n"{CLEAN}"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], [CLEAN, DIRTY, CLEAN])
+        # the K-05 shapes: an inch mark inside a run that closes at end of line
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n"{CLEAN} A 6" OLED panel, then {CLEAN}"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)],
+                         [f'{CLEAN} A 6" OLED panel, then {CLEAN}'])
+
+    def test_l01_declared_aspect_does_not_raise_on_an_unbalanced_prompt_section(self):
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n"{DIRTY}" (8 s)\n')
+        self.assertIsNone(package.declared_aspect(pkg))
+        pkg = package.parse_package(f'DELIVERABLE\none 4:5 poster\nGENERATION_PROMPTS\n"{DIRTY}" (8 s)\n')
+        self.assertEqual(package.declared_aspect(pkg), "4:5")
 
     def test_duration_pattern_forms(self):
         self.assertEqual(package.parse_duration("2s"), (2.0, 2.0))

@@ -12,7 +12,9 @@ and the blinding tool cut a package at the same lines.
 
 Prompt extraction (plan §B): double-quoted runs >= 120 chars under GENERATION_PROMPTS, and
 `>` blockquote runs with `**` removed — the same rules EVAL-038's EXTRACTION-RECORD.json
-records for the four dispatched prompts. Shot extraction: table rows `| n |`, `Shot n`
+records for the four dispatched prompts. A section whose straight quotes admit no single
+pairing raises UnbalancedQuotes (Ruling 7, L-01): the gate reports the error rather than
+guessing a closer. Shot extraction: table rows `| n |`, `Shot n`
 headings, or numbered items in PRODUCTION_RECIPE / GENERATION_PROMPTS. The plan names the
 union of the two sections; a literal union double-counts a package that carries both a shot
 table and per-block prompt headings (Sonnet B01: 11 + 4), so the shot list is the single
@@ -150,33 +152,78 @@ def scope_text(pkg: Package, feeds_sections) -> Scope:
 CLOSER_TAIL = re.compile(r"[ \t]*[.)\],;:!?]*[ \t]*(?:\n|$)")
 
 
+class UnbalancedQuotes(ValueError):
+    """The straight quotes of a GENERATION_PROMPTS section admit no single pairing (Ruling 7,
+    L-01): a run never closes, or a quote after an undecided inch mark could equally open a
+    new run or close the current one. The gate never guesses a closer."""
+
+
+def _excerpt(text: str, i: int) -> str:
+    return " ".join(text[i:i + 28].split())
+
+
 def _straight_runs(text: str) -> list:
-    """(start, body) between paired straight quotes. A quote opens a run when nothing
-    alphanumeric (and no quote) precedes it; it closes the open run when nothing
-    alphanumeric follows it. Whitespace just inside either quote is accepted (K-02).
-    Inside an open run a quote immediately preceded by a digit is a measurement — `6" OLED
-    panel`, `is 6". It shows` — unless a bracket or separator follows it or the rest of its
-    line is blank/punctuation, where it closes (K-05; `"… past 99"` at end of line, `"Aspect
-    ratio: 9:16")`). Outside a run a digit-preceded quote can never open one, so `the 5"
-    screen` between prompts is skipped instead of shifting every later pair (F-12). Recorded
-    limitation: a genuine closer preceded by a digit and followed by prose on the same line
-    (`… 99" then the next shot`) is read as an inch mark."""
+    """(start, body) between paired straight quotes; raises UnbalancedQuotes when the text
+    admits no single pairing. A quote opens a run when nothing alphanumeric (and no quote)
+    precedes it; it closes the open run when nothing alphanumeric follows it. Whitespace just
+    inside either quote is accepted (K-02). Outside a run a digit-preceded quote can never
+    open one, so `the 5" screen` between prompts is skipped instead of shifting every later
+    pair (F-12).
+
+    Inside a run a quote immediately preceded by a digit is an inch mark — `6" OLED panel`,
+    `is 6". It shows` (K-05) — unless a bracket or separator follows it or the rest of its
+    line is blank/punctuation, where it definitely closes (`… past 99"` at end of line,
+    `"Aspect ratio: 9:16")`). A digit-preceded quote followed by prose on the same line
+    (`₹9" (massive …)`, `99" then …`) is undecidable: the inch mark and the closer look the
+    same. The safer default is to leave the run open and mark it in doubt, not to close it:
+    closing would cut every K-05 prompt at its inch mark and hand the remainder — the
+    text-bearing half — to a run opened by the prompt's own closing quote, which then never
+    closes; leaving it open keeps the prompt whole when a definite closer follows and
+    otherwise reaches an error, never a silent drop. While in doubt only a definite closer,
+    or a quote that could not open a run (alphanumeric before it), may close the run. A
+    quote that could open a new run — `"VIDEO`, `"` before the next prompt — means two
+    pairings exist (the inch mark was the closer and this opens; or it was not and this is
+    nested), so the gate raises instead of choosing. A run still open at the end of the text
+    raises too (Ruling 7 condition 1). A wrong guess either drops a prompt or manufactures
+    one from unrelated prose, and LIMIT-TEXT then reports PASS over text it never scanned
+    (L-01, the committed Gemma B02-R1 package)."""
     runs = []
     open_at = None
+    doubt = None    # offset of the digit-preceded quote that left the open run undecided
     for m in re.finditer(r'"', text):
         i = m.start()
         prev = text[i - 1] if i else ""
         nxt = text[i + 1] if i + 1 < len(text) else ""
+        could_open = not (prev.isalnum() or prev == '"')
         if open_at is None:
-            if not (prev.isalnum() or prev == '"'):
-                open_at = i
+            if could_open:
+                open_at, doubt = i, None
+            continue
+        if nxt.isalnum() and not could_open:
+            continue   # inside a word (5"x7) or a doubled quote: neither opens nor closes
+        definite = nxt in ")],;:" or CLOSER_TAIL.match(text, i + 1) is not None
+        if prev.isdigit() and not definite:
+            doubt = i   # inch mark or closer — undecided; the run stays open
             continue
         if nxt.isalnum():
-            continue   # glued to a following word: not a closer
-        if prev.isdigit() and nxt not in ")],;:" and not CLOSER_TAIL.match(text, i + 1):
-            continue   # inch mark
+            if doubt is not None:
+                raise UnbalancedQuotes(
+                    f"the quote at offset {i} ({_excerpt(text, i)!r}) could open a new run or "
+                    f"close the one opened at offset {open_at} — the digit-preceded quote at "
+                    f"offset {doubt} ({_excerpt(text, doubt)!r}) is an inch mark under one "
+                    f"pairing and a closer under the other")
+            continue   # a nested opener; the run continues
+        if doubt is not None and could_open and not definite:
+            raise UnbalancedQuotes(
+                f"the quote at offset {i} ({_excerpt(text, i)!r}) could open a new run or "
+                f"close the one opened at offset {open_at} — the digit-preceded quote at "
+                f"offset {doubt} ({_excerpt(text, doubt)!r}) is an inch mark under one "
+                f"pairing and a closer under the other")
         runs.append((open_at, text[open_at + 1:i]))
-        open_at = None
+        open_at, doubt = None, None
+    if open_at is not None:
+        raise UnbalancedQuotes(
+            f"the run opened at offset {open_at} ({_excerpt(text, open_at)!r}) never closes")
     return runs
 
 
@@ -211,10 +258,15 @@ def _blockquote_runs(text: str) -> list:
 
 
 def extract_prompts(pkg: Package) -> list:
+    """Prompts in package order; raises UnbalancedQuotes when the section's straight quotes
+    admit no single pairing (Ruling 7) — callers report the error, never a partial list."""
     section = pkg.sections.get("GENERATION_PROMPTS")
     if section is None:
         return []
-    found = [(s, b, "quoted") for s, b in _quoted_runs(section)]
+    try:
+        found = [(s, b, "quoted") for s, b in _quoted_runs(section)]
+    except UnbalancedQuotes as exc:
+        raise UnbalancedQuotes(f"unbalanced quotes in GENERATION_PROMPTS — {exc}") from None
     found += [(s, b, "blockquote") for s, b in _blockquote_runs(section)]
     found.sort(key=lambda t: t[0])
     return [Prompt(index=i + 1, text=b.strip(), origin=o) for i, (_, b, o) in enumerate(found)]
@@ -292,7 +344,11 @@ def declared_aspect(pkg: Package):
         found = find_aspect(pkg.sections.get(name, ""))
         if found:
             return found
-    for p in extract_prompts(pkg):
+    try:
+        prompts = extract_prompts(pkg)
+    except UnbalancedQuotes:
+        return None   # the prompts are unreadable; LIMIT-TEXT reports the error
+    for p in prompts:
         found = find_aspect(p.text)
         if found:
             return found

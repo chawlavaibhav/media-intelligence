@@ -22,6 +22,13 @@ SONNET_B06 = E38 / "baseline/sonnet-no-canon/E037-sonnet-no-canon-B06-R1.txt"
 HAIKU_B01 = E38 / "runs/haiku-packs/packages/E038-haiku-packs-B01-R1.txt"
 HAIKU_B06 = E38 / "runs/haiku-packs/packages/E038-haiku-packs-B06-R1.txt"
 MEDIA = E38 / "media"
+GEMMA_B02 = E38 / "runs/gemma-packs/packages/E038-gemma-packs-B02-R1.txt"
+# L-01 fixtures (Ruling 7): a clean 144-char prompt, a text-bearing prompt ending in a digit,
+# and the six tail shapes the third checker listed after a digit-ending closer.
+CLEAN = ("A matte plate, no text. " * 6).strip()
+DIRTY = ("Vertical 9:16, a smartphone screen filling with WhatsApp rent-reminder chat bubbles "
+         "and a notification counter climbing past 99")
+TAILS = (" (8 s)", " — 4 s", " | 4 s |", ". Then the next shot.", " 8 s", " then the next shot")
 S = findings.Status
 ALL_IDS = [f"PA-D{i}-check" for i in range(1, 11)] + [f"CA-D{i}-check" for i in range(1, 12)]
 NOT_MECH_PRE = ["PA-D2-check", "PA-D3-check", "PA-D5-check", "PA-D6-check", "PA-D7-check",
@@ -558,6 +565,80 @@ class MutationTest(_Base):
         r = self.run_gate(HAIKU_B06, "static_image", True)
         self.assertEqual(list(r.inputs), [HAIKU_B06.name])
         self.assertEqual(len(r.inputs[HAIKU_B06.name]), 64)
+
+
+
+class L01UnbalancedQuotesTest(_Base):
+    """Ruling 7 (L-01): a quote run the gate cannot pair is an extraction ERROR on LIMIT-TEXT
+    (reason "unbalanced quotes", verdict FAIL) — never a dropped or manufactured prompt."""
+
+    @staticmethod
+    def synthetic(section):
+        return ("## VISUAL_SYSTEM\nkey light from upper-left; centre zone\n## DELIVERABLE\n"
+                "one 9:16 video\n## GENERATION_PROMPTS\n" + section
+                + "## DOCTRINE_DEVIATIONS\nnone\n")
+
+    def test_gemma_b02_r1_read_in_place_does_not_exit_pass(self):
+        # condition 3(a): the committed poster package requesting rendered prices
+        for product in (False, True):
+            r = self.run_gate(GEMMA_B02, "static_image", product)
+            lt = self.row(r, "LIMIT-TEXT")
+            self.assertIn(lt.status, (S.ERROR, S.FAIL), lt.detail)
+            self.assertEqual(lt.status, S.ERROR, lt.detail)
+            self.assertIn("unbalanced quotes", lt.detail)
+            self.assertTrue(lt.blocking)
+            self.assertEqual(r.verdict(), "FAIL", product)
+            self.assertTrue(r.render_text().splitlines()[-1].startswith("GATE FAIL"))
+            self.assertInvariants(r)
+
+    def test_six_tails_after_a_digit_ending_closer_never_pass(self):
+        # condition 3(b): PASS is the only forbidden outcome; this build leaves the run in
+        # doubt and errors, so the observed status is ERROR with the reason named
+        for tail in TAILS:
+            for follow in ("", f'"{CLEAN}"\n'):
+                section = f'"{CLEAN}"\n"{DIRTY}"{tail}\n{follow}'
+                r = self.run_gate(Path("synthetic.txt"), "video", False,
+                                  text=self.synthetic(section))
+                lt = self.row(r, "LIMIT-TEXT")
+                self.assertIn(lt.status, (S.ERROR, S.FAIL), (tail, follow, lt.detail))
+                if lt.status is S.ERROR:
+                    self.assertIn("unbalanced quotes", lt.detail)
+                else:
+                    self.assertIn("prompt 2", lt.detail)
+                self.assertEqual(r.verdict(), "FAIL", (tail, follow))
+
+    def test_a_digit_ending_closer_at_end_of_line_still_closes_and_is_scanned(self):
+        # condition 3(c)
+        r = self.run_gate(Path("synthetic.txt"), "video", False,
+                          text=self.synthetic(f'"{CLEAN}"\n"{DIRTY}"\n'))
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertEqual(lt.status, S.FAIL, lt.detail)
+        self.assertTrue(lt.detail.startswith("prompt 2, sentence"), lt.detail)
+        self.assertEqual(r.verdict(), "FAIL")
+
+    def test_an_unclosed_run_is_an_error_and_a_supplied_prompt_bypasses_extraction(self):
+        # condition 1, plain shape: a prompt whose closing quote is missing
+        text = self.synthetic(f'"{CLEAN}"\n"{CLEAN}\n')
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=text)
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertEqual(lt.status, S.ERROR, lt.detail)
+        self.assertIn("unbalanced quotes", lt.detail)
+        self.assertEqual(r.verdict(), "FAIL")
+        # --prompt-file supplies the prompts; extraction is not consulted
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=text, prompts=[CLEAN])
+        self.assertEqual(self.status(r, "LIMIT-TEXT"), S.PASS)
+
+    def test_check_limit_text_names_the_extraction_error(self):
+        row = predispatch.check_limit_text([], self.reg, extraction_error="unbalanced quotes in "
+                                           "GENERATION_PROMPTS: run opened at offset 3 never closes")
+        self.assertEqual(row.status, S.ERROR)
+        self.assertTrue(row.blocking)
+        self.assertIn("unbalanced quotes", row.detail)
+        self.assertIn("offset 3", row.detail)
+        # without an extraction error the empty-prompt row reads as before
+        row = predispatch.check_limit_text([], self.reg)
+        self.assertEqual(row.status, S.ERROR)
+        self.assertIn("no generation prompt could be extracted", row.detail)
 
 
 if __name__ == "__main__":

@@ -9,7 +9,9 @@ NOT_MECHANISED / NOT_APPLICABLE row for every registry id it did not run, so eve
 lists all 21 doctrine ids. A partial check tests the quoted literal clause as a necessary
 condition only and prints that clause. Scan scope = the decision's committed feeds_sections
 (typed subfield first, prose fallback — Ruling 3) plus GENERATION_PROMPTS. Blocking rows
-(Ruling 2): LIMIT-TEXT, DISPATCH-*, CA-D2 clause 2, and any ERROR.
+(Ruling 2): LIMIT-TEXT, DISPATCH-*, CA-D2 clause 2, and any ERROR. A GENERATION_PROMPTS
+section whose quotes cannot be paired (package.UnbalancedQuotes, Ruling 7) is a LIMIT-TEXT
+ERROR naming the reason; no prompt is scanned and nothing else is inferred from the prompts.
 """
 from __future__ import annotations
 
@@ -124,10 +126,15 @@ def _describe_hit(prompt_index: int, hit: textscan.TextHit) -> str:
     return f"{where} requests text-bearing surfaces ({terms}) with no illegibility/deferral term"
 
 
-def check_limit_text(prompts: list, registry) -> CheckResult:
-    """LIMIT-TEXT pre-dispatch (§D T1–T3) over every extracted generation prompt."""
+def check_limit_text(prompts: list, registry, extraction_error: str = None) -> CheckResult:
+    """LIMIT-TEXT pre-dispatch (§D T1–T3) over every extracted generation prompt. An
+    extraction error (unbalanced quotes, Ruling 7) is reported as ERROR with its reason."""
     base = dict(check_id="LIMIT-TEXT", family="limit", gate=GATE, coverage="full",
                 clause="", source_text=registry.limit_text, blocking=True)
+    if extraction_error:
+        return CheckResult(status=Status.ERROR, evidence=(),
+                           detail=f"{extraction_error} — no generation prompt extracted, "
+                                  "fails closed", **base)
     if not prompts:
         return CheckResult(status=Status.ERROR, evidence=(),
                            detail="no generation prompt could be extracted from "
@@ -449,13 +456,17 @@ def run_predispatch(package_text: str, prompts, dispatch, modality: str, product
     pkg = package.parse_package(package_text)
     sha = hashlib.sha256(package_text.encode("utf-8")).hexdigest()
     packs, override = select(registry, modality, product_entity, packs)
+    extraction_error = None
     if prompts is None:
-        prompts = [p.text for p in package.extract_prompts(pkg)]
+        try:
+            prompts = [p.text for p in package.extract_prompts(pkg)]
+        except package.UnbalancedQuotes as exc:
+            prompts, extraction_error = [], str(exc)
     ctx = Ctx(pkg=pkg, prompts=list(prompts), modality=modality, registry=registry)
     results = []
 
     if packs:
-        results.append(check_limit_text(ctx.prompts, registry))
+        results.append(check_limit_text(ctx.prompts, registry, extraction_error))
     else:
         results.append(CheckResult(
             check_id="LIMIT-TEXT", family="limit", gate=GATE, status=Status.NOT_APPLICABLE,
