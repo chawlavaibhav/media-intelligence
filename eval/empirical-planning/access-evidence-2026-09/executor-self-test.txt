@@ -1,0 +1,92 @@
+# EVAL-039B Executor self-test — Tester checklist items 1–5, 8–11 (6–7 skipped: creations out of scope). Run 2026-09-04T21:03:02Z from the worktree root. (A first pass found ACCESS-STATUS-2026-09.yaml unparseable — a note key before a list — fixed; this is the re-run.)
+
+## 1 YAML parse
+$ python3 -c "import yaml,sys; [yaml.safe_load(open(f)) for f in sys.argv[1:]]; print('PASS: all parse')" eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml eval/empirical-planning/ACCESS-STATUS-2026-09.yaml eval/empirical-planning/COST-PROJECTION-INPUTS-2026-09.yaml eval/empirical-planning/COST-PROJECTION-2026-09.yaml eval/historical-priors/media-factory-v1/PRIOR-INDEX.yaml
+PASS: all parse
+[exit 0]
+
+## 2 roster: required route_keys once, key order, status/surface sets
+$ python3 /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/chk2.py
+required route_keys exactly once: True []
+extra routes (must have added_by_executor_because): ['kling-lipsync-audio-to-video'] [True]
+key order ok: True | status sets ok: True | surface set ok: True
+PASS
+[exit 0]
+
+## 3 pins: pin_ref exists, sha256 = shasum, bytes = wc -c, evidence grep -cF >= 1, du -sk <= 5120
+$ python3 /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/chk3.py
+pinned routes checked: 26 | failures: [] | du -sk: 5108 (<=5120: True )
+PASS
+[exit 0]
+
+## 4 promo never used; H3 Max at regular price
+$ grep -c 'used_in_totals: true' eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml eval/empirical-planning/COST-PROJECTION-2026-09.yaml; grep -n '^promo_prices_used' eval/empirical-planning/COST-PROJECTION-2026-09.yaml; python3 -c "import yaml;d=yaml.safe_load(open('eval/empirical-planning/COST-PROJECTION-2026-09.yaml'));h=[x for x in d['by_route'] if x['route_key']=='minimax-h3-max'];print('H3 Max unit prices used:',sorted(set(x['unit_price_usd'] for x in h)),'-> PASS' if all(x['unit_price_usd'] in (0.08,0.05) for x in h) else 'FAIL')"
+eval/empirical-planning/COST-PROJECTION-2026-09.yaml:0
+eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml:0
+2215:promo_prices_used: false
+H3 Max unit prices used: [0.05, 0.08] -> PASS
+[exit 0]
+
+## 5 Azure log discipline
+$ echo "azure rows lacking --subscription b832f4a1…: $(grep -E '^\| .*\| azure \|' eval/empirical-planning/ACCESS-LOG.md | grep -vc -- '--subscription b832f4a1-79be-4fb2-ae93-6ba6efd209d2')"; echo '--- d3ee8dc2 mentions (note lines only):'; grep -n d3ee8dc2 eval/empirical-planning/ACCESS-LOG.md eval/empirical-planning/ACCESS-STATUS-2026-09.yaml | cut -c1-140; echo "--- d3ee8dc2 in a command row: $(grep -E '^\| 2026' eval/empirical-planning/ACCESS-LOG.md | grep -c d3ee8dc2)"; echo "--- default-config change commands in log: $(grep -cE 'az account set|aws configure|gcloud config set' eval/empirical-planning/ACCESS-LOG.md)"
+azure rows lacking --subscription b832f4a1…: 0
+--- d3ee8dc2 mentions (note lines only):
+eval/empirical-planning/ACCESS-LOG.md:5:Rules kept: every `az` command carries `--subscription b832f4a1-79be-4fb2-ae93-6ba6efd209d2` (the ge
+eval/empirical-planning/ACCESS-STATUS-2026-09.yaml:6:# The Wherehouse Azure subscription d3ee8dc2-… is mentioned here only to say it was n
+eval/empirical-planning/ACCESS-STATUS-2026-09.yaml:70:    subscription_rule: 'every az command carried --subscription b832f4a1-79be-4fb2-ae9
+--- d3ee8dc2 in a command row: 0
+--- default-config change commands in log: 0
+[exit 0]
+
+## 8 priors
+$ (cd eval/historical-priors/media-factory-v1 && shasum -a 256 MEDIA-FACTORY-ROUTING-PRIOR.md MEDIA-FACTORY-EMPIRICAL-FINDINGS.md COST-SUMMARY.md PROMPT-ENRICHMENT-EVIDENCE.md EVIDENCE-MANIFEST.json && python3 -c "import yaml;d=yaml.safe_load(open('PRIOR-INDEX.yaml'));print(len(d['rows']),'rows; all historical_prior + freshness_required:',all(r['tier']=='historical_prior' and r['freshness_required'] is True for r in d['rows']))"); echo "registry diff: '$(git diff --stat -- eval/registry/)' (empty = PASS)"
+b326f885775b63b026003498670d16515b1db441578ae81eac3a4d699c35a049  MEDIA-FACTORY-ROUTING-PRIOR.md
+59037aabf983e1c13404cafb0948bf8b8b4a5c471652274d365fd4de079855bb  MEDIA-FACTORY-EMPIRICAL-FINDINGS.md
+5ef3e0658dc1978857662c37c0ad804d92ba3e3416c6195a9380662211f3448f  COST-SUMMARY.md
+f5cbf2782d021ba0078fa602a959ebf2b173038f67e821457057cf373f2ab013  PROMPT-ENRICHMENT-EVIDENCE.md
+3e87ff3663d78a653dcca36ede91036a5598b98a58011585203371d84dd7ef73  EVIDENCE-MANIFEST.json
+5 rows; all historical_prior + freshness_required: True
+registry diff: '' (empty = PASS)
+[exit 0]
+
+## 9 projection regeneration + invariants
+$ (cd eval/empirical-planning && python3 project_costs.py --inputs COST-PROJECTION-INPUTS-2026-09.yaml --roster ROSTER-REFRESH-2026-09.yaml --out-yaml /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/x-cp.yaml --out-md /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/x-cp.md && diff COST-PROJECTION-2026-09.yaml /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/x-cp.yaml && diff COST-PROJECTION-2026-09.md /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/x-cp.md && echo 'regeneration diff: empty' && python3 -c "
+import yaml;d=yaml.safe_load(open('COST-PROJECTION-2026-09.yaml'));r=yaml.safe_load(open('ROSTER-REFRESH-2026-09.yaml'))
+bt=sum(t['cash_usd']+t['credits_usd_equivalent'] for t in d['by_tranche']);br=sum(x['usd'] for x in d['by_route'])+sum(e['line_usd'] for e in d['evaluator_lines'])
+t1=sum(t['total_usd_equivalent'] for t in d['by_tranche'] if t['tranche'] in ('T1a','T1b'));m=d['minimum_viable_round_one']['total_usd_equivalent']
+ex={x.get('route_key') for t in d['by_tranche'] for x in t['unpinned_lines_excluded']}|{x['route_key'] for t in d['by_tranche'] for x in t['priced_on_fallback']}
+np=[x['route_key'] for x in r['routes'] if x['route_status']!='pinned']
+print('by_tranche == by_route + evaluators:',abs(bt-br)<0.005,'| MVR <= T1:',m<=t1,'| every non-pinned route listed (excluded or fallback):',all(k in ex for k in np),[k for k in np if k not in ex])")
+regeneration diff: empty
+by_tranche == by_route + evaluators: True | MVR <= T1: True | every non-pinned route listed (excluded or fallback): True []
+[exit 0]
+
+## 10 no pre-existing file modified or deleted
+$ git diff --name-status | grep -E '^(D|M)'; echo "modified/deleted count: $(git diff --name-status | grep -cE '^(D|M)')"; echo 'porcelain status codes:'; git status --porcelain | cut -c1-2 | sort | uniq -c
+modified/deleted count: 0
+porcelain status codes:
+  12 ??
+[exit 0]
+
+## 11 report length (<= 60) and MD coverage
+$ wc -l eval/tasks/EVAL-039B-EXECUTOR-REPORT.md; for n in $(grep -oE '^## MD-[0-9]+' eval/empirical-planning/MORNING-DECISIONS.md | grep -oE 'MD-[0-9]+'); do printf '%s in report: %s
+' $n $(grep -c "$n" eval/tasks/EVAL-039B-EXECUTOR-REPORT.md); done
+      30 eval/tasks/EVAL-039B-EXECUTOR-REPORT.md
+MD-1 in report: 3
+MD-2 in report: 1
+MD-3 in report: 1
+MD-4 in report: 1
+MD-5 in report: 2
+MD-6 in report: 1
+MD-7 in report: 2
+MD-8 in report: 2
+MD-9 in report: 3
+MD-10 in report: 2
+[exit 0]
+
+## extra: secret-pattern sweep (sha256 values in PIN-INDEX / PRIOR-INDEX are required by the task and expected)
+$ grep -rlE 'AKIA[0-9A-Z]{16}|"private_key"|BEGIN (RSA |EC )?PRIVATE KEY|AQICAH|X-Amz-Signature' eval/empirical-planning eval/historical-priors eval/tasks/EVAL-039B-EXECUTOR-REPORT.md || echo 'no key-shaped strings'; grep -rlE '/Users/[a-z]+/\.(mi-keys|aight-litellm-keys|mi-battery-keys)' eval/empirical-planning eval/historical-priors eval/tasks/EVAL-039B-EXECUTOR-REPORT.md || echo 'no absolute home-dir key paths (tilde form only)'
+no key-shaped strings
+no absolute home-dir key paths (tilde form only)
+[exit 0]
+

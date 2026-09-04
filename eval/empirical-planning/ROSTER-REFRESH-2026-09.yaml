@@ -1,0 +1,1496 @@
+# ROSTER-REFRESH-2026-09 — EVAL-039B Executor output, generated 2026-09-04 (UTC) / 2026-09-05 IST.
+# PLANNING RECORD. Nothing here authorises spend. Every price is either PINNED (an exact substring in a fetched file
+# listed in price-pins-2026-09/PIN-INDEX.yaml with bytes + sha256 + UTC) or honestly null with an unpinned_reason.
+# Plain-English key: a "route" is one model on one provider surface for one kind of task. `billing_pool` says whose
+# money it spends: `credits` = a cloud account that may hold startup credits (balances UNKNOWN, MD-1); `cash` = fal /
+# direct vendors paid in money. `route_status`: pinned = id and price verified tonight; unpinned = price could not be
+# established (reason given); no_access = we cannot call it from this machine; needs_controller_enablement = the
+# surface exists and is priced but a resource / deployment / API enablement must be created first (MD-9).
+# `billing_unit_verbatim` keeps the vendor's own words; `regular_price.unit` is our normalised unit for the projection.
+# `promo_price` is recorded only to be avoided: used_in_totals is always false. `capabilities` fields are null unless
+# the pinned bytes state them. `variants` are parameter sub-rows (10-s, 480p, i2v) of the same route, not new routes.
+# Surfaces: vertex (GCP), bedrock (AWS; Polly recorded here for want of an 'aws' value), azure_foundry, fal, sarvam_direct, runway_direct.
+# Counts: 35 routes — needs_controller_enablement 5, no_access 3, pinned 26, unpinned 1.
+meta:
+  task: EVAL-039B
+  generated_utc: '2026-09-04T21:00:00Z'
+  branch: controller/capability-lab-direction-2026-09-05
+  base_main_sha: 599ff4af6a1f0684132303687e438877da47a004
+  pin_index: eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml
+  access_status: eval/empirical-planning/ACCESS-STATUS-2026-09.yaml
+  morning_decisions: eval/empirical-planning/MORNING-DECISIONS.md
+  status: PLANNING_ONLY_NOT_AUTHORISED
+  route_count: 35
+  route_status_counts:
+    needs_controller_enablement: 5
+    pinned: 26
+    no_access: 3
+    unpinned: 1
+  promo_rule: promotional prices are recorded, flagged and never used in totals (decision §3 rule 3)
+  date_note: fetches ran 2026-09-04 20:30–20:50 UTC, which is 02:00–02:20 IST on 2026-09-05
+routes:
+- route_key: gpt-image-2
+  question_slots:
+  - IMG-CORE
+  - IMG-01
+  - IMG-02
+  model_family: GPT Image 2 (OpenAI)
+  model_version_string: gpt-image-2 version 2026-04-21 (az cognitiveservices model list, eastus2, lifecycle GenerallyAvailable, sku GlobalStandard)
+  surface: azure_foundry
+  surface_model_id: gpt-image-2
+  surface_rule_note: sold directly by Azure → Microsoft for Startups credits apply (survey §4); only cloud carrying it. Needs a new AI Services resource + deployment
+    in eastus2 (MD-9); nothing exists tonight
+  billing_pool: credits
+  billing_unit_verbatim: 'Azure Retail Prices API: meterName ''Image 2 img opt Gl 1M Tokens'', retailPrice 30.0, unitOfMeasure ''1M'' (eastus2); text/image input
+    meters 5.0 / 8.0 per 1M'
+  regular_price:
+    value: 30.0
+    currency: USD
+    unit: per_1M_image_output_tokens
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: &id003
+    name: az CLI signed-in session, subscription b832f4a1-79be-4fb2-ae93-6ba6efd209d2 (no media resource or API key exists yet — MD-9)
+    file: null
+  route_status: needs_controller_enablement
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/azure-retail-prices-image2-eastus2.json
+  fallback:
+    route_key: gpt-image-2
+    question_slots:
+    - IMG-CORE
+    - IMG-01
+    - IMG-02
+    model_family: GPT Image 2 (OpenAI)
+    model_version_string: GPT Image 2 API (fal title); fal endpoint openai/gpt-image-2
+    surface: fal
+    surface_model_id: openai/gpt-image-2
+    surface_rule_note: fallback while the Azure deployment does not exist (MD-9); cash on fal
+    billing_pool: cash
+    billing_unit_verbatim: 'fal JSON: ''Image tokens (per 1M): **$8.00** input, **$2.00** cached, **$30.00** output''; fal page table: ''1024 x 1024 | $0.006 (low)
+      | $0.053 (medium) | $0.211 (high)'' per image; ''by default we use **high**'''
+    regular_price:
+      value: 0.053
+      currency: USD
+      unit: per_image
+    promo_price: null
+    capabilities:
+      durations_s: null
+      resolutions:
+      - 1024x768
+      - 1024x1024
+      - 1024x1536
+      - 1920x1080
+      - 2560x1440 (fal canonical-size table)
+      max_refs: null
+      native_audio: null
+      seed_supported: null
+    key_present: &id002
+      name: FAL_KEY
+      file: ~/.mi-keys
+    route_status: pinned
+    screen_status: screened
+    pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
+    fallback: null
+    source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+    notes: 0.053 is fal's own per-image projection for 1024x1024 at quality=medium (the plan's ~0.053); fal's default quality is high (0.211). The harness must set
+      quality=medium for the projected price to hold. Underlying meter is token-based, so the metered amount may differ slightly.
+  source: pin-2026-09-04 (Azure Retail Prices API JSON) + cli-2026-09-04 (access-evidence-2026-09/azure-cognitiveservices-model-list-eastus2.json)
+  notes: 'Per-image cost on Azure is not derivable tonight: tokens-per-image is not published on the meter (survey unknown 4). The projection therefore prices this
+    route on the fal fallback (cash) until the Azure deployment exists and one metered image has been observed.'
+- route_key: nano-banana-2
+  question_slots:
+  - IMG-CORE
+  model_family: Gemini 3.1 Flash Image (Nano Banana 2, Google)
+  model_version_string: publishers/google/models/gemini-3.1-flash-image, versionId default, launchStage GA (publisher GET 200)
+  surface: vertex
+  surface_model_id: gemini-3.1-flash-image
+  surface_rule_note: Google model on Vertex AI → Google for Startups credits (survey §4); same list price as Google direct, cheaper than fal (0.08)
+  billing_pool: credits
+  billing_unit_verbatim: 'Vertex pricing footnote: ''Gemini 3.1 Flash Image charges 1120 tokens per input image, with output image costs scaling by resolution: 747
+    tokens ($0.045) for 512 (roughly 0.25MP), 1120 tokens ($0.067) for 1K (roughly 1MP), 1680 tokens ($0.101) for 2K (roughly 4MP), and 2,520 tokens ($0.15) for 4K
+    (roughly 16MP)'''
+  regular_price:
+    value: 0.067
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - '512'
+    - 1K
+    - 2K
+    - 4K
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: &id001
+    name: vertex-sa.json (service-account key for aight-gateway-sa@vertexaiproject-507518)
+    file: ~/.aight-litellm-keys/vertex-sa.json
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  fallback: null
+  source: pin-2026-09-04 (Vertex AI generative-ai pricing page) + publisher-model GET on us-central1 endpoint (access-evidence-2026-09/gcp-publisher-model-regional-retry.json)
+  notes: '1K output assumed for the projection (plan: ~1 MP). Per-image USD values are published by Google, not computed here.'
+- route_key: nano-banana-pro
+  question_slots:
+  - IMG-CORE
+  - IMG-01
+  - IMG-02
+  model_family: Gemini 3 Pro Image (Nano Banana Pro, Google)
+  model_version_string: publishers/google/models/gemini-3-pro-image, versionId default, launchStage GA (publisher GET 200)
+  surface: vertex
+  surface_model_id: gemini-3-pro-image
+  surface_rule_note: Google model on Vertex AI → GCP credits; cheaper than fal (0.15)
+  billing_pool: credits
+  billing_unit_verbatim: 'Vertex pricing footnote: ''Gemini 3 Pro Image charges 560 tokens per input image, with output image costs scaling by resolution: 1120 tokens
+    ($0.134) for 1K and 2K (roughly 1MP and 4MP), and 2000 tokens ($0.24) for 4K (roughly 16MP)'''
+  regular_price:
+    value: 0.134
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 1K
+    - 2K
+    - 4K
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id001
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  fallback: null
+  source: pin-2026-09-04 (Vertex AI generative-ai pricing page) + publisher-model GET on us-central1 endpoint (access-evidence-2026-09/gcp-publisher-model-regional-retry.json)
+  notes: 1K/2K output assumed for the projection.
+- route_key: seedream-5-pro
+  question_slots:
+  - IMG-CORE
+  - IMG-01
+  - IMG-02
+  model_family: Seedream 5.0 Pro (ByteDance)
+  model_version_string: Seedream 5.0 Pro Text to Image (fal title); fal endpoint bytedance/seedream/v5/pro/text-to-image
+  surface: fal
+  surface_model_id: bytedance/seedream/v5/pro/text-to-image
+  surface_rule_note: not on Bedrock / Vertex / Azure (survey §1) → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''Tentative pricing is **$0.0675** per image for images of total area less than or equal to **1536x1536** pixels. For images with
+    area in between **1536x1536** and **2048x2048** pixels, the price is **$0.135** per image.'''
+  regular_price:
+    value: 0.0675
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - <=1536x1536
+    - 1536x1536-2048x2048
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: fal labels the price 'Tentative'. Recorded as the regular price; re-verify at execution time (DN-07 pattern).
+- route_key: flux-2-pro
+  question_slots:
+  - IMG-CORE
+  model_family: FLUX.2 [pro] (Black Forest Labs)
+  model_version_string: FLUX.2-pro version 1 (az cognitiveservices model list, eastus2, GenerallyAvailable, skus GlobalStandard / DataZoneStandard)
+  surface: azure_foundry
+  surface_model_id: FLUX.2-pro
+  surface_rule_note: '''Black Forest Labs models sold by Azure'' → Azure credits (survey §1/§4); same list price as fal; needs a deployment on a new AI Services resource
+    (MD-9)'
+  billing_pool: credits
+  billing_unit_verbatim: 'Azure Retail Prices API: meterName ''Flux 2 Pro Initial MP Megapixel'' retailPrice 0.03 (unitOfMeasure ''1''); ''Flux 2 Pro MP Megapixel''
+    0.015 (eastus2, Global)'
+  regular_price:
+    value: 0.03
+    currency: USD
+    unit: per_image_first_megapixel
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id003
+  route_status: needs_controller_enablement
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/azure-retail-prices-flux-pro-eastus2.json
+  fallback:
+    route_key: flux-2-pro
+    question_slots:
+    - IMG-CORE
+    model_family: FLUX.2 [pro] (Black Forest Labs)
+    model_version_string: Flux 2 Pro (fal title); fal endpoint fal-ai/flux-2-pro
+    surface: fal
+    surface_model_id: fal-ai/flux-2-pro
+    surface_rule_note: fallback while the Azure deployment does not exist (MD-9); cash on fal; identical list price
+    billing_pool: cash
+    billing_unit_verbatim: 'fal JSON: ''Your request will cost **$0.03** for the first megapixel of output, plus **$0.015** per extra megapixel of input and output,
+      rounded up to the nearest megapixel.'''
+    regular_price:
+      value: 0.03
+      currency: USD
+      unit: per_image_first_megapixel
+    promo_price: null
+    capabilities:
+      durations_s: null
+      resolutions: null
+      max_refs: null
+      native_audio: null
+      seed_supported: null
+    key_present: *id002
+    route_status: pinned
+    screen_status: screened
+    pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+    fallback: null
+    source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+    notes: 1 MP outputs assumed (1024x1024 = $0.03 per fal example).
+  source: pin-2026-09-04 (Azure Retail Prices API JSON) + cli-2026-09-04 (azure-cognitiveservices-model-list-eastus2.json)
+  notes: Price pinned on Azure and identical to fal; the surface is not usable until MD-9. Projection prices it on the fal fallback (cash) tonight; it moves to credits
+    the moment the deployment exists.
+- route_key: qwen-image-3
+  question_slots:
+  - IMG-CORE
+  model_family: Qwen Image 3 (Alibaba)
+  model_version_string: Qwen Image 3 Text to Image (fal title); fal endpoint alibaba/qwen-image-3/text-to-image
+  surface: fal
+  surface_model_id: alibaba/qwen-image-3/text-to-image
+  surface_rule_note: not on any hyperscaler (survey §1) → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''Your request will cost $**0.04** per generated image at 1K resolution, and $**0.075** per generated image at 2K resolution.'''
+  regular_price:
+    value: 0.04
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 1K
+    - 2K
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: 'The plan''s id ''alibaba/qwen-image-3'' returns 404 on fal; the live endpoint is alibaba/qwen-image-3/text-to-image (edit sibling: alibaba/qwen-image-3/edit).
+    1K assumed.'
+- route_key: recraft-v4
+  question_slots:
+  - IMG-02
+  model_family: Recraft V4
+  model_version_string: Recraft V4 (fal title); fal endpoint fal-ai/recraft/v4/text-to-image
+  surface: fal
+  surface_model_id: fal-ai/recraft/v4/text-to-image
+  surface_rule_note: not on any hyperscaler → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal page meta description: ''accurate text rendering, and clean composition at $0.04 per image''; the JSON pricingInfoOverride for this
+    endpoint is empty'
+  regular_price:
+    value: 0.04
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/recraft-v4/fal-recraft-v4-text-to-image.html
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: Price comes from the page's description text, not from a pricing block; fal's JSON price field is blank for this endpoint. Treat as pinned-with-caveat and
+    re-verify at execution time.
+- route_key: flux-2-pro-edit
+  question_slots:
+  - IMG-03
+  - IMG-04
+  model_family: FLUX.2 [pro] edit (Black Forest Labs)
+  model_version_string: FLUX 2 Pro Edit (fal title); fal endpoint fal-ai/flux-2-pro/edit
+  surface: fal
+  surface_model_id: fal-ai/flux-2-pro/edit
+  surface_rule_note: edit/reference endpoint exists on fal; the Azure FLUX.2-pro deployment would also accept reference images (Retail meter 'Flux 2 Pro Ref') but
+    no deployment exists (MD-9) → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''**$0.03** for the first megapixel of output, plus **$0.015** per extra megapixel of input and output, rounded up to the nearest
+    megapixel'''
+  regular_price:
+    value: 0.03
+    currency: USD
+    unit: per_image_first_megapixel
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: Reference images are billed as input megapixels ($0.015/MP each); projection assumes 1 reference of 1 MP → $0.045 per edit generation.
+- route_key: nano-banana-pro-edit
+  question_slots:
+  - IMG-03
+  - IMG-04
+  model_family: Gemini 3 Pro Image edit (Nano Banana Pro, via fal)
+  model_version_string: Nano Banana Pro (fal title); fal endpoint fal-ai/nano-banana-pro/edit
+  surface: fal
+  surface_model_id: fal-ai/nano-banana-pro/edit
+  surface_rule_note: the same model edits on Vertex (gemini-3-pro-image accepts input images at 560 tokens each) for 0.134 on credits; the fal edit route is recorded
+    as the plan names it; the Vertex route should be preferred at execution (note)
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''Your request will cost **$0.15** per image. For **$1.00**, you can run this model **7** times. 4K outputs will be charged at
+    double the standard rate.'''
+  regular_price:
+    value: 0.15
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - standard
+    - 4K (double rate)
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: 'Cheaper equivalent on credits: Vertex gemini-3-pro-image with image inputs (pinned at 0.134/image output + 560 input tokens per reference). The Executor
+    did not switch the surface (scope); the Controller may.'
+- route_key: seedream-5-pro-edit
+  question_slots:
+  - IMG-03
+  - IMG-04
+  model_family: Seedream 5.0 Pro edit (ByteDance)
+  model_version_string: Seedream 5.0 Pro Image Editing (fal title); fal endpoint bytedance/seedream/v5/pro/edit
+  surface: fal
+  surface_model_id: bytedance/seedream/v5/pro/edit
+  surface_rule_note: fal-only → cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''The first input image is not charged, and every additional input image will cost **$0.0045**. Tentative pricing is **$0.0675+
+    $(0.0045 x number of additional input images)** per output image for images of total area less than or equal to **1536x1536** pixels.'''
+  regular_price:
+    value: 0.0675
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - <=1536x1536
+    - 1536x1536-2048x2048
+    max_refs: 10
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: 'max_refs 10 from fal description ''up to 10 reference im[ages]''. Projection: 1 reference (free) → 0.0675; each extra reference +0.0045.'
+- route_key: gpt-image-2-edit
+  question_slots:
+  - IMG-03
+  - IMG-04
+  model_family: GPT Image 2 edit (OpenAI)
+  model_version_string: GPT Image 2 API (fal title); fal endpoint openai/gpt-image-2/edit
+  surface: fal
+  surface_model_id: openai/gpt-image-2/edit
+  surface_rule_note: Azure gpt-image-2 also edits, but no deployment exists (MD-9) → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''Image tokens (per 1M): **$8.00** input, **$2.00** cached, **$30.00** output ... See the description at the bottom of this page
+    for more details on how much canonical image sizes cost.'''
+  regular_price:
+    value: 30.0
+    currency: USD
+    unit: per_1M_image_output_tokens
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2-edit/fal-api-models-openai-gpt-image-2-edit.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: Only the token meter is in this endpoint's pinned bytes; the per-image canonical-size table was pinned for the base route only. Not projectable per image
+    → excluded from totals (listed under unpinned_lines_excluded as pinned_but_not_projectable). Likely ≈ 0.053/image at medium quality (INFERRED from the base route's
+    table).
+- route_key: veo-3.1-fast
+  question_slots:
+  - VID-01
+  - VID-03a
+  - VID-03b
+  - VID-05
+  model_family: Veo 3.1 Fast (Google)
+  model_version_string: publishers/google/models/veo-3.1-fast-generate-001, versionId default, launchStage GA (us-central1 publisher GET 200; global endpoint 404)
+  surface: vertex
+  surface_model_id: veo-3.1-fast-generate-001
+  surface_rule_note: Google model on Vertex → GCP credits; fal charges 0.15/s with audio for the same model
+  billing_pool: credits
+  billing_unit_verbatim: 'Vertex pricing row: ''Veo 3.1 Fast | Video + Audio generation | ... | Text/Image prompt | Video + Audio | 720p | $0.10 / 1 count'' (1080p
+    $0.12 / 1 count; 4K $0.30 / 1 count)'
+  regular_price:
+    value: 0.1
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 720p
+    - 1080p
+    - 4K
+    max_refs: null
+    native_audio: true
+    seed_supported: null
+  key_present: *id001
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  fallback: null
+  source: pin-2026-09-04 (Vertex AI generative-ai pricing page) + publisher-model GET on us-central1 endpoint (access-evidence-2026-09/gcp-publisher-model-regional-retry.json)
+  notes: Vertex price cell reads '<price> / 1 count' under the column 'Price (USD)'; the fetched bytes do not define 'count' for Veo rows. The survey (survey-2026-09-05)
+    and fal's own Veo listing (USD 0.40/s with audio) read it as per second of generated video; the projection treats it as per second and records this as an assumption,
+    not a vendor statement.
+  variants:
+  - variant: t2v
+    surface_model_id: veo-3.1-fast-generate-001
+    regular_price:
+      value: 0.1
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+    route_status: pinned
+    notes: text prompt; 720p with audio
+  - variant: i2v
+    surface_model_id: veo-3.1-fast-generate-001
+    regular_price:
+      value: 0.1
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+    route_status: pinned
+    notes: '''Text/Image prompt'' input per the pricing row; same price'
+  - variant: ref2v
+    surface_model_id: veo-3.1-fast-generate-001
+    regular_price:
+      value: 0.1
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+    route_status: pinned
+    notes: reference-image conditioning; whether Fast supports reference images is not stated in the pinned bytes (capability null) — verify at execution
+  - variant: extend-15s
+    surface_model_id: veo-3.1-fast-generate-001
+    regular_price:
+      value: 0.1
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+    route_status: pinned
+    notes: 'C.3d 15-second item via Veo extend; billed per generated second (ASSUMPTION: extension seconds billed at the same rate)'
+- route_key: veo-3.1-lite
+  question_slots:
+  - VID-05
+  model_family: Veo 3.1 Lite (Google)
+  model_version_string: publishers/google/models/veo-3.1-lite-generate-001, versionId default, launchStage PUBLIC_PREVIEW (us-central1 publisher GET 200)
+  surface: vertex
+  surface_model_id: veo-3.1-lite-generate-001
+  surface_rule_note: Google model on Vertex → GCP credits; same 0.05/s as fal
+  billing_pool: credits
+  billing_unit_verbatim: 'Vertex pricing row: ''Veo 3.1 Lite | Video + Audio generation | ... | 720p | $0.05 / 1 count'' (1080p $0.08; silent 720p $0.03)'
+  regular_price:
+    value: 0.05
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 720p
+    - 1080p
+    max_refs: null
+    native_audio: true
+    seed_supported: null
+  key_present: *id001
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  fallback: null
+  source: pin-2026-09-04 (Vertex AI generative-ai pricing page) + publisher-model GET on us-central1 endpoint (access-evidence-2026-09/gcp-publisher-model-regional-retry.json)
+  notes: 'Vertex price cell reads ''<price> / 1 count'' under the column ''Price (USD)''; the fetched bytes do not define ''count'' for Veo rows. The survey (survey-2026-09-05)
+    and fal''s own Veo listing (USD 0.40/s with audio) read it as per second of generated video; the projection treats it as per second and records this as an assumption,
+    not a vendor statement. Public preview: terms may differ from GA.'
+- route_key: veo-3.1-full
+  question_slots:
+  - VID-05
+  - VID-01 (dialogue, C.3d)
+  model_family: Veo 3.1 (Google)
+  model_version_string: publishers/google/models/veo-3.1-generate-001, versionId default, launchStage GA (us-central1 publisher GET 200)
+  surface: vertex
+  surface_model_id: veo-3.1-generate-001
+  surface_rule_note: Google model on Vertex → GCP credits; same 0.40/s as fal
+  billing_pool: credits
+  billing_unit_verbatim: 'Vertex pricing row: ''Veo 3.1 | Video + Audio generation | ... | Video + Audio | 720p, 1080p | $0.40 / 1 count'' (4K $0.60; silent $0.20)'
+  regular_price:
+    value: 0.4
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 720p
+    - 1080p
+    - 4K
+    max_refs: null
+    native_audio: true
+    seed_supported: null
+  key_present: *id001
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  fallback: null
+  source: pin-2026-09-04 (Vertex AI generative-ai pricing page) + publisher-model GET on us-central1 endpoint (access-evidence-2026-09/gcp-publisher-model-regional-retry.json)
+  notes: 'Vertex price cell reads ''<price> / 1 count'' under the column ''Price (USD)''; the fetched bytes do not define ''count'' for Veo rows. The survey (survey-2026-09-05)
+    and fal''s own Veo listing (USD 0.40/s with audio) read it as per second of generated video; the projection treats it as per second and records this as an assumption,
+    not a vendor statement. Plan: 2 gens only (VID-05 cost knee) plus the two-speaker dialogue item.'
+- route_key: kling-v3-pro
+  question_slots:
+  - VID-01
+  - VID-03a
+  - VID-03b
+  - VID-02
+  model_family: Kling 3.0 Pro (Kuaishou)
+  model_version_string: Kling Video v3 Text to Video [Pro] (fal title); fal endpoint fal-ai/kling-video/v3/pro/text-to-video
+  surface: fal
+  surface_model_id: fal-ai/kling-video/v3/pro/text-to-video
+  surface_rule_note: not on any hyperscaler (survey §2) → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''For every second of video you generated, you will be charged **$0.112** (audio off) or **$0.168** (audio on), if voice control
+    is used while generating audio you will be charged **$0.196**.'''
+  regular_price:
+    value: 0.112
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: true
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: 0.112 is the audio-off rate (the 26-Aug plan's choice); native-audio items must be costed at 0.168/s (dialogue variant below). 'multi-shot support' stated
+    in the fal description.
+  variants:
+  - variant: t2v
+    surface_model_id: fal-ai/kling-video/v3/pro/text-to-video
+    regular_price:
+      value: 0.112
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+    route_status: pinned
+    notes: audio off
+  - variant: t2v-audio-on
+    surface_model_id: fal-ai/kling-video/v3/pro/text-to-video
+    regular_price:
+      value: 0.168
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+    route_status: pinned
+    notes: audio on — used for the C.3d two-speaker dialogue item
+  - variant: i2v
+    surface_model_id: fal-ai/kling-video/v3/pro/image-to-video
+    regular_price:
+      value: 0.112
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-i2v.json
+    route_status: pinned
+    notes: audio off
+  - variant: multishot-10s
+    surface_model_id: fal-ai/kling-video/v3/pro/text-to-video
+    regular_price:
+      value: 0.112
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+    route_status: pinned
+    notes: 10-s multi-shot prompt; same per-second price
+  - variant: 15s
+    surface_model_id: fal-ai/kling-video/v3/pro/text-to-video
+    regular_price:
+      value: 0.112
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+    route_status: pinned
+    notes: C.3d 15-second item; supported durations not stated in pinned bytes (capability null)
+  - variant: elements-ref2v
+    surface_model_id: fal-ai/kling-video/v3/pro/elements
+    regular_price:
+      value: null
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: null
+    route_status: unpinned
+    notes: fal.ai/models/fal-ai/kling-video/v3/pro/elements → HTTP 404; no 'elements' endpoint found for v3 pro tonight. Kling i2v description mentions 'custom element
+      support' — reference conditioning may live inside the i2v endpoint; verify at execution.
+    unpinned_reason: id_not_found
+  - variant: lipsync
+    surface_model_id: fal-ai/kling-video/lipsync/audio-to-video
+    regular_price:
+      value: 0.014
+      currency: USD
+      unit: per_input_video_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/kling-lipsync-audio-to-video/fal-api-models-kling-lipsync-a2v.json
+    route_status: pinned
+    notes: exists as a separate endpoint; recorded as its own route kling-lipsync-audio-to-video
+- route_key: minimax-h3-max
+  question_slots:
+  - VID-01
+  - VID-03a
+  - VID-05
+  model_family: MiniMax H3 Max (fal post-trained variant of MiniMax H3)
+  model_version_string: MiniMax H3 Max Text to Video (fal title); fal endpoint minimax/h3-max/text-to-video
+  surface: fal
+  surface_model_id: minimax/h3-max/text-to-video
+  surface_rule_note: not on any hyperscaler (survey §2) → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''Video costs **$0.0125** per second at **480p**, **$0.02** per second at **768p**. Note: these are promotional launch rates,
+    75% off for a limited time. The discount ends September 7, after which 480p is $0.05/second and 768p is $0.08/second.'''
+  regular_price:
+    value: 0.08
+    currency: USD
+    unit: per_second
+  promo_price:
+    value: 0.02
+    ends: '2026-09-07 (fal: "The discount ends September 7")'
+    flagged: true
+    used_in_totals: false
+    note: 480p promo 0.0125/s; regular 0.05/s
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 480p
+    - 768p
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: 'Regular (post-7-Sep) price used everywhere: 0.08/s at 768p, 0.05/s at 480p. fal states this is fal''s own post-trained variant (''fal''s H3 Max is a post-trained
+    variant of MiniMax H3''), not MiniMax''s hosted model — record on the Registry row.'
+  variants:
+  - variant: t2v-768p
+    surface_model_id: minimax/h3-max/text-to-video
+    regular_price:
+      value: 0.08
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json
+    route_status: pinned
+    notes: regular rate
+  - variant: t2v-480p
+    surface_model_id: minimax/h3-max/text-to-video
+    regular_price:
+      value: 0.05
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json
+    route_status: pinned
+    notes: regular rate; VID-05 480p vs 768p
+  - variant: i2v-768p
+    surface_model_id: minimax/h3-max/image-to-video
+    regular_price:
+      value: 0.08
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+    route_status: pinned
+    notes: regular rate
+  - variant: i2v-480p
+    surface_model_id: minimax/h3-max/image-to-video
+    regular_price:
+      value: 0.05
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+    route_status: pinned
+    notes: regular rate
+- route_key: wan-3.0-prime
+  question_slots:
+  - VID-01
+  - VID-03a
+  model_family: Wan 3.0 Prime (Alibaba)
+  model_version_string: Wan 3.0 Prime (fal title); fal endpoint alibaba/wan-3.0-prime/text-to-video
+  surface: fal
+  surface_model_id: alibaba/wan-3.0-prime/text-to-video
+  surface_rule_note: not on any hyperscaler → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''For every second of video you generate, you will be charged **$0.068** at **480p**, **$0.14** at **720p**, or **$0.28** at **1080p**.
+    ... **Pricing is subject to change.**'''
+  regular_price:
+    value: 0.14
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 480p
+    - 720p
+    - 1080p
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-t2v.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: The plan's id 'alibaba/wan-3.0-prime' returns 404; live endpoints are .../text-to-video and .../image-to-video.
+  variants:
+  - variant: t2v
+    surface_model_id: alibaba/wan-3.0-prime/text-to-video
+    regular_price:
+      value: 0.14
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-t2v.json
+    route_status: pinned
+    notes: 720p
+  - variant: i2v
+    surface_model_id: alibaba/wan-3.0-prime/image-to-video
+    regular_price:
+      value: 0.14
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-i2v.json
+    route_status: pinned
+    notes: 720p
+- route_key: gemini-omni-flash-1.1
+  question_slots:
+  - VID-01
+  - VID-02
+  model_family: Gemini Omni 1.1 Flash (Google)
+  model_version_string: publishers/google/models/gemini-omni-1.1-flash-preview, versionId default, launchStage PUBLIC_PREVIEW (global publisher GET 200); sibling
+    gemini-omni-flash GA
+  surface: vertex
+  surface_model_id: gemini-omni-1.1-flash-preview
+  surface_rule_note: Google-only model on Vertex → GCP credits
+  billing_pool: credits
+  billing_unit_verbatim: 'Vertex pricing (Gemini Omni table, ''Token Price /1M (USD)''): ''Gemini Omni Flash, Gemini Omni 1.1 Flash | Input (text, image, video, audio)*
+    $1.50 | Text output $9.00 | Video Output** $17.50''; footnote: ''Gemini Omni Flash charges 1931 tokens per second of 360p video, 5792 tokens per second of 720p
+    video, 8688 tokens per second of 1080p video, and 17376 tokens per second of 4k video for video outputs (with audio).'''
+  regular_price:
+    value: 0.10136
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 360p
+    - 720p
+    - 1080p
+    - 4K
+    max_refs: null
+    native_audio: true
+    seed_supported: null
+  key_present: *id001
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  fallback: null
+  source: pin-2026-09-04 (Vertex AI generative-ai pricing page) + publisher-model GET on us-central1 endpoint (access-evidence-2026-09/gcp-publisher-model-regional-retry.json)
+  notes: 'DERIVED per-second figure: $17.50 per 1M video-output tokens × 5,792 tokens per second of 720p = $0.10136/s (both inputs are in the pinned bytes; Google
+    prints no per-second price). Input tokens for the prompt add a small amount not projected. The preview id is the one the plan names; the GA id gemini-omni-flash
+    also answered 200 — which model the docs call 1.1 is unresolved (survey unknown 3).'
+  variants:
+  - variant: t2v
+    surface_model_id: gemini-omni-1.1-flash-preview
+    regular_price:
+      value: 0.10136
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+    route_status: pinned
+    notes: derived, see notes
+  - variant: multishot-10s
+    surface_model_id: gemini-omni-1.1-flash-preview
+    regular_price:
+      value: 0.10136
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+    route_status: pinned
+    notes: 10-s item; same per-second price
+  - variant: dialogue
+    surface_model_id: gemini-omni-1.1-flash-preview
+    regular_price:
+      value: 0.10136
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+    route_status: pinned
+    notes: C.3d two-speaker Hindi dialogue; native audio stated (with audio)
+- route_key: seedance-2.5
+  question_slots:
+  - VID-01
+  - VID-03a
+  - VID-03b
+  - VID-02
+  model_family: Seedance 2.5 (ByteDance / Dreamina)
+  model_version_string: Seedance 2.5 Text to Video (fal title); fal endpoint bytedance/seedance-2.5/text-to-video
+  surface: fal
+  surface_model_id: bytedance/seedance-2.5/text-to-video
+  surface_rule_note: 'not on any hyperscaler → fal, cash. Premium: the plan runs 4 gens, not 8'
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''For 480p, your request will cost roughly **$0.2205** per second of generated video, for 720p, you will be charged roughly **$0.4730**
+    per second of generated video, and for 1080p, roughly **$1.164** per second of generated video. Your request will cost **$0.0214** per 1000 tokens for 480p and
+    720p video ... The number of tokens is roughly given by (height of output video * width of output video * (input video duration + output video duration) * 24)
+    / 1024.'''
+  regular_price:
+    value: 0.473
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s:
+    - 'up to 30 s (fal: "native 30-second single-shot video")'
+    resolutions:
+    - 480p
+    - 720p
+    - 1080p
+    max_refs: 50
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-t2v.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: 'Token-metered underneath (''roughly''); 0.473/s at 720p is fal''s own conversion. Contradicts §0 ''480p/720p only'': the pinned text also prices 1080p.
+    max_refs 50 from the reference-to-video description (''up to 50 multimodal references''). Native audio is not stated in the pinned bytes (null) although the plan
+    says native audio.'
+  variants:
+  - variant: t2v
+    surface_model_id: bytedance/seedance-2.5/text-to-video
+    regular_price:
+      value: 0.473
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-t2v.json
+    route_status: pinned
+    notes: 720p
+  - variant: i2v
+    surface_model_id: bytedance/seedance-2.5/image-to-video
+    regular_price:
+      value: 0.473
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-i2v.json
+    route_status: pinned
+    notes: 720p
+  - variant: ref2v
+    surface_model_id: bytedance/seedance-2.5/reference-to-video
+    regular_price:
+      value: 0.473
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-ref2v.json
+    route_status: pinned
+    notes: 720p with image references; 'If video inputs are provided the price is multiplied by 0.6' (0.2838/s) — not used
+  - variant: 15s
+    surface_model_id: bytedance/seedance-2.5/text-to-video
+    regular_price:
+      value: 0.473
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-t2v.json
+    route_status: pinned
+    notes: C.3d 15-second item (VID-02 multi-shot 15 s ×2)
+  - variant: dialogue
+    surface_model_id: bytedance/seedance-2.5/text-to-video
+    regular_price:
+      value: 0.473
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-t2v.json
+    route_status: pinned
+    notes: C.3d two-speaker item; native audio not stated in pinned bytes
+- route_key: runway-aleph
+  question_slots:
+  - VID-04
+  model_family: Runway Aleph
+  model_version_string: null
+  surface: runway_direct
+  surface_model_id: aleph2 (26-Aug plan literal; not re-verified tonight)
+  surface_rule_note: Runway is on no hyperscaler; direct account only
+  billing_pool: cash
+  billing_unit_verbatim: null
+  regular_price:
+    value: null
+    currency: USD
+    unit: null
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present:
+    name: null
+    file: null
+  route_status: no_access
+  screen_status: deferred
+  pin_ref: null
+  fallback: null
+  source: controller-session-2026-09-05 + plan §C.3
+  notes: No Runway key on this machine; the Controller decides whether to open an account (MD-5). Not fetched, not pinned; excluded from totals.
+  unpinned_reason: no_access
+- route_key: sora-2
+  question_slots:
+  - VID-01 (addition, C.3c)
+  model_family: Sora 2 (OpenAI)
+  model_version_string: sora-2 versions 2025-10-06 and 2025-12-08, lifecycle Preview, sku GlobalStandard (az cognitiveservices model list, eastus2); the 2025-10-06
+    version shows deprecationDate 2026-07-15 (already past)
+  surface: azure_foundry
+  surface_model_id: sora-2
+  surface_rule_note: '''sold directly by Azure'' → Azure credits; deployable in eastus2 / swedencentral only; needs a new resource + deployment (MD-9); preview gating
+    unknown (MD-2)'
+  billing_pool: credits
+  billing_unit_verbatim: 'Azure Retail Prices API: meterName ''Sora 2 glbl Second'', retailPrice 0.1, unitOfMeasure ''1'' (eastus2); ''Sora 2 dzone'' 0.11; ''Sora
+    2 pro glbl'' 0.3; ''Sora 2 pro high res glbl'' 0.5'
+  regular_price:
+    value: 0.1
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id003
+  route_status: needs_controller_enablement
+  screen_status: deferred
+  pin_ref: eval/empirical-planning/price-pins-2026-09/sora-2/azure-retail-prices-sora-2.json
+  fallback: null
+  source: pin-2026-09-04 (Azure Retail Prices API JSON) + cli-2026-09-04 (azure-cognitiveservices-model-list-eastus2.json)
+  notes: Use version 2025-12-08 if deployed (the older version is past its listed deprecation date). Not in the T1 nominal counts; shown as a 0-count line.
+- route_key: mai-image-2.6
+  question_slots:
+  - IMG-CORE (addition, C.3c)
+  model_family: MAI-Image-2.6 (Microsoft)
+  model_version_string: 'not in the eastus2 model list tonight (survey: Preview in eastus / southindia / swedencentral / uaenorth)'
+  surface: azure_foundry
+  surface_model_id: MAI-Image-2.6
+  surface_rule_note: Microsoft model sold by Azure → credits; region differs from gpt-image-2/sora-2 (MD-2)
+  billing_pool: credits
+  billing_unit_verbatim: null
+  regular_price:
+    value: null
+    currency: USD
+    unit: null
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id003
+  route_status: unpinned
+  screen_status: deferred
+  pin_ref: eval/empirical-planning/price-pins-2026-09/mai-image-2.6/azure-retail-prices-mai-2.6-empty.json
+  fallback: null
+  source: pin-2026-09-04 (Azure Retail Prices API returned Count 0 for MAI 2.6 meters) + survey-2026-09-05
+  notes: 'Price unpublished: the Retail Prices API has no 2.6 meters (Count 0 saved as page_only evidence). Excluded from totals.'
+  unpinned_reason: price_unpublished
+- route_key: sd3.5-large
+  question_slots:
+  - IMG-CORE (addition, C.3c)
+  model_family: Stable Diffusion 3.5 Large (Stability AI)
+  model_version_string: stability.sd3-5-large-v1:0, modelLifecycle ACTIVE, inferenceTypesSupported ON_DEMAND (aws bedrock list-foundation-models us-west-2)
+  surface: bedrock
+  surface_model_id: stability.sd3-5-large-v1:0
+  surface_rule_note: Bedrock-native serverless → AWS credits (survey §4); us-west-2 only
+  billing_pool: credits
+  billing_unit_verbatim: 'Bedrock offer rate card (CLI): dimension ''USW2_created_image'', price ''0.08'', unit ''Units'', description ''Output image from Stable
+    Diffusion 3.5 Large''; supportTerm ''No refunds will be offered.''; no subscription or standing-fee term in the offer'
+  regular_price:
+    value: 0.08
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: &id004
+    name: AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY (IAM user claude-aight)
+    file: ~/.aight-litellm-keys/aws.env
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/sd3.5-large/aws-bedrock-list-foundation-model-agreement-offers-sd3.5-large.json
+  fallback: null
+  source: cli-2026-09-04 (aws bedrock list-foundation-model-agreement-offers; get-foundation-model-availability)
+  notes: 'get-foundation-model-availability: authorizationStatus AUTHORIZED, entitlementAvailability AVAILABLE, regionAvailability AVAILABLE, agreementAvailability.status
+    NOT_AVAILABLE — read as: this account can already invoke the model without a new agreement (INFERRED; confirm with one metered call in the morning, MD-9). Offer
+    EULA URL recorded in the evidence; not fetched or read tonight. AWS''s public pricing page is JS-rendered, so the rate card is the only pinned price.'
+- route_key: stable-image-core
+  question_slots:
+  - IMG-CORE (addition, C.3c)
+  model_family: Stable Image Core 1.0 (Stability AI)
+  model_version_string: stability.stable-image-core-v1:1, ACTIVE, ON_DEMAND (bedrock list us-west-2)
+  surface: bedrock
+  surface_model_id: stability.stable-image-core-v1:1
+  surface_rule_note: Bedrock-native → AWS credits; us-west-2 only
+  billing_pool: credits
+  billing_unit_verbatim: 'Bedrock offer rate card: ''USW2_created_image'' price ''0.04'' unit ''Units'', ''Output image from Stable Image Core'''
+  regular_price:
+    value: 0.04
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id004
+  route_status: pinned
+  screen_status: recorded_not_screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/stable-image-core/aws-bedrock-list-foundation-model-agreement-offers-stable-image-core.json
+  fallback: null
+  source: cli-2026-09-04 (agreement-offers + model-availability)
+  notes: Same availability flags as SD3.5 Large (AUTHORIZED / AVAILABLE). The plan names only SD3.5 Large as screened; Core is recorded.
+- route_key: stable-image-ultra
+  question_slots:
+  - IMG-CORE (addition, C.3c)
+  model_family: Stable Image Ultra 1.0 (Stability AI)
+  model_version_string: stability.stable-image-ultra-v1:1, ACTIVE, ON_DEMAND (bedrock list us-west-2)
+  surface: bedrock
+  surface_model_id: stability.stable-image-ultra-v1:1
+  surface_rule_note: Bedrock-native → AWS credits; us-west-2 only
+  billing_pool: credits
+  billing_unit_verbatim: 'Bedrock offer rate card: ''USW2_created_image_stable_image_ultra'' price ''0.14'' unit ''Units'', ''Output image from Stable Image Ultra'''
+  regular_price:
+    value: 0.14
+    currency: USD
+    unit: per_image
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id004
+  route_status: pinned
+  screen_status: recorded_not_screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/stable-image-ultra/aws-bedrock-list-foundation-model-agreement-offers-stable-image-ultra.json
+  fallback: null
+  source: cli-2026-09-04 (agreement-offers + model-availability)
+  notes: Same availability flags (AUTHORIZED / AVAILABLE). Recorded, not screened.
+- route_key: luma-ray-2
+  question_slots:
+  - VID-01 (addition, C.3c)
+  model_family: Luma Ray 2 (Luma AI)
+  model_version_string: luma.ray-v2:0, ACTIVE, ON_DEMAND (bedrock list us-west-2)
+  surface: bedrock
+  surface_model_id: luma.ray-v2:0
+  surface_rule_note: Bedrock-native → AWS credits; 2–4× the price of Veo, so recorded only
+  billing_pool: credits
+  billing_unit_verbatim: 'Bedrock offer rate card: ''USW2_videoMediumFpsHdRes'' price ''1.5'' — ''1 second of generated video at 720p, 24fps''; ''USW2_videoMediumFpsStandardRes''
+    price ''0.75'' — ''1 second of generated video at 540p, 24fps''; supportTerm ''We do not currently offer refunds'''
+  regular_price:
+    value: 1.5
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 540p
+    - 720p
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id004
+  route_status: pinned
+  screen_status: recorded_not_screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/luma-ray-2/aws-bedrock-list-foundation-model-agreement-offers-luma-ray-2.json
+  fallback: null
+  source: cli-2026-09-04 (agreement-offers + model-availability)
+  notes: Availability flags AUTHORIZED / AVAILABLE. 0 generations in every tranche.
+- route_key: sarvam-bulbul-v3
+  question_slots:
+  - AUD-01
+  model_family: Sarvam bulbul v3
+  model_version_string: bulbul:v3 (26-Aug plan literal; Sarvam pricing page FAQ names "Text to Speech (Bulbul v3)")
+  surface: sarvam_direct
+  surface_model_id: bulbul:v3
+  surface_rule_note: Sarvam is not on any hyperscaler's credit-eligible surface (Azure Marketplace SaaS only, survey §3) → direct; Sarvam's own prepaid balance is
+    a cash pool
+  billing_pool: cash
+  billing_unit_verbatim: 'Sarvam api-pricing page: ''Text to Speech is priced at ₹3.00 per 1,000 characters for both real-time and streaming usage.'''
+  regular_price:
+    value: 3.0
+    currency: INR
+    unit: per_1000_characters
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present:
+    name: SARVAM_API_KEY (present by name; value length 0 = empty)
+    file: ~/.mi-keys
+  route_status: no_access
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+  fallback: null
+  source: pin-2026-09-04 (sarvam.ai/api-pricing) + key-length check (access-evidence-2026-09/sarvam-key-length.txt)
+  notes: 'PRICE PINNED but NO ACCESS: SARVAM_API_KEY exists in ~/.mi-keys by name with an EMPTY value (length 0). The Controller must supply the key (MD-10). ₹3.00
+    per 1,000 characters = ₹30 per 10k, matching §0. Excluded from totals while no_access (its 6 TTS gens are shown at INR price for reference).'
+  unpinned_reason: no_access (empty key)
+- route_key: elevenlabs-v3
+  question_slots:
+  - AUD-02
+  model_family: ElevenLabs Eleven v3
+  model_version_string: fal endpoint fal-ai/elevenlabs/tts/eleven-v3
+  surface: fal
+  surface_model_id: fal-ai/elevenlabs/tts/eleven-v3
+  surface_rule_note: ElevenLabs on GCP Marketplace is credit-ineligible (survey §3/§4); no direct key → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal page: ''**Simple, transparent pricing**: $0.10 per 1,000 characters'' and ''Pricing on fal is based on the length of the input text'''
+  regular_price:
+    value: 0.1
+    currency: USD
+    unit: per_1000_characters
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/elevenlabs-v3/fal-elevenlabs-tts-eleven-v3.html
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: fal's JSON price field is empty for this endpoint; the price is in the page's README text. Max 250 characters per item (26-Aug audio defaults).
+- route_key: sync-lipsync-v3
+  question_slots:
+  - AUD-03
+  model_family: sync-3 lipsync (sync.)
+  model_version_string: sync-3 Lipsync (fal title); fal endpoint fal-ai/sync-lipsync/v3
+  surface: fal
+  surface_model_id: fal-ai/sync-lipsync/v3
+  surface_rule_note: no audio-driven lipsync on any cloud (survey §3) → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal page (embedded model record for id fal-ai/sync-lipsync/v3): ''Your request will cost **$0.1333** per output second.'''
+  regular_price:
+    value: 0.1333
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3.html
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: 0.1333 per output second = USD 8.00 per minute (the 26-Aug figure). The unauthenticated JSON search returns an empty price for this id; the price sits in
+    the page HTML.
+- route_key: kling-lipsync-audio-to-video
+  question_slots:
+  - AUD-03
+  model_family: Kling LipSync (Kuaishou)
+  model_version_string: Kling LipSync Audio-to-Video (fal title); fal endpoint fal-ai/kling-video/lipsync/audio-to-video
+  surface: fal
+  surface_model_id: fal-ai/kling-video/lipsync/audio-to-video
+  surface_rule_note: 'second lipsync route (plan: "one LatentSync-class or Kling lipsync route"); fal-only → cash'
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''Your request will be priced **$0.014** per input **video seconds**, rolling up to closest **5 second increment**.'''
+  regular_price:
+    value: 0.014
+    currency: USD
+    unit: per_input_video_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/kling-lipsync-audio-to-video/fal-api-models-kling-lipsync-a2v.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: added_by_executor_because the task asks for one second lipsync route and the plan names Kling lipsync as a candidate; fal-ai/latentsync also exists ($0.2
+    per video up to 40 s, seen in the probe, not pinned). A 6-s plate bills as 10 s (5-s increments) → 0.14 per generation.
+- route_key: lyria
+  question_slots:
+  - MUS (C.3d music lane)
+  model_family: Lyria (Google)
+  model_version_string: 'publisher GET: lyria-002 → 200, versionId default, launchStage GA (us-central1 endpoint); lyria-3 → 404 NOT_FOUND; pricing page rows: ''Lyria
+    3'' ($0.04 / 30-second clip), ''Lyria 3 Pro'' ($0.08 / full song), ''Lyria 2'' ($0.06 / music)'
+  surface: vertex
+  surface_model_id: lyria-002
+  surface_rule_note: Google model on Vertex → GCP credits
+  billing_pool: credits
+  billing_unit_verbatim: 'Vertex pricing rows: ''Lyria 3 | 30 second music clip generation | ... | 30 second music clip | $0.04 / 1 count''; ''Lyria 2 | Music generation
+    | ... | Music | $0.06 / 1 count'''
+  regular_price:
+    value: 0.06
+    currency: USD
+    unit: per_clip
+  promo_price: null
+  capabilities:
+    durations_s:
+    - 30
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id001
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  fallback: null
+  source: pin-2026-09-04 (Vertex AI generative-ai pricing page) + publisher-model GET on us-central1 endpoint (access-evidence-2026-09/gcp-publisher-model-regional-retry.json)
+  notes: 'NOT RECONCILED (MD-7): the plan says ''Lyria 3'', the publisher endpoint only knows lyria-002, and the pricing page prices ''Lyria 3'' at 0.04 and ''Lyria
+    2'' at 0.06 per clip. The projection uses 0.06 for surface_model_id lyria-002 (the id that exists; INFERRED to be the ''Lyria 2'' row) — the conservative choice;
+    0.04 applies only if a Lyria 3 id becomes reachable. Music lane: 2 briefs × 2 = 4 in totals, 8 shown.'
+  variants:
+  - variant: lyria-3
+    surface_model_id: lyria-3
+    regular_price:
+      value: 0.04
+      currency: USD
+      unit: per_30s_clip
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+    route_status: unpinned
+    notes: priced on the page but no publisher model id answers (lyria-3 and lyria-3-generate-preview both 404)
+    unpinned_reason: id_not_found
+- route_key: elevenlabs-music
+  question_slots:
+  - MUS (C.3d music lane)
+  model_family: ElevenLabs Music
+  model_version_string: Elevenlabs Music (fal title); fal endpoint fal-ai/elevenlabs/music
+  surface: fal
+  surface_model_id: fal-ai/elevenlabs/music
+  surface_rule_note: fal-only → cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal JSON: ''Your request will cost **$0.6** per output audio minute. The audio will be **rounded up** to the closest minute.'''
+  regular_price:
+    value: 0.6
+    currency: USD
+    unit: per_minute
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/elevenlabs-music/fal-api-models-elevenlabs-music.json
+  fallback: null
+  source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
+  notes: A 30-s clip bills as 1 minute → 0.60 per generation.
+- route_key: chirp-3-hd-hi-in
+  question_slots:
+  - AUD-01/02 (cloud TTS, C.3c)
+  model_family: 'Chirp 3: HD Hindi (Google Cloud Text-to-Speech)'
+  model_version_string: hi-IN-Chirp3-HD-<voice> (survey; not verified tonight — the Text-to-Speech API is not enabled in the project)
+  surface: vertex
+  surface_model_id: hi-IN-Chirp3-HD-*
+  surface_rule_note: Google first-party → GCP credits; API not enabled (needs_controller_enablement, MD-9)
+  billing_pool: credits
+  billing_unit_verbatim: 'Cloud TTS pricing page (probe fetch, bytes NOT retained — pin budget): ''Chirp 3: HD voices (sku:F977-2280-6F1B) | 0 to 1 million characters
+    | US$0.00003 per character (US$30 per 1 million characters)'''
+  regular_price:
+    value: null
+    currency: USD
+    unit: per_1M_characters
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id001
+  route_status: needs_controller_enablement
+  screen_status: recorded_not_screened
+  pin_ref: null
+  fallback: null
+  source: probe fetch 2026-09-04 of https://cloud.google.com/text-to-speech/pricing (2,199,576 bytes) — not retained; survey-2026-09-05
+  notes: The price string was observed in the fetched bytes tonight but the 2.2 MB page would breach the 5 MB pin cap, so the route is unpinned (pin_budget) with
+    price null; the observed USD 30 per 1M characters is recorded here as an unpinned observation only. Cloud TTS API enablement is an MD-9 step.
+  unpinned_reason: pin_budget (page 2,199,576 bytes; price observed but bytes not retained) + api_not_enabled
+- route_key: azure-neural-tts-hi-in
+  question_slots:
+  - AUD-01/02 (cloud TTS, C.3c)
+  model_family: Azure Neural TTS Hindi (Azure Speech)
+  model_version_string: hi-IN neural voices (survey REPORTED names; not verified tonight — no Speech resource exists)
+  surface: azure_foundry
+  surface_model_id: Azure Speech S1 Neural Text To Speech (hi-IN voice)
+  surface_rule_note: Azure Speech is 'Foundry Tools', sold by Azure → credits; needs a Speech/AI Services resource (MD-9)
+  billing_pool: credits
+  billing_unit_verbatim: 'Azure Retail Prices API: productName ''Azure Speech'', skuName ''S1'', meterName ''S1 Neural Text To Speech Characters'', retailPrice 15.0,
+    unitOfMeasure ''1M'' (centralindia); ''Neural HD Text to Speech Characters'' 22.0'
+  regular_price:
+    value: 15.0
+    currency: USD
+    unit: per_1M_characters
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id003
+  route_status: needs_controller_enablement
+  screen_status: recorded_not_screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/azure-neural-tts-hi-in/azure-retail-prices-speech-neural-centralindia.json
+  fallback: null
+  source: pin-2026-09-04 (Azure Retail Prices API JSON)
+  notes: Voice names are from the survey (REPORTED), not verified tonight. 0 generations in the nominal counts.
+- route_key: polly-kajal
+  question_slots:
+  - AUD-01/02 (cloud TTS, C.3c)
+  model_family: Amazon Polly Kajal (hi-IN neural)
+  model_version_string: Kajal, Neural, hi-IN (survey OBSERVED on the Polly voices page; polly:DescribeVoices is denied to claude-aight so not verified by CLI)
+  surface: bedrock
+  surface_model_id: polly:Kajal (engine neural)
+  surface_rule_note: AWS first-party → credits; the only IAM user on this machine is denied polly:DescribeVoices (and iam:GetUser), so nothing Polly can be checked
+    or run tonight (MD-8)
+  billing_pool: credits
+  billing_unit_verbatim: 'Polly pricing page (probe fetch, bytes NOT retained — pin budget): ''Neural voices are priced at $16.00 per 1 million characters'''
+  regular_price:
+    value: null
+    currency: USD
+    unit: per_1M_characters
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions: null
+    max_refs: null
+    native_audio: null
+    seed_supported: null
+  key_present: *id004
+  route_status: no_access
+  screen_status: recorded_not_screened
+  pin_ref: null
+  fallback: null
+  source: probe fetch 2026-09-04 of https://aws.amazon.com/polly/pricing/ (423,049 bytes) — not retained; survey-2026-09-05; cli-2026-09-04 (iam:GetUser AccessDenied)
+  notes: surface recorded as 'bedrock' because the allowed set has no 'aws' value; it is Amazon Polly, not Bedrock. Price observed (USD 16 per 1M characters) but
+    the page was not retained under the pin cap; route is no_access anyway.
+  unpinned_reason: no_access (polly:DescribeVoices denied) + pin_budget
