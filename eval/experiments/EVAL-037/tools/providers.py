@@ -151,7 +151,12 @@ def _get(obj, *names):
 
 def turn_record(turn_index, started, raw, provider):
     """One provider turn's complete usage/cost evidence. Missing fields stay null."""
-    usage = _get(raw, "usage") or {}
+    # INSTRUMENTATION FIX 1 (Gemini usage capture). The google-genai response object
+    # names its usage block `usage_metadata`, not `usage`, so a lookup on `usage` alone
+    # found nothing and every Gemini token field was recorded as null while the provider
+    # had in fact reported them. Both names are consulted, `usage` first, so the
+    # Anthropic and OpenAI branches resolve exactly as before.
+    usage = _get(raw, "usage", "usage_metadata") or {}
     u = _serialise(usage) if not isinstance(usage, dict) else usage
 
     if provider == "Anthropic":
@@ -257,7 +262,15 @@ class OpenAIResponsesAdapter(Adapter):
             try:
                 resp = client.responses.create(**req)
             except Exception as e:
-                raise ProviderError(str(e)[:600], classify_exception(e)) from e
+                # INSTRUMENTATION FIX 3 (evidence retention). Work already completed
+                # before a later failure is retained: `turns` and `tool_log` are both in
+                # scope here and were previously discarded, so a trial that failed mid
+                # tool-loop reported zero turns and zero tool calls even though both had
+                # happened. The tool-loop-guard raise below already passes exactly this
+                # detail; only this path dropped it. Classification and retry eligibility
+                # are unchanged.
+                raise ProviderError(str(e)[:600], classify_exception(e),
+                                    {"turns": turns, "tool_calls": tool_log}) from e
             rec = turn_record(turn, t0, resp, self.provider)
             turns.append(rec)
             fail = check_stop_reason(rec)
@@ -310,7 +323,15 @@ class AnthropicMessagesAdapter(Adapter):
                 with client.messages.stream(**req) as stream:
                     resp = stream.get_final_message()
             except Exception as e:
-                raise ProviderError(str(e)[:600], classify_exception(e)) from e
+                # INSTRUMENTATION FIX 3 (evidence retention). Work already completed
+                # before a later failure is retained: `turns` and `tool_log` are both in
+                # scope here and were previously discarded, so a trial that failed mid
+                # tool-loop reported zero turns and zero tool calls even though both had
+                # happened. The tool-loop-guard raise below already passes exactly this
+                # detail; only this path dropped it. Classification and retry eligibility
+                # are unchanged.
+                raise ProviderError(str(e)[:600], classify_exception(e),
+                                    {"turns": turns, "tool_calls": tool_log}) from e
             rec = turn_record(turn, t0, resp, self.provider)
             turns.append(rec)
             fail = check_stop_reason(rec)
@@ -359,7 +380,15 @@ class GeminiAdapter(Adapter):
                 resp = client.models.generate_content(
                     model=request["model"], contents=contents, config=request["config"])
             except Exception as e:
-                raise ProviderError(str(e)[:600], classify_exception(e)) from e
+                # INSTRUMENTATION FIX 3 (evidence retention). Work already completed
+                # before a later failure is retained: `turns` and `tool_log` are both in
+                # scope here and were previously discarded, so a trial that failed mid
+                # tool-loop reported zero turns and zero tool calls even though both had
+                # happened. The tool-loop-guard raise below already passes exactly this
+                # detail; only this path dropped it. Classification and retry eligibility
+                # are unchanged.
+                raise ProviderError(str(e)[:600], classify_exception(e),
+                                    {"turns": turns, "tool_calls": tool_log}) from e
             rec = turn_record(turn, t0, resp, self.provider)
             turns.append(rec)
             fail = check_stop_reason(rec)
@@ -377,8 +406,20 @@ class GeminiAdapter(Adapter):
             for c in calls:
                 out, meta = _run_tool(dispatch, c.name, dict(c.args or {}), turn)
                 tool_log.append(meta)
-                replies.append({"function_response": {"name": c.name,
-                                                      "response": {"result": out}}})
+                # INSTRUMENTATION FIX 4 (Gemini tool-result transport). google-genai
+                # serialises the outgoing request with a bare json.dumps() and no
+                # `default=`, so any datetime.date raises TypeError before the call
+                # leaves the process. Canon YAML reads a bare date as datetime.date and
+                # 10 of 12 representative bounded searches carry one, so this fires on
+                # most retrievals regardless of payload size. The OpenAI and Anthropic
+                # adapters above already pre-serialise their tool results with exactly
+                # this `json.dumps(out, default=str)`; the Gemini adapter alone passed
+                # the raw object through. A date becomes its ISO-8601 string; no other
+                # value is touched, and Canon content, ranking and status semantics are
+                # unchanged.
+                replies.append({"function_response": {
+                    "name": c.name,
+                    "response": {"result": json.loads(json.dumps(out, default=str))}}})
             contents.append({"role": "user", "parts": replies})
         raise ProviderError(
             f"tool loop guard: {MAX_TOOL_TURNS} provider turns without a final answer",

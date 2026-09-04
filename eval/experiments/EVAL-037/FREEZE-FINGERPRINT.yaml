@@ -21,13 +21,15 @@ algorithm: sha256-of-sorted-path-and-content
 canon_base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
 canon_base_commit_role: the CANON-014 merge the corpus fingerprints were computed against
 
-file_count: 45
-freeze_fingerprint: 0dcd4edbc786c0e6f9dc3c06f2209cb8e73c8fc084ebb2c2b4ad1d35f5ca8d24
-common_substrate_file_count: 37
-common_substrate_digest: aa1d2f99259ead8279d9909319ba731aeac2ae8115b432aacd72632a9d19d25a
+file_count: 49
+freeze_fingerprint: 899eb3f5e3ba7bab8ef43006bb632a8bea59543b7b020607cbb89e10cbd311dc
+common_substrate_file_count: 40
+common_substrate_digest: fe0a51267444d8584fa70036f11f990fd36ec4fd09c3597f854134271af823be
 files:
   - path: EXECUTION-CONTRACT.md
     sha256: b4af51a3e9b891110b347233d5b3f959400fa7a8d0431ec3318608888b4d92ad
+  - path: SUPPLEMENTAL-FREEZE-controlled.md
+    sha256: 5355fa4b7e694717939fa57020d948e0be4bd978c5abe6c6c5365938618c6afd
   - path: common/briefs/B01.txt
     sha256: 944a0a7edd62bcc3f8dcab670a0aed3fffc06bb29e8df1beb6b103e014023cff
   - path: common/briefs/B02.txt
@@ -66,10 +68,14 @@ files:
     sha256: 4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6
   - path: common/websites/rentok.com/page.txt
     sha256: ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79
+  - path: conditions/full-canon-controlled.yaml
+    sha256: 47ce5a1b6a96aa08dcd36e21f16823f7c671a17968b73cfadcffa2cd63fcd0a6
   - path: conditions/full-canon.yaml
     sha256: ff03c79829c1d9bb6db6c10bbd5ea38e9b2782647db19209a58eeec0e695f91b
   - path: experiment.yaml
     sha256: a9da0f65fce4fc430984d683c647805b55a4d74a8e7623aa25ccf9e409c3dd3c
+  - path: lanes/gemma-controlled-canon.yaml
+    sha256: d2957c4ad20c4e58a912bd005b9afe2c38c27381a367d53916e242359bb676cc
   - path: lanes/gemma-full-canon.yaml
     sha256: 0a355093a63fa16406f14332cbb3c7b06465a57400d8b1e2af25f4d7eef47c87
   - path: lanes/gemma-no-canon.yaml
@@ -87,15 +93,17 @@ files:
   - path: lanes/sonnet-no-canon.yaml
     sha256: b857d149a5aa80df47bd4df2f8444a7bcfa434145b0c85d7e1f9b0183cccbec9
   - path: schemas/attempt-ledger.schema.json
-    sha256: 5fbc3a17fa2167a35ef723298428ff1fff2537692edf910640356f9da2b624cb
+    sha256: 8b425634a0ee1aaa628ae4c437e62f36012137f0296d4cd784b9567010a8cc34
   - path: schemas/result.schema.json
-    sha256: f45f2fa05b631ea418222a91a92a4adb2bdb8fa159799778c461235ce3dd7cd3
+    sha256: 483982a740a76c894d40ad2672f5752b15721e3be0ec6816f49f06fede826889
   - path: tools/build_lanes.py
     sha256: 575d2aa29b0fb3c77fcbd155bf465ae1770dc269499bc5e07a3bfe3435c70bed
   - path: tools/canon_tools.py
     sha256: c2f476a7c7885cbe15af636f015b3e8280a76e03ce3208b1fb891111d9920ad3
+  - path: tools/controlled_canon.py
+    sha256: 561b42947c0dcc4c236a6480a10423c049cbab81cb304f17b67b8e9585c8f70b
   - path: tools/fake_provider.py
-    sha256: a21825bf9fe94ed694570fa82b44f5d235f327ac0455a7b731cdcb8a20b5c98e
+    sha256: 8309b9ad07770a66c35dc73cd8d633f328555ab8e4385ffca13fbbc3dae00410
   - path: tools/freeze_fingerprint.py
     sha256: aa4d5787a9a88cfbd183c4ac841c8edc64a2a3ce7de091d7b04e8185a712b25f
   - path: tools/jsonschema_mini.py
@@ -103,9 +111,9 @@ files:
   - path: tools/preflight.py
     sha256: 203a731c63d665a473cab0675c113e8d892876313c762451bc3e551d76189c3b
   - path: tools/providers.py
-    sha256: 216b971cff363a14e3fd9242cc5e316786b428a58b26b32f215567b4d26c0638
+    sha256: 28dd71f9e72dce490a2502c61d2ba21536f4b36f7e203b3bd1a7f0f5c1be363f
   - path: tools/runner.py
-    sha256: 11afdd3087a4b892d0b72ef8a53dfc82f46af3b558ec7d7828080d69453231ac
+    sha256: 32c3c56c5627b25273ecd949ab4acb6ac8690ff36f5da27ca87f2b7cf0c6417b
   - path: tools/snapshot_websites.py
     sha256: d2906418a6fadb1d26bef68dc914537e7090620401f6b711572dea338dac880a
   - path: tools/website_tools.py
@@ -115,4 +123,4 @@ files:
   - path: validators/validate_freeze.py
     sha256: c0375195298c1c2f87b07aeb0ab82ac2845852708b7de681293a9ce5043698e5
   - path: validators/validate_lane_run.py
-    sha256: e03668335fab184acbda15b3177fd29379164dfec957da629e3bf6ab501ef7a0
+    sha256: ab89709f04df94a2b1178f9f2c5045c529406f2c5f9933795f588b948afd3d13

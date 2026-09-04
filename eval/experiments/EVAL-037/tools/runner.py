@@ -117,9 +117,17 @@ def canon_fingerprints():
                             for p in glob.glob(str(REPO / "canon/qa/canon-014/*-qa-bank.yaml"))))}
 
 
-def expected_trial_order(lane_id):
-    """Recompute the frozen order: sort trial ids by sha256('EVAL-037|' + trial_id)."""
-    ids = [f"E037-{lane_id}-{b}-R{r}"
+def expected_trial_order(lane_id, trial_id_prefix=None):
+    """Recompute the frozen order: sort trial ids by sha256('EVAL-037|' + trial_id).
+
+    The ORDERING METHOD is what is frozen, and it is unchanged. A lane may declare its
+    own `trial_id_prefix` so a supplemental treatment occupies a separate trial-id
+    namespace; the ids then differ, so the permutation differs, but it is derived by the
+    identical rule. Absent a declared prefix this is bit-identical to the original
+    `E037-<lane_id>` behaviour for every existing lane.
+    """
+    prefix = trial_id_prefix or f"E037-{lane_id}"
+    ids = [f"{prefix}-{b}-R{r}"
            for r in (1, 2, 3) for b in ["B01", "B02", "B03", "B04", "B05", "B06"]]
     return sorted(ids, key=lambda t: sha256_text("EVAL-037|" + t))
 
@@ -185,7 +193,8 @@ def preflight(lane, fake=None):
     if len(ids) != 18 or len(set(ids)) != 18:
         problems.append(f"trials_plan has {len(ids)} entries ({len(set(ids))} unique), "
                         f"expected 18 unique")
-    expected = expected_trial_order(lane["lane_id"])
+    expected = expected_trial_order(lane["lane_id"],
+                                    lane["execution"].get("trial_id_prefix"))
     if ids != expected:
         problems.append("trial order does not match the frozen SHA-256 ordering")
     notes.append("trial order recomputed from sha256('EVAL-037|'+trial_id) and matches")
@@ -240,14 +249,24 @@ def sum_usage(turns):
 
 # --------------------------------------------------------------------------
 def build_tools(lane, brief_id):
-    """Tools for this trial. Website access depends on the BRIEF, Canon on the CONDITION."""
+    """Tools for this trial. Website access depends on the BRIEF, Canon on the CONDITION.
+
+    Under the CONTROLLED_CANON treatment the Canon dispatch is routed through a
+    per-trial retrieval governor. The governor bounds HOW MUCH evidence is exposed; it
+    never touches Canon contents, the BM25 ranking or the status semantics, and it never
+    chooses a query or an object for the model. State is per trial and nothing crosses a
+    trial boundary.
+    """
     import website_tools
-    schemas, canon, site = [], None, None
+    schemas, canon, site, governor = [], None, None, None
 
     if lane["condition"] == "FULL_CANON":
         import canon_tools
         canon = canon_tools.Canon(REPO, condition="FULL_CANON")
         schemas += canon_tools.TOOL_SCHEMAS
+        if (lane.get("treatment") or {}).get("id") == "CONTROLLED_CANON":
+            import controlled_canon
+            governor = controlled_canon.ControlledCanon(canon)
 
     ws = website_tools.schema_for(brief_id)
     if ws:
@@ -259,10 +278,15 @@ def build_tools(lane, brief_id):
             return website_tools.dispatch(site, name, args)
         if canon is None:
             raise ValueError(f"tool {name!r} is not exposed in this condition")
+        if governor is not None:
+            return governor.dispatch(name, args)
         import canon_tools as CT
         return CT.dispatch(canon, name, args)
 
-    return schemas, dispatch if schemas else None
+    # The governor rides on the dispatch callable rather than widening this function's
+    # return signature, which the frozen substrate tests unpack as a 2-tuple.
+    dispatch.governor = governor
+    return schemas, (dispatch if schemas else None)
 
 
 def system_prompt_for(lane):
@@ -293,6 +317,7 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
     brief_path = ROOT / trial["brief_path"]
     brief = brief_path.read_text(encoding="utf-8")
     schemas, dispatch = build_tools(lane, trial["brief_id"])
+    governor = getattr(dispatch, "governor", None) if dispatch else None
     adapter = make_adapter(lane, schemas, fake, fake_target)
 
     attempts, all_turns, all_tools = [], [], []
@@ -339,8 +364,26 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
             resp = adapter.call(request, **kw)
         except Exception as e:  # noqa: BLE001 — classified, never blanket-retried
             fc = getattr(e, "failure_class", None) or P.classify_exception(e)
-            turns = (getattr(e, "detail", {}) or {}).get("turns", [])
+            detail = getattr(e, "detail", {}) or {}
+            turns = detail.get("turns", [])
             all_turns += turns
+            # INSTRUMENTATION FIX 3 (runner side). Tool calls completed before the
+            # failure are retained and transcribed exactly as on the success path, so a
+            # trial that died mid tool-loop still shows the research it actually did.
+            failed_tools = detail.get("tool_calls") or []
+            if failed_tools:
+                tpath = outdir / "transcripts" / f"{trial['trial_id']}-a{idx}.jsonl"
+                tpath.parent.mkdir(parents=True, exist_ok=True)
+                with open(tpath, "w", encoding="utf-8") as fh:
+                    for n, tc in enumerate(failed_tools):
+                        full = tc.pop("_full_result", None)
+                        tc["transcript_ref"] = f"{tpath.relative_to(outdir)}#{n}"
+                        fh.write(json.dumps({"line": n, "call": tc,
+                                             "full_result": full}, default=str) + "\n")
+                row["transcript_path"] = str(tpath.relative_to(outdir))
+                row["tool_calls"] = [{k: v for k, v in tc.items() if k != "_full_result"}
+                                     for tc in failed_tools]
+                all_tools += failed_tools
             row.update(ended_at=now(),
                        outcome="transient_failure" if P.is_transient(fc)
                        else "deterministic_failure",
@@ -428,6 +471,32 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
                              totals["input_tokens"], totals["output_tokens"])
     canon_calls = [t for t in all_tools if t.get("tool_family") == "canon"]
     web_calls = [t for t in all_tools if t.get("tool_family") == "website"]
+
+    # -- CONTROLLED_CANON compliance gate ----------------------------------
+    # Mechanical, and evaluated ONLY from evidence already collected. It issues no
+    # further provider call: a trial that ignored the mandatory instruction keeps its
+    # output and is recorded, never quality-retried and never resampled. The upper
+    # bounds cannot be violated here because the governor PREVENTS the excess rather
+    # than allowing it and judging it afterwards; they are asserted anyway, from the
+    # governor's own ledger, so the claim rests on evidence rather than on trust.
+    gov = governor.summary() if governor is not None else None
+    treatment = (lane.get("treatment") or {}).get("id")
+    controlled = treatment == "CONTROLLED_CANON"
+    n_search = gov["searches_used"] if gov else sum(
+        1 for t in canon_calls if t.get("name") == "canon_search")
+    n_read = gov["reads_used"] if gov else sum(
+        1 for t in canon_calls if t.get("name") == "canon_read")
+    n_catalog = sum(1 for t in canon_calls if t.get("name") == "canon_catalog")
+    canon_satisfied = n_search >= 1 and n_read >= 1
+    format_outcome = status
+    # The gate speaks only about a trial the model actually completed. A transient or
+    # deterministic provider failure is never relabelled as non-compliance: the model
+    # never got its chance to comply, and masking a provider fault as a behavioural
+    # result would misreport the experiment.
+    if controlled and not canon_satisfied and status in (
+            "complete", "format_repaired", "failed_format"):
+        status = "failed_required_canon_use"
+
     eligible = package is not None and status in ("complete", "format_repaired")
 
     result = {
@@ -443,6 +512,14 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
         "package_digest": sha256_text(package) if package else None,
         "sections_present": sections_present(package) if package else [],
         "eligible_for_media_generation": eligible,
+        "treatment": treatment,
+        "format_outcome": format_outcome,
+        "required_canon_use_satisfied": (canon_satisfied if controlled else None),
+        "canon_governor": gov,
+        "canon_search_calls": n_search,
+        "canon_read_calls": n_read,
+        "canon_catalog_calls": n_catalog,
+        "canon_results_exposed": (gov["results_exposed"] if gov else None),
         "canon_used": (bool(canon_calls) if lane["condition"] == "FULL_CANON" else None),
         "canon_tool_calls": len(canon_calls),
         "canon_items_returned": {
@@ -498,7 +575,9 @@ def main():
         trials.append(res); all_attempts += atts
         print(f"  [{res['order_index']:2d}/18] {res['trial_id']}  {res['status']}  "
               f"attempts={res['attempts_used']}  turns={res['usage_totals']['provider_turns']}"
-              f"  web={res['website_tool_calls']}  canon={res['canon_tool_calls']}")
+              f"  web={res['website_tool_calls']}"
+              f"  search={res['canon_search_calls']} read={res['canon_read_calls']}"
+              f" exposed={res['canon_results_exposed']}")
 
     # Substrate identity recorded into the evidence: the freeze fingerprint is
     # COMPUTED from the tree that actually ran (preflight already proved it matches
@@ -510,6 +589,7 @@ def main():
     ledger = {"experiment": "EVAL-037", "lane_id": lane["lane_id"], "branch": lane["branch"],
               "substrate": identity, "runner_commit": head,
               "model": lane["model"]["model_id"], "condition": lane["condition"],
+              "treatment": (lane.get("treatment") or {}).get("id"),
               "attempts": all_attempts}
 
     lane_turns = [t for a_ in all_attempts for t in (a_.get("provider_turns") or [])]
@@ -519,7 +599,9 @@ def main():
     result = {"experiment": "EVAL-037", "lane_id": lane["lane_id"], "branch": lane["branch"],
               "substrate": identity, "runner_commit": head,
               "provider": lane["model"]["provider"], "model": lane["model"]["model_id"],
-              "condition": lane["condition"], "trial_count": len(trials),
+              "condition": lane["condition"],
+              "treatment": (lane.get("treatment") or {}).get("id"),
+              "trial_count": len(trials),
               "price_snapshot": prices["snapshot_id"],
               "lane_usage_totals": lane_totals,
               "lane_calculated_cost_usd": lcost, "lane_cost_basis": lbasis,

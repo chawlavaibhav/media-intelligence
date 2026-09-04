@@ -1,0 +1,566 @@
+# EVAL-037 lane: gemma-controlled-canon  (SUPPLEMENTAL treatment)
+#
+# SELF-CONTAINED. This file plus EXECUTION-CONTRACT.md plus the files named below
+# are everything this worker may read. Do not open a sibling lane config. Do not
+# look at another EVAL-037 branch, PR, log, output or report.
+
+experiment: EVAL-037
+lane_id: gemma-controlled-canon
+branch: work/eval-037-gemma-controlled-canon
+
+substrate:
+  # The experiment-defining BYTES are the authority, not a commit SHA. The
+  # substrate was authored after the Canon merge, so no commit can contain both
+  # itself and its own fingerprint; requiring one would be self-referential.
+  algorithm: sha256-of-sorted-path-and-content
+  common_substrate_digest: fe0a51267444d8584fa70036f11f990fd36ec4fd09c3597f854134271af823be
+  common_substrate_scope: eval/experiments/EVAL-037/** excluding lanes/, runs/, dotfiles
+  supplemental_substrate_note: >-
+    This digest differs from the EVAL-037 freeze recorded on main, because this
+    supplemental run adds conditions/full-canon-controlled.yaml and
+    tools/controlled_canon.py and carries the named instrumentation fixes.
+    SUPPLEMENTAL-FREEZE.md enumerates every changed byte and its reason. The briefs, the
+    common system prompt, the website snapshots, the price snapshot and the Canon corpus
+    are unchanged, and their individual digests below are the frozen originals.
+  common_substrate_note: >-
+    Safe to embed here because lanes/ is outside its scope. This is the digest
+    this lane verifies on its own: prompt, briefs, website snapshots, conditions,
+    schemas, tools and validators. Recompute and STOP on mismatch.
+  freeze_fingerprint_file: FREEZE-FINGERPRINT.yaml
+  freeze_fingerprint_note: >-
+    The whole-substrate fingerprint covers lanes/ too, so it cannot be embedded
+    in a lane without self-reference. It lives in FREEZE-FINGERPRINT.yaml, is
+    recorded in the controller approval, and is verified with
+    `tools/freeze_fingerprint.py --check` before dispatch.
+  canon_base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+  canon_base_commit_role: >-
+    Canon provenance only. This is the CANON-014 merge the two corpus
+    fingerprints were computed against. It does NOT contain EVAL-037 and is not
+    the execution-lane starting commit.
+  execution_checkout_requirement: >-
+    Run from any checkout that contains the approved frozen substrate (verified
+    by freeze_fingerprint) and has canon_base_commit as an ancestor.
+
+model:
+  key: gemma
+  provider: Google Gemini API
+  model_id: gemma-4-31b-it
+  api: Gemini API
+  credential_env: GEMINI_API_KEY
+  moving_alias: false
+  alias_policy: >-
+    This exact model id, never a moving alias and never a substitute. Preflight the
+    id against the provider before the first trial. If it is unavailable, STOP and
+    report. Substituting a different model silently destroys the comparison.
+  settings:
+    sampling: provider defaults
+    reasoning: provider defaults
+  settings_note: >-
+    Provider defaults throughout. Do NOT invent or pass unsupported reasoning controls:
+    there is no thinking budget, no effort parameter and no reasoning_effort on this model.
+    If a control is not documented for gemma-4-31b-it, it is not set.
+
+condition: FULL_CANON
+
+# ---------------------------------------------------------------------------
+# THE EXPERIMENTAL TREATMENT: mandatory, objective-driven, BOUNDED Canon research.
+# ---------------------------------------------------------------------------
+treatment:
+  id: CONTROLLED_CANON
+  supplements: gemma-full-canon
+  distinct_from:
+    - lane: gemma-full-canon
+      recorded: Canon optional; Gemma used it 0/18 times.
+    - lane: gemma-required-canon
+      recorded: >-
+        Canon mandatory but retrieval UNBOUNDED; Gemma searched without a limit, drew
+        1506 items (~1.13M tokens) against a 16k input quota, and failed 18/18 on 429.
+      status: >-
+        Frozen on its own branch and in PR #78. Neither it nor the optional-Canon run is
+        replaced, altered, rerun or merged by this lane.
+  question: >-
+    Does gemma-4-31b-it benefit from Canon when research is mandatory, explicitly
+    objective-driven, and mechanically bounded, while the model still chooses WHAT to
+    search for, WHAT to read, and HOW to apply it?
+  why_this_is_the_production_relevant_treatment: >-
+    Optional Canon measured whether the model would opt in; it did not. Unbounded
+    mandatory Canon measured what happens when it must opt in with no guard rails; it
+    drowned. Neither resembles how a production system would actually expose a knowledge
+    base. This one does: research is required, aimed at a concrete production decision,
+    and served in small ranked result sets.
+  harness_enforced_maxima:
+    canon_search_per_trial: 3
+    results_per_search: 6
+    canon_read_per_research_question: 2
+    canon_read_per_trial: 4
+    max_items_exposable_per_trial: 18
+  enforcement_module: tools/controlled_canon.py
+  enforcement_note: >-
+    The harness owns the RESULT COUNT; the model owns the QUERY. `limit` is forced to at
+    most 6 before the search runs, so an oversized payload is never built rather than
+    built and truncated. A model that omits `limit` gets 6; one that asks for more is
+    clamped to 6; one that asks for fewer is honoured. A call beyond an allowance is
+    refused with a structured, Canon-free response carrying no source_status.
+  model_still_chooses:
+    - the production question to research
+    - the search wording
+    - which returned objects to read
+    - whether to stop early
+    - what retrieved knowledge to apply
+  harness_never:
+    - curates or rewrites a query
+    - names a Canon source or object
+    - reads the top results on the model's behalf
+    - supplies a preselected Canon packet
+    - reranks or filters Canon content
+  stop_rule: >-
+    Research stops when the model decides it has enough, or when the mechanical
+    allowance is exhausted. It may then produce the package. It may not request more
+    research merely because an answer feels weak.
+  everything_else_held_identical:
+    - model gemma-4-31b-it on the Google Gemini API
+    - model settings (provider defaults throughout)
+    - the six briefs, byte for byte
+    - three repetitions per brief
+    - the system production-package contract
+    - website rules and the frozen website snapshots
+    - the FULL_CANON corpus and the Q&A corpus
+    - ACCEPTED / HOLD / Q&A semantics
+    - trial independence, fresh stateless context per trial
+    - the trial-ordering method
+    - the retry rules
+    - the format-repair rules
+    - no creative judging
+    - no media generation
+    - no model or provider selection
+  compliance_gate:
+    satisfied_when: at least one effective canon_search AND at least one effective canon_read
+    minimum_violation:
+      retain_output: true
+      status: failed_required_canon_use
+      quality_retry: forbidden
+      resample: forbidden
+    maximum_violation:
+      prevented_not_punished: true
+      note: >-
+        The governor refuses the excess call rather than returning an oversized payload,
+        so a maximum cannot be exceeded. The validator asserts it anyway from the
+        governor's own ledger, so the claim rests on evidence rather than trust.
+
+condition_detail:
+  canon_instruction: present
+  addendum_path: conditions/full-canon-controlled.yaml
+  addendum_key: addendum
+  addendum_placement: >-
+    Appended to the common system prompt, after its final line, separated by one
+    blank line. The customer brief is the user message. Nothing else is added.
+  canon_tools_exposed:
+    - canon_catalog
+    - canon_search
+    - canon_read
+  canon_tools_module: tools/canon_tools.py
+  canon_tools_access: read-only
+  corpus:
+    roots:
+      accepted: canon/knowledge/current
+      hold: canon/candidates/canon-014
+      qa: canon/qa/canon-014
+    index: canon/knowledge/CANON-CORPUS-INDEX.yaml
+  fingerprints:
+    algorithm: sha256-of-sorted-path-and-content
+    full_knowledge:
+      file_count: 193
+      combined_digest: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+    qa:
+      file_count: 23
+      combined_digest: 1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd
+    verify_at_preflight: true
+    on_mismatch: stop
+  status_invariants:
+    - Every returned object carries source_status.
+    - source_status is ACCEPTED or HOLD, taken from the corpus, never inferred.
+    - HOLD is never represented, relabelled or defaulted as accepted.
+    - An object whose status cannot be established is not returned.
+    - Q&A is accessible knowledge, not independent corroboration and not benchmark truth.
+  model_discretion:
+    # Retrieval is compelled and bounded. Every judgement inside it stays the model's.
+    - what production question to research
+    - the search wording
+    - which returned objects are worth reading
+    - whether to consume Q&A
+    - whether to stop early, before the allowance is spent
+    - what retrieved knowledge to actually apply
+  model_no_longer_decides:
+    - whether to use Canon at all
+    - how much evidence is returned
+  harness_enforced_result_cap: 6 per search, 3 searches, 18 items max
+  no_canon_token_budget: true
+  retrieval_count_budget: 3 searches / 4 reads per trial
+  mandatory_canon_use: true
+
+website_tool:
+  name: website_read
+  access: read-only
+  module: tools/website_tools.py
+  exposed_for_briefs: [B01, B02]
+  not_exposed_for_briefs: [B03, B04, B05, B06]
+  identical_across_conditions: true
+  condition_independence_note: >-
+    Website access is a property of the BRIEF, not of the condition. This tool is
+    exposed identically in NO_CANON and FULL_CANON, and serves byte-identical
+    snapshot content in both. It is not a Canon tool and carries no Canon
+    semantics.
+  returns:
+    - the frozen page.txt for the website that brief permits
+    - the snapshot sha256 actually served
+    - the source URL
+  live_browsing: forbidden
+  other_domains: refused
+  model_decides_whether_to_call: true
+  recording: >-
+    Every call is recorded with its arguments and the exact snapshot digest
+    returned. website_snapshot_used is derived from actual calls and is never
+    hardcoded.
+
+prompt:
+  system_prompt_path: common/system-prompt.txt
+  system_prompt_sha256: aae58578f4300b3e6bd27e7812dced88bb955d77635cf521fcde17154e00889f
+  system_prompt_composition: >-
+    common/system-prompt.txt + the FULL_CANON addendum (verbatim) + the
+    CONTROLLED_CANON treatment instruction. The common system prompt itself is
+    byte-identical and its sha256 above is unchanged.
+  user_message: the brief file's contents, verbatim, and nothing else
+  no_few_shot_examples: true
+  no_lane_specific_prompt_text: true
+
+briefs:
+  B01:
+    path: common/briefs/B01.txt
+    sha256: 944a0a7edd62bcc3f8dcab670a0aed3fffc06bb29e8df1beb6b103e014023cff
+    website:
+      permitted_url: https://rentok.com
+      snapshot_dir: common/websites/rentok.com
+      snapshot_html: common/websites/rentok.com/index.html
+      snapshot_html_sha256: 4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6
+      snapshot_text: common/websites/rentok.com/page.txt
+      snapshot_text_sha256: ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79
+      live_browsing: forbidden
+      model_decides_whether_to_inspect: true
+  B02:
+    path: common/briefs/B02.txt
+    sha256: 1974ed4998e88de52cf50cc79c94f64c5573959355cd2e0d0b4a64c686dff87a
+    website:
+      permitted_url: https://getaight.ai
+      snapshot_dir: common/websites/getaight.ai
+      snapshot_html: common/websites/getaight.ai/index.html
+      snapshot_html_sha256: 17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514
+      snapshot_text: common/websites/getaight.ai/page.txt
+      snapshot_text_sha256: e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567
+      live_browsing: forbidden
+      model_decides_whether_to_inspect: true
+  B03:
+    path: common/briefs/B03.txt
+    sha256: 896df798a0f91b8fbb3af461051248675d746e3a95b78bc0b62b95bba4123492
+    website: null
+    website_note: this brief permits no website
+  B04:
+    path: common/briefs/B04.txt
+    sha256: 0d2b8a86fbc34551c2e10457beb104fd14160f136d759ee3d3ecee01456115ce
+    website: null
+    website_note: this brief permits no website
+  B05:
+    path: common/briefs/B05.txt
+    sha256: a5450117410e01e6eb8889977e463e6f697f0e6fb42f524c70784a254cd510c6
+    website: null
+    website_note: this brief permits no website
+  B06:
+    path: common/briefs/B06.txt
+    sha256: 27391665eb56d62f9788329ce994dabcb2a8f152073843594caf6bef74ab8ff4
+    website: null
+    website_note: this brief permits no website
+
+websites:
+  live_browsing_during_experimental_calls: forbidden
+  other_websites: forbidden
+  snapshots_taken: once, during the EVAL-037 setup/freeze task
+  manifest: common/websites/WEBSITE-SNAPSHOT-MANIFEST.yaml
+
+execution:
+  trial_id_prefix: E037GCC-gemma
+  trial_id_prefix_note: >-
+    A separate trial-id namespace so these trials can never be confused with the
+    optional-Canon run or with gemma-required-canon. The ORDERING METHOD is unchanged —
+    trial ids sorted by sha256("EVAL-037|" + trial_id) — so the permutation differs only
+    because the ids differ.
+  briefs: 6
+  repetitions: 3
+  trials: 18
+  trial_count_is_exact: true
+  one_model_one_condition_per_session: true
+  fresh_provider_context_per_trial: true
+  carry_state_between_trials: forbidden
+  creative_quality_judging: forbidden
+  media_generation: forbidden
+  order_note: >-
+    Execute in the order given. Repetition-major, so the three repetitions of a
+    brief are maximally separated. Every trial is a fresh stateless request
+    regardless.
+  trials_plan:
+    - order_index: 1
+      trial_id: E037GCC-gemma-B02-R3
+      brief_id: B02
+      repetition: 3
+      brief_path: common/briefs/B02.txt
+      website_snapshot: common/websites/getaight.ai
+    - order_index: 2
+      trial_id: E037GCC-gemma-B01-R2
+      brief_id: B01
+      repetition: 2
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
+    - order_index: 3
+      trial_id: E037GCC-gemma-B03-R3
+      brief_id: B03
+      repetition: 3
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 4
+      trial_id: E037GCC-gemma-B02-R2
+      brief_id: B02
+      repetition: 2
+      brief_path: common/briefs/B02.txt
+      website_snapshot: common/websites/getaight.ai
+    - order_index: 5
+      trial_id: E037GCC-gemma-B06-R2
+      brief_id: B06
+      repetition: 2
+      brief_path: common/briefs/B06.txt
+      website_snapshot: null
+    - order_index: 6
+      trial_id: E037GCC-gemma-B01-R1
+      brief_id: B01
+      repetition: 1
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
+    - order_index: 7
+      trial_id: E037GCC-gemma-B05-R1
+      brief_id: B05
+      repetition: 1
+      brief_path: common/briefs/B05.txt
+      website_snapshot: null
+    - order_index: 8
+      trial_id: E037GCC-gemma-B04-R1
+      brief_id: B04
+      repetition: 1
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 9
+      trial_id: E037GCC-gemma-B04-R2
+      brief_id: B04
+      repetition: 2
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 10
+      trial_id: E037GCC-gemma-B04-R3
+      brief_id: B04
+      repetition: 3
+      brief_path: common/briefs/B04.txt
+      website_snapshot: null
+    - order_index: 11
+      trial_id: E037GCC-gemma-B06-R3
+      brief_id: B06
+      repetition: 3
+      brief_path: common/briefs/B06.txt
+      website_snapshot: null
+    - order_index: 12
+      trial_id: E037GCC-gemma-B05-R2
+      brief_id: B05
+      repetition: 2
+      brief_path: common/briefs/B05.txt
+      website_snapshot: null
+    - order_index: 13
+      trial_id: E037GCC-gemma-B06-R1
+      brief_id: B06
+      repetition: 1
+      brief_path: common/briefs/B06.txt
+      website_snapshot: null
+    - order_index: 14
+      trial_id: E037GCC-gemma-B01-R3
+      brief_id: B01
+      repetition: 3
+      brief_path: common/briefs/B01.txt
+      website_snapshot: common/websites/rentok.com
+    - order_index: 15
+      trial_id: E037GCC-gemma-B03-R1
+      brief_id: B03
+      repetition: 1
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 16
+      trial_id: E037GCC-gemma-B03-R2
+      brief_id: B03
+      repetition: 2
+      brief_path: common/briefs/B03.txt
+      website_snapshot: null
+    - order_index: 17
+      trial_id: E037GCC-gemma-B02-R1
+      brief_id: B02
+      repetition: 1
+      brief_path: common/briefs/B02.txt
+      website_snapshot: common/websites/getaight.ai
+    - order_index: 18
+      trial_id: E037GCC-gemma-B05-R3
+      brief_id: B05
+      repetition: 3
+      brief_path: common/briefs/B05.txt
+      website_snapshot: null
+
+retry_policy:
+  # A retry is licensed ONLY by a TRANSIENT provider failure. Deterministic
+  # failures are recorded and never resampled — resampling them would be
+  # creative resampling wearing a technical retry's clothes.
+  transient_failure:
+    initial_attempt: 1
+    max_technical_retries: 2
+    max_total_attempts_from_transient: 3
+    retry_resends: the identical request, unchanged
+    classes:
+      - timeout
+      - connection_error
+      - rate_limit_429
+      - server_error_5xx
+    on_exhaustion: >-
+      Record the trial as failed_technical with every attempt retained. Do not
+      substitute a model, relax a setting or hand-write a package.
+  deterministic_failure:
+    retries: 0
+    status: failed_execution
+    classes:
+      - invalid_request_4xx
+      - auth_error
+      - tool_schema_rejected
+      - context_overflow
+      - tool_loop_guard_exhausted
+      - model_refusal
+      - truncated_response
+      - empty_response
+      - sdk_error
+    note: >-
+      A stable 4xx caused by request, configuration or tool schema; context
+      exhaustion; tool-loop exhaustion; provider truncation; or model refusal is
+      recorded distinctly and receives NO automatic resampling. Context overflow
+      or tool-loop exhaustion caused by the model's own retrieval is a
+      model+condition EXECUTION FAILURE and is a real result of this experiment,
+      not a transient provider fault.
+  truncation_detection: >-
+    Detected from the provider's own stop/finish reason, not inferred from missing
+    section headings.
+  format_repair:
+    max: 1
+    scope: format only
+    request_contains:
+      - the original customer brief
+      - the original model answer, verbatim
+      - exactly the frozen format-only instruction
+    must_not_contain:
+      - any other trial
+      - any new creative guidance
+    records: repair_source_response_digest
+    permitted_when: >-
+      The response is present and substantive but does not carry the required
+      FINAL_PRODUCTION_PACKAGE section structure.
+    on_transient_failure_during_repair: >-
+      Retry THAT SAME format-repair request under the transient retry policy. It
+      must NEVER fall back to a fresh creative generation.
+    if_repair_still_invalid:
+      retain_output: true
+      status: failed_format
+      eligible_for_media_generation: false
+      note: An invalid repair is never labelled format_repaired.
+  required_canon_use_failure:
+    retries: 0
+    status: failed_required_canon_use
+    note: >-
+      A trial that completes a package without at least one canon_search and one
+      canon_read keeps its output and is marked failed_required_canon_use. It is NOT
+      quality-retried and NOT resampled. The gate is evaluated after the fact from
+      retained evidence and issues no further provider call. A trial that failed for a
+      provider reason keeps its own status: the model never got its chance to comply.
+  forbidden_retry_reasons:
+    - the answer looks creatively weak
+    - the idea seems unoriginal or safe
+    - the package is shorter than expected
+    - a different sample would probably be better
+    - the model did not use Canon
+    - the research allowance was exhausted before the answer felt complete
+  forbidden_retry_note: >-
+    Creative weakness is NEVER a reason for another attempt. Retrying on quality
+    silently selects the best-of-N and destroys the comparison this experiment exists
+    to make.
+
+tool_loop_guard:
+  max_provider_turns: 100
+  purpose: emergency stop against literal runaway execution
+  is_a_retrieval_budget: false
+  note: >-
+    The model may retrieve as much as it wants below this. Hitting the guard is a
+    model+condition execution failure, preserved as such, and never rerun as a
+    transient provider failure.
+
+spend:
+  experiment_level_cap: none
+  note: >-
+    EVAL-037 has no experiment-level spend cap. Cost is recorded, not enforced.
+
+evidence:
+  root: eval/experiments/EVAL-037/runs/gemma-controlled-canon
+  attempt_ledger: eval/experiments/EVAL-037/runs/gemma-controlled-canon/attempt-ledger.json
+  attempt_ledger_schema: schemas/attempt-ledger.schema.json
+  result: eval/experiments/EVAL-037/runs/gemma-controlled-canon/result.json
+  result_schema: schemas/result.schema.json
+  raw_requests: eval/experiments/EVAL-037/runs/gemma-controlled-canon/requests/
+  raw_responses: eval/experiments/EVAL-037/runs/gemma-controlled-canon/raw/
+  tool_transcripts: eval/experiments/EVAL-037/runs/gemma-controlled-canon/transcripts/
+  transcript_note: >-
+    Every provider invocation retains its EXACT serialised request, not only a
+    digest. Every tool call retains its real arguments, per-item identity
+    (item id, source id, source_status, kind, Q&A flag) and the full tool result,
+    so a later session can reconstruct exactly what the model asked for and got.
+  usage_note: >-
+    Usage is recorded per PROVIDER TURN, including every intermediate turn caused
+    by a tool call, and summed to trial and lane totals. A field the provider does
+    not expose is null; nothing is invented.
+  price_snapshot: common/price-snapshot.yaml
+  packages: eval/experiments/EVAL-037/runs/gemma-controlled-canon/packages/
+  retention: >-
+    Retain every output regardless of apparent quality, including outputs from
+    failed and repaired attempts. Nothing is deleted, trimmed or tidied.
+  validator: validators/validate_lane_run.py
+
+downstream:
+  all_valid_packages_eligible_for_media_generation: true
+  media_generation_in_scope: false
+  acceptance_scoring_in_scope: false
+  note: >-
+    Media generation and final acceptance scoring are explicitly outside EVAL-037.
+    Eligibility is never withdrawn on creative grounds.
+
+worker_obligations:
+  - Run from a checkout containing the approved frozen substrate; verify the
+    common_substrate_digest above and the freeze fingerprint before dispatch.
+  - Read only EXECUTION-CONTRACT.md, this lane YAML, and files this YAML names.
+  - Never list or read a sibling lane config.
+  - Never inspect another EVAL-037 execution branch, PR, log, output or report.
+  - Preflight the exact model id; stop rather than substitute if unavailable.
+  - Preflight both Canon fingerprints; stop on mismatch.
+  - Freeze and commit the runner BEFORE the first experimental call.
+  - Make no runner, prompt or config change after the first call.
+  - Execute exactly 18 trials, in the listed order.
+  - Use a fresh stateless provider request for every trial.
+  - Never pass output or state from one trial into another.
+  - Retain every output regardless of apparent quality, INCLUDING the output of any
+    trial that did not satisfy the mandatory-research minimum.
+  - Never quality-retry or resample a failed_required_canon_use trial.
+  - Do no creative judging.
+  - Generate no media.
+
