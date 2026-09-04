@@ -29,6 +29,14 @@ CLEAN = ("A matte plate, no text. " * 6).strip()
 DIRTY = ("Vertical 9:16, a smartphone screen filling with WhatsApp rent-reminder chat bubbles "
          "and a notification counter climbing past 99")
 TAILS = (" (8 s)", " — 4 s", " | 4 s |", ". Then the next shot.", " 8 s", " then the next shot")
+# M-01 / M-02 fixtures (Ruling 8): a nested straight-quoted string with a text-bearing tail,
+# and the symbol-initial price strings; the clean 143-char lead would PASS on its own.
+NESTED = ('A model showing the "Aster Meridian" on her wrist, chat bubbles and a notification '
+          'counter on screen')
+PRICES = 'she holds "₹9" and "₹99" in gold, chat bubbles and a notification counter on screen'
+PRICES3 = ('she holds "₹9" and "₹99" and "₹999" in gold, chat bubbles and a notification '
+           'counter on screen')
+DOUBT_THEN_SPACE_LED = f'{CLEAN} 6" then " chat bubbles and a notification counter past 99'
 S = findings.Status
 ALL_IDS = [f"PA-D{i}-check" for i in range(1, 11)] + [f"CA-D{i}-check" for i in range(1, 12)]
 NOT_MECH_PRE = ["PA-D2-check", "PA-D3-check", "PA-D5-check", "PA-D6-check", "PA-D7-check",
@@ -639,6 +647,47 @@ class L01UnbalancedQuotesTest(_Base):
         row = predispatch.check_limit_text([], self.reg)
         self.assertEqual(row.status, S.ERROR)
         self.assertIn("no generation prompt could be extracted", row.detail)
+
+
+class M01NestedQuotesTest(_Base):
+    """Ruling 8 (M-01, M-02): a straight-quoted string nested inside a prompt is either kept
+    inside a whole prompt (LIMIT-TEXT FAIL on the tail) or is an extraction ERROR — PASS over
+    the unscanned tail is the one forbidden outcome."""
+
+    @staticmethod
+    def synthetic(section):
+        return ("## VISUAL_SYSTEM\nkey light from upper-left; centre zone\n## DELIVERABLE\n"
+                "one 9:16 video\n## GENERATION_PROMPTS\n" + section
+                + "## DOCTRINE_DEVIATIONS\nnone\n")
+
+    def limit_text(self, section):
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=self.synthetic(section))
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertIn(lt.status, (S.ERROR, S.FAIL), (section, lt.detail))
+        self.assertTrue(lt.blocking)
+        self.assertEqual(r.verdict(), "FAIL", section)
+        self.assertInvariants(r)
+        return lt
+
+    def test_m01_a1_a2_a3_extract_whole_and_fail_on_the_tail(self):
+        for name, section in (("A1", f'"{CLEAN} {NESTED}"\n'),
+                              ("A2", f'"{CLEAN} {NESTED}."\n"{CLEAN}"\n'),
+                              ("A3", f'"{CLEAN} {NESTED}."\n')):
+            lt = self.limit_text(section)
+            self.assertEqual(lt.status, S.FAIL, (name, lt.detail))
+            self.assertTrue(lt.detail.startswith("prompt 1, sentence"), (name, lt.detail))
+
+    def test_m01_symbol_initial_string_is_an_error(self):
+        lt = self.limit_text(f'"{CLEAN} {PRICES}"\n')
+        self.assertEqual(lt.status, S.ERROR, lt.detail)
+        self.assertIn("unbalanced quotes", lt.detail)
+
+    def test_m02_symbol_initial_string_after_a_doubt_point_is_an_error(self):
+        for section in (f'"{CLEAN} {PRICES3}"\n', f'"{DOUBT_THEN_SPACE_LED}"\n',
+                        f'"{CLEAN} 6" then "₹9" and chat bubbles past 99"\n'):
+            lt = self.limit_text(section)
+            self.assertEqual(lt.status, S.ERROR, (section, lt.detail))
+            self.assertIn("unbalanced quotes", lt.detail)
 
 
 if __name__ == "__main__":

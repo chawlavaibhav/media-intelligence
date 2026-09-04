@@ -154,8 +154,8 @@ CLOSER_TAIL = re.compile(r"[ \t]*[.)\],;:!?]*[ \t]*(?:\n|$)")
 
 class UnbalancedQuotes(ValueError):
     """The straight quotes of a GENERATION_PROMPTS section admit no single pairing (Ruling 7,
-    L-01): a run never closes, or a quote after an undecided inch mark could equally open a
-    new run or close the current one. The gate never guesses a closer."""
+    L-01; Ruling 8, M-01): a run never closes, a closer arrives with no run open, or a quote
+    could equally open a nested string or close the current run. The gate never guesses."""
 
 
 def _excerpt(text: str, i: int) -> str:
@@ -168,7 +168,26 @@ def _straight_runs(text: str) -> list:
     precedes it; it closes the open run when nothing alphanumeric follows it. Whitespace just
     inside either quote is accepted (K-02). Outside a run a digit-preceded quote can never
     open one, so `the 5" screen` between prompts is skipped instead of shifting every later
-    pair (F-12).
+    pair (F-12); a letter-preceded quote outside a run closes nothing and is the trace an
+    early close leaves behind (`… chat bubbles on screen"` after a run cut short), so it
+    raises rather than being skipped (M-01).
+
+    Nested strings (M-01). A prompt may quote a rendered string of its own — `the "Aster
+    Meridian" on her wrist`, `("Aster Meridian")`. Inside an open run a quote that could open
+    (nothing alphanumeric before it) and is followed by a letter or digit cannot be a closer,
+    so it opens a nested string and the depth rises; the next closer ends the nested string,
+    not the run, and only a closer at depth one ends the run. This is the one case the text
+    decides by itself: under the alternative reading the inner closer ends the run and the
+    prompt's real closer then closes nothing, which the orphan rule above rejects. A
+    could-open quote followed by anything else — a symbol (`"₹9`), a bracket, a dash — is
+    not decidable: it opens a symbol-initial nested string under one pairing and, preceded
+    by a space or a full stop, closes the run with K-02 trailing whitespace under the other
+    (`… she holds "` is a well-formed closer). No lexical rule separates them, so the gate
+    raises rather than choosing (the fourth checker's symbol-initial shape). The residual
+    guess the design keeps is a could-open quote followed by whitespace, which is read as
+    the run's closer (`… festive."` + ` (8 s)`, K-02's trailing space) and never as a nested
+    opener with leading whitespace; that reading is checked, not trusted: what it leaves
+    outside the run must itself pair, or the orphan rule raises.
 
     Inside a run a quote immediately preceded by a digit is an inch mark — `6" OLED panel`,
     `is 6". It shows` (K-05) — unless a bracket or separator follows it or the rest of its
@@ -181,14 +200,17 @@ def _straight_runs(text: str) -> list:
     closes; leaving it open keeps the prompt whole when a definite closer follows and
     otherwise reaches an error, never a silent drop. While in doubt only a definite closer,
     or a quote that could not open a run (alphanumeric before it), may close the run. A
-    quote that could open a new run — `"VIDEO`, `"` before the next prompt — means two
-    pairings exist (the inch mark was the closer and this opens; or it was not and this is
-    nested), so the gate raises instead of choosing. A run still open at the end of the text
-    raises too (Ruling 7 condition 1). A wrong guess either drops a prompt or manufactures
-    one from unrelated prose, and LIMIT-TEXT then reports PASS over text it never scanned
-    (L-01, the committed Gemma B02-R1 package)."""
+    quote that could open a new run — `"VIDEO`, `"` before the next prompt, `" ` before a
+    space-led string — means two pairings exist (the inch mark was the closer and this
+    opens; or it was not and this is nested), so the gate raises instead of choosing
+    (M-02 pins the space-led case: without that raise `6" then " chat bubbles … 99"` closes
+    after `then`, the clean head passes and `99"` is skipped as an inch mark). A run still
+    open at the end of the text raises too (Ruling 7 condition 1). A wrong guess either
+    drops a prompt or manufactures one from unrelated prose, and LIMIT-TEXT then reports
+    PASS over text it never scanned (L-01, the committed Gemma B02-R1 package)."""
     runs = []
     open_at = None
+    depth = 0       # straight-quoted strings open inside the run; the run itself is depth 1
     doubt = None    # offset of the digit-preceded quote that left the open run undecided
     for m in re.finditer(r'"', text):
         i = m.start()
@@ -197,8 +219,11 @@ def _straight_runs(text: str) -> list:
         could_open = not (prev.isalnum() or prev == '"')
         if open_at is None:
             if could_open:
-                open_at, doubt = i, None
-            continue
+                open_at, depth, doubt = i, 1, None
+            elif prev.isalnum() and not prev.isdigit():
+                raise UnbalancedQuotes(
+                    f"the quote at offset {i} ({_excerpt(text, max(0, i - 12))!r}) closes no open run")
+            continue   # a digit-preceded inch mark (F-12) or a doubled quote
         if nxt.isalnum() and not could_open:
             continue   # inside a word (5"x7) or a doubled quote: neither opens nor closes
         definite = nxt in ")],;:" or CLOSER_TAIL.match(text, i + 1) is not None
@@ -212,13 +237,22 @@ def _straight_runs(text: str) -> list:
                     f"close the one opened at offset {open_at} — the digit-preceded quote at "
                     f"offset {doubt} ({_excerpt(text, doubt)!r}) is an inch mark under one "
                     f"pairing and a closer under the other")
-            continue   # a nested opener; the run continues
+            depth += 1   # a nested opener; the run continues past the nested string
+            continue
         if doubt is not None and could_open and not definite:
             raise UnbalancedQuotes(
                 f"the quote at offset {i} ({_excerpt(text, i)!r}) could open a new run or "
                 f"close the one opened at offset {open_at} — the digit-preceded quote at "
                 f"offset {doubt} ({_excerpt(text, doubt)!r}) is an inch mark under one "
                 f"pairing and a closer under the other")
+        if could_open and not definite and not nxt.isspace():
+            raise UnbalancedQuotes(
+                f"the quote at offset {i} ({_excerpt(text, i)!r}) could open a nested string "
+                f"or close the run opened at offset {open_at} — nothing alphanumeric precedes "
+                f"it and a symbol follows it")
+        depth -= 1
+        if depth:
+            continue   # the nested string closed; the run continues
         runs.append((open_at, text[open_at + 1:i]))
         open_at, doubt = None, None
     if open_at is not None:

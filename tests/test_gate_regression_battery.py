@@ -11,7 +11,9 @@ junk VISUAL_SYSTEM, "Soft window light.", "the key is the product itself, shown 
 front", "brighter neutral daylight balance") and F-07 phrases, the K-04 narrowed-term
 fixtures, the EVAL-038 defect phrases ("chat bubbles", "notification counter"), and the
 third checker's L-01 shapes (the Gemma B02-R1 `"₹9" (massive …)` idiom read in place, the six
-tails after a digit-ending closer, the end-of-line closer, an unclosed run).
+tails after a digit-ending closer, the end-of-line closer, an unclosed run), and the fourth
+checker's M-01/M-02 shapes (a nested straight-quoted string with a text-bearing tail, the
+symbol-initial price strings, a doubt point followed by a symbol-initial or space-led quote).
 
 Each row is (finding, check, phrase, intended). Checks:
   T-scan      textscan.scan_prompt over the phrase              → HIT | CLEAR
@@ -56,6 +58,14 @@ CLEAN = PLATE.strip()
 DIRTY = ("Vertical 9:16, a smartphone screen filling with WhatsApp rent-reminder chat bubbles "
          "and a notification counter climbing past 99")
 TAILS = (" (8 s)", " — 4 s", " | 4 s |", ". Then the next shot.", " 8 s", " then the next shot")
+# M-01 / M-02 (Ruling 8): a nested straight-quoted string with a text-bearing tail (the
+# fourth checker's A1/A2/A3), and the symbol-initial price strings
+NESTED = ('A model showing the "Aster Meridian" on her wrist, chat bubbles and a notification '
+          'counter on screen')
+PRICES = 'she holds "₹9" and "₹99" in gold, chat bubbles and a notification counter on screen'
+PRICES3 = ('she holds "₹9" and "₹99" and "₹999" in gold, chat bubbles and a notification '
+           'counter on screen')
+DOUBT_THEN_SPACE_LED = f'{CLEAN} 6" then " chat bubbles and a notification counter past 99'
 
 # (finding, check, phrase, intended)
 ROWS = [
@@ -189,6 +199,15 @@ ROWS = [
       for tail in TAILS],
     *[("L-01 tail, then prompt", "LIMIT-TEXT raw", f'"{CLEAN}"\n"{DIRTY}"{tail}\n"{CLEAN}"\n',
        "ERROR") for tail in TAILS],
+    # ── M-01 / M-02 / Ruling 8: a nested string never closes the prompt at its inner closer ──
+    ("M-01 A1 nested string", "LIMIT-TEXT raw", f'"{CLEAN} {NESTED}"\n', "FAIL"),
+    ("M-01 A2 nested, then prompt", "LIMIT-TEXT raw", f'"{CLEAN} {NESTED}."\n"{CLEAN}"\n', "FAIL"),
+    ("M-01 A3 nested, last", "LIMIT-TEXT raw", f'"{CLEAN} {NESTED}."\n', "FAIL"),
+    ("M-01 symbol-initial", "LIMIT-TEXT raw", f'"{CLEAN} {PRICES}"\n', "ERROR"),
+    ("M-02 symbol-initial x3", "LIMIT-TEXT raw", f'"{CLEAN} {PRICES3}"\n', "ERROR"),
+    ("M-02 doubt, then symbol", "LIMIT-TEXT raw", f'"{CLEAN} 6" then "₹9" and chat bubbles past 99"\n',
+     "ERROR"),
+    ("M-02 doubt, then space-led", "LIMIT-TEXT raw", f'"{DOUBT_THEN_SPACE_LED}"\n', "ERROR"),
 ]
 
 

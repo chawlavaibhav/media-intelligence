@@ -27,6 +27,15 @@ CLEAN = ("A matte plate, no text. " * 6).strip()
 DIRTY = ("Vertical 9:16, a smartphone screen filling with WhatsApp rent-reminder chat bubbles "
          "and a notification counter climbing past 99")
 TAILS = (" (8 s)", " — 4 s", " | 4 s |", ". Then the next shot.", " 8 s", " then the next shot")
+# M-01 / M-02 fixtures (Ruling 8): a text-bearing tail after a legitimately nested straight-
+# quoted string (the fourth checker's A1/A2/A3), and the symbol-initial price strings. Each
+# lead is clean and >= 120 chars so a truncated extraction would PASS LIMIT-TEXT.
+NESTED = ('A model showing the "Aster Meridian" on her wrist, chat bubbles and a notification '
+          'counter on screen')
+PRICES = 'she holds "₹9" and "₹99" in gold, chat bubbles and a notification counter on screen'
+PRICES3 = ('she holds "₹9" and "₹99" and "₹999" in gold, chat bubbles and a notification '
+           'counter on screen')
+DOUBT_THEN_SPACE_LED = f'{CLEAN} 6" then " chat bubbles and a notification counter past 99'
 
 V1_SECTIONS = ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
                "MESSAGE_AND_INFORMATION_HIERARCHY", "VISUAL_SYSTEM", "PRODUCTION_RECIPE",
@@ -337,6 +346,80 @@ class ShotAndDeclarationTest(unittest.TestCase):
         self.assertEqual(package.parse_duration("2.5-3 sec"), (2.5, 3.0))
         self.assertIsNone(package.parse_duration("shot 4"))
         self.assertIsNone(package.parse_duration("3 screens"))
+
+
+class M01NestedQuotesTest(unittest.TestCase):
+    """Ruling 8 (M-01, M-02): a straight-quoted string nested inside a prompt never closes the
+    prompt at the inner closer. Either the whole prompt is extracted (the inner string is
+    provably nested) or extraction raises UnbalancedQuotes — never a truncated prompt whose
+    text-bearing tail goes unscanned."""
+
+    def prompts(self, section):
+        return [p.text for p in package.extract_prompts(
+            package.parse_package("GENERATION_PROMPTS\n" + section))]
+
+    def assertWhole(self, section, expected):
+        got = self.prompts(section)
+        self.assertEqual(got, expected)
+        for text in got:
+            if "Aster" in text:
+                self.assertIn("chat bubbles", text,
+                              "the inner closer was allowed to close the outer run")
+
+    def test_m01_a1_a_nested_string_does_not_close_the_prompt(self):
+        # A1: the prompt ends in a letter; at HEAD d19cb3a the run closed at `Meridian"` and
+        # the clean 160-char head PASSed while the text-bearing tail was never scanned
+        self.assertWhole(f'"{CLEAN} {NESTED}"\n', [f"{CLEAN} {NESTED}"])
+
+    def test_m01_a2_the_tail_is_kept_when_another_prompt_follows(self):
+        # A2: `."` then a second prompt; at HEAD the `."` opened a phantom run that swallowed
+        # the second prompt, and the first prompt's tail was lost
+        self.assertWhole(f'"{CLEAN} {NESTED}."\n"{CLEAN}"\n', [f"{CLEAN} {NESTED}.", CLEAN])
+
+    def test_m01_a3_the_tail_is_kept_when_the_prompt_is_last(self):
+        # A3: the only shape that already failed closed (ERROR); now the prompt is whole
+        self.assertWhole(f'"{CLEAN} {NESTED}."\n', [f"{CLEAN} {NESTED}."])
+
+    def test_m01_a_nested_string_closed_by_a_bracket_is_still_nested(self):
+        body = f'{CLEAN} the watch ("Aster Meridian") on her wrist, chat bubbles on screen'
+        self.assertWhole(f'"{body}"\n', [body])
+
+    def test_m01_a_symbol_initial_string_inside_a_prompt_is_an_error_not_a_close(self):
+        # `"₹9`: prev is a space, next is a symbol — a nested opener or a closer with K-02
+        # trailing whitespace; two pairings, so neither is chosen. At HEAD the run closed here.
+        with self.assertRaises(package.UnbalancedQuotes) as cm:
+            self.prompts(f'"{CLEAN} {PRICES}"\n')
+        self.assertIn("unbalanced quotes", str(cm.exception))
+
+    def test_m02_a_symbol_initial_string_after_a_doubt_point_is_an_error(self):
+        # the fourth checker's M-02 shape: HEAD ERROR only through the second raise
+        with self.assertRaises(package.UnbalancedQuotes):
+            self.prompts(f'"{CLEAN} {PRICES3}"\n')
+        # a doubt point (`6"` + prose) followed by a symbol-initial string
+        with self.assertRaises(package.UnbalancedQuotes):
+            self.prompts(f'"{CLEAN} 6" then "₹9" and chat bubbles past 99"\n')
+
+    def test_m02_a_space_led_quote_after_a_doubt_point_is_an_error(self):
+        # isolates the second raise: with it disabled the `" ` closes the run after `then`,
+        # the clean head PASSes and `past 99"` is skipped as an inch mark — PASS over the
+        # unscanned "chat bubbles"
+        with self.assertRaises(package.UnbalancedQuotes) as cm:
+            self.prompts(f'"{DOUBT_THEN_SPACE_LED}"\n')
+        self.assertIn("inch mark under one pairing", str(cm.exception))
+
+    def test_m01_a_letter_preceded_quote_outside_any_run_is_an_error(self):
+        # the orphan closer (HEAD :198) is no longer skipped: it is the trace every early
+        # close leaves behind. A digit-preceded one is still the F-12 inch mark.
+        with self.assertRaises(package.UnbalancedQuotes) as cm:
+            self.prompts(f'"{CLEAN}"\nchat bubbles on screen" then\n')
+        self.assertIn("closes no open run", str(cm.exception))
+        self.assertEqual(self.prompts(f'"{CLEAN}"\nthe 5" screen\n"{CLEAN}"\n'), [CLEAN, CLEAN])
+
+    def test_m01_declared_aspect_survives_the_new_errors(self):
+        pkg = package.parse_package(f'DELIVERABLE\none 4:5 poster\nGENERATION_PROMPTS\n"{CLEAN} {PRICES}"\n')
+        self.assertEqual(package.declared_aspect(pkg), "4:5")
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n"{CLEAN} {PRICES}"\n')
+        self.assertIsNone(package.declared_aspect(pkg))
 
 
 if __name__ == "__main__":
