@@ -1,0 +1,1457 @@
+{
+  "experiment": "EVAL-037",
+  "lane_id": "haiku-no-canon",
+  "branch": "work/eval-037-haiku-no-canon",
+  "substrate": {
+    "freeze_fingerprint": "5fc021d96d23299e977600735cc8cf0f950f61d6ed7cd8b39099f9a10aa189ee",
+    "canon_base_commit": "c6f8d910f7a3cdaaeafa2280313abfb9b898cddd",
+    "execution_commit": "85cb4f3d7aec4637d0fd186236a23c321053b541"
+  },
+  "runner_commit": "85cb4f3d7aec4637d0fd186236a23c321053b541",
+  "model": "claude-haiku-4-5-20251001",
+  "condition": "NO_CANON",
+  "attempts": [
+    {
+      "trial_id": "E037-haiku-no-canon-B02-R1",
+      "brief_id": "B02",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:52:19.494796+00:00",
+      "fresh_context": true,
+      "request_digest": "0d5891ec33d59eac9b79900008b00408939f11116641de389080a5c9f7046b3d",
+      "request_path": "requests/E037-haiku-no-canon-B02-R1-a0.request.json",
+      "ended_at": "2026-08-30T15:52:50.193076+00:00",
+      "response_digest": "b16a633b75a73d30e6da177851d5bc4d07dcb69f796ac4bfc0626b1886065f7a",
+      "raw_response_path": "raw/E037-haiku-no-canon-B02-R1-a0.response.json",
+      "transcript_path": "transcripts/E037-haiku-no-canon-B02-R1-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCcww1fxzSL2QFK6EMH",
+          "input_tokens": 1044,
+          "cached_input_tokens": 0,
+          "output_tokens": 216,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 2788,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 1044,
+            "output_tokens": 216,
+            "output_tokens_details": {
+              "thinking_tokens": 177
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCd9bEZjXrd6Bs1515L",
+          "input_tokens": 3427,
+          "cached_input_tokens": 0,
+          "output_tokens": 2108,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 26589,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 3427,
+            "output_tokens": 2108,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 4471,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 2324,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 29377
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.016091,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "2fc765114f829aeeb8be7e902567355c0486a75f2e69e1a97195aecb1f0515e4",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-haiku-no-canon-B02-R1-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B02-R2",
+      "brief_id": "B02",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:52:50.210816+00:00",
+      "fresh_context": true,
+      "request_digest": "0d5891ec33d59eac9b79900008b00408939f11116641de389080a5c9f7046b3d",
+      "request_path": "requests/E037-haiku-no-canon-B02-R2-a0.request.json",
+      "ended_at": "2026-08-30T15:53:22.047623+00:00",
+      "response_digest": "72246c061bca5ee14f429a1c8f46849e3ce951016284e42a4ba678ae3d1f2139",
+      "raw_response_path": "raw/E037-haiku-no-canon-B02-R2-a0.response.json",
+      "transcript_path": "transcripts/E037-haiku-no-canon-B02-R2-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCf7byzoTM7C66933i6",
+          "input_tokens": 1044,
+          "cached_input_tokens": 0,
+          "output_tokens": 178,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 2710,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 1044,
+            "output_tokens": 178,
+            "output_tokens_details": {
+              "thinking_tokens": 139
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCfK5YxwLKi8gR9pUTT",
+          "input_tokens": 3389,
+          "cached_input_tokens": 0,
+          "output_tokens": 2247,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 29099,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 3389,
+            "output_tokens": 2247,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 4433,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 2425,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 31809
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.016558,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "2fc765114f829aeeb8be7e902567355c0486a75f2e69e1a97195aecb1f0515e4",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-haiku-no-canon-B02-R2-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B04-R2",
+      "brief_id": "B04",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:53:22.050553+00:00",
+      "fresh_context": true,
+      "request_digest": "838874626382168d30a67674e705b2ecaf78836a0d603933a5503184966e6bed",
+      "request_path": "requests/E037-haiku-no-canon-B04-R2-a0.request.json",
+      "ended_at": "2026-08-30T15:53:57.189093+00:00",
+      "response_digest": "7c7de3483c74b2e9be8e569a815f9541508b33235c86d4d142f58e36e5f6d8c0",
+      "raw_response_path": "raw/E037-haiku-no-canon-B04-R2-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZChTbKoaFsANqWxbXFb",
+          "input_tokens": 446,
+          "cached_input_tokens": 0,
+          "output_tokens": 2878,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 35127,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 446,
+            "output_tokens": 2878,
+            "output_tokens_details": {
+              "thinking_tokens": 652
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 446,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 2878,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 35127
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.014836,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B03-R1",
+      "brief_id": "B03",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:53:57.191741+00:00",
+      "fresh_context": true,
+      "request_digest": "51313b0f45c4026f9340215be3e5899d4455273979ff2b32c5d75a87e8098443",
+      "request_path": "requests/E037-haiku-no-canon-B03-R1-a0.request.json",
+      "ended_at": "2026-08-30T15:54:29.006261+00:00",
+      "response_digest": "630ada56d76532402cef3afe2028ce630c6b949972b5948737984a1a0720d350",
+      "raw_response_path": "raw/E037-haiku-no-canon-B03-R1-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCk3ovbG9KvK3o87RuX",
+          "input_tokens": 420,
+          "cached_input_tokens": 0,
+          "output_tokens": 2501,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 31803,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 420,
+            "output_tokens": 2501,
+            "output_tokens_details": {
+              "thinking_tokens": 520
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 420,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 2501,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 31803
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.012925,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B06-R2",
+      "brief_id": "B06",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:54:29.010505+00:00",
+      "fresh_context": true,
+      "request_digest": "17d2dfca96d5460389560b1be57e9bc343b8e74a0a716b00630565fb22dfdd94",
+      "request_path": "requests/E037-haiku-no-canon-B06-R2-a0.request.json",
+      "ended_at": "2026-08-30T15:55:14.035897+00:00",
+      "response_digest": "dc3e444f9f624350b67fbede8f107ee631276cbf10e6172d47cb5bcd0cd18585",
+      "raw_response_path": "raw/E037-haiku-no-canon-B06-R2-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCnPxgMxFnmZPFJiNsF",
+          "input_tokens": 462,
+          "cached_input_tokens": 0,
+          "output_tokens": 4861,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 45014,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 462,
+            "output_tokens": 4861,
+            "output_tokens_details": {
+              "thinking_tokens": 2449
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 462,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 4861,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 45014
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.024767,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B06-R1",
+      "brief_id": "B06",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:55:14.040554+00:00",
+      "fresh_context": true,
+      "request_digest": "17d2dfca96d5460389560b1be57e9bc343b8e74a0a716b00630565fb22dfdd94",
+      "request_path": "requests/E037-haiku-no-canon-B06-R1-a0.request.json",
+      "ended_at": "2026-08-30T15:55:37.710072+00:00",
+      "response_digest": "1d3dda5121fa729f486a216ff11264ce464c674badf83bf961429dbd81901d09",
+      "raw_response_path": "raw/E037-haiku-no-canon-B06-R1-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCqiVVEJvVMQYRevB7p",
+          "input_tokens": 462,
+          "cached_input_tokens": 0,
+          "output_tokens": 2234,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 23656,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 462,
+            "output_tokens": 2234,
+            "output_tokens_details": {
+              "thinking_tokens": 886
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 462,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 2234,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 23656
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.011632,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B04-R3",
+      "brief_id": "B04",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:55:37.711157+00:00",
+      "fresh_context": true,
+      "request_digest": "838874626382168d30a67674e705b2ecaf78836a0d603933a5503184966e6bed",
+      "request_path": "requests/E037-haiku-no-canon-B04-R3-a0.request.json",
+      "ended_at": "2026-08-30T15:56:14.601219+00:00",
+      "response_digest": "6a8a81171298b7f9e4525a1e2407400fe623094adc9d5f92daf68c9c916010ed",
+      "raw_response_path": "raw/E037-haiku-no-canon-B04-R3-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCsTgK5PX7Ye7aJP84A",
+          "input_tokens": 446,
+          "cached_input_tokens": 0,
+          "output_tokens": 2863,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 36886,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 446,
+            "output_tokens": 2863,
+            "output_tokens_details": {
+              "thinking_tokens": 449
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 446,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 2863,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 36886
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.014761,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B05-R2",
+      "brief_id": "B05",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:56:14.602615+00:00",
+      "fresh_context": true,
+      "request_digest": "85c39124f44f13886abdc29e2ef6f8c1bc42c475516a096cb2cec92f2f46ee48",
+      "request_path": "requests/E037-haiku-no-canon-B05-R2-a0.request.json",
+      "ended_at": "2026-08-30T15:56:54.577347+00:00",
+      "response_digest": "cb0a01c3cd7fefd36d4c2c81ead719f976ee9b6c9a3d18e69764a14214c85de7",
+      "raw_response_path": "raw/E037-haiku-no-canon-B05-R2-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCvBGAihD17Z6h3JnH5",
+          "input_tokens": 418,
+          "cached_input_tokens": 0,
+          "output_tokens": 3581,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 39969,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 418,
+            "output_tokens": 3581,
+            "output_tokens_details": {
+              "thinking_tokens": 789
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 418,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 3581,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 39969
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.018323,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B03-R2",
+      "brief_id": "B03",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:56:54.579305+00:00",
+      "fresh_context": true,
+      "request_digest": "51313b0f45c4026f9340215be3e5899d4455273979ff2b32c5d75a87e8098443",
+      "request_path": "requests/E037-haiku-no-canon-B03-R2-a0.request.json",
+      "ended_at": "2026-08-30T15:57:34.201396+00:00",
+      "response_digest": "317b70672f178ec0bdba3d437b59575588e743f03cd3e7569202e4d3ae735178",
+      "raw_response_path": "raw/E037-haiku-no-canon-B03-R2-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZCy8JuUdRwgGotz71WS",
+          "input_tokens": 420,
+          "cached_input_tokens": 0,
+          "output_tokens": 3067,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 39611,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 420,
+            "output_tokens": 3067,
+            "output_tokens_details": {
+              "thinking_tokens": 861
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 420,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 3067,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 39611
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.015755,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B06-R3",
+      "brief_id": "B06",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:57:34.209338+00:00",
+      "fresh_context": true,
+      "request_digest": "17d2dfca96d5460389560b1be57e9bc343b8e74a0a716b00630565fb22dfdd94",
+      "request_path": "requests/E037-haiku-no-canon-B06-R3-a0.request.json",
+      "ended_at": "2026-08-30T15:58:12.614376+00:00",
+      "response_digest": "425195a2118d436468266e5ccbb1887810c084d7cbf21e48c0cc0f474618d5bc",
+      "raw_response_path": "raw/E037-haiku-no-canon-B06-R3-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZD243kcdzvxL1chGjM6",
+          "input_tokens": 462,
+          "cached_input_tokens": 0,
+          "output_tokens": 3816,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 38379,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 462,
+            "output_tokens": 3816,
+            "output_tokens_details": {
+              "thinking_tokens": 1873
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 462,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 3816,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 38379
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.019542,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B04-R1",
+      "brief_id": "B04",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:58:12.615891+00:00",
+      "fresh_context": true,
+      "request_digest": "838874626382168d30a67674e705b2ecaf78836a0d603933a5503184966e6bed",
+      "request_path": "requests/E037-haiku-no-canon-B04-R1-a0.request.json",
+      "ended_at": "2026-08-30T15:58:49.319710+00:00",
+      "response_digest": "de1ee969d0c0a07ba415d0fdbd90bbe5e73a01a35111f4f9119dc53642db46a5",
+      "raw_response_path": "raw/E037-haiku-no-canon-B04-R1-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZD4swNozX9vZJhzT9FC",
+          "input_tokens": 446,
+          "cached_input_tokens": 0,
+          "output_tokens": 3003,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 36700,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 446,
+            "output_tokens": 3003,
+            "output_tokens_details": {
+              "thinking_tokens": 553
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 446,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 3003,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 36700
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.015461,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B02-R3",
+      "brief_id": "B02",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:58:49.324353+00:00",
+      "fresh_context": true,
+      "request_digest": "0d5891ec33d59eac9b79900008b00408939f11116641de389080a5c9f7046b3d",
+      "request_path": "requests/E037-haiku-no-canon-B02-R3-a0.request.json",
+      "ended_at": "2026-08-30T15:59:25.503059+00:00",
+      "response_digest": "e503f18c565c5da7a29b03bb76101a06f34ce4caba1427255a39e8d0f6b742a7",
+      "raw_response_path": "raw/E037-haiku-no-canon-B02-R3-a0.response.json",
+      "transcript_path": "transcripts/E037-haiku-no-canon-B02-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZD7av26BDjuc2a9pY9o",
+          "input_tokens": 1044,
+          "cached_input_tokens": 0,
+          "output_tokens": 313,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 3919,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 1044,
+            "output_tokens": 313,
+            "output_tokens_details": {
+              "thinking_tokens": 274
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZD7sYQ5MrVt61oWrF7T",
+          "input_tokens": 3524,
+          "cached_input_tokens": 0,
+          "output_tokens": 2386,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 32248,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 3524,
+            "output_tokens": 2386,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 4568,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 2699,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 36167
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.018063,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "2fc765114f829aeeb8be7e902567355c0486a75f2e69e1a97195aecb1f0515e4",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-haiku-no-canon-B02-R3-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B03-R3",
+      "brief_id": "B03",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:59:25.504692+00:00",
+      "fresh_context": true,
+      "request_digest": "51313b0f45c4026f9340215be3e5899d4455273979ff2b32c5d75a87e8098443",
+      "request_path": "requests/E037-haiku-no-canon-B03-R3-a0.request.json",
+      "ended_at": "2026-08-30T16:00:02.347124+00:00",
+      "response_digest": "82d26b4c949ae8baaa53dd6da0b33ac96e05b61a7f7c9c1c8b7d3b0df3965282",
+      "raw_response_path": "raw/E037-haiku-no-canon-B03-R3-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDAFkBbxNkrhJNU5Szw",
+          "input_tokens": 420,
+          "cached_input_tokens": 0,
+          "output_tokens": 2907,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 36826,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 420,
+            "output_tokens": 2907,
+            "output_tokens_details": {
+              "thinking_tokens": 671
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 420,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 2907,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 36826
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.014955,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B05-R1",
+      "brief_id": "B05",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:00:02.349867+00:00",
+      "fresh_context": true,
+      "request_digest": "85c39124f44f13886abdc29e2ef6f8c1bc42c475516a096cb2cec92f2f46ee48",
+      "request_path": "requests/E037-haiku-no-canon-B05-R1-a0.request.json",
+      "ended_at": "2026-08-30T16:00:43.246691+00:00",
+      "response_digest": "1477cd81cfc4e0fa1238556e643a3662ac3b99a60116729d50367bbd9ed712c0",
+      "raw_response_path": "raw/E037-haiku-no-canon-B05-R1-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDCyJZFrRCEN5sxTd9V",
+          "input_tokens": 418,
+          "cached_input_tokens": 0,
+          "output_tokens": 3877,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 40887,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 418,
+            "output_tokens": 3877,
+            "output_tokens_details": {
+              "thinking_tokens": 588
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 418,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 3877,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 40887
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.019803,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B01-R1",
+      "brief_id": "B01",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:00:43.259385+00:00",
+      "fresh_context": true,
+      "request_digest": "0e4982b9ad669c18c3ab060de1710ae4a99ac42cb91532f5a951bd82e14dc5f1",
+      "request_path": "requests/E037-haiku-no-canon-B01-R1-a0.request.json",
+      "ended_at": "2026-08-30T16:01:31.420233+00:00",
+      "response_digest": "aa0604f39dc99ba2c546887c4f1a53ee590804272ce0a1492ae4a64387c58d5e",
+      "raw_response_path": "raw/E037-haiku-no-canon-B01-R1-a0.response.json",
+      "transcript_path": "transcripts/E037-haiku-no-canon-B01-R1-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDFz52kZSXoF2mN2Ggw",
+          "input_tokens": 1075,
+          "cached_input_tokens": 0,
+          "output_tokens": 327,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 4649,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 1075,
+            "output_tokens": 327,
+            "output_tokens_details": {
+              "thinking_tokens": 288
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDGKmTCSNCVJXuZEFwW",
+          "input_tokens": 4339,
+          "cached_input_tokens": 0,
+          "output_tokens": 3541,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 43498,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 4339,
+            "output_tokens": 3541,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 5414,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 3868,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 48147
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.024754,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "4f1027628b556be6d64dcb921b92907fc39b4d6012d4891523f14c0ae2859833",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-haiku-no-canon-B01-R1-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B05-R3",
+      "brief_id": "B05",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:01:31.421812+00:00",
+      "fresh_context": true,
+      "request_digest": "85c39124f44f13886abdc29e2ef6f8c1bc42c475516a096cb2cec92f2f46ee48",
+      "request_path": "requests/E037-haiku-no-canon-B05-R3-a0.request.json",
+      "ended_at": "2026-08-30T16:02:19.222917+00:00",
+      "response_digest": "1b15b8c562c46e792e980038c0370b3e202f9c300f9902bfbd7f129aab243bba",
+      "raw_response_path": "raw/E037-haiku-no-canon-B05-R3-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDKYGcPDsNhQoBHURoB",
+          "input_tokens": 418,
+          "cached_input_tokens": 0,
+          "output_tokens": 4417,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 47788,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 418,
+            "output_tokens": 4417,
+            "output_tokens_details": {
+              "thinking_tokens": 1075
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 418,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 4417,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 47788
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.022503,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B01-R2",
+      "brief_id": "B01",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:02:19.247137+00:00",
+      "fresh_context": true,
+      "request_digest": "0e4982b9ad669c18c3ab060de1710ae4a99ac42cb91532f5a951bd82e14dc5f1",
+      "request_path": "requests/E037-haiku-no-canon-B01-R2-a0.request.json",
+      "ended_at": "2026-08-30T16:03:09.127805+00:00",
+      "response_digest": "ccb6c3b723f80748bb78951496745e5e184b8e2ceece897afa2a81a2233eb3ce",
+      "raw_response_path": "raw/E037-haiku-no-canon-B01-R2-a0.response.json",
+      "transcript_path": "transcripts/E037-haiku-no-canon-B01-R2-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDP5EHHGdkeYFEcp6NY",
+          "input_tokens": 1075,
+          "cached_input_tokens": 0,
+          "output_tokens": 239,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 2726,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 1075,
+            "output_tokens": 239,
+            "output_tokens_details": {
+              "thinking_tokens": 200
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDPG4u7ZbfhaoVnMrKM",
+          "input_tokens": 4251,
+          "cached_input_tokens": 0,
+          "output_tokens": 3873,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 47105,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 4251,
+            "output_tokens": 3873,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 5326,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 4112,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 49831
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.025886,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "4f1027628b556be6d64dcb921b92907fc39b4d6012d4891523f14c0ae2859833",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-haiku-no-canon-B01-R2-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-haiku-no-canon-B01-R3",
+      "brief_id": "B01",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:03:09.137123+00:00",
+      "fresh_context": true,
+      "request_digest": "0e4982b9ad669c18c3ab060de1710ae4a99ac42cb91532f5a951bd82e14dc5f1",
+      "request_path": "requests/E037-haiku-no-canon-B01-R3-a0.request.json",
+      "ended_at": "2026-08-30T16:03:55.949732+00:00",
+      "response_digest": "88399da901da3e674d0e07dc79007ea34a4d41fee80de4dfdc829bb7c8c8c6ca",
+      "raw_response_path": "raw/E037-haiku-no-canon-B01-R3-a0.response.json",
+      "transcript_path": "transcripts/E037-haiku-no-canon-B01-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDSjt47enqGiouZ7ddk",
+          "input_tokens": 1075,
+          "cached_input_tokens": 0,
+          "output_tokens": 306,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 3151,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 1075,
+            "output_tokens": 306,
+            "output_tokens_details": {
+              "thinking_tokens": 245
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-haiku-4-5-20251001",
+          "provider_request_id": "msg_011CeZDSy73QvtzxwmVfmq78",
+          "input_tokens": 4318,
+          "cached_input_tokens": 0,
+          "output_tokens": 3564,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 43631,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "not_available",
+            "input_tokens": 4318,
+            "output_tokens": 3564,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 5393,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 3870,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 46782
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.024743,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {
+            "url": "https://rentok.com"
+          },
+          "arguments_digest": "d41f7c48cdbbb2ecdc60751d74f066f30a1e351ab34f4735e498efdbeb59e221",
+          "result_digest": "4f1027628b556be6d64dcb921b92907fc39b4d6012d4891523f14c0ae2859833",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-haiku-no-canon-B01-R3-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79"
+      ],
+      "outcome": "ok"
+    }
+  ]
+}
