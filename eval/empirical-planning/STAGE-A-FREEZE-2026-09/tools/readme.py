@@ -1,4 +1,11 @@
-# Stage A freeze package — September 2026 (EVAL-039A)
+# -*- coding: utf-8 -*-
+def README(counts, totals, tr1a, tr1b, roster_present, fixtures, langs, lane_lang):
+    n1a, n1b, nc = counts["calls_1a"], counts["calls_1b"], counts["calls_conditional"]
+    delta = "none — the counts equal the task's fixed 186 / 112 / 298 + 32." if (n1a, n1b, nc) == (186, 112, 32) else f"DEVIATION: built {n1a} / {n1b} / {n1a + n1b} + {nc} against the task's 186 / 112 / 298 + 32 — see §Open questions."
+    pools = "\n".join(f"| {t['tranche']} | {t['billing_pool']} | {t['calls']} | {t['priced_calls']} | {t['unpinned_calls']} | {t['usd_nominal']} |" for t in totals["by_tranche_and_pool"])
+    cond = "\n".join(f"| {t['tranche']} | {t['billing_pool']} | {t['calls']} | {t['priced_calls']} | {t['unpinned_calls']} | {t['usd_nominal']} |" for t in totals["conditional_by_pool"])
+    lanes = "\n".join(f"| {k} | {v['en']} | {v['hi']} | {v['hg']} | {sum(v.values())} |" for k, v in lane_lang.items())
+    return f"""# Stage A freeze package — September 2026 (EVAL-039A)
 
 **Status:** FROZEN PROPOSAL, USD 0 spent, awaiting the Controller's acceptance and the separate spend record. Nothing here authorises a paid call. Authored by the Executor agent on 2026-09-05 from the committed packs, grammar and source pools only (base `cb92f1e` on `controller/capability-lab-direction-2026-09-05`); no provider, evaluator, OCR or LLM API call was made and no network was used.
 
@@ -23,19 +30,16 @@ Before any money is spent on the model screen, every test item must exist the wa
 
 ## Counts
 
-- Cases: **35** · blueprints: **35** (one per case; `VID-KNEE-01` carries the same production spec as `VID-T2V-04` under its own header).
-- Calls: **1a = 186**, **1b = 112**, **total = 298**, plus **32 conditional** (SD3.5 Large 8, MAI-Image-2.6 8, Sora 2 8, Chirp 3 HD 2, Azure Neural TTS 2, Kling v3 elements 4) listed but outside the cap.
-- Deviation from the task's fixed counts: none — the counts equal the task's fixed 186 / 112 / 298 + 32.
-- Language mix (by the language the customer wrote in): en 15, hi 12, hg 8 → Hindi + Hinglish = 20/35 = 57 %.
+- Cases: **{counts['cases']}** · blueprints: **{counts['blueprints']}** (one per case; `VID-KNEE-01` carries the same production spec as `VID-T2V-04` under its own header).
+- Calls: **1a = {n1a}**, **1b = {n1b}**, **total = {n1a + n1b}**, plus **{nc} conditional** (SD3.5 Large 8, MAI-Image-2.6 8, Sora 2 8, Chirp 3 HD 2, Azure Neural TTS 2, Kling v3 elements 4) listed but outside the cap.
+- Deviation from the task's fixed counts: {delta}
+- Language mix (by the language the customer wrote in): en {langs['en']}, hi {langs['hi']}, hg {langs['hg']} → Hindi + Hinglish = {langs['hi'] + langs['hg']}/35 = {round(100 * (langs['hi'] + langs['hg']) / 35)} %.
 
 | lane | en | hi | hg | total |
 |---|---|---|---|---|
-| IMG | 5 | 4 | 3 | 12 |
-| VID | 7 | 5 | 3 | 15 |
-| AUD | 2 | 2 | 2 | 6 |
-| MUS | 1 | 1 | 0 | 2 |
+{lanes}
 
-- Fixtures (no source pool could supply the shape; each carries its reason in `source.adaptation`): IMG-CORE-04, VID-T2V-03, VID-I2V-04, AUD-LIP-01, AUD-LIP-02, AUD-LIP-03. Three are the policy-edge shape (the Media Factory Veo-refusal scene as still, text-to-video and animate); three are the lip-sync requests, because no pool item supplies a clip plus a voice file to be lip-synced — each consumes two real-demand items (its drive script and its plate).
+- Fixtures (no source pool could supply the shape; each carries its reason in `source.adaptation`): {', '.join(fixtures)}. Three are the policy-edge shape (the Media Factory Veo-refusal scene as still, text-to-video and animate); three are the lip-sync requests, because no pool item supplies a clip plus a voice file to be lip-synced — each consumes two real-demand items (its drive script and its plate).
 - **4K is not a case.** 4K recorded as a Stage B COND-DELIVERY level only; round one runs 720p.
 
 ## How prices are treated (read this before the cost table)
@@ -53,32 +57,26 @@ Two roster facts changed this package after its first build: the second lip-sync
 
 | tranche | pool | calls | priced calls | unpinned calls | nominal USD |
 |---|---|---|---|---|---|
-| 1a | cash | 136 | 124 | 12 | 47.77 |
-| 1a | credits | 50 | 50 | 0 | 25.5 |
-| 1b | cash | 78 | 70 | 8 | 66.92 |
-| 1b | credits | 24 | 22 | 2 | 15.51 |
-| 1b | sarvam_credits | 10 | 10 | 0 | 0.01 |
+{pools}
 
 Conditional (listed, outside the cap):
 
 | tranche | pool | calls | priced calls | unpinned calls | nominal USD |
 |---|---|---|---|---|---|
-| 1a | credits | 24 | 16 | 8 | 5.44 |
-| 1b | cash | 4 | 0 | 4 | 0.0 |
-| 1b | credits | 4 | 2 | 2 | 0.0 |
+{cond}
 
-- Nominal in-cap total: **USD 155.71** (1a ≈ 73.27, 1b ≈ 82.44); of which cash ≈ 114.69, GCP credits ≈ 41.01.
-- Unpinned calls excluded from the cap: **22** on routes `gpt-image-2-edit`, `sync-lipsync-v3`, `veo-3.1-lite-i2v` (sync-lipsync v3 became unpinned at the committed roster — its exact endpoint carries no price; the 0.1333/s string belongs to the sibling image-to-video endpoint — so all 12 of its calls sit outside the cap until pinned).
+- Nominal in-cap total: **USD {totals['nominal_usd_in_cap']}** (1a ≈ {tr1a}, 1b ≈ {tr1b}); of which cash ≈ {totals['nominal_usd_cash']}, GCP credits ≈ {totals['nominal_usd_credits']}.
+- Unpinned calls excluded from the cap: **{totals['unpinned_calls_excluded_from_cap']}** on routes {', '.join('`' + r + '`' for r in totals['unpinned_routes_excluded'])} (sync-lipsync v3 became unpinned at the committed roster — its exact endpoint carries no price; the 0.1333/s string belongs to the sibling image-to-video endpoint — so all 12 of its calls sit outside the cap until pinned).
 - Priced against `ROSTER-REFRESH-2026-09.yaml` at the commit and sha256 recorded in `COST-TABLE.yaml` → `priced_against_roster`; `gpt-image-2` and `flux-2-pro` are `route_status: pinned` on their fal fallback records (the credit surfaces stay `needs_controller_enablement`), stated in `route_catalogue.priced_surface`.
-- Sarvam lines are inside the cap in INR: ≈ ₹0.92 (Sarvam's prepaid balance; shown as USD-equivalent 0.01 at the August display rate).
-- Evaluator lines (nominal): ≈ USD 3.82 (Cloud Vision + VLM triage; ASR unpinned). Controller judging time: see `COST-TABLE.yaml` → `evaluator_rows` → `controller_blind_judging.minutes`.
+- Sarvam lines are inside the cap in INR: ≈ ₹{totals['nominal_inr_sarvam']} (Sarvam's prepaid balance; shown as USD-equivalent 0.01 at the August display rate).
+- Evaluator lines (nominal): ≈ USD {totals['evaluator_nominal_usd']} (Cloud Vision + VLM triage; ASR unpinned). Controller judging time: see `COST-TABLE.yaml` → `evaluator_rows` → `controller_blind_judging.minutes`.
 - The task's INFERRED planning figure was ≈ USD 150–165 nominal with ≈ 45–55 credit-eligible; the pinned figure sits in that range. gpt-image-2 and FLUX.2 Pro (base, edit and the arm-C/chain plates) are carried as fal cash until deployed on Azure; once deployed those lines move from cash to Azure credits at the same list price. The 1a nominal is above the plan's ≈ USD 60 line — morning decision 8 (raise the 1a cap, or apply the cut order in `IRREDUCIBILITY.md`).
 
 ## Morning decisions for the Controller (recorded, never attempted)
 
 The task's eleven human-approval triggers, with the state this package assumes:
 
-1. Ratify this package and the counts (35 cases / 298 + 32 conditional) or apply the cut order in `IRREDUCIBILITY.md`.
+1. Ratify this package and the counts (35 cases / {n1a + n1b} + {nc} conditional) or apply the cut order in `IRREDUCIBILITY.md`.
 2. Sarvam key — **confirmed present**: the Controller session stated it, EVAL-039B's overnight check first reported the value empty, and EVAL-039B's Tester corrected that as a measurement error (DEFECT-1, commit `a24b197`: a 36-character value; length check only). The roster now records Sarvam bulbul:v3 as `pinned` and this package runs AUD-TTS-* on Sarvam (Sarvam credits, ₹3 per 1,000 characters) and ElevenLabs v3 via fal (cash). No key value was read by this task.
 3. Azure deployments for gpt-image-2 / FLUX.2 Pro (credits) — carried as fal cash here; whether Sora 2 / MAI-Image-2.6 join — listed conditional.
 4. Bedrock access for SD3.5 Large — listed conditional.
@@ -128,3 +126,4 @@ The task's eleven human-approval triggers, with the state this package assumes:
 ## Self-check
 
 The Executor ran the Tester checklist F.1–F.9 on its own output before finishing (YAML parse, 35 ids, sha256 match, operation vocabulary, primary capability ids, 13 families, coverage checks 1–8 incl. the benchmark-vocabulary grep, cost totals, source ids, HOLD-id and pack-id scans, E1–E5 byte match, `git status` confined to this directory and the Executor report). That self-check is not the Tester's verdict.
+"""

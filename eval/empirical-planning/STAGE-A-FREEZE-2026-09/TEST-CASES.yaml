@@ -19,17 +19,18 @@ counts:
     AUD: {en: 2, hi: 2, hg: 2}
     MUS: {en: 1, hi: 1, hg: 0}
   fixtures: [IMG-CORE-04, VID-T2V-03, VID-I2V-04, AUD-LIP-01, AUD-LIP-02, AUD-LIP-03]
+cut_order_rule: cut_order_rank = the lowest-numbered task-§C cut item that touches the case (cut_order_items[] lists each item and whether it removes a route line, an arm, or the whole case), or never_cut with never_cut_reason (core item / Hindi-Hinglish item / TOPO-02/03 arms A and C); the cut order itself is in IRREDUCIBILITY.md
 route_catalogue:
-  gpt-image-2: {route_id: openai/gpt-image-2, surface: fal, billing_pool: cash, route_status: unpinned, arm_class: cheap, unit: per_image, unit_price: 0.053, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html, roster_route_key: gpt-image-2 / variant fallback, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, note: 'fal fallback pinned at 0.053/image for 1024x1024 at quality=medium (fal''s default is high at 0.211 — the harness must set quality=medium); the credit surface is Azure gpt-image-2 (token-metered $30/1M output tokens, per-image unknown) and needs a Controller deployment (roster: needs_controller_enablement; MD-9)', credit_alternative: azure_foundry gpt-image-2 (credits) only if the Controller deploys a resource — morning decision 3}
+  gpt-image-2: {route_id: openai/gpt-image-2, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_image, unit_price: 0.053, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html, roster_route_key: gpt-image-2 / variant fallback, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, priced_surface: 'fal (the roster''s fallback record, route_status pinned); the credit surface azure_foundry gpt-image-2 is needs_controller_enablement', note: 'fal fallback pinned at 0.053/image for 1024x1024 at quality=medium (fal''s default is high at 0.211 — the harness must set quality=medium); the credit surface is Azure gpt-image-2 (token-metered $30/1M output tokens, per-image unknown) and needs a Controller deployment (roster: needs_controller_enablement; MD-9)', credit_alternative: azure_foundry gpt-image-2 (credits) only if the Controller deploys a resource — morning decision 3}
   nano-banana-2: {route_id: gemini-3.1-flash-image, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_image, unit_price: 0.067, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: nano-banana-2, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
   nano-banana-pro: {route_id: gemini-3-pro-image, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: premium, unit: per_image, unit_price: 0.134, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: nano-banana-pro, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
   seedream-5-pro: {route_id: bytedance/seedream/v5/pro/text-to-image, surface: fal, billing_pool: cash, route_status: pinned, arm_class: premium, unit: per_image, unit_price: 0.0675, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json, roster_route_key: seedream-5-pro, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  flux-2-pro: {route_id: fal-ai/flux-2-pro, surface: fal, billing_pool: cash, route_status: unpinned, arm_class: cheap, unit: per_image, unit_price: 0.03, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json, roster_route_key: flux-2-pro / variant fallback, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: 'fal fallback pinned at 0.03 first megapixel (1 MP outputs); Azure FLUX.2-pro lists the same 0.03 on credits but no deployment exists (roster: needs_controller_enablement; MD-9)', credit_alternative: 'azure_foundry FLUX.2-pro (credits, eastus/southindia) only if the Controller deploys — morning decision 3'}
+  flux-2-pro: {route_id: fal-ai/flux-2-pro, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_image, unit_price: 0.03, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json, roster_route_key: flux-2-pro / variant fallback, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, priced_surface: 'fal (the roster''s fallback record, route_status pinned); the credit surface azure_foundry FLUX.2-pro is needs_controller_enablement', note: 'fal fallback pinned at 0.03 first megapixel (1 MP outputs); Azure FLUX.2-pro lists the same 0.03 on credits but no deployment exists (roster: needs_controller_enablement; MD-9)', credit_alternative: 'azure_foundry FLUX.2-pro (credits, eastus/southindia) only if the Controller deploys — morning decision 3'}
   qwen-image-3: {route_id: alibaba/qwen-image-3, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_image, unit_price: 0.04, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json, roster_route_key: qwen-image-3, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
   sd3.5-large: {route_id: 'stability.sd3-5-large-v1:0', surface: bedrock, billing_pool: credits, route_status: needs_controller_enablement, arm_class: cheap, unit: per_image, unit_price: 0.08, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/sd3.5-large/aws-bedrock-list-foundation-model-agreement-offers-sd3.5-large.json, roster_route_key: sd3.5-large, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: 'roster: price pinned from the Bedrock offer rate card and the account reads AUTHORIZED (INFERRED, to be confirmed by one metered call — MD-9); the task records the route as needs_controller_enablement (morning decision 4)'}
   mai-image-2.6: {route_id: MAI-Image-2.6, surface: azure, billing_pool: credits, route_status: needs_controller_enablement, arm_class: cheap, unit: per_image, unit_price: null, price_status: unpinned, price_ref: unpinned — no projectable price in eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml, roster_route_key: mai-image-2.6, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: 'roster: price unpublished (Retail Prices API has no 2.6 meters)'}
   recraft-v4: {route_id: fal-ai/recraft/v4 (text-to-image), surface: fal, billing_pool: cash, route_status: pinned, arm_class: premium, unit: per_image, unit_price: 0.04, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/recraft-v4/fal-recraft-v4-text-to-image.html, roster_route_key: recraft-v4, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, note: EVAL-010 verified the text-to-vector path has no seed; the raster path is the pinned one}
-  flux-2-pro-edit: {route_id: fal-ai/flux-2-pro/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: 0.03, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json, roster_route_key: flux-2-pro-edit, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: 0.03 first output megapixel + 0.015 per extra MP of input and output; 1 MP output and ≤ 1 MP input assumed → 0.045 possible with a 1 MP reference; carried at the pinned 0.03 base with the extra-MP rule recorded, credit_alternative: azure_foundry FLUX.2-pro with reference image (credits) if deployed — morning decision 3}
+  flux-2-pro-edit: {route_id: fal-ai/flux-2-pro/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: 0.045, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json, roster_route_key: flux-2-pro-edit, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, roster_base_price: 0.03, addon: '0.015 per input megapixel × 1 reference (roster price_addons.additional_megapixel, pinned in the same bytes)', note: 'priced at 0.045 = pinned base 0.03 + pinned 0.015 addon for one 1-MP reference, as the committed roster''s projection does; a 2- or 3-reference case (IMG-COMP-01, IMG-REF-*) may bill more addon megapixels — recorded, not projected', credit_alternative: azure_foundry FLUX.2-pro with reference image (credits) if deployed — morning decision 3, quantity_rule: '0.03 first output megapixel + 0.015 per input megapixel (price_addons.additional_megapixel): one 1-MP reference → 0.045 per edit generation (roster after Auditor AF-2, commit 3434b37)'}
   nano-banana-pro-edit: {route_id: fal-ai/nano-banana-pro/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: 0.15, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json, roster_route_key: nano-banana-pro-edit, seed_support: exposed, conditional: false, plan_ref: plan §C.3, note: 'roster records the fal edit route as the plan names it; the same model edits on Vertex (gemini-3-pro-image with image inputs, 0.134 + 560 input tokens per reference) on credits — the roster and this package both flag that the Controller may switch the surface (open question)', credit_alternative: 'vertex gemini-3-pro-image with image inputs (credits, 0.134 pinned + input tokens) — Controller may switch'}
   seedream-5-pro-edit: {route_id: bytedance/seedream/v5/pro/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: 0.0675, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json, roster_route_key: seedream-5-pro-edit, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
   gpt-image-2-edit: {route_id: openai/gpt-image-2/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: null, price_status: unpinned, price_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2-edit/fal-api-models-openai-gpt-image-2-edit.json, roster_route_key: gpt-image-2-edit, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, note: 'pinned but not projectable: only the token meter ($30/1M output tokens) is in the pinned bytes; no per-image table for the edit path → 0 in totals, listed under unpinned (the roster''s own reading)', credit_alternative: azure_foundry gpt-image-2 edit (credits) if deployed — morning decision 3}
@@ -63,7 +64,7 @@ route_catalogue:
   elevenlabs-v3: {route_id: fal-ai/elevenlabs/tts/eleven-v3, surface: fal, billing_pool: cash, route_status: pinned, arm_class: native, unit: per_1k_chars, unit_price: 0.1, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/elevenlabs-v3/fal-elevenlabs-tts-eleven-v3.html, roster_route_key: elevenlabs-v3, seed_support: exposed, conditional: false, plan_ref: plan §C.3, note: 'EVAL-010: ElevenLabs direct exposes seed; the fal wrapper''s seed support is what the harness records'}
   chirp-3-hd-hi-in: {route_id: hi-IN-Chirp3-HD-<voice> (Cloud Text-to-Speech), surface: vertex, billing_pool: credits, route_status: needs_controller_enablement, arm_class: native, unit: per_1M_chars, unit_price: null, price_status: unpinned, price_ref: unpinned — no projectable price in eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml, roster_route_key: chirp-3-hd-hi-in, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: Text-to-Speech API not enabled in the project; price page JS-rendered}
   azure-neural-tts-hi-in: {route_id: Azure Neural TTS hi-IN, surface: azure, billing_pool: credits, route_status: needs_controller_enablement, arm_class: native, unit: per_1M_chars, unit_price: 15.0, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/azure-neural-tts-hi-in/azure-retail-prices-speech-neural-centralindia.json, roster_route_key: azure-neural-tts-hi-in, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: no Speech resource exists yet}
-  sync-lipsync-v3: {route_id: fal-ai/sync-lipsync/v3, surface: fal, billing_pool: cash, route_status: pinned, arm_class: chain, unit: per_second, unit_price: 0.1333, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3.html, roster_route_key: sync-lipsync-v3, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: EVAL-010 verified v2/pro has no seed; v3 not enumerated there, quantity_rule: per output second (= USD 8/min)}
+  sync-lipsync-v3: {route_id: fal-ai/sync-lipsync/v3, surface: fal, billing_pool: cash, route_status: unpinned, arm_class: chain, unit: per_second, unit_price: null, price_status: unpinned, price_ref: unpinned — no projectable price in eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml, roster_route_key: sync-lipsync-v3, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: 'UNPINNED at the committed roster (EVAL-039B Auditor AF-1, commit 3434b37): the exact endpoint''s pricing field is empty in fal''s JSON and page; the only price string in the bytes is the sibling image-to-video endpoint''s 0.1333/s. 12 calls outside the cap until pinned. EVAL-010 verified v2/pro has no seed; v3 not enumerated there', quantity_rule: 'per output second (the August figure USD 8/min = 0.1333/s belongs to the sibling endpoint fal-ai/sync-lipsync/v3/image-to-video, not to this one)'}
   kling-lipsync-a2v: {route_id: fal-ai/kling-video/lipsync/audio-to-video, surface: fal, billing_pool: cash, route_status: pinned, arm_class: chain, unit: per_second, unit_price: 0.014, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/kling-lipsync-audio-to-video/fal-api-models-kling-lipsync-a2v.json, roster_route_key: kling-lipsync-audio-to-video, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: 'the second lipsync route (plan: ''LatentSync-class or Kling lipsync''); the roster added it and notes fal-ai/latentsync exists ($0.2/video, not pinned)', quantity_rule: 'per input video second, rolled up to the nearest 5-s increment (a 6-s or 8-s plate bills as 10 s)'}
   lyria: {route_id: lyria-002, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: native, unit: per_clip, unit_price: 0.06, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: lyria, seed_support: undocumented, conditional: false, plan_ref: plan §C.3d, note: 'NOT RECONCILED (contradiction 1 / MD-7): the plan says ''Lyria 3'' (priced 0.04 per 30-s clip on the page) but only lyria-002 answers on the publisher endpoint; the roster prices lyria-002 at the ''Lyria 2'' row 0.06 per clip — used here; morning decision 10'}
   elevenlabs-music: {route_id: fal-ai/elevenlabs/music, surface: fal, billing_pool: cash, route_status: pinned, arm_class: native, unit: per_minute, unit_price: 0.6, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/elevenlabs-music/fal-api-models-elevenlabs-music.json, roster_route_key: elevenlabs-music, seed_support: undocumented, conditional: false, plan_ref: plan §C.3d, quantity_rule: 'per output minute, rounded up (a 30-s clip bills as 1 minute)'}
@@ -164,9 +165,9 @@ cases:
     route_id: openai/gpt-image-2
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-01
@@ -179,7 +180,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-01
@@ -192,7 +193,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-01
@@ -205,7 +206,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-01
@@ -216,9 +217,9 @@ cases:
     route_id: fal-ai/flux-2-pro
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-01
@@ -231,7 +232,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-01
@@ -244,7 +245,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-01
@@ -258,7 +259,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-01
@@ -269,7 +270,9 @@ cases:
   downstream_reuse:
     feeds: [VID-I2V-01 plate (the Controller-accepted draw), 'hero-still precedent for VID-T2V-04 / VID-KNEE-01 (same product, text-to-video — no bytes reused)']
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item
   irreducibility_ref: C.IMG-CORE-01
 - case_id: IMG-CORE-02
   item_id: IMG-CORE-02
@@ -377,9 +380,9 @@ cases:
     route_id: openai/gpt-image-2
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-02
@@ -392,7 +395,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-02
@@ -405,7 +408,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-02
@@ -418,7 +421,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-02
@@ -429,9 +432,9 @@ cases:
     route_id: fal-ai/flux-2-pro
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-02
@@ -444,7 +447,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-02
@@ -457,7 +460,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-02
@@ -471,7 +474,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: core
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-02
@@ -482,7 +485,9 @@ cases:
   downstream_reuse:
     feeds: [VID-I2V-02 plate, VID-I2V-03 plate, AUD-LIP-01/02/03 plate (via the VID-I2V-02 accepted clip)]
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item, Hindi/Hinglish item
   irreducibility_ref: C.IMG-CORE-02
 - case_id: IMG-CORE-03
   item_id: IMG-CORE-03
@@ -589,9 +594,9 @@ cases:
     route_id: openai/gpt-image-2
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: core
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-03
@@ -604,7 +609,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-03
@@ -617,7 +622,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-03
@@ -630,7 +635,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-03
@@ -641,9 +646,9 @@ cases:
     route_id: fal-ai/flux-2-pro
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: core
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-03
@@ -656,7 +661,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-03
@@ -669,7 +674,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: core
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-03
@@ -683,7 +688,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: core
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-03
@@ -694,7 +699,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item, Hindi/Hinglish item
   irreducibility_ref: C.IMG-CORE-03
 - case_id: IMG-CORE-04
   item_id: IMG-CORE-04
@@ -799,9 +806,9 @@ cases:
     route_id: openai/gpt-image-2
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: core
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-04
@@ -814,7 +821,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-04
@@ -827,7 +834,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-04
@@ -840,7 +847,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-04
@@ -851,9 +858,9 @@ cases:
     route_id: fal-ai/flux-2-pro
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: core
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-04
@@ -866,7 +873,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-04
@@ -879,7 +886,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: core
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-04
@@ -893,7 +900,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: core
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-CORE-04
@@ -904,7 +911,9 @@ cases:
   downstream_reuse:
     feeds: [VID-I2V-04 plate]
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item, Hindi/Hinglish item
   irreducibility_ref: C.IMG-CORE-04
 - case_id: IMG-TEXT-01
   item_id: IMG-TEXT-01
@@ -1018,7 +1027,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: A_cheap_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-01
@@ -1031,7 +1040,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: A_cheap_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-01
@@ -1042,9 +1051,9 @@ cases:
     route_id: openai/gpt-image-2
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: A_cheap_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-01
@@ -1057,7 +1066,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: B_premium_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-01
@@ -1070,7 +1079,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_premium_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-01
@@ -1083,7 +1092,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_premium_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-01
@@ -1094,9 +1103,9 @@ cases:
     route_id: fal-ai/flux-2-pro
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: C_composite_textless_base
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: textless plate; overlay by code at USD 0 (2 base draws), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: textless plate; overlay by code at USD 0 (2 base draws), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-01
@@ -1106,7 +1115,9 @@ cases:
   downstream_reuse:
     feeds: [VID-TOPO3-01 arm A plate (the accepted arm-A draw), VID-TOPO3-01 arm C plate (the arm-C textless base)]
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: Hindi/Hinglish item, TOPO-02/03 arms A and C
   irreducibility_ref: C.IMG-TEXT-01
 - case_id: IMG-TEXT-02
   item_id: IMG-TEXT-02
@@ -1214,7 +1225,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: A_cheap_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-02
@@ -1227,7 +1238,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: A_cheap_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-02
@@ -1238,9 +1249,9 @@ cases:
     route_id: openai/gpt-image-2
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: A_cheap_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-02
@@ -1253,7 +1264,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: B_premium_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-02
@@ -1266,7 +1277,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_premium_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-02
@@ -1279,7 +1290,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_premium_generated
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-02
@@ -1290,9 +1301,9 @@ cases:
     route_id: fal-ai/flux-2-pro
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: C_composite_textless_base
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: textless plate; overlay by code at USD 0 (2 base draws), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: textless plate; overlay by code at USD 0 (2 base draws), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-TEXT-02
@@ -1302,7 +1313,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: TOPO-02/03 arms A and C
   irreducibility_ref: C.IMG-TEXT-02
 - case_id: IMG-EDIT-01
   item_id: IMG-EDIT-01
@@ -1399,7 +1412,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EDIT-01
@@ -1412,7 +1425,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EDIT-01
@@ -1425,7 +1438,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EDIT-01
@@ -1438,7 +1451,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EDIT-01
@@ -1448,7 +1461,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [Controller-supplied photo (morning decision 6)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: not named by any cut item
   irreducibility_ref: C.IMG-EDIT-01
 - case_id: IMG-EDIT-02
   item_id: IMG-EDIT-02
@@ -1548,7 +1563,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EDIT-02
@@ -1561,7 +1576,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EDIT-02
@@ -1574,7 +1589,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EDIT-02
@@ -1587,7 +1602,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EDIT-02
@@ -1597,7 +1612,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [constructed synthetic pack photo (morning decision 6)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: Hindi/Hinglish item
   irreducibility_ref: C.IMG-EDIT-02
 - case_id: IMG-EXT-01
   item_id: IMG-EXT-01
@@ -1701,7 +1718,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EXT-01
@@ -1714,7 +1731,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EXT-01
@@ -1727,7 +1744,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EXT-01
@@ -1740,7 +1757,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-EXT-01
@@ -1750,7 +1767,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [constructed synthetic banner (morning decision 6)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: not named by any cut item
   irreducibility_ref: C.IMG-EXT-01
 - case_id: IMG-COMP-01
   item_id: IMG-COMP-01
@@ -1875,7 +1894,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-COMP-01
@@ -1888,7 +1907,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-COMP-01
@@ -1901,7 +1920,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-COMP-01
@@ -1914,7 +1933,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-COMP-01
@@ -1924,7 +1943,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [Controller-owned portrait and packshot (morning decision 6)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: Hindi/Hinglish item
   irreducibility_ref: C.IMG-COMP-01
 - case_id: IMG-REF-01
   item_id: IMG-REF-01
@@ -2039,7 +2060,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-REF-01
@@ -2052,7 +2073,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-REF-01
@@ -2065,7 +2086,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-REF-01
@@ -2078,7 +2099,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-REF-01
@@ -2088,7 +2109,9 @@ cases:
   downstream_reuse:
     feeds: [VID-REF-01 shares the same reference pack and decoys (Q4 identity pack)]
     consumes: [Controller-owned tin photos (morning decision 6)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: Hindi/Hinglish item
   irreducibility_ref: C.IMG-REF-01
 - case_id: IMG-REF-02
   item_id: IMG-REF-02
@@ -2204,7 +2227,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-REF-02
@@ -2217,7 +2240,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-REF-02
@@ -2230,7 +2253,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-REF-02
@@ -2243,7 +2266,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: edit
-    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: IMG-REF-02
@@ -2253,7 +2276,9 @@ cases:
   downstream_reuse:
     feeds: [VID-REF-02 shares the same reference pack and decoys]
     consumes: [Controller-owned portraits (morning decision 6)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: not named by any cut item
   irreducibility_ref: C.IMG-REF-02
 - case_id: VID-T2V-01
   item_id: VID-T2V-01
@@ -2373,7 +2398,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-01
@@ -2386,7 +2411,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-01
@@ -2399,7 +2424,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-01
@@ -2412,7 +2437,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-01
@@ -2425,7 +2450,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-01
@@ -2438,7 +2463,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: premium
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-01
@@ -2452,7 +2477,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: conditional
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-01
@@ -2463,7 +2488,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: 10
+  cut_order_items:
+  - {item: 10, scope: 'route line: Wan 3.0 t2v'}
   irreducibility_ref: C.VID-T2V-01
 - case_id: VID-T2V-02
   item_id: VID-T2V-02
@@ -2580,7 +2607,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-02
@@ -2593,7 +2620,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-02
@@ -2606,7 +2633,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-02
@@ -2619,7 +2646,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-02
@@ -2632,7 +2659,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-02
@@ -2645,7 +2672,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: premium
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-02
@@ -2659,7 +2686,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: conditional
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-02
@@ -2670,7 +2697,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: 10
+  cut_order_items:
+  - {item: 10, scope: 'route line: Wan 3.0 t2v'}
   irreducibility_ref: C.VID-T2V-02
 - case_id: VID-T2V-03
   item_id: VID-T2V-03
@@ -2787,7 +2816,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-03
@@ -2800,7 +2829,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-03
@@ -2813,7 +2842,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-03
@@ -2826,7 +2855,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-03
@@ -2839,7 +2868,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-03
@@ -2852,7 +2881,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: conditional
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-03
@@ -2863,7 +2892,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: 10
+  cut_order_items:
+  - {item: 10, scope: 'route line: Wan 3.0 t2v'}
   irreducibility_ref: C.VID-T2V-03
 - case_id: VID-T2V-04
   item_id: VID-T2V-04
@@ -2977,7 +3008,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-04
@@ -2990,7 +3021,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-04
@@ -3003,7 +3034,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-04
@@ -3016,7 +3047,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-04
@@ -3029,7 +3060,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-04
@@ -3042,7 +3073,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: conditional
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-04
@@ -3053,7 +3084,9 @@ cases:
   downstream_reuse:
     feeds: ['VID-KNEE-01 (same request, cost-knee tiers)']
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: 10
+  cut_order_items:
+  - {item: 10, scope: 'route line: Wan 3.0 t2v'}
   irreducibility_ref: C.VID-T2V-04
 - case_id: VID-2SPK-01
   item_id: VID-2SPK-01
@@ -3183,7 +3216,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: A_native
-    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-2SPK-01
@@ -3196,7 +3229,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: A_native
-    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-2SPK-01
@@ -3209,7 +3242,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: A_native
-    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-2SPK-01
@@ -3222,7 +3255,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: A_native
-    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-2SPK-01
@@ -3233,9 +3266,9 @@ cases:
     route_id: fal-ai/flux-2-pro
     surface: fal
     billing_pool: cash
-    route_status: unpinned
+    route_status: pinned
     arm: B_chain_plate
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: 'two-person plate, drawn once on the cheapest pinned image route (2 draws = repeats)', seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: 'two-person plate, drawn once on the cheapest pinned image route (2 draws = repeats)', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-2SPK-01
@@ -3248,7 +3281,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_chain_i2v
-    params: {aspect: '9:16', duration_s: 8, resolution: 768p, audio: 'off', refs: 1, plate: accepted B_chain_plate draw, note: cheapest pinned i2v route at 720p-class (roster), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 8, resolution: 768p, audio: 'off', refs: 1, plate: accepted B_chain_plate draw, note: cheapest pinned i2v route at 720p-class (roster), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-2SPK-01
@@ -3261,7 +3294,7 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: B_chain_tts_L1
-    params: {line: 'यह रंग कैसा लगेगा?', voice: one female voice (route voice id recorded at dispatch), chars: 18, seed: unset (SEED-POLICY.yaml)}
+    params: {line: 'यह रंग कैसा लगेगा?', voice: one female voice (route voice id recorded at dispatch), chars: 18, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-2SPK-01-tts-L1
@@ -3274,7 +3307,7 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: B_chain_tts_L2
-    params: {line: घर जैसा, voice: one male voice (route voice id recorded at dispatch), chars: 7, seed: unset (SEED-POLICY.yaml)}
+    params: {line: घर जैसा, voice: one male voice (route voice id recorded at dispatch), chars: 7, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-2SPK-01-tts-L2
@@ -3287,7 +3320,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_chain_tts_L1
-    params: {line: 'यह रंग कैसा लगेगा?', voice: one female voice (route voice id recorded at dispatch), chars: 18, seed: unset (SEED-POLICY.yaml)}
+    params: {line: 'यह रंग कैसा लगेगा?', voice: one female voice (route voice id recorded at dispatch), chars: 18, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-2SPK-01-tts-L1
@@ -3300,7 +3333,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_chain_tts_L2
-    params: {line: घर जैसा, voice: one male voice (route voice id recorded at dispatch), chars: 7, seed: unset (SEED-POLICY.yaml)}
+    params: {line: घर जैसा, voice: one male voice (route voice id recorded at dispatch), chars: 7, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-2SPK-01-tts-L2
@@ -3311,22 +3344,22 @@ cases:
     route_id: fal-ai/sync-lipsync/v3
     surface: fal
     billing_pool: cash
-    route_status: pinned
+    route_status: unpinned
     arm: B_chain_lipsync
-    params: {plate: accepted B_chain_i2v clip (8 s), drive: 'ElevenLabs v3 repeat 1, L1 then a 0.6 s silence then L2, joined by code at USD 0 (frozen drive rule; Sarvam if the Controller chooses in the morning — decision 9)', output_seconds: 8, seed: unset (SEED-POLICY.yaml)}
+    params: {plate: accepted B_chain_i2v clip (8 s), drive: 'ElevenLabs v3 repeat 1, L1 then a 0.6 s silence then L2, joined by code at USD 0 (frozen drive rule; Sarvam if the Controller chooses in the morning — decision 9)', output_seconds: 8, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-2SPK-01
     quantity: 8
     quantity_unit: seconds
-    price_status: pinned
+    price_status: unpinned
   - route_key: kling-lipsync-a2v
     route_id: fal-ai/kling-video/lipsync/audio-to-video
     surface: fal
     billing_pool: cash
     route_status: pinned
     arm: B_chain_lipsync
-    params: {plate: accepted B_chain_i2v clip (8 s), drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (8-s plate rolled up to the 5-s increment), seed: unset (SEED-POLICY.yaml)}
+    params: {plate: accepted B_chain_i2v clip (8 s), drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (8-s plate rolled up to the 5-s increment), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-2SPK-01
@@ -3337,6 +3370,8 @@ cases:
     feeds: []
     consumes: [chain arm consumes its own plate/i2v/TTS outputs]
   cut_order_rank: 7
+  cut_order_items:
+  - {item: 7, scope: 'arm: the chain (plate, i2v, TTS drives, lipsync)'}
   irreducibility_ref: C.VID-2SPK-01
 - case_id: VID-KNEE-01
   item_id: VID-KNEE-01
@@ -3450,7 +3485,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: knee_cheap
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-KNEE-01
@@ -3463,7 +3498,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: knee_premium
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-KNEE-01
@@ -3476,7 +3511,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: knee_cheap
-    params: {aspect: '9:16', duration_s: 6, resolution: 480p, audio: 'on', refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 480p, audio: 'on', refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-KNEE-01
@@ -3487,6 +3522,8 @@ cases:
     feeds: []
     consumes: [VID-T2V-04's blueprint (identical bytes)]
   cut_order_rank: 9
+  cut_order_items:
+  - {item: 9, scope: 'route line: Veo 3.1 full tier'}
   irreducibility_ref: C.VID-KNEE-01
   same_as: {nr: VID-T2V-04, acceptance_contract: VID-T2V-04, bp: VID-T2V-04}
 - case_id: VID-TOPO3-01
@@ -3606,7 +3643,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: A_cheap_still_to_cheap_i2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3619,7 +3656,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: A_cheap_still_to_cheap_i2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3632,7 +3669,7 @@ cases:
     billing_pool: credits
     route_status: unpinned
     arm: A_cheap_still_to_cheap_i2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3645,7 +3682,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: B_premium_native_t2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-TOPO3-01
@@ -3658,7 +3695,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_premium_native_t2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 0, seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-TOPO3-01
@@ -3671,7 +3708,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: C_textless_plate_i2v_composite
-    params: {aspect: '9:16', duration_s: 6, resolution: 768p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-C textless base draw, note: 'cheapest pinned i2v route at 720p-class (roster: H3 Max i2v-768p 0.08/s); overlay by code at USD 0 (static, or tracked if the plate region moves)', seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 768p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-C textless base draw, note: 'cheapest pinned i2v route at 720p-class (roster: H3 Max i2v-768p 0.08/s); overlay by code at USD 0 (static, or tracked if the plate region moves)', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3681,7 +3718,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [IMG-TEXT-01 arm-A accepted draw (arm A plate), IMG-TEXT-01 arm-C textless base (arm C plate)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: Hindi/Hinglish item, TOPO-02/03 arms A and C
   irreducibility_ref: C.VID-TOPO3-01
 - case_id: VID-I2V-01
   item_id: VID-I2V-01
@@ -3795,7 +3834,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-01
@@ -3808,7 +3847,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-01
@@ -3821,7 +3860,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-01
@@ -3834,7 +3873,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-01
@@ -3844,7 +3883,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [IMG-CORE-01 accepted draw]
-  cut_order_rank: null
+  cut_order_rank: 3
+  cut_order_items:
+  - {item: 3, scope: 'route line: Wan 3.0 i2v'}
   irreducibility_ref: C.VID-I2V-01
 - case_id: VID-I2V-02
   item_id: VID-I2V-02
@@ -3959,7 +4000,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-02
@@ -3972,7 +4013,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-02
@@ -3985,7 +4026,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-02
@@ -3998,7 +4039,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-02
@@ -4011,7 +4052,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: premium
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-02
@@ -4022,7 +4063,10 @@ cases:
   downstream_reuse:
     feeds: [AUD-LIP-01/02/03 plate (the Controller-accepted clip)]
     consumes: [IMG-CORE-02 accepted draw]
-  cut_order_rank: null
+  cut_order_rank: 3
+  cut_order_items:
+  - {item: 3, scope: 'route line: Wan 3.0 i2v'}
+  - {item: 6, scope: 'route line: Seedance 2.5 i2v'}
   irreducibility_ref: C.VID-I2V-02
 - case_id: VID-I2V-03
   item_id: VID-I2V-03
@@ -4138,7 +4182,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-03
@@ -4151,7 +4195,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-03
@@ -4164,7 +4208,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-03
@@ -4177,7 +4221,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-03
@@ -4190,7 +4234,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: premium
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-03
@@ -4201,7 +4245,10 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [IMG-CORE-02 accepted draw]
-  cut_order_rank: null
+  cut_order_rank: 3
+  cut_order_items:
+  - {item: 3, scope: 'route line: Wan 3.0 i2v'}
+  - {item: 6, scope: 'route line: Seedance 2.5 i2v'}
   irreducibility_ref: C.VID-I2V-03
 - case_id: VID-I2V-04
   item_id: VID-I2V-04
@@ -4313,7 +4360,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-04
@@ -4326,7 +4373,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-04
@@ -4339,7 +4386,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-04
@@ -4352,7 +4399,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-04
@@ -4362,7 +4409,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [IMG-CORE-04 accepted draw]
-  cut_order_rank: null
+  cut_order_rank: 3
+  cut_order_items:
+  - {item: 3, scope: 'route line: Wan 3.0 i2v'}
   irreducibility_ref: C.VID-I2V-04
 - case_id: VID-REF-01
   item_id: VID-REF-01
@@ -4487,7 +4536,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: premium
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-REF-01
@@ -4500,7 +4549,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: native
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-REF-01
@@ -4513,7 +4562,7 @@ cases:
     billing_pool: cash
     route_status: unpinned
     arm: conditional
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-REF-01
@@ -4525,6 +4574,8 @@ cases:
     feeds: []
     consumes: [IMG-REF-01 reference pack]
   cut_order_rank: 2
+  cut_order_items:
+  - {item: 2, scope: 'route line: Seedance 2.5 ref2v'}
   irreducibility_ref: C.VID-REF-01
 - case_id: VID-REF-02
   item_id: VID-REF-02
@@ -4644,7 +4695,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: premium
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (ambient), refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (ambient), refs: 3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-REF-02
@@ -4657,7 +4708,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: native
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (ambient), refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (ambient), refs: 3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-REF-02
@@ -4670,7 +4721,7 @@ cases:
     billing_pool: cash
     route_status: unpinned
     arm: conditional
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (ambient), refs: 3, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (ambient), refs: 3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-REF-02
@@ -4682,6 +4733,9 @@ cases:
     feeds: []
     consumes: [IMG-REF-02 reference pack]
   cut_order_rank: 2
+  cut_order_items:
+  - {item: 2, scope: 'route line: Seedance 2.5 ref2v'}
+  - {item: 5, scope: 'route line: Kling v3 elements (conditional arm)'}
   irreducibility_ref: C.VID-REF-02
 - case_id: VID-MS-01
   item_id: VID-MS-01
@@ -4809,7 +4863,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 15, resolution: 720p, audio: on (ambient), refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 15, resolution: 720p, audio: on (ambient), refs: 0, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-MS-01
@@ -4822,7 +4876,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: premium
-    params: {aspect: '9:16', duration_s: 15, resolution: 720p, audio: on (ambient), refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 15, resolution: 720p, audio: on (ambient), refs: 0, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-MS-01
@@ -4835,7 +4889,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: longest supported ≤ 15 (recorded), resolution: 720p, audio: on (ambient), refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: longest supported ≤ 15 (recorded), resolution: 720p, audio: on (ambient), refs: 0, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-MS-01
@@ -4848,7 +4902,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: chain
-    params: {aspect: '9:16', duration_s: 8 + 7 (extend), resolution: 720p, audio: on (ambient), refs: 0, api_calls_per_trial: 2, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 8 + 7 (extend), resolution: 720p, audio: on (ambient), refs: 0, api_calls_per_trial: 2, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-MS-01
@@ -4859,6 +4913,8 @@ cases:
     feeds: []
     consumes: []
   cut_order_rank: 1
+  cut_order_items:
+  - {item: 1, scope: 'route line: Seedance 2.5 15 s'}
   irreducibility_ref: C.VID-MS-01
 - case_id: VID-MS-02
   item_id: VID-MS-02
@@ -4972,7 +5028,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 10, resolution: 720p, audio: 'off', refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 10, resolution: 720p, audio: 'off', refs: 0, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-MS-02
@@ -4985,7 +5041,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: core
-    params: {aspect: '9:16', duration_s: 10, resolution: 720p, audio: 'off', refs: 0, seed: unset (SEED-POLICY.yaml)}
+    params: {aspect: '9:16', duration_s: 10, resolution: 720p, audio: 'off', refs: 0, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-MS-02
@@ -4996,6 +5052,8 @@ cases:
     feeds: []
     consumes: []
   cut_order_rank: 4
+  cut_order_items:
+  - {item: 4, scope: whole case}
   irreducibility_ref: C.VID-MS-02
 - case_id: AUD-TTS-01
   item_id: AUD-TTS-01
@@ -5081,7 +5139,7 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: native
-    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset (SEED-POLICY.yaml)}
+    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-01
@@ -5094,7 +5152,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: native
-    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: 'one male voice, recorded', model: eleven_v3, seed: unset (SEED-POLICY.yaml)}
+    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-01
@@ -5107,7 +5165,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: conditional
-    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: hi-IN male, seed: unset (SEED-POLICY.yaml)}
+    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: hi-IN male, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-01
@@ -5121,7 +5179,7 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: conditional
-    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: hi-IN male, seed: unset (SEED-POLICY.yaml)}
+    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: hi-IN male, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-01
@@ -5132,7 +5190,9 @@ cases:
   downstream_reuse:
     feeds: [AUD-LIP-01 drive (ElevenLabs repeat 1 by the frozen rule)]
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item, Hindi/Hinglish item
   irreducibility_ref: C.AUD-TTS-01
   billing_note: Sarvam credits + ElevenLabs cash; Chirp 3 HD / Azure Neural TTS conditional credit-only extras on this Hindi script
 - case_id: AUD-TTS-02
@@ -5222,7 +5282,7 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: native
-    params: {script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', chars: 74, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset (SEED-POLICY.yaml)}
+    params: {script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', chars: 74, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-02
@@ -5235,7 +5295,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: native
-    params: {script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', chars: 74, voice: 'one male voice, recorded', model: eleven_v3, seed: unset (SEED-POLICY.yaml)}
+    params: {script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', chars: 74, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-02
@@ -5245,7 +5305,9 @@ cases:
   downstream_reuse:
     feeds: [AUD-LIP-02 drive (ElevenLabs repeat 1 by the frozen rule)]
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item, Hindi/Hinglish item
   irreducibility_ref: C.AUD-TTS-02
   billing_note: Sarvam credits + ElevenLabs cash
 - case_id: AUD-TTS-03
@@ -5332,7 +5394,7 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: native
-    params: {script: Zero petrol. Zero noise. All city., chars: 34, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset (SEED-POLICY.yaml)}
+    params: {script: Zero petrol. Zero noise. All city., chars: 34, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-03
@@ -5345,7 +5407,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: native
-    params: {script: Zero petrol. Zero noise. All city., chars: 34, voice: 'one male voice, recorded', model: eleven_v3, seed: unset (SEED-POLICY.yaml)}
+    params: {script: Zero petrol. Zero noise. All city., chars: 34, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-03
@@ -5355,7 +5417,9 @@ cases:
   downstream_reuse:
     feeds: [AUD-LIP-03 drive (ElevenLabs repeat 1 by the frozen rule)]
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item
   irreducibility_ref: C.AUD-TTS-03
   billing_note: Sarvam credits + ElevenLabs cash
 - case_id: AUD-LIP-01
@@ -5461,22 +5525,22 @@ cases:
     route_id: fal-ai/sync-lipsync/v3
     surface: fal
     billing_pool: cash
-    route_status: pinned
+    route_status: unpinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: एक धुलाई में दाग गायब, seed: unset (SEED-POLICY.yaml)}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: एक धुलाई में दाग गायब, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-01
     quantity: 6
     quantity_unit: seconds
-    price_status: pinned
+    price_status: unpinned
   - route_key: kling-lipsync-a2v
     route_id: fal-ai/kling-video/lipsync/audio-to-video
     surface: fal
     billing_pool: cash
     route_status: pinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: एक धुलाई में दाग गायब, seed: unset (SEED-POLICY.yaml)}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: एक धुलाई में दाग गायब, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-01
@@ -5486,7 +5550,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [VID-I2V-02 accepted clip (plate), AUD-TTS-01 ElevenLabs repeat 1 (drive)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item, Hindi/Hinglish item
   irreducibility_ref: C.AUD-LIP-01
 - case_id: AUD-LIP-02
   item_id: AUD-LIP-02
@@ -5591,22 +5657,22 @@ cases:
     route_id: fal-ai/sync-lipsync/v3
     surface: fal
     billing_pool: cash
-    route_status: pinned
+    route_status: unpinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', seed: unset (SEED-POLICY.yaml)}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-02
     quantity: 6
     quantity_unit: seconds
-    price_status: pinned
+    price_status: unpinned
   - route_key: kling-lipsync-a2v
     route_id: fal-ai/kling-video/lipsync/audio-to-video
     surface: fal
     billing_pool: cash
     route_status: pinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', seed: unset (SEED-POLICY.yaml)}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-02
@@ -5616,7 +5682,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [VID-I2V-02 accepted clip (plate), AUD-TTS-02 ElevenLabs repeat 1 (drive)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item, Hindi/Hinglish item
   irreducibility_ref: C.AUD-LIP-02
 - case_id: AUD-LIP-03
   item_id: AUD-LIP-03
@@ -5721,22 +5789,22 @@ cases:
     route_id: fal-ai/sync-lipsync/v3
     surface: fal
     billing_pool: cash
-    route_status: pinned
+    route_status: unpinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: Zero petrol. Zero noise. All city., seed: unset (SEED-POLICY.yaml)}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: Zero petrol. Zero noise. All city., seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-03
     quantity: 6
     quantity_unit: seconds
-    price_status: pinned
+    price_status: unpinned
   - route_key: kling-lipsync-a2v
     route_id: fal-ai/kling-video/lipsync/audio-to-video
     surface: fal
     billing_pool: cash
     route_status: pinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: Zero petrol. Zero noise. All city., seed: unset (SEED-POLICY.yaml)}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: Zero petrol. Zero noise. All city., seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-03
@@ -5746,7 +5814,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: [VID-I2V-02 accepted clip (plate), AUD-TTS-03 ElevenLabs repeat 1 (drive)]
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: core item
   irreducibility_ref: C.AUD-LIP-03
 - case_id: MUS-01
   item_id: MUS-01
@@ -5837,7 +5907,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: native
-    params: {duration_s: 30, format: wav, seed: unset (SEED-POLICY.yaml)}
+    params: {duration_s: 30, format: wav, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: MUS-01
@@ -5850,7 +5920,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: native
-    params: {duration_s: 30, format: wav, billed_minutes: 1 (30-s clip rounded up), seed: unset (SEED-POLICY.yaml)}
+    params: {duration_s: 30, format: wav, billed_minutes: 1 (30-s clip rounded up), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: MUS-01
@@ -5860,7 +5930,9 @@ cases:
   downstream_reuse:
     feeds: []
     consumes: []
-  cut_order_rank: null
+  cut_order_rank: never_cut
+  cut_order_items: []
+  never_cut_reason: Hindi/Hinglish item
   irreducibility_ref: C.MUS-01
 - case_id: MUS-02
   item_id: MUS-02
@@ -5951,7 +6023,7 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: native
-    params: {duration_s: 30, format: wav, seed: unset (SEED-POLICY.yaml)}
+    params: {duration_s: 30, format: wav, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: MUS-02
@@ -5964,7 +6036,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: native
-    params: {duration_s: 30, format: wav, billed_minutes: 1 (30-s clip rounded up), seed: unset (SEED-POLICY.yaml)}
+    params: {duration_s: 30, format: wav, billed_minutes: 1 (30-s clip rounded up), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: MUS-02
@@ -5975,4 +6047,6 @@ cases:
     feeds: []
     consumes: []
   cut_order_rank: 8
+  cut_order_items:
+  - {item: 8, scope: whole case}
   irreducibility_ref: C.MUS-02

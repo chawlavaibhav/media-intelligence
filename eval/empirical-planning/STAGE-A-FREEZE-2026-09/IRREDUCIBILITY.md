@@ -157,4 +157,4 @@ Drop it and the music lane has one brief and cannot separate 'the route makes ac
 
 **Never cut:** repeats, any core item, any Hindi item, TOPO-02/03 arms A and C.
 
-Each `cut_order_rank` in `TEST-CASES.yaml` names the case whose line the numbered cut removes; where a cut removes only one route's line (items 1, 2, 3, 5, 6, 9, 10) the case itself stays.
+In `TEST-CASES.yaml` every case carries `cut_order_rank`: an integer = the lowest-numbered cut item that touches the case, with `cut_order_items[]` listing every item and its scope (items 1, 2, 3, 5, 6, 9, 10 remove one route line; 7 removes an arm; 4 and 8 remove the whole case); or `never_cut` with the reason (core item, Hindi/Hinglish item, TOPO-02/03 arms A and C). Cases and ranks: item 1 → VID-MS-01; item 2 → VID-REF-01, VID-REF-02; item 3 → VID-I2V-01, VID-I2V-02, VID-I2V-03, VID-I2V-04; item 4 → VID-MS-02; item 5 → VID-REF-02; item 6 → VID-I2V-02, VID-I2V-03; item 7 → VID-2SPK-01; item 8 → MUS-02; item 9 → VID-KNEE-01; item 10 → VID-T2V-01, VID-T2V-02, VID-T2V-03, VID-T2V-04.
