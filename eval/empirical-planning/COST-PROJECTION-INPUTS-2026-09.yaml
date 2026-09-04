@@ -49,12 +49,12 @@ tranches:
       - {route_key: seedream-5-pro, lane: image-text, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-01/02; assumption as above'}
       - {route_key: recraft-v4, lane: image-text, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-02 (Recraft V4 promoted); assumption as above'}
       # ---- IMG-03 edit: 4 routes × 2 items × 2 = 16 ----
-      - {route_key: flux-2-pro-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-03; assumption as above', note: 'priced with 1 reference input of 1 MP (+0.015)'}
+      - {route_key: flux-2-pro-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, addon_quantities: {additional_megapixel: 1}, source: 'plan §C.3 IMG-03; assumption as above', note: 'priced with 1 reference input of 1 MP: 0.03 + 1 × 0.015 (roster price_addons) = 0.045 per gen — reconciled after Auditor AF-2'}
       - {route_key: nano-banana-pro-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-03; assumption as above'}
       - {route_key: seedream-5-pro-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-03; assumption as above'}
       - {route_key: gpt-image-2-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-03; assumption as above'}
       # ---- IMG-04 reference (product; person): 4 routes × 2 × 2 = 16 ----
-      - {route_key: flux-2-pro-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-04; assumption as above'}
+      - {route_key: flux-2-pro-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, addon_quantities: {additional_megapixel: 1}, source: 'plan §C.3 IMG-04; assumption as above', note: '1 reference of 1 MP → 0.045 per gen (AF-2)'}
       - {route_key: nano-banana-pro-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-04; assumption as above'}
       - {route_key: seedream-5-pro-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-04; assumption as above'}
       - {route_key: gpt-image-2-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-04; assumption as above'}

@@ -161,3 +161,77 @@ $ git diff --name-only | xargs grep -lE 'AKIA[0-9A-Z]{16}|"private_key"|BEGIN (R
 eval/empirical-planning/access-evidence-2026-09/executor-self-test.txt
 [exit 0]
 
+
+
+# RE-RUN after Auditor AF-1/AF-2/AF-3 corrections — items 1, 3, 4, 9, 10, 11 — 2026-09-04T21:28:44Z
+
+## 1 YAML parse
+$ python3 -c "import yaml,sys; [yaml.safe_load(open(f)) for f in sys.argv[1:]]; print('PASS: all parse')" eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml eval/empirical-planning/ACCESS-STATUS-2026-09.yaml eval/empirical-planning/COST-PROJECTION-INPUTS-2026-09.yaml eval/empirical-planning/COST-PROJECTION-2026-09.yaml eval/historical-priors/media-factory-v1/PRIOR-INDEX.yaml
+PASS: all parse
+[exit 0]
+
+## 3 pins
+$ python3 /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/chk3.py
+pinned routes checked: 26 | failures: [] | du -sk: 5108 (<=5120: True )
+PASS
+[exit 0]
+
+## 4 promo never used; H3 Max regular
+$ grep -c 'used_in_totals: true' eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml eval/empirical-planning/COST-PROJECTION-2026-09.yaml eval/empirical-planning/COST-PROJECTION-INPUTS-2026-09.yaml; grep -n '^promo_prices_used' eval/empirical-planning/COST-PROJECTION-2026-09.yaml; python3 -c "import yaml;d=yaml.safe_load(open('eval/empirical-planning/COST-PROJECTION-2026-09.yaml'));h=[x for x in d['by_route'] if x['route_key']=='minimax-h3-max'];print('H3 Max unit prices used:',sorted(set(x['unit_price_usd'] for x in h)),'-> PASS' if all(x['unit_price_usd'] in (0.08,0.05) for x in h) else 'FAIL')"
+eval/empirical-planning/COST-PROJECTION-INPUTS-2026-09.yaml:0
+eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml:0
+eval/empirical-planning/COST-PROJECTION-2026-09.yaml:0
+2463:promo_prices_used: false
+H3 Max unit prices used: [0.05, 0.08] -> PASS
+[exit 0]
+
+## 9 regeneration + invariants (+ AF-1 exclusion, AF-2 addon)
+$ (cd eval/empirical-planning && python3 project_costs.py --inputs COST-PROJECTION-INPUTS-2026-09.yaml --roster ROSTER-REFRESH-2026-09.yaml --out-yaml /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/z.yaml --out-md /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/z.md && diff COST-PROJECTION-2026-09.yaml /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/z.yaml && diff COST-PROJECTION-2026-09.md /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/z.md && echo 'regeneration diff: empty' && python3 -c "
+import yaml;d=yaml.safe_load(open('COST-PROJECTION-2026-09.yaml'));r=yaml.safe_load(open('ROSTER-REFRESH-2026-09.yaml'))
+bt=sum(t['cash_usd']+t['credits_usd_equivalent'] for t in d['by_tranche']);br=sum(x['usd'] for x in d['by_route'])+sum(e['line_usd'] for e in d['evaluator_lines'])
+t1=sum(t['total_usd_equivalent'] for t in d['by_tranche'] if t['tranche'] in ('T1a','T1b'));m=d['minimum_viable_round_one']['total_usd_equivalent']
+ex={x.get('route_key') for t in d['by_tranche'] for x in t['unpinned_lines_excluded']}|{x['route_key'] for t in d['by_tranche'] for x in t['priced_on_fallback']}
+np=[x['route_key'] for x in r['routes'] if x['route_status']!='pinned']
+fe=[g for g in d['generation_lines'] if g['route_key']=='flux-2-pro-edit']; sy=[x for x in d['by_route'] if x['route_key']=='sync-lipsync-v3'][0]
+print('by_tranche == by_route + evaluators (USD):',abs(bt-br)<0.005,'| MVR <= T1:',m<=t1,'| non-pinned routes listed:',all(k in ex for k in np),[k for k in np if k not in ex])
+print('AF-2 flux-2-pro-edit per-gen:',sorted(set(g['per_generation_usd'] for g in fe)),'| AF-1 sync-lipsync-v3 usd:',sy['usd'],'excluded_reason:',sy['excluded_reason'])
+print('T1a',[t['total_usd_equivalent'] for t in d['by_tranche'] if t['tranche']=='T1a'][0],'T1b',[t['total_usd_equivalent'] for t in d['by_tranche'] if t['tranche']=='T1b'][0],'T1',d['headline']['tranche_1_total_usd_equivalent'],'INR',d['headline']['tranche_1_cash_inr'])"); rm -f /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/z.yaml /private/tmp/claude-501/-Users-vaibhavchawla-Vaibhav-Personal-Projects/78c2c870-746d-4398-8c38-42a9935ba80b/scratchpad/z.md
+regeneration diff: empty
+by_tranche == by_route + evaluators (USD): True | MVR <= T1: True | non-pinned routes listed: True []
+AF-2 flux-2-pro-edit per-gen: [0.045] | AF-1 sync-lipsync-v3 usd: 0.0 excluded_reason: route_status unpinned — price_only_on_sibling_endpoint
+T1a 62.9396 T1b 92.0744 T1 155.014 INR 4.5
+[exit 0]
+
+## 10 modified/deleted (own committed deliverables only)
+$ git diff --name-status; echo "non-own-deliverable modifications: $(git diff --name-status | grep -vE 'eval/empirical-planning/|eval/tasks/EVAL-039B-EXECUTOR-REPORT.md' | wc -l | tr -d ' ')"; echo "deleted: $(git diff --name-status | grep -c '^D')"; git status --porcelain | grep '^??'
+M	eval/empirical-planning/ACCESS-LOG.md
+M	eval/empirical-planning/COST-PROJECTION-2026-09.md
+M	eval/empirical-planning/COST-PROJECTION-2026-09.yaml
+M	eval/empirical-planning/COST-PROJECTION-INPUTS-2026-09.yaml
+M	eval/empirical-planning/MORNING-DECISIONS.md
+M	eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml
+M	eval/empirical-planning/access-evidence-2026-09/executor-self-test.txt
+M	eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml
+M	eval/empirical-planning/project_costs.py
+M	eval/tasks/EVAL-039B-EXECUTOR-REPORT.md
+non-own-deliverable modifications: 0
+deleted: 0
+?? eval/empirical-planning/access-evidence-2026-09/af1-sync-lipsync-v3-refetch.json
+[exit 0]
+
+## 11 report length and MD coverage
+$ wc -l eval/tasks/EVAL-039B-EXECUTOR-REPORT.md; for n in $(grep -oE '^## MD-[0-9]+' eval/empirical-planning/MORNING-DECISIONS.md | grep -oE 'MD-[0-9]+'); do printf '%s in report: %s
+' $n $(grep -c "$n" eval/tasks/EVAL-039B-EXECUTOR-REPORT.md); done
+      42 eval/tasks/EVAL-039B-EXECUTOR-REPORT.md
+MD-1 in report: 3
+MD-2 in report: 1
+MD-3 in report: 1
+MD-4 in report: 1
+MD-5 in report: 2
+MD-6 in report: 2
+MD-7 in report: 2
+MD-8 in report: 2
+MD-9 in report: 4
+MD-10 in report: 2
+[exit 0]
+

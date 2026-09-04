@@ -4,10 +4,10 @@
 
 ## The three numbers the Controller must approve
 
-1. **Tranche 1 total ≈ USD 161.29** against the proposed cap of USD 175 (1a 60 + 1b 115): ≈ USD 126.72 cash on fal/direct vendors + ≈ USD 34.58 that would come off cloud credits if the credits exist (balances unverified, MD-1).
+1. **Tranche 1 total ≈ USD 155.01** against the proposed cap of USD 175 (1a 60 + 1b 115): ≈ USD 120.44 cash on fal/direct vendors + ≈ USD 34.58 that would come off cloud credits if the credits exist (balances unverified, MD-1).
    Plus **₹4.50 in rupees** (Sarvam bulbul v3 TTS, paid from Sarvam's own prepaid balance) — kept as a separate INR total, not added to the USD figures; for orientation only that is ≈ USD 0.05 at the August reference rate 95.4211 (`display_only_reference_rate_2026-08-26`; no live FX rate was fetched).
 2. **Minimum viable round one ≈ USD 74.42** (USD 58.35 cash + USD 16.07 credits): image core + text-to-video + image-to-video only, with their evaluators. This is the smallest round that still answers the routing questions.
-3. **The caps** (USD 60 / 115 / 250 / 150): T1a is OVER its cap by USD 2.82; T1b is within its cap by USD 16.53. See MD-6.
+3. **The caps** (USD 60 / 115 / 250 / 150): T1a is OVER its cap by USD 2.94; T1b is within its cap by USD 22.93. See MD-6.
 
 ## What this means
 
@@ -21,12 +21,12 @@
 | Tranche | Generations (priced / excluded) | Evaluator calls | Cash USD | Credits USD-eq | Total USD-eq | Cap | Headroom | Cash INR (separate) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | T0 | 0 (0 / 0) | 0 | 0.00 | 0.00 | 0.00 | 0 | 0.0 | ₹0.00 |
-| T1a | 180 (172 / 8) | 270 | 42.62 | 20.20 | 62.82 | 60 | -2.8196 | ₹0.00 |
-| T1b | 96 (92 / 4) | 84 | 84.10 | 14.37 | 98.47 | 115 | 16.5272 | ₹4.50 |
-| T2 | 200 (200 / 0) | 1000 | 106.49 | 26.80 | 133.29 | 250 | 116.7113 | ₹0.00 |
-| T3 | 125 (125 / 0) | 400 | 64.30 | 16.75 | 81.06 | 150 | 68.9446 | ₹0.00 |
+| T1a | 180 (172 / 8) | 270 | 42.74 | 20.20 | 62.94 | 60 | -2.9396 | ₹0.00 |
+| T1b | 96 (84 / 12) | 84 | 77.70 | 14.37 | 92.07 | 115 | 22.9256 | ₹4.50 |
+| T2 | 200 (200 / 0) | 1000 | 104.55 | 27.66 | 132.21 | 250 | 117.7888 | ₹0.00 |
+| T3 | 125 (125 / 0) | 400 | 63.09 | 17.29 | 80.38 | 150 | 69.618 | ₹0.00 |
 
-All tranches: cash ≈ USD 297.51, credits ≈ USD 78.13, total ≈ USD 375.64 against caps totalling USD 575. T2 and T3 use a blended per-generation average because their route mix is unknown until Stage A has survivors (assumption A-BLEND).
+All tranches: cash ≈ USD 288.08, credits ≈ USD 79.52, total ≈ USD 367.61 against caps totalling USD 575. T2 and T3 use a blended per-generation average because their route mix is unknown until Stage A has survivors (assumption A-BLEND).
 Rupee lines total ₹4.50 across all tranches (≈ USD 0.05 display-only at 95.4211) and are not part of the USD totals or the caps arithmetic above.
 
 ## Lines excluded because unpinned or not usable (they count 0 in the totals)
@@ -39,6 +39,8 @@ Rupee lines total ₹4.50 across all tranches (≈ USD 0.05 display-only at 95.4
 | T1a | mai-image-2.6 | 0 | route_status unpinned — price_unpublished |
 | T1a | asr | 20 | ASR model unnamed in the plan → price null, unpinned |
 | T1b | kling-v3-pro/elements-ref2v | 4 | route_status unpinned — id_not_found |
+| T1b | sync-lipsync-v3 | 6 | route_status unpinned — price_only_on_sibling_endpoint |
+| T1b | sync-lipsync-v3 | 2 | route_status unpinned — price_only_on_sibling_endpoint |
 | T1b | runway-aleph | 0 | route_status no_access — no_access |
 | T1b | chirp-3-hd-hi-in | 0 | route_status needs_controller_enablement — pin_budget (page 2,199,576 bytes; price observed but bytes not retained) + api_not_enabled |
 | T1b | azure-neural-tts-hi-in | 0 | route_status needs_controller_enablement |
@@ -77,18 +79,18 @@ image core (6 routes × 4 items × 2) + text-to-video (VID-01) + image-to-video 
 
 | Route | Priced on | Pool | Generations | USD |
 |---|---|---|---:|---:|
-| BLENDED-T1-AVERAGE/cash | Tranche-1 pinned lines (average) | cash | 325 | 156.79 |
-| BLENDED-T1-AVERAGE/credits | Tranche-1 pinned lines (average) | credits | 0 | 43.55 |
+| BLENDED-T1-AVERAGE/cash | Tranche-1 pinned lines (average) | cash | 325 | 153.64 |
+| BLENDED-T1-AVERAGE/credits | Tranche-1 pinned lines (average) | credits | 0 | 44.95 |
 | seedance-2.5/15s | seedance-2.5/15s (fal: bytedance/seedance-2.5/text-to-video) | cash | 4 | 28.38 |
 | seedance-2.5/t2v | seedance-2.5/t2v (fal: bytedance/seedance-2.5/text-to-video) | cash | 4 | 11.35 |
 | seedance-2.5/i2v | seedance-2.5/i2v (fal: bytedance/seedance-2.5/image-to-video) | cash | 4 | 11.35 |
 | seedance-2.5/ref2v | seedance-2.5/ref2v (fal: bytedance/seedance-2.5/reference-to-video) | cash | 4 | 11.35 |
 | wan-3.0-prime/t2v | wan-3.0-prime/t2v (fal: alibaba/wan-3.0-prime/text-to-video) | cash | 8 | 6.72 |
 | wan-3.0-prime/i2v | wan-3.0-prime/i2v (fal: alibaba/wan-3.0-prime/image-to-video) | cash | 8 | 6.72 |
-| sync-lipsync-v3 | sync-lipsync-v3 (fal: fal-ai/sync-lipsync/v3) | cash | 8 | 6.40 |
 | seedance-2.5/dialogue | seedance-2.5/dialogue (fal: bytedance/seedance-2.5/text-to-video) | cash | 2 | 5.68 |
 | kling-v3-pro/t2v | kling-v3-pro/t2v (fal: fal-ai/kling-video/v3/pro/text-to-video) | cash | 8 | 5.38 |
 | kling-v3-pro/i2v | kling-v3-pro/i2v (fal: fal-ai/kling-video/v3/pro/image-to-video) | cash | 8 | 5.38 |
+| gemini-omni-flash-1.1/t2v | gemini-omni-flash-1.1/t2v (vertex: gemini-omni-1.1-flash-preview) | credits | 8 | 4.87 |
 
 ## Rupee lines (separate currency; not in the USD totals)
 
@@ -113,7 +115,7 @@ Totals use 4 music generations (2 briefs × 2). If the Controller reads "2 brief
 - **A-09** — C.3c SD3.5 Large (8 gens, credits) and VID-05 cost-knee lines (Veo Lite 4, H3 Max 480p 4) are additions beyond the plan’s §E nominal 164 and are shown separately (generations_additions). _(source: plan §C.3c, §C.3 VID-05; counts = assumption)_
 - **A-EVAL** — Evaluator prices are the plan’s nominals (Cloud Vision 1.50 per 1k images, VLM triage 0.01 per call), not pinned; ASR is unpriced and excluded; T2/T3 evaluator calls are all priced at the VLM nominal. _(source: plan §E)_
 - **A-10** — Credits: any route on Vertex / Bedrock / Azure "sold by Azure" is counted as credits per the survey’s reading of each programme’s terms; balances and enrolment are unknown (MD-1). fal, Sarvam, Runway are cash. _(source: survey-2026-09-05 §4; decision §3 rule 9)_
-- **A-BLEND** — T2 and T3 are priced at the blended Tranche-1 average of USD 0.6164 per generation (Tranche-1 pinned lines: 258 generations, USD 159.0424), split 0.7826 cash / 0.2174 credits, because survivors are unknown until Stage A runs _(source: assumption (Executor); counts from plan §E)_
+- **A-BLEND** — T2 and T3 are priced at the blended Tranche-1 average of USD 0.6111 per generation (Tranche-1 pinned lines: 250 generations, USD 152.764), split 0.7737 cash / 0.2263 credits, because survivors are unknown until Stage A runs _(source: assumption (Executor); counts from plan §E)_
 
 ## What is NOT in these numbers
 

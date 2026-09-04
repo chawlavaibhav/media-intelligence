@@ -442,15 +442,16 @@ pins:
   additional_evidence_quotes: null
 - route_key: sync-lipsync-v3
   pin_file: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3.html
-  pin_kind: price
+  pin_kind: page_only
   url: https://fal.ai/models/fal-ai/sync-lipsync/v3
   fetched_utc: '2026-09-04T20:35:27Z'
   http_status: '200'
   bytes: 318464
   sha256: d38bf225721ececcb97fb2e1181141af8a64c2162fa7fa4dcf329a86c7a91abc
   fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/sync-lipsync/v3" -o fal-sync-lipsync-v3.html
-  evidence_quote: Your request will cost **$0.1333** per output second.
-  additional_evidence_quotes: null
+  evidence_quote: fal-ai/sync-lipsync/v3/image-to-video
+  additional_evidence_quotes:
+  - Your request will cost **$0.1333** per output second.
 - route_key: sync-lipsync-v3
   pin_file: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-api-models-sync-lipsync-v3.json
   pin_kind: page_only

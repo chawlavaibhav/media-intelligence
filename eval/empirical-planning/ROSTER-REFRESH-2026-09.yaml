@@ -10,7 +10,7 @@
 # `promo_price` is recorded only to be avoided: used_in_totals is always false. `capabilities` fields are null unless
 # the pinned bytes state them. `variants` are parameter sub-rows (10-s, 480p, i2v) of the same route, not new routes.
 # Surfaces: vertex (GCP), bedrock (AWS; Polly recorded here for want of an 'aws' value), azure_foundry, fal, sarvam_direct, runway_direct.
-# Counts: 35 routes — needs_controller_enablement 5, no_access 2, pinned 27, unpinned 1.
+# Counts: 35 routes — needs_controller_enablement 5, no_access 2, pinned 26, unpinned 2.
 meta:
   task: EVAL-039B
   generated_utc: '2026-09-04T21:00:00Z'
@@ -23,9 +23,9 @@ meta:
   route_count: 35
   route_status_counts:
     needs_controller_enablement: 5
-    pinned: 27
+    pinned: 26
     no_access: 2
-    unpinned: 1
+    unpinned: 2
   promo_rule: promotional prices are recorded, flagged and never used in totals (decision §3 rule 3)
   date_note: fetches ran 2026-09-04 20:30–20:50 UTC, which is 02:00–02:20 IST on 2026-09-05
 routes:
@@ -263,9 +263,18 @@ routes:
     fallback: null
     source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
     notes: 1 MP outputs assumed (1024x1024 = $0.03 per fal example).
+    price_addons: &id004
+    - addon: additional_megapixel
+      value: 0.015
+      currency: USD
+      unit: per_megapixel
+      applies_to: each input megapixel (reference images) and each output megapixel beyond the first, rounded up
+      pinned_in: 'same fal / Azure Retail bytes as the base price (fal: plus **$0.015** per extra megapixel of input and output; Azure: Flux 2 Pro MP Megapixel 0.015,
+        Flux 2 Pro Ref 0.015)'
   source: pin-2026-09-04 (Azure Retail Prices API JSON) + cli-2026-09-04 (azure-cognitiveservices-model-list-eastus2.json)
   notes: Price pinned on Azure and identical to fal; the surface is not usable until MD-9. Projection prices it on the fal fallback (cash) tonight; it moves to credits
     the moment the deployment exists.
+  price_addons: *id004
 - route_key: qwen-image-3
   question_slots:
   - IMG-CORE
@@ -357,7 +366,9 @@ routes:
   pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json
   fallback: null
   source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
-  notes: Reference images are billed as input megapixels ($0.015/MP each); projection assumes 1 reference of 1 MP → $0.045 per edit generation.
+  notes: Reference images are billed as input megapixels ($0.015/MP each, price_addons.additional_megapixel); the projection applies the INPUTS line addon_quantities
+    (1 reference of 1 MP → 0.03 + 0.015 = $0.045 per edit generation) — reconciled after Auditor AF-2.
+  price_addons: *id004
 - route_key: nano-banana-pro-edit
   question_slots:
   - IMG-03
@@ -1113,7 +1124,7 @@ routes:
     max_refs: null
     native_audio: null
     seed_supported: null
-  key_present: &id004
+  key_present: &id005
     name: AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY (IAM user claude-aight)
     file: ~/.aight-litellm-keys/aws.env
   route_status: pinned
@@ -1145,7 +1156,7 @@ routes:
     max_refs: null
     native_audio: null
     seed_supported: null
-  key_present: *id004
+  key_present: *id005
   route_status: pinned
   screen_status: recorded_not_screened
   pin_ref: eval/empirical-planning/price-pins-2026-09/stable-image-core/aws-bedrock-list-foundation-model-agreement-offers-stable-image-core.json
@@ -1173,7 +1184,7 @@ routes:
     max_refs: null
     native_audio: null
     seed_supported: null
-  key_present: *id004
+  key_present: *id005
   route_status: pinned
   screen_status: recorded_not_screened
   pin_ref: eval/empirical-planning/price-pins-2026-09/stable-image-ultra/aws-bedrock-list-foundation-model-agreement-offers-stable-image-ultra.json
@@ -1204,7 +1215,7 @@ routes:
     max_refs: null
     native_audio: null
     seed_supported: null
-  key_present: *id004
+  key_present: *id005
   route_status: pinned
   screen_status: recorded_not_screened
   pin_ref: eval/empirical-planning/price-pins-2026-09/luma-ray-2/aws-bedrock-list-foundation-model-agreement-offers-luma-ray-2.json
@@ -1281,9 +1292,10 @@ routes:
   surface_model_id: fal-ai/sync-lipsync/v3
   surface_rule_note: no audio-driven lipsync on any cloud (survey §3) → fal, cash
   billing_pool: cash
-  billing_unit_verbatim: 'fal page (embedded model record for id fal-ai/sync-lipsync/v3): ''Your request will cost **$0.1333** per output second.'''
+  billing_unit_verbatim: 'fal page bytes: ''Your request will cost **$0.1333** per output second.'' — present once, inside the embedded record of the SIBLING endpoint
+    fal-ai/sync-lipsync/v3/image-to-video; the exact id''s own record has no price text'
   regular_price:
-    value: 0.1333
+    value: null
     currency: USD
     unit: per_second
   promo_price: null
@@ -1294,13 +1306,17 @@ routes:
     native_audio: null
     seed_supported: null
   key_present: *id002
-  route_status: pinned
+  route_status: unpinned
   screen_status: screened
   pin_ref: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3.html
   fallback: null
   source: pin-2026-09-04 (fal.ai/api/models?keywords=<id> JSON, unauthenticated) + fal route page HTTP 200 check (access-evidence-2026-09/fal-route-page-status.txt)
-  notes: 0.1333 per output second = USD 8.00 per minute (the 26-Aug figure). The unauthenticated JSON search returns an empty price for this id; the price sits in
-    the page HTML.
+  notes: 'UNPINNED after Auditor AF-1 (re-fetched 2026-09-04 ~21:20Z to confirm): the exact endpoint fal-ai/sync-lipsync/v3 carries an EMPTY pricingInfoOverride in
+    both fal''s JSON and the page HTML; the only price string in the page bytes — ''Your request will cost **$0.1333** per output second.'' — belongs to the embedded
+    record of the sibling endpoint fal-ai/sync-lipsync/v3/image-to-video. Sibling price kept here as a note (0.1333 per output second = USD 8.00 per minute, the 26-Aug
+    figure) for execution-time verification; excluded from totals until the exact id''s price is pinned (fal''s authenticated pricing endpoint, or the price appearing
+    in the page).'
+  unpinned_reason: price_only_on_sibling_endpoint
 - route_key: kling-lipsync-audio-to-video
   question_slots:
   - AUD-03
@@ -1485,7 +1501,7 @@ routes:
     max_refs: null
     native_audio: null
     seed_supported: null
-  key_present: *id004
+  key_present: *id005
   route_status: no_access
   screen_status: recorded_not_screened
   pin_ref: null

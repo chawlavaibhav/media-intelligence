@@ -47,7 +47,7 @@ PROJECTABLE_UNITS = {
     'per_second': lambda p, q, k: p * q,
     'per_input_video_second': lambda p, q, k: p * q,
     'per_image': lambda p, q, k: p * 1.0,
-    'per_image_first_megapixel': lambda p, q, k: p * 1.0,   # 1 MP outputs assumed (assumption A-03)
+    'per_image_first_megapixel': lambda p, q, k: p * 1.0,   # 1 MP outputs assumed (assumption A-03); reference megapixels via price_addons + addon_quantities (AF-2)
     'per_1000_characters': lambda p, q, k: p * q / 1000.0,
     'per_1M_characters': lambda p, q, k: p * q / 1e6,
     'per_minute': lambda p, q, k: p * q,
@@ -86,6 +86,22 @@ def resolve_currency(roster, route_key, variant):
     if rp.get('currency') in ('USD', 'INR') and rp.get('value') is not None and (target or {}).get('route_status') == 'pinned':
         return rp.get('currency')
     return 'USD'
+
+
+def resolve_addons(roster, route_key, quantities):
+    """Per-generation USD from roster `price_addons` × the INPUTS line's `addon_quantities` (e.g. FLUX reference megapixels)."""
+    route = find_route(roster, route_key)
+    total = 0.0
+    used = []
+    if not route or not quantities:
+        return 0.0, used
+    addons = route.get('price_addons') or (route.get('fallback') or {}).get('price_addons') or []
+    for name, qty in quantities.items():
+        for ad in addons:
+            if ad['addon'] == name and ad.get('currency') == 'USD' and ad.get('value') is not None:
+                total += float(ad['value']) * float(qty)
+                used.append(f"{name} x{qty} @ {ad['value']}")
+    return total, used
 
 
 def resolve_price(roster, route_key, variant):
@@ -190,7 +206,10 @@ def main():
             priced.append(row)
         elif reason is None:
             per_gen = PROJECTABLE_UNITS[unit](float(val), float(ln.get('unit_quantity', 1)), ln.get('unit_kind'))
-            row.update([('priced_on', basis), ('status', status), ('currency', 'USD'), ('unit_price_usd', val), ('unit', unit), ('per_generation_usd', r4(per_gen)),
+            addon_usd, addon_used = resolve_addons(roster, ln['route_key'], ln.get('addon_quantities'))
+            per_gen += addon_usd
+            row.update([('priced_on', basis), ('status', status), ('currency', 'USD'), ('unit_price_usd', val), ('unit', unit),
+                        ('addons_per_generation_usd', r4(addon_usd) if addon_used else None), ('addons_applied', addon_used or None), ('per_generation_usd', r4(per_gen)),
                         ('billing_pool', pool), ('line_usd', r4(per_gen * gens))])
             priced.append(row)
         else:
