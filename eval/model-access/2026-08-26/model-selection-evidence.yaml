@@ -1,0 +1,497 @@
+# EVAL-008 — machine-readable model-selection evidence
+# Written and frozen BEFORE any sourcing analysis. Contains NO route/provider
+# recommendation by design; sourcing lives in the E8-C/D/E/F artifacts.
+#
+# 0 API calls. Rs 0 spent. No account created. No terms accepted. No Registry row.
+
+meta:
+  task: EVAL-008
+  package: E8-A + E8-B
+  date: 2026-08-26
+  branch: work/eval-008-model-access
+  selection_independent_of_sourcing: true
+  authorises_spend: false
+  registry_rows_created: 0
+
+evidence_tiers:
+  T1:
+    name: primary_read_directly
+    meaning: page fetched by this session
+    reachable_domains: [cloud.google.com]
+    supports: [exact_model_id, price, availability]
+  T2:
+    name: provider_page_via_search
+    meaning: search tool read a vendor-owned or platform-owned page and summarised it
+    supports: [probable_existence, approximate_capability]
+    does_not_support: [version_pinning, price]
+  T3:
+    name: third_party
+    meaning: comparison blog, leaderboard summary, news article
+    supports: [currently_serious, family_comparison]
+    does_not_support: [identity, availability, price]
+
+environment_constraint:
+  network_egress: restricted_by_policy
+  domains_probed: 37
+  vendor_domains_reachable: 1
+  reachable: [cloud.google.com]
+  blocked_examples:
+    [fal.ai, docs.fal.ai, platform.openai.com, developers.openai.com, bfl.ai,
+     runwayml.com, runway.com, elevenlabs.io, docs.byteplus.com, www.sarvam.ai,
+     docs.sarvam.ai, replicate.com, huggingface.co, artificialanalysis.ai,
+     ideogram.ai, stability.ai, app.klingai.com, platform.minimax.io,
+     openrouter.ai, lumalabs.ai, en.wikipedia.org, docs.cloud.google.com]
+  consequence: >
+    Provider documentation could not be read directly except on cloud.google.com.
+    Every non-Google identity, availability and price claim is therefore T2 or T3
+    and must be re-verified from the provider catalogue before any paid run.
+  demonstrated_T3_price_failure:
+    claim_a: "Veo 3.1 costs $0.03/sec (third-party)"
+    claim_b: "Veo 3.1 costs $0.40/sec (third-party)"
+    T1_truth: "Veo 3.1 video+audio $0.40 per generated video (per count) at 720p/1080p; $0.60 at 4K"
+    lesson: third_party_prices_are_wrong_in_unit_and_magnitude
+
+hypotheses:
+  H_frontier_image_quality: frontier overall image quality
+  H_text_exactness: exact text/typography, Devanagari and Hinglish in particular
+  H_instruction_edit: instruction-driven image editing without full re-roll
+  H_identity_consistency: person/product identity held across images or shots
+  H_lineage_acceptance: whether training lineage changes commercial acceptance
+  H_structured_ir: whether a structured image IR reduces retries
+  H_open_economics: marginal cost of owning the step on open weights
+  H_vector_output: taking type out of the raster generator
+  H_t2v_quality: text-to-video quality
+  H_reference_video: reference-conditioned video, reference count as a variable
+  H_multishot_continuity: state continuity across cuts
+  H_footage_editing: editing existing footage vs generating new
+  H_native_dialogue: native multilingual audio/dialogue in one pass
+  H_conversational_loop: conversational iteration vs re-prompting
+  H_cost_knee: where paying more stops buying accepted outcomes
+  H_clean_rights: quality cost of licensed-data-only training
+  H_indic_voice: Indian-language and Hinglish voice correctness
+  H_lipsync_route: TTS + lip-sync as the working route to Hindi dialogue video
+
+models:
+
+  - id: gpt-image-2
+    vendor: OpenAI
+    family: GPT Image
+    version_claimed: gpt-image-2
+    version_confidence: T2
+    lanes: [image_t2i, image_edit, image_reference, image_text]
+    distinctive:
+      - plans layout and self-checks before rendering
+      - vendor claim ~99% character accuracy incl. Hindi and Bengali
+    seriousness_evidence: {tier: T3, claim: "Artificial Analysis T2I arena #1, ~1370 Elo, Aug 2026"}
+    hypotheses: [H_text_exactness, H_frontier_image_quality]
+    redundancy_with: [ideogram-v3, nano-banana-2, reve-2.1]
+    status: must_test
+
+  - id: nano-banana-2
+    vendor: Google
+    family: Gemini Image
+    version_claimed: Gemini 3.1 Flash Image
+    model_api_id_observed: gemini-3.1-flash-image
+    version_confidence: T1
+    ga_date: 2026-05-28
+    price_T1:
+      image_output_per_1M_tokens_usd: 60.00
+      input_text_image_video_per_1M_tokens_usd: 0.50
+      note: "sibling Gemini 3.1 Flash-Lite Image (Nano Banana 2 Lite) at 30.00 per 1M image output tokens"
+    lanes: [image_t2i, image_edit, image_reference]
+    distinctive: [identity preservation across edits, fast/cheap tier of a frontier family]
+    hypotheses: [H_cost_knee, H_identity_consistency, H_frontier_image_quality]
+    redundancy_with: [nano-banana-pro]
+    status: must_test
+
+  - id: nano-banana-pro
+    vendor: Google
+    family: Gemini Image
+    version_claimed: Gemini 3 Pro Image
+    version_confidence: T1
+    ga_date: 2026-05-28
+    price_T1:
+      cached_input_per_1M_tokens_usd: 0.20
+      text_output_per_1M_tokens_usd: 12.00
+      image_output_usd: NOT_VERIFIED   # cell not populated in the table read
+    lanes: [image_t2i, image_edit, image_reference, image_text]
+    distinctive: [flagship reasoning backbone, complex multi-element composition, packaging/print typography]
+    hypotheses: [H_cost_knee, H_frontier_image_quality, H_text_exactness]
+    redundancy_with: [nano-banana-2]
+    status: should_test
+
+  - id: seedream-5.0-pro
+    vendor: ByteDance
+    family: Seedream
+    version_claimed: Seedream 5.0 Pro
+    version_confidence: T2
+    version_ambiguity: "4.5 and 5.0 both appear as current in Aug 2026 sources"
+    lanes: [image_t2i, image_edit, image_reference]
+    distinctive: [non-US training lineage, editorial/fashion strength, reasoning-oriented generation]
+    hypotheses: [H_lineage_acceptance, H_frontier_image_quality]
+    redundancy_with: [gpt-image-2, nano-banana-2]
+    status: must_test
+
+  - id: reve-2.1
+    vendor: Reve AI
+    family: Reve
+    version_claimed: Reve 2.1
+    version_confidence: T3
+    release_claimed: 2026-07-09
+    lanes: [image_t2i, image_edit, image_text]
+    distinctive:
+      - image treated as structured addressable regions ("image as code")
+      - single-element edit without re-rolling the frame
+      - native 4K; lossless iterative edits preserving typography
+    seriousness_evidence: {tier: T3, claim: "T2I arena #2 ~1306 Elo; editing arena #2 ~1263 Elo"}
+    hypotheses: [H_structured_ir, H_instruction_edit, H_text_exactness]
+    redundancy_with: [flux2-pro, mai-image-2.5-pro]
+    status: must_test
+    note_for_project: "closest commercial analogue to this project's Creative-IR / Production-IR separation"
+
+  - id: flux2-pro
+    vendor: Black Forest Labs
+    family: FLUX.2
+    version_claimed: FLUX.2 [pro]
+    version_confidence: T2
+    lanes: [image_t2i, image_edit, image_reference]
+    distinctive: [dedicated instruction/context editing lineage, native up to 4MP]
+    hypotheses: [H_instruction_edit]
+    redundancy_with: [reve-2.1, mai-image-2.5-pro]
+    status: must_test
+
+  - id: flux2-klein
+    vendor: Black Forest Labs
+    family: FLUX.2
+    version_claimed: FLUX.2 [klein]
+    version_confidence: T3
+    version_ambiguity: "sources disagree: 9B vs 4B parameters"
+    licence_claimed: Apache-2.0
+    lanes: [image_t2i, image_edit]
+    distinctive: [open weights that fit a consumer-class GPU]
+    hypotheses: [H_open_economics]
+    redundancy_with: [qwen-image]
+    status: should_test
+
+  - id: qwen-image
+    vendor: Alibaba
+    family: Qwen-Image
+    version_claimed: Qwen-Image-2512 (+ Qwen-Image-Edit)
+    version_confidence: T3
+    licence_claimed: Apache-2.0
+    lanes: [image_t2i, image_edit, image_text]
+    distinctive: [best reported legible in-image text among open models, strong multilingual prompting, ~20B base]
+    hypotheses: [H_open_economics, H_text_exactness, H_instruction_edit]
+    redundancy_with: [flux2-klein]
+    status: must_test
+
+  - id: mai-image-2.5-pro
+    vendor: Microsoft
+    family: MAI-Image
+    version_claimed: MAI-Image-2.5-Pro
+    version_confidence: T3
+    lanes: [image_t2i, image_edit]
+    seriousness_evidence: {tier: T3, claim: "Artificial Analysis image-editing arena #1, ~1271 Elo"}
+    hypotheses: [H_instruction_edit]
+    redundancy_with: [reve-2.1, flux2-pro]
+    status: should_test
+    demotion_condition: "move to reserve if its results track Reve 2.1 closely"
+
+  - id: ideogram-v3
+    vendor: Ideogram
+    family: Ideogram
+    version_claimed: Ideogram V3 (Turbo / Default / Quality)
+    version_confidence: T2
+    lanes: [image_t2i, image_text]
+    distinctive: [typography specialist for signage, packaging, labels, posters, logos]
+    hypotheses: [H_text_exactness]
+    redundancy_with: [gpt-image-2]
+    status: should_test
+    role: pre-measured fallback if the frontier generalist fails on Devanagari
+
+  - id: recraft-v3
+    vendor: Recraft
+    family: Recraft
+    version_claimed: Recraft V3
+    version_confidence: T3
+    lanes: [image_t2i, image_text]
+    distinctive: [native SVG vector output - type stays type]
+    hypotheses: [H_vector_output, H_text_exactness]
+    redundancy_with: []
+    status: should_test
+    risk: "scope, not redundancy - only valuable if the product takes on design deliverables"
+
+  - id: seedance-2.0-pro
+    vendor: ByteDance
+    family: Seedance
+    version_claimed: Seedance 2.0 (Pro)
+    version_confidence: T2
+    release_claimed: 2026-02
+    lanes: [video_t2v, video_i2v, video_native_audio]
+    distinctive: [native audio, camera control, physics, unified multimodal input]
+    seriousness_evidence: {tier: T3, claim: "top-3 on AA video arenas through Aug 2026; #1 at launch"}
+    hypotheses: [H_t2v_quality, H_native_dialogue, H_cost_knee]
+    redundancy_with: [seedance-2.0-fast]
+    status: must_test
+
+  - id: seedance-2.0-fast
+    vendor: ByteDance
+    family: Seedance
+    version_claimed: Seedance 2.0 Fast
+    version_confidence: T3
+    lanes: [video_t2v, video_i2v]
+    distinctive: [best reported quality-per-cost tier at credible quality]
+    hypotheses: [H_cost_knee]
+    redundancy_with: [seedance-2.0-pro]
+    status: must_test
+    note: separate workflow row - one Registry entry is vendor+model+version+workflow
+
+  - id: happyhorse-1.1
+    vendor: Alibaba
+    family: HappyHorse
+    version_claimed: HappyHorse 1.1 (1.0 still higher on silent-video board)
+    version_confidence: T3
+    lanes: [video_t2v, video_i2v, video_edit, video_native_audio]
+    distinctive:
+      - lip-synced dialogue in 7 languages in a single forward pass
+      - natural-language video editing; reference-to-video
+      - 15B unified transformer, video+audio one pass
+    seriousness_evidence: {tier: T3, claim: "anonymous arena debut ~2026-04-07, #1 T2V and I2V, ~107 Elo margin"}
+    hypotheses: [H_native_dialogue, H_t2v_quality, H_footage_editing]
+    redundancy_with: [kling-3.0, veo-3.1]
+    status: must_test
+    open_question: "is Hindi among the 7 languages? NOT VERIFIED - decisive for the lip-sync route"
+
+  - id: veo-3.1
+    vendor: Google
+    family: Veo
+    version_claimed: Veo 3.1 (+ Fast, + Lite)
+    version_confidence: T1
+    price_T1:
+      veo_3_1_video_audio_720p_1080p_usd_per_count: 0.40
+      veo_3_1_video_audio_4k_usd_per_count: 0.60
+      veo_3_1_silent_720p_1080p_usd_per_count: 0.20
+      veo_3_1_fast_video_audio_720p_usd_per_count: 0.10
+      veo_3_1_lite_video_audio_720p_usd_per_count: 0.05
+    lanes: [video_t2v, video_i2v, video_native_audio]
+    distinctive: [48kHz synchronised speech, stock-footage-like default, published 3-tier cost ladder, enterprise SLA on Vertex]
+    hypotheses: [H_t2v_quality, H_native_dialogue, H_cost_knee]
+    redundancy_with: [seedance-2.0-pro, kling-3.0]
+    status: must_test
+    open_question: >
+      Google's live pricing table lists advanced controls (start/end frame interpolation,
+      extend, camera controls) under Veo 2 only, not Veo 3.1. Whether Veo 3.1 exposes them
+      is NOT VERIFIED and decides whether Veo can serve the video-edit lane.
+
+  - id: kling-3.0
+    vendor: Kuaishou
+    family: Kling
+    version_claimed: Kling 3.0 (Pro)
+    version_confidence: T2
+    lanes: [video_t2v, video_i2v, video_edit, video_native_audio]
+    distinctive: [multi-shot cinematic sequences with subject consistency, custom elements, native audio]
+    audio_languages_claimed: [English, Chinese, Japanese, Korean, Spanish]
+    hypotheses: [H_multishot_continuity, H_native_dialogue, H_identity_consistency]
+    redundancy_with: [happyhorse-1.1, minimax-h3]
+    status: must_test
+    finding: "Hindi absent from documented audio languages (T3)"
+
+  - id: minimax-h3
+    vendor: MiniMax
+    family: Hailuo / H
+    version_claimed: MiniMax H3 (Hailuo 03)
+    version_confidence: T2
+    version_ambiguity: "one platform page calls it open-weights; product framing elsewhere is closed. NOT VERIFIED"
+    lanes: [video_t2v, video_i2v, video_edit, video_native_audio]
+    distinctive:
+      - omni-reference - up to 9 reference images, 3 video clips, 3 audio clips
+      - native 2K 24fps, 5-15s extendable to ~30s
+      - V2V motion transfer and instruction editing
+    seriousness_evidence: {tier: T3, claim: "~1242 Elo, #2 T2V-with-audio"}
+    hypotheses: [H_reference_video, H_identity_consistency]
+    redundancy_with: [kling-3.0]
+    status: must_test
+    role: instrument - reference count becomes an experimental variable
+
+  - id: runway-aleph-2.0
+    vendor: Runway
+    family: Aleph
+    version_claimed: Aleph 2.0
+    version_confidence: T2
+    announced_claimed: 2026-05-21
+    lanes: [video_edit, video_i2v]
+    distinctive:
+      - in-context editing of real footage from natural language
+      - up to 30s at 1080p, edits across up to 10 cuts
+      - up to 5 keyframe anchor images at chosen timestamps
+    hypotheses: [H_footage_editing]
+    redundancy_with: [happyhorse-1.1, minimax-h3]
+    status: must_test
+    known_access_problem_ignored_for_selection:
+      claim: "Runway API access moved to Enterprise in January 2026"
+      tier: T3
+      handled_in: ACCOUNT-ACTIONS.md
+
+  - id: gemini-omni-flash
+    vendor: Google
+    family: Gemini Omni
+    version_claimed: Gemini Omni Flash
+    version_confidence: T1
+    announced_claimed: 2026-05-19
+    price_T1:
+      video_output_per_1M_tokens_usd: 17.50
+      tokens_per_second_720p_video_with_audio: 5792
+      derived_usd_per_second_720p: 0.1014   # 17.50 * 5792 / 1e6, computed from Google's own figures
+      input_text_image_video_audio_per_1M_tokens_usd: 1.50
+    lanes: [video_t2v, video_i2v, video_edit, video_native_audio]
+    distinctive: [conversational generate-and-edit loop, any-combination multimodal input, natively generated audio]
+    hypotheses: [H_conversational_loop, H_native_dialogue]
+    redundancy_with: [veo-3.1]
+    status: should_test
+    limitation_claimed: "audio reference inputs not supported in the June 30 API version (T3)"
+
+  - id: wan-2.7
+    vendor: Alibaba
+    family: Wan
+    version_claimed: Wan 2.7
+    version_confidence: T2
+    version_ambiguity: "2.2 is the well-documented Apache-2.0 release; 2.6 and 2.7 appear in catalogues. Licence per version NOT VERIFIED"
+    lanes: [video_t2v, video_i2v]
+    distinctive: [open weights, best reported photorealistic humans among open video, no native audio]
+    hypotheses: [H_open_economics]
+    redundancy_with: [ltx-2]
+    status: should_test
+
+  - id: ltx-2
+    vendor: Lightricks
+    family: LTX
+    version_claimed: LTX-2
+    version_confidence: T3
+    version_ambiguity: "LTX-2, LTX-2.3, LTX-2.3 Fast and LTX-2.5 all cited as current"
+    lanes: [video_t2v, video_native_audio]
+    distinctive: [only open model reported to generate audio and video together natively, 4K, ~20s, LoRA fine-tuning, fast]
+    licence_claimed: "free below $10M ARR (T3)"
+    hypotheses: [H_open_economics, H_native_dialogue]
+    redundancy_with: [wan-2.7]
+    status: should_test
+
+  - id: marey-realism-1.5
+    vendor: Moonvalley
+    family: Marey
+    version_claimed: Marey Realism V1.5
+    version_confidence: T2
+    lanes: [video_t2v, video_i2v, video_edit]
+    distinctive: [trained exclusively on licensed data; indemnification offered]
+    hypotheses: [H_clean_rights]
+    redundancy_with: []
+    status: should_test
+    promotion_condition: "becomes must_test the moment any output is intended to leave internal research"
+
+  - id: sarvam-bulbul-v3
+    vendor: Sarvam AI
+    family: Bulbul
+    version_claimed: Bulbul v3
+    version_confidence: T2
+    lanes: [supporting_tts]
+    languages_claimed: [Indian English, Hindi, Bengali, Tamil, Telugu, Kannada, Malayalam, Marathi, Gujarati, Punjabi, Odia]
+    distinctive: [explicit Hinglish code-switching, 30+ persona voices, sub-250ms streaming, India data residency]
+    price_claimed_T2: "INR 30 per 10,000 characters (beta, Aug 2026)"
+    hypotheses: [H_indic_voice]
+    redundancy_with: [elevenlabs-v3]
+    status: must_test
+
+  - id: elevenlabs-v3
+    vendor: ElevenLabs
+    family: Eleven
+    version_claimed: Eleven v3
+    version_confidence: T2
+    languages_claimed: "70+"
+    lanes: [supporting_tts]
+    hypotheses: [H_indic_voice]
+    redundancy_with: [sarvam-bulbul-v3]
+    status: must_test
+    role: control arm - without it a Bulbul score has nothing to compare against
+
+  - id: sync-3
+    vendor: sync.so
+    family: Sync
+    version_claimed: Sync-3 (Sync Lipsync 2.0 also current)
+    version_confidence: T2
+    lanes: [supporting_lipsync]
+    distinctive: [transformation lane - consumes our video plus our audio, so some checks become deterministic]
+    hypotheses: [H_lipsync_route]
+    redundancy_with: [omnihuman-1.5]
+    status: must_test
+
+  - id: omnihuman-1.5
+    vendor: ByteDance
+    family: OmniHuman
+    version_claimed: OmniHuman v1.5
+    version_confidence: T2
+    lanes: [supporting_avatar]
+    distinctive: [single still image + audio -> speaking presenter; no source video needed]
+    hypotheses: [H_lipsync_route]
+    redundancy_with: [sync-3]
+    status: should_test
+
+  # ---- reserve and exclude ----
+
+  - {id: midjourney,        vendor: Midjourney, status: reserve, reason: "redundancy - aesthetic-ceiling hypothesis weakly separable from frontier picks; production API route unclear (recorded separately, not the reason)"}
+  - {id: cosmos-3-super,    vendor: NVIDIA,     status: reserve, reason: "open image economics already covered by qwen-image and flux2-klein; identity/licence evidence thin"}
+  - {id: glm-image,         vendor: Zhipu,      status: reserve, reason: "no differentiated capability evidence found"}
+  - {id: grok-imagine,      vendor: xAI,        status: reserve, reason: "no differentiated capability evidence found"}
+  - {id: vidu-q3,           vendor: Shengshu,   status: reserve, reason: "cost frontier already readable from Seedance 2.0 Fast and Veo 3.1 Lite without adding a vendor"}
+  - {id: pixverse-v6,       vendor: PixVerse,   status: reserve, reason: "same as vidu-q3"}
+  - {id: hunyuanvideo-1.5,  vendor: Tencent,    status: reserve, reason: "Wan and LTX cover the open video lane; licence reported more restrictive"}
+  - {id: cartesia-sonic-3.5,vendor: Cartesia,   status: reserve, reason: "distinctive advantage is latency; produced media is not latency-bound. Promote for a real-time product"}
+  - {id: inworld-tts-1.5-max,vendor: Inworld,   status: reserve, reason: "general speech-arena leadership does not evidence Indic competence"}
+  - {id: gemini-3.1-flash-tts,vendor: Google,   status: reserve, reason: "redundant with Google lineage already tested unless Indic quality is documented"}
+  - {id: chatterbox,        vendor: Resemble,   status: reserve, reason: "real open-voice economics candidate; voice is not yet the binding constraint"}
+  - {id: heygen,            vendor: HeyGen,     status: reserve, reason: "product suite; same hypothesis as sync-3/omnihuman with more wrapper"}
+  - {id: veed-fabric-1.0,   vendor: VEED,       status: reserve, reason: "as heygen"}
+  - {id: hedra,             vendor: Hedra,      status: reserve, reason: "as heygen"}
+  - {id: lyria-3,           vendor: Google,     status: reserve, reason: "music not established as part of our production route; priced T1 at $0.04 (Lyria 3) / $0.08 (Lyria 3 Pro) per count"}
+
+  - id: sora-2
+    vendor: OpenAI
+    status: exclude
+    exclusion_category: model_viability
+    reason: "reported deprecated 2026-04-26, API shutdown 2026-09-24 (T3). A Registry row would expire within weeks."
+    verify_before_final: true
+
+  - {id: runway-gen-4.5, vendor: Runway,   status: exclude, exclusion_category: superseded_in_vendor, reason: "Aleph 2.0 covers the capability we want; reported out of the top ten"}
+  - {id: imagen-4,       vendor: Google,   status: exclude, exclusion_category: superseded_in_vendor, reason: "superseded by Gemini 3.x image models already selected. Priced T1 at $0.04 (Imagen 4), $0.06 (Ultra), $0.02 (Fast) - cheapness is not a hypothesis"}
+  - {id: nano-banana-v1, vendor: Google,   status: exclude, exclusion_category: superseded_in_family}
+  - {id: ideogram-v2,    vendor: Ideogram, status: exclude, exclusion_category: superseded_in_family}
+  - {id: seedream-4.5,   vendor: ByteDance,status: exclude, exclusion_category: superseded_in_family}
+  - {id: flux1-kontext,  vendor: BFL,      status: exclude, exclusion_category: superseded_in_family}
+  - {id: veo-2,          vendor: Google,   status: exclude, exclusion_category: superseded_in_family, note: "only Veo row whose listed features include advanced frame/extend/camera controls (T1)"}
+  - {id: veo-3,          vendor: Google,   status: exclude, exclusion_category: superseded_in_family}
+  - {id: kling-2.5,      vendor: Kuaishou, status: exclude, exclusion_category: superseded_in_family}
+  - {id: hailuo-02,      vendor: MiniMax,  status: exclude, exclusion_category: superseded_in_family}
+  - {id: seedance-1.5,   vendor: ByteDance,status: exclude, exclusion_category: superseded_in_family}
+
+roster_summary:
+  must_test_rows: 16          # 15 distinct models; Seedance 2.0 contributes two workflow rows
+  should_test_rows: 10
+  must_plus_should_rows: 26
+  reserve: 15
+  excluded: 12
+  prior_capacity_plan_cap: 19    # eval/v1/MODEL-WORKFLOW-INVENTORY-2026-08-26.md, 0 slots filled
+  reconciliation_required: true
+  reconciliation_owner: Controller
+
+open_version_ambiguities:
+  - {model: flux2-klein, question: "4B or 9B parameters"}
+  - {model: ltx-2,       question: "2.0 / 2.3 / 2.3 Fast / 2.5 - which is current"}
+  - {model: wan-2.7,     question: "2.6 or 2.7, and which version carries Apache-2.0"}
+  - {model: seedream-5.0-pro, question: "4.5 or 5.0 is the current production version"}
+  - {model: minimax-h3,  question: "open-weights or closed"}
+  - {model: happyhorse-1.1, question: "1.0 or 1.1 for our workload; which 7 languages"}
+  - {model: veo-3.1,     question: "does 3.1 expose advanced frame/extend/camera controls"}
+  - {model: sora-2,      question: "confirm deprecation and shutdown dates before treating the exclusion as final"}
+
+standing_dependencies_not_resolved_by_this_task:
+  - "No checker has ever been qualified in this project. Choosing what to measure does not create the ability to measure it."
+  - "No Capability Registry exists."
+  - "Every row must be version-pinned from the provider's own catalogue before measurement."
