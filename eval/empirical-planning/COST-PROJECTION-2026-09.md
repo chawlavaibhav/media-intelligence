@@ -5,6 +5,7 @@
 ## The three numbers the Controller must approve
 
 1. **Tranche 1 total ≈ USD 161.29** against the proposed cap of USD 175 (1a 60 + 1b 115): ≈ USD 126.72 cash on fal/direct vendors + ≈ USD 34.58 that would come off cloud credits if the credits exist (balances unverified, MD-1).
+   Plus **₹4.50 in rupees** (Sarvam bulbul v3 TTS, paid from Sarvam's own prepaid balance) — kept as a separate INR total, not added to the USD figures; for orientation only that is ≈ USD 0.05 at the August reference rate 95.4211 (`display_only_reference_rate_2026-08-26`; no live FX rate was fetched).
 2. **Minimum viable round one ≈ USD 74.42** (USD 58.35 cash + USD 16.07 credits): image core + text-to-video + image-to-video only, with their evaluators. This is the smallest round that still answers the routing questions.
 3. **The caps** (USD 60 / 115 / 250 / 150): T1a is OVER its cap by USD 2.82; T1b is within its cap by USD 16.53. See MD-6.
 
@@ -17,15 +18,16 @@
 
 ## By tranche
 
-| Tranche | Generations (priced / excluded) | Evaluator calls | Cash USD | Credits USD-eq | Total USD-eq | Cap | Headroom |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| T0 | 0 (0 / 0) | 0 | 0.00 | 0.00 | 0.00 | 0 | 0.0 |
-| T1a | 180 (172 / 8) | 270 | 42.62 | 20.20 | 62.82 | 60 | -2.8196 |
-| T1b | 96 (86 / 10) | 84 | 84.10 | 14.37 | 98.47 | 115 | 16.5272 |
-| T2 | 200 (200 / 0) | 1000 | 106.49 | 26.80 | 133.29 | 250 | 116.7113 |
-| T3 | 125 (125 / 0) | 400 | 64.30 | 16.75 | 81.06 | 150 | 68.9446 |
+| Tranche | Generations (priced / excluded) | Evaluator calls | Cash USD | Credits USD-eq | Total USD-eq | Cap | Headroom | Cash INR (separate) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| T0 | 0 (0 / 0) | 0 | 0.00 | 0.00 | 0.00 | 0 | 0.0 | ₹0.00 |
+| T1a | 180 (172 / 8) | 270 | 42.62 | 20.20 | 62.82 | 60 | -2.8196 | ₹0.00 |
+| T1b | 96 (92 / 4) | 84 | 84.10 | 14.37 | 98.47 | 115 | 16.5272 | ₹4.50 |
+| T2 | 200 (200 / 0) | 1000 | 106.49 | 26.80 | 133.29 | 250 | 116.7113 | ₹0.00 |
+| T3 | 125 (125 / 0) | 400 | 64.30 | 16.75 | 81.06 | 150 | 68.9446 | ₹0.00 |
 
 All tranches: cash ≈ USD 297.51, credits ≈ USD 78.13, total ≈ USD 375.64 against caps totalling USD 575. T2 and T3 use a blended per-generation average because their route mix is unknown until Stage A has survivors (assumption A-BLEND).
+Rupee lines total ₹4.50 across all tranches (≈ USD 0.05 display-only at 95.4211) and are not part of the USD totals or the caps arithmetic above.
 
 ## Lines excluded because unpinned or not usable (they count 0 in the totals)
 
@@ -37,7 +39,6 @@ All tranches: cash ≈ USD 297.51, credits ≈ USD 78.13, total ≈ USD 375.64 a
 | T1a | mai-image-2.6 | 0 | route_status unpinned — price_unpublished |
 | T1a | asr | 20 | ASR model unnamed in the plan → price null, unpinned |
 | T1b | kling-v3-pro/elements-ref2v | 4 | route_status unpinned — id_not_found |
-| T1b | sarvam-bulbul-v3 | 6 | route_status no_access — no_access (empty key) |
 | T1b | runway-aleph | 0 | route_status no_access — no_access |
 | T1b | chirp-3-hd-hi-in | 0 | route_status needs_controller_enablement — pin_budget (page 2,199,576 bytes; price observed but bytes not retained) + api_not_enabled |
 | T1b | azure-neural-tts-hi-in | 0 | route_status needs_controller_enablement |
@@ -88,6 +89,12 @@ image core (6 routes × 4 items × 2) + text-to-video (VID-01) + image-to-video 
 | seedance-2.5/dialogue | seedance-2.5/dialogue (fal: bytedance/seedance-2.5/text-to-video) | cash | 2 | 5.68 |
 | kling-v3-pro/t2v | kling-v3-pro/t2v (fal: fal-ai/kling-video/v3/pro/text-to-video) | cash | 8 | 5.38 |
 | kling-v3-pro/i2v | kling-v3-pro/i2v (fal: fal-ai/kling-video/v3/pro/image-to-video) | cash | 8 | 5.38 |
+
+## Rupee lines (separate currency; not in the USD totals)
+
+| Route | Priced on | Generations | INR | USD display-only (95.4211, 2026-08-26) |
+|---|---|---:|---:|---:|
+| sarvam-bulbul-v3 | sarvam-bulbul-v3 (sarvam_direct: bulbul:v3) | 6 | ₹4.50 | 0.0472 |
 
 ## Music lane (MD-7)
 

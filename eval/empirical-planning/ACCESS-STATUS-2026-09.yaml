@@ -96,15 +96,15 @@ surfaces:
     open_items: []
 
   sarvam:
-    identity_seen: 'SARVAM_API_KEY present by NAME in ~/.mi-keys; value length 0 (empty) — awk length check only'
-    reachable_now: false
-    consequence: 'AUD-01 (bulbul v3) is no_access; its price is pinned (₹3.00 per 1,000 characters) → MD-10'
-    open_items: [MD-10]
+    identity_seen: 'SARVAM_API_KEY present by NAME in ~/.mi-keys with a 36-character value (length check only, value never printed). CORRECTION after Tester DEFECT-1: the first check reported length 0 because its awk pattern /^SARVAM_API_KEY=/ cannot match a line beginning with "export "; that result is superseded (ACCESS-LOG.md row 20:39:04Z marked superseded; corrected row appended).'
+    reachable_now: 'not tested — key present; no authenticated Sarvam call was made (USD 0 rule)'
+    consequence: 'AUD-01 (bulbul v3) is pinned (₹3.00 per 1,000 characters) and its 6 TTS generations enter the projection as a separate INR line; MD-10 resolved, no decision needed'
+    open_items: []
 
   elevenlabs_direct: {key_on_machine: false, route: 'via fal (fal-ai/elevenlabs/tts/eleven-v3, fal-ai/elevenlabs/music) with FAL_KEY', open_items: []}
   runway_direct: {key_on_machine: false, route: 'none — VID-04 deferred', open_items: [MD-5]}
   keys_by_name_only:
-    mi_keys: [ANTHROPIC_API_KEY, GOOGLE_API_KEY, FAL_KEY, GOOGLE_CLOUD_VISION_API_KEY, 'SARVAM_API_KEY (empty)']
+    mi_keys: [ANTHROPIC_API_KEY, GOOGLE_API_KEY, FAL_KEY, GOOGLE_CLOUD_VISION_API_KEY, 'SARVAM_API_KEY (36 characters; an earlier "empty" reading was a measurement error — see surfaces.sarvam)']
     aight_litellm_keys_dir: {mode: 'drwx------', files_seen: [acr.env, app.env, aws.env, azure.env, namecheap.env, pg.env, sample-key.txt, sample-portal.env, vertex-sa.json, 'customers/ (dir)'], all_mode_600: true}
 
 mi_battery_keys_dir: {path: '~/.mi-battery-keys/', created: false, reason: '§2b out of scope tonight — MD-9'}

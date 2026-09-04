@@ -10,7 +10,7 @@
 # `promo_price` is recorded only to be avoided: used_in_totals is always false. `capabilities` fields are null unless
 # the pinned bytes state them. `variants` are parameter sub-rows (10-s, 480p, i2v) of the same route, not new routes.
 # Surfaces: vertex (GCP), bedrock (AWS; Polly recorded here for want of an 'aws' value), azure_foundry, fal, sarvam_direct, runway_direct.
-# Counts: 35 routes — needs_controller_enablement 5, no_access 3, pinned 26, unpinned 1.
+# Counts: 35 routes — needs_controller_enablement 5, no_access 2, pinned 27, unpinned 1.
 meta:
   task: EVAL-039B
   generated_utc: '2026-09-04T21:00:00Z'
@@ -23,8 +23,8 @@ meta:
   route_count: 35
   route_status_counts:
     needs_controller_enablement: 5
-    pinned: 26
-    no_access: 3
+    pinned: 27
+    no_access: 2
     unpinned: 1
   promo_rule: promotional prices are recorded, flagged and never used in totals (decision §3 rule 3)
   date_note: fetches ran 2026-09-04 20:30–20:50 UTC, which is 02:00–02:20 IST on 2026-09-05
@@ -1234,16 +1234,16 @@ routes:
     native_audio: null
     seed_supported: null
   key_present:
-    name: SARVAM_API_KEY (present by name; value length 0 = empty)
+    name: SARVAM_API_KEY (present; 36-character value, length check only)
     file: ~/.mi-keys
-  route_status: no_access
+  route_status: pinned
   screen_status: screened
   pin_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
   fallback: null
   source: pin-2026-09-04 (sarvam.ai/api-pricing) + key-length check (access-evidence-2026-09/sarvam-key-length.txt)
-  notes: 'PRICE PINNED but NO ACCESS: SARVAM_API_KEY exists in ~/.mi-keys by name with an EMPTY value (length 0). The Controller must supply the key (MD-10). ₹3.00
-    per 1,000 characters = ₹30 per 10k, matching §0. Excluded from totals while no_access (its 6 TTS gens are shown at INR price for reference).'
-  unpinned_reason: no_access (empty key)
+  notes: 'Price pinned; key present (36 characters). CORRECTION after Tester DEFECT-1: the overnight check reported the key empty because its awk pattern could not
+    match an "export …" line; superseded. ₹3.00 per 1,000 characters = ₹30 per 10k, matching §0. Priced in INR: the projection carries it as a separate cash_inr total,
+    never converted into the USD totals (display-only reference rate only).'
 - route_key: elevenlabs-v3
   question_slots:
   - AUD-02

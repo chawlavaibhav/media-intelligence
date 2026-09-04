@@ -18,11 +18,22 @@ headline:
   tranche_1_credits_usd_equivalent: 34.576
   tranche_1_total_usd_equivalent: 161.2924
   tranche_1_cap_usd: 175.0
+  tranche_1_cash_inr: 4.5
+  tranche_1_cash_inr_usd_display_only: 0.0472
+  inr_rule: cash_inr is a separate total in rupees (Sarvam); it is NEVER added to the USD totals; the usd_display_only figures use display_only_reference_rate_2026-08-26 = 95.4211 INR per USD
   minimum_viable_round_one_usd_equivalent: 74.4233
   all_tranches_cash_usd: 297.5055
   all_tranches_credits_usd_equivalent: 78.131
   all_tranches_total_usd_equivalent: 375.6365
   all_tranches_cap_usd: 575.0
+  all_tranches_cash_inr: 4.5
+  all_tranches_cash_inr_usd_display_only: 0.0472
+inr_display_only_reference_rate:
+  inr_per_usd: 95.4211
+  label: display_only_reference_rate_2026-08-26
+  source: eval/empirical-planning/STAGE-A-ROUTE-PRICE-REFRESH-2026-08-26.yaml meta.usd_inr_reference (rate 95.4211 as of 2026-08-26T16:51:00Z; display-only planning conversion, provider invoices remain
+    in source currency)
+  rule: INR lines are totalled as cash_inr and NEVER added to cash_usd; the USD figure shown beside them is display-only
 by_tranche:
 - tranche: T0
   generations: 0
@@ -35,6 +46,9 @@ by_tranche:
   cash_usd: 0.0
   credits_usd_equivalent: 0.0
   total_usd_equivalent: 0.0
+  cash_inr: 0.0
+  cash_inr_usd_display_only: 0.0
+  cash_inr_rate_label: null
   unpinned_lines_excluded: []
   priced_on_fallback: []
   proposed_cap_usd: 0
@@ -51,6 +65,9 @@ by_tranche:
   cash_usd: 42.618
   credits_usd_equivalent: 20.2016
   total_usd_equivalent: 62.8196
+  cash_inr: 0.0
+  cash_inr_usd_display_only: 0.0
+  cash_inr_rate_label: null
   unpinned_lines_excluded:
   - route_key: gpt-image-2-edit
     variant: null
@@ -102,8 +119,8 @@ by_tranche:
   within_cap: false
 - tranche: T1b
   generations: 96
-  generations_priced: 86
-  generations_excluded_unpinned: 10
+  generations_priced: 92
+  generations_excluded_unpinned: 4
   generations_nominal_plan: 82
   generations_additions: 14
   evaluator_calls: 84
@@ -111,17 +128,15 @@ by_tranche:
   cash_usd: 84.0984
   credits_usd_equivalent: 14.3744
   total_usd_equivalent: 98.4728
+  cash_inr: 4.5
+  cash_inr_usd_display_only: 0.0472
+  cash_inr_rate_label: display_only_reference_rate_2026-08-26
   unpinned_lines_excluded:
   - route_key: kling-v3-pro
     variant: elements-ref2v
     lane: ref2v
     generations: 4
     reason: route_status unpinned — id_not_found
-  - route_key: sarvam-bulbul-v3
-    variant: null
-    lane: tts
-    generations: 6
-    reason: route_status no_access — no_access (empty key)
   - route_key: runway-aleph
     variant: null
     lane: video-edit
@@ -160,6 +175,9 @@ by_tranche:
   cash_usd: 106.4856
   credits_usd_equivalent: 26.8031
   total_usd_equivalent: 133.2887
+  cash_inr: 0.0
+  cash_inr_usd_display_only: 0.0
+  cash_inr_rate_label: null
   unpinned_lines_excluded: []
   priced_on_fallback: []
   proposed_cap_usd: 250
@@ -176,6 +194,9 @@ by_tranche:
   cash_usd: 64.3035
   credits_usd_equivalent: 16.7519
   total_usd_equivalent: 81.0554
+  cash_inr: 0.0
+  cash_inr_usd_display_only: 0.0
+  cash_inr_rate_label: null
   unpinned_lines_excluded: []
   priced_on_fallback: []
   proposed_cap_usd: 150
@@ -187,6 +208,7 @@ by_route:
   priced_on: 'gpt-image-2 FALLBACK (fal: openai/gpt-image-2)'
   status: pinned (fallback)
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.053
   unit: per_image
   generations: 16
@@ -199,6 +221,7 @@ by_route:
   priced_on: 'nano-banana-2 (vertex: gemini-3.1-flash-image)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.067
   unit: per_image
   generations: 8
@@ -211,6 +234,7 @@ by_route:
   priced_on: 'nano-banana-pro (vertex: gemini-3-pro-image)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.134
   unit: per_image
   generations: 16
@@ -223,6 +247,7 @@ by_route:
   priced_on: 'seedream-5-pro (fal: bytedance/seedream/v5/pro/text-to-image)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.0675
   unit: per_image
   generations: 16
@@ -235,6 +260,7 @@ by_route:
   priced_on: 'flux-2-pro FALLBACK (fal: fal-ai/flux-2-pro)'
   status: pinned (fallback)
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.03
   unit: per_image_first_megapixel
   generations: 8
@@ -247,6 +273,7 @@ by_route:
   priced_on: 'qwen-image-3 (fal: alibaba/qwen-image-3/text-to-image)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.04
   unit: per_image
   generations: 8
@@ -259,6 +286,7 @@ by_route:
   priced_on: 'recraft-v4 (fal: fal-ai/recraft/v4/text-to-image)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.04
   unit: per_image
   generations: 8
@@ -271,6 +299,7 @@ by_route:
   priced_on: 'flux-2-pro-edit (fal: fal-ai/flux-2-pro/edit)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.03
   unit: per_image_first_megapixel
   generations: 8
@@ -283,6 +312,7 @@ by_route:
   priced_on: 'nano-banana-pro-edit (fal: fal-ai/nano-banana-pro/edit)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.15
   unit: per_image
   generations: 8
@@ -295,6 +325,7 @@ by_route:
   priced_on: 'seedream-5-pro-edit (fal: bytedance/seedream/v5/pro/edit)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.0675
   unit: per_image
   generations: 8
@@ -307,6 +338,7 @@ by_route:
   priced_on: 'veo-3.1-fast/t2v (vertex: veo-3.1-fast-generate-001)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.1
   unit: per_second
   generations: 8
@@ -319,6 +351,7 @@ by_route:
   priced_on: 'kling-v3-pro/t2v (fal: fal-ai/kling-video/v3/pro/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.112
   unit: per_second
   generations: 8
@@ -331,6 +364,7 @@ by_route:
   priced_on: 'minimax-h3-max/t2v-768p (fal: minimax/h3-max/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.08
   unit: per_second
   generations: 8
@@ -343,6 +377,7 @@ by_route:
   priced_on: 'wan-3.0-prime/t2v (fal: alibaba/wan-3.0-prime/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.14
   unit: per_second
   generations: 8
@@ -355,6 +390,7 @@ by_route:
   priced_on: 'gemini-omni-flash-1.1/t2v (vertex: gemini-omni-1.1-flash-preview)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.10136
   unit: per_second
   generations: 8
@@ -367,6 +403,7 @@ by_route:
   priced_on: 'seedance-2.5/t2v (fal: bytedance/seedance-2.5/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   generations: 4
@@ -379,6 +416,7 @@ by_route:
   priced_on: 'veo-3.1-full (vertex: veo-3.1-generate-001)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.4
   unit: per_second
   generations: 2
@@ -391,6 +429,7 @@ by_route:
   priced_on: 'kling-v3-pro/t2v-audio-on (fal: fal-ai/kling-video/v3/pro/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.168
   unit: per_second
   generations: 2
@@ -403,6 +442,7 @@ by_route:
   priced_on: 'gemini-omni-flash-1.1/dialogue (vertex: gemini-omni-1.1-flash-preview)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.10136
   unit: per_second
   generations: 2
@@ -415,6 +455,7 @@ by_route:
   priced_on: 'seedance-2.5/dialogue (fal: bytedance/seedance-2.5/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   generations: 2
@@ -427,6 +468,7 @@ by_route:
   priced_on: 'sd3.5-large (bedrock: stability.sd3-5-large-v1:0)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.08
   unit: per_image
   generations: 8
@@ -439,6 +481,7 @@ by_route:
   priced_on: 'veo-3.1-lite (vertex: veo-3.1-lite-generate-001)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.05
   unit: per_second
   generations: 4
@@ -451,6 +494,7 @@ by_route:
   priced_on: 'minimax-h3-max/t2v-480p (fal: minimax/h3-max/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.05
   unit: per_second
   generations: 4
@@ -463,6 +507,7 @@ by_route:
   priced_on: 'stable-image-core (bedrock: stability.stable-image-core-v1:1)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.04
   unit: per_image
   generations: 0
@@ -475,6 +520,7 @@ by_route:
   priced_on: 'stable-image-ultra (bedrock: stability.stable-image-ultra-v1:1)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.14
   unit: per_image
   generations: 0
@@ -487,6 +533,7 @@ by_route:
   priced_on: 'luma-ray-2 (bedrock: luma.ray-v2:0)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 1.5
   unit: per_second
   generations: 0
@@ -499,6 +546,7 @@ by_route:
   priced_on: 'veo-3.1-fast/i2v (vertex: veo-3.1-fast-generate-001)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.1
   unit: per_second
   generations: 8
@@ -511,6 +559,7 @@ by_route:
   priced_on: 'kling-v3-pro/i2v (fal: fal-ai/kling-video/v3/pro/image-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.112
   unit: per_second
   generations: 8
@@ -523,6 +572,7 @@ by_route:
   priced_on: 'minimax-h3-max/i2v-768p (fal: minimax/h3-max/image-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.08
   unit: per_second
   generations: 8
@@ -535,6 +585,7 @@ by_route:
   priced_on: 'wan-3.0-prime/i2v (fal: alibaba/wan-3.0-prime/image-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.14
   unit: per_second
   generations: 8
@@ -547,6 +598,7 @@ by_route:
   priced_on: 'seedance-2.5/i2v (fal: bytedance/seedance-2.5/image-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   generations: 4
@@ -559,6 +611,7 @@ by_route:
   priced_on: 'seedance-2.5/ref2v (fal: bytedance/seedance-2.5/reference-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   generations: 4
@@ -571,6 +624,7 @@ by_route:
   priced_on: 'veo-3.1-fast/ref2v (vertex: veo-3.1-fast-generate-001)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.1
   unit: per_second
   generations: 4
@@ -583,6 +637,7 @@ by_route:
   priced_on: 'kling-v3-pro/multishot-10s (fal: fal-ai/kling-video/v3/pro/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.112
   unit: per_second
   generations: 4
@@ -595,6 +650,7 @@ by_route:
   priced_on: 'seedance-2.5/15s (fal: bytedance/seedance-2.5/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   generations: 4
@@ -607,6 +663,7 @@ by_route:
   priced_on: 'gemini-omni-flash-1.1/multishot-10s (vertex: gemini-omni-1.1-flash-preview)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.10136
   unit: per_second
   generations: 4
@@ -614,11 +671,29 @@ by_route:
   tranches:
   - T1b
   excluded_reason: null
+- route_key: sarvam-bulbul-v3
+  variant: null
+  priced_on: 'sarvam-bulbul-v3 (sarvam_direct: bulbul:v3)'
+  status: pinned
+  billing_pool: cash
+  currency: INR
+  unit_price_usd: null
+  unit: per_1000_characters
+  generations: 6
+  usd: 0.0
+  tranches:
+  - T1b
+  excluded_reason: null
+  unit_price_inr: 3.0
+  inr: 4.5
+  usd_display_only: 0.0472
+  display_only_rate_label: display_only_reference_rate_2026-08-26
 - route_key: elevenlabs-v3
   variant: null
   priced_on: 'elevenlabs-v3 (fal: fal-ai/elevenlabs/tts/eleven-v3)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.1
   unit: per_1000_characters
   generations: 8
@@ -631,6 +706,7 @@ by_route:
   priced_on: 'sync-lipsync-v3 (fal: fal-ai/sync-lipsync/v3)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.1333
   unit: per_second
   generations: 8
@@ -643,6 +719,7 @@ by_route:
   priced_on: 'kling-lipsync-audio-to-video (fal: fal-ai/kling-video/lipsync/audio-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.014
   unit: per_input_video_second
   generations: 6
@@ -655,6 +732,7 @@ by_route:
   priced_on: 'kling-v3-pro/15s (fal: fal-ai/kling-video/v3/pro/text-to-video)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.112
   unit: per_second
   generations: 2
@@ -667,6 +745,7 @@ by_route:
   priced_on: 'veo-3.1-fast/extend-15s (vertex: veo-3.1-fast-generate-001)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.1
   unit: per_second
   generations: 2
@@ -679,6 +758,7 @@ by_route:
   priced_on: 'lyria (vertex: lyria-002)'
   status: pinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.06
   unit: per_clip
   generations: 2
@@ -691,6 +771,7 @@ by_route:
   priced_on: 'elevenlabs-music (fal: fal-ai/elevenlabs/music)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.6
   unit: per_minute
   generations: 2
@@ -703,6 +784,7 @@ by_route:
   priced_on: Tranche-1 pinned lines (average)
   status: assumption
   billing_pool: cash
+  currency: USD
   unit_price_usd: 0.6164
   unit: per_generation_blended
   generations: 325
@@ -716,6 +798,7 @@ by_route:
   priced_on: Tranche-1 pinned lines (average)
   status: assumption
   billing_pool: credits
+  currency: USD
   unit_price_usd: 0.6164
   unit: per_generation_blended
   generations: 0
@@ -729,6 +812,7 @@ by_route:
   priced_on: 'gpt-image-2-edit (fal: openai/gpt-image-2/edit)'
   status: pinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: null
   unit: per_1M_image_output_tokens
   generations: 8
@@ -741,6 +825,7 @@ by_route:
   priced_on: 'sora-2 (azure_foundry: sora-2)'
   status: needs_controller_enablement
   billing_pool: credits
+  currency: USD
   unit_price_usd: null
   unit: per_second
   generations: 0
@@ -753,6 +838,7 @@ by_route:
   priced_on: 'mai-image-2.6 (azure_foundry: MAI-Image-2.6)'
   status: unpinned
   billing_pool: credits
+  currency: USD
   unit_price_usd: null
   unit: null
   generations: 0
@@ -765,6 +851,7 @@ by_route:
   priced_on: 'kling-v3-pro/elements-ref2v (fal: fal-ai/kling-video/v3/pro/elements)'
   status: unpinned
   billing_pool: cash
+  currency: USD
   unit_price_usd: null
   unit: per_second
   generations: 4
@@ -772,23 +859,12 @@ by_route:
   tranches:
   - T1b
   excluded_reason: route_status unpinned — id_not_found
-- route_key: sarvam-bulbul-v3
-  variant: null
-  priced_on: 'sarvam-bulbul-v3 (sarvam_direct: bulbul:v3)'
-  status: no_access
-  billing_pool: cash
-  unit_price_usd: null
-  unit: per_1000_characters
-  generations: 6
-  usd: 0.0
-  tranches:
-  - T1b
-  excluded_reason: route_status no_access — no_access (empty key)
 - route_key: runway-aleph
   variant: null
   priced_on: 'runway-aleph (runway_direct: aleph2 (26-Aug plan literal; not re-verified tonight))'
   status: no_access
   billing_pool: cash
+  currency: USD
   unit_price_usd: null
   unit: null
   generations: 0
@@ -801,6 +877,7 @@ by_route:
   priced_on: 'chirp-3-hd-hi-in (vertex: hi-IN-Chirp3-HD-*)'
   status: needs_controller_enablement
   billing_pool: credits
+  currency: USD
   unit_price_usd: null
   unit: per_1M_characters
   generations: 0
@@ -813,6 +890,7 @@ by_route:
   priced_on: 'azure-neural-tts-hi-in (azure_foundry: Azure Speech S1 Neural Text To Speech (hi-IN voice))'
   status: needs_controller_enablement
   billing_pool: credits
+  currency: USD
   unit_price_usd: null
   unit: per_1M_characters
   generations: 0
@@ -825,6 +903,7 @@ by_route:
   priced_on: 'polly-kajal (bedrock: polly:Kajal (engine neural))'
   status: no_access
   billing_pool: credits
+  currency: USD
   unit_price_usd: null
   unit: per_1M_characters
   generations: 0
@@ -1050,6 +1129,7 @@ generation_lines:
   note: null
   priced_on: 'gpt-image-2 FALLBACK (fal: openai/gpt-image-2)'
   status: pinned (fallback)
+  currency: USD
   unit_price_usd: 0.053
   unit: per_image
   per_generation_usd: 0.053
@@ -1067,6 +1147,7 @@ generation_lines:
   note: null
   priced_on: 'nano-banana-2 (vertex: gemini-3.1-flash-image)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.067
   unit: per_image
   per_generation_usd: 0.067
@@ -1084,6 +1165,7 @@ generation_lines:
   note: null
   priced_on: 'nano-banana-pro (vertex: gemini-3-pro-image)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.134
   unit: per_image
   per_generation_usd: 0.134
@@ -1101,6 +1183,7 @@ generation_lines:
   note: null
   priced_on: 'seedream-5-pro (fal: bytedance/seedream/v5/pro/text-to-image)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.0675
   unit: per_image
   per_generation_usd: 0.0675
@@ -1118,6 +1201,7 @@ generation_lines:
   note: null
   priced_on: 'flux-2-pro FALLBACK (fal: fal-ai/flux-2-pro)'
   status: pinned (fallback)
+  currency: USD
   unit_price_usd: 0.03
   unit: per_image_first_megapixel
   per_generation_usd: 0.03
@@ -1135,6 +1219,7 @@ generation_lines:
   note: null
   priced_on: 'qwen-image-3 (fal: alibaba/qwen-image-3/text-to-image)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.04
   unit: per_image
   per_generation_usd: 0.04
@@ -1152,6 +1237,7 @@ generation_lines:
   note: null
   priced_on: 'gpt-image-2 FALLBACK (fal: openai/gpt-image-2)'
   status: pinned (fallback)
+  currency: USD
   unit_price_usd: 0.053
   unit: per_image
   per_generation_usd: 0.053
@@ -1169,6 +1255,7 @@ generation_lines:
   note: null
   priced_on: 'nano-banana-pro (vertex: gemini-3-pro-image)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.134
   unit: per_image
   per_generation_usd: 0.134
@@ -1186,6 +1273,7 @@ generation_lines:
   note: null
   priced_on: 'seedream-5-pro (fal: bytedance/seedream/v5/pro/text-to-image)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.0675
   unit: per_image
   per_generation_usd: 0.0675
@@ -1203,6 +1291,7 @@ generation_lines:
   note: null
   priced_on: 'recraft-v4 (fal: fal-ai/recraft/v4/text-to-image)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.04
   unit: per_image
   per_generation_usd: 0.04
@@ -1220,6 +1309,7 @@ generation_lines:
   note: priced with 1 reference input of 1 MP (+0.015)
   priced_on: 'flux-2-pro-edit (fal: fal-ai/flux-2-pro/edit)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.03
   unit: per_image_first_megapixel
   per_generation_usd: 0.03
@@ -1237,6 +1327,7 @@ generation_lines:
   note: null
   priced_on: 'nano-banana-pro-edit (fal: fal-ai/nano-banana-pro/edit)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.15
   unit: per_image
   per_generation_usd: 0.15
@@ -1254,6 +1345,7 @@ generation_lines:
   note: null
   priced_on: 'seedream-5-pro-edit (fal: bytedance/seedream/v5/pro/edit)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.0675
   unit: per_image
   per_generation_usd: 0.0675
@@ -1271,6 +1363,7 @@ generation_lines:
   note: null
   priced_on: 'flux-2-pro-edit (fal: fal-ai/flux-2-pro/edit)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.03
   unit: per_image_first_megapixel
   per_generation_usd: 0.03
@@ -1288,6 +1381,7 @@ generation_lines:
   note: null
   priced_on: 'nano-banana-pro-edit (fal: fal-ai/nano-banana-pro/edit)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.15
   unit: per_image
   per_generation_usd: 0.15
@@ -1305,6 +1399,7 @@ generation_lines:
   note: null
   priced_on: 'seedream-5-pro-edit (fal: bytedance/seedream/v5/pro/edit)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.0675
   unit: per_image
   per_generation_usd: 0.0675
@@ -1322,6 +1417,7 @@ generation_lines:
   note: null
   priced_on: 'veo-3.1-fast/t2v (vertex: veo-3.1-fast-generate-001)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.1
   unit: per_second
   per_generation_usd: 0.6
@@ -1339,6 +1435,7 @@ generation_lines:
   note: null
   priced_on: 'kling-v3-pro/t2v (fal: fal-ai/kling-video/v3/pro/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.112
   unit: per_second
   per_generation_usd: 0.672
@@ -1356,6 +1453,7 @@ generation_lines:
   note: null
   priced_on: 'minimax-h3-max/t2v-768p (fal: minimax/h3-max/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.08
   unit: per_second
   per_generation_usd: 0.48
@@ -1373,6 +1471,7 @@ generation_lines:
   note: null
   priced_on: 'wan-3.0-prime/t2v (fal: alibaba/wan-3.0-prime/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.14
   unit: per_second
   per_generation_usd: 0.84
@@ -1390,6 +1489,7 @@ generation_lines:
   note: null
   priced_on: 'gemini-omni-flash-1.1/t2v (vertex: gemini-omni-1.1-flash-preview)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.10136
   unit: per_second
   per_generation_usd: 0.6082
@@ -1407,6 +1507,7 @@ generation_lines:
   note: null
   priced_on: 'seedance-2.5/t2v (fal: bytedance/seedance-2.5/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   per_generation_usd: 2.838
@@ -1424,6 +1525,7 @@ generation_lines:
   note: null
   priced_on: 'veo-3.1-full (vertex: veo-3.1-generate-001)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.4
   unit: per_second
   per_generation_usd: 2.4
@@ -1441,6 +1543,7 @@ generation_lines:
   note: null
   priced_on: 'kling-v3-pro/t2v-audio-on (fal: fal-ai/kling-video/v3/pro/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.168
   unit: per_second
   per_generation_usd: 1.008
@@ -1458,6 +1561,7 @@ generation_lines:
   note: null
   priced_on: 'gemini-omni-flash-1.1/dialogue (vertex: gemini-omni-1.1-flash-preview)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.10136
   unit: per_second
   per_generation_usd: 0.6082
@@ -1475,6 +1579,7 @@ generation_lines:
   note: null
   priced_on: 'seedance-2.5/dialogue (fal: bytedance/seedance-2.5/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   per_generation_usd: 2.838
@@ -1492,6 +1597,7 @@ generation_lines:
   note: null
   priced_on: 'sd3.5-large (bedrock: stability.sd3-5-large-v1:0)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.08
   unit: per_image
   per_generation_usd: 0.08
@@ -1509,6 +1615,7 @@ generation_lines:
   note: null
   priced_on: 'veo-3.1-lite (vertex: veo-3.1-lite-generate-001)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.05
   unit: per_second
   per_generation_usd: 0.3
@@ -1526,6 +1633,7 @@ generation_lines:
   note: null
   priced_on: 'minimax-h3-max/t2v-480p (fal: minimax/h3-max/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.05
   unit: per_second
   per_generation_usd: 0.3
@@ -1543,6 +1651,7 @@ generation_lines:
   note: null
   priced_on: 'stable-image-core (bedrock: stability.stable-image-core-v1:1)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.04
   unit: per_image
   per_generation_usd: 0.04
@@ -1560,6 +1669,7 @@ generation_lines:
   note: null
   priced_on: 'stable-image-ultra (bedrock: stability.stable-image-ultra-v1:1)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.14
   unit: per_image
   per_generation_usd: 0.14
@@ -1577,6 +1687,7 @@ generation_lines:
   note: null
   priced_on: 'luma-ray-2 (bedrock: luma.ray-v2:0)'
   status: pinned
+  currency: USD
   unit_price_usd: 1.5
   unit: per_second
   per_generation_usd: 9.0
@@ -1594,6 +1705,7 @@ generation_lines:
   note: null
   priced_on: 'veo-3.1-fast/i2v (vertex: veo-3.1-fast-generate-001)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.1
   unit: per_second
   per_generation_usd: 0.6
@@ -1611,6 +1723,7 @@ generation_lines:
   note: null
   priced_on: 'kling-v3-pro/i2v (fal: fal-ai/kling-video/v3/pro/image-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.112
   unit: per_second
   per_generation_usd: 0.672
@@ -1628,6 +1741,7 @@ generation_lines:
   note: null
   priced_on: 'minimax-h3-max/i2v-768p (fal: minimax/h3-max/image-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.08
   unit: per_second
   per_generation_usd: 0.48
@@ -1645,6 +1759,7 @@ generation_lines:
   note: null
   priced_on: 'wan-3.0-prime/i2v (fal: alibaba/wan-3.0-prime/image-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.14
   unit: per_second
   per_generation_usd: 0.84
@@ -1662,6 +1777,7 @@ generation_lines:
   note: null
   priced_on: 'seedance-2.5/i2v (fal: bytedance/seedance-2.5/image-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   per_generation_usd: 2.838
@@ -1679,6 +1795,7 @@ generation_lines:
   note: null
   priced_on: 'seedance-2.5/ref2v (fal: bytedance/seedance-2.5/reference-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   per_generation_usd: 2.838
@@ -1696,6 +1813,7 @@ generation_lines:
   note: null
   priced_on: 'veo-3.1-fast/ref2v (vertex: veo-3.1-fast-generate-001)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.1
   unit: per_second
   per_generation_usd: 0.6
@@ -1713,6 +1831,7 @@ generation_lines:
   note: null
   priced_on: 'kling-v3-pro/multishot-10s (fal: fal-ai/kling-video/v3/pro/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.112
   unit: per_second
   per_generation_usd: 1.12
@@ -1730,6 +1849,7 @@ generation_lines:
   note: null
   priced_on: 'seedance-2.5/15s (fal: bytedance/seedance-2.5/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   per_generation_usd: 7.095
@@ -1747,11 +1867,35 @@ generation_lines:
   note: null
   priced_on: 'gemini-omni-flash-1.1/multishot-10s (vertex: gemini-omni-1.1-flash-preview)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.10136
   unit: per_second
   per_generation_usd: 1.0136
   billing_pool: credits
   line_usd: 4.0544
+- tranche: T1b
+  lane: tts
+  route_key: sarvam-bulbul-v3
+  variant: null
+  generations: 6
+  unit_quantity: 250
+  unit_kind: chars
+  source: plan §C.3 AUD-01 (3 scripts × 2); 250 chars = 26-Aug audio default
+  addition: null
+  note: null
+  priced_on: 'sarvam-bulbul-v3 (sarvam_direct: bulbul:v3)'
+  status: pinned
+  currency: INR
+  unit_price_inr: 3.0
+  unit: per_1000_characters
+  per_generation_inr: 0.75
+  billing_pool: cash
+  line_inr: 4.5
+  line_usd: 0.0
+  line_usd_display_only: 0.0472
+  display_only_rate_label: display_only_reference_rate_2026-08-26
+  unit_price_usd: null
+  per_generation_usd: null
 - tranche: T1b
   lane: tts
   route_key: elevenlabs-v3
@@ -1764,6 +1908,7 @@ generation_lines:
   note: null
   priced_on: 'elevenlabs-v3 (fal: fal-ai/elevenlabs/tts/eleven-v3)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.1
   unit: per_1000_characters
   per_generation_usd: 0.025
@@ -1781,6 +1926,7 @@ generation_lines:
   note: null
   priced_on: 'sync-lipsync-v3 (fal: fal-ai/sync-lipsync/v3)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.1333
   unit: per_second
   per_generation_usd: 0.7998
@@ -1798,6 +1944,7 @@ generation_lines:
   note: null
   priced_on: 'kling-lipsync-audio-to-video (fal: fal-ai/kling-video/lipsync/audio-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.014
   unit: per_input_video_second
   per_generation_usd: 0.14
@@ -1815,6 +1962,7 @@ generation_lines:
   note: null
   priced_on: 'kling-v3-pro/15s (fal: fal-ai/kling-video/v3/pro/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.112
   unit: per_second
   per_generation_usd: 1.68
@@ -1832,6 +1980,7 @@ generation_lines:
   note: null
   priced_on: 'seedance-2.5/15s (fal: bytedance/seedance-2.5/text-to-video)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.473
   unit: per_second
   per_generation_usd: 7.095
@@ -1849,6 +1998,7 @@ generation_lines:
   note: null
   priced_on: 'veo-3.1-fast/extend-15s (vertex: veo-3.1-fast-generate-001)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.1
   unit: per_second
   per_generation_usd: 1.5
@@ -1866,6 +2016,7 @@ generation_lines:
   note: null
   priced_on: 'elevenlabs-v3 (fal: fal-ai/elevenlabs/tts/eleven-v3)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.1
   unit: per_1000_characters
   per_generation_usd: 0.025
@@ -1883,6 +2034,7 @@ generation_lines:
   note: null
   priced_on: 'sync-lipsync-v3 (fal: fal-ai/sync-lipsync/v3)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.1333
   unit: per_second
   per_generation_usd: 0.7998
@@ -1900,6 +2052,7 @@ generation_lines:
   note: null
   priced_on: 'lyria (vertex: lyria-002)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.06
   unit: per_clip
   per_generation_usd: 0.06
@@ -1917,6 +2070,7 @@ generation_lines:
   note: null
   priced_on: 'elevenlabs-music (fal: fal-ai/elevenlabs/music)'
   status: pinned
+  currency: USD
   unit_price_usd: 0.6
   unit: per_minute
   per_generation_usd: 0.6
@@ -2080,24 +2234,6 @@ generation_lines:
   billing_pool: cash
   line_usd: 0.0
   excluded_reason: route_status unpinned — id_not_found
-- tranche: T1b
-  lane: tts
-  route_key: sarvam-bulbul-v3
-  variant: null
-  generations: 6
-  unit_quantity: 250
-  unit_kind: chars
-  source: plan §C.3 AUD-01 (3 scripts × 2); 250 chars = 26-Aug audio default
-  addition: null
-  note: null
-  priced_on: 'sarvam-bulbul-v3 (sarvam_direct: bulbul:v3)'
-  status: no_access
-  unit_price_usd: null
-  unit: per_1000_characters
-  per_generation_usd: null
-  billing_pool: cash
-  line_usd: 0.0
-  excluded_reason: route_status no_access — no_access (empty key)
 - tranche: T1b
   lane: video-edit
   route_key: runway-aleph

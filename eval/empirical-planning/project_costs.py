@@ -15,6 +15,10 @@ Unit PRICES always come from the roster (regular_price only; promo prices are ne
 
 Rules implemented (task §4):
   * regular price only — promo_price is ignored entirely (promo_prices_used is always false);
+  * a pinned price in INR (Sarvam) is projected in rupees and totalled as cash_inr per tranche; it is NEVER added to the
+    USD totals or compared with the USD caps; a display-only USD figure is shown beside it using the August reference
+    rate 95.4211 (display_only_reference_rate_2026-08-26, from STAGE-A-ROUTE-PRICE-REFRESH-2026-08-26.yaml) — no FX rate
+    is fetched or invented (rule added after Tester DEFECT-1);
   * a route or variant whose price is null, whose currency is not USD, whose unit cannot be converted with the
     line's unit_quantity, or whose route_status is not `pinned` contributes 0 and is listed under
     unpinned_lines_excluded with the reason — unless the roster gives a `fallback` whose status is `pinned`,
@@ -75,8 +79,18 @@ def find_variant(route, name):
     return None
 
 
+def resolve_currency(roster, route_key, variant):
+    route = find_route(roster, route_key)
+    target = find_variant(route, variant) if (route and variant) else route
+    rp = (target or {}).get('regular_price') or {}
+    if rp.get('currency') in ('USD', 'INR') and rp.get('value') is not None and (target or {}).get('route_status') == 'pinned':
+        return rp.get('currency')
+    return 'USD'
+
+
 def resolve_price(roster, route_key, variant):
-    """Return (price_value, unit, pool, status, basis, reason_if_excluded)."""
+    """Return (price_value, unit, pool, status, basis, reason_if_excluded). USD and INR are projectable; INR lines are
+    totalled separately (cash_inr) and never added to the USD totals."""
     route = find_route(roster, route_key)
     if route is None:
         return None, None, None, 'missing', None, f'route_key {route_key} not in roster'
@@ -91,7 +105,7 @@ def resolve_price(roster, route_key, variant):
     status = target.get('route_status')
     rp = target.get('regular_price') or {}
     pool = route['billing_pool']
-    if status == 'pinned' and rp.get('value') is not None and rp.get('currency') == 'USD' and rp.get('unit') in PROJECTABLE_UNITS:
+    if status == 'pinned' and rp.get('value') is not None and rp.get('currency') in ('USD', 'INR') and rp.get('unit') in PROJECTABLE_UNITS:
         return rp['value'], rp['unit'], pool, status, basis, None
     # try the route-level fallback (one level, task §1)
     fb = route.get('fallback')
@@ -155,19 +169,28 @@ def main():
                 lines.append(d)
         count_source = 'plan §E / §C.3 / §C.3c / §C.3d via INPUTS (no TEST-CASES.yaml yet)'
 
+    fx = inputs['meta']['inr_display_only_reference_rate_2026_08_26']
     priced = []
     excluded = []
     for ln in lines:
         val, unit, pool, status, basis, reason = resolve_price(roster, ln['route_key'], ln.get('variant'))
+        cur = resolve_currency(roster, ln['route_key'], ln.get('variant')) if reason is None else 'USD'
         gens = int(ln['generations'])
         row = OrderedDict([
             ('tranche', ln['tranche']), ('lane', ln.get('lane')), ('route_key', ln['route_key']), ('variant', ln.get('variant')),
             ('generations', gens), ('unit_quantity', ln.get('unit_quantity', 1)), ('unit_kind', ln.get('unit_kind', 'images')),
             ('source', ln.get('source')), ('addition', ln.get('addition')), ('note', ln.get('note')),
         ])
-        if reason is None:
+        if reason is None and cur == 'INR':
             per_gen = PROJECTABLE_UNITS[unit](float(val), float(ln.get('unit_quantity', 1)), ln.get('unit_kind'))
-            row.update([('priced_on', basis), ('status', status), ('unit_price_usd', val), ('unit', unit), ('per_generation_usd', r4(per_gen)),
+            row.update([('priced_on', basis), ('status', status), ('currency', 'INR'), ('unit_price_inr', val), ('unit', unit), ('per_generation_inr', r4(per_gen)),
+                        ('billing_pool', pool), ('line_inr', r4(per_gen * gens)), ('line_usd', 0.0),
+                        ('line_usd_display_only', r4(per_gen * gens / float(fx['inr_per_usd']))), ('display_only_rate_label', fx['label']),
+                        ('unit_price_usd', None), ('per_generation_usd', None)])
+            priced.append(row)
+        elif reason is None:
+            per_gen = PROJECTABLE_UNITS[unit](float(val), float(ln.get('unit_quantity', 1)), ln.get('unit_kind'))
+            row.update([('priced_on', basis), ('status', status), ('currency', 'USD'), ('unit_price_usd', val), ('unit', unit), ('per_generation_usd', r4(per_gen)),
                         ('billing_pool', pool), ('line_usd', r4(per_gen * gens))])
             priced.append(row)
         else:
@@ -176,7 +199,7 @@ def main():
             excluded.append(row)
 
     # ---- T2 / T3 blended lines (assumption: route mix unknown until survivors are known) ----------
-    t1 = [p for p in priced if p['tranche'] in ('T1a', 'T1b')]
+    t1 = [p for p in priced if p['tranche'] in ('T1a', 'T1b') and p.get('currency') != 'INR']  # rupee lines are not blended into USD
     t1_gens = sum(p['generations'] for p in t1)
     t1_usd = sum(p['line_usd'] for p in t1)
     t1_cash = sum(p['line_usd'] for p in t1 if p['billing_pool'] == 'cash')
@@ -217,6 +240,7 @@ def main():
         xl = [x for x in excluded if x['tranche'] == tr]
         el = [e for e in ev_rows if e['tranche'] == tr]
         ex = [e for e in ev_excluded if e['tranche'] == tr]
+        cash_inr = sum(p.get('line_inr', 0.0) for p in gl)
         cash = sum(p['line_usd'] for p in gl if p['billing_pool'] == 'cash') + sum(e['line_usd'] for e in el if e['billing_pool'] == 'cash')
         cred = sum(p['line_usd'] for p in gl if p['billing_pool'] == 'credits') + sum(e['line_usd'] for e in el if e['billing_pool'] == 'credits')
         total = cash + cred
@@ -232,6 +256,7 @@ def main():
             ('evaluator_calls', sum(e['calls'] for e in el) + sum(e['calls'] for e in ex)),
             ('evaluator_calls_excluded_unpinned', sum(e['calls'] for e in ex)),
             ('cash_usd', r4(cash)), ('credits_usd_equivalent', r4(cred)), ('total_usd_equivalent', r4(total)),
+            ('cash_inr', r4(cash_inr)), ('cash_inr_usd_display_only', r4(cash_inr / float(fx['inr_per_usd']))), ('cash_inr_rate_label', fx['label'] if cash_inr else None),
             ('unpinned_lines_excluded', [OrderedDict([('route_key', x['route_key']), ('variant', x['variant']), ('lane', x['lane']), ('generations', x['generations']), ('reason', x['excluded_reason'])]) for x in xl]
                                        + [OrderedDict([('evaluator', e['evaluator']), ('calls', e['calls']), ('reason', e['excluded_reason'])]) for e in ex]),
             ('priced_on_fallback', [OrderedDict([('route_key', p['route_key']), ('variant', p['variant']), ('lane', p['lane']), ('generations', p['generations']), ('priced_on', p['priced_on']), ('billing_pool', p['billing_pool']), ('usd', p['line_usd'])]) for p in gl if 'FALLBACK' in (p['priced_on'] or '')]),
@@ -245,9 +270,13 @@ def main():
         k = (p['route_key'], p['variant'] or '')
         if k not in agg:
             agg[k] = OrderedDict([('route_key', p['route_key']), ('variant', p['variant']), ('priced_on', p['priced_on']), ('status', p['status']), ('billing_pool', p['billing_pool']),
-                                  ('unit_price_usd', p['unit_price_usd']), ('unit', p['unit']), ('generations', 0), ('usd', 0.0), ('tranches', []), ('excluded_reason', p.get('excluded_reason'))])
+                                  ('currency', p.get('currency', 'USD')), ('unit_price_usd', p['unit_price_usd']), ('unit', p['unit']), ('generations', 0), ('usd', 0.0), ('tranches', []), ('excluded_reason', p.get('excluded_reason'))])
+            if p.get('currency') == 'INR':
+                agg[k]['unit_price_inr'] = p['unit_price_inr']; agg[k]['inr'] = 0.0; agg[k]['usd_display_only'] = 0.0; agg[k]['display_only_rate_label'] = p['display_only_rate_label']
         agg[k]['generations'] += p['generations']
         agg[k]['usd'] = r4(agg[k]['usd'] + p['line_usd'])
+        if p.get('currency') == 'INR':
+            agg[k]['inr'] = r4(agg[k]['inr'] + p['line_inr']); agg[k]['usd_display_only'] = r4(agg[k]['usd_display_only'] + p['line_usd_display_only'])
         if p['tranche'] not in agg[k]['tranches']:
             agg[k]['tranches'].append(p['tranche'])
     by_route = list(agg.values())
@@ -273,6 +302,7 @@ def main():
     # ---- totals / assumptions / output ------------------------------------------------------------------
     total_cash = r4(sum(t['cash_usd'] for t in by_tranche))
     total_cred = r4(sum(t['credits_usd_equivalent'] for t in by_tranche))
+    total_inr = r4(sum(t['cash_inr'] for t in by_tranche))
     music8 = inputs.get('music_lane_alternative_8', {})
     assumptions = [OrderedDict(x) for x in inputs['assumptions']]
     assumptions.append(OrderedDict([('id', 'A-BLEND'), ('assumption', f'T2 and T3 are priced at the blended Tranche-1 average of USD {r4(blended)} per generation (Tranche-1 pinned lines: {t1_gens} generations, USD {r4(t1_usd)}), split {r4(cash_share)} cash / {r4(1 - cash_share)} credits, because survivors are unknown until Stage A runs'), ('source', 'assumption (Executor); counts from plan §E')]))
@@ -286,10 +316,15 @@ def main():
             ('tranche_1_cash_usd', r4(sum(t['cash_usd'] for t in by_tranche if t['tranche'] in ('T1a', 'T1b')))),
             ('tranche_1_credits_usd_equivalent', r4(sum(t['credits_usd_equivalent'] for t in by_tranche if t['tranche'] in ('T1a', 'T1b')))),
             ('tranche_1_total_usd_equivalent', r4(t1_total)), ('tranche_1_cap_usd', r4((caps.get('T1a') or 0) + (caps.get('T1b') or 0))),
+            ('tranche_1_cash_inr', r4(sum(t['cash_inr'] for t in by_tranche if t['tranche'] in ('T1a', 'T1b')))),
+            ('tranche_1_cash_inr_usd_display_only', r4(sum(t['cash_inr'] for t in by_tranche if t['tranche'] in ('T1a', 'T1b')) / float(fx['inr_per_usd']))),
+            ('inr_rule', 'cash_inr is a separate total in rupees (Sarvam); it is NEVER added to the USD totals; the usd_display_only figures use ' + fx['label'] + ' = ' + str(fx['inr_per_usd']) + ' INR per USD'),
             ('minimum_viable_round_one_usd_equivalent', mvr['total_usd_equivalent']),
             ('all_tranches_cash_usd', total_cash), ('all_tranches_credits_usd_equivalent', total_cred), ('all_tranches_total_usd_equivalent', r4(total_cash + total_cred)),
             ('all_tranches_cap_usd', r4(sum(v for v in caps.values() if v))),
+            ('all_tranches_cash_inr', total_inr), ('all_tranches_cash_inr_usd_display_only', r4(total_inr / float(fx['inr_per_usd']))),
         ])),
+        ('inr_display_only_reference_rate', OrderedDict(fx)),
         ('by_tranche', by_tranche), ('by_route', by_route), ('minimum_viable_round_one', mvr),
         ('music_lane_alternative_8', OrderedDict([('note', music8.get('note')), ('extra_generations', music8.get('extra_generations')),
                                                   ('extra_usd_equivalent', r4(sum(p['per_generation_usd'] for p in priced if p['lane'] == 'music') if music8 else 0.0))])),
@@ -316,6 +351,8 @@ def write_md(path, out, inputs, caps):
     L.append('')
     L.append(f"1. **Tranche 1 total ≈ USD {h['tranche_1_total_usd_equivalent']:.2f}** against the proposed cap of USD {h['tranche_1_cap_usd']:.0f} (1a {caps.get('T1a')} + 1b {caps.get('T1b')}): "
              f"≈ USD {h['tranche_1_cash_usd']:.2f} cash on fal/direct vendors + ≈ USD {h['tranche_1_credits_usd_equivalent']:.2f} that would come off cloud credits if the credits exist (balances unverified, MD-1).")
+    if h.get('tranche_1_cash_inr'):
+        L.append(f"   Plus **₹{h['tranche_1_cash_inr']:.2f} in rupees** (Sarvam bulbul v3 TTS, paid from Sarvam's own prepaid balance) — kept as a separate INR total, not added to the USD figures; for orientation only that is ≈ USD {h['tranche_1_cash_inr_usd_display_only']:.2f} at the August reference rate 95.4211 (`display_only_reference_rate_2026-08-26`; no live FX rate was fetched).")
     L.append(f"2. **Minimum viable round one ≈ USD {mvr['total_usd_equivalent']:.2f}** (USD {mvr['cash_usd']:.2f} cash + USD {mvr['credits_usd_equivalent']:.2f} credits): image core + text-to-video + image-to-video only, with their evaluators. This is the smallest round that still answers the routing questions.")
     L.append(f"3. **The caps** (USD {caps.get('T1a')} / {caps.get('T1b')} / {caps.get('T2')} / {caps.get('T3')}): T1a is {'within' if bt['T1a']['within_cap'] else 'OVER'} its cap by USD {abs(bt['T1a']['headroom_usd']):.2f}; T1b is {'within' if bt['T1b']['within_cap'] else 'OVER'} its cap by USD {abs(bt['T1b']['headroom_usd']):.2f}. See MD-6.")
     L.append('')
@@ -330,13 +367,14 @@ def write_md(path, out, inputs, caps):
     L.append('')
     L.append('## By tranche')
     L.append('')
-    L.append('| Tranche | Generations (priced / excluded) | Evaluator calls | Cash USD | Credits USD-eq | Total USD-eq | Cap | Headroom |')
-    L.append('|---|---:|---:|---:|---:|---:|---:|---:|')
+    L.append('| Tranche | Generations (priced / excluded) | Evaluator calls | Cash USD | Credits USD-eq | Total USD-eq | Cap | Headroom | Cash INR (separate) |')
+    L.append('|---|---:|---:|---:|---:|---:|---:|---:|---:|')
     for t in out['by_tranche']:
-        L.append(f"| {t['tranche']} | {t['generations']} ({t['generations_priced']} / {t['generations_excluded_unpinned']}) | {t['evaluator_calls']} | {t['cash_usd']:.2f} | {t['credits_usd_equivalent']:.2f} | {t['total_usd_equivalent']:.2f} | {t['proposed_cap_usd'] if t['proposed_cap_usd'] is not None else '—'} | {t['headroom_usd'] if t['headroom_usd'] is not None else '—'} |")
+        L.append(f"| {t['tranche']} | {t['generations']} ({t['generations_priced']} / {t['generations_excluded_unpinned']}) | {t['evaluator_calls']} | {t['cash_usd']:.2f} | {t['credits_usd_equivalent']:.2f} | {t['total_usd_equivalent']:.2f} | {t['proposed_cap_usd'] if t['proposed_cap_usd'] is not None else '—'} | {t['headroom_usd'] if t['headroom_usd'] is not None else '—'} | ₹{t['cash_inr']:.2f} |")
     L.append('')
     L.append(f"All tranches: cash ≈ USD {h['all_tranches_cash_usd']:.2f}, credits ≈ USD {h['all_tranches_credits_usd_equivalent']:.2f}, total ≈ USD {h['all_tranches_total_usd_equivalent']:.2f} against caps totalling USD {h['all_tranches_cap_usd']:.0f}. "
              'T2 and T3 use a blended per-generation average because their route mix is unknown until Stage A has survivors (assumption A-BLEND).')
+    L.append(f"Rupee lines total ₹{h['all_tranches_cash_inr']:.2f} across all tranches (≈ USD {h['all_tranches_cash_inr_usd_display_only']:.2f} display-only at 95.4211) and are not part of the USD totals or the caps arithmetic above.")
     L.append('')
     L.append('## Lines excluded because unpinned or not usable (they count 0 in the totals)')
     L.append('')
@@ -366,6 +404,15 @@ def write_md(path, out, inputs, caps):
     L.append('|---|---|---|---:|---:|')
     for r in sorted([r for r in out['by_route'] if r['usd']], key=lambda r: -r['usd'])[:12]:
         L.append(f"| {r['route_key']}{('/' + r['variant']) if r['variant'] else ''} | {r['priced_on']} | {r['billing_pool']} | {r['generations']} | {r['usd']:.2f} |")
+    inr_rows = [r for r in out['by_route'] if r.get('currency') == 'INR']
+    if inr_rows:
+        L.append('')
+        L.append('## Rupee lines (separate currency; not in the USD totals)')
+        L.append('')
+        L.append('| Route | Priced on | Generations | INR | USD display-only (95.4211, 2026-08-26) |')
+        L.append('|---|---|---:|---:|---:|')
+        for r in inr_rows:
+            L.append(f"| {r['route_key']} | {r['priced_on']} | {r['generations']} | ₹{r['inr']:.2f} | {r['usd_display_only']:.4f} |")
     L.append('')
     L.append('## Music lane (MD-7)')
     L.append('')

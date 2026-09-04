@@ -2,7 +2,7 @@
 
 **What this is.** Ten numbered questions the Executor could not settle overnight without you. Each one says what is needed, why it matters, the options with their consequence, and what happens by default if you say nothing. Nothing has been spent, created, enabled, deployed or deleted; every check tonight was read-only. Companion files: `ROSTER-REFRESH-2026-09.yaml` (ids and prices), `ACCESS-STATUS-2026-09.yaml` (what each cloud allowed), `COST-PROJECTION-2026-09.md` (money), `ACCESS-LOG.md` (every command).
 
-**Headline numbers (from the projection):** Tranche 1 ≈ **USD 161** (≈ 127 cash on fal/direct + ≈ 35 that would come off cloud credits *if the credits exist*) against the proposed USD 175 cap; minimum viable round one ≈ **USD 74**; Tranche 1a is ≈ USD 2.8 over its own USD 60 cap only because of three small additions (see MD-6).
+**Headline numbers (from the projection):** Tranche 1 ≈ **USD 161** (+ ₹4.50 Sarvam, kept in INR) (≈ 127 cash on fal/direct + ≈ 35 that would come off cloud credits *if the credits exist*) against the proposed USD 175 cap; minimum viable round one ≈ **USD 74**; Tranche 1a is ≈ USD 2.8 over its own USD 60 cap only because of three small additions (see MD-6).
 
 ---
 
@@ -117,12 +117,11 @@ Before running: confirm in the portal's cost estimate that AI Services S0 and Gl
 - **After creation:** one metered image on `gpt-image-2` tells us tokens-per-image, which turns Azure's USD 30 per 1M output tokens into a per-image price (today's projection uses fal's 0.053 at medium quality instead).
 - **Default if unanswered:** nothing is created; Tranche 1 runs Google routes on Vertex with the existing service account (which already reaches every needed model), Stability on Bedrock with `claude-aight` if its invoke is allowed (untested), and everything Azure-only stays on fal.
 
-## MD-10 — Sarvam key is present by name but EMPTY
+## MD-10 — Sarvam key — RESOLVED after Tester check: key present (length 36); no decision needed
 
-- **Needed:** the Sarvam API key value placed into `~/.mi-keys` as `SARVAM_API_KEY=…` (the line exists with nothing after `=`; length check returned 0).
-- **Why it matters:** AUD-01 (bulbul v3 Hindi TTS, ₹3.00 per 1,000 characters — pinned) is `no_access`; its 6 generations count USD 0 in the projection and the TTS comparison collapses to ElevenLabs alone.
-- **Options:** (a) paste the key into the file yourself (never in chat); (b) drop AUD-01 from Tranche 1.
-- **Default if unanswered:** (b); the route stays in the roster as `no_access`.
+- **What happened:** the Executor's overnight check reported `SARVAM_API_KEY` as empty. The Tester (DEFECT-1) showed the check was wrong: every line in `~/.mi-keys` begins with `export `, and the awk pattern `^SARVAM_API_KEY=` cannot match that. The corrected check (`grep -E '^export SARVAM_API_KEY=' … | wc -c`) returns **36 characters** (value never printed).
+- **Consequence:** AUD-01 (Sarvam bulbul v3, ₹3.00 per 1,000 characters — pinned) is `pinned`, not `no_access`; its 6 TTS generations (≈ 1,500 characters ≈ **₹4.50**) are now in the projection as a separate INR line. No FX rate is invented: the YAML/MD carry `cash_inr` on its own, plus a display-only USD figure at the August reference rate 95.4211 (`display_only_reference_rate_2026-08-26`, from `STAGE-A-ROUTE-PRICE-REFRESH-2026-08-26.yaml`).
+- **Nothing to decide.** The number is kept so references to MD-10 elsewhere stay valid.
 
 ---
 
