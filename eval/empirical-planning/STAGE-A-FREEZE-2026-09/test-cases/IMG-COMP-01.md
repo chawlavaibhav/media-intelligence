@@ -42,15 +42,20 @@
 - ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy portraits (the judge must pick the supplied portrait as the match).
 - ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade.
 - ACCEPT only if the model's hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.
-- ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct (composited at USD 0 on the accepted draw; judged on the final).
+- ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct.
 - REJECT if a second person, a second product or any other lettering appears.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- required string absent (Cloud Vision, T-BENCH) → reject before judging
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): flux-2-pro-edit, gpt-image-2-edit, nano-banana-pro-edit, seedream-5-pro-edit.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro-edit, gpt-image-2-edit, nano-banana-pro-edit, seedream-5-pro-edit.
 
-**Blueprint:** `BLUEPRINTS/IMG-COMP-01.blueprint.md` (sha256 `43973582de2e94fa…`, author executor_agent)
+**Blueprint:** `BLUEPRINTS/IMG-COMP-01.blueprint.md` (sha256 `487c1070482b8131…`, author executor_agent)
 
 ## Why this shape is real demand
 

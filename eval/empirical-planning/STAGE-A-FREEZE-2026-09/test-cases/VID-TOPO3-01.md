@@ -4,7 +4,7 @@
 
 **Channel:** whatsapp · **Language:** hi · **Attachments named:** none
 
-> जो दीपावली वाला poster बन रहा है, उसी का एक 6 सेकंड का vertical video भी चाहिए WhatsApp status के लिए। वही तीनों लाइनें — "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट", और "श्री गणेश मिष्ठान भंडार" सबसे बड़ा — पूरे वीडियो में साफ़ पढ़ने लायक रहें, हिलें-डुलें नहीं, एक भी अक्षर बदले नहीं। पीछे दीये जलते हुए, हल्की सी movement, मिठाई का डिब्बा वहीं रहे। कोई आवाज़ ज़रूरी नहीं।
+> जो दीपावली वाला poster बन रहा है, उसी का एक 6 सेकंड का vertical video भी चाहिए WhatsApp status के लिए। वही तीनों लाइनें — "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट", और "श्री गणेश मिष्ठान भंडार" सबसे बड़ा — video में साफ़ पढ़ने लायक रहें, spelling वही रहे। पीछे दीये जलते हुए, हल्की सी movement, मिठाई का डिब्बा वहीं रहे। कोई आवाज़ ज़रूरी नहीं।
 
 **Source:** pool `brief_bank`, id `BR-F01-HI`
 
@@ -12,7 +12,8 @@
 
 - converted_to_video_6s (same brief as IMG-TEXT-01, asked as a moving status)
 - aspect_set_to_9_16 (WhatsApp status)
-- text_stability_stated ('हिलें-डुलें नहीं') — the customer's own words for text stability under motion
+- register_rewrite_after_audit (the stability clause 'हिलें-डुलें नहीं, एक भी अक्षर बदले नहीं' reduced to 'साफ़ पढ़ने लायक रहें, spelling वही रहे'; the contract carries the frame-to-frame test)
+- plates_drawn_at_9_16_under_this_case (AF-1: the IMG-TEXT-01 draws are square; arms A and C use 9:16 re-draws of the same brief made under this case, +4 image calls)
 - audio_not_required (customer states)
 
 ## Normalized Request (CANON-010 grammar)
@@ -41,18 +42,24 @@
 
 ## Acceptance contract (judged blind, from the artifact alone)
 
-- ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार"; REJECT if any character differs between frames or from the strings.
+- ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
 - REJECT if any string drifts, wobbles, smears or flickers across the clip.
 - ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
 - ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
 - REJECT if any other lettering or pseudo-lettering appears in any frame.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- required string absent (Cloud Vision, T-BENCH) → reject before judging
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): kling-v3-pro, minimax-h3-max-i2v, veo-3.1-full, veo-3.1-lite-i2v, wan-3.0-prime-i2v.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro, kling-v3-pro, minimax-h3-max-i2v, qwen-image-3, veo-3.1-full, veo-3.1-lite-i2v, wan-3.0-prime-i2v.
 
-**Blueprint:** `BLUEPRINTS/VID-TOPO3-01.blueprint.md` (sha256 `2f8d5591bfa7da5a…`, author executor_agent)
+**Blueprint:** `BLUEPRINTS/VID-TOPO3-01.blueprint.md` (sha256 `3a97d8f39498f254…`, author executor_agent)
 
 ## Why this shape is real demand
 

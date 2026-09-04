@@ -1,6 +1,6 @@
 # Coverage matrix — Stage A freeze
 
-35 cases, 298 calls (1a 186 / 1b 112) + 32 conditional. **4K recorded as a Stage B COND-DELIVERY level only; round one runs 720p.**
+35 cases, 288 calls (1a 192 / 1b 96) + 32 conditional. **4K recorded as a Stage B COND-DELIVERY level only; round one runs 720p.**
 
 ## 1. Plan §C.1 routing questions → cases
 
@@ -44,7 +44,7 @@
 ## 3. §C.3d additions
 
 - one 15-second item: **VID-MS-01** (Kling v3 15 s, Seedance 2.5 15 s, Omni Flash 1.1 longest ≤ 15 s, Veo 3.1 fast + extend; 4 routes × 2 = 8 calls)
-- one two-speaker Hindi dialogue item: **VID-2SPK-01** — native arm (Veo 3.1 fast, Kling v3, Omni Flash 1.1, Seedance 2.5; 8 calls) and chain arm (plate 2 + i2v 2 + TTS 8 [counted under TTS] + lipsync 4 = 8 chain calls + 8 TTS)
+- one two-speaker Hindi dialogue item: **VID-2SPK-01** — native arm (Veo 3.1 fast, Kling v3 audio-on, Omni Flash 1.1, Seedance 2.5, Wan 3.0 Prime — Wan added after audit so freshness item 4's preferred route is present; 5 × 2 = 10 calls) and the chain arm (plate → i2v → TTS → lipsync) **recorded, not screened, 0 calls** (single-face lipsync routes document no speaker assignment — Auditor AF-3)
 - music lane: **MUS-01**, **MUS-02** × 2 routes (Lyria on Vertex, ElevenLabs music on fal) × 2 repeats = 8 calls
 - 4K: **not a case.** 4K recorded as a Stage B COND-DELIVERY level only; round one runs 720p.
 
@@ -58,13 +58,23 @@
 | TTS | 3 | AUD-TTS-01..03 | AUD-TTS-01 (hi), AUD-TTS-02 (hg) | waived — a TTS policy-edge has no source shape and no prior; stated | n/a |
 | lipsync | 3 | AUD-LIP-01..03 | AUD-LIP-01 (hi), AUD-LIP-02 (hg) | waived — as TTS; stated | n/a |
 
-## 5. TOPO-02 / TOPO-03 arms
+## 5. TOPO-02 / TOPO-03 arms (generated from each case's `routes[]`)
 
-| topology | arm A | arm B | arm C |
-|---|---|---|---|
-| TOPO-02 IMG-TEXT-01 (hi) | NB2, Qwen Image 3, GPT Image 2 — 3 × 2 = 6 | NB Pro, Seedream 5 Pro, Recraft V4 — 3 × 2 = 6 | FLUX.2 Pro textless base × 2 + overlay by code (USD 0) |
-| TOPO-02 IMG-TEXT-02 (en) | same routes, 6 | same routes, 6 | same, 2 + overlay |
-| TOPO-03 VID-TOPO3-01 (hi) | IMG-TEXT-01 arm-A accepted still → H3 Max, Wan 3.0, Veo 3.1 lite i2v — 3 × 2 = 6 (1b) | Veo 3.1 full, Kling v3 native t2v — 2 × 2 = 4 (1a) | IMG-TEXT-01 arm-C base → Veo 3.1 lite i2v × 2 (1b) + tracked/static overlay by code |
+| case | arm | routes (× repeats, tranche) |
+|---|---|---|
+| IMG-TEXT-01 | A_cheap_generated | `gemini-3.1-flash-image` ×2 (1a); `alibaba/qwen-image-3` ×2 (1a); `openai/gpt-image-2` ×2 (1a) |
+| IMG-TEXT-01 | B_premium_generated | `gemini-3-pro-image` ×2 (1a); `bytedance/seedream/v5/pro/text-to-image` ×2 (1a); `fal-ai/recraft/v4 (text-to-image)` ×2 (1a) |
+| IMG-TEXT-01 | C_composite_textless_base | `fal-ai/flux-2-pro` ×2 (1a) |
+| IMG-TEXT-02 | A_cheap_generated | `gemini-3.1-flash-image` ×2 (1a); `alibaba/qwen-image-3` ×2 (1a); `openai/gpt-image-2` ×2 (1a) |
+| IMG-TEXT-02 | B_premium_generated | `gemini-3-pro-image` ×2 (1a); `bytedance/seedream/v5/pro/text-to-image` ×2 (1a); `fal-ai/recraft/v4 (text-to-image)` ×2 (1a) |
+| IMG-TEXT-02 | C_composite_textless_base | `fal-ai/flux-2-pro` ×2 (1a) |
+| VID-TOPO3-01 | A_plate_9x16 | `alibaba/qwen-image-3` ×2 (1a) |
+| VID-TOPO3-01 | C_plate_9x16 | `fal-ai/flux-2-pro` ×2 (1a) |
+| VID-TOPO3-01 | A_cheap_still_to_cheap_i2v | `minimax/h3-max/image-to-video (768p)` ×2 (1b); `alibaba/wan-3.0-prime/image-to-video` ×2 (1b); `veo-3.1-lite-generate-001 (image input)` ×2 (1b) |
+| VID-TOPO3-01 | B_premium_native_t2v | `veo-3.1-generate-001` ×2 (1a); `fal-ai/kling-video/v3/pro/text-to-video (silent)` ×2 (1a) |
+| VID-TOPO3-01 | C_textless_plate_i2v_composite | `minimax/h3-max/image-to-video (768p)` ×2 (1b) |
+
+Every TOPO-03 arm runs at 9:16: arms A and C use 9:16 plates drawn under VID-TOPO3-01 (Qwen Image 3 with text; FLUX.2 Pro textless), arm B draws natively at 9:16 (Auditor AF-1). Arm C's overlay is code at USD 0.
 
 ## 6. Media Factory freshness items → cases
 
@@ -74,7 +84,7 @@
 | 2 Seedance 2.x cost/quality position | every Seedance 2.5 line: VID-T2V-01/02, VID-I2V-02/03, VID-REF-01/02, VID-MS-01 |
 | 3 in-scene text through motion (composite-always for video) | VID-TOPO3-01 |
 | 4 multi-turn dialogue and voice consistency | VID-2SPK-01 |
-| 5 LatentSync-class mouth repaint vs native lip-sync | AUD-LIP-01/02/03 (+ VID-2SPK-01 chain arm) |
+| 5 LatentSync-class mouth repaint vs native lip-sync | AUD-LIP-01/02/03 — tested with sync-lipsync v3 and Kling lipsync audio-to-video as the LatentSync-class substitutes (`fal-ai/latentsync` exists but is unpinned); the VID-2SPK-01 chain arm is recorded, not screened |
 
 ## 7. `requested_operation` coverage
 

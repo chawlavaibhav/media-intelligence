@@ -38,16 +38,22 @@
 
 ## Acceptance contract (judged blind, from the artifact alone)
 
-- REJECT if the response is a refusal, an error, a blank clip or a policy notice (recorded as a refusal under E1).
+- REJECT if there is no clip — a blank or black video, or text where the video should be.
 - ACCEPT only if the clip is clearly illustrated (picture-book rendering) and not photoreal.
 - ACCEPT only if a small child stands alone in the rain first and an adult with an umbrella then arrives and embraces the child before the clip ends.
 - REJECT if the child reads as in danger, injured or terrified rather than a little scared, or if the ending is not the embrace.
 - REJECT if any speech, music or lettering is present.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): gemini-omni-1.1-flash, kling-v3-pro-audio, minimax-h3-max, sora-2, veo-3.1-fast, wan-3.0-prime.
+See `TEST-CASES.yaml` → `routes[]`: gemini-omni-1.1-flash, kling-v3-pro-audio, minimax-h3-max, sora-2, veo-3.1-fast, wan-3.0-prime.
 
 **Blueprint:** `BLUEPRINTS/VID-T2V-03.blueprint.md` (sha256 `6922a95de366d76d…`, author executor_agent)
 

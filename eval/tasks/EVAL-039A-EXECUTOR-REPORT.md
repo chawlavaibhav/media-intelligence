@@ -82,3 +82,32 @@ Tester report: `eval/tasks/EVAL-039A-TESTER-REPORT.md` — FAIL on DEFECT-1, ris
 5. **O3 fixed.** README OQ-16 describes the fifth HOLD-lane id without printing the bare token, so a word-bounded scan of every .md/.yaml in the package is clean.
 6. **Reproducibility.** The generator is committed under `tools/` (`build.py`, `routes.py`, `common.py`, `cases_*.py`, `readme.py`, `README.md`); it resolves the repo root from its own location and rebuilds the package deterministically from committed inputs. The Tester reproduced 79/79 files byte-identical before these changes; after them, a rebuild from `tools/` changed exactly the files listed above (`git diff --name-only`), blueprints and twins byte-identical to the committed package; `__pycache__` is removed after each build and is not part of the deliverable.
 7. **Self-check re-run:** F.1–F.9, the DEFECT-1 rank check, `priced_against_roster` sha256 = `shasum -a 256` of the roster, in-cap sum = row sum with no sync-lipsync row counted, whole-package word-bounded HOLD scan over every .md/.yaml, storage (package files 1023 KB ≤ 1 MB; `tools/` adds 376 KB) — all PASS. Not the Tester's verdict.
+
+## Corrections after Auditor (2026-09-05, USD 0, no network, no commits)
+
+Auditor report: `eval/tasks/EVAL-039A-AUDITOR-REPORT.md` — PASS WITH NOTES, AF-1 High, AF-2..8 Medium, AF-9..14 Low, AF-15..18 Notes, 8 borderline requests. Controller dispositions applied as stated. Rebuilt with `tools/build.py`; self-check F.1–F.9 plus Auditor-specific checks all PASS (below).
+
+**Blueprints changed (sha256 updated in `TEST-CASES.yaml`):** AUD-LIP-01, AUD-LIP-02, AUD-LIP-03, AUD-TTS-01, AUD-TTS-02, IMG-COMP-01, MUS-01, MUS-02, VID-2SPK-01, VID-TOPO3-01 — VID-TOPO3-01 (9:16 plate prompt variants, dispatch line, composite band spec for the 9:16 frame — AF-1), VID-2SPK-01 (chain step 4 marked recorded/not screened — AF-3), AUD-TTS-01 and AUD-LIP-01 (script → the arm-A farmer line — AF-2), AUD-TTS-02 and AUD-LIP-02 (script shortened to the drive cap — AF-4; the drive-cap line appears in all three lipsync blueprints, so AUD-LIP-03 changed too), MUS-01/02 (music-specific brief checks replace TTS boilerplate — AF-11), IMG-COMP-01 (exact-string-carry check dropped: no generated arm — AF-11). The other 25 blueprints are byte-identical.
+
+1. **AF-1 (High).** Every TOPO-03 arm runs at 9:16: two 9:16 plate draws added under VID-TOPO3-01 — arm A on the cheapest pinned cheap text route (Qwen Image 3, 0.04) ×2 and arm C textless base on FLUX.2 Pro (0.03) ×2, both tranche 1a, prompts as variants in the VID-TOPO3-01 blueprint; arm B native 9:16 unchanged; plates named "the Controller-accepted draw; else draw 1" (AF-10). +4 calls. COVERAGE §5 is generated from `routes[]` (AF-7) and states the 9:16 rule.
+2. **AF-2.** TOPO-01 arms share one brief shape and one spoken line: AUD-TTS-01 re-sourced to BR-F07-HI (the farmer line "इस दवाई से मेरी फसल दोगुनी हुई", adaptations listed); AUD-LIP-01 drives that line onto the shared plate. The residual confound (plate subject ≠ farmer) is README OQ-18.
+3. **AF-3.** VID-2SPK-01 chain arm `recorded_not_screened`, 0 calls (reason on every chain route → README OQ-19, and in the blueprint); Wan 3.0 Prime (pinned t2v 0.14/s) added to the native arm (+2 calls). Freshness item 4 row updated; `audio_video_synchronisation` removed from the case (AF-8).
+4. **AF-4.** Lip-sync drive scripts capped at 70 characters (≈ ≤ 5 s), asserted at build time; AUD-TTS-02 shortened to "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." (adaptation listed).
+5. **AF-5.** `ELIMINATION-RULES.md` carries a denominator table for 8-, 6-, 4- and 2-trial cores (E1 ≥ 37.5 % → ≥ 3/8, ≥ 3/6, ≥ 2/4; E2 ≤ 25 % → ≤ 2/8, ≤ 1/6, ≤ 1/4), stated before any call.
+6. **AF-6 / AF-12 / AF-14 / weak contracts.** Every rule-, arm-, cost- and Canon-leaking parenthetical stripped; a build-time guard now rejects such tokens in any contract statement. E5 pre-checks come from one per-case list into a separate non-judge section of `ACCEPTANCE-CONTRACTS.md` and each twin. IMG-CORE-04, IMG-CORE-02, AUD-TTS-02, MUS-01 and VID-I2V-01 statements rewritten to observables; the 20 / २० digit rule stated on IMG-TEXT-01 and VID-TOPO3-01.
+7. **AF-8.** Baked-text scan labelled a T-BENCH instrument used as the E5 trigger; A/V offset claimed only on lipsync artifacts.
+8. **AF-9 / AF-11 / AF-13 / AF-15.** System choices relabelled `system_derived` with rationale (IMG-CORE-02 entities; VID-2SPK-01 relationships and duration; VID-MS-01 brand_requirements now `absent`); music blueprints carry music checks; judging time re-estimated by lane at 312 min (30–120 s per artifact, basis on the row); `priced_against_roster` no longer embeds the branch HEAD so `COST-TABLE.yaml` rebuilds byte-identical after its own commit (roster sha256 unchanged, `99cde63c8c66…`).
+9. **Register.** Eight borderline requests rewritten so the buyer describes what they want and the contract carries the test (VID-T2V-01, VID-2SPK-01, VID-TOPO3-01, VID-MS-01, AUD-TTS-02, AUD-LIP-01/02/03), each listed as `register_rewrite_after_audit` in `source.adaptation`; VID-MS-01's livery constraint is handled by not requesting the aircraft.
+10. **Storage.** The route catalogue now lives only in `COST-TABLE.yaml` (pointer in `TEST-CASES.yaml`) so the package stays ≤ 1 MB (1021 KB).
+
+**Counts (OBSERVED):** 1a **192**, 1b **96**, total **288**, conditional 32 — versus the task's 186 / 112 / 298 + 32; README explains the delta (AF-1 +4; AF-3 +2 and −16). **In-cap nominal USD 156.46** (1a 75.65, 1b 80.81); cash 115.45, GCP credits 41.01, Sarvam ₹0.8; unpinned excluded 20 calls (gpt-image-2-edit, sync-lipsync-v3, veo-3.1-lite-i2v).
+
+| tranche | pool | calls | priced | unpinned | nominal USD |
+|---|---|---|---|---|---|
+| 1a | cash | 142 | 130 | 12 | 50.15 |
+| 1a | credits | 50 | 50 | 0 | 25.5 |
+| 1b | cash | 66 | 60 | 6 | 65.3 |
+| 1b | credits | 24 | 22 | 2 | 15.51 |
+| 1b | sarvam_credits | 6 | 6 | 0 | 0.01 |
+
+**Files changed:** ACCEPTANCE-CONTRACTS.md, COST-TABLE.yaml, COVERAGE-MATRIX.md, ELIMINATION-RULES.md, EVALUATOR-PLAN.yaml, IRREDUCIBILITY.md, README.md, SEED-POLICY.yaml, TEST-CASES.yaml; the 10 blueprints above; all 35 twins (the E5 section is new in every twin); `tools/*` (generator updated). Self-check: F.1–F.9, contract-leak guard, 9:16 on every TOPO-03 arm, chain 0 calls + Wan native, same line on TOPO-01 arms, drive cap, AF-5 denominators, T-BENCH/A-V placement, matrix from routes, pre-check separation, storage 1021 KB ≤ 1 MB — all PASS. Not the Tester's verdict.

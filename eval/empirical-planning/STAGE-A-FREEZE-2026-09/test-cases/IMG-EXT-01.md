@@ -44,11 +44,16 @@
 - ACCEPT only if the boat and the headline sit in the same relationship to each other as in the supplied banner.
 - REJECT if the headline's letters have changed shape, spacing or spelling.
 - REJECT if the added sky or water shows a visible seam, a repeated tile, a horizon that does not line up, or a second boat.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): flux-2-pro-edit, gpt-image-2-edit, nano-banana-pro-edit, seedream-5-pro-edit.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro-edit, gpt-image-2-edit, nano-banana-pro-edit, seedream-5-pro-edit.
 
 **Blueprint:** `BLUEPRINTS/IMG-EXT-01.blueprint.md` (sha256 `0eb6ca1595e63510…`, author executor_agent)
 

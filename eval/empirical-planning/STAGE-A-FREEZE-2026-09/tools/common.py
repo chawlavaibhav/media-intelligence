@@ -35,8 +35,9 @@ def conds(case, *, delivery, load, reference=None, interaction=None, motion=None
         "COND-SCALE": scale or dict(deliverable_count=1, is_variant_set=False, set_acceptance_basis="per_deliverable"),
     }
 
-def rt(key, arm, tranche, params, quantity, repeats=2, quantity_unit=None, exception=None, item_id=None):
+def rt(key, arm, tranche, params, quantity, repeats=2, quantity_unit=None, exception=None, item_id=None, screen_status=None):
     d = dict(route_key=key, arm=arm, tranche=tranche, params=params, quantity=quantity, repeats=repeats)
+    if screen_status: d["screen_status"] = screen_status
     if quantity_unit: d["quantity_unit"] = quantity_unit
     if exception: d["repeats_exception"] = exception
     if item_id: d["item_id"] = item_id

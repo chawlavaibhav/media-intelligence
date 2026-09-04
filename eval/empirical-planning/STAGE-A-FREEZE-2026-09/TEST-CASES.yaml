@@ -1,4 +1,4 @@
-# EVAL-039A — Stage A freeze package. Prices/pins by route key from EVAL-039B's ROSTER-REFRESH-2026-09.yaml (present at build time; read-only).
+# EVAL-039A — Stage A freeze package. Prices/pins by route key from EVAL-039B's roster (read-only).
 # STATUS: FROZEN PROPOSAL, USD 0, awaits the Controller's acceptance (task file §F, morning decisions in README.md).
 # Generated 2026-09-05 by the Executor agent from the committed packs, grammar and source pools; base cb92f1e. No provider, evaluator, OCR or LLM call was made.
 package: STAGE-A-FREEZE-2026-09
@@ -8,9 +8,9 @@ base: cb92f1e
 counts:
   cases: 35
   blueprints: 35
-  calls_1a: 186
-  calls_1b: 112
-  calls_total: 298
+  calls_1a: 192
+  calls_1b: 96
+  calls_total: 288
   calls_conditional: 32
   language_mix: {en: 15, hi: 12, hg: 8}
   language_mix_by_lane:
@@ -20,54 +20,7 @@ counts:
     MUS: {en: 1, hi: 1, hg: 0}
   fixtures: [IMG-CORE-04, VID-T2V-03, VID-I2V-04, AUD-LIP-01, AUD-LIP-02, AUD-LIP-03]
 cut_order_rule: cut_order_rank = the lowest-numbered task-§C cut item that touches the case (cut_order_items[] lists each item and whether it removes a route line, an arm, or the whole case), or never_cut with never_cut_reason (core item / Hindi-Hinglish item / TOPO-02/03 arms A and C); the cut order itself is in IRREDUCIBILITY.md
-route_catalogue:
-  gpt-image-2: {route_id: openai/gpt-image-2, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_image, unit_price: 0.053, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html, roster_route_key: gpt-image-2 / variant fallback, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, priced_surface: 'fal (the roster''s fallback record, route_status pinned); the credit surface azure_foundry gpt-image-2 is needs_controller_enablement', note: 'fal fallback pinned at 0.053/image for 1024x1024 at quality=medium (fal''s default is high at 0.211 — the harness must set quality=medium); the credit surface is Azure gpt-image-2 (token-metered $30/1M output tokens, per-image unknown) and needs a Controller deployment (roster: needs_controller_enablement; MD-9)', credit_alternative: azure_foundry gpt-image-2 (credits) only if the Controller deploys a resource — morning decision 3}
-  nano-banana-2: {route_id: gemini-3.1-flash-image, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_image, unit_price: 0.067, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: nano-banana-2, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
-  nano-banana-pro: {route_id: gemini-3-pro-image, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: premium, unit: per_image, unit_price: 0.134, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: nano-banana-pro, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
-  seedream-5-pro: {route_id: bytedance/seedream/v5/pro/text-to-image, surface: fal, billing_pool: cash, route_status: pinned, arm_class: premium, unit: per_image, unit_price: 0.0675, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json, roster_route_key: seedream-5-pro, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  flux-2-pro: {route_id: fal-ai/flux-2-pro, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_image, unit_price: 0.03, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json, roster_route_key: flux-2-pro / variant fallback, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, priced_surface: 'fal (the roster''s fallback record, route_status pinned); the credit surface azure_foundry FLUX.2-pro is needs_controller_enablement', note: 'fal fallback pinned at 0.03 first megapixel (1 MP outputs); Azure FLUX.2-pro lists the same 0.03 on credits but no deployment exists (roster: needs_controller_enablement; MD-9)', credit_alternative: 'azure_foundry FLUX.2-pro (credits, eastus/southindia) only if the Controller deploys — morning decision 3'}
-  qwen-image-3: {route_id: alibaba/qwen-image-3, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_image, unit_price: 0.04, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json, roster_route_key: qwen-image-3, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  sd3.5-large: {route_id: 'stability.sd3-5-large-v1:0', surface: bedrock, billing_pool: credits, route_status: needs_controller_enablement, arm_class: cheap, unit: per_image, unit_price: 0.08, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/sd3.5-large/aws-bedrock-list-foundation-model-agreement-offers-sd3.5-large.json, roster_route_key: sd3.5-large, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: 'roster: price pinned from the Bedrock offer rate card and the account reads AUTHORIZED (INFERRED, to be confirmed by one metered call — MD-9); the task records the route as needs_controller_enablement (morning decision 4)'}
-  mai-image-2.6: {route_id: MAI-Image-2.6, surface: azure, billing_pool: credits, route_status: needs_controller_enablement, arm_class: cheap, unit: per_image, unit_price: null, price_status: unpinned, price_ref: unpinned — no projectable price in eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml, roster_route_key: mai-image-2.6, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: 'roster: price unpublished (Retail Prices API has no 2.6 meters)'}
-  recraft-v4: {route_id: fal-ai/recraft/v4 (text-to-image), surface: fal, billing_pool: cash, route_status: pinned, arm_class: premium, unit: per_image, unit_price: 0.04, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/recraft-v4/fal-recraft-v4-text-to-image.html, roster_route_key: recraft-v4, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, note: EVAL-010 verified the text-to-vector path has no seed; the raster path is the pinned one}
-  flux-2-pro-edit: {route_id: fal-ai/flux-2-pro/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: 0.045, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json, roster_route_key: flux-2-pro-edit, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, roster_base_price: 0.03, addon: '0.015 per input megapixel × 1 reference (roster price_addons.additional_megapixel, pinned in the same bytes)', note: 'priced at 0.045 = pinned base 0.03 + pinned 0.015 addon for one 1-MP reference, as the committed roster''s projection does; a 2- or 3-reference case (IMG-COMP-01, IMG-REF-*) may bill more addon megapixels — recorded, not projected', credit_alternative: azure_foundry FLUX.2-pro with reference image (credits) if deployed — morning decision 3, quantity_rule: '0.03 first output megapixel + 0.015 per input megapixel (price_addons.additional_megapixel): one 1-MP reference → 0.045 per edit generation (roster after Auditor AF-2, commit 3434b37)'}
-  nano-banana-pro-edit: {route_id: fal-ai/nano-banana-pro/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: 0.15, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json, roster_route_key: nano-banana-pro-edit, seed_support: exposed, conditional: false, plan_ref: plan §C.3, note: 'roster records the fal edit route as the plan names it; the same model edits on Vertex (gemini-3-pro-image with image inputs, 0.134 + 560 input tokens per reference) on credits — the roster and this package both flag that the Controller may switch the surface (open question)', credit_alternative: 'vertex gemini-3-pro-image with image inputs (credits, 0.134 pinned + input tokens) — Controller may switch'}
-  seedream-5-pro-edit: {route_id: bytedance/seedream/v5/pro/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: 0.0675, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json, roster_route_key: seedream-5-pro-edit, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  gpt-image-2-edit: {route_id: openai/gpt-image-2/edit, surface: fal, billing_pool: cash, route_status: pinned, arm_class: edit, unit: per_image, unit_price: null, price_status: unpinned, price_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2-edit/fal-api-models-openai-gpt-image-2-edit.json, roster_route_key: gpt-image-2-edit, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, note: 'pinned but not projectable: only the token meter ($30/1M output tokens) is in the pinned bytes; no per-image table for the edit path → 0 in totals, listed under unpinned (the roster''s own reading)', credit_alternative: azure_foundry gpt-image-2 edit (credits) if deployed — morning decision 3}
-  veo-3.1-fast: {route_id: veo-3.1-fast-generate-001, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.1, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: veo-3.1-fast / variant t2v, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
-  kling-v3-pro-audio: {route_id: fal-ai/kling-video/v3/pro/text-to-video (audio on), surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.168, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json, roster_route_key: kling-v3-pro / variant t2v-audio-on, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, note: 'the roster pins two Kling t2v prices: 0.112/s silent, 0.168/s with native audio; the core runs with audio where native, so the audio-on price applies'}
-  kling-v3-pro: {route_id: fal-ai/kling-video/v3/pro/text-to-video (silent), surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.112, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json, roster_route_key: kling-v3-pro / variant t2v, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3}
-  minimax-h3-max: {route_id: minimax/h3-max/text-to-video (768p), surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.08, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json, roster_route_key: minimax-h3-max / variant t2v-768p, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: regular 0.08/s; the 0.02/s promotion ending 7 Sep is recorded in the roster and never used}
-  wan-3.0-prime: {route_id: alibaba/wan-3.0-prime/text-to-video, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.14, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-t2v.json, roster_route_key: wan-3.0-prime / variant t2v, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  gemini-omni-1.1-flash: {route_id: gemini-omni-1.1-flash-preview, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.10136, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: gemini-omni-flash-1.1 / variant t2v, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
-  seedance-2.5: {route_id: bytedance/seedance-2.5/text-to-video, surface: fal, billing_pool: cash, route_status: pinned, arm_class: premium, unit: per_second, unit_price: 0.473, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-t2v.json, roster_route_key: seedance-2.5 / variant t2v, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  sora-2: {route_id: sora-2, surface: azure, billing_pool: credits, route_status: needs_controller_enablement, arm_class: cheap, unit: per_second, unit_price: 0.1, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/sora-2/azure-retail-prices-sora-2.json, roster_route_key: sora-2, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: preview; eastus2/swedencentral; new Azure resource needed; gating unknown (MD-2)}
-  veo-3.1-lite: {route_id: veo-3.1-lite-generate-001, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.05, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: veo-3.1-lite, seed_support: exposed, conditional: false, plan_ref: plan §C.3, note: 'PUBLIC_PREVIEW; the Vertex cell reads ''$0.05 / 1 count'' — read as per second (roster assumption, recorded)'}
-  veo-3.1-full: {route_id: veo-3.1-generate-001, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: premium, unit: per_second, unit_price: 0.4, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: veo-3.1-full, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
-  minimax-h3-max-480p: {route_id: minimax/h3-max/text-to-video (480p), surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.05, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json, roster_route_key: minimax-h3-max / variant t2v-480p, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  veo-3.1-fast-i2v: {route_id: veo-3.1-fast-generate-001 (image input), surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.1, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: veo-3.1-fast / variant i2v, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
-  kling-v3-pro-i2v: {route_id: fal-ai/kling-video/v3/pro/image-to-video, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.112, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-i2v.json, roster_route_key: kling-v3-pro / variant i2v, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  minimax-h3-max-i2v: {route_id: minimax/h3-max/image-to-video (768p), surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.08, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json, roster_route_key: minimax-h3-max / variant i2v-768p, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: cheapest PINNED image-to-video route at 720p-class (0.08/s) — used for TOPO-03 arm C and the VID-2SPK-01 chain; H3 Max i2v-480p (0.05/s) is cheaper but below round one's 720p}
-  wan-3.0-prime-i2v: {route_id: alibaba/wan-3.0-prime/image-to-video, surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.14, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-i2v.json, roster_route_key: wan-3.0-prime / variant i2v, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  seedance-2.5-i2v: {route_id: bytedance/seedance-2.5/image-to-video, surface: fal, billing_pool: cash, route_status: pinned, arm_class: premium, unit: per_second, unit_price: 0.473, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-i2v.json, roster_route_key: seedance-2.5 / variant i2v, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  veo-3.1-lite-i2v: {route_id: veo-3.1-lite-generate-001 (image input), surface: vertex, billing_pool: credits, route_status: unpinned, arm_class: cheap, unit: per_second, unit_price: null, price_status: unpinned, price_ref: unpinned — no projectable price in eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml, roster_route_key: veo-3.1-lite, seed_support: exposed, conditional: false, plan_ref: plan §C.3, note: task-fixed arm-A route for TOPO-03; the roster pins Veo 3.1 Lite t2v at 0.05/s but records no i2v variant and capabilities null → this line is unpinned (0 in totals; the Controller may price it at 0.05/s if Lite accepts an image input)}
-  seedance-2.5-ref2v: {route_id: bytedance/seedance-2.5/reference-to-video, surface: fal, billing_pool: cash, route_status: pinned, arm_class: premium, unit: per_second, unit_price: 0.473, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-ref2v.json, roster_route_key: seedance-2.5 / variant ref2v, seed_support: undocumented, conditional: false, plan_ref: plan §C.3}
-  veo-3.1-fast-ref2v: {route_id: veo-3.1-fast-generate-001 (reference-to-video), surface: vertex, billing_pool: credits, route_status: pinned, arm_class: native, unit: per_second, unit_price: 0.1, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: veo-3.1-fast / variant ref2v, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: 'the plan names ''veo-3.1 reference-to-video'' without a tier; the roster pins the Fast tier''s ref2v variant at 0.10/s, so that tier is used (credits); EVAL-010: the fal veo3.1 reference-to-video path has no seed — Vertex path undocumented'}
-  kling-v3-elements: {route_id: fal-ai/kling-video/v3/pro/elements, surface: fal, billing_pool: cash, route_status: unpinned, arm_class: cheap, unit: per_second, unit_price: null, price_status: unpinned, price_ref: unpinned — no projectable price in eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml, roster_route_key: kling-v3-pro / variant elements-ref2v, seed_support: undocumented, conditional: true, plan_ref: plan §C.3, note: 'plan: ''if pinned'' — the roster records the elements variant as unpinned'}
-  kling-v3-pro-15s: {route_id: fal-ai/kling-video/v3/pro/text-to-video (15 s), surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.112, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json, roster_route_key: kling-v3-pro / variant 15s, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3d, note: silent price; VID-MS-01 runs ambient audio where native — if audio-on is chosen the 0.168/s variant applies (recorded)}
-  seedance-2.5-15s: {route_id: bytedance/seedance-2.5/text-to-video (15 s), surface: fal, billing_pool: cash, route_status: pinned, arm_class: premium, unit: per_second, unit_price: 0.473, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-t2v.json, roster_route_key: seedance-2.5 / variant 15s, seed_support: undocumented, conditional: false, plan_ref: plan §C.3d}
-  gemini-omni-1.1-flash-long: {route_id: gemini-omni-1.1-flash-preview (longest supported ≤ 15 s), surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.10136, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: gemini-omni-flash-1.1 / variant multishot-10s, seed_support: exposed, conditional: false, plan_ref: plan §C.3d, note: the roster pins a 10-s multishot variant; the longest supported duration ≤ 15 s is not stated (capabilities null) — priced at 15 s × 0.10136 as the ceiling}
-  veo-3.1-fast-extend: {route_id: veo-3.1-fast-generate-001 + extend (8 s + 7 s), surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.1, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: veo-3.1-fast / variant extend-15s, seed_support: exposed, conditional: false, plan_ref: plan §C.3d, note: one trial = 2 API calls; 15 billed seconds}
-  kling-v3-pro-10s: {route_id: fal-ai/kling-video/v3/pro/text-to-video (10 s multi-shot prompt), surface: fal, billing_pool: cash, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.112, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json, roster_route_key: kling-v3-pro / variant multishot-10s, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3}
-  gemini-omni-1.1-flash-10s: {route_id: gemini-omni-1.1-flash-preview (10 s), surface: vertex, billing_pool: credits, route_status: pinned, arm_class: cheap, unit: per_second, unit_price: 0.10136, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: gemini-omni-flash-1.1 / variant multishot-10s, seed_support: exposed, conditional: false, plan_ref: plan §C.3}
-  sarvam-bulbul-v3: {route_id: 'bulbul:v3', surface: direct, billing_pool: sarvam_credits, route_status: pinned, arm_class: native, unit: per_1k_chars_inr, unit_price: 3.0, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html, roster_route_key: sarvam-bulbul-v3, seed_support: absent_in_api, conditional: false, plan_ref: plan §C.3, note: 'key present: the Controller session stated it and EVAL-039B''s Tester (DEFECT-1, commit a24b197) corrected the overnight ''empty value'' reading to a 36-character value (length check only; never read by this task); price pinned ₹3.00 per 1,000 characters; the roster labels Sarvam''s prepaid balance ''cash'', this package keeps the task''s ''sarvam_credits'' pool name — same money'}
-  elevenlabs-v3: {route_id: fal-ai/elevenlabs/tts/eleven-v3, surface: fal, billing_pool: cash, route_status: pinned, arm_class: native, unit: per_1k_chars, unit_price: 0.1, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/elevenlabs-v3/fal-elevenlabs-tts-eleven-v3.html, roster_route_key: elevenlabs-v3, seed_support: exposed, conditional: false, plan_ref: plan §C.3, note: 'EVAL-010: ElevenLabs direct exposes seed; the fal wrapper''s seed support is what the harness records'}
-  chirp-3-hd-hi-in: {route_id: hi-IN-Chirp3-HD-<voice> (Cloud Text-to-Speech), surface: vertex, billing_pool: credits, route_status: needs_controller_enablement, arm_class: native, unit: per_1M_chars, unit_price: null, price_status: unpinned, price_ref: unpinned — no projectable price in eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml, roster_route_key: chirp-3-hd-hi-in, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: Text-to-Speech API not enabled in the project; price page JS-rendered}
-  azure-neural-tts-hi-in: {route_id: Azure Neural TTS hi-IN, surface: azure, billing_pool: credits, route_status: needs_controller_enablement, arm_class: native, unit: per_1M_chars, unit_price: 15.0, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/azure-neural-tts-hi-in/azure-retail-prices-speech-neural-centralindia.json, roster_route_key: azure-neural-tts-hi-in, seed_support: undocumented, conditional: true, plan_ref: plan §C.3c, note: no Speech resource exists yet}
-  sync-lipsync-v3: {route_id: fal-ai/sync-lipsync/v3, surface: fal, billing_pool: cash, route_status: unpinned, arm_class: chain, unit: per_second, unit_price: null, price_status: unpinned, price_ref: unpinned — no projectable price in eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml, roster_route_key: sync-lipsync-v3, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: 'UNPINNED at the committed roster (EVAL-039B Auditor AF-1, commit 3434b37): the exact endpoint''s pricing field is empty in fal''s JSON and page; the only price string in the bytes is the sibling image-to-video endpoint''s 0.1333/s. 12 calls outside the cap until pinned. EVAL-010 verified v2/pro has no seed; v3 not enumerated there', quantity_rule: 'per output second (the August figure USD 8/min = 0.1333/s belongs to the sibling endpoint fal-ai/sync-lipsync/v3/image-to-video, not to this one)'}
-  kling-lipsync-a2v: {route_id: fal-ai/kling-video/lipsync/audio-to-video, surface: fal, billing_pool: cash, route_status: pinned, arm_class: chain, unit: per_second, unit_price: 0.014, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/kling-lipsync-audio-to-video/fal-api-models-kling-lipsync-a2v.json, roster_route_key: kling-lipsync-audio-to-video, seed_support: undocumented, conditional: false, plan_ref: plan §C.3, note: 'the second lipsync route (plan: ''LatentSync-class or Kling lipsync''); the roster added it and notes fal-ai/latentsync exists ($0.2/video, not pinned)', quantity_rule: 'per input video second, rolled up to the nearest 5-s increment (a 6-s or 8-s plate bills as 10 s)'}
-  lyria: {route_id: lyria-002, surface: vertex, billing_pool: credits, route_status: pinned, arm_class: native, unit: per_clip, unit_price: 0.06, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html, roster_route_key: lyria, seed_support: undocumented, conditional: false, plan_ref: plan §C.3d, note: 'NOT RECONCILED (contradiction 1 / MD-7): the plan says ''Lyria 3'' (priced 0.04 per 30-s clip on the page) but only lyria-002 answers on the publisher endpoint; the roster prices lyria-002 at the ''Lyria 2'' row 0.06 per clip — used here; morning decision 10'}
-  elevenlabs-music: {route_id: fal-ai/elevenlabs/music, surface: fal, billing_pool: cash, route_status: pinned, arm_class: native, unit: per_minute, unit_price: 0.6, price_status: pinned, price_ref: eval/empirical-planning/price-pins-2026-09/elevenlabs-music/fal-api-models-elevenlabs-music.json, roster_route_key: elevenlabs-music, seed_support: undocumented, conditional: false, plan_ref: plan §C.3d, quantity_rule: 'per output minute, rounded up (a 30-s clip bills as 1 minute)'}
+route_catalogue: 'see COST-TABLE.yaml → route_catalogue (one record per route_key: id, surface, pool, status, unit price, pin path, seed support, notes)'
 interlock_eval_039b: {item_id: '= case_id (route-level item_id where a case carries several billed items, e.g. VID-2SPK-01 TTS lines)', quantity: 'routes[].quantity with routes[].quantity_unit ∈ {images, seconds, chars, minutes, clips}', regenerate: python3 eval/empirical-planning/project_costs.py --test-cases eval/empirical-planning/STAGE-A-FREEZE-2026-09/TEST-CASES.yaml (EVAL-039B), price_pins: ROSTER-REFRESH-2026-09.yaml present at build time; every route record names its roster_route_key and price_status; the COST-TABLE carries a roster_cross_check block}
 cases:
 - case_id: IMG-CORE-01
@@ -342,7 +295,7 @@ cases:
     provenance:
       requested_operation: customer_stated
       modality: customer_stated
-      entities: customer_stated
+      entities: {value: system_derived, rationale: 'the person and the phone are customer_stated; the gender and age (male, 25–28) are the Executor''s adaptation so the still can serve VID-I2V-02/03 and the male-voice lipsync drives — BR-F03-HG names neither'}
       relationships: customer_stated
       text_requirements: customer_stated (none)
       language_topology: customer_implied
@@ -371,7 +324,7 @@ cases:
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: ['ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.', 'ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.', 'REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).', 'REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.', 'ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features) and the expression reads as a relaxed smile rather than a blank stare.']
+  acceptance_contract: ['ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.', 'ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.', 'REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).', 'REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.', 'ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or a fixed blank stare.']
   blueprint_ref: BLUEPRINTS/IMG-CORE-02.blueprint.md
   blueprint_author: executor_agent
   blueprint_sha256: 9846d024ac29a6cdcb22c0db453e33c2054800e5b0268bb51b4038347d5d5479
@@ -797,7 +750,7 @@ cases:
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: ['ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.', 'ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.', 'REJECT if the child''s expression reads as frightened, crying hard or in danger; ACCEPT only if it reads as quietly sad or wistful.', 'REJECT if any lettering, title or numeral appears anywhere in the image.', 'REJECT if the response is a refusal, a blank/black image or a policy notice instead of an image (recorded as a refusal, counted under E1).']
+  acceptance_contract: ['ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.', 'ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.', 'REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT only if her mouth is closed or nearly closed.', 'REJECT if any lettering, title or numeral appears anywhere in the image.', 'REJECT if there is no picture — a blank or black frame, or text where the image should be.']
   blueprint_ref: BLUEPRINTS/IMG-CORE-04.blueprint.md
   blueprint_author: executor_agent
   blueprint_sha256: f0d4bcf1bf234b34f8e2ce03471a1350925112b1fdede34c2ce78f7dc9475a62
@@ -1016,7 +969,7 @@ cases:
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: ['ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every matra, the conjunct ष्ठ in मिष्ठान and the digits 20 correct; REJECT on any wrong, missing, doubled or invented character.', ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster., REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere., ACCEPT only if at least one of a sweet box or lit diyas is recognisable., REJECT if any string is cut by the frame edge or overlaps another string.]
+  acceptance_contract: ['ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented character.', ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster., REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere., ACCEPT only if at least one of a sweet box or lit diyas is recognisable., REJECT if any string is cut by the frame edge or overlaps another string.]
   blueprint_ref: BLUEPRINTS/IMG-TEXT-01.blueprint.md
   blueprint_author: executor_agent
   blueprint_sha256: 72de774d6dcaed7e358837632d1d6feee1b0329689628561214cfcad2b7781ba
@@ -1113,7 +1066,7 @@ cases:
     quantity_unit: images
     price_status: pinned
   downstream_reuse:
-    feeds: [VID-TOPO3-01 arm A plate (the accepted arm-A draw), VID-TOPO3-01 arm C plate (the arm-C textless base)]
+    feeds: ['VID-TOPO3-01 reuses this brief and blueprint doctrine; its 9:16 plates are drawn under VID-TOPO3-01 (AF-1), so no square draw of this case is a plate']
     consumes: []
   cut_order_rank: never_cut
   cut_order_items: []
@@ -1883,10 +1836,10 @@ cases:
   reference_assets:
   - {role: identity_person, description: 'one clean head-and-shoulders portrait of a consenting adult, ≥ 1 MP', rights_rule: Controller-owned photo with the subject's consent, decoys_required: true, decoys: '2 same-category decoys: portraits of two other adults of similar age and demographics, used only at judging/qualification (Q4)', status: specified}
   - {role: identity_product, description: one packshot of a lipstick (or any small cosmetic pack) in one distinct shade; the shade's sRGB value recorded at fixture time, rights_rule: Controller-owned photo (no third-party brand marks visible), decoys_required: true, decoys: '2 decoys: the same kind of pack in two neighbouring shades', status: specified}
-  acceptance_contract: [ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy portraits (the judge must pick the supplied portrait as the match)., ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade., 'ACCEPT only if the model''s hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.', 'ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct (composited at USD 0 on the accepted draw; judged on the final).', 'REJECT if a second person, a second product or any other lettering appears.']
+  acceptance_contract: [ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy portraits (the judge must pick the supplied portrait as the match)., ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade., 'ACCEPT only if the model''s hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.', 'ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct.', 'REJECT if a second person, a second product or any other lettering appears.']
   blueprint_ref: BLUEPRINTS/IMG-COMP-01.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: 43973582de2e94fabf0c7ca5a9663481312330f5e06aec8f4c39606b882b42a3
+  blueprint_sha256: 487c1070482b8131f5247580f628eeccbfcdc94501563b00c4f91fab0376e56a
   routes:
   - route_key: flux-2-pro-edit
     route_id: fal-ai/flux-2-pro/edit
@@ -2293,12 +2246,12 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: hi
-    text: एक 6 सेकंड का वीडियो चाहिए, Reels के लिए vertical। एक किसान खेत में खड़ा होकर camera के सामने बोल रहा है — "इस दवाई से मेरी फसल दोगुनी हुई"। बोलते हुए उसका चेहरा साफ़ दिखे, हाथ में product की बोतल हो। आवाज़ वीडियो में ही होनी चाहिए, अलग से voice-over नहीं। Simple और भरोसेमंद लगे, ज़्यादा चमक-दमक नहीं। कोई text नहीं, "किसान भरोसा" वाला end card हम बाद में लगाएंगे।
+    text: एक 6 सेकंड का वीडियो चाहिए, Reels के लिए vertical। एक किसान खेत में खड़ा होकर camera के सामने बोल रहा है — "इस दवाई से मेरी फसल दोगुनी हुई"। बोलते हुए उसका चेहरा साफ़ दिखे, हाथ में product की बोतल हो। वो खुद बोलता दिखे, dubbing जैसा न लगे। Simple और भरोसेमंद लगे, ज़्यादा चमक-दमक नहीं। कोई text नहीं, "किसान भरोसा" वाला end card हम बाद में लगाएंगे।
     attachments_named: []
   source:
     pool: brief_bank
     id: BR-F07-HI
-    adaptation: [duration_set_to_6s (source ≈ 20 s), end_card_dropped_customer_adds_in_post ("किसान भरोसा" removed from the generated clip), native_audio_stated (the customer asks for the voice to be in the video itself — TOPO-01 arm A), aspect_stated_9_16 (Reels), register_rewritten_to_devanagari_whatsapp, 'source flag carried: the spoken line is an efficacy claim presented as testimony; recorded as the customer wrote it, never to be used as real advertising without substantiation']
+    adaptation: [duration_set_to_6s (source ≈ 20 s), end_card_dropped_customer_adds_in_post ("किसान भरोसा" removed from the generated clip), 'register_rewrite_after_audit (the native-audio clause ''आवाज़ वीडियो में ही होनी चाहिए, अलग से voice-over नहीं'' replaced by the buyer''s own words ''वो खुद बोलता दिखे, dubbing जैसा न लगे''; the contract carries the test)', aspect_stated_9_16 (Reels), register_rewritten_to_devanagari_whatsapp, 'source flag carried: the spoken line is an efficacy claim presented as testimony; recorded as the customer wrote it, never to be used as real advertising without substantiation']
   nr:
     requested_operation: generate
     modality: video
@@ -2348,7 +2301,7 @@ cases:
       affected_fields: [R11]
     acceptance_intent:
       stated_success_criteria: [face clearly visible while speaking, voice in the video, simple and trustworthy]
-      stated_rejection_criteria: [separate voice-over, any text]
+      stated_rejection_criteria: [looks dubbed, any text]
       hard_constraints: ['one visible speaker, Hindi', the exact line, bottle in hand, no lettering]
       soft_preferences: [not flashy]
       free_choices: ['field, crop, time of day']
@@ -2805,7 +2758,7 @@ cases:
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: ['REJECT if the response is a refusal, an error, a blank clip or a policy notice (recorded as a refusal under E1).', ACCEPT only if the clip is clearly illustrated (picture-book rendering) and not photoreal., ACCEPT only if a small child stands alone in the rain first and an adult with an umbrella then arrives and embraces the child before the clip ends., 'REJECT if the child reads as in danger, injured or terrified rather than a little scared, or if the ending is not the embrace.', 'REJECT if any speech, music or lettering is present.']
+  acceptance_contract: ['REJECT if there is no clip — a blank or black video, or text where the video should be.', ACCEPT only if the clip is clearly illustrated (picture-book rendering) and not photoreal., ACCEPT only if a small child stands alone in the rain first and an adult with an umbrella then arrives and embraces the child before the clip ends., 'REJECT if the child reads as in danger, injured or terrified rather than a little scared, or if the ending is not the embrace.', 'REJECT if any speech, music or lettering is present.']
   blueprint_ref: BLUEPRINTS/VID-T2V-03.blueprint.md
   blueprint_author: executor_agent
   blueprint_sha256: 6922a95de366d76d9b2cac94bda55e29fbeb3eedd7f3b02ecd96533a52e0482f
@@ -3101,12 +3054,12 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: hi
-    text: 8 सेकंड का वीडियो चाहिए, Reels और Status के लिए vertical। दो लोग — पति-पत्नी, 30-35 साल — नए घर में दीवार का रंग चुन रहे हैं, हाथ में paint का डिब्बा। पत्नी कहती है "यह रंग कैसा लगेगा?" और पति कहता है "घर जैसा"। दोनों की आवाज़ वीडियो में ही हो, और जो बोल रहा है उसी के होंठ हिलें, दूसरे के नहीं। Emotional और warm लगे। पति का जवाब "घर जैसा" बदलना नहीं, वो हमारी tagline से जुड़ा है। कोई text नहीं, "रंग जो घर बनाए" वाला end card हम लगाएंगे।
+    text: 8 सेकंड का वीडियो चाहिए, Reels और Status के लिए vertical। दो लोग — पति-पत्नी, 30-35 साल — नए घर में दीवार का रंग चुन रहे हैं, हाथ में paint का डिब्बा। पत्नी कहती है "यह रंग कैसा लगेगा?" और पति कहता है "घर जैसा"। दोनों की आवाज़ वीडियो में ही हो, असली बातचीत जैसी लगे। Emotional और warm लगे। पति का जवाब "घर जैसा" बदलना नहीं, वो हमारी tagline से जुड़ा है। कोई text नहीं, "रंग जो घर बनाए" वाला end card हम लगाएंगे।
     attachments_named: []
   source:
     pool: brief_bank
     id: BR-F08-HI
-    adaptation: ['duration_set_to_8s (source ≈ 20 s; two turns with a pause need 8 s — system_derived, recorded)', end_card_dropped_customer_adds_in_post ("रंग जो घर बनाए"), ages_stated (30–35) so the chain arm's TTS voices can be chosen, turn_assignment_stated ('जो बोल रहा है उसी के होंठ हिलें') — the customer's own words for the capability under test, aspect_stated_9_16, register_rewritten_to_devanagari_whatsapp]
+    adaptation: ['duration_set_to_8s (source ≈ 20 s; two turns with a pause need 8 s — system_derived, recorded)', end_card_dropped_customer_adds_in_post ("रंग जो घर बनाए"), ages_stated (30–35) so the chain arm's TTS voices can be chosen, 'register_rewrite_after_audit (the turn-assignment clause ''जो बोल रहा है उसी के होंठ हिलें, दूसरे के नहीं'' removed; the buyer now says ''असली बातचीत जैसी लगे'' and the contract carries the turn test)', aspect_stated_9_16, register_rewritten_to_devanagari_whatsapp]
   nr:
     requested_operation: generate
     modality: video
@@ -3173,12 +3126,12 @@ cases:
     provenance:
       requested_operation: customer_stated
       modality: customer_stated
-      entities: customer_stated
-      relationships: customer_stated
+      entities: customer_stated (ages 30–35 by adaptation, listed)
+      relationships: {value: system_derived, rationale: '''speaks_to / replies_to'' are customer_stated; ''husband holds paint_can'' is the Executor''s staging — the source says only ''paint can dikhe'''}
       text_requirements: customer_stated (none)
       language_topology: customer_stated
       speaker_topology: customer_stated
-      temporal_structure: customer_stated (duration set on the freeze — see derived)
+      temporal_structure: {value: system_derived, rationale: 8 s chosen on the freeze for two turns plus a pause; the source says ≈ 20 s; the request text states 8 s by adaptation}
       subject_motion: customer_implied
       camera_motion: {value: system_derived, rationale: delegated; stillness (CA-D11)}
       delivery_aspect: customer_stated
@@ -3186,7 +3139,7 @@ cases:
       acceptance_intent: customer_stated
   capabilities:
     primary: two_speaker_turn_assignment_and_lip_sync
-    exercised: [two_speaker_turn_assignment_and_lip_sync, spoken_script_correctness, pronunciation_intelligibility, human_human_interaction, person_stability_in_clip, audio_video_synchronisation, delivery_format_compliance, latency_errors_refusals, reproducibility, cost_and_cpao, reliability_pass_at_k]
+    exercised: [two_speaker_turn_assignment_and_lip_sync, spoken_script_correctness, pronunciation_intelligibility, human_human_interaction, person_stability_in_clip, delivery_format_compliance, latency_errors_refusals, reproducibility, cost_and_cpao, reliability_pass_at_k]
   conditions:
     COND-DELIVERY: {aspect_ratio: '9:16', resolution: 720p, duration_s: 8, fps: route default (recorded), delivery_size_declared: true, platform_target: reels+status}
     COND-LOAD: {n_people: 2, n_products: 1, n_countable_objects: 1, distractor_present: false, scene_complexity_class: simple interior}
@@ -3195,7 +3148,7 @@ cases:
     COND-MOTION: {camera_motion_class: static, subject_motion_class: gesture_speech, motion_magnitude_class: low, framing_instruction: 'two-shot, both faces visible'}
     COND-CONSTRAINT: {n_hard_constraints: 5, exact_string_count: 2, exact_string_length_chars: 25, brand_constraint_count: 0, prerequisite_depth: 0}
     COND-WORKFLOW:
-      workflow_mode_per_route_arm: {'native arm (Veo 3.1 fast, Kling v3, Omni Flash 1.1, Seedance 2.5)': t2v, chain arm: t2i plate → i2v → tts → transform_lipsync}
+      workflow_mode_per_route_arm: {'native arm (Veo 3.1 fast, Kling v3, Omni Flash 1.1, Seedance 2.5, Wan 3.0 Prime)': t2v, 'chain arm (recorded_not_screened, 0 calls)': t2i plate → i2v → tts → transform_lipsync}
       who_chose_workflow_mode: benchmark_fixed
       seed_fields: SEED-POLICY.yaml (policy unset)
     COND-SEQUENCE: {n_shots: 1, shot_boundaries_declared: false, is_multi_shot: false, set_size: 1, set_acceptance_basis: per_deliverable}
@@ -3208,7 +3161,7 @@ cases:
   acceptance_contract: ['ACCEPT only if two adults are visible and the audio carries, in Hindi and in this order, "यह रंग कैसा लगेगा?" then "घर जैसा" — every word present; REJECT if either line is missing, changed or paraphrased.', ACCEPT only if the woman's lips move while the first line is spoken and the man's lips move while the second is spoken., 'REJECT if the second speaker''s lips move while the first line is spoken, or the first speaker''s while the second is spoken.', ACCEPT only if a paint can is visible at some point in the clip., 'REJECT if either person changes identity within the clip, or if any lettering appears.']
   blueprint_ref: BLUEPRINTS/VID-2SPK-01.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: e906c5a3c1c5c3716b10ebb47954e0945fe6247998f89c435771a83bbcfa9f93
+  blueprint_sha256: 3450eb2363323b49802f794a8b9e3a9f04678dfcc57d70d896d021c333f79f20
   routes:
   - route_key: veo-3.1-fast
     route_id: veo-3.1-fast-generate-001
@@ -3262,18 +3215,32 @@ cases:
     quantity: 8
     quantity_unit: seconds
     price_status: pinned
+  - route_key: wan-3.0-prime
+    route_id: alibaba/wan-3.0-prime/text-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: A_native
+    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
+    repeats: 2
+    tranche: 1a
+    item_id: VID-2SPK-01
+    quantity: 8
+    quantity_unit: seconds
+    price_status: pinned
   - route_key: flux-2-pro
     route_id: fal-ai/flux-2-pro
     surface: fal
     billing_pool: cash
     route_status: pinned
     arm: B_chain_plate
-    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: 'two-person plate, drawn once on the cheapest pinned image route (2 draws = repeats)', seed: unset}
-    repeats: 2
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: 'two-person plate (recorded, not screened)', seed: unset}
+    repeats: 0
     tranche: 1b
     item_id: VID-2SPK-01
     quantity: 1
     quantity_unit: images
+    screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
   - route_key: minimax-h3-max-i2v
     route_id: minimax/h3-max/image-to-video (768p)
@@ -3281,12 +3248,13 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_chain_i2v
-    params: {aspect: '9:16', duration_s: 8, resolution: 768p, audio: 'off', refs: 1, plate: accepted B_chain_plate draw, note: cheapest pinned i2v route at 720p-class (roster), seed: unset}
-    repeats: 2
+    params: {aspect: '9:16', duration_s: 8, resolution: 768p, audio: 'off', refs: 1, plate: B_chain_plate draw, seed: unset}
+    repeats: 0
     tranche: 1b
     item_id: VID-2SPK-01
     quantity: 8
     quantity_unit: seconds
+    screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
   - route_key: sarvam-bulbul-v3
     route_id: bulbul:v3
@@ -3294,12 +3262,13 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: B_chain_tts_L1
-    params: {line: 'यह रंग कैसा लगेगा?', voice: one female voice (route voice id recorded at dispatch), chars: 18, seed: unset}
-    repeats: 2
+    params: {line: 'यह रंग कैसा लगेगा?', voice: female, chars: 18, seed: unset}
+    repeats: 0
     tranche: 1b
     item_id: VID-2SPK-01-tts-L1
     quantity: 18
     quantity_unit: chars
+    screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
   - route_key: sarvam-bulbul-v3
     route_id: bulbul:v3
@@ -3307,12 +3276,13 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: B_chain_tts_L2
-    params: {line: घर जैसा, voice: one male voice (route voice id recorded at dispatch), chars: 7, seed: unset}
-    repeats: 2
+    params: {line: घर जैसा, voice: male, chars: 7, seed: unset}
+    repeats: 0
     tranche: 1b
     item_id: VID-2SPK-01-tts-L2
     quantity: 7
     quantity_unit: chars
+    screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
   - route_key: elevenlabs-v3
     route_id: fal-ai/elevenlabs/tts/eleven-v3
@@ -3320,12 +3290,13 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_chain_tts_L1
-    params: {line: 'यह रंग कैसा लगेगा?', voice: one female voice (route voice id recorded at dispatch), chars: 18, seed: unset}
-    repeats: 2
+    params: {line: 'यह रंग कैसा लगेगा?', voice: female, chars: 18, seed: unset}
+    repeats: 0
     tranche: 1b
     item_id: VID-2SPK-01-tts-L1
     quantity: 18
     quantity_unit: chars
+    screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
   - route_key: elevenlabs-v3
     route_id: fal-ai/elevenlabs/tts/eleven-v3
@@ -3333,12 +3304,13 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_chain_tts_L2
-    params: {line: घर जैसा, voice: one male voice (route voice id recorded at dispatch), chars: 7, seed: unset}
-    repeats: 2
+    params: {line: घर जैसा, voice: male, chars: 7, seed: unset}
+    repeats: 0
     tranche: 1b
     item_id: VID-2SPK-01-tts-L2
     quantity: 7
     quantity_unit: chars
+    screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
   - route_key: sync-lipsync-v3
     route_id: fal-ai/sync-lipsync/v3
@@ -3346,12 +3318,13 @@ cases:
     billing_pool: cash
     route_status: unpinned
     arm: B_chain_lipsync
-    params: {plate: accepted B_chain_i2v clip (8 s), drive: 'ElevenLabs v3 repeat 1, L1 then a 0.6 s silence then L2, joined by code at USD 0 (frozen drive rule; Sarvam if the Controller chooses in the morning — decision 9)', output_seconds: 8, seed: unset}
-    repeats: 2
+    params: {plate: B_chain_i2v clip (8 s), drive: 'L1 + 0.6 s silence + L2, joined by code', output_seconds: 8, seed: unset}
+    repeats: 0
     tranche: 1b
     item_id: VID-2SPK-01
     quantity: 8
     quantity_unit: seconds
+    screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: unpinned
   - route_key: kling-lipsync-a2v
     route_id: fal-ai/kling-video/lipsync/audio-to-video
@@ -3359,16 +3332,17 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: B_chain_lipsync
-    params: {plate: accepted B_chain_i2v clip (8 s), drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (8-s plate rolled up to the 5-s increment), seed: unset}
-    repeats: 2
+    params: {plate: B_chain_i2v clip (8 s), drive: same drive file, billed_input_seconds: '10', seed: unset}
+    repeats: 0
     tranche: 1b
     item_id: VID-2SPK-01
     quantity: 10
     quantity_unit: seconds
+    screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
   downstream_reuse:
     feeds: []
-    consumes: [chain arm consumes its own plate/i2v/TTS outputs]
+    consumes: ['the chain arm (recorded, not screened) would consume its own plate/i2v/TTS outputs']
   cut_order_rank: 7
   cut_order_items:
   - {item: 7, scope: 'arm: the chain (plate, i2v, TTS drives, lipsync)'}
@@ -3539,12 +3513,12 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: hi
-    text: जो दीपावली वाला poster बन रहा है, उसी का एक 6 सेकंड का vertical video भी चाहिए WhatsApp status के लिए। वही तीनों लाइनें — "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट", और "श्री गणेश मिष्ठान भंडार" सबसे बड़ा — पूरे वीडियो में साफ़ पढ़ने लायक रहें, हिलें-डुलें नहीं, एक भी अक्षर बदले नहीं। पीछे दीये जलते हुए, हल्की सी movement, मिठाई का डिब्बा वहीं रहे। कोई आवाज़ ज़रूरी नहीं।
+    text: जो दीपावली वाला poster बन रहा है, उसी का एक 6 सेकंड का vertical video भी चाहिए WhatsApp status के लिए। वही तीनों लाइनें — "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट", और "श्री गणेश मिष्ठान भंडार" सबसे बड़ा — video में साफ़ पढ़ने लायक रहें, spelling वही रहे। पीछे दीये जलते हुए, हल्की सी movement, मिठाई का डिब्बा वहीं रहे। कोई आवाज़ ज़रूरी नहीं।
     attachments_named: []
   source:
     pool: brief_bank
     id: BR-F01-HI
-    adaptation: ['converted_to_video_6s (same brief as IMG-TEXT-01, asked as a moving status)', aspect_set_to_9_16 (WhatsApp status), text_stability_stated ('हिलें-डुलें नहीं') — the customer's own words for text stability under motion, audio_not_required (customer states)]
+    adaptation: ['converted_to_video_6s (same brief as IMG-TEXT-01, asked as a moving status)', aspect_set_to_9_16 (WhatsApp status), 'register_rewrite_after_audit (the stability clause ''हिलें-डुलें नहीं, एक भी अक्षर बदले नहीं'' reduced to ''साफ़ पढ़ने लायक रहें, spelling वही रहे''; the contract carries the frame-to-frame test)', 'plates_drawn_at_9_16_under_this_case (AF-1: the IMG-TEXT-01 draws are square; arms A and C use 9:16 re-draws of the same brief made under this case, +4 image calls)', audio_not_required (customer states)]
   nr:
     requested_operation: generate
     modality: video
@@ -3622,28 +3596,54 @@ cases:
     COND-MOTION: {camera_motion_class: static, subject_motion_class: object_motion_subtle, motion_magnitude_class: low, framing_instruction: text static}
     COND-CONSTRAINT: {n_hard_constraints: 3, exact_string_count: 3, exact_string_length_chars: 67, brand_constraint_count: 0, prerequisite_depth: 1}
     COND-WORKFLOW:
-      workflow_mode_per_route_arm: {'arm A (H3 Max, Wan 3.0, Veo lite i2v)': i2v from the IMG-TEXT-01 arm-A accepted still, 'arm B (Veo 3.1 full, Kling v3)': t2v native text, 'arm C (H3 Max i2v, the cheapest pinned i2v route)': i2v from the IMG-TEXT-01 arm-C textless base → composite (tracked/static overlay by code)}
+      workflow_mode_per_route_arm: {'arm A plate (Qwen Image 3, 9:16)': t2i, 'arm A (H3 Max, Wan 3.0, Veo lite i2v)': 'i2v from the arm-A 9:16 plate', 'arm B (Veo 3.1 full, Kling v3)': t2v native text, 'arm C plate (FLUX.2 Pro, 9:16 textless)': t2i, 'arm C (H3 Max i2v, the cheapest pinned i2v route)': 'i2v from the arm-C 9:16 textless base → composite (tracked/static overlay by code)'}
       who_chose_workflow_mode: benchmark_fixed
       seed_fields: SEED-POLICY.yaml (policy unset)
     COND-SEQUENCE: {n_shots: 1, shot_boundaries_declared: false, is_multi_shot: false, set_size: 1, set_acceptance_basis: per_deliverable}
     COND-LANGUAGE: {language: hi, script_system: devanagari, is_code_mixed: false, n_speakers: 0, speaker_turn_boundaries_present: false}
     COND-INPUT: {input_source_class: none, input_resolution: not_applicable, input_degradation_class: not_applicable}
-    COND-PROVENANCE: {requested_operation: generate, workflow_mode: as COND-WORKFLOW.workflow_mode_per_route_arm, who_chose_workflow_mode: benchmark_fixed, reference_selection_provenance: benchmark_fixed (plates are Controller-accepted IMG-TEXT-01 draws)}
+    COND-PROVENANCE: {requested_operation: generate, workflow_mode: as COND-WORKFLOW.workflow_mode_per_route_arm, who_chose_workflow_mode: benchmark_fixed, reference_selection_provenance: 'benchmark_fixed (plates are this case''s own 9:16 draws, Controller-accepted; else draw 1)'}
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: ['ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार"; REJECT if any character differs between frames or from the strings.', 'REJECT if any string drifts, wobbles, smears or flickers across the clip.', ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame., ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject., REJECT if any other lettering or pseudo-lettering appears in any frame.]
+  acceptance_contract: ['ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.', 'REJECT if any string drifts, wobbles, smears or flickers across the clip.', ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame., ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject., REJECT if any other lettering or pseudo-lettering appears in any frame.]
   blueprint_ref: BLUEPRINTS/VID-TOPO3-01.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: 2f8d5591bfa7da5a34983929e160773809bd23a9ecba731a261225dcf4e0ea53
+  blueprint_sha256: 3a97d8f39498f254da7e6edfd780ef39586ebd4f4ee41d5ac2523cce0b656b19
   routes:
+  - route_key: qwen-image-3
+    route_id: alibaba/qwen-image-3
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: A_plate_9x16
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: '9:16 re-draw of the IMG-TEXT-01 brief with the three strings, on the cheapest pinned cheap text route (Qwen Image 3, USD 0.04) — AF-1; prompt: arm_A_plate_prompt_9x16 in this case''s blueprint', seed: unset}
+    repeats: 2
+    tranche: 1a
+    item_id: VID-TOPO3-01
+    quantity: 1
+    quantity_unit: images
+    price_status: pinned
+  - route_key: flux-2-pro
+    route_id: fal-ai/flux-2-pro
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: C_plate_9x16
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: '9:16 textless base re-draw on the cheapest pinned image route (FLUX.2 Pro, USD 0.03) — AF-1; prompt: arm_C_textless_plate_prompt_9x16', seed: unset}
+    repeats: 2
+    tranche: 1a
+    item_id: VID-TOPO3-01
+    quantity: 1
+    quantity_unit: images
+    price_status: pinned
   - route_key: minimax-h3-max-i2v
     route_id: minimax/h3-max/image-to-video (768p)
     surface: fal
     billing_pool: cash
     route_status: pinned
     arm: A_cheap_still_to_cheap_i2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: 'arm-A 9:16 plate: the Controller-accepted A_plate_9x16 draw; else draw 1', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3656,7 +3656,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: A_cheap_still_to_cheap_i2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: 'arm-A 9:16 plate: the Controller-accepted A_plate_9x16 draw; else draw 1', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3669,7 +3669,7 @@ cases:
     billing_pool: credits
     route_status: unpinned
     arm: A_cheap_still_to_cheap_i2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-A Controller-accepted draw, seed: unset}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: 'arm-A 9:16 plate: the Controller-accepted A_plate_9x16 draw; else draw 1', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3708,7 +3708,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: C_textless_plate_i2v_composite
-    params: {aspect: '9:16', duration_s: 6, resolution: 768p, audio: 'off', refs: 1, plate: IMG-TEXT-01 arm-C textless base draw, note: 'cheapest pinned i2v route at 720p-class (roster: H3 Max i2v-768p 0.08/s); overlay by code at USD 0 (static, or tracked if the plate region moves)', seed: unset}
+    params: {aspect: '9:16', duration_s: 6, resolution: 768p, audio: 'off', refs: 1, plate: 'arm-C 9:16 textless base: the Controller-accepted C_plate_9x16 draw; else draw 1', note: 'cheapest pinned i2v route at 720p-class (roster: H3 Max i2v-768p 0.08/s); overlay by code at USD 0 (static, or tracked if the plate region moves)', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3717,7 +3717,7 @@ cases:
     price_status: pinned
   downstream_reuse:
     feeds: []
-    consumes: [IMG-TEXT-01 arm-A accepted draw (arm A plate), IMG-TEXT-01 arm-C textless base (arm C plate)]
+    consumes: ['its own A_plate_9x16 and C_plate_9x16 draws (1a) — the IMG-TEXT-01 brief and doctrine, not its square bytes']
   cut_order_rank: never_cut
   cut_order_items: []
   never_cut_reason: Hindi/Hinglish item, TOPO-02/03 arms A and C
@@ -3823,7 +3823,7 @@ cases:
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets:
   - {role: supplied_subject, description: the Controller-accepted IMG-CORE-01 draw (selected blind after Tranche 1a), rights_rule: generated in this programme; no third-party media, decoys_required: false, status: specified (bytes exist only after 1a acceptance)}
-  acceptance_contract: [ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start)., 'ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the surface, or grows lettering.', 'REJECT if reflections or the highlight jump, flicker or stay glued to the glass as the viewpoint moves.', 'REJECT if any audio track with sound, or any lettering, is present.']
+  acceptance_contract: [ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start)., 'ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the surface, or grows lettering.', 'REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint has changed.', 'REJECT if speech or music is present, or any lettering.']
   blueprint_ref: BLUEPRINTS/VID-I2V-01.blueprint.md
   blueprint_author: executor_agent
   blueprint_sha256: 0ab9692b55eb6c3c6909b3452aee121aaa61372c6f8ff0258bcc33648cf9a325
@@ -4349,7 +4349,7 @@ cases:
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets:
   - {role: supplied_subject, description: the Controller-accepted IMG-CORE-04 draw, rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist only after 1a acceptance)}
-  acceptance_contract: ['REJECT if the response is a refusal, error, blank clip or policy notice (recorded as a refusal under E1).', 'ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.', ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal., ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile., REJECT if any lettering appears.]
+  acceptance_contract: ['REJECT if there is no clip — a blank or black video, or text where the video should be.', 'ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.', ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal., ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile., REJECT if any lettering appears.]
   blueprint_ref: BLUEPRINTS/VID-I2V-04.blueprint.md
   blueprint_author: executor_agent
   blueprint_sha256: 4e361973822934f2bc2b58adb474c0ad7753bad3d8ac9ae823ebd47b1c93e3c8
@@ -4750,12 +4750,12 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: hg
-    text: 15 second ka multi-shot video chahiye, Reels ke liye vertical. Do friends (20s mein, ek ladka ek ladki) ghar pe phone pe trip plan kar rahe hain, phir airport pe bag lekar bhaagte hue, phir beach pe pahunch gaye. 3-4 shots, dono log har shot mein same dikhne chahiye. Young aur fun vibe. Aircraft agar dikhe toh generic rakhna, koi logo ya livery nahi. VO aur end card hum khud daalenge, sirf visuals aur ambient sound. Koi text nahi.
+    text: 15 second ka multi-shot video chahiye, Reels ke liye vertical. Do friends (20s mein, ek ladka ek ladki) ghar pe phone pe trip plan kar rahe hain, phir airport pe bag lekar bhaagte hue, phir beach pe pahunch gaye. 3-4 shots, dono log har shot mein same dikhne chahiye. Young aur fun vibe. Plane dikhana zaroori nahi, airport aur beach kaafi hai. VO aur end card hum khud daalenge, sirf visuals aur ambient sound. Koi text nahi.
     attachments_named: []
   source:
     pool: brief_bank
     id: BR-F10-HG
-    adaptation: ['vo_and_end_card_dropped_customer_adds_in_post ("Plan kam, travel zyada" VO and "फ्लाइट्स ₹1,499 से" end card removed)', 'livery_dropped_no_brand_asset (source: ''livery hamari exact honi chahiye'' — no livery asset can be supplied; customer asks for a generic aircraft)', shot_count_stated_3_4 (source underspecified), 'genders_stated (one man, one woman) so identity continuity is judgeable', aspect_stated_9_16]
+    adaptation: ['vo_and_end_card_dropped_customer_adds_in_post ("Plan kam, travel zyada" VO and "फ्लाइट्स ₹1,499 से" end card removed)', 'livery_constraint_removed_by_not_requesting_the_aircraft (source: ''livery hamari exact honi chahiye'' — no livery asset can be supplied to a text-to-video route; register rewrite after audit: the earlier ''generic aircraft, no livery'' wording was a benchmark convenience, the buyer now says the plane need not appear)', shot_count_stated_3_4 (source underspecified), 'genders_stated (one man, one woman) so identity continuity is judgeable', aspect_stated_9_16]
   nr:
     requested_operation: generate
     modality: video
@@ -4772,19 +4772,10 @@ cases:
       entity_type: person
       role: hero
       identity_invariants: ['woman, 20s', same in every shot]
-    - entity_id: aircraft
-      entity_type: object
-      role: background
-      identity_invariants: ['generic, no livery']
     relationships:
     - {subject: friend_m, relation: travels_with, object: friend_f}
     text_requirements: []
-    brand_requirements:
-      assets: []
-      palette: {}
-      palette_tolerance: ''
-      mandatories: []
-      prohibitions: [no logo or livery]
+    brand_requirements: null
     language_topology: {spoken: none, on_screen_copy: none, subtitles: none, viewer_locale: hi-en-IN}
     speaker_topology: {visible_speakers: 0, offscreen_voices: 0, turn_boundaries_required: false, script_exactness: free}
     temporal_structure:
@@ -4803,8 +4794,8 @@ cases:
       resolution: 720p
       safe_areas: []
     specification_provenance:
-      customer_specified: [R01, R05, R06, R07, R08 (none), R09.prohibitions, R10, R11 (none), R12, R13, R15.aspect, R18]
-      customer_omitted: [R15.resolution]
+      customer_specified: [R01, R05, R06, R07, R08 (none), R10, R11 (none), R12, R13, R15.aspect, R18]
+      customer_omitted: [R09, R15.resolution]
       derived:
       - {field: R14, rationale: delegated (CA-D11)}
       - {field: R15.resolution, rationale: admission resolution}
@@ -4814,16 +4805,16 @@ cases:
       affected_fields: [R06]
     acceptance_intent:
       stated_success_criteria: [3–4 shots, same two people in every shot, 'young, fun']
-      stated_rejection_criteria: [logo or livery, text]
+      stated_rejection_criteria: [text]
       hard_constraints: [15 s, 'multi-shot: home → airport → beach', identity continuity, 'no text, no VO']
       soft_preferences: [fun vibe]
-      free_choices: [beach, wardrobe]
+      free_choices: [beach, wardrobe, whether an aircraft appears]
     provenance:
       requested_operation: customer_stated
       modality: customer_stated
-      entities: customer_stated
+      entities: customer_stated (genders by adaptation, listed)
       relationships: customer_stated
-      brand_requirements: customer_stated
+      brand_requirements: absent
       language_topology: customer_stated
       temporal_structure: customer_stated
       subject_motion: customer_stated
@@ -4840,7 +4831,7 @@ cases:
     COND-REFERENCE: {reference_type: none, reference_count: 0, reference_view_diversity: not_applicable, reference_quality_class: not_applicable, decoy_present: false}
     COND-INTERACTION: not_applicable
     COND-MOTION: {camera_motion_class: mostly_static, subject_motion_class: locomotion_fast, motion_magnitude_class: medium-high, framing_instruction: three locations}
-    COND-CONSTRAINT: {n_hard_constraints: 4, exact_string_count: 0, exact_string_length_chars: 0, brand_constraint_count: 1, prerequisite_depth: 0}
+    COND-CONSTRAINT: {n_hard_constraints: 4, exact_string_count: 0, exact_string_length_chars: 0, brand_constraint_count: 0, prerequisite_depth: 0}
     COND-WORKFLOW:
       workflow_mode_per_route_arm: {'Kling v3 15 s, Seedance 2.5 15 s, Omni Flash 1.1 (≤ 15 s)': t2v, Veo 3.1 fast + extend: t2v + extension}
       who_chose_workflow_mode: benchmark_fixed
@@ -4852,7 +4843,7 @@ cases:
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: ['ACCEPT only if the clip contains at least three distinct shots (visible cuts) showing, in order, a home scene with a phone, an airport with the pair running with bags, and a beach.', 'ACCEPT only if the same man and the same woman appear in every shot — same faces, same hair — when paused on one frame per shot.', 'REJECT if any logo, airline livery or lettering appears (aircraft must be plain).', REJECT if a shot is shorter than one second or the total runs under 13 s or over 17 s., REJECT if any speech or music is present.]
+  acceptance_contract: ['ACCEPT only if the clip contains at least three distinct shots (visible cuts) showing, in order, a home scene with a phone, an airport with the pair running with bags, and a beach.', 'ACCEPT only if the same man and the same woman appear in every shot — same faces, same hair — when paused on one frame per shot.', REJECT if any logo or lettering appears anywhere in any shot., REJECT if a shot is shorter than one second or the total runs under 13 s or over 17 s., REJECT if any speech or music is present.]
   blueprint_ref: BLUEPRINTS/VID-MS-01.blueprint.md
   blueprint_author: executor_agent
   blueprint_sha256: a731d6c6f16cfa8ee32e3689318794befccb1e4ab091618f7b55b0ecb9d89262
@@ -5068,12 +5059,12 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: hi
-    text: 'एक voice-over line चाहिए हमारे 10 सेकंड वाले detergent video के लिए। पुरुष आवाज़, साफ़ हिंदी, घरेलू और भरोसेमंद, ज़्यादा नाटकीय नहीं। Line है: "एक धुलाई में दाग गायब"। बस यही, सिर्फ audio file (wav या mp3) भेज दीजिए।'
+    text: 'एक voice-over line चाहिए हमारे किसान वाले video के लिए, video अलग से बन रहा है। पुरुष आवाज़, किसान जैसी सादी हिंदी, भरोसेमंद, ज़्यादा नाटकीय नहीं। Line है: "इस दवाई से मेरी फसल दोगुनी हुई"। बस यही, सिर्फ audio file (wav या mp3) भेज दीजिए।'
     attachments_named: []
   source:
     pool: brief_bank
-    id: BR-F05-HI
-    adaptation: [voiceover_script_extracted_as_a_tts_request (the source is a 10-s product video with this VO line; here the buyer asks for the VO alone), voice_gender_stated_male (the source names none; chosen so the same voice can drive the male-plate lipsync cases), register_rewritten_to_devanagari_whatsapp]
+    id: BR-F07-HI
+    adaptation: [spoken_line_extracted_as_a_tts_request (the source is the 20-s farmer testimonial video; the same Nashik dealer asks for the line as a VO for a separate edit), 'line_shared_with_VID-T2V-01_after_audit (AF-2: TOPO-01 arm A and arm B now carry the same brief and the same spoken line; the first draft used BR-F05-HI''s detergent line, which is no longer in the package)', 'voice_gender_stated_male (the source''s speaker is a farmer, male by the source''s own pronoun; chosen so the same voice can drive the male-plate lipsync cases)', register_rewritten_to_devanagari_whatsapp, 'source flag carried: the line is an efficacy claim presented as testimony']
   nr:
     requested_operation: generate
     modality: audio
@@ -5086,7 +5077,7 @@ cases:
     text_requirements: []
     brand_requirements: null
     language_topology: {spoken: hi, on_screen_copy: none, subtitles: none, viewer_locale: IN}
-    speaker_topology: {visible_speakers: 0, offscreen_voices: 1, turn_boundaries_required: false, script_exactness: exact, script: एक धुलाई में दाग गायब}
+    speaker_topology: {visible_speakers: 0, offscreen_voices: 1, turn_boundaries_required: false, script_exactness: exact, script: इस दवाई से मेरी फसल दोगुनी हुई}
     temporal_structure: null
     subject_motion: null
     camera_motion: null
@@ -5101,7 +5092,7 @@ cases:
       derived: []
     ambiguity_markers: []
     acceptance_intent:
-      stated_success_criteria: ['male voice, clear Hindi, homely and trustworthy, not theatrical']
+      stated_success_criteria: ['male voice, plain farmer-like Hindi, trustworthy, not theatrical']
       stated_rejection_criteria: []
       hard_constraints: ['the script, word for word', one voice]
       soft_preferences: []
@@ -5116,7 +5107,7 @@ cases:
     COND-REFERENCE: {reference_type: none, reference_count: 0, reference_view_diversity: not_applicable, reference_quality_class: not_applicable, decoy_present: false}
     COND-INTERACTION: not_applicable
     COND-MOTION: not_applicable
-    COND-CONSTRAINT: {n_hard_constraints: 2, exact_string_count: 1, exact_string_length_chars: 21, brand_constraint_count: 0, prerequisite_depth: 0}
+    COND-CONSTRAINT: {n_hard_constraints: 2, exact_string_count: 1, exact_string_length_chars: 30, brand_constraint_count: 0, prerequisite_depth: 0}
     COND-WORKFLOW:
       workflow_mode_per_route_arm: {'Sarvam bulbul:v3, ElevenLabs v3 (+ conditional Chirp 3 HD / Azure Neural)': tts}
       who_chose_workflow_mode: benchmark_fixed
@@ -5128,10 +5119,10 @@ cases:
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: ['ACCEPT only if a first-language Hindi listener hears exactly "एक धुलाई में दाग गायब" — every word, in order, no extra word.', ACCEPT only if it is one male voice speaking clear standard Hindi; REJECT if the accent makes any word ambiguous (e.g. धुलाई heard as another word)., 'REJECT if any music, effect, second voice or English word is present.', 'REJECT if the file is silent, truncated mid-word, or longer than 6 seconds.']
+  acceptance_contract: ['ACCEPT only if a first-language Hindi listener hears exactly "इस दवाई से मेरी फसल दोगुनी हुई" — every word, in order, no extra word.', ACCEPT only if it is one male voice speaking clear Hindi; REJECT if any word is heard as a different word (e.g. दवाई or दोगुनी mispronounced into another word)., 'REJECT if any music, effect, second voice or English word is present.', 'REJECT if the file is silent, truncated mid-word, or longer than 6 seconds.']
   blueprint_ref: BLUEPRINTS/AUD-TTS-01.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: 1e1cf42cf56f0472cb10fdf29ece1a98242847a06ff3e08b3e876ae942787ecf
+  blueprint_sha256: 3c10c117788072ed9cb65b0464733e4d8d6fe12eb7e26d2675778d2b54b861cc
   routes:
   - route_key: sarvam-bulbul-v3
     route_id: bulbul:v3
@@ -5139,11 +5130,11 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: native
-    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset}
+    params: {script: इस दवाई से मेरी फसल दोगुनी हुई, chars: 30, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-01
-    quantity: 21
+    quantity: 30
     quantity_unit: chars
     price_status: pinned
   - route_key: elevenlabs-v3
@@ -5152,11 +5143,11 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: native
-    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
+    params: {script: इस दवाई से मेरी फसल दोगुनी हुई, chars: 30, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-01
-    quantity: 21
+    quantity: 30
     quantity_unit: chars
     price_status: pinned
   - route_key: chirp-3-hd-hi-in
@@ -5165,11 +5156,11 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: conditional
-    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: hi-IN male, seed: unset}
+    params: {script: इस दवाई से मेरी फसल दोगुनी हुई, chars: 30, voice: hi-IN male, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-01
-    quantity: 21
+    quantity: 30
     quantity_unit: chars
     conditional: listed, not in the cap
     price_status: unpinned
@@ -5179,11 +5170,11 @@ cases:
     billing_pool: credits
     route_status: needs_controller_enablement
     arm: conditional
-    params: {script: एक धुलाई में दाग गायब, chars: 21, voice: hi-IN male, seed: unset}
+    params: {script: इस दवाई से मेरी फसल दोगुनी हुई, chars: 30, voice: hi-IN male, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-01
-    quantity: 21
+    quantity: 30
     quantity_unit: chars
     conditional: listed, not in the cap
     price_status: pinned
@@ -5208,12 +5199,12 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: hg
-    text: 'Ek VO chahiye 15 sec video ke liye, young male voice, energetic aur motivational but trustworthy bhi, education hai. Thoda fast bole but clearly samajh aaye. Line: "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par." Hindi-English mix hai, waise hi bolna hai jaise hum bolte hain. "Kaushal Setu" hamara naam hai, sahi bolna. Sirf audio chahiye.'
+    text: 'Ek VO chahiye 15 sec ke video ke liye, young male voice, energetic aur motivational, but bharosa bhi lage, padhai ka matter hai. Thoda fast bole but clear. Line: "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." Hindi-English mix hai, waise hi bolna hai jaise hum bolte hain. Kaushal Setu hamara naam hai, sahi bolna. Sirf audio chahiye.'
     attachments_named: []
   source:
     pool: brief_bank
     id: BR-F07-HG
-    adaptation: [spoken_script_extracted_as_a_tts_request (the source is a 15-s single-speaker video; here the VO alone), 'brand_name_line_added_as_fixture (''— Kaushal Setu par.'' appended: the task requires Indian brand names in the Hinglish script and the source''s business is unnamed; the name is a labelled fixture, not customer text from the bank)', end_card_dropped ("Batch starts Monday"), both source contradictions kept (energetic vs calm; fast vs clear)]
+    adaptation: [spoken_script_extracted_as_a_tts_request (the source is a 15-s single-speaker video; here the VO alone), 'brand_name_line_added_as_fixture (''Kaushal Setu par'' appended: the task requires Indian brand names in the Hinglish script and the source''s business is unnamed; the name is a labelled fixture, not customer text from the bank)', 'script_shortened_to_drive_cap (AF-4: ''Toh'' dropped and the clauses tightened so the line is ≤ 70 characters, ≈ ≤ 5 s, and ends inside the 6-s lipsync plate)', register_rewrite_after_audit (the source's mid-sentence Devanagari 'enroll करो' typed in Latin as a Hinglish buyer types; 'education hai' → 'padhai ka matter hai'), end_card_dropped ("Batch starts Monday"), both source contradictions kept (energetic vs calm; fast vs clear)]
   nr:
     requested_operation: generate
     modality: audio
@@ -5226,7 +5217,7 @@ cases:
     text_requirements: []
     brand_requirements: null
     language_topology: {spoken: hi-en (Hinglish), on_screen_copy: none, subtitles: none, viewer_locale: IN}
-    speaker_topology: {visible_speakers: 0, offscreen_voices: 1, turn_boundaries_required: false, script_exactness: exact, script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.'}
+    speaker_topology: {visible_speakers: 0, offscreen_voices: 1, turn_boundaries_required: false, script_exactness: exact, script: 'Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.'}
     temporal_structure: null
     subject_motion: null
     camera_motion: null
@@ -5259,7 +5250,7 @@ cases:
     COND-REFERENCE: {reference_type: none, reference_count: 0, reference_view_diversity: not_applicable, reference_quality_class: not_applicable, decoy_present: false}
     COND-INTERACTION: not_applicable
     COND-MOTION: not_applicable
-    COND-CONSTRAINT: {n_hard_constraints: 2, exact_string_count: 1, exact_string_length_chars: 74, brand_constraint_count: 1, prerequisite_depth: 0}
+    COND-CONSTRAINT: {n_hard_constraints: 2, exact_string_count: 1, exact_string_length_chars: 70, brand_constraint_count: 1, prerequisite_depth: 0}
     COND-WORKFLOW:
       workflow_mode_per_route_arm: {'Sarvam bulbul:v3, ElevenLabs v3 (+ conditional Chirp 3 HD / Azure Neural)': tts}
       who_chose_workflow_mode: benchmark_fixed
@@ -5271,10 +5262,10 @@ cases:
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: ['ACCEPT only if the listener hears exactly "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par." — every word, in order.', 'ACCEPT only if "Kaushal Setu" is pronounced as a Hindi name (कौशल सेतु), not anglicised; REJECT if either word is mangled.', 'ACCEPT only if the English words (job, skill, upgrade, enroll) sound as an Indian speaker says them inside a Hindi sentence, not as a separate English accent.', 'REJECT if any music, effect or second voice is present, or if the file is longer than 8 seconds.', 'REJECT if the delivery is so fast that a word is lost, or so slow that it reads as a lullaby (the customer asked for fast but clear).']
+  acceptance_contract: ['ACCEPT only if the listener hears exactly "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." — every word, in order.', ACCEPT only if "Kaushal Setu" is heard as the Hindi words कौशल सेतु; REJECT if either word is heard as something else., 'ACCEPT only if every word, English and Hindi, is understood on a single listen by a Hindi-English speaker; REJECT if any word has to be replayed to be made out.', 'REJECT if any music, effect or second voice is present, or if the file is longer than 6 seconds.']
   blueprint_ref: BLUEPRINTS/AUD-TTS-02.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: 6e06cf0b25e69985c4fbb9f847efc52ca7077f8fcf01b72b341a96bd36a81507
+  blueprint_sha256: 87944aca072597cd2b7b91710f0f3ca851596bca05d25d8d92174b4c2730bc4a
   routes:
   - route_key: sarvam-bulbul-v3
     route_id: bulbul:v3
@@ -5282,11 +5273,11 @@ cases:
     billing_pool: sarvam_credits
     route_status: pinned
     arm: native
-    params: {script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', chars: 74, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset}
+    params: {script: 'Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.', chars: 70, voice: 'one male voice, chosen by ear at dispatch and recorded', language_code: as the script, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-02
-    quantity: 74
+    quantity: 70
     quantity_unit: chars
     price_status: pinned
   - route_key: elevenlabs-v3
@@ -5295,11 +5286,11 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: native
-    params: {script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', chars: 74, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
+    params: {script: 'Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.', chars: 70, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-TTS-02
-    quantity: 74
+    quantity: 70
     quantity_unit: chars
     price_status: pinned
   downstream_reuse:
@@ -5435,19 +5426,19 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: hi
-    text: हमारे model की एक clip है (model_clip.mp4, 6 सेकंड) और VO की audio है (vo_line.wav) — "एक धुलाई में दाग गायब"। इस आवाज़ को clip में lip-sync कर दीजिए, जो बोला जा रहा है वही होंठों से निकलता दिखे और सही समय पर। चेहरा, background, बाकी सब वैसा ही रहे, सिर्फ होंठ बदलें। जब line खत्म हो जाए तब होंठ बंद रहें।
-    attachments_named: [model_clip.mp4, vo_line.wav]
+    text: हमारे presenter की एक clip है (presenter_clip.mp4, 6 सेकंड) और किसान वाली line की VO है (vo_kisan.wav) — "इस दवाई से मेरी फसल दोगुनी हुई"। इस आवाज़ को clip पर lip-sync कर दीजिए, natural लगे। चेहरा, background, बाकी सब वैसा ही रहे।
+    attachments_named: [presenter_clip.mp4, vo_kisan.wav]
   source:
     pool: fixture
     id: none
-    adaptation: ['fixture — no source pool holds a ''lip-sync this voice onto this clip'' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the AUD-TTS-01 output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items']
+    adaptation: ['fixture — no source pool holds a ''lip-sync this voice onto this clip'' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the AUD-TTS-01 output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items', register_rewrite_after_audit (the timing / closed-lips clauses that restated the contract were removed; the buyer asks for a natural lip-sync and the contract carries the timing and silence tests)]
     derived_from: [AUD-TTS-01, VID-I2V-02]
   nr:
     requested_operation: compose
     modality: video
     supplied_assets:
-    - {asset_id: model_clip, media_type: video, role: subject_of_operation, applies_to: presenter, description: '6-s clip of one man, static camera (the VID-I2V-02 accepted clip)'}
-    - {asset_id: vo_line, media_type: audio, role: subject_of_operation, applies_to: voice, description: 'the VO file: "एक धुलाई में दाग गायब"'}
+    - {asset_id: presenter_clip, media_type: video, role: subject_of_operation, applies_to: presenter, description: '6-s clip of one man, static camera (the VID-I2V-02 accepted clip)'}
+    - {asset_id: vo_kisan, media_type: audio, role: subject_of_operation, applies_to: voice, description: 'the VO file: "इस दवाई से मेरी फसल दोगुनी हुई"'}
     mutation_intents:
       preservation_default: implicit_everything_not_named
       intents:
@@ -5466,7 +5457,7 @@ cases:
     text_requirements: []
     brand_requirements: null
     language_topology: {spoken: hi, on_screen_copy: none, subtitles: none, viewer_locale: IN}
-    speaker_topology: {visible_speakers: 1, offscreen_voices: 0, turn_boundaries_required: false, script_exactness: exact, script: एक धुलाई में दाग गायब}
+    speaker_topology: {visible_speakers: 1, offscreen_voices: 0, turn_boundaries_required: false, script_exactness: exact, script: इस दवाई से मेरी फसल दोगुनी हुई}
     temporal_structure:
       duration_seconds: 6
       shot_count: 1
@@ -5502,7 +5493,7 @@ cases:
     COND-REFERENCE: {reference_type: none, reference_count: 0, reference_view_diversity: not_applicable, reference_quality_class: not_applicable, decoy_present: false}
     COND-INTERACTION: not_applicable
     COND-MOTION: {camera_motion_class: static, subject_motion_class: mouth_only, motion_magnitude_class: low, framing_instruction: as the clip}
-    COND-CONSTRAINT: {n_hard_constraints: 3, exact_string_count: 1, exact_string_length_chars: 21, brand_constraint_count: 0, prerequisite_depth: 2}
+    COND-CONSTRAINT: {n_hard_constraints: 3, exact_string_count: 1, exact_string_length_chars: 30, brand_constraint_count: 0, prerequisite_depth: 2}
     COND-WORKFLOW:
       workflow_mode_per_route_arm: {'sync-lipsync v3, Kling lipsync audio-to-video': transform_lipsync}
       who_chose_workflow_mode: benchmark_fixed
@@ -5514,12 +5505,12 @@ cases:
     COND-OPERATION: compose
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets:
-  - {role: supplied_subject, description: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after 1b i2v acceptance)}
+  - {role: supplied_subject, description: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after 1b i2v acceptance)}
   - {role: supplied_subject, description: 'drive audio: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after the TTS calls)}
-  acceptance_contract: [ACCEPT only if the man's mouth opens and closes with the syllables of "एक धुलाई में दाग गायब" — a first-language Hindi judge sees the words being spoken; REJECT if the mouth moves out of time by a visible beat., ACCEPT only if his lips are closed or at rest during the silence after the line., 'REJECT if the face changes identity, the mouth region shows a visible patch, blur, colour seam or flicker, or the background changes.', 'REJECT if the audio in the output is not the supplied voice (re-synthesised, clipped or shifted).']
+  acceptance_contract: [ACCEPT only if the man's mouth opens and closes with the syllables of "इस दवाई से मेरी फसल दोगुनी हुई" — a first-language Hindi judge sees the words being spoken; REJECT if the mouth moves out of time by a visible beat., ACCEPT only if his lips are closed or at rest during the silence after the line., 'REJECT if the face changes identity, the mouth region shows a visible patch, blur, colour seam or flicker, or the background changes.', 'REJECT if the audio in the output is not the supplied voice (re-synthesised, clipped or shifted).']
   blueprint_ref: BLUEPRINTS/AUD-LIP-01.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: 0785cf24e2077768fddac4fbfda20fd1aa940ccf13477ef539829a3339c6e529
+  blueprint_sha256: 3cc26a8690db0946b0b5e253cba1a19c275b69cb50b8cd0bb0eed941c3250d7e
   routes:
   - route_key: sync-lipsync-v3
     route_id: fal-ai/sync-lipsync/v3
@@ -5527,7 +5518,7 @@ cases:
     billing_pool: cash
     route_status: unpinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: एक धुलाई में दाग गायब, seed: unset}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: इस दवाई से मेरी फसल दोगुनी हुई, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-01
@@ -5540,7 +5531,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: एक धुलाई में दाग गायब, seed: unset}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: इस दवाई से मेरी फसल दोगुनी हुई, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-01
@@ -5567,19 +5558,19 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: hg
-    text: Ek clip hai instructor ki (instructor_clip.mp4, 6 sec) aur VO file (vo_kaushal.wav) — "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par." VO ko clip pe lip-sync kar do, lips exactly awaaz ke saath chalein, Hindi-English mix line hai toh mouth shapes sahi lagni chahiye. Baaki clip mein kuch change nahi, face same. Jab awaaz nahi hai tab lips band.
+    text: Ek clip hai instructor ki (instructor_clip.mp4, 6 sec) aur VO file (vo_kaushal.wav) — "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." VO ko clip pe lip-sync kar do, natural lage. Baaki clip mein kuch change nahi, face same.
     attachments_named: [instructor_clip.mp4, vo_kaushal.wav]
   source:
     pool: fixture
     id: none
-    adaptation: ['fixture — no source pool holds a ''lip-sync this voice onto this clip'' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the AUD-TTS-02 output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items']
+    adaptation: ['fixture — no source pool holds a ''lip-sync this voice onto this clip'' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the AUD-TTS-02 output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items', register_rewrite_after_audit (the timing / closed-lips clauses that restated the contract were removed; the buyer asks for a natural lip-sync and the contract carries the timing and silence tests)]
     derived_from: [AUD-TTS-02, VID-I2V-02]
   nr:
     requested_operation: compose
     modality: video
     supplied_assets:
     - {asset_id: instructor_clip, media_type: video, role: subject_of_operation, applies_to: presenter, description: '6-s clip of one man, static camera (the VID-I2V-02 accepted clip)'}
-    - {asset_id: vo_kaushal, media_type: audio, role: subject_of_operation, applies_to: voice, description: 'the VO file: "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par."'}
+    - {asset_id: vo_kaushal, media_type: audio, role: subject_of_operation, applies_to: voice, description: 'the VO file: "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par."'}
     mutation_intents:
       preservation_default: implicit_everything_not_named
       intents:
@@ -5598,7 +5589,7 @@ cases:
     text_requirements: []
     brand_requirements: null
     language_topology: {spoken: hi-en (Hinglish), on_screen_copy: none, subtitles: none, viewer_locale: IN}
-    speaker_topology: {visible_speakers: 1, offscreen_voices: 0, turn_boundaries_required: false, script_exactness: exact, script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.'}
+    speaker_topology: {visible_speakers: 1, offscreen_voices: 0, turn_boundaries_required: false, script_exactness: exact, script: 'Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.'}
     temporal_structure:
       duration_seconds: 6
       shot_count: 1
@@ -5634,7 +5625,7 @@ cases:
     COND-REFERENCE: {reference_type: none, reference_count: 0, reference_view_diversity: not_applicable, reference_quality_class: not_applicable, decoy_present: false}
     COND-INTERACTION: not_applicable
     COND-MOTION: {camera_motion_class: static, subject_motion_class: mouth_only, motion_magnitude_class: low, framing_instruction: as the clip}
-    COND-CONSTRAINT: {n_hard_constraints: 3, exact_string_count: 1, exact_string_length_chars: 74, brand_constraint_count: 0, prerequisite_depth: 2}
+    COND-CONSTRAINT: {n_hard_constraints: 3, exact_string_count: 1, exact_string_length_chars: 70, brand_constraint_count: 0, prerequisite_depth: 2}
     COND-WORKFLOW:
       workflow_mode_per_route_arm: {'sync-lipsync v3, Kling lipsync audio-to-video': transform_lipsync}
       who_chose_workflow_mode: benchmark_fixed
@@ -5646,12 +5637,12 @@ cases:
     COND-OPERATION: compose
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets:
-  - {role: supplied_subject, description: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after 1b i2v acceptance)}
+  - {role: supplied_subject, description: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after 1b i2v acceptance)}
   - {role: supplied_subject, description: 'drive audio: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after the TTS calls)}
-  acceptance_contract: ['ACCEPT only if the mouth follows the whole line "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par." in time — including the English words — with no visible lag or lead.', ACCEPT only if the lips rest closed during the pauses and after the line., 'REJECT if the face changes identity, or the mouth region shows a patch, blur, seam or flicker.', REJECT if the output audio is not the supplied voice.]
+  acceptance_contract: ['ACCEPT only if the mouth follows the whole line "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." in time — including the English words — with no visible lag or lead.', ACCEPT only if the lips rest closed during the pauses and after the line., 'REJECT if the face changes identity, or the mouth region shows a patch, blur, seam or flicker.', REJECT if the output audio is not the supplied voice.]
   blueprint_ref: BLUEPRINTS/AUD-LIP-02.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: faefd08ef8317562fbc0504ee16182caf90e5ee4ba07977847fc37cc1b98da89
+  blueprint_sha256: 8d51ec462dd23892a991f8e71517e7c4087d198ebb8730152ba60b13d9839a3f
   routes:
   - route_key: sync-lipsync-v3
     route_id: fal-ai/sync-lipsync/v3
@@ -5659,7 +5650,7 @@ cases:
     billing_pool: cash
     route_status: unpinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', seed: unset}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: 'Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-02
@@ -5672,7 +5663,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', seed: unset}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: 'Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-02
@@ -5699,12 +5690,12 @@ cases:
     channel: whatsapp
     register: whatsapp
     language: en
-    text: Sending a 6 sec clip of our presenter (presenter_clip.mp4) and the VO (velo_vo.wav) - "Zero petrol. Zero noise. All city." Please lip-sync the VO onto the clip. Lips must match the words and the timing, and stay closed in the pauses between the three sentences. Nothing else in the clip should change.
+    text: Sending a 6 sec clip of our presenter (presenter_clip.mp4) and the VO (velo_vo.wav) - "Zero petrol. Zero noise. All city." Please lip-sync the VO onto the clip so it looks natural. Nothing else in the clip should change.
     attachments_named: [presenter_clip.mp4, velo_vo.wav]
   source:
     pool: fixture
     id: none
-    adaptation: ['fixture — no source pool holds a ''lip-sync this voice onto this clip'' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the AUD-TTS-03 output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items']
+    adaptation: ['fixture — no source pool holds a ''lip-sync this voice onto this clip'' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the AUD-TTS-03 output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items', register_rewrite_after_audit (the timing / closed-lips clauses that restated the contract were removed; the buyer asks for a natural lip-sync and the contract carries the timing and silence tests)]
     derived_from: [AUD-TTS-03, VID-I2V-02]
   nr:
     requested_operation: compose
@@ -5778,12 +5769,12 @@ cases:
     COND-OPERATION: compose
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets:
-  - {role: supplied_subject, description: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after 1b i2v acceptance)}
+  - {role: supplied_subject, description: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after 1b i2v acceptance)}
   - {role: supplied_subject, description: 'drive audio: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes', rights_rule: generated in this programme, decoys_required: false, status: specified (bytes exist after the TTS calls)}
   acceptance_contract: ['ACCEPT only if the mouth follows "Zero petrol. Zero noise. All city." in time, sentence by sentence.', ACCEPT only if the lips are closed in each of the two pauses and after the last sentence., 'REJECT if the face changes identity, or the mouth region shows a patch, blur, seam or flicker.', REJECT if the output audio is not the supplied voice.]
   blueprint_ref: BLUEPRINTS/AUD-LIP-03.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: 46539a4afeaccbd68c21bff188c23a470375421006e48942e33809d03d4594d2
+  blueprint_sha256: df0e5f28563e13df1fb79c611d7b853411b2f9a3ffd59f82e4ee547611146ff4
   routes:
   - route_key: sync-lipsync-v3
     route_id: fal-ai/sync-lipsync/v3
@@ -5791,7 +5782,7 @@ cases:
     billing_pool: cash
     route_status: unpinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: Zero petrol. Zero noise. All city., seed: unset}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes, output_seconds: 6, script: Zero petrol. Zero noise. All city., seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-03
@@ -5804,7 +5795,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: chain
-    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: Zero petrol. Zero noise. All city., seed: unset}
+    params: {plate: 'the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate''s subject (a young man in a lobby) differs from arm A''s farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)', drive: same drive file as sync-lipsync-v3, billed_input_seconds: 10 (6-s plate rolled up to the 5-s increment), script: Zero petrol. Zero noise. All city., seed: unset}
     repeats: 2
     tranche: 1b
     item_id: AUD-LIP-03
@@ -5896,10 +5887,10 @@ cases:
     COND-OPERATION: generate
     COND-SCALE: {deliverable_count: 1, is_variant_set: false, set_acceptance_basis: per_deliverable}
   reference_assets: []
-  acceptance_contract: [ACCEPT only if the track is 28–32 s long and has no sung or spoken words., 'ACCEPT only if a listener would call it light and warm rather than dramatic — no big orchestral swell, no heavy drums.', ACCEPT only if at least one recognisably Indian instrument colour (flute/bansuri or tabla-like percussion) is audible., 'REJECT if the file is silent, clipped or ends with an abrupt cut mid-phrase.']
+  acceptance_contract: [ACCEPT only if the track is 28–32 s long and has no sung or spoken words., 'REJECT if drums or heavy percussion dominate the mix, or if an orchestral string or brass swell is present.', ACCEPT only if at least one recognisably Indian instrument colour (flute/bansuri or tabla-like percussion) is audible., 'REJECT if the file is silent, clipped or ends with an abrupt cut mid-phrase.']
   blueprint_ref: BLUEPRINTS/MUS-01.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: 6f1de5d3bf85fbec7c165853dccf32641f6a4a237c4c6354f89c4f6c5edafc5a
+  blueprint_sha256: 4d03a82e214c4c54d8f4119cfa913450abef9ad671870736d35a6e95506e368b
   routes:
   - route_key: lyria
     route_id: lyria-002
@@ -6015,7 +6006,7 @@ cases:
   acceptance_contract: [ACCEPT only if the track is 28–32 s long and has no sung or spoken words., ACCEPT only if the energy audibly builds from the start to the end (more elements or a stronger pulse by the last third)., 'REJECT if there is a large orchestral or ''trailer'' swell, or if the arrangement is so dense it would mask street ambience.', 'REJECT if the file is silent, clipped or ends abruptly mid-phrase.']
   blueprint_ref: BLUEPRINTS/MUS-02.blueprint.md
   blueprint_author: executor_agent
-  blueprint_sha256: 4c81402a4c5000cea24dd2a5f9441eed1668ddb3ae1ef4db208850c9f5d021de
+  blueprint_sha256: dbf2301833123c5192dedf0809a6fec96e55b8bc5deb66fe1a8e8ba79d26567f
   routes:
   - route_key: lyria
     route_id: lyria-002

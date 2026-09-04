@@ -47,11 +47,17 @@
 - ACCEPT only if the pack's label stays as printed on the references in every sampled frame (start, middle, end); REJECT if lettering morphs, blurs into new shapes or re-arranges.
 - ACCEPT only if the pack visibly turns or the viewpoint visibly changes during the clip.
 - REJECT if the pack's proportions or colours change during the clip, or if any added lettering, voice or music is present.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): kling-v3-elements, seedance-2.5-ref2v, veo-3.1-fast-ref2v.
+See `TEST-CASES.yaml` → `routes[]`: kling-v3-elements, seedance-2.5-ref2v, veo-3.1-fast-ref2v.
 
 **Blueprint:** `BLUEPRINTS/VID-REF-01.blueprint.md` (sha256 `fbee0f74bc6ca394…`, author executor_agent)
 

@@ -68,7 +68,7 @@ Drop it and the video core has no product commercial — the shape that VID-05's
 
 ## C.VID-2SPK-01 — VID-2SPK-01
 
-Drop it and the §C.3d two-speaker requirement is unmet, the capability two_speaker_turn_assignment_and_lip_sync has no item, and freshness item 4 (Media Factory: dialogue 'breaks beyond two turns', ≤ 2 turns worked on Wan) is untested; it cannot merge with VID-T2V-01 because turn assignment only exists with two visible speakers, and its chain arm cannot merge with AUD-LIP-* because those drive one face.
+Drop it and the §C.3d two-speaker requirement is unmet, the capability two_speaker_turn_assignment_and_lip_sync has no item, and freshness item 4 (Media Factory: dialogue 'breaks beyond two turns'; ≤ 2 turns worked on Wan i2v from a crisp plate) is untested — Wan 3.0 Prime sits in the native arm for exactly that refresh; it cannot merge with VID-T2V-01 because turn assignment only exists with two visible speakers. The chain arm is recorded, not screened (0 calls): single-face lipsync routes expose no speaker assignment.
 
 ## C.VID-KNEE-01 — VID-KNEE-01
 
@@ -112,7 +112,7 @@ Drop it and VID-02 is answered only at 15 s on a two-person, three-location item
 
 ## C.AUD-TTS-01 — AUD-TTS-01
 
-Drop it and AUD-01/02 have no Hindi script and TOPO-01 arm B has no Indic drive; it cannot merge with AUD-TTS-02 because Hindi and Hinglish results are never pooled and code-mixing is the harder, more commercial case.
+Drop it and AUD-01/02 have no Hindi script and TOPO-01 arm B has no drive for the arm-A line; it cannot merge with AUD-TTS-02 because Hindi and Hinglish results are never pooled and code-mixing is the harder, more commercial case.
 
 ## C.AUD-TTS-02 — AUD-TTS-02
 
@@ -156,5 +156,7 @@ Drop it and the music lane has one brief and cannot separate 'the route makes ac
 10. Wan 3.0 on VID-T2V-*
 
 **Never cut:** repeats, any core item, any Hindi item, TOPO-02/03 arms A and C.
+
+Item 7 (the VID-2SPK-01 chain arm) is already at 0 calls — recorded, not screened (Auditor AF-3) — so it is a no-op cut.
 
 In `TEST-CASES.yaml` every case carries `cut_order_rank`: an integer = the lowest-numbered cut item that touches the case, with `cut_order_items[]` listing every item and its scope (items 1, 2, 3, 5, 6, 9, 10 remove one route line; 7 removes an arm; 4 and 8 remove the whole case); or `never_cut` with the reason (core item, Hindi/Hinglish item, TOPO-02/03 arms A and C). Cases and ranks: item 1 → VID-MS-01; item 2 → VID-REF-01, VID-REF-02; item 3 → VID-I2V-01, VID-I2V-02, VID-I2V-03, VID-I2V-04; item 4 → VID-MS-02; item 5 → VID-REF-02; item 6 → VID-I2V-02, VID-I2V-03; item 7 → VID-2SPK-01; item 8 → MUS-02; item 9 → VID-KNEE-01; item 10 → VID-T2V-01, VID-T2V-02, VID-T2V-03, VID-T2V-04.

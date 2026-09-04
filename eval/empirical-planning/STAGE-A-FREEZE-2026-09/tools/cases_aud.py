@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from common import *
 
-S1 = "एक धुलाई में दाग गायब"
-S2 = "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par."
+S1 = "इस दवाई से मेरी फसल दोगुनी हुई"
+S2 = "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par."
 S3 = "Zero petrol. Zero noise. All city."
+DRIVE_CAP = 70  # characters; ≈ ≤ 5 s spoken, so the line ends inside the 6-s lipsync plate (Auditor AF-4)
+assert all(len(s) <= DRIVE_CAP for s in (S1, S2, S3)), [len(s) for s in (S1, S2, S3)]
 DRIVE_RULE = "drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes"
-PLATE = "the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable"
+PLATE = "the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate's subject (a young man in a lobby) differs from arm A's farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)"
 
 def aud_lang(code, n_speakers=1):
     return dict(LANG_TOPO[code], n_speakers=n_speakers, speaker_turn_boundaries_present=False)
@@ -61,24 +63,23 @@ def tts_case(cid, lang, text, attachments, source, script, voice_desc, pool_note
     )
 
 AUD.append(tts_case("AUD-TTS-01", "hi",
-    "एक voice-over line चाहिए हमारे 10 सेकंड वाले detergent video के लिए। पुरुष आवाज़, साफ़ हिंदी, घरेलू और भरोसेमंद, ज़्यादा नाटकीय नहीं। Line है: \"एक धुलाई में दाग गायब\"। बस यही, सिर्फ audio file (wav या mp3) भेज दीजिए।", [],
-    dict(pool="brief_bank", id="BR-F05-HI", adaptation=["voiceover_script_extracted_as_a_tts_request (the source is a 10-s product video with this VO line; here the buyer asks for the VO alone)", "voice_gender_stated_male (the source names none; chosen so the same voice can drive the male-plate lipsync cases)", "register_rewritten_to_devanagari_whatsapp"]),
-    S1, "male voice, clear Hindi, homely and trustworthy, not theatrical", "Sarvam credits + ElevenLabs cash; Chirp 3 HD / Azure Neural TTS conditional credit-only extras on this Hindi script",
-    ["ACCEPT only if a first-language Hindi listener hears exactly \"एक धुलाई में दाग गायब\" — every word, in order, no extra word.",
-     "ACCEPT only if it is one male voice speaking clear standard Hindi; REJECT if the accent makes any word ambiguous (e.g. धुलाई heard as another word).",
+    "एक voice-over line चाहिए हमारे किसान वाले video के लिए, video अलग से बन रहा है। पुरुष आवाज़, किसान जैसी सादी हिंदी, भरोसेमंद, ज़्यादा नाटकीय नहीं। Line है: \"इस दवाई से मेरी फसल दोगुनी हुई\"। बस यही, सिर्फ audio file (wav या mp3) भेज दीजिए।", [],
+    dict(pool="brief_bank", id="BR-F07-HI", adaptation=["spoken_line_extracted_as_a_tts_request (the source is the 20-s farmer testimonial video; the same Nashik dealer asks for the line as a VO for a separate edit)", "line_shared_with_VID-T2V-01_after_audit (AF-2: TOPO-01 arm A and arm B now carry the same brief and the same spoken line; the first draft used BR-F05-HI's detergent line, which is no longer in the package)", "voice_gender_stated_male (the source's speaker is a farmer, male by the source's own pronoun; chosen so the same voice can drive the male-plate lipsync cases)", "register_rewritten_to_devanagari_whatsapp", "source flag carried: the line is an efficacy claim presented as testimony"]),
+    S1, "male voice, plain farmer-like Hindi, trustworthy, not theatrical", "Sarvam credits + ElevenLabs cash; Chirp 3 HD / Azure Neural TTS conditional credit-only extras on this Hindi script",
+    ["ACCEPT only if a first-language Hindi listener hears exactly \"इस दवाई से मेरी फसल दोगुनी हुई\" — every word, in order, no extra word.",
+     "ACCEPT only if it is one male voice speaking clear Hindi; REJECT if any word is heard as a different word (e.g. दवाई or दोगुनी mispronounced into another word).",
      "REJECT if any music, effect, second voice or English word is present.",
      "REJECT if the file is silent, truncated mid-word, or longer than 6 seconds."],
-    "Drop it and AUD-01/02 have no Hindi script and TOPO-01 arm B has no Indic drive; it cannot merge with AUD-TTS-02 because Hindi and Hinglish results are never pooled and code-mixing is the harder, more commercial case.", freshness=[5]))
+    "Drop it and AUD-01/02 have no Hindi script and TOPO-01 arm B has no drive for the arm-A line; it cannot merge with AUD-TTS-02 because Hindi and Hinglish results are never pooled and code-mixing is the harder, more commercial case.", freshness=[5]))
 
 AUD.append(tts_case("AUD-TTS-02", "hg",
-    "Ek VO chahiye 15 sec video ke liye, young male voice, energetic aur motivational but trustworthy bhi, education hai. Thoda fast bole but clearly samajh aaye. Line: \"Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.\" Hindi-English mix hai, waise hi bolna hai jaise hum bolte hain. \"Kaushal Setu\" hamara naam hai, sahi bolna. Sirf audio chahiye.", [],
-    dict(pool="brief_bank", id="BR-F07-HG", adaptation=["spoken_script_extracted_as_a_tts_request (the source is a 15-s single-speaker video; here the VO alone)", "brand_name_line_added_as_fixture ('— Kaushal Setu par.' appended: the task requires Indian brand names in the Hinglish script and the source's business is unnamed; the name is a labelled fixture, not customer text from the bank)", "end_card_dropped (\"Batch starts Monday\")", "both source contradictions kept (energetic vs calm; fast vs clear)"]),
+    "Ek VO chahiye 15 sec ke video ke liye, young male voice, energetic aur motivational, but bharosa bhi lage, padhai ka matter hai. Thoda fast bole but clear. Line: \"Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.\" Hindi-English mix hai, waise hi bolna hai jaise hum bolte hain. Kaushal Setu hamara naam hai, sahi bolna. Sirf audio chahiye.", [],
+    dict(pool="brief_bank", id="BR-F07-HG", adaptation=["spoken_script_extracted_as_a_tts_request (the source is a 15-s single-speaker video; here the VO alone)", "brand_name_line_added_as_fixture ('Kaushal Setu par' appended: the task requires Indian brand names in the Hinglish script and the source's business is unnamed; the name is a labelled fixture, not customer text from the bank)", "script_shortened_to_drive_cap (AF-4: 'Toh' dropped and the clauses tightened so the line is ≤ 70 characters, ≈ ≤ 5 s, and ends inside the 6-s lipsync plate)", "register_rewrite_after_audit (the source's mid-sentence Devanagari 'enroll करो' typed in Latin as a Hinglish buyer types; 'education hai' → 'padhai ka matter hai')", "end_card_dropped (\"Batch starts Monday\")", "both source contradictions kept (energetic vs calm; fast vs clear)"]),
     S2, "young male voice, energetic and motivational yet trustworthy; a little fast but every word clear", "Sarvam credits + ElevenLabs cash",
-    ["ACCEPT only if the listener hears exactly \"Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.\" — every word, in order.",
-     "ACCEPT only if \"Kaushal Setu\" is pronounced as a Hindi name (कौशल सेतु), not anglicised; REJECT if either word is mangled.",
-     "ACCEPT only if the English words (job, skill, upgrade, enroll) sound as an Indian speaker says them inside a Hindi sentence, not as a separate English accent.",
-     "REJECT if any music, effect or second voice is present, or if the file is longer than 8 seconds.",
-     "REJECT if the delivery is so fast that a word is lost, or so slow that it reads as a lullaby (the customer asked for fast but clear)."],
+    ["ACCEPT only if the listener hears exactly \"Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.\" — every word, in order.",
+     "ACCEPT only if \"Kaushal Setu\" is heard as the Hindi words कौशल सेतु; REJECT if either word is heard as something else.",
+     "ACCEPT only if every word, English and Hindi, is understood on a single listen by a Hindi-English speaker; REJECT if any word has to be replayed to be made out.",
+     "REJECT if any music, effect or second voice is present, or if the file is longer than 6 seconds."],
     "Drop it and the TTS lane has no code-mixed script, which the condition contract calls arguably the hardest and most commercially common case, and the brand-name pronunciation question (human-judged, Q5) has no item; it cannot merge with AUD-TTS-01 (pure Hindi) or AUD-TTS-03 (English) for the pooling rule.",
     ambiguity=[dict(marker_type="contradiction", detail="energetic vs calm/trustworthy; fast vs clearly understood (source c1, c2) — recorded; the request's own words are the resolution ('thoda fast but clearly')", affected_fields=["R18"])],
     fixture_note="fixture note: the brand name Kaushal Setu is a labelled fixture; no real business of that name is implied"))
@@ -99,7 +100,7 @@ def lip_case(cid, lang, text, attachments, drive_case, script, contract, irr, fr
         case_id=cid, lane="AUD",
         question_served=dict(plan_c1_rows=["best lip-sync route"] + (["best Hindi / Hinglish route (COND-LANGUAGE)"] if lang != "en" else []), roster_questions=["AUD-03"], topo_arms=["TOPO-01 arm B"] if cid == "AUD-LIP-01" else [], c3d=[], freshness_items=list(freshness)),
         customer_request=dict(channel="whatsapp", register="whatsapp", language=lang, text=text, attachments_named=attachments),
-        source=dict(pool="fixture", id="none", adaptation=[f"fixture — no source pool holds a 'lip-sync this voice onto this clip' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the {drive_case} output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items"], derived_from=[drive_case, "VID-I2V-02"]),
+        source=dict(pool="fixture", id="none", adaptation=[f"fixture — no source pool holds a 'lip-sync this voice onto this clip' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the {drive_case} output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items", "register_rewrite_after_audit (the timing / closed-lips clauses that restated the contract were removed; the buyer asks for a natural lip-sync and the contract carries the timing and silence tests)"], derived_from=[drive_case, "VID-I2V-02"]),
         nr=dict(requested_operation="compose", modality="video",
             supplied_assets=[dict(asset_id=attachments[0].split(".")[0], media_type="video", role="subject_of_operation", applies_to="presenter", description="6-s clip of one man, static camera (the VID-I2V-02 accepted clip)"),
                              dict(asset_id=attachments[1].split(".")[0], media_type="audio", role="subject_of_operation", applies_to="voice", description=f"the VO file: \"{script}\"")],
@@ -140,30 +141,30 @@ def lip_case(cid, lang, text, attachments, drive_case, script, contract, irr, fr
                            ("CA-D3", "Framing unchanged; no re-crop of the plate.")],
                 text_handling="none",
                 dispatch=dict(aspect="as the clip", duration_s=6, resolution="as the clip", audio="the supplied drive, muxed unchanged", reference_slots="2 (clip + audio)"),
-                brief_parameters=["plate: " + PLATE, "drive: " + DRIVE_RULE, "no speaker mask supplied (one face)", "output audio = the drive, unchanged; video = the plate with the mouth region re-synthesised only"],
+                brief_parameters=["plate: " + PLATE, "drive: " + DRIVE_RULE, f"drive script ≤ {DRIVE_CAP} characters (≈ ≤ 5 s spoken) so the line ends inside the 6-s plate and the after-line silence is judgeable (AF-4); this script: {len(script)} characters", "no speaker mask supplied (one face)", "output audio = the drive, unchanged; video = the plate with the mouth region re-synthesised only"],
                 prompt=f"Lip-sync the supplied voice onto the supplied clip. The man's mouth must move with the words \"{script}\" in time and shape; when the voice is silent his lips rest closed. Change nothing else: face, hair, background, framing and timing of the clip stay exactly as supplied."),
     )
 
 AUD.append(lip_case("AUD-LIP-01", "hi",
-    "हमारे model की एक clip है (model_clip.mp4, 6 सेकंड) और VO की audio है (vo_line.wav) — \"एक धुलाई में दाग गायब\"। इस आवाज़ को clip में lip-sync कर दीजिए, जो बोला जा रहा है वही होंठों से निकलता दिखे और सही समय पर। चेहरा, background, बाकी सब वैसा ही रहे, सिर्फ होंठ बदलें। जब line खत्म हो जाए तब होंठ बंद रहें।",
-    ["model_clip.mp4", "vo_line.wav"], "AUD-TTS-01", S1,
-    ["ACCEPT only if the man's mouth opens and closes with the syllables of \"एक धुलाई में दाग गायब\" — a first-language Hindi judge sees the words being spoken; REJECT if the mouth moves out of time by a visible beat.",
+    "हमारे presenter की एक clip है (presenter_clip.mp4, 6 सेकंड) और किसान वाली line की VO है (vo_kisan.wav) — \"इस दवाई से मेरी फसल दोगुनी हुई\"। इस आवाज़ को clip पर lip-sync कर दीजिए, natural लगे। चेहरा, background, बाकी सब वैसा ही रहे।",
+    ["presenter_clip.mp4", "vo_kisan.wav"], "AUD-TTS-01", S1,
+    ["ACCEPT only if the man's mouth opens and closes with the syllables of \"इस दवाई से मेरी फसल दोगुनी हुई\" — a first-language Hindi judge sees the words being spoken; REJECT if the mouth moves out of time by a visible beat.",
      "ACCEPT only if his lips are closed or at rest during the silence after the line.",
      "REJECT if the face changes identity, the mouth region shows a visible patch, blur, colour seam or flicker, or the background changes.",
      "REJECT if the audio in the output is not the supplied voice (re-synthesised, clipped or shifted)."],
     "Drop it and TOPO-01 has no arm B and freshness item 5 (LatentSync-class mouth repaint vs native lip-sync) is untested for Hindi; it cannot merge with VID-T2V-01 (arm A) because the two arms are the comparison, nor with AUD-LIP-02/03 for the language-pooling rule."))
 
 AUD.append(lip_case("AUD-LIP-02", "hg",
-    "Ek clip hai instructor ki (instructor_clip.mp4, 6 sec) aur VO file (vo_kaushal.wav) — \"Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.\" VO ko clip pe lip-sync kar do, lips exactly awaaz ke saath chalein, Hindi-English mix line hai toh mouth shapes sahi lagni chahiye. Baaki clip mein kuch change nahi, face same. Jab awaaz nahi hai tab lips band.",
+    "Ek clip hai instructor ki (instructor_clip.mp4, 6 sec) aur VO file (vo_kaushal.wav) — \"Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.\" VO ko clip pe lip-sync kar do, natural lage. Baaki clip mein kuch change nahi, face same.",
     ["instructor_clip.mp4", "vo_kaushal.wav"], "AUD-TTS-02", S2,
-    ["ACCEPT only if the mouth follows the whole line \"Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.\" in time — including the English words — with no visible lag or lead.",
+    ["ACCEPT only if the mouth follows the whole line \"Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.\" in time — including the English words — with no visible lag or lead.",
      "ACCEPT only if the lips rest closed during the pauses and after the line.",
      "REJECT if the face changes identity, or the mouth region shows a patch, blur, seam or flicker.",
      "REJECT if the output audio is not the supplied voice."],
     "Drop it and the lip-sync lane has no code-mixed drive, so a route that syncs Hindi syllables but not English ones inside a Hindi sentence would pass unseen; it cannot merge with the other two for the pooling rule."))
 
 AUD.append(lip_case("AUD-LIP-03", "en",
-    "Sending a 6 sec clip of our presenter (presenter_clip.mp4) and the VO (velo_vo.wav) - \"Zero petrol. Zero noise. All city.\" Please lip-sync the VO onto the clip. Lips must match the words and the timing, and stay closed in the pauses between the three sentences. Nothing else in the clip should change.",
+    "Sending a 6 sec clip of our presenter (presenter_clip.mp4) and the VO (velo_vo.wav) - \"Zero petrol. Zero noise. All city.\" Please lip-sync the VO onto the clip so it looks natural. Nothing else in the clip should change.",
     ["presenter_clip.mp4", "velo_vo.wav"], "AUD-TTS-03", S3,
     ["ACCEPT only if the mouth follows \"Zero petrol. Zero noise. All city.\" in time, sentence by sentence.",
      "ACCEPT only if the lips are closed in each of the two pauses and after the last sentence.",
@@ -212,7 +213,7 @@ AUD.append(mus_case("MUS-01", "hi",
     dict(pool="brief_bank", id="BR-F06-HI", adaptation=["music_bed_extracted_from_the_video_brief (source: 'sirf background music aur kitchen ki awaaz' for a 15-s cooker demo; here the buyer asks for the bed alone)", "duration_set_to_30s (a bed to cut from)", "instrument_hint_stated (flute or light tabla) — the customer's own words for 'Indian touch'", "register_rewritten_to_devanagari_whatsapp"]),
     ["warm, light, home-kitchen feel", "a light Indian touch: flute or soft tabla", "not filmy", "loopable"],
     ["ACCEPT only if the track is 28–32 s long and has no sung or spoken words.",
-     "ACCEPT only if a listener would call it light and warm rather than dramatic — no big orchestral swell, no heavy drums.",
+     "REJECT if drums or heavy percussion dominate the mix, or if an orchestral string or brass swell is present.",
      "ACCEPT only if at least one recognisably Indian instrument colour (flute/bansuri or tabla-like percussion) is audible.",
      "REJECT if the file is silent, clipped or ends with an abrupt cut mid-phrase."],
     "Drop it and the §C.3d music lane has no Hindi-market bed and only one brief, which cannot show whether a route's register control is real; it cannot merge with MUS-02 (minimal Western beat) because the Indian-instrument colour is the condition.",

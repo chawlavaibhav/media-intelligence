@@ -50,8 +50,9 @@ packs_source: canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers c
 
 ### 2a. Production parameters from the brief alone (not Canon)
 
-- plate: the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable
+- plate: the Controller-accepted VID-I2V-02 clip (6 s, one man, static camera) — one plate held constant across all three lipsync cases so that the drive language is the only variable; for TOPO-01 the plate's subject (a young man in a lobby) differs from arm A's farmer in a field — the spoken line and the brief shape (one visible Hindi speaker, one line) are the same; the subject difference is recorded as the residual confound (Auditor AF-2)
 - drive: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule; the Controller may choose Sarvam in the morning — decision 9); the same drive file is held constant across both lipsync routes
+- drive script ≤ 70 characters (≈ ≤ 5 s spoken) so the line ends inside the 6-s plate and the after-line silence is judgeable (AF-4); this script: 70 characters
 - no speaker mask supplied (one face)
 - output audio = the drive, unchanged; video = the plate with the mouth region re-synthesised only
 
@@ -78,5 +79,5 @@ packs_source: canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers c
 ## 6. generation_prompt (byte-identical across every route listed for this case)
 
 ```text
-Lip-sync the supplied voice onto the supplied clip. The man's mouth must move with the words "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par." in time and shape; when the voice is silent his lips rest closed. Change nothing else: face, hair, background, framing and timing of the clip stay exactly as supplied.
+Lip-sync the supplied voice onto the supplied clip. The man's mouth must move with the words "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." in time and shape; when the voice is silent his lips rest closed. Change nothing else: face, hair, background, framing and timing of the clip stay exactly as supplied.
 ```

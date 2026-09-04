@@ -97,19 +97,19 @@ packs_source: canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers c
 
 ## 3. text_handling
 
-- mode: generated (arm B native; arm A inherits the still's generated text) and composite (arm C)
+- mode: generated (arm B native; arm A's 9:16 plate generated on Qwen Image 3) and composite (arm C, 9:16 textless plate)
 - string `t1` (devanagari, headline, exact): **दीपावली की शुभकामनाएं**
 - string `t2` (devanagari, body, exact): **सभी मिठाइयों पर 20% छूट**
 - string `t3` (devanagari, brand_name, exact): **श्री गणेश मिष्ठान भंडार**
-- composite arm: font Noto Serif Devanagari (bundled); positions: as IMG-TEXT-01 arm C; colour: as IMG-TEXT-01 arm C; rule: overlay by code at USD 0 on every frame of the arm-C clip; static overlay if the plate region is still, tracked (per-frame homography from the plate) if it moves; identical on both draws
+- composite arm: font Noto Serif Devanagari (bundled); positions: t1 top band centred; t2 upper-middle band centred, gold #D4A017 on maroon; t3 lower-third band centred at 1.6× the height of t2, cream #F5E9D3 — the 9:16 frame's bands; colour: gold for t2, cream for t1/t3; rule: overlay by code at USD 0 on every frame of the arm-C clip; static overlay if the plate region is still, tracked (per-frame homography from the plate) if it moves; identical on both draws
 
 ## 4. dispatch_parameters (identical for every route; route mapping only in `TEST-CASES.yaml` → `routes[].params`)
 
-- aspect: 9:16
+- aspect: 9:16 for every arm, including the two 9:16 plate draws (AF-1)
 - duration_s: 6
-- resolution: 720p
+- resolution: 720p (plates ~1 MP)
 - audio: off
-- reference_slots: 1 (arms A and C) / 0 (arm B)
+- reference_slots: 1 (arms A and C) / 0 (arm B and the plate draws)
 
 ## 5. pre_dispatch_checks (the packs' CHECK lines, by id, run over the prompt before any call)
 
@@ -135,6 +135,18 @@ packs_source: canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers c
 
 ```text
 Vertical video, one continuous static shot, 6 seconds, silent. A Diwali festive poster scene: on a deep maroon matte ground, an open box of Indian sweets with one gold foil band beside three lit clay diyas whose flames flicker gently and light the scene from below; the only movement is the flames and their warm light on the box. Devanagari text stays perfectly still and sharp in every frame, all spellings exact: at the top "दीपावली की शुभकामनाएं"; below it, larger and in bright gold, "सभी मिठाइयों पर 20% छूट"; across the lower third, the largest lettering of all, in cream, "श्री गणेश मिष्ठान भंडार". No other words, letters or numerals anywhere; no camera movement.
+```
+
+### arm_A_plate_prompt_9x16 (still with text, Qwen Image 3, 9:16)
+
+```text
+Diwali festive poster, vertical 9:16. On a deep maroon matte ground, lower area: an open box of Indian sweets (matte card box with one glossy gold foil band) beside three lit clay diyas whose flames light the scene from below with warm light; one small flame reflection on each diya's oil. Traditional motifs, clean modern layout with generous empty space. Text in Devanagari, all spellings exact: a top line reading "दीपावली की शुभकामनाएं"; below it, larger and in bright gold, the offer line "सभी मिठाइयों पर 20% छूट"; across the lower third, the largest lettering of all, in cream, the shop name "श्री गणेश मिष्ठान भंडार". No other words, letters or numerals anywhere.
+```
+
+### arm_C_textless_plate_prompt_9x16 (FLUX.2 Pro, 9:16)
+
+```text
+Diwali festive poster background, vertical 9:16. On a deep maroon matte ground, lower area: an open box of Indian sweets (matte card box with one glossy gold foil band) beside three lit clay diyas whose flames light the scene from below with warm light; one small flame reflection on each diya's oil. Traditional motifs, clean modern layout with the upper two-thirds and the lower-third band left as empty maroon space. No text, no lettering, no numerals, no symbols anywhere in the image.
 ```
 
 ### i2v_motion_prompt (arms A and C, identical)

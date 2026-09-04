@@ -38,16 +38,22 @@
 
 ## Acceptance contract (judged blind, from the artifact alone)
 
-- REJECT if the response is a refusal, error, blank clip or policy notice (recorded as a refusal under E1).
+- REJECT if there is no clip — a blank or black video, or text where the video should be.
 - ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
 - ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
 - ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
 - REJECT if any lettering appears.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): kling-v3-pro-i2v, minimax-h3-max-i2v, veo-3.1-fast-i2v, wan-3.0-prime-i2v.
+See `TEST-CASES.yaml` → `routes[]`: kling-v3-pro-i2v, minimax-h3-max-i2v, veo-3.1-fast-i2v, wan-3.0-prime-i2v.
 
 **Blueprint:** `BLUEPRINTS/VID-I2V-04.blueprint.md` (sha256 `4e361973822934f2…`, author executor_agent)
 

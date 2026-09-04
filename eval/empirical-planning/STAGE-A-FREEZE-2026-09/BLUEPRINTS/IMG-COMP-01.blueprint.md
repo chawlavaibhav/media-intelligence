@@ -141,7 +141,6 @@ packs_source: canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers c
 - `CA-D5-check`: Declared balanced or deliberately restless; if balanced, a grayscale check shows tonal weight agreeing with size weight.
 - `CA-D6-check`: The stated aspect is justified by a named shape in the scene, not by the platform alone.
 - `no-in-image-text (composite arm / plate)`: the textless-plate prompt includes an explicit no-lettering instruction; lettering on a plate is a reject; the overlay step is code at USD 0.
-- `exact-string-carry (generated arms)`: every required string appears in the generation prompt byte-identical to `text_requirements[].content` (checked by substring).
 - pack limit (`composition_and_attention`): Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.
 - pack limit (`product_appearance`): Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.
 

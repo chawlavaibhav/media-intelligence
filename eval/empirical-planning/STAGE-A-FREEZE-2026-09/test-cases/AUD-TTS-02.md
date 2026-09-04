@@ -4,14 +4,16 @@
 
 **Channel:** whatsapp · **Language:** hg · **Attachments named:** none
 
-> Ek VO chahiye 15 sec video ke liye, young male voice, energetic aur motivational but trustworthy bhi, education hai. Thoda fast bole but clearly samajh aaye. Line: "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par." Hindi-English mix hai, waise hi bolna hai jaise hum bolte hain. "Kaushal Setu" hamara naam hai, sahi bolna. Sirf audio chahiye.
+> Ek VO chahiye 15 sec ke video ke liye, young male voice, energetic aur motivational, but bharosa bhi lage, padhai ka matter hai. Thoda fast bole but clear. Line: "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." Hindi-English mix hai, waise hi bolna hai jaise hum bolte hain. Kaushal Setu hamara naam hai, sahi bolna. Sirf audio chahiye.
 
 **Source:** pool `brief_bank`, id `BR-F07-HG`
 
 **Adaptations:**
 
 - spoken_script_extracted_as_a_tts_request (the source is a 15-s single-speaker video; here the VO alone)
-- brand_name_line_added_as_fixture ('— Kaushal Setu par.' appended: the task requires Indian brand names in the Hinglish script and the source's business is unnamed; the name is a labelled fixture, not customer text from the bank)
+- brand_name_line_added_as_fixture ('Kaushal Setu par' appended: the task requires Indian brand names in the Hinglish script and the source's business is unnamed; the name is a labelled fixture, not customer text from the bank)
+- script_shortened_to_drive_cap (AF-4: 'Toh' dropped and the clauses tightened so the line is ≤ 70 characters, ≈ ≤ 5 s, and ends inside the 6-s lipsync plate)
+- register_rewrite_after_audit (the source's mid-sentence Devanagari 'enroll करो' typed in Latin as a Hinglish buyer types; 'education hai' → 'padhai ka matter hai')
 - end_card_dropped ("Batch starts Monday")
 - both source contradictions kept (energetic vs calm; fast vs clear)
 
@@ -29,7 +31,7 @@
 | text_requirements | — (absent) | absent |
 | brand_requirements | — (absent) | absent |
 | language_topology | {on_screen_copy: none, spoken: hi-en (Hinglish), subtitles: none, viewer_locale: IN} | customer_stated |
-| speaker_topology | {offscreen_voices: 1, script: 'Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.', script_exactness: exact, turn_boundaries_required: false, visible_speakers: 0} | customer_stated |
+| speaker_topology | {offscreen_voices: 1, script: 'Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.', script_exactness: exact, turn_boundaries_required: false, visible_speakers: 0} | customer_stated |
 | temporal_structure | — (absent) | absent |
 | subject_motion | — (absent) | absent |
 | camera_motion | — (absent) | absent |
@@ -41,18 +43,21 @@
 
 ## Acceptance contract (judged blind, from the artifact alone)
 
-- ACCEPT only if the listener hears exactly "Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par." — every word, in order.
-- ACCEPT only if "Kaushal Setu" is pronounced as a Hindi name (कौशल सेतु), not anglicised; REJECT if either word is mangled.
-- ACCEPT only if the English words (job, skill, upgrade, enroll) sound as an Indian speaker says them inside a Hindi sentence, not as a separate English accent.
-- REJECT if any music, effect or second voice is present, or if the file is longer than 8 seconds.
-- REJECT if the delivery is so fast that a word is lost, or so slow that it reads as a lullaby (the customer asked for fast but clear).
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+- ACCEPT only if the listener hears exactly "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." — every word, in order.
+- ACCEPT only if "Kaushal Setu" is heard as the Hindi words कौशल सेतु; REJECT if either word is heard as something else.
+- ACCEPT only if every word, English and Hindi, is understood on a single listen by a Hindi-English speaker; REJECT if any word has to be replayed to be made out.
+- REJECT if any music, effect or second voice is present, or if the file is longer than 6 seconds.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- audio probe (container, sample rate, duration: TTS ≤ 6 s / music 28–32 s)
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): elevenlabs-v3, sarvam-bulbul-v3.
+See `TEST-CASES.yaml` → `routes[]`: elevenlabs-v3, sarvam-bulbul-v3.
 
-**Blueprint:** `BLUEPRINTS/AUD-TTS-02.blueprint.md` (sha256 `6e06cf0b25e69985…`, author executor_agent)
+**Blueprint:** `BLUEPRINTS/AUD-TTS-02.blueprint.md` (sha256 `87944aca072597cd…`, author executor_agent)
 
 ## Why this shape is real demand
 

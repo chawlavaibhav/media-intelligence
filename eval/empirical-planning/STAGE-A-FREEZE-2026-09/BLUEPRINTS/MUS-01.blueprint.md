@@ -51,7 +51,7 @@ _No Canon decision applies to this cell (audio: zero packs, zero accepted source
 
 ## 5. pre_dispatch_checks (the packs' CHECK lines, by id, run over the prompt before any call)
 
-- no pack CHECK applies (audio cell — see the coverage-gap notice); brief-only pre-dispatch checks, attributed to nothing in Canon: the request payload's script is byte-identical to `speaker_topology.script`; ≤ 250 characters; one voice; no music bed.
+- no pack CHECK applies (audio cell — see the coverage-gap notice); brief-only pre-dispatch checks, attributed to nothing in Canon: requested duration 30 s in the payload; instrumental only (no vocals requested); wav requested where the route offers it.
 
 ## 6. generation_prompt (byte-identical across every route listed for this case)
 

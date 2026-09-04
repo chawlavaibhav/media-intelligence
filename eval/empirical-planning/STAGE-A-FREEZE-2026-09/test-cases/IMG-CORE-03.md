@@ -47,11 +47,16 @@
 - REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
 - REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
 - REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): flux-2-pro, gpt-image-2, mai-image-2.6, nano-banana-2, nano-banana-pro, qwen-image-3, sd3.5-large, seedream-5-pro.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro, gpt-image-2, mai-image-2.6, nano-banana-2, nano-banana-pro, qwen-image-3, sd3.5-large, seedream-5-pro.
 
 **Blueprint:** `BLUEPRINTS/IMG-CORE-03.blueprint.md` (sha256 `ed23ebc78411341d…`, author executor_agent)
 

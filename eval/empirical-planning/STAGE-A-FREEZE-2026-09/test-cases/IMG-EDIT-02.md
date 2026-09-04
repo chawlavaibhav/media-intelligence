@@ -43,11 +43,16 @@
 - ACCEPT only if the pack still reads exactly "शुद्ध मसाले" and "५०० ग्राम" — the conjunct द्ध and the Devanagari digits ५०० unchanged; REJECT if any character is altered, blurred into a different form or re-rendered in a different typeface.
 - ACCEPT only if the pack's colour matches the supplied photo when flicked side by side.
 - REJECT if the pack's outline, size or position has changed, or if any part of the pack is cut off.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): flux-2-pro-edit, gpt-image-2-edit, nano-banana-pro-edit, seedream-5-pro-edit.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro-edit, gpt-image-2-edit, nano-banana-pro-edit, seedream-5-pro-edit.
 
 **Blueprint:** `BLUEPRINTS/IMG-EDIT-02.blueprint.md` (sha256 `1bd82f5a6dab5046…`, author executor_agent)
 

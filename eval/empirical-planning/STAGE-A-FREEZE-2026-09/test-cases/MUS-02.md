@@ -44,13 +44,17 @@
 - ACCEPT only if the energy audibly builds from the start to the end (more elements or a stronger pulse by the last third).
 - REJECT if there is a large orchestral or 'trailer' swell, or if the arrangement is so dense it would mask street ambience.
 - REJECT if the file is silent, clipped or ends abruptly mid-phrase.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- audio probe (container, sample rate, duration: TTS ≤ 6 s / music 28–32 s)
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): elevenlabs-music, lyria.
+See `TEST-CASES.yaml` → `routes[]`: elevenlabs-music, lyria.
 
-**Blueprint:** `BLUEPRINTS/MUS-02.blueprint.md` (sha256 `4c81402a4c5000ce…`, author executor_agent)
+**Blueprint:** `BLUEPRINTS/MUS-02.blueprint.md` (sha256 `dbf2301833123c51…`, author executor_agent)
 
 ## Why this shape is real demand
 

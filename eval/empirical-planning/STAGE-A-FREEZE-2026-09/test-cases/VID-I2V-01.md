@@ -41,13 +41,19 @@
 
 - ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
 - ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the surface, or grows lettering.
-- REJECT if reflections or the highlight jump, flicker or stay glued to the glass as the viewpoint moves.
-- REJECT if any audio track with sound, or any lettering, is present.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+- REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint has changed.
+- REJECT if speech or music is present, or any lettering.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): kling-v3-pro-i2v, minimax-h3-max-i2v, veo-3.1-fast-i2v, wan-3.0-prime-i2v.
+See `TEST-CASES.yaml` → `routes[]`: kling-v3-pro-i2v, minimax-h3-max-i2v, veo-3.1-fast-i2v, wan-3.0-prime-i2v.
 
 **Blueprint:** `BLUEPRINTS/VID-I2V-01.blueprint.md` (sha256 `0ab9692b55eb6c3c…`, author executor_agent)
 

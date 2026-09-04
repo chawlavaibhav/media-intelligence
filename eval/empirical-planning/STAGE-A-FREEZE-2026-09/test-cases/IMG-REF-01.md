@@ -46,11 +46,16 @@
 - ACCEPT only if the tin's yellow matches the references when flicked side by side.
 - REJECT if the tin's proportions, cap or handle differ from the references, or if a second tin appears.
 - REJECT if any lettering appears outside the tin itself.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): flux-2-pro-edit, gpt-image-2-edit, nano-banana-pro-edit, seedream-5-pro-edit.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro-edit, gpt-image-2-edit, nano-banana-pro-edit, seedream-5-pro-edit.
 
 **Blueprint:** `BLUEPRINTS/IMG-REF-01.blueprint.md` (sha256 `83f1d962e9cfe7d9…`, author executor_agent)
 

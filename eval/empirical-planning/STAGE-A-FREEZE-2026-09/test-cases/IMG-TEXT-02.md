@@ -45,11 +45,16 @@
 - REJECT if any person, silhouette or body part appears.
 - ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
 - REJECT if any other lettering or pseudo-lettering appears anywhere.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- required string absent (Cloud Vision, T-BENCH) → reject before judging
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): flux-2-pro, gpt-image-2, nano-banana-2, nano-banana-pro, qwen-image-3, recraft-v4, seedream-5-pro.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro, gpt-image-2, nano-banana-2, nano-banana-pro, qwen-image-3, recraft-v4, seedream-5-pro.
 
 **Blueprint:** `BLUEPRINTS/IMG-TEXT-02.blueprint.md` (sha256 `335be8f8dd06c951…`, author executor_agent)
 

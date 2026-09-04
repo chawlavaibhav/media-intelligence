@@ -33,8 +33,8 @@ _No Canon decision applies to this cell (audio: zero packs, zero accepted source
 
 ### 2a. Production parameters from the brief alone (not Canon)
 
-- script (exact, 21 characters): एक धुलाई में दाग गायब
-- male voice, clear Hindi, homely and trustworthy, not theatrical
+- script (exact, 30 characters): इस दवाई से मेरी फसल दोगुनी हुई
+- male voice, plain farmer-like Hindi, trustworthy, not theatrical
 - one voice, no music bed, no effects
 - pace: natural; a short pause at each sentence boundary
 
@@ -56,5 +56,5 @@ _No Canon decision applies to this cell (audio: zero packs, zero accepted source
 ## 6. generation_prompt (byte-identical across every route listed for this case)
 
 ```text
-एक धुलाई में दाग गायब
+इस दवाई से मेरी फसल दोगुनी हुई
 ```

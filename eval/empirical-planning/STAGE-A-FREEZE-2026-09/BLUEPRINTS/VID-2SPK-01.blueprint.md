@@ -150,8 +150,8 @@ L1 (female voice, warm, questioning): यह रंग कैसा लगेग
 L2 (male voice, warm, gentle smile): घर जैसा
 ```
 
-### chain_lipsync (arm B step 4)
+### chain_lipsync (arm B step 4) — RECORDED, NOT SCREENED
 
 ```text
-Drive = L1, 0.6 s silence, L2 (ElevenLabs v3 repeat 1 by the frozen rule). Apply to the accepted i2v clip. The route must assign L1 to the woman and L2 to the man; no speaker masks are supplied — turn assignment is the capability under test.
+Drive = L1, 0.6 s silence, L2 (ElevenLabs v3 repeat 1 by the frozen rule), applied to the accepted i2v clip. The route would have to assign L1 to the woman and L2 to the man, but neither lipsync route documents a speaker-assignment or mask parameter, so the step is recorded as the chain design and not dispatched (0 calls); it re-opens as a new task if a route exposes a face/region parameter.
 ```

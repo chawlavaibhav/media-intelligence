@@ -42,11 +42,17 @@
 - ACCEPT only if the camera moves slowly (a reveal or drift) while the bottle itself stays still and keeps its shape; REJECT if the bottle warps, changes size or shifts on the surface.
 - ACCEPT only if condensation droplets are visible on the glass at some point.
 - REJECT if any voice, music or lettering is present.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): minimax-h3-max-480p, veo-3.1-full, veo-3.1-lite.
+See `TEST-CASES.yaml` → `routes[]`: minimax-h3-max-480p, veo-3.1-full, veo-3.1-lite.
 
 **Blueprint:** `BLUEPRINTS/VID-KNEE-01.blueprint.md` (sha256 `f6e8774ae8603379…`, author executor_agent)
 

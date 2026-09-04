@@ -24,8 +24,8 @@ Before any money is spent on the model screen, every test item must exist the wa
 ## Counts
 
 - Cases: **35** · blueprints: **35** (one per case; `VID-KNEE-01` carries the same production spec as `VID-T2V-04` under its own header).
-- Calls: **1a = 186**, **1b = 112**, **total = 298**, plus **32 conditional** (SD3.5 Large 8, MAI-Image-2.6 8, Sora 2 8, Chirp 3 HD 2, Azure Neural TTS 2, Kling v3 elements 4) listed but outside the cap.
-- Deviation from the task's fixed counts: none — the counts equal the task's fixed 186 / 112 / 298 + 32.
+- Calls: **1a = 192**, **1b = 96**, **total = 288**, plus **32 conditional** (SD3.5 Large 8, MAI-Image-2.6 8, Sora 2 8, Chirp 3 HD 2, Azure Neural TTS 2, Kling v3 elements 4) listed but outside the cap.
+- Deviation from the task's fixed counts: **192 / 96 / 288 + 32** against the task's 186 / 112 / 298 + 32 — three Controller-disposed Auditor fixes: AF-1 adds 4 image calls to 1a (9:16 plates for TOPO-03 arms A and C, drawn under VID-TOPO3-01); AF-3 adds 2 calls to 1a (Wan 3.0 Prime in the VID-2SPK-01 native arm) and removes the chain arm's 16 calls from 1b (plate 2 + i2v 2 + TTS drives 8 + lipsync 4 → recorded, not screened, 0 calls). Image lane 124 → 128; TTS 20 → 12; lipsync 12 (unchanged); 2SPK native 8 → 10; chain 8 → 0.
 - Language mix (by the language the customer wrote in): en 15, hi 12, hg 8 → Hindi + Hinglish = 20/35 = 57 %.
 
 | lane | en | hi | hg | total |
@@ -45,7 +45,7 @@ Before any money is spent on the model screen, every test item must exist the wa
 - `pinned` — the unit price and pin path come from the named roster record (fetched bytes + sha256 in `price-pins-2026-09/PIN-INDEX.yaml`); regular price only, promotions never used;
 - `unpinned` — the roster has no projectable price for that path (in the cap's scope: gpt-image-2 edit, pinned only as a token meter with no per-image table, 12 calls; Veo 3.1 Lite image-input, no pinned variant, 2 calls; among the conditionals: MAI-Image-2.6 unpublished, Chirp 3 HD, Kling elements); the line contributes 0, is summed under `unpinned_calls_excluded_from_cap`, and is outside the proposed cap.
 
-Route-level facts (id, surface, pool, status, unit price, pin path, seed support, notes, credit alternatives, billing-quantity rules) live once per route in `route_catalogue` at the top of `TEST-CASES.yaml` and `COST-TABLE.yaml`; each case's `routes[]` row and each cost row carries the `route_key` into that catalogue.
+Route-level facts (id, surface, pool, status, unit price, pin path, seed support, notes, credit alternatives, billing-quantity rules) live once per route in `route_catalogue` in `COST-TABLE.yaml`; each case's `routes[]` row and each cost row carries the `route_key` into that catalogue.
 
 Two roster facts changed this package after its first build: the second lip-sync route now has an id (`fal-ai/kling-video/lipsync/audio-to-video`, pinned), and Veo 3.1 **Fast** has a pinned reference-to-video variant, so VID-REF-* run on Fast (credits) rather than the full tier. The "cheapest pinned image-to-video route" resolves to MiniMax H3 Max i2v at 768p (0.08/s) for TOPO-03 arm C and the VID-2SPK-01 chain, because Veo Lite's image-input path is not pinned. Kling v3 bills 0.168/s with native audio on (0.112/s silent); the text-to-video core and the native dialogue arm use the audio-on price.
 
@@ -53,11 +53,11 @@ Two roster facts changed this package after its first build: the second lip-sync
 
 | tranche | pool | calls | priced calls | unpinned calls | nominal USD |
 |---|---|---|---|---|---|
-| 1a | cash | 136 | 124 | 12 | 47.77 |
+| 1a | cash | 142 | 130 | 12 | 50.15 |
 | 1a | credits | 50 | 50 | 0 | 25.5 |
-| 1b | cash | 78 | 70 | 8 | 66.92 |
+| 1b | cash | 66 | 60 | 6 | 65.3 |
 | 1b | credits | 24 | 22 | 2 | 15.51 |
-| 1b | sarvam_credits | 10 | 10 | 0 | 0.01 |
+| 1b | sarvam_credits | 6 | 6 | 0 | 0.01 |
 
 Conditional (listed, outside the cap):
 
@@ -67,18 +67,18 @@ Conditional (listed, outside the cap):
 | 1b | cash | 4 | 0 | 4 | 0.0 |
 | 1b | credits | 4 | 2 | 2 | 0.0 |
 
-- Nominal in-cap total: **USD 155.71** (1a ≈ 73.27, 1b ≈ 82.44); of which cash ≈ 114.69, GCP credits ≈ 41.01.
-- Unpinned calls excluded from the cap: **22** on routes `gpt-image-2-edit`, `sync-lipsync-v3`, `veo-3.1-lite-i2v` (sync-lipsync v3 became unpinned at the committed roster — its exact endpoint carries no price; the 0.1333/s string belongs to the sibling image-to-video endpoint — so all 12 of its calls sit outside the cap until pinned).
+- Nominal in-cap total: **USD 156.46** (1a ≈ 75.65, 1b ≈ 80.81); of which cash ≈ 115.45, GCP credits ≈ 41.01.
+- Unpinned calls excluded from the cap: **20** on routes `gpt-image-2-edit`, `sync-lipsync-v3`, `veo-3.1-lite-i2v` (sync-lipsync v3 became unpinned at the committed roster — its exact endpoint carries no price; the 0.1333/s string belongs to the sibling image-to-video endpoint — so all 12 of its calls sit outside the cap until pinned).
 - Priced against `ROSTER-REFRESH-2026-09.yaml` at the commit and sha256 recorded in `COST-TABLE.yaml` → `priced_against_roster`; `gpt-image-2` and `flux-2-pro` are `route_status: pinned` on their fal fallback records (the credit surfaces stay `needs_controller_enablement`), stated in `route_catalogue.priced_surface`.
-- Sarvam lines are inside the cap in INR: ≈ ₹0.92 (Sarvam's prepaid balance; shown as USD-equivalent 0.01 at the August display rate).
-- Evaluator lines (nominal): ≈ USD 3.82 (Cloud Vision + VLM triage; ASR unpinned). Controller judging time: see `COST-TABLE.yaml` → `evaluator_rows` → `controller_blind_judging.minutes`.
+- Sarvam lines are inside the cap in INR: ≈ ₹0.8 (Sarvam's prepaid balance; shown as USD-equivalent 0.01 at the August display rate).
+- Evaluator lines (nominal): ≈ USD 3.71 (Cloud Vision + VLM triage; ASR unpinned). Controller judging time: see `COST-TABLE.yaml` → `evaluator_rows` → `controller_blind_judging.minutes`.
 - The task's INFERRED planning figure was ≈ USD 150–165 nominal with ≈ 45–55 credit-eligible; the pinned figure sits in that range. gpt-image-2 and FLUX.2 Pro (base, edit and the arm-C/chain plates) are carried as fal cash until deployed on Azure; once deployed those lines move from cash to Azure credits at the same list price. The 1a nominal is above the plan's ≈ USD 60 line — morning decision 8 (raise the 1a cap, or apply the cut order in `IRREDUCIBILITY.md`).
 
 ## Morning decisions for the Controller (recorded, never attempted)
 
 The task's eleven human-approval triggers, with the state this package assumes:
 
-1. Ratify this package and the counts (35 cases / 298 + 32 conditional) or apply the cut order in `IRREDUCIBILITY.md`.
+1. Ratify this package and the counts (35 cases / 288 + 32 conditional) or apply the cut order in `IRREDUCIBILITY.md`.
 2. Sarvam key — **confirmed present**: the Controller session stated it, EVAL-039B's overnight check first reported the value empty, and EVAL-039B's Tester corrected that as a measurement error (DEFECT-1, commit `a24b197`: a 36-character value; length check only). The roster now records Sarvam bulbul:v3 as `pinned` and this package runs AUD-TTS-* on Sarvam (Sarvam credits, ₹3 per 1,000 characters) and ElevenLabs v3 via fal (cash). No key value was read by this task.
 3. Azure deployments for gpt-image-2 / FLUX.2 Pro (credits) — carried as fal cash here; whether Sora 2 / MAI-Image-2.6 join — listed conditional.
 4. Bedrock access for SD3.5 Large — listed conditional.
@@ -106,6 +106,9 @@ The task's eleven human-approval triggers, with the state this package assumes:
 - OQ-12 VID-REF-01 reads the localised buyer's request (three references, free camera) as `generate` with identity references; MKT-014's own reading of its one-image posting is `animate`. Recorded, not silently resolved.
 - OQ-14 `nano-banana-pro/edit`: the roster records the fal edit route (0.15/image, cash) as the plan names it and notes the same model edits on Vertex for 0.134 on credits; this package follows the roster so the two deliverables agree, and flags that the credits-first rule would move it to Vertex — the Controller may switch (counts unchanged).
 - OQ-15 `openai/gpt-image-2` on fal is pinned at 0.053 only at quality=medium (fal's default is high at 0.211): the harness must set quality=medium, or the 1a projection rises by ≈ USD 4.
+- OQ-18 (after audit) TOPO-01's residual confound: arm A (VID-T2V-01, farmer in a field) and arm B (AUD-LIP-01, the VID-I2V-02 young-man plate) now share the brief shape and the spoken line "इस दवाई से मेरी फसल दोगुनी हुई" (AUD-TTS-01 re-sourced from BR-F07-HI), but the subject differs; making arm B's plate a farmer still → i2v would add 2 image + 2 i2v calls — a Controller decision, not taken here.
+- OQ-19 (after audit) The VID-2SPK-01 chain arm (two-person plate → i2v → TTS both lines → lipsync) is recorded, not screened (0 calls): its lipsync step would drive a two-person clip through single-face routes (sync-lipsync v3, Kling lipsync audio-to-video) that document no speaker-assignment or mask parameter, so without masks the trial is a near-certain reject, not evidence (Auditor AF-3). Re-open as a new task if a route exposes a face/region parameter; cut-order item 7 is therefore a no-op.
+- OQ-20 (after audit) Lip-sync drive scripts are capped at 70 characters (≈ ≤ 5 s) so each line ends inside the 6-s plate; AUD-TTS-02's line was shortened to meet it (adaptation listed).
 - OQ-17 The sibling's roster was edited again after this package's first build (its Tester's Sarvam correction landed in the working tree, commit `a24b197`); the final build read the working-tree roster, and `COST-TABLE.yaml` → `roster_cross_check` records the values it matched. If the roster changes again before the spend record, rebuild the cost table from `TEST-CASES.yaml` with EVAL-039B's `project_costs.py --test-cases` rather than editing numbers by hand.
 - OQ-16 The HOLD-id scan: the fifth HOLD-lane id in the task's grep list (the retired positioning source, DN-05 — four letters, ending in -ies; not cited anywhere in this package) is a substring of the English word "carries", which the packs' own verbatim DEFAULT text contains (CA-D7), and of the grammar's field name `mandatories`. An un-bounded substring search for that id therefore matches pack bytes and a schema field, never a HOLD citation. Search with word boundaries (`grep -w`), as the repo's `validate_compiled_pack.py` matches HOLD-lane tokens; the Executor removed the words "carries"/"hurries" from its own prose.
 - OQ-13 The image core's fourth slot folds the Indian-market scene into the Hindi policy-edge item (contradiction 3); if the Controller prefers the plan's split, one case is swapped, counts unchanged.
@@ -119,6 +122,7 @@ The task's eleven human-approval triggers, with the state this package assumes:
 5. "TTS 20 incl. 2SPK drives" implies both dialogue lines on both TTS routes × 2 repeats = 8 calls; a single call cannot voice two speakers. Resolution: four line-specific TTS entries on VID-2SPK-01.
 6. "Veo 3.1 fast + extend" is one trial in the multi-shot count but two API calls. Recorded on the row (`api_calls_per_trial: 2`); billed seconds 15.
 7. BR-F02-HI states the strings printed on the tin; IMG-REF-01 makes the tin the referenced product, so the lettering is product identity reproduced from references, never generated (the pack limit). Recorded as an adaptation.
+9. Eight requests the Auditor marked borderline (the capability under test had been written into the buyer's words) were rewritten so the buyer only describes what they want and the contract carries the test — VID-T2V-01, VID-2SPK-01, VID-TOPO3-01, VID-MS-01, AUD-TTS-02, AUD-LIP-01/02/03; each rewrite is listed in the case's `source.adaptation` as `register_rewrite_after_audit`.
 8. The marketplace bank's UK/US buyers are localised to Indian buyers (MKT-009, MKT-012, MKT-014) to satisfy the Controller's register rule; the demand shape is kept and the localisation is listed as an adaptation.
 
 ## Rebuilding this package

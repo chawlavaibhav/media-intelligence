@@ -4,13 +4,14 @@
 
 **Channel:** whatsapp · **Language:** en · **Attachments named:** presenter_clip.mp4, velo_vo.wav
 
-> Sending a 6 sec clip of our presenter (presenter_clip.mp4) and the VO (velo_vo.wav) - "Zero petrol. Zero noise. All city." Please lip-sync the VO onto the clip. Lips must match the words and the timing, and stay closed in the pauses between the three sentences. Nothing else in the clip should change.
+> Sending a 6 sec clip of our presenter (presenter_clip.mp4) and the VO (velo_vo.wav) - "Zero petrol. Zero noise. All city." Please lip-sync the VO onto the clip so it looks natural. Nothing else in the clip should change.
 
 **Source:** pool `fixture`, id `none`
 
 **Adaptations:**
 
 - fixture — no source pool holds a 'lip-sync this voice onto this clip' request; the shape is the Media Factory LatentSync route (freshness item 5) and TOPO-01 arm B; the drive is the AUD-TTS-03 output and the plate is the VID-I2V-02 accepted clip, so the case consumes two real-demand items
+- register_rewrite_after_audit (the timing / closed-lips clauses that restated the contract were removed; the buyer asks for a natural lip-sync and the contract carries the timing and silence tests)
 
 ## Normalized Request (CANON-010 grammar)
 
@@ -42,13 +43,19 @@
 - ACCEPT only if the lips are closed in each of the two pauses and after the last sentence.
 - REJECT if the face changes identity, or the mouth region shows a patch, blur, seam or flicker.
 - REJECT if the output audio is not the supplied voice.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): kling-lipsync-a2v, sync-lipsync-v3.
+See `TEST-CASES.yaml` → `routes[]`: kling-lipsync-a2v, sync-lipsync-v3.
 
-**Blueprint:** `BLUEPRINTS/AUD-LIP-03.blueprint.md` (sha256 `46539a4afeaccbd6…`, author executor_agent)
+**Blueprint:** `BLUEPRINTS/AUD-LIP-03.blueprint.md` (sha256 `df0e5f28563e13df…`, author executor_agent)
 
 ## Why this shape is real demand
 

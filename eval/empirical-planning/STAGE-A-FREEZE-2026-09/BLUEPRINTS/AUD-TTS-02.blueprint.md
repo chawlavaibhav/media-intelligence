@@ -33,7 +33,7 @@ _No Canon decision applies to this cell (audio: zero packs, zero accepted source
 
 ### 2a. Production parameters from the brief alone (not Canon)
 
-- script (exact, 74 characters): Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.
+- script (exact, 70 characters): Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.
 - young male voice, energetic and motivational yet trustworthy; a little fast but every word clear
 - one voice, no music bed, no effects
 - pace: natural; a short pause at each sentence boundary
@@ -57,5 +57,5 @@ _No Canon decision applies to this cell (audio: zero packs, zero accepted source
 ## 6. generation_prompt (byte-identical across every route listed for this case)
 
 ```text
-Job chahiye? Toh skill upgrade karo. Aaj hi enroll करो — Kaushal Setu par.
+Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.
 ```

@@ -42,7 +42,8 @@ RREC = {r["route_key"]: r for r in ROSTER["routes"]}
 ROSTER_SHA256 = hashlib.sha256(open(ROSTER_PATH, "rb").read()).hexdigest()
 PRICED_AGAINST = dict(file="eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml", sha256=ROSTER_SHA256,
                       roster_last_commit=git("log", "-1", "--format=%h %s", "--", "eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml"),
-                      branch_head_at_build=git("log", "-1", "--format=%h", "HEAD"), working_tree_matches_head=(git("diff", "HEAD", "--stat", "--", "eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml") == ""),
+                      working_tree_matches_head=(git("diff", "HEAD", "--stat", "--", "eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml") == ""),
+                      note="the branch HEAD is deliberately not embedded (Auditor AF-15) so this file rebuilds byte-identical after its own commit; the roster's own last commit and sha256 identify the pricing basis",
                       rule="the spend record must name this sha256; if the roster changes, rebuild with tools/build.py rather than editing numbers by hand")
 def roster_price(R0):
     rec = RREC.get(R0["roster_key"])
@@ -62,7 +63,7 @@ for k, R0 in R.items():
         base = R0["roster_base_price"] if R0["roster_base_price"] is not None else R0["unit_price"]
         assert st in ("pinned", "needs_controller_enablement", "no_access") and val is not None and abs(float(val) - float(base)) < 1e-9, (k, st, val, base)
         assert pin and R0["price_ref"].endswith(pin.split("price-pins-2026-09/")[-1]), (k, pin, R0["price_ref"])
-    XCHECK.append(dict(route_key=k, roster_key=R0["roster_key"], roster_variant=R0["roster_variant"], roster_status=st, roster_price=val, package_price=R0["unit_price"], package_price_status=R0["price_status"], **({"addon": R0["addon"]} if R0["addon"] else {})))
+    XCHECK.append(dict(route_key=k, roster=R0["roster_key"] + (f"/{R0['roster_variant']}" if R0["roster_variant"] else ""), roster_status=st, roster_price=val, package_price=R0["unit_price"], package_price_status=R0["price_status"], **({"addon": "base+addon"} if R0["addon"] else {})))
 print("roster cross-check ok:", len(XCHECK), "routes")
 
 # ---------------------------------------------------------------- assemble cases
@@ -211,13 +212,16 @@ def render_blueprint(c):
     L("")
     for did in used_ids:
         d = DEC[did]; L(f"- `{d['check_id']}`: {d['check']}")
-    if nr["modality"] == "audio":
+    if nr["modality"] == "audio" and (nr.get("speaker_topology") or {}).get("script"):
         L("- no pack CHECK applies (audio cell — see the coverage-gap notice); brief-only pre-dispatch checks, attributed to nothing in Canon: the request payload's script is byte-identical to `speaker_topology.script`; ≤ 250 characters; one voice; no music bed.")
+    elif nr["modality"] == "audio":
+        L("- no pack CHECK applies (audio cell — see the coverage-gap notice); brief-only pre-dispatch checks, attributed to nothing in Canon: requested duration 30 s in the payload; instrumental only (no vocals requested); wav requested where the route offers it.")
     elif isinstance(th, str) and th.startswith("none"):
         L("- `no-in-image-text`: the generation prompt includes an explicit no-lettering instruction and names no string; any lettering in the output is a reject (E5), never an exclusion.")
     elif not isinstance(th, str):
         L("- `no-in-image-text (composite arm / plate)`: the textless-plate prompt includes an explicit no-lettering instruction; lettering on a plate is a reject; the overlay step is code at USD 0.")
-        L("- `exact-string-carry (generated arms)`: every required string appears in the generation prompt byte-identical to `text_requirements[].content` (checked by substring).")
+        if "generated" in th["mode"]:
+            L("- `exact-string-carry (generated arms)`: every required string appears in the generation prompt byte-identical to `text_requirements[].content` (checked by substring).")
     for p in packs:
         if p["pack"] in selected_compiled:
             for lim in PACK_LIMITS[p["pack"]][:1]:
@@ -248,8 +252,22 @@ def route_record(r, case):
     rec["params"]["seed"] = "unset"
     if R0["conditional"]: rec["conditional"] = "listed, not in the cap"
     if r.get("repeats_exception"): rec["repeats_note"] = r["repeats_exception"]
+    if r.get("screen_status"): rec["screen_status"] = r["screen_status"]
     rec["price_status"] = R0["price_status"]
     return rec
+
+def prechecks(c):
+    """Deterministic pre-checks that count as rejects (E5); one list per case, emitted into both the twin and the contracts file, never shown to the judge."""
+    nr = c["nr"]; th = c["bp"]["text_handling"]; mod = nr["modality"]
+    p = ["format probe vs `delivery` (container, aspect, resolution, duration, audio track)"]
+    if mod == "audio": p = ["audio probe (container, sample rate, duration: TTS ≤ 6 s / music 28–32 s)"]
+    if mod == "video": p.append("duration or aspect mismatch vs `delivery`")
+    if isinstance(th, str) and th.startswith("none") and mod != "audio":
+        p.append("baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject")
+    if nr.get("text_requirements") and not (isinstance(th, str) and th.startswith("none")):
+        p.append("required string absent (Cloud Vision, T-BENCH) → reject before judging")
+    p.append("refusal / error / empty artifact → reject")
+    return p
 
 # cut order (task §C, copied verbatim into IRREDUCIBILITY.md): item number → (cases touched, scope)
 CUT_ITEMS = {1: (["VID-MS-01"], "route line: Seedance 2.5 15 s"), 2: (["VID-REF-01", "VID-REF-02"], "route line: Seedance 2.5 ref2v"),
@@ -291,9 +309,9 @@ def eval_plan(c):
     tdet = ["COMMON_T_DET (see common_T_DET at the top of this file)"]
     if "edit_preservation" in ex: tdet.append("masked-diff preservation against the supplied input (mask = the named changed region) → edit_preservation")
     if "packaging_brand_colour_fidelity" in ex: tdet.append("brand-colour distance in the pack/product mask against the fixture-recorded sRGB → packaging_brand_colour_fidelity")
-    if "audio_video_synchronisation" in ex: tdet.append("A/V offset between the supplied drive and the output audio/mouth-onset → audio_video_synchronisation (we supply both inputs)")
-    if no_text and mod != "audio": tdet.append("baked-text scan (Cloud Vision TEXT_DETECTION on the image / on 3 sampled frames): any detection → reject under E5; the detector's known error rate is carried")
+    if "audio_video_synchronisation" in ex: tdet.append("A/V offset between the supplied drive and the output audio track → audio_video_synchronisation (we supply both inputs; lipsync artifacts only — never claimed on a native-audio arm)")
     tbench = []
+    if no_text and mod != "audio": tbench.append("baked-text scan (Cloud Vision; T-BENCH instrument used as the E5 trigger; never Registry)")
     if has_text: tbench.append("Cloud Vision TEXT_DETECTION vs text_requirements (Devanagari NFC / Latin normalised) on every artifact" + (" and on 3 sampled frames per clip" if mod == "video" else "") + " → exact_text_* (benchmark-grade, never Registry)")
     if speech: tbench.append("ASR vs the known script on the output audio → spoken_script_correctness (benchmark-grade; ASR model unnamed → price unpinned)")
     thuman = ["COMMON_T_HUMAN (blind Controller acceptance, see common_T_HUMAN)"]
@@ -322,7 +340,8 @@ def cost_rows(c):
                          unit_price=price, price_status=R0["price_status"],
                          line_usd=(round(line, 4) if line is not None else None), line_inr=(round(inr, 4) if inr is not None else None),
                          conditional=R0["conditional"], route_status=R0["route_status"],
-                         counted_in_cap=(line is not None and not R0["conditional"] and R0["in_cap"] and R0["route_status"] != "no_access")))
+                         screen_status=r.get("screen_status", "screened"),
+                         counted_in_cap=(calls > 0 and line is not None and not R0["conditional"] and R0["in_cap"] and R0["route_status"] != "no_access")))
     return rows
 
 # ---------------------------------------------------------------- emit
@@ -353,10 +372,10 @@ counts = dict(cases=len(CASES), blueprints=len(CASES), calls_1a=n1a, calls_1b=n1
 print("COUNTS", counts)
 
 yd = lambda o: yaml.safe_dump(o, allow_unicode=True, sort_keys=False, width=2000, default_flow_style=None)
-HEAD = f"# EVAL-039A — Stage A freeze package. Prices/pins by route key from EVAL-039B's ROSTER-REFRESH-2026-09.yaml (present at build time; read-only).\n# STATUS: FROZEN PROPOSAL, USD 0, awaits the Controller's acceptance (task file §F, morning decisions in README.md).\n# Generated {TODAY} by the Executor agent from the committed packs, grammar and source pools; base {BASE_SHA}. No provider, evaluator, OCR or LLM call was made.\n"
+HEAD = f"# EVAL-039A — Stage A freeze package. Prices/pins by route key from EVAL-039B's roster (read-only).\n# STATUS: FROZEN PROPOSAL, USD 0, awaits the Controller's acceptance (task file §F, morning decisions in README.md).\n# Generated {TODAY} by the Executor agent from the committed packs, grammar and source pools; base {BASE_SHA}. No provider, evaluator, OCR or LLM call was made.\n"
 open(f"{OUT}/TEST-CASES.yaml", "w", encoding="utf-8").write(HEAD + yd(dict(package="STAGE-A-FREEZE-2026-09", task="EVAL-039A", status="FROZEN_PROPOSAL_PENDING_CONTROLLER_ACCEPTANCE", base=BASE_SHA, counts=counts,
     cut_order_rule="cut_order_rank = the lowest-numbered task-§C cut item that touches the case (cut_order_items[] lists each item and whether it removes a route line, an arm, or the whole case), or never_cut with never_cut_reason (core item / Hindi-Hinglish item / TOPO-02/03 arms A and C); the cut order itself is in IRREDUCIBILITY.md",
-    route_catalogue=catalogue(),
+    route_catalogue="see COST-TABLE.yaml → route_catalogue (one record per route_key: id, surface, pool, status, unit price, pin path, seed support, notes)",
     interlock_eval_039b=dict(item_id="= case_id (route-level item_id where a case carries several billed items, e.g. VID-2SPK-01 TTS lines)", quantity="routes[].quantity with routes[].quantity_unit ∈ {images, seconds, chars, minutes, clips}", regenerate="python3 eval/empirical-planning/project_costs.py --test-cases eval/empirical-planning/STAGE-A-FREEZE-2026-09/TEST-CASES.yaml (EVAL-039B)", price_pins="ROSTER-REFRESH-2026-09.yaml present at build time; every route record names its roster_route_key and price_status; the COST-TABLE carries a roster_cross_check block"),
     cases=records)))
 
@@ -371,7 +390,7 @@ open(f"{OUT}/EVALUATOR-PLAN.yaml", "w", encoding="utf-8").write(HEAD + yd(dict(p
     common_T_HUMAN="Controller blind acceptance against ACCEPTANCE-CONTRACTS.md (EVAL-038 pattern: stripped, blinded, committed, keys off-repo); one accept/reject per artifact; identity items judged as line-ups with decoys",
     common_T_SCREEN="VLM failure-mode tagging (Gemini / Claude vision), labelled screened_not_qualified; never a Registry input; agreement with T-HUMAN recorded as Q4 qualification evidence",
     gate_post="canon/gate/run_gate.py post on every artifact, structure only, observation — not_available_on_base " + BASE_SHA,
-    evaluator_call_estimate=dict(cloud_vision_calls="≈ one per image artifact (baked-text scan or exactness) + 3 frames per video clip (baked-text) + 3 frames per TOPO-03 clip (exactness); see COST-TABLE.yaml evaluator rows", asr_calls="one per speech artifact (TTS 20, T2V-01 12, 2SPK native 8 + chain 4, lipsync 12)", vlm_triage_calls="one per artifact"),
+    evaluator_call_estimate=dict(cloud_vision_calls="≈ one per image artifact (baked-text scan or exactness) + 3 frames per video clip (baked-text) + 3 frames per TOPO-03 clip (exactness); see COST-TABLE.yaml evaluator rows", asr_calls="one per speech artifact (TTS 12, T2V-01 12, 2SPK native 10, lipsync 12; the 2SPK chain is not screened)", vlm_triage_calls="one per screened artifact"),
     per_case=plans)))
 
 seed_rows = []
@@ -395,12 +414,24 @@ main_rows = [r for r in allrows if not r["conditional"]]; cond_rows = [r for r i
 n_img_art = sum(r["calls"] for r in main_rows if r["quantity_unit"] == "images"); n_vid_art = sum(r["calls"] for r in main_rows if r["quantity_unit"] == "seconds")
 n_text_vid = sum(r["calls"] for r in main_rows if r["case_id"] == "VID-TOPO3-01")
 cv_calls = n_img_art + 4 + 3 * n_vid_art  # +4 composited finals (2 text cases × 2 base draws)
-asr_calls = 20 + 12 + 8 + 4 + 12
+asr_calls = 12 + 12 + 10 + 12  # TTS 12 + T2V-01 12 + 2SPK native 10 + lipsync 12 (chain not screened)
 vlm_calls = n1a + n1b
+def judging_minutes():
+    sec = 0
+    for r in main_rows:
+        if r["calls"] == 0: continue
+        cid = r["case_id"]; u = r["quantity_unit"]
+        if u == "images": per = 60 if cid in ("IMG-COMP-01", "IMG-REF-01", "IMG-REF-02") else 30
+        elif u == "seconds" and cid.startswith("AUD-LIP"): per = 90
+        elif u == "seconds": per = 120 if (cid.startswith("VID-REF") or cid.startswith("VID-MS")) else 90
+        elif u == "chars": per = 30
+        else: per = 60
+        sec += per * r["calls"]
+    return round((sec + 4 * 30) / 60)
 eval_rows = [dict(instrument="cloud-vision-text-detection", calls=cv_calls, unit_price=EVAL_PRICES["cloud-vision-text-detection"]["price"], line_usd=round(cv_calls * 0.0015, 2), price_status="plan_indicative", price_ref=EVAL_PRICES["cloud-vision-text-detection"]["ref"], billing_pool="credits (GCP) — unverified", tranche="1a+1b", basis=f"{n_img_art} image artifacts + 4 composited finals + 3 frames × {n_vid_art} clips"),
-             dict(instrument="asr-vs-script", calls=asr_calls, unit_price=None, line_usd=None, price_status="unpinned", price_ref=EVAL_PRICES["asr-vs-script"]["ref"], billing_pool="unknown", tranche="1a+1b", basis="TTS 20 + T2V-01 12 + 2SPK native 8 + chain lipsync 4 + lipsync 12"),
+             dict(instrument="asr-vs-script", calls=asr_calls, unit_price=None, line_usd=None, price_status="unpinned", price_ref=EVAL_PRICES["asr-vs-script"]["ref"], billing_pool="unknown", tranche="1a+1b", basis="TTS 12 + T2V-01 12 + 2SPK native 10 + lipsync 12"),
              dict(instrument="vlm-triage", calls=vlm_calls, unit_price=0.01, line_usd=round(vlm_calls * 0.01, 2), price_status="plan_indicative", price_ref=EVAL_PRICES["vlm-triage"]["ref"], billing_pool="cash (Anthropic/Gemini key)", tranche="1a+1b", basis="one call per artifact"),
-             dict(instrument="controller_blind_judging", calls=n1a + n1b + 4, unit_price="≈ 20 s per artifact (plan §E)", line_usd=None, price_status="human_time", price_ref="plan §E", billing_pool="Controller time", tranche="1a+1b", minutes=round((n1a + n1b + 4) * 20 / 60), basis="every artifact + 4 composited finals; identity items take longer (decoy line-ups)")]
+             dict(instrument="controller_blind_judging", calls=n1a + n1b + 4, unit_price="per artifact by lane: image 30 s (identity line-ups 60 s); video 90 s (identity 120 s; 10–15-s clips 120 s); TTS 30 s; lipsync 90 s; music 60 s — INFERRED, replaces the plan's 20 s (Auditor AF-13)", line_usd=None, price_status="human_time", price_ref="plan §E, re-estimated", billing_pool="Controller time", tranche="1a+1b", minutes=judging_minutes(), basis="every screened artifact + 4 composited finals, each contract read once, each clip watched at least twice; decoy line-ups on identity items")]
 totals = dict(by_tranche_and_pool=tot(main_rows), conditional_by_pool=tot(cond_rows),
               nominal_usd_in_cap=round(sum(r["line_usd"] for r in main_rows if r["counted_in_cap"]), 2),
               nominal_usd_cash=round(sum(r["line_usd"] for r in main_rows if r["line_usd"] is not None and r["billing_pool"] == "cash"), 2),
@@ -457,10 +488,12 @@ def md_case(c, rec):
     L.append(f"\n`product_or_packshot_present`: {nr['product_or_packshot_present']} · primary capability `{c['capabilities']['primary']}`\n")
     L.append("## Acceptance contract (judged blind, from the artifact alone)\n")
     for s in c["acceptance_contract"]: L.append(f"- {s}")
-    L.append("- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.")
+    L.append("")
+    L.append("### E5 pre-checks (code, not shown to the judge)\n")
+    for s in prechecks(c): L.append(f"- {s}")
     L.append("")
     L.append("## Routes\n")
-    L.append("Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): " + ", ".join(sorted({r['route_key'] for r in rec['routes']})) + ".\n")
+    L.append("See `TEST-CASES.yaml` → `routes[]`: " + ", ".join(sorted({r['route_key'] for r in rec['routes']})) + ".\n")
     L.append(f"**Blueprint:** `{rec['blueprint_ref']}` (sha256 `{rec['blueprint_sha256'][:16]}…`, author executor_agent)\n")
     L.append("## Why this shape is real demand\n")
     L.append(c["why_real"] if c.get("why_real") else WHY[c["case_id"]])
@@ -509,13 +542,20 @@ for c, rec in zip(CASES, records):
 
 # ACCEPTANCE-CONTRACTS.md
 L = ["# Acceptance contracts — Stage A freeze (judged blind, from the artifact alone)\n",
-     "Each contract is 3–6 statements a first-language Indian judge can decide from the artifact with no prompt, route name, arm or Canon reference. Phrased `ACCEPT only if …` / `REJECT if …`; no rubric scores, no adjectives without an observable. Every contract ends with the deterministic pre-checks that count as rejects (E5): a format probe (container, aspect, resolution, duration, audio-track presence against `delivery`), the baked-text scan on no-text items, and any duration or aspect mismatch. A refusal, error or blank artifact is a reject counted under E1, never an exclusion.\n",
+     "Each contract is 3–6 statements a first-language Indian judge can decide from the artifact with no prompt, route name, arm, cost, rule id or Canon reference (a build-time guard rejects any such token in a statement). Phrased `ACCEPT only if …` / `REJECT if …`; no rubric scores, no adjectives without an observable. The deterministic pre-checks that count as rejects (E5) are listed per case in the separate section at the end of this file and in each twin; they are run by code and are not shown to the judge. A refusal, error or blank artifact is a reject, never an exclusion.\n",
      "Judging mechanics follow `eval/experiments/EVAL-038/JUDGING-PROTOCOL.md`: stripped artifacts under blinded names, a salted commitment of the key committed before judging, the key off-repo, revealed only after every verdict is committed. Identity contracts are judged as line-ups: the artifact beside the references and the same-category decoys; the judge must pick the referenced identity.\n",
      "Language is never pooled: en, hi and hg verdicts are tallied separately.\n"]
+LEAK = re.compile(r"\b(E[1-5]|USD|arm [ABC]|arm-[ABC]|route|Canon|PA-D\d|CA-D\d|composited|pinned|tranche|Registry)\b", re.I)
 for c in CASES:
+    for s in c["acceptance_contract"]:
+        assert not LEAK.search(s), (c["case_id"], s)
     L.append(f"## {c['case_id']} ({c['customer_request']['language']})\n")
     for s in c["acceptance_contract"]: L.append(f"- {s}")
-    L.append("- Pre-checks counted as rejects (E5): format probe; " + ("baked-text scan; " if isinstance(c["bp"]["text_handling"], str) and c["bp"]["text_handling"].startswith("none") and c["nr"]["modality"] != "audio" else "") + "duration/aspect mismatch against `delivery`.")
+    L.append("")
+L.append("---\n\n# Deterministic pre-checks (E5) — not part of the judge's packet\n\nRun by code on every artifact before judging; any failure is a reject, never an exclusion. The same per-case list appears in each twin (both emitted from one list).\n")
+for c in CASES:
+    L.append(f"### {c['case_id']}\n")
+    for s in prechecks(c): L.append(f"- {s}")
     L.append("")
 open(f"{OUT}/ACCEPTANCE-CONTRACTS.md", "w", encoding="utf-8").write("\n".join(L))
 
@@ -527,6 +567,7 @@ for c in CASES:
 L.append("## Cut order if money is short (fixed here, copied verbatim from the task file §C)\n")
 for i, s in enumerate(CUT, 1): L.append(f"{i}. {s}")
 L.append("\n**Never cut:** repeats, any core item, any Hindi item, TOPO-02/03 arms A and C.\n")
+L.append("Item 7 (the VID-2SPK-01 chain arm) is already at 0 calls — recorded, not screened (Auditor AF-3) — so it is a no-op cut.\n")
 L.append("In `TEST-CASES.yaml` every case carries `cut_order_rank`: an integer = the lowest-numbered cut item that touches the case, with `cut_order_items[]` listing every item and its scope (items 1, 2, 3, 5, 6, 9, 10 remove one route line; 7 removes an arm; 4 and 8 remove the whole case); or `never_cut` with the reason (core item, Hindi/Hinglish item, TOPO-02/03 arms A and C). Cases and ranks: " + "; ".join(f"item {i} → {', '.join(ids)}" for i, (ids, _) in CUT_ITEMS.items()) + ".\n")
 open(f"{OUT}/IRREDUCIBILITY.md", "w", encoding="utf-8").write("\n".join(L))
 
@@ -535,6 +576,14 @@ L = ["# Elimination rules — pre-registered before any call (Stage A)\n", "E1�
 L += E_LINES
 L += ["", "**Survivor cap:** at most 3 routes per question advance to Stage B (E3).", "",
       "**Proportional rule for routes with fewer core trials (stated before any call):** Seedance 2.5 runs 2 core items × 2 repeats = 4 core trials instead of 8. It is eliminated on the same *proportions*: E1 refusal/hard error on ≥ 3/8 → ≥ 37.5 % (so ≥ 2 of 4); E2 blind acceptance ≤ 2/8 → ≤ 25 % (so ≤ 1 of 4). No threshold is rounded in Seedance's favour.", "",
+      "**Denominators per lane core (stated before any call; the same proportions, never rounded in a route's favour):**", "",
+      "| core | trials per route | E1 (refusal/hard error ≥ 37.5 %) | E2 (blind acceptance ≤ 25 %) |", "|---|---|---|---|",
+      "| image (4 items × 2), text-to-video (4 × 2), image-to-video (4 × 2) | 8 | ≥ 3 of 8 | ≤ 2 of 8 |",
+      "| Seedance 2.5 on any 8-trial core (2 items × 2) | 4 | ≥ 2 of 4 | ≤ 1 of 4 |",
+      "| TTS (3 scripts × 2), lipsync (3 × 2) | 6 | ≥ 3 of 6 (2.25 rounds up: 2 of 6 = 33 % is below the line) | ≤ 1 of 6 (1.5 rounds down: 2 of 6 = 33 % is above the line) |",
+      "| music (2 briefs × 2), reference-to-video (2 × 2), multi-shot per route (1–2 items × 2) | 4 | ≥ 2 of 4 | ≤ 1 of 4 |",
+      "| exact-text arms (2 items × 2 per route), cost-knee tiers (1 × 2), two-speaker native (1 × 2) | 4 / 2 | ≥ 2 of 4 / 1 of 2 (≥ 50 %) | ≤ 1 of 4 / 0 of 2 |", "",
+      "A route whose trial count is not in this table is judged on the nearest larger denominator's proportion, and the case is recorded in the Controller Brief before the first call.", "",
       "**E5 in this package:** the deterministic pre-checks named at the end of every acceptance contract (format probe, baked-text scan on no-text items, duration/aspect mismatch) are rejects, never exclusions. A refusal or error is counted under E1 and is also a reject for E2's denominator.", "",
       "Elimination is per (route, question) (E4); a route dropped on one question can advance on another. Nothing here is changed mid-run; a change is a new task."]
 open(f"{OUT}/ELIMINATION-RULES.md", "w", encoding="utf-8").write("\n".join(L) + "\n")
@@ -556,7 +605,7 @@ for q in ["IMG-01", "IMG-02", "IMG-03", "IMG-04", "VID-01", "VID-02", "VID-03", 
     L.append(f"| {q} | {', '.join(ids) if ids else 'deferred_no_account (Runway)'} |")
 L += ["", "## 3. §C.3d additions\n",
       "- one 15-second item: **VID-MS-01** (Kling v3 15 s, Seedance 2.5 15 s, Omni Flash 1.1 longest ≤ 15 s, Veo 3.1 fast + extend; 4 routes × 2 = 8 calls)",
-      "- one two-speaker Hindi dialogue item: **VID-2SPK-01** — native arm (Veo 3.1 fast, Kling v3, Omni Flash 1.1, Seedance 2.5; 8 calls) and chain arm (plate 2 + i2v 2 + TTS 8 [counted under TTS] + lipsync 4 = 8 chain calls + 8 TTS)",
+      "- one two-speaker Hindi dialogue item: **VID-2SPK-01** — native arm (Veo 3.1 fast, Kling v3 audio-on, Omni Flash 1.1, Seedance 2.5, Wan 3.0 Prime — Wan added after audit so freshness item 4's preferred route is present; 5 × 2 = 10 calls) and the chain arm (plate → i2v → TTS → lipsync) **recorded, not screened, 0 calls** (single-face lipsync routes document no speaker assignment — Auditor AF-3)",
       "- music lane: **MUS-01**, **MUS-02** × 2 routes (Lyria on Vertex, ElevenLabs music on fal) × 2 repeats = 8 calls",
       "- 4K: **not a case.** 4K recorded as a Stage B COND-DELIVERY level only; round one runs 720p.", "",
       "## 4. Core counts and per-core requirements\n", "| core | count | cases | Hindi/Hinglish | policy-edge | high-motion |\n|---|---|---|---|---|---|",
@@ -565,16 +614,16 @@ L += ["", "## 3. §C.3d additions\n",
       "| image-to-video | 4 | VID-I2V-01..04 | VID-I2V-02 (hi), VID-I2V-04 (hi), VID-I2V-03 (hg) | VID-I2V-04 | VID-I2V-03 |",
       "| TTS | 3 | AUD-TTS-01..03 | AUD-TTS-01 (hi), AUD-TTS-02 (hg) | waived — a TTS policy-edge has no source shape and no prior; stated | n/a |",
       "| lipsync | 3 | AUD-LIP-01..03 | AUD-LIP-01 (hi), AUD-LIP-02 (hg) | waived — as TTS; stated | n/a |", "",
-      "## 5. TOPO-02 / TOPO-03 arms\n", "| topology | arm A | arm B | arm C |\n|---|---|---|---|",
-      "| TOPO-02 IMG-TEXT-01 (hi) | NB2, Qwen Image 3, GPT Image 2 — 3 × 2 = 6 | NB Pro, Seedream 5 Pro, Recraft V4 — 3 × 2 = 6 | FLUX.2 Pro textless base × 2 + overlay by code (USD 0) |",
-      "| TOPO-02 IMG-TEXT-02 (en) | same routes, 6 | same routes, 6 | same, 2 + overlay |",
-      "| TOPO-03 VID-TOPO3-01 (hi) | IMG-TEXT-01 arm-A accepted still → H3 Max, Wan 3.0, Veo 3.1 lite i2v — 3 × 2 = 6 (1b) | Veo 3.1 full, Kling v3 native t2v — 2 × 2 = 4 (1a) | IMG-TEXT-01 arm-C base → Veo 3.1 lite i2v × 2 (1b) + tracked/static overlay by code |", "",
+      "## 5. TOPO-02 / TOPO-03 arms (generated from each case's `routes[]`)\n", "| case | arm | routes (× repeats, tranche) |\n|---|---|---|"] + [
+      f"| {cid} | {arm} | " + "; ".join(f"`{R[r['route_key']]['route_id']}` ×{r['repeats']} ({r['tranche']})" for r in BY[cid]["routes"] if r["arm"] == arm) + " |"
+      for cid in ("IMG-TEXT-01", "IMG-TEXT-02", "VID-TOPO3-01") for arm in dict.fromkeys(r["arm"] for r in BY[cid]["routes"])] + [
+      "", "Every TOPO-03 arm runs at 9:16: arms A and C use 9:16 plates drawn under VID-TOPO3-01 (Qwen Image 3 with text; FLUX.2 Pro textless), arm B draws natively at 9:16 (Auditor AF-1). Arm C's overlay is code at USD 0.", "",
       "## 6. Media Factory freshness items → cases\n", "| prior item | cases |\n|---|---|",
       "| 1 Veo policy behaviour on the emotional stylised child scene | VID-I2V-04, VID-T2V-03 (and IMG-CORE-04 as the still) |",
       "| 2 Seedance 2.x cost/quality position | every Seedance 2.5 line: VID-T2V-01/02, VID-I2V-02/03, VID-REF-01/02, VID-MS-01 |",
       "| 3 in-scene text through motion (composite-always for video) | VID-TOPO3-01 |",
       "| 4 multi-turn dialogue and voice consistency | VID-2SPK-01 |",
-      "| 5 LatentSync-class mouth repaint vs native lip-sync | AUD-LIP-01/02/03 (+ VID-2SPK-01 chain arm) |", "",
+      "| 5 LatentSync-class mouth repaint vs native lip-sync | AUD-LIP-01/02/03 — tested with sync-lipsync v3 and Kling lipsync audio-to-video as the LatentSync-class substitutes (`fal-ai/latentsync` exists but is unpinned); the VID-2SPK-01 chain arm is recorded, not screened |", "",
       "## 7. `requested_operation` coverage\n", "| operation | cases | note |\n|---|---|---|",
       "| generate | IMG-CORE-*, IMG-TEXT-*, IMG-REF-*, VID-T2V-*, VID-2SPK-01, VID-KNEE-01, VID-TOPO3-01, VID-REF-*, VID-MS-*, AUD-TTS-*, MUS-* | |",
       "| edit | IMG-EDIT-01, IMG-EDIT-02 | |", "| animate | VID-I2V-01..04 | |", "| extend | IMG-EXT-01 | |", "| compose | IMG-COMP-01, AUD-LIP-01..03 | |",

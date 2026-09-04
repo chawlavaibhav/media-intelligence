@@ -45,11 +45,17 @@
 - ACCEPT only if the person in shot 3 is recognisably the person in shot 1.
 - ACCEPT only if shot 1 is visibly darker than shot 2 and shot 3 is the brightest.
 - REJECT if any lettering, voice or music is present, or if the clip runs under 9 s or over 11 s.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): gemini-omni-1.1-flash-10s, kling-v3-pro-10s.
+See `TEST-CASES.yaml` → `routes[]`: gemini-omni-1.1-flash-10s, kling-v3-pro-10s.
 
 **Blueprint:** `BLUEPRINTS/VID-MS-02.blueprint.md` (sha256 `50dac11feef4693d…`, author executor_agent)
 

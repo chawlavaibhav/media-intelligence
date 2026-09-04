@@ -40,14 +40,19 @@
 
 - ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
 - ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
-- REJECT if the child's expression reads as frightened, crying hard or in danger; ACCEPT only if it reads as quietly sad or wistful.
+- REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT only if her mouth is closed or nearly closed.
 - REJECT if any lettering, title or numeral appears anywhere in the image.
-- REJECT if the response is a refusal, a blank/black image or a policy notice instead of an image (recorded as a refusal, counted under E1).
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+- REJECT if there is no picture — a blank or black frame, or text where the image should be.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): flux-2-pro, gpt-image-2, mai-image-2.6, nano-banana-2, nano-banana-pro, qwen-image-3, sd3.5-large, seedream-5-pro.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro, gpt-image-2, mai-image-2.6, nano-banana-2, nano-banana-pro, qwen-image-3, sd3.5-large, seedream-5-pro.
 
 **Blueprint:** `BLUEPRINTS/IMG-CORE-04.blueprint.md` (sha256 `f0d4bcf1bf234b34…`, author executor_agent)
 

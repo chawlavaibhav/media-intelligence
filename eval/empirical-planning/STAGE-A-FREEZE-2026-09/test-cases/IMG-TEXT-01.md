@@ -41,16 +41,21 @@
 
 ## Acceptance contract (judged blind, from the artifact alone)
 
-- ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every matra, the conjunct ष्ठ in मिष्ठान and the digits 20 correct; REJECT on any wrong, missing, doubled or invented character.
+- ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented character.
 - ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
 - REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
 - ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
 - REJECT if any string is cut by the frame edge or overlaps another string.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- required string absent (Cloud Vision, T-BENCH) → reject before judging
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): flux-2-pro, gpt-image-2, nano-banana-2, nano-banana-pro, qwen-image-3, recraft-v4, seedream-5-pro.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro, gpt-image-2, nano-banana-2, nano-banana-pro, qwen-image-3, recraft-v4, seedream-5-pro.
 
 **Blueprint:** `BLUEPRINTS/IMG-TEXT-01.blueprint.md` (sha256 `72de774d6dcaed7e…`, author executor_agent)
 

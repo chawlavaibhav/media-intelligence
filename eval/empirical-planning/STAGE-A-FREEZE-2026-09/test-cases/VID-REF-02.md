@@ -46,11 +46,17 @@
 - ACCEPT only if she enters the frame walking, sits at a table and looks at the camera before the clip ends.
 - REJECT if her face or hair changes between the walking frames and the seated frames.
 - REJECT if any lettering or speech is present.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): kling-v3-elements, seedance-2.5-ref2v, veo-3.1-fast-ref2v.
+See `TEST-CASES.yaml` → `routes[]`: kling-v3-elements, seedance-2.5-ref2v, veo-3.1-fast-ref2v.
 
 **Blueprint:** `BLUEPRINTS/VID-REF-02.blueprint.md` (sha256 `e860908af55a16c7…`, author executor_agent)
 

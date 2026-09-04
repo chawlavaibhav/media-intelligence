@@ -48,11 +48,17 @@
 - REJECT if her body, legs or feet visibly warp, multiply, slide without steps, or change identity between the first and last second.
 - REJECT if any speech, music or lettering is present.
 - REJECT if she never reaches or passes the camera (a jog in place or a distant figure does not satisfy the request).
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): gemini-omni-1.1-flash, kling-v3-pro-audio, minimax-h3-max, seedance-2.5, sora-2, veo-3.1-fast, wan-3.0-prime.
+See `TEST-CASES.yaml` → `routes[]`: gemini-omni-1.1-flash, kling-v3-pro-audio, minimax-h3-max, seedance-2.5, sora-2, veo-3.1-fast, wan-3.0-prime.
 
 **Blueprint:** `BLUEPRINTS/VID-T2V-02.blueprint.md` (sha256 `8b56537372dc0880…`, author executor_agent)
 

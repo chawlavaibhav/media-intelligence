@@ -44,11 +44,15 @@
 - ACCEPT only if there is an audible pause between each sentence.
 - ACCEPT only if the accent is recognisably Indian English; REJECT if it is American or British.
 - REJECT if any music, effect or second voice is present, or if the file is longer than 6 seconds.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- audio probe (container, sample rate, duration: TTS ≤ 6 s / music 28–32 s)
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): elevenlabs-v3, sarvam-bulbul-v3.
+See `TEST-CASES.yaml` → `routes[]`: elevenlabs-v3, sarvam-bulbul-v3.
 
 **Blueprint:** `BLUEPRINTS/AUD-TTS-03.blueprint.md` (sha256 `94c11ec223134b69…`, author executor_agent)
 

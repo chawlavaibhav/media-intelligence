@@ -46,11 +46,17 @@
 - ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
 - ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
 - REJECT if his hand, the phone or his features distort, or if any lettering appears.
-- Deterministic pre-checks that count as rejects (E5): format probe (container/aspect/resolution/duration/audio-track); baked-text scan on no-text items; duration or aspect mismatch against `delivery`.
+
+### E5 pre-checks (code, not shown to the judge)
+
+- format probe vs `delivery` (container, aspect, resolution, duration, audio track)
+- duration or aspect mismatch vs `delivery`
+- baked-text scan (Cloud Vision, T-BENCH instrument as the E5 trigger): any lettering → reject
+- refusal / error / empty artifact → reject
 
 ## Routes
 
-Routes, arms, tranches and billing quantities are in `TEST-CASES.yaml` → this case's `routes[]` (route facts in `route_catalogue`): kling-v3-pro-i2v, minimax-h3-max-i2v, seedance-2.5-i2v, veo-3.1-fast-i2v, wan-3.0-prime-i2v.
+See `TEST-CASES.yaml` → `routes[]`: kling-v3-pro-i2v, minimax-h3-max-i2v, seedance-2.5-i2v, veo-3.1-fast-i2v, wan-3.0-prime-i2v.
 
 **Blueprint:** `BLUEPRINTS/VID-I2V-02.blueprint.md` (sha256 `08fb8cbd2803a34b…`, author executor_agent)
 
