@@ -1,0 +1,1455 @@
+{
+  "experiment": "EVAL-037",
+  "lane_id": "sonnet-no-canon",
+  "branch": "work/eval-037-sonnet-no-canon",
+  "substrate": {
+    "freeze_fingerprint": "5fc021d96d23299e977600735cc8cf0f950f61d6ed7cd8b39099f9a10aa189ee",
+    "canon_base_commit": "c6f8d910f7a3cdaaeafa2280313abfb9b898cddd",
+    "execution_commit": "cc002f59f211685725a8a537cbb60451c95fb1cf"
+  },
+  "runner_commit": "cc002f59f211685725a8a537cbb60451c95fb1cf",
+  "model": "claude-sonnet-5",
+  "condition": "NO_CANON",
+  "attempts": [
+    {
+      "trial_id": "E037-sonnet-no-canon-B02-R1",
+      "brief_id": "B02",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:53:50.824559+00:00",
+      "fresh_context": true,
+      "request_digest": "82de6f539b024f4371d6b15be0bee5243b9b19d37688d7c06773af4f446cd5b4",
+      "request_path": "requests/E037-sonnet-no-canon-B02-R1-a0.request.json",
+      "ended_at": "2026-08-30T15:55:08.938299+00:00",
+      "response_digest": "0b80afe7233dd862fe16b82f588e5349d5509a9db536dcf1b8914aa8b9da2e90",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B02-R1-a0.response.json",
+      "transcript_path": "transcripts/E037-sonnet-no-canon-B02-R1-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZCjh5ja8ospwTHCicJ5",
+          "input_tokens": 1167,
+          "cached_input_tokens": 0,
+          "output_tokens": 42,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 1686,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 1167,
+            "output_tokens": 42,
+            "output_tokens_details": {
+              "thinking_tokens": 15
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZCjp4SGre7NQu1zS44s",
+          "input_tokens": 4004,
+          "cached_input_tokens": 0,
+          "output_tokens": 6021,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 74981,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 4004,
+            "output_tokens": 6021,
+            "output_tokens_details": {
+              "thinking_tokens": 2575
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 5171,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 6063,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 76667
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.070972,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "2fc765114f829aeeb8be7e902567355c0486a75f2e69e1a97195aecb1f0515e4",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-sonnet-no-canon-B02-R1-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B05-R2",
+      "brief_id": "B05",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:55:08.943120+00:00",
+      "fresh_context": true,
+      "request_digest": "7a3234f5cb4ba32634973926b4ff9666f0542155e77759eed2c7692bca91234a",
+      "request_path": "requests/E037-sonnet-no-canon-B05-R2-a0.request.json",
+      "ended_at": "2026-08-30T15:56:36.662634+00:00",
+      "response_digest": "ed9ce57fda35e29d11a767441dbcdf49f5432f40d170349fc66df55d738e3abf",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B05-R2-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZCqLk3899kcHiFYAeWo",
+          "input_tokens": 648,
+          "cached_input_tokens": 0,
+          "output_tokens": 7280,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 87708,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 648,
+            "output_tokens": 7280,
+            "output_tokens_details": {
+              "thinking_tokens": 3541
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 648,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 7280,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 87708
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.074096,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B05-R3",
+      "brief_id": "B05",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:56:36.664105+00:00",
+      "fresh_context": true,
+      "request_digest": "7a3234f5cb4ba32634973926b4ff9666f0542155e77759eed2c7692bca91234a",
+      "request_path": "requests/E037-sonnet-no-canon-B05-R3-a0.request.json",
+      "ended_at": "2026-08-30T15:57:37.995429+00:00",
+      "response_digest": "864b9fb22ef938e81e65d1d08559c8283536e12c65080c90cc1cf6867fd64cb3",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B05-R3-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZCwoivYkcU42UWG5X1X",
+          "input_tokens": 648,
+          "cached_input_tokens": 0,
+          "output_tokens": 5210,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 61324,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 648,
+            "output_tokens": 5210,
+            "output_tokens_details": {
+              "thinking_tokens": 1803
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 648,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 5210,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 61324
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.053396,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B02-R2",
+      "brief_id": "B02",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:57:38.015127+00:00",
+      "fresh_context": true,
+      "request_digest": "82de6f539b024f4371d6b15be0bee5243b9b19d37688d7c06773af4f446cd5b4",
+      "request_path": "requests/E037-sonnet-no-canon-B02-R2-a0.request.json",
+      "ended_at": "2026-08-30T15:58:50.834920+00:00",
+      "response_digest": "3948b420d4d783f366fa970d0f8d374ebb64b5400a96021f8860ca3e0611145f",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B02-R2-a0.response.json",
+      "transcript_path": "transcripts/E037-sonnet-no-canon-B02-R2-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZD2LJYuizahUsB8aWsM",
+          "input_tokens": 1167,
+          "cached_input_tokens": 0,
+          "output_tokens": 40,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 1482,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 1167,
+            "output_tokens": 40,
+            "output_tokens_details": {
+              "thinking_tokens": 13
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZD2SWN6kvHWmJ1HTC4A",
+          "input_tokens": 4002,
+          "cached_input_tokens": 0,
+          "output_tokens": 5597,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 71319,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 4002,
+            "output_tokens": 5597,
+            "output_tokens_details": {
+              "thinking_tokens": 2008
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 5169,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 5637,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 72801
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.066708,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "2fc765114f829aeeb8be7e902567355c0486a75f2e69e1a97195aecb1f0515e4",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-sonnet-no-canon-B02-R2-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B06-R1",
+      "brief_id": "B06",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T15:58:50.836984+00:00",
+      "fresh_context": true,
+      "request_digest": "25e229007b58bb5b2b9aa5948ee877ed350f0a0c09268d9a3ba6d32dd32cc829",
+      "request_path": "requests/E037-sonnet-no-canon-B06-R1-a0.request.json",
+      "ended_at": "2026-08-30T16:00:02.001263+00:00",
+      "response_digest": "6f71f98c1ea7d3d5288db39bd12dc21a73ff3ddba282d6f342d1ea13a0cce7be",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B06-R1-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZD7hSSDmx51DTwNK9gu",
+          "input_tokens": 708,
+          "cached_input_tokens": 0,
+          "output_tokens": 5541,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 71153,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 708,
+            "output_tokens": 5541,
+            "output_tokens_details": {
+              "thinking_tokens": 1848
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 708,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 5541,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 71153
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.056826,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B03-R1",
+      "brief_id": "B03",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:00:02.003595+00:00",
+      "fresh_context": true,
+      "request_digest": "22f5354d4de1560141407dc090aa9b5269c403a03ac5efe59b4641cc88f206a3",
+      "request_path": "requests/E037-sonnet-no-canon-B03-R1-a0.request.json",
+      "ended_at": "2026-08-30T16:01:11.466162+00:00",
+      "response_digest": "b5cefa42d4a6406be01dd83c6e97c5948d404ec9feb3139a640ca05e7e823306",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B03-R1-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDCx2ueTtJ6n7ctw7D3",
+          "input_tokens": 653,
+          "cached_input_tokens": 0,
+          "output_tokens": 5370,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 69446,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 653,
+            "output_tokens": 5370,
+            "output_tokens_details": {
+              "thinking_tokens": 1623
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 653,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 5370,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 69446
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.055006,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B02-R3",
+      "brief_id": "B02",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:01:11.471204+00:00",
+      "fresh_context": true,
+      "request_digest": "82de6f539b024f4371d6b15be0bee5243b9b19d37688d7c06773af4f446cd5b4",
+      "request_path": "requests/E037-sonnet-no-canon-B02-R3-a0.request.json",
+      "ended_at": "2026-08-30T16:02:19.243253+00:00",
+      "response_digest": "6ce2c4466b85aaa22b9c84a2194d56c81dc23b1894015bda3b7ea6ef4115c4be",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B02-R3-a0.response.json",
+      "transcript_path": "transcripts/E037-sonnet-no-canon-B02-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDJ52V38xuitAd6k2hL",
+          "input_tokens": 1167,
+          "cached_input_tokens": 0,
+          "output_tokens": 40,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 1440,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 1167,
+            "output_tokens": 40,
+            "output_tokens_details": {
+              "thinking_tokens": 13
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDJAvCK4VNMGjJUigmU",
+          "input_tokens": 4002,
+          "cached_input_tokens": 0,
+          "output_tokens": 5064,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 66305,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 4002,
+            "output_tokens": 5064,
+            "output_tokens_details": {
+              "thinking_tokens": 1639
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 5169,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 5104,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 67745
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.061378,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "2fc765114f829aeeb8be7e902567355c0486a75f2e69e1a97195aecb1f0515e4",
+          "result_bytes": 6424,
+          "tool_family": "website",
+          "source_url": "https://getaight.ai",
+          "snapshot_path": "common/websites/getaight.ai/page.txt",
+          "snapshot_sha256": "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567",
+          "source_html_sha256": "17b88662e13b17e7694507b6511fdfa0c4399ab3fed5f591ffc337a08b975514",
+          "content_chars": 5537,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-sonnet-no-canon-B02-R3-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "e632c381165ee3fbfc71f1afb6fed9bd61f203a44f8eb24160bdfed3d944a567"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B01-R3",
+      "brief_id": "B01",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:02:19.264509+00:00",
+      "fresh_context": true,
+      "request_digest": "d01bde47c6d4dc36d74148db828768c0b741551f6915410c5daa0c97dcfbf2de",
+      "request_path": "requests/E037-sonnet-no-canon-B01-R3-a0.request.json",
+      "ended_at": "2026-08-30T16:03:24.059052+00:00",
+      "response_digest": "ba4b42636863fcee09bede7c65af8a40028c4f9516cd127a2cb424f119c33db7",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B01-R3-a0.response.json",
+      "transcript_path": "transcripts/E037-sonnet-no-canon-B01-R3-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDP5JVqUimzoczNuTf5",
+          "input_tokens": 1223,
+          "cached_input_tokens": 0,
+          "output_tokens": 45,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 2021,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 1223,
+            "output_tokens": 45,
+            "output_tokens_details": {
+              "thinking_tokens": 18
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDPDbp4Z66GdASNnnQa",
+          "input_tokens": 5333,
+          "cached_input_tokens": 0,
+          "output_tokens": 4863,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 62703,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 5333,
+            "output_tokens": 4863,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 6556,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 4908,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 64724
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.062192,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "4f1027628b556be6d64dcb921b92907fc39b4d6012d4891523f14c0ae2859833",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-sonnet-no-canon-B01-R3-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B04-R3",
+      "brief_id": "B04",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:03:24.063370+00:00",
+      "fresh_context": true,
+      "request_digest": "42db7d5bb18c03ce2a36cfd687b0ba30da424cb2e0cf1242bd8e219523352a81",
+      "request_path": "requests/E037-sonnet-no-canon-B04-R3-a0.request.json",
+      "ended_at": "2026-08-30T16:04:39.655432+00:00",
+      "response_digest": "84dacd5dd67fc4ffbe3d245330f311ff9d92a70c51d6af3259271e4481d98935",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B04-R3-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDTqdN9ax4xrUyiusPb",
+          "input_tokens": 686,
+          "cached_input_tokens": 0,
+          "output_tokens": 6373,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 75581,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 686,
+            "output_tokens": 6373,
+            "output_tokens_details": {
+              "thinking_tokens": 1764
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 686,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 6373,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 75581
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.065102,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B04-R1",
+      "brief_id": "B04",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:04:39.659304+00:00",
+      "fresh_context": true,
+      "request_digest": "42db7d5bb18c03ce2a36cfd687b0ba30da424cb2e0cf1242bd8e219523352a81",
+      "request_path": "requests/E037-sonnet-no-canon-B04-R1-a0.request.json",
+      "ended_at": "2026-08-30T16:05:57.381757+00:00",
+      "response_digest": "0827ff77816e7a233a85bbbe7311d18ac8a8d49d135a85d5609e25a8610aff09",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B04-R1-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDZQoY5k4fSR6hoax5f",
+          "input_tokens": 686,
+          "cached_input_tokens": 0,
+          "output_tokens": 7003,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 77694,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 686,
+            "output_tokens": 7003,
+            "output_tokens_details": {
+              "thinking_tokens": 3177
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 686,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 7003,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 77694
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.071402,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B06-R3",
+      "brief_id": "B06",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:05:57.395026+00:00",
+      "fresh_context": true,
+      "request_digest": "25e229007b58bb5b2b9aa5948ee877ed350f0a0c09268d9a3ba6d32dd32cc829",
+      "request_path": "requests/E037-sonnet-no-canon-B06-R3-a0.request.json",
+      "ended_at": "2026-08-30T16:07:04.179098+00:00",
+      "response_digest": "31df469bea2128d82cf59c2225bda471f6f6a29f292299776d2fed52ec39af8c",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B06-R3-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDf9QzUqHEuRmvWc2aB",
+          "input_tokens": 708,
+          "cached_input_tokens": 0,
+          "output_tokens": 5462,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 66760,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 708,
+            "output_tokens": 5462,
+            "output_tokens_details": {
+              "thinking_tokens": 2248
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 708,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 5462,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 66760
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.056036,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B05-R1",
+      "brief_id": "B05",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:07:04.184991+00:00",
+      "fresh_context": true,
+      "request_digest": "7a3234f5cb4ba32634973926b4ff9666f0542155e77759eed2c7692bca91234a",
+      "request_path": "requests/E037-sonnet-no-canon-B05-R1-a0.request.json",
+      "ended_at": "2026-08-30T16:08:37.990586+00:00",
+      "response_digest": "cbad4d82fe22a5ae2c2d49c7fd5cc283f64afcb41805fe406cb4d0da97d52fd6",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B05-R1-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDk5Jai655ZRGncQaCa",
+          "input_tokens": 648,
+          "cached_input_tokens": 0,
+          "output_tokens": 8143,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 93786,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 648,
+            "output_tokens": 8143,
+            "output_tokens_details": {
+              "thinking_tokens": 3499
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 648,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 8143,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 93786
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.082726,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B06-R2",
+      "brief_id": "B06",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:08:37.993535+00:00",
+      "fresh_context": true,
+      "request_digest": "25e229007b58bb5b2b9aa5948ee877ed350f0a0c09268d9a3ba6d32dd32cc829",
+      "request_path": "requests/E037-sonnet-no-canon-B06-R2-a0.request.json",
+      "ended_at": "2026-08-30T16:09:33.638801+00:00",
+      "response_digest": "0373b1b3ace087de7402b414176858aaeece4a08d1874245368f9ddd5b839fc5",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B06-R2-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDrysLzV9BHjUttUFnj",
+          "input_tokens": 708,
+          "cached_input_tokens": 0,
+          "output_tokens": 4466,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 55638,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 708,
+            "output_tokens": 4466,
+            "output_tokens_details": {
+              "thinking_tokens": 882
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 708,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 4466,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 55638
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.046076,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B01-R1",
+      "brief_id": "B01",
+      "repetition": 1,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:09:33.650616+00:00",
+      "fresh_context": true,
+      "request_digest": "d01bde47c6d4dc36d74148db828768c0b741551f6915410c5daa0c97dcfbf2de",
+      "request_path": "requests/E037-sonnet-no-canon-B01-R1-a0.request.json",
+      "ended_at": "2026-08-30T16:10:42.173870+00:00",
+      "response_digest": "5a4f5a8a2a166c9487a51fe4f4ec05150a426df7e320d51cced8f1966375e7a1",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B01-R1-a0.response.json",
+      "transcript_path": "transcripts/E037-sonnet-no-canon-B01-R1-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDw6T6RgLZQMNKAbL6v",
+          "input_tokens": 1223,
+          "cached_input_tokens": 0,
+          "output_tokens": 41,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 1654,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 1223,
+            "output_tokens": 41,
+            "output_tokens_details": {
+              "thinking_tokens": 14
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZDwD3y3FtJxP3rPb4xn",
+          "input_tokens": 5329,
+          "cached_input_tokens": 0,
+          "output_tokens": 5314,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 66848,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 5329,
+            "output_tokens": 5314,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 6552,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 5355,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 68502
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.066654,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "4f1027628b556be6d64dcb921b92907fc39b4d6012d4891523f14c0ae2859833",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-sonnet-no-canon-B01-R1-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79"
+      ],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B03-R2",
+      "brief_id": "B03",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:10:42.176092+00:00",
+      "fresh_context": true,
+      "request_digest": "22f5354d4de1560141407dc090aa9b5269c403a03ac5efe59b4641cc88f206a3",
+      "request_path": "requests/E037-sonnet-no-canon-B03-R2-a0.request.json",
+      "ended_at": "2026-08-30T16:11:42.041684+00:00",
+      "response_digest": "c3a028477578eb126985710c42fc1bec7e3d7e5224221a642c995992fd6f30fe",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B03-R2-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZE296yUGZJrsPUaeRNG",
+          "input_tokens": 653,
+          "cached_input_tokens": 0,
+          "output_tokens": 4443,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 59861,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 653,
+            "output_tokens": 4443,
+            "output_tokens_details": {
+              "thinking_tokens": 1728
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 653,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 4443,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 59861
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.045736,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B04-R2",
+      "brief_id": "B04",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:11:42.043516+00:00",
+      "fresh_context": true,
+      "request_digest": "42db7d5bb18c03ce2a36cfd687b0ba30da424cb2e0cf1242bd8e219523352a81",
+      "request_path": "requests/E037-sonnet-no-canon-B04-R2-a0.request.json",
+      "ended_at": "2026-08-30T16:13:34.814396+00:00",
+      "response_digest": "fc5802daf42c203dac3ee6327fcd4ec0fba8c4e84f84b37fb9b04147f2bcf335",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B04-R2-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZE6ZK7kKRGWtSiXKFFD",
+          "input_tokens": 686,
+          "cached_input_tokens": 0,
+          "output_tokens": 9267,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 112585,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 686,
+            "output_tokens": 9267,
+            "output_tokens_details": {
+              "thinking_tokens": 5120
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 686,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 9267,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 112585
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.094042,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B03-R3",
+      "brief_id": "B03",
+      "repetition": 3,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:13:34.952749+00:00",
+      "fresh_context": true,
+      "request_digest": "22f5354d4de1560141407dc090aa9b5269c403a03ac5efe59b4641cc88f206a3",
+      "request_path": "requests/E037-sonnet-no-canon-B03-R3-a0.request.json",
+      "ended_at": "2026-08-30T16:14:37.469632+00:00",
+      "response_digest": "61157c806ee2542ffc6e5671aef17ce890165c5945299b11f979d32e3ecb0c6c",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B03-R3-a0.response.json",
+      "transcript_path": null,
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZEEvaXBZXyU59fe61UM",
+          "input_tokens": 653,
+          "cached_input_tokens": 0,
+          "output_tokens": 4917,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 62090,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 653,
+            "output_tokens": 4917,
+            "output_tokens_details": {
+              "thinking_tokens": 1699
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 653,
+        "input_tokens_turns_reporting": 1,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 1,
+        "output_tokens": 4917,
+        "output_tokens_turns_reporting": 1,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 1,
+        "latency_ms": 62090
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.050476,
+      "cost_basis": "computed",
+      "tool_calls": [],
+      "website_reads": [],
+      "outcome": "ok"
+    },
+    {
+      "trial_id": "E037-sonnet-no-canon-B01-R2",
+      "brief_id": "B01",
+      "repetition": 2,
+      "attempt_index": 0,
+      "attempt_kind": "initial",
+      "phase": "creative",
+      "started_at": "2026-08-30T16:14:37.484620+00:00",
+      "fresh_context": true,
+      "request_digest": "d01bde47c6d4dc36d74148db828768c0b741551f6915410c5daa0c97dcfbf2de",
+      "request_path": "requests/E037-sonnet-no-canon-B01-R2-a0.request.json",
+      "ended_at": "2026-08-30T16:15:38.162944+00:00",
+      "response_digest": "0591e151b0253416eece6ccf7b68720a72a44d7c6d0b256fd3fb299a8c5b899a",
+      "raw_response_path": "raw/E037-sonnet-no-canon-B01-R2-a0.response.json",
+      "transcript_path": "transcripts/E037-sonnet-no-canon-B01-R2-a0.jsonl",
+      "provider_turns": [
+        {
+          "turn_index": 0,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZEKVaFbig4uCVXHGBH1",
+          "input_tokens": 1223,
+          "cached_input_tokens": 0,
+          "output_tokens": 53,
+          "reasoning_tokens": null,
+          "stop_reason": "tool_use",
+          "latency_ms": 1725,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 1223,
+            "output_tokens": 53,
+            "output_tokens_details": {
+              "thinking_tokens": 26
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        {
+          "turn_index": 1,
+          "provider": "Anthropic",
+          "provider_model_version": "claude-sonnet-5",
+          "provider_request_id": "msg_011CeZEKcDMozG3JMWvm7csx",
+          "input_tokens": 5341,
+          "cached_input_tokens": 0,
+          "output_tokens": 4633,
+          "reasoning_tokens": null,
+          "stop_reason": "end_turn",
+          "latency_ms": 58942,
+          "provider_reported_usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": 0,
+              "ephemeral_5m_input_tokens": 0
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 5341,
+            "output_tokens": 4633,
+            "output_tokens_details": {
+              "thinking_tokens": 0
+            },
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 6564,
+        "input_tokens_turns_reporting": 2,
+        "cached_input_tokens": 0,
+        "cached_input_tokens_turns_reporting": 2,
+        "output_tokens": 4686,
+        "output_tokens_turns_reporting": 2,
+        "reasoning_tokens": null,
+        "reasoning_tokens_turns_reporting": 0,
+        "provider_turns": 2,
+        "latency_ms": 60667
+      },
+      "price_snapshot": "eval-037-price-snapshot-v1",
+      "calculated_cost_usd": 0.059988,
+      "cost_basis": "computed",
+      "tool_calls": [
+        {
+          "turn_index": 0,
+          "name": "website_read",
+          "arguments": {},
+          "arguments_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "result_digest": "4f1027628b556be6d64dcb921b92907fc39b4d6012d4891523f14c0ae2859833",
+          "result_bytes": 9427,
+          "tool_family": "website",
+          "source_url": "https://rentok.com",
+          "snapshot_path": "common/websites/rentok.com/page.txt",
+          "snapshot_sha256": "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79",
+          "source_html_sha256": "4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6",
+          "content_chars": 8565,
+          "live_browsing": false,
+          "result_item_count": 1,
+          "transcript_ref": "transcripts/E037-sonnet-no-canon-B01-R2-a0.jsonl#0"
+        }
+      ],
+      "website_reads": [
+        "ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79"
+      ],
+      "outcome": "ok"
+    }
+  ]
+}

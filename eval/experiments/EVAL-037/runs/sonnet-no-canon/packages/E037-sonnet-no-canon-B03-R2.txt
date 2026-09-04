@@ -1,0 +1,66 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+One premium, print/social-ready advertising still image, 4:5 aspect ratio (e.g., 1600×2000 px minimum, scalable to 4000×5000 px for print), full colour, hero product photography style. Single final image only.
+
+OBJECTIVE_INTERPRETATION
+Launch-style hero shot for a new Indian mosambi + sparkling water beverage, targeting urban 22–35 year-olds who associate themselves with contemporary design, wellness, and craft beverage culture rather than mass-market soft drinks. The image must read as premium and modern first, "Indian" second — through ingredient authenticity and material quality rather than décor, motifs, or costume signalling. Product recognisability and desirability are the primary success metrics.
+
+CORE_CREATIVE_IDEA
+"Mosambi, elevated." A single slim aluminium can stands centre-stage in a moody, softly lit still-life set — caught mid-moment as a citrus-bright splash of carbonated water arcs around it, with a halved mosambi and glistening droplets grounding the drink in real fruit. The palette (muted charcoal, stone, brass, and the drink's own chartreuse-gold) does the cultural work: warm, sun-washed, orchard-adjacent, but styled like a design-object, not a soda ad. No people, no landmarks, no folk motifs — just craft, light, and fruit.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Product (can) — unmistakable hero, largest, sharpest, centre-weighted.
+2. Freshness cue — splash + citrus slice + droplets, directly interacting with the can.
+3. Mood/positioning — lighting, background gradient, surface reflection (premium, calm, adult).
+4. Brand mark — small, confident wordmark on can body only (no additional on-image text/copy).
+No headline, no price, no logo lockup outside the can — keeps the product as the only communicator.
+
+VISUAL_SYSTEM
+- Format: vertical 4:5, product occupying middle third, slight low-angle hero framing.
+- Palette: deep charcoal-to-soft-moss gradient background; can body in warm chartreuse-to-ivory gradient with a thin brushed-brass accent ring; no red/orange soda cues.
+- Materials: matte-finish aluminium can (not glossy soda-can plastic look), wet stone or dark honed-marble surface for reflection.
+- Props: one halved mosambi (cut face visible, pale green-gold flesh), 2–3 loose citrus segments, scattered water droplets, a controlled splash arc with visible fine bubbles — no overflowing "fizz mess."
+- Lighting: soft key light top-left (large softbox feel), subtle warm rim light right edge separating product from background, gentle fill to retain shadow detail; no harsh commercial soda flash.
+- Depth: shallow depth of field, background softly defocused with faint warm bokeh (suggesting orchard light without literal leaves/trees dominating).
+- Explicitly avoided: turmeric-hand shots, marigolds, paisley, saris, monuments, auto-rickshaws, neon Bollywood palettes, plastic-bottle soda tropes, cluttered ice-and-splash chaos.
+
+PRODUCTION_RECIPE
+1. Generate base composition via single text-to-image prompt (below) at 4:5, high detail, photographic realism.
+2. Select best candidate for: can geometry accuracy, splash realism, correct 4:5 framing, absence of stray text artefacts.
+3. Post-production pass (deterministic, non-generative): clean up label surface, add vector-based brand wordmark/logo, colour-grade for premium consistency, refine droplet highlights, confirm crop to exact 4:5.
+4. Final QC against hard constraints before delivery.
+
+GENERATION_PROMPTS
+Single final prompt (image, one shot):
+
+"Ultra-premium studio product photograph, vertical 4:5 composition, a single slim matte-finish aluminium beverage can centred slightly below frame middle, label surface left deliberately clean/blank (no readable text or logos), can body colour a soft chartreuse-to-pale-ivory gradient with a thin brushed brass accent ring near the top. The can sits on a dark honed-marble wet surface with a subtle mirror reflection. Around the can, a dynamic but controlled arc of sparkling water splash frozen mid-motion with fine, realistic bubbles, alongside a freshly halved mosambi (sweet lime) showing pale green-gold flesh, two loose citrus segments, and scattered natural water droplets on the can and surface. Background is a smooth dark charcoal-to-soft-moss gradient with soft warm defocused bokeh, no landmarks, no people, no folk motifs, no plastic soda-bottle aesthetic. Lighting: large soft key light from top-left, subtle warm rim light on right edge separating product from background, gentle fill light preserving shadow detail, cinematic but clean commercial studio lighting. Shot on a macro/product lens look, shallow depth of field, background softly out of focus, product in crisp sharp focus. Mood: sophisticated, modern, adult, refreshing, minimal, high-end beverage advertising, no text anywhere in image, no watermark, no extra props, no ice cubes, no straws."
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- Brand wordmark/logo on can: added in post as a vector overlay (not generated) to guarantee crisp, correct typography — placed on the pre-left-blank label zone.
+- Final colour grade and contrast pass: standard non-generative post (LUT/curves) for cross-platform consistency.
+- Exact 4:5 crop/canvas confirmation and export at required resolutions.
+- Any nutritional/legal disclaimer text (if required by client) added as deterministic overlay, kept off primary visual zone.
+
+AUDIO_AND_EDIT
+Not applicable — static image deliverable only.
+
+FAILURE_PREVENTION
+- Risk: AI renders can label with garbled text → Mitigated by keeping label blank in generation prompt; logo added deterministically in post.
+- Risk: Composition drifts toward generic red/orange soda-can look → Explicit palette and "no plastic soda-bottle aesthetic" constraint in prompt.
+- Risk: Cultural clichés creeping in (mango leaves, marigold, monuments) → Explicitly excluded in prompt; background kept abstract/bokeh only.
+- Risk: Splash/bubbles look chaotic or cheap → Prompt specifies "controlled," "fine bubbles," avoids "overflowing" language.
+- Risk: Wrong aspect ratio or off-centre crop → Framing and canvas explicitly locked to 4:5 with product centred in prompt and QC step.
+- Risk: Product not clearly the hero (props overpower) → Hierarchy enforced via prompt ordering, size relationships, and sharp-focus/shallow-DOF direction.
+
+HARD_CONSTRAINT_CHECK
+- 4:5 aspect ratio: ✅ specified in canvas and prompt.
+- Product is unmistakable hero: ✅ centred, sharp, largest element.
+- No celebrity: ✅ no people in image.
+- No external website: ✅ none referenced or shown.
+- Avoids clichéd "Indian" visual shorthand: ✅ explicitly excluded in prompt and visual system.
+- Avoids cheap soft-drink look: ✅ matte can, muted palette, controlled splash, premium lighting.
+- Retains mosambi familiarity: ✅ visible halved fruit and segments, characteristic pale green-gold color cues.
+
+KNOWLEDGE_AND_WEBSITE_USE
+None used — no external sources, websites, or brand references were consulted; concept built entirely from brief requirements and general premium-beverage photography conventions.

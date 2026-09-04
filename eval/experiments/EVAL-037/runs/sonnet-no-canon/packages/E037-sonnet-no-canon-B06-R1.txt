@@ -1,0 +1,78 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+One premium, commercially usable e-commerce hero image, 4:5 aspect ratio (e.g., 1600×2000 px minimum, delivered as high-res sRGB JPEG/PNG plus a layered master), depicting the Aster Meridian 38 watch as a single, photorealistic still-life product shot.
+
+OBJECTIVE_INTERPRETATION
+The image must function as a primary product-page hero: it needs to sell craftsmanship and material quality at a glance, hold up under zoom/crop for a PDP gallery, and read cleanly on a light or dark storefront background. The customer wants a grounded, tactile, "real object" feel rather than a synthetic floating-CGI look, and demands strict fidelity to fixed product geometry — no reinterpretation of case size, dial layout, hands, crystal, or strap.
+
+CORE_CREATIVE_IDEA
+A intimate, studio-lit tabletop still life: the watch rests naturally on a dark walnut surface with its dark brown leather strap coiled loosely beside/behind the case, photographed at a low three-quarter hero angle that lets a single large soft key light rake across the dial to ignite the blue sunburst pattern and pick out the polished bevels, dauphine hands, and dome of the sapphire crystal. This is presented as an aspirational, editorial-grade product photograph — the kind seen in luxury watch catalogs — not a rendered CGI floating object, because the surface contact, real shadow falloff, and material specularity are what sell craftsmanship and desirability believably.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Primary: dial and crystal (craftsmanship, sunburst finish, precision of hands/markers) — largest, sharpest, most lit area, positioned in upper-middle third.
+2. Secondary: case material (brushed steel finish, polished bevel edge, crown) — visible along the case flank, catching a distinct rim light.
+3. Tertiary: strap material and stitching (leather grain, tone, craftsmanship of tailoring) — lower third, softly lit, leading the eye out of frame.
+4. Supporting: clean negative space at top ~15% of frame and soft background falloff, preserving room for a retailer to later overlay logo/price without a text layer being baked into this deliverable.
+
+VISUAL_SYSTEM
+- Aspect ratio: 4:5, vertical.
+- Palette: deep sunburst blue (dial) + brushed cool steel + warm dark walnut brown (strap + surface) + near-black charcoal gradient background — a restrained, premium 3-tone palette.
+- Lighting: single large soft key (softbox equivalent, ~45° top-left), gentle fill from camera-right to open case shadow detail, small hard kicker to define bezel edge, background lit separately and slightly dimmer to create a soft vignette.
+- Camera language: macro-adjacent product photography — 100mm macro equivalent, low tripod-height three-quarter angle (~35–40° above horizontal), shallow-to-moderate depth of field (dial and nearest hands tack sharp, strap coil and background softly falling off), no wide-angle distortion of the case.
+- Surface/props: single dark walnut wood surface with soft reflection, no clutter, no extra props, no hands/fingers holding the watch.
+- Mood: quiet luxury, tactile, confident — not flashy, no lens flares, no exaggerated CGI gloss.
+
+PRODUCTION_RECIPE
+1. Generate base image from the single prompt below at high resolution, framed natively in 4:5.
+2. Generate 4–6 candidate variants (same prompt, seed variation only) to allow selection of the version with most accurate hand geometry, marker spacing, and crown placement.
+3. Select the candidate with: correct hand count/shape (dauphine, silver, two hands only — hour and minute, plus seconds hand if present must be thin/simple and not mistaken for a date complication), no visible date window, symmetric baton markers, correctly domed (not flat) crystal.
+4. Non-generative retouch pass (deterministic, manual/Photoshop-style): 
+   - Verify and, if needed, locally correct dial symmetry and marker alignment.
+   - Clean any sensor-noise/artifact specks on the crystal or dial.
+   - Calibrate blue channel so the dial reads as a true deep sunburst blue (not teal/purple) under both display and print color profiles.
+   - Sharpen dial/hands selectively; keep strap and background at softer sharpness to preserve depth hierarchy.
+   - Confirm strap is dark brown leather with visible grain/stitching, not black or reddish.
+5. Final color grade: subtle contrast lift, gentle vignette reinforcement, export sRGB with embedded profile for e-commerce use.
+
+GENERATION_PROMPTS
+Single final image prompt (execute at 4:5, e.g., 1600x2000):
+
+"Ultra-detailed, photorealistic luxury product photograph of a men's mechanical wristwatch, the 'Aster Meridian 38', shot as a still life on a dark polished walnut wood surface, low three-quarter hero angle roughly 35-40 degrees above horizontal. The watch: 38mm brushed stainless-steel round case with a distinct polished bevel edge, fine directional brushed-metal texture on the case flank, visible crown at 3 o'clock. Dial: deep blue sunburst finish with radial brushed texture catching light, silver polished baton hour markers evenly spaced, silver polished dauphine hour and minute hands with sharp faceted edges catching a bright specular highlight, no date window, no other complications, clean symmetrical dial layout. Crystal: clearly domed sapphire crystal with subtle barrel-shaped optical distortion of the dial edges and a soft, controlled reflection of a large studio softbox on its upper curve, not obscuring the dial. Strap: dark brown genuine leather strap, fine natural grain, visible top-stitching, strap coiled loosely and draped naturally beside and slightly behind the case, resting on the wood surface. Lighting: one large soft key light from upper left raking across the dial to reveal sunburst texture, gentle fill light from the right to open shadow detail on the case, a small controlled kicker light defining the case bezel, separate dim background light creating a soft charcoal-to-black gradient vignette. Camera: 100mm macro-equivalent lens, shallow-to-moderate depth of field, dial and nearest hands in critical sharp focus, strap coil and background surface softly falling off. Composition: watch positioned center-lower two-thirds of frame, dial slightly left of center, generous clean negative space in the top 15 percent of the frame, no text, no logos, no watermark, no human hands or fingers, no props other than the watch, strap, and wood surface. Style: quiet luxury editorial watch catalog photography, tactile, true-to-material, no CGI plastic sheen, no exaggerated gloss, no lens flare, no floating product, natural contact shadow beneath case and strap. Vertical 4:5 aspect ratio."
+
+Negative/exclusion guidance (apply as negative prompt or generation constraints where supported):
+"no date window, no additional dial complications, no chronograph subdials, no visible brand logo or text, no watermark, no floating/levitating watch, no glossy plastic CGI look, no distorted or oversized case proportions, no mismatched or asymmetric hour markers, no flat crystal, no black or red strap, no fingers or hands in frame, no cluttered background props, no harsh unmotivated lens flare, no double crown, no blurry dial."
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- Final color calibration/grading pass (blue-channel correction, contrast, vignette) performed as a deterministic post-process, not re-generated.
+- Manual pixel-level correction of any dial/marker asymmetry or artifact via standard retouching (non-generative inpainting/cloning) rather than re-prompting, to guarantee fixed geometry is preserved exactly.
+- Export/color-profile management (sRGB embed) is a deterministic technical step.
+- No overlaid text, logo, or price graphics are part of this deliverable (kept clean for downstream commercial use).
+
+AUDIO_AND_EDIT
+Not applicable — static image deliverable, no audio or edit timeline required.
+
+FAILURE_PREVENTION
+- Primary risk: AI-generated hands/markers drifting into an unintended "date window" or extra subdial → mitigated by explicit negative prompt and mandatory manual verification step before approval.
+- Risk: crystal rendered flat instead of domed, losing the sapphire-dome cue → explicitly specified with distortion/reflection cues and checked at selection stage.
+- Risk: dial color skewing teal/purple instead of "deep blue sunburst" → corrected via deterministic color-calibration pass.
+- Risk: image drifting into generic floating-CGI product-render aesthetic → explicitly forbidden in prompt; composition anchored with real surface contact and shadow.
+- Risk: strap color/material misread (black, suede, or synthetic look) → explicitly reinforced ("dark brown genuine leather... natural grain... top-stitching") and checked in QA pass.
+- Risk: over-cluttered composition reducing e-commerce usability → single surface, no extra props, controlled negative space enforced.
+
+HARD_CONSTRAINT_CHECK
+- 38mm brushed stainless-steel case: specified explicitly. ✔
+- Deep blue sunburst dial: specified explicitly, with color-calibration safeguard. ✔
+- Silver baton hour markers: specified explicitly. ✔
+- Silver dauphine hands: specified explicitly, faceted detail called out. ✔
+- No date window: explicitly stated in both main prompt and negative prompt. ✔
+- Domed sapphire crystal: explicitly specified with distortion/reflection cues. ✔
+- Dark brown leather strap: explicitly specified with grain/stitching detail. ✔
+- 4:5 aspect ratio: explicitly specified and locked in output dimensions. ✔
+- Craftsmanship/dial detail/material quality/desirability communicated: addressed via lighting, macro detail focus, and composition hierarchy. ✔
+- Avoid generic floating CGI: explicitly rejected in creative idea and negative prompt; grounded studio still-life chosen instead. ✔
+- No external website used: confirmed, none referenced. ✔
+- Single deliverable, no alternates presented: confirmed. ✔
+
+KNOWLEDGE_AND_WEBSITE_USE
+None. No external websites or knowledge sources were consulted or required; all specifications derive solely from the customer's stated product facts and general premium product-photography conventions.
