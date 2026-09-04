@@ -92,6 +92,34 @@ Further Controller inputs in the same session (transcribed from a voice note; pu
     deterministic composite) are in Tranche 1, not deferred. This does not reopen EVAL-038 and
     implies no verdict on Canon.
 
+## 3a. Execution method and two design rules (Controller, 5 Sep, later in the session)
+
+Controller's words: *"spin off agents — planner who writes tasks, execution who executes it, tester,
+auditor and approver. Before anything is spent, one of the first tasks is to look at the test
+holistically and write down the model test cases really well. Prompts should look like customer
+prompts. Also, all productions must use Canon knowledge."*
+
+11. **Five-role pipeline for every campaign task**: Planner (writes the task and acceptance
+    criteria; writes no deliverable), Executor (produces the deliverable; changes no scope),
+    Tester (runs validators and checks the deliverable against the task's acceptance criteria),
+    Auditor (adversarial review against doctrine, contracts and evidence rules; reports, does not
+    fix), Approver (PASS / PASS WITH NOTES / BLOCK on the merge line). Roles run in sequence with
+    separate contexts; no role approves its own work; the human Controller reviews between the
+    Planner and the Executor and before merge. Agents run one at a time on this machine.
+12. **Test cases are customer-shaped.** Every Stage A item is written the way a real buyer writes
+    to a studio — WhatsApp or email register, Hindi / Hinglish / English as the market dictates,
+    with the customer's own constraints and attachments — and is mapped to a Normalized Request
+    under the CANON-010 grammar. Benchmark-style prompts ("isolated probe for capability X") are
+    not admissible as items.
+13. **All productions use Canon.** For each test case one production blueprint is authored under
+    `canon/CANON-SHAPE-v1.md` §4 (deterministic pack lookup, compiled packs as the doctrine, check
+    lines applied before dispatch) and **frozen**; then every candidate route executes that same
+    blueprint. The blueprint is held constant across routes so the comparison remains a comparison
+    of routes. The blueprint author (model or agent) is recorded on each case. This measures
+    routes under Canon-shaped production; it still draws no verdict on Canon.
+14. **First pipeline task**: the holistic Stage A test-case package (EVAL-039A), at USD 0 provider
+    spend, before any spend authorisation is written.
+
 ## 4. Authorised by this decision (USD 0)
 
 - **EVAL-039** — September-2026 roster, price and route-liveness refresh; compact Media Factory
@@ -118,3 +146,15 @@ gate branch or its files.
 3. Decide whether Stage C's second recipe is the CANON-SHAPE-v1 blueprint + gate path (doubling as
    the reserved acceptance-rate measurement) or a plain second topology.
 4. HED-1 before Stage C's fully-loaded CpAO.
+
+## 7. Overnight execution mode (Controller, 5 Sep, ~01:45 IST)
+
+Controller's words: *"complete the tasks. I don't authorise spends till I give approval. Just create
+plans, build access, projections and everything. Will approve in the morning. Build async. Don't
+destroy anything. Will not be available to resolve queries for 5–6 hours."*
+
+Binding for every agent in this window: USD 0 provider spend of any kind; no deletion, overwrite of
+committed evidence, or force-push; reversible access steps only (requesting Bedrock model access,
+enabling a Vertex API) and each one logged; anything needing the Controller (Ashva Azure sign-in,
+deployments, spend) is written down as a morning decision, never attempted. The Writer Controller
+session reviews between roles in the human's absence; the human ratifies in the morning.
