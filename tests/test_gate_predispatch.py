@@ -52,6 +52,19 @@ N01_SHAPES = (
     ("K17", f'"{CLEAN} she holds "\tAster\t" {TAIL}"\n'),
 )
 K16_SHORT_SECOND_PROMPT = f'"{CLEAN}"\n"chat bubbles and a notification counter on screen"\n'
+# P-01 fixtures (Ruling 10): the sixth checker's four curly shapes — a curly quote nested in
+# a curly prompt, an orphan curly closer, an unclosed second curly prompt (closer missing or
+# typed as an opener). At HEAD 8902fb1 each extracted one clean prompt and PASSed with the
+# dirty remainder unscanned; under Ruling 10 a curly quote in GENERATION_PROMPTS is an ERROR.
+LQ, RQ = "“", "”"
+CURLY_ERROR = "curly quote in GENERATION_PROMPTS — straight quotes delimit prompts; not scanned"
+P01_SHAPES = (
+    ("C2", f'{LQ}{CLEAN} she reads {LQ}{CLEAN}{RQ} on the card, chat bubbles and a notification '
+           f'counter on screen{RQ}\n'),
+    ("C3", f'{LQ}{CLEAN}{RQ} chat bubbles and a notification counter on screen{RQ}\n'),
+    ("C4", f'{LQ}{CLEAN}{RQ}\n{LQ}{DIRTY}\n'),
+    ("C4b", f'{LQ}{CLEAN}{RQ}\n{LQ}{DIRTY}{LQ}\n'),
+)
 S = findings.Status
 ALL_IDS = [f"PA-D{i}-check" for i in range(1, 11)] + [f"CA-D{i}-check" for i in range(1, 12)]
 NOT_MECH_PRE = ["PA-D2-check", "PA-D3-check", "PA-D5-check", "PA-D6-check", "PA-D7-check",
@@ -736,9 +749,9 @@ class N01SubFloorRunTest(_Base):
     def test_n05_k16_a_short_second_prompt_is_an_error(self):
         self.assertFloorError(K16_SHORT_SECOND_PROMPT, "K16")
 
-    def test_n01_a_run_nested_inside_a_prompt_is_scanned_with_it(self):
-        # the fourth checker's A5 and its mirror: the inner name is covered by the prompt
-        # that contains it; the prompt is whole and FAILs on its tail, not ERROR
+    def test_n01_a_run_nested_in_the_other_quote_style_is_a_curly_error(self):
+        # A5 and "straight inner in curly": flipped FAIL→ERROR under Ruling 10 (curly quotes
+        # are not delimiters) — the curly quote is reported, nothing is extracted or scanned
         for name, section in (
                 ("A5 curly inner", f'"{CLEAN} the \u201cAster Meridian\u201d on her wrist, chat '
                                    f'bubbles and a notification counter"\n'),
@@ -747,8 +760,8 @@ class N01SubFloorRunTest(_Base):
             with self.subTest(name):
                 r = self.run_gate(Path("synthetic.txt"), "video", False, text=self.synthetic(section))
                 lt = self.row(r, "LIMIT-TEXT")
-                self.assertEqual(lt.status, S.FAIL, (name, lt.detail))
-                self.assertTrue(lt.detail.startswith("prompt 1, sentence"), (name, lt.detail))
+                self.assertEqual(lt.status, S.ERROR, (name, lt.detail))
+                self.assertIn(CURLY_ERROR, lt.detail, name)
                 self.assertEqual(r.verdict(), "FAIL")
 
     def test_n01_a_supplied_prompt_file_still_bypasses_extraction(self):
@@ -763,6 +776,66 @@ class N01SubFloorRunTest(_Base):
         self.assertEqual(row.status, S.ERROR)
         self.assertTrue(row.blocking)
         self.assertIn("below the prompt floor", row.detail)
+        self.assertIn("offset 146", row.detail)
+
+
+class P01CurlyQuoteTest(_Base):
+    """Ruling 10 (P-01): a curly double quote anywhere in GENERATION_PROMPTS is a LIMIT-TEXT
+    ERROR naming the reason ("curly quote in GENERATION_PROMPTS — straight quotes delimit
+    prompts; not scanned") and the offset, verdict FAIL — never a curly run extracted as a
+    prompt while the text outside it goes unscanned."""
+
+    @staticmethod
+    def synthetic(section):
+        return ("## VISUAL_SYSTEM\nkey light from upper-left; centre zone\n## DELIVERABLE\n"
+                "one 9:16 video\n## GENERATION_PROMPTS\n" + section
+                + "## DOCTRINE_DEVIATIONS\nnone\n")
+
+    def assertCurlyError(self, section, name):
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=self.synthetic(section))
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertNotEqual(lt.status, S.PASS, (name, lt.detail))
+        self.assertEqual(lt.status, S.ERROR, (name, lt.detail))
+        self.assertIn(CURLY_ERROR, lt.detail, name)
+        first = min(i for i, ch in enumerate(section) if ch in (LQ, RQ))
+        self.assertIn(f"offset {first}", lt.detail, name)
+        self.assertIn("fails closed", lt.detail, name)
+        self.assertTrue(lt.blocking)
+        self.assertEqual(r.verdict(), "FAIL", name)
+        self.assertTrue(r.render_text().splitlines()[-1].startswith("GATE FAIL"))
+        self.assertInvariants(r)
+
+    def test_p01_the_four_shapes_are_errors(self):
+        for name, section in P01_SHAPES:
+            with self.subTest(name):
+                self.assertCurlyError(section, name)
+
+    def test_p01_a4_curly_outer_with_an_inch_mark_inside_is_an_error(self):
+        # A4: flipped FAIL→ERROR under Ruling 10 (curly quotes are not delimiters)
+        self.assertCurlyError(
+            f'{LQ}{CLEAN} a 6" OLED panel showing chat bubbles and a notification counter{RQ}\n', "A4")
+
+    def test_p01_a_short_curly_run_is_a_curly_error(self):
+        # "curly short": flipped floor ERROR→curly ERROR under Ruling 10 (curly quotes are not
+        # delimiters); the reason names the curly quote, not the floor
+        r = self.run_gate(Path("synthetic.txt"), "video", False,
+                          text=self.synthetic(f'"{CLEAN}"\n{LQ}chat bubbles on screen{RQ}\n'))
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertEqual(lt.status, S.ERROR, lt.detail)
+        self.assertIn(CURLY_ERROR, lt.detail)
+        self.assertNotIn("below the prompt floor", lt.detail)
+
+    def test_p01_a_supplied_prompt_file_still_bypasses_extraction(self):
+        r = self.run_gate(Path("synthetic.txt"), "video", False,
+                          text=self.synthetic(P01_SHAPES[0][1]), prompts=[CLEAN])
+        self.assertEqual(self.status(r, "LIMIT-TEXT"), S.PASS)
+
+    def test_check_limit_text_names_the_curly_error(self):
+        row = predispatch.check_limit_text(
+            [], self.reg, extraction_error=f"{CURLY_ERROR} — the {LQ} at offset 146")
+        self.assertEqual(row.status, S.ERROR)
+        self.assertTrue(row.blocking)
+        self.assertIn(CURLY_ERROR, row.detail)
         self.assertIn("offset 146", row.detail)
 
 

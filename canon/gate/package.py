@@ -10,10 +10,11 @@ optionally DOCTRINE_DEVIATIONS (retired in production, CANON-SHAPE-v1 §5). The 
 regex is identical to eval/experiments/EVAL-038/tools/strip_blind.py::SECTION_RE so the gate
 and the blinding tool cut a package at the same lines.
 
-Prompt extraction (plan §B): double-quoted runs under GENERATION_PROMPTS, and `>` blockquote
-runs with `**` removed — the same rules EVAL-038's EXTRACTION-RECORD.json records for the
-four dispatched prompts. A section whose straight quotes admit no single pairing raises
-UnbalancedQuotes (Ruling 7, L-01): the gate reports the error rather than guessing a closer.
+Prompt extraction (plan §B): straight double-quoted runs under GENERATION_PROMPTS, and `>`
+blockquote runs with `**` removed — the same rules EVAL-038's EXTRACTION-RECORD.json records
+for the four dispatched prompts. A section whose straight quotes admit no single pairing
+raises UnbalancedQuotes (Ruling 7, L-01): the gate reports the error rather than guessing a
+closer. A curly quote in the section is an error (Ruling 10, below).
 
 FLOOR SEMANTICS CHANGED — Ruling 9, CONTROLLER-CANON-GATE-001-FIFTH-CHECK-DISPOSITION-
 2026-09-05.md (N-01/N-05). Plan §B.1 / §F read "double-quoted runs >= 120 chars": a quoted
@@ -24,7 +25,24 @@ verdict is FAIL. The discard was the concealment mechanism behind six pairing ed
 K-02, K-05, L-01, M-01, N-01) — a prompt cut short leaves a remainder that pairs into a
 sub-floor run, and the floor hid it while the clean head PASSed. Every byte inside a quoted
 run is now either scanned or the cause of an ERROR (`_quoted_runs`). The plan text is amended
-by the Controller separately. Shot extraction: table rows `| n |`, `Shot n`
+by the Controller separately.
+
+CURLY QUOTES ARE NOT DELIMITERS — Ruling 10, CONTROLLER-CANON-GATE-001-SIXTH-CHECK-
+DISPOSITION-2026-09-05.md (P-01). Until this commit `_quoted_runs` also paired curly runs
+(“ … ”) with a bare regex that had none of the fail-closed rules `_straight_runs` enforces:
+an orphan curly closer, an unclosed curly prompt or a curly quote nested inside a curly
+prompt left the text-bearing remainder outside any run, and LIMIT-TEXT PASSed over it (the
+sixth checker's C2, C3, C4, C4b). The mechanism is removed rather than tuned: straight
+double quotes are the only prompt delimiter, `_straight_runs` the sole pairer, and any curly
+double quote (“ U+201C or ” U+201D) inside GENERATION_PROMPTS is an extraction error,
+CurlyQuotes ("curly quote in GENERATION_PROMPTS — straight quotes delimit prompts; not
+scanned"), naming its offset and raised before the straight pairer runs, so the outcome does
+not depend on the straight-quote state. A curly quote in any other section is prose. No
+committed package carries a curly quote in the section (0 of 84) and the production
+blueprint schema (Ruling 3) carries straight quotes. The plan text is amended by the
+Controller separately.
+
+Shot extraction: table rows `| n |`, `Shot n`
 headings, or numbered items in PRODUCTION_RECIPE / GENERATION_PROMPTS. The plan names the
 union of the two sections; a literal union double-counts a package that carries both a shot
 table and per-block prompt headings (Sonnet B01: 11 + 4), so the shot list is the single
@@ -160,11 +178,19 @@ def scope_text(pkg: Package, feeds_sections) -> Scope:
 # ── generation prompts ───────────────────────────────────────────────────────
 
 CLOSER_TAIL = re.compile(r"[ \t]*[.)\],;:!?]*[ \t]*(?:\n|$)")
+CURLY_QUOTE = re.compile("[“”]")   # U+201C, U+201D
 
 
 class ExtractionError(ValueError):
     """GENERATION_PROMPTS cannot be turned into a list of prompts the gate would stand behind.
     Callers report the reason on LIMIT-TEXT as ERROR (verdict FAIL) — never a partial list."""
+
+
+class CurlyQuotes(ExtractionError):
+    """A curly double quote (“ or ”) appears inside GENERATION_PROMPTS (Ruling 10, P-01).
+    Straight quotes are the only prompt delimiter; a curly quote is neither paired nor
+    ignored, because a curly run was the second surface for the same family of pairing
+    defects (an orphan closer, an unclosed run, a nested opener) and is not needed."""
 
 
 class UnbalancedQuotes(ExtractionError):
@@ -284,9 +310,20 @@ def _straight_runs(text: str) -> list:
 
 
 def _quoted_runs(text: str) -> list:
-    """(start, body) for every quoted run. Straight quotes pair by `_straight_runs`; curly
-    quotes pair each “ with the next ”. A run under PROMPT_MIN_CHARS raises PromptBelowFloor
-    (Ruling 9, N-01/N-05) — the floor filters nothing any more.
+    """(start, body) for every prompt-delimiting run: straight-quoted runs paired by
+    `_straight_runs`, the sole pairer. A curly double quote anywhere in `text` raises
+    CurlyQuotes before pairing (Ruling 10, P-01); a run under PROMPT_MIN_CHARS raises
+    PromptBelowFloor (Ruling 9, N-01/N-05) — the floor filters nothing any more.
+
+    Why a curly quote errors instead of pairing or passing as prose (Ruling 10). The curly
+    regex this function used to carry (`“([^“”]*)”`) had none of the three fail-closed rules
+    `_straight_runs` enforces — an orphan closer raises, an unclosed run raises, a nested
+    opener raises depth — so a stray “ or ” was silently prose and a curly run open at the
+    end of the section was never seen: the text-bearing remainder sat outside any run and
+    LIMIT-TEXT PASSed over it (the sixth checker's C2, C3, C4, C4b). Rather than give the
+    curly pairer the same rules — a second surface for the same family of defects — the
+    mechanism is removed. The check runs first, on the raw text, so the error is the same
+    whatever the straight quotes around it would do.
 
     Why the floor exists, and why it errors instead of filtering. The floor was written so
     that a short quoted label in the section's prose — `"IMAGE"`, `"₹9"`, `"Get Free Demo."`
@@ -306,16 +343,21 @@ def _quoted_runs(text: str) -> list:
     prompt is supplied via --prompt-file or lengthened. The class-3 reading itself is left
     as it is: its worst case is now this error, not a PASS.
 
-    One run inside another. A run whose span lies strictly inside another run's span — a
-    curly-quoted name inside a straight-quoted prompt (`"… the “Aster Meridian” on her
-    wrist …"`, the fourth checker's A5) or the mirror — is nested: its bytes are scanned as
-    part of the prompt that contains it, so it is neither a prompt of its own nor subject to
-    the floor. This is the cross-style twin of the depth rule `_straight_runs` already
-    applies to a straight string inside a straight prompt (M-01); it is decided by the
-    spans alone, never by what the inner run looks like. Only runs that no other run
-    contains are prompts, and only those face the floor."""
+    One run inside another. A run whose span lies strictly inside another run's span is
+    nested: its bytes are scanned as part of the prompt that contains it, so it is neither
+    a prompt of its own nor subject to the floor. It is decided by the spans alone, never by
+    what the inner run looks like. Among straight runs `_straight_runs` already folds a
+    nested string into its run by depth (M-01), so every run it yields is outermost and the
+    span rule holds trivially; it stays as the guard so that containment is a property of
+    the spans and not of the pairer. Only runs that no other run contains are prompts, and
+    only those face the floor."""
+    m = CURLY_QUOTE.search(text)
+    if m:
+        i = m.start()
+        raise CurlyQuotes(
+            f"the {m.group()} at offset {i} ({_excerpt(text, max(0, i - 12))!r}) is not a "
+            f"prompt delimiter")
     runs = list(_straight_runs(text))
-    runs += [(m.start(), m.group(1)) for m in re.finditer(r"“([^“”]*)”", text, re.S)]
     runs.sort(key=lambda r: r[0])
     spans = [(start, start + 1 + len(body)) for start, body in runs]   # opener .. closer
     outer = [run for run, (s, e) in zip(runs, spans)
@@ -350,14 +392,19 @@ def _blockquote_runs(text: str) -> list:
 
 
 def extract_prompts(pkg: Package) -> list:
-    """Prompts in package order; raises UnbalancedQuotes when the section's straight quotes
-    admit no single pairing (Ruling 7) and PromptBelowFloor when a quoted run falls under the
-    floor (Ruling 9) — callers report the error, never a partial list."""
+    """Prompts in package order; raises CurlyQuotes when the section carries a curly double
+    quote (Ruling 10), UnbalancedQuotes when its straight quotes admit no single pairing
+    (Ruling 7) and PromptBelowFloor when a quoted run falls under the floor (Ruling 9) —
+    callers report the error, never a partial list."""
     section = pkg.sections.get("GENERATION_PROMPTS")
     if section is None:
         return []
     try:
         found = [(s, b, "quoted") for s, b in _quoted_runs(section)]
+    except CurlyQuotes as exc:
+        raise CurlyQuotes(
+            f"curly quote in GENERATION_PROMPTS — straight quotes delimit prompts; not scanned "
+            f"— {exc}") from None
     except UnbalancedQuotes as exc:
         raise UnbalancedQuotes(f"unbalanced quotes in GENERATION_PROMPTS — {exc}") from None
     except PromptBelowFloor as exc:

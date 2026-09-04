@@ -8,7 +8,6 @@ extraction must reproduce the four committed media/prompts/*.txt after whitespac
 normalisation, consistent with media/prompts/EXTRACTION-RECORD.json.
 Run: python3 -m unittest tests.test_gate_package
 """
-import re
 import unittest
 from pathlib import Path
 
@@ -56,6 +55,23 @@ N01_SHAPES = (
     ("K17 inner opener + TAB", f'"{CLEAN} she holds "\tAster\t" {TAIL}"\n'),
 )
 K16_SHORT_SECOND_PROMPT = f'"{CLEAN}"\n"chat bubbles and a notification counter on screen"\n'
+# P-01 fixtures (Ruling 10): the sixth checker's four curly shapes. At HEAD 8902fb1 the curly
+# regex paired each “ with the next ” with none of the fail-closed rules `_straight_runs`
+# enforces, so a curly quote nested in a curly prompt (C2), an orphan curly closer (C3) or an
+# unclosed second curly prompt (C4, C4b) left the text-bearing remainder outside any run and
+# LIMIT-TEXT PASSed. Under Ruling 10 straight quotes alone delimit prompts; a curly quote
+# anywhere in GENERATION_PROMPTS is an extraction error.
+LQ, RQ = "“", "”"
+CURLY_ERROR = "curly quote in GENERATION_PROMPTS — straight quotes delimit prompts; not scanned"
+P01_SHAPES = (
+    ("C2 curly-in-curly, inner over the floor, dirty tail",
+     f'{LQ}{CLEAN} she reads {LQ}{CLEAN}{RQ} on the card, chat bubbles and a notification '
+     f'counter on screen{RQ}\n'),
+    ("C3 orphan curly closer after a clean curly prompt",
+     f'{LQ}{CLEAN}{RQ} chat bubbles and a notification counter on screen{RQ}\n'),
+    ("C4 second curly prompt never closes", f'{LQ}{CLEAN}{RQ}\n{LQ}{DIRTY}\n'),
+    ("C4b second curly prompt, closer typed as an opener", f'{LQ}{CLEAN}{RQ}\n{LQ}{DIRTY}{LQ}\n'),
+)
 
 V1_SECTIONS = ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
                "MESSAGE_AND_INFORMATION_HIERARCHY", "VISUAL_SYSTEM", "PRODUCTION_RECIPE",
@@ -484,31 +500,34 @@ class N01SubFloorRunTest(unittest.TestCase):
         self.assertIn(f"{package.PROMPT_MIN_CHARS}-char floor", msg)
         self.assertIn(f"offset {len(CLEAN) + 3}", msg)
 
-    def test_n01_a_short_curly_run_is_an_error_too(self):
-        # the floor applied to both quote styles; it discards neither now
-        with self.assertRaises(package.PromptBelowFloor):
-            self.prompts(f'"{CLEAN}"\n\u201cchat bubbles on screen\u201d\n')
-        self.assertEqual(self.prompts(f'"{CLEAN}"\n\u201c{CLEAN}\u201d\n'), [CLEAN, CLEAN])
+    def test_n01_a_short_curly_run_is_a_curly_error_now(self):
+        # "curly short": flipped PromptBelowFloor→CurlyQuotes ERROR under Ruling 10 (curly quotes
+        # are not delimiters); the curly long twin flipped extract [CLEAN, CLEAN]→ERROR likewise
+        with self.assertRaises(package.CurlyQuotes) as cm:
+            self.prompts(f'"{CLEAN}"\n“chat bubbles on screen”\n')
+        self.assertIn(f"offset {len(CLEAN) + 3}", str(cm.exception))
+        with self.assertRaises(package.CurlyQuotes):
+            self.prompts(f'"{CLEAN}"\n“{CLEAN}”\n')
 
-    def test_n01_a_run_nested_inside_another_is_covered_not_an_error(self):
-        # the fourth checker's A5 (a curly-quoted name inside a straight prompt) and its
-        # mirror: the inner run's bytes are scanned as part of the outer prompt, so the floor
-        # does not apply to it — only to runs that no other run contains. This is the same
-        # fact `_straight_runs` already applies to a straight string nested in a straight
-        # prompt (M-01); it is not a guess about what the inner run "looks like".
-        inner_curly = (f'{CLEAN} the \u201cAster Meridian\u201d on her wrist, chat bubbles and a '
+    def test_n01_a_run_nested_in_the_other_quote_style_is_a_curly_error_now(self):
+        # A5 (a curly-quoted name inside a straight prompt), "straight-in-curly", "long curly
+        # inner in straight" and the sub-floor curly label: each flipped extract-whole or
+        # PromptBelowFloor→CurlyQuotes ERROR under Ruling 10 (curly quotes are not delimiters).
+        # Containment now applies among straight runs only; a straight string nested in a
+        # straight prompt is still covered by the depth rule (M01NestedQuotesTest).
+        inner_curly = (f'{CLEAN} the “Aster Meridian” on her wrist, chat bubbles and a '
                        f'notification counter')
-        self.assertEqual(self.prompts(f'"{inner_curly}"\n'), [inner_curly])
+        with self.assertRaises(package.CurlyQuotes):
+            self.prompts(f'"{inner_curly}"\n')
         inner_straight = (f'{CLEAN} the "Aster Meridian" on her wrist, chat bubbles and a '
                           f'notification counter')
-        self.assertEqual(self.prompts(f'\u201c{inner_straight}\u201d\n'), [inner_straight])
-        # a nested run over the floor is not a second prompt either: it is scanned once, as
-        # part of the prompt that contains it
-        long_inner = f'{CLEAN} she reads \u201c{CLEAN}\u201d on the card, chat bubbles on screen'
-        self.assertEqual(self.prompts(f'"{long_inner}"\n'), [long_inner])
-        # but a sub-floor run that is not contained by any other still errors
-        with self.assertRaises(package.PromptBelowFloor):
-            self.prompts(f'"{inner_curly}"\n\u201cAster\u201d\n')
+        with self.assertRaises(package.CurlyQuotes):
+            self.prompts(f'“{inner_straight}”\n')
+        long_inner = f'{CLEAN} she reads “{CLEAN}” on the card, chat bubbles on screen'
+        with self.assertRaises(package.CurlyQuotes):
+            self.prompts(f'"{long_inner}"\n')
+        with self.assertRaises(package.CurlyQuotes):
+            self.prompts(f'"{inner_curly}"\n“Aster”\n')
 
     def test_n01_pairing_errors_still_come_first(self):
         # a section that both fails to pair and carries a short run reports the pairing error
@@ -523,13 +542,91 @@ class N01SubFloorRunTest(unittest.TestCase):
         self.assertIsNone(package.declared_aspect(pkg))
 
 
+class P01CurlyQuoteTest(unittest.TestCase):
+    """Ruling 10 (P-01): a curly double quote anywhere in GENERATION_PROMPTS is an extraction
+    error naming its offset — CurlyQuotes, "curly quote in GENERATION_PROMPTS — straight quotes
+    delimit prompts; not scanned". Curly runs are no longer prompts; the check runs before the
+    straight pairer so the outcome does not depend on the straight-quote state."""
+
+    def prompts(self, section):
+        return [p.text for p in package.extract_prompts(
+            package.parse_package("GENERATION_PROMPTS\n" + section))]
+
+    def assertCurlyError(self, section, name):
+        with self.assertRaises(package.CurlyQuotes, msg=name) as cm:
+            self.prompts(section)
+        msg = str(cm.exception)
+        self.assertIn(CURLY_ERROR, msg, name)
+        first = min(i for i, ch in enumerate(section) if ch in (LQ, RQ))
+        self.assertIn(f"offset {first}", msg, name)
+        self.assertIsInstance(cm.exception, package.ExtractionError, name)
+        return msg
+
+    def test_p01_the_four_shapes_are_errors(self):
+        # at HEAD 8902fb1 each extracted one clean prompt and PASSed with the dirty text unscanned
+        for name, section in P01_SHAPES:
+            with self.subTest(name):
+                self.assertCurlyError(section, name)
+
+    def test_p01_a_lone_curly_quote_of_either_kind_is_an_error(self):
+        for name, section in (("lone opener", f'"{CLEAN}"\nsee {LQ}below\n'),
+                              ("lone closer", f'"{CLEAN}"\nas above{RQ}\n'),
+                              ("opener only, no straight run", f'{LQ}{CLEAN}\n'),
+                              ("closer only, no straight run", f'{CLEAN}{RQ}\n')):
+            with self.subTest(name):
+                self.assertCurlyError(section, name)
+
+    def test_p01_the_error_names_the_offset_and_the_quote(self):
+        msg = self.assertCurlyError(f'"{CLEAN}"\n{LQ}{DIRTY}\n', "C4")
+        self.assertIn(f"offset {len(CLEAN) + 3}", msg)
+        self.assertIn(LQ, msg)
+        msg = self.assertCurlyError(f'"{CLEAN}"\n{DIRTY}{RQ}\n', "closer")
+        self.assertIn(f"offset {len(CLEAN) + 3 + len(DIRTY)}", msg)
+        self.assertIn(RQ, msg)
+
+    def test_p01_the_curly_check_comes_before_pairing(self):
+        # a section that both carries a curly quote and fails to pair, or carries a sub-floor
+        # straight run, reports the curly error whichever comes first in the text
+        for name, section in (
+                ("curly before an unclosed straight run", f'{LQ}{CLEAN}{RQ}\n"{CLEAN}\n'),
+                ("unclosed straight run before curly", f'"{CLEAN}\n{LQ}{CLEAN}{RQ}\n'),
+                ("orphan straight closer, then curly", f'"{CLEAN}"\nbubbles" {LQ}x{RQ}\n'),
+                ("symbol-initial (M-01), then curly", f'"{CLEAN} {PRICES}"\n{LQ}{CLEAN}{RQ}\n'),
+                ("sub-floor straight run, then curly", f'{K16_SHORT_SECOND_PROMPT}{LQ}{CLEAN}{RQ}\n'),
+                ("curly, then sub-floor straight run", f'{LQ}{CLEAN}{RQ}\n{K16_SHORT_SECOND_PROMPT}')):
+            with self.subTest(name):
+                self.assertCurlyError(section, name)
+
+    def test_p01_a_straight_only_section_is_untouched(self):
+        self.assertEqual(self.prompts(f'"{CLEAN}"\n"{CLEAN} {NESTED}."\n'),
+                         [CLEAN, f"{CLEAN} {NESTED}."])
+        with self.assertRaises(package.UnbalancedQuotes):
+            self.prompts(f'"{CLEAN}"\n"{CLEAN}\n')
+        with self.assertRaises(package.PromptBelowFloor):
+            self.prompts(K16_SHORT_SECOND_PROMPT)
+
+    def test_p01_a_curly_quote_outside_generation_prompts_is_not_an_error(self):
+        pkg = package.parse_package(
+            f'DELIVERABLE\nthe {LQ}Aster{RQ} poster, 4:5\nGENERATION_PROMPTS\n"{CLEAN}"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], [CLEAN])
+
+    def test_p01_declared_aspect_survives_the_curly_error(self):
+        pkg = package.parse_package(
+            f'DELIVERABLE\none 4:5 poster\nGENERATION_PROMPTS\n{P01_SHAPES[0][1]}')
+        self.assertEqual(package.declared_aspect(pkg), "4:5")
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n{P01_SHAPES[0][1]}')
+        self.assertIsNone(package.declared_aspect(pkg))
+
+
 class N01NoSilentDiscardInvariantTest(unittest.TestCase):
-    """Ruling 9 condition 1, as a property over a set of sections: for any GENERATION_PROMPTS
-    section, either `extract_prompts` returns prompts whose texts cover every run
-    `_straight_runs` (and the curly pairing) yields, or extraction raises an ExtractionError
-    (UnbalancedQuotes from pairing, PromptBelowFloor from the floor) that is justified by a
-    run the section actually contains. There is no third outcome: nothing quoted is ever
-    silently discarded."""
+    """Ruling 9 condition 1 as amended by Ruling 10 condition 2, as a property over a set of
+    sections: for any GENERATION_PROMPTS section, if it contains a curly double quote
+    `extract_prompts` raises CurlyQuotes; otherwise either `_straight_runs` cannot pair it and
+    extraction raises UnbalancedQuotes, or an outermost straight run is under the floor and
+    extraction raises PromptBelowFloor naming it, or extraction succeeds and every outermost
+    straight run is a prompt exactly, every nested run inside one. There is no fifth outcome:
+    nothing quoted is ever silently discarded. The straight spans are computed here from
+    `_straight_runs` alone, independently of `_quoted_runs`."""
 
     @classmethod
     def sections(cls):
@@ -566,6 +663,8 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
             ("M-02 doubt, then space-led", f'"{DOUBT_THEN_SPACE_LED}"\n'),
             ("M-01 orphan closer", f'"{CLEAN}"\nchat bubbles on screen" then\n'),
             ("short label in prose", 'say "hello there" and "' + "x" * 119 + '"\n'),
+            # the curly fixtures: each flipped FAIL / extract / PromptBelowFloor→CurlyQuotes
+            # ERROR under Ruling 10 (curly quotes are not delimiters)
             ("curly short", f'"{CLEAN}"\n\u201cchat bubbles on screen\u201d\n'),
             ("A5 curly inner in straight", f'"{CLEAN} the \u201cAster Meridian\u201d on her wrist, '
                                            f'chat bubbles and a notification counter"\n'),
@@ -575,6 +674,9 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
              f'"{CLEAN} she reads \u201c{CLEAN}\u201d on the card, chat bubbles on screen"\n'),
             ("A4 curly outer, inch mark inside",
              f'\u201c{CLEAN} a 6" OLED panel showing chat bubbles and a notification counter\u201d\n'),
+            *P01_SHAPES,
+            ("curly, then unclosed straight run", f'{LQ}{CLEAN}{RQ}\n"{CLEAN}\n'),
+            ("unclosed straight run, then curly", f'"{CLEAN}\n{LQ}{CLEAN}{RQ}\n'),
         ]
         for name, section in synthetic:
             out.append((name, package.parse_package("GENERATION_PROMPTS\n" + section)))
@@ -582,21 +684,29 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
 
     @staticmethod
     def spans(section):
-        """Every quoted run of the section as (start, end, body): straight runs from
-        `_straight_runs` (raises UnbalancedQuotes), curly runs from the same regex
-        `_quoted_runs` uses. `end` is the offset of the closing quote."""
+        """Every straight-quoted run of the section as (start, end, body), from
+        `_straight_runs` alone (raises UnbalancedQuotes); `end` is the offset of the closing
+        quote. Curly quotes are not runs (Ruling 10) and are handled before this is called."""
         runs = list(package._straight_runs(section))
-        runs += [(m.start(), m.group(1))
-                 for m in re.finditer(r"\u201c([^\u201c\u201d]*)\u201d", section, re.S)]
         return sorted((s, s + 1 + len(b), b) for s, b in runs)
 
     def test_every_quoted_run_is_extracted_or_the_section_errors(self):
         cases = self.sections()
-        self.assertGreaterEqual(len(cases), 40)
-        outcomes = {"extracted": 0, "unbalanced": 0, "floor": 0}
+        self.assertGreaterEqual(len(cases), 45)
+        outcomes = {"curly": 0, "unbalanced": 0, "floor": 0, "extracted": 0}
         for name, pkg in cases:
             with self.subTest(name):
                 section = pkg.sections["GENERATION_PROMPTS"]
+                curly = [i for i, ch in enumerate(section) if ch in (LQ, RQ)]
+                if curly:
+                    # exactly one admitted outcome: the curly error, naming the first curly
+                    # quote's offset, whatever the straight quotes around it would do
+                    with self.assertRaises(package.CurlyQuotes) as cm:
+                        package.extract_prompts(pkg)
+                    self.assertIn(CURLY_ERROR, str(cm.exception), name)
+                    self.assertIn(f"offset {curly[0]}", str(cm.exception), name)
+                    outcomes["curly"] += 1
+                    continue
                 try:
                     runs = self.spans(section)
                 except package.UnbalancedQuotes:
@@ -632,7 +742,7 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
                     self.assertTrue(any(body in b for b in holder), (name, s))
                     self.assertNotIn(body.strip(), texts, (name, s, "nested run extracted twice"))
                 outcomes["extracted"] += 1
-        # the set exercises all three admitted outcomes
+        # the set exercises all four admitted outcomes at least once
         self.assertTrue(all(outcomes.values()), outcomes)
 
 

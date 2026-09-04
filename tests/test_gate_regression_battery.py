@@ -16,7 +16,9 @@ checker's M-01/M-02 shapes (a nested straight-quoted string with a text-bearing 
 symbol-initial price strings, a doubt point followed by a symbol-initial or space-led quote),
 and the fifth checker's N-01/N-05 shapes (Ruling 9: a nested string whose opener is followed
 by whitespace, and a stand-alone prompt under the floor — a sub-floor quoted run is an ERROR,
-never a silent drop).
+never a silent drop), and the sixth checker's P-01 shapes (Ruling 10: curly quotes are not
+prompt delimiters — a curly quote anywhere in GENERATION_PROMPTS is an ERROR, so the curly
+fixtures that used to extract and FAIL now ERROR).
 
 Each row is (finding, check, phrase, intended). Checks:
   T-scan      textscan.scan_prompt over the phrase              → HIT | CLEAR
@@ -228,13 +230,26 @@ ROWS = [
     ("N-01 K17 opener + TAB", "LIMIT-TEXT raw", f'"{CLEAN} she holds "\tAster\t" {TAIL}"\n', "ERROR"),
     ("N-05 K16 short 2nd prompt", "LIMIT-TEXT raw",
      f'"{CLEAN}"\n"chat bubbles and a notification counter on screen"\n', "ERROR"),
-    # a run nested inside a prompt of the other quote style is scanned with that prompt
+    # ── P-01 / Ruling 10: a curly quote in GENERATION_PROMPTS is an ERROR; curly runs are not
+    # prompts. The two N-01 cross-style rows below flipped FAIL→ERROR under Ruling 10 (curly
+    # quotes are not delimiters); A4 and "curly short" are pinned here for the first time. ──
     ("N-01 A5 curly inner name", "LIMIT-TEXT raw",
      f'"{CLEAN} the \u201cAster Meridian\u201d on her wrist, chat bubbles and a notification counter"\n',
-     "FAIL"),
+     "ERROR"),
     ("N-01 straight inner in curly", "LIMIT-TEXT raw",
      f'\u201c{CLEAN} the "Aster Meridian" on her wrist, chat bubbles and a notification counter\u201d\n',
-     "FAIL"),
+     "ERROR"),
+    ("P-01 A4 curly outer, inch inside", "LIMIT-TEXT raw",
+     f'\u201c{CLEAN} a 6" OLED panel showing chat bubbles and a notification counter\u201d\n', "ERROR"),
+    ("P-01 curly short", "LIMIT-TEXT raw", f'"{CLEAN}"\n\u201cchat bubbles on screen\u201d\n', "ERROR"),
+    ("P-01 C2 curly-in-curly, inner long", "LIMIT-TEXT raw",
+     f'\u201c{CLEAN} she reads \u201c{CLEAN}\u201d on the card, chat bubbles and a notification '
+     f'counter on screen\u201d\n', "ERROR"),
+    ("P-01 C3 orphan curly closer", "LIMIT-TEXT raw",
+     f'\u201c{CLEAN}\u201d chat bubbles and a notification counter on screen\u201d\n', "ERROR"),
+    ("P-01 C4 curly prompt unclosed", "LIMIT-TEXT raw", f'\u201c{CLEAN}\u201d\n\u201c{DIRTY}\n', "ERROR"),
+    ("P-01 C4b closer typed as opener", "LIMIT-TEXT raw",
+     f'\u201c{CLEAN}\u201d\n\u201c{DIRTY}\u201c\n', "ERROR"),
 ]
 
 
