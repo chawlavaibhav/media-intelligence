@@ -8,6 +8,7 @@ extraction must reproduce the four committed media/prompts/*.txt after whitespac
 normalisation, consistent with media/prompts/EXTRACTION-RECORD.json.
 Run: python3 -m unittest tests.test_gate_package
 """
+import re
 import unittest
 from pathlib import Path
 
@@ -36,6 +37,25 @@ PRICES = 'she holds "₹9" and "₹99" in gold, chat bubbles and a notification 
 PRICES3 = ('she holds "₹9" and "₹99" and "₹999" in gold, chat bubbles and a notification '
            'counter on screen')
 DOUBT_THEN_SPACE_LED = f'{CLEAN} 6" then " chat bubbles and a notification counter past 99'
+# N-01 / N-05 fixtures (Ruling 9): a straight-quoted string nested inside a prompt whose
+# opener is followed by whitespace (space, `.`-closed, then-next-prompt, inside a K-02 outer,
+# newline, NBSP, TAB) — the fifth checker's K11, K11b, K11e, K11f, K12, K12b, K17 — and K16,
+# a stand-alone second prompt under the floor. At HEAD e47cf13 the class-3 reading closes
+# the prompt at the inner opener, the text-bearing remainder pairs into a sub-floor run
+# that `_quoted_runs` drops without trace, and LIMIT-TEXT PASSes.
+TAIL = "in gold, chat bubbles and a notification counter on screen"
+N01_SHAPES = (
+    ("K11 padded inner both", f'"{CLEAN} she holds " Aster " {TAIL}"\n'),
+    ("K11b padded opener, .closer", f'"{CLEAN} she holds " Aster." {TAIL}"\n'),
+    ("K11e padded both, .\" + next prompt", f'"{CLEAN} she holds " Aster " {TAIL}."\n"{CLEAN}"\n'),
+    ("K11f padded both, K-02 outer", f'" {CLEAN} she holds " Aster " {TAIL} "\n'),
+    ("K12 inner opener + newline",
+     f'"{CLEAN} she reads "\nAster Meridian\n" on her wrist, chat bubbles and a notification '
+     f'counter on screen"\n'),
+    ("K12b inner opener + NBSP", f'"{CLEAN} she holds "\u00a0Aster\u00a0" {TAIL}"\n'),
+    ("K17 inner opener + TAB", f'"{CLEAN} she holds "\tAster\t" {TAIL}"\n'),
+)
+K16_SHORT_SECOND_PROMPT = f'"{CLEAN}"\n"chat bubbles and a notification counter on screen"\n'
 
 V1_SECTIONS = ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
                "MESSAGE_AND_INFORMATION_HIERARCHY", "VISUAL_SYSTEM", "PRODUCTION_RECIPE",
@@ -154,9 +174,18 @@ class PromptExtractionTest(unittest.TestCase):
         pkg = package.parse_package("DELIVERABLE\none image\n")
         self.assertEqual(package.extract_prompts(pkg), [])
 
-    def test_short_quotes_are_not_prompts(self):
+    def test_short_quotes_are_an_error_not_ignored(self):
+        # Until Ruling 9 this pin read `assertEqual(extract_prompts(pkg), [])`: runs under
+        # PROMPT_MIN_CHARS were ignored. Ruling 9 (N-01/N-05) makes a sub-floor quoted run
+        # in GENERATION_PROMPTS an extraction error — the floor no longer discards anything.
         pkg = package.parse_package('GENERATION_PROMPTS\nsay "hello there" and "' + "x" * 119 + '"\n')
-        self.assertEqual(package.extract_prompts(pkg), [])
+        with self.assertRaises(package.PromptBelowFloor) as cm:
+            package.extract_prompts(pkg)
+        self.assertIn("quoted run below the prompt floor — not scanned", str(cm.exception))
+        self.assertIn("'hello there'", str(cm.exception))
+        # a run exactly at the floor is a prompt
+        pkg = package.parse_package('GENERATION_PROMPTS\n"' + "x" * 120 + '"\n')
+        self.assertEqual([p.text for p in package.extract_prompts(pkg)], ["x" * 120])
 
 
 class ShotAndDeclarationTest(unittest.TestCase):
@@ -420,6 +449,138 @@ class M01NestedQuotesTest(unittest.TestCase):
         self.assertEqual(package.declared_aspect(pkg), "4:5")
         pkg = package.parse_package(f'GENERATION_PROMPTS\n"{CLEAN} {PRICES}"\n')
         self.assertIsNone(package.declared_aspect(pkg))
+
+
+class N01SubFloorRunTest(unittest.TestCase):
+    """Ruling 9 (N-01, N-05): a quoted run inside GENERATION_PROMPTS that falls under the
+    prompt floor is an extraction error, never a silent drop. The class-3 whitespace reading
+    (a could-open quote followed by whitespace closes the run) stays; its worst case is now
+    PromptBelowFloor, not a PASS over the unscanned remainder."""
+
+    def prompts(self, section):
+        return [p.text for p in package.extract_prompts(
+            package.parse_package("GENERATION_PROMPTS\n" + section))]
+
+    def assertFloorError(self, section, name):
+        with self.assertRaises(package.PromptBelowFloor, msg=name) as cm:
+            self.prompts(section)
+        self.assertIn("quoted run below the prompt floor — not scanned", str(cm.exception), name)
+        self.assertIsInstance(cm.exception, package.ExtractionError)
+
+    def test_n01_the_seven_class_3_shapes_are_errors(self):
+        for name, section in N01_SHAPES:
+            with self.subTest(name):
+                self.assertFloorError(section, name)
+
+    def test_n05_k16_a_short_second_prompt_is_an_error(self):
+        self.assertFloorError(K16_SHORT_SECOND_PROMPT, "K16")
+
+    def test_n01_the_error_names_the_run_and_the_floor(self):
+        with self.assertRaises(package.PromptBelowFloor) as cm:
+            self.prompts(K16_SHORT_SECOND_PROMPT)
+        msg = str(cm.exception)
+        self.assertIn("GENERATION_PROMPTS", msg)
+        self.assertIn("'chat bubbles and a notification counter on screen'", msg)
+        self.assertIn(f"{package.PROMPT_MIN_CHARS}-char floor", msg)
+        self.assertIn(f"offset {len(CLEAN) + 3}", msg)
+
+    def test_n01_a_short_curly_run_is_an_error_too(self):
+        # the floor applied to both quote styles; it discards neither now
+        with self.assertRaises(package.PromptBelowFloor):
+            self.prompts(f'"{CLEAN}"\n\u201cchat bubbles on screen\u201d\n')
+        self.assertEqual(self.prompts(f'"{CLEAN}"\n\u201c{CLEAN}\u201d\n'), [CLEAN, CLEAN])
+
+    def test_n01_pairing_errors_still_come_first(self):
+        # a section that both fails to pair and carries a short run reports the pairing error
+        with self.assertRaises(package.UnbalancedQuotes):
+            self.prompts(f'"{CLEAN} {PRICES}"\n')
+
+    def test_n01_declared_aspect_survives_the_floor_error(self):
+        pkg = package.parse_package(
+            f'DELIVERABLE\none 4:5 poster\nGENERATION_PROMPTS\n{K16_SHORT_SECOND_PROMPT}')
+        self.assertEqual(package.declared_aspect(pkg), "4:5")
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n{K16_SHORT_SECOND_PROMPT}')
+        self.assertIsNone(package.declared_aspect(pkg))
+
+
+class N01NoSilentDiscardInvariantTest(unittest.TestCase):
+    """Ruling 9 condition 1, as a property over a set of sections: for any GENERATION_PROMPTS
+    section, either `extract_prompts` returns prompts whose texts cover every run
+    `_straight_runs` (and the curly pairing) yields, or extraction raises an ExtractionError
+    (UnbalancedQuotes from pairing, PromptBelowFloor from the floor) that is justified by a
+    run the section actually contains. There is no third outcome: nothing quoted is ever
+    silently discarded."""
+
+    @classmethod
+    def sections(cls):
+        out = []
+        for path in (SONNET_B01, SONNET_B06, HAIKU_B01, HAIKU_B06, GEMMA_B02):
+            out.append((path.name, package.parse_package(path.read_text())))
+        synthetic = [
+            *N01_SHAPES,
+            ("K16 short second prompt", K16_SHORT_SECOND_PROMPT),
+            ("K-05 OLED", '"Vertical 9:16, a young man at a desk in a cramped PG office, harsh '
+                          'tube-light. A 6" OLED panel showing chat bubbles and a notification '
+                          'counter."\n'),
+            ("K-05 is 6\".", '"Vertical 9:16, a young man at a desk in a cramped PG office, harsh '
+                             'tube-light. The panel is 6". It shows chat bubbles and a notification '
+                             'counter."\n'),
+            ("F-12 inch mark before", 'Note: the 5" screen is the hero.\n\n"' + "x" * 130 + '"\n'),
+            ("F-12 inch mark between", '"' + "x" * 130 + '"\nthe 5" screen\n"' + "x" * 130 + ' 99"\n'),
+            ("K-02 trailing space", '"' + "A matte plate, no text. " * 8 + '"\n'),
+            ("K-02 leading space", '" ' + CLEAN + '"\n'),
+            ("L-01 EOL closer", f'"{CLEAN}"\n"{DIRTY}"\n'),
+            ("L-01 unclosed run", f'"{CLEAN}"\n"{CLEAN}\n'),
+            *[(f"L-01 tail{tail!r}, last", f'"{CLEAN}"\n"{DIRTY}"{tail}\n') for tail in TAILS],
+            *[(f"L-01 tail{tail!r}, then prompt", f'"{CLEAN}"\n"{DIRTY}"{tail}\n"{CLEAN}"\n')
+              for tail in TAILS],
+            ("L-01 Gemma idiom",
+             'The text "IMAGE" (small) is paired with "₹9" (massive, bold, gold). Below it, '
+             '"VIDEO" (small) is paired with "₹99" (massive, bold, gold). ' + "x" * 200
+             + ' No "sale" badges.\n'),
+            ("M-01 A1", f'"{CLEAN} {NESTED}"\n'),
+            ("M-01 A2", f'"{CLEAN} {NESTED}."\n"{CLEAN}"\n'),
+            ("M-01 A3", f'"{CLEAN} {NESTED}."\n'),
+            ("M-01 symbol-initial", f'"{CLEAN} {PRICES}"\n'),
+            ("M-02 symbol-initial x3", f'"{CLEAN} {PRICES3}"\n'),
+            ("M-02 doubt, then space-led", f'"{DOUBT_THEN_SPACE_LED}"\n'),
+            ("M-01 orphan closer", f'"{CLEAN}"\nchat bubbles on screen" then\n'),
+            ("short label in prose", 'say "hello there" and "' + "x" * 119 + '"\n'),
+            ("curly short", f'"{CLEAN}"\n\u201cchat bubbles on screen\u201d\n'),
+        ]
+        for name, section in synthetic:
+            out.append((name, package.parse_package("GENERATION_PROMPTS\n" + section)))
+        return out
+
+    def test_every_quoted_run_is_extracted_or_the_section_errors(self):
+        cases = self.sections()
+        self.assertGreaterEqual(len(cases), 40)
+        outcomes = {"extracted": 0, "unbalanced": 0, "floor": 0}
+        for name, pkg in cases:
+            with self.subTest(name):
+                section = pkg.sections["GENERATION_PROMPTS"]
+                try:
+                    runs = package._straight_runs(section)
+                except package.UnbalancedQuotes:
+                    with self.assertRaises(package.UnbalancedQuotes):
+                        package.extract_prompts(pkg)
+                    outcomes["unbalanced"] += 1
+                    continue
+                runs += [(m.start(), m.group(1))
+                         for m in re.finditer(r"\u201c([^\u201c\u201d]*)\u201d", section, re.S)]
+                try:
+                    prompts = package.extract_prompts(pkg)
+                except package.PromptBelowFloor:
+                    # the error must rest on a run the section really contains
+                    self.assertTrue(any(len(b) < package.PROMPT_MIN_CHARS for _, b in runs), name)
+                    outcomes["floor"] += 1
+                    continue
+                texts = [p.text for p in prompts]
+                for start, body in runs:
+                    self.assertIn(body.strip(), texts, (name, start))
+                outcomes["extracted"] += 1
+        # the set exercises all three admitted outcomes
+        self.assertTrue(all(outcomes.values()), outcomes)
 
 
 if __name__ == "__main__":

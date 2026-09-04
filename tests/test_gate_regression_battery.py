@@ -13,7 +13,10 @@ fixtures, the EVAL-038 defect phrases ("chat bubbles", "notification counter"), 
 third checker's L-01 shapes (the Gemma B02-R1 `"₹9" (massive …)` idiom read in place, the six
 tails after a digit-ending closer, the end-of-line closer, an unclosed run), and the fourth
 checker's M-01/M-02 shapes (a nested straight-quoted string with a text-bearing tail, the
-symbol-initial price strings, a doubt point followed by a symbol-initial or space-led quote).
+symbol-initial price strings, a doubt point followed by a symbol-initial or space-led quote),
+and the fifth checker's N-01/N-05 shapes (Ruling 9: a nested string whose opener is followed
+by whitespace, and a stand-alone prompt under the floor — a sub-floor quoted run is an ERROR,
+never a silent drop).
 
 Each row is (finding, check, phrase, intended). Checks:
   T-scan      textscan.scan_prompt over the phrase              → HIT | CLEAR
@@ -66,6 +69,8 @@ PRICES = 'she holds "₹9" and "₹99" in gold, chat bubbles and a notification 
 PRICES3 = ('she holds "₹9" and "₹99" and "₹999" in gold, chat bubbles and a notification '
            'counter on screen')
 DOUBT_THEN_SPACE_LED = f'{CLEAN} 6" then " chat bubbles and a notification counter past 99'
+# N-01 / N-05 (Ruling 9): the fifth checker's class-3 shapes and the short second prompt
+TAIL = "in gold, chat bubbles and a notification counter on screen"
 
 # (finding, check, phrase, intended)
 ROWS = [
@@ -208,6 +213,21 @@ ROWS = [
     ("M-02 doubt, then symbol", "LIMIT-TEXT raw", f'"{CLEAN} 6" then "₹9" and chat bubbles past 99"\n',
      "ERROR"),
     ("M-02 doubt, then space-led", "LIMIT-TEXT raw", f'"{DOUBT_THEN_SPACE_LED}"\n', "ERROR"),
+    # ── N-01 / N-05 / Ruling 9: a quoted run under the floor is an ERROR, never a silent drop ──
+    ("N-01 K11 padded inner", "LIMIT-TEXT raw", f'"{CLEAN} she holds " Aster " {TAIL}"\n', "ERROR"),
+    ("N-01 K11b padded, .closer", "LIMIT-TEXT raw", f'"{CLEAN} she holds " Aster." {TAIL}"\n', "ERROR"),
+    ("N-01 K11e padded, then prompt", "LIMIT-TEXT raw",
+     f'"{CLEAN} she holds " Aster " {TAIL}."\n"{CLEAN}"\n', "ERROR"),
+    ("N-01 K11f padded, K-02 outer", "LIMIT-TEXT raw",
+     f'" {CLEAN} she holds " Aster " {TAIL} "\n', "ERROR"),
+    ("N-01 K12 opener + newline", "LIMIT-TEXT raw",
+     f'"{CLEAN} she reads "\nAster Meridian\n" on her wrist, chat bubbles and a notification '
+     f'counter on screen"\n', "ERROR"),
+    ("N-01 K12b opener + NBSP", "LIMIT-TEXT raw",
+     f'"{CLEAN} she holds "\u00a0Aster\u00a0" {TAIL}"\n', "ERROR"),
+    ("N-01 K17 opener + TAB", "LIMIT-TEXT raw", f'"{CLEAN} she holds "\tAster\t" {TAIL}"\n', "ERROR"),
+    ("N-05 K16 short 2nd prompt", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n"chat bubbles and a notification counter on screen"\n', "ERROR"),
 ]
 
 

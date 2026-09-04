@@ -37,6 +37,21 @@ PRICES = 'she holds "₹9" and "₹99" in gold, chat bubbles and a notification 
 PRICES3 = ('she holds "₹9" and "₹99" and "₹999" in gold, chat bubbles and a notification '
            'counter on screen')
 DOUBT_THEN_SPACE_LED = f'{CLEAN} 6" then " chat bubbles and a notification counter past 99'
+# N-01 / N-05 fixtures (Ruling 9): the fifth checker's seven class-3 shapes — a nested
+# straight-quoted string whose opener is followed by whitespace — and K16, a stand-alone
+# second prompt under the floor. At HEAD e47cf13 each PASSed with its tail unscanned.
+TAIL = "in gold, chat bubbles and a notification counter on screen"
+N01_SHAPES = (
+    ("K11", f'"{CLEAN} she holds " Aster " {TAIL}"\n'),
+    ("K11b", f'"{CLEAN} she holds " Aster." {TAIL}"\n'),
+    ("K11e", f'"{CLEAN} she holds " Aster " {TAIL}."\n"{CLEAN}"\n'),
+    ("K11f", f'" {CLEAN} she holds " Aster " {TAIL} "\n'),
+    ("K12", f'"{CLEAN} she reads "\nAster Meridian\n" on her wrist, chat bubbles and a '
+            f'notification counter on screen"\n'),
+    ("K12b", f'"{CLEAN} she holds "\u00a0Aster\u00a0" {TAIL}"\n'),
+    ("K17", f'"{CLEAN} she holds "\tAster\t" {TAIL}"\n'),
+)
+K16_SHORT_SECOND_PROMPT = f'"{CLEAN}"\n"chat bubbles and a notification counter on screen"\n'
 S = findings.Status
 ALL_IDS = [f"PA-D{i}-check" for i in range(1, 11)] + [f"CA-D{i}-check" for i in range(1, 12)]
 NOT_MECH_PRE = ["PA-D2-check", "PA-D3-check", "PA-D5-check", "PA-D6-check", "PA-D7-check",
@@ -688,6 +703,52 @@ class M01NestedQuotesTest(_Base):
             lt = self.limit_text(section)
             self.assertEqual(lt.status, S.ERROR, (section, lt.detail))
             self.assertIn("unbalanced quotes", lt.detail)
+
+
+class N01SubFloorRunTest(_Base):
+    """Ruling 9 (N-01, N-05): a quoted run under the prompt floor inside GENERATION_PROMPTS is
+    a LIMIT-TEXT ERROR naming the reason ("quoted run below the prompt floor — not scanned"),
+    verdict FAIL — never a silent drop that lets the clean head PASS."""
+
+    @staticmethod
+    def synthetic(section):
+        return ("## VISUAL_SYSTEM\nkey light from upper-left; centre zone\n## DELIVERABLE\n"
+                "one 9:16 video\n## GENERATION_PROMPTS\n" + section
+                + "## DOCTRINE_DEVIATIONS\nnone\n")
+
+    def assertFloorError(self, section, name):
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=self.synthetic(section))
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertNotEqual(lt.status, S.PASS, (name, lt.detail))
+        self.assertEqual(lt.status, S.ERROR, (name, lt.detail))
+        self.assertIn("quoted run below the prompt floor — not scanned", lt.detail, name)
+        self.assertIn("fails closed", lt.detail, name)
+        self.assertTrue(lt.blocking)
+        self.assertEqual(r.verdict(), "FAIL", name)
+        self.assertTrue(r.render_text().splitlines()[-1].startswith("GATE FAIL"))
+        self.assertInvariants(r)
+
+    def test_n01_the_seven_class_3_shapes_are_errors(self):
+        for name, section in N01_SHAPES:
+            with self.subTest(name):
+                self.assertFloorError(section, name)
+
+    def test_n05_k16_a_short_second_prompt_is_an_error(self):
+        self.assertFloorError(K16_SHORT_SECOND_PROMPT, "K16")
+
+    def test_n01_a_supplied_prompt_file_still_bypasses_extraction(self):
+        r = self.run_gate(Path("synthetic.txt"), "video", False,
+                          text=self.synthetic(K16_SHORT_SECOND_PROMPT), prompts=[CLEAN])
+        self.assertEqual(self.status(r, "LIMIT-TEXT"), S.PASS)
+
+    def test_check_limit_text_names_the_floor_error(self):
+        row = predispatch.check_limit_text(
+            [], self.reg, extraction_error="quoted run below the prompt floor — not scanned — "
+                                           "the run at offset 146 is 49 chars")
+        self.assertEqual(row.status, S.ERROR)
+        self.assertTrue(row.blocking)
+        self.assertIn("below the prompt floor", row.detail)
+        self.assertIn("offset 146", row.detail)
 
 
 if __name__ == "__main__":

@@ -10,11 +10,21 @@ optionally DOCTRINE_DEVIATIONS (retired in production, CANON-SHAPE-v1 §5). The 
 regex is identical to eval/experiments/EVAL-038/tools/strip_blind.py::SECTION_RE so the gate
 and the blinding tool cut a package at the same lines.
 
-Prompt extraction (plan §B): double-quoted runs >= 120 chars under GENERATION_PROMPTS, and
-`>` blockquote runs with `**` removed — the same rules EVAL-038's EXTRACTION-RECORD.json
-records for the four dispatched prompts. A section whose straight quotes admit no single
-pairing raises UnbalancedQuotes (Ruling 7, L-01): the gate reports the error rather than
-guessing a closer. Shot extraction: table rows `| n |`, `Shot n`
+Prompt extraction (plan §B): double-quoted runs under GENERATION_PROMPTS, and `>` blockquote
+runs with `**` removed — the same rules EVAL-038's EXTRACTION-RECORD.json records for the
+four dispatched prompts. A section whose straight quotes admit no single pairing raises
+UnbalancedQuotes (Ruling 7, L-01): the gate reports the error rather than guessing a closer.
+
+FLOOR SEMANTICS CHANGED — Ruling 9, CONTROLLER-CANON-GATE-001-FIFTH-CHECK-DISPOSITION-
+2026-09-05.md (N-01/N-05). Plan §B.1 / §F read "double-quoted runs >= 120 chars": a quoted
+run under PROMPT_MIN_CHARS was ignored. From this commit a quoted run under the floor inside
+GENERATION_PROMPTS is an extraction error, PromptBelowFloor ("quoted run below the prompt
+floor — not scanned"), never a silent drop: LIMIT-TEXT reports ERROR with the reason and the
+verdict is FAIL. The discard was the concealment mechanism behind six pairing edges (F-12,
+K-02, K-05, L-01, M-01, N-01) — a prompt cut short leaves a remainder that pairs into a
+sub-floor run, and the floor hid it while the clean head PASSed. Every byte inside a quoted
+run is now either scanned or the cause of an ERROR (`_quoted_runs`). The plan text is amended
+by the Controller separately. Shot extraction: table rows `| n |`, `Shot n`
 headings, or numbered items in PRODUCTION_RECIPE / GENERATION_PROMPTS. The plan names the
 union of the two sections; a literal union double-counts a package that carries both a shot
 table and per-block prompt headings (Sonnet B01: 11 + 4), so the shot list is the single
@@ -152,10 +162,22 @@ def scope_text(pkg: Package, feeds_sections) -> Scope:
 CLOSER_TAIL = re.compile(r"[ \t]*[.)\],;:!?]*[ \t]*(?:\n|$)")
 
 
-class UnbalancedQuotes(ValueError):
+class ExtractionError(ValueError):
+    """GENERATION_PROMPTS cannot be turned into a list of prompts the gate would stand behind.
+    Callers report the reason on LIMIT-TEXT as ERROR (verdict FAIL) — never a partial list."""
+
+
+class UnbalancedQuotes(ExtractionError):
     """The straight quotes of a GENERATION_PROMPTS section admit no single pairing (Ruling 7,
     L-01; Ruling 8, M-01): a run never closes, a closer arrives with no run open, or a quote
     could equally open a nested string or close the current run. The gate never guesses."""
+
+
+class PromptBelowFloor(ExtractionError):
+    """A quoted run inside GENERATION_PROMPTS is shorter than PROMPT_MIN_CHARS (Ruling 9,
+    N-01/N-05). It is not silently dropped: either it is the text-bearing remainder of a
+    prompt that a pairing mistake cut short, or a short label or prompt the section quotes —
+    in every case content the gate did not scan, so the section errors."""
 
 
 def _excerpt(text: str, i: int) -> str:
@@ -262,13 +284,37 @@ def _straight_runs(text: str) -> list:
 
 
 def _quoted_runs(text: str) -> list:
-    """(start, body) for every quoted run >= PROMPT_MIN_CHARS. Straight quotes pair by
-    `_straight_runs`; curly quotes pair each “ with the next ”."""
-    runs = [(start, body) for start, body in _straight_runs(text)
-            if len(body) >= PROMPT_MIN_CHARS]
-    for m in re.finditer(r"“([^“”]*)”", text, re.S):
-        if len(m.group(1)) >= PROMPT_MIN_CHARS:
-            runs.append((m.start(), m.group(1)))
+    """(start, body) for every quoted run. Straight quotes pair by `_straight_runs`; curly
+    quotes pair each “ with the next ”. A run under PROMPT_MIN_CHARS raises PromptBelowFloor
+    (Ruling 9, N-01/N-05) — the floor filters nothing any more.
+
+    Why the floor exists, and why it errors instead of filtering. The floor was written so
+    that a short quoted label in the section's prose — `"IMAGE"`, `"₹9"`, `"Get Free Demo."`
+    — is not mistaken for a prompt; under plan §B.1 such runs were ignored. That discard was
+    the concealment mechanism behind N-01: whenever the pairing cut a prompt short (a nested
+    string whose opener is followed by whitespace reads as the run's closer, `_straight_runs`
+    class 3), the text-bearing remainder paired into a sub-floor run, vanished here without
+    trace, and LIMIT-TEXT PASSed over text it never scanned. The same floor dropped K16, a
+    genuine second prompt under 120 chars. Under this rule every sub-floor run inside
+    GENERATION_PROMPTS is an error, a genuine label included: fail closed, no silent discard,
+    on the Controller's instruction. No attempt is made to tell a label from a truncated
+    prompt by position, capitalisation, punctuation or length — that would be a seventh
+    lexical guess in the mechanism that has produced six edges (F-12, K-02, K-05, L-01,
+    M-01, N-01), and a wrong guess reopens the silent path. If the section has quoted
+    content, all of it is scanned or the section errors; a package that wants a short
+    quoted label in this section carries it in another section or unquoted, and a short
+    prompt is supplied via --prompt-file or lengthened. The class-3 reading itself is left
+    as it is: its worst case is now this error, not a PASS."""
+    runs = list(_straight_runs(text))
+    runs += [(m.start(), m.group(1)) for m in re.finditer(r"“([^“”]*)”", text, re.S)]
+    runs.sort(key=lambda r: r[0])
+    short = [(start, body) for start, body in runs if len(body) < PROMPT_MIN_CHARS]
+    if short:
+        start, body = short[0]
+        more = f" (+{len(short) - 1} more under the floor)" if len(short) > 1 else ""
+        raise PromptBelowFloor(
+            f"the run at offset {start} ({' '.join(body.split())!r}) is {len(body)} chars, "
+            f"under the {PROMPT_MIN_CHARS}-char floor{more}")
     return runs
 
 
@@ -293,7 +339,8 @@ def _blockquote_runs(text: str) -> list:
 
 def extract_prompts(pkg: Package) -> list:
     """Prompts in package order; raises UnbalancedQuotes when the section's straight quotes
-    admit no single pairing (Ruling 7) — callers report the error, never a partial list."""
+    admit no single pairing (Ruling 7) and PromptBelowFloor when a quoted run falls under the
+    floor (Ruling 9) — callers report the error, never a partial list."""
     section = pkg.sections.get("GENERATION_PROMPTS")
     if section is None:
         return []
@@ -301,6 +348,9 @@ def extract_prompts(pkg: Package) -> list:
         found = [(s, b, "quoted") for s, b in _quoted_runs(section)]
     except UnbalancedQuotes as exc:
         raise UnbalancedQuotes(f"unbalanced quotes in GENERATION_PROMPTS — {exc}") from None
+    except PromptBelowFloor as exc:
+        raise PromptBelowFloor(
+            f"quoted run below the prompt floor — not scanned — GENERATION_PROMPTS: {exc}") from None
     found += [(s, b, "blockquote") for s, b in _blockquote_runs(section)]
     found.sort(key=lambda t: t[0])
     return [Prompt(index=i + 1, text=b.strip(), origin=o) for i, (_, b, o) in enumerate(found)]
@@ -380,7 +430,7 @@ def declared_aspect(pkg: Package):
             return found
     try:
         prompts = extract_prompts(pkg)
-    except UnbalancedQuotes:
+    except ExtractionError:
         return None   # the prompts are unreadable; LIMIT-TEXT reports the error
     for p in prompts:
         found = find_aspect(p.text)

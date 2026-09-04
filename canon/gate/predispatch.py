@@ -10,8 +10,9 @@ lists all 21 doctrine ids. A partial check tests the quoted literal clause as a 
 condition only and prints that clause. Scan scope = the decision's committed feeds_sections
 (typed subfield first, prose fallback — Ruling 3) plus GENERATION_PROMPTS. Blocking rows
 (Ruling 2): LIMIT-TEXT, DISPATCH-*, CA-D2 clause 2, and any ERROR. A GENERATION_PROMPTS
-section whose quotes cannot be paired (package.UnbalancedQuotes, Ruling 7) is a LIMIT-TEXT
-ERROR naming the reason; no prompt is scanned and nothing else is inferred from the prompts.
+section whose quotes cannot be paired (package.UnbalancedQuotes, Ruling 7) or that carries a
+quoted run under the prompt floor (package.PromptBelowFloor, Ruling 9) is a LIMIT-TEXT ERROR
+naming the reason; no prompt is scanned and nothing else is inferred from the prompts.
 """
 from __future__ import annotations
 
@@ -128,7 +129,8 @@ def _describe_hit(prompt_index: int, hit: textscan.TextHit) -> str:
 
 def check_limit_text(prompts: list, registry, extraction_error: str = None) -> CheckResult:
     """LIMIT-TEXT pre-dispatch (§D T1–T3) over every extracted generation prompt. An
-    extraction error (unbalanced quotes, Ruling 7) is reported as ERROR with its reason."""
+    extraction error (unbalanced quotes, Ruling 7; a quoted run under the floor, Ruling 9)
+    is reported as ERROR with its reason."""
     base = dict(check_id="LIMIT-TEXT", family="limit", gate=GATE, coverage="full",
                 clause="", source_text=registry.limit_text, blocking=True)
     if extraction_error:
@@ -460,7 +462,7 @@ def run_predispatch(package_text: str, prompts, dispatch, modality: str, product
     if prompts is None:
         try:
             prompts = [p.text for p in package.extract_prompts(pkg)]
-        except package.UnbalancedQuotes as exc:
+        except package.ExtractionError as exc:
             prompts, extraction_error = [], str(exc)
     ctx = Ctx(pkg=pkg, prompts=list(prompts), modality=modality, registry=registry)
     results = []
