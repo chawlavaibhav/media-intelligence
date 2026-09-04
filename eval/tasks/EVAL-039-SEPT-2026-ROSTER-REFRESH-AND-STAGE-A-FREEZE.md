@@ -76,6 +76,10 @@ If a route's exact id, version or price cannot be established from a primary ven
 
 **STOP CONDITIONS:** any action that would bill a provider; a route whose billing unit cannot be read verbatim; a reference input whose rights are unclear; any temptation to author Stage C briefs (Eval authors no customer briefs — the pool is CANON-011 / CANON-010 / EVAL-037).
 
-**HUMAN APPROVAL TRIGGERS:** Sarvam key (AUD-01) and Runway account (VID-04) — ask, never create; acceptance of the freeze package; the spend authorisation itself.
+**ADDED SCOPE (Controller, 5 Sep):** the freeze package must also itemise: one 15-second item (routes that support it); one two-speaker Hindi dialogue item on native-audio routes and on the TTS + lip-sync chain; a small music lane (Lyria 3 on Vertex vs ElevenLabs music on fal, 2 briefs × 2); 4K recorded as a Stage B delivery level only. See plan §C.3d.
+
+**PROVIDER SURFACE FACTS TO CARRY (from the 5 Sep survey):** Google routes on Vertex (`vertexaiproject-507518`) against credits; GPT Image 2 and FLUX.2 Pro on Azure only after the Controller deploys them (`gpt-image-2` needs a resource in eastus2 / swedencentral / westus3 / uaenorth / polandcentral); Imagen 4 and Nova are dropped (retired / end of life); Sora 2 preview and MAI-Image-2.6 added as Azure candidates; SD3.5 Large added as a Bedrock candidate (us-west-2 only); every Azure command must pass `--subscription b832f4a1…` and the adapter must refuse otherwise; Sarvam runs direct against Sarvam credits with `SARVAM_API_KEY` from `~/.mi-keys` (Controller holds the key; never printed).
+
+**HUMAN APPROVAL TRIGGERS:** Runway account (VID-04) — ask, never create; Azure deployments of gpt-image-2 / FLUX.2 Pro; Bedrock model access; credit balances on the three clouds; acceptance of the freeze package; the spend authorisation itself.
 
 **RESULT LOCATION:** `eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml`, `eval/empirical-planning/STAGE-A-FREEZE-2026-09/`, `eval/historical-priors/media-factory-v1/`, `eval/tasks/EVAL-039-CONTROLLER-BRIEF.md`, branch `work/eval-039-roster-refresh`.

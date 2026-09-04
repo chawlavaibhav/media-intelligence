@@ -210,6 +210,33 @@ it is read here as "via one of the cheaper routes" — to be confirmed.)
 | TOPO-02 exact text in a still | cheap image route renders text | premium image route renders text | textless base + deterministic composite (USD 0) | when generated text is acceptable at all, and at which price tier |
 | TOPO-03 exact text through motion | cheap still (with text) → cheap i2v | premium t2v renders text natively | textless still → i2v → tracked/static composite | whether the Media Factory "composite-always for video" prior has expired |
 
+### C.3c Cloud survey result (read-only, 5 Sep) and the surface per route
+
+Full record: `eval/empirical-planning/CLOUD-MODEL-AVAILABILITY-2026-09-05.md`. Nothing was enabled or
+spent. What it changes in C.3:
+
+| Finding | Effect on the slate |
+|---|---|
+| Vertex AI (project `vertexaiproject-507518`, reachable with our service account) carries Veo 3.1 full / Fast / Lite, Nano Banana 2 (`gemini-3.1-flash-image`), Nano Banana Pro (`gemini-3-pro-image`), Gemini Omni 1.1 Flash preview, Gemini TTS and Chirp 3 HD Hindi — same list prices as fal or lower, **credit-eligible** | All Google routes move to Vertex against GCP credits |
+| Imagen 4 ids are **retired** on Vertex | Imagen dropped |
+| Azure "sold directly by Azure", credit-eligible: `gpt-image-2` GA (USD 30 per 1M image-output tokens; needs a new resource in eastus2 / swedencentral / westus3 / uaenorth / polandcentral), `FLUX.2-pro` GA (USD 0.03 first megapixel; deployable in our existing regions), `sora-2` preview (USD 0.10/s), MAI-Image-2.6 preview, Neural TTS hi-IN, TTS Avatar | GPT Image 2 and FLUX.2 Pro move to Azure credits **if the Controller deploys them**; Sora 2 and MAI-Image-2.6 added as candidates at no cash cost |
+| Bedrock: Stability SD3.5 and Luma Ray 2 exist only in us-west-2; ap-south-1 has no media models; Nova Canvas / Reel are legacy, end of life 30 Sep, closed to new customers | Nova dropped; SD3.5 Large added as a cheap image candidate on AWS credits; Luma Ray 2 (USD 0.75–1.50/s) recorded, not screened |
+| fal-only: Kling v3, Seedance 2.5, Wan 3.0, MiniMax H3, Runway, Pika, LTX, Recraft V4, Qwen Image 3, every audio-driven lip-sync model | These stay cash on fal |
+| ElevenLabs (GCP Marketplace), Sarvam (Azure Marketplace SaaS), Stability on Azure are partner listings — **excluded from startup credits** by each cloud's rules | ElevenLabs via fal (cash); **Sarvam direct against Sarvam's own credits — the Controller has the key** |
+| Account caution: the `az` CLI default subscription is `d3ee8dc2-…`, not the getaight subscription `b832f4a1-…`; both are named "Azure subscription 1" | Every Azure command in this programme must pass `--subscription b832f4a1…`; the harness refuses an Azure dispatch without it |
+| Unknown: credit balances on all three accounts; Bedrock invoke permissions; gpt-image-2 tokens per image; Sora 2 preview gating | Controller to confirm balances before Tranche 1 is priced |
+
+### C.3d Scope added by the Controller on 5 Sep — longer clips, multiple speakers, music, 4K
+
+| Addition | Round one (Stage A) | Round two (Stage B, survivors only) |
+|---|---|---|
+| Longer videos | one 15-second item on the routes that support it (Kling v3, Seedance 2.5, Veo via extend) — cost scales with length | duration as a COND-DELIVERY level: 15 s, 30 s |
+| Multiple speakers | one two-speaker Hindi dialogue item on native-audio routes (Veo 3.1, Kling v3, Omni Flash 1.1, Seedance 2.5) and on the TTS + lip-sync chain; capability `two_speaker_turn_assignment_and_lip_sync` | more than two turns — re-check of the Media Factory "breaks beyond two turns" prior |
+| Music | small lane: Lyria 3 on Vertex (≈ USD 0.04 per 30 s clip, credits) vs ElevenLabs music on fal; 2 briefs × 2 | music-to-cut fit as a compound item |
+| 4K | **not screened** — round one runs 720p because resolution does not change which route holds identity or follows the brief | 4K as a COND-DELIVERY level on survivors: Veo full / Fast, Omni Flash, Kling native 4K (price to pin); Seedance has no 4K on fal |
+
+Round-one cost effect: roughly + USD 25–30 before credits.
+
 ### C.4 What each stage establishes and what is eliminated when
 
 **Stage A (Tranche 1)** establishes, per route × question: refusal/error/latency (deterministic), format compliance (deterministic), trial cost (deterministic), unseeded repeat variance (deterministic), text exactness (benchmark-grade), edit preservation (deterministic), and **blind human acceptance on the core** (product evidence). Pre-registered elimination rules, frozen before the first call:
