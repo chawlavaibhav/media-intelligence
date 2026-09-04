@@ -158,3 +158,17 @@ committed evidence, or force-push; reversible access steps only (requesting Bedr
 enabling a Vertex API) and each one logged; anything needing the Controller (Ashva Azure sign-in,
 deployments, spend) is written down as a morning decision, never attempted. The Writer Controller
 session reviews between roles in the human's absence; the human ratifies in the morning.
+
+### 7a. Cloud accounts and fresh resources (Controller, 5 Sep, ~01:50 IST)
+
+Controller's words: *"getaight tenant in azure, yes, yes. can you rather create fresh resources in
+all three clouds — where the APIs are kept. it will save polluting existing projects."*
+
+Read as: Azure = the getaight subscription `b832f4a1-…` (not Ashva); AWS account `528730633804` and
+GCP project `vertexaiproject-507518` confirmed as the credit-bearing accounts. Workers may create
+**new, isolated, zero-standing-cost** resources dedicated to this battery — an Azure resource group +
+AI Services resource with pay-as-you-go model deployments; a dedicated AWS IAM identity scoped to
+Bedrock with its own key; a dedicated GCP service account (or a new project if the credentials and
+billing link allow it unambiguously) — and store their keys under `~/.mi-battery-keys/` (mode 600)
+without ever printing a value. Nothing existing is modified or deleted; the Wherehouse subscription
+`d3ee8dc2-…` is never touched. Every creation is logged with the exact command.
