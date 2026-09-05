@@ -82,10 +82,50 @@ class RegistryGateTest(NoNetworkTestCase):
 
 
 class BatteryHarnessTest(NoNetworkTestCase):
-    def test_write_registry_row_is_inherited_not_overridden(self):
-        self.assertIs(BH.BatteryHarness.write_registry_row, H.Harness.write_registry_row)
+    def test_af4_write_registry_row_is_gated_in_front_of_the_frozen_method(self):
+        """Auditor AF-4: the 8-capability gate must hold on EVERY path, so write_registry_row is overridden
+        (gate, then the frozen Harness.write_registry_row) - the task's "inherited" wording is superseded."""
         self.assertTrue(issubclass(BH.BatteryHarness, H.Harness))
-        self.assertNotIn("write_registry_row", BH.BatteryHarness.__dict__)
+        self.assertIn("write_registry_row", BH.BatteryHarness.__dict__)
+        self.assertTrue(BH.BatteryHarness.write_registry_row.__wrapped_frozen__ is H.Harness.write_registry_row)
+
+    def _real_harness(self, cap, instrument):
+        hz = BH.BatteryHarness(self.tmp / "hz")
+        hz.register_instrument(instrument)
+        png = IO.encode_png([b"\x01\x02\x03" * 4] * 4, 4, 4)
+        ms = []
+        for i in range(2):
+            item = {"item_id": f"item{i}", "measurement_fanout": [cap]}
+            prov = hz.generate(item, {"provider": "fal", "model": "m", "version": "v", "endpoint": "e", "workflow": "t2i", "lane": "image",
+                                      "media_kind": "image", "currency": "USD"},
+                               lambda it, cfg: {"api_status": "ok", "payload_bytes": png + bytes([i]), "content_type": "image/png", "cost_generation": 0.05, "synthetic": False})
+            ms.append(hz.measure(prov.asset_id, cap, instrument.id, item, observation_unit="artifact"))
+        self.assertFalse(any(m.synthetic for m in ms))
+        return hz, ms
+
+    def test_af4_probe_g_non_deterministic_capability_cannot_become_a_row_by_any_path(self):
+        from instruments import common as C
+        with self.assertRaises(RG.RegistryGateRefused):
+            C.build_instrument("format_probe", "0", ("visual_quality_vlm",), lambda p, i, c: {"verdict": "pass"})
+        rogue = det_instrument(iid="rogue", caps=("visual_quality_vlm",), fn=lambda p, i, c: {"verdict": "pass"})
+        hz, ms = self._real_harness("visual_quality_vlm", rogue)
+        with self.assertRaises(RG.RegistryGateRefused):
+            hz.write_registry_row("visual_quality_vlm", "rogue", ms, {}, 1, 1)
+        with self.assertRaises(RG.RegistryGateRefused):
+            hz.registry_row_for("visual_quality_vlm", "rogue", ms, {}, 1, 1)
+        self.assertEqual(hz.registry_rows, [])
+
+    def test_af4_eligible_path_still_reaches_the_frozen_writer(self):
+        """A TEMP in-memory harness row, never eval/registry/. Proves the override delegates to the frozen method."""
+        ok = det_instrument(iid="probe", caps=("delivery_format_compliance",), fn=lambda p, i, c: {"verdict": "pass"})
+        hz, ms = self._real_harness("delivery_format_compliance", ok)
+        row = hz.write_registry_row("delivery_format_compliance", "probe", ms, {}, 1, 1)
+        self.assertEqual((row.capability, row.n_items, row.trials, row.passes), ("delivery_format_compliance", 2, 2, 2))
+        self.assertEqual(row.uncertainty["status"], "not_computed")            # the frozen default; registry_row_for attaches the computed block
+        row2 = hz.registry_row_for("delivery_format_compliance", "probe", ms, {}, 1, 1)
+        self.assertEqual(row2.uncertainty["method"], "clopper_pearson_95")
+        with self.assertRaises(H.HarnessError):
+            hz.write_registry_row("delivery_format_compliance", "probe", [], {}, 1, 1)
 
     def test_generate_stores_bytes_and_measure_hands_a_path(self):
         hz = BH.BatteryHarness(self.tmp / "hz")
@@ -114,7 +154,7 @@ class BatteryHarnessTest(NoNetworkTestCase):
     def test_registry_write_through_battery_harness_is_refused_for_ineligible_input(self):
         hz = BH.BatteryHarness(self.tmp / "hz")
         hz.register_instrument(det_instrument(status="provisional"))
-        with self.assertRaises(H.HarnessError):
+        with self.assertRaises((H.HarnessError, RG.RegistryGateRefused)):       # the gate refuses first; the frozen method would too
             hz.write_registry_row("delivery_format_compliance", "probe", [], {}, 1, 1)
         with self.assertRaises(RG.RegistryGateRefused):
             hz.registry_row_for("hierarchy_product_as_hero", "probe", [], {}, 1, 1)

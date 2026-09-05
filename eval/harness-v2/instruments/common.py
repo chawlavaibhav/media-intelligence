@@ -130,6 +130,14 @@ def build_instrument(criterion_id: str, version: str, capabilities, fn, criteria
     """A harness.Instrument whose config (and so config_hash) covers thresholds, frozen flag, colour space,
     the criteria file's sha256 and the local tool versions."""
     c = criterion(criterion_id, criteria_path)
+    from models import REGISTRY_WRITABLE
+    if qualification_status in REGISTRY_WRITABLE:
+        from . import registry_gate as RG
+        allowed = RG.deterministic_capabilities()
+        bad = [cap for cap in capabilities if cap not in allowed]
+        if bad:
+            raise RG.RegistryGateRefused(f"a {qualification_status} instrument may not be built for {bad}: only EVALUATOR-PLAN's "
+                                         f"deterministic capabilities {sorted(allowed)} can be written by a deterministic instrument (AF-4)")
     config = {"instrument": instrument_id or c.registered_as, "criterion_id": c.id, "version": version,
               "criteria_ref": c.ref, "criteria_file_sha256": c.sha256, "frozen": c.frozen, "status": c.status,
               "thresholds": c.thresholds, "metric": c.metric, "colour_space": c.colour_space,

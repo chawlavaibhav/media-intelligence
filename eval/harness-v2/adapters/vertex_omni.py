@@ -66,7 +66,7 @@ class VertexOmniAdapter(B.RouteAdapter):
 
     def _credential(self) -> str:
         if self.token_source is None:
-            raise PreDispatchRefusal("no token source injected for Vertex; nothing was sent")
+            self.token_source = self._default_token_source()        # AF-8: MD-C3 resolver, live runner only
         return self.token_source.token()
 
     def _credential_file_name(self) -> str:
@@ -85,9 +85,12 @@ class VertexOmniAdapter(B.RouteAdapter):
         attempt["completed_at"] = self._now()
         iid = reply.get("id")
         if status != 200:
-            err = reply.get("error") or {}
-            return B.Outcome("error", str(err.get("status") or err.get("code") or f"http_{status}"), str(reply)[:300],
-                             ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_request_id=iid)
+            o = B.http_status_outcome(status, reply, counts, note=str(reply))
+            err = B.error_of(reply)
+            if not o.ambiguous and (err.get("status") or err.get("code")):
+                o.error_class = str(err.get("status") or err.get("code"))
+            o.provider_request_id = iid
+            return o
         if reply.get("status") not in ("completed", None):
             return B.Outcome("error", f"interaction_{reply.get('status')}", str(reply.get("error") or reply.get("status"))[:300],
                              ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_request_id=iid)

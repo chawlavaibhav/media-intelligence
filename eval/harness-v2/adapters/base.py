@@ -110,6 +110,7 @@ class Request:
     body: dict
     followups: list = field(default_factory=list)   # extra API calls inside the SAME trial (extend)
     notes: list = field(default_factory=list)
+    rendered_chars: int | None = None               # AF-9: characters actually in the body's text (character-metered routes)
 
     @property
     def body_bytes(self) -> bytes:
@@ -178,9 +179,14 @@ def seed_policy_for(route_key: str, path: Path | str = hv2_paths.SEED_POLICY) ->
 class RouteAdapter:
     family = "base"
 
+    # AF-10: 180 checks x 5 s = 15 minutes of polling; a completed job is never abandoned before that.
+    DEFAULT_MAX_STATUS_CHECKS = 180
+    DEFAULT_POLL_INTERVAL_S = 5.0
+
     def __init__(self, entry, *, pricing, transport=None, budget=None, store=None, key_loader=None,
-                 token_source=None, sleep=None, clock=None, max_status_checks: int = 60,
-                 poll_interval_s: float = 5.0, seed_policy_path: Path | str = hv2_paths.SEED_POLICY):
+                 token_source=None, sleep=None, clock=None, max_status_checks: int = DEFAULT_MAX_STATUS_CHECKS,
+                 poll_interval_s: float = DEFAULT_POLL_INTERVAL_S, seed_policy_path: Path | str = hv2_paths.SEED_POLICY,
+                 allow_default_token_source: bool = False):
         if entry.adapter != self.family:
             raise ValueError(f"{type(self).__name__} cannot serve route {entry.route_key!r} (adapter {entry.adapter!r})")
         self.entry = entry
@@ -195,8 +201,12 @@ class RouteAdapter:
         self.max_status_checks = max_status_checks
         self.poll_interval_s = poll_interval_s
         self.seed_policy_path = seed_policy_path
-        self.submits = 0            # generation trials - the only count that may reach 1 per dispatch
-        self.status_checks = 0      # lifecycle steps, never trials
+        # AF-8: the gcloud token source is built from resolve_gcp_credential_file() ONLY when the live runner says so;
+        # tests never set this flag, so no test can start a token exchange.
+        self.allow_default_token_source = allow_default_token_source
+        self.submits = 0            # instance totals (diagnostics); the persisted counts are PER DISPATCH (AF-5)
+        self.status_checks = 0
+        self._counts: dict = {}     # the current dispatch's lifecycle counts
 
     # -- to be implemented per family ---------------------------------------------------------
     def build_request(self, case_row: dict, inputs: dict | None = None) -> Request:
@@ -210,6 +220,14 @@ class RouteAdapter:
 
     def _auth_headers(self, credential: str) -> dict:
         raise NotImplementedError
+
+    def _default_token_source(self):
+        """MD-C3 / AF-8: the gcloud token source over the resolved credential file NAME, at dispatch only."""
+        if not self.allow_default_token_source:
+            raise PreDispatchRefusal("no token source injected and the default gcloud token source is not allowed here "
+                                     "(allow_default_token_source is set only by the live runner); nothing was sent")
+        import transports as T
+        return T.GcloudServiceAccountTokenSource(resolve_gcp_credential_file())
 
     # -- shared guards -------------------------------------------------------------------------
     def _now(self) -> str:
@@ -246,7 +264,7 @@ class RouteAdapter:
             build_error = None
         except (PreDispatchRefusal, ValueError) as exc:
             req, build_error = None, f"{type(exc).__name__}: {exc}"
-        pc = self.pricing.evaluate(entry.route_key, case_row)
+        pc = self.pricing.evaluate(entry.route_key, case_row, rendered_chars=(req.rendered_chars if req else None))
         reasons = []
         if build_error:
             reasons.append(build_error)
@@ -293,7 +311,7 @@ class RouteAdapter:
         request = self.build_request(case_row, inputs)         # refuses bad params BEFORE any money moves
         if request.has_pending():
             raise PreDispatchRefusal("request body carries a pending input placeholder; a live dispatch needs concrete inputs; nothing was sent")
-        pc = self.pricing.check(entry.route_key, case_row)     # refuses drift BEFORE anything is reserved
+        pc = self.pricing.check(entry.route_key, case_row, rendered_chars=request.rendered_chars)   # refuses drift BEFORE anything is reserved
         tranche = case_row.get("tranche")
         stage = self.budget.tranche(tranche)
         call_context = dict(call_context or {})
@@ -309,30 +327,47 @@ class RouteAdapter:
         }
         reservation_id = stage.reserve(pc.amount_usd_equiv, **ctx)     # BudgetExceeded raises HERE, nothing sent
 
+        # ---- AF-3: from here on, EVERY outcome persists an attempt and settles the reservation. Only a refusal
+        # raised by our own code before any send (PreDispatchRefusal / a sealed-store clash) may release it.
+        self._counts = {}
+        secrets: list[str] = []
+        attempt = self._base_attempt(case_row, request, pc, ctx, trial_id, None, None, reservation_id)
+        outcome = None
         try:
             req_path, config_hash = self.store.write_request(trial_id, request.body_bytes)
+            attempt["config_hash"], attempt["config_location"] = config_hash, str(req_path)
             credential = self._credential()
+            secrets.append(credential)
+            headers = self._auth_headers(credential)
+            secrets += [v for v in headers.values() if isinstance(v, str)]
+            del credential
+            attempt["credential_file_name"] = self._credential_file_name()
+            attempt["requested_at"] = self._now()
+            # ---- THE DISPATCH BOUNDARY: everything below may have reached the provider ----------
+            outcome = self._lifecycle(request, headers, attempt)
         except (PreDispatchRefusal, S.ArtifactIntegrityError) as exc:
-            stage.release()                                     # PROVEN nothing was sent
-            if isinstance(exc, S.ArtifactIntegrityError):
-                raise PreDispatchRefusal(f"trial {trial_id} already has a sealed request; a repeat is a new trial id, never a re-run: {exc}") from exc
-            raise
-
-        attempt = self._base_attempt(case_row, request, pc, ctx, trial_id, config_hash, req_path, reservation_id)
-        headers = self._auth_headers(credential)
-        del credential
-        attempt["requested_at"] = self._now()
-        # ---- THE DISPATCH BOUNDARY: everything below may have reached the provider ----------
-        outcome = self._lifecycle(request, headers, attempt)
+            if not self._counts.get("submits"):                     # PROVEN nothing was sent
+                stage.release()
+                if isinstance(exc, S.ArtifactIntegrityError):
+                    raise PreDispatchRefusal(f"trial {trial_id} already has a sealed request; a repeat is a new trial id, never a re-run: {exc}") from exc
+                raise
+            outcome = self._harness_exception(exc)
+        except Exception as exc:                                     # noqa: BLE001 - AF-3: never escapes, never releases
+            outcome = self._harness_exception(exc)
         if attempt["completed_at"] is None and outcome.outcome_resolved:
             attempt["completed_at"] = self._now()
         billing_state = "unknown_provisional" if (outcome.ambiguous or not outcome.outcome_resolved) else "reported"
         cost_ref = stage.record(pc.amount_usd_equiv, billing_state=billing_state, **ctx)
         artifact = None
-        if outcome.media:
-            artifact = self.store.seal(trial_id, outcome.media, outcome.content_type, outcome.provider_meta)
-        for suffix, data, ct in outcome.intermediates:
-            self.store.seal(trial_id, data, ct, outcome.provider_meta, suffix=suffix)
+        try:
+            if outcome.media:
+                artifact = self.store.seal(trial_id, outcome.media, outcome.content_type, outcome.provider_meta)
+            for suffix, data, ct in outcome.intermediates:
+                self.store.seal(trial_id, data, ct, outcome.provider_meta, suffix=suffix)
+        except Exception as exc:                                     # noqa: BLE001 - a sealing failure is recorded, never lost
+            outcome.note = f"{outcome.note} | artifact sealing failed: {type(exc).__name__}: {exc}"
+            outcome.error_class = outcome.error_class or "artifact_seal_failed"
+            outcome.status = "error" if outcome.status == "ok" else outcome.status
         attempt.update({
             "status": outcome.status, "error_class": outcome.error_class,
             "raw_status_note": (outcome.note or "")[:300],
@@ -342,12 +377,17 @@ class RouteAdapter:
             "cost_ref": cost_ref, "ambiguous_dispatch": bool(outcome.ambiguous),
             "outcome_resolved": bool(outcome.outcome_resolved),
             "provider_request_id": outcome.provider_request_id,
-            "lifecycle_counts": {**outcome.lifecycle_counts, "submits": self.submits, "status_checks": self.status_checks},
+            "lifecycle_counts": {**outcome.lifecycle_counts, "submits": self._counts.get("submits", 0), "status_checks": self._counts.get("status_checks", 0)},
             "artifact": ({k: artifact[k] for k in ("artifact_id", "relative_path", "bytes", "sha256", "content_type", "media_kind")}
                          if artifact else None),
         })
+        attempt = scrub(attempt, secrets)
         self.store.write_attempt(trial_id, attempt)
         return attempt
+
+    @staticmethod
+    def _harness_exception(exc: BaseException) -> "Outcome":
+        return Outcome("error", "harness_exception", f"{type(exc).__name__}: {exc}", ambiguous=True, outcome_resolved=False)
 
     def _base_attempt(self, case_row, request, pc, ctx, trial_id, config_hash, req_path, reservation_id) -> dict:
         e = self.entry
@@ -360,7 +400,7 @@ class RouteAdapter:
             "route_key": e.route_key, "arm": ctx["arm"], "repeat_index": ctx["repeat_index"],
             "trial_id": trial_id, "attempt_id": trial_id,
             "prompt_hash": sha256_hex(prompt.encode("utf-8")) if prompt else None,
-            "config_hash": config_hash, "config_location": str(req_path),
+            "config_hash": config_hash, "config_location": (str(req_path) if req_path else None),
             "headers_template": request.headers, "api_calls_per_trial": e.api_calls_per_trial,
             "seed": None, "seed_policy": pol["seed_policy"],
             "billing_pool": e.billing_pool, "currency": pc.currency,
@@ -383,6 +423,7 @@ class RouteAdapter:
     def _submit(self, url: str, headers: dict, payload: bytes, attempt: dict, counts: dict):
         """Exactly one submit per call. Returns (status, reply) or an ambiguous Outcome."""
         self.submits += 1
+        self._counts["submits"] = self._counts.get("submits", 0) + 1
         counts["api_calls"] = counts.get("api_calls", 0) + 1
         try:
             return self.transport.post_json(url, headers, payload)
@@ -398,6 +439,7 @@ class RouteAdapter:
             if counts.get("status_checks") and self.sleep:
                 self.sleep(self.poll_interval_s)
             self.status_checks += 1
+            self._counts["status_checks"] = self._counts.get("status_checks", 0) + 1
             counts["status_checks"] = counts.get("status_checks", 0) + 1
             try:
                 done, reply = check()
@@ -427,6 +469,40 @@ class RouteAdapter:
             return Outcome("error", "artifact_download_failed", f"artifact URL answered {code} with {'no' if not data else 'non-byte'} content",
                            ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_meta={"artifact_url": url})
         return bytes(data), ct
+
+
+def http_status_outcome(status: int, reply, counts: dict, refusal: bool = False, note: str = "") -> Outcome:
+    """AF-6: a non-200 reply after the submit. 429, 5xx and a 2xx other than 200 mean the request was RECEIVED and
+    may still complete and bill -> ambiguous / unresolved. A 4xx validation answer is a resolved provider error."""
+    ambiguous = status == 429 or status >= 500 or (200 < status < 300)
+    if refusal:
+        return Outcome("refusal", "moderation_block", note[:300], ambiguous=False, outcome_resolved=True, lifecycle_counts=counts)
+    return Outcome("error", f"http_{status}", note[:300], ambiguous=ambiguous, outcome_resolved=not ambiguous, lifecycle_counts=counts)
+
+
+def error_of(reply) -> dict:
+    """A provider `error` field may be a dict, a string or missing; never assume a dict (AF-3 probe A)."""
+    err = reply.get("error") if isinstance(reply, dict) else None
+    if isinstance(err, dict):
+        return err
+    return {"message": str(err)} if err else {}
+
+
+def scrub(obj, secrets: list):
+    """Replace every credential value (>= 8 chars) with <REDACTED> in every string of a record. Never logs the value."""
+    keys = [k for k in secrets if isinstance(k, str) and len(k) >= 8]
+    if not keys:
+        return obj
+    if isinstance(obj, str):
+        for k in keys:
+            if k in obj:
+                obj = obj.replace(k, "<REDACTED>")
+        return obj
+    if isinstance(obj, dict):
+        return {k: scrub(v, secrets) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [scrub(v, secrets) for v in obj]
+    return obj
 
 
 def make_trial_id(case_row: dict) -> str:

@@ -11,12 +11,17 @@ WHAT IS OVERRIDDEN, AND WHY
                  it the PATH. Every other check (unknown asset / instrument / capability fan-out / failed
                  attempt) is repeated verbatim, and the Measurement is built the same way.
 
+    write_registry_row   OVERRIDDEN after Auditor AF-4 (the task's "inherited, never overridden" wording is
+                         superseded): the override runs the registry gate - only the 8 deterministic capabilities,
+                         only a deterministic / qualified instrument specified for that capability, never a synthetic
+                         measurement - and then calls the FROZEN Harness.write_registry_row unchanged, so no path
+                         (direct call or registry_row_for) can write a row for any other capability.
+                         `write_registry_row.__wrapped_frozen__` names the frozen method it delegates to.
+
 WHAT IS INHERITED, DELIBERATELY
 
-    write_registry_row   NOT overridden. `BatteryHarness.write_registry_row is Harness.write_registry_row`
-                         is a test. registry_row_for() only adds the registry gate IN FRONT of it and the
-                         SCHEMA-v1 uncertainty block AFTER it.
-    everything else      derive_frames, trial ids, operational metrics, storage handoff, dump.
+    everything else      derive_frames, trial ids, operational metrics, storage handoff, dump, and the whole
+                         body of the frozen write_registry_row (homogeneity, balance, no-synthetic rules).
 
 This task writes no Registry row anywhere; the class exists so Stage A can, once a Controller freezes
 a criterion (MD-C1) and ratifies the instrument's use.
@@ -117,14 +122,21 @@ class BatteryHarness(H.Harness):
         return m
 
     # ---------------------------------------------------------------- registry
-    def registry_row_for(self, capability: str, instrument_id: str, measurements, conditions: dict,
-                         difficulty_level: int, repeats_per_item: int):
-        """Registry gate in front, the INHERITED write_registry_row in the middle, uncertainty after."""
+    def write_registry_row(self, capability: str, instrument_id: str, measurements, conditions: dict,
+                           difficulty_level: int, repeats_per_item: int):
+        """AF-4: the registry gate on EVERY path, then the frozen Harness.write_registry_row unchanged."""
         instr = self.instruments.get(instrument_id)
         if instr is None:
             raise RG.RegistryGateRefused(f"unknown instrument {instrument_id}")
         RG.assert_registry_eligible(capability, instr)
         RG.assert_measurements_real(measurements)
+        return H.Harness.write_registry_row(self, capability, instrument_id, measurements, conditions, difficulty_level, repeats_per_item)
+
+    write_registry_row.__wrapped_frozen__ = H.Harness.write_registry_row
+
+    def registry_row_for(self, capability: str, instrument_id: str, measurements, conditions: dict,
+                         difficulty_level: int, repeats_per_item: int):
+        """The gated write plus the SCHEMA-v1 uncertainty block."""
         row = self.write_registry_row(capability, instrument_id, measurements, conditions, difficulty_level, repeats_per_item)
         RG.attach_uncertainty(row)
         return row

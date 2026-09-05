@@ -22,7 +22,7 @@ them read-only (`hv2_paths.py`) and subclasses what it needs. The protected base
 | `hv2_paths.py` | read-only import paths to the frozen packages (harness-v2 first, so its `adapters/` package shadows the frozen `adapters.py`) |
 | `surfaces.py` | `SurfaceRegistry`: the 47 route keys → adapter, surface, model id, endpoint, pinned schema, price pin, pool, credential **name**, `shape_status` |
 | `pricing.py` | roster + COST-TABLE reader; execution-time price check (re-reads the roster every time; refuses drift, promos, unpinned or non-projectable prices, unknown quantity rules) |
-| `ledger.py` | `BatteryRun / BatteryBudget / PoolStageBudget` = subclasses of EMP-001's ledger; EVAL-040 caps from `authorization.local.yaml` (gitignored, absent tonight); INR rows carry a USD-equivalent the cap is checked over |
+| `ledger.py` | `BatteryRun / BatteryBudget / PoolStageBudget` = subclasses of EMP-001's ledger; EVERY ceiling / cap / INR sub-cap comes from `authorization.local.yaml` (the signed record's `machine_authorisation` block; gitignored, absent tonight) - no constant in code; the roster sha256 named there must equal the roster on disk; every open re-validates the file |
 | `store.py` | sealed artifact store: `media/<trial>.<ext>` + `.request.json` (written **before** dispatch) + `.record.json` + `.attempt.json` + append-only manifest; never overwrites |
 | `transports.py` | the **only** module that may open a socket (urllib) or run a network-capable subprocess (`gcloud` token, at dispatch only); plus the fakes the tests use |
 | `casebook.py` | TEST-CASES rows × repeats with each case's blueprint prompt; route catalogue read from COST-TABLE (working tree or a git revision) |
@@ -59,14 +59,15 @@ python3 eval/harness-v2/q1/check_record.py eval/v1/instruments/qualification-rec
   under SEED-POLICY `held` (today: never);
 * one `dispatch()` = one submit; polls, result reads and downloads are lifecycle steps of that trial; the poll loop
   is bounded and can never resubmit; 0 retries;
-* the reservation is written **before** the first byte leaves; a pre-dispatch failure releases it; anything after
-  the send settles conservatively (`AmbiguousDispatch` semantics from EMP-001);
+* the reservation is written **before** the first byte leaves; only a refusal raised by our own code before any send
+  releases it; ANY other exception after the reservation persists an attempt and settles it as ambiguous, with
+  credential values scrubbed from the record (Auditor AF-3);
 * the dry-run body bytes are the bytes the (fake) transport receives — same builder, no second rendering;
 * no adapter, unverified shape, conditional row, unpinned price or unsatisfied precondition ever dispatches;
 * every instrument fails closed (`parse_failure`), reports a missing tool (`instrument_unavailable`), and returns
   `absent / criterion_not_frozen` until its threshold is frozen;
 * only the eight deterministic capabilities, through a `deterministic` or `qualified` instrument, over
-  non-synthetic measurements, can reach the inherited `write_registry_row`. This task writes no row.
+  non-synthetic measurements, can reach the frozen `write_registry_row` (the gate sits in front of it on every path). This task writes no row.
 
 ## What is NOT true yet
 

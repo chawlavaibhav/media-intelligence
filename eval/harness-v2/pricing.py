@@ -178,8 +178,9 @@ def _ceil_to(n: Decimal, step: int) -> Decimal:
     return Decimal(int(math.ceil(n / Decimal(step)))) * Decimal(step)
 
 
-def quantity_for(route_key: str, unit: str | None, case_row: dict) -> tuple[Decimal, str, str] | None:
-    """(quantity, quantity_unit, rule_id) for one call, or None when no rule is known."""
+def quantity_for(route_key: str, unit: str | None, case_row: dict, rendered_chars: int | None = None) -> tuple[Decimal, str, str] | None:
+    """(quantity, quantity_unit, rule_id) for one call, or None when no rule is known.
+    AF-9: for character-metered routes the quantity is the characters actually rendered into the body when known."""
     params = case_row.get("params") or {}
     row_qty = _dec(case_row.get("quantity"))
     row_unit = case_row.get("quantity_unit")
@@ -207,7 +208,7 @@ def quantity_for(route_key: str, unit: str | None, case_row: dict) -> tuple[Deci
     if route_key == "veo-3.1-fast-extend":
         return Decimal(15), "seconds", "veo_extend_15s"
     if unit in ("per_1000_characters", "per_1M_characters"):
-        chars = _dec(params.get("chars"))
+        chars = Decimal(int(rendered_chars)) if rendered_chars is not None else _dec(params.get("chars"))
         if chars is None:
             return None
         return chars, "chars", unit
@@ -265,8 +266,18 @@ class Pricing:
 
     def __init__(self, roster_path: Path | str = hv2_paths.ROSTER,
                  registry=None, expected_roster_sha256: str | None = None,
-                 catalogue: dict | None = None, cost_table_path: Path | str | None = hv2_paths.COST_TABLE):
+                 catalogue: dict | None = None, cost_table_path: Path | str | None = hv2_paths.COST_TABLE,
+                 bind_roster_sha: bool = True):
         self.roster = Roster(roster_path)
+        # AF-1: the roster sha binding is MANDATORY. The expected value is the one COST-TABLE priced against (the
+        # same value the signed spend record names); a roster whose bytes differ refuses every check.
+        if not bind_roster_sha:
+            raise ValueError("bind_roster_sha=False is not offered: every price check is bound to the priced-against roster sha256")
+        if expected_roster_sha256 is None:
+            ct = CostTable(cost_table_path) if cost_table_path and Path(cost_table_path).exists() else None
+            expected_roster_sha256 = (ct.priced_against_roster or {}).get("sha256") if ct else None
+        if not expected_roster_sha256:
+            raise ValueError("no expected roster sha256: pass expected_roster_sha256 or a COST-TABLE with priced_against_roster.sha256")
         self.expected_roster_sha256 = expected_roster_sha256
         if registry is None:
             import surfaces
@@ -280,7 +291,7 @@ class Pricing:
         self.catalogue = catalogue or {}
 
     # -- the check ------------------------------------------------------------------------
-    def evaluate(self, route_key: str, case_row: dict) -> PriceCheck:
+    def evaluate(self, route_key: str, case_row: dict, rendered_chars: int | None = None) -> PriceCheck:
         """Compute the roster-implied cost of one call and list the reason it would be refused."""
         self.roster.reload()                                   # re-read the file, every time
         entry = self.registry.get(route_key)
@@ -295,7 +306,7 @@ class Pricing:
         # price_status is about the PRICE only; route_status is tracked separately so a conditional route
         # with a pinned rate card (sora-2, sd3.5-large) still prices its conditional line while refusing dispatch
         price_status = "pinned" if unit_price is not None else "unpinned"
-        q = quantity_for(route_key, unit, case_row)
+        q = quantity_for(route_key, unit, case_row, rendered_chars)
         reasons: list[str] = []
 
         if self.expected_roster_sha256 and self.roster.sha256 != self.expected_roster_sha256:
@@ -356,9 +367,9 @@ class Pricing:
             fx_rate=fx, pin_ref=rec.get("pin_ref"),
             ok=not reasons, refusal_reason=("; ".join(reasons) if reasons else None))
 
-    def check(self, route_key: str, case_row: dict) -> PriceCheck:
+    def check(self, route_key: str, case_row: dict, rendered_chars: int | None = None) -> PriceCheck:
         """The dispatch-time gate: refuse (nothing reserved, nothing sent) unless everything pins."""
-        pc = self.evaluate(route_key, case_row)
+        pc = self.evaluate(route_key, case_row, rendered_chars)
         if not pc.ok:
             raise PreDispatchRefusal(
                 f"price check refused {route_key} for {case_row.get('case_id')}: {pc.refusal_reason}. "

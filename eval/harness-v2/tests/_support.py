@@ -78,14 +78,25 @@ class NoNetworkTestCase(unittest.TestCase):
         with self.key_file.open("a") as fh:
             fh.write(f"export {name}={value}\n")
 
-    def make_ledger(self, ceiling="175.00", caps=("60.00", "115.00"), run_id="run-test"):
+    def write_auth(self, ceiling="200.00", caps=("85.00", "115.00"), inr_cap="5.00", name="auth.yaml", **overrides):
+        """A TEST-ONLY authorisation file in the signed record's machine_authorisation shape."""
+        import hashlib
+        fields = {
+            "tranche_id": "EVAL-040-TRANCHE-1", "authorised": True, "item_basis_commit": "0596aa2",
+            "price_basis_roster_sha256": hashlib.sha256(Path(hv2_paths.ROSTER).read_bytes()).hexdigest(),
+            "max_consumed_usd_equivalent": ceiling, "cap_1a_usd": caps[0], "cap_1b_usd": caps[1], "sarvam_cap_inr": inr_cap,
+            "retries_authorised": 0, "execution_time_route_price_verification": "required_before_every_paid_call",
+            "images_before_video": True, "approved_by": "test-fixture", "approved_at": "2026-09-05T00:00:00Z",
+        }
+        fields.update(overrides)
+        import yaml
+        auth_path = self.tmp / name
+        auth_path.write_text(yaml.safe_dump({"machine_authorisation": fields}, sort_keys=False))
+        return auth_path
+
+    def make_ledger(self, ceiling="200.00", caps=("85.00", "115.00"), run_id="run-test", inr_cap="5.00"):
         import ledger as L
-        auth_path = self.tmp / "auth.yaml"
-        auth_path.write_text(
-            "authorised: true\ntranche_id: EVAL-040\n"
-            f"max_consumed_api_spend_usd: {ceiling}\n"
-            f"tranche_caps_usd: {{1a: {caps[0]}, 1b: {caps[1]}}}\n"
-            "retries_authorised: 0\napproved_by: test-fixture\napproved_at: '2026-09-05'\n")
+        auth_path = self.write_auth(ceiling, caps, inr_cap)
         auth = L.load_battery_authorisation(auth_path)
         run = L.BatteryRun.create(self.tmp / "runs", run_id, auth, mode="fake_live")
         return L.BatteryBudget(run)

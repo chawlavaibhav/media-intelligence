@@ -115,6 +115,25 @@ class PricingTest(NoNetworkTestCase):
         pc = p.evaluate("gpt-image-2", ROW_GPT)
         self.assertIn("roster_sha256_drift", pc.refusal_reason)
 
+    def test_af1_roster_sha_is_bound_by_default_to_the_cost_table_basis(self):
+        """AF-1: the sha check is mandatory - the default expectation is COST-TABLE.priced_against_roster.sha256."""
+        self.assertEqual(self.p.expected_roster_sha256, pricing.CostTable().priced_against_roster["sha256"])
+        roster_copy = self.tmp / "roster.yaml"
+        data = yaml.safe_load(Path(hv2_paths.ROSTER).read_text())
+        data["meta"]["route_count"] = 999
+        roster_copy.write_text(yaml.safe_dump(data, allow_unicode=True, sort_keys=False))
+        pc = pricing.Pricing(roster_copy).evaluate("gpt-image-2", ROW_GPT)
+        self.assertIn("roster_sha256_drift", pc.refusal_reason)
+        with self.assertRaises(ValueError):
+            pricing.Pricing(expected_roster_sha256=None, bind_roster_sha=False, catalogue={})   # opting out is not offered
+
+    def test_af9_character_quantity_comes_from_the_rendered_text(self):
+        pc = self.p.check("sarvam-bulbul-v3", ROW_SARVAM, rendered_chars=21)
+        self.assertEqual(pc.quantity, Decimal(21))
+        with self.assertRaises(PreDispatchRefusal) as cm:
+            self.p.check("sarvam-bulbul-v3", ROW_SARVAM, rendered_chars=25)
+        self.assertIn("quantity_rule_mismatch", str(cm.exception))
+
 
 if __name__ == "__main__":
     unittest.main()

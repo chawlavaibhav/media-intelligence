@@ -59,7 +59,7 @@ class SarvamTTSAdapter(B.RouteAdapter):
         body = {"text": text, "language_code": lang, "speaker": speaker, "model": "bulbul:v3"}
         self._guard_body(body, BODY_FIELDS, e.route_key)
         headers = {"api-subscription-key": "<KEY:SARVAM_API_KEY>", "Content-Type": "application/json"}
-        return B.Request("POST", e.endpoint, headers, body, notes=notes)
+        return B.Request("POST", e.endpoint, headers, body, notes=notes, rendered_chars=len(text))
 
     def _credential(self) -> str:
         return self.key_loader.read("SARVAM_API_KEY")
@@ -77,8 +77,9 @@ class SarvamTTSAdapter(B.RouteAdapter):
         attempt["completed_at"] = self._now()
         rid = reply.get("request_id")
         if status != 200:
-            return B.Outcome("error", f"http_{status}", str(reply)[:300], ambiguous=False, outcome_resolved=True,
-                             lifecycle_counts=counts, provider_request_id=rid)
+            o = B.http_status_outcome(status, reply, counts, note=str(reply))
+            o.provider_request_id = rid
+            return o
         audios = reply.get("audios") or []
         if not audios or not audios[0]:
             return B.Outcome("error", "no_artifact_returned", "200 response carried no audio", ambiguous=False,

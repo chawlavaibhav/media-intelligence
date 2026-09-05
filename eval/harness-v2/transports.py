@@ -25,49 +25,55 @@ import os
 import shutil
 import subprocess
 import tempfile
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 import hv2_paths  # noqa: F401
 from providers import PreDispatchRefusal  # noqa: E402
 
 
+class NoRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """AF-7: a 3xx is returned as the provider's ANSWER; the request (and its Authorization header) is never
+    replayed to the redirect target, so a credential can never be forwarded across hosts."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def build_opener():
+    return urllib.request.build_opener(NoRedirectHandler)
+
+
 class _UrllibTransport:
-    """Three verbs. An HTTP error status is a provider ANSWER and is returned, not raised."""
+    """Three verbs. An HTTP error status (a 3xx included) is a provider ANSWER and is returned, not raised."""
 
     name = "urllib"
 
     def __init__(self, timeout_s: float = 120.0):
         self.timeout_s = timeout_s
         self.calls = 0
+        self.opener = build_opener()
 
     def _open(self, req):
-        import urllib.error
-        import urllib.request
-
         self.calls += 1
         try:
-            with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
+            with self.opener.open(req, timeout=self.timeout_s) as resp:
                 return resp.status, resp.read(), resp.headers.get("Content-Type")
         except urllib.error.HTTPError as exc:
             return exc.code, exc.read(), exc.headers.get("Content-Type")
 
     def post_json(self, url: str, headers: dict, payload: bytes) -> tuple[int, dict]:
-        import urllib.request
-
         status, body, _ = self._open(urllib.request.Request(
             url, data=payload, method="POST",
             headers={"Content-Type": "application/json", **headers}))
         return status, _parse_json(body)
 
     def get_json(self, url: str, headers: dict) -> tuple[int, dict]:
-        import urllib.request
-
         status, body, _ = self._open(urllib.request.Request(url, headers=headers, method="GET"))
         return status, _parse_json(body)
 
     def get_bytes(self, url: str, headers: dict) -> tuple[int, bytes, str | None]:
-        import urllib.request
-
         return self._open(urllib.request.Request(url, headers=headers, method="GET"))
 
 
@@ -133,6 +139,8 @@ class GcloudServiceAccountTokenSource:
             return r.stdout.strip()
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
+            if os.path.exists(tmp):                                   # AF-13: a leftover throw-away config is named, never silent
+                raise RuntimeError(f"throw-away gcloud config directory {tmp} could not be removed; delete it by hand")
 
 
 # ------------------------------------------------------------------------------- fakes

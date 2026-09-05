@@ -105,7 +105,7 @@ class VertexVeoAdapter(B.RouteAdapter):
     # -- credential ---------------------------------------------------------------------------
     def _credential(self) -> str:
         if self.token_source is None:
-            raise PreDispatchRefusal("no token source injected for Vertex; nothing was sent")
+            self.token_source = self._default_token_source()        # AF-8: MD-C3 resolver, live runner only
         return self.token_source.token()
 
     def _credential_file_name(self) -> str:
@@ -123,9 +123,11 @@ class VertexVeoAdapter(B.RouteAdapter):
         status, reply = r
         reply = reply if isinstance(reply, dict) else {}
         if status != 200:
-            err = reply.get("error") or {}
-            return B.Outcome("error", str(err.get("status") or err.get("code") or f"http_{status}"), str(reply)[:300],
-                             ambiguous=False, outcome_resolved=True, lifecycle_counts=counts)
+            o = B.http_status_outcome(status, reply, counts, note=str(reply))
+            err = B.error_of(reply)
+            if not o.ambiguous and (err.get("status") or err.get("code")):
+                o.error_class = str(err.get("status") or err.get("code"))
+            return o
         name = reply.get("name")
         if not name:
             return B.Outcome("error", "malformed_response", "predictLongRunning returned 200 with no operation name",
@@ -148,7 +150,7 @@ class VertexVeoAdapter(B.RouteAdapter):
         if isinstance(op, B.Outcome):
             return op
         if op.get("error"):
-            err = op["error"]
+            err = B.error_of(op)
             return B.Outcome("error", str(err.get("status") or err.get("code") or "operation_error"), str(err)[:300],
                              ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_request_id=name)
         resp = op.get("response") or {}

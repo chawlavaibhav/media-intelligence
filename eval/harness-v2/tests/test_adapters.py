@@ -194,7 +194,7 @@ class FailureModesTest(AdapterBase):
         self.assertEqual(a["error_class"], "moderation_block")
 
     def test_f_poll_exhaustion_never_resubmits(self):
-        t = T.FakeTransport(posts=[(200, {"request_id": "r", "status_url": "s", "response_url": "p"})], gets=[(200, {"status": "IN_PROGRESS"})])
+        t = T.FakeTransport(posts=[(200, {"request_id": "r", "status_url": "https://queue.fal.run/x/requests/r/status", "response_url": "https://queue.fal.run/x/requests/r"})], gets=[(200, {"status": "IN_PROGRESS"})])
         sleeps = []
         ad, a = self._run(t, sleep=sleeps.append, max_status_checks=4)
         self._assert_one_trial(ad, a, t, "timeout", "unknown_provisional")
@@ -204,7 +204,7 @@ class FailureModesTest(AdapterBase):
         self.assertEqual(sum(1 for c in t.calls if c["kind"] == "post"), 1)
 
     def test_f_poll_failure_after_submit_is_ambiguous(self):
-        t = T.FakeTransport(posts=[(200, {"request_id": "r", "status_url": "s", "response_url": "p"})], gets=[ConnectionResetError(54, "reset")])
+        t = T.FakeTransport(posts=[(200, {"request_id": "r", "status_url": "https://queue.fal.run/x/requests/r/status", "response_url": "https://queue.fal.run/x/requests/r"})], gets=[ConnectionResetError(54, "reset")])
         ad, a = self._run(t)
         self._assert_one_trial(ad, a, t, "error", "unknown_provisional")
         self.assertTrue(a["error_class"].startswith("poll_"))
@@ -425,3 +425,142 @@ class StoreThroughAdapterTest(AdapterBase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ============================================================ Auditor corrections (AF-3, AF-5..AF-10)
+class AuditorFixesTest(AdapterBase):
+    def test_af3_non_dict_provider_error_is_handled_and_persisted(self):
+        op = VEO_OP
+        t = T.FakeTransport(posts=[(200, {"name": op}), (200, {"name": op, "done": True, "error": "a bare string"})])
+        ad = self.make("veo-3.1-fast", t)
+        a = ad.dispatch(self.row("VID-T2V-01", "veo-3.1-fast"))
+        self.assertEqual(a["status"], "error")
+        self.assertTrue(self.store.attempt_path(a["trial_id"]).exists())
+        self.assertEqual([r["type"] for r in self.budget.records()], ["reservation", "spend"])
+
+    def test_af3_any_exception_in_the_lifecycle_persists_and_settles_ambiguous(self):
+        os.environ["FAL_KEY"] = "fake"
+        t = fal_ok()
+        t.post_json = lambda url, headers, payload: "not a (status, reply) tuple"      # the transport misbehaves after the send
+        ad = self.make("gpt-image-2", t)
+        a = ad.dispatch(self.row("IMG-CORE-01", "gpt-image-2"))
+        self.assertEqual((a["status"], a["error_class"]), ("error", "harness_exception"))
+        self.assertIn("ValueError", a["raw_status_note"])
+        self.assertTrue(a["ambiguous_dispatch"]); self.assertFalse(a["outcome_resolved"])
+        self.assertEqual(a["billing_state"], "unknown_provisional")
+        self.assertEqual([r["type"] for r in self.budget.records()], ["reservation", "spend"], "settled conservatively, never released")
+        self.assertTrue(self.store.attempt_path(a["trial_id"]).exists())
+
+    def test_af3_credential_failure_after_reservation_settles_ambiguous_and_scrubs(self):
+        class Exploding:
+            credential_file_name = "FAKE-sa.json"
+
+            def token(self):
+                raise RuntimeError("gcloud exploded: stdout was TOKEN-CANARY-8f3a1c")
+        ad = self.make("veo-3.1-fast", veo_ok(), token_source=Exploding())
+        a = ad.dispatch(self.row("VID-T2V-01", "veo-3.1-fast"))
+        self.assertEqual((a["status"], a["error_class"]), ("error", "harness_exception"))
+        self.assertIn("RuntimeError", a["raw_status_note"])
+        self.assertEqual([r["type"] for r in self.budget.records()], ["reservation", "spend"])
+        persisted = self.store.attempt_path(a["trial_id"]).read_text()
+        self.assertIn("gcloud exploded", persisted)
+        # a credential value that leaks into an exception text is scrubbed from the record
+        canary = "TOKEN-VALUE-CANARY-51c2e9"
+        t = T.FakeTransport(posts=[RuntimeError(f"boom while sending Bearer {canary}")])
+        ad2 = self.make("veo-3.1-fast", t, token_source=T.FakeTokenSource(token=canary))
+        a2 = ad2.dispatch({**self.row("VID-T2V-01", "veo-3.1-fast"), "repeat_index": 2})
+        blob = self.store.attempt_path(a2["trial_id"]).read_text() + json.dumps(a2)
+        self.assertNotIn(canary, blob)
+        self.assertIn("<REDACTED>", blob)
+
+    def test_af5_lifecycle_counts_are_per_dispatch(self):
+        os.environ["FAL_KEY"] = "fake"
+        ad = self.make("gpt-image-2", fal_ok())
+        ad.dispatch(self.row("IMG-CORE-01", "gpt-image-2"))
+        ad.transport = fal_ok()
+        a2 = ad.dispatch({**self.row("IMG-CORE-01", "gpt-image-2"), "repeat_index": 2})
+        self.assertEqual(a2["lifecycle_counts"]["submits"], 1)
+        self.assertEqual(a2["lifecycle_counts"]["status_checks"], 3)
+
+    def test_af6_429_5xx_and_non_200_2xx_after_submit_are_ambiguous(self):
+        os.environ["FAL_KEY"] = "fake"
+        os.environ["SARVAM_API_KEY"] = "fake"
+        for code, expect_ambiguous in ((503, True), (429, True), (202, True), (400, False), (422, False)):
+            with self.subTest(code=code):
+                t = T.FakeTransport(posts=[(code, {"detail": "gateway says no"})])
+                ad = self.make("gpt-image-2", t)
+                a = ad.dispatch({**self.row("IMG-CORE-01", "gpt-image-2"), "repeat_index": code})
+                self.assertEqual(a["error_class"], f"http_{code}")
+                self.assertEqual(a["ambiguous_dispatch"], expect_ambiguous)
+                self.assertEqual(a["billing_state"], "unknown_provisional" if expect_ambiguous else "reported")
+        t = T.FakeTransport(posts=[(502, {})])
+        a = self.make("sarvam-bulbul-v3", t).dispatch(self.row("AUD-TTS-01", "sarvam-bulbul-v3"), {"voice": "rahul"})
+        self.assertTrue(a["ambiguous_dispatch"])
+
+    def test_af7_poll_and_result_urls_must_be_on_the_fal_host(self):
+        os.environ["FAL_KEY"] = "fake"
+        t = T.FakeTransport(posts=[(200, {"request_id": "r", "status_url": "https://evil.example/status", "response_url": "https://queue.fal.run/x/requests/r"})],
+                            gets=[(200, {"status": "COMPLETED"})])
+        a = self.make("gpt-image-2", t).dispatch(self.row("IMG-CORE-01", "gpt-image-2"))
+        self.assertEqual(a["error_class"], "untrusted_url")
+        self.assertEqual([c["kind"] for c in t.calls], ["post"], "no GET may carry the key to a foreign host")
+        self.assertTrue(a["ambiguous_dispatch"])
+        self.assertTrue(fal_queue.trusted_fal_url("https://queue.fal.run/fal-ai/x/requests/1/status"))
+        self.assertFalse(fal_queue.trusted_fal_url("https://queue.fal.run.evil.example/x"))
+        self.assertFalse(fal_queue.trusted_fal_url("http://queue.fal.run/x"))
+
+    def test_af7_transport_never_follows_a_redirect(self):
+        import urllib.request
+        opener = T.build_opener()
+        handlers = [type(h).__name__ for h in opener.handlers]
+        self.assertIn("NoRedirectHandler", handlers)
+        self.assertNotIn("HTTPRedirectHandler", handlers)
+        h = T.NoRedirectHandler()
+        self.assertIsNone(h.redirect_request(urllib.request.Request("https://queue.fal.run/x"), None, 302, "Found", {}, "https://elsewhere.example/"))
+
+    def test_af8_default_token_source_uses_the_md_c3_resolver_only_when_allowed(self):
+        made = []
+
+        class FakeGcloud:
+            def __init__(self, credential_file, **kw):
+                made.append(str(credential_file))
+                self.credential_file_name = str(credential_file)
+
+            def token(self):
+                return "FAKE-TOKEN"
+        saved = T.GcloudServiceAccountTokenSource
+        try:
+            T.GcloudServiceAccountTokenSource = FakeGcloud
+            ad = self.make("veo-3.1-fast", veo_ok(), token_source=None)
+            with self.assertRaises(PreDispatchRefusal):                       # tests never get a default token source
+                ad.dispatch(self.row("VID-T2V-01", "veo-3.1-fast"))
+            self.assertEqual(made, [])
+            self.assertEqual([r["type"] for r in self.budget.records()], ["reservation", "release"])
+            ad2 = self.make("veo-3.1-fast", veo_ok(), token_source=None, allow_default_token_source=True)
+            a = ad2.dispatch({**self.row("VID-T2V-01", "veo-3.1-fast"), "repeat_index": 2})
+            self.assertEqual(a["status"], "ok")
+            self.assertEqual(made, [B.resolve_gcp_credential_file()])
+            self.assertEqual(a["credential_file_name"], B.resolve_gcp_credential_file())
+        finally:
+            T.GcloudServiceAccountTokenSource = saved
+
+    def test_af9_edited_script_without_updated_chars_is_refused(self):
+        os.environ["SARVAM_API_KEY"] = "fake"
+        os.environ["FAL_KEY"] = "fake"
+        row = self.row("AUD-TTS-01", "sarvam-bulbul-v3")
+        edited = {**row, "params": {**row["params"], "script": row["params"]["script"] + " और भी"}}
+        ad = self.make("sarvam-bulbul-v3", T.FakeTransport(posts=[(200, {"audios": [B.b64(WAV_FIXTURE)]})]))
+        with self.assertRaises(PreDispatchRefusal) as cm:
+            ad.dispatch(edited, {"voice": "rahul"})
+        self.assertIn("quantity_rule_mismatch", str(cm.exception))
+        self.assertEqual(self.budget.records(), [])
+        d = ad.dry_run(edited, {"voice": "rahul"})
+        self.assertFalse(d["would_dispatch"])
+        row2 = self.row("AUD-TTS-01", "elevenlabs-v3")
+        ad2 = self.make("elevenlabs-v3", fal_ok("https://v3.fal.media/files/fake/out.wav"))
+        with self.assertRaises(PreDispatchRefusal):
+            ad2.dispatch({**row2, "params": {**row2["params"], "script": "x" * 40}}, {"voice": "Roger"})
+
+    def test_af10_default_poll_budget_is_at_least_fifteen_minutes(self):
+        ad = self.make("kling-v3-pro", fal_ok())
+        self.assertGreaterEqual(ad.max_status_checks * ad.poll_interval_s, 900)

@@ -1,18 +1,23 @@
 # EVAL-040 authorisation SCHEMA AND EXAMPLE ONLY. This committed file authorises nothing.
 #
-# Real approval is materialised at execution time in `authorization.local.yaml` (gitignored, never
-# committed) after the Controller writes the spend record. `ledger.open_battery_ledger()` refuses
-# this file (authorised: false) and refuses a missing local file, so no live ledger can be opened
-# from the committed state - eval/harness-v2/tests/test_ledger.py proves it.
-#
+# The real file, `authorization.local.yaml` (gitignored, never committed), is materialised from the
+# Controller's SIGNED spend record - coordination/decisions/DRAFT-SPEND-AUTHORISATION-TRANCHE-1-2026-09-05.md,
+# block `machine_authorisation` - by one reviewed copy of that block, field for field. `ledger.py` reads
+# exactly these field names (Auditor AF-1) and refuses when the file is absent, `authorised` is not the
+# boolean true, `approved_by` / `approved_at` are empty, or `price_basis_roster_sha256` differs from the
+# sha256 of the roster on disk. There is NO ceiling constant in code: every number comes from this block.
 # No secret, key or token belongs in either file. Credentials are read by NAME at dispatch.
-authorised: false
-tranche_id: EVAL-040
-max_consumed_api_spend_usd: 0          # the local file may name at most 175.00 (plan §B)
-tranche_caps_usd:                       # USD-equivalent caps across every billing pool
-  1a: 0                                 # proposal: 60
-  1b: 0                                 # proposal: 115
-retries_authorised: 0                   # one call = one trial; 0 is the only accepted value
-approved_by: null
-approved_at: null
-spend_record_ref: null                  # path of the Controller's spend record, when it exists
+machine_authorisation:
+  tranche_id: EVAL-040-TRANCHE-1
+  authorised: false                    # flips to true only with the Controller's words in the signed record
+  item_basis_commit: "0596aa2"
+  price_basis_roster_sha256: "99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46"
+  max_consumed_usd_equivalent: null    # the signed record names it (proposed 200.00); the cap is checked over USD-equivalent across every pool
+  cap_1a_usd: null                     # proposed 85.00
+  cap_1b_usd: null                     # proposed 115.00
+  sarvam_cap_inr: null                 # proposed 5.00; enforced natively over the sarvam_credits pool
+  retries_authorised: 0                # one call = one trial; 0 is the only accepted value
+  execution_time_route_price_verification: required_before_every_paid_call
+  images_before_video: true
+  approved_by: null
+  approved_at: null

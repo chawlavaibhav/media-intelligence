@@ -28,6 +28,7 @@ SIZE POLICY (recorded on every dry-run row; MD-C10 asks the Controller to confir
 """
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import hv2_paths
@@ -85,6 +86,23 @@ ROUTE_PINS: dict[str, dict] = {
 }
 
 _SCHEMA_CACHE: dict[str, dict] = {}
+FAL_QUEUE_HOST = "queue.fal.run"
+FAL_DOWNLOAD_SUFFIXES = (".fal.media", ".fal.run")
+
+
+_HTTPS_HOST = re.compile(r"^https://([A-Za-z0-9.-]+)(?::\d+)?(?:[/?#]|$)")
+
+
+def trusted_fal_url(url, kind: str = "queue") -> bool:
+    """AF-7: the key header is only ever sent to https://queue.fal.run; downloads only from fal's own hosts.
+    (A regex host parser, so this module never imports a network library - transports.py is the only one.)"""
+    m = _HTTPS_HOST.match(str(url))
+    if not m:
+        return False
+    host = m.group(1).lower()
+    if kind == "queue":
+        return host == FAL_QUEUE_HOST
+    return host == FAL_QUEUE_HOST or any(host.endswith(sfx) for sfx in FAL_DOWNLOAD_SUFFIXES)
 
 
 def load_input_schema(entry) -> dict | None:
@@ -210,7 +228,8 @@ class FalQueueAdapter(B.RouteAdapter):
         if missing:
             raise PreDispatchRefusal(f"{entry.route_key}: required schema fields {missing} are not pinned")
         self._guard_body(body, set(props), entry.route_key)
-        return B.Request("POST", entry.endpoint, self._headers_template(), body, notes=notes)
+        rendered = len(body["text"]) if isinstance(body.get("text"), str) else None      # AF-9: the characters actually sent
+        return B.Request("POST", entry.endpoint, self._headers_template(), body, notes=notes, rendered_chars=rendered)
 
     @staticmethod
     def _headers_template() -> dict:
@@ -232,15 +251,18 @@ class FalQueueAdapter(B.RouteAdapter):
         status, reply = r
         reply = reply if isinstance(reply, dict) else {}
         if status != 200:
-            detail = reply.get("detail") or reply.get("error") or reply
-            refusal = "content" in str(detail).lower() and ("policy" in str(detail).lower() or "safety" in str(detail).lower())
-            return B.Outcome("refusal" if refusal else "error", "moderation_block" if refusal else f"http_{status}",
-                             str(detail)[:300], ambiguous=False, outcome_resolved=True, lifecycle_counts=counts)
+            detail = reply.get("detail") or B.error_of(reply).get("message") or reply
+            refusal = status < 500 and "content" in str(detail).lower() and ("policy" in str(detail).lower() or "safety" in str(detail).lower())
+            return B.http_status_outcome(status, reply, counts, refusal=refusal, note=str(detail))
         request_id, status_url, response_url = reply.get("request_id"), reply.get("status_url"), reply.get("response_url")
         if not (request_id and status_url and response_url):
             return B.Outcome("error", "malformed_response", "queue submit returned 200 without request_id/status_url/response_url; the job cannot be tracked",
                              ambiguous=True, outcome_resolved=False, lifecycle_counts=counts)
         attempt["provider_request_id"] = request_id
+        if not (trusted_fal_url(status_url) and trusted_fal_url(response_url)):
+            return B.Outcome("error", "untrusted_url", f"queue reply named a status/response URL off {FAL_QUEUE_HOST}; the key is never sent there; "
+                             f"request {request_id} may still complete and bill", ambiguous=True, outcome_resolved=False,
+                             lifecycle_counts=counts, provider_request_id=request_id)
 
         def check():
             code, st = self.transport.get_json(status_url, headers)
@@ -276,6 +298,9 @@ class FalQueueAdapter(B.RouteAdapter):
         if not url:
             return B.Outcome("error", "no_artifact_returned", "COMPLETED result carried no media url", ambiguous=False,
                              outcome_resolved=True, lifecycle_counts=counts, provider_request_id=request_id)
+        if not trusted_fal_url(url, kind="download"):
+            return B.Outcome("error", "untrusted_url", f"artifact URL is not on a fal host; not fetched. URL recorded for a separately authorised fetch",
+                             ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_request_id=request_id, provider_meta={"artifact_url": url})
         d = self._download(url, {}, counts)
         if isinstance(d, B.Outcome):
             d.provider_request_id = request_id
