@@ -1,0 +1,151 @@
+# PASS-CRITERIA-v0 - one entry per deterministic instrument in eval/harness-v2/instruments/.
+#
+# STATUS: EVERY THRESHOLD HERE IS A PROPOSAL. Nothing is frozen. While an entry says `frozen: false`
+# the instrument computes and STORES its measurement but returns verdict `absent`, absence_reason
+# `other`, note `criterion_not_frozen` - so no Registry row can be built on an unapproved number
+# (Controller between-role note 4; task EVAL-039C §3). Freezing a value is morning decision MD-C1:
+# the Controller sets `frozen: true` and `status: frozen` on the entry and records the ruling ref.
+# A threshold change is a different instrument (the value is inside the instrument config_hash).
+schema: PASS-CRITERIA-v0
+package: eval/harness-v2
+status: PROPOSED_NOT_FROZEN
+controller_ref: MD-C1
+rule: >-
+  frozen: false  ->  the instrument returns absent / other / criterion_not_frozen and keeps the measurement.
+  frozen: true   ->  the instrument returns pass / fail against `thresholds` exactly as written here.
+  `source` is a repo path, a named external reference marked verified: false, or "Planner proposal".
+criteria:
+
+  format_probe:
+    capabilities: [delivery_format_compliance, reliability_pass_at_k]
+    metric: >-
+      ffprobe -print_format json -show_format -show_streams: container, width x height, aspect (w:h
+      reduced), duration_s, fps, audio-stream presence; compared with the case's COND-DELIVERY and
+      the route row's params (aspect, duration_s, audio, resolution class).
+    colour_space: not_applicable
+    thresholds:
+      aspect_ratio_tolerance_fraction: 0.01          # |observed/declared - 1| <= 1 %
+      duration_tolerance_s: 0.5                      # |observed - duration_s| <= 0.5 s (video/audio only)
+      audio_present_iff_audio_on: true               # audio stream present  <=>  params.audio starts with "on"
+      resolution_class_must_match_declared: true     # 720p/1080p/1K class from the case row
+    source: Planner proposal (task EVAL-039C §3 table; no repo source names these tolerances)
+    verified: false
+    frozen: false
+    status: proposed
+    controller_ref: MD-C1
+
+  masked_diff:
+    capabilities: [edit_preservation]
+    metric: >-
+      output resized to the input's size (nearest-neighbour, stdlib); mean absolute difference per
+      channel (0-255, sRGB) over pixels OUTSIDE the case's mask; plus global SSIM (Wang 2004 form,
+      BT.601 greyscale, 8x8 non-overlapping windows on a stride of 8, K1 0.01, K2 0.03, L 255, mean over
+      windows) over windows that lie entirely outside the mask.
+      mask = the named changed region supplied as a PNG alongside the reference asset (white = changed).
+    colour_space: sRGB 8-bit (MAE); BT.601 luma (SSIM)
+    thresholds:
+      mae_max_per_channel_8bit: 8                    # MAE <= 8/255 outside the mask
+      ssim_min_outside_mask: 0.90
+    source: "Planner proposal (task EVAL-039C §3 table); SSIM definition Wang et al. 2004 (external, verified: false)"
+    verified: false
+    frozen: false
+    status: proposed
+    controller_ref: MD-C1
+    provenance_rule: the mask's sha256 and origin are recorded on every measurement
+
+  brand_colour:
+    capabilities: [packaging_brand_colour_fidelity]
+    metric: >-
+      mean colour inside the pack/product mask, converted sRGB -> linear (IEC 61966-2-1 transfer)
+      -> XYZ (D65, sRGB matrix) -> CIELAB (D65 white 0.95047/1.0/1.08883); dE*ab (CIE76) against the
+      fixture-recorded sRGB value converted the same way.
+    colour_space: CIELAB D65 (CIE76 distance)
+    thresholds:
+      delta_e_ab_max: 5.0
+    source: >-
+      Planner proposal (task EVAL-039C §3 table). Candidate external reference "dE ~ 2.3 is a just
+      noticeable difference" (Mahy et al. 1994) - NOT verified tonight.
+    verified: false
+    frozen: false
+    status: proposed
+    controller_ref: MD-C1
+
+  av_offset:
+    registered_as: audio_track_offset_vs_drive
+    capabilities: [audio_video_synchronisation]
+    claim: >-
+      PARTIAL. Measures the artifact's audio track against the drive audio we supplied, not mouth
+      onset against audio. Mouth onset is not deterministic. Accepting this partial claim, or
+      withdrawing the audio_video_synchronisation Registry claim from Stage A, is MD-C6.
+    metric: >-
+      both signals decoded to 16 kHz mono PCM via ffmpeg; 10-ms RMS envelopes; direct
+      cross-correlation of the mean-removed envelopes over lags -1000..+1000 ms; lag_ms at the
+      correlation peak (positive = artifact audio lags the drive) and the normalised peak correlation.
+    colour_space: not_applicable
+    thresholds:
+      abs_lag_ms_max: 80
+      min_peak_correlation: 0.5                      # below this the lag is reported but the result is absent (no alignment found)
+    source: >-
+      Planner proposal (task EVAL-039C §3 table). Candidate external reference ITU-R BT.1359-1
+      detectability thresholds (Planner recollection) - NOT verified tonight.
+    verified: false
+    frozen: false
+    status: proposed
+    controller_ref: MD-C1
+
+  repeat_consistency:
+    capabilities: [reproducibility]
+    metric: >-
+      dHash (resize to 9x8 greyscale nearest-neighbour, 64-bit horizontal gradient hash) Hamming
+      distance and global SSIM (as masked_diff, no mask) between repeat 1 and repeat 2 of the same
+      (case, route); video = first / middle / last frames via ffmpeg, distances reported per frame
+      and as the maximum. `unseeded` and `held_seed` groups are reported separately and never pooled
+      (SEED-POLICY.yaml: every route is `unset` today, so only the unseeded rule can apply).
+    colour_space: BT.601 luma
+    thresholds:
+      unseeded:
+        rule: structural_reproducibility
+        description: pass = both repeats produced a valid artifact of the same probed format (container, size class, audio presence); distances are reported as observation only
+      held_seed:
+        dhash_hamming_max: 4
+        description: pass = Hamming distance <= 4 on every compared frame (Planner proposal)
+    source: "Planner proposal (task EVAL-039C §3 table); dHash per the common 9x8 difference-hash definition (external, verified: false)"
+    verified: false
+    frozen: false
+    status: proposed
+    controller_ref: MD-C1
+
+  ledger_metrics:
+    capabilities: [latency_errors_refusals, cost_and_cpao]
+    metric: >-
+      from the persisted attempt records and the battery ledger: latency = completed_at - requested_at
+      (p50 / p95 per cell), status counts by error_class, refusal rate, trial cost from the settled
+      spend row. CpAO is always absent / not_applicable at Stage A (no accepted-outcome chain yet).
+    colour_space: not_applicable
+    thresholds:
+      latency_errors_refusals:
+        rule: status_ok
+        description: pass = attempt status == ok (an error, refusal or timeout is a fail; the attempt row keeps the reason)
+      cost_and_cpao:
+        rule: settled_within_reserved
+        description: pass = settled amount <= reserved amount (pinned price x quantity); CpAO absent / not_applicable
+    source: "task EVAL-039C §3 table (\"no threshold needed\"); kept frozen: false because the Controller freezes every criterion (between-role note 4)"
+    verified: false
+    frozen: false
+    status: proposed
+    controller_ref: MD-C1
+
+  gate_wrapper:
+    capabilities: []
+    qualification_status: provisional
+    metric: >-
+      runs `python3 canon/gate/run_gate.py post --artifact ... --dispatch <request.json> --modality ... --json ...`
+      via subprocess when canon/gate/run_gate.py exists on the checkout; otherwise returns
+      {status: not_available_on_base, base: <sha>}. Observation only; never a verdict.
+    colour_space: not_applicable
+    thresholds: {}
+    source: coordination/plans/2026-09-05-CAPABILITY-LAB-CAMPAIGN-v1.md §D (T-DET row, "structure only") and EVALUATOR-PLAN.yaml gate_post
+    verified: false
+    frozen: false
+    status: observation_only_never_a_row
+    controller_ref: MD-C1

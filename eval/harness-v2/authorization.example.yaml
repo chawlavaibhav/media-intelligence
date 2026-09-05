@@ -1,0 +1,18 @@
+# EVAL-040 authorisation SCHEMA AND EXAMPLE ONLY. This committed file authorises nothing.
+#
+# Real approval is materialised at execution time in `authorization.local.yaml` (gitignored, never
+# committed) after the Controller writes the spend record. `ledger.open_battery_ledger()` refuses
+# this file (authorised: false) and refuses a missing local file, so no live ledger can be opened
+# from the committed state - eval/harness-v2/tests/test_ledger.py proves it.
+#
+# No secret, key or token belongs in either file. Credentials are read by NAME at dispatch.
+authorised: false
+tranche_id: EVAL-040
+max_consumed_api_spend_usd: 0          # the local file may name at most 175.00 (plan §B)
+tranche_caps_usd:                       # USD-equivalent caps across every billing pool
+  1a: 0                                 # proposal: 60
+  1b: 0                                 # proposal: 115
+retries_authorised: 0                   # one call = one trial; 0 is the only accepted value
+approved_by: null
+approved_at: null
+spend_record_ref: null                  # path of the Controller's spend record, when it exists

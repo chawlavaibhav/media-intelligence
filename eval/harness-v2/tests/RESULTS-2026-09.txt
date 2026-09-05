@@ -1,0 +1,133 @@
+# EVAL-039C harness-v2 test run - 2026-09-05T01:37:47Z - Python 3.14.7 - fake transports only, no socket, no key
+# command: python3 -m unittest discover -s eval/harness-v2/tests -v
+test_g_dry_run_body_bytes_equal_sent_bytes_for_every_family (test_adapters.BodyEqualityTest.test_g_dry_run_body_bytes_equal_sent_bytes_for_every_family) ... ok
+test_gpt_image_2_body_pins_quality_medium_and_one_image (test_adapters.BodyEqualityTest.test_gpt_image_2_body_pins_quality_medium_and_one_image) ... ok
+test_veo_extend_is_two_calls_one_reservation (test_adapters.BodyEqualityTest.test_veo_extend_is_two_calls_one_reservation) ... ok
+test_a_every_registry_key_constructs_without_socket_or_key (test_adapters.ConstructionTest.test_a_every_registry_key_constructs_without_socket_or_key) ... ok
+test_f_content_policy_is_a_refusal (test_adapters.FailureModesTest.test_f_content_policy_is_a_refusal) ... ok
+test_f_download_failure_keeps_the_trial_and_the_money (test_adapters.FailureModesTest.test_f_download_failure_keeps_the_trial_and_the_money) ... ok
+test_f_poll_exhaustion_never_resubmits (test_adapters.FailureModesTest.test_f_poll_exhaustion_never_resubmits) ... ok
+test_f_poll_failure_after_submit_is_ambiguous (test_adapters.FailureModesTest.test_f_poll_failure_after_submit_is_ambiguous) ... ok
+test_f_provider_error_resolves_but_still_settles (test_adapters.FailureModesTest.test_f_provider_error_resolves_but_still_settles) ... ok
+test_f_transport_timeout_at_submit_is_ambiguous (test_adapters.FailureModesTest.test_f_transport_timeout_at_submit_is_ambiguous) ... ok
+test_f_veo_operation_error_and_safety_filter (test_adapters.FailureModesTest.test_f_veo_operation_error_and_safety_filter) ... ok
+test_b_env_canary_never_reaches_disk_or_records (test_adapters.KeyLeakTest.test_b_env_canary_never_reaches_disk_or_records) ... ok
+test_b_exception_texts_never_carry_the_key (test_adapters.KeyLeakTest.test_b_exception_texts_never_carry_the_key) ... ok
+test_b_file_canary_by_name_from_a_fake_path (test_adapters.KeyLeakTest.test_b_file_canary_by_name_from_a_fake_path) ... ok
+test_missing_key_releases_the_reservation_and_sends_nothing (test_adapters.KeyLeakTest.test_missing_key_releases_the_reservation_and_sends_nothing) ... ok
+test_c_reservation_is_open_when_the_transport_is_called (test_adapters.OrderingTest.test_c_reservation_is_open_when_the_transport_is_called) ... ok
+test_i_caller_parameters_are_refused (test_adapters.ParameterRefusalTest.test_i_caller_parameters_are_refused) ... ok
+test_i_pinned_output_count_must_be_one (test_adapters.ParameterRefusalTest.test_i_pinned_output_count_must_be_one) ... ok
+test_pending_inputs_render_in_dry_run_but_refuse_live (test_adapters.ParameterRefusalTest.test_pending_inputs_render_in_dry_run_but_refuse_live) ... ok
+test_d_price_mismatch_refuses_with_zero_calls_and_no_open_reservation (test_adapters.PriceAndCapTest.test_d_price_mismatch_refuses_with_zero_calls_and_no_open_reservation) ... ok
+test_e_cap_breach_raises_before_send (test_adapters.PriceAndCapTest.test_e_cap_breach_raises_before_send) ... ok
+test_h_unpinned_conditional_unverified_and_azure_rows (test_adapters.RefuseLiveRenderDryTest.test_h_unpinned_conditional_unverified_and_azure_rows) ... ok
+test_j_same_trial_twice_is_refused_and_nothing_is_overwritten (test_adapters.StoreThroughAdapterTest.test_j_same_trial_twice_is_refused_and_nothing_is_overwritten) ... ok
+test_no_transport_or_ledger_refuses (test_adapters.StoreThroughAdapterTest.test_no_transport_or_ledger_refuses) ... ok
+test_network_modules_only_in_transports (test_dry_run.HygieneTest.test_network_modules_only_in_transports) ... ok
+test_no_key_pattern_in_deliverables (test_dry_run.HygieneTest.test_no_key_pattern_in_deliverables) ... ok
+test_counts (test_dry_run.ManifestTest.test_counts) ... ok
+test_every_dispatchable_row_is_pinned_and_verified (test_dry_run.ManifestTest.test_every_dispatchable_row_is_pinned_and_verified) ... ok
+test_no_promo_and_no_key_value (test_dry_run.ManifestTest.test_no_promo_and_no_key_value) ... ok
+test_reconciliation_closes (test_dry_run.ManifestTest.test_reconciliation_closes) ... ok
+test_unpinned_and_enablement_keys_never_dispatch (test_dry_run.ManifestTest.test_unpinned_and_enablement_keys_never_dispatch) ... ok
+test_decode_image_via_ffmpeg_matches_stdlib_decoder (test_imageio.FfmpegWrapperTest.test_decode_image_via_ffmpeg_matches_stdlib_decoder) ... ok
+test_probe_and_decode_a_generated_mp4_and_wav (test_imageio.FfmpegWrapperTest.test_probe_and_decode_a_generated_mp4_and_wav) ... ok
+test_probe_fails_closed_on_garbage (test_imageio.FfmpegWrapperTest.test_probe_fails_closed_on_garbage) ... ok
+test_tools_report_versions (test_imageio.FfmpegWrapperTest.test_tools_report_versions) ... ok
+test_missing_ffmpeg_is_reported_not_guessed (test_imageio.MissingToolsTest.test_missing_ffmpeg_is_reported_not_guessed) ... ok
+test_all_five_filter_types_roundtrip_rgb (test_imageio.PngCodecTest.test_all_five_filter_types_roundtrip_rgb) ... ok
+test_corrupt_inputs_fail_closed (test_imageio.PngCodecTest.test_corrupt_inputs_fail_closed) ... ok
+test_grey_greyalpha_rgba_and_palette (test_imageio.PngCodecTest.test_grey_greyalpha_rgba_and_palette) ... ok
+test_interlaced_and_16bit_refuse_rather_than_guess (test_imageio.PngCodecTest.test_interlaced_and_16bit_refuse_rather_than_guess) ... ok
+test_rgb_view_and_grey_conversion (test_imageio.PngCodecTest.test_rgb_view_and_grey_conversion) ... ok
+test_nearest_neighbour_resize (test_imageio.ResizeTest.test_nearest_neighbour_resize) ... ok
+test_missing_ffmpeg_is_instrument_unavailable (test_instruments.AvOffsetTest.test_missing_ffmpeg_is_instrument_unavailable) ... ok
+test_shifted_click_train_gives_the_shift (test_instruments.AvOffsetTest.test_shifted_click_train_gives_the_shift) ... ok
+test_verdicts_and_fail_closed (test_instruments.AvOffsetTest.test_verdicts_and_fail_closed) ... ok
+test_video_container_audio_track_is_decoded (test_instruments.AvOffsetTest.test_video_container_audio_track_is_decoded) ... ok
+test_lab_conversion_reference_values (test_instruments.BrandColourTest.test_lab_conversion_reference_values) ... ok
+test_mean_colour_in_mask_and_delta_e (test_instruments.BrandColourTest.test_mean_colour_in_mask_and_delta_e) ... ok
+test_absence_helpers_never_pass (test_instruments.CriteriaFileTest.test_absence_helpers_never_pass) ... ok
+test_every_instrument_has_a_proposed_unfrozen_entry (test_instruments.CriteriaFileTest.test_every_instrument_has_a_proposed_unfrozen_entry) ... ok
+test_gate_rule_returns_absent_until_frozen_and_pass_fail_after (test_instruments.CriteriaFileTest.test_gate_rule_returns_absent_until_frozen_and_pass_fail_after) ... ok
+test_instrument_factory_config_hash_covers_thresholds (test_instruments.CriteriaFileTest.test_instrument_factory_config_hash_covers_thresholds) ... ok
+test_image_probe_and_fail_closed (test_instruments.FormatProbeTest.test_image_probe_and_fail_closed) ... ok
+test_measurement_and_comparison (test_instruments.FormatProbeTest.test_measurement_and_comparison) ... ok
+test_not_available_on_this_base (test_instruments.GateWrapperTest.test_not_available_on_this_base) ... ok
+test_scripted_gate_is_run_via_subprocess_and_parsed (test_instruments.GateWrapperTest.test_scripted_gate_is_run_via_subprocess_and_parsed) ... ok
+test_cell_metrics (test_instruments.LedgerMetricsTest.test_cell_metrics) ... ok
+test_per_trial_verdicts (test_instruments.LedgerMetricsTest.test_per_trial_verdicts) ... ok
+test_change_inside_mask_is_ignored_change_outside_is_measured (test_instruments.MaskedDiffTest.test_change_inside_mask_is_ignored_change_outside_is_measured) ... ok
+test_fail_closed (test_instruments.MaskedDiffTest.test_fail_closed) ... ok
+test_identical_is_zero_and_one (test_instruments.MaskedDiffTest.test_identical_is_zero_and_one) ... ok
+test_output_is_resized_to_the_input_size (test_instruments.MaskedDiffTest.test_output_is_resized_to_the_input_size) ... ok
+test_verdicts (test_instruments.MaskedDiffTest.test_verdicts) ... ok
+test_dhash_and_ssim_between_repeats (test_instruments.RepeatConsistencyTest.test_dhash_and_ssim_between_repeats) ... ok
+test_fail_closed (test_instruments.RepeatConsistencyTest.test_fail_closed) ... ok
+test_groups_are_never_pooled_and_verdicts_follow_the_group (test_instruments.RepeatConsistencyTest.test_groups_are_never_pooled_and_verdicts_follow_the_group) ... ok
+test_video_uses_first_middle_last_frames (test_instruments.RepeatConsistencyTest.test_video_uses_first_middle_last_frames) ... ok
+test_m_no_live_ledger_from_the_committed_state (test_ledger.AuthorisationTest.test_m_no_live_ledger_from_the_committed_state)
+Test (m): the committed example refuses, and no local file exists. ... ok
+test_refusal_rules (test_ledger.AuthorisationTest.test_refusal_rules) ... ok
+test_ceiling_and_tranche_caps (test_ledger.LedgerTest.test_ceiling_and_tranche_caps) ... ok
+test_correction_is_additive_and_never_negative (test_ledger.LedgerTest.test_correction_is_additive_and_never_negative) ... ok
+test_every_row_needs_pool_and_currency (test_ledger.LedgerTest.test_every_row_needs_pool_and_currency) ... ok
+test_inr_reservation_counts_against_the_usd_cap (test_ledger.LedgerTest.test_inr_reservation_counts_against_the_usd_cap) ... ok
+test_release_and_corrupt_ledger_are_inherited (test_ledger.LedgerTest.test_release_and_corrupt_ledger_are_inherited) ... ok
+test_reserve_then_record_with_pool_fields (test_ledger.LedgerTest.test_reserve_then_record_with_pool_fields) ... ok
+test_run_record_carries_eval_040_identity_and_caps (test_ledger.LedgerTest.test_run_record_carries_eval_040_identity_and_caps) ... ok
+test_subclasses_not_copies (test_ledger.LedgerTest.test_subclasses_not_copies) ... ok
+test_expected_sha_drift_refuses (test_pricing.PricingTest.test_expected_sha_drift_refuses) ... ok
+test_inr_row_keeps_inr_and_carries_a_usd_equivalent (test_pricing.PricingTest.test_inr_row_keeps_inr_and_carries_a_usd_equivalent) ... ok
+test_needs_enablement_route_refuses (test_pricing.PricingTest.test_needs_enablement_route_refuses) ... ok
+test_per_second_quantity (test_pricing.PricingTest.test_per_second_quantity) ... ok
+test_pinned_row_passes_and_prices_from_the_roster (test_pricing.PricingTest.test_pinned_row_passes_and_prices_from_the_roster) ... ok
+test_price_mismatch_refuses_before_anything_is_reserved (test_pricing.PricingTest.test_price_mismatch_refuses_before_anything_is_reserved) ... ok
+test_promo_flagged_as_used_refuses (test_pricing.PricingTest.test_promo_flagged_as_used_refuses) ... ok
+test_quantity_mismatch_refuses (test_pricing.PricingTest.test_quantity_mismatch_refuses) ... ok
+test_quantity_rules (test_pricing.PricingTest.test_quantity_rules) ... ok
+test_roster_is_re_read_at_every_check (test_pricing.PricingTest.test_roster_is_re_read_at_every_check)
+A roster edited on disk between two checks changes the second answer. ... ok
+test_unpinned_route_refuses (test_pricing.PricingTest.test_unpinned_route_refuses) ... ok
+test_config_is_hash_covered_and_declares_t_rgb (test_q1.DetectorTest.test_config_is_hash_covered_and_declares_t_rgb) ... ok
+test_corrupt_png_fails_closed (test_q1.DetectorTest.test_corrupt_png_fails_closed) ... ok
+test_counts_shapes_and_colours (test_q1.DetectorTest.test_counts_shapes_and_colours) ... ok
+test_pixels_outside_tolerance_are_background (test_q1.DetectorTest.test_pixels_outside_tolerance_are_background) ... ok
+test_relations_quadrants_and_sizes (test_q1.DetectorTest.test_relations_quadrants_and_sizes) ... ok
+test_shadow_and_white_are_background (test_q1.DetectorTest.test_shadow_and_white_are_background) ... ok
+test_checker_reports_every_missing_schema_field (test_q1.RecordCheckerTest.test_checker_reports_every_missing_schema_field) ... ok
+test_run_refuses_without_a_matching_preregistration (test_q1.RunnerGuardTest.test_run_refuses_without_a_matching_preregistration) ... ok
+test_generate_stores_bytes_and_measure_hands_a_path (test_registry_gate.BatteryHarnessTest.test_generate_stores_bytes_and_measure_hands_a_path) ... ok
+test_registry_write_through_battery_harness_is_refused_for_ineligible_input (test_registry_gate.BatteryHarnessTest.test_registry_write_through_battery_harness_is_refused_for_ineligible_input) ... ok
+test_write_registry_row_is_inherited_not_overridden (test_registry_gate.BatteryHarnessTest.test_write_registry_row_is_inherited_not_overridden) ... ok
+test_attach_uncertainty_shape (test_registry_gate.RegistryGateTest.test_attach_uncertainty_shape) ... ok
+test_clopper_pearson_reference_values (test_registry_gate.RegistryGateTest.test_clopper_pearson_reference_values) ... ok
+test_eligible_capabilities_are_exactly_the_eight (test_registry_gate.RegistryGateTest.test_eligible_capabilities_are_exactly_the_eight) ... ok
+test_measurements_to_cell (test_registry_gate.RegistryGateTest.test_measurements_to_cell) ... ok
+test_refusals (test_registry_gate.RegistryGateTest.test_refusals) ... ok
+test_canonical_json_is_stable_and_unicode_safe (test_store.StoreTest.test_canonical_json_is_stable_and_unicode_safe) ... ok
+test_image_and_unknown_types (test_store.StoreTest.test_image_and_unknown_types) ... ok
+test_refusals (test_store.StoreTest.test_refusals) ... ok
+test_request_written_before_dispatch_and_hash_bound (test_store.StoreTest.test_request_written_before_dispatch_and_hash_bound) ... ok
+test_seal_bytes_with_record_and_manifest (test_store.StoreTest.test_seal_bytes_with_record_and_manifest) ... ok
+test_every_entry_names_adapter_surface_and_schema (test_surfaces.SurfaceRegistryTest.test_every_entry_names_adapter_surface_and_schema) ... ok
+test_extend_is_two_calls_in_one_trial (test_surfaces.SurfaceRegistryTest.test_extend_is_two_calls_in_one_trial) ... ok
+test_keys_equal_the_route_catalogue (test_surfaces.SurfaceRegistryTest.test_keys_equal_the_route_catalogue) ... ok
+test_no_key_value_anywhere_in_the_registry (test_surfaces.SurfaceRegistryTest.test_no_key_value_anywhere_in_the_registry) ... ok
+test_not_built_entries_refuse_by_construction (test_surfaces.SurfaceRegistryTest.test_not_built_entries_refuse_by_construction) ... ok
+test_roster_key_and_variant_agree_with_the_catalogue (test_surfaces.SurfaceRegistryTest.test_roster_key_and_variant_agree_with_the_catalogue) ... ok
+test_surface_and_pool_agree_with_the_catalogue (test_surfaces.SurfaceRegistryTest.test_surface_and_pool_agree_with_the_catalogue) ... ok
+test_unknown_key_is_refused (test_surfaces.SurfaceRegistryTest.test_unknown_key_is_refused) ... ok
+test_construction_opens_no_socket (test_transports.TransportTest.test_construction_opens_no_socket) ... ok
+test_fake_transport_records_and_raises_scripted_failures (test_transports.TransportTest.test_fake_transport_records_and_raises_scripted_failures) ... ok
+test_live_call_would_hit_the_guard (test_transports.TransportTest.test_live_call_would_hit_the_guard)
+Proves the no-network guard is real: a live transport call raises NetworkAttempted here. ... ok
+test_token_source_failure_text_carries_no_token (test_transports.TransportTest.test_token_source_failure_text_carries_no_token) ... ok
+test_token_source_refuses_missing_file_before_running_anything (test_transports.TransportTest.test_token_source_refuses_missing_file_before_running_anything) ... ok
+test_token_source_uses_a_throwaway_gcloud_config_and_returns_only_the_token (test_transports.TransportTest.test_token_source_uses_a_throwaway_gcloud_config_and_returns_only_the_token) ... ok
+
+----------------------------------------------------------------------
+Ran 123 tests in 16.303s
+
+OK
