@@ -72,6 +72,41 @@ P01_SHAPES = (
     ("C4 second curly prompt never closes", f'{LQ}{CLEAN}{RQ}\n{LQ}{DIRTY}\n'),
     ("C4b second curly prompt, closer typed as an opener", f'{LQ}{CLEAN}{RQ}\n{LQ}{DIRTY}{LQ}\n'),
 )
+# Q-01 fixtures (Ruling 11): the seventh checker's five section-parser shapes. At HEAD 0c21d76 a
+# bare ALL-CAPS line of four or more characters (or a `###` heading) between two prompts
+# matched SECTION_RE, opened a new section, and the second, text-bearing prompt was assigned
+# to it — never extracted, never scanned — while LIMIT-TEXT PASSed on the first prompt alone.
+# Under Ruling 11 parsing is unchanged (the line still opens a section); a heading outside
+# KNOWN_SECTION_HEADINGS after GENERATION_PROMPTS has opened is an extraction error naming it.
+UNKNOWN_HEADING_ERROR = ("unrecognised section heading after GENERATION_PROMPTS — prompts may be "
+                         "hidden; not scanned")
+Q01_SHAPES = (
+    ("S6a IMPORTANT between prompts", f'"{CLEAN}"\nIMPORTANT\n"{DIRTY}"\n', "IMPORTANT"),
+    ("S6b VIDEO label between prompts", f'"{CLEAN}"\nVIDEO\n"{DIRTY}"\n', "VIDEO"),
+    ("S6c NOTE: between prompts", f'"{CLEAN}"\nNOTE:\n"{DIRTY}"\n', "NOTE"),
+    ("S6e ### PROMPT_B between prompts", f'"{CLEAN}"\n### PROMPT_B\n"{DIRTY}"\n', "PROMPT_B"),
+    ("S6i NOTES, then a dirty blockquote", f'"{CLEAN}"\nNOTES\n> {DIRTY}\n', "NOTES"),
+)
+# not headings under SECTION_RE (a digit, a space, a colon before the closing `**`): the
+# second prompt stays in the section and is scanned (the seventh checker's S6d, S6f, S6j)
+Q01_NOT_HEADINGS = (
+    ("S6d **SHOT_2**", f'"{CLEAN}"\n**SHOT_2**\n"{DIRTY}"\n'),
+    ("S6f SHOT 2", f'"{CLEAN}"\nSHOT 2\n"{DIRTY}"\n'),
+    ("S6j **IMAGE_PROMPT:**", f'"{CLEAN}"\n**IMAGE_PROMPT:**\n"{DIRTY}"\n'),
+)
+# the headings that follow GENERATION_PROMPTS in the four anchors (and Gemma B02-R1), read
+# off the files; every one is in the known set, so Ruling 11 leaves the anchors untouched
+ANCHOR_HEADINGS_AFTER_PROMPTS = {
+    SONNET_B01: ["DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS", "AUDIO_AND_EDIT", "FAILURE_PREVENTION",
+                 "HARD_CONSTRAINT_CHECK", "KNOWLEDGE_AND_WEBSITE_USE"],
+    SONNET_B06: ["DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS", "AUDIO_AND_EDIT", "FAILURE_PREVENTION",
+                 "HARD_CONSTRAINT_CHECK", "KNOWLEDGE_AND_WEBSITE_USE"],
+    HAIKU_B01: ["DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS", "AUDIO_AND_EDIT", "FAILURE_PREVENTION",
+                "DOCTRINE_DEVIATIONS", "HARD_CONSTRAINT_CHECK", "KNOWLEDGE_AND_WEBSITE_USE"],
+    HAIKU_B06: ["DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS", "AUDIO_AND_EDIT", "FAILURE_PREVENTION",
+                "DOCTRINE_DEVIATIONS", "HARD_CONSTRAINT_CHECK", "KNOWLEDGE_AND_WEBSITE_USE"],
+}
+ANCHOR_PROMPT_COUNTS = {SONNET_B01: 4, SONNET_B06: 2, HAIKU_B01: 9, HAIKU_B06: 1}
 
 V1_SECTIONS = ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
                "MESSAGE_AND_INFORMATION_HIERARCHY", "VISUAL_SYSTEM", "PRODUCTION_RECIPE",
@@ -81,6 +116,23 @@ V1_SECTIONS = ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
 
 def norm(s):
     return " ".join(s.split())
+
+
+def committed_packages():
+    """The 84 committed EVAL-038 packages (baseline/, runs/*/packages/, judging/packages/**),
+    read in place — the corpus Ruling 11's known heading set is derived from."""
+    return sorted(p for p in list((E38 / "baseline").rglob("*.txt"))
+                  + list((E38 / "runs").rglob("packages/*.txt"))
+                  + list((E38 / "judging/packages").rglob("*.txt"))
+                  if p.name != "FREEZE-COMMIT.txt")
+
+
+def headings_in_order(text):
+    """Every section heading of `text` in order of appearance, repeats kept, from SECTION_RE
+    alone (the regex is parity-pinned to strip_blind.py) — independent of the helper the
+    implementation uses."""
+    matches = (package.SECTION_RE.match(line.strip()) for line in text.splitlines())
+    return [m.group(1) for m in matches if m]
 
 
 class ParseTest(unittest.TestCase):
@@ -618,15 +670,199 @@ class P01CurlyQuoteTest(unittest.TestCase):
         self.assertIsNone(package.declared_aspect(pkg))
 
 
+class KnownHeadingsTest(unittest.TestCase):
+    """Ruling 11: KNOWN_SECTION_HEADINGS is the frozen union of every section heading
+    `parse_package` yields over the 84 committed EVAL-038 packages, recomputed here in place
+    so the constant cannot drift — a heading added to or removed from the corpus, or the
+    constant edited by hand, fails this test. Zero corpus change under the rule follows by
+    construction, and the second test states it directly."""
+
+    def test_the_frozen_set_equals_the_recomputed_union(self):
+        files = committed_packages()
+        self.assertEqual(len(files), 84)
+        union = set()
+        for path in files:
+            union.update(package.parse_package(path.read_text(encoding="utf-8")).sections)
+        self.assertEqual(package.KNOWN_SECTION_HEADINGS, tuple(sorted(union)))
+        self.assertEqual(len(package.KNOWN_SECTION_HEADINGS), 15)
+        self.assertIn("GENERATION_PROMPTS", package.KNOWN_SECTION_HEADINGS)
+        self.assertIsInstance(package.KNOWN_SECTION_HEADINGS, tuple)
+
+    def test_no_committed_package_carries_an_unknown_heading_after_the_prompts(self):
+        # zero corpus change: every heading after GENERATION_PROMPTS in every committed
+        # package is in the frozen set, no heading repeats, so the rule never fires on it
+        for path in committed_packages():
+            text = path.read_text(encoding="utf-8")
+            headings = headings_in_order(text)
+            self.assertIn("GENERATION_PROMPTS", headings, path.name)
+            after = headings[headings.index("GENERATION_PROMPTS") + 1:]
+            self.assertTrue(after, path.name)
+            self.assertTrue(set(after) <= set(package.KNOWN_SECTION_HEADINGS), (path.name, after))
+            self.assertEqual(len(headings), len(set(headings)), path.name)
+            self.assertEqual(package.section_headings(text), headings, path.name)
+            self.assertEqual(headings, list(package.parse_package(text).sections), path.name)
+
+
+class Q01UnknownHeadingTest(unittest.TestCase):
+    """Ruling 11 (Q-01): a section heading outside KNOWN_SECTION_HEADINGS after
+    GENERATION_PROMPTS has opened is an extraction error — UnknownSectionHeading,
+    "unrecognised section heading after GENERATION_PROMPTS — prompts may be hidden; not
+    scanned" — naming the heading. Parsing is untouched: the line still opens a section and
+    SECTION_RE is the blinding tool's; extraction refuses the package instead of reading the
+    first section alone. The check is section-level and runs before any quote is read."""
+
+    def prompts(self, text):
+        return [p.text for p in package.extract_prompts(package.parse_package(text))]
+
+    def assertHeadingError(self, text, heading, name):
+        with self.assertRaises(package.UnknownSectionHeading, msg=name) as cm:
+            self.prompts(text)
+        msg = str(cm.exception)
+        self.assertIn(UNKNOWN_HEADING_ERROR, msg, name)
+        self.assertIn(f"heading {heading!r}", msg, name)
+        self.assertIsInstance(cm.exception, package.ExtractionError, name)
+        return msg
+
+    def test_q01_the_five_shapes_are_errors(self):
+        # at HEAD 0c21d76 each parsed the ALL-CAPS line as a heading, extracted the clean
+        # prompt alone and PASSed with the dirty text sitting in the new section, unscanned
+        for name, section, heading in Q01_SHAPES:
+            with self.subTest(name):
+                pkg = package.parse_package("GENERATION_PROMPTS\n" + section)
+                self.assertIn(heading, pkg.sections, name)   # parsing unchanged
+                self.assertNotIn("chat bubbles", pkg.sections["GENERATION_PROMPTS"], name)
+                self.assertIn("chat bubbles", pkg.sections[heading], name)
+                self.assertHeadingError("GENERATION_PROMPTS\n" + section, heading, name)
+
+    def test_q01_the_error_names_the_heading_and_its_line(self):
+        head = f'## DELIVERABLE\none 4:5 poster\n## GENERATION_PROMPTS\n"{CLEAN}"\n'
+        msg = self.assertHeadingError(head + f'IMPORTANT\n"{DIRTY}"\n', "IMPORTANT", "bare")
+        self.assertIn("line 5", msg)
+        msg = self.assertHeadingError(head + f'### PROMPT_B\n"{DIRTY}"\n', "PROMPT_B", "###")
+        self.assertIn("line 5", msg)
+        msg = self.assertHeadingError(head + f'"{CLEAN}"\nNOTE:\n"{DIRTY}"\n', "NOTE", "colon")
+        self.assertIn("line 6", msg)
+
+    def test_q01_the_heading_check_comes_before_quotes(self):
+        # a section that also carries a curly quote, an unclosed run, an orphan closer or a
+        # sub-floor run reports the heading: a section-level property, decided before the
+        # quotes are read, so the outcome does not depend on the quote state
+        for name, section in (
+                ("curly prompt, then heading", f'{LQ}{CLEAN}{RQ}\nIMPORTANT\n"{DIRTY}"\n'),
+                ("unclosed run, then heading", f'"{CLEAN}\nIMPORTANT\n"{DIRTY}"\n'),
+                ("orphan closer, then heading", f'"{CLEAN}"\nbubbles" here\nIMPORTANT\n"{DIRTY}"\n'),
+                ("sub-floor run, then heading", f'"x"\nIMPORTANT\n"{DIRTY}"\n'),
+                ("heading, then curly in the new section", f'"{CLEAN}"\nIMPORTANT\n{LQ}{DIRTY}{RQ}\n'),
+                ("heading, then nothing", f'"{CLEAN}"\nIMPORTANT\n')):
+            with self.subTest(name):
+                self.assertHeadingError("GENERATION_PROMPTS\n" + section, "IMPORTANT", name)
+
+    def test_q01_every_known_heading_after_the_prompts_is_not_an_error(self):
+        # counter-pin: each of the 14 other known headings, in each heading style the parser
+        # accepts, may follow the prompts section without tripping the rule
+        for heading in package.KNOWN_SECTION_HEADINGS:
+            if heading == "GENERATION_PROMPTS":
+                continue
+            for style in ("{h}", "## {h}", "**{h}**", "{h}:", "### **{h}**:"):
+                text = f'## GENERATION_PROMPTS\n"{CLEAN}"\n{style.format(h=heading)}\nprose\n'
+                with self.subTest(heading=heading, style=style):
+                    pkg = package.parse_package(text)
+                    self.assertEqual(list(pkg.sections), ["GENERATION_PROMPTS", heading])
+                    self.assertEqual(self.prompts(text), [CLEAN])
+
+    def test_q01_a_known_heading_after_the_prompts_opens_a_genuine_section(self):
+        # the ruled boundary, recorded: a known heading is schema, and what follows it belongs
+        # to that section — it is not a prompt and is not scanned as one (a quoted run under
+        # FAILURE_PREVENTION is that section's prose). Ruling 11 refuses unknown headings
+        # only; the production blueprint schema (Ruling 3) owns the known set.
+        text = f'## GENERATION_PROMPTS\n"{CLEAN}"\n## FAILURE_PREVENTION\n"{DIRTY}"\n'
+        self.assertEqual(self.prompts(text), [CLEAN])
+
+    def test_q01_the_four_anchors_carry_known_headings_after_the_prompts_and_extract(self):
+        for path, expected in ANCHOR_HEADINGS_AFTER_PROMPTS.items():
+            with self.subTest(path.name):
+                text = path.read_text()
+                headings = headings_in_order(text)
+                after = headings[headings.index("GENERATION_PROMPTS") + 1:]
+                self.assertEqual(after, expected)
+                self.assertTrue(set(after) <= set(package.KNOWN_SECTION_HEADINGS))
+                prompts = package.extract_prompts(package.parse_package(text))
+                self.assertEqual(len(prompts), ANCHOR_PROMPT_COUNTS[path])
+        # Gemma B02-R1 keeps its Ruling 7 outcome: the heading rule finds nothing, pairing raises
+        with self.assertRaises(package.UnbalancedQuotes):
+            package.extract_prompts(package.parse_package(GEMMA_B02.read_text()))
+
+    def test_q01_an_unknown_heading_before_the_prompts_still_extracts(self):
+        text = (f'## IMPORTANT\nread this first\n## DELIVERABLE\none 4:5 poster\n'
+                f'## GENERATION_PROMPTS\n"{CLEAN}"\n## DOCTRINE_DEVIATIONS\nnone\n')
+        pkg = package.parse_package(text)
+        self.assertIn("IMPORTANT", pkg.sections)
+        self.assertEqual(self.prompts(text), [CLEAN])
+        # the same heading once more after the section has opened is the error, even though
+        # `Package.sections` (keyed by name, first appearance) lists it before the prompts
+        pkg = package.parse_package(text + f'## IMPORTANT\n"{DIRTY}"\n')
+        self.assertEqual(list(pkg.sections)[0], "IMPORTANT")
+        self.assertHeadingError(text + f'## IMPORTANT\n"{DIRTY}"\n', "IMPORTANT", "repeat")
+
+    def test_q01_a_bare_heading_before_the_first_prompt_is_the_heading_error_now(self):
+        # S6h: at HEAD 0c21d76 `VIDEO` right after the section opened moved the only prompt
+        # into VIDEO and extraction returned no prompt (LIMIT-TEXT ERROR, "no generation
+        # prompt"); still an ERROR, now naming the heading — nothing moved toward PASS
+        self.assertHeadingError(f'GENERATION_PROMPTS\nVIDEO\n"{DIRTY}"\n', "VIDEO", "S6h")
+
+    def test_q01_a_second_generation_prompts_heading_merges_as_today(self):
+        # observed at HEAD 0c21d76 and left as it is by Ruling 11 condition 2 (the seventh
+        # checker's S1): parse_package keys sections by name, so a second GENERATION_PROMPTS
+        # heading appends its lines to the first section — both prompts extract and are
+        # scanned. GENERATION_PROMPTS is in the known set, so the rule does not fire.
+        text = (f'## GENERATION_PROMPTS\n"{CLEAN}"\n## DOCTRINE_DEVIATIONS\nnone\n'
+                f'## GENERATION_PROMPTS\n"{DIRTY}"\n')
+        pkg = package.parse_package(text)
+        self.assertEqual(headings_in_order(text),
+                         ["GENERATION_PROMPTS", "DOCTRINE_DEVIATIONS", "GENERATION_PROMPTS"])
+        self.assertEqual(list(pkg.sections), ["GENERATION_PROMPTS", "DOCTRINE_DEVIATIONS"])
+        self.assertEqual(pkg.sections["GENERATION_PROMPTS"], f'"{CLEAN}"\n"{DIRTY}"')
+        self.assertEqual(self.prompts(text), [CLEAN, DIRTY])
+
+    def test_q01_lines_that_are_not_headings_stay_in_the_section(self):
+        for name, section in Q01_NOT_HEADINGS:
+            with self.subTest(name):
+                pkg = package.parse_package("GENERATION_PROMPTS\n" + section)
+                self.assertEqual(list(pkg.sections), ["GENERATION_PROMPTS"])
+                self.assertEqual(self.prompts("GENERATION_PROMPTS\n" + section), [CLEAN, DIRTY])
+
+    def test_q01_no_prompts_section_still_yields_no_prompts(self):
+        pkg = package.parse_package(f'DELIVERABLE\none\nIMPORTANT\n"{DIRTY}"\n')
+        self.assertEqual(package.extract_prompts(pkg), [])
+
+    def test_q01_section_headings_lists_every_heading_in_order_with_repeats(self):
+        text = "## A_BC\nx\nVISUAL_SYSTEM:\n**DELIVERABLE**\n> NOT_ONE\n  ## A_BC\nabc\n"
+        self.assertEqual(package.section_headings(text), ["A_BC", "VISUAL_SYSTEM", "DELIVERABLE", "A_BC"])
+        self.assertEqual(package.section_headings(text), headings_in_order(text))
+        self.assertEqual(package.section_headings(""), [])
+
+    def test_q01_declared_aspect_survives_the_heading_error(self):
+        pkg = package.parse_package(
+            f'DELIVERABLE\none 4:5 poster\nGENERATION_PROMPTS\n{Q01_SHAPES[0][1]}')
+        self.assertEqual(package.declared_aspect(pkg), "4:5")
+        pkg = package.parse_package(f'GENERATION_PROMPTS\n{Q01_SHAPES[0][1]}')
+        self.assertIsNone(package.declared_aspect(pkg))
+
+
 class N01NoSilentDiscardInvariantTest(unittest.TestCase):
-    """Ruling 9 condition 1 as amended by Ruling 10 condition 2, as a property over a set of
-    sections: for any GENERATION_PROMPTS section, if it contains a curly double quote
+    """Ruling 9 condition 1 as amended by Ruling 10 condition 2 and Ruling 11 condition 5, as
+    a property over a set of sections: for any package with a GENERATION_PROMPTS section, if a
+    heading outside KNOWN_SECTION_HEADINGS follows the section's opening `extract_prompts`
+    raises UnknownSectionHeading naming it (a section-level property, checked before any
+    quote); otherwise if the section contains a curly double quote
     `extract_prompts` raises CurlyQuotes; otherwise either `_straight_runs` cannot pair it and
     extraction raises UnbalancedQuotes, or an outermost straight run is under the floor and
     extraction raises PromptBelowFloor naming it, or extraction succeeds and every outermost
-    straight run is a prompt exactly, every nested run inside one. There is no fifth outcome:
-    nothing quoted is ever silently discarded. The straight spans are computed here from
-    `_straight_runs` alone, independently of `_quoted_runs`."""
+    straight run is a prompt exactly, every nested run inside one. There is no sixth outcome:
+    nothing quoted is ever silently discarded, and nothing after the section opens is read as
+    a section the gate does not know. The straight spans are computed here from
+    `_straight_runs` alone, independently of `_quoted_runs`; the headings from SECTION_RE
+    alone, independently of `section_headings`."""
 
     @classmethod
     def sections(cls):
@@ -677,6 +913,17 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
             *P01_SHAPES,
             ("curly, then unclosed straight run", f'{LQ}{CLEAN}{RQ}\n"{CLEAN}\n'),
             ("unclosed straight run, then curly", f'"{CLEAN}\n{LQ}{CLEAN}{RQ}\n'),
+            # Ruling 11: the five Q-01 shapes, S6h, and unknown headings paired with each
+            # quote state — every one the heading error; then the counter-shapes
+            *[(name, section) for name, section, _ in Q01_SHAPES],
+            ("S6h VIDEO before the first prompt", f'VIDEO\n"{DIRTY}"\n'),
+            ("unknown heading after a curly prompt", f'{LQ}{CLEAN}{RQ}\nIMPORTANT\n"{DIRTY}"\n'),
+            ("unknown heading after an unclosed run", f'"{CLEAN}\nIMPORTANT\n"{DIRTY}"\n'),
+            ("unknown heading after a sub-floor run", f'"x"\nIMPORTANT\n"{DIRTY}"\n'),
+            ("unknown heading, then curly", f'"{CLEAN}"\nIMPORTANT\n{LQ}{DIRTY}{RQ}\n'),
+            ("known heading after the prompts", f'"{CLEAN}"\n## FAILURE_PREVENTION\nnone\n'),
+            ("second GENERATION_PROMPTS heading", f'"{CLEAN}"\n## GENERATION_PROMPTS\n"{DIRTY}"\n'),
+            *Q01_NOT_HEADINGS,
         ]
         for name, section in synthetic:
             out.append((name, package.parse_package("GENERATION_PROMPTS\n" + section)))
@@ -692,10 +939,23 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
 
     def test_every_quoted_run_is_extracted_or_the_section_errors(self):
         cases = self.sections()
-        self.assertGreaterEqual(len(cases), 45)
-        outcomes = {"curly": 0, "unbalanced": 0, "floor": 0, "extracted": 0}
+        self.assertGreaterEqual(len(cases), 60)
+        outcomes = {"heading": 0, "curly": 0, "unbalanced": 0, "floor": 0, "extracted": 0}
         for name, pkg in cases:
             with self.subTest(name):
+                headings = headings_in_order(pkg.text)
+                after = headings[headings.index("GENERATION_PROMPTS") + 1:]
+                unknown = [h for h in after if h not in package.KNOWN_SECTION_HEADINGS]
+                if unknown:
+                    # exactly one admitted outcome: the heading error, naming the first
+                    # unknown heading, whatever the section's quotes would do — the check
+                    # is section-level and precedes every quote rule
+                    with self.assertRaises(package.UnknownSectionHeading) as cm:
+                        package.extract_prompts(pkg)
+                    self.assertIn(UNKNOWN_HEADING_ERROR, str(cm.exception), name)
+                    self.assertIn(f"heading {unknown[0]!r}", str(cm.exception), name)
+                    outcomes["heading"] += 1
+                    continue
                 section = pkg.sections["GENERATION_PROMPTS"]
                 curly = [i for i, ch in enumerate(section) if ch in (LQ, RQ)]
                 if curly:
@@ -742,8 +1002,9 @@ class N01NoSilentDiscardInvariantTest(unittest.TestCase):
                     self.assertTrue(any(body in b for b in holder), (name, s))
                     self.assertNotIn(body.strip(), texts, (name, s, "nested run extracted twice"))
                 outcomes["extracted"] += 1
-        # the set exercises all four admitted outcomes at least once
+        # the set exercises all five admitted outcomes at least once
         self.assertTrue(all(outcomes.values()), outcomes)
+        self.assertGreaterEqual(outcomes["heading"], 10, outcomes)
 
 
 if __name__ == "__main__":

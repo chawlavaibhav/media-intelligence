@@ -65,6 +65,19 @@ P01_SHAPES = (
     ("C4", f'{LQ}{CLEAN}{RQ}\n{LQ}{DIRTY}\n'),
     ("C4b", f'{LQ}{CLEAN}{RQ}\n{LQ}{DIRTY}{LQ}\n'),
 )
+# Q-01 (Ruling 11): the seventh checker's five section-parser shapes — a bare ALL-CAPS line or
+# a `###` heading between two prompts opened a new section and hid the second prompt from
+# LIMIT-TEXT, which PASSed on the first alone. A heading outside package.KNOWN_SECTION_HEADINGS
+# after GENERATION_PROMPTS has opened is now an extraction error naming the heading.
+UNKNOWN_HEADING_ERROR = ("unrecognised section heading after GENERATION_PROMPTS — prompts may be "
+                         "hidden; not scanned")
+Q01_SHAPES = (
+    ("S6a IMPORTANT between prompts", f'"{CLEAN}"\nIMPORTANT\n"{DIRTY}"\n', "IMPORTANT"),
+    ("S6b VIDEO label between prompts", f'"{CLEAN}"\nVIDEO\n"{DIRTY}"\n', "VIDEO"),
+    ("S6c NOTE: between prompts", f'"{CLEAN}"\nNOTE:\n"{DIRTY}"\n', "NOTE"),
+    ("S6e ### PROMPT_B between prompts", f'"{CLEAN}"\n### PROMPT_B\n"{DIRTY}"\n', "PROMPT_B"),
+    ("S6i NOTES, then a dirty blockquote", f'"{CLEAN}"\nNOTES\n> {DIRTY}\n', "NOTES"),
+)
 S = findings.Status
 ALL_IDS = [f"PA-D{i}-check" for i in range(1, 11)] + [f"CA-D{i}-check" for i in range(1, 12)]
 NOT_MECH_PRE = ["PA-D2-check", "PA-D3-check", "PA-D5-check", "PA-D6-check", "PA-D7-check",
@@ -837,6 +850,100 @@ class P01CurlyQuoteTest(_Base):
         self.assertTrue(row.blocking)
         self.assertIn(CURLY_ERROR, row.detail)
         self.assertIn("offset 146", row.detail)
+
+
+class Q01UnknownHeadingTest(_Base):
+    """Ruling 11 (Q-01): a section heading outside the known schema set after
+    GENERATION_PROMPTS has opened is a LIMIT-TEXT ERROR naming the reason ("unrecognised
+    section heading after GENERATION_PROMPTS — prompts may be hidden; not scanned") and the
+    heading, verdict FAIL — never a PASS on the first prompt with the second sitting in a
+    section the gate does not know. Parsing is untouched; known headings after the section
+    (the anchors' DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS … KNOWLEDGE_AND_WEBSITE_USE, the
+    synthetic wrapper's DOCTRINE_DEVIATIONS) do not trip it."""
+
+    @staticmethod
+    def synthetic(section):
+        return ("## VISUAL_SYSTEM\nkey light from upper-left; centre zone\n## DELIVERABLE\n"
+                "one 9:16 video\n## GENERATION_PROMPTS\n" + section
+                + "## DOCTRINE_DEVIATIONS\nnone\n")
+
+    def assertHeadingError(self, text, heading, name):
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=text)
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertNotEqual(lt.status, S.PASS, (name, lt.detail))
+        self.assertEqual(lt.status, S.ERROR, (name, lt.detail))
+        self.assertIn(UNKNOWN_HEADING_ERROR, lt.detail, name)
+        self.assertIn(f"heading {heading!r}", lt.detail, name)
+        self.assertIn("fails closed", lt.detail, name)
+        self.assertTrue(lt.blocking)
+        self.assertEqual(r.verdict(), "FAIL", name)
+        self.assertTrue(r.render_text().splitlines()[-1].startswith("GATE FAIL"))
+        self.assertInvariants(r)
+        return r
+
+    def test_q01_the_five_shapes_are_errors(self):
+        # at HEAD 0c21d76 each was LIMIT-TEXT PASS, verdict PASS, with the dirty prompt
+        # unscanned in a section of its own
+        for name, section, heading in Q01_SHAPES:
+            with self.subTest(name):
+                self.assertHeadingError(self.synthetic(section), heading, name)
+
+    def test_q01_a_bare_heading_before_the_first_prompt_is_still_an_error(self):
+        # S6h: ERROR at HEAD 0c21d76 ("no generation prompt could be extracted"); ERROR now,
+        # naming the heading
+        self.assertHeadingError(self.synthetic(f'VIDEO\n"{DIRTY}"\n'), "VIDEO", "S6h")
+
+    def test_q01_an_unknown_heading_before_the_prompts_still_extracts(self):
+        text = "## IMPORTANT\nread this first\n" + self.synthetic(f'"{CLEAN}"\n')
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=text)
+        self.assertEqual(self.status(r, "LIMIT-TEXT"), S.PASS, self.row(r, "LIMIT-TEXT").detail)
+        self.assertEqual(r.verdict(), "PASS")
+        # the same heading again after the section has opened is the error
+        self.assertHeadingError(text + f'## IMPORTANT\n"{DIRTY}"\n', "IMPORTANT", "repeat")
+
+    def test_q01_known_headings_after_the_prompts_do_not_trip(self):
+        # the four anchors, read in place: every heading after GENERATION_PROMPTS is known;
+        # LIMIT-TEXT keeps its outcome (PASS for the B06 images, FAIL for the B01 videos) and
+        # never carries the heading reason
+        for path, modality, product, expected in ((HAIKU_B06, "static_image", True, S.PASS),
+                                                  (SONNET_B06, "static_image", True, S.PASS),
+                                                  (HAIKU_B01, "video", False, S.FAIL),
+                                                  (SONNET_B01, "video", False, S.FAIL)):
+            with self.subTest(path.name):
+                r = self.run_gate(path, modality, product)
+                lt = self.row(r, "LIMIT-TEXT")
+                self.assertEqual(lt.status, expected, lt.detail)
+                self.assertNotIn(UNKNOWN_HEADING_ERROR, lt.detail)
+        # and a synthetic package with a known heading between the prompts and the wrapper's
+        # DOCTRINE_DEVIATIONS extracts the prompt and scans it
+        r = self.run_gate(Path("synthetic.txt"), "video", False,
+                          text=self.synthetic(f'"{DIRTY}"\n## FAILURE_PREVENTION\nnone\n'))
+        self.assertEqual(self.status(r, "LIMIT-TEXT"), S.FAIL)
+
+    def test_q01_lines_that_are_not_headings_keep_the_second_prompt_in_scope(self):
+        for name, section in (("S6d **SHOT_2**", f'"{CLEAN}"\n**SHOT_2**\n"{DIRTY}"\n'),
+                              ("S6f SHOT 2", f'"{CLEAN}"\nSHOT 2\n"{DIRTY}"\n'),
+                              ("S6j **IMAGE_PROMPT:**", f'"{CLEAN}"\n**IMAGE_PROMPT:**\n"{DIRTY}"\n'),
+                              ("S1 second GENERATION_PROMPTS heading (merges)",
+                               f'"{CLEAN}"\n## GENERATION_PROMPTS\n"{DIRTY}"\n')):
+            with self.subTest(name):
+                r = self.run_gate(Path("synthetic.txt"), "video", False, text=self.synthetic(section))
+                lt = self.row(r, "LIMIT-TEXT")
+                self.assertEqual(lt.status, S.FAIL, (name, lt.detail))
+                self.assertIn("prompt 2", lt.detail, name)
+
+    def test_q01_a_supplied_prompt_file_still_bypasses_extraction(self):
+        r = self.run_gate(Path("synthetic.txt"), "video", False,
+                          text=self.synthetic(Q01_SHAPES[0][1]), prompts=[CLEAN])
+        self.assertEqual(self.status(r, "LIMIT-TEXT"), S.PASS)
+
+    def test_check_limit_text_names_the_heading_error(self):
+        row = predispatch.check_limit_text(
+            [], self.reg, extraction_error=f"{UNKNOWN_HEADING_ERROR} — heading 'IMPORTANT' at line 9")
+        self.assertEqual(row.status, S.ERROR)
+        self.assertTrue(row.blocking)
+        self.assertIn(UNKNOWN_HEADING_ERROR, row.detail)
+        self.assertIn("heading 'IMPORTANT' at line 9", row.detail)
 
 
 if __name__ == "__main__":

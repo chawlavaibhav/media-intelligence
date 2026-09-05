@@ -42,6 +42,26 @@ committed package carries a curly quote in the section (0 of 84) and the product
 blueprint schema (Ruling 3) carries straight quotes. The plan text is amended by the
 Controller separately.
 
+UNKNOWN HEADINGS AFTER THE PROMPTS SECTION ARE AN ERROR — Ruling 11, CONTROLLER-CANON-GATE-
+001-SEVENTH-CHECK-DISPOSITION-2026-09-05.md (Q-01). SECTION_RE matches any bare ALL-CAPS line
+of four or more characters, so until this commit such a line between two straight-quoted
+prompts inside GENERATION_PROMPTS (`IMPORTANT`, `VIDEO`, `NOTE:`, `### PROMPT_B`, `NOTES`
+before a `>` blockquote) opened a new section; the second, text-bearing prompt was assigned
+to it, never extracted, never scanned, and LIMIT-TEXT PASSed on the first prompt alone.
+Parsing is not changed — SECTION_RE and parse_package stay byte-identical to 38f4295 and to
+the blinding tool. The rule is post-parse: `extract_prompts` reads the headings of the raw
+package text in order of appearance (`section_headings`, the same regex over the same
+stripped lines, repeats kept — `Package.sections` is keyed by name and so cannot show a
+heading that recurs after the prompts) and, if any heading after the first GENERATION_PROMPTS
+is not in KNOWN_SECTION_HEADINGS, raises UnknownSectionHeading ("unrecognised section
+heading after GENERATION_PROMPTS — prompts may be hidden; not scanned"), naming the heading
+and its line, before any quote is read. KNOWN_SECTION_HEADINGS is derived mechanically, not
+hand-typed: the union of every heading parse_package yields over the 84 committed EVAL-038
+packages, frozen here and recomputed by tests/test_gate_package.py::KnownHeadingsTest, so
+the corpus is unchanged by construction (0 of 84 carry a bare ALL-CAPS line inside the
+section). Headings before the section opens are unaffected; a second GENERATION_PROMPTS
+heading is in the set and merges into the first as it always has.
+
 Shot extraction: table rows `| n |`, `Shot n`
 headings, or numbered items in PRODUCTION_RECIPE / GENERATION_PROMPTS. The plan names the
 union of the two sections; a literal union double-counts a package that carries both a shot
@@ -61,6 +81,30 @@ TYPED_SUBFIELDS = ("surface_finish_per_key_object", "implied_light_source", "pla
 SUBFIELD_RE = re.compile(
     r"^\s*(?:\*\*)?(" + "|".join(TYPED_SUBFIELDS) + r")(?:\*\*)?\s*:?\s*(?:\*\*)?\s*(.*)$")
 PROMPT_MIN_CHARS = 120
+# Ruling 11 (CONTROLLER-CANON-GATE-001-SEVENTH-CHECK-DISPOSITION-2026-09-05.md, Q-01): the
+# union of every section heading `parse_package` yields over the 84 committed EVAL-038
+# packages under eval/experiments/EVAL-038/ (baseline/, runs/*/packages/, judging/packages/**),
+# derived by a scratch script over parse_package and frozen here, sorted. Recomputed in place
+# by tests/test_gate_package.py::KnownHeadingsTest, which fails if this tuple and the corpus
+# ever disagree. A heading outside this set after GENERATION_PROMPTS has opened is an
+# extraction error (UnknownSectionHeading); the tuple is not edited by hand.
+KNOWN_SECTION_HEADINGS = (
+    "AUDIO_AND_EDIT",
+    "CORE_CREATIVE_IDEA",
+    "CREATIVE_BRIEF_TO_EXECUTION_NARRATIVE",
+    "DELIVERABLE",
+    "DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS",
+    "DOCTRINE_DEVIATIONS",
+    "FAILURE_PREVENTION",
+    "FINAL_PRODUCTION_PACKAGE",
+    "GENERATION_PROMPTS",
+    "HARD_CONSTRAINT_CHECK",
+    "KNOWLEDGE_AND_WEBSITE_USE",
+    "MESSAGE_AND_INFORMATION_HIERARCHY",
+    "OBJECTIVE_INTERPRETATION",
+    "PRODUCTION_RECIPE",
+    "VISUAL_SYSTEM",
+)
 SHOT_SECTIONS = ("PRODUCTION_RECIPE", "GENERATION_PROMPTS")
 SHOT_TABLE_ROW = re.compile(r"^\|\s*(\d+)\s*\|")
 SHOT_HEADING = re.compile(r"^#{0,4}\s*(?:\*\*)?Shot\s+(\d+)")
@@ -139,6 +183,16 @@ def parse_package(text: str) -> Package:
     return Package(sections=joined, subfields=subfields, schema=schema, text=text)
 
 
+def section_headings(text: str) -> list:
+    """Every section heading of `text` in order of appearance, repeats kept — SECTION_RE over
+    each stripped line, exactly as `parse_package` cuts the package (Ruling 11). The order
+    is read from the text because `Package.sections` is keyed by name: a dict keeps only a
+    heading's first position and folds a repeat into it, so it cannot show that a heading
+    seen before GENERATION_PROMPTS recurs after it."""
+    matches = (SECTION_RE.match(line.strip()) for line in text.splitlines())
+    return [m.group(1) for m in matches if m]
+
+
 def _split_subfields(visual_system: str) -> dict:
     out: dict = {}
     current = None
@@ -191,6 +245,14 @@ class CurlyQuotes(ExtractionError):
     Straight quotes are the only prompt delimiter; a curly quote is neither paired nor
     ignored, because a curly run was the second surface for the same family of pairing
     defects (an orphan closer, an unclosed run, a nested opener) and is not needed."""
+
+
+class UnknownSectionHeading(ExtractionError):
+    """A section heading outside KNOWN_SECTION_HEADINGS appears after GENERATION_PROMPTS has
+    opened (Ruling 11, Q-01). SECTION_RE reads any bare ALL-CAPS line of four or more
+    characters as a heading, so such a line between two prompts starts a section the gate
+    does not know and everything after it — a prompt included — leaves the scan. Parsing
+    is untouched; the package is refused before any quote is read."""
 
 
 class UnbalancedQuotes(ExtractionError):
@@ -391,14 +453,42 @@ def _blockquote_runs(text: str) -> list:
     return [(s, b) for s, b in runs if b]
 
 
+def _unknown_heading_after_prompts(text: str):
+    """(line number, heading) of the first heading after the first GENERATION_PROMPTS heading
+    that is not in KNOWN_SECTION_HEADINGS, else None (Ruling 11). Headings before the section
+    opens are not looked at; a second GENERATION_PROMPTS is in the set and passes."""
+    seen = False
+    line_no = 0
+    for line in text.splitlines():
+        line_no += 1
+        m = SECTION_RE.match(line.strip())
+        if not m:
+            continue
+        if not seen:
+            seen = m.group(1) == "GENERATION_PROMPTS"
+            continue
+        if m.group(1) not in KNOWN_SECTION_HEADINGS:
+            return line_no, m.group(1)
+    return None
+
+
 def extract_prompts(pkg: Package) -> list:
-    """Prompts in package order; raises CurlyQuotes when the section carries a curly double
-    quote (Ruling 10), UnbalancedQuotes when its straight quotes admit no single pairing
-    (Ruling 7) and PromptBelowFloor when a quoted run falls under the floor (Ruling 9) —
-    callers report the error, never a partial list."""
+    """Prompts in package order; raises UnknownSectionHeading when a heading outside the
+    known schema set follows the section's opening (Ruling 11), CurlyQuotes when the section
+    carries a curly double quote (Ruling 10), UnbalancedQuotes when its straight quotes admit
+    no single pairing (Ruling 7) and PromptBelowFloor when a quoted run falls under the floor
+    (Ruling 9) — callers report the error, never a partial list. The heading check is
+    section-level and runs first, on the raw package text, so its outcome does not depend
+    on the quote state."""
     section = pkg.sections.get("GENERATION_PROMPTS")
     if section is None:
         return []
+    unknown = _unknown_heading_after_prompts(pkg.text)
+    if unknown:
+        line_no, heading = unknown
+        raise UnknownSectionHeading(
+            f"unrecognised section heading after GENERATION_PROMPTS — prompts may be hidden; "
+            f"not scanned — heading {heading!r} at line {line_no}")
     try:
         found = [(s, b, "quoted") for s, b in _quoted_runs(section)]
     except CurlyQuotes as exc:

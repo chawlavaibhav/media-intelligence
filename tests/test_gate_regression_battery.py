@@ -18,7 +18,11 @@ and the fifth checker's N-01/N-05 shapes (Ruling 9: a nested string whose opener
 by whitespace, and a stand-alone prompt under the floor — a sub-floor quoted run is an ERROR,
 never a silent drop), and the sixth checker's P-01 shapes (Ruling 10: curly quotes are not
 prompt delimiters — a curly quote anywhere in GENERATION_PROMPTS is an ERROR, so the curly
-fixtures that used to extract and FAIL now ERROR).
+fixtures that used to extract and FAIL now ERROR), and the seventh checker's Q-01 shapes
+(Ruling 11: a section heading outside package.KNOWN_SECTION_HEADINGS after GENERATION_PROMPTS
+has opened is an ERROR naming the heading — a bare ALL-CAPS line between two prompts no longer
+hides the second; parsing is untouched, known headings and the four anchors keep their
+outcome).
 
 Each row is (finding, check, phrase, intended). Checks:
   T-scan      textscan.scan_prompt over the phrase              → HIT | CLEAR
@@ -250,6 +254,32 @@ ROWS = [
     ("P-01 C4 curly prompt unclosed", "LIMIT-TEXT raw", f'\u201c{CLEAN}\u201d\n\u201c{DIRTY}\n', "ERROR"),
     ("P-01 C4b closer typed as opener", "LIMIT-TEXT raw",
      f'\u201c{CLEAN}\u201d\n\u201c{DIRTY}\u201c\n', "ERROR"),
+    # ── Q-01 / Ruling 11: an unknown heading after GENERATION_PROMPTS has opened is an ERROR
+    # naming it. The five S6 rows flipped PASS→ERROR (the dirty prompt sat in the new section,
+    # unscanned); S6h stays ERROR (was "no prompt", now the heading). The counter rows: a known
+    # heading after the prompts, the lines SECTION_RE does not match (S6d, S6f, S6j), a second
+    # GENERATION_PROMPTS heading (merges, as today), and the four anchors read in place. ──
+    ("Q-01 S6a IMPORTANT between prompts", "LIMIT-TEXT raw", f'"{CLEAN}"\nIMPORTANT\n"{DIRTY}"\n', "ERROR"),
+    ("Q-01 S6b VIDEO between prompts", "LIMIT-TEXT raw", f'"{CLEAN}"\nVIDEO\n"{DIRTY}"\n', "ERROR"),
+    ("Q-01 S6c NOTE: between prompts", "LIMIT-TEXT raw", f'"{CLEAN}"\nNOTE:\n"{DIRTY}"\n', "ERROR"),
+    ("Q-01 S6e ### PROMPT_B between", "LIMIT-TEXT raw", f'"{CLEAN}"\n### PROMPT_B\n"{DIRTY}"\n', "ERROR"),
+    ("Q-01 S6i NOTES + dirty blockquote", "LIMIT-TEXT raw", f'"{CLEAN}"\nNOTES\n> {DIRTY}\n', "ERROR"),
+    ("Q-01 S6h VIDEO before first prompt", "LIMIT-TEXT raw", f'VIDEO\n"{DIRTY}"\n', "ERROR"),
+    ("Q-01 unknown heading, curly after", "LIMIT-TEXT raw", f'"{CLEAN}"\nIMPORTANT\n\u201c{DIRTY}\u201d\n', "ERROR"),
+    ("Q-01 known heading after prompts", "LIMIT-TEXT raw", f'"{CLEAN}"\n## FAILURE_PREVENTION\nnone\n', "PASS"),
+    ("Q-01 known heading, dirty prompt", "LIMIT-TEXT raw", f'"{DIRTY}"\n## FAILURE_PREVENTION\nnone\n', "FAIL"),
+    ("Q-01 S6d **SHOT_2** not a heading", "LIMIT-TEXT raw", f'"{CLEAN}"\n**SHOT_2**\n"{DIRTY}"\n', "FAIL"),
+    ("Q-01 S6f SHOT 2 not a heading", "LIMIT-TEXT raw", f'"{CLEAN}"\nSHOT 2\n"{DIRTY}"\n', "FAIL"),
+    ("Q-01 S6j **IMAGE_PROMPT:** not a heading", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n**IMAGE_PROMPT:**\n"{DIRTY}"\n', "FAIL"),
+    ("Q-01 S1 second GENERATION_PROMPTS", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## GENERATION_PROMPTS\n"{DIRTY}"\n', "FAIL"),
+    ("Q-01 anchor Haiku B06", "LIMIT-TEXT pkg", "runs/haiku-packs/packages/E038-haiku-packs-B06-R1.txt", "PASS"),
+    ("Q-01 anchor Sonnet B06", "LIMIT-TEXT pkg",
+     "baseline/sonnet-no-canon/E037-sonnet-no-canon-B06-R1.txt", "PASS"),
+    ("Q-01 anchor Haiku B01", "LIMIT-TEXT pkg", "runs/haiku-packs/packages/E038-haiku-packs-B01-R1.txt", "FAIL"),
+    ("Q-01 anchor Sonnet B01", "LIMIT-TEXT pkg",
+     "baseline/sonnet-no-canon/E037-sonnet-no-canon-B01-R1.txt", "FAIL"),
 ]
 
 
