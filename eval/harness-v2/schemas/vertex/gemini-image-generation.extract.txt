@@ -1,0 +1,21 @@
+# Plain-text EXTRACT of a pinned vendor reference page (EVAL-039C schema pin). The raw page was removed from the
+# working tree after the Tester's D1 finding (vendor site-config tokens inside the raw HTML); this extract keeps only
+# the request-body evidence the adapters use. The original fetch stays verifiable through the fields below, and the
+# raw bytes remain in git history at commit ae191fb33ed2 (eval/harness-v2/schemas/vertex/gemini-image-generation.html.gz).
+id: gemini_image_guide
+url: https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/image-generation
+fetched_utc: 2026-09-04T21:58:13Z (file mtime)
+http_status: 200
+original_bytes: 570096
+original_sha256: a70cb9ca0e0f5b6cfa4bd9b0c597ad24c8fe5a61170001cf7dc1c65cff79260b
+extract_written_utc: 2026-09-05T01:51:26.310812Z
+used_by_shapes: ['gemini_image']
+
+evidence_quotes cited by SCHEMA-INDEX for the shapes this page serves (found=exact | ws-insensitive | false; a quote may live on a sibling page):
+  - found=exact          | "imageConfig": { "aspectRatio": "16:9"
+  - found=exact          | "responseModalities": ["TEXT", "IMAGE"]
+  - found=ws-insensitive | export GOOGLE_CLOUD_LOCATION=global
+  - found=exact          | gemini-3-pro-image
+  - found=exact          | gemini-3.1-flash-image
+
+field_names (found in the page text):

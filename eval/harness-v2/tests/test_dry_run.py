@@ -95,16 +95,24 @@ class HygieneTest(NoNetworkTestCase):
 
     def test_no_key_pattern_in_deliverables(self):
         import re
-        frags = ("s" + "k-[A-Za-z0-9]{10,}", "AI" + "za[0-9A-Za-z_-]{20,}", "ke" + "y_[0-9a-f]{20,}", "fa" + "l_[A-Za-z0-9]{20,}",
-                 "BEGIN PRIVATE" + " KEY", "api-subscription-" + "key: [A-Za-z0-9]")
+        frags = ("s" + "k-[A-Za-z0-9]{10,}", "AI" + "za[0-9A-Za-z_-]{20,}", "AK" + "IA[0-9A-Z]{12,}", "ke" + "y_[0-9a-f]{20,}",
+                 "fa" + "l_[A-Za-z0-9]{20,}", "BEGIN PRIVATE" + " KEY", "api-subscription-" + "key: [A-Za-z0-9]")
         pat = re.compile("(" + "|".join(frags) + ")")
         roots = [hv2_paths.HERE, hv2_paths.EVAL_ROOT / "v1" / "instruments" / "qualification-records"]
         hits = []
+        import gzip
+        n_files = 0
         for root in roots:
             for p in root.rglob("*"):
-                if p.is_file() and "__pycache__" not in p.parts and p.suffix not in (".gz",):
-                    if pat.search(p.read_text(encoding="utf-8", errors="ignore")):
-                        hits.append(str(p))
+                if not p.is_file() or "__pycache__" in p.parts:
+                    continue
+                n_files += 1
+                raw = p.read_bytes()
+                if p.suffix == ".gz":                       # compressed files are scanned DECOMPRESSED (Tester D1)
+                    raw = gzip.decompress(raw)
+                if pat.search(raw.decode("utf-8", errors="ignore")):
+                    hits.append(str(p))
+        self.assertGreater(n_files, 50)
         self.assertEqual(hits, [])
 
 

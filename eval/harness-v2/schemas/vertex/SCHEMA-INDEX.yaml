@@ -1,6 +1,7 @@
-# Pinned vendor pages for the Vertex / Sarvam body shapes (EVAL-039C). Generated 2026-09-05.
-purpose: Pinned vendor reference pages used for request-body shapes (task EVAL-039C §1). Raw HTML gzipped to stay under the 5 MB pin budget; raw_sha256 is over the exact bytes fetched, stored_sha256 over
-  the .gz file. Free, unauthenticated fetches; no provider call, no key.
+# Pinned vendor pages for the Vertex / Sarvam body shapes (EVAL-039C). Generated 2026-09-05; raw pages replaced by extracts after Tester D1.
+purpose: Pinned vendor reference pages used for request-body shapes (task EVAL-039C §1). Each page is stored as a plain-text EXTRACT (only the evidence quotes and field names the adapters use); raw_sha256
+  / raw_bytes are over the exact bytes originally fetched, stored_sha256 over the extract. The raw gzipped pages were removed after the Tester D1 finding. Free, unauthenticated fetches; no provider call,
+  no key.
 fetched_from_this_machine_utc_window: 2026-09-04T21:53Z - 2026-09-04T22:05Z
 pages:
 - id: veo_t2v_guide
@@ -9,100 +10,150 @@ pages:
   http_status: 200
   raw_bytes: 492209
   raw_sha256: dc26505f5be5dbe0b1c51bae56de36c2e74a6ed2196867da26a5e245201e2114
-  stored_file: eval/harness-v2/schemas/vertex/veo-generate-videos-from-text.html.gz
-  stored_bytes: 45704
-  stored_sha256: 233d44fc7e296c9af0270395da2a79ff437556106a3be712828f20a8fa71dc4f
+  stored_file: eval/harness-v2/schemas/vertex/veo-generate-videos-from-text.extract.txt
+  stored_bytes: 3240
+  stored_sha256: 2cff8cb5413a4d1cca68ea466e2693a76af8a4990694c28a4d5970ddfb6bcc18
   fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/docs/video/generate-videos-from-text"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/veo-generate-videos-from-text.html.gz
 - id: veo_i2v_guide
   url: https://cloud.google.com/vertex-ai/generative-ai/docs/video/generate-videos-from-an-image
   fetched_utc: 2026-09-04T21:58:47Z (file mtime)
   http_status: 200
   raw_bytes: 498550
   raw_sha256: c00bf776065914ccb35b854cc99a2843e795324cbf3e3be31336a0d1d2227bfa
-  stored_file: eval/harness-v2/schemas/vertex/veo-generate-videos-from-an-image.html.gz
-  stored_bytes: 46818
-  stored_sha256: 2bca691d278a1ec64fa42510875ba1deeae239c8cbc25df1c20e9ebb7bd5d864
+  stored_file: eval/harness-v2/schemas/vertex/veo-generate-videos-from-an-image.extract.txt
+  stored_bytes: 3248
+  stored_sha256: 29585c5eb7a26fd08b4202c023dbea6bdc93b2cedc18517305ab164b52e1f638
   fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/docs/video/generate-videos-from-an-image"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/veo-generate-videos-from-an-image.html.gz
 - id: veo_params_ref
   url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/Shared.Types/VideoGenerationModelParams
   fetched_utc: '2026-09-04T22:03:44Z'
   http_status: 200
   raw_bytes: 740562
   raw_sha256: 1e7ecc6ea1e4f2a1d3bd80572a12d4faa04bd5a6fc6353b6c2253c369bccbc01
-  stored_file: eval/harness-v2/schemas/vertex/VideoGenerationModelParams.html.gz
-  stored_bytes: 41764
-  stored_sha256: d9bb7cbca306da36b0c5a2fb48097799877f35744e7d111691b67e347f868773
+  stored_file: eval/harness-v2/schemas/vertex/VideoGenerationModelParams.extract.txt
+  stored_bytes: 2419
+  stored_sha256: 401d3b9dfbbd76a38ac14312d8436fb047754f100b67d65cf619a5fca47a181a
   fetch_command: curl -sL -A "Mozilla/5.0" "https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/Shared.Types/VideoGenerationModelParams"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/VideoGenerationModelParams.html.gz
 - id: veo_instance_ref
   url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/Shared.Types/VideoGenerationModelInstance
   fetched_utc: '2026-09-04T22:03:47Z'
   http_status: 200
   raw_bytes: 753762
   raw_sha256: 17a0f498cbe811af726ffc181e24ae1593848932c4088341c62b83b301f3ae80
-  stored_file: eval/harness-v2/schemas/vertex/VideoGenerationModelInstance.html.gz
-  stored_bytes: 42722
-  stored_sha256: e843eb7ebd49f731cffb60700632c65015cf5a56d488e5919ccdba9ac72f3d37
+  stored_file: eval/harness-v2/schemas/vertex/VideoGenerationModelInstance.extract.txt
+  stored_bytes: 2425
+  stored_sha256: 302b52802dc4670fddb4dae6b3d7ad6fe3528acde011b86caf185e590a3a786a
   fetch_command: curl -sL -A "Mozilla/5.0" "https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/Shared.Types/VideoGenerationModelInstance"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/VideoGenerationModelInstance.html.gz
 - id: veo_extend_guide
   url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/video/extend-videos
   fetched_utc: '2026-09-04T22:03:53Z'
   http_status: 200
   raw_bytes: 437459
   raw_sha256: 8731a3c5051a5b479a726317a6046d7f64721dfa5b6319a32d0acd7fd8eee9c3
-  stored_file: eval/harness-v2/schemas/vertex/veo-extend-videos.html.gz
-  stored_bytes: 41582
-  stored_sha256: c0a97a8a00fabd8f08246eeb93ba7a6905c7d6c180a0a6b34c417d18704e41fe
+  stored_file: eval/harness-v2/schemas/vertex/veo-extend-videos.extract.txt
+  stored_bytes: 2384
+  stored_sha256: 557683df981ddfdc1b1777a093c47cabc613cb48e6f599c2005d520e0eb05f6b
   fetch_command: curl -sL -A "Mozilla/5.0" "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/video/extend-videos"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/veo-extend-videos.html.gz
 - id: veo_references_guide
   url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/video/generate-videos-from-references
   fetched_utc: '2026-09-04T22:03:56Z'
   http_status: 200
   raw_bytes: 447761
   raw_sha256: abc012edbcd03df11c36e937e01aef341cc48936a5b117944b43d5c283f6fde3
-  stored_file: eval/harness-v2/schemas/vertex/veo-generate-videos-from-references.html.gz
-  stored_bytes: 42855
-  stored_sha256: 5555b5abc2070b2e3ddf845d2c0298aabf2fb7a40f6661db64ecf6e23e8c109d
+  stored_file: eval/harness-v2/schemas/vertex/veo-generate-videos-from-references.extract.txt
+  stored_bytes: 2424
+  stored_sha256: ce47af8afde4edf25b0b4361ca39821e7f2d31dd00eabb9222a50c0fa7918c2a
   fetch_command: curl -sL -A "Mozilla/5.0" "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/video/generate-videos-from-references"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/veo-generate-videos-from-references.html.gz
 - id: omni_interactions_ref
   url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/models/interactions-api
   fetched_utc: '2026-09-04T22:03:58Z'
   http_status: 200
   raw_bytes: 1107201
   raw_sha256: f496c5a029e323192f5bc2316cafdd8aea3a11ae2df985211d5f46dc6d32eb80
-  stored_file: eval/harness-v2/schemas/vertex/interactions-api.html.gz
-  stored_bytes: 62152
-  stored_sha256: 803b9672c2164b9dbbbfeadc46f3fde43d15e87c692da1b8ccc7b9cde97e1f2b
+  stored_file: eval/harness-v2/schemas/vertex/interactions-api.extract.txt
+  stored_bytes: 1974
+  stored_sha256: 5fb3192302769c25fde27163890d92ac406504a0902b34f5e47b01388c73a318
   fetch_command: curl -sL -A "Mozilla/5.0" "https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/models/interactions-api"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/interactions-api.html.gz
 - id: gemini_image_guide
   url: https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/image-generation
   fetched_utc: 2026-09-04T21:58:13Z (file mtime)
   http_status: 200
   raw_bytes: 570096
   raw_sha256: a70cb9ca0e0f5b6cfa4bd9b0c597ad24c8fe5a61170001cf7dc1c65cff79260b
-  stored_file: eval/harness-v2/schemas/vertex/gemini-image-generation.html.gz
-  stored_bytes: 47340
-  stored_sha256: f5e6d788467099ccf946cf88b3de2ec8b2c705a55f9a4f1a3601585b8ef8560f
+  stored_file: eval/harness-v2/schemas/vertex/gemini-image-generation.extract.txt
+  stored_bytes: 1309
+  stored_sha256: 15ee91675f62366476b83c25665790d7a2fae18eb7e84d84c75d98e6ec5f9b17
   fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/image-generation"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/gemini-image-generation.html.gz
 - id: lyria_ref
   url: https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/lyria-music-generation
   fetched_utc: 2026-09-04T21:53:20Z (file mtime)
   http_status: 200
   raw_bytes: 735593
   raw_sha256: de0a337eef2604764b2c92e7ac61ef8ca80ead5c839a3e273528a3333f2865f6
-  stored_file: eval/harness-v2/schemas/vertex/lyria-music-generation.html.gz
-  stored_bytes: 42046
-  stored_sha256: 6694633f8943a9a000ac9b96146c5af21887647a51fd37d870ea27213b566c37
+  stored_file: eval/harness-v2/schemas/vertex/lyria-music-generation.extract.txt
+  stored_bytes: 1414
+  stored_sha256: 2faf148bb4ed5059edd49df995cba0ae58f155e112c15ba0902c7ecf43ac889a
   fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/lyria-music-generation"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/vertex/lyria-music-generation.html.gz
 - id: sarvam_tts_ref
   url: https://docs.sarvam.ai/api-reference-docs/text-to-speech/convert
   fetched_utc: 2026-09-04T21:53:26Z (file mtime)
   http_status: 200
   raw_bytes: 1035623
   raw_sha256: 98ec4b326e1ab5d169899234566c16ea323fe8ced2933f122cf6a5f5fd4dafd1
-  stored_file: eval/harness-v2/schemas/sarvam/text-to-speech-convert.html.gz
-  stored_bytes: 107842
-  stored_sha256: 8ff571d02a9421d9ed28ff0da07ccf5847d3c2f32b9766eb5c2a0847144ed0dd
+  stored_file: eval/harness-v2/schemas/sarvam/text-to-speech-convert.extract.txt
+  stored_bytes: 1375
+  stored_sha256: a2666d36419f23a530b9aa5cf05b5f1234fd1dda14e42791c1fb08d23e29fd2f
   fetch_command: curl -sL -A "Mozilla/5.0" "https://docs.sarvam.ai/api-reference-docs/text-to-speech/convert"
+  stored_kind: plain_text_extract
+  raw_page_removed: true
+  removal_note: raw .html.gz removed 2026-09-05 after Tester D1 (vendor site-config tokens in the raw HTML); the extract keeps only the evidence used; raw_sha256 / raw_bytes / url / fetched_utc keep the
+    fetch verifiable
+  raw_bytes_in_git_history: ae191fb33ed2e3ca5b10edb8a5b4c790c3c16c8e:eval/harness-v2/schemas/sarvam/text-to-speech-convert.html.gz
 shapes:
   veo:
     sources:

@@ -1,0 +1,21 @@
+# Plain-text EXTRACT of a pinned vendor reference page (EVAL-039C schema pin). The raw page was removed from the
+# working tree after the Tester's D1 finding (vendor site-config tokens inside the raw HTML); this extract keeps only
+# the request-body evidence the adapters use. The original fetch stays verifiable through the fields below, and the
+# raw bytes remain in git history at commit ae191fb33ed2 (eval/harness-v2/schemas/sarvam/text-to-speech-convert.html.gz).
+id: sarvam_tts_ref
+url: https://docs.sarvam.ai/api-reference-docs/text-to-speech/convert
+fetched_utc: 2026-09-04T21:53:26Z (file mtime)
+http_status: 200
+original_bytes: 1035623
+original_sha256: 98ec4b326e1ab5d169899234566c16ea323fe8ced2933f122cf6a5f5fd4dafd1
+extract_written_utc: 2026-09-05T01:51:26.310812Z
+used_by_shapes: ['sarvam']
+
+evidence_quotes cited by SCHEMA-INDEX for the shapes this page serves (found=exact | ws-insensitive | false; a quote may live on a sibling page):
+  - found=exact          | audios list of strings The output audio files in WAV format, encoded as base64 strings
+  - found=exact          | bulbul:v3: Max 2500 characters
+  - found=exact          | language_code enum Required The language code in BCP-47 format
+  - found=exact          | speaker enum or null Optional Defaults to shubh
+  - found=exact          | text string Required
+
+field_names (found in the page text):
