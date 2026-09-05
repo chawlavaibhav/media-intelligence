@@ -15,7 +15,28 @@ approver), one agent at a time, with this session reviewing between roles.
 |---|---|---|
 | **A — the test cases** | 35 test cases written the way real Indian buyers write to a studio (WhatsApp / email; Hindi in Devanagari, Hinglish, Indian English; 57 % Hindi or Hinglish), each mapped to a Normalized Request, each with one frozen Canon production blueprint that every model executes identically, blind accept/reject contracts, coverage matrix, elimination rules, seed policy, evaluator plan, cost table, irreducibility argument, and a generator that rebuilds the whole package byte-for-byte | PASS WITH NOTES |
 | **B — prices, access, projections** | 35 current routes with 36 vendor pages pinned as bytes; read-only checks of what AWS, Google Cloud, Azure (getaight), fal and Sarvam can reach today; the Media Factory learnings imported as dated priors; a deterministic cost projection by tranche and by pool; ten morning decisions written out with defaults | PASS WITH NOTES |
-| **C — the harness** | Adapters for every route (fal, Vertex, Sarvam), the deterministic instruments, the free geometry-evaluator qualification run, and a dry-run manifest that prices all round-one calls without sending any | executor still running at the time of writing; verdicts will be appended below |
+| **C — the harness** | Adapters for every route (fal, Vertex, Sarvam), seven deterministic instruments, the free geometry-evaluator qualification run, and a dry-run manifest that prices all round-one calls without sending any. 140 tests, run with the network deliberately blocked. It refuses every dispatch unless a signed authorisation file exists, and that file is never committed | PASS WITH NOTES |
+
+### Track C, in plain English (added ~07:55 IST)
+
+- The harness cannot spend by accident. Without your signed authorisation file every one of the 47
+  routes refuses to dispatch; with it, the ceiling is whatever you sign, checked against the exact
+  roster version, across cash, credits and rupees together, with zero retries. Every failed or
+  ambiguous call is written down and charged conservatively.
+- The free geometry-evaluator qualification ran honestly: two capabilities qualified pending your
+  ratification, one left undecided because a colour tolerance was never frozen, and one
+  (`object_count`) **disqualified** because the fixture pack's overlapping-circle trap caught it.
+  Nothing entered the Registry.
+- Every instrument threshold is a **proposal** in `PASS-CRITERIA-v0.yaml`; until you freeze them
+  the instruments report "criterion not frozen" and cannot create a Registry row.
+- Conditions before the first paid call (C1–C7 in `eval/tasks/EVAL-039C-APPROVER-VERDICT.md`): sign
+  and materialise the authorisation file; freeze the thresholds; ratify the Q1 result; choose the
+  Vertex credential file (defaults to the Aight service account until MD-9 creates the new one);
+  rule on two small pricing readings (FLUX edit add-on, Omni 15-second clips); make the very first
+  live call a single cheap image.
+- Note for the record: vendor pages pinned earlier contained the vendors' own public site-config
+  tokens; they were replaced by schema extracts in the tree, but remain in one earlier commit. The
+  auditor judged them public material and recommended no history rewrite; you may disagree.
 
 ## The numbers you are being asked to approve
 
