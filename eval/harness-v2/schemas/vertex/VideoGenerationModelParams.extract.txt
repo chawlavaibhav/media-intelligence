@@ -1,0 +1,49 @@
+# Plain-text EXTRACT of a pinned vendor reference page (EVAL-039C schema pin). The raw page was removed from the
+# working tree after the Tester's D1 finding (vendor site-config tokens inside the raw HTML); this extract keeps only
+# the request-body evidence the adapters use. The original fetch stays verifiable through the fields below, and the
+# raw bytes remain in git history at commit ae191fb33ed2 (eval/harness-v2/schemas/vertex/VideoGenerationModelParams.html.gz).
+id: veo_params_ref
+url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/Shared.Types/VideoGenerationModelParams
+fetched_utc: 2026-09-04T22:03:44Z
+http_status: 200
+original_bytes: 740562
+original_sha256: 1e7ecc6ea1e4f2a1d3bd80572a12d4faa04bd5a6fc6353b6c2253c369bccbc01
+extract_written_utc: 2026-09-05T01:51:26.310812Z
+used_by_shapes: ['veo']
+
+evidence_quotes cited by SCHEMA-INDEX for the shapes this page serves (found=exact | ws-insensitive | false; a quote may live on a sibling page):
+  - found=ws-insensitive | "durationSeconds": number
+  - found=ws-insensitive | "generateAudio": boolean
+  - found=false          | "referenceType": "asset"
+  - found=false          | If not provided, video bytes are returned in the response
+  - found=false          | The extended length is 7 seconds
+  - found=false          | Veo 3 models: 4, 6, or 8
+
+field_names (found in the page text):
+  - found=true           | aspectRatio
+  - found=false          | asset
+  - found=false          | bytesBase64Encoded
+  - found=true           | compressionQuality
+  - found=true           | durationSeconds
+  - found=true           | enablePromptRewriting
+  - found=true           | enhancePrompt
+  - found=true           | fps
+  - found=false          | gcsUri
+  - found=true           | generateAudio
+  - found=true           | image
+  - found=false          | lastFrame
+  - found=false          | mimeType
+  - found=true           | negativePrompt
+  - found=true           | personGeneration
+  - found=true           | prompt
+  - found=true           | pubsubTopic
+  - found=false          | referenceImages
+  - found=false          | referenceType
+  - found=true           | resizeMode
+  - found=true           | resolution
+  - found=true           | sampleCount
+  - found=true           | seed
+  - found=true           | storageUri
+  - found=false          | style
+  - found=true           | task
+  - found=true           | video

@@ -1,0 +1,37 @@
+# Plain-text EXTRACT of a pinned vendor reference page (EVAL-039C schema pin). The raw page was removed from the
+# working tree after the Tester's D1 finding (vendor site-config tokens inside the raw HTML); this extract keeps only
+# the request-body evidence the adapters use. The original fetch stays verifiable through the fields below, and the
+# raw bytes remain in git history at commit ae191fb33ed2 (eval/harness-v2/schemas/vertex/interactions-api.html.gz).
+id: omni_interactions_ref
+url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/models/interactions-api
+fetched_utc: 2026-09-04T22:03:58Z
+http_status: 200
+original_bytes: 1107201
+original_sha256: f496c5a029e323192f5bc2316cafdd8aea3a11ae2df985211d5f46dc6d32eb80
+extract_written_utc: 2026-09-05T01:51:26.310812Z
+used_by_shapes: ['omni']
+
+evidence_quotes cited by SCHEMA-INDEX for the shapes this page serves (found=exact | ws-insensitive | false; a quote may live on a sibling page):
+  - found=false          | "type":"model_output","content":[{"type":"video","data":"VIDEO DATA","mime_type":"video/mp4"
+  - found=false          | Allowed strings are integers between 3 and 10, followed by "s"
+  - found=false          | gemini-omni-1.1-flash-preview supports the following values: "360p" "720p" "1080p" "4k"
+
+field_names (found in the page text):
+  - found=true           | aspect_ratio
+  - found=true           | data
+  - found=false          | delivery
+  - found=false          | duration
+  - found=false          | gcs_uri
+  - found=true           | generation_config
+  - found=true           | image
+  - found=true           | input
+  - found=true           | mime_type
+  - found=true           | model
+  - found=true           | resolution
+  - found=true           | response_format
+  - found=false          | task
+  - found=true           | text
+  - found=true           | type
+  - found=true           | uri
+  - found=true           | video
+  - found=false          | video_config

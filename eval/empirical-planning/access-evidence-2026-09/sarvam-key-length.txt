@@ -1,0 +1,4 @@
+SARVAM_API_KEY value length (characters, value never printed): 0
+SUPERSEDED (measurement error): the line above used awk /^SARVAM_API_KEY=/, which cannot match a line that starts with "export ". Corrected check 2026-09-04T21:12:32Z (DEFECT-1, Tester report):
+$ grep -E '^export SARVAM_API_KEY=' ~/.mi-keys | sed -E 's/^[^=]*=//; s/"//g' | tr -d '\n' | wc -c
+SARVAM_API_KEY value length (characters, value never printed): 36

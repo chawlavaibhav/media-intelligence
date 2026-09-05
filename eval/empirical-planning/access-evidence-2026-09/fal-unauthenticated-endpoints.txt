@@ -1,0 +1,4 @@
+unauthenticated fal endpoints (no key sent):
+200 https://fal.ai/api/models?keywords=<id>  (model metadata incl. pricingInfoOverride text; no schema)
+200 https://api.fal.ai/v1/models?endpoint_id=<id>  (metadata + openapi schema; no price)
+401 https://api.fal.ai/v1/models/pricing?endpoint_id=<id>  (requires API key; not called with one)
