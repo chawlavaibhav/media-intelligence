@@ -78,6 +78,43 @@ Q01_SHAPES = (
     ("S6e ### PROMPT_B between prompts", f'"{CLEAN}"\n### PROMPT_B\n"{DIRTY}"\n', "PROMPT_B"),
     ("S6i NOTES, then a dirty blockquote", f'"{CLEAN}"\nNOTES\n> {DIRTY}\n', "NOTES"),
 )
+# R-01 (Ruling 12): the eighth checker's known-heading-as-divider shapes, as GENERATION_PROMPTS
+# sections for Q01UnknownHeadingTest.synthetic's wrapper (VISUAL_SYSTEM, DELIVERABLE, the
+# prompts, DOCTRINE_DEVIATIONS — line 7 is the divider, line 9 the wrapper's heading). At HEAD
+# dbbe76f every one was LIMIT-TEXT PASS, verdict PASS, the dirty text unscanned. A heading the
+# corpus only places before the prompts is now an ERROR (after-set); a heading repeated at or
+# after the first GENERATION_PROMPTS is an ERROR (repeat). The boundary rows — every heading
+# after the prompts in package.KNOWN_HEADINGS_AFTER_PROMPTS, once — keep PASS (register R-01
+# residual): 3d-4 needs a package without the wrapper's DOCTRINE_DEVIATIONS (post="").
+AFTER_SET_ERROR = ("section heading not observed after GENERATION_PROMPTS in the committed "
+                   "schema — prompts may be hidden; not scanned")
+REPEAT_ERROR = "section heading repeated after GENERATION_PROMPTS — prompts may be hidden; not scanned"
+R01_AFTER_SET_SHAPES = (
+    ("3a-3 DELIVERABLE after the prompts", f'"{CLEAN}"\n## DELIVERABLE\n"{DIRTY}"\n', "DELIVERABLE"),
+    ("3d-1 FINAL_PRODUCTION_PACKAGE bare divider", f'"{CLEAN}"\nFINAL_PRODUCTION_PACKAGE\n"{DIRTY}"\n',
+     "FINAL_PRODUCTION_PACKAGE"),
+    ("3d-2 ## FINAL_PRODUCTION_PACKAGE + dirty blockquote",
+     f'"{CLEAN}"\n## FINAL_PRODUCTION_PACKAGE\n> {DIRTY}\n', "FINAL_PRODUCTION_PACKAGE"),
+    ("3d-5 CORE_CREATIVE_IDEA after the prompts", f'"{CLEAN}"\n## CORE_CREATIVE_IDEA\n"{DIRTY}"\n',
+     "CORE_CREATIVE_IDEA"),
+)
+R01_REPEAT_SHAPES = (
+    ("3a-1 FAILURE_PREVENTION divider, then the real one",
+     f'"{CLEAN}"\n## FAILURE_PREVENTION\n"{DIRTY}"\n## FAILURE_PREVENTION\nreal notes\n', "FAILURE_PREVENTION"),
+    ("3d-3 DOCTRINE_DEVIATIONS divider, then the wrapper's",
+     f'"{CLEAN}"\n## DOCTRINE_DEVIATIONS\n"{DIRTY}"\n', "DOCTRINE_DEVIATIONS"),
+)
+R01_BOUNDARY_SHAPES = (    # (name, section, post)
+    ("3a-2 FAILURE_PREVENTION divider, no repeat", f'"{CLEAN}"\n## FAILURE_PREVENTION\n"{DIRTY}"\n', None),
+    ("3a-4 FAILURE_PREVENTION divider + dirty blockquote", f'"{CLEAN}"\n## FAILURE_PREVENTION\n> {DIRTY}\n', None),
+    ("3a-6 AUDIO_AND_EDIT bare divider", f'"{CLEAN}"\nAUDIO_AND_EDIT\n"{DIRTY}"\n', None),
+    ("3a-8 FAILURE_PREVENTION divider, dirty, ordinary tail",
+     f'"{CLEAN}"\n## FAILURE_PREVENTION\n"{DIRTY}"\n## HARD_CONSTRAINT_CHECK\nok\n', None),
+    ("3d-4 DOCTRINE_DEVIATIONS divider, v1 package", f'"{CLEAN}"\n## DOCTRINE_DEVIATIONS\n"{DIRTY}"\n', ""),
+)
+AFTER_PROMPTS_SCHEMA_ORDER = ["DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS", "AUDIO_AND_EDIT",
+                              "FAILURE_PREVENTION", "DOCTRINE_DEVIATIONS", "HARD_CONSTRAINT_CHECK",
+                              "KNOWLEDGE_AND_WEBSITE_USE", "CREATIVE_BRIEF_TO_EXECUTION_NARRATIVE"]
 S = findings.Status
 ALL_IDS = [f"PA-D{i}-check" for i in range(1, 11)] + [f"CA-D{i}-check" for i in range(1, 12)]
 NOT_MECH_PRE = ["PA-D2-check", "PA-D3-check", "PA-D5-check", "PA-D6-check", "PA-D7-check",
@@ -944,6 +981,132 @@ class Q01UnknownHeadingTest(_Base):
         self.assertTrue(row.blocking)
         self.assertIn(UNKNOWN_HEADING_ERROR, row.detail)
         self.assertIn("heading 'IMPORTANT' at line 9", row.detail)
+
+
+class R01HeadingStructureTest(_Base):
+    """Ruling 12 (R-01, CONTROLLER-CANON-GATE-001-EIGHTH-CHECK-DISPOSITION-2026-09-07.md): a
+    known heading reused as a divider after GENERATION_PROMPTS. A heading the corpus only ever
+    places before the prompts (DELIVERABLE, CORE_CREATIVE_IDEA, the FINAL_PRODUCTION_PACKAGE
+    banner …) after them, or any heading but GENERATION_PROMPTS repeated at or after the first
+    GENERATION_PROMPTS line, is a LIMIT-TEXT ERROR naming the reason and the heading, blocking,
+    verdict FAIL — never a PASS on the first prompt with the second sitting under the divider.
+    The rows whose headings after the prompts are all in the after-prompts set, once each
+    (3a-2, 3a-4, 3a-6, 3a-8, 3d-4), are the ruled boundary and keep PASS: register R-01
+    residual, documented, not tuned. A second GENERATION_PROMPTS still merges."""
+
+    @staticmethod
+    def synthetic(section, post=None):
+        post = "## DOCTRINE_DEVIATIONS\nnone\n" if post is None else post
+        return ("## VISUAL_SYSTEM\nkey light from upper-left; centre zone\n## DELIVERABLE\n"
+                "one 9:16 video\n## GENERATION_PROMPTS\n" + section + post)
+
+    def assertStructureError(self, text, reason, heading_clause, name):
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=text)
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertNotEqual(lt.status, S.PASS, (name, lt.detail))
+        self.assertEqual(lt.status, S.ERROR, (name, lt.detail))
+        self.assertIn(reason, lt.detail, name)
+        self.assertIn(heading_clause, lt.detail, name)
+        self.assertNotIn(UNKNOWN_HEADING_ERROR, lt.detail, name)
+        self.assertIn("fails closed", lt.detail, name)
+        self.assertTrue(lt.blocking)
+        self.assertEqual(r.verdict(), "FAIL", name)
+        self.assertTrue(r.render_text().splitlines()[-1].startswith("GATE FAIL"))
+        self.assertInvariants(r)
+        return r
+
+    def test_r01_the_after_set_rows_are_errors(self):
+        # at HEAD dbbe76f each was LIMIT-TEXT PASS, verdict PASS, the dirty text unscanned
+        for name, section, heading in R01_AFTER_SET_SHAPES:
+            with self.subTest(name):
+                self.assertStructureError(self.synthetic(section), AFTER_SET_ERROR,
+                                          f"heading {heading!r} at line 7", name)
+
+    def test_r01_the_repeat_rows_are_errors(self):
+        for name, section, heading in R01_REPEAT_SHAPES:
+            with self.subTest(name):
+                self.assertStructureError(self.synthetic(section), REPEAT_ERROR,
+                                          f"heading {heading!r} at lines 7 and 9", name)
+
+    def test_r01_the_boundary_rows_keep_their_outcome(self):
+        # documented, not tuned (register R-01 residual): LIMIT-TEXT PASS on the first prompt,
+        # the dirty text in a genuine section — the shape only the production blueprint
+        # schema closes. Every heading after the prompts is in the after-prompts set, once.
+        for name, section, post in R01_BOUNDARY_SHAPES:
+            with self.subTest(name):
+                text = self.synthetic(section, post)
+                headings = package.section_headings(text)
+                after = headings[headings.index("GENERATION_PROMPTS") + 1:]
+                self.assertTrue(set(after) <= set(package.KNOWN_HEADINGS_AFTER_PROMPTS), after)
+                self.assertEqual(len(after), len(set(after)), after)
+                r = self.run_gate(Path("synthetic.txt"), "video", False, text=text)
+                lt = self.row(r, "LIMIT-TEXT")
+                self.assertEqual(lt.status, S.PASS, (name, lt.detail))
+                self.assertEqual(r.verdict(), "PASS", name)
+                self.assertInvariants(r)
+
+    def test_r01_the_seven_after_prompts_headings_once_extract_and_scan(self):
+        # counter-pin: the dirty prompt followed by all seven after-prompts headings in the
+        # corpus's order (the wrapper's DOCTRINE_DEVIATIONS dropped so none repeats) is
+        # scanned and FAILs; each of the seven before-only headings after the prompts errors
+        text = self.synthetic(f'"{DIRTY}"\n' + "".join(f"## {h}\nprose\n" for h in AFTER_PROMPTS_SCHEMA_ORDER),
+                              post="")
+        r = self.run_gate(Path("synthetic.txt"), "video", False, text=text)
+        lt = self.row(r, "LIMIT-TEXT")
+        self.assertEqual(lt.status, S.FAIL, lt.detail)
+        self.assertIn("prompt 1", lt.detail)
+        before_only = sorted(set(package.KNOWN_SECTION_HEADINGS)
+                             - set(package.KNOWN_HEADINGS_AFTER_PROMPTS) - {"GENERATION_PROMPTS"})
+        self.assertEqual(len(before_only), 7)
+        for heading in before_only:
+            with self.subTest(heading):
+                self.assertStructureError(self.synthetic(f'"{CLEAN}"\n## {heading}\n"{DIRTY}"\n'),
+                                          AFTER_SET_ERROR, f"heading {heading!r} at line 7", heading)
+
+    def test_r01_a_second_generation_prompts_heading_still_merges(self):
+        # the exempt repeat (Ruling 11 condition 2): the eighth checker's 3a-5 — a known
+        # divider, then a second GENERATION_PROMPTS carrying the dirty prompt — is scanned
+        for name, section in (("S1 second GENERATION_PROMPTS", f'"{CLEAN}"\n## GENERATION_PROMPTS\n"{DIRTY}"\n'),
+                              ("3a-5 known divider, then second GENERATION_PROMPTS",
+                               f'"{CLEAN}"\n## FAILURE_PREVENTION\nx\n## GENERATION_PROMPTS\n"{DIRTY}"\n')):
+            with self.subTest(name):
+                r = self.run_gate(Path("synthetic.txt"), "video", False, text=self.synthetic(section))
+                lt = self.row(r, "LIMIT-TEXT")
+                self.assertEqual(lt.status, S.FAIL, (name, lt.detail))
+                self.assertIn("prompt 2", lt.detail, name)
+
+    def test_r01_the_four_anchors_carry_no_new_reason(self):
+        for path, modality, product, expected in ((HAIKU_B06, "static_image", True, S.PASS),
+                                                  (SONNET_B06, "static_image", True, S.PASS),
+                                                  (HAIKU_B01, "video", False, S.FAIL),
+                                                  (SONNET_B01, "video", False, S.FAIL)):
+            with self.subTest(path.name):
+                r = self.run_gate(path, modality, product)
+                lt = self.row(r, "LIMIT-TEXT")
+                self.assertEqual(lt.status, expected, lt.detail)
+                for reason in (UNKNOWN_HEADING_ERROR, AFTER_SET_ERROR, REPEAT_ERROR):
+                    self.assertNotIn(reason, lt.detail)
+
+    def test_r01_a_supplied_prompt_file_still_bypasses_extraction(self):
+        for section in (R01_AFTER_SET_SHAPES[0][1], R01_REPEAT_SHAPES[0][1]):
+            r = self.run_gate(Path("synthetic.txt"), "video", False,
+                              text=self.synthetic(section), prompts=[CLEAN])
+            self.assertEqual(self.status(r, "LIMIT-TEXT"), S.PASS)
+
+    def test_check_limit_text_names_the_after_set_and_repeat_errors(self):
+        row = predispatch.check_limit_text(
+            [], self.reg, extraction_error=f"{AFTER_SET_ERROR} — heading 'DELIVERABLE' at line 7")
+        self.assertEqual(row.status, S.ERROR)
+        self.assertTrue(row.blocking)
+        self.assertIn(AFTER_SET_ERROR, row.detail)
+        self.assertIn("heading 'DELIVERABLE' at line 7", row.detail)
+        row = predispatch.check_limit_text(
+            [], self.reg,
+            extraction_error=f"{REPEAT_ERROR} — heading 'FAILURE_PREVENTION' at lines 7 and 9")
+        self.assertEqual(row.status, S.ERROR)
+        self.assertTrue(row.blocking)
+        self.assertIn(REPEAT_ERROR, row.detail)
+        self.assertIn("heading 'FAILURE_PREVENTION' at lines 7 and 9", row.detail)
 
 
 if __name__ == "__main__":

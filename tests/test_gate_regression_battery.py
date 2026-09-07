@@ -22,7 +22,10 @@ fixtures that used to extract and FAIL now ERROR), and the seventh checker's Q-0
 (Ruling 11: a section heading outside package.KNOWN_SECTION_HEADINGS after GENERATION_PROMPTS
 has opened is an ERROR naming the heading — a bare ALL-CAPS line between two prompts no longer
 hides the second; parsing is untouched, known headings and the four anchors keep their
-outcome).
+outcome), and the eighth checker's R-01 shapes (Ruling 12: a known heading reused as a divider
+after GENERATION_PROMPTS — one the corpus only places before the prompts, or one repeated at
+or after the first GENERATION_PROMPTS — is an ERROR naming it; a heading in
+package.KNOWN_HEADINGS_AFTER_PROMPTS, once, stays a genuine section — the ruled boundary).
 
 Each row is (finding, check, phrase, intended). Checks:
   T-scan      textscan.scan_prompt over the phrase              → HIT | CLEAR
@@ -280,6 +283,44 @@ ROWS = [
     ("Q-01 anchor Haiku B01", "LIMIT-TEXT pkg", "runs/haiku-packs/packages/E038-haiku-packs-B01-R1.txt", "FAIL"),
     ("Q-01 anchor Sonnet B01", "LIMIT-TEXT pkg",
      "baseline/sonnet-no-canon/E037-sonnet-no-canon-B01-R1.txt", "FAIL"),
+    # ── R-01 / Ruling 12: a known heading reused as a divider after GENERATION_PROMPTS. A
+    # heading the corpus only places before the prompts (3a-3, 3d-1, 3d-2, 3d-5) or a heading
+    # repeated at or after the first GENERATION_PROMPTS (3a-1; 3d-3 repeats the wrapper's
+    # DOCTRINE_DEVIATIONS) is an ERROR; each of the six flipped PASS→ERROR. The boundary rows
+    # (3a-2, 3a-4, 3a-6, 3a-8: every heading after the prompts in the after-prompts set, once)
+    # stay PASS — register R-01 residual, documented, not tuned; 3d-4 needs a package without
+    # the wrapper's DOCTRINE_DEVIATIONS and is pinned in the package and predispatch tests.
+    # Counter rows: a second GENERATION_PROMPTS after a known divider (3a-5, merges), a known
+    # divider then an unknown heading (3a-7, the Ruling 11 reason), and the six other
+    # after-prompts headings in schema order before the wrapper's DOCTRINE_DEVIATIONS — all
+    # seven once, the dirty prompt scanned. ──
+    ("R-01 3a-1 FAILURE_PREVENTION x2", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## FAILURE_PREVENTION\n"{DIRTY}"\n## FAILURE_PREVENTION\nreal notes\n', "ERROR"),
+    ("R-01 3a-3 DELIVERABLE after", "LIMIT-TEXT raw", f'"{CLEAN}"\n## DELIVERABLE\n"{DIRTY}"\n', "ERROR"),
+    ("R-01 3d-1 FINAL_PRODUCTION bare", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\nFINAL_PRODUCTION_PACKAGE\n"{DIRTY}"\n', "ERROR"),
+    ("R-01 3d-2 FINAL_PRODUCTION + >", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## FINAL_PRODUCTION_PACKAGE\n> {DIRTY}\n', "ERROR"),
+    ("R-01 3d-3 DOCTRINE_DEVIATIONS x2", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## DOCTRINE_DEVIATIONS\n"{DIRTY}"\n', "ERROR"),
+    ("R-01 3d-5 CORE_CREATIVE_IDEA after", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## CORE_CREATIVE_IDEA\n"{DIRTY}"\n', "ERROR"),
+    ("R-01 3a-2 boundary: known divider", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## FAILURE_PREVENTION\n"{DIRTY}"\n', "PASS"),
+    ("R-01 3a-4 boundary: divider + >", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## FAILURE_PREVENTION\n> {DIRTY}\n', "PASS"),
+    ("R-01 3a-6 boundary: AUDIO_AND_EDIT", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\nAUDIO_AND_EDIT\n"{DIRTY}"\n', "PASS"),
+    ("R-01 3a-8 boundary: ordinary tail", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## FAILURE_PREVENTION\n"{DIRTY}"\n## HARD_CONSTRAINT_CHECK\nok\n', "PASS"),
+    ("R-01 3a-5 divider, 2nd GEN_PROMPTS", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## FAILURE_PREVENTION\nx\n## GENERATION_PROMPTS\n"{DIRTY}"\n', "FAIL"),
+    ("R-01 3a-7 divider, then unknown", "LIMIT-TEXT raw",
+     f'"{CLEAN}"\n## FAILURE_PREVENTION\nx\nIMPORTANT\n"{DIRTY}"\n', "ERROR"),
+    ("R-01 seven after headings, once", "LIMIT-TEXT raw",
+     f'"{DIRTY}"\n## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS\na\n## AUDIO_AND_EDIT\nb\n'
+     f'## FAILURE_PREVENTION\nc\n## HARD_CONSTRAINT_CHECK\nd\n## KNOWLEDGE_AND_WEBSITE_USE\ne\n'
+     f'## CREATIVE_BRIEF_TO_EXECUTION_NARRATIVE\nf\n', "FAIL"),
 ]
 
 

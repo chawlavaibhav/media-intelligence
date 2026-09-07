@@ -62,6 +62,32 @@ the corpus is unchanged by construction (0 of 84 carry a bare ALL-CAPS line insi
 section). Headings before the section opens are unaffected; a second GENERATION_PROMPTS
 heading is in the set and merges into the first as it always has.
 
+KNOWN HEADINGS AS DIVIDERS — Ruling 12, CONTROLLER-CANON-GATE-001-EIGHTH-CHECK-DISPOSITION-
+2026-09-07.md (R-01). The Ruling 11 rule checks membership in the 15-heading union, not
+structure, so until this commit a known heading reused as a divider after GENERATION_PROMPTS
+hid a quoted run the same way — `FAILURE_PREVENTION … "dirty" … FAILURE_PREVENTION`,
+`DELIVERABLE` or `CORE_CREATIVE_IDEA` after the prompts, the FINAL_PRODUCTION_PACKAGE banner
+repeated, `DOCTRINE_DEVIATIONS` twice — and LIMIT-TEXT PASSed on the first prompt alone. Two
+refinements, both post-parse in the same place, both derived from the same 84 packages:
+(1) the known set for the post-prompts position is KNOWN_HEADINGS_AFTER_PROMPTS, the union of
+headings that follow the first GENERATION_PROMPTS in at least one committed package (7 of the
+15, frozen beside KNOWN_SECTION_HEADINGS and recomputed by KnownHeadingsTest) — a heading
+after the prompts that is in the union but not in this set raises
+HeadingNotObservedAfterPrompts ("section heading not observed after GENERATION_PROMPTS in the
+committed schema — prompts may be hidden; not scanned"), naming it and its line; (2) a heading
+that appears more than once at or after the first GENERATION_PROMPTS line raises
+RepeatedSectionHeading ("section heading repeated after GENERATION_PROMPTS — prompts may be
+hidden; not scanned"), naming it and both lines — no committed package repeats any heading.
+A second GENERATION_PROMPTS heading is exempt from both and merges into the first as Ruling
+11 condition 2 recorded. Precedence: unrecognised (Ruling 11), then not observed after, then
+repeated — `_heading_error_after_prompts`, which reads the headings from the one line-walk
+`section_headings` makes (R-02: until this commit the rule walked the lines itself while
+this docstring said it used `section_headings`). The ruled boundary stays: a heading in the
+after-prompts set, once, with a quoted run or blockquote under it opens a genuine section
+whose quoted text is that section's prose (CANON-GATE-002 register, R-01 residual) — the
+eighth checker's 3a-2, and likewise its 3a-4, 3a-6, 3a-8 and 3d-4, each of which carries only
+after-prompts headings once — closable only by the production blueprint schema (Ruling 3).
+
 Shot extraction: table rows `| n |`, `Shot n`
 headings, or numbered items in PRODUCTION_RECIPE / GENERATION_PROMPTS. The plan names the
 union of the two sections; a literal union double-counts a package that carries both a shot
@@ -104,6 +130,25 @@ KNOWN_SECTION_HEADINGS = (
     "OBJECTIVE_INTERPRETATION",
     "PRODUCTION_RECIPE",
     "VISUAL_SYSTEM",
+)
+# Ruling 12 (CONTROLLER-CANON-GATE-001-EIGHTH-CHECK-DISPOSITION-2026-09-07.md, R-01): the
+# union of every heading that appears AFTER the first GENERATION_PROMPTS heading in at least
+# one of the same 84 packages — SECTION_RE over the stripped lines of the raw text, repeats
+# kept, as `section_headings` walks them — derived by a scratch script and frozen here,
+# sorted; recomputed in place by tests/test_gate_package.py::KnownHeadingsTest. A strict
+# subset of KNOWN_SECTION_HEADINGS: the other eight (the seven schema sections before the
+# prompts, and GENERATION_PROMPTS itself) never follow the prompts in any committed package.
+# A heading after the first GENERATION_PROMPTS that is in the union but not here is an
+# extraction error (HeadingNotObservedAfterPrompts), except a second GENERATION_PROMPTS,
+# which merges (see `_heading_error_after_prompts`); the tuple is not edited by hand.
+KNOWN_HEADINGS_AFTER_PROMPTS = (
+    "AUDIO_AND_EDIT",
+    "CREATIVE_BRIEF_TO_EXECUTION_NARRATIVE",
+    "DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS",
+    "DOCTRINE_DEVIATIONS",
+    "FAILURE_PREVENTION",
+    "HARD_CONSTRAINT_CHECK",
+    "KNOWLEDGE_AND_WEBSITE_USE",
 )
 SHOT_SECTIONS = ("PRODUCTION_RECIPE", "GENERATION_PROMPTS")
 SHOT_TABLE_ROW = re.compile(r"^\|\s*(\d+)\s*\|")
@@ -183,14 +228,20 @@ def parse_package(text: str) -> Package:
     return Package(sections=joined, subfields=subfields, schema=schema, text=text)
 
 
-def section_headings(text: str) -> list:
+def section_headings(text: str, *, numbered: bool = False) -> list:
     """Every section heading of `text` in order of appearance, repeats kept — SECTION_RE over
-    each stripped line, exactly as `parse_package` cuts the package (Ruling 11). The order
-    is read from the text because `Package.sections` is keyed by name: a dict keeps only a
-    heading's first position and folds a repeat into it, so it cannot show that a heading
-    seen before GENERATION_PROMPTS recurs after it."""
-    matches = (SECTION_RE.match(line.strip()) for line in text.splitlines())
-    return [m.group(1) for m in matches if m]
+    each stripped line, exactly as `parse_package` cuts the package (Ruling 11); with
+    `numbered`, (line number, heading) pairs, 1-based. This is the one line-walk the heading
+    rules read (`_heading_error_after_prompts`; Ruling 12 condition 6). The order is read
+    from the text because `Package.sections` is keyed by name: a dict keeps only a heading's
+    first position and folds a repeat into it, so it cannot show that a heading seen before
+    GENERATION_PROMPTS recurs after it, nor that one after it recurs."""
+    pairs = []
+    for line_no, line in enumerate(text.splitlines(), 1):
+        m = SECTION_RE.match(line.strip())
+        if m:
+            pairs.append((line_no, m.group(1)))
+    return pairs if numbered else [heading for _, heading in pairs]
 
 
 def _split_subfields(visual_system: str) -> dict:
@@ -253,6 +304,23 @@ class UnknownSectionHeading(ExtractionError):
     characters as a heading, so such a line between two prompts starts a section the gate
     does not know and everything after it — a prompt included — leaves the scan. Parsing
     is untouched; the package is refused before any quote is read."""
+
+
+class HeadingNotObservedAfterPrompts(ExtractionError):
+    """A heading in KNOWN_SECTION_HEADINGS but not in KNOWN_HEADINGS_AFTER_PROMPTS appears
+    after the first GENERATION_PROMPTS heading (Ruling 12, R-01, refinement 1). The corpus
+    places DELIVERABLE, CORE_CREATIVE_IDEA, the FINAL_PRODUCTION_PACKAGE banner and the rest
+    of the pre-prompt schema before the prompts only; after them such a heading is a
+    divider, and what follows it — a quoted run, a blockquote — leaves the scan. A second
+    GENERATION_PROMPTS is exempt: it merges into the first (Ruling 11 condition 2)."""
+
+
+class RepeatedSectionHeading(ExtractionError):
+    """A heading appears more than once at or after the first GENERATION_PROMPTS line
+    (Ruling 12, R-01, refinement 2). No committed package repeats any heading, so the second
+    occurrence is a divider and what sits between the two leaves the scan. A second
+    GENERATION_PROMPTS heading is the one exempt repeat: it merges into the first section
+    and both halves are extracted (Ruling 11 condition 2)."""
 
 
 class UnbalancedQuotes(ExtractionError):
@@ -453,42 +521,65 @@ def _blockquote_runs(text: str) -> list:
     return [(s, b) for s, b in runs if b]
 
 
-def _unknown_heading_after_prompts(text: str):
-    """(line number, heading) of the first heading after the first GENERATION_PROMPTS heading
-    that is not in KNOWN_SECTION_HEADINGS, else None (Ruling 11). Headings before the section
-    opens are not looked at; a second GENERATION_PROMPTS is in the set and passes."""
-    seen = False
-    line_no = 0
-    for line in text.splitlines():
-        line_no += 1
-        m = SECTION_RE.match(line.strip())
-        if not m:
+def _heading_error_after_prompts(text: str):
+    """The ExtractionError the headings of `text` earn after the first GENERATION_PROMPTS
+    heading, else None — over the one heading walk `section_headings` makes (Rulings 11 and
+    12). Three rules in this precedence, each over the whole list, naming its first offender
+    in line order: (1) Ruling 11 — a heading outside KNOWN_SECTION_HEADINGS is
+    UnknownSectionHeading; (2) Ruling 12 — a known heading outside
+    KNOWN_HEADINGS_AFTER_PROMPTS is HeadingNotObservedAfterPrompts; (3) Ruling 12 — a heading
+    seen a second time at or after the first GENERATION_PROMPTS line is
+    RepeatedSectionHeading, naming both lines. Rule order rather than line order because each
+    later rule presumes the earlier one passed: a repeat of an unknown heading is reported as
+    unknown (Ruling 11's message, unchanged), a before-only heading repeated after the
+    prompts as not observed after them — the stricter reason for the same lines. Headings
+    before the section opens are not looked at. A second GENERATION_PROMPTS heading is exempt
+    from (2) and (3): it is not in the after-prompts set (no committed package repeats it),
+    but Ruling 11 condition 2 preserved its merge into the first section and Ruling 12 keeps
+    that."""
+    headings = section_headings(text, numbered=True)
+    opened = next((i for i, (_, h) in enumerate(headings) if h == "GENERATION_PROMPTS"), None)
+    if opened is None:
+        return None
+    after = headings[opened + 1:]
+    for line_no, heading in after:
+        if heading not in KNOWN_SECTION_HEADINGS:
+            return UnknownSectionHeading(
+                f"unrecognised section heading after GENERATION_PROMPTS — prompts may be hidden; "
+                f"not scanned — heading {heading!r} at line {line_no}")
+    for line_no, heading in after:
+        if heading != "GENERATION_PROMPTS" and heading not in KNOWN_HEADINGS_AFTER_PROMPTS:
+            return HeadingNotObservedAfterPrompts(
+                f"section heading not observed after GENERATION_PROMPTS in the committed schema "
+                f"— prompts may be hidden; not scanned — heading {heading!r} at line {line_no}")
+    first_seen: dict = {}
+    for line_no, heading in headings[opened:]:
+        if heading == "GENERATION_PROMPTS":
             continue
-        if not seen:
-            seen = m.group(1) == "GENERATION_PROMPTS"
-            continue
-        if m.group(1) not in KNOWN_SECTION_HEADINGS:
-            return line_no, m.group(1)
+        if heading in first_seen:
+            return RepeatedSectionHeading(
+                f"section heading repeated after GENERATION_PROMPTS — prompts may be hidden; "
+                f"not scanned — heading {heading!r} at lines {first_seen[heading]} and {line_no}")
+        first_seen[heading] = line_no
     return None
 
 
 def extract_prompts(pkg: Package) -> list:
     """Prompts in package order; raises UnknownSectionHeading when a heading outside the
-    known schema set follows the section's opening (Ruling 11), CurlyQuotes when the section
-    carries a curly double quote (Ruling 10), UnbalancedQuotes when its straight quotes admit
-    no single pairing (Ruling 7) and PromptBelowFloor when a quoted run falls under the floor
-    (Ruling 9) — callers report the error, never a partial list. The heading check is
-    section-level and runs first, on the raw package text, so its outcome does not depend
-    on the quote state."""
+    known schema set follows the section's opening (Ruling 11), HeadingNotObservedAfterPrompts
+    when a known heading the corpus never places after the prompts follows it and
+    RepeatedSectionHeading when any heading but GENERATION_PROMPTS recurs after it (Ruling
+    12), CurlyQuotes when the section carries a curly double quote (Ruling 10),
+    UnbalancedQuotes when its straight quotes admit no single pairing (Ruling 7) and
+    PromptBelowFloor when a quoted run falls under the floor (Ruling 9) — callers report the
+    error, never a partial list. The heading checks are section-level and run first, on the
+    raw package text, so their outcome does not depend on the quote state."""
     section = pkg.sections.get("GENERATION_PROMPTS")
     if section is None:
         return []
-    unknown = _unknown_heading_after_prompts(pkg.text)
-    if unknown:
-        line_no, heading = unknown
-        raise UnknownSectionHeading(
-            f"unrecognised section heading after GENERATION_PROMPTS — prompts may be hidden; "
-            f"not scanned — heading {heading!r} at line {line_no}")
+    heading_error = _heading_error_after_prompts(pkg.text)
+    if heading_error is not None:
+        raise heading_error
     try:
         found = [(s, b, "quoted") for s, b in _quoted_runs(section)]
     except CurlyQuotes as exc:
