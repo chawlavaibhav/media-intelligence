@@ -3,12 +3,12 @@ header:
   plan: EVAL-040-RUN-PLAN
   run_id: img-r1
   mode: lane
-  generated_utc: '2026-09-08T06:50:31.352694Z'
+  generated_utc: '2026-09-08T06:53:39.626845Z'
   statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
     body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
     the authorisation file at every open.'
   git_rev: HEAD
-  commit: 57f75bc7921976c541c9e42b5ecd6027c9a88ac1
+  commit: 0bb6c6d90bb387ebfbde015c747fec2d74c5c7c3
   item_basis_commit: 0596aa2
   freeze_matches_item_basis: true
   tranche_id: EVAL-040-TRANCHE-1
@@ -27,7 +27,7 @@ header:
   routes: null
   tranche: 1a
   repeats: null
-  ordering: case-major; within a case every route's repeat 1 before any repeat 2
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
   counts:
     trials: 76
     excluded: 16
@@ -196,156 +196,6 @@ trials:
   credential_file_name: ~/.mi-keys
   seed_policy: unset
 - seq: 7
-  trial_id: IMG-CORE-01__gpt-image-2__core__r2
-  case_id: IMG-CORE-01
-  item_id: IMG-CORE-01
-  route_key: gpt-image-2
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: openai/gpt-image-2
-  endpoint: https://queue.fal.run/openai/gpt-image-2
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.053000'
-  estimated_usd_equiv: '0.053000'
-  unit_price: '0.053'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
-  body_sha256: f60b11bc33dcd05daf5f52b87afff506022bc0170b5e561138624d320e0b4fe1
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 8
-  trial_id: IMG-CORE-01__nano-banana-2__core__r2
-  case_id: IMG-CORE-01
-  item_id: IMG-CORE-01
-  route_key: nano-banana-2
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3.1-flash-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.067000'
-  estimated_usd_equiv: '0.067000'
-  unit_price: '0.067'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: 67df6aad6320dd0ff4e01af0933b2ab6b052bd528dd4100997dbac87817ec271
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 9
-  trial_id: IMG-CORE-01__nano-banana-pro__core__r2
-  case_id: IMG-CORE-01
-  item_id: IMG-CORE-01
-  route_key: nano-banana-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3-pro-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.134000'
-  estimated_usd_equiv: '0.134000'
-  unit_price: '0.134'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: 67df6aad6320dd0ff4e01af0933b2ab6b052bd528dd4100997dbac87817ec271
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 10
-  trial_id: IMG-CORE-01__seedream-5-pro__core__r2
-  case_id: IMG-CORE-01
-  item_id: IMG-CORE-01
-  route_key: seedream-5-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: bytedance/seedream/v5/pro/text-to-image
-  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.067500'
-  estimated_usd_equiv: '0.067500'
-  unit_price: '0.0675'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
-  body_sha256: 38a50b94224ab2272e20ee5f69b1f14be21eee62ca62a1875ef0ad5caf718b39
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 11
-  trial_id: IMG-CORE-01__flux-2-pro__core__r2
-  case_id: IMG-CORE-01
-  item_id: IMG-CORE-01
-  route_key: flux-2-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: fal-ai/flux-2-pro
-  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.030000'
-  estimated_usd_equiv: '0.030000'
-  unit_price: '0.03'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
-  body_sha256: 65f260e2db284152d7549e074bb209d2e00812a992719fa6e01863385f850e3d
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 12
-  trial_id: IMG-CORE-01__qwen-image-3__core__r2
-  case_id: IMG-CORE-01
-  item_id: IMG-CORE-01
-  route_key: qwen-image-3
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: alibaba/qwen-image-3/text-to-image
-  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.040000'
-  estimated_usd_equiv: '0.040000'
-  unit_price: '0.04'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
-  body_sha256: 8c340f57feee84202b093bcaa918d61e616a17d068d7a27b05f5b395f17ec72e
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 13
   trial_id: IMG-CORE-02__gpt-image-2__core__r1
   case_id: IMG-CORE-02
   item_id: IMG-CORE-02
@@ -370,7 +220,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 14
+- seq: 8
   trial_id: IMG-CORE-02__nano-banana-2__core__r1
   case_id: IMG-CORE-02
   item_id: IMG-CORE-02
@@ -395,7 +245,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 15
+- seq: 9
   trial_id: IMG-CORE-02__nano-banana-pro__core__r1
   case_id: IMG-CORE-02
   item_id: IMG-CORE-02
@@ -420,7 +270,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 16
+- seq: 10
   trial_id: IMG-CORE-02__seedream-5-pro__core__r1
   case_id: IMG-CORE-02
   item_id: IMG-CORE-02
@@ -445,7 +295,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 17
+- seq: 11
   trial_id: IMG-CORE-02__flux-2-pro__core__r1
   case_id: IMG-CORE-02
   item_id: IMG-CORE-02
@@ -470,7 +320,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 18
+- seq: 12
   trial_id: IMG-CORE-02__qwen-image-3__core__r1
   case_id: IMG-CORE-02
   item_id: IMG-CORE-02
@@ -495,157 +345,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 19
-  trial_id: IMG-CORE-02__gpt-image-2__core__r2
-  case_id: IMG-CORE-02
-  item_id: IMG-CORE-02
-  route_key: gpt-image-2
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: openai/gpt-image-2
-  endpoint: https://queue.fal.run/openai/gpt-image-2
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.053000'
-  estimated_usd_equiv: '0.053000'
-  unit_price: '0.053'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
-  body_sha256: e1a69fad9615d73ac86870bbdf642c36353f6f7610cf92a9d7a14c13c3835d87
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 20
-  trial_id: IMG-CORE-02__nano-banana-2__core__r2
-  case_id: IMG-CORE-02
-  item_id: IMG-CORE-02
-  route_key: nano-banana-2
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3.1-flash-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.067000'
-  estimated_usd_equiv: '0.067000'
-  unit_price: '0.067'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: fa52360797121b168285402d9f10c3d733e88499d8148d2c65c81a9f59fd38d8
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 21
-  trial_id: IMG-CORE-02__nano-banana-pro__core__r2
-  case_id: IMG-CORE-02
-  item_id: IMG-CORE-02
-  route_key: nano-banana-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3-pro-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.134000'
-  estimated_usd_equiv: '0.134000'
-  unit_price: '0.134'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: fa52360797121b168285402d9f10c3d733e88499d8148d2c65c81a9f59fd38d8
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 22
-  trial_id: IMG-CORE-02__seedream-5-pro__core__r2
-  case_id: IMG-CORE-02
-  item_id: IMG-CORE-02
-  route_key: seedream-5-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: bytedance/seedream/v5/pro/text-to-image
-  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.067500'
-  estimated_usd_equiv: '0.067500'
-  unit_price: '0.0675'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
-  body_sha256: b1816a401c6347df971826cb943508386ac58bbfcdb0985e5003c56a7a7c25ba
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 23
-  trial_id: IMG-CORE-02__flux-2-pro__core__r2
-  case_id: IMG-CORE-02
-  item_id: IMG-CORE-02
-  route_key: flux-2-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: fal-ai/flux-2-pro
-  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.030000'
-  estimated_usd_equiv: '0.030000'
-  unit_price: '0.03'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
-  body_sha256: 7d6ee3192e387db5b43345c465d5d6a2d9131b92b3b942ba5624b9cf1819e576
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 24
-  trial_id: IMG-CORE-02__qwen-image-3__core__r2
-  case_id: IMG-CORE-02
-  item_id: IMG-CORE-02
-  route_key: qwen-image-3
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: alibaba/qwen-image-3/text-to-image
-  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.040000'
-  estimated_usd_equiv: '0.040000'
-  unit_price: '0.04'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
-  body_sha256: 72c093db5f1a6f1055325576531bbb06d27c63742163a386bcd147f0bc467d63
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 25
+- seq: 13
   trial_id: IMG-CORE-03__gpt-image-2__core__r1
   case_id: IMG-CORE-03
   item_id: IMG-CORE-03
@@ -670,7 +370,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 26
+- seq: 14
   trial_id: IMG-CORE-03__nano-banana-2__core__r1
   case_id: IMG-CORE-03
   item_id: IMG-CORE-03
@@ -695,7 +395,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 27
+- seq: 15
   trial_id: IMG-CORE-03__nano-banana-pro__core__r1
   case_id: IMG-CORE-03
   item_id: IMG-CORE-03
@@ -720,7 +420,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 28
+- seq: 16
   trial_id: IMG-CORE-03__seedream-5-pro__core__r1
   case_id: IMG-CORE-03
   item_id: IMG-CORE-03
@@ -745,7 +445,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 29
+- seq: 17
   trial_id: IMG-CORE-03__flux-2-pro__core__r1
   case_id: IMG-CORE-03
   item_id: IMG-CORE-03
@@ -770,7 +470,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 30
+- seq: 18
   trial_id: IMG-CORE-03__qwen-image-3__core__r1
   case_id: IMG-CORE-03
   item_id: IMG-CORE-03
@@ -795,157 +495,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 31
-  trial_id: IMG-CORE-03__gpt-image-2__core__r2
-  case_id: IMG-CORE-03
-  item_id: IMG-CORE-03
-  route_key: gpt-image-2
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: openai/gpt-image-2
-  endpoint: https://queue.fal.run/openai/gpt-image-2
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.053000'
-  estimated_usd_equiv: '0.053000'
-  unit_price: '0.053'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
-  body_sha256: 4409ac66290911703fbfbf8e74d2b9eed00143ad2b682957b6a9969130daf2bd
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 32
-  trial_id: IMG-CORE-03__nano-banana-2__core__r2
-  case_id: IMG-CORE-03
-  item_id: IMG-CORE-03
-  route_key: nano-banana-2
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3.1-flash-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.067000'
-  estimated_usd_equiv: '0.067000'
-  unit_price: '0.067'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: 3d070f7a4a743860da5f08980a8241b17d95b1a8a5dbcc1150e110b3fa4ad40e
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 33
-  trial_id: IMG-CORE-03__nano-banana-pro__core__r2
-  case_id: IMG-CORE-03
-  item_id: IMG-CORE-03
-  route_key: nano-banana-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3-pro-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.134000'
-  estimated_usd_equiv: '0.134000'
-  unit_price: '0.134'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: 3d070f7a4a743860da5f08980a8241b17d95b1a8a5dbcc1150e110b3fa4ad40e
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 34
-  trial_id: IMG-CORE-03__seedream-5-pro__core__r2
-  case_id: IMG-CORE-03
-  item_id: IMG-CORE-03
-  route_key: seedream-5-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: bytedance/seedream/v5/pro/text-to-image
-  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.067500'
-  estimated_usd_equiv: '0.067500'
-  unit_price: '0.0675'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
-  body_sha256: 184de6aae081802cad54332f2315c17c76beb845fcb76b169f7891318962f2f0
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 35
-  trial_id: IMG-CORE-03__flux-2-pro__core__r2
-  case_id: IMG-CORE-03
-  item_id: IMG-CORE-03
-  route_key: flux-2-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: fal-ai/flux-2-pro
-  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.030000'
-  estimated_usd_equiv: '0.030000'
-  unit_price: '0.03'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
-  body_sha256: 80982aae2ee3bd8ae3baec021ac47e60b6a16ae2d8a690ff5d313bb4846a205f
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 36
-  trial_id: IMG-CORE-03__qwen-image-3__core__r2
-  case_id: IMG-CORE-03
-  item_id: IMG-CORE-03
-  route_key: qwen-image-3
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: alibaba/qwen-image-3/text-to-image
-  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.040000'
-  estimated_usd_equiv: '0.040000'
-  unit_price: '0.04'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
-  body_sha256: 184de6aae081802cad54332f2315c17c76beb845fcb76b169f7891318962f2f0
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 37
+- seq: 19
   trial_id: IMG-CORE-04__gpt-image-2__core__r1
   case_id: IMG-CORE-04
   item_id: IMG-CORE-04
@@ -970,7 +520,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 38
+- seq: 20
   trial_id: IMG-CORE-04__nano-banana-2__core__r1
   case_id: IMG-CORE-04
   item_id: IMG-CORE-04
@@ -995,7 +545,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 39
+- seq: 21
   trial_id: IMG-CORE-04__nano-banana-pro__core__r1
   case_id: IMG-CORE-04
   item_id: IMG-CORE-04
@@ -1020,7 +570,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 40
+- seq: 22
   trial_id: IMG-CORE-04__seedream-5-pro__core__r1
   case_id: IMG-CORE-04
   item_id: IMG-CORE-04
@@ -1045,7 +595,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 41
+- seq: 23
   trial_id: IMG-CORE-04__flux-2-pro__core__r1
   case_id: IMG-CORE-04
   item_id: IMG-CORE-04
@@ -1070,7 +620,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 42
+- seq: 24
   trial_id: IMG-CORE-04__qwen-image-3__core__r1
   case_id: IMG-CORE-04
   item_id: IMG-CORE-04
@@ -1095,157 +645,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 43
-  trial_id: IMG-CORE-04__gpt-image-2__core__r2
-  case_id: IMG-CORE-04
-  item_id: IMG-CORE-04
-  route_key: gpt-image-2
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: openai/gpt-image-2
-  endpoint: https://queue.fal.run/openai/gpt-image-2
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.053000'
-  estimated_usd_equiv: '0.053000'
-  unit_price: '0.053'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
-  body_sha256: 6621e7c0d6bc65571aacf618febd4d59f366b26e292b9d99f1e391edd8b83385
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 44
-  trial_id: IMG-CORE-04__nano-banana-2__core__r2
-  case_id: IMG-CORE-04
-  item_id: IMG-CORE-04
-  route_key: nano-banana-2
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3.1-flash-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.067000'
-  estimated_usd_equiv: '0.067000'
-  unit_price: '0.067'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: d9ebe80b4c1bb52c9a68113160420ae30d6fe73d88bb0b4882618ec2a6402ff6
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 45
-  trial_id: IMG-CORE-04__nano-banana-pro__core__r2
-  case_id: IMG-CORE-04
-  item_id: IMG-CORE-04
-  route_key: nano-banana-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3-pro-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.134000'
-  estimated_usd_equiv: '0.134000'
-  unit_price: '0.134'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: d9ebe80b4c1bb52c9a68113160420ae30d6fe73d88bb0b4882618ec2a6402ff6
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 46
-  trial_id: IMG-CORE-04__seedream-5-pro__core__r2
-  case_id: IMG-CORE-04
-  item_id: IMG-CORE-04
-  route_key: seedream-5-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: bytedance/seedream/v5/pro/text-to-image
-  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.067500'
-  estimated_usd_equiv: '0.067500'
-  unit_price: '0.0675'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
-  body_sha256: a341466198a0741cbf49f4e714c8e7674b3309da6f1613d457e860eeadef106d
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 47
-  trial_id: IMG-CORE-04__flux-2-pro__core__r2
-  case_id: IMG-CORE-04
-  item_id: IMG-CORE-04
-  route_key: flux-2-pro
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: fal-ai/flux-2-pro
-  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.030000'
-  estimated_usd_equiv: '0.030000'
-  unit_price: '0.03'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
-  body_sha256: 22a5c173438578e9ed2881c0ec05ed6c03081d3684db9ec16e4f844ebb32dfcc
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 48
-  trial_id: IMG-CORE-04__qwen-image-3__core__r2
-  case_id: IMG-CORE-04
-  item_id: IMG-CORE-04
-  route_key: qwen-image-3
-  arm: core
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: alibaba/qwen-image-3/text-to-image
-  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.040000'
-  estimated_usd_equiv: '0.040000'
-  unit_price: '0.04'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
-  body_sha256: 063ad5769a73a121afa5fe78e14f6b368456a7666319089973e77d3ad505dd41
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 49
+- seq: 25
   trial_id: IMG-TEXT-01__nano-banana-2__A_cheap_generated__r1
   case_id: IMG-TEXT-01
   item_id: IMG-TEXT-01
@@ -1270,7 +670,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 50
+- seq: 26
   trial_id: IMG-TEXT-01__qwen-image-3__A_cheap_generated__r1
   case_id: IMG-TEXT-01
   item_id: IMG-TEXT-01
@@ -1295,7 +695,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 51
+- seq: 27
   trial_id: IMG-TEXT-01__gpt-image-2__A_cheap_generated__r1
   case_id: IMG-TEXT-01
   item_id: IMG-TEXT-01
@@ -1320,7 +720,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 52
+- seq: 28
   trial_id: IMG-TEXT-01__nano-banana-pro__B_premium_generated__r1
   case_id: IMG-TEXT-01
   item_id: IMG-TEXT-01
@@ -1345,7 +745,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 53
+- seq: 29
   trial_id: IMG-TEXT-01__seedream-5-pro__B_premium_generated__r1
   case_id: IMG-TEXT-01
   item_id: IMG-TEXT-01
@@ -1370,7 +770,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 54
+- seq: 30
   trial_id: IMG-TEXT-01__recraft-v4__B_premium_generated__r1
   case_id: IMG-TEXT-01
   item_id: IMG-TEXT-01
@@ -1395,7 +795,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 55
+- seq: 31
   trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r1
   case_id: IMG-TEXT-01
   item_id: IMG-TEXT-01
@@ -1420,182 +820,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 56
-  trial_id: IMG-TEXT-01__nano-banana-2__A_cheap_generated__r2
-  case_id: IMG-TEXT-01
-  item_id: IMG-TEXT-01
-  route_key: nano-banana-2
-  arm: A_cheap_generated
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3.1-flash-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.067000'
-  estimated_usd_equiv: '0.067000'
-  unit_price: '0.067'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: f13156ef5050f1caac1f89a0a9c12ad95aabd0de155f8022e91ce3b4df6a23ca
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 57
-  trial_id: IMG-TEXT-01__qwen-image-3__A_cheap_generated__r2
-  case_id: IMG-TEXT-01
-  item_id: IMG-TEXT-01
-  route_key: qwen-image-3
-  arm: A_cheap_generated
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: alibaba/qwen-image-3/text-to-image
-  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.040000'
-  estimated_usd_equiv: '0.040000'
-  unit_price: '0.04'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
-  body_sha256: 34ddf013aebca2955e040af8cb0098f762dbb64bbf8c93be389826a9ec1e2c7f
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 58
-  trial_id: IMG-TEXT-01__gpt-image-2__A_cheap_generated__r2
-  case_id: IMG-TEXT-01
-  item_id: IMG-TEXT-01
-  route_key: gpt-image-2
-  arm: A_cheap_generated
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: openai/gpt-image-2
-  endpoint: https://queue.fal.run/openai/gpt-image-2
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.053000'
-  estimated_usd_equiv: '0.053000'
-  unit_price: '0.053'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
-  body_sha256: eec0eff48fdd2a799dfe8954b9505319bb0bcf8a1296da5459f094428bc7213a
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 59
-  trial_id: IMG-TEXT-01__nano-banana-pro__B_premium_generated__r2
-  case_id: IMG-TEXT-01
-  item_id: IMG-TEXT-01
-  route_key: nano-banana-pro
-  arm: B_premium_generated
-  repeat_index: 2
-  tranche: 1a
-  surface: vertex
-  adapter: vertex_gemini_image
-  surface_model_id: gemini-3-pro-image
-  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
-  billing_pool: credits
-  currency: USD
-  estimated_amount_native: '0.134000'
-  estimated_usd_equiv: '0.134000'
-  unit_price: '0.134'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
-  body_sha256: f13156ef5050f1caac1f89a0a9c12ad95aabd0de155f8022e91ce3b4df6a23ca
-  api_calls_per_trial: 1
-  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
-  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
-  seed_policy: unset
-- seq: 60
-  trial_id: IMG-TEXT-01__seedream-5-pro__B_premium_generated__r2
-  case_id: IMG-TEXT-01
-  item_id: IMG-TEXT-01
-  route_key: seedream-5-pro
-  arm: B_premium_generated
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: bytedance/seedream/v5/pro/text-to-image
-  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.067500'
-  estimated_usd_equiv: '0.067500'
-  unit_price: '0.0675'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
-  body_sha256: 34ddf013aebca2955e040af8cb0098f762dbb64bbf8c93be389826a9ec1e2c7f
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 61
-  trial_id: IMG-TEXT-01__recraft-v4__B_premium_generated__r2
-  case_id: IMG-TEXT-01
-  item_id: IMG-TEXT-01
-  route_key: recraft-v4
-  arm: B_premium_generated
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: fal-ai/recraft/v4/text-to-image
-  endpoint: https://queue.fal.run/fal-ai/recraft/v4/text-to-image
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.040000'
-  estimated_usd_equiv: '0.040000'
-  unit_price: '0.04'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/recraft-v4/fal-recraft-v4-text-to-image.html
-  body_sha256: 76373ace1574ac835e2454d3dd5d6aa41f058938088d5b16b8942b376e83f706
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 62
-  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r2
-  case_id: IMG-TEXT-01
-  item_id: IMG-TEXT-01
-  route_key: flux-2-pro
-  arm: C_composite_textless_base
-  repeat_index: 2
-  tranche: 1a
-  surface: fal
-  adapter: fal_queue
-  surface_model_id: fal-ai/flux-2-pro
-  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
-  billing_pool: cash
-  currency: USD
-  estimated_amount_native: '0.030000'
-  estimated_usd_equiv: '0.030000'
-  unit_price: '0.03'
-  quantity: '1'
-  quantity_unit: images
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
-  body_sha256: 76373ace1574ac835e2454d3dd5d6aa41f058938088d5b16b8942b376e83f706
-  api_calls_per_trial: 1
-  key_name: FAL_KEY
-  credential_file_name: ~/.mi-keys
-  seed_policy: unset
-- seq: 63
+- seq: 32
   trial_id: IMG-TEXT-02__nano-banana-2__A_cheap_generated__r1
   case_id: IMG-TEXT-02
   item_id: IMG-TEXT-02
@@ -1620,7 +845,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 64
+- seq: 33
   trial_id: IMG-TEXT-02__qwen-image-3__A_cheap_generated__r1
   case_id: IMG-TEXT-02
   item_id: IMG-TEXT-02
@@ -1645,7 +870,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 65
+- seq: 34
   trial_id: IMG-TEXT-02__gpt-image-2__A_cheap_generated__r1
   case_id: IMG-TEXT-02
   item_id: IMG-TEXT-02
@@ -1670,7 +895,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 66
+- seq: 35
   trial_id: IMG-TEXT-02__nano-banana-pro__B_premium_generated__r1
   case_id: IMG-TEXT-02
   item_id: IMG-TEXT-02
@@ -1695,7 +920,7 @@ trials:
   key_name: gcloud auth print-access-token (service-account key file, MD-C3)
   credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
   seed_policy: unset
-- seq: 67
+- seq: 36
   trial_id: IMG-TEXT-02__seedream-5-pro__B_premium_generated__r1
   case_id: IMG-TEXT-02
   item_id: IMG-TEXT-02
@@ -1720,7 +945,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 68
+- seq: 37
   trial_id: IMG-TEXT-02__recraft-v4__B_premium_generated__r1
   case_id: IMG-TEXT-02
   item_id: IMG-TEXT-02
@@ -1745,7 +970,7 @@ trials:
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys
   seed_policy: unset
-- seq: 69
+- seq: 38
   trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r1
   case_id: IMG-TEXT-02
   item_id: IMG-TEXT-02
@@ -1766,6 +991,781 @@ trials:
   quantity_unit: images
   price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
   body_sha256: e75c87c679a18dacd568f1db84e1643dde326ebdf5371620f99140761ab17931
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 39
+  trial_id: IMG-CORE-01__gpt-image-2__core__r2
+  case_id: IMG-CORE-01
+  item_id: IMG-CORE-01
+  route_key: gpt-image-2
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: openai/gpt-image-2
+  endpoint: https://queue.fal.run/openai/gpt-image-2
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.053000'
+  estimated_usd_equiv: '0.053000'
+  unit_price: '0.053'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
+  body_sha256: f60b11bc33dcd05daf5f52b87afff506022bc0170b5e561138624d320e0b4fe1
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 40
+  trial_id: IMG-CORE-01__nano-banana-2__core__r2
+  case_id: IMG-CORE-01
+  item_id: IMG-CORE-01
+  route_key: nano-banana-2
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3.1-flash-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.067000'
+  estimated_usd_equiv: '0.067000'
+  unit_price: '0.067'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 67df6aad6320dd0ff4e01af0933b2ab6b052bd528dd4100997dbac87817ec271
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 41
+  trial_id: IMG-CORE-01__nano-banana-pro__core__r2
+  case_id: IMG-CORE-01
+  item_id: IMG-CORE-01
+  route_key: nano-banana-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3-pro-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.134000'
+  estimated_usd_equiv: '0.134000'
+  unit_price: '0.134'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 67df6aad6320dd0ff4e01af0933b2ab6b052bd528dd4100997dbac87817ec271
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 42
+  trial_id: IMG-CORE-01__seedream-5-pro__core__r2
+  case_id: IMG-CORE-01
+  item_id: IMG-CORE-01
+  route_key: seedream-5-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: bytedance/seedream/v5/pro/text-to-image
+  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.067500'
+  estimated_usd_equiv: '0.067500'
+  unit_price: '0.0675'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
+  body_sha256: 38a50b94224ab2272e20ee5f69b1f14be21eee62ca62a1875ef0ad5caf718b39
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 43
+  trial_id: IMG-CORE-01__flux-2-pro__core__r2
+  case_id: IMG-CORE-01
+  item_id: IMG-CORE-01
+  route_key: flux-2-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 65f260e2db284152d7549e074bb209d2e00812a992719fa6e01863385f850e3d
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 44
+  trial_id: IMG-CORE-01__qwen-image-3__core__r2
+  case_id: IMG-CORE-01
+  item_id: IMG-CORE-01
+  route_key: qwen-image-3
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: alibaba/qwen-image-3/text-to-image
+  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.040000'
+  estimated_usd_equiv: '0.040000'
+  unit_price: '0.04'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
+  body_sha256: 8c340f57feee84202b093bcaa918d61e616a17d068d7a27b05f5b395f17ec72e
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 45
+  trial_id: IMG-CORE-02__gpt-image-2__core__r2
+  case_id: IMG-CORE-02
+  item_id: IMG-CORE-02
+  route_key: gpt-image-2
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: openai/gpt-image-2
+  endpoint: https://queue.fal.run/openai/gpt-image-2
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.053000'
+  estimated_usd_equiv: '0.053000'
+  unit_price: '0.053'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
+  body_sha256: e1a69fad9615d73ac86870bbdf642c36353f6f7610cf92a9d7a14c13c3835d87
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 46
+  trial_id: IMG-CORE-02__nano-banana-2__core__r2
+  case_id: IMG-CORE-02
+  item_id: IMG-CORE-02
+  route_key: nano-banana-2
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3.1-flash-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.067000'
+  estimated_usd_equiv: '0.067000'
+  unit_price: '0.067'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: fa52360797121b168285402d9f10c3d733e88499d8148d2c65c81a9f59fd38d8
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 47
+  trial_id: IMG-CORE-02__nano-banana-pro__core__r2
+  case_id: IMG-CORE-02
+  item_id: IMG-CORE-02
+  route_key: nano-banana-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3-pro-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.134000'
+  estimated_usd_equiv: '0.134000'
+  unit_price: '0.134'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: fa52360797121b168285402d9f10c3d733e88499d8148d2c65c81a9f59fd38d8
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 48
+  trial_id: IMG-CORE-02__seedream-5-pro__core__r2
+  case_id: IMG-CORE-02
+  item_id: IMG-CORE-02
+  route_key: seedream-5-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: bytedance/seedream/v5/pro/text-to-image
+  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.067500'
+  estimated_usd_equiv: '0.067500'
+  unit_price: '0.0675'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
+  body_sha256: b1816a401c6347df971826cb943508386ac58bbfcdb0985e5003c56a7a7c25ba
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 49
+  trial_id: IMG-CORE-02__flux-2-pro__core__r2
+  case_id: IMG-CORE-02
+  item_id: IMG-CORE-02
+  route_key: flux-2-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 7d6ee3192e387db5b43345c465d5d6a2d9131b92b3b942ba5624b9cf1819e576
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 50
+  trial_id: IMG-CORE-02__qwen-image-3__core__r2
+  case_id: IMG-CORE-02
+  item_id: IMG-CORE-02
+  route_key: qwen-image-3
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: alibaba/qwen-image-3/text-to-image
+  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.040000'
+  estimated_usd_equiv: '0.040000'
+  unit_price: '0.04'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
+  body_sha256: 72c093db5f1a6f1055325576531bbb06d27c63742163a386bcd147f0bc467d63
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 51
+  trial_id: IMG-CORE-03__gpt-image-2__core__r2
+  case_id: IMG-CORE-03
+  item_id: IMG-CORE-03
+  route_key: gpt-image-2
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: openai/gpt-image-2
+  endpoint: https://queue.fal.run/openai/gpt-image-2
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.053000'
+  estimated_usd_equiv: '0.053000'
+  unit_price: '0.053'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
+  body_sha256: 4409ac66290911703fbfbf8e74d2b9eed00143ad2b682957b6a9969130daf2bd
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 52
+  trial_id: IMG-CORE-03__nano-banana-2__core__r2
+  case_id: IMG-CORE-03
+  item_id: IMG-CORE-03
+  route_key: nano-banana-2
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3.1-flash-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.067000'
+  estimated_usd_equiv: '0.067000'
+  unit_price: '0.067'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 3d070f7a4a743860da5f08980a8241b17d95b1a8a5dbcc1150e110b3fa4ad40e
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 53
+  trial_id: IMG-CORE-03__nano-banana-pro__core__r2
+  case_id: IMG-CORE-03
+  item_id: IMG-CORE-03
+  route_key: nano-banana-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3-pro-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.134000'
+  estimated_usd_equiv: '0.134000'
+  unit_price: '0.134'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 3d070f7a4a743860da5f08980a8241b17d95b1a8a5dbcc1150e110b3fa4ad40e
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 54
+  trial_id: IMG-CORE-03__seedream-5-pro__core__r2
+  case_id: IMG-CORE-03
+  item_id: IMG-CORE-03
+  route_key: seedream-5-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: bytedance/seedream/v5/pro/text-to-image
+  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.067500'
+  estimated_usd_equiv: '0.067500'
+  unit_price: '0.0675'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
+  body_sha256: 184de6aae081802cad54332f2315c17c76beb845fcb76b169f7891318962f2f0
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 55
+  trial_id: IMG-CORE-03__flux-2-pro__core__r2
+  case_id: IMG-CORE-03
+  item_id: IMG-CORE-03
+  route_key: flux-2-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 80982aae2ee3bd8ae3baec021ac47e60b6a16ae2d8a690ff5d313bb4846a205f
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 56
+  trial_id: IMG-CORE-03__qwen-image-3__core__r2
+  case_id: IMG-CORE-03
+  item_id: IMG-CORE-03
+  route_key: qwen-image-3
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: alibaba/qwen-image-3/text-to-image
+  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.040000'
+  estimated_usd_equiv: '0.040000'
+  unit_price: '0.04'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
+  body_sha256: 184de6aae081802cad54332f2315c17c76beb845fcb76b169f7891318962f2f0
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 57
+  trial_id: IMG-CORE-04__gpt-image-2__core__r2
+  case_id: IMG-CORE-04
+  item_id: IMG-CORE-04
+  route_key: gpt-image-2
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: openai/gpt-image-2
+  endpoint: https://queue.fal.run/openai/gpt-image-2
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.053000'
+  estimated_usd_equiv: '0.053000'
+  unit_price: '0.053'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
+  body_sha256: 6621e7c0d6bc65571aacf618febd4d59f366b26e292b9d99f1e391edd8b83385
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 58
+  trial_id: IMG-CORE-04__nano-banana-2__core__r2
+  case_id: IMG-CORE-04
+  item_id: IMG-CORE-04
+  route_key: nano-banana-2
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3.1-flash-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.067000'
+  estimated_usd_equiv: '0.067000'
+  unit_price: '0.067'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: d9ebe80b4c1bb52c9a68113160420ae30d6fe73d88bb0b4882618ec2a6402ff6
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 59
+  trial_id: IMG-CORE-04__nano-banana-pro__core__r2
+  case_id: IMG-CORE-04
+  item_id: IMG-CORE-04
+  route_key: nano-banana-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3-pro-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.134000'
+  estimated_usd_equiv: '0.134000'
+  unit_price: '0.134'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: d9ebe80b4c1bb52c9a68113160420ae30d6fe73d88bb0b4882618ec2a6402ff6
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 60
+  trial_id: IMG-CORE-04__seedream-5-pro__core__r2
+  case_id: IMG-CORE-04
+  item_id: IMG-CORE-04
+  route_key: seedream-5-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: bytedance/seedream/v5/pro/text-to-image
+  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.067500'
+  estimated_usd_equiv: '0.067500'
+  unit_price: '0.0675'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
+  body_sha256: a341466198a0741cbf49f4e714c8e7674b3309da6f1613d457e860eeadef106d
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 61
+  trial_id: IMG-CORE-04__flux-2-pro__core__r2
+  case_id: IMG-CORE-04
+  item_id: IMG-CORE-04
+  route_key: flux-2-pro
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 22a5c173438578e9ed2881c0ec05ed6c03081d3684db9ec16e4f844ebb32dfcc
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 62
+  trial_id: IMG-CORE-04__qwen-image-3__core__r2
+  case_id: IMG-CORE-04
+  item_id: IMG-CORE-04
+  route_key: qwen-image-3
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: alibaba/qwen-image-3/text-to-image
+  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.040000'
+  estimated_usd_equiv: '0.040000'
+  unit_price: '0.04'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
+  body_sha256: 063ad5769a73a121afa5fe78e14f6b368456a7666319089973e77d3ad505dd41
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 63
+  trial_id: IMG-TEXT-01__nano-banana-2__A_cheap_generated__r2
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: nano-banana-2
+  arm: A_cheap_generated
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3.1-flash-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.067000'
+  estimated_usd_equiv: '0.067000'
+  unit_price: '0.067'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: f13156ef5050f1caac1f89a0a9c12ad95aabd0de155f8022e91ce3b4df6a23ca
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 64
+  trial_id: IMG-TEXT-01__qwen-image-3__A_cheap_generated__r2
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: qwen-image-3
+  arm: A_cheap_generated
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: alibaba/qwen-image-3/text-to-image
+  endpoint: https://queue.fal.run/alibaba/qwen-image-3/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.040000'
+  estimated_usd_equiv: '0.040000'
+  unit_price: '0.04'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
+  body_sha256: 34ddf013aebca2955e040af8cb0098f762dbb64bbf8c93be389826a9ec1e2c7f
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 65
+  trial_id: IMG-TEXT-01__gpt-image-2__A_cheap_generated__r2
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: gpt-image-2
+  arm: A_cheap_generated
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: openai/gpt-image-2
+  endpoint: https://queue.fal.run/openai/gpt-image-2
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.053000'
+  estimated_usd_equiv: '0.053000'
+  unit_price: '0.053'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
+  body_sha256: eec0eff48fdd2a799dfe8954b9505319bb0bcf8a1296da5459f094428bc7213a
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 66
+  trial_id: IMG-TEXT-01__nano-banana-pro__B_premium_generated__r2
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: nano-banana-pro
+  arm: B_premium_generated
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3-pro-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3-pro-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.134000'
+  estimated_usd_equiv: '0.134000'
+  unit_price: '0.134'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: f13156ef5050f1caac1f89a0a9c12ad95aabd0de155f8022e91ce3b4df6a23ca
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+- seq: 67
+  trial_id: IMG-TEXT-01__seedream-5-pro__B_premium_generated__r2
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: seedream-5-pro
+  arm: B_premium_generated
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: bytedance/seedream/v5/pro/text-to-image
+  endpoint: https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.067500'
+  estimated_usd_equiv: '0.067500'
+  unit_price: '0.0675'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
+  body_sha256: 34ddf013aebca2955e040af8cb0098f762dbb64bbf8c93be389826a9ec1e2c7f
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 68
+  trial_id: IMG-TEXT-01__recraft-v4__B_premium_generated__r2
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: recraft-v4
+  arm: B_premium_generated
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/recraft/v4/text-to-image
+  endpoint: https://queue.fal.run/fal-ai/recraft/v4/text-to-image
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.040000'
+  estimated_usd_equiv: '0.040000'
+  unit_price: '0.04'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/recraft-v4/fal-recraft-v4-text-to-image.html
+  body_sha256: 76373ace1574ac835e2454d3dd5d6aa41f058938088d5b16b8942b376e83f706
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 69
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 76373ace1574ac835e2454d3dd5d6aa41f058938088d5b16b8942b376e83f706
   api_calls_per_trial: 1
   key_name: FAL_KEY
   credential_file_name: ~/.mi-keys

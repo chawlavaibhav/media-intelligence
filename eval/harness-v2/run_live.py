@@ -11,8 +11,9 @@ WHAT IT DOES, IN PLAIN ENGLISH
     `plan` writes down, before any money moves, exactly which calls will be made and in which order: the rows
     of the dry-run manifest (the same request builder a live call uses) restricted to the requested cases,
     routes and tranche, minus every row that could not dispatch (conditional, no adapter, unverified shape,
-    unpinned price, needs_controller_enablement). The order is case-major: within a case every route's repeat 1
-    is dispatched before any repeat 2, so the two repeats of a (case, route) are separated in time.
+    unpinned price, needs_controller_enablement). The order is repeat-major: every case's repeat 1 (cases in the
+    requested order, routes in catalogue order) is dispatched before any repeat 2, so the two unseeded draws of a
+    (case, route) are separated by the whole lane, never by seconds.
     `PLAN.yaml` + `PLAN.sha256` are the commitment; `execute` refuses if the plan is absent or its bytes changed.
 
     `execute` opens the Controller's authorisation (refuses if absent or not permitted), opens or creates the
@@ -164,10 +165,14 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
             raise PlanRefused(f"requested routes {missing} have no dispatchable row for cases {cases} in tranche {tranche!r}: "
                               + "; ".join(f"{e['route_key']}: {e['reason']}" for e in excluded if e["route_key"] in missing) or "not listed on these cases")
     seq = 0
-    for case_id in cases:
-        rows = by_case[case_id]
-        reps = sorted({r["repeat_index"] for r in rows})
-        for rep in reps:                                 # all routes at repeat 1, THEN all routes at repeat 2
+    # Repeat-major: EVERY case's repeat 1 (cases in the requested order, routes in catalogue order) is
+    # dispatched before ANY repeat 2. Repeats are unseeded inherent-variance draws (SEED-POLICY); sending
+    # the identical body to a provider seconds apart invites request-level caching or shared sampler state,
+    # which would understate variance. Separating the two blocks by the whole lane is the cheapest guard.
+    all_reps = sorted({r["repeat_index"] for rows in by_case.values() for r in rows})
+    for rep in all_reps:
+        for case_id in cases:
+            rows = by_case[case_id]
             for r in rows:
                 if r["repeat_index"] != rep:
                     continue
@@ -198,7 +203,7 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
         "tranche_id": auth.tranche_id, "authorisation_path": auth.source_path, "authorisation_sha256": auth.sha256,
         "roster_sha256": pricing.roster.sha256, "test_cases_sha256": book.source["test_cases_sha256"], "cost_table_sha256": book.source["cost_table_sha256"],
         "cases": list(cases), "routes": list(routes) if routes else None, "tranche": tranche, "repeats": list(repeats) if repeats else None,
-        "ordering": "case-major; within a case every route's repeat 1 before any repeat 2",
+        "ordering": "repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2",
         "counts": {"trials": len(trials), "excluded": len(excluded)},
         "estimated_by_pool": {k: {"calls": v["calls"], "currency": v["currency"], "native": str(v["native"]), "usd_equiv": str(v["usd_equiv"])} for k, v in by_pool.items()},
         "estimated_total_usd_equiv": str(sum((v["usd_equiv"] for v in by_pool.values()), Decimal("0"))),

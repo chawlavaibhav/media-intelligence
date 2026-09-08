@@ -137,21 +137,24 @@ class PlanTest(RunnerBase):
         self.assertEqual(plan["header"]["tranche_id"], "EVAL-040-TRANCHE-1")
         self.assertTrue(plan["header"]["freeze_matches_item_basis"])
 
-    def test_plan_ordering_case_major_repeat_1_block_then_repeat_2(self):
+    def test_plan_ordering_repeat_major_all_repeat_1_then_all_repeat_2(self):
+        # Controller change before the first lane (8 Sep 2026): identical unseeded bodies must not reach a
+        # provider seconds apart, so the WHOLE lane's repeat 1 runs before any repeat 2.
         trials = self.full_plan()["trials"]
         self.assertEqual([t["seq"] for t in trials], list(range(1, 77)))
-        cases_in_order = []
-        for t in trials:
-            if not cases_in_order or cases_in_order[-1] != t["case_id"]:
-                cases_in_order.append(t["case_id"])
-        self.assertEqual(cases_in_order, SIX_CASES, "case-major: a case's trials are contiguous, in the requested order")
-        for case in SIX_CASES:
-            reps = [t["repeat_index"] for t in trials if t["case_id"] == case]
-            n = len(reps) // 2
-            self.assertEqual(reps, [1] * n + [2] * n, f"{case}: every route's repeat 1 before any repeat 2")
-            routes_r1 = [t["route_key"] for t in trials if t["case_id"] == case and t["repeat_index"] == 1]
-            routes_r2 = [t["route_key"] for t in trials if t["case_id"] == case and t["repeat_index"] == 2]
-            self.assertEqual(routes_r1, routes_r2)
+        reps = [t["repeat_index"] for t in trials]
+        n = len(reps) // 2
+        self.assertEqual(reps, [1] * n + [2] * n, "every repeat 1 in the lane before any repeat 2")
+        for rep in (1, 2):
+            block = [t for t in trials if t["repeat_index"] == rep]
+            cases_in_order = []
+            for t in block:
+                if not cases_in_order or cases_in_order[-1] != t["case_id"]:
+                    cases_in_order.append(t["case_id"])
+            self.assertEqual(cases_in_order, SIX_CASES, f"repeat {rep}: cases contiguous, in the requested order")
+        r1 = [(t["case_id"], t["route_key"], t["arm"]) for t in trials if t["repeat_index"] == 1]
+        r2 = [(t["case_id"], t["route_key"], t["arm"]) for t in trials if t["repeat_index"] == 2]
+        self.assertEqual(r1, r2, "the repeat-2 block mirrors the repeat-1 block exactly")
 
     def test_plan_files_and_no_key_value(self):
         self.full_plan()
