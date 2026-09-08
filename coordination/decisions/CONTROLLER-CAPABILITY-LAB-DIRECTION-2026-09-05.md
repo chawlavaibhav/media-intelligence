@@ -1,9 +1,12 @@
 # Controller — Capability Lab Direction: Empirical Model/Workflow Battery — 2026-09-05
 
-**Status:** DRAFT — PENDING CONTROLLER RATIFICATION. Written by the Writer Controller session on
-2026-09-05 from the human Controller's direction; it becomes a durable decision only when the
-human Controller ratifies it and the carrying branch is merged. Until then
-`coordination/CONTROL-STATE.md` governs.
+**Status:** APPROVED CONTROLLER DECISION — ratified 2026-09-08 ~12:00 IST. The human Controller,
+asked "do you want to stick to the same plan?" and shown the three adjustments in §8, answered:
+
+> **"Go for it. Approved now"**
+
+Drafted by the Writer Controller session on 2026-09-05 from the Controller's direction; governing on
+the merge of PR #87.
 **Role:** Writer Controller.
 **Base `main`:** `599ff4af6a1f0684132303687e438877da47a004`.
 **Plan adopted by this decision:** `coordination/plans/2026-09-05-CAPABILITY-LAB-CAMPAIGN-v1.md`.
@@ -172,3 +175,25 @@ Bedrock with its own key; a dedicated GCP service account (or a new project if t
 billing link allow it unambiguously) — and store their keys under `~/.mi-battery-keys/` (mode 600)
 without ever printing a value. Nothing existing is modified or deleted; the Wherehouse subscription
 `d3ee8dc2-…` is never touched. Every creation is logged with the exact command.
+
+## 8. Ratification adjustments (Controller, 2026-09-08)
+
+Three adjustments were put to the Controller with the ratification and accepted with it:
+
+1. **The image lane runs in two halves.** Half one — the four core pictures and the two exact-text
+   cases (IMG-CORE-01..04, IMG-TEXT-01/02), six image routes, 76 calls, nominal USD 4.86 — needs no
+   customer photos and runs first. Half two — the edit, extend, compose and reference cases — runs
+   once the Controller supplies photos or approves constructed/Resources items under the stated
+   rights rule.
+2. **Images run on the credentials already on this machine** (Google direct/Vertex service account
+   and fal). The fresh isolated cloud resources of §7a and the credit-only Azure/Bedrock routes are
+   deferred to the video rounds, where credits matter. Conditional routes (SD3.5, MAI-Image-2.6,
+   Sora 2) do not run in half one.
+3. **Round two is not pre-sized.** The USD 250 ceiling in the plan is withdrawn as a number; after
+   round one the Writer Controller proposes round two per surviving question, credits first, and
+   the Controller approves each piece separately.
+
+Unchanged despite cost pressure: two repeats per item.
+
+The first spend record under this decision is
+`CONTROLLER-SPEND-AUTHORISATION-IMAGE-ROUND-1-2026-09-08.md` (cap ₹1,200).

@@ -1,6 +1,9 @@
 # DRAFT — Spend Authorisation, Capability Lab Tranche 1 (Stage A route admission screen)
 
-**Status:** UNSIGNED DRAFT prepared overnight by the Writer Controller session, 2026-09-05 ~03:50 IST.
+**Status:** SUPERSEDED, never signed. Kept for the record of the proposed full-tranche shape. The
+Controller chose a smaller first step on 2026-09-08 (image lane, half one): see
+`CONTROLLER-SPEND-AUTHORISATION-IMAGE-ROUND-1-2026-09-08.md`.
+Originally: UNSIGNED DRAFT prepared overnight by the Writer Controller session, 2026-09-05 ~03:50 IST.
 **Nothing is authorised until the human Controller signs §6 in their own words.** Until then no paid
 call may be made under EVAL-040.
 **Parent decision:** `CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md` (itself DRAFT, pending ratification).
