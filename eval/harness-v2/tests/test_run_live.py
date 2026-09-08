@@ -119,12 +119,15 @@ class RedoPlanTest(RunnerBase):
             json.dumps({"trial_id": "IMG-CORE-02__nano-banana-2__core__r1", "error": "PreDispatchRefusal: gcloud auth activate-service-account failed (exit 1); nothing was sent"}))
         # (e) a provider refusal (moderation) -> a trial, never redone
         store.write_attempt("IMG-CORE-01__gpt-image-2__core__r2", base("IMG-CORE-01__gpt-image-2__core__r2", status="refusal", error_class="moderation_block"))
+        # (f) the runner was interrupted after sealing a request; the resume refused it -> nothing was sent -> redo
+        (self.out / RL.TRIALS_DIR / "IMG-CORE-02__gpt-image-2__core__r2.pre_dispatch_refusal.json").write_text(
+            json.dumps({"trial_id": "IMG-CORE-02__gpt-image-2__core__r2", "error": "PreDispatchRefusal: trial IMG-CORE-02__gpt-image-2__core__r2 already has a sealed request; a repeat is a new trial id, never a re-run"}))
         return plan
 
     def test_infra_failures_pick_only_nothing_was_sent(self):
         self._prev_run_with_records()
         got = RL.infra_failures(self.out, "run-x")
-        self.assertEqual(sorted(f["trial_id"] for f in got), ["IMG-CORE-01__gpt-image-2__core__r1", "IMG-CORE-02__nano-banana-2__core__r1"])
+        self.assertEqual(sorted(f["trial_id"] for f in got), ["IMG-CORE-01__gpt-image-2__core__r1", "IMG-CORE-02__gpt-image-2__core__r2", "IMG-CORE-02__nano-banana-2__core__r1"])
         self.assertEqual({f["reason"] for f in got}, {"attempt:network_failure", "pre_dispatch_refusal"})
 
     def test_redo_plan_carries_only_those_trials_under_a_new_run_id(self):
@@ -133,9 +136,9 @@ class RedoPlanTest(RunnerBase):
         plan = self.plan(cases=("IMG-CORE-01", "IMG-CORE-02"), routes=("gpt-image-2", "nano-banana-2"), run_id="run-redo", out=out2,
                          redo_from=(self.out, "run-x"))
         ids = [(t["case_id"], t["route_key"], t["repeat_index"]) for t in plan["trials"]]
-        self.assertEqual(sorted(ids), [("IMG-CORE-01", "gpt-image-2", 1), ("IMG-CORE-02", "nano-banana-2", 1)])
+        self.assertEqual(sorted(ids), [("IMG-CORE-01", "gpt-image-2", 1), ("IMG-CORE-02", "gpt-image-2", 2), ("IMG-CORE-02", "nano-banana-2", 1)])
         self.assertTrue(all(t["redo_of"]["prev_run_id"] == "run-x" for t in plan["trials"]))
-        self.assertEqual(plan["header"]["redo_of"]["n_trials"], 2)
+        self.assertEqual(plan["header"]["redo_of"]["n_trials"], 3)
         self.assertEqual(plan["header"]["run_id"], "run-redo")
 
     def test_redo_plan_refuses_when_nothing_failed_locally(self):

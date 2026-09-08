@@ -148,7 +148,11 @@ def infra_failures(prev_out: Path | str, prev_run_id: str) -> list[dict]:
             if rp.exists():
                 rec = json.loads(rp.read_text(encoding="utf-8"))
                 text = json.dumps(rec)
-                if kind == "harness_error" or "nothing was sent" in text.lower():
+                # "nothing was sent": DNS / token / key faults. "already has a sealed request": the runner was interrupted
+                # between sealing the request and dispatching it (observed 2026-09-08 when the lane was stopped mid-trial);
+                # the resume then refused it — no submit ever happened, so it is an infrastructure fault too.
+                low = text.lower()
+                if kind == "harness_error" or "nothing was sent" in low or "already has a sealed request" in low:
                     out.append({"trial_id": tid, "case_id": t["case_id"], "route_key": t["route_key"], "arm": t["arm"],
                                 "repeat_index": t["repeat_index"], "reason": f"{kind}", "prev_run_id": prev_run_id})
                 break
