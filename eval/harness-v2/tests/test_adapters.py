@@ -87,6 +87,18 @@ class FalQueue202Test(AdapterBase):
         self.assertTrue(rec["ambiguous_dispatch"])
         self.assertEqual(rec["provider_request_id"], "req-202")
 
+    def test_dns_failure_before_any_byte_is_a_pre_dispatch_refusal_and_releases_the_reservation(self):
+        import socket
+        import urllib.error
+        t = T.FakeTransport(posts=[urllib.error.URLError(socket.gaierror(8, "nodename nor servname provided, or not known"))])
+        ad = self.make("gpt-image-2", t)
+        before = self.budget.spent_usd()
+        with self.assertRaises(PreDispatchRefusal):
+            ad.dispatch(self.row("IMG-CORE-01", "gpt-image-2"), call_context={"trial_id": "tdns"})
+        self.assertEqual(self.budget.spent_usd(), before, "nothing was sent, so nothing is charged")
+        self.assertEqual(ad.submits, 0)
+        self.assertFalse(self.store.attempt_path("tdns").exists(), "a DNS failure is not a trial")
+
     def test_non_2xx_poll_is_still_unknown_and_keeps_the_request_id(self):
         t = self._fal_202([(503, {"detail": "down"})])
         ad = self.make("gpt-image-2", t)

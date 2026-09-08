@@ -35,7 +35,7 @@ import store as S
 from adapters import base as B
 from adapters import fal_queue as FQ
 
-RECOVERABLE = re.compile(r"^(poll_http_2\d\d|poll_budget_exhausted)$")
+RECOVERABLE = re.compile(r"^(poll_http_2\d\d|poll_budget_exhausted|poll_network_failure|poll_timeout)$")
 REQUEST_ID_IN_NOTE = re.compile(r"\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b")
 MAX_STATUS_CHECKS = 60
 POLL_INTERVAL_S = 3.0

@@ -60,6 +60,19 @@ class RecoverFalTest(NoNetworkTestCase):
         # a second recovery of the same trial is not a candidate any more
         self.assertEqual(RF.candidates(store), [])
 
+    def test_status_url_hangs_off_the_app_id_not_the_full_endpoint(self):
+        # Observed 2026-09-08: queue.fal.run/bytedance/seedream/v5/pro/text-to-image/requests/<id>/status answers 405;
+        # the tracked URL is queue.fal.run/bytedance/seedream/requests/<id>/status. The app base is tried first.
+        out, store, original = self._run_dir()
+        original = dict(original, endpoint="https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image")
+        t = T.FakeTransport(gets=[(200, {"status": "COMPLETED"}),
+                                  (200, {"images": [{"url": "https://v3.fal.media/files/fake/out.png", "content_type": "image/png"}]})],
+                            downloads=[(200, PNG_FIXTURE, "image/png")])
+        res = RF.recover_one(self.TID, original, store, t, {"Authorization": "Key K"}, sleep=lambda s: None)
+        self.assertTrue(res["recovered"], res)
+        self.assertEqual(t.calls[0]["url"], f"https://queue.fal.run/bytedance/seedream/requests/{self.RID}/status")
+        self.assertEqual(t.calls[1]["url"], f"https://queue.fal.run/bytedance/seedream/requests/{self.RID}")
+
     def test_not_completed_is_reported_not_forced(self):
         out, store, original = self._run_dir()
         t = T.FakeTransport(gets=[(202, {"status": "IN_PROGRESS"})] * 3 + [(500, {"detail": "boom"})])

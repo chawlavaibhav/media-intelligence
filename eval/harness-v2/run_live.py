@@ -115,8 +115,48 @@ def _freeze_matches(git_rev: str, item_basis_commit: str) -> bool:
     return True
 
 
+
+INFRA_ERROR_CLASSES = ("network_failure", "poll_network_failure", "harness_exception", "tls_failure", "connection_reset",
+                       "remote_disconnect", "connection_aborted", "unknown_transport_failure")
+
+
+def infra_failures(prev_out: Path | str, prev_run_id: str) -> list[dict]:
+    """Trials of a previous run that ended in a LOCAL infrastructure fault, never a provider outcome.
+
+    Eligible: (a) an attempt with status != ok whose error class is a transport failure AND that has no recovered
+    attempt and no provider request id (a poll failure WITH a request id is recoverable, not redoable);
+    (b) a pre-dispatch refusal record whose reason says nothing was sent (DNS, gcloud token, key lookup);
+    (c) a harness_error record. Provider outcomes (refusal, moderation, http_4xx/5xx after a submit, poll_http_2xx)
+    are trials and are never redone. A redo is a NEW trial under a NEW run id, never a retry in place.
+    """
+    prev_out = Path(prev_out)
+    plan = load_plan(prev_out, prev_run_id)
+    store = S.SealedStore(prev_out / ARTIFACTS_DIR)
+    out = []
+    for t in plan["trials"]:
+        tid = t["trial_id"]
+        a = store.load_attempt(tid)
+        if a is not None:
+            if a.get("status") == "ok" or a.get("artifact"):
+                continue
+            if (a.get("error_class") or "") in INFRA_ERROR_CLASSES and not a.get("provider_request_id"):
+                out.append({"trial_id": tid, "case_id": t["case_id"], "route_key": t["route_key"], "arm": t["arm"],
+                            "repeat_index": t["repeat_index"], "reason": f"attempt:{a.get('error_class')}", "prev_run_id": prev_run_id})
+            continue
+        for kind in ("pre_dispatch_refusal", "harness_error"):
+            rp = prev_out / TRIALS_DIR / f"{S.safe_id(tid)}.{kind}.json"
+            if rp.exists():
+                rec = json.loads(rp.read_text(encoding="utf-8"))
+                text = json.dumps(rec)
+                if kind == "harness_error" or "nothing was sent" in text.lower():
+                    out.append({"trial_id": tid, "case_id": t["case_id"], "route_key": t["route_key"], "arm": t["arm"],
+                                "repeat_index": t["repeat_index"], "reason": f"{kind}", "prev_run_id": prev_run_id})
+                break
+    return out
+
 def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str] | None, tranche: str | None,
-               auth_path: Path | str, git_rev: str = "HEAD", mode: str = "lane", repeats: tuple | None = None) -> dict:
+               auth_path: Path | str, git_rev: str = "HEAD", mode: str = "lane", repeats: tuple | None = None,
+               redo_from: tuple | None = None) -> dict:
     """Write `<out>/PLAN.yaml` + `PLAN.sha256` before any dispatch. Refuses an empty plan and never overwrites."""
     out = Path(out)
     if (out / PLAN_FILE).exists():
@@ -141,10 +181,20 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
     cost_table = PR.CostTable()
     manifest = DR.build_manifest(fbook, registry, pricing, cost_table, git_commit=commit)
 
+    redo_keys, redo_by_key = None, {}
+    if redo_from:
+        prev_out, prev_run_id = redo_from
+        for f in infra_failures(prev_out, prev_run_id):
+            redo_by_key[(f["case_id"], f["route_key"], f["arm"], f["repeat_index"])] = f
+        redo_keys = set(redo_by_key)
+        if not redo_keys:
+            raise PlanRefused(f"run {prev_run_id} has no infrastructure-failure trial to redo")
     trials, excluded = [], []
     by_case: dict[str, list] = {c: [] for c in cases}
     for row in manifest["rows"]:
         reason = None
+        if redo_keys is not None and (row["case_id"], row["route_key"], row["arm"], row["repeat_index"]) not in redo_keys:
+            continue                                     # a redo plan carries ONLY the previous run's infrastructure failures
         if routes and row["route_key"] not in routes:
             continue                                     # not requested: neither planned nor listed
         if not row["would_dispatch"]:
@@ -187,6 +237,7 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
                     "unit_price": r["unit_price"], "quantity": r["quantity"], "quantity_unit": r["quantity_unit"], "price_pin_ref": r["price_pin_ref"],
                     "body_sha256": r["body_sha256"], "api_calls_per_trial": r["api_calls_per_trial"],
                     "key_name": entry.key_name, "credential_file_name": entry.credential_file_name, "seed_policy": r["seed_policy"],
+                    **({"redo_of": redo_by_key[(r["case_id"], r["route_key"], r["arm"], r["repeat_index"])]} if redo_keys is not None else {}),
                 })
     if not trials:
         raise PlanRefused(f"the plan is empty for cases {cases}, routes {routes}, tranche {tranche!r}: "
@@ -203,6 +254,7 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
         "tranche_id": auth.tranche_id, "authorisation_path": auth.source_path, "authorisation_sha256": auth.sha256,
         "roster_sha256": pricing.roster.sha256, "test_cases_sha256": book.source["test_cases_sha256"], "cost_table_sha256": book.source["cost_table_sha256"],
         "cases": list(cases), "routes": list(routes) if routes else None, "tranche": tranche, "repeats": list(repeats) if repeats else None,
+        "redo_of": ({"run_id": redo_from[1], "out": str(redo_from[0]), "n_trials": len(redo_keys)} if redo_keys is not None else None),
         "ordering": "repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2",
         "counts": {"trials": len(trials), "excluded": len(excluded)},
         "estimated_by_pool": {k: {"calls": v["calls"], "currency": v["currency"], "native": str(v["native"]), "usd_equiv": str(v["usd_equiv"])} for k, v in by_pool.items()},
@@ -536,6 +588,8 @@ def main(argv=None) -> int:
     p.add_argument("--routes", default=None, help="comma-separated route keys (default: every dispatchable route on those cases)")
     p.add_argument("--tranche", default="1a")
     p.add_argument("--git-rev", default="HEAD")
+    p.add_argument("--redo-from", default=None, metavar="OUT:RUN_ID",
+                   help="plan ONLY the infrastructure-failure trials of a previous run (DNS, token, harness faults with nothing sent) under this new run id")
     p = sub.add_parser("smoke"); common(p)
     p.add_argument("--case", required=True)
     p.add_argument("--route", required=True)
@@ -547,9 +601,15 @@ def main(argv=None) -> int:
 
     try:
         if a.cmd == "plan":
+            redo = None
+            if a.redo_from:
+                prev_out, _, prev_run = a.redo_from.rpartition(":")
+                if not prev_out or not prev_run:
+                    raise PlanRefused("--redo-from takes OUT_DIR:RUN_ID")
+                redo = (Path(prev_out), prev_run)
             plan = build_plan(a.out, a.run_id, cases=[c.strip() for c in a.cases.split(",") if c.strip()],
                               routes=([r.strip() for r in a.routes.split(",") if r.strip()] if a.routes else None),
-                              tranche=a.tranche, auth_path=a.auth, git_rev=a.git_rev)
+                              tranche=a.tranche, auth_path=a.auth, git_rev=a.git_rev, redo_from=redo)
             h = plan["header"]
             print(json.dumps({"run_id": h["run_id"], "trials": h["counts"]["trials"], "excluded": h["counts"]["excluded"],
                               "estimated_by_pool": h["estimated_by_pool"], "estimated_total_usd_equiv": h["estimated_total_usd_equiv"],

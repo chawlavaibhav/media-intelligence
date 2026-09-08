@@ -197,28 +197,34 @@ def _leaks(text: str, needles: list[str]) -> list[str]:
     return [n for n in needles if re.search(r"(?<![A-Za-z0-9_])" + re.escape(n) + r"(?![A-Za-z0-9_])", text, re.I)]
 
 
-def build(out: Path | str, run_id: str, key_dir: Path | str, seed: str | None = None) -> dict:
+def _runs(out, run_id, extra_runs):
+    """[(out_dir, run_id, plan, store)] — the primary run first, then any extra runs (e.g. a redo run) judged in ONE blind set."""
+    runs = [(Path(out), run_id)] + [(Path(o), r) for o, r in (extra_runs or [])]
+    return [(o, r, RL.load_plan(o, r), S.SealedStore(o / RL.ARTIFACTS_DIR)) for o, r in runs]
+
+
+def build(out: Path | str, run_id: str, key_dir: Path | str, seed: str | None = None, extra_runs: list | None = None) -> dict:
     out = Path(out)
     key_dir = Path(key_dir)
-    plan = RL.load_plan(out, run_id)
+    runs = _runs(out, run_id, extra_runs)
+    plan = runs[0][2]
     if not _outside_repo(key_dir):
         raise PacketRefused(f"key dir {key_dir} is inside the repo {hv2_paths.REPO_ROOT}; the reveal key is held OFF-repo only")
     jd, bd = out / JUDGING_DIR, out / BUILD_DIR
     if jd.exists():
         raise PacketRefused(f"{jd} already exists; a packet is built once (the blinding must not be re-drawn while judging is open)")
-    store = S.SealedStore(out / RL.ARTIFACTS_DIR)
-    manifest = {m["trial_id"]: m for m in store.manifest() if "." not in S.safe_id(m["trial_id"]) or True}
     items = []
-    for t in plan["trials"]:
-        a = store.load_attempt(t["trial_id"])            # a recovered attempt (recover_fal.py) supersedes the original
-        if a is None:
-            continue
-        if a.get("status") != "ok" or not a.get("artifact"):
-            continue
-        rec = a["artifact"]
-        if not store.verify(rec):
-            raise PacketRefused(f"{t['trial_id']}: sealed artifact bytes do not match their record; refusing to judge unverifiable evidence")
-        items.append((t, rec, a))
+    for r_out, r_id, r_plan, r_store in runs:
+        for t in r_plan["trials"]:
+            a = r_store.load_attempt(t["trial_id"])      # a recovered attempt (recover_fal.py) supersedes the original
+            if a is None:
+                continue
+            if a.get("status") != "ok" or not a.get("artifact"):
+                continue
+            rec = a["artifact"]
+            if not r_store.verify(rec):
+                raise PacketRefused(f"{t['trial_id']}: sealed artifact bytes do not match their record; refusing to judge unverifiable evidence")
+            items.append((dict(t, _run_id=r_id, _store_root=str(r_store.root)), rec, a))
     if not items:
         raise PacketRefused(f"run {run_id} has no artifact to judge")
     seed = seed or os.urandom(16).hex()
@@ -234,7 +240,7 @@ def build(out: Path | str, run_id: str, key_dir: Path | str, seed: str | None = 
     for rank, idx in enumerate(order, 1):
         t, rec, a = items[idx]
         bid = f"J{rank:0{width}d}"
-        src = store.root / rec["relative_path"]
+        src = Path(t["_store_root"]) / rec["relative_path"]
         ext = src.suffix
         data = src.read_bytes()
         dst = jd / f"{bid}{ext}"
@@ -242,7 +248,7 @@ def build(out: Path | str, run_id: str, key_dir: Path | str, seed: str | None = 
         if hashlib.sha256(dst.read_bytes()).hexdigest() != rec["sha256"]:
             raise PacketRefused(f"{bid}: copied bytes do not hash to the sealed sha256")
         metadata_notes[t["trial_id"]] = scan_metadata(data, ext, vocab)
-        mapping[bid] = {"trial_id": t["trial_id"], "case_id": t["case_id"], "route_key": t["route_key"], "arm": t["arm"],
+        mapping[bid] = {"trial_id": t["trial_id"], "run_id": t["_run_id"], "case_id": t["case_id"], "route_key": t["route_key"], "arm": t["arm"],
                         "repeat_index": t["repeat_index"], "surface": t["surface"], "sha256": rec["sha256"], "ext": ext, "file": dst.name}
     # the judge-facing sheet: blind id + case id + contract only
     commit = plan["header"]["commit"]
@@ -278,8 +284,8 @@ def build(out: Path | str, run_id: str, key_dir: Path | str, seed: str | None = 
     key_path = key_dir / f"REVEAL-{run_id}.json"
     if key_path.exists():
         raise PacketRefused(f"{key_path} already exists; refusing to overwrite a reveal key")
-    key_path.write_text(json.dumps({"run_id": run_id, "seed": seed, "salt": salt, "commitment": commitment, "created_utc": _now(),
-                                    "mapping": mapping}, indent=1, sort_keys=True), encoding="utf-8")
+    key_path.write_text(json.dumps({"run_id": run_id, "runs": [[str(o), r] for o, r, _, _ in runs], "seed": seed, "salt": salt,
+                                    "commitment": commitment, "created_utc": _now(), "mapping": mapping}, indent=1, sort_keys=True), encoding="utf-8")
     (bd / "METADATA-NOTES.json").write_text(json.dumps(metadata_notes, indent=1, sort_keys=True), encoding="utf-8")
     (bd / "BUILD.json").write_text(json.dumps({"run_id": run_id, "built_utc": _now(), "n_artifacts": len(mapping), "key_path": str(key_path),
                                                 "commitment": commitment, "metadata_flagged_trials": sorted(t for t, f in metadata_notes.items() if f),
@@ -368,17 +374,29 @@ def reveal(out: Path | str, run_id: str, key_dir: Path | str) -> dict:
     unknown = sorted(set(verdicts) - set(mapping))
     if missing or unknown:
         raise PacketRefused(f"verdicts incomplete: missing {missing}, unknown {unknown}; every blind id needs exactly one verdict before the reveal")
-    by_trial = {m["trial_id"]: (bid, m) for bid, m in mapping.items()}
-    store = S.SealedStore(out / RL.ARTIFACTS_DIR)
+    by_trial = {(m.get("run_id", run_id), m["trial_id"]): (bid, m) for bid, m in mapping.items()}
+    runs = [(Path(o), r) for o, r in key.get("runs") or [[str(out), run_id]]]
     rows = []
-    for t in plan["trials"]:
+    redone: set = set()
+    for r_out, r_id in runs:
+        r_plan = RL.load_plan(r_out, r_id)
+        for t in r_plan["trials"]:
+            if t.get("redo_of"):
+                redone.add((t["redo_of"]["prev_run_id"], t["redo_of"]["trial_id"]))
+    for r_out, r_id in runs:
+      r_plan = RL.load_plan(r_out, r_id)
+      store = S.SealedStore(r_out / RL.ARTIFACTS_DIR)
+      for t in r_plan["trials"]:
         tid = t["trial_id"]
+        if (r_id, tid) in redone:
+            continue                                      # superseded by its redo trial in another run (an infrastructure fault, not a draw)
         a = store.load_attempt(tid)                       # recovered attempt preferred
-        row = {"trial_id": tid, "case_id": t["case_id"], "question": question_of(t["case_id"]), "route_key": t["route_key"], "arm": t["arm"],
+        row = {"trial_id": tid, "run_id": r_id, "case_id": t["case_id"], "question": question_of(t["case_id"]), "route_key": t["route_key"], "arm": t["arm"],
                "repeat_index": t["repeat_index"], "dispatched": a is not None, "status": a.get("status") if a else None,
-               "error_class": a.get("error_class") if a else None, "blind_id": None, "verdict": None, "verdict_basis": None, "note": ""}
-        if tid in by_trial:
-            bid, _ = by_trial[tid]
+               "error_class": a.get("error_class") if a else None, "blind_id": None, "verdict": None, "verdict_basis": None, "note": "",
+               "redo_of": t.get("redo_of")}
+        if (r_id, tid) in by_trial:
+            bid, _ = by_trial[(r_id, tid)]
             row.update(blind_id=bid, verdict=verdicts[bid]["verdict"], verdict_basis="blind_verdict", note=verdicts[bid]["note"])
         elif a is not None:
             row.update(verdict="reject", verdict_basis=f"no_artifact:{a.get('status')}")
@@ -406,10 +424,17 @@ def main(argv=None) -> int:
         p.add_argument("--run-id", required=True)
         p.add_argument("--out", required=True)
         p.add_argument("--key-dir", required=True, help="a directory OUTSIDE the repo for the reveal key")
+        p.add_argument("--extra-run", action="append", default=None, metavar="OUT:RUN_ID", help="judge another run (e.g. a redo run) in the SAME blind set")
     a = ap.parse_args(argv)
     try:
         if a.cmd == "build":
-            print(json.dumps(build(a.out, a.run_id, a.key_dir), indent=1))
+            extra = []
+            for spec in (a.extra_run or []):
+                o, _, r = spec.rpartition(":")
+                if not o or not r:
+                    raise PacketRefused("--extra-run takes OUT_DIR:RUN_ID")
+                extra.append((o, r))
+            print(json.dumps(build(a.out, a.run_id, a.key_dir, extra_runs=extra), indent=1))
         else:
             r = reveal(a.out, a.run_id, a.key_dir)
             print(f"results: {r['results_path']}")
