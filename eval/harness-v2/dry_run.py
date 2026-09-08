@@ -37,8 +37,9 @@ TASK_FIXED = {"tranche_1a": 192, "tranche_1b": 96, "total": 288, "conditional": 
 ROUNDING_TOLERANCE_PER_CALL = Decimal("0.0001")    # COST-TABLE rounds line_usd to 4 decimals
 
 
-def _d2(x: Decimal | None) -> Decimal | None:
-    return None if x is None else x.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+def _d2(x: Decimal | int | None) -> Decimal | None:
+    # `sum()` over zero rows is the int 0 (a subset book with no INR row): coerce, never fail (EVAL-040 runner, additive fix)
+    return None if x is None else Decimal(x).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
 def _s(x):

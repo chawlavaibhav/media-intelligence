@@ -139,8 +139,11 @@ def load_battery_authorisation(path: Path | str = AUTH_LOCAL_PATH, roster_path: 
     caps: dict[str, Decimal] = {}
     for name, key in (("1a", "cap_1a_usd"), ("1b", "cap_1b_usd")):
         cap = _dec(g(key))
-        if cap is None or cap <= 0:
-            refusals.append(f"{key} {g(key)!r} is not a positive amount")
+        # A cap of exactly 0 is a valid signed statement: "no call in this tranche may dispatch under this
+        # record" (Image Round 1 signs cap_1b_usd: 0.00). BatteryBudget._check then refuses every positive
+        # reservation against it. Only a missing or negative cap is malformed.
+        if cap is None or cap < 0:
+            refusals.append(f"{key} {g(key)!r} is not a non-negative amount")
         elif ceiling and cap > ceiling:
             refusals.append(f"{key} {cap} exceeds max_consumed_usd_equivalent {ceiling}")
         else:
