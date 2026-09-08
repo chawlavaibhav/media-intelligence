@@ -28,6 +28,8 @@ history/evidence stays inside its owning stream.
 | `CONTROL-STATE-PRE-CONTEXT-MIGRATION-2026-08-28.md` | Byte-for-byte snapshot of `coordination/CONTROL-STATE.md` immediately before its compaction in the same migration. SHA-256 `44d9e82f4f04c7154c912b2146f0edfb8e66697c787d039caffe7110467d3f9a`. |
 | `PROJECT-MEMORY-PRE-EVAL-038-REFRESH-2026-09-01.md` | Byte-for-byte snapshot of `PROJECT-MEMORY.md` immediately before the 2026-09-01 Governor refresh (REP-07 admission batch, EVAL-038, CANON-SHAPE-v1). SHA-256 `84599ac8d16981bf443ed8e42af15185fcde3edc806a1666d92e74955ea45fc1`. |
 | `CONTROL-STATE-PRE-EVAL-038-REFRESH-2026-09-01.md` | Byte-for-byte snapshot of `coordination/CONTROL-STATE.md` immediately before the same refresh. SHA-256 `9591dfe8d9ff1a51b82b6fedc80a57e15afc42336063871f768fbb4a9cc2ac38`. |
+| `PROJECT-MEMORY-PRE-GATE-001-REFRESH-2026-09-07.md` | Byte-for-byte snapshot of `PROJECT-MEMORY.md` immediately before the 2026-09-07 post-gate Governor refresh (CANON-GATE-001 merged, PR #88). SHA-256 prefix `21e68d84d0ba9e22`. |
+| `CONTROL-STATE-PRE-GATE-001-REFRESH-2026-09-07.md` | Byte-for-byte snapshot of `coordination/CONTROL-STATE.md` immediately before the same refresh. SHA-256 prefix `bf00d3c4ad0ad622`. |
 | `EMP-001.md` | The full first-paid-tranche chronology: qualification history, the literalness mechanism finding, spend, evidence sealing, EVAL-029/024/030. |
 | `GOVERNANCE-2026-08.md` | The August 2026 governance and planning narrative: V1 overnight, the macro reset, the pre-execution freeze, EVAL-008, GOV-001…GOV-006, external research posture. |
 | `PROJECT-MILESTONES.md` | The dated milestone table with evidence pointers. |
