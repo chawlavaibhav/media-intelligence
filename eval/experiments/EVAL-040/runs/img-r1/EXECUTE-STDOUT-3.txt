@@ -1,0 +1,45 @@
+LIVE: paid calls under /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/harness-v2/authorization.local.yaml; run img-r1; out eval/experiments/EVAL-040/runs/img-r1/
+{
+ "run_id": "img-r1",
+ "status": "completed",
+ "dispatched": 56,
+ "skipped": 19,
+ "errors": [
+  {
+   "trial_id": "IMG-CORE-04__nano-banana-2__core__r1",
+   "kind": "pre_dispatch_refusal",
+   "note": "PreDispatchRefusal: trial IMG-CORE-04__nano-banana-2__core__r1 already has a sealed request; a repeat is a new trial id, never a re-run: eval/experiments/EVAL-040/runs/img-r1/artifacts/IMG-CORE-04__nano-banana-2__core__r1.request.json already exists - sealed files are immutable; a correction is a ne"
+  },
+  {
+   "trial_id": "IMG-TEXT-02__qwen-image-3__A_cheap_generated__r1",
+   "kind": "attempt",
+   "status": "refusal",
+   "error_class": "moderation_block",
+   "note": "[{'loc': ['body', 'image'], 'msg': 'The content could not be processed because it contained material flagged by a content checker.', 'type': 'content_policy_violation', 'url': 'https://docs.fal.ai/errors#content_policy_violation', 'input': {'prompt': 'Bold square social-media poster for a gym offer."
+  },
+  {
+   "trial_id": "IMG-CORE-03__qwen-image-3__core__r2",
+   "kind": "attempt",
+   "status": "error",
+   "error_class": "poll_network_failure",
+   "note": "fal queue poll failed after the submit succeeded; the job may still complete and bill: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  }
+ ],
+ "stop_reason": null,
+ "remaining": 0
+}
+run img-r1 (lane): 76 done / 0 remaining of 76 planned; state completed
+  cash            USD 2.446000  (USD-equiv 2.446000)
+  credits         USD 2.211000  (USD-equiv 2.211000)
+  spent USD-equiv 4.657000 of estimated 4.858000; headroom 7.923000 [authorisation file (re-validated)]
+  ! IMG-CORE-03__gpt-image-2__core__r1: attempt error poll_network_failure fal queue poll failed after the submit succeeded; the job may still complete and bill: <urlopen error [Errno 60] Operation timed out>
+  ! IMG-CORE-03__nano-banana-2__core__r1: pre_dispatch_refusal   PreDispatchRefusal: gcloud auth activate-service-account failed (exit 1); nothing was sent
+  ! IMG-CORE-03__nano-banana-pro__core__r1: pre_dispatch_refusal   PreDispatchRefusal: gcloud auth activate-service-account failed (exit 1); nothing was sent
+  ! IMG-CORE-03__seedream-5-pro__core__r1: attempt error network_failure URLError after dispatch to https://queue.fal.run/bytedance/seedream/v5/pro/text-to-image: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+  ! IMG-CORE-03__flux-2-pro__core__r1: attempt error network_failure URLError after dispatch to https://queue.fal.run/fal-ai/flux-2-pro: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+  ! IMG-CORE-03__qwen-image-3__core__r1: attempt error network_failure URLError after dispatch to https://queue.fal.run/alibaba/qwen-image-3/text-to-image: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+  ! IMG-CORE-04__gpt-image-2__core__r1: attempt error network_failure URLError after dispatch to https://queue.fal.run/openai/gpt-image-2: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+  ! IMG-CORE-04__nano-banana-2__core__r1: pre_dispatch_refusal   PreDispatchRefusal: trial IMG-CORE-04__nano-banana-2__core__r1 already has a sealed request; a repeat is a new trial id, never a re-run: eval/experiments/EVAL-040/runs/img-r1/artifacts/IMG-CORE-04__na
+  ! IMG-TEXT-02__qwen-image-3__A_cheap_generated__r1: attempt refusal moderation_block [{'loc': ['body', 'image'], 'msg': 'The content could not be processed because it contained material flagged by a content checker.', 'type': 'content_policy_violation', 'url': 'https://docs.fal.ai/err
+  ! IMG-CORE-03__qwen-image-3__core__r2: attempt error poll_network_failure fal queue poll failed after the submit succeeded; the job may still complete and bill: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+exit 0
