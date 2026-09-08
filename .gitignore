@@ -23,6 +23,10 @@ resources/v1/build/
 # execution time; never committed. The committed schema is authorization.example.yaml.
 eval/empirical-tranche-1/authorization.local.yaml
 
+# EVAL-040 runtime authorisation (eval/harness-v2), same rule: materialised only from the Controller's
+# spend record, never committed. The committed schema is eval/harness-v2/authorization.example.yaml.
+eval/harness-v2/authorization.local.yaml
+
 # Reproducible build products of EMP-001 text qualification: the rendered Latin pack, and the
 # materialised 96-item Devanagari validated view. Both are regenerated deterministically from
 # committed code plus pinned fonts, so committing the bytes would add weight without adding truth.

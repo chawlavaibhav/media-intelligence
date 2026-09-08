@@ -1,0 +1,112 @@
+# ACCESS-STATUS-2026-09 — what each provider surface looked like from this machine on the night of 4/5 Sep 2026.
+# Plain English: "reachable_now" means a read-only command with the credentials already on this machine succeeded;
+# "denied" lists the exact permissions that were refused; nothing was created, enabled, deployed, invoked or paid for.
+# Task §2b (isolated resource creation) was taken OUT of scope at the between-role review; its steps, commands and
+# undo commands are written down as MD-9 in MORNING-DECISIONS.md for the Controller's own session. ~/.mi-battery-keys/ was NOT created.
+# The Wherehouse Azure subscription d3ee8dc2-… is mentioned here only to say it was never used as a target: every az
+# command carried --subscription b832f4a1-79be-4fb2-ae93-6ba6efd209d2 (getaight). Evidence: access-evidence-2026-09/ (selected fields only; no secret ever saved or printed).
+meta:
+  task: EVAL-039B
+  mode: read-only checks only (task §2a); §2b creations deferred to MD-9
+  checked_utc_window: '2026-09-04T20:36:00Z – 2026-09-04T20:45:00Z (02:06–02:15 IST, 5 Sep)'
+  command_log: eval/empirical-planning/ACCESS-LOG.md
+  evidence_dir: eval/empirical-planning/access-evidence-2026-09/
+  secrets_policy: 'key VALUES never printed, echoed, read back or saved; only variable names, key-file names and modes; the one raw offer listing that contained an opaque offerToken was deleted and re-listed with selected fields'
+  spend_usd: 0
+  default_config_changes: none (no az account set / aws configure / gcloud config set; gcloud ran inside a throw-away CLOUDSDK_CONFIG that was deleted afterwards)
+
+surfaces:
+  aws:
+    identity_seen: {account: '528730633804', principal: 'arn:aws:iam::528730633804:user/claude-aight', via: 'aws sts get-caller-identity'}
+    reachable_now: true
+    region_for_media: us-west-2 (us-east-1 has only legacy Nova + Stability editing primitives — survey)
+    models_reachable:
+      - {model_id: 'stability.sd3-5-large-v1:0', lifecycle: ACTIVE, inference: ON_DEMAND, availability: 'authorizationStatus AUTHORIZED; entitlementAvailability AVAILABLE; regionAvailability AVAILABLE; agreementAvailability.status NOT_AVAILABLE', offer_price: 'USD 0.08 per output image (offer rate card)'}
+      - {model_id: 'stability.stable-image-core-v1:1', lifecycle: ACTIVE, inference: ON_DEMAND, availability: 'same flags', offer_price: 'USD 0.04 per output image'}
+      - {model_id: 'stability.stable-image-ultra-v1:1', lifecycle: ACTIVE, inference: ON_DEMAND, availability: 'same flags', offer_price: 'USD 0.14 per output image'}
+      - {model_id: 'luma.ray-v2:0', lifecycle: ACTIVE, inference: ON_DEMAND, availability: 'same flags', offer_price: 'USD 1.50 per second at 720p; 0.75 at 540p'}
+    availability_reading: 'OBSERVED flags above. INFERRED: AUTHORIZED + entitlement AVAILABLE means this account can invoke these four models now without accepting a new agreement; the get-foundation-model-availability subcommand EXISTS in the installed CLI. Confirm with one metered call in the morning (MD-9) — not done tonight (USD 0 rule).'
+    agreement_offers: 'listed read-only for all four (nothing accepted): usage-based pricing terms only; supportTerm "No refunds will be offered." / "We do not currently offer refunds"; no subscription, hourly or standing-fee term present (MD-4 = no fee found). Each offer carries a legal-terms URL (recorded without its presigned query string); the EULA text was NOT fetched or read tonight.'
+    denied:
+      - {action: 'iam:GetUser', error: 'AccessDenied — User: arn:aws:iam::528730633804:user/claude-aight is not authorized to perform: iam:GetUser on resource: user claude-aight because no identity-based policy allows the iam:GetUser action', consequence: 'claude-aight cannot read IAM, so it almost certainly cannot create the mi-battery user or its key (INFERRED) → MD-9 needs an admin identity'}
+      - {action: 'polly:DescribeVoices', error: 'AccessDenied (survey-2026-09-05; not re-run tonight)', consequence: 'Polly Kajal is no_access → MD-8'}
+      - {action: 'pricing:GetProducts', error: 'AccessDenied (survey-2026-09-05)', consequence: 'Bedrock prices come from offer rate cards, not the Pricing API'}
+    credits: 'unknown — no billing read attempted (MD-1)'
+    created_resources: []
+    key_files: []
+    existing_key_file_untouched: {path: '~/.aight-litellm-keys/aws.env', mode: '-rw-------', variables: [AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION]}
+    open_items: [MD-1, MD-4, MD-8, MD-9]
+
+  gcp:
+    identity_seen: {service_account: 'aight-gateway-sa@vertexaiproject-507518.iam.gserviceaccount.com', project: vertexaiproject-507518, project_number: '148505173459', via: 'gcloud auth activate-service-account inside an isolated CLOUDSDK_CONFIG (deleted afterwards)'}
+    reachable_now: true
+    publisher_model_gets_note: 'The GLOBAL endpoint (aiplatform.googleapis.com/v1/publishers/google/models/<id>) returned 404 NOT_FOUND for every Veo and Lyria id; the REGIONAL endpoint (us-central1-aiplatform.googleapis.com/v1/publishers/google/models/<id>) returned them. Image / Omni / TTS ids answered on the global endpoint. Saved fields: name, versionId, launchStage only.'
+    publisher_model_gets:
+      - {id: veo-3.1-generate-001, http: 200, versionId: default, launchStage: GA, endpoint: us-central1}
+      - {id: veo-3.1-fast-generate-001, http: 200, versionId: default, launchStage: GA, endpoint: us-central1}
+      - {id: veo-3.1-lite-generate-001, http: 200, versionId: default, launchStage: PUBLIC_PREVIEW, endpoint: us-central1}
+      - {id: veo-3.1-generate-preview, http: 200, launchStage: PUBLIC_PREVIEW, endpoint: us-central1}
+      - {id: veo-3.1-fast-generate-preview, http: 200, launchStage: PUBLIC_PREVIEW, endpoint: us-central1}
+      - {id: gemini-3.1-flash-image, http: 200, versionId: default, launchStage: GA, endpoint: global}
+      - {id: gemini-3-pro-image, http: 200, versionId: default, launchStage: GA, endpoint: global}
+      - {id: gemini-omni-1.1-flash-preview, http: 200, versionId: default, launchStage: PUBLIC_PREVIEW, endpoint: global}
+      - {id: gemini-omni-flash, http: 200, versionId: default, launchStage: GA, endpoint: global}
+      - {id: lyria-002, http: 200, versionId: default, launchStage: GA, endpoint: us-central1}
+      - {id: lyria-3, http: 404, error: 'NOT_FOUND — Publisher Model `publishers/google/models/lyria-3` is not found.', endpoint: 'global and us-central1'}
+      - {id: lyria-3-generate-preview, http: 404, error: NOT_FOUND, endpoint: us-central1}
+      - {id: gemini-2.5-pro-tts, http: 200, versionId: default, launchStage: GA, endpoint: global}
+    denied:
+      - {action: 'serviceusage.services.list (gcloud services list --enabled --project vertexaiproject-507518)', error: 'ERROR: (gcloud.services.list) [aight-gateway-sa@vertexaiproject-507518.iam.gserviceaccount.com] does not have permission to access projects instance [vertexaiproject-507518] (or it may not exist): Permission denied to list services for consumer container [projects/148505173459]', consequence: 'cannot confirm which APIs are enabled; the survey observed the Text-to-Speech API as NOT enabled; the SA is unlikely to be able to create service accounts or enable APIs (INFERRED) → MD-9 needs the Controller''s owner account'}
+    credits: 'unknown (MD-1)'
+    created_resources: []
+    key_files: []
+    existing_key_file_untouched: {path: '~/.aight-litellm-keys/vertex-sa.json', mode: '-rw-------'}
+    wherehouse_default_config: 'never loaded — every gcloud call ran with CLOUDSDK_CONFIG=$(mktemp -d)'
+    open_items: [MD-1, MD-3, MD-7, MD-9]
+
+  azure:
+    identity_seen: {subscription_id: b832f4a1-79be-4fb2-ae93-6ba6efd209d2, tenant_id: 999dbc1a-418f-482b-948a-5b8394459f6f, name: 'Azure subscription 1', state: Enabled, via: 'az account show --subscription b832f4a1-79be-4fb2-ae93-6ba6efd209d2'}
+    reachable_now: true
+    subscription_rule: 'every az command carried --subscription b832f4a1-79be-4fb2-ae93-6ba6efd209d2; the default subscription was never changed and the other subscription (d3ee8dc2-…, Wherehouse) was never referenced as a target'
+    models_reachable_eastus2:
+      - {name: gpt-image-2, version: '2026-04-21', format: OpenAI, lifecycle: GenerallyAvailable, skus: 'GlobalStandard (capacity default 3, max 1000; deprecationDate 2027-10-21)'}
+      - {name: FLUX.2-pro, version: '1', format: Black Forest Labs, lifecycle: GenerallyAvailable, skus: 'GlobalStandard, DataZoneStandard (capacity default 1, max 1000)'}
+      - {name: sora-2, version: '2025-12-08', format: OpenAI, lifecycle: Preview, skus: 'GlobalStandard (capacity default 15; deprecationDate 2026-10-15)'}
+      - {name: sora-2, version: '2025-10-06', format: OpenAI, lifecycle: Preview, skus: 'GlobalStandard (deprecationDate 2026-07-15 — already past; do not deploy this version)'}
+      - {name: MAI-Image-2.6, result: 'NOT listed in eastus2 (survey: eastus / southindia / swedencentral / uaenorth)'}
+    sku_standing_cost_reading: 'INFERRED from the Retail Prices API: GlobalStandard / DataZoneStandard meters are per token, per megapixel or per second only; hourly "Unit 1/Hour" meters exist only for "Provisioned Managed" SKUs. So a GlobalStandard deployment with --sku-capacity 1 should carry no standing charge — verify in the portal cost estimate before creating (MD-2 / MD-9).'
+    existing_accounts: [{name: aight-openai-c3bits, location: eastus, kind: OpenAI, state: Succeeded}, {name: aight-openai-southindia, location: southindia, kind: OpenAI, state: Succeeded}, {name: aight-openai-c1wher, location: southindia, kind: OpenAI, state: Succeeded}]
+    existing_media_deployments: 'none (survey: all existing deployments are text/embedding)'
+    denied: []
+    credits: 'unknown — Microsoft for Startups sponsorship not checked (MD-1)'
+    created_resources: []
+    key_files: []
+    open_items: [MD-1, MD-2, MD-9]
+
+  fal:
+    identity_seen: 'not checked — no authenticated call was made; FAL_KEY exists by name in ~/.mi-keys'
+    reachable_now: true (unauthenticated)
+    route_pages: '29 of 30 candidate ids return HTTP 200 on https://fal.ai/models/<id>; fal-ai/kling-video/v3/pro/elements returns 404 (access-evidence-2026-09/fal-route-page-status.txt)'
+    unauthenticated_endpoints:
+      - {url: 'https://fal.ai/api/models?keywords=<id>', status: 200, gives: 'model metadata incl. the pricingInfoOverride price sentence; used for the pins'}
+      - {url: 'https://api.fal.ai/v1/models?endpoint_id=<id>', status: 200, gives: 'metadata + OpenAPI schema (a free schema endpoint), no price'}
+      - {url: 'https://api.fal.ai/v1/models/pricing?endpoint_id=<id>', status: 401, gives: 'requires an API key — not called with one'}
+    queue_submits: 0 (a queue submit is never a check)
+    credits: n/a (cash)
+    open_items: []
+
+  sarvam:
+    identity_seen: 'SARVAM_API_KEY present by NAME in ~/.mi-keys with a 36-character value (length check only, value never printed). CORRECTION after Tester DEFECT-1: the first check reported length 0 because its awk pattern /^SARVAM_API_KEY=/ cannot match a line beginning with "export "; that result is superseded (ACCESS-LOG.md row 20:39:04Z marked superseded; corrected row appended).'
+    reachable_now: 'not tested — key present; no authenticated Sarvam call was made (USD 0 rule)'
+    consequence: 'AUD-01 (bulbul v3) is pinned (₹3.00 per 1,000 characters) and its 6 TTS generations enter the projection as a separate INR line; MD-10 resolved, no decision needed'
+    open_items: []
+
+  elevenlabs_direct: {key_on_machine: false, route: 'via fal (fal-ai/elevenlabs/tts/eleven-v3, fal-ai/elevenlabs/music) with FAL_KEY', open_items: []}
+  runway_direct: {key_on_machine: false, route: 'none — VID-04 deferred', open_items: [MD-5]}
+  keys_by_name_only:
+    mi_keys: [ANTHROPIC_API_KEY, GOOGLE_API_KEY, FAL_KEY, GOOGLE_CLOUD_VISION_API_KEY, 'SARVAM_API_KEY (36 characters; an earlier "empty" reading was a measurement error — see surfaces.sarvam)']
+    aight_litellm_keys_dir: {mode: 'drwx------', files_seen: [acr.env, app.env, aws.env, azure.env, namecheap.env, pg.env, sample-key.txt, sample-portal.env, vertex-sa.json, 'customers/ (dir)'], all_mode_600: true}
+
+mi_battery_keys_dir: {path: '~/.mi-battery-keys/', created: false, reason: '§2b out of scope tonight — MD-9'}
+created_resources_all_clouds: []
+stop_conditions_hit: none

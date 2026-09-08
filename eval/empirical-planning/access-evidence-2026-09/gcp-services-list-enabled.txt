@@ -1,0 +1,14 @@
+ERROR: (gcloud.services.list) [aight-gateway-sa@vertexaiproject-507518.iam.gserviceaccount.com] does not have permission to access projects instance [vertexaiproject-507518] (or it may not exist): Permission denied to list services for consumer container [projects/148505173459]
+Help Token: <REDACTED>. This command is authenticated as aight-gateway-sa@vertexaiproject-507518.iam.gserviceaccount.com which is the active account specified by the [core/account] property
+- '@type': type.googleapis.com/google.rpc.PreconditionFailure
+  violations:
+  - subject: ?error_code=110002&service=cloudresourcemanager.googleapis.com&permission=serviceusage.services.list&error_info_id=CiQwMWEwNmUyNC00N2ZjLTdhYjUtODRkMS1mZWVjYTU0YWI0ZWMSG3Byb2plY3RudW1iZXJzLzE0ODUwNTE3MzQ1OQ%3D%3D&troubleshooter_url=https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId%3DCiQwMWEwNmUyNC00N2ZjLTdhYjUtODRkMS1mZWVjYTU0YWI0ZWMSG3Byb2plY3RudW1iZXJzLzE0ODUwNTE3MzQ1OQ%253D%253D
+    type: googleapis.com
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: serviceusage.googleapis.com
+  metadata:
+    error_info_id: CiQwMWEwNmUyNC00N2ZjLTdhYjUtODRkMS1mZWVjYTU0YWI0ZWMSG3Byb2plY3RudW1iZXJzLzE0ODUwNTE3MzQ1OQ==
+    permission: serviceusage.services.list
+    service: cloudresourcemanager.googleapis.com
+    troubleshooter_url: https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=CiQwMWEwNmUyNC00N2ZjLTdhYjUtODRkMS1mZWVjYTU0YWI0ZWMSG3Byb2plY3RudW1iZXJzLzE0ODUwNTE3MzQ1OQ%3D%3D
+  reason: AUTH_PERMISSION_DENIED

@@ -1,0 +1,152 @@
+# COST-PROJECTION-INPUTS-2026-09 — the COUNTS side of the projection (prices come from the roster).
+# PLANNING ONLY. Nothing here authorises spend.
+# Counts are the plan's nominal figures (coordination/plans/2026-09-05-CAPABILITY-LAB-CAMPAIGN-v1.md §E, §C.3, §C.3c, §C.3d)
+# until EVAL-039A's TEST-CASES.yaml exists; then `project_costs.py --test-cases` regenerates the counts from it.
+# Each line: tranche, route_key (+variant), lane, generations, unit_quantity (seconds per gen, characters, minutes,
+# 1 for images), unit_kind, source, optional `addition` (a C.3c / C.3d / VID-05 line beyond the plan's §E nominal
+# 164 / 82) and `note`. `source: assumption` marks a decomposition the plan does not spell out.
+meta:
+  task: EVAL-039B
+  status: PLANNING_ONLY_NOT_AUTHORISED
+  plan_nominal_counts: {T1a_generations: 164, T1a_split: '112 image + 52 t2v (incl. native dialogue)', T1b_generations: 82, T1b_split: 'i2v 36, ref2v 12, multi-shot 10, TTS 12, lipsync 12', T2_generations_max: 200, T2_evaluator_calls: 1000, T3_generations: '100-150', T3_evaluator_calls: 400}
+  video_default_seconds: 6
+  tts_default_characters: 250
+  lipsync_plate_seconds: 6
+  inr_display_only_reference_rate_2026_08_26: {inr_per_usd: 95.4211, label: display_only_reference_rate_2026-08-26, source: 'eval/empirical-planning/STAGE-A-ROUTE-PRICE-REFRESH-2026-08-26.yaml meta.usd_inr_reference (rate 95.4211 as of 2026-08-26T16:51:00Z; display-only planning conversion, provider invoices remain in source currency)', rule: 'INR lines are totalled as cash_inr and NEVER added to cash_usd; the USD figure shown beside them is display-only'}
+
+proposed_caps_usd: {T0: 0, T1a: 60, T1b: 115, T2: 250, T3: 150}
+
+evaluator_prices:
+  cloud_vision_ocr: {price_usd_per_call: 0.0015, unit: per_image, billing_pool: cash, pinned: false, source: 'plan §E (Cloud Vision ≈ USD 1.50 per 1k images); key GOOGLE_CLOUD_VISION_API_KEY present'}
+  vlm_triage: {price_usd_per_call: 0.01, unit: per_call, billing_pool: cash, pinned: false, source: 'plan §E (VLM triage ≈ USD 0.01 per call)'}
+  asr: {price_usd_per_call: null, unit: per_call, billing_pool: cash, pinned: false, unpinned_reason: 'ASR model unnamed in the plan → price null, unpinned', source: 'plan §E'}
+
+minimum_viable_round_one:
+  definition: 'image core (6 routes × 4 items × 2) + text-to-video (VID-01) + image-to-video (VID-03a) only, with the evaluator lines that touch those lanes'
+  lanes: [image-core, t2v, i2v]
+
+music_lane_alternative_8:
+  note: 'MD-7: the plan says "2 briefs × 2"; totals use 4 generations (2 Lyria + 2 ElevenLabs Music); the 8-reading doubles each line.'
+  extra_generations: 4
+
+tranches:
+  - tranche: T0
+    lines: []
+    evaluators: []
+
+  - tranche: T1a
+    lines:
+      # ---- image core: 6 routes × 4 items × 2 = 48 (plan §C.3) ----
+      - {route_key: gpt-image-2, lane: image-core, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 image core (6 × 4 × 2 = 48)'}
+      - {route_key: nano-banana-2, lane: image-core, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 image core'}
+      - {route_key: nano-banana-pro, lane: image-core, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 image core'}
+      - {route_key: seedream-5-pro, lane: image-core, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 image core'}
+      - {route_key: flux-2-pro, lane: image-core, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 image core'}
+      - {route_key: qwen-image-3, lane: image-core, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 image core'}
+      # ---- IMG-01/02 exact text: 4 routes × 4 items × 2 = 32 (decomposition of the plan's 112 is an assumption) ----
+      - {route_key: gpt-image-2, lane: image-text, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-01/02; count split = assumption (112 = 48 core + 32 text + 16 edit + 16 reference)'}
+      - {route_key: nano-banana-pro, lane: image-text, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-01/02; assumption as above'}
+      - {route_key: seedream-5-pro, lane: image-text, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-01/02; assumption as above'}
+      - {route_key: recraft-v4, lane: image-text, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-02 (Recraft V4 promoted); assumption as above'}
+      # ---- IMG-03 edit: 4 routes × 2 items × 2 = 16 ----
+      - {route_key: flux-2-pro-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, addon_quantities: {additional_megapixel: 1}, source: 'plan §C.3 IMG-03; assumption as above', note: 'priced with 1 reference input of 1 MP: 0.03 + 1 × 0.015 (roster price_addons) = 0.045 per gen — reconciled after Auditor AF-2'}
+      - {route_key: nano-banana-pro-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-03; assumption as above'}
+      - {route_key: seedream-5-pro-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-03; assumption as above'}
+      - {route_key: gpt-image-2-edit, lane: image-edit, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-03; assumption as above'}
+      # ---- IMG-04 reference (product; person): 4 routes × 2 × 2 = 16 ----
+      - {route_key: flux-2-pro-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, addon_quantities: {additional_megapixel: 1}, source: 'plan §C.3 IMG-04; assumption as above', note: '1 reference of 1 MP → 0.045 per gen (AF-2)'}
+      - {route_key: nano-banana-pro-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-04; assumption as above'}
+      - {route_key: seedream-5-pro-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-04; assumption as above'}
+      - {route_key: gpt-image-2-edit, lane: image-ref, generations: 4, unit_quantity: 1, unit_kind: images, source: 'plan §C.3 IMG-04; assumption as above'}
+      # ---- VID-01 text-to-video: 6 s, 720p, 9:16 — 5 routes × 8 + Seedance 4 = 44 ----
+      - {route_key: veo-3.1-fast, variant: t2v, lane: t2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-01'}
+      - {route_key: kling-v3-pro, variant: t2v, lane: t2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-01 (audio off, 26-Aug slot design)'}
+      - {route_key: minimax-h3-max, variant: t2v-768p, lane: t2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-01 (768p regular price)'}
+      - {route_key: wan-3.0-prime, variant: t2v, lane: t2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-01'}
+      - {route_key: gemini-omni-flash-1.1, variant: t2v, lane: t2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-01'}
+      - {route_key: seedance-2.5, variant: t2v, lane: t2v, generations: 4, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-01 (premium — 4 gens not 8)'}
+      # ---- C.3d two-speaker Hindi dialogue on native-audio routes ×2 = 8 (the "incl. native dialogue" part of §E's 52) ----
+      - {route_key: veo-3.1-full, lane: dialogue, generations: 2, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3d multiple speakers ×2; §E "t2v incl. native dialogue (52)"'}
+      - {route_key: kling-v3-pro, variant: t2v-audio-on, lane: dialogue, generations: 2, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3d ×2 (audio on rate 0.168/s)'}
+      - {route_key: gemini-omni-flash-1.1, variant: dialogue, lane: dialogue, generations: 2, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3d ×2'}
+      - {route_key: seedance-2.5, variant: dialogue, lane: dialogue, generations: 2, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3d ×2'}
+      # ---- additions beyond §E's 164 ----
+      - {route_key: sd3.5-large, lane: image-core, generations: 8, unit_quantity: 1, unit_kind: images, source: 'plan §C.3c (SD3.5 Large added as a cheap image candidate on AWS credits) — 4 items × 2 = assumption', addition: C.3c}
+      - {route_key: veo-3.1-lite, lane: cost-knee, generations: 4, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-05 (lite vs fast vs full); count 4 = assumption', addition: VID-05}
+      - {route_key: minimax-h3-max, variant: t2v-480p, lane: cost-knee, generations: 4, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-05 (480p vs 768p); count 4 = assumption', addition: VID-05}
+      # ---- zero-count lines: roster routes with no plan count tonight, shown so their status is visible in the projection ----
+      - {route_key: sora-2, lane: t2v, generations: 0, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3c (added at no cash cost) — no count in §E; 0 until MD-9 deployment exists', addition: C.3c}
+      - {route_key: mai-image-2.6, lane: image-core, generations: 0, unit_quantity: 1, unit_kind: images, source: 'plan §C.3c — price unpublished; 0', addition: C.3c}
+      - {route_key: stable-image-core, lane: image-core, generations: 0, unit_quantity: 1, unit_kind: images, source: 'plan §C.3c — recorded, not screened; 0', addition: C.3c}
+      - {route_key: stable-image-ultra, lane: image-core, generations: 0, unit_quantity: 1, unit_kind: images, source: 'plan §C.3c — recorded, not screened; 0', addition: C.3c}
+      - {route_key: luma-ray-2, lane: t2v, generations: 0, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3c — recorded, not screened; 0', addition: C.3c}
+    evaluators:
+      - {evaluator: cloud_vision_ocr, calls: 100, lanes: [image-core, image-text], source: 'plan §E T1a "Cloud Vision ~100"'}
+      - {evaluator: asr, calls: 20, lanes: [dialogue, t2v], source: 'plan §E T1a "ASR ~20"'}
+      - {evaluator: vlm_triage, calls: 150, lanes: [image-core, image-text, image-edit, image-ref, t2v], source: 'plan §E T1a "VLM triage ~150"'}
+
+  - tranche: T1b
+    lines:
+      # ---- VID-03a image-to-video from one shared hero still: 36 ----
+      - {route_key: veo-3.1-fast, variant: i2v, lane: i2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-03a / §E i2v 36'}
+      - {route_key: kling-v3-pro, variant: i2v, lane: i2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-03a'}
+      - {route_key: minimax-h3-max, variant: i2v-768p, lane: i2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-03a'}
+      - {route_key: wan-3.0-prime, variant: i2v, lane: i2v, generations: 8, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-03a'}
+      - {route_key: seedance-2.5, variant: i2v, lane: i2v, generations: 4, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-03a (4 gens)'}
+      # ---- VID-03b reference-to-video: 12 ----
+      - {route_key: seedance-2.5, variant: ref2v, lane: ref2v, generations: 4, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-03b (4)'}
+      - {route_key: veo-3.1-fast, variant: ref2v, lane: ref2v, generations: 4, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-03b (4)'}
+      - {route_key: kling-v3-pro, variant: elements-ref2v, lane: ref2v, generations: 4, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-03b "Kling v3 elements if pinned" — §E ref2v 12 = 4 + 4 + 4 (assumption)'}
+      # ---- VID-02 multi-shot: 10 ----
+      - {route_key: kling-v3-pro, variant: multishot-10s, lane: multishot, generations: 4, unit_quantity: 10, unit_kind: seconds, source: 'plan §C.3 VID-02 (10 s, 4)'}
+      - {route_key: seedance-2.5, variant: 15s, lane: multishot, generations: 2, unit_quantity: 15, unit_kind: seconds, source: 'plan §C.3 VID-02 (15 s, 2)'}
+      - {route_key: gemini-omni-flash-1.1, variant: multishot-10s, lane: multishot, generations: 4, unit_quantity: 10, unit_kind: seconds, source: 'plan §C.3 VID-02 (10 s, 4)'}
+      # ---- AUD-01/02 TTS: 3 scripts × 2 per route = 12 ----
+      - {route_key: sarvam-bulbul-v3, lane: tts, generations: 6, unit_quantity: 250, unit_kind: chars, source: 'plan §C.3 AUD-01 (3 scripts × 2); 250 chars = 26-Aug audio default'}
+      - {route_key: elevenlabs-v3, lane: tts, generations: 6, unit_quantity: 250, unit_kind: chars, source: 'plan §C.3 AUD-02 (3 scripts × 2)'}
+      # ---- AUD-03 lipsync: 12 (drives = TTS outputs; plates = i2v outputs) ----
+      - {route_key: sync-lipsync-v3, lane: lipsync, generations: 6, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 AUD-03; §E lipsync 12 = 6 + 6 (assumption)'}
+      - {route_key: kling-lipsync-audio-to-video, lane: lipsync, generations: 6, unit_quantity: 10, unit_kind: seconds, source: 'plan §C.3 AUD-03 second route; 6-s plate bills as 10 s (5-s increments per fal)'}
+      # ---- C.3d additions ----
+      - {route_key: kling-v3-pro, variant: 15s, lane: long-clip, generations: 2, unit_quantity: 15, unit_kind: seconds, source: 'plan §C.3d longer videos ×2', addition: C.3d}
+      - {route_key: seedance-2.5, variant: 15s, lane: long-clip, generations: 2, unit_quantity: 15, unit_kind: seconds, source: 'plan §C.3d longer videos ×2 (may overlap VID-02 15-s ×2 — kept separate as the task itemises C.3d separately)', addition: C.3d}
+      - {route_key: veo-3.1-fast, variant: extend-15s, lane: long-clip, generations: 2, unit_quantity: 15, unit_kind: seconds, source: 'plan §C.3d longer videos ×2 (Veo via extend)', addition: C.3d}
+      - {route_key: elevenlabs-v3, lane: dialogue-chain, generations: 2, unit_quantity: 250, unit_kind: chars, source: 'plan §C.3d TTS + lip-sync chain ×2 (TTS half)', addition: C.3d}
+      - {route_key: sync-lipsync-v3, lane: dialogue-chain, generations: 2, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3d TTS + lip-sync chain ×2 (lipsync half)', addition: C.3d}
+      - {route_key: lyria, lane: music, generations: 2, unit_quantity: 1, unit_kind: clips, source: 'plan §C.3d music lane, 2 briefs × 2 read as 4 total (MD-7)', addition: C.3d}
+      - {route_key: elevenlabs-music, lane: music, generations: 2, unit_quantity: 1, unit_kind: minutes, source: 'plan §C.3d music lane (30-s clip bills as 1 minute)', addition: C.3d}
+      # ---- zero-count lines (status visibility) ----
+      - {route_key: runway-aleph, lane: video-edit, generations: 0, unit_quantity: 6, unit_kind: seconds, source: 'plan §C.3 VID-04 — deferred, no account (MD-5); 0'}
+      - {route_key: chirp-3-hd-hi-in, lane: tts, generations: 0, unit_quantity: 250, unit_kind: chars, source: 'plan §C.3c cloud TTS — API not enabled (MD-9); 0', addition: C.3c}
+      - {route_key: azure-neural-tts-hi-in, lane: tts, generations: 0, unit_quantity: 250, unit_kind: chars, source: 'plan §C.3c cloud TTS — no Speech resource (MD-9); 0', addition: C.3c}
+      - {route_key: polly-kajal, lane: tts, generations: 0, unit_quantity: 250, unit_kind: chars, source: 'plan §C.3c cloud TTS — IAM denies Polly (MD-8); 0', addition: C.3c}
+    evaluators:
+      - {evaluator: asr, calls: 24, lanes: [tts, lipsync, dialogue-chain], source: 'plan §E T1b "ASR ~24"'}
+      - {evaluator: vlm_triage, calls: 60, lanes: [i2v, ref2v, multishot, long-clip], source: 'plan §E T1b "VLM triage ~60"'}
+
+  - tranche: T2
+    lines: []
+    blended_generations: 200
+    blended_source: 'plan §E T2 "≤ 200" generations; route mix unknown until Stage A survivors are known'
+    evaluators:
+      - {evaluator: vlm_triage, calls: 1000, lanes: [stage-b], source: 'plan §E T2 "≈ 1,000" evaluator calls, all priced at the VLM triage nominal (assumption A-EVAL)'}
+
+  - tranche: T3
+    lines: []
+    blended_generations: 125
+    blended_source: 'plan §E T3 "≈ 100–150" generations → midpoint 125 (assumption)'
+    evaluators:
+      - {evaluator: vlm_triage, calls: 400, lanes: [stage-c], source: 'plan §E T3 "≈ 400" evaluator calls, all priced at the VLM triage nominal (assumption A-EVAL)'}
+
+assumptions:
+  - {id: A-01, assumption: 'Veo prices on the Vertex page read "$0.40 / 1 count" under "Price (USD)"; the bytes do not define "count". Treated as per second of generated video (the survey and fal read it that way, and fal lists the identical 0.40/s).', source: 'survey-2026-09-05 §2; roster notes; NOT a vendor statement'}
+  - {id: A-02, assumption: 'Video items are 6 s at 720p unless the plan states 10 s or 15 s; TTS items are 250 characters; lipsync plates are 6 s (Kling lipsync bills a 6-s plate as 10 s).', source: 'STAGE-A-ROUTE-PRICE-REFRESH-2026-08-26.yaml execution_assumptions; plan §C.3'}
+  - {id: A-03, assumption: 'Image outputs are ≈ 1 megapixel (1024-class): FLUX.2-pro = first-megapixel price; Nano Banana 2/Pro = 1K row; Qwen = 1K; Seedream ≤ 1536² tier; GPT Image 2 = fal 1024×1024 medium-quality projection (0.053) — the harness must set quality=medium, fal defaults to high (0.211).', source: 'plan §C.3; pinned fal/Vertex texts'}
+  - {id: A-04, assumption: 'The plan’s 112 image generations decompose as 48 core + 32 exact-text + 16 edit + 16 reference; ref2v 12 = 4 Seedance + 4 Veo + 4 Kling elements; lipsync 12 = 6 + 6.', source: 'assumption (plan §E gives totals only)'}
+  - {id: A-05, assumption: 'Routes whose credit surface is not yet enabled (gpt-image-2, FLUX.2-pro on Azure) are priced on their fal fallback as cash tonight; they move to credits once MD-9 deployments exist.', source: 'task §4 rule (cash for the fallback); roster fallback records'}
+  - {id: A-06, assumption: 'Gemini Omni Flash 1.1 per-second price is derived: $17.50 per 1M video-output tokens × 5,792 tokens per second of 720p = 0.10136/s; prompt input tokens are not added.', source: 'pinned Vertex bytes (both figures); arithmetic by the Executor'}
+  - {id: A-07, assumption: 'Lyria is priced at 0.06 per clip for the id that exists (lyria-002, read as the "Lyria 2" row); the plan’s "Lyria 3" (0.04) has no reachable id tonight.', source: 'roster lyria record; MD-7'}
+  - {id: A-08, assumption: 'Kling v3 dialogue items use the audio-on rate (0.168/s); all other Kling lines use audio off (0.112/s) as in the 26-Aug slot design.', source: 'pinned fal text; STAGE-A-ROUTE-PRICE-REFRESH-2026-08-26.yaml VID-02'}
+  - {id: A-09, assumption: 'C.3c SD3.5 Large (8 gens, credits) and VID-05 cost-knee lines (Veo Lite 4, H3 Max 480p 4) are additions beyond the plan’s §E nominal 164 and are shown separately (generations_additions).', source: 'plan §C.3c, §C.3 VID-05; counts = assumption'}
+  - {id: A-EVAL, assumption: 'Evaluator prices are the plan’s nominals (Cloud Vision 1.50 per 1k images, VLM triage 0.01 per call), not pinned; ASR is unpriced and excluded; T2/T3 evaluator calls are all priced at the VLM nominal.', source: 'plan §E'}
+  - {id: A-10, assumption: 'Credits: any route on Vertex / Bedrock / Azure "sold by Azure" is counted as credits per the survey’s reading of each programme’s terms; balances and enrolment are unknown (MD-1). fal, Sarvam, Runway are cash.', source: 'survey-2026-09-05 §4; decision §3 rule 9'}

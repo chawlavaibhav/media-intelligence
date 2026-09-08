@@ -1,0 +1,20 @@
+# Plain-text EXTRACT of a pinned vendor reference page (EVAL-039C schema pin). The raw page was removed from the
+# working tree after the Tester's D1 finding (vendor site-config tokens inside the raw HTML); this extract keeps only
+# the request-body evidence the adapters use. The original fetch stays verifiable through the fields below, and the
+# raw bytes remain in git history at commit ae191fb33ed2 (eval/harness-v2/schemas/vertex/lyria-music-generation.html.gz).
+id: lyria_ref
+url: https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/lyria-music-generation
+fetched_utc: 2026-09-04T21:53:20Z (file mtime)
+http_status: 200
+original_bytes: 735593
+original_sha256: de0a337eef2604764b2c92e7ac61ef8ca80ead5c839a3e273528a3333f2865f6
+extract_written_utc: 2026-09-05T01:51:26.310812Z
+used_by_shapes: ['lyria']
+
+evidence_quotes cited by SCHEMA-INDEX for the shapes this page serves (found=exact | ws-insensitive | false; a quote may live on a sibling page):
+  - found=exact          | "audioContent" : "BASE64_ENCODED_WAV_STRING_SAMPLE_1" , "mimeType" : "audio/wav"
+  - found=exact          | "instances": [ { "prompt": "string", "negative_prompt": "string", // Optional "seed": 0 // Optional. Cannot be used with sample_count.
+  - found=exact          | "parameters": { "sample_count": 1
+  - found=exact          | Each generated audio clip is 30 seconds long
+
+field_names (found in the page text):

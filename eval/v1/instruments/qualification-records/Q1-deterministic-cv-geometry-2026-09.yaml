@@ -1,0 +1,348 @@
+# Q1 qualification result - one record per judgement family; registry_use_permitted is false in every record (MD-C2).
+record_type: instrument_qualification
+schema_ref: eval/v1/instruments/qualification-result-schema.yaml
+schema_status: PROPOSED_NOT_IN_FORCE
+task: EVAL-039C
+run_utc: '2026-09-05T01:34:21.195172Z'
+preregistration:
+  path: eval/v1/instruments/qualification-records/Q1-deterministic-cv-geometry-2026-09-PREREGISTRATION.yaml
+  sha256: e7edee8c1cbcd5b4d86452af513539d3942141e0007376636799ad09da87c038
+  R_q: 3
+  T_rgb: 30
+run:
+  elapsed_s: 20.49
+  under_10_minutes: true
+  items_per_pass: 102
+  passes: 3
+  observations: eval/v1/instruments/qualification-records/Q1-deterministic-cv-geometry-2026-09-observations.jsonl
+  n_observations: 306
+  verify_before:
+    command: python3 eval/v1/instruments/build_cv_fixtures.py --verify
+    exit_code: 0
+    pass: true
+    last_line: PASS - every fixture present and hash-identical to its manifest.
+    at: '2026-09-05T01:34:00.638681Z'
+  verify_after:
+    command: python3 eval/v1/instruments/build_cv_fixtures.py --verify
+    exit_code: 0
+    pass: true
+    last_line: PASS - every fixture present and hash-identical to its manifest.
+    at: '2026-09-05T01:34:21.192915Z'
+  manifest_sha256_before: 2cc31b661f720cb7e676f87f41fd85abfc718c3d7e4f7acf3765be5ecc63ed3b
+  manifest_sha256_after: 2cc31b661f720cb7e676f87f41fd85abfc718c3d7e4f7acf3765be5ecc63ed3b
+  manifest_unchanged: true
+  python: 3.14.7
+  spend_usd: 0
+negative_controls:
+  blank_gives_zero_objects: true
+  corrupt_fails_closed: true
+  all_ok: true
+  repeat_consistency: 1.0
+supplementary_observation:
+  object_count_agreement_on_non_count_categories: 72/75
+  gates_nothing: true
+qualified_domain: the record covers ONLY this synthetic domain; NO transfer to photographic or generated outputs is claimed
+records:
+- record_id: qual_q1_object_count_2026-09
+  instrument_id: hv2-q1-flat-colour-cc
+  instrument_version: 0.1.0
+  configuration_hash: 70ea60d8faa53807213c811fc2e02a5cc4cee19d2f0029624b5c56ab4014abb4
+  instrument_family: '2'
+  judgement_family: object_count
+  pack_ref: eval/v1/instruments/fixtures/cv-geometry/manifest.json
+  pack_version: cv-geometry-v1
+  pack_hash: c0d178c74421bc8ee669784d785b4c958b8e4eb14dd9cf28ccf5c50b0ab25813
+  conditions: &id001
+    render_class: flat-colour synthetic renders on a white background (constructed by code, no photograph)
+    frame: 640x480, 8-bit RGB PNG, filter type 0, non-interlaced
+    palette: five named sRGB colours + white background + one grey shadow trap (185,185,185)
+    shapes: axis-aligned squares, circles and horizontal bars, 45-140 px
+    degradation_class: none
+    lighting: none (flat fill)
+    language: not_applicable
+    script: not_applicable
+    qualified_domain_statement: the record covers ONLY this synthetic domain; NO transfer to photographic or generated outputs is claimed
+  gate:
+    n_opportunities: 31
+    false_passes: 3
+    false_fails: 0
+    refusals: 0
+    gate_verdict: fail
+    gate_rule_ref: eval/v1/instruments/FAMILY-2-DETERMINISTIC-CV.md#Gate
+    gate_mapping_note: a known-answer geometry pack has agreement/disagreement, not pass/fail on generated work; every disagreement is counted
+      under false_passes (the dangerous direction, conservatively) and false_fails is 0 by construction
+    agreements: 27
+    disagreements: 3
+    disagreement_direction:
+      under_count: 3
+    all_repeats_agree: false
+    negative_controls_ok: true
+    n_items: 30
+    opportunity_note: one generator made every fixture from one seed; items are NOT independent opportunities
+  diagnosis:
+    n_scored: 30
+    correct_class: 27
+    wrong_class: 3
+    no_class_offered: 0
+    silent_correction: 0
+    note: the detector never sees the intended answer, so silent correction cannot occur
+  repeats:
+    full_passes: 3
+    shapes_covered:
+    - object_count
+    repeat_consistency: 1.0
+    consistency_threshold_applied: 1.0
+    threshold_status: PROPOSED_NOT_EMPIRICALLY_BACKED (deterministic code; 1.0 expected)
+  reference_calculation:
+    iid_reference_upper_bound_95pct: 0.265288450474208
+    independence_status: NOT ESTABLISHED
+    caveat: Clopper-Pearson upper bound on the disagreement rate over items under an iid model the pack does not establish; a sizing reference,
+      NOT the detector's real-world error rate
+  blind_check:
+    required: false
+    performed_before_run: true
+    method: the detector API takes image bytes only; truth is read by the runner after detection (code inspection of q1/run_q1.py judge())
+    result: clean
+  human_reference:
+    used: false
+    n_reviewers: 0
+    qualification: none
+    what_the_human_decided: nothing - truth is constructed by code
+    epistemic_status: ground truth by construction (build_cv_fixtures.py, seed 20260826)
+  status: disqualified
+  qualified: false
+  status_reason: '3/30 first-pass disagreements: cv-0024 expected 3 detected 1; cv-0025 expected 4 detected 1; cv-0026 expected 5 detected 1'
+  registry_use_permitted: false
+  controller_ratification_required: MD-C2
+  qualified_date: null
+  requalification_triggers:
+  - instrument_version_change
+  - configuration_hash_change
+  - pack_version_change
+  - conditions_outside_qualified_range
+  - scheduled_interval_elapsed
+  cost:
+    calls: 0
+    currency: USD
+    spend: 0
+    human_hours: 0
+- record_id: qual_q1_spatial_relationship_2d_2026-09
+  instrument_id: hv2-q1-flat-colour-cc
+  instrument_version: 0.1.0
+  configuration_hash: 70ea60d8faa53807213c811fc2e02a5cc4cee19d2f0029624b5c56ab4014abb4
+  instrument_family: '2'
+  judgement_family: spatial_relationship_2d
+  pack_ref: eval/v1/instruments/fixtures/cv-geometry/manifest.json
+  pack_version: cv-geometry-v1
+  pack_hash: c0d178c74421bc8ee669784d785b4c958b8e4eb14dd9cf28ccf5c50b0ab25813
+  conditions: *id001
+  gate:
+    n_opportunities: 40
+    false_passes: 0
+    false_fails: 0
+    refusals: 0
+    gate_verdict: pass
+    gate_rule_ref: eval/v1/instruments/FAMILY-2-DETERMINISTIC-CV.md#Gate
+    gate_mapping_note: a known-answer geometry pack has agreement/disagreement, not pass/fail on generated work; every disagreement is counted
+      under false_passes (the dangerous direction, conservatively) and false_fails is 0 by construction
+    agreements: 40
+    disagreements: 0
+    disagreement_direction: {}
+    all_repeats_agree: true
+    negative_controls_ok: true
+    n_items: 40
+    opportunity_note: one generator made every fixture from one seed; items are NOT independent opportunities
+  diagnosis:
+    n_scored: 40
+    correct_class: 40
+    wrong_class: 0
+    no_class_offered: 0
+    silent_correction: 0
+    note: the detector never sees the intended answer, so silent correction cannot occur
+  repeats:
+    full_passes: 3
+    shapes_covered:
+    - spatial_relationship_2d
+    repeat_consistency: 1.0
+    consistency_threshold_applied: 1.0
+    threshold_status: PROPOSED_NOT_EMPIRICALLY_BACKED (deterministic code; 1.0 expected)
+  reference_calculation:
+    iid_reference_upper_bound_95pct: 0.08809730287880241
+    independence_status: NOT ESTABLISHED
+    caveat: Clopper-Pearson upper bound on the disagreement rate over items under an iid model the pack does not establish; a sizing reference,
+      NOT the detector's real-world error rate
+  blind_check:
+    required: false
+    performed_before_run: true
+    method: the detector API takes image bytes only; truth is read by the runner after detection (code inspection of q1/run_q1.py judge())
+    result: clean
+  human_reference:
+    used: false
+    n_reviewers: 0
+    qualification: none
+    what_the_human_decided: nothing - truth is constructed by code
+    epistemic_status: ground truth by construction (build_cv_fixtures.py, seed 20260826)
+  status: qualified
+  qualified: true
+  status_reason: exact agreement on all 40 items in every one of R_q=3 passes; registry use still needs MD-C2
+  registry_use_permitted: false
+  controller_ratification_required: MD-C2
+  qualified_date: '2026-09-05'
+  requalification_triggers:
+  - instrument_version_change
+  - configuration_hash_change
+  - pack_version_change
+  - conditions_outside_qualified_range
+  - scheduled_interval_elapsed
+  cost:
+    calls: 0
+    currency: USD
+    spend: 0
+    human_hours: 0
+- record_id: qual_q1_size_aspect_2026-09
+  instrument_id: hv2-q1-flat-colour-cc
+  instrument_version: 0.1.0
+  configuration_hash: 70ea60d8faa53807213c811fc2e02a5cc4cee19d2f0029624b5c56ab4014abb4
+  instrument_family: '2'
+  judgement_family: size_aspect
+  pack_ref: eval/v1/instruments/fixtures/cv-geometry/manifest.json
+  pack_version: cv-geometry-v1
+  pack_hash: c0d178c74421bc8ee669784d785b4c958b8e4eb14dd9cf28ccf5c50b0ab25813
+  conditions: *id001
+  gate:
+    n_opportunities: 15
+    false_passes: 0
+    false_fails: 0
+    refusals: 0
+    gate_verdict: pass
+    gate_rule_ref: eval/v1/instruments/FAMILY-2-DETERMINISTIC-CV.md#Gate
+    gate_mapping_note: a known-answer geometry pack has agreement/disagreement, not pass/fail on generated work; every disagreement is counted
+      under false_passes (the dangerous direction, conservatively) and false_fails is 0 by construction
+    agreements: 15
+    disagreements: 0
+    disagreement_direction: {}
+    all_repeats_agree: true
+    negative_controls_ok: true
+    n_items: 15
+    opportunity_note: one generator made every fixture from one seed; items are NOT independent opportunities
+  diagnosis:
+    n_scored: 15
+    correct_class: 15
+    wrong_class: 0
+    no_class_offered: 0
+    silent_correction: 0
+    note: the detector never sees the intended answer, so silent correction cannot occur
+  repeats:
+    full_passes: 3
+    shapes_covered:
+    - size_aspect
+    repeat_consistency: 1.0
+    consistency_threshold_applied: 1.0
+    threshold_status: PROPOSED_NOT_EMPIRICALLY_BACKED (deterministic code; 1.0 expected)
+  reference_calculation:
+    iid_reference_upper_bound_95pct: 0.21801936091053403
+    independence_status: NOT ESTABLISHED
+    caveat: Clopper-Pearson upper bound on the disagreement rate over items under an iid model the pack does not establish; a sizing reference,
+      NOT the detector's real-world error rate
+  blind_check:
+    required: false
+    performed_before_run: true
+    method: the detector API takes image bytes only; truth is read by the runner after detection (code inspection of q1/run_q1.py judge())
+    result: clean
+  human_reference:
+    used: false
+    n_reviewers: 0
+    qualification: none
+    what_the_human_decided: nothing - truth is constructed by code
+    epistemic_status: ground truth by construction (build_cv_fixtures.py, seed 20260826)
+  status: qualified
+  qualified: true
+  status_reason: exact agreement on all 15 items in every one of R_q=3 passes; registry use still needs MD-C2
+  registry_use_permitted: false
+  controller_ratification_required: MD-C2
+  qualified_date: '2026-09-05'
+  requalification_triggers:
+  - instrument_version_change
+  - configuration_hash_change
+  - pack_version_change
+  - conditions_outside_qualified_range
+  - scheduled_interval_elapsed
+  cost:
+    calls: 0
+    currency: USD
+    spend: 0
+    human_hours: 0
+- record_id: qual_q1_attribute_binding_2026-09
+  instrument_id: hv2-q1-flat-colour-cc
+  instrument_version: 0.1.0
+  configuration_hash: 70ea60d8faa53807213c811fc2e02a5cc4cee19d2f0029624b5c56ab4014abb4
+  instrument_family: '2'
+  judgement_family: attribute_binding
+  pack_ref: eval/v1/instruments/fixtures/cv-geometry/manifest.json
+  pack_version: cv-geometry-v1
+  pack_hash: c0d178c74421bc8ee669784d785b4c958b8e4eb14dd9cf28ccf5c50b0ab25813
+  conditions: *id001
+  gate:
+    n_opportunities: 15
+    false_passes: 0
+    false_fails: 0
+    refusals: 0
+    gate_verdict: pass
+    gate_rule_ref: eval/v1/instruments/FAMILY-2-DETERMINISTIC-CV.md#Gate
+    gate_mapping_note: a known-answer geometry pack has agreement/disagreement, not pass/fail on generated work; every disagreement is counted
+      under false_passes (the dangerous direction, conservatively) and false_fails is 0 by construction
+    agreements: 15
+    disagreements: 0
+    disagreement_direction: {}
+    all_repeats_agree: true
+    negative_controls_ok: true
+    n_items: 15
+    opportunity_note: one generator made every fixture from one seed; items are NOT independent opportunities
+  diagnosis:
+    n_scored: 15
+    correct_class: 15
+    wrong_class: 0
+    no_class_offered: 0
+    silent_correction: 0
+    note: the detector never sees the intended answer, so silent correction cannot occur
+  repeats:
+    full_passes: 3
+    shapes_covered:
+    - attribute_binding
+    repeat_consistency: 1.0
+    consistency_threshold_applied: 1.0
+    threshold_status: PROPOSED_NOT_EMPIRICALLY_BACKED (deterministic code; 1.0 expected)
+  reference_calculation:
+    iid_reference_upper_bound_95pct: 0.21801936091053403
+    independence_status: NOT ESTABLISHED
+    caveat: Clopper-Pearson upper bound on the disagreement rate over items under an iid model the pack does not establish; a sizing reference,
+      NOT the detector's real-world error rate
+  blind_check:
+    required: false
+    performed_before_run: true
+    method: the detector API takes image bytes only; truth is read by the runner after detection (code inspection of q1/run_q1.py judge())
+    result: clean
+  human_reference:
+    used: false
+    n_reviewers: 0
+    qualification: none
+    what_the_human_decided: nothing - truth is constructed by code
+    epistemic_status: ground truth by construction (build_cv_fixtures.py, seed 20260826)
+  status: provisional
+  qualified: null
+  status_reason: exact agreement observed, but the colour judgement rests on T_rgb, which FAMILY-2 says needs Controller approval before the run;
+    qualified stays null until MD-C2
+  registry_use_permitted: false
+  controller_ratification_required: MD-C2
+  qualified_date: null
+  requalification_triggers:
+  - instrument_version_change
+  - configuration_hash_change
+  - pack_version_change
+  - conditions_outside_qualified_range
+  - scheduled_interval_elapsed
+  cost:
+    calls: 0
+    currency: USD
+    spend: 0
+    human_hours: 0

@@ -1,0 +1,54 @@
+# HISTORICAL PRIOR — NOT A CURRENT CAPABILITY CLAIM. These five files are Media Factory's own
+# observations from July–August 2026 (an earlier B2B media product), copied byte-for-byte from the
+# Controller's handoff zip. They tell us what was seen then, with those models and prompts; they do
+# not say what any model can do today, and they are never Registry evidence. Any routing statement
+# in them must pass a fresh, dated check before it is relied on (freshness_required: true on every row).
+zip_path: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-factory-controller-handoff.zip
+zip_sha256: 48a1cc944255c179396ed93e0e8fc747417b0e0094e25c413d1e3d0de4a8ae6a
+zip_bytes: 122476693
+imported_utc: '2026-09-04T20:24:57Z'
+imported_by: EVAL-039B Executor (compact form of EVAL-036; five files only)
+extract_command: unzip -p <zip> media-factory-controller-handoff/<file> > eval/historical-priors/media-factory-v1/<file>
+hash_check: all five sha256 values equal the Controller-supplied values in EVAL-039B §0 (verified with shasum -a 256 after extraction)
+pii_screen: >-
+  grep for e-mail addresses, Indian mobile-number patterns and capitalised name pairs across all five
+  files; 0 e-mails, 0 standalone phone numbers (21 ten-digit runs found, all inside sha256 strings),
+  no personal names of non-public individuals (only product/model names). Bytes were not altered.
+excluded_on_purpose: [media files, source-copies/, SOURCE-INDEX.md, Registry rows, any edit to the copied bytes]
+rows:
+  - file: MEDIA-FACTORY-ROUTING-PRIOR.md
+    source_path_in_zip: media-factory-controller-handoff/MEDIA-FACTORY-ROUTING-PRIOR.md
+    bytes: 6524
+    sha256: b326f885775b63b026003498670d16515b1db441578ae81eac3a4d699c35a049
+    tier: historical_prior
+    freshness_required: true
+    registry_rows_created: 0
+  - file: MEDIA-FACTORY-EMPIRICAL-FINDINGS.md
+    source_path_in_zip: media-factory-controller-handoff/MEDIA-FACTORY-EMPIRICAL-FINDINGS.md
+    bytes: 15670
+    sha256: 59037aabf983e1c13404cafb0948bf8b8b4a5c471652274d365fd4de079855bb
+    tier: historical_prior
+    freshness_required: true
+    registry_rows_created: 0
+  - file: COST-SUMMARY.md
+    source_path_in_zip: media-factory-controller-handoff/COST-SUMMARY.md
+    bytes: 3413
+    sha256: 5ef3e0658dc1978857662c37c0ad804d92ba3e3416c6195a9380662211f3448f
+    tier: historical_prior
+    freshness_required: true
+    registry_rows_created: 0
+  - file: PROMPT-ENRICHMENT-EVIDENCE.md
+    source_path_in_zip: media-factory-controller-handoff/PROMPT-ENRICHMENT-EVIDENCE.md
+    bytes: 5656
+    sha256: f5cbf2782d021ba0078fa602a959ebf2b173038f67e821457057cf373f2ab013
+    tier: historical_prior
+    freshness_required: true
+    registry_rows_created: 0
+  - file: EVIDENCE-MANIFEST.json
+    source_path_in_zip: media-factory-controller-handoff/EVIDENCE-MANIFEST.json
+    bytes: 322329
+    sha256: 3e87ff3663d78a653dcca36ede91036a5598b98a58011585203371d84dd7ef73
+    tier: historical_prior
+    freshness_required: true
+    registry_rows_created: 0
+    note: 206 rows, 67 with a human score, as declared in the file's own header (row_count / scored_rows)

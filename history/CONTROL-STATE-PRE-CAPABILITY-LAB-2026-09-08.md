@@ -5,7 +5,7 @@ deferred, cancelled; the current empirical floor; Registry state; spend authorit
 next Controller gate. It is a synthesis backed by the durable Controller decisions it links — where
 it and any older prose disagree, the latest durable Controller decision governs.
 
-**Updated:** 8 Sep 2026 — Capability Lab direction ratified and Image Round 1 authorised (PR #87), on top of the 7-Sep gate merge. Byte-for-byte pre-text: `history/CONTROL-STATE-PRE-CAPABILITY-LAB-2026-09-08.md`. Earlier: CANON-GATE-001 merged (PR #88, merge commit `7dd064c`; thirteen
+**Updated:** 7 Sep 2026 — CANON-GATE-001 merged (PR #88, merge commit `7dd064c`; thirteen
 Controller records `CONTROLLER-CANON-GATE-001-*`, the last being the merge decision) on top of the
 1-Sep REP-07 / EVAL-038 / CANON-SHAPE-v1 integration, the 31-Aug EVAL-037 conclusion and the 29-Aug
 Media Factory programme reset.
@@ -25,28 +25,6 @@ reconciliation remains GOV-006 (`governance/reviews/GOV-006-POST-PARALLEL-RECONC
 **Read `PROJECT-MEMORY.md` first.**
 
 ## Active / authorised
-
-### Capability Lab (ratified 8 Sep 2026)
-
-**Governing decision:** `coordination/decisions/CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md`
-(Controller: *"Go for it. Approved now"*, 8 Sep). The programme is centred on the empirical
-model/workflow battery whose output is a **conditional routing map**, not a leaderboard. Plan:
-`coordination/plans/2026-09-05-CAPABILITY-LAB-CAMPAIGN-v1.md`. Frozen inputs on `main`: the Stage A
-test-case package `eval/empirical-planning/STAGE-A-FREEZE-2026-09/` (35 customer-shaped cases, 35
-Canon blueprints; EVAL-039A, PASS WITH NOTES), the September roster and price pins
-`eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml` (EVAL-039B, PASS WITH NOTES), and the
-execution harness `eval/harness-v2/` with seven deterministic instruments and the Q1 geometry
-qualification record (EVAL-039C, PASS WITH NOTES; 140 tests; refuses every dispatch without a signed
-authorisation file).
-
-| Task | Purpose | Spend / generation authority |
-|---|---|---|
-| **EVAL-040 — Image Round 1** | Cases IMG-CORE-01..04 and IMG-TEXT-01/02 on six image routes, 2 repeats, 76 calls + 1 smoke test; blind Controller acceptance; deterministic-instrument rows only | **₹1,200 = USD 12.58 USD-equivalent cap**, 0 retries — `CONTROLLER-SPEND-AUTHORISATION-IMAGE-ROUND-1-2026-09-08.md` |
-| EVAL-040 — remaining image half, video rounds, Stage B, Stage C | Sized and authorised piece by piece after each judging sitting | **Not authorised** |
-
-Superseded by the ratified direction (explicitly, see the decision's §2): the 29-Aug reset's queue
-item 4 ("no new media before T2B") and its "USD 25 T2 screen remains declined" line. Preserved:
-EVAL-037/038 dispositions, CANON-SHAPE-v1, the Registry admission bar, the reserved Canon verdict.
 
 Four **zero-spend pre-pilot tasks are authorised in parallel**:
 
@@ -177,7 +155,6 @@ The accepted result is the OCR-observed 7/16.
 
 | Item | Figure | Authority |
 |---|---|---|
-| **EVAL-040 Image Round 1** (8 Sep 2026) | **₹1,200 = USD 12.58 USD-equivalent** across cash and credits; 0 retries; images only; 76 calls + smoke test | `CONTROLLER-SPEND-AUTHORISATION-IMAGE-ROUND-1-2026-09-08.md` |
 | EMP-001 ceiling (user-approved, **covers EMP-001 only**) | **USD 10.00** total; USD 6.00 qualification sub-cap; 0 retries; no pre-funding above ceiling | `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md` |
 | Recorded cumulative through EVAL-024 | **USD 2.6397905** | sealed generation manifest + EVAL-024 decision |
 | EVAL-030 evaluator stage | USD 0.024 | sealed scoring evidence + EVAL-030 decision |
@@ -235,11 +212,6 @@ identity 3 — **the two identity populations must not be pooled**.
 Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-MATERIAL-RESOLUTION-2026-08-28.md`.
 
 ## Next gate
-
-**The next gate is Capability Lab Image Round 1 (EVAL-040), authorised 8 Sep 2026.** After its blind
-judging: the second image half (needs Controller photos), then video rounds, each with its own spend
-record. Round two is sized from round-one survivors, not pre-authorised. The Canon items below remain a
-queue, not an authorisation.
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's
 choice among `canon/CANON-SHAPE-v1.md` §7's remaining items — injection v1 (cached prefix, no

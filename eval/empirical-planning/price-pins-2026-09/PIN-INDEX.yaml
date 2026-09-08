@@ -1,0 +1,500 @@
+# PIN-INDEX — EVAL-039B price pins, fetched 2026-09-04 (UTC) = 2026-09-05 IST.
+# What this is: for every pinned price, the exact file we fetched, its size, its SHA-256 fingerprint,
+# the command used, and an exact substring (evidence_quote) that must be present in the bytes.
+# pin_kind: price = a vendor page/API response whose bytes contain the price; page_only = fetched but the
+# bytes carry no usable price for the exact id (route stays unpinned); cli_output = a read-only cloud CLI
+# response saved with selected fields only (Bedrock offer rate cards; no offer accepted).
+# Every 'Tester check 3' quantity is recomputed from the files by the generator; nothing here is typed by hand.
+# Total unique pin bytes: 5118349 (4998 KB) — cap 5 MB.
+pins:
+- route_key: veo-3.1-full
+  pin_file: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  pin_kind: price
+  url: https://cloud.google.com/vertex-ai/generative-ai/pricing
+  fetched_utc: '2026-09-04T20:34:59Z'
+  http_status: '200'
+  bytes: 2975717
+  sha256: 1cc5a1acca90ec2f50fb5a88d565a65ac961bb09e41e12f844a04e9fccb288a3
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/pricing" -o vertex-generative-ai-pricing.html
+  evidence_quote: $0.40 / 1 count
+  additional_evidence_quotes:
+  - <p>Veo 3.1</p>
+- route_key: veo-3.1-fast
+  pin_file: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  pin_kind: price
+  url: https://cloud.google.com/vertex-ai/generative-ai/pricing
+  fetched_utc: '2026-09-04T20:34:59Z'
+  http_status: '200'
+  bytes: 2975717
+  sha256: 1cc5a1acca90ec2f50fb5a88d565a65ac961bb09e41e12f844a04e9fccb288a3
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/pricing" -o vertex-generative-ai-pricing.html
+  evidence_quote: $0.10 / 1 count
+  additional_evidence_quotes:
+  - <p>Veo 3.1 Fast</p>
+- route_key: veo-3.1-lite
+  pin_file: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  pin_kind: price
+  url: https://cloud.google.com/vertex-ai/generative-ai/pricing
+  fetched_utc: '2026-09-04T20:34:59Z'
+  http_status: '200'
+  bytes: 2975717
+  sha256: 1cc5a1acca90ec2f50fb5a88d565a65ac961bb09e41e12f844a04e9fccb288a3
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/pricing" -o vertex-generative-ai-pricing.html
+  evidence_quote: $0.05 / 1 count
+  additional_evidence_quotes:
+  - <p>Veo 3.1 Lite</p>
+- route_key: nano-banana-2
+  pin_file: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  pin_kind: price
+  url: https://cloud.google.com/vertex-ai/generative-ai/pricing
+  fetched_utc: '2026-09-04T20:34:59Z'
+  http_status: '200'
+  bytes: 2975717
+  sha256: 1cc5a1acca90ec2f50fb5a88d565a65ac961bb09e41e12f844a04e9fccb288a3
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/pricing" -o vertex-generative-ai-pricing.html
+  evidence_quote: 1120 tokens ($0.067) for 1K
+  additional_evidence_quotes: null
+- route_key: nano-banana-pro
+  pin_file: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  pin_kind: price
+  url: https://cloud.google.com/vertex-ai/generative-ai/pricing
+  fetched_utc: '2026-09-04T20:34:59Z'
+  http_status: '200'
+  bytes: 2975717
+  sha256: 1cc5a1acca90ec2f50fb5a88d565a65ac961bb09e41e12f844a04e9fccb288a3
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/pricing" -o vertex-generative-ai-pricing.html
+  evidence_quote: 1120 tokens ($0.134) for 1K and 2K
+  additional_evidence_quotes: null
+- route_key: gemini-omni-flash-1.1
+  pin_file: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  pin_kind: price
+  url: https://cloud.google.com/vertex-ai/generative-ai/pricing
+  fetched_utc: '2026-09-04T20:34:59Z'
+  http_status: '200'
+  bytes: 2975717
+  sha256: 1cc5a1acca90ec2f50fb5a88d565a65ac961bb09e41e12f844a04e9fccb288a3
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/pricing" -o vertex-generative-ai-pricing.html
+  evidence_quote: $17.50
+  additional_evidence_quotes:
+  - 5792 tokens per second of 720p
+- route_key: lyria
+  pin_file: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  pin_kind: price
+  url: https://cloud.google.com/vertex-ai/generative-ai/pricing
+  fetched_utc: '2026-09-04T20:34:59Z'
+  http_status: '200'
+  bytes: 2975717
+  sha256: 1cc5a1acca90ec2f50fb5a88d565a65ac961bb09e41e12f844a04e9fccb288a3
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://cloud.google.com/vertex-ai/generative-ai/pricing" -o vertex-generative-ai-pricing.html
+  evidence_quote: $0.04 / 1 count
+  additional_evidence_quotes:
+  - $0.06 / 1 count
+  - <p>Lyria 3</p>
+- route_key: gpt-image-2
+  pin_file: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
+  pin_kind: price
+  url: https://fal.ai/models/openai/gpt-image-2
+  fetched_utc: '2026-09-04T20:35:01Z'
+  http_status: '200'
+  bytes: 397133
+  sha256: 3f378a664a5054f4cb07a7cc256eca11d70ec9e20482b421be26b9c736765e72
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/openai/gpt-image-2" -o fal-openai-gpt-image-2.html
+  evidence_quote: <td>1024 x 1024</td><td>$0.006</td><td>$0.053</td>
+  additional_evidence_quotes: null
+- route_key: gpt-image-2
+  pin_file: eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-api-models-openai-gpt-image-2.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=openai/gpt-image-2
+  fetched_utc: '2026-09-04T20:35:02Z'
+  http_status: '200'
+  bytes: 7325
+  sha256: ea378a129c4bcb0f304b5f276f41f7c28ee476b0fa383bcee2c31ca31e849290
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=openai/gpt-image-2" -o fal-api-models-openai-gpt-image-2.json
+  evidence_quote: '**$30.00** output'
+  additional_evidence_quotes: null
+- route_key: gpt-image-2
+  pin_file: eval/empirical-planning/price-pins-2026-09/gpt-image-2/azure-retail-prices-image2-eastus2.json
+  pin_kind: price
+  url: https://prices.azure.com/api/retail/prices?$filter=contains(productName,'Azure%20OpenAI%20Media')%20and%20contains(skuName,'Image%202')%20and%20armRegionName%20eq%20'eastus2'
+  fetched_utc: '2026-09-04T20:35:03Z'
+  http_status: '200'
+  bytes: 12163
+  sha256: d8c1780cbd32186e3371e1ca2d68c77897d127b510d3368c1d6a4439b20cb8b8
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://prices.azure.com/api/retail/prices?$filter=contains(productName,'Azure%20OpenAI%20Media')%20and%20contains(skuName,'Image%202')%20and%20armRegionName%20eq%20'eastus2'"
+    -o azure-retail-prices-image2-eastus2.json
+  evidence_quote: '"retailPrice":30.0,"unitPrice":30.0,"armRegionName":"eastus2"'
+  additional_evidence_quotes:
+  - '"meterName":"Image 2 img opt Gl 1M Tokens"'
+- route_key: gpt-image-2-edit
+  pin_file: eval/empirical-planning/price-pins-2026-09/gpt-image-2-edit/fal-api-models-openai-gpt-image-2-edit.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=openai/gpt-image-2/edit
+  fetched_utc: '2026-09-04T20:35:03Z'
+  http_status: '200'
+  bytes: 1836
+  sha256: 17a2d975635fb57d31cd2678f18b6c55f3df11de77fde6000b171e6ec6840255
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=openai/gpt-image-2/edit" -o fal-api-models-openai-gpt-image-2-edit.json
+  evidence_quote: '**$30.00** output'
+  additional_evidence_quotes: null
+- route_key: nano-banana-pro-edit
+  pin_file: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/nano-banana-pro/edit
+  fetched_utc: '2026-09-04T20:35:04Z'
+  http_status: '200'
+  bytes: 5187
+  sha256: fe7ee02cea3bed9dc29d97cc44939559ccc3d1aee5e6d83eeea33ee6f2850f92
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/nano-banana-pro/edit" -o fal-api-models-nano-banana-pro-edit.json
+  evidence_quote: '**$0.15** per image'
+  additional_evidence_quotes: null
+- route_key: seedream-5-pro
+  pin_file: eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=bytedance/seedream/v5/pro/text-to-image
+  fetched_utc: '2026-09-04T20:35:05Z'
+  http_status: '200'
+  bytes: 4583
+  sha256: b1cddaea99ddac2787202bbc4c5564453f3f8ced9f9847d9bc298bf2448e685d
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=bytedance/seedream/v5/pro/text-to-image" -o fal-api-models-seedream-v5-pro-t2i.json
+  evidence_quote: '**$0.0675** per image'
+  additional_evidence_quotes: null
+- route_key: seedream-5-pro-edit
+  pin_file: eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=bytedance/seedream/v5/pro/edit
+  fetched_utc: '2026-09-04T20:35:06Z'
+  http_status: '200'
+  bytes: 8724
+  sha256: 419ffb161ce1b9e76132da3fb83e8913570c829097e513eb771381bb5c990558
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=bytedance/seedream/v5/pro/edit" -o fal-api-models-seedream-v5-pro-edit.json
+  evidence_quote: '**$0.0675+ $(0.0045 x number of additional input images)**'
+  additional_evidence_quotes: null
+- route_key: flux-2-pro
+  pin_file: eval/empirical-planning/price-pins-2026-09/flux-2-pro/azure-retail-prices-flux-pro-eastus2.json
+  pin_kind: price
+  url: https://prices.azure.com/api/retail/prices?$filter=contains(productName,'Flux')%20and%20contains(skuName,'Pro')%20and%20armRegionName%20eq%20'eastus2'
+  fetched_utc: '2026-09-04T20:35:07Z'
+  http_status: '200'
+  bytes: 8495
+  sha256: 72f612c54e655b1d14596d3d65ed50e0e84dc8e14155186f0f89f30ac6e57dc4
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://prices.azure.com/api/retail/prices?$filter=contains(productName,'Flux')%20and%20contains(skuName,'Pro')%20and%20armRegionName%20eq%20'eastus2'" -o azure-retail-prices-flux-pro-eastus2.json
+  evidence_quote: '"retailPrice":0.03,"unitPrice":0.03,"armRegionName":"eastus2"'
+  additional_evidence_quotes:
+  - '"meterName":"Flux 2 Pro Initial MP Megapixel"'
+- route_key: flux-2-pro
+  pin_file: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/flux-2-pro
+  fetched_utc: '2026-09-04T20:35:08Z'
+  http_status: '200'
+  bytes: 48263
+  sha256: 701801737a4919c0d9eda709de188dfdcc1e435b3bf95db6d2d007f5dd91c423
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/flux-2-pro" -o fal-api-models-flux-2-pro.json
+  evidence_quote: '**$0.03** for the first megapixel of output'
+  additional_evidence_quotes: null
+- route_key: flux-2-pro-edit
+  pin_file: eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/flux-2-pro/edit
+  fetched_utc: '2026-09-04T20:35:09Z'
+  http_status: '200'
+  bytes: 9722
+  sha256: ef0172d7a217a9fa830fc4a48169b35fc49cd49866f3d734d359268e7bc6d258
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/flux-2-pro/edit" -o fal-api-models-flux-2-pro-edit.json
+  evidence_quote: '**$0.03** for the first megapixel of output'
+  additional_evidence_quotes: null
+- route_key: qwen-image-3
+  pin_file: eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=alibaba/qwen-image-3/text-to-image
+  fetched_utc: '2026-09-04T20:35:10Z'
+  http_status: '200'
+  bytes: 1341
+  sha256: c5eb76bad23e2a522b3d1ed22a8a79bb48e9cecc269d213cc995f57a2c28c195
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=alibaba/qwen-image-3/text-to-image" -o fal-api-models-qwen-image-3-t2i.json
+  evidence_quote: $**0.04** per generated image at 1K resolution
+  additional_evidence_quotes: null
+- route_key: recraft-v4
+  pin_file: eval/empirical-planning/price-pins-2026-09/recraft-v4/fal-recraft-v4-text-to-image.html
+  pin_kind: price
+  url: https://fal.ai/models/fal-ai/recraft/v4/text-to-image
+  fetched_utc: '2026-09-04T20:35:12Z'
+  http_status: '200'
+  bytes: 419156
+  sha256: 59b828faaac2628228f234f8d99bfc91bf83aa71833cceed52324a80c3ae210b
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/recraft/v4/text-to-image" -o fal-recraft-v4-text-to-image.html
+  evidence_quote: $0.04 per image
+  additional_evidence_quotes: null
+- route_key: recraft-v4
+  pin_file: eval/empirical-planning/price-pins-2026-09/recraft-v4/fal-api-models-recraft-v4-t2i.json
+  pin_kind: page_only
+  url: https://fal.ai/api/models?keywords=fal-ai/recraft/v4/text-to-image
+  fetched_utc: '2026-09-04T20:35:11Z'
+  http_status: '200'
+  bytes: 8708
+  sha256: c5dc8acb26cba7bc28a3bad735f86982c38d7c76538b6eb9bfbb40cae5cb3051
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/recraft/v4/text-to-image" -o fal-api-models-recraft-v4-t2i.json
+  evidence_quote: '"id":"fal-ai/recraft/v4/text-to-image"'
+  additional_evidence_quotes: null
+- route_key: kling-v3-pro
+  pin_file: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/kling-video/v3/pro/text-to-video
+  fetched_utc: '2026-09-04T20:35:13Z'
+  http_status: '200'
+  bytes: 9500
+  sha256: 6c11b648d34e9565d186cbc9c5f1de6f46ce20a943576dec9828fd51734b7386
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/kling-video/v3/pro/text-to-video" -o fal-api-models-kling-v3-pro-t2v.json
+  evidence_quote: '**$0.112** (audio off) or **$0.168** (audio on)'
+  additional_evidence_quotes: null
+- route_key: kling-v3-pro
+  pin_file: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-i2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/kling-video/v3/pro/image-to-video
+  fetched_utc: '2026-09-04T20:35:14Z'
+  http_status: '200'
+  bytes: 14585
+  sha256: 054168637253ae592f4249f6ff72cfb7430966e03a3cadb899a81026e4b79818
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/kling-video/v3/pro/image-to-video" -o fal-api-models-kling-v3-pro-i2v.json
+  evidence_quote: '**$0.112** (audio off) or **$0.168** (audio on)'
+  additional_evidence_quotes: null
+- route_key: minimax-h3-max
+  pin_file: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=minimax/h3-max/text-to-video
+  fetched_utc: '2026-09-04T20:35:16Z'
+  http_status: '200'
+  bytes: 4492
+  sha256: f8be94cfbd5fcd8c98faf4583bae887d8da26fde8b3e312b12eef72bb0d07494
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=minimax/h3-max/text-to-video" -o fal-api-models-minimax-h3-max-t2v.json
+  evidence_quote: after which 480p is $0.05/second and 768p is $0.08/second
+  additional_evidence_quotes:
+  - '**$0.02** per second at **768p**'
+- route_key: minimax-h3-max
+  pin_file: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=minimax/h3-max/image-to-video
+  fetched_utc: '2026-09-04T20:35:17Z'
+  http_status: '200'
+  bytes: 4396
+  sha256: f07bfc81b24964f8058085de8eeab005d3816393b0051523610834336b4868f1
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=minimax/h3-max/image-to-video" -o fal-api-models-minimax-h3-max-i2v.json
+  evidence_quote: after which 480p is $0.05/second and 768p is $0.08/second
+  additional_evidence_quotes: null
+- route_key: wan-3.0-prime
+  pin_file: eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-t2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=alibaba/wan-3.0-prime/text-to-video
+  fetched_utc: '2026-09-04T20:35:18Z'
+  http_status: '200'
+  bytes: 2947
+  sha256: 022803bf4a46dfc6f2560c464e221421993f8360409add2cbc026a67bc81d119
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=alibaba/wan-3.0-prime/text-to-video" -o fal-api-models-wan-3.0-prime-t2v.json
+  evidence_quote: '**$0.14** at **720p**'
+  additional_evidence_quotes: null
+- route_key: wan-3.0-prime
+  pin_file: eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-i2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=alibaba/wan-3.0-prime/image-to-video
+  fetched_utc: '2026-09-04T20:35:19Z'
+  http_status: '200'
+  bytes: 2796
+  sha256: 72cba9d280a98eebbbf326072155048cd93db945626b88e9dd014d877eccc257
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=alibaba/wan-3.0-prime/image-to-video" -o fal-api-models-wan-3.0-prime-i2v.json
+  evidence_quote: '**$0.14** at **720p**'
+  additional_evidence_quotes: null
+- route_key: seedance-2.5
+  pin_file: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-t2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=bytedance/seedance-2.5/text-to-video
+  fetched_utc: '2026-09-04T20:35:20Z'
+  http_status: '200'
+  bytes: 6560
+  sha256: 00a4c43bef2f71253d99ca714b49edd252eb7c18dd87f33b5939ff62231875de
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=bytedance/seedance-2.5/text-to-video" -o fal-api-models-seedance-2.5-t2v.json
+  evidence_quote: '**$0.4730** per second of generated video'
+  additional_evidence_quotes: null
+- route_key: seedance-2.5
+  pin_file: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-i2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=bytedance/seedance-2.5/image-to-video
+  fetched_utc: '2026-09-04T20:35:22Z'
+  http_status: '200'
+  bytes: 6288
+  sha256: 73cfc43d14c948034e4962f2d75edcb8f75d63c5a7946fedfc3c9ba802172a97
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=bytedance/seedance-2.5/image-to-video" -o fal-api-models-seedance-2.5-i2v.json
+  evidence_quote: '**$0.4730** per second of generated video'
+  additional_evidence_quotes: null
+- route_key: seedance-2.5
+  pin_file: eval/empirical-planning/price-pins-2026-09/seedance-2.5/fal-api-models-seedance-2.5-ref2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=bytedance/seedance-2.5/reference-to-video
+  fetched_utc: '2026-09-04T20:35:23Z'
+  http_status: '200'
+  bytes: 7187
+  sha256: cd4854c43ce07ce0177e0e1a19252ceb107291fe750f9b553c429e2da9cd8e7e
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=bytedance/seedance-2.5/reference-to-video" -o fal-api-models-seedance-2.5-ref2v.json
+  evidence_quote: '**$0.4730** per second of generated video'
+  additional_evidence_quotes: null
+- route_key: sora-2
+  pin_file: eval/empirical-planning/price-pins-2026-09/sora-2/azure-retail-prices-sora-2.json
+  pin_kind: price
+  url: https://prices.azure.com/api/retail/prices?$filter=contains(skuName,'Sora%202')
+  fetched_utc: '2026-09-04T20:35:24Z'
+  http_status: '200'
+  bytes: 66976
+  sha256: a7f2602b24c95928ec7b2e630533275e90c5635f3ef045ccccefb475de1d3238
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://prices.azure.com/api/retail/prices?$filter=contains(skuName,'Sora%202')" -o azure-retail-prices-sora-2.json
+  evidence_quote: '"retailPrice":0.1,"unitPrice":0.1,"armRegionName":"eastus2"'
+  additional_evidence_quotes:
+  - '"meterName":"Sora 2 glbl Second"'
+- route_key: mai-image-2.6
+  pin_file: eval/empirical-planning/price-pins-2026-09/mai-image-2.6/azure-retail-prices-mai-2.6-empty.json
+  pin_kind: page_only
+  url: https://prices.azure.com/api/retail/prices?$filter=contains(productName,'MAI')%20and%20contains(skuName,'2.6')
+  fetched_utc: '2026-09-04T20:35:25Z'
+  http_status: '200'
+  bytes: 125
+  sha256: d05e6f94eecce83d548e0b39f3f76ef094c8653c0b9747f93828be4ad6134691
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://prices.azure.com/api/retail/prices?$filter=contains(productName,'MAI')%20and%20contains(skuName,'2.6')" -o azure-retail-prices-mai-2.6-empty.json
+  evidence_quote: '"Items":[]'
+  additional_evidence_quotes:
+  - '"Count":0'
+- route_key: sd3.5-large
+  pin_file: eval/empirical-planning/price-pins-2026-09/sd3.5-large/aws-bedrock-list-foundation-model-agreement-offers-sd3.5-large.json
+  pin_kind: cli_output
+  url: aws bedrock list-foundation-model-agreement-offers (CLI, us-west-2)
+  fetched_utc: '2026-09-04T20:40:01Z'
+  http_status: cli
+  bytes: 1487
+  sha256: 4aa9ecfe1c819c77a72f266140ece4e59d3bc910970c86424e0daa6234748450
+  fetch_command: set -a; source ~/.aight-litellm-keys/aws.env; set +a; aws bedrock list-foundation-model-agreement-offers --region us-west-2 --model-id stability.sd3-5-large-v1:0 --output json --query '{modelId:modelId,
+    offers:offers[].{offerId:offerId, termDetails:termDetails}}' > aws-bedrock-list-foundation-model-agreement-offers-sd3.5-large.json  (offerToken never saved; legalTerm.url query string stripped before
+    saving)
+  evidence_quote: '"price": "0.08"'
+  additional_evidence_quotes:
+  - '"description": "Output image from Stable Diffusion 3.5 Large"'
+- route_key: stable-image-core
+  pin_file: eval/empirical-planning/price-pins-2026-09/stable-image-core/aws-bedrock-list-foundation-model-agreement-offers-stable-image-core.json
+  pin_kind: cli_output
+  url: aws bedrock list-foundation-model-agreement-offers (CLI, us-west-2)
+  fetched_utc: '2026-09-04T20:40:03Z'
+  http_status: cli
+  bytes: 1827
+  sha256: 5fcef17bb41c70443c4f67e50531b7ae597b7d0f8130d402d9d7693a2864f9b7
+  fetch_command: set -a; source ~/.aight-litellm-keys/aws.env; set +a; aws bedrock list-foundation-model-agreement-offers --region us-west-2 --model-id stability.stable-image-core-v1:1 --output json --query
+    '{modelId:modelId, offers:offers[].{offerId:offerId, termDetails:termDetails}}' > aws-bedrock-list-foundation-model-agreement-offers-stable-image-core.json  (offerToken never saved; legalTerm.url query
+    string stripped before saving)
+  evidence_quote: '"price": "0.04"'
+  additional_evidence_quotes:
+  - '"description": "Output image from Stable Image Core"'
+- route_key: stable-image-ultra
+  pin_file: eval/empirical-planning/price-pins-2026-09/stable-image-ultra/aws-bedrock-list-foundation-model-agreement-offers-stable-image-ultra.json
+  pin_kind: cli_output
+  url: aws bedrock list-foundation-model-agreement-offers (CLI, us-west-2)
+  fetched_utc: '2026-09-04T20:40:05Z'
+  http_status: cli
+  bytes: 1832
+  sha256: 86f35cbedf086f79005a6ea55c9e9290559905a48ccfc7a2f5004c1f3642ff7f
+  fetch_command: set -a; source ~/.aight-litellm-keys/aws.env; set +a; aws bedrock list-foundation-model-agreement-offers --region us-west-2 --model-id stability.stable-image-ultra-v1:1 --output json --query
+    '{modelId:modelId, offers:offers[].{offerId:offerId, termDetails:termDetails}}' > aws-bedrock-list-foundation-model-agreement-offers-stable-image-ultra.json  (offerToken never saved; legalTerm.url query
+    string stripped before saving)
+  evidence_quote: '"price": "0.14"'
+  additional_evidence_quotes:
+  - '"description": "Output image from Stable Image Ultra"'
+- route_key: luma-ray-2
+  pin_file: eval/empirical-planning/price-pins-2026-09/luma-ray-2/aws-bedrock-list-foundation-model-agreement-offers-luma-ray-2.json
+  pin_kind: cli_output
+  url: aws bedrock list-foundation-model-agreement-offers (CLI, us-west-2)
+  fetched_utc: '2026-09-04T20:40:06Z'
+  http_status: cli
+  bytes: 1141
+  sha256: c1048119f1772cf61b9fcbb81b46587fefd20385679290ba1551140431d06068
+  fetch_command: set -a; source ~/.aight-litellm-keys/aws.env; set +a; aws bedrock list-foundation-model-agreement-offers --region us-west-2 --model-id luma.ray-v2:0 --output json --query '{modelId:modelId,
+    offers:offers[].{offerId:offerId, termDetails:termDetails}}' > aws-bedrock-list-foundation-model-agreement-offers-luma-ray-2.json  (offerToken never saved; legalTerm.url query string stripped before
+    saving)
+  evidence_quote: '"price": "1.5"'
+  additional_evidence_quotes:
+  - '"description": "1 second of generated video at 720p, 24fps"'
+  - '"price": "0.75"'
+- route_key: sarvam-bulbul-v3
+  pin_file: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+  pin_kind: price
+  url: https://www.sarvam.ai/api-pricing
+  fetched_utc: '2026-09-04T20:35:25Z'
+  http_status: '200'
+  bytes: 198021
+  sha256: 20c7085d9444e124a3f5585531fca9a82a2cb14909c7afe118475e7a7cdb4967
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://www.sarvam.ai/api-pricing" -o sarvam-api-pricing.html
+  evidence_quote: Text to Speech is priced at ₹3.00 per 1,000 characters
+  additional_evidence_quotes:
+  - Bulbul v3
+- route_key: elevenlabs-v3
+  pin_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-v3/fal-elevenlabs-tts-eleven-v3.html
+  pin_kind: price
+  url: https://fal.ai/models/fal-ai/elevenlabs/tts/eleven-v3
+  fetched_utc: '2026-09-04T20:35:26Z'
+  http_status: '200'
+  bytes: 527719
+  sha256: e8ba253273ce6685243ba2fdc74c06b54b75389ccbe726c066ba6a383da852dc
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/elevenlabs/tts/eleven-v3" -o fal-elevenlabs-tts-eleven-v3.html
+  evidence_quote: $0.10 per 1,000 characters
+  additional_evidence_quotes: null
+- route_key: sync-lipsync-v3
+  pin_file: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3.html
+  pin_kind: page_only
+  url: https://fal.ai/models/fal-ai/sync-lipsync/v3
+  fetched_utc: '2026-09-04T20:35:27Z'
+  http_status: '200'
+  bytes: 318464
+  sha256: d38bf225721ececcb97fb2e1181141af8a64c2162fa7fa4dcf329a86c7a91abc
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/sync-lipsync/v3" -o fal-sync-lipsync-v3.html
+  evidence_quote: fal-ai/sync-lipsync/v3/image-to-video
+  additional_evidence_quotes:
+  - Your request will cost **$0.1333** per output second.
+- route_key: sync-lipsync-v3
+  pin_file: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-api-models-sync-lipsync-v3.json
+  pin_kind: page_only
+  url: https://fal.ai/api/models?keywords=fal-ai/sync-lipsync/v3
+  fetched_utc: '2026-09-04T20:35:28Z'
+  http_status: '200'
+  bytes: 6106
+  sha256: 07cc9546c586d85cf3e10acf4abd6e61616c231a072c7db4813a647c6781263f
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/sync-lipsync/v3" -o fal-api-models-sync-lipsync-v3.json
+  evidence_quote: '"id":"fal-ai/sync-lipsync/v3"'
+  additional_evidence_quotes: null
+- route_key: kling-lipsync-audio-to-video
+  pin_file: eval/empirical-planning/price-pins-2026-09/kling-lipsync-audio-to-video/fal-api-models-kling-lipsync-a2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/kling-video/lipsync/audio-to-video
+  fetched_utc: '2026-09-04T20:35:29Z'
+  http_status: '200'
+  bytes: 2564
+  sha256: b2ee529a9281a5e37fe4966b8b02d407a625277d79cd3188230fe377497c681b
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/kling-video/lipsync/audio-to-video" -o fal-api-models-kling-lipsync-a2v.json
+  evidence_quote: '**$0.014** per input **video seconds**'
+  additional_evidence_quotes: null
+- route_key: elevenlabs-music
+  pin_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-music/fal-api-models-elevenlabs-music.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/elevenlabs/music
+  fetched_utc: '2026-09-04T20:35:30Z'
+  http_status: '200'
+  bytes: 10009
+  sha256: 4d97ec54a3af3360722d03073aea42abe9b7027377fe4edc5f010a94c337c392
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/elevenlabs/music" -o fal-api-models-elevenlabs-music.json
+  evidence_quote: '**$0.6** per output audio minute'
+  additional_evidence_quotes: null
+- route_key: azure-neural-tts-hi-in
+  pin_file: eval/empirical-planning/price-pins-2026-09/azure-neural-tts-hi-in/azure-retail-prices-speech-neural-centralindia.json
+  pin_kind: price
+  url: https://prices.azure.com/api/retail/prices?$filter=contains(productName,'Azure%20Speech')%20and%20armRegionName%20eq%20'centralindia'%20and%20contains(meterName,'Neural')%20and%20type%20eq%20'Consumption'
+  fetched_utc: '2026-09-04T20:35:31Z'
+  http_status: '200'
+  bytes: 14974
+  sha256: 2fd5162b7b3e8b5bbbcfdb8298740b76fd82a5cb74cfb3ba85b821739c300b33
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://prices.azure.com/api/retail/prices?$filter=contains(productName,'Azure%20Speech')%20and%20armRegionName%20eq%20'centralindia'%20and%20contains(meterName,'Neural')%20and%20type%20eq%20'Consumption'"
+    -o azure-retail-prices-speech-neural-centralindia.json
+  evidence_quote: '"retailPrice":15.0,"unitPrice":15.0,"armRegionName":"centralindia"'
+  additional_evidence_quotes:
+  - '"meterName":"S1 Neural Text To Speech Characters"'

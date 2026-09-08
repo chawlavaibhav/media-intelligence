@@ -1,0 +1,120 @@
+# Q1 PRE-REGISTRATION - written before the run; never edited. Task EVAL-039C §4.
+record_type: instrument_qualification_preregistration
+task: EVAL-039C
+written_utc: '2026-09-05T01:34:00.491039Z'
+written_before_any_run: true
+rule: R_q, T_rgb and every gate below are fixed here; changing any of them after seeing output is an EXPERIMENT MUTATION stop
+R_q: 3
+R_q_rule_ref: eval/v1/instruments/QUALIFICATION-MASTER-SPEC.md#3 (>= 3 full repeats for any status above screened)
+instrument_id: hv2-q1-flat-colour-cc
+instrument_version: 0.1.0
+instrument_family: '2'
+detector_module: eval/harness-v2/q1/detector.py
+detector_source_sha256: 8ed22357dbcaf966bdd737b953dad74a24c0ba2f58b3b473da1d6537b3d14122
+configuration_hash: 70ea60d8faa53807213c811fc2e02a5cc4cee19d2f0029624b5c56ab4014abb4
+configuration:
+  detector: hv2-q1-flat-colour-cc
+  version: 0.1.0
+  palette_srgb:
+    red:
+    - 220
+    - 40
+    - 40
+    blue:
+    - 40
+    - 80
+    - 220
+    green:
+    - 40
+    - 170
+    - 70
+    yellow:
+    - 240
+    - 200
+    - 50
+    purple:
+    - 150
+    - 60
+    - 190
+  background_examples:
+    white:
+    - 255
+    - 255
+    - 255
+    grey_shadow_trap:
+    - 185
+    - 185
+    - 185
+  T_rgb: 30
+  connectivity: 4
+  min_component_area_px: 16
+  shape_rules:
+    square_fill_min: 0.93
+    circle_fill_min: 0.62
+    circle_fill_max: 0.88
+    bar_aspect_min: 1.8
+    square_aspect_max: 1.15
+    circle_aspect_max: 1.15
+  relation_rule: 'dominant axis of the bounding-box centre offset: |dx| >= |dy| -> left_of / right_of, else above / below'
+  quadrant_rule: bounding-box centre against the frame midlines (x < W/2 -> left, y < H/2 -> top)
+  size_rule: larger = the object with the larger pixel area; equal if areas are equal
+T_rgb:
+  value: 30
+  space: sRGB 8-bit, Euclidean
+  role: 'the detector confidence: a pixel is an object pixel only within T_rgb of a palette colour, else background'
+  declared_here: true
+  hash_covered: true
+  approval: 'FAMILY-2 says the colour tolerance is a judgement call needing Controller approval before the run; none exists tonight, so attribute_binding
+    is reported with qualified: null (MD-C2)'
+gate_rules:
+  ref: eval/v1/instruments/FAMILY-2-DETERMINISTIC-CV.md#Gate
+  object_count: exact agreement of the detected component count with truth.object_count on every count fixture (30) and 0 objects on the blank
+    negative control
+  spatial_relationship_2d: exact agreement on truth.relation for every relative_position fixture (25; subject = red square, object = blue circle,
+    dominant-axis rule) and on truth.quadrant for every absolute_placement fixture (15; one object)
+  size_aspect: exact agreement on truth.larger (green vs purple by pixel area) and truth.frame_aspect (W:H of the decoded frame) on every size_aspect
+    fixture (15)
+  attribute_binding: exact agreement on truth.square_colour and truth.circle_colour on every attribute_binding fixture (15); the colour judgement
+    depends on T_rgb, which needs Controller approval, so qualified is null whatever the agreement
+  negative_controls: blank -> exactly 0 objects; corrupt -> ProbeError (fail closed). Either failing disqualifies the WHOLE run
+  no_tolerance: counts, relations, quadrants and size orderings are exact; there is no partial credit
+  supplementary: object_count agreement on non-count categories is reported as observation only and gates nothing
+pack:
+  pack_ref: eval/v1/instruments/fixtures/cv-geometry/manifest.json
+  pack_version: cv-geometry-v1
+  pack_seed: 20260826
+  manifest_sha256: 2cc31b661f720cb7e676f87f41fd85abfc718c3d7e4f7acf3765be5ecc63ed3b
+  protected_baseline_sha256: 2cc31b661f720cb7e676f87f41fd85abfc718c3d7e4f7acf3765be5ecc63ed3b
+  manifest_matches_protected_baseline: true
+  pack_hash: c0d178c74421bc8ee669784d785b4c958b8e4eb14dd9cf28ccf5c50b0ab25813
+  pack_hash_rule: sha256 over the per-image sha256 strings in manifest order (the exact bytes judged)
+  items_total: 102
+  scoreable: 100
+  negative_controls: 2
+  by_category:
+    absolute_placement: 15
+    attribute_binding: 15
+    count: 30
+    negative_control: 2
+    relative_position: 25
+    size_aspect: 15
+conditions:
+  render_class: flat-colour synthetic renders on a white background (constructed by code, no photograph)
+  frame: 640x480, 8-bit RGB PNG, filter type 0, non-interlaced
+  palette: five named sRGB colours + white background + one grey shadow trap (185,185,185)
+  shapes: axis-aligned squares, circles and horizontal bars, 45-140 px
+  degradation_class: none
+  lighting: none (flat fill)
+  language: not_applicable
+  script: not_applicable
+  qualified_domain_statement: the record covers ONLY this synthetic domain; NO transfer to photographic or generated outputs is claimed
+output_files:
+  result: eval/v1/instruments/qualification-records/Q1-deterministic-cv-geometry-2026-09.yaml
+  observations: eval/v1/instruments/qualification-records/Q1-deterministic-cv-geometry-2026-09-observations.jsonl
+registry_use: registry_use_permitted will be false in every record regardless of status; Registry use is a Controller ruling (MD-C2); the result
+  schema is PROPOSED_NOT_IN_FORCE
+spend:
+  currency: USD
+  amount: 0
+  calls: 0
+  human_hours: 0
