@@ -2,9 +2,11 @@
 
     python3 canon/gate/run_gate.py post --artifact <file> --dispatch <request.json> --modality <m> [--frames DIR] --json <out>
 
-`canon/gate/run_gate.py` exists on branch work/canon-gate-001 (read-only) and NOT on this branch, so on
-this base `run_post()` returns {status: not_available_on_base, base: <sha>}. The instrument is registered
-`provisional`: it may never write a Registry row; its report is stored as an observation.
+`canon/gate/run_gate.py` merged to main on 2026-09-07 (CANON-GATE-001, PR #88). Where it is present,
+`run_post()` runs it by subprocess and returns {status: ran, report: <gate json>}; on a base without it,
+{status: not_available_on_base, base: <sha>}. Either way the instrument is registered `provisional`: it
+may never write a Registry row; its report is stored as an observation. A gate PASS establishes
+structure over the bytes — never doctrine satisfaction, quality, outcomes or adoption.
 This is one of the two local-subprocess sites outside transports.py (the other is imageio's ffmpeg).
 """
 from __future__ import annotations
@@ -37,7 +39,8 @@ def run_post(artifact: Path | str, request_json: Path | str, modality: str, fram
         return {"status": "invalid_modality", "modality": modality, "allowed": list(MODALITIES)}
     if not script.exists():
         return {"status": "not_available_on_base", "base": base_sha(), "gate_path": str(script),
-                "note": "canon/gate/run_gate.py lives on work/canon-gate-001; EVALUATOR-PLAN gate_post: not_available_on_base today"}
+                "note": "canon/gate/run_gate.py is absent on this base (it merged to main on 2026-09-07, CANON-GATE-001 PR #88); "
+                        "EVALUATOR-PLAN gate_post: not_available_on_base"}
     out = Path(json_out) if json_out else Path(str(artifact) + ".gate.json")
     argv = [sys.executable, str(script), "post", "--artifact", str(artifact), "--dispatch", str(request_json),
             "--modality", modality, "--json", str(out)]

@@ -429,19 +429,41 @@ class LedgerMetricsTest(NoNetworkTestCase):
 
 # ------------------------------------------------------------------------------ gate_wrapper
 class GateWrapperTest(NoNetworkTestCase):
-    def test_not_available_on_this_base(self):
+    # The gate merged to main on 2026-09-07 (CANON-GATE-001, PR #88). This test pins BOTH states:
+    # on a base that carries canon/gate/run_gate.py it runs the real gate over a committed EVAL-038
+    # artifact (read-only) through the wrapper's exact subprocess path; on a base without it, it pins
+    # the honest not_available_on_base report. Either way the instrument stays provisional and yields
+    # no verdict — the gate's PASS establishes structure, never quality (CONTROL-STATE, 7 Sep 2026).
+    def test_gate_present_or_absent_is_reported_honestly(self):
         from instruments import gate_wrapper as GW
-        self.assertFalse((hv2_paths.REPO_ROOT / "canon" / "gate" / "run_gate.py").exists(), "this branch must not carry the gate")
-        r = GW.run_post(self.tmp / "a.png", self.tmp / "a.request.json", "static_image")
-        self.assertEqual(r["status"], "not_available_on_base")
-        self.assertTrue(r["base"])
+        gate = hv2_paths.REPO_ROOT / "canon" / "gate" / "run_gate.py"
         inst = GW.instrument()
         self.assertEqual(inst.qualification_status, "provisional")
         self.assertFalse(inst.registry_writable)
         self.assertEqual(inst.capabilities, set())
-        out = inst.fn(self.tmp / "a.png", {"item_id": "x"}, "delivery_format_compliance")
-        self.assertEqual((out["verdict"], out["absence_reason"]), ("absent", "instrument_unavailable"))
-        self.assertEqual(out["observation"]["status"], "not_available_on_base")
+        if gate.exists():
+            fixture_dir = hv2_paths.REPO_ROOT / "eval" / "experiments" / "EVAL-038" / "media"
+            art = fixture_dir / "E038-media-B06-haiku-packs.jpg"
+            req = fixture_dir / "E038-media-B06-haiku-packs.request.json"
+            self.assertTrue(art.exists() and req.exists(), "committed EVAL-038 fixture missing")
+            r = GW.run_post(art, req, "static_image", json_out=self.tmp / "gate.json")
+            self.assertEqual(r["status"], "ran")
+            self.assertEqual(r["exit_code"], 0)
+            self.assertIn(r["report"]["verdict"], ("PASS", "FAIL", "ERROR"))
+            self.assertEqual(r["report"]["gate"], "post_draw")
+            self.assertIn("not doctrine satisfaction, quality, outcomes, or adoption", r["report"]["report_text"])
+            self.assertFalse((fixture_dir / "E038-media-B06-haiku-packs.jpg.gate.json").exists(),
+                             "the wrapper must not write beside committed evidence when json_out is given")
+            out = inst.fn(art, {"item_id": "x"}, "delivery_format_compliance")
+            self.assertEqual(out["verdict"], "absent")
+            self.assertNotIn(out.get("would_verdict"), ("pass", "fail"))
+        else:
+            r = GW.run_post(self.tmp / "a.png", self.tmp / "a.request.json", "static_image")
+            self.assertEqual(r["status"], "not_available_on_base")
+            self.assertTrue(r["base"])
+            out = inst.fn(self.tmp / "a.png", {"item_id": "x"}, "delivery_format_compliance")
+            self.assertEqual((out["verdict"], out["absence_reason"]), ("absent", "instrument_unavailable"))
+            self.assertEqual(out["observation"]["status"], "not_available_on_base")
 
     def test_scripted_gate_is_run_via_subprocess_and_parsed(self):
         from instruments import gate_wrapper as GW
