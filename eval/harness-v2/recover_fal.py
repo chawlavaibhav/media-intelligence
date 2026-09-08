@@ -73,23 +73,38 @@ def candidates(store: S.SealedStore, only: set[str] | None = None) -> list[tuple
 def recover_one(tid: str, attempt: dict, store: S.SealedStore, transport, headers: dict, sleep=time.sleep, log=None) -> dict:
     rid = request_id_of(attempt)
     endpoint = attempt["endpoint"].rstrip("/")
-    status_url, response_url = f"{endpoint}/requests/{rid}/status", f"{endpoint}/requests/{rid}"
-    if not (FQ.trusted_fal_url(status_url) and FQ.trusted_fal_url(response_url)):
-        return {"trial_id": tid, "recovered": False, "reason": "status/response URL not on queue.fal.run; key not sent"}
+    # fal's request URLs hang off the APP id (owner/app), not the full endpoint path: a submit to
+    # queue.fal.run/bytedance/seedream/v5/pro/text-to-image is tracked at
+    # queue.fal.run/bytedance/seedream/requests/<id>/status (observed 2026-09-08: the full path answers 405).
+    # Endpoints that are exactly owner/app (fal-ai/flux-2-pro) are unchanged by this rule.
+    parts = endpoint.split("://", 1)[1].split("/")            # ["queue.fal.run", owner, app, ...]
+    app_base = "https://" + "/".join(parts[:3])
+    bases = [app_base] + ([endpoint] if endpoint != app_base else [])
+    status_url = response_url = None
     checks = 0
-    for i in range(MAX_STATUS_CHECKS):
-        if i:
-            sleep(POLL_INTERVAL_S)
-        checks += 1
-        code, st = transport.get_json(status_url, headers)
-        s = (st or {}).get("status") if isinstance(st, dict) else None
-        if code in (200, 202) and s == "COMPLETED":
+    last = None
+    for base in bases:
+        status_url, response_url = f"{base}/requests/{rid}/status", f"{base}/requests/{rid}"
+        if not (FQ.trusted_fal_url(status_url) and FQ.trusted_fal_url(response_url)):
+            return {"trial_id": tid, "recovered": False, "reason": "status/response URL not on queue.fal.run; key not sent"}
+        done = False
+        for i in range(MAX_STATUS_CHECKS):
+            if i:
+                sleep(POLL_INTERVAL_S)
+            checks += 1
+            code, st = transport.get_json(status_url, headers)
+            s = (st or {}).get("status") if isinstance(st, dict) else None
+            last = (code, s)
+            if code in (200, 202) and s == "COMPLETED":
+                done = True
+                break
+            if code in (200, 202) and s in ("IN_QUEUE", "IN_PROGRESS"):
+                continue
+            break                                             # 404/405/other: try the next base, if any
+        if done:
             break
-        if code in (200, 202) and s in ("IN_QUEUE", "IN_PROGRESS"):
-            continue
-        return {"trial_id": tid, "recovered": False, "reason": f"status poll answered {code} / {s!r} after {checks} checks", "request_id": rid}
     else:
-        return {"trial_id": tid, "recovered": False, "reason": f"not COMPLETED after {checks} checks", "request_id": rid}
+        return {"trial_id": tid, "recovered": False, "reason": f"status poll answered {last[0]} / {last[1]!r} after {checks} checks (bases tried: {bases})", "request_id": rid}
     code, out = transport.get_json(response_url, headers)
     out = out if isinstance(out, dict) else {}
     if code != 200 or out.get("error") or out.get("detail"):
@@ -130,7 +145,9 @@ def run(out: Path | str, run_id: str, only: set[str] | None = None, dry: bool = 
     summary = {"run_id": run_id, "candidates": [t for t, _ in todo], "results": [], "dry": dry}
     if dry or not todo:
         return summary
-    transport = transport or RL.live_transport_factory(None, None)
+    if transport is None:
+        import transports as T
+        transport = T.FalQueueTransport()          # queue.fal.run status/result + fal CDN download; no submit verb is used here
     key = (key_loader or B.KeyLoader()).read("FAL_KEY")
     headers = {"Authorization": f"Key {key}"}
     del key
