@@ -96,6 +96,54 @@ class RunnerBase(NoNetworkTestCase):
 
 
 # ====================================================================== plan
+class RedoPlanTest(RunnerBase):
+    """After the 2026-09-08 network outage: a redo plan carries ONLY a previous run's infrastructure-failure trials
+    (nothing was sent) under a NEW run id; provider outcomes and successes are never redone."""
+
+    def _prev_run_with_records(self):
+        plan = self.plan(cases=("IMG-CORE-01", "IMG-CORE-02"), routes=("gpt-image-2", "nano-banana-2"), run_id="run-x")
+        store = S.SealedStore(self.out / RL.ARTIFACTS_DIR)
+        t = {x["trial_id"]: x for x in plan["trials"]}
+        base = lambda tid, **kw: {"trial_id": tid, "status": "error", "artifact": None, "provider_request_id": None, **kw}  # noqa: E731
+        # (a) DNS-class transport failure with no request id -> redo
+        store.write_attempt("IMG-CORE-01__gpt-image-2__core__r1", base("IMG-CORE-01__gpt-image-2__core__r1", error_class="network_failure"))
+        # (b) provider poll outcome WITH a request id -> recoverable, never redone
+        store.write_attempt("IMG-CORE-01__nano-banana-2__core__r1", base("IMG-CORE-01__nano-banana-2__core__r1", error_class="poll_http_202",
+                                                                          provider_request_id="req-1"))
+        # (c) a success -> never redone
+        store.write_attempt("IMG-CORE-02__gpt-image-2__core__r1", base("IMG-CORE-02__gpt-image-2__core__r1", status="ok", error_class=None,
+                                                                        artifact={"relative_path": "media/x.png", "sha256": "0" * 64}))
+        # (d) a pre-dispatch refusal that says nothing was sent -> redo
+        (self.out / RL.TRIALS_DIR).mkdir(parents=True, exist_ok=True)
+        (self.out / RL.TRIALS_DIR / "IMG-CORE-02__nano-banana-2__core__r1.pre_dispatch_refusal.json").write_text(
+            json.dumps({"trial_id": "IMG-CORE-02__nano-banana-2__core__r1", "error": "PreDispatchRefusal: gcloud auth activate-service-account failed (exit 1); nothing was sent"}))
+        # (e) a provider refusal (moderation) -> a trial, never redone
+        store.write_attempt("IMG-CORE-01__gpt-image-2__core__r2", base("IMG-CORE-01__gpt-image-2__core__r2", status="refusal", error_class="moderation_block"))
+        return plan
+
+    def test_infra_failures_pick_only_nothing_was_sent(self):
+        self._prev_run_with_records()
+        got = RL.infra_failures(self.out, "run-x")
+        self.assertEqual(sorted(f["trial_id"] for f in got), ["IMG-CORE-01__gpt-image-2__core__r1", "IMG-CORE-02__nano-banana-2__core__r1"])
+        self.assertEqual({f["reason"] for f in got}, {"attempt:network_failure", "pre_dispatch_refusal"})
+
+    def test_redo_plan_carries_only_those_trials_under_a_new_run_id(self):
+        self._prev_run_with_records()
+        out2 = self.tmp / "runs" / "run-redo"
+        plan = self.plan(cases=("IMG-CORE-01", "IMG-CORE-02"), routes=("gpt-image-2", "nano-banana-2"), run_id="run-redo", out=out2,
+                         redo_from=(self.out, "run-x"))
+        ids = [(t["case_id"], t["route_key"], t["repeat_index"]) for t in plan["trials"]]
+        self.assertEqual(sorted(ids), [("IMG-CORE-01", "gpt-image-2", 1), ("IMG-CORE-02", "nano-banana-2", 1)])
+        self.assertTrue(all(t["redo_of"]["prev_run_id"] == "run-x" for t in plan["trials"]))
+        self.assertEqual(plan["header"]["redo_of"]["n_trials"], 2)
+        self.assertEqual(plan["header"]["run_id"], "run-redo")
+
+    def test_redo_plan_refuses_when_nothing_failed_locally(self):
+        self.plan(run_id="run-clean")
+        with self.assertRaises(RL.PlanRefused):
+            self.plan(run_id="run-redo2", out=self.tmp / "runs" / "run-redo2", redo_from=(self.out, "run-clean"))
+
+
 class PlanTest(RunnerBase):
     """The 76-trial plan is built once per process (a plan is never overwritten) in its own throw-away directory."""
     _full = None
