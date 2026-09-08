@@ -5,14 +5,12 @@ itself.** Read this first, every session; then `coordination/CONTROL-STATE.md` f
 authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
-**Last refresh:** 7 Sep 2026 — CANON-GATE-001 merged (PR #88, merge commit `7dd064c`): the
-compiled-doctrine gate exists as code. The
+**Last refresh:** 1 Sep 2026 — REP-07 admission batch, EVAL-038 and CANON-SHAPE-v1 refresh. The
 last full Governor reconciliation remains **GOV-006** against `main` at `91984f5`
 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`, PASS WITH NON-BLOCKING NOTES);
 CANON-014 received a bounded Level-1 review at
 `governance/reviews/GOV-L1-CANON-014-FULL-CORPUS.md`. The text immediately before this refresh is
-preserved byte-for-byte at `history/PROJECT-MEMORY-PRE-GATE-001-REFRESH-2026-09-07.md` (the
-1 Sep text at `history/PROJECT-MEMORY-PRE-EVAL-038-REFRESH-2026-09-01.md`), and the
+preserved byte-for-byte at `history/PROJECT-MEMORY-PRE-EVAL-038-REFRESH-2026-09-01.md`, and the
 full pre-migration text at
 `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md`; detailed narrative now lives under
 `history/` (see §8).
@@ -106,15 +104,12 @@ subjective/perceptual evaluator families · strict-exactness-qualified text eval
 configurations tested, five disqualified, unrewritten) · qualified temporal-video evaluators (no
 numeric pass mark exists) · **Capability Registry rows — a deliberate decision, not an absence** ·
 customer-outcome CpAO observations (Stage C
-only; not authorised) · Production IR / Planner ·
+only; not authorised) · Production IR / Planner · **the mechanical acceptance gate** (pre-dispatch
+and post-draw checks as code — designed in `canon/CANON-SHAPE-v1.md` §4, **not built**) ·
 **accepted-outcome-rate measurements** (no acceptance-rate run has ever been commissioned) ·
-**8 of the 10 compiled packs** · **post-draw text detection on a real artifact** (the gate's
-Cloud Vision adapter is wired and has never been invoked; invoking it needs a spend authorisation)
-· **any gate run over a production blueprint** (only committed EVAL-038 packages and artifacts have
-been gated).
+**8 of the 10 compiled packs**.
 
-**The gate itself is no longer zero** — see "No longer zero" below — but building it moved none of
-the zeros above. **EVAL-038 did not move any of those zeros either.** It generated real media (2 images + 2 videos + a
+**EVAL-038 did not move any of those zeros.** It generated real media (2 images + 2 videos + a
 replay pair) and the Controller judged it, but that authority labelled media generation **product
 learning only — never Capability Registry evidence**. Do not read EVAL-038 artifacts as a qualified
 model, a qualified evaluator, a Registry row, or a customer-outcome CpAO observation.
@@ -157,21 +152,6 @@ model, a qualified evaluator, a Registry row, or a customer-outcome CpAO observa
   `canon/findings/PROPOSED-EVAL-038-CONCLUSION.md` is a worker proposal, not an adopted finding.
   Evidence `eval/experiments/EVAL-038/`; authority
   `coordination/decisions/CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md`.
-- **CANON-GATE-001 — the compiled-doctrine gate exists as code** (`canon/gate/`, merged 7 Sep
-  2026 via PR #88; `coordination/decisions/CONTROLLER-CANON-GATE-001-MERGE-2026-09-07.md`). It
-  reads the 21 check lines from the two compiled packs by id, runs a pre-dispatch inspection over a
-  production package and its generation prompts and a post-draw inspection over artifact bytes,
-  and prints every one of the 21 lines on every run with a status and a reason. **Honest scope:**
-  10 lines are mechanised partially (a literal clause each), 11 not at all; the blocking set is the
-  baked-text guard, delivered-vs-declared (aspect, dimensions, duration, shot sum), the named-ratio
-  prohibition, the integrity rows and any extraction error; declaration-presence partials report
-  but do not block. On the committed fixtures it fails both EVAL-038 video packages on the exact
-  sentences that produced the baked-text defects, passes the accepted image, and flags the image
-  delivered below its declared size. Built maker/checker over nine bounded checker passes; USD 0;
-  the extractor fails closed on every quoted-content path a checker could name (274 tests, a
-  172-row intended-vs-observed battery, a no-silent-discard invariant). **A gate PASS establishes
-  structure over the submitted bytes — never doctrine satisfaction, quality, outcomes or
-  adoption — and bears nothing on whether Canon works.** Run: `python3 canon/gate/run_gate.py`.
 - **Canon:** **37 live accepted sources** · **1,300 SourceKnowledge objects** · 132 concept
   systems · 291 bindings, with **5 HOLD** (desai, airey, freeman-beyond, samara-ch2; ries retired).
   Grew 24 → 37 under the REP-07 admission batch
@@ -214,13 +194,9 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
   is, what it is for, and how it is consumed: packs injected unconditionally as a cached prefix, no
   forced-consumption receipts, mechanical gates in code, blueprints amortised over cheap redraws.
   **Adopting the shape authorises no build.**
-- **The gate is built and merged (CANON-GATE-001).** What follows is the Controller's choice, not
-  a queue item: `canon/CANON-SHAPE-v1.md` §7 lists injection v1 (cached prefix, no receipts) and
-  the template library as the next builds, and names the acceptance-rate run — many draws per arm,
-  blind accept/reject — as the cheapest decisive measurement of the reserved question. **None is
-  authorised.** The **CANON-GATE-002 register** (vocabulary and negation semantics; a schema-level
-  prompt boundary so extraction is a lookup, not a guess) is opened by the merge decision and is
-  **not** a task.
+- **The next gate is the gate build** — pre-dispatch and post-draw checks derived as code from
+  PA-D1..D10 / CA-D1..D11, baked-text scan first (`canon/CANON-SHAPE-v1.md` §7 item 1). It is the
+  next build **when the Controller directs it**; it is not yet authorised.
 - **The programme is back in Controller planning mode.** The next move is not another broad Canon-value experiment; it is a rebase of T3-T8 around the shortest route to an end-to-end accepted-outcome product.
 - **EVAL-036 remains authorised at USD 0** as a historical-prior import, but its sequencing must now be justified by outcome value rather than treated as an automatic gate.
 - **No new paid tranche is currently authorised.**
@@ -254,14 +230,7 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
     Runtime retrieval remains accepted-only unless a separately frozen experiment explicitly exposes
     the status-carrying full corpus. After the REP-07 admission batch, **HOLD is 5, not 18** — 13 of
     the former candidates were admitted; `ries` is retired and must never be put to the Audit Gate.
-13. **Do not read gate output as a verdict on Canon.** A gate PASS means no mechanised check
-    failed over the submitted bytes; 11 of 21 doctrine lines are never mechanised and are printed
-    as such. The gate is Canon's *consumption*, not its *evaluation*. The verdict stays reserved.
-14. **The CANON-GATE-002 register is a list of recorded limitations, not an authorisation.** Each
-    item needs its own Controller decision. Its root-cause entry — the gate extracts prompts from
-    free prose — is the reason nine checker passes were needed; do not patch a tenth edge without
-    reading the merge decision first.
-15. Longer lessons list (paid for, do not rediscover): `history/EMP-001.md` §Lessons and
+13. Longer lessons list (paid for, do not rediscover): `history/EMP-001.md` §Lessons and
     `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md` §6.
 
 ## 8. History — where the narrative went
@@ -278,9 +247,6 @@ Detailed chronology moved out of this file on 28 Aug 2026 (nothing was lost):
 - `history/PROJECT-MEMORY-PRE-EVAL-038-REFRESH-2026-09-01.md` and
   `history/CONTROL-STATE-PRE-EVAL-038-REFRESH-2026-09-01.md` — byte-for-byte snapshots of both
   current-state documents immediately before the 1 Sep 2026 refresh.
-- `history/PROJECT-MEMORY-PRE-GATE-001-REFRESH-2026-09-07.md` and
-  `history/CONTROL-STATE-PRE-GATE-001-REFRESH-2026-09-07.md` — the same, immediately before the
-  7 Sep 2026 post-gate refresh.
 
 ## 9. Authority map — which file proves what
 
@@ -312,8 +278,6 @@ Detailed chronology moved out of this file on 28 Aug 2026 (nothing was lost):
 | Which Canon sources were admitted, and on what markers | `coordination/decisions/CONTROLLER-REP-07-ADMISSION-BATCH-2026-09-01.md` |
 | What EVAL-038 established, and who owns the verdict | `coordination/decisions/CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md`; evidence `eval/experiments/EVAL-038/` |
 | Why CANON-SHAPE-v1 governs and what it does not authorise | `coordination/decisions/CONTROLLER-CANON-SHAPE-V1-DIRECTION-2026-09-01.md` |
-| The compiled-doctrine gate: code, CLI, what it mechanises and what it does not | `canon/gate/` (`run_gate.py`, `GATE-BUILD-PLAN-v0.md` §A derivation table); tests `tests/test_gate_*.py`; `python3 -m tests.test_gate_regression_battery --table` |
-| Why the gate merged, its guarantee in one sentence, and the CANON-GATE-002 register | `coordination/decisions/CONTROLLER-CANON-GATE-001-MERGE-2026-09-07.md` (Ruling 13; Rulings 1–12 are the `CONTROLLER-CANON-GATE-001-*` records beside it) |
 | Full Canon map, HOLD candidates and corpus fingerprints | `canon/knowledge/CANON-CORPUS-INDEX.yaml` + `canon/candidates/canon-014/` |
 | CANON-014 grounded Q&A corpus | `canon/qa/canon-014/` |
 | The authoritative Eval battery (96-item validated view) | `eval/battery/devanagari-exactness/human-validation/` |

@@ -1,0 +1,192 @@
+"""Result model, verdict and renderers for the gate (CANON-GATE-001 plan §C, Ruling 2).
+
+STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+coordination/CONTROL-STATE.md governs.
+
+Statuses: PASS (the tested clause holds), FAIL (it does not), NOT_MECHANISED (code cannot
+test the line; reason mandatory), NOT_APPLICABLE (pack not selected or modality excludes the
+check), NOT_RUN (mechanisable but an input is missing), ERROR (input unparsable — fails closed).
+
+Verdict (Rulings 2 and 4): FAIL iff any row with blocking=True is FAIL, or any row is ERROR —
+the blocking set is LIMIT-TEXT, every DISPATCH-*, every INFRA-*, CA-D2 clause 2; the
+declaration-presence partials are reported, not blocking. A
+non-blocking FAIL is printed as `FAIL (non-blocking)` and counted on the final line; it is
+never folded into a pass count. A partial PASS always prints its clause in brackets.
+"""
+from __future__ import annotations
+
+import enum
+from dataclasses import dataclass, field
+
+FAMILIES = ("doctrine", "limit", "dispatch", "infra")
+
+# Uncalibrated v0 tolerances (plan §E / §G-7), in one place so tuning is visible:
+#   aspect: 928/1152 = 0.8056 vs 4:5 = 0.8 -> delta 0.0056 must PASS, so 0.01 absolute on the
+#   ratio; duration: mvhd vs durationSeconds within half a second; shot sum: Sonnet B01's
+#   26 s vs "~30 s" passes and Haiku B01's 17.5 s fails at 20 % relative.
+TOLERANCES = {"aspect_ratio_abs": 0.01, "duration_s_abs": 0.5, "shot_sum_rel": 0.20}
+GATES = ("pre_dispatch", "post_draw")
+COVERAGES = ("full", "partial", "none")
+GATE_LABEL = {"pre_dispatch": "pre-dispatch", "post_draw": "post-draw"}
+CLAUSE_JOIN = " … "   # separates verbatim fragments inside CheckResult.clause
+
+
+class Status(enum.Enum):
+    PASS = "PASS"
+    FAIL = "FAIL"
+    NOT_MECHANISED = "NOT-MECHANISED"
+    NOT_APPLICABLE = "NOT-APPLICABLE"
+    NOT_RUN = "NOT-RUN"
+    ERROR = "ERROR"
+
+
+@dataclass(frozen=True)
+class CheckResult:
+    check_id: str
+    family: str            # doctrine | limit | dispatch | infra
+    gate: str              # pre_dispatch | post_draw
+    status: Status
+    coverage: str          # full | partial | none
+    clause: str            # the literal clause tested (partial checks print it)
+    source_text: str       # the committed pack `check` / limit line, verbatim
+    detail: str            # reason (mandatory when not PASS) or evidence summary
+    evidence: tuple = ()
+    blocking: bool = False  # Rulings 2 + 4: LIMIT-TEXT, DISPATCH-*, INFRA-*, CA-D2 clause 2 block
+
+    def __post_init__(self):
+        if self.family not in FAMILIES:
+            raise ValueError(f"{self.check_id}: unknown family {self.family!r}")
+        if self.gate not in GATES:
+            raise ValueError(f"{self.check_id}: unknown gate {self.gate!r}")
+        if self.coverage not in COVERAGES:
+            raise ValueError(f"{self.check_id}: unknown coverage {self.coverage!r}")
+        if self.status is not Status.PASS and not self.detail.strip():
+            raise ValueError(f"{self.check_id}: a {self.status.name} row needs a reason")
+        if self.family == "doctrine" and not self.source_text.strip():
+            raise ValueError(f"{self.check_id}: a doctrine row needs its source_text")
+
+    @property
+    def failing(self) -> bool:
+        """Turns the verdict: any ERROR, or a FAIL on a blocking row."""
+        return self.status is Status.ERROR or (self.status is Status.FAIL and self.blocking)
+
+    def status_label(self) -> str:
+        if self.status is Status.FAIL and not self.blocking:
+            return "FAIL (non-blocking)"
+        return self.status.value
+
+    def rendered_detail(self) -> str:
+        if self.status is Status.NOT_MECHANISED:
+            return f"{self.detail} — not counted as satisfied"
+        if self.status in (Status.PASS, Status.FAIL) and self.coverage == "partial" and self.clause:
+            return f"[partial: {self.quoted_clause()}] {self.detail}".rstrip()
+        return self.detail
+
+    def quoted_clause(self) -> str:
+        """The clause is one or more verbatim fragments of `source_text` joined by
+        CLAUSE_JOIN; each fragment is rendered inside its own quotation marks so nothing
+        non-verbatim ever appears in quotes attributed to a pack (condition 5)."""
+        return CLAUSE_JOIN.join(f'"{f}"' for f in self.clause.split(CLAUSE_JOIN))
+
+
+@dataclass
+class Report:
+    gate: str
+    inputs: dict                 # path -> sha256, subject first
+    packs_selected: list
+    results: list
+    label: str = ""              # header subject, e.g. "package X.txt (sha256 …)"
+    notes: list = field(default_factory=list)
+
+    def __post_init__(self):
+        if self.gate not in GATES:
+            raise ValueError(f"unknown gate {self.gate!r}")
+        seen = set()
+        for r in self.results:
+            if r.check_id in seen:
+                raise ValueError(f"duplicate row for {r.check_id}")
+            seen.add(r.check_id)
+
+    # ── verdict ─────────────────────────────────────────────────────────
+    def verdict(self) -> str:
+        return "FAIL" if any(r.failing for r in self.results) else "PASS"
+
+    def rows(self, *families) -> list:
+        return [r for r in self.results if r.family in families]
+
+    # ── text rendering (mirrors validate_compiled_pack.py's PASS/FAIL idiom) ──
+    def render_text(self) -> str:
+        lines = [f"CANON GATE v0 — {GATE_LABEL[self.gate]} — {self.label} — packs: "
+                 f"{', '.join(self.packs_selected) or 'none'}"]
+        for r in self.rows("limit", "doctrine"):
+            lines.append(self._row(r))
+        for heading in ("dispatch", "infra"):
+            block = self.rows(heading)
+            if block:
+                lines.append(heading)
+                lines.extend(self._row(r) for r in block)
+        lines.extend(self.notes)
+        lines.append(self.final_line())
+        return "\n".join(lines)
+
+    @staticmethod
+    def _row(r: CheckResult) -> str:
+        label = r.status_label()
+        return (f"{label}{' ' * max(1, 16 - len(label))}"
+                f"{r.check_id}{' ' * max(1, 16 - len(r.check_id))}{r.rendered_detail()}")
+
+    @staticmethod
+    def _scope(rows) -> str:
+        """'<d> doctrine partial(s) + <o> limit/dispatch/infra row(s)' — the numerator of
+        both final lines says what it counts (F-13): every family, doctrine named apart."""
+        d = sum(1 for r in rows if r.family == "doctrine")
+        o = len(rows) - d
+        return (f"{d} doctrine partial{'s' if d != 1 else ''} + {o} limit/dispatch/infra "
+                f"row{'s' if o != 1 else ''}")
+
+    def final_line(self) -> str:
+        S = Status
+        doctrine = self.rows("doctrine")
+        held = [r for r in self.results if r.status is S.PASS]
+        ran = [r for r in self.results if r.status in (S.PASS, S.FAIL)]
+        nb = sum(1 for r in self.results if r.status is S.FAIL and not r.blocking)
+        nb_text = f"{nb} non-blocking FAIL{'s' if nb != 1 else ''} on record"
+        # Non-doctrine rows (limit / dispatch / infra) that did not run are named here: the
+        # plan's j below counts doctrine lines only, and a PASS with LIMIT-TEXT not run must
+        # not read as a clean report.
+        other_nr = [r.check_id for r in self.results
+                    if r.family != "doctrine" and r.status is S.NOT_RUN]
+        if other_nr:
+            nb_text += (f"; {len(other_nr)} non-doctrine row{'s' if len(other_nr) != 1 else ''} "
+                        f"not run: {', '.join(other_nr)}")
+        m = sum(1 for r in doctrine if r.status is S.NOT_MECHANISED)
+        k = sum(1 for r in doctrine if r.status is S.NOT_APPLICABLE)
+        j = sum(1 for r in doctrine if r.status is S.NOT_RUN)
+        if self.verdict() == "PASS":
+            return (f"GATE PASS: {len(held)} mechanised checks hold over the submitted bytes "
+                    f"({self._scope(held)}; {nb_text}); {m} doctrine check lines NOT "
+                    f"mechanised, {k} not applicable, {j} not run — none counted as satisfied. "
+                    "This establishes structure over the prompt/artifact bytes — not doctrine "
+                    "satisfaction, quality, outcomes, or adoption.")
+        failing = sum(1 for r in self.results if r.failing)
+        return (f"GATE FAIL ({failing} failing checks; {nb_text}). {len(ran)} checks mechanised "
+                f"({self._scope(ran)}) over {len(doctrine)} doctrine check lines; {m + k + j} "
+                "lines NOT mechanised, not applicable or not run — never counted as satisfied.")
+
+    # ── JSON ────────────────────────────────────────────────────────────
+    def to_json(self) -> dict:
+        return {
+            "gate": self.gate,
+            "verdict": self.verdict(),
+            "label": self.label,
+            "inputs": dict(self.inputs),
+            "packs_selected": list(self.packs_selected),
+            "results": [{
+                "check_id": r.check_id, "family": r.family, "gate": r.gate,
+                "status": r.status.name, "coverage": r.coverage, "clause": r.clause,
+                "source_text": r.source_text, "detail": r.detail,
+                "evidence": list(r.evidence), "blocking": r.blocking,
+            } for r in self.results],
+            "notes": list(self.notes),
+            "report_text": self.render_text(),
+        }
