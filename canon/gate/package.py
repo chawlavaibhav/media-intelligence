@@ -1,0 +1,696 @@
+"""FINAL_PRODUCTION_PACKAGE parser for schema v1 and v2 (CANON-GATE-001 plan §B package.py).
+
+STATUS: PROPOSED — Canon-stream worker output; no Controller decision adopts it;
+coordination/CONTROL-STATE.md governs.
+
+v1 (the 18 Sonnet baselines): bare ALL_CAPS headings, 12 sections. v2 (the haiku/gemma runs
+and the production shape per Ruling 3): `##` headings, the four typed VISUAL_SYSTEM subfields
+(surface_finish_per_key_object, implied_light_source, placement_zone, attention_order),
+optionally DOCTRINE_DEVIATIONS (retired in production, CANON-SHAPE-v1 §5). The section
+regex is identical to eval/experiments/EVAL-038/tools/strip_blind.py::SECTION_RE so the gate
+and the blinding tool cut a package at the same lines.
+
+Prompt extraction (plan §B): straight double-quoted runs under GENERATION_PROMPTS, and `>`
+blockquote runs with `**` removed — the same rules EVAL-038's EXTRACTION-RECORD.json records
+for the four dispatched prompts. A section whose straight quotes admit no single pairing
+raises UnbalancedQuotes (Ruling 7, L-01): the gate reports the error rather than guessing a
+closer. A curly quote in the section is an error (Ruling 10, below).
+
+FLOOR SEMANTICS CHANGED — Ruling 9, CONTROLLER-CANON-GATE-001-FIFTH-CHECK-DISPOSITION-
+2026-09-05.md (N-01/N-05). Plan §B.1 / §F read "double-quoted runs >= 120 chars": a quoted
+run under PROMPT_MIN_CHARS was ignored. From this commit a quoted run under the floor inside
+GENERATION_PROMPTS is an extraction error, PromptBelowFloor ("quoted run below the prompt
+floor — not scanned"), never a silent drop: LIMIT-TEXT reports ERROR with the reason and the
+verdict is FAIL. The discard was the concealment mechanism behind six pairing edges (F-12,
+K-02, K-05, L-01, M-01, N-01) — a prompt cut short leaves a remainder that pairs into a
+sub-floor run, and the floor hid it while the clean head PASSed. Every byte inside a quoted
+run is now either scanned or the cause of an ERROR (`_quoted_runs`). The plan text is amended
+by the Controller separately.
+
+CURLY QUOTES ARE NOT DELIMITERS — Ruling 10, CONTROLLER-CANON-GATE-001-SIXTH-CHECK-
+DISPOSITION-2026-09-05.md (P-01). Until this commit `_quoted_runs` also paired curly runs
+(“ … ”) with a bare regex that had none of the fail-closed rules `_straight_runs` enforces:
+an orphan curly closer, an unclosed curly prompt or a curly quote nested inside a curly
+prompt left the text-bearing remainder outside any run, and LIMIT-TEXT PASSed over it (the
+sixth checker's C2, C3, C4, C4b). The mechanism is removed rather than tuned: straight
+double quotes are the only prompt delimiter, `_straight_runs` the sole pairer, and any curly
+double quote (“ U+201C or ” U+201D) inside GENERATION_PROMPTS is an extraction error,
+CurlyQuotes ("curly quote in GENERATION_PROMPTS — straight quotes delimit prompts; not
+scanned"), naming its offset and raised before the straight pairer runs, so the outcome does
+not depend on the straight-quote state. A curly quote in any other section is prose. No
+committed package carries a curly quote in the section (0 of 84) and the production
+blueprint schema (Ruling 3) carries straight quotes. The plan text is amended by the
+Controller separately.
+
+UNKNOWN HEADINGS AFTER THE PROMPTS SECTION ARE AN ERROR — Ruling 11, CONTROLLER-CANON-GATE-
+001-SEVENTH-CHECK-DISPOSITION-2026-09-05.md (Q-01). SECTION_RE matches any bare ALL-CAPS line
+of four or more characters, so until this commit such a line between two straight-quoted
+prompts inside GENERATION_PROMPTS (`IMPORTANT`, `VIDEO`, `NOTE:`, `### PROMPT_B`, `NOTES`
+before a `>` blockquote) opened a new section; the second, text-bearing prompt was assigned
+to it, never extracted, never scanned, and LIMIT-TEXT PASSed on the first prompt alone.
+Parsing is not changed — SECTION_RE and parse_package stay byte-identical to 38f4295 and to
+the blinding tool. The rule is post-parse: `extract_prompts` reads the headings of the raw
+package text in order of appearance (`section_headings`, the same regex over the same
+stripped lines, repeats kept — `Package.sections` is keyed by name and so cannot show a
+heading that recurs after the prompts) and, if any heading after the first GENERATION_PROMPTS
+is not in KNOWN_SECTION_HEADINGS, raises UnknownSectionHeading ("unrecognised section
+heading after GENERATION_PROMPTS — prompts may be hidden; not scanned"), naming the heading
+and its line, before any quote is read. KNOWN_SECTION_HEADINGS is derived mechanically, not
+hand-typed: the union of every heading parse_package yields over the 84 committed EVAL-038
+packages, frozen here and recomputed by tests/test_gate_package.py::KnownHeadingsTest, so
+the corpus is unchanged by construction (0 of 84 carry a bare ALL-CAPS line inside the
+section). Headings before the section opens are unaffected; a second GENERATION_PROMPTS
+heading is in the set and merges into the first as it always has.
+
+KNOWN HEADINGS AS DIVIDERS — Ruling 12, CONTROLLER-CANON-GATE-001-EIGHTH-CHECK-DISPOSITION-
+2026-09-07.md (R-01). The Ruling 11 rule checks membership in the 15-heading union, not
+structure, so until this commit a known heading reused as a divider after GENERATION_PROMPTS
+hid a quoted run the same way — `FAILURE_PREVENTION … "dirty" … FAILURE_PREVENTION`,
+`DELIVERABLE` or `CORE_CREATIVE_IDEA` after the prompts, the FINAL_PRODUCTION_PACKAGE banner
+repeated, `DOCTRINE_DEVIATIONS` twice — and LIMIT-TEXT PASSed on the first prompt alone. Two
+refinements, both post-parse in the same place, both derived from the same 84 packages:
+(1) the known set for the post-prompts position is KNOWN_HEADINGS_AFTER_PROMPTS, the union of
+headings that follow the first GENERATION_PROMPTS in at least one committed package (7 of the
+15, frozen beside KNOWN_SECTION_HEADINGS and recomputed by KnownHeadingsTest) — a heading
+after the prompts that is in the union but not in this set raises
+HeadingNotObservedAfterPrompts ("section heading not observed after GENERATION_PROMPTS in the
+committed schema — prompts may be hidden; not scanned"), naming it and its line; (2) a heading
+that appears more than once at or after the first GENERATION_PROMPTS line raises
+RepeatedSectionHeading ("section heading repeated after GENERATION_PROMPTS — prompts may be
+hidden; not scanned"), naming it and both lines — no committed package repeats any heading.
+A second GENERATION_PROMPTS heading is exempt from both and merges into the first as Ruling
+11 condition 2 recorded. Precedence: unrecognised (Ruling 11), then not observed after, then
+repeated — `_heading_error_after_prompts`, which reads the headings from the one line-walk
+`section_headings` makes (R-02: until this commit the rule walked the lines itself while
+this docstring said it used `section_headings`). The ruled boundary stays: a heading in the
+after-prompts set, once, with a quoted run or blockquote under it opens a genuine section
+whose quoted text is that section's prose (CANON-GATE-002 register, R-01 residual) — the
+eighth checker's 3a-2, and likewise its 3a-4, 3a-6, 3a-8 and 3d-4, each of which carries only
+after-prompts headings once — closable only by the production blueprint schema (Ruling 3).
+
+Shot extraction: table rows `| n |`, `Shot n`
+headings, or numbered items in PRODUCTION_RECIPE / GENERATION_PROMPTS. The plan names the
+union of the two sections; a literal union double-counts a package that carries both a shot
+table and per-block prompt headings (Sonnet B01: 11 + 4), so the shot list is the single
+section yielding the most entries, PRODUCTION_RECIPE first on a tie.
+"""
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass, field
+
+from canon.gate import vocab
+
+SECTION_RE = re.compile(r"^(?:#{1,4}\s+)?(?:\*\*)?([A-Z][A-Z_]{3,})(?:\*\*)?:?$")
+TYPED_SUBFIELDS = ("surface_finish_per_key_object", "implied_light_source", "placement_zone",
+                   "attention_order")
+SUBFIELD_RE = re.compile(
+    r"^\s*(?:\*\*)?(" + "|".join(TYPED_SUBFIELDS) + r")(?:\*\*)?\s*:?\s*(?:\*\*)?\s*(.*)$")
+PROMPT_MIN_CHARS = 120
+# Ruling 11 (CONTROLLER-CANON-GATE-001-SEVENTH-CHECK-DISPOSITION-2026-09-05.md, Q-01): the
+# union of every section heading `parse_package` yields over the 84 committed EVAL-038
+# packages under eval/experiments/EVAL-038/ (baseline/, runs/*/packages/, judging/packages/**),
+# derived by a scratch script over parse_package and frozen here, sorted. Recomputed in place
+# by tests/test_gate_package.py::KnownHeadingsTest, which fails if this tuple and the corpus
+# ever disagree. A heading outside this set after GENERATION_PROMPTS has opened is an
+# extraction error (UnknownSectionHeading); the tuple is not edited by hand.
+KNOWN_SECTION_HEADINGS = (
+    "AUDIO_AND_EDIT",
+    "CORE_CREATIVE_IDEA",
+    "CREATIVE_BRIEF_TO_EXECUTION_NARRATIVE",
+    "DELIVERABLE",
+    "DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS",
+    "DOCTRINE_DEVIATIONS",
+    "FAILURE_PREVENTION",
+    "FINAL_PRODUCTION_PACKAGE",
+    "GENERATION_PROMPTS",
+    "HARD_CONSTRAINT_CHECK",
+    "KNOWLEDGE_AND_WEBSITE_USE",
+    "MESSAGE_AND_INFORMATION_HIERARCHY",
+    "OBJECTIVE_INTERPRETATION",
+    "PRODUCTION_RECIPE",
+    "VISUAL_SYSTEM",
+)
+# Ruling 12 (CONTROLLER-CANON-GATE-001-EIGHTH-CHECK-DISPOSITION-2026-09-07.md, R-01): the
+# union of every heading that appears AFTER the first GENERATION_PROMPTS heading in at least
+# one of the same 84 packages — SECTION_RE over the stripped lines of the raw text, repeats
+# kept, as `section_headings` walks them — derived by a scratch script and frozen here,
+# sorted; recomputed in place by tests/test_gate_package.py::KnownHeadingsTest. A strict
+# subset of KNOWN_SECTION_HEADINGS: the other eight (the seven schema sections before the
+# prompts, and GENERATION_PROMPTS itself) never follow the prompts in any committed package.
+# A heading after the first GENERATION_PROMPTS that is in the union but not here is an
+# extraction error (HeadingNotObservedAfterPrompts), except a second GENERATION_PROMPTS,
+# which merges (see `_heading_error_after_prompts`); the tuple is not edited by hand.
+KNOWN_HEADINGS_AFTER_PROMPTS = (
+    "AUDIO_AND_EDIT",
+    "CREATIVE_BRIEF_TO_EXECUTION_NARRATIVE",
+    "DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS",
+    "DOCTRINE_DEVIATIONS",
+    "FAILURE_PREVENTION",
+    "HARD_CONSTRAINT_CHECK",
+    "KNOWLEDGE_AND_WEBSITE_USE",
+)
+SHOT_SECTIONS = ("PRODUCTION_RECIPE", "GENERATION_PROMPTS")
+SHOT_TABLE_ROW = re.compile(r"^\|\s*(\d+)\s*\|")
+SHOT_HEADING = re.compile(r"^#{0,4}\s*(?:\*\*)?Shot\s+(\d+)")
+SHOT_NUMBERED = re.compile(r"^\s*(\d+)[.)]\s")
+DURATION_PATTERN = re.compile(
+    r"(\d+(?:\.\d+)?)(?:\s*[–-]\s*(\d+(?:\.\d+)?))?\s*(?:s\b|sec\b|secs\b|seconds?\b)")
+ASPECT_RATIO = re.compile(r"\b(\d{1,2}):(\d{1,2})\b")
+DIMENSIONS = re.compile(r"(\d{3,5})\s*[×x*]\s*(\d{3,5})")
+MINIMUM_WORDS = re.compile(r"\b(?:minimum|min|at least)\b", re.I)
+# `.` and `;` split at whitespace; `!` and `?` split only when the next character is not a
+# lowercase letter, so "a visible #REF! error" stays one clause (F-14).
+SENTENCE_SPLIT = re.compile(r"[.;]\s+|[!?]\s+(?=[^a-z])|\n")
+WORD = re.compile(r"[A-Za-z']+")
+
+
+@dataclass
+class Package:
+    sections: dict          # SECTION_NAME -> text (headings removed)
+    subfields: dict         # typed VISUAL_SYSTEM subfield -> text ("" when present but empty)
+    schema: str             # 'v1' | 'v2'
+    text: str = ""
+
+
+@dataclass(frozen=True)
+class Prompt:
+    index: int              # 1-based, in package order
+    text: str
+    origin: str             # 'quoted' | 'blockquote' | 'file'
+
+
+@dataclass(frozen=True)
+class Shot:
+    label: str
+    duration_s_min: float | None
+    duration_s_max: float | None
+    text: str
+    section: str
+
+
+@dataclass
+class Scope:
+    text: str
+    sources: list = field(default_factory=list)          # section / subfield names used
+    empty_subfields: list = field(default_factory=list)  # typed subfields present but empty
+    parts: list = field(default_factory=list)            # (source, text) in scope order
+
+    def add(self, source: str, body: str) -> None:
+        if source not in self.sources:
+            self.sources.append(source)
+            self.parts.append((source, body))
+            self.text = "\n".join(t for _, t in self.parts)
+
+
+def split_sentences(text: str) -> list:
+    return [s.strip() for s in SENTENCE_SPLIT.split(text) if s and s.strip()]
+
+
+# ── sections and subfields ───────────────────────────────────────────────────
+
+def parse_package(text: str) -> Package:
+    sections: dict = {}
+    current = None
+    for line in text.splitlines():
+        m = SECTION_RE.match(line.strip())
+        if m:
+            current = m.group(1)
+            sections.setdefault(current, [])
+            continue
+        if current is not None:
+            sections[current].append(line)
+    joined = {name: "\n".join(lines).strip("\n") for name, lines in sections.items()}
+    subfields = _split_subfields(joined.get("VISUAL_SYSTEM", ""))
+    # Schema is decided by the v2 contract's fields, not by heading style: Sonnet B01 (v1)
+    # already uses `##` headings, Sonnet B06 bare ones.
+    schema = "v2" if subfields or "DOCTRINE_DEVIATIONS" in joined else "v1"
+    return Package(sections=joined, subfields=subfields, schema=schema, text=text)
+
+
+def section_headings(text: str, *, numbered: bool = False) -> list:
+    """Every section heading of `text` in order of appearance, repeats kept — SECTION_RE over
+    each stripped line, exactly as `parse_package` cuts the package (Ruling 11); with
+    `numbered`, (line number, heading) pairs, 1-based. This is the one line-walk the heading
+    rules read (`_heading_error_after_prompts`; Ruling 12 condition 6). The order is read
+    from the text because `Package.sections` is keyed by name: a dict keeps only a heading's
+    first position and folds a repeat into it, so it cannot show that a heading seen before
+    GENERATION_PROMPTS recurs after it, nor that one after it recurs."""
+    pairs = []
+    for line_no, line in enumerate(text.splitlines(), 1):
+        m = SECTION_RE.match(line.strip())
+        if m:
+            pairs.append((line_no, m.group(1)))
+    return pairs if numbered else [heading for _, heading in pairs]
+
+
+def _split_subfields(visual_system: str) -> dict:
+    out: dict = {}
+    current = None
+    for line in visual_system.splitlines():
+        m = SUBFIELD_RE.match(line)
+        if m:
+            current = m.group(1)
+            out[current] = [m.group(2)] if m.group(2).strip() else []
+            continue
+        if current is not None:
+            out[current].append(line)
+    return {name: "\n".join(lines).strip() for name, lines in out.items()}
+
+
+def scope_text(pkg: Package, feeds_sections) -> Scope:
+    """Resolve a decision's committed feeds_sections over this package (Ruling 3): a typed
+    subfield is read first when present; present-but-empty is recorded as a declaration gap
+    and does not fall back; an absent subfield falls back to the parent section's prose."""
+    scope = Scope(text="")
+    for name in feeds_sections:
+        if "." in name:
+            section, sub = name.split(".", 1)
+            if sub in pkg.subfields:
+                if pkg.subfields[sub].strip():
+                    scope.add(name, pkg.subfields[sub])
+                else:
+                    scope.empty_subfields.append(name)
+                continue
+            if section in pkg.sections:
+                scope.add(section, pkg.sections[section])
+            continue
+        if name in pkg.sections:
+            scope.add(name, pkg.sections[name])
+    return scope
+
+
+# ── generation prompts ───────────────────────────────────────────────────────
+
+CLOSER_TAIL = re.compile(r"[ \t]*[.)\],;:!?]*[ \t]*(?:\n|$)")
+CURLY_QUOTE = re.compile("[“”]")   # U+201C, U+201D
+
+
+class ExtractionError(ValueError):
+    """GENERATION_PROMPTS cannot be turned into a list of prompts the gate would stand behind.
+    Callers report the reason on LIMIT-TEXT as ERROR (verdict FAIL) — never a partial list."""
+
+
+class CurlyQuotes(ExtractionError):
+    """A curly double quote (“ or ”) appears inside GENERATION_PROMPTS (Ruling 10, P-01).
+    Straight quotes are the only prompt delimiter; a curly quote is neither paired nor
+    ignored, because a curly run was the second surface for the same family of pairing
+    defects (an orphan closer, an unclosed run, a nested opener) and is not needed."""
+
+
+class UnknownSectionHeading(ExtractionError):
+    """A section heading outside KNOWN_SECTION_HEADINGS appears after GENERATION_PROMPTS has
+    opened (Ruling 11, Q-01). SECTION_RE reads any bare ALL-CAPS line of four or more
+    characters as a heading, so such a line between two prompts starts a section the gate
+    does not know and everything after it — a prompt included — leaves the scan. Parsing
+    is untouched; the package is refused before any quote is read."""
+
+
+class HeadingNotObservedAfterPrompts(ExtractionError):
+    """A heading in KNOWN_SECTION_HEADINGS but not in KNOWN_HEADINGS_AFTER_PROMPTS appears
+    after the first GENERATION_PROMPTS heading (Ruling 12, R-01, refinement 1). The corpus
+    places DELIVERABLE, CORE_CREATIVE_IDEA, the FINAL_PRODUCTION_PACKAGE banner and the rest
+    of the pre-prompt schema before the prompts only; after them such a heading is a
+    divider, and what follows it — a quoted run, a blockquote — leaves the scan. A second
+    GENERATION_PROMPTS is exempt: it merges into the first (Ruling 11 condition 2)."""
+
+
+class RepeatedSectionHeading(ExtractionError):
+    """A heading appears more than once at or after the first GENERATION_PROMPTS line
+    (Ruling 12, R-01, refinement 2). No committed package repeats any heading, so the second
+    occurrence is a divider and what sits between the two leaves the scan. A second
+    GENERATION_PROMPTS heading is the one exempt repeat: it merges into the first section
+    and both halves are extracted (Ruling 11 condition 2)."""
+
+
+class UnbalancedQuotes(ExtractionError):
+    """The straight quotes of a GENERATION_PROMPTS section admit no single pairing (Ruling 7,
+    L-01; Ruling 8, M-01): a run never closes, a closer arrives with no run open, or a quote
+    could equally open a nested string or close the current run. The gate never guesses."""
+
+
+class PromptBelowFloor(ExtractionError):
+    """A quoted run inside GENERATION_PROMPTS is shorter than PROMPT_MIN_CHARS (Ruling 9,
+    N-01/N-05). It is not silently dropped: either it is the text-bearing remainder of a
+    prompt that a pairing mistake cut short, or a short label or prompt the section quotes —
+    in every case content the gate did not scan, so the section errors."""
+
+
+def _excerpt(text: str, i: int) -> str:
+    return " ".join(text[i:i + 28].split())
+
+
+def _straight_runs(text: str) -> list:
+    """(start, body) between paired straight quotes; raises UnbalancedQuotes when the text
+    admits no single pairing. A quote opens a run when nothing alphanumeric (and no quote)
+    precedes it; it closes the open run when nothing alphanumeric follows it. Whitespace just
+    inside either quote is accepted (K-02). Outside a run a digit-preceded quote can never
+    open one, so `the 5" screen` between prompts is skipped instead of shifting every later
+    pair (F-12); a letter-preceded quote outside a run closes nothing and is the trace an
+    early close leaves behind (`… chat bubbles on screen"` after a run cut short), so it
+    raises rather than being skipped (M-01).
+
+    Nested strings (M-01). A prompt may quote a rendered string of its own — `the "Aster
+    Meridian" on her wrist`, `("Aster Meridian")`. Inside an open run a quote that could open
+    (nothing alphanumeric before it) and is followed by a letter or digit cannot be a closer,
+    so it opens a nested string and the depth rises; the next closer ends the nested string,
+    not the run, and only a closer at depth one ends the run. This is the one case the text
+    decides by itself: under the alternative reading the inner closer ends the run and the
+    prompt's real closer then closes nothing, which the orphan rule above rejects. A
+    could-open quote followed by anything else — a symbol (`"₹9`), a bracket, a dash — is
+    not decidable: it opens a symbol-initial nested string under one pairing and, preceded
+    by a space or a full stop, closes the run with K-02 trailing whitespace under the other
+    (`… she holds "` is a well-formed closer). No lexical rule separates them, so the gate
+    raises rather than choosing (the fourth checker's symbol-initial shape). The residual
+    guess the design keeps is a could-open quote followed by whitespace, which is read as
+    the run's closer (`… festive."` + ` (8 s)`, K-02's trailing space) and never as a nested
+    opener with leading whitespace; that reading is checked, not trusted: what it leaves
+    outside the run must itself pair, or the orphan rule raises.
+
+    Inside a run a quote immediately preceded by a digit is an inch mark — `6" OLED panel`,
+    `is 6". It shows` (K-05) — unless a bracket or separator follows it or the rest of its
+    line is blank/punctuation, where it definitely closes (`… past 99"` at end of line,
+    `"Aspect ratio: 9:16")`). A digit-preceded quote followed by prose on the same line
+    (`₹9" (massive …)`, `99" then …`) is undecidable: the inch mark and the closer look the
+    same. The safer default is to leave the run open and mark it in doubt, not to close it:
+    closing would cut every K-05 prompt at its inch mark and hand the remainder — the
+    text-bearing half — to a run opened by the prompt's own closing quote, which then never
+    closes; leaving it open keeps the prompt whole when a definite closer follows and
+    otherwise reaches an error, never a silent drop. While in doubt only a definite closer,
+    or a quote that could not open a run (alphanumeric before it), may close the run. A
+    quote that could open a new run — `"VIDEO`, `"` before the next prompt, `" ` before a
+    space-led string — means two pairings exist (the inch mark was the closer and this
+    opens; or it was not and this is nested), so the gate raises instead of choosing
+    (M-02 pins the space-led case: without that raise `6" then " chat bubbles … 99"` closes
+    after `then`, the clean head passes and `99"` is skipped as an inch mark). A run still
+    open at the end of the text raises too (Ruling 7 condition 1). A wrong guess either
+    drops a prompt or manufactures one from unrelated prose, and LIMIT-TEXT then reports
+    PASS over text it never scanned (L-01, the committed Gemma B02-R1 package)."""
+    runs = []
+    open_at = None
+    depth = 0       # straight-quoted strings open inside the run; the run itself is depth 1
+    doubt = None    # offset of the digit-preceded quote that left the open run undecided
+    for m in re.finditer(r'"', text):
+        i = m.start()
+        prev = text[i - 1] if i else ""
+        nxt = text[i + 1] if i + 1 < len(text) else ""
+        could_open = not (prev.isalnum() or prev == '"')
+        if open_at is None:
+            if could_open:
+                open_at, depth, doubt = i, 1, None
+            elif prev.isalnum() and not prev.isdigit():
+                raise UnbalancedQuotes(
+                    f"the quote at offset {i} ({_excerpt(text, max(0, i - 12))!r}) closes no open run")
+            continue   # a digit-preceded inch mark (F-12) or a doubled quote
+        if nxt.isalnum() and not could_open:
+            continue   # inside a word (5"x7) or a doubled quote: neither opens nor closes
+        definite = nxt in ")],;:" or CLOSER_TAIL.match(text, i + 1) is not None
+        if prev.isdigit() and not definite:
+            doubt = i   # inch mark or closer — undecided; the run stays open
+            continue
+        if nxt.isalnum():
+            if doubt is not None:
+                raise UnbalancedQuotes(
+                    f"the quote at offset {i} ({_excerpt(text, i)!r}) could open a new run or "
+                    f"close the one opened at offset {open_at} — the digit-preceded quote at "
+                    f"offset {doubt} ({_excerpt(text, doubt)!r}) is an inch mark under one "
+                    f"pairing and a closer under the other")
+            depth += 1   # a nested opener; the run continues past the nested string
+            continue
+        if doubt is not None and could_open and not definite:
+            raise UnbalancedQuotes(
+                f"the quote at offset {i} ({_excerpt(text, i)!r}) could open a new run or "
+                f"close the one opened at offset {open_at} — the digit-preceded quote at "
+                f"offset {doubt} ({_excerpt(text, doubt)!r}) is an inch mark under one "
+                f"pairing and a closer under the other")
+        if could_open and not definite and not nxt.isspace():
+            raise UnbalancedQuotes(
+                f"the quote at offset {i} ({_excerpt(text, i)!r}) could open a nested string "
+                f"or close the run opened at offset {open_at} — nothing alphanumeric precedes "
+                f"it and a symbol follows it")
+        depth -= 1
+        if depth:
+            continue   # the nested string closed; the run continues
+        runs.append((open_at, text[open_at + 1:i]))
+        open_at, doubt = None, None
+    if open_at is not None:
+        raise UnbalancedQuotes(
+            f"the run opened at offset {open_at} ({_excerpt(text, open_at)!r}) never closes")
+    return runs
+
+
+def _quoted_runs(text: str) -> list:
+    """(start, body) for every prompt-delimiting run: straight-quoted runs paired by
+    `_straight_runs`, the sole pairer. A curly double quote anywhere in `text` raises
+    CurlyQuotes before pairing (Ruling 10, P-01); a run under PROMPT_MIN_CHARS raises
+    PromptBelowFloor (Ruling 9, N-01/N-05) — the floor filters nothing any more.
+
+    Why a curly quote errors instead of pairing or passing as prose (Ruling 10). The curly
+    regex this function used to carry (`“([^“”]*)”`) had none of the three fail-closed rules
+    `_straight_runs` enforces — an orphan closer raises, an unclosed run raises, a nested
+    opener raises depth — so a stray “ or ” was silently prose and a curly run open at the
+    end of the section was never seen: the text-bearing remainder sat outside any run and
+    LIMIT-TEXT PASSed over it (the sixth checker's C2, C3, C4, C4b). Rather than give the
+    curly pairer the same rules — a second surface for the same family of defects — the
+    mechanism is removed. The check runs first, on the raw text, so the error is the same
+    whatever the straight quotes around it would do.
+
+    Why the floor exists, and why it errors instead of filtering. The floor was written so
+    that a short quoted label in the section's prose — `"IMAGE"`, `"₹9"`, `"Get Free Demo."`
+    — is not mistaken for a prompt; under plan §B.1 such runs were ignored. That discard was
+    the concealment mechanism behind N-01: whenever the pairing cut a prompt short (a nested
+    string whose opener is followed by whitespace reads as the run's closer, `_straight_runs`
+    class 3), the text-bearing remainder paired into a sub-floor run, vanished here without
+    trace, and LIMIT-TEXT PASSed over text it never scanned. The same floor dropped K16, a
+    genuine second prompt under 120 chars. Under this rule every sub-floor run inside
+    GENERATION_PROMPTS is an error, a genuine label included: fail closed, no silent discard,
+    on the Controller's instruction. No attempt is made to tell a label from a truncated
+    prompt by position, capitalisation, punctuation or length — that would be a seventh
+    lexical guess in the mechanism that has produced six edges (F-12, K-02, K-05, L-01,
+    M-01, N-01), and a wrong guess reopens the silent path. If the section has quoted
+    content, all of it is scanned or the section errors; a package that wants a short
+    quoted label in this section carries it in another section or unquoted, and a short
+    prompt is supplied via --prompt-file or lengthened. The class-3 reading itself is left
+    as it is: its worst case is now this error, not a PASS.
+
+    One run inside another. A run whose span lies strictly inside another run's span is
+    nested: its bytes are scanned as part of the prompt that contains it, so it is neither
+    a prompt of its own nor subject to the floor. It is decided by the spans alone, never by
+    what the inner run looks like. Among straight runs `_straight_runs` already folds a
+    nested string into its run by depth (M-01), so every run it yields is outermost and the
+    span rule holds trivially; it stays as the guard so that containment is a property of
+    the spans and not of the pairer. Only runs that no other run contains are prompts, and
+    only those face the floor."""
+    m = CURLY_QUOTE.search(text)
+    if m:
+        i = m.start()
+        raise CurlyQuotes(
+            f"the {m.group()} at offset {i} ({_excerpt(text, max(0, i - 12))!r}) is not a "
+            f"prompt delimiter")
+    runs = list(_straight_runs(text))
+    runs.sort(key=lambda r: r[0])
+    spans = [(start, start + 1 + len(body)) for start, body in runs]   # opener .. closer
+    outer = [run for run, (s, e) in zip(runs, spans)
+             if not any(s2 < s and e < e2 for s2, e2 in spans)]
+    short = [(start, body) for start, body in outer if len(body) < PROMPT_MIN_CHARS]
+    if short:
+        start, body = short[0]
+        more = f" (+{len(short) - 1} more under the floor)" if len(short) > 1 else ""
+        raise PromptBelowFloor(
+            f"the run at offset {start} ({' '.join(body.split())!r}) is {len(body)} chars, "
+            f"under the {PROMPT_MIN_CHARS}-char floor{more}")
+    return outer
+
+
+def _blockquote_runs(text: str) -> list:
+    runs = []
+    pos = 0
+    block: list = []
+    start = None
+    for line in text.splitlines(keepends=True):
+        if line.lstrip().startswith(">"):
+            if start is None:
+                start = pos
+            block.append(re.sub(r"^\s*>\s?", "", line.rstrip("\n")).replace("**", ""))
+        elif block:
+            runs.append((start, "\n".join(block).strip()))
+            block, start = [], None
+        pos += len(line)
+    if block:
+        runs.append((start, "\n".join(block).strip()))
+    return [(s, b) for s, b in runs if b]
+
+
+def _heading_error_after_prompts(text: str):
+    """The ExtractionError the headings of `text` earn after the first GENERATION_PROMPTS
+    heading, else None — over the one heading walk `section_headings` makes (Rulings 11 and
+    12). Three rules in this precedence, each over the whole list, naming its first offender
+    in line order: (1) Ruling 11 — a heading outside KNOWN_SECTION_HEADINGS is
+    UnknownSectionHeading; (2) Ruling 12 — a known heading outside
+    KNOWN_HEADINGS_AFTER_PROMPTS is HeadingNotObservedAfterPrompts; (3) Ruling 12 — a heading
+    seen a second time at or after the first GENERATION_PROMPTS line is
+    RepeatedSectionHeading, naming both lines. Rule order rather than line order because each
+    later rule presumes the earlier one passed: a repeat of an unknown heading is reported as
+    unknown (Ruling 11's message, unchanged), a before-only heading repeated after the
+    prompts as not observed after them — the stricter reason for the same lines. Headings
+    before the section opens are not looked at. A second GENERATION_PROMPTS heading is exempt
+    from (2) and (3): it is not in the after-prompts set (no committed package repeats it),
+    but Ruling 11 condition 2 preserved its merge into the first section and Ruling 12 keeps
+    that."""
+    headings = section_headings(text, numbered=True)
+    opened = next((i for i, (_, h) in enumerate(headings) if h == "GENERATION_PROMPTS"), None)
+    if opened is None:
+        return None
+    after = headings[opened + 1:]
+    for line_no, heading in after:
+        if heading not in KNOWN_SECTION_HEADINGS:
+            return UnknownSectionHeading(
+                f"unrecognised section heading after GENERATION_PROMPTS — prompts may be hidden; "
+                f"not scanned — heading {heading!r} at line {line_no}")
+    for line_no, heading in after:
+        if heading != "GENERATION_PROMPTS" and heading not in KNOWN_HEADINGS_AFTER_PROMPTS:
+            return HeadingNotObservedAfterPrompts(
+                f"section heading not observed after GENERATION_PROMPTS in the committed schema "
+                f"— prompts may be hidden; not scanned — heading {heading!r} at line {line_no}")
+    first_seen: dict = {}
+    for line_no, heading in headings[opened:]:
+        if heading == "GENERATION_PROMPTS":
+            continue
+        if heading in first_seen:
+            return RepeatedSectionHeading(
+                f"section heading repeated after GENERATION_PROMPTS — prompts may be hidden; "
+                f"not scanned — heading {heading!r} at lines {first_seen[heading]} and {line_no}")
+        first_seen[heading] = line_no
+    return None
+
+
+def extract_prompts(pkg: Package) -> list:
+    """Prompts in package order; raises UnknownSectionHeading when a heading outside the
+    known schema set follows the section's opening (Ruling 11), HeadingNotObservedAfterPrompts
+    when a known heading the corpus never places after the prompts follows it and
+    RepeatedSectionHeading when any heading but GENERATION_PROMPTS recurs after it (Ruling
+    12), CurlyQuotes when the section carries a curly double quote (Ruling 10),
+    UnbalancedQuotes when its straight quotes admit no single pairing (Ruling 7) and
+    PromptBelowFloor when a quoted run falls under the floor (Ruling 9) — callers report the
+    error, never a partial list. The heading checks are section-level and run first, on the
+    raw package text, so their outcome does not depend on the quote state."""
+    section = pkg.sections.get("GENERATION_PROMPTS")
+    if section is None:
+        return []
+    heading_error = _heading_error_after_prompts(pkg.text)
+    if heading_error is not None:
+        raise heading_error
+    try:
+        found = [(s, b, "quoted") for s, b in _quoted_runs(section)]
+    except CurlyQuotes as exc:
+        raise CurlyQuotes(
+            f"curly quote in GENERATION_PROMPTS — straight quotes delimit prompts; not scanned "
+            f"— {exc}") from None
+    except UnbalancedQuotes as exc:
+        raise UnbalancedQuotes(f"unbalanced quotes in GENERATION_PROMPTS — {exc}") from None
+    except PromptBelowFloor as exc:
+        raise PromptBelowFloor(
+            f"quoted run below the prompt floor — not scanned — GENERATION_PROMPTS: {exc}") from None
+    found += [(s, b, "blockquote") for s, b in _blockquote_runs(section)]
+    found.sort(key=lambda t: t[0])
+    return [Prompt(index=i + 1, text=b.strip(), origin=o) for i, (_, b, o) in enumerate(found)]
+
+
+# ── shots, durations, declarations ───────────────────────────────────────────
+
+def parse_duration(text: str):
+    m = DURATION_PATTERN.search(text)
+    if not m:
+        return None
+    lo = float(m.group(1))
+    hi = float(m.group(2)) if m.group(2) else lo
+    return (min(lo, hi), max(lo, hi))
+
+
+def _shots_in(section_name: str, body: str) -> list:
+    entries = []  # (label, [lines])
+    for line in body.splitlines():
+        m = SHOT_TABLE_ROW.match(line) or SHOT_HEADING.match(line) or SHOT_NUMBERED.match(line)
+        if m:
+            entries.append((m.group(1), [line]))
+        elif entries:
+            entries[-1][1].append(line)
+    shots = []
+    for label, lines in entries:
+        d = parse_duration(lines[0])
+        shots.append(Shot(label=label, duration_s_min=d[0] if d else None,
+                          duration_s_max=d[1] if d else None,
+                          text="\n".join(lines).strip(), section=section_name))
+    return shots
+
+
+def extract_shots(pkg: Package) -> list:
+    best: list = []
+    for name in SHOT_SECTIONS:
+        if name in pkg.sections:
+            shots = _shots_in(name, pkg.sections[name])
+            if len(shots) > len(best):
+                best = shots
+    return best
+
+
+def shot_sum_s(shots) -> float:
+    return float(sum(s.duration_s_max for s in shots if s.duration_s_max is not None))
+
+
+def find_aspect(text: str):
+    """The first `a:b` in `text` that reads as an aspect, normalised ("4:5"), else None. A
+    pair with an ASPECT_CONTEXT word within three tokens on either side is an aspect; failing
+    that, a pair with a zero numerator, a leading-zero denominator, a TIME_CONTEXT word within
+    three tokens before it or a time suffix within two after it is a clock time and is
+    skipped (F-04: "Hands set to 10:10 as convention.", "the last 0:03")."""
+    for m in ASPECT_RATIO.finditer(text):
+        a, b = m.group(1), m.group(2)
+        # context windows stop at a sentence boundary so "… 10:10 as convention. 4:5 aspect"
+        # does not lend the next sentence's "aspect" to the clock time
+        head = re.split(r"[.;!?\n]", text[max(0, m.start() - 60):m.start()])[-1]
+        tail = re.split(r"[.;!?\n]", text[m.end():m.end() + 40])[0]
+        before = [t.lower() for t in WORD.findall(head)][-3:]
+        after = [t.lower() for t in WORD.findall(tail)][:3]
+        if any(t in vocab.ASPECT_CONTEXT_WORDS for t in before + after):
+            return f"{int(a)}:{int(b)}"
+        if a == "0" or (len(b) == 2 and b[0] == "0"):
+            continue
+        if any(t in vocab.TIME_CONTEXT_BEFORE for t in before) \
+                or any(t in vocab.TIME_CONTEXT_AFTER for t in after[:2]):
+            continue
+        return f"{int(a)}:{int(b)}"
+    return None
+
+
+def declared_aspect(pkg: Package):
+    for name in ("DELIVERABLE", "VISUAL_SYSTEM"):
+        found = find_aspect(pkg.sections.get(name, ""))
+        if found:
+            return found
+    try:
+        prompts = extract_prompts(pkg)
+    except ExtractionError:
+        return None   # the prompts are unreadable; LIMIT-TEXT reports the error
+    for p in prompts:
+        found = find_aspect(p.text)
+        if found:
+            return found
+    return None
+
+
+def declared_duration_s(pkg: Package):
+    for name in ("DELIVERABLE", "PRODUCTION_RECIPE", "AUDIO_AND_EDIT"):
+        d = parse_duration(pkg.sections.get(name, ""))
+        if d:
+            return d[1]
+    return None
+
+
+def declared_min_dimensions(pkg: Package):
+    for name in ("DELIVERABLE", "VISUAL_SYSTEM", "PRODUCTION_RECIPE", "GENERATION_PROMPTS"):
+        for sentence in split_sentences(pkg.sections.get(name, "")):
+            m = DIMENSIONS.search(sentence)
+            if m and MINIMUM_WORDS.search(sentence):
+                return (int(m.group(1)), int(m.group(2)))
+    return None
