@@ -68,6 +68,24 @@ class SealedStore:
     def attempt_path(self, trial_id: str) -> Path:
         return self.root / f"{safe_id(trial_id)}.attempt.json"
 
+    def recovered_attempt_path(self, trial_id: str) -> Path:
+        """A recovered attempt (recover_fal.py): the ORIGINAL attempt stays untouched; this sits beside it."""
+        return self.root / f"{safe_id(trial_id)}.attempt.recovered.json"
+
+    def write_recovered_attempt(self, trial_id: str, attempt: dict) -> Path:
+        if not self.attempt_path(trial_id).exists():
+            raise ArtifactIntegrityError(f"{trial_id}: no original attempt to recover; a recovery never stands alone")
+        path = self.recovered_attempt_path(trial_id)
+        self._write_new(path, (json.dumps(attempt, indent=1, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8"))
+        return path
+
+    def load_attempt(self, trial_id: str) -> dict | None:
+        """The attempt the harness should act on: the recovered record if one exists, else the original, else None."""
+        for p in (self.recovered_attempt_path(trial_id), self.attempt_path(trial_id)):
+            if p.exists():
+                return json.loads(p.read_text(encoding="utf-8"))
+        return None
+
     # -- writes ---------------------------------------------------------------------------
     def _write_new(self, path: Path, data: bytes) -> None:
         if not isinstance(data, (bytes, bytearray)):

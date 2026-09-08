@@ -210,10 +210,9 @@ def build(out: Path | str, run_id: str, key_dir: Path | str, seed: str | None = 
     manifest = {m["trial_id"]: m for m in store.manifest() if "." not in S.safe_id(m["trial_id"]) or True}
     items = []
     for t in plan["trials"]:
-        ap = store.attempt_path(t["trial_id"])
-        if not ap.exists():
+        a = store.load_attempt(t["trial_id"])            # a recovered attempt (recover_fal.py) supersedes the original
+        if a is None:
             continue
-        a = json.loads(ap.read_text(encoding="utf-8"))
         if a.get("status") != "ok" or not a.get("artifact"):
             continue
         rec = a["artifact"]
@@ -374,8 +373,7 @@ def reveal(out: Path | str, run_id: str, key_dir: Path | str) -> dict:
     rows = []
     for t in plan["trials"]:
         tid = t["trial_id"]
-        ap = store.attempt_path(tid)
-        a = json.loads(ap.read_text(encoding="utf-8")) if ap.exists() else None
+        a = store.load_attempt(tid)                       # recovered attempt preferred
         row = {"trial_id": tid, "case_id": t["case_id"], "question": question_of(t["case_id"]), "route_key": t["route_key"], "arm": t["arm"],
                "repeat_index": t["repeat_index"], "dispatched": a is not None, "status": a.get("status") if a else None,
                "error_class": a.get("error_class") if a else None, "blind_id": None, "verdict": None, "verdict_basis": None, "note": ""}

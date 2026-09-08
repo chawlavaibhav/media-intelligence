@@ -363,7 +363,7 @@ class LiveRunner:
                         from instruments import repeat_consistency as RC
                         first = next((t for t in self.plan["trials"] if t["case_id"] == trial["case_id"] and t["route_key"] == trial["route_key"]
                                       and t["arm"] == trial["arm"] and t["repeat_index"] == 1), None)
-                        a1 = json.loads(self.store.attempt_path(first["trial_id"]).read_text(encoding="utf-8")) if first and self.store.attempt_path(first["trial_id"]).exists() else None
+                        a1 = self.store.load_attempt(first["trial_id"]) if first else None   # prefers a recovered attempt
                         if a1 and a1.get("status") == "ok" and a1.get("artifact"):
                             res["repeat_consistency"] = RC.evaluate(self.store.root / a1["artifact"]["relative_path"], path, attempt.get("seed_policy") or "unset")
                             res["repeat_consistency"]["other_repeat_trial_id"] = first["trial_id"]
@@ -465,7 +465,7 @@ def status(out: Path | str, run_id: str, auth_path: Path | str = L.AUTH_LOCAL_PA
         herr = out / TRIALS_DIR / f"{S.safe_id(tid)}.harness_error.json"
         if ap.exists():
             done += 1
-            a = json.loads(ap.read_text(encoding="utf-8"))
+            a = store.load_attempt(tid)                      # a recovered attempt (recover_fal.py) supersedes the original for status
             if a.get("status") != "ok":
                 errors.append({"trial_id": tid, "kind": "attempt", "status": a.get("status"), "error_class": a.get("error_class"),
                                "billing_state": a.get("billing_state"), "note": (a.get("raw_status_note") or "")[:200]})
