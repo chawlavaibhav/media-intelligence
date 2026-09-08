@@ -26,9 +26,19 @@ import hv2_paths
 
 FREEZE_REL = "eval/empirical-planning/STAGE-A-FREEZE-2026-09"
 _PROMPT_RE = re.compile(r"## 6\. generation_prompt[^\n]*\n\s*```text\n(.*?)\n```", re.S)
+# Arm C of the exact-text cases (TOPO-02 / TOPO-03): the blueprint carries a SECOND, textless prompt for the
+# composite plate. Image Round 1 (2026-09-08) dispatched arm C with the main prompt, so the composite arm was
+# never tested; the arm-aware selection below is the fix. The main prompt stays byte-identical across arms A/B.
+_TEXTLESS_RE = re.compile(r"### generation_prompt_textless_plate[^\n]*\n\s*```text\n(.*?)\n```", re.S)
+COMPOSITE_ARM_PREFIX = "C_composite"
 
 
-def extract_prompt(blueprint_md: str) -> str:
+def extract_prompt(blueprint_md: str, arm: str | None = None) -> str:
+    if arm and arm.startswith(COMPOSITE_ARM_PREFIX):
+        m = _TEXTLESS_RE.search(blueprint_md)
+        if not m:
+            raise ValueError(f"arm {arm!r} needs a '### generation_prompt_textless_plate' ```text block and the blueprint has none")
+        return m.group(1)
     m = _PROMPT_RE.search(blueprint_md)
     if not m:
         raise ValueError("blueprint has no '## 6. generation_prompt' ```text block")
@@ -101,15 +111,17 @@ class CaseBook:
                 return c
         raise KeyError(case_id)
 
-    def prompt_for(self, case_id: str) -> str:
-        if case_id not in self._prompts:
+    def prompt_for(self, case_id: str, arm: str | None = None) -> str:
+        """The generation prompt for a case — and, for a composite arm (C_composite*), the blueprint's textless plate prompt."""
+        key = (case_id, "textless" if (arm and arm.startswith(COMPOSITE_ARM_PREFIX)) else "main")
+        if key not in self._prompts:
             c = self.case(case_id)
             md = self._bp(c["blueprint_ref"])
             digest = hashlib.sha256(md.encode("utf-8")).hexdigest()
             if c.get("blueprint_sha256") and digest != c["blueprint_sha256"]:
                 raise ValueError(f"{case_id}: blueprint sha256 {digest[:12]} != TEST-CASES {c['blueprint_sha256'][:12]}")
-            self._prompts[case_id] = extract_prompt(md)
-        return self._prompts[case_id]
+            self._prompts[key] = extract_prompt(md, arm if key[1] == "textless" else None)
+        return self._prompts[key]
 
     def route_rows(self, case_id: str | None = None) -> list[dict]:
         """One row per (case, route row) - before repeats are expanded."""
@@ -139,7 +151,7 @@ class CaseBook:
         """One row per (case, route row, repeat_index 1..repeats)."""
         out = []
         for base in self.route_rows(case_id):
-            prompt = self.prompt_for(base["case_id"]) if with_prompt else None
+            prompt = self.prompt_for(base["case_id"], base.get("arm")) if with_prompt else None
             for i in range(1, base["repeats"] + 1):
                 out.append({**base, "repeat_index": i, "prompt": prompt})
         return out
