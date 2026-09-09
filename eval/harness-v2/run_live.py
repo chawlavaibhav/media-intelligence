@@ -191,8 +191,10 @@ def open_inputs(inputs_path: Path | str | None) -> INP.InputsFile | None:
 
 def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str] | None, tranche: str | None,
                auth_path: Path | str, git_rev: str = "HEAD", mode: str = "lane", repeats: tuple | None = None,
-               redo_from: tuple | None = None, inputs_path: Path | str | None = None, accept_roster_price: bool = False) -> dict:
-    """Write `<out>/PLAN.yaml` + `PLAN.sha256` before any dispatch. Refuses an empty plan and never overwrites."""
+               redo_from: tuple | None = None, inputs_path: Path | str | None = None, accept_roster_price: bool = False,
+               arms: list[str] | None = None) -> dict:
+    """Write `<out>/PLAN.yaml` + `PLAN.sha256` before any dispatch. Refuses an empty plan and never overwrites.
+    `arms` (optional) keeps only rows whose arm is listed - for a route that carries several arms on one case."""
     out = Path(out)
     if (out / PLAN_FILE).exists():
         raise PlanRefused(f"{out / PLAN_FILE} already exists; a plan is written once. Use a new run id for a new plan.")
@@ -239,6 +241,8 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
             continue                                     # a redo plan carries ONLY the previous run's infrastructure failures
         if routes and row["route_key"] not in routes:
             continue                                     # not requested: neither planned nor listed
+        if arms and row.get("arm") not in arms:
+            continue                                     # another arm of a requested route: neither planned nor listed
         if not row["would_dispatch"]:
             reason = row["refusal_reason"] or "would_dispatch: false"
         elif tranches and row["tranche"] not in tranches:
@@ -677,6 +681,7 @@ def main(argv=None) -> int:
     p = sub.add_parser("plan"); common(p); inputs_opts(p)
     p.add_argument("--cases", required=True, help="comma-separated case ids, in the order they will run")
     p.add_argument("--routes", default=None, help="comma-separated route keys (default: every dispatchable route on those cases)")
+    p.add_argument("--arms", default=None, help="comma-separated arm names; keeps only those arms of the requested routes")
     p.add_argument("--tranche", default="1a", help="1a | 1b | 1a,1b | all")
     p.add_argument("--git-rev", default="HEAD")
     p.add_argument("--redo-from", default=None, metavar="OUT:RUN_ID",
@@ -705,7 +710,8 @@ def main(argv=None) -> int:
             plan = build_plan(a.out, a.run_id, cases=[c.strip() for c in a.cases.split(",") if c.strip()],
                               routes=([r.strip() for r in a.routes.split(",") if r.strip()] if a.routes else None),
                               tranche=a.tranche, auth_path=a.auth, git_rev=a.git_rev, redo_from=redo,
-                              inputs_path=a.inputs, accept_roster_price=a.accept_roster_price)
+                              inputs_path=a.inputs, accept_roster_price=a.accept_roster_price,
+                              arms=([x.strip() for x in a.arms.split(",") if x.strip()] if a.arms else None))
             h = plan["header"]
             print(json.dumps({"run_id": h["run_id"], "trials": h["counts"]["trials"], "excluded": h["counts"]["excluded"],
                               "estimated_by_pool": h["estimated_by_pool"], "estimated_total_usd_equiv": h["estimated_total_usd_equiv"],

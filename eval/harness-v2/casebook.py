@@ -39,6 +39,9 @@ ARM_PROMPT_BLOCKS = {
     "C_plate_9x16": "arm_C_textless_plate_prompt_9x16",
     "A_cheap_still_to_cheap_i2v": "i2v_motion_prompt",
     "C_textless_plate_i2v_composite": "i2v_motion_prompt",
+    # 2026-09-09 addendum: arm A re-run with a text-capable plate (Nano Banana 2) after both Qwen plates misspelled Hindi.
+    "A2_nb_plate_9x16": "arm_A_plate_prompt_9x16",
+    "A2_nb_still_to_cheap_i2v": "i2v_motion_prompt",
 }
 
 
