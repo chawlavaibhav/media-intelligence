@@ -37,16 +37,14 @@ MUSIC_URL = f"{surfaces.ELEVENLABS_MUSIC}?output_format=mp3_44100_128"
 
 
 def tts_row(**over):
-    """The freeze's AUD-TTS-01 row re-pointed at the direct route (there is no catalogue row for an extension route)."""
-    row = BOOK.row("AUD-TTS-01", "elevenlabs-v3")
-    return {**row, "route_key": "elevenlabs-v3-direct", "surface": "direct", "billing_pool": "elevenlabs_credits",
-            "unit_price": 0, "quantity": 30, "quantity_unit": "chars", **over}
+    """The freeze's AUD-TTS-01 row on the direct route (a catalogue row since the 2026-09-09 re-point)."""
+    row = BOOK.row("AUD-TTS-01", "elevenlabs-v3-direct")
+    return {**row, **over}
 
 
 def music_row(**over):
-    row = BOOK.row("MUS-01", "elevenlabs-music")
-    return {**row, "route_key": "elevenlabs-music-direct", "surface": "direct", "billing_pool": "elevenlabs_credits",
-            "unit_price": 0, "quantity": 30, "quantity_unit": "seconds", **over}
+    row = BOOK.row("MUS-01", "elevenlabs-music-direct")
+    return {**row, **over}
 
 
 def ok_transport(headers=None):
@@ -82,7 +80,7 @@ class RegistryTest(NoNetworkTestCase):
             self.assertEqual(e.shape_status, "verified")
             self.assertEqual(e.media_kind, "audio")
             self.assertTrue(e.endpoint.startswith("https://api.elevenlabs.io/v1/"), e.endpoint)
-            self.assertNotIn(e.route_key, surfaces.REGISTRY.catalogue_keys())
+            self.assertIn(e.route_key, surfaces.REGISTRY.catalogue_keys())
         self.assertEqual((tts.workflow, tts.lane, tts.surface_model_id), ("tts", "tts", "eleven_v3"))
         self.assertEqual((music.workflow, music.lane, music.surface_model_id), ("music", "music", "music_v1"))
         self.assertEqual(tts.endpoint, "https://api.elevenlabs.io/v1/text-to-speech")

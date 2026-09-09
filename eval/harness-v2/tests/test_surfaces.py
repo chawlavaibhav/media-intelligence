@@ -45,7 +45,7 @@ class SurfaceRegistryTest(unittest.TestCase):
             e = self.reg.get(key)
             self.assertEqual(e.billing_pool, cat["billing_pool"], key)
             cat_surface = {"fal": "fal", "vertex": "vertex", "direct": "sarvam_direct", "bedrock": "bedrock",
-                           "azure": "azure_foundry"}[cat["surface"]]
+                           "azure": "azure_foundry", "elevenlabs_direct": "elevenlabs_direct"}[cat["surface"]]
             if key == "chirp-3-hd-hi-in":
                 cat_surface = "cloud_tts"
             self.assertEqual(e.surface, cat_surface, key)
