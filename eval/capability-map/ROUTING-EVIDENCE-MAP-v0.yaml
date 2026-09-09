@@ -3,28 +3,44 @@
 # No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.
 schema: ROUTING-EVIDENCE-MAP-v0
 status: product_asset; tiers never mixed; human tiers are never Registry rows
-generated_utc: '2026-09-09T10:04:37.925671Z'
-round: EVAL-040 Image Round 1 + image half two + video piece 1 (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video)
+generated_utc: '2026-09-09T12:44:45.373864Z'
+round: EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video,
+  topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip)
 sources:
   registry: eval/registry/registry-v1.jsonl
-  registry_sha256: 7c78b1d4c2c980cec6d40c08b8b38fbb44dac8019407c910ed714c6c3f78d417
+  registry_sha256: 36097c27a42a300618ad802d8ce0d248b437d9314bedb4a8d959023080d88e13
   results:
   - eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/half2/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/topo3-nb-video/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-knee/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-ms/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-i2v/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-ref/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-tts-sarvam/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-tts-eleven/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-music-lyria/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
   results_run_ids:
   - img-r1
   - half2
   - topo3-video
   - topo3-nb-video
+  - vid-knee
+  - vid-ms
+  - vid-i2v
+  - vid-ref
+  - aud-tts-sarvam
+  - aud-tts-eleven
+  - aud-music-lyria
   criteria_sha256: 6fce5ea875c0653ad7321a292fcada31594c9512e1297deabba6c525d9d23888
   summary: eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
   summaries:
   - eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
   - eval/experiments/EVAL-040/runs/half2/IMAGE-HALF-TWO-SUMMARY.md
   - eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md
+  - eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
   historical_prior_index: eval/historical-priors/media-factory-v1/PRIOR-INDEX.yaml
 tiers:
   deterministic:
@@ -103,7 +119,64 @@ routing_rules:
   registry: false
   status: tested_in_motion_2026-09-09
   source: eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md
-cell_count: 33
+- id: RR-8
+  scope: image-to-video from an accepted still
+  rule: Animate an accepted still on Kling v3 Pro or Wan 3.0 Prime first; MiniMax H3 Max as the cheapest fallback; avoid Veo 3.1 fast i2v where
+    the brief forbids camera moves.
+  evidence: 'vid-i2v (4 stills x 4 routes x 2): kling-v3-pro-i2v 8/8 (USD 0.67), wan-3.0-prime-i2v 8/8 (USD 0.84), minimax-h3-max-i2v 7/8 (USD
+    0.48; one ''label appeared out of thin air''), veo-3.1-fast-i2v 5/8 (0/2 on the phone still: ''zooms in''; one ''hand appeared'')'
+  tier: human_blind_acceptance
+  registry: false
+  caveat: expression drift to 'angry' noted on three routes for the man-with-phone still; accepted under the contract
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+- id: RR-9
+  scope: multi-shot and 10-15 s clips
+  rule: Kling v3 Pro for 15 s three-shot stories; Gemini Omni 1.1 Flash for 10 s three-shot stories; Veo 3.1 fast extend chain works but reads
+    visually weaker; Seedance 2.5 not needed on this evidence.
+  evidence: 'vid-ms: kling-v3-pro-15s 2/2 clean (USD 1.68), veo-3.1-fast-extend 2/2 (USD 2.00, one ''a little visually bad''), gemini-omni-1.1-flash-10s
+    2/2 ''clean'' (USD 1.01), kling-v3-pro-10s 2/2 ''technically correct but visually not amazing'' (USD 1.12)'
+  tier: human_blind_acceptance
+  registry: false
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+- id: RR-10
+  scope: product-hero clips with strict physical detail (condensation, blank label, slow camera)
+  rule: 'The cheap tier is NOT enough: Veo 3.1 lite and H3 Max 480p failed every draw; even Veo 3.1 full passed 1/2. Route such briefs to the
+    premium tier and plan for re-draws, or set the label by code.'
+  evidence: 'vid-knee VID-KNEE-01: veo-3.1-full 1/2 (USD 2.40), veo-3.1-lite 0/2 (USD 0.30: ''no slow camera'', ''got a label''), minimax-h3-max-480p
+    0/2 (USD 0.30: ''no condensation'', ''got a label'')'
+  tier: human_blind_acceptance
+  registry: false
+  caveat: n = 2 per route on one brief; the boundary of the cheap-first rule, not a reversal
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+- id: RR-11
+  scope: reference-to-video (a referenced product or person in motion)
+  rule: Veo 3.1 fast ref2v carries a referenced PRODUCT into motion (2/2) but invents lettering in people scenes (0/2); until a second route is
+    screened, use it for products and keep people scenes lettering-free by post-check.
+  evidence: 'vid-ref: VID-REF-01 tin 2/2, VID-REF-02 person 0/2 ''some different language'' (stray script in the cafe) at USD 0.80 a clip (8 s
+    minimum on Vertex)'
+  tier: human_blind_acceptance
+  registry: false
+  caveat: one route only (Seedance 2.5 ref2v left out; Kling elements unpinned)
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+- id: RR-12
+  scope: Hindi / Hinglish / Indian-English speech
+  rule: Sarvam bulbul:v3 is the default voice route for all three; ElevenLabs v3 on a premade voice passes Hindi and short English but fails Hinglish
+    on accent until an Indian voice is added to the account.
+  evidence: aud-tts-sarvam 6/6 (aditya, INR 0.13 a file); aud-tts-eleven Hindi 2/2, English 2/2, Hinglish 0/2 'rejected for accent' (298 plan
+    credits for six files)
+  tier: human_blind_acceptance
+  registry: false
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+- id: RR-13
+  scope: instrumental music beds (30 s)
+  rule: Lyria 2 on Vertex credits is the default music route (USD 0.06 a track); tracks measure 32.8 s, trim by code to the brief. ElevenLabs
+    music needs a paid plan (skipped by the Controller).
+  evidence: aud-music-lyria 4/4 accepted (home-kitchen and city-running briefs), judged raw and stacked under the accepted multi-shot clips; elevenlabs-music-direct
+    refused HTTP 402 on the free plan
+  tier: human_blind_acceptance
+  registry: false
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+cell_count: 49
 reading_guide:
 - deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation
   (independence NOT ESTABLISHED)
@@ -111,6 +184,358 @@ reading_guide:
   row
 - fallback is a ranking by acceptance within the question, not a score; the Production Planner decides routing
 questions:
+  AUD-LIP:
+    cells:
+      kling-lipsync-a2v+chain:
+        route_key: kling-lipsync-a2v
+        arm: chain
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/kling-lipsync-audio-to-video/fal-api-models-kling-lipsync-a2v.json
+        unit_price_usd_pinned:
+        - '0.014'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-02dddbbf39b648a2
+          - cap-047c705c64901837
+          - cap-470582902a92e641
+          - cap-8c6d0a2737808e5d
+          - cap-8d32cb2a7c4462d4
+          - cap-b15484a831ea3978
+          - cap-b18c78d2ad0803b5
+          - cap-cbff4856bcd8958a
+          - cap-e2c7a64b081735f0
+          - cap-f5859d8996dea006
+          - cap-f73f2a5e6bddc38c
+          - cap-fe65d21e4942076a
+          n_items:
+          - AUD-LIP-01
+          - AUD-LIP-02
+          - AUD-LIP-03
+          counted_trials: 6
+          status_counts:
+            ok: 5
+            error: 1
+          refusal_rate: 0.0
+          error_rate: 0.16666666666666666
+          format_compliance:
+            passes: 4
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.840000'
+            per_trial_mean: '0.140000'
+            n_settled: 6
+            cost_within_reserved:
+              passes: 6
+              trials: 6
+          latency_s:
+            p50: 114.279269
+            p95: 169.203924
+            n: 6
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 0.5
+            dhash_hamming_max: 1
+            ssim_mean: 0.9891275420815101
+            ssim_min: 0.9891196846140692
+            structural_passes: 2
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          status: no_verdicts
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: null
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  AUD-TTS:
+    cells:
+      elevenlabs-v3-direct+native:
+        route_key: elevenlabs-v3-direct
+        arm: native
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-pricing.html
+        unit_price_usd_pinned:
+        - '0'
+        billing_pool:
+        - elevenlabs_credits
+        surface:
+        - elevenlabs_direct
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-2019f1093af7f4e6
+          - cap-268a12f8c8997f0f
+          - cap-32e50e3e534a4301
+          - cap-33fd12bbc87dccf8
+          - cap-3c083fd3c4cd40d4
+          - cap-4a1cb2d48f728042
+          - cap-5dcd8b5b40240a1f
+          - cap-6a7b3c3d613d427b
+          - cap-7be204895c6c223a
+          - cap-a0f06af82c22e2f3
+          - cap-bd4f63c4f44b0108
+          - cap-d3c165a0d10e5a1c
+          n_items:
+          - AUD-TTS-01
+          - AUD-TTS-02
+          - AUD-TTS-03
+          counted_trials: 6
+          status_counts:
+            ok: 6
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 6
+            trials: 6
+            n_items: 3
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.000000'
+            per_trial_mean: '0.000000'
+            n_settled: 6
+            cost_within_reserved:
+              passes: 6
+              trials: 6
+          latency_s:
+            p50: 1.929899
+            p95: 2.987616
+            n: 6
+          repeat_variance_unseeded:
+            pairs: 0
+            dhash_hamming_mean: null
+            dhash_hamming_max: null
+            ssim_mean: null
+            ssim_min: null
+            structural_passes: 0
+            structural_trials: 0
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 4
+          trials: 6
+          rejects: 2
+          n_items: 3
+          arms:
+          - native
+          no_artifact_rejects: 0
+          per_item:
+            AUD-TTS-01:
+              accepts: 2
+              trials: 2
+            AUD-TTS-02:
+              accepts: 0
+              trials: 2
+            AUD-TTS-03:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: AUD-TTS-02__elevenlabs-v3-direct__native__r1
+            verdict: reject
+            note: rejected for accent (Controller)
+          - trial_id: AUD-TTS-01__elevenlabs-v3-direct__native__r2
+            verdict: accept
+            note: approved (Controller)
+          - trial_id: AUD-TTS-03__elevenlabs-v3-direct__native__r2
+            verdict: accept
+            note: approved (Controller)
+          - trial_id: AUD-TTS-02__elevenlabs-v3-direct__native__r2
+            verdict: reject
+            note: rejected for accent (Controller)
+          - trial_id: AUD-TTS-01__elevenlabs-v3-direct__native__r1
+            verdict: accept
+            note: approved (Controller)
+          - trial_id: AUD-TTS-03__elevenlabs-v3-direct__native__r1
+            verdict: accept
+            note: approved (Controller)
+          elimination:
+            question: AUD-TTS
+            case_id: AUD-TTS-01
+            route_key: elevenlabs-v3-direct
+            arm: native
+            arms:
+            - native
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: aud-tts-eleven
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - aud-tts-eleven
+          source: RESULTS.yaml of run aud-tts-eleven
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: sarvam-bulbul-v3+native
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      sarvam-bulbul-v3+native:
+        route_key: sarvam-bulbul-v3
+        arm: native
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+        unit_price_usd_pinned:
+        - '3.0'
+        billing_pool:
+        - sarvam_credits
+        surface:
+        - sarvam_direct
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-0974370b09ba1039
+          - cap-0f136a13bee01b09
+          - cap-1ca9559e256329cf
+          - cap-212c453318131944
+          - cap-3be404fd8ba269cd
+          - cap-4160c44715ebb7f2
+          - cap-468c27a4ba2a403f
+          - cap-9a01763a7908d46e
+          - cap-a3a1d5008a4adda8
+          - cap-aa91d79017681e6f
+          - cap-b4e781737971773a
+          - cap-ed977fde41d8232d
+          n_items:
+          - AUD-TTS-01
+          - AUD-TTS-02
+          - AUD-TTS-03
+          counted_trials: 6
+          status_counts:
+            ok: 6
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 6
+            trials: 6
+            n_items: 3
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.008426'
+            per_trial_mean: '0.001404'
+            n_settled: 6
+            cost_within_reserved:
+              passes: 6
+              trials: 6
+          latency_s:
+            p50: 1.181037
+            p95: 1.718515
+            n: 6
+          repeat_variance_unseeded:
+            pairs: 0
+            dhash_hamming_mean: null
+            dhash_hamming_max: null
+            ssim_mean: null
+            ssim_min: null
+            structural_passes: 0
+            structural_trials: 0
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 6
+          trials: 6
+          rejects: 0
+          n_items: 3
+          arms:
+          - native
+          no_artifact_rejects: 0
+          per_item:
+            AUD-TTS-01:
+              accepts: 2
+              trials: 2
+            AUD-TTS-02:
+              accepts: 2
+              trials: 2
+            AUD-TTS-03:
+              accepts: 2
+              trials: 2
+          controller_notes: []
+          elimination:
+            question: AUD-TTS
+            route_key: sarvam-bulbul-v3
+            arm: native
+            arms:
+            - native
+            n_planned: 6
+            refusals_or_errors: 0
+            accepts: 6
+            rejects: 0
+            pending: 0
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: aud-tts-sarvam
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - aud-tts-sarvam
+          source: RESULTS.yaml of run aud-tts-sarvam
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: elevenlabs-v3-direct+native
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
   IMG-COMP:
     cells:
       flux-2-pro-edit:
@@ -3291,6 +3716,1618 @@ questions:
         rank_in_question: 7
         fallback:
           route: flux-2-pro+C_composite_textless_base
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  MUS:
+    cells:
+      lyria+native:
+        route_key: lyria
+        arm: native
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.06'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-01a99a2b85eee6fc
+          - cap-9450e10838f0a8d2
+          - cap-a2739d1ebf50e7ce
+          - cap-add16cb0ae79670f
+          - cap-bd3dcf7e9cb5f9ed
+          - cap-c3b8e0842da597a9
+          - cap-cfbb21a548502b7a
+          - cap-e9261941242bf088
+          n_items:
+          - MUS-01
+          - MUS-02
+          counted_trials: 4
+          status_counts:
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.240000'
+            per_trial_mean: '0.060000'
+            n_settled: 4
+            cost_within_reserved:
+              passes: 4
+              trials: 4
+          latency_s:
+            p50: 28.317345
+            p95: 41.740885
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 0
+            dhash_hamming_mean: null
+            dhash_hamming_max: null
+            ssim_mean: null
+            ssim_min: null
+            structural_passes: 0
+            structural_trials: 0
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 4
+          trials: 4
+          rejects: 0
+          n_items: 2
+          arms:
+          - native
+          no_artifact_rejects: 0
+          per_item:
+            MUS-01:
+              accepts: 2
+              trials: 2
+            MUS-02:
+              accepts: 2
+              trials: 2
+          controller_notes: []
+          elimination:
+            question: MUS
+            route_key: lyria
+            arm: native
+            arms:
+            - native
+            n_planned: 4
+            refusals_or_errors: 0
+            accepts: 4
+            rejects: 0
+            pending: 0
+            not_dispatched: 0
+            e1_threshold: 2
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: aud-music-lyria
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - aud-music-lyria
+          source: RESULTS.yaml of run aud-music-lyria
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: null
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  VID-I2V:
+    cells:
+      kling-v3-pro-i2v:
+        route_key: kling-v3-pro-i2v
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-i2v.json
+        unit_price_usd_pinned:
+        - '0.112'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-0106b3bf7c71da05
+          - cap-0ecd26ac79918801
+          - cap-0f0dca33be2dab06
+          - cap-140c619069d190a9
+          - cap-260843e307094d35
+          - cap-36c311debf94d4bc
+          - cap-42f880f6a6c110b1
+          - cap-44167725ffb42a2d
+          - cap-4b186c456def4685
+          - cap-4da3aa7daafe8d2b
+          - cap-65cc128cff5eb5e9
+          - cap-67c9d1ca8acede2f
+          - cap-73581fe75b7bd1c0
+          - cap-7b08b530073ec782
+          - cap-7f09ab871f00f2f3
+          - cap-810e76aecb2d49df
+          - cap-b525408a6a66444f
+          - cap-e6eaf659a30a7998
+          - cap-eadbc7e74af0cd84
+          - cap-f5df0abf31f0c7f4
+          n_items:
+          - VID-I2V-01
+          - VID-I2V-02
+          - VID-I2V-03
+          - VID-I2V-04
+          counted_trials: 8
+          status_counts:
+            ok: 8
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 8
+            n_items: 4
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '5.376000'
+            per_trial_mean: '0.672000'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 104.225723
+            p95: 343.62201
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 4
+            dhash_hamming_mean: 14.25
+            dhash_hamming_max: 21
+            ssim_mean: 0.6400486314194412
+            ssim_min: 0.3848436426965374
+            structural_passes: 4
+            structural_trials: 4
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 8
+          trials: 8
+          rejects: 0
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-I2V-01:
+              accepts: 2
+              trials: 2
+            VID-I2V-02:
+              accepts: 2
+              trials: 2
+            VID-I2V-03:
+              accepts: 2
+              trials: 2
+            VID-I2V-04:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-I2V-02__kling-v3-pro-i2v__core__r1
+            verdict: accept
+            note: expressesion change to angry in the end
+          - trial_id: VID-I2V-02__kling-v3-pro-i2v__core__r2
+            verdict: accept
+            note: expressesion change to angry
+          elimination:
+            question: VID-I2V
+            route_key: kling-v3-pro-i2v
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            refusals_or_errors: 0
+            accepts: 8
+            rejects: 0
+            pending: 0
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 2
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-i2v
+          source: RESULTS.yaml of run vid-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: wan-3.0-prime-i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      minimax-h3-max-i2v:
+        route_key: minimax-h3-max-i2v
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-1f9f3abe4048b703
+          - cap-2863eb30d7f91642
+          - cap-2ac7dd1b78bbacb3
+          - cap-56dece5d00e1d21c
+          - cap-6050f2502068db0a
+          - cap-762444b00670d940
+          - cap-7ff4445c81236000
+          - cap-85e5f5c44a72759a
+          - cap-8d21ba3342044774
+          - cap-90499cafbafa76be
+          - cap-95355d7605b82af3
+          - cap-a9892cc0b8ef3512
+          - cap-c537664f816fdeb4
+          - cap-c83072e641c5e910
+          - cap-c8ddd534660590e5
+          - cap-e58901a1e1d430b0
+          - cap-e67d43b7582af600
+          - cap-ecd1ef51c4f78ac4
+          - cap-eee2dba3e559e0ae
+          - cap-fce8a3d5e56e5382
+          n_items:
+          - VID-I2V-01
+          - VID-I2V-02
+          - VID-I2V-03
+          - VID-I2V-04
+          counted_trials: 8
+          status_counts:
+            ok: 8
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 8
+            n_items: 4
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '3.840000'
+            per_trial_mean: '0.480000'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 9.539176
+            p95: 21.436696
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 4
+            dhash_hamming_mean: 17.0
+            dhash_hamming_max: 29
+            ssim_mean: 0.6335996244679538
+            ssim_min: 0.2223970708886588
+            structural_passes: 4
+            structural_trials: 4
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 7
+          trials: 8
+          rejects: 1
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-I2V-01:
+              accepts: 1
+              trials: 2
+            VID-I2V-02:
+              accepts: 2
+              trials: 2
+            VID-I2V-03:
+              accepts: 2
+              trials: 2
+            VID-I2V-04:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-I2V-02__minimax-h3-max-i2v__core__r2
+            verdict: accept
+            note: expressesion change to angry
+          - trial_id: VID-I2V-03__minimax-h3-max-i2v__core__r1
+            verdict: accept
+            note: accept (Controller)
+          - trial_id: VID-I2V-01__minimax-h3-max-i2v__core__r2
+            verdict: reject
+            note: label appeared out of thin air. not by changing angle
+          elimination:
+            question: VID-I2V
+            route_key: minimax-h3-max-i2v
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            refusals_or_errors: 0
+            accepts: 7
+            rejects: 1
+            pending: 0
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 2
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-i2v
+          source: RESULTS.yaml of run vid-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: veo-3.1-fast-i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      veo-3.1-fast-i2v:
+        route_key: veo-3.1-fast-i2v
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.1'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-0309e751fae8d45b
+          - cap-0454064f07928680
+          - cap-2158d32f3fd15dd9
+          - cap-3547c0b2b4b05c99
+          - cap-36b4f09edcb98f6f
+          - cap-3753aeee6d6cd552
+          - cap-4434c62e8000f149
+          - cap-516f4530d357f567
+          - cap-57f661d231d2cf33
+          - cap-6ee0e6dfb0e46a8f
+          - cap-75b85c0a56aa2569
+          - cap-7b3fff4dcd337973
+          - cap-8d4fe8fac6005ec3
+          - cap-9a5f10b931a15e83
+          - cap-ac361d6c3d4699d5
+          - cap-af73ae04cae5c2b8
+          - cap-ba0f3eb65f055dd3
+          - cap-dcdd37b246e12351
+          - cap-df77cff25fe8c99a
+          - cap-e90d561a8cb1a9d8
+          n_items:
+          - VID-I2V-01
+          - VID-I2V-02
+          - VID-I2V-03
+          - VID-I2V-04
+          counted_trials: 8
+          status_counts:
+            ok: 8
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 8
+            trials: 8
+            n_items: 4
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '4.800000'
+            per_trial_mean: '0.600000'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 55.252162
+            p95: 69.696144
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 4
+            dhash_hamming_mean: 16.5
+            dhash_hamming_max: 23
+            ssim_mean: 0.615605697825192
+            ssim_min: 0.32964702001634005
+            structural_passes: 4
+            structural_trials: 4
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 5
+          trials: 8
+          rejects: 3
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-I2V-01:
+              accepts: 1
+              trials: 2
+            VID-I2V-02:
+              accepts: 0
+              trials: 2
+            VID-I2V-03:
+              accepts: 2
+              trials: 2
+            VID-I2V-04:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-I2V-02__veo-3.1-fast-i2v__core__r2
+            verdict: reject
+            note: zooms in
+          - trial_id: VID-I2V-02__veo-3.1-fast-i2v__core__r1
+            verdict: reject
+            note: zooms in
+          - trial_id: VID-I2V-01__veo-3.1-fast-i2v__core__r2
+            verdict: reject
+            note: hand appeared
+          elimination:
+            question: VID-I2V
+            route_key: veo-3.1-fast-i2v
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            refusals_or_errors: 0
+            accepts: 5
+            rejects: 3
+            pending: 0
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 2
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-i2v
+          source: RESULTS.yaml of run vid-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 4
+        fallback:
+          route: kling-v3-pro-i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      wan-3.0-prime-i2v:
+        route_key: wan-3.0-prime-i2v
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-i2v.json
+        unit_price_usd_pinned:
+        - '0.14'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-112079598a4b2ea8
+          - cap-17b48321cb9ce64d
+          - cap-4e5fe64b1cd28d2a
+          - cap-52110bb85b133e40
+          - cap-6a36d692260725ed
+          - cap-6ce013b1b06ea261
+          - cap-8b6015fa32f8d185
+          - cap-8d3fe19a46990c20
+          - cap-a4835d9a19589ca1
+          - cap-a530072ad177c854
+          - cap-b4dfdc795881992e
+          - cap-bcbc14113e3cb172
+          - cap-bf65724b73824e6e
+          - cap-c8752d15ffda341f
+          - cap-c9ec2ced9587aa01
+          - cap-cdf751fb7e636b07
+          - cap-de11c82925e4ed50
+          - cap-ee1d56516d857421
+          - cap-f4a34fcb75a00b37
+          n_items:
+          - VID-I2V-01
+          - VID-I2V-02
+          - VID-I2V-03
+          - VID-I2V-04
+          counted_trials: 8
+          status_counts:
+            ok: 8
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 8
+            n_items: 4
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '6.720000'
+            per_trial_mean: '0.840000'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 56.543197
+            p95: 68.420472
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 3
+            dhash_hamming_mean: 21.0
+            dhash_hamming_max: 33
+            ssim_mean: 0.561890643420777
+            ssim_min: 0.3729855025946022
+            structural_passes: 3
+            structural_trials: 3
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 8
+          trials: 8
+          rejects: 0
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-I2V-01:
+              accepts: 2
+              trials: 2
+            VID-I2V-02:
+              accepts: 2
+              trials: 2
+            VID-I2V-03:
+              accepts: 2
+              trials: 2
+            VID-I2V-04:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-I2V-02__wan-3.0-prime-i2v__core__r1
+            verdict: accept
+            note: expressesion change to angry
+          elimination:
+            question: VID-I2V
+            route_key: wan-3.0-prime-i2v
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            refusals_or_errors: 0
+            accepts: 8
+            rejects: 0
+            pending: 0
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 2
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-i2v
+          source: RESULTS.yaml of run vid-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: minimax-h3-max-i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  VID-KNEE:
+    cells:
+      minimax-h3-max-480p+knee_cheap:
+        route_key: minimax-h3-max-480p
+        arm: knee_cheap
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json
+        unit_price_usd_pinned:
+        - '0.05'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-3717254570dc51dd
+          - cap-44f665efe4de5be4
+          - cap-6243b16ca4b61d18
+          - cap-9d4d4e8710ce9a30
+          - cap-d7d93c3ac0259d25
+          n_items:
+          - VID-KNEE-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.600000'
+            per_trial_mean: '0.300000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 7.443008
+            p95: 7.527068
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 33.0
+            dhash_hamming_max: 33
+            ssim_mean: 0.46790777003590966
+            ssim_min: 0.46790777003590966
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - knee_cheap
+          no_artifact_rejects: 0
+          per_item:
+            VID-KNEE-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r2
+            verdict: reject
+            note: no condensation on bottle (Controller)
+          - trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r1
+            verdict: reject
+            note: got a label (Controller)
+          elimination:
+            question: VID-KNEE
+            route_key: minimax-h3-max-480p
+            arm: knee_cheap
+            arms:
+            - knee_cheap
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: vid-knee
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-knee
+          source: RESULTS.yaml of run vid-knee
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: veo-3.1-lite+knee_cheap
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      veo-3.1-full+knee_premium:
+        route_key: veo-3.1-full
+        arm: knee_premium
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.4'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-2025dbd017b6d20d
+          - cap-7342913f27c4de22
+          - cap-85005fe918f6fac5
+          - cap-ae00f5d93d3d0292
+          - cap-ea015412c263fc51
+          n_items:
+          - VID-KNEE-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '4.800000'
+            per_trial_mean: '2.400000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 46.969871
+            p95: 56.073352
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 28.0
+            dhash_hamming_max: 28
+            ssim_mean: 0.18344217753936795
+            ssim_min: 0.18344217753936795
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 1
+          trials: 2
+          rejects: 1
+          n_items: 1
+          arms:
+          - knee_premium
+          no_artifact_rejects: 0
+          per_item:
+            VID-KNEE-01:
+              accepts: 1
+              trials: 2
+          controller_notes:
+          - trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r2
+            verdict: accept
+            note: accept (Controller)
+          - trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r1
+            verdict: reject
+            note: doesn't look like slow camera (Controller)
+          elimination:
+            question: VID-KNEE
+            route_key: veo-3.1-full
+            arm: knee_premium
+            arms:
+            - knee_premium
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 1
+            rejects: 1
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-knee
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-knee
+          source: RESULTS.yaml of run vid-knee
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: minimax-h3-max-480p+knee_cheap
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      veo-3.1-lite+knee_cheap:
+        route_key: veo-3.1-lite
+        arm: knee_cheap
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.05'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-3a365c10f81649c4
+          - cap-493f3ed3a02e0d03
+          - cap-5a503e0f157decb2
+          - cap-9dfc5ef5d67e78f6
+          - cap-f7b92df03e6d1d62
+          n_items:
+          - VID-KNEE-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.600000'
+            per_trial_mean: '0.300000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 34.21377
+            p95: 39.649969
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 32.0
+            dhash_hamming_max: 32
+            ssim_mean: 0.5232977227514223
+            ssim_min: 0.5232977227514223
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - knee_cheap
+          no_artifact_rejects: 0
+          per_item:
+            VID-KNEE-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-KNEE-01__veo-3.1-lite__knee_cheap__r1
+            verdict: reject
+            note: doesn't look like slow camera (Controller)
+          - trial_id: VID-KNEE-01__veo-3.1-lite__knee_cheap__r2
+            verdict: reject
+            note: got a label, no slow camera (Controller)
+          elimination:
+            question: VID-KNEE
+            route_key: veo-3.1-lite
+            arm: knee_cheap
+            arms:
+            - knee_cheap
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: vid-knee
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-knee
+          source: RESULTS.yaml of run vid-knee
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: veo-3.1-full+knee_premium
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  VID-MS:
+    cells:
+      gemini-omni-1.1-flash-10s:
+        route_key: gemini-omni-1.1-flash-10s
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.10136'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-279751dfbf411d87
+          - cap-4b536a9ce1f401e7
+          - cap-66e4934609d88910
+          - cap-79dfb6fa0b5dfe09
+          - cap-ffb091ded454d28f
+          n_items:
+          - VID-MS-02
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '2.027200'
+            per_trial_mean: '1.013600'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 33.413157
+            p95: 34.810556
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 39.0
+            dhash_hamming_max: 39
+            ssim_mean: 0.6178165321768307
+            ssim_min: 0.6178165321768307
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 2
+          trials: 2
+          rejects: 0
+          n_items: 1
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-MS-02:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r2
+            verdict: accept
+            note: clean (Controller)
+          - trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r1
+            verdict: accept
+            note: clean (Controller)
+          elimination:
+            question: VID-MS
+            route_key: gemini-omni-1.1-flash-10s
+            arm: core
+            arms:
+            - core
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-ms
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-ms
+          source: RESULTS.yaml of run vid-ms
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: kling-v3-pro-10s
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      kling-v3-pro-10s:
+        route_key: kling-v3-pro-10s
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+        unit_price_usd_pinned:
+        - '0.112'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-65dfca7cbb864ced
+          - cap-6e168ca1b2ebe4a8
+          - cap-92064d2b81d6fea9
+          - cap-c540c8a0b455b414
+          - cap-ee9838761f35e393
+          n_items:
+          - VID-MS-02
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '2.240000'
+            per_trial_mean: '1.120000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 135.570611
+            p95: 135.754962
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 35.0
+            dhash_hamming_max: 35
+            ssim_mean: 0.541727568787452
+            ssim_min: 0.541727568787452
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 2
+          trials: 2
+          rejects: 0
+          n_items: 1
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-MS-02:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-MS-02__kling-v3-pro-10s__core__r1
+            verdict: accept
+            note: technically correct but visually not amazing (Controller)
+          - trial_id: VID-MS-02__kling-v3-pro-10s__core__r2
+            verdict: accept
+            note: technically correct but visually not amazing (Controller)
+          elimination:
+            question: VID-MS
+            route_key: kling-v3-pro-10s
+            arm: core
+            arms:
+            - core
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-ms
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-ms
+          source: RESULTS.yaml of run vid-ms
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: veo-3.1-fast-extend+chain
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      kling-v3-pro-15s:
+        route_key: kling-v3-pro-15s
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+        unit_price_usd_pinned:
+        - '0.112'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-10bb57443cda5dcc
+          - cap-408b6cb37cbf5974
+          - cap-97fdaab29e76ce8d
+          - cap-dae55a4f680f3fb5
+          - cap-f96f0a1853fb2092
+          n_items:
+          - VID-MS-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '3.360000'
+            per_trial_mean: '1.680000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 203.123649
+            p95: 205.538341
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 43.0
+            dhash_hamming_max: 43
+            ssim_mean: 0.4580378582044136
+            ssim_min: 0.4580378582044136
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 2
+          trials: 2
+          rejects: 0
+          n_items: 1
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-MS-01:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-MS-01__kling-v3-pro-15s__core__r1
+            verdict: accept
+            note: accepted (Controller)
+          - trial_id: VID-MS-01__kling-v3-pro-15s__core__r2
+            verdict: accept
+            note: accepted (Controller)
+          elimination:
+            question: VID-MS
+            route_key: kling-v3-pro-15s
+            arm: core
+            arms:
+            - core
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-ms
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-ms
+          source: RESULTS.yaml of run vid-ms
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 4
+        fallback:
+          route: gemini-omni-1.1-flash-10s
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      veo-3.1-fast-extend+chain:
+        route_key: veo-3.1-fast-extend
+        arm: chain
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.1'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-3a0c4fd61933ab49
+          - cap-5f205abe46699ceb
+          - cap-869e886128779ec6
+          - cap-c745d76287abc5d1
+          n_items:
+          - VID-MS-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '3.000000'
+            per_trial_mean: '1.500000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 151.101628
+            p95: 167.124356
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 0
+            dhash_hamming_mean: null
+            dhash_hamming_max: null
+            ssim_mean: null
+            ssim_min: null
+            structural_passes: 0
+            structural_trials: 0
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 2
+          trials: 2
+          rejects: 0
+          n_items: 1
+          arms:
+          - chain
+          no_artifact_rejects: 0
+          per_item:
+            VID-MS-01:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r1
+            verdict: accept
+            note: accepted (Controller)
+          - trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r2
+            verdict: accept
+            note: a little visually bad but technically correct (Controller)
+          elimination:
+            question: VID-MS
+            route_key: veo-3.1-fast-extend
+            arm: chain
+            arms:
+            - chain
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-ms
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-ms
+          source: RESULTS.yaml of run vid-ms
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: kling-v3-pro-15s
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  VID-REF:
+    cells:
+      veo-3.1-fast-ref2v+native:
+        route_key: veo-3.1-fast-ref2v
+        arm: native
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.1'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-3801831589de44b4
+          - cap-3baab651e6d1a1ef
+          - cap-454b650282389434
+          - cap-4db25ed9337f8e98
+          - cap-69d1249e6c939e9d
+          - cap-7555ceebdf03e22b
+          - cap-840d9559fb86f1e5
+          - cap-c8341f9267cea7d1
+          - cap-ebc629f8990ec0cf
+          - cap-f33e1192e368500a
+          n_items:
+          - VID-REF-01
+          - VID-REF-02
+          counted_trials: 4
+          status_counts:
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 4
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '3.200000'
+            per_trial_mean: '0.800000'
+            n_settled: 4
+            cost_within_reserved:
+              passes: 4
+              trials: 4
+          latency_s:
+            p50: 56.147892
+            p95: 56.377117
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 33.5
+            dhash_hamming_max: 37
+            ssim_mean: 0.5970964680497712
+            ssim_min: 0.4191246750425704
+            structural_passes: 2
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 2
+          trials: 4
+          rejects: 2
+          n_items: 2
+          arms:
+          - native
+          no_artifact_rejects: 0
+          per_item:
+            VID-REF-01:
+              accepts: 2
+              trials: 2
+            VID-REF-02:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r2
+            verdict: accept
+            note: accepted (Controller); line-up letter not given
+          - trial_id: VID-REF-02__veo-3.1-fast-ref2v__native__r1
+            verdict: reject
+            note: 'some different language (lettering appeared; contract: no lettering, signage or logos) (Controller)'
+          - trial_id: VID-REF-02__veo-3.1-fast-ref2v__native__r2
+            verdict: reject
+            note: some different language (Controller)
+          - trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r1
+            verdict: accept
+            note: accepted (Controller); line-up letter not given
+          elimination:
+            question: VID-REF
+            case_id: VID-REF-01
+            route_key: veo-3.1-fast-ref2v
+            arm: native
+            arms:
+            - native
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-ref
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-ref
+          source: RESULTS.yaml of run vid-ref
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: null
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
   VID-TOPO3:

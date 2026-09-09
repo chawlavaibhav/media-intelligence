@@ -244,16 +244,17 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-**Image Round 1, image half two and video piece 1 all judged; Registry v1 at 292 deterministic rows (9 Sep 2026).**
-Half two (edit / extend / compose / reference on constructed stand-ins, 36 trials, USD 3.30 of ₹700): Seedream 5 Pro edit
-10/12 (survives every question), FLUX.2 Pro edit 4/12, Nano Banana Pro edit 3/12 (eliminated on three of four
-questions). Video piece 1 (VID-TOPO3-01, USD 10.22 of ₹950): arm C (textless plate → cheap i2v → exact strings by code
-per frame) 2/2; arms A and B 0/4 each (plate misspelling carried / premium native Devanagari fabricated). H-CHEAP
-supported in its strong form for text in motion; the addendum leg (Nano Banana 2 plate → H3 Max, cap ₹150, USD 1.09) passed 2/2, so
-both cheap forms are proven (code-set type on an animated plate; text-capable cheap still into a cheap animator). Summaries: `runs/half2/IMAGE-HALF-TWO-SUMMARY.md`,
-`runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md`; rules RR-4..RR-7 in `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml`.
-Next gates, each needing its own Controller act: (1) the next video piece (t2v core / multi-shot / two speakers / music), with its own spend record;
-(2) round two of stills sized from survivors. Fresh isolated cloud resources (MD-9) still need the Controller's own
+**Day 2 (9 Sep 2026): video pieces 2–5, speech, music and lipsync run; all but lipsync judged. Registry v1 at 459
+deterministic rows; routing map 49 cells, rules RR-1..RR-13.** Cheap-first held for image-to-video (Kling 8/8, Wan 8/8,
+H3 Max 7/8, Veo fast 5/8) and multi-shot stories (8/8 across Kling, Omni, Veo extend); its boundary is the product-hero
+knee brief (cheap tier 0/4, Veo full 1/2). Reference-to-video: tin 2/2, person 0/2 (stray lettering). Text in motion
+closed end to end (Nano Banana 2 plate → H3 Max 2/2). Speech: Sarvam 6/6, ElevenLabs direct 4/6 (Hinglish accent).
+Music: Lyria 4/4; ElevenLabs music skipped (free plan). Summary: `eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md`.
+Infrastructure: fal balance exhausted (one lipsync draw refused; every fal route blocked until the Controller tops up);
+ElevenLabs now direct on the Controller's key (fal rows retired from the package). Next gates, each its own Controller
+act: (1) lipsync verdicts (set P) and the refused draw after the fal top-up; (2) an Indian voice on the ElevenLabs
+account, then the Hinglish retry; (3) the two-speaker piece (caps quoted ₹950 cheap-first, not approved); (4) Seedance
+2.5 only as a premium reference where cheap routes failed. MD-9 fresh cloud resources still need the Controller's own
 session. The Canon items below remain a queue, not an authorisation.
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's

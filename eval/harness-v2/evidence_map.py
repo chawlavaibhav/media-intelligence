@@ -46,9 +46,10 @@ PRIOR_FILE = f"{PRIOR_DIR}/MEDIA-FACTORY-ROUTING-PRIOR.md"
 SUMMARY_REF = "eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md"
 SUMMARY_HALF2 = "eval/experiments/EVAL-040/runs/half2/IMAGE-HALF-TWO-SUMMARY.md"
 SUMMARY_VIDEO1 = "eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md"
+SUMMARY_DAY2 = "eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md"
 COMPOSITE_SUFFIX = "+code_overlay"
 TRIVIAL_ARMS = (None, "core", "edit")      # arms that do not distinguish a cell: the route name stands alone
-ROUND = "EVAL-040 Image Round 1 + image half two + video piece 1 (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video)"
+ROUND = "EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip)"
 
 TIERS = {
     "deterministic": {"registry": True, "meaning": "re-evaluated by a frozen deterministic instrument over sealed bytes; the Registry rows named are the evidence"},
@@ -101,6 +102,24 @@ ROUTING_RULES = [
      "rule": "A text plate that goes into image-to-video must come from a text-capable still route (RR-2: Nano Banana 2 or GPT Image 2), never from the cheapest still model.",
      "evidence": "topo3-video arm A: both qwen-image-3 9:16 plates misspelled Hindi (0/4 in motion); topo3-nb-video arm A2: nano-banana-2 plate (draw 2 accepted, draw 1 'two shri') -> H3 Max 2/2 - the same animator passes once the plate is right",
      "tier": "human_blind_acceptance", "registry": False, "status": "tested_in_motion_2026-09-09", "source": SUMMARY_VIDEO1},
+    {"id": "RR-8", "scope": "image-to-video from an accepted still", "rule": "Animate an accepted still on Kling v3 Pro or Wan 3.0 Prime first; MiniMax H3 Max as the cheapest fallback; avoid Veo 3.1 fast i2v where the brief forbids camera moves.",
+     "evidence": "vid-i2v (4 stills x 4 routes x 2): kling-v3-pro-i2v 8/8 (USD 0.67), wan-3.0-prime-i2v 8/8 (USD 0.84), minimax-h3-max-i2v 7/8 (USD 0.48; one 'label appeared out of thin air'), veo-3.1-fast-i2v 5/8 (0/2 on the phone still: 'zooms in'; one 'hand appeared')",
+     "tier": "human_blind_acceptance", "registry": False, "caveat": "expression drift to 'angry' noted on three routes for the man-with-phone still; accepted under the contract", "source": SUMMARY_DAY2},
+    {"id": "RR-9", "scope": "multi-shot and 10-15 s clips", "rule": "Kling v3 Pro for 15 s three-shot stories; Gemini Omni 1.1 Flash for 10 s three-shot stories; Veo 3.1 fast extend chain works but reads visually weaker; Seedance 2.5 not needed on this evidence.",
+     "evidence": "vid-ms: kling-v3-pro-15s 2/2 clean (USD 1.68), veo-3.1-fast-extend 2/2 (USD 2.00, one 'a little visually bad'), gemini-omni-1.1-flash-10s 2/2 'clean' (USD 1.01), kling-v3-pro-10s 2/2 'technically correct but visually not amazing' (USD 1.12)",
+     "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_DAY2},
+    {"id": "RR-10", "scope": "product-hero clips with strict physical detail (condensation, blank label, slow camera)", "rule": "The cheap tier is NOT enough: Veo 3.1 lite and H3 Max 480p failed every draw; even Veo 3.1 full passed 1/2. Route such briefs to the premium tier and plan for re-draws, or set the label by code.",
+     "evidence": "vid-knee VID-KNEE-01: veo-3.1-full 1/2 (USD 2.40), veo-3.1-lite 0/2 (USD 0.30: 'no slow camera', 'got a label'), minimax-h3-max-480p 0/2 (USD 0.30: 'no condensation', 'got a label')",
+     "tier": "human_blind_acceptance", "registry": False, "caveat": "n = 2 per route on one brief; the boundary of the cheap-first rule, not a reversal", "source": SUMMARY_DAY2},
+    {"id": "RR-11", "scope": "reference-to-video (a referenced product or person in motion)", "rule": "Veo 3.1 fast ref2v carries a referenced PRODUCT into motion (2/2) but invents lettering in people scenes (0/2); until a second route is screened, use it for products and keep people scenes lettering-free by post-check.",
+     "evidence": "vid-ref: VID-REF-01 tin 2/2, VID-REF-02 person 0/2 'some different language' (stray script in the cafe) at USD 0.80 a clip (8 s minimum on Vertex)",
+     "tier": "human_blind_acceptance", "registry": False, "caveat": "one route only (Seedance 2.5 ref2v left out; Kling elements unpinned)", "source": SUMMARY_DAY2},
+    {"id": "RR-12", "scope": "Hindi / Hinglish / Indian-English speech", "rule": "Sarvam bulbul:v3 is the default voice route for all three; ElevenLabs v3 on a premade voice passes Hindi and short English but fails Hinglish on accent until an Indian voice is added to the account.",
+     "evidence": "aud-tts-sarvam 6/6 (aditya, INR 0.13 a file); aud-tts-eleven Hindi 2/2, English 2/2, Hinglish 0/2 'rejected for accent' (298 plan credits for six files)",
+     "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_DAY2},
+    {"id": "RR-13", "scope": "instrumental music beds (30 s)", "rule": "Lyria 2 on Vertex credits is the default music route (USD 0.06 a track); tracks measure 32.8 s, trim by code to the brief. ElevenLabs music needs a paid plan (skipped by the Controller).",
+     "evidence": "aud-music-lyria 4/4 accepted (home-kitchen and city-running briefs), judged raw and stacked under the accepted multi-shot clips; elevenlabs-music-direct refused HTTP 402 on the free plan",
+     "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_DAY2},
 ]
 
 
@@ -307,7 +326,7 @@ def build_map(records: list, results: dict | list, composite_results: dict | Non
         "round": ROUND,
         "sources": {"registry": registry_path, "registry_sha256": (_sha256_file(registry_path) if registry_path and Path(registry_path).exists() else None),
                     "results": results_paths or [], "results_run_ids": results.get("run_ids"), "criteria_sha256": criteria_sha256,
-                    "summary": SUMMARY_REF, "summaries": [SUMMARY_REF, SUMMARY_HALF2, SUMMARY_VIDEO1], "historical_prior_index": f"{PRIOR_DIR}/PRIOR-INDEX.yaml"},
+                    "summary": SUMMARY_REF, "summaries": [SUMMARY_REF, SUMMARY_HALF2, SUMMARY_VIDEO1, SUMMARY_DAY2], "historical_prior_index": f"{PRIOR_DIR}/PRIOR-INDEX.yaml"},
         "tiers": TIERS, "routing_rules": ROUTING_RULES, "cell_count": n_cells,
         "reading_guide": ["deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation (independence NOT ESTABLISHED)",
                           "human acceptance is the Controller's blind verdict against the acceptance contract; n is small (2-8 trials over 1-4 items); never a Registry row",
