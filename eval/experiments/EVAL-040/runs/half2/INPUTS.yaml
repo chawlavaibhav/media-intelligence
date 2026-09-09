@@ -1,0 +1,39 @@
+inputs_file: EVAL-041 INPUTS
+note: 'TEMPLATE for image half two: (case, role) -> the sealed stand-in fixture of run `half2-fixtures` (run_live.py fixtures). Decoys are never listed here: they
+  belong to the qualification pack. runs_root defaults to eval/experiments/EVAL-040/runs.'
+data_uri_source: 'pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` with no format constraint; data URIs
+  per fal''s public API documentation (not in the pinned bytes; proven by the first live smoke, never by a test)'
+inputs:
+- case_id: IMG-EDIT-01
+  role: reference_asset_1
+  ref: fixture:half2-fixtures:showroom_sofa_01
+- case_id: IMG-EDIT-02
+  role: reference_asset_1
+  ref: half2-fixtures:FIXTURE__masala_pack_raw:overlay-v2
+- case_id: IMG-EXT-01
+  role: reference_asset_1
+  ref: fixture:half2-fixtures:backwaters_banner_16x9
+- case_id: IMG-COMP-01
+  role: reference_asset_1
+  ref: fixture:half2-fixtures:model_portrait
+- case_id: IMG-COMP-01
+  role: reference_asset_2
+  ref: fixture:half2-fixtures:shade_ruby_pack
+- case_id: IMG-REF-01
+  role: reference_asset_1
+  ref: fixture:half2-fixtures:tin_front
+- case_id: IMG-REF-01
+  role: reference_asset_2
+  ref: fixture:half2-fixtures:tin_side
+- case_id: IMG-REF-01
+  role: reference_asset_3
+  ref: fixture:half2-fixtures:tin_top
+- case_id: IMG-REF-02
+  role: reference_asset_1
+  ref: fixture:half2-fixtures:host_ref_1
+- case_id: IMG-REF-02
+  role: reference_asset_2
+  ref: fixture:half2-fixtures:host_ref_2
+- case_id: IMG-REF-02
+  role: reference_asset_3
+  ref: fixture:half2-fixtures:host_ref_3
