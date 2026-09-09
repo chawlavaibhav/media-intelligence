@@ -82,3 +82,12 @@ machine_authorisation_video1:
 
 Any other video case; any audio, music or lip-sync; conditional routes; any Registry row from a non-deterministic
 instrument; any conclusion about Canon; any spend beyond the two caps.
+
+## 6. Addendum — Video piece 1 sizing correction (Writer Controller, 2026-09-09)
+
+The plumbing build priced `VID-TOPO3-01` exactly from the roster: plates USD 0.14 + video rows USD 9.744 =
+**USD 9.884 all-in**, above the ₹900 = USD 9.43 cap the Writer Controller sized from an estimate ("≈ USD 8"). Two
+facts were also missed in the sizing: the case's image-to-video rows are **tranche 1b** in the frozen package (so a
+1b cap must be non-zero), and repeats are never halved. Correction under the Controller's "go ahead": the video
+piece 1 cap is **₹950 = USD 9.96 USD-equivalent**, with `cap_1a_usd` and `cap_1b_usd` both 9.96 (one ceiling across
+the case's plate and video tranches). The authorisation file is re-materialised accordingly. No other change.
