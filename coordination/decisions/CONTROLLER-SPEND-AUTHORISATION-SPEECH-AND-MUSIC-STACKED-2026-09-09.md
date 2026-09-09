@@ -60,3 +60,13 @@ The Sarvam and Lyria rows run first under 13-field authorisation files (`authori
 runs once the adapter, the `elevenlabs_credits` pool and its cap field exist; the same per-piece ceilings apply across
 both runs of a piece. Speaker choice for Sarvam: `aditya` (bulbul:v3; recorded via INPUTS `literal:` — see
 `price-pins-2026-09/sarvam-bulbul-v3/SPEAKERS-PIN.yaml`).
+
+## 7. Controller — ElevenLabs music skipped (2026-09-09)
+
+The ElevenLabs music smoke was refused: HTTP 402 *"Music API is not available for free users. Please upgrade to a paid
+plan to use the API."* (the account is on the free plan; nothing was charged). Put to the Controller:
+
+> **"skip eleven labs music"**
+
+`elevenlabs-music-direct` rows on MUS-01/02 are **not run**; the music piece is carried by Lyria alone (4/4 accepted
+by the Controller, 32.8-s tracks). The rows stay in the package as `recorded_not_screened` until a paid plan exists.
