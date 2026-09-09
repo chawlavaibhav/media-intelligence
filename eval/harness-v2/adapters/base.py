@@ -41,6 +41,7 @@ from providers import (AmbiguousDispatch, DispatchRefused, PreDispatchRefusal,  
                        classify_transport_failure)
 from budget_guard import BudgetExceeded  # noqa: F401
 import store as S
+from transports import nothing_left_the_machine   # DNS-class failures: the only exception classification that needs a network module
 
 # Looked up at call time so a test can point it at a throw-away file. Never the real file in tests.
 DEFAULT_KEY_FILE = Path("~/.mi-keys").expanduser()
@@ -428,7 +429,7 @@ class RouteAdapter:
         try:
             return self.transport.post_json(url, headers, payload)
         except Exception as exc:                     # noqa: BLE001 - every post-send failure is ambiguous
-            if _nothing_left_the_machine(exc):
+            if nothing_left_the_machine(exc):
                 # DNS resolution failed: no TCP connection was ever opened, so no byte reached the provider.
                 # This is a local infrastructure fault, not a trial — undo the submit count so dispatch()
                 # releases the reservation, and refuse pre-dispatch. Observed 2026-09-08 (network outage
@@ -482,17 +483,6 @@ class RouteAdapter:
             return Outcome("error", "artifact_download_failed", f"artifact URL answered {code} with {'no' if not data else 'non-byte'} content",
                            ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_meta={"artifact_url": url})
         return bytes(data), ct
-
-
-def _nothing_left_the_machine(exc: BaseException) -> bool:
-    """True only for a name-resolution failure: the socket was never connected, so nothing was sent."""
-    import socket
-    import urllib.error
-    if isinstance(exc, socket.gaierror):
-        return True
-    if isinstance(exc, urllib.error.URLError) and isinstance(getattr(exc, "reason", None), socket.gaierror):
-        return True
-    return False
 
 
 def http_status_outcome(status: int, reply, counts: dict, refusal: bool = False, note: str = "") -> Outcome:

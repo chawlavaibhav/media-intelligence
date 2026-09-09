@@ -41,6 +41,19 @@ class NoRedirectHandler(urllib.request.HTTPRedirectHandler):
         return None
 
 
+def nothing_left_the_machine(exc: BaseException) -> bool:
+    """True only for a name-resolution failure: the socket was never connected, so no byte reached the provider.
+    Lives here because it is the one exception classification that needs the network modules (hygiene rule:
+    network symbols only in transports.py)."""
+    import socket
+    import urllib.error
+    if isinstance(exc, socket.gaierror):
+        return True
+    if isinstance(exc, urllib.error.URLError) and isinstance(getattr(exc, "reason", None), socket.gaierror):
+        return True
+    return False
+
+
 def build_opener():
     return urllib.request.build_opener(NoRedirectHandler)
 

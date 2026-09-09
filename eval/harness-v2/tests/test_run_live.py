@@ -385,14 +385,18 @@ class ExecuteTest(RunnerBase):
         t1, t2 = plan["trials"][0]["trial_id"], plan["trials"][1]["trial_id"]
         i1 = json.loads((self.out / "instruments" / f"{t1}.json").read_text())
         i2 = json.loads((self.out / "instruments" / f"{t2}.json").read_text())
-        self.assertEqual(i1["format_probe"]["verdict"], "absent")                 # criterion_not_frozen (MD-C1): observation only
-        self.assertEqual(i1["format_probe"]["note"], "criterion_not_frozen")
+        # PASS-CRITERIA-v0.yaml is frozen by Controller decision (2026-09-09, MD-C1): the runner's observation now
+        # carries a verdict instead of criterion_not_frozen; the measurement is stored either way.
+        self.assertIn(i1["format_probe"]["verdict"], ("pass", "fail"))
+        self.assertTrue(i1["format_probe"]["criterion"]["frozen"])
+        self.assertNotIn("would_verdict", i1["format_probe"])
         self.assertTrue(i1["format_probe"]["measurement"]["probe"]["width"])
         self.assertEqual(i1["gate_post"]["status"], "ran")
         self.assertEqual(i1["gate_post"]["report"]["verdict"], "PASS")
         self.assertTrue(i1["gate_post"]["json_path"].startswith(str(self.out / "instruments")))
         self.assertIsNone(i1["repeat_consistency"])
-        self.assertEqual(i2["repeat_consistency"]["note"], "criterion_not_frozen")
+        self.assertIn(i2["repeat_consistency"]["verdict"], ("pass", "fail"))
+        self.assertTrue(i2["repeat_consistency"]["criterion"]["frozen"])
         self.assertEqual(i2["repeat_consistency"]["measurement"]["group"], "unseeded")
         self.assertGreater(i2["repeat_consistency"]["measurement"]["dhash_hamming_max"], -1)
 

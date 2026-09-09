@@ -1,9 +1,15 @@
 """Test (k): every deterministic instrument on constructed fixtures (<= 64x64, generated in the temp dir).
 
 Rules proven here: an unparseable input yields absent / parse_failure and never pass; a missing tool yields
-absent / instrument_unavailable; while PASS-CRITERIA-v0.yaml says frozen: false the instrument STORES its
-measurement but returns absent / other with the note criterion_not_frozen; with a frozen criteria file
-(a test-only override, never the committed one) the same measurement becomes pass or fail.
+absent / instrument_unavailable; while a criteria file says frozen: false the instrument STORES its
+measurement but returns absent / other with the note criterion_not_frozen; with a frozen criteria file the same
+measurement becomes pass or fail.
+
+CRITERIA FIXTURES. The committed PASS-CRITERIA-v0.yaml is FROZEN by Controller decision (2026-09-09,
+coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md) and must stay so. Every
+"absent until frozen" assertion therefore runs against `unfreeze_criteria()` - a TEST-ONLY temp copy with
+frozen: false - and every "verdict once frozen" assertion runs against the committed file itself (or
+`freeze_criteria()`, a temp copy that re-freezes the unfrozen fixture). Neither helper touches the committed file.
 """
 import json
 import math
@@ -36,32 +42,59 @@ def mask_rows(w, h, box):
 
 
 class CriteriaFileTest(NoNetworkTestCase):
-    """Tester check 7 made mechanical: every instrument has an entry; every entry is frozen: false with a source."""
+    """Tester check 7 made mechanical, updated for the 2026-09-09 freeze: every instrument has an entry with a source;
+    the six instrument criteria are frozen by the recorded Controller decision; gate_wrapper stays observation-only."""
 
-    def test_every_instrument_has_a_proposed_unfrozen_entry(self):
+    INSTRUMENTS = ("format_probe", "masked_diff", "brand_colour", "av_offset", "repeat_consistency", "ledger_metrics")
+    FREEZE_REF = "coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md"
+
+    def test_committed_file_is_frozen_by_the_controller_decision(self):
         crit = C.load_criteria()
-        self.assertEqual(crit["status"], "PROPOSED_NOT_FROZEN")
-        for iid in ("format_probe", "masked_diff", "brand_colour", "av_offset", "repeat_consistency", "ledger_metrics", "gate_wrapper"):
+        self.assertTrue(str(crit["status"]).startswith("frozen_as_proposed_2026-09-09"), crit["status"])
+        self.assertTrue((hv2_paths.REPO_ROOT / self.FREEZE_REF).exists(), "the freeze decision must be on disk")
+        raw = yaml.safe_load(Path(C.CRITERIA_PATH).read_text())["criteria"]
+        for iid in self.INSTRUMENTS:
             with self.subTest(instrument=iid):
                 c = C.criterion(iid)
-                self.assertFalse(c.frozen)
-                self.assertIn(c.status, ("proposed", "observation_only_never_a_row"))
+                self.assertTrue(c.frozen)
+                self.assertEqual(c.status, "frozen")
                 self.assertTrue(c.source)
                 self.assertTrue(c.source.startswith("Planner proposal") or "/" in c.source or "verified: false" in c.source or "task EVAL-039C" in c.source or "coordination/" in c.source)
                 self.assertEqual(c.controller_ref, "MD-C1")
+                self.assertEqual(raw[iid].get("frozen_ref"), self.FREEZE_REF)
+                self.assertIn("freeze as proposed", str(raw[iid].get("frozen_by")))
+        gw = C.criterion("gate_wrapper")
+        self.assertFalse(gw.frozen, "gate_wrapper stays observation-only and never yields a row")
+        self.assertEqual(gw.status, "observation_only_never_a_row")
+        self.assertEqual(gw.controller_ref, "MD-C1")
+
+    def test_unfrozen_fixture_reports_every_instrument_unfrozen(self):
+        """The 'absent until frozen' behaviour is still exercised - against the unfrozen fixture, never the committed file."""
+        unfrozen = unfreeze_criteria(self)
+        self.assertNotEqual(Path(unfrozen).resolve(), Path(C.CRITERIA_PATH).resolve())
+        self.assertTrue(C.criterion("format_probe").frozen, "the committed file must stay frozen")
+        for iid in self.INSTRUMENTS + ("gate_wrapper",):
+            with self.subTest(instrument=iid):
+                c = C.criterion(iid, unfrozen)
+                self.assertFalse(c.frozen)
+                self.assertIn(c.status, ("proposed", "observation_only_never_a_row"))
+                self.assertEqual(c.controller_ref, "MD-C1")
 
     def test_gate_rule_returns_absent_until_frozen_and_pass_fail_after(self):
-        c = C.criterion("masked_diff")
+        c = C.criterion("masked_diff", unfreeze_criteria(self))
+        self.assertFalse(c.frozen)
         r = C.gate(c, True, {"mae": 1.0})
         self.assertEqual((r["verdict"], r["absence_reason"], r["note"]), ("absent", "other", "criterion_not_frozen"))
         self.assertEqual(r["measurement"]["mae"], 1.0)
         self.assertEqual(r["would_verdict"], "pass")
-        frozen = self.freeze("masked_diff")
-        c2 = C.criterion("masked_diff", frozen)
-        self.assertTrue(c2.frozen)
-        self.assertEqual(C.gate(c2, True, {})["verdict"], "pass")
-        self.assertEqual(C.gate(c2, False, {}, defects=[{"term": "x"}])["verdict"], "fail")
-        self.assertEqual(C.gate(c2, False, {}, defects=[{"term": "x"}])["defects"][0]["observed_by"], "instrument")
+        for label, path in (("re-frozen fixture", self.freeze("masked_diff")), ("committed frozen file", None)):
+            with self.subTest(criteria=label):
+                c2 = C.criterion("masked_diff", path)
+                self.assertTrue(c2.frozen)
+                self.assertEqual(C.gate(c2, True, {})["verdict"], "pass")
+                self.assertEqual(C.gate(c2, False, {}, defects=[{"term": "x"}])["verdict"], "fail")
+                self.assertEqual(C.gate(c2, False, {}, defects=[{"term": "x"}])["defects"][0]["observed_by"], "instrument")
+                self.assertEqual(C.gate(c2, True, {})["criterion"]["criteria_file_sha256"], c2.sha256)
 
     def test_absence_helpers_never_pass(self):
         self.assertEqual(C.parse_failure("bad")["verdict"], "absent")
@@ -70,10 +103,12 @@ class CriteriaFileTest(NoNetworkTestCase):
 
     def test_instrument_factory_config_hash_covers_thresholds(self):
         from instruments import masked_diff as MD
-        a = MD.instrument()
-        b = MD.instrument(criteria_path=self.freeze("masked_diff"))
+        a = MD.instrument()                                                   # the committed, frozen file
+        b = MD.instrument(criteria_path=unfreeze_criteria(self, "masked_diff"))
         self.assertEqual(a.qualification_status, "deterministic")
         self.assertNotEqual(a.config_hash, b.config_hash, "freezing / changing a threshold must change the instrument identity")
+        self.assertTrue(a.config["frozen"])
+        self.assertFalse(b.config["frozen"])
         self.assertEqual(a.capabilities, {"edit_preservation"})
         self.assertTrue(a.registry_writable)
 
@@ -82,9 +117,31 @@ class CriteriaFileTest(NoNetworkTestCase):
         return freeze_criteria(self, iid, **overrides)
 
 
-def freeze_criteria(tc, iid, **overrides):
-    """Write a TEST-ONLY criteria file with `iid` frozen (never touches the committed file)."""
+def unfreeze_criteria(tc, iid=None):
+    """Write a TEST-ONLY criteria file with `iid` (default: every entry) UNFROZEN. The committed file is frozen by
+    Controller decision and is never touched; this is the fixture the 'absent until frozen' tests run against."""
     d = C.load_criteria()
+    d.pop("_sha256", None)
+    d.pop("_path", None)
+    d["status"] = "UNFROZEN_TEST_FIXTURE"
+    for k, c in d["criteria"].items():
+        if iid is not None and k != iid:
+            continue
+        c["frozen"] = False
+        if c.get("status") != "observation_only_never_a_row":
+            c["status"] = "proposed"
+        for drop in ("frozen_by", "frozen_at", "frozen_ref"):
+            c.pop(drop, None)
+    p = tc.tmp / f"criteria-unfrozen-{iid or 'all'}.yaml"
+    p.write_text(yaml.safe_dump(d, allow_unicode=True, sort_keys=False))
+    return p
+
+
+def freeze_criteria(tc, iid, **overrides):
+    """Write a TEST-ONLY criteria file with `iid` frozen and every OTHER entry unfrozen (never touches the committed file)."""
+    d = C.load_criteria(unfreeze_criteria(tc))
+    d.pop("_sha256", None)
+    d.pop("_path", None)
     d["criteria"][iid]["frozen"] = True
     d["criteria"][iid]["status"] = "frozen_TEST_ONLY"
     for k, v in overrides.items():
@@ -134,11 +191,12 @@ class MaskedDiffTest(NoNetworkTestCase):
         self.assertEqual(m["resized_output_to"], [32, 24])
 
     def test_verdicts(self):
-        r = self.MD.evaluate(self.inp, self.same, self.mask)
+        r = self.MD.evaluate(self.inp, self.same, self.mask, criteria_path=unfreeze_criteria(self, "masked_diff"))
         self.assertEqual((r["verdict"], r["note"]), ("absent", "criterion_not_frozen"))
         self.assertEqual(r["would_verdict"], "pass")
         frozen = freeze_criteria(self, "masked_diff")
         self.assertEqual(self.MD.evaluate(self.inp, self.same, self.mask, criteria_path=frozen)["verdict"], "pass")
+        self.assertEqual(self.MD.evaluate(self.inp, self.same, self.mask)["verdict"], "pass", "the committed file is frozen: a verdict, not an absence")
         bad = self.MD.evaluate(self.inp, self.outside, self.mask, criteria_path=frozen)
         self.assertEqual(bad["verdict"], "fail")
         self.assertTrue(bad["defects"])
@@ -151,8 +209,9 @@ class MaskedDiffTest(NoNetworkTestCase):
         r2 = self.MD.evaluate(self.inp, self.same, self.tmp / "missing-mask.png", criteria_path=freeze_criteria(self, "masked_diff"))
         self.assertEqual((r2["verdict"], r2["absence_reason"]), ("absent", "parse_failure"))
         wrong_mask = png_file(self.tmp / "wm.png", mask_rows(8, 8, (0, 0, 2, 2)), 8, 8)
-        r3 = self.MD.evaluate(self.inp, self.same, wrong_mask)
+        r3 = self.MD.evaluate(self.inp, self.same, wrong_mask, criteria_path=unfreeze_criteria(self, "masked_diff"))
         self.assertEqual(r3["absence_reason"], "parse_failure")
+        self.assertEqual(self.MD.evaluate(self.inp, self.same, wrong_mask)["absence_reason"], "parse_failure", "fail closed whether or not the criterion is frozen")
 
 
 # ------------------------------------------------------------------------------ brand_colour
@@ -180,8 +239,9 @@ class BrandColourTest(NoNetworkTestCase):
         self.assertAlmostEqual(m["delta_e_ab"], 0.0, places=6)
         far = BC.measure(img, mask, (0xF0, 0xF0, 0xF0))
         self.assertGreater(far["delta_e_ab"], 30)
-        r = BC.evaluate(img, mask, (0x10, 0x60, 0xA0))
+        r = BC.evaluate(img, mask, (0x10, 0x60, 0xA0), criteria_path=unfreeze_criteria(self, "brand_colour"))
         self.assertEqual((r["verdict"], r["note"], r["would_verdict"]), ("absent", "criterion_not_frozen", "pass"))
+        self.assertEqual(BC.evaluate(img, mask, (0x10, 0x60, 0xA0))["verdict"], "pass", "committed file is frozen")
         frozen = freeze_criteria(self, "brand_colour")
         self.assertEqual(BC.evaluate(img, mask, (0x10, 0x60, 0xA0), criteria_path=frozen)["verdict"], "pass")
         self.assertEqual(BC.evaluate(img, mask, (0xF0, 0xF0, 0xF0), criteria_path=frozen)["verdict"], "fail")
@@ -238,8 +298,9 @@ class AvOffsetTest(NoNetworkTestCase):
         drive = IO.write_wav(self.tmp / "drive.wav", click_train(offset_s=0.10), 16000)
         late = IO.write_wav(self.tmp / "late.wav", click_train(offset_s=0.22), 16000)
         near = IO.write_wav(self.tmp / "near.wav", click_train(offset_s=0.13), 16000)
-        r = AV.evaluate(drive, near)
+        r = AV.evaluate(drive, near, criteria_path=unfreeze_criteria(self, "av_offset"))
         self.assertEqual((r["verdict"], r["note"], r["would_verdict"]), ("absent", "criterion_not_frozen", "pass"))
+        self.assertEqual(AV.evaluate(drive, near)["verdict"], "pass", "committed file is frozen")
         self.assertEqual(r["claim"], "partial: audio_track_offset_vs_drive")
         frozen = freeze_criteria(self, "av_offset")
         self.assertEqual(AV.evaluate(drive, near, criteria_path=frozen)["verdict"], "pass")
@@ -283,8 +344,12 @@ class FormatProbeTest(NoNetworkTestCase):
         self.assertTrue(m["checks"]["aspect_ok"])
         self.assertTrue(m["checks"]["duration_ok"])
         self.assertTrue(m["checks"]["audio_ok"])
-        r = self.FP.evaluate(self.clip, self.case)
+        r = self.FP.evaluate(self.clip, self.case, criteria_path=unfreeze_criteria(self, "format_probe"))
         self.assertEqual((r["verdict"], r["note"], r["would_verdict"]), ("absent", "criterion_not_frozen", "pass"))
+        committed = self.FP.evaluate(self.clip, self.case)
+        self.assertEqual(committed["verdict"], "pass", "committed file is frozen")
+        self.assertTrue(committed["criterion"]["frozen"])
+        self.assertNotIn("would_verdict", committed)
         frozen = freeze_criteria(self, "format_probe")
         self.assertEqual(self.FP.evaluate(self.clip, self.case, criteria_path=frozen)["verdict"], "pass")
         bad = self.FP.evaluate(self.silent, self.case, criteria_path=frozen)
@@ -345,12 +410,13 @@ class RepeatConsistencyTest(NoNetworkTestCase):
         vert = [bytes(b"".join(bytes(((y * 16) % 256,) * 3) for x in range(16))) for y in range(16)]
         a = self._img("a.png", horiz, 16, 16)
         b = self._img("b.png", vert, 16, 16)
-        r = RC.evaluate(a, b, seed_policy="unset")
+        r = RC.evaluate(a, b, seed_policy="unset", criteria_path=unfreeze_criteria(self, "repeat_consistency"))
         self.assertEqual((r["verdict"], r["note"]), ("absent", "criterion_not_frozen"))
         self.assertEqual(r["measurement"]["group"], "unseeded")
         self.assertEqual(r["would_verdict"], "pass")                      # structural reproducibility: both valid PNGs
         frozen = freeze_criteria(self, "repeat_consistency")
         self.assertEqual(RC.evaluate(a, b, seed_policy="unset", criteria_path=frozen)["verdict"], "pass")
+        self.assertEqual(RC.evaluate(a, b, seed_policy="unset")["verdict"], "pass", "committed file is frozen")
         held = RC.evaluate(a, b, seed_policy="held", criteria_path=frozen)
         self.assertEqual(held["measurement"]["group"], "held_seed")
         self.assertEqual(held["verdict"], "fail")
@@ -408,8 +474,9 @@ class LedgerMetricsTest(NoNetworkTestCase):
         from instruments import ledger_metrics as LM
         ok = self._attempt("t1", "ok", "2026-09-05T00:00:00Z", "2026-09-05T00:00:04Z")
         ledger = self._ledger("t1", "0.100000")
-        r = LM.evaluate(ok, ledger, "latency_errors_refusals")
+        r = LM.evaluate(ok, ledger, "latency_errors_refusals", criteria_path=unfreeze_criteria(self, "ledger_metrics"))
         self.assertEqual((r["verdict"], r["note"], r["would_verdict"]), ("absent", "criterion_not_frozen", "pass"))
+        self.assertEqual(LM.evaluate(ok, ledger, "latency_errors_refusals")["verdict"], "pass", "committed file is frozen")
         self.assertEqual(r["measurement"]["latency_s"], 4.0)
         frozen = freeze_criteria(self, "ledger_metrics")
         self.assertEqual(LM.evaluate(ok, ledger, "latency_errors_refusals", criteria_path=frozen)["verdict"], "pass")

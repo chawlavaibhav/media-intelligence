@@ -30,6 +30,8 @@ them read-only (`hv2_paths.py`) and subclasses what it needs. The protected base
 | `dry_run.py` | renders body + price for every (case, route row, repeat) and reconciles against COST-TABLE line by line |
 | `instruments/` | `imageio` (stdlib PNG codec + ffmpeg wrappers), `common`, `metrics`, `format_probe`, `masked_diff`, `brand_colour`, `av_offset`, `repeat_consistency`, `ledger_metrics`, `gate_wrapper`, `registry_gate`, `PASS-CRITERIA-v0.yaml` |
 | `battery_harness.py` | `BatteryHarness(Harness)`: bytes-aware `generate()` / `measure()`; `write_registry_row` **inherited, never overridden** |
+| `registry_rows.py` | EVAL-041: the first Registry rows from sealed run records under the FROZEN criteria (`--run OUT:RUN_ID ... [--write]`); every row through `BatteryHarness.registry_row_for`; infra faults excluded, refusals counted; dry by default |
+| `evidence_map.py` | EVAL-041: `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml` - the tiered product asset (deterministic rows / human blind acceptance / screened / historical prior) per (question, route); human tiers never `registry: true` |
 | `q1/` | `detector.py` (frozen method), `run_q1.py` (`--preregister`, then `--run`), `check_record.py` (schema checker) |
 | `schemas/` | pinned fal OpenAPI JSON and vendor reference pages (gzipped) with sha256 — the only source of request-body shapes |
 | `tests/` | `unittest`, stdlib only; every test runs with sockets and `urlopen` monkeypatched to raise and every key name stripped from the environment |
@@ -49,6 +51,14 @@ python3 eval/harness-v2/dry_run.py --git-rev HEAD --out eval/harness-v2/DRY-RUN-
 python3 eval/harness-v2/q1/run_q1.py --preregister    # once, BEFORE any run
 python3 eval/harness-v2/q1/run_q1.py --run
 python3 eval/harness-v2/q1/check_record.py eval/v1/instruments/qualification-records/Q1-deterministic-cv-geometry-2026-09.yaml
+```
+
+```bash
+# EVAL-041: Registry rows from Image Round 1's sealed records (dry first; --write appends through the harness writer)
+python3 eval/harness-v2/registry_rows.py --run eval/experiments/EVAL-040/runs/img-r1:img-r1 \
+    --run eval/experiments/EVAL-040/runs/img-r1-redo:img-r1-redo --run eval/experiments/EVAL-040/runs/img-r1-composite:img-r1-composite [--write]
+python3 eval/harness-v2/evidence_map.py --results eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml \
+    --composite-results eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
 ```
 
 ## The rules the code enforces (each is a test)

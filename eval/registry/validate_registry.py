@@ -8,6 +8,7 @@ capability claim with nothing behind it.
 Run:  python3 eval/registry/validate_registry.py
       python3 eval/registry/validate_registry.py --selftest   # negative controls
 """
+import hashlib
 import argparse, io, json, pathlib, sys, contextlib, yaml
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -45,9 +46,11 @@ def validate(schema_path=None, data_path=None):
         if k not in s:
             errors.append(f"schema missing top-level key '{k}'")
 
-    if s.get("empirical_entries") != 0:
-        errors.append(f"schema declares {s.get('empirical_entries')} empirical "
-                      f"entries; must be 0 - no instrument is qualified")
+    # 2026-09-09: the Controller froze the six deterministic-instrument criteria
+    # (coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md), so rows from
+    # `deterministic` (or `qualified`) instruments are admissible. The declared count must equal
+    # the rows actually present; nothing else changed in the admission bar.
+    declared_entries = s.get("empirical_entries")
     if s.get("status") != "PROPOSED_NOT_IN_FORCE":
         errors.append(f"schema status is '{s.get('status')}'; the schema is not "
                       f"approved and must not claim otherwise")
@@ -85,9 +88,10 @@ def validate(schema_path=None, data_path=None):
     else:
         rows = [l for l in data_path.read_text().splitlines()
                 if l.strip() and not l.lstrip().startswith("#")]
-    if rows:
-        errors.append(f"registry contains {len(rows)} data row(s); it must be "
-                      f"empty until an instrument is qualified")
+    if declared_entries != len(rows):
+        errors.append(f"schema declares {declared_entries} empirical entries but the data file holds {len(rows)}")
+    criteria_path = schema_path.parent.parent / "harness-v2" / "instruments" / "PASS-CRITERIA-v0.yaml"
+    frozen_sha = hashlib.sha256(criteria_path.read_bytes()).hexdigest() if criteria_path.exists() else None
     for i, l in enumerate(rows, 1):
         try:
             r = json.loads(l)
@@ -96,6 +100,20 @@ def validate(schema_path=None, data_path=None):
             continue
         if r.get("synthetic"):
             errors.append(f"row {i} is SYNTHETIC and must never be in the registry")
+        if r.get("instrument_qualification_status") not in ("deterministic", "qualified"):
+            errors.append(f"row {i}: instrument qualification status {r.get('instrument_qualification_status')!r} may not write a row")
+        if r.get("evidence_tier") not in ("deterministic", "qualified"):
+            errors.append(f"row {i}: evidence tier {r.get('evidence_tier')!r} is not admissible (human, benchmark and screened evidence never enter the Registry)")
+        if frozen_sha and r.get("criteria_sha256") != frozen_sha:
+            errors.append(f"row {i}: criteria_sha256 does not match the committed frozen PASS-CRITERIA file")
+        for k in ("n_items", "repeats_per_item", "trials"):
+            if not isinstance(r.get(k), int):
+                errors.append(f"row {i}: {k} missing or not an integer")
+        unc = r.get("uncertainty") or {}
+        if unc.get("status") not in ("computed", "not_computed"):
+            errors.append(f"row {i}: uncertainty.status must be computed or not_computed")
+        if unc.get("status") == "computed" and unc.get("independence_status") not in ("ESTABLISHED", "NOT ESTABLISHED"):
+            errors.append(f"row {i}: computed uncertainty needs independence_status")
 
     print(f"schema                 : {schema_path.name}")
     print(f"schema_version         : {s.get('schema_version')}")
