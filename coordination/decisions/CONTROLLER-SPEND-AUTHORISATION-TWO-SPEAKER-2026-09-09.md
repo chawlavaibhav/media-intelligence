@@ -36,3 +36,11 @@ authorisation file `eval/harness-v2/authorization.2spk.local.yaml` (gitignored),
 ## 4. Not authorised
 
 Seedance 2.5; the B_chain arm; anything beyond the rows above.
+
+## 5. Writer Controller note — Kling refused again (2026-09-09)
+
+After the Controller's "fal balance added", the Wan smoke and both Wan draws went through (USD 3.36 on fal), then both
+Kling v3 Pro audio draws were refused with HTTP 403 *"Exhausted balance"* — the added balance ran out before the
+Kling rows (USD 1.34 each). Infrastructure refusal, nothing generated or charged. Six clips sealed (Veo fast, Gemini
+Omni, Wan); spend USD 9.27 of the USD 9.96 cap. The Kling rows can run under this record's headroom (USD 0.69 —
+insufficient for two draws at 1.34; a further top-up AND a ₹150 cap addendum would be needed) — the Controller decides.
