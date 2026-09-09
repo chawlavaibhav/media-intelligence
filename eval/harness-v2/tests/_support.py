@@ -30,7 +30,7 @@ KEY_NAMES = ("FAL_KEY", "SARVAM_API_KEY", "ELEVENLABS_API_KEY", "GOOGLE_API_KEY"
              "GOOGLE_CLOUD_VISION_API_KEY")
 
 
-ITEM_BASIS_COMMIT = "9adc4035d089"   # freeze package basis: TEST-CASES amended 2026-09-09 (arm A2 rows)
+ITEM_BASIS_COMMIT = "0ba06b92ee27"   # freeze package basis: 2026-09-09 ElevenLabs re-point + ref2v 8 s (earlier: 9adc4035d089 arm A2 rows)
 
 class NetworkAttempted(RuntimeError):
     """A test tried to open a real socket. That is a test failure by definition."""

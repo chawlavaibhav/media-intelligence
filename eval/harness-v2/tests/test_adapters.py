@@ -302,9 +302,7 @@ class BodyEqualityTest(AdapterBase):
         ("VID-I2V-01", "kling-v3-pro-i2v", {"image_url": "https://example.test/plate.png"}, "fal-video"),
         ("VID-REF-01", "seedance-2.5-ref2v", {"image_urls": ["https://example.test/a.png", "https://example.test/b.png", "https://example.test/c.png"]}, "fal-video"),
         ("IMG-EDIT-01", "flux-2-pro-edit", {"image_urls": ["https://example.test/in.png"]}, "fal"),
-        ("AUD-TTS-01", "elevenlabs-v3", {"voice": "Roger"}, "fal-audio"),
         ("AUD-LIP-01", "kling-lipsync-a2v", {"video_url": "https://example.test/plate.mp4", "audio_url": "https://example.test/drive.wav"}, "fal-video"),
-        ("MUS-01", "elevenlabs-music", {}, "fal-audio"),
         ("VID-T2V-01", "veo-3.1-fast", {}, "veo"),
         ("IMG-CORE-01", "nano-banana-2", {}, "gemini"),
         ("VID-T2V-01", "gemini-omni-1.1-flash", {}, "omni"),
@@ -630,10 +628,7 @@ class AuditorFixesTest(AdapterBase):
         self.assertEqual(self.budget.records(), [])
         d = ad.dry_run(edited, {"voice": "rahul"})
         self.assertFalse(d["would_dispatch"])
-        row2 = self.row("AUD-TTS-01", "elevenlabs-v3")
-        ad2 = self.make("elevenlabs-v3", fal_ok("https://v3.fal.media/files/fake/out.wav"))
-        with self.assertRaises(PreDispatchRefusal):
-            ad2.dispatch({**row2, "params": {**row2["params"], "script": "x" * 40}}, {"voice": "Roger"})
+        # (the fal-hosted ElevenLabs rows left the package on 2026-09-09; the direct adapter's own tests cover its AF-9 guard)
 
     def test_af10_default_poll_budget_is_at_least_fifteen_minutes(self):
         ad = self.make("kling-v3-pro", fal_ok())
