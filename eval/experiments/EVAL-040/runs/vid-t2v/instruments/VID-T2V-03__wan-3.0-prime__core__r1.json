@@ -1,0 +1,420 @@
+{
+ "at": "2026-09-09T13:57:56.404444Z",
+ "errors": [],
+ "format_probe": {
+  "absence_reason": null,
+  "criterion": {
+   "controller_ref": "MD-C1",
+   "criteria_file_sha256": "6fce5ea875c0653ad7321a292fcada31594c9512e1297deabba6c525d9d23888",
+   "frozen": true,
+   "id": "format_probe",
+   "ref": "eval/harness-v2/instruments/PASS-CRITERIA-v0.yaml#format_probe",
+   "status": "frozen"
+  },
+  "defects": [],
+  "measurement": {
+   "artifact_sha256": "564c6e9651c689b4277d1ec7ebf4fac0efcc523a4291936ef9da6b429dc22334",
+   "checks": {
+    "aspect_ok": true,
+    "audio_ok": true,
+    "decodable": true,
+    "duration_ok": true,
+    "resolution_class_ok": true
+   },
+   "declared": {
+    "aspect": "9:16",
+    "audio": true,
+    "duration_s": 6.0,
+    "resolution": "720p"
+   },
+   "notes": {
+    "aspect": "declared 9:16, observed 9:16 (720x1280)",
+    "audio": "declared audio on, stream present",
+    "duration": "declared 6.0 s, observed 6.037007",
+    "resolution": "720p class: short side 720"
+   },
+   "probe": {
+    "aspect": "9:16",
+    "aspect_float": 0.5625,
+    "audio_codec": "aac",
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "duration_s": 6.037007,
+    "fps": 30.0,
+    "has_audio": true,
+    "has_video": true,
+    "height": 1280,
+    "n_audio_streams": 1,
+    "n_video_streams": 1,
+    "nb_frames": "180",
+    "pix_fmt": "yuv420p",
+    "r_frame_rate": "30/1",
+    "size_bytes": 11065985,
+    "video_codec": "h264",
+    "width": 720
+   }
+  },
+  "note": "",
+  "verdict": "pass"
+ },
+ "gate_post": {
+  "argv": [
+   "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/canon/gate/run_gate.py",
+   "post",
+   "--artifact",
+   "eval/experiments/EVAL-040/runs/vid-t2v/artifacts/media/VID-T2V-03__wan-3.0-prime__core__r1.mp4",
+   "--dispatch",
+   "eval/experiments/EVAL-040/runs/vid-t2v/artifacts/VID-T2V-03__wan-3.0-prime__core__r1.request.json",
+   "--modality",
+   "video",
+   "--json",
+   "eval/experiments/EVAL-040/runs/vid-t2v/instruments/VID-T2V-03__wan-3.0-prime__core__r1.gate.json"
+  ],
+  "exit_code": 0,
+  "json_path": "eval/experiments/EVAL-040/runs/vid-t2v/instruments/VID-T2V-03__wan-3.0-prime__core__r1.gate.json",
+  "report": {
+   "gate": "post_draw",
+   "inputs": {
+    "VID-T2V-03__wan-3.0-prime__core__r1.mp4": "564c6e9651c689b4277d1ec7ebf4fac0efcc523a4291936ef9da6b429dc22334"
+   },
+   "label": "artifact VID-T2V-03__wan-3.0-prime__core__r1.mp4 (sha256 564c6e9651c6)",
+   "notes": [],
+   "packs_selected": [
+    "composition_and_attention"
+   ],
+   "report_text": "CANON GATE v0 — post-draw — artifact VID-T2V-03__wan-3.0-prime__core__r1.mp4 (sha256 564c6e9651c6) — packs: composition_and_attention\nNOT-RUN         LIMIT-TEXT      frame extraction not available in stdlib; supply --frames DIR of JPEG/PNG frames to scan — source: pack_limits \"… composite text deterministically.\"\nNOT-APPLICABLE  PA-D1-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D2-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D3-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D4-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D5-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D6-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D7-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D8-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D9-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D10-check    product_appearance not selected (trigger table: no product/packshot entity)\nNOT-MECHANISED  CA-D1-check     read order and 'one dominant cue' need pixels and attention modelling — not counted as satisfied\nNOT-MECHANISED  CA-D2-check     placement zone and its reason need scene understanding in pixels — not counted as satisfied\nNOT-MECHANISED  CA-D3-check     edge treatment and tangency need pixels — not counted as satisfied\nNOT-MECHANISED  CA-D4-check     framing-element tone/width comparison needs pixels — not counted as satisfied\nNOT-MECHANISED  CA-D5-check     grayscale tonal weight needs pixels — not counted as satisfied\nNOT-RUN         CA-D6-check     no dispatched or declared aspect to compare against\nNOT-MECHANISED  CA-D7-check     per-cut content is semantic; frame analysis is not available in stdlib — not counted as satisfied\nNOT-MECHANISED  CA-D8-check     edit-room judgment; no detectable trigger for 'imperfect cut' — not counted as satisfied\nNOT-MECHANISED  CA-D9-check     screen direction needs frame analysis — not counted as satisfied\nNOT-MECHANISED  CA-D10-check    'outlasts describable content' is semantic; per-shot timing needs decoded frames — not counted as satisfied\nNOT-MECHANISED  CA-D11-check    camera motion and its motivation need decoded frames — not counted as satisfied\ndispatch\nNOT-RUN         DISPATCH-ASPECT no dispatched or declared aspect to compare against\nNOT-RUN         DISPATCH-DIMENSIONS no package supplied — declared minimum unknown\ninfra\nPASS            INFRA-CONTAINER mp4 video 720×1280, 6.04 s, avc1\nPASS            INFRA-VIDEO-TRACK video track present (avc1), audio track present\nNOT-RUN         INFRA-RECORD-SHA no record.json supplied\nGATE PASS: 2 mechanised checks hold over the submitted bytes (0 doctrine partials + 2 limit/dispatch/infra rows; 0 non-blocking FAILs on record; 4 non-doctrine rows not run: LIMIT-TEXT, DISPATCH-ASPECT, DISPATCH-DIMENSIONS, INFRA-RECORD-SHA); 10 doctrine check lines NOT mechanised, 10 not applicable, 1 not run — none counted as satisfied. This establishes structure over the prompt/artifact bytes — not doctrine satisfaction, quality, outcomes, or adoption.",
+   "results": [
+    {
+     "blocking": true,
+     "check_id": "LIMIT-TEXT",
+     "clause": "",
+     "coverage": "full",
+     "detail": "frame extraction not available in stdlib; supply --frames DIR of JPEG/PNG frames to scan — source: pack_limits \"… composite text deterministically.\"",
+     "evidence": [],
+     "family": "limit",
+     "gate": "post_draw",
+     "source_text": "Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.",
+     "status": "NOT_RUN"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D1-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Every key object has exactly one declared finish; two surfaces of the same tone still read differently by finish; no surface reads as both matte and mirror-glossy in one shot.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D2-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Highlight positions agree with the single implied source; highlight brightness does not fall off with implied source distance; a large soft source reads as a large reflection, never a hard point.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D3-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Shadow edge quality and highlight size agree — a soft shadow with a pinpoint specular, or the reverse, is a lighting contradiction.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D4-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "One nameable fictional source; key direction agrees with it; no shadow in frame contradicts the declared direction.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D5-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Product-to-ground tonal contrast survives a grayscale check; where depth planes are staged, nearer planes are darker than farther ones.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D6-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Mood is attributable to light character — direction, hardness, contrast — not to a brightness slider; the key level is declared and consistent across shots.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D7-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "State in one line what the hero image sells at a glance; if that line needs the body copy, the image fails.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D8-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Every specular on glass, dark or glossy surfaces is declared wanted or removed; none is accidental.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D9-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Count visible faces of the product; if a candidate angle shows more surfaces without breaking PA-D2 or PA-D5, prefer it.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D10-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Every deviation from PA-D1..PA-D9 is listed in DOCTRINE_DEVIATIONS with its forcing brief clause; none is silent.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D1-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "read order and 'one dominant cue' need pixels and attention modelling",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Name the 1st/2nd/3rd read; each carried by exactly one dominant cue; no two cues compete for one beat.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D2-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "placement zone and its reason need scene understanding in pixels",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Placement is stated as a zone plus the reason for it; no placement is justified by a named ratio or grid line.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D3-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "edge treatment and tangency need pixels",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "The edge treatment is one of the three, named; no accidental near-tangency between a subject edge and a frame edge.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D4-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "framing-element tone/width comparison needs pixels",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "A framing element used is darker or thinner than the subject it frames.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D5-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "grayscale tonal weight needs pixels",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Declared balanced or deliberately restless; if balanced, a grayscale check shows tonal weight agreeing with size weight.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D6-check",
+     "clause": "The stated aspect is justified by a named shape in the scene",
+     "coverage": "partial",
+     "detail": "no dispatched or declared aspect to compare against",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "The stated aspect is justified by a named shape in the scene, not by the platform alone.",
+     "status": "NOT_RUN"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D7-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "per-cut content is semantic; frame analysis is not available in stdlib",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Per cut, name the new information and motivation; per beat, state the one device: cut, camera move, or blocking.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D8-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "edit-room judgment; no detectable trigger for 'imperfect cut'",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "An imperfect cut names the bottom criteria sacrificed; never sacrifice emotion for eye-trace, planarity or 3D continuity.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D9-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "screen direction needs frame analysis",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Screen direction and side-of-frame persist across consecutive shots, or something on screen shows the change (gos_0007), or the crossing is declared in DOCTRINE_DEVIATIONS.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D10-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "'outlasts describable content' is semantic; per-shot timing needs decoded frames",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "No shot outlasts its describable content; the stated pace names the prevailing norm it assumes.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D11-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "camera motion and its motivation need decoded frames",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Each camera move names its motivation; unmotivated moves are replaced by stillness or a cut.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": true,
+     "check_id": "DISPATCH-ASPECT",
+     "clause": "",
+     "coverage": "full",
+     "detail": "no dispatched or declared aspect to compare against",
+     "evidence": [],
+     "family": "dispatch",
+     "gate": "post_draw",
+     "source_text": "CANON-SHAPE-v1 §4 'brief-fixed parameters honoured'; INJECTION-CONTRACT-v0 §3.1 — not a pack check_id",
+     "status": "NOT_RUN"
+    },
+    {
+     "blocking": true,
+     "check_id": "DISPATCH-DIMENSIONS",
+     "clause": "",
+     "coverage": "full",
+     "detail": "no package supplied — declared minimum unknown",
+     "evidence": [],
+     "family": "dispatch",
+     "gate": "post_draw",
+     "source_text": "CANON-SHAPE-v1 §4 'brief-fixed parameters honoured'; INJECTION-CONTRACT-v0 §3.1 — not a pack check_id",
+     "status": "NOT_RUN"
+    },
+    {
+     "blocking": true,
+     "check_id": "INFRA-CONTAINER",
+     "clause": "",
+     "coverage": "full",
+     "detail": "mp4 video 720×1280, 6.04 s, avc1",
+     "evidence": [],
+     "family": "infra",
+     "gate": "post_draw",
+     "source_text": "plan §E INFRA rows — container, video track, record sha256; not doctrine",
+     "status": "PASS"
+    },
+    {
+     "blocking": true,
+     "check_id": "INFRA-VIDEO-TRACK",
+     "clause": "",
+     "coverage": "full",
+     "detail": "video track present (avc1), audio track present",
+     "evidence": [],
+     "family": "infra",
+     "gate": "post_draw",
+     "source_text": "plan §E INFRA rows — container, video track, record sha256; not doctrine",
+     "status": "PASS"
+    },
+    {
+     "blocking": true,
+     "check_id": "INFRA-RECORD-SHA",
+     "clause": "",
+     "coverage": "full",
+     "detail": "no record.json supplied",
+     "evidence": [],
+     "family": "infra",
+     "gate": "post_draw",
+     "source_text": "plan §E INFRA rows — container, video track, record sha256; not doctrine",
+     "status": "NOT_RUN"
+    }
+   ],
+   "verdict": "PASS"
+  },
+  "status": "ran",
+  "stderr": "",
+  "stdout": "CANON GATE v0 — post-draw — artifact VID-T2V-03__wan-3.0-prime__core__r1.mp4 (sha256 564c6e9651c6) — packs: composition_and_attention\nNOT-RUN         LIMIT-TEXT      frame extraction not available in stdlib; supply --frames DIR of JPEG/PNG frames to scan — source: pack_limits \"… composite text deterministically.\"\nNOT-APPLICABLE  PA-D1-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D2-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D3-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D4-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D5-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D6-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D7-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D8-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D9-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D10-check    product_appearance not selected (trigger table: no product/packshot entity)\nNOT-MECHANISED  CA-D1-check     read order and 'one dominant cue' need pixels and attention modelling — not counted as satisfied\nNOT-MECHANISED  CA-D2-check     placement zone and its reason need scene understanding in pixels — not counted as satisfied\nNOT-MECHANISED  CA-D3-check     edge treatment and tangency need pixels — not counted as satisfied\nNOT-MECHANISED  CA-D4-check     framing-element tone/width comparison needs pixels — not counted as satisfied\nNOT-MECHANISED  CA-D5-check     grayscale tonal weight needs pixels — not counted as satisfied\nNOT-RUN         CA-D6-check     no dispatched or"
+ },
+ "repeat_consistency": null,
+ "run_id": "vid-t2v",
+ "trial_id": "VID-T2V-03__wan-3.0-prime__core__r1"
+}
