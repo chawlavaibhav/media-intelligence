@@ -365,7 +365,8 @@ class RunnerTest(NoNetworkTestCase):
 
     def test_dry_run_prints_the_plan_and_price_not_pinned_and_sends_nothing(self):
         exploding = T.FakeTransport()            # no scripted answers: any post would raise AssertionError
-        rc = QS.main(self.base_args("--dry-run"), transport=exploding, key_reader=key_reader, log=self.log)
+        # the repo now carries a real Gemini price pin (2026-09-09), so point at an absent index to exercise "price not pinned"
+        rc = QS.main(self.base_args("--dry-run", "--pin-index", str(self.tmp / "NO-PIN-INDEX.yaml")), transport=exploding, key_reader=key_reader, log=self.log)
         self.assertEqual(rc, 0)
         text = "\n".join(self.out)
         self.assertIn("NOTHING IS SENT", text)
@@ -402,7 +403,7 @@ class RunnerTest(NoNetworkTestCase):
         self.assertEqual(rc, 2)
         cap = self.tmp / "auth.yaml"
         cap.write_text(yaml.safe_dump({"screen_authorisation": {"screen_cap_usd": 1.0}}))
-        rc = QS.main(self.base_args("--auth", str(cap), "--out", str(self.tmp / "R.yaml")), transport=exploding, key_reader=key_reader, log=self.log)
+        rc = QS.main(self.base_args("--auth", str(cap), "--out", str(self.tmp / "R.yaml"), "--pin-index", str(self.tmp / "NO-PIN-INDEX.yaml")), transport=exploding, key_reader=key_reader, log=self.log)
         self.assertEqual(rc, 2)
         self.assertIn("price not pinned", self.out[-1])
         self.assertEqual(exploding.calls, [])
