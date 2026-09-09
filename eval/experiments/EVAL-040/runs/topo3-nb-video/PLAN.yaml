@@ -1,0 +1,135 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: topo3-nb-video
+  mode: lane
+  generated_utc: '2026-09-09T10:01:02.543201Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: 598699e70289de0a5212f95a0a7cc04439ea83dd
+  item_basis_commit: 9adc4035d089
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.nb.local.yaml
+  authorisation_sha256: 0b86478125084684b3d0465f7eaba907c7f27c5edfc3c109909094937243450f
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: c2619cdbc56d16af08c02232f08583fcb7f91683c423472e00ee985626b6ff3f
+  cost_table_sha256: 51e28596574114d4ce9fb95bd3ac4d5811240986549d44ec7925b601601907ec
+  cases:
+  - VID-TOPO3-01
+  routes:
+  - minimax-h3-max-i2v
+  tranche:
+  - 1b
+  repeats: null
+  inputs_file:
+    path: eval/experiments/EVAL-040/runs/topo3-nb-video/INPUTS.yaml
+    sha256: a38f736681956a9009b626e6391d0cbf8aeaeb919e601c7f9046b0651e75a3c9
+    runs_root: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/experiments/EVAL-040/runs
+    data_uri_source: 'pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` with no format constraint; data
+      URIs per fal''s public API documentation (not in the pinned bytes; proven by the first live smoke, never by a test)'
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 2
+    excluded: 0
+  estimated_by_pool:
+    cash:
+      calls: 2
+      currency: USD
+      native: '0.960000'
+      usd_equiv: '0.960000'
+  estimated_total_usd_equiv: '0.960000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A2_nb_still_to_cheap_i2v__r1
+  case_id: VID-TOPO3-01
+  item_id: VID-TOPO3-01
+  route_key: minimax-h3-max-i2v
+  arm: A2_nb_still_to_cheap_i2v
+  repeat_index: 1
+  tranche: 1b
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: minimax/h3-max/image-to-video
+  endpoint: https://queue.fal.run/minimax/h3-max/image-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.480000'
+  estimated_usd_equiv: '0.480000'
+  unit_price: '0.08'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+  body_sha256: 66a9c8ea5c8a854b960ee33253829c358df1f336e6ff61692f93ad43904801c2
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: plate_accepted_draw
+    ref: topo3-nb-plates:VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+    kind: trial
+    run_id: topo3-nb-plates
+    artifact_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+    suffix: null
+    relative_path: media/VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2.png
+    sha256: a2333251cc6ab15f479d53a9b9d553a7fe9bca103d482928674472b97dcd40fc
+    bytes: 1099220
+    content_type: image/png
+    constructed_synthetic: false
+    for_case: null
+    fixture_role: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.08'
+  roster_implied_usd: '0.08'
+  constructed_synthetic_inputs: false
+- seq: 2
+  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A2_nb_still_to_cheap_i2v__r2
+  case_id: VID-TOPO3-01
+  item_id: VID-TOPO3-01
+  route_key: minimax-h3-max-i2v
+  arm: A2_nb_still_to_cheap_i2v
+  repeat_index: 2
+  tranche: 1b
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: minimax/h3-max/image-to-video
+  endpoint: https://queue.fal.run/minimax/h3-max/image-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.480000'
+  estimated_usd_equiv: '0.480000'
+  unit_price: '0.08'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+  body_sha256: 66a9c8ea5c8a854b960ee33253829c358df1f336e6ff61692f93ad43904801c2
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: plate_accepted_draw
+    ref: topo3-nb-plates:VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+    kind: trial
+    run_id: topo3-nb-plates
+    artifact_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+    suffix: null
+    relative_path: media/VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2.png
+    sha256: a2333251cc6ab15f479d53a9b9d553a7fe9bca103d482928674472b97dcd40fc
+    bytes: 1099220
+    content_type: image/png
+    constructed_synthetic: false
+    for_case: null
+    fixture_role: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.08'
+  roster_implied_usd: '0.08'
+  constructed_synthetic_inputs: false
+excluded: []
