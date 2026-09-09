@@ -8,7 +8,9 @@
 # A threshold change is a different instrument (the value is inside the instrument config_hash).
 schema: PASS-CRITERIA-v0
 package: eval/harness-v2
-status: PROPOSED_NOT_FROZEN
+status: frozen_as_proposed_2026-09-09_amended_v1  # six criteria frozen 09 Sep; format_probe resolution class amended the same day (v1); gate_wrapper stays observation-only
+criteria_version: v1
+amended_ref: coordination/decisions/CONTROLLER-FORMAT-PROBE-RESOLUTION-CLASS-AMENDMENT-2026-09-09.md
 controller_ref: MD-C1
 rule: >-
   frozen: false  ->  the instrument returns absent / other / criterion_not_frozen and keeps the measurement.
@@ -28,10 +30,14 @@ criteria:
       duration_tolerance_s: 0.5                      # |observed - duration_s| <= 0.5 s (video/audio only)
       audio_present_iff_audio_on: true               # audio stream present  <=>  params.audio starts with "on"
       resolution_class_must_match_declared: true     # 720p/1080p/1K class from the case row
+      resolution_class_pixel_tolerance_fraction: 0.20  # amended 2026-09-09: <N>-class = total pixels within +-20 % of N*N (v0 used long side 960..1100)
     source: Planner proposal (task EVAL-039C §3 table; no repo source names these tolerances)
     verified: false
-    frozen: false
-    status: proposed
+    frozen: true
+    frozen_by: "Vaibhav Chawla (Controller) — \"freeze as proposed\", 2026-09-09"
+    frozen_at: "2026-09-09T10:30:00+05:30"
+    frozen_ref: coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md
+    status: frozen
     controller_ref: MD-C1
 
   masked_diff:
@@ -48,8 +54,11 @@ criteria:
       ssim_min_outside_mask: 0.90
     source: "Planner proposal (task EVAL-039C §3 table); SSIM definition Wang et al. 2004 (external, verified: false)"
     verified: false
-    frozen: false
-    status: proposed
+    frozen: true
+    frozen_by: "Vaibhav Chawla (Controller) — \"freeze as proposed\", 2026-09-09"
+    frozen_at: "2026-09-09T10:30:00+05:30"
+    frozen_ref: coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md
+    status: frozen
     controller_ref: MD-C1
     provenance_rule: the mask's sha256 and origin are recorded on every measurement
 
@@ -66,8 +75,11 @@ criteria:
       Planner proposal (task EVAL-039C §3 table). Candidate external reference "dE ~ 2.3 is a just
       noticeable difference" (Mahy et al. 1994) - NOT verified tonight.
     verified: false
-    frozen: false
-    status: proposed
+    frozen: true
+    frozen_by: "Vaibhav Chawla (Controller) — \"freeze as proposed\", 2026-09-09"
+    frozen_at: "2026-09-09T10:30:00+05:30"
+    frozen_ref: coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md
+    status: frozen
     controller_ref: MD-C1
 
   av_offset:
@@ -89,8 +101,11 @@ criteria:
       Planner proposal (task EVAL-039C §3 table). Candidate external reference ITU-R BT.1359-1
       detectability thresholds (Planner recollection) - NOT verified tonight.
     verified: false
-    frozen: false
-    status: proposed
+    frozen: true
+    frozen_by: "Vaibhav Chawla (Controller) — \"freeze as proposed\", 2026-09-09"
+    frozen_at: "2026-09-09T10:30:00+05:30"
+    frozen_ref: coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md
+    status: frozen
     controller_ref: MD-C1
 
   repeat_consistency:
@@ -111,8 +126,11 @@ criteria:
         description: pass = Hamming distance <= 4 on every compared frame (Planner proposal)
     source: "Planner proposal (task EVAL-039C §3 table); dHash per the common 9x8 difference-hash definition (external, verified: false)"
     verified: false
-    frozen: false
-    status: proposed
+    frozen: true
+    frozen_by: "Vaibhav Chawla (Controller) — \"freeze as proposed\", 2026-09-09"
+    frozen_at: "2026-09-09T10:30:00+05:30"
+    frozen_ref: coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md
+    status: frozen
     controller_ref: MD-C1
 
   ledger_metrics:
@@ -131,8 +149,11 @@ criteria:
         description: pass = settled amount <= reserved amount (pinned price x quantity); CpAO absent / not_applicable
     source: "task EVAL-039C §3 table (\"no threshold needed\"); kept frozen: false because the Controller freezes every criterion (between-role note 4)"
     verified: false
-    frozen: false
-    status: proposed
+    frozen: true
+    frozen_by: "Vaibhav Chawla (Controller) — \"freeze as proposed\", 2026-09-09"
+    frozen_at: "2026-09-09T10:30:00+05:30"
+    frozen_ref: coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md
+    status: frozen
     controller_ref: MD-C1
 
   gate_wrapper:

@@ -350,7 +350,7 @@ def ffprobe(path: Path | str) -> dict:
         g = math.gcd(int(width), int(height))
         aspect = f"{int(width) // g}:{int(height) // g}"
     return {
-        "container": fmt.get("format_name"), "width": width, "height": height, "aspect": aspect,
+        "container": fmt.get("format_name"), "width": width, "height": height, "aspect": aspect, "r_frame_rate": v0.get("r_frame_rate"),
         "aspect_float": (float(width) / float(height) if width and height else None),
         "duration_s": duration, "fps": fps, "has_video": bool(video), "has_audio": bool(audio),
         "video_codec": v0.get("codec_name"), "audio_codec": (audio[0].get("codec_name") if audio else None),
@@ -371,6 +371,72 @@ def decode_image_ffmpeg(path: Path | str) -> Image:
     if not info["width"] or not info["height"]:
         raise ProbeError(f"{Path(path).name} has no decodable picture")
     return _rawvideo(["-i", str(path), "-frames:v", "1"], int(info["width"]), int(info["height"]))
+
+
+def stream_video_frames(path: Path | str, width: int, height: int):
+    """Yield every frame of a clip as rgb24 bytes (width*height*3), decoded by one ffmpeg process, in order.
+    Used by composite.py --video (EVAL-041 part 2): a per-frame static overlay without holding the clip in memory."""
+    _require(FFMPEG_BIN, "ffmpeg")
+    size = width * height * 3
+    proc = subprocess.Popen([FFMPEG_BIN, "-v", "error", "-i", str(path), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    try:
+        while True:
+            buf = b""
+            while len(buf) < size:
+                chunk = proc.stdout.read(size - len(buf))
+                if not chunk:
+                    break
+                buf += chunk
+            if len(buf) < size:
+                break
+            yield buf
+    finally:
+        proc.stdout.close()
+        err = proc.stderr.read()
+        proc.stderr.close()
+        rc = proc.wait()
+        if rc != 0:
+            raise ProbeError(f"ffmpeg frame decode failed ({err.decode('utf-8', 'replace')[:200]})")
+
+
+def video_encoder_available(name: str) -> bool:
+    try:
+        r = _run([FFMPEG_BIN, "-hide_banner", "-encoders"], timeout_s=30)
+    except ToolUnavailable:
+        return False
+    return any(line.split()[1:2] == [name] for line in (r.stdout or b"").decode("utf-8", "replace").splitlines() if line.strip())
+
+
+class VideoWriter:
+    """rgb24 frames in, an mp4 out, at an exact frame rate string; optional audio copied from `audio_from`."""
+
+    def __init__(self, path: Path | str, width: int, height: int, fps: str, audio_from: Path | str | None = None, codec: str | None = None):
+        _require(FFMPEG_BIN, "ffmpeg")
+        self.path = Path(path)
+        self.codec = codec or ("libx264" if video_encoder_available("libx264") else "mpeg4")
+        cmd = [FFMPEG_BIN, "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{width}x{height}", "-r", str(fps), "-i", "-"]
+        if audio_from is not None:
+            cmd += ["-i", str(audio_from), "-map", "0:v:0", "-map", "1:a:0", "-c:a", "copy"]
+        cmd += ["-c:v", self.codec, "-pix_fmt", "yuv420p"]
+        cmd += (["-crf", "18", "-preset", "medium"] if self.codec == "libx264" else ["-q:v", "3"])
+        cmd += ["-r", str(fps), "-movflags", "+faststart", str(self.path)]
+        self.cmd = cmd
+        self.frames = 0
+        self.proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    def write(self, frame: bytes) -> None:
+        self.proc.stdin.write(frame)
+        self.frames += 1
+
+    def close(self) -> Path:
+        self.proc.stdin.close()
+        err = self.proc.stderr.read()
+        self.proc.stderr.close()
+        rc = self.proc.wait()
+        if rc != 0 or not self.path.exists() or self.path.stat().st_size == 0:
+            raise ProbeError(f"ffmpeg encode failed ({err.decode('utf-8', 'replace')[:300]})")
+        return self.path
 
 
 def decode_video_frames(path: Path | str, which=("first", "middle", "last")) -> list[Image]:

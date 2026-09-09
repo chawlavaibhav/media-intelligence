@@ -1,0 +1,44 @@
+# Plain-text EXTRACT of a pinned vendor reference page (ElevenLabs direct surface, 2026-09-09). The raw bytes are pinned under
+# eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/ (PIN-INDEX.yaml there carries url, fetch time, size, sha256).
+# This extract keeps only the request-body evidence the adapter uses; nothing here was typed from memory.
+id: elevenlabs_tts_convert_ref
+url: https://elevenlabs.io/docs/api-reference/text-to-speech/convert
+fetched_utc: 2026-09-09T10:53:01Z
+http_status: 200
+raw_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-tts-convert.html
+raw_bytes: 1449040
+raw_sha256: 8fbde8cbd5aad3188c6c6cdd396a14c0667e2f29c4a3b87fa75a004e98e27023
+used_by_shapes: ['elevenlabs_tts']
+
+endpoint: POST https://api.elevenlabs.io/v1/text-to-speech/{voice_id}
+auth: header xi-api-key
+response: "The generated audio file" (raw audio bytes in the requested output_format; NOT a JSON envelope)
+
+evidence_quotes (exact substrings of the raw bytes):
+  - voice_id string Required ID of the voice to be used            (path parameter)
+  - text string Required The text that will get converted into speech
+  - model_id string Optional Defaults to eleven_multilingual_v2 Identifier of the model that will be used, you can query them using GET /v1/models
+  - output_format enum Optional Defaults to mp3_44100_128 Output format of the generated audio. Formatted as codec_sample_rate_bitrate
+  - language_code string or null Optional Language code (ISO 639-1) used to enforce a language for the model and text normalization
+  - The generated audio file
+
+field_names (request body, as the page lists them; name | type | required):
+  text | string | Required
+  model_id | string | Optional (default eleven_multilingual_v2)
+  language_code | string or null | Optional
+  voice_settings | object or null | Optional
+  pronunciation_dictionary_locators | list of objects or null | Optional
+  seed | integer or null | Optional
+  previous_text | string or null | Optional
+  next_text | string or null | Optional
+  previous_request_ids | list of strings or null | Optional
+  next_request_ids | list of strings or null | Optional
+  apply_text_normalization | enum | Optional (default auto)
+  apply_language_text_normalization | boolean | Optional (default false)
+  use_pvc_as_ivc | boolean | Optional (default false)
+
+query_parameters: enable_logging (boolean, default true) | optimize_streaming_latency (integer or null) | output_format (enum, default mp3_44100_128)
+
+model_id_for_v3: the convert page does not name it. The pinned models page (elevenlabs-models.html, same PIN-INDEX) does:
+  - "Model ID Character limit Approximate audio duration eleven_v3 5,000 ~5 minutes"
+  - "Use eleven_v3 or eleven_multilingual_v2 Best for high-fidelity audio output"

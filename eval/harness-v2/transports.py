@@ -1,7 +1,7 @@
 """THE ONLY module in eval/harness-v2 that may open a socket or run a network-capable subprocess.
 
-    FalQueueTransport / VertexTransport / SarvamTransport   urllib, called only from an adapter's
-                                                             dispatch, never from construction
+    FalQueueTransport / VertexTransport / SarvamTransport /  urllib, called only from an adapter's
+    ElevenLabsTransport                                      dispatch, never from construction
     GcloudServiceAccountTokenSource                          `gcloud auth activate-service-account`
                                                              + `gcloud auth print-access-token`
                                                              inside a throw-away CLOUDSDK_CONFIG,
@@ -41,12 +41,25 @@ class NoRedirectHandler(urllib.request.HTTPRedirectHandler):
         return None
 
 
+def nothing_left_the_machine(exc: BaseException) -> bool:
+    """True only for a name-resolution failure: the socket was never connected, so no byte reached the provider.
+    Lives here because it is the one exception classification that needs the network modules (hygiene rule:
+    network symbols only in transports.py)."""
+    import socket
+    import urllib.error
+    if isinstance(exc, socket.gaierror):
+        return True
+    if isinstance(exc, urllib.error.URLError) and isinstance(getattr(exc, "reason", None), socket.gaierror):
+        return True
+    return False
+
+
 def build_opener():
     return urllib.request.build_opener(NoRedirectHandler)
 
 
 class _UrllibTransport:
-    """Three verbs. An HTTP error status (a 3xx included) is a provider ANSWER and is returned, not raised."""
+    """Four verbs. An HTTP error status (a 3xx included) is a provider ANSWER and is returned, not raised."""
 
     name = "urllib"
 
@@ -63,6 +76,16 @@ class _UrllibTransport:
         except urllib.error.HTTPError as exc:
             return exc.code, exc.read(), exc.headers.get("Content-Type")
 
+    def _open_with_headers(self, req):
+        """Like _open, but also returns the response headers (lower-cased names) for providers that put the
+        request / job id in a header instead of a JSON body (ElevenLabs: request-id, song-id)."""
+        self.calls += 1
+        try:
+            with self.opener.open(req, timeout=self.timeout_s) as resp:
+                return resp.status, resp.read(), resp.headers.get("Content-Type"), {k.lower(): v for k, v in resp.headers.items()}
+        except urllib.error.HTTPError as exc:
+            return exc.code, exc.read(), exc.headers.get("Content-Type"), {k.lower(): v for k, v in exc.headers.items()}
+
     def post_json(self, url: str, headers: dict, payload: bytes) -> tuple[int, dict]:
         status, body, _ = self._open(urllib.request.Request(
             url, data=payload, method="POST",
@@ -75,6 +98,12 @@ class _UrllibTransport:
 
     def get_bytes(self, url: str, headers: dict) -> tuple[int, bytes, str | None]:
         return self._open(urllib.request.Request(url, headers=headers, method="GET"))
+
+    def post_bytes(self, url: str, headers: dict, payload: bytes) -> tuple[int, bytes, str | None, dict]:
+        """A JSON POST whose ANSWER is raw bytes (audio), not JSON: (status, body_bytes, content_type, response_headers).
+        Exactly one request, like post_json; an error status comes back with the provider's error body bytes."""
+        return self._open_with_headers(urllib.request.Request(
+            url, data=payload, method="POST", headers={"Content-Type": "application/json", **headers}))
 
 
 def _parse_json(body: bytes) -> dict:
@@ -97,6 +126,11 @@ class VertexTransport(_UrllibTransport):
 class SarvamTransport(_UrllibTransport):
     """api.sarvam.ai with `api-subscription-key`."""
     name = "sarvam"
+
+
+class ElevenLabsTransport(_UrllibTransport):
+    """api.elevenlabs.io with `xi-api-key`; the answer is audio bytes (post_bytes), never a JSON envelope."""
+    name = "elevenlabs"
 
 
 class GcloudServiceAccountTokenSource:
@@ -205,7 +239,14 @@ class FakeTransport:
         self._record("download", url, headers)
         return self._next(self.downloads, "_di")
 
+    def post_bytes(self, url, headers, payload):
+        """Scripted from the same `posts` list (it is a submit and counts as one): each item is
+        (status, body_bytes, content_type, response_headers) or an Exception to raise."""
+        self._record("post", url, headers, payload)
+        return self._next(self.posts, "_pi")
+
 
 FakeQueueTransport = FakeTransport
 FakeVertexTransport = FakeTransport
 FakeSarvamTransport = FakeTransport
+FakeElevenLabsTransport = FakeTransport

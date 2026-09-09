@@ -1,0 +1,10 @@
+inputs_file: EVAL-041 INPUTS
+note: 'VID-REF-01/02 (video piece 5, 2026-09-09): the half-two stand-in references of run `half2-fixtures` (same as IMG-REF-01/02). runs_root defaults to eval/experiments/EVAL-040/runs.'
+data_uri_source: 'as topo3-video/INPUTS.yaml'
+inputs:
+- {case_id: VID-REF-01, arm: '*', role: reference_asset_1, ref: 'fixture:half2-fixtures:tin_front'}
+- {case_id: VID-REF-01, arm: '*', role: reference_asset_2, ref: 'fixture:half2-fixtures:tin_side'}
+- {case_id: VID-REF-01, arm: '*', role: reference_asset_3, ref: 'fixture:half2-fixtures:tin_top'}
+- {case_id: VID-REF-02, arm: '*', role: reference_asset_1, ref: 'fixture:half2-fixtures:host_ref_1'}
+- {case_id: VID-REF-02, arm: '*', role: reference_asset_2, ref: 'fixture:half2-fixtures:host_ref_2'}
+- {case_id: VID-REF-02, arm: '*', role: reference_asset_3, ref: 'fixture:half2-fixtures:host_ref_3'}

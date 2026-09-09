@@ -302,9 +302,7 @@ class BodyEqualityTest(AdapterBase):
         ("VID-I2V-01", "kling-v3-pro-i2v", {"image_url": "https://example.test/plate.png"}, "fal-video"),
         ("VID-REF-01", "seedance-2.5-ref2v", {"image_urls": ["https://example.test/a.png", "https://example.test/b.png", "https://example.test/c.png"]}, "fal-video"),
         ("IMG-EDIT-01", "flux-2-pro-edit", {"image_urls": ["https://example.test/in.png"]}, "fal"),
-        ("AUD-TTS-01", "elevenlabs-v3", {"voice": "Roger"}, "fal-audio"),
         ("AUD-LIP-01", "kling-lipsync-a2v", {"video_url": "https://example.test/plate.mp4", "audio_url": "https://example.test/drive.wav"}, "fal-video"),
-        ("MUS-01", "elevenlabs-music", {}, "fal-audio"),
         ("VID-T2V-01", "veo-3.1-fast", {}, "veo"),
         ("IMG-CORE-01", "nano-banana-2", {}, "gemini"),
         ("VID-T2V-01", "gemini-omni-1.1-flash", {}, "omni"),
@@ -330,6 +328,18 @@ class BodyEqualityTest(AdapterBase):
         if kind == "sarvam":
             return T.FakeTransport(posts=[(200, {"request_id": "s", "audios": [B.b64(WAV_FIXTURE)]})])
         raise AssertionError(kind)
+
+    def test_lyria_accepts_the_live_response_key_and_records_the_deviation(self):
+        """2026-09-09 live smoke: lyria-002 returns predictions[0].bytesBase64Encoded, not the pinned audioContent."""
+        t = T.FakeTransport(posts=[(200, {"predictions": [{"bytesBase64Encoded": B.b64(WAV_FIXTURE)}]})])
+        ad = self.make("lyria", t)
+        attempt = ad.dispatch(self.row("MUS-01", "lyria"), {})
+        self.assertEqual(attempt["status"], "ok", (attempt["error_class"], attempt["raw_status_note"]))
+        self.assertIn("response key bytesBase64Encoded (pinned page: audioContent)", attempt.get("shape_deviations", []))
+        t2 = T.FakeTransport(posts=[(200, {"predictions": [{"raiFilteredReason": "blocked"}]})])
+        a2 = self.make("lyria", t2).dispatch(dict(self.row("MUS-01", "lyria"), repeat_index=2), {})   # a new trial id: sealed files are immutable
+        self.assertEqual(a2["error_class"], "no_artifact_returned")
+        self.assertIn("raiFilteredReason", a2["raw_status_note"])
 
     def test_g_dry_run_body_bytes_equal_sent_bytes_for_every_family(self):
         os.environ["FAL_KEY"] = "fake"
@@ -446,15 +456,21 @@ class ParameterRefusalTest(AdapterBase):
             fal_queue.ROUTE_PINS["gpt-image-2"] = saved
 
     def test_pending_inputs_render_in_dry_run_but_refuse_live(self):
+        # EVAL-041 part 2: a placeholder still renders (priced and shaped, the body is inspectable) but the row now REFUSES
+        # in dry-run too, naming the role (`input_unresolved:<role>`), until inputs.py resolves it from a sealed artifact.
         os.environ["FAL_KEY"] = "fake"
         ad = self.make("kling-v3-pro-i2v", fal_ok("https://x/out.mp4"))
         row = self.row("VID-I2V-01", "kling-v3-pro-i2v")
         d = ad.dry_run(row)
         self.assertEqual(d["body"]["start_image_url"], {"$pending_artifact": "VID-I2V-01:core:plate_accepted_draw"})
-        self.assertTrue(d["would_dispatch"])                     # priced and shaped; the plate arrives after 1a acceptance
+        self.assertIsNotNone(d["price"]["amount_usd_equiv"])
+        self.assertFalse(d["would_dispatch"])
+        self.assertEqual(d["refusal_reason"], "input_unresolved:plate_accepted_draw")
         with self.assertRaises(PreDispatchRefusal):
             ad.dispatch(row)
         self.assertEqual(self.budget.records(), [])
+        d2 = ad.dry_run(row, {"image_url": "data:image/png;base64,AAAA"})
+        self.assertTrue(d2["would_dispatch"], d2["refusal_reason"])
 
 
 # ============================================================ (j) store
@@ -612,10 +628,7 @@ class AuditorFixesTest(AdapterBase):
         self.assertEqual(self.budget.records(), [])
         d = ad.dry_run(edited, {"voice": "rahul"})
         self.assertFalse(d["would_dispatch"])
-        row2 = self.row("AUD-TTS-01", "elevenlabs-v3")
-        ad2 = self.make("elevenlabs-v3", fal_ok("https://v3.fal.media/files/fake/out.wav"))
-        with self.assertRaises(PreDispatchRefusal):
-            ad2.dispatch({**row2, "params": {**row2["params"], "script": "x" * 40}}, {"voice": "Roger"})
+        # (the fal-hosted ElevenLabs rows left the package on 2026-09-09; the direct adapter's own tests cover its AF-9 guard)
 
     def test_af10_default_poll_budget_is_at_least_fifteen_minutes(self):
         ad = self.make("kling-v3-pro", fal_ok())

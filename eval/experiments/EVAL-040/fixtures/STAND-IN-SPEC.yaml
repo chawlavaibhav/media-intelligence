@@ -1,0 +1,118 @@
+# Constructed stand-in inputs for image half two (Controller, 2026-09-09: "constructed stand in").
+# Every asset here is SYNTHETIC — generated on the cheapest Google route or derived by an edit call or by code —
+# and is labelled `constructed_synthetic` wherever it is used. None is a customer photo. Exact strings that must
+# read correctly on a fixture are set by code (composite.py) on a blank label, never left to the generator.
+# Decoys are same-category (a tin against tins, a face against faces), as the qualification map requires.
+package: eval/empirical-planning/STAGE-A-FREEZE-2026-09 (item basis 0596aa2)
+generation_route: nano-banana-2          # gemini-3.1-flash-image, Vertex, credits, ~USD 0.067 each
+derivation_route: nano-banana-pro-edit   # extra views of the SAME subject from the first image (edit call), ~USD 0.134 each
+overlay: eval/harness-v2/composite.py    # exact label text by code, USD 0
+assets:
+  - id: showroom_sofa_01
+    for: IMG-EDIT-01
+    role: supplied_subject
+    kind: generate
+    prompt: >-
+      Phone photograph inside a furniture showroom: a three-seat fabric sofa in warm grey is the main object, centred,
+      on a light wooden floor with a rug; in the LEFT background, a male staff member in a plain shirt stands facing
+      the camera a few metres behind the sofa, clearly visible but small. Even daylight from large windows on the
+      right, natural colours, no text, no logos, no price tags. 4:3, realistic.
+    aspect: "4:3"
+    note: the customer asks for the person to be removed; the instrument masks the person region
+
+  - id: masala_pack_raw
+    for: IMG-EDIT-02
+    role: supplied_subject
+    kind: generate_then_overlay
+    prompt: >-
+      Phone photograph of a small rectangular cardboard spice pack, deep red with a plain WHITE rectangular label on
+      its front, standing upright on a cluttered Indian kitchen counter with a steel bowl, a wooden spoon and scattered
+      spices around it, warm tungsten light from the left. The label is completely blank. No text anywhere.
+    aspect: "1:1"
+    overlay:
+      - {text: "शुद्ध मसाले", script: devanagari, size_pt: 40, colour: "1A1A1A", anchor: center, y_frac: 0.45}
+      - {text: "५०० ग्राम", script: devanagari, size_pt: 30, colour: "1A1A1A", anchor: center, y_frac: 0.53}
+    overlay_note: positions are refined at fixture time to sit inside the blank label found on the generated pack; the
+      pack's dominant sRGB colour is measured and recorded for the brand-colour instrument
+    exact_strings_by_code: true
+
+  - id: backwaters_banner_16x9
+    for: IMG-EXT-01
+    role: supplied_subject
+    kind: generate_then_overlay
+    prompt: >-
+      Wide landscape photograph of Kerala backwaters at golden hour: a traditional houseboat on calm water, coconut
+      palms lining the far bank, soft warm light, slight haze. Empty sky in the upper third. No people close to camera,
+      no text, no logos. 16:9, realistic travel photography.
+    aspect: "16:9"
+    overlay:
+      - {text: "Kerala Backwaters — Book Your Stay", script: latin, size_pt: 56, colour: "FFFFFF", anchor: center, y_frac: 0.14}
+    exact_strings_by_code: true
+    headline_fixture: "Kerala Backwaters — Book Your Stay"
+
+  - id: model_portrait
+    for: IMG-COMP-01
+    role: identity_person
+    kind: generate
+    prompt: >-
+      Clean head-and-shoulders studio portrait of an Indian woman in her late twenties, neutral expression, natural
+      make-up, hair tied back, plain mid-grey background, soft frontal light, 3:4, photographic, no text.
+    aspect: "3:4"
+    decoys:
+      - {id: model_portrait_decoy_1, prompt: "Clean head-and-shoulders studio portrait of a different Indian woman in her early thirties, short hair, plain mid-grey background, soft frontal light, 3:4, photographic, no text."}
+      - {id: model_portrait_decoy_2, prompt: "Clean head-and-shoulders studio portrait of a different Indian woman in her twenties, long open hair, glasses, plain mid-grey background, soft frontal light, 3:4, photographic, no text."}
+
+  - id: shade_ruby_pack
+    for: IMG-COMP-01
+    role: identity_product
+    kind: generate
+    prompt: >-
+      Product packshot of a single lipstick standing upright with its cap off beside it, deep ruby red shade, matte
+      black tube with no branding, on a plain white surface, soft studio light, 1:1, no text.
+    aspect: "1:1"
+    record_srgb_of: the lipstick bullet (shade colour)
+    decoys:
+      - {id: shade_pack_decoy_coral, prompt: "Product packshot of a single lipstick standing upright with its cap off beside it, bright coral shade, matte black tube with no branding, on a plain white surface, soft studio light, 1:1, no text."}
+      - {id: shade_pack_decoy_nude, prompt: "Product packshot of a single lipstick standing upright with its cap off beside it, soft nude beige shade, matte black tube with no branding, on a plain white surface, soft studio light, 1:1, no text."}
+
+  - id: tin_front
+    for: IMG-REF-01
+    role: identity_product
+    kind: generate_then_overlay
+    prompt: >-
+      Phone photograph of a one-litre rectangular yellow metal oil tin with a red screw cap, standing on a plain
+      light-grey surface, front face square to camera, with a plain WHITE rectangular label area on the front and no
+      printing anywhere. Even daylight, 1:1.
+    aspect: "1:1"
+    overlay:
+      - {text: "सरसों तेल", script: devanagari, size_pt: 44, colour: "B3000C", anchor: center, y_frac: 0.42}
+      - {text: "1 लीटर", script: devanagari, size_pt: 28, colour: "1A1A1A", anchor: center, y_frac: 0.52}
+    exact_strings_by_code: true
+    derived_views:
+      - {id: tin_side, edit_prompt: "Show this exact same yellow oil tin, unchanged, photographed from its left side at a three-quarter angle on the same grey surface, same light. Keep the label exactly as it is."}
+      - {id: tin_top, edit_prompt: "Show this exact same yellow oil tin, unchanged, photographed from directly above on the same grey surface, same light, the red cap centred."}
+    decoys:
+      - {id: tin_decoy_1, prompt: "Phone photograph of a one-litre rectangular yellow metal oil tin with a BLUE screw cap and a plain green label band, on a plain light-grey surface, front face to camera, no text, 1:1."}
+      - {id: tin_decoy_2, prompt: "Phone photograph of a one-litre round yellow metal oil tin with a silver cap, on a plain light-grey surface, front face to camera, no text, 1:1."}
+
+  - id: host_ref_1
+    for: IMG-REF-02
+    role: identity_person
+    kind: generate
+    prompt: >-
+      Daylight phone photograph, front view, of an Indian woman in her early thirties with shoulder-length dark hair,
+      small stud earrings, a plain teal kurta, smiling slightly, standing in front of a plain cream wall, 3:4,
+      photographic, no text.
+    aspect: "3:4"
+    derived_views:
+      - {id: host_ref_2, edit_prompt: "Show this exact same woman, unchanged in face, hair, earrings and teal kurta, photographed from a three-quarter angle in front of the same cream wall, same daylight."}
+      - {id: host_ref_3, edit_prompt: "Show this exact same woman, unchanged in face, hair, earrings and teal kurta, in profile facing left, in front of the same cream wall, same daylight."}
+    decoys:
+      - {id: host_decoy_1, prompt: "Daylight phone photograph, front view, of a different Indian woman in her thirties with long braided hair, no earrings, a plain maroon kurta, in front of a plain cream wall, 3:4, no text."}
+      - {id: host_decoy_2, prompt: "Daylight phone photograph, front view, of a different Indian woman in her late twenties with short hair and glasses, a plain white shirt, in front of a plain cream wall, 3:4, no text."}
+
+counts:
+  generate_calls: 13     # 1+1+1+1+2+1+2+1+2+1+2  (nano-banana-2, ~USD 0.87)
+  derive_calls: 4        # tin side/top, host 3/4 and profile  (nano-banana-pro-edit, ~USD 0.54)
+  overlays: 3            # masala label, backwaters headline, tin label (USD 0)
+  nominal_usd: 1.41

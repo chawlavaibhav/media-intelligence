@@ -3284,10 +3284,10 @@ cases:
     quantity_unit: chars
     screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
-  - route_key: elevenlabs-v3
-    route_id: fal-ai/elevenlabs/tts/eleven-v3
-    surface: fal
-    billing_pool: cash
+  - route_key: elevenlabs-v3-direct
+    route_id: eleven_v3 (api.elevenlabs.io, own account)
+    surface: elevenlabs_direct
+    billing_pool: elevenlabs_credits
     route_status: pinned
     arm: B_chain_tts_L1
     params: {line: 'यह रंग कैसा लगेगा?', voice: female, chars: 18, seed: unset}
@@ -3298,10 +3298,10 @@ cases:
     quantity_unit: chars
     screen_status: 'recorded_not_screened (0 calls; reason: README OQ-19 — single-face lipsync routes document no speaker assignment, Auditor AF-3)'
     price_status: pinned
-  - route_key: elevenlabs-v3
-    route_id: fal-ai/elevenlabs/tts/eleven-v3
-    surface: fal
-    billing_pool: cash
+  - route_key: elevenlabs-v3-direct
+    route_id: eleven_v3 (api.elevenlabs.io, own account)
+    surface: elevenlabs_direct
+    billing_pool: elevenlabs_credits
     route_status: pinned
     arm: B_chain_tts_L2
     params: {line: घर जैसा, voice: male, chars: 7, seed: unset}
@@ -3636,6 +3636,32 @@ cases:
     item_id: VID-TOPO3-01
     quantity: 1
     quantity_unit: images
+    price_status: pinned
+  - route_key: nano-banana-2
+    route_id: gemini-3.1-flash-image
+    surface: vertex
+    billing_pool: credits
+    route_status: pinned
+    arm: A2_nb_plate_9x16
+    params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 0, note: '9:16 re-draw of the same three-string brief on a TEXT-CAPABLE cheap still route (Nano Banana 2, USD 0.067; round one spelled Hindi 2/2) — added 2026-09-09 after arm A''s Qwen plates misspelled both draws (Controller: "1. do it."); prompt: arm_A_plate_prompt_9x16 (same block as arm A)', seed: unset}
+    repeats: 2
+    tranche: 1a
+    item_id: VID-TOPO3-01
+    quantity: 1
+    quantity_unit: images
+    price_status: pinned
+  - route_key: minimax-h3-max-i2v
+    route_id: minimax/h3-max/image-to-video (768p)
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: A2_nb_still_to_cheap_i2v
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: 'arm-A2 9:16 plate: the Controller-accepted A2_nb_plate_9x16 draw', note: 'arm A re-run with the Nano Banana 2 plate on the cheapest animator only (H3 Max); Wan already shown to preserve plate lettering in topo3-video', seed: unset}
+    repeats: 2
+    tranche: 1b
+    item_id: VID-TOPO3-01
+    quantity: 6
+    quantity_unit: seconds
     price_status: pinned
   - route_key: minimax-h3-max-i2v
     route_id: minimax/h3-max/image-to-video (768p)
@@ -4549,11 +4575,11 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: native
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 3, seed: unset}
+    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'off', refs: 3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-REF-01
-    quantity: 6
+    quantity: 8
     quantity_unit: seconds
     price_status: pinned
   - route_key: kling-v3-elements
@@ -4708,11 +4734,11 @@ cases:
     billing_pool: credits
     route_status: pinned
     arm: native
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (ambient), refs: 3, seed: unset}
+    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: on (ambient), refs: 3, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-REF-02
-    quantity: 6
+    quantity: 8
     quantity_unit: seconds
     price_status: pinned
   - route_key: kling-v3-elements
@@ -5137,10 +5163,10 @@ cases:
     quantity: 30
     quantity_unit: chars
     price_status: pinned
-  - route_key: elevenlabs-v3
-    route_id: fal-ai/elevenlabs/tts/eleven-v3
-    surface: fal
-    billing_pool: cash
+  - route_key: elevenlabs-v3-direct
+    route_id: eleven_v3 (api.elevenlabs.io, own account)
+    surface: elevenlabs_direct
+    billing_pool: elevenlabs_credits
     route_status: pinned
     arm: native
     params: {script: इस दवाई से मेरी फसल दोगुनी हुई, chars: 30, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
@@ -5280,10 +5306,10 @@ cases:
     quantity: 70
     quantity_unit: chars
     price_status: pinned
-  - route_key: elevenlabs-v3
-    route_id: fal-ai/elevenlabs/tts/eleven-v3
-    surface: fal
-    billing_pool: cash
+  - route_key: elevenlabs-v3-direct
+    route_id: eleven_v3 (api.elevenlabs.io, own account)
+    surface: elevenlabs_direct
+    billing_pool: elevenlabs_credits
     route_status: pinned
     arm: native
     params: {script: 'Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par.', chars: 70, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
@@ -5392,10 +5418,10 @@ cases:
     quantity: 34
     quantity_unit: chars
     price_status: pinned
-  - route_key: elevenlabs-v3
-    route_id: fal-ai/elevenlabs/tts/eleven-v3
-    surface: fal
-    billing_pool: cash
+  - route_key: elevenlabs-v3-direct
+    route_id: eleven_v3 (api.elevenlabs.io, own account)
+    surface: elevenlabs_direct
+    billing_pool: elevenlabs_credits
     route_status: pinned
     arm: native
     params: {script: Zero petrol. Zero noise. All city., chars: 34, voice: 'one male voice, recorded', model: eleven_v3, seed: unset}
@@ -5905,18 +5931,18 @@ cases:
     quantity: 1
     quantity_unit: clips
     price_status: pinned
-  - route_key: elevenlabs-music
-    route_id: fal-ai/elevenlabs/music
-    surface: fal
-    billing_pool: cash
+  - route_key: elevenlabs-music-direct
+    route_id: music_v1 (api.elevenlabs.io, own account)
+    surface: elevenlabs_direct
+    billing_pool: elevenlabs_credits
     route_status: pinned
     arm: native
     params: {duration_s: 30, format: wav, billed_minutes: 1 (30-s clip rounded up), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: MUS-01
-    quantity: 1
-    quantity_unit: minutes
+    quantity: 30
+    quantity_unit: seconds
     price_status: pinned
   downstream_reuse:
     feeds: []
@@ -6021,18 +6047,18 @@ cases:
     quantity: 1
     quantity_unit: clips
     price_status: pinned
-  - route_key: elevenlabs-music
-    route_id: fal-ai/elevenlabs/music
-    surface: fal
-    billing_pool: cash
+  - route_key: elevenlabs-music-direct
+    route_id: music_v1 (api.elevenlabs.io, own account)
+    surface: elevenlabs_direct
+    billing_pool: elevenlabs_credits
     route_status: pinned
     arm: native
     params: {duration_s: 30, format: wav, billed_minutes: 1 (30-s clip rounded up), seed: unset}
     repeats: 2
     tranche: 1b
     item_id: MUS-02
-    quantity: 1
-    quantity_unit: minutes
+    quantity: 30
+    quantity_unit: seconds
     price_status: pinned
   downstream_reuse:
     feeds: []

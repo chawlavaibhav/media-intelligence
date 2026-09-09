@@ -1,0 +1,104 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: topo3-nb-plates
+  mode: lane
+  generated_utc: '2026-09-09T09:52:27.081895Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: 9adc4035d089fd8e169d585e9603f05eec440e20
+  item_basis_commit: 9adc4035d089
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.nb.local.yaml
+  authorisation_sha256: 0b86478125084684b3d0465f7eaba907c7f27c5edfc3c109909094937243450f
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: c2619cdbc56d16af08c02232f08583fcb7f91683c423472e00ee985626b6ff3f
+  cost_table_sha256: 51e28596574114d4ce9fb95bd3ac4d5811240986549d44ec7925b601601907ec
+  cases:
+  - VID-TOPO3-01
+  routes:
+  - nano-banana-2
+  tranche:
+  - 1a
+  repeats: null
+  inputs_file: null
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 2
+    excluded: 0
+  estimated_by_pool:
+    credits:
+      calls: 2
+      currency: USD
+      native: '0.134000'
+      usd_equiv: '0.134000'
+  estimated_total_usd_equiv: '0.134000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r1
+  case_id: VID-TOPO3-01
+  item_id: VID-TOPO3-01
+  route_key: nano-banana-2
+  arm: A2_nb_plate_9x16
+  repeat_index: 1
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3.1-flash-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.067000'
+  estimated_usd_equiv: '0.067000'
+  unit_price: '0.067'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 1b5b6aa720be63ffddc4c75954560e6b1ad7b187cfadd4063a3b9f0f447d9f2f
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.067'
+  roster_implied_usd: '0.067'
+  constructed_synthetic_inputs: false
+- seq: 2
+  trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+  case_id: VID-TOPO3-01
+  item_id: VID-TOPO3-01
+  route_key: nano-banana-2
+  arm: A2_nb_plate_9x16
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_gemini_image
+  surface_model_id: gemini-3.1-flash-image
+  endpoint: https://aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/global/publishers/google/models/gemini-3.1-flash-image:generateContent
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.067000'
+  estimated_usd_equiv: '0.067000'
+  unit_price: '0.067'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 1b5b6aa720be63ffddc4c75954560e6b1ad7b187cfadd4063a3b9f0f447d9f2f
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.067'
+  roster_implied_usd: '0.067'
+  constructed_synthetic_inputs: false
+excluded: []

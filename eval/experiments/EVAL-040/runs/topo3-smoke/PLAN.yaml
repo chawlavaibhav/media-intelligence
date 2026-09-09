@@ -1,0 +1,110 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: topo3-smoke
+  mode: smoke
+  generated_utc: '2026-09-09T06:55:55.914209Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: 213256f8f4e04e6c7b750064c78d868bc83e6fab
+  item_basis_commit: 0596aa2
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.video1.local.yaml
+  authorisation_sha256: 24262ca4463511d8076edd2bd54d00bce9352bf2fca2036a444cbf66dfe43209
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: 2681066e36e09d9a80e7d10413300957491625f9074b36a800b04dc776ecbe40
+  cost_table_sha256: 51e28596574114d4ce9fb95bd3ac4d5811240986549d44ec7925b601601907ec
+  cases:
+  - VID-TOPO3-01
+  routes:
+  - minimax-h3-max-i2v
+  tranche: null
+  repeats:
+  - 1
+  inputs_file:
+    path: eval/experiments/EVAL-040/runs/topo3-smoke/INPUTS.yaml
+    sha256: 000907cb77bb9dfbf6d429f914094bd038243e954544961047ce35607b96fe6a
+    runs_root: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/experiments/EVAL-040/runs
+    data_uri_source: 'pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` with no format constraint; data
+      URIs per fal''s public API documentation (not in the pinned bytes; proven by the first live smoke, never by a test)'
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 1
+    excluded: 3
+  estimated_by_pool:
+    cash:
+      calls: 1
+      currency: USD
+      native: '0.480000'
+      usd_equiv: '0.480000'
+  estimated_total_usd_equiv: '0.480000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r1
+  case_id: VID-TOPO3-01
+  item_id: VID-TOPO3-01
+  route_key: minimax-h3-max-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  repeat_index: 1
+  tranche: 1b
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: minimax/h3-max/image-to-video
+  endpoint: https://queue.fal.run/minimax/h3-max/image-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.480000'
+  estimated_usd_equiv: '0.480000'
+  unit_price: '0.08'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+  body_sha256: 0e7efc78532e8bd8a25623370e14fee14f74829724f29c0eb16fbe1b32b32f26
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: plate_accepted_draw
+    ref: topo3-plates:VID-TOPO3-01__qwen-image-3__A_plate_9x16__r2
+    kind: trial
+    run_id: topo3-plates
+    artifact_id: VID-TOPO3-01__qwen-image-3__A_plate_9x16__r2
+    suffix: null
+    relative_path: media/VID-TOPO3-01__qwen-image-3__A_plate_9x16__r2.png
+    sha256: 9f87e596dd05f4927c2856e2a53d6137d83568ee83bee7128a1e52ae2b90e476
+    bytes: 932853
+    content_type: image/png
+    constructed_synthetic: false
+    for_case: null
+    fixture_role: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.08'
+  roster_implied_usd: '0.08'
+  constructed_synthetic_inputs: false
+excluded:
+- case_id: VID-TOPO3-01
+  route_key: minimax-h3-max-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  repeat_index: 2
+  tranche: 1b
+  reason: repeat 2 not requested ([1])
+- case_id: VID-TOPO3-01
+  route_key: minimax-h3-max-i2v
+  arm: C_textless_plate_i2v_composite
+  repeat_index: 1
+  tranche: 1b
+  reason: input_unresolved:plate_accepted_draw
+- case_id: VID-TOPO3-01
+  route_key: minimax-h3-max-i2v
+  arm: C_textless_plate_i2v_composite
+  repeat_index: 2
+  tranche: 1b
+  reason: input_unresolved:plate_accepted_draw

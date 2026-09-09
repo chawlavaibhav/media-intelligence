@@ -15,6 +15,9 @@ from providers import PreDispatchRefusal
 from . import base as B
 
 
+AUDIO_KEYS = ("audioContent", "bytesBase64Encoded")   # pinned page name first, then the key the live endpoint returns
+
+
 class VertexLyriaAdapter(B.RouteAdapter):
     family = "vertex_lyria"
 
@@ -56,15 +59,25 @@ class VertexLyriaAdapter(B.RouteAdapter):
                 o.error_class = str(err.get("status") or err.get("code"))
             return o
         preds = reply.get("predictions") or []
-        if not preds or not preds[0].get("audioContent"):
-            return B.Outcome("error", "no_artifact_returned", "predict returned no audioContent", ambiguous=False,
-                             outcome_resolved=True, lifecycle_counts=counts)
+        # 2026-09-09 live smoke: lyria-002 answers {"predictions":[{"bytesBase64Encoded": ...}]} where the pinned page
+        # shows "audioContent". Both are accepted; the key actually used is recorded on the artifact (shape deviation).
+        audio_key = next((k for k in AUDIO_KEYS if preds and isinstance(preds[0], dict) and preds[0].get(k)), None)
+        if audio_key and audio_key != "audioContent":
+            attempt.setdefault("shape_deviations", []).append(f"response key {audio_key} (pinned page: audioContent)")
+        if not audio_key:
+            # evidence for the record, never the audio: which keys came back (a filter reason is a string, kept whole)
+            p0 = preds[0] if preds and isinstance(preds[0], dict) else {}
+            diag = {"reply_keys": sorted(reply.keys()), "n_predictions": len(preds), "prediction_keys": sorted(p0.keys()),
+                    "filter": {k: p0.get(k) for k in p0 if "filter" in k.lower() or "rai" in k.lower() or "safety" in k.lower()},
+                    "metadata": {k: reply.get(k) for k in ("metadata", "model", "deployedModelId") if k in reply}}
+            return B.Outcome("error", "no_artifact_returned", f"predict returned no audioContent; {diag}", ambiguous=False,
+                             outcome_resolved=True, lifecycle_counts=counts, provider_meta=diag)
         import base64
         try:
-            data = base64.b64decode(preds[0]["audioContent"])
+            data = base64.b64decode(preds[0][audio_key])
         except Exception as exc:                  # noqa: BLE001
             return B.Outcome("error", "malformed_response", f"audioContent was not valid base64: {exc}", ambiguous=False,
                              outcome_resolved=True, lifecycle_counts=counts)
         return B.Outcome("ok", None, "", media=data, content_type=preds[0].get("mimeType") or "audio/wav",
-                         provider_meta={"deployedModelId": reply.get("deployedModelId"), "model": reply.get("model")},
+                         provider_meta={"deployedModelId": reply.get("deployedModelId"), "model": reply.get("model"), "audio_key": audio_key},
                          lifecycle_counts=counts)

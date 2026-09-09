@@ -1,0 +1,44 @@
+# EVAL-041 part 2 — plumbing executor report (image half two on stand-ins; video piece 1) — 2026-09-09
+
+**Spend: USD 0.** No live call, no key value read, nothing committed. Branch `work/eval-041-registry-and-half-two`; work under `eval/harness-v2/` only.
+**Tests: 235 green** (208 before + 27 new in `tests/test_plumbing.py`; one superseded expectation in `test_adapters.py` updated), run under
+`HTTP_PROXY/HTTPS_PROXY/ALL_PROXY=http://127.0.0.1:9`, captured to `eval/harness-v2/tests/RESULTS-2026-09-09-plumbing.txt`. Hygiene holds: network modules only in `transports.py`; `allow_default_token_source=True` only in `run_live.py`.
+
+## What was built
+1. **Input resolver** `inputs.py`: a committed `INPUTS.yaml` maps `(case_id, arm, role)` → `fixture:<run>:<fixture_id>` or `<run>:<trial_id>[:<suffix>]`. Bytes are read from the sealed store, sha256-verified against the record (and the optional pinned `sha256` on the line), and handed to the adapter as a **data URI** for fal (`image_url` / `image_urls` / `start_image_url`) or bytes for Vertex (`image_bytes`+`image_mime`, `reference_images`). `plan --inputs` renders the body WITH the bytes, so `body_sha256` commits to the input; `execute` refuses a changed INPUTS file (sha), a swapped input (resolved sha ≠ plan) or a changed body. Multi-ref order = role index (`reference_asset_1..n`); IMG-COMP-01 sends portrait then packshot; a fixture with `is_decoy: true` refuses to resolve (decoys are qualification-pack only — the rule is code and a test). Unmapped roles keep `$pending_artifact` and the row refuses `input_unresolved:<role>` (dry-run now says so; before, such rows showed `would_dispatch: true` and only refused at dispatch). Templates: `INPUTS.half2.template.yaml`, `INPUTS.topo3.template.yaml`.
+2. **Fixture mode** `fixtures.py` + `run_live.py fixtures --spec … --run-id … --out … --auth … [--dry]`: `FIXTURE-PLAN.yaml`+sha (generates → USD-0 overlays on the raw draw → derived views with the CANONICAL, overlaid parent as the one reference through the same resolver). Every output is a fixture record `<out>/artifacts/fixtures/<id>.fixture.json` with prompt, `for_case`, `role`, `is_decoy`, `constructed_synthetic: true`, parent sha, placed overlay strings, and `central_srgb` (mean sRGB of the central 20 % box; `record_srgb_of` carried). Same ledger/caps/0 retries/reservation-before-send/resumability as `execute` (tests: generate→overlay→derive with the parent's bytes in the payload, resume, cap stop, changed-plan refusal).
+3. **Price mismatch rows** (`dry_run.py`): refusal now reads `price_mismatch … [cost_table 0.045 vs roster 0.060; Controller option: --accept-roster-price …]`; every row carries `roster_implied_usd`, `cost_table_unit_price`, `price_basis`. `plan --accept-roster-price` dispatches multi-reference FLUX edit rows at the ROSTER price with `price_basis: roster_over_cost_table` (ledger charges 0.060/0.075; test proves it). COST-TABLE untouched; `gpt-image-2-edit` stays excluded (`price_unpinned`, token meter).
+4. **Video readiness**: `casebook.py` arm-aware prompts for VID-TOPO3-01 (`A_plate_9x16`→`arm_A_plate_prompt_9x16`, `C_plate_9x16`→`arm_C_textless_plate_prompt_9x16`, both i2v arms→`i2v_motion_prompt`, arm B→main). `composite.py --video`: ffmpeg frame stream → static overlay on every frame → re-encode at the source `r_frame_rate` (libx264, audio copied if present) → sealed `<trial>.composite.mp4`. Real-size check (synthetic 720×1280, 6 s, 24 fps, pinned Kohinoor face 3): 144 frames in 1.7 s, fps/duration preserved. `smoke` works for video routes (H3 Max i2v with a data-URI plate; Veo i2v with inline bytes): attempt `media_kind: video`, format_probe records fps/duration/audio checks, gate modality `video`. `--tranche 1a,1b|all` added (TOPO3 video rows are tranche 1b).
+
+## Commands for the Controller session (in order)
+```
+H=eval/harness-v2; R=eval/experiments/EVAL-040/runs; A2=$H/authorization.half2.local.yaml; AV=$H/authorization.video1.local.yaml
+python3 $H/run_live.py fixtures --dry --spec eval/experiments/EVAL-040/fixtures/STAND-IN-SPEC.yaml --run-id half2-fixtures --out $R/half2-fixtures --auth $A2
+python3 $H/run_live.py fixtures --spec eval/experiments/EVAL-040/fixtures/STAND-IN-SPEC.yaml --run-id half2-fixtures --out $R/half2-fixtures --auth $A2   # LIVE (≈1.61), resumable
+cp $H/INPUTS.half2.template.yaml $R/half2/INPUTS.yaml   # fixture ids already match the spec
+python3 $H/run_live.py smoke --run-id half2-smoke --case IMG-EDIT-01 --route nano-banana-pro-edit --inputs $R/half2/INPUTS.yaml --out $R/half2-smoke --auth $A2   # 1 call, proves data URIs
+python3 $H/run_live.py plan --run-id half2 --cases IMG-EDIT-01,IMG-EDIT-02,IMG-EXT-01,IMG-COMP-01,IMG-REF-01,IMG-REF-02 --tranche 1a --inputs $R/half2/INPUTS.yaml [--accept-roster-price] --out $R/half2 --auth $A2
+python3 $H/run_live.py execute --run-id half2 --out $R/half2 --auth $A2
+python3 $H/run_live.py plan --run-id topo3-plates --cases VID-TOPO3-01 --routes qwen-image-3,flux-2-pro --tranche 1a --out $R/topo3-plates --auth $AV ; execute … (4 calls, 0.14); Controller accepts one draw per arm
+cp $H/INPUTS.topo3.template.yaml $R/topo3-video/INPUTS.yaml ; edit the two trial ids to the accepted draws
+python3 $H/run_live.py smoke --run-id topo3-smoke --case VID-TOPO3-01 --route minimax-h3-max-i2v --inputs <INPUTS with the arm-A line only> --out $R/topo3-smoke --auth $AV   # first 6-s video call
+python3 $H/run_live.py plan --run-id topo3-video --cases VID-TOPO3-01 --routes minimax-h3-max-i2v,wan-3.0-prime-i2v,veo-3.1-full,kling-v3-pro --tranche 1a,1b --inputs $R/topo3-video/INPUTS.yaml --out $R/topo3-video --auth $AV ; execute
+python3 $H/composite.py --video --run-id topo3-video --out $R/topo3-video --spec <VIDEO-COMPOSITE-SPEC.yaml>   # USD 0; arm C clips → *.composite.mp4
+```
+
+## Dry-plan totals (plans kept under `eval/harness-v2/DRY-PLANS-2026-09-09/`; the half-two and TOPO3 plans used PLACEHOLDER inputs in the scratchpad and must be re-planned with the real fixtures/plates)
+- **Fixture spec**: 22 steps = 15 generations (7 assets + 8 decoys) on nano-banana-2 @0.067 + 4 derivations on nano-banana-pro-edit @0.15 + 3 overlays @0 = **USD 1.605** — 0.005 ABOVE the "≤ 1.6" sizing: the spec's own sum line (1+1+1+1+2+1+2+1+2+1+2) is 15, not the 13 it wrote, and the derivation route is priced at the roster's pinned fal number (0.15), not the ~0.134 Vertex figure the spec assumed. Inside the half-two cap (7.34).
+- **Half two**: 30 trials, **USD 2.88** at COST-TABLE prices (the six multi-ref FLUX rows refuse `price_mismatch`); 36 trials, **USD 3.30** with `--accept-roster-price`. Fixtures + half two ≈ 4.9 ≤ 7.34 (note: each run has its own ledger; the two do not add up mechanically).
+- **VID-TOPO3-01**: plates 4 calls **0.14**; video rows 10 calls **9.744** (H3 A 0.96, Wan 1.68, Veo full 4.80, Kling 1.344, H3 C 0.96); everything 14 calls **9.884** — **ABOVE the 9.43 cap** by 0.454. The ledger would stop at the cap mid-lane (the last trial in repeat-major order is H3 arm C r2). Every arm renders a complete body with resolved inputs (test `test_topo3_video_plan_resolves_every_arm_with_the_plates`).
+
+## Rows that still refuse, and why
+- `gpt-image-2-edit` ×12 (all six cases): `price_unpinned` — token meter, not projectable. Excluded as the record says.
+- `flux-2-pro-edit` on IMG-COMP-01 / IMG-REF-01 / IMG-REF-02 ×6: `price_mismatch` 0.045 vs roster 0.060 / 0.075 — dispatch only under `--accept-roster-price`.
+- `veo-3.1-lite-i2v` ×2: `price_unpinned` (freeze catalogue) — runs only if the Controller pins it (a COST-TABLE/roster change, not a harness flag).
+- Every input-taking row without `--inputs`: `input_unresolved:<role>` (by design).
+
+## Open questions / not verifiable without a live call
+1. **Tranche 1b cap is 0.00** in `authorization.video1.local.yaml`, but the freeze puts all i2v rows of VID-TOPO3-01 (6 calls, USD 3.60) in tranche **1b** → `BudgetExceeded` on the first i2v trial. The record needs `cap_1b_usd` ≥ 3.60 (or the Controller re-tranches), else only plates + arm B run.
+2. **TOPO3 total 9.884 > 9.43**: drop one row (e.g. one Veo full repeat −2.40 → 7.48, or Wan r2 −0.84) or raise the cap; the harness stops mechanically either way.
+3. **Data URIs on fal**: the pinned schema extracts say only `type: string`; acceptance rests on fal's public docs (not fetched, not in the pinned bytes) — the half-two smoke (nano-banana-pro-edit, 0.15) is the proof; if refused, the fallback is a fal upload endpoint, which is unpinned.
+4. Fixture total 1.605 vs the 1.6 sizing (above). 5. Video overlay spec for 720-px-wide frames needs smaller point sizes than the 1:1 image spec (96 pt t3 overruns the frame by 62 px each side); positions are the Controller's after seeing the plate. 6. `DRY-RUN-MANIFEST-2026-09.yaml` is dated evidence and was not regenerated; a fresh manifest would show input rows as `would_dispatch: false` with `input_unresolved`.

@@ -1,0 +1,151 @@
+run_id: aud-tts-eleven
+case: AUD-TTS-01..03 on elevenlabs-v3-direct (eleven_v3, premade male voice 'Eric'; no Indian-accent voice on the account)
+revealed_utc: '2026-09-09'
+judge: Controller (blind E01-E06)
+commitment_verified: false
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: E1/E2 per (route, case) since one route ran
+trials:
+- trial_id: AUD-TTS-02__elevenlabs-v3-direct__native__r1
+  run_id: aud-tts-eleven
+  case_id: AUD-TTS-02
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: E01
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: rejected for accent (Controller)
+  redo_of: null
+- trial_id: AUD-TTS-01__elevenlabs-v3-direct__native__r2
+  run_id: aud-tts-eleven
+  case_id: AUD-TTS-01
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: E02
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: AUD-TTS-03__elevenlabs-v3-direct__native__r2
+  run_id: aud-tts-eleven
+  case_id: AUD-TTS-03
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: E03
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: AUD-TTS-02__elevenlabs-v3-direct__native__r2
+  run_id: aud-tts-eleven
+  case_id: AUD-TTS-02
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: E04
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: rejected for accent (Controller)
+  redo_of: null
+- trial_id: AUD-TTS-01__elevenlabs-v3-direct__native__r1
+  run_id: aud-tts-eleven
+  case_id: AUD-TTS-01
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: E05
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: AUD-TTS-03__elevenlabs-v3-direct__native__r1
+  run_id: aud-tts-eleven
+  case_id: AUD-TTS-03
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: E06
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+elimination:
+- question: AUD-TTS
+  case_id: AUD-TTS-01
+  route_key: elevenlabs-v3-direct
+  arm: native
+  arms:
+  - native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: AUD-TTS
+  case_id: AUD-TTS-02
+  route_key: elevenlabs-v3-direct
+  arm: native
+  arms:
+  - native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 0
+  rejects: 2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
+- question: AUD-TTS
+  case_id: AUD-TTS-03
+  route_key: elevenlabs-v3-direct
+  arm: native
+  arms:
+  - native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+reading:
+- Hindi script 2/2 and Indian-English script 2/2 accepted; the Hinglish script 0/2, both 'rejected for accent' - with an American premade voice the code-mixed line
+  does not land, while pure Hindi and the short English line do.
+- Sarvam bulbul:v3 (aditya) took all three scripts 6/6 at INR 0.13 a file; ElevenLabs used 298 plan credits for six files. For Hindi/Hinglish speech Sarvam is the
+  default; ElevenLabs needs an Indian voice from the Voice Library before the Hinglish case is retried.
+plan_credits_used: 298

@@ -1,0 +1,38 @@
+# Plain-text EXTRACT of a pinned vendor reference page (ElevenLabs direct surface, 2026-09-09). The raw bytes are pinned under
+# eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/ (PIN-INDEX.yaml there carries url, fetch time, size, sha256).
+# This extract keeps only the request-body evidence the adapter uses; nothing here was typed from memory.
+id: elevenlabs_music_compose_ref
+url: https://elevenlabs.io/docs/api-reference/music/compose
+fetched_utc: 2026-09-09T10:53:01Z
+http_status: 200
+raw_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-music-compose.html
+raw_bytes: 1384559
+raw_sha256: a604b5c42d6e2f8c8534d790efadffe5d824b48fbb4533b40943bc0d2a58b1e3
+used_by_shapes: ['elevenlabs_music']
+
+endpoint: POST https://api.elevenlabs.io/v1/music        ("Compose music"; the docs URL says /music/compose, the endpoint is /v1/music)
+auth: header xi-api-key
+response: "The generated audio file in the format specified" (raw audio bytes); response header song-id ("Unique identifier for the generated song")
+
+evidence_quotes (exact substrings of the raw bytes):
+  - prompt string or null Optional <=4100 characters A simple text prompt to generate a song from
+  - music_length_ms integer or null Optional 3000-600000 The length of the song to generate in milliseconds
+  - model_id enum Optional Defaults to music_v1 The model to use for the generation
+  - output_format enum Optional Defaults to auto ... mp3_44100_128 for v1 models and mp3_48000_192 for v2 models
+  - force_instrumental boolean Optional Defaults to false If true, guarantees that the generated song will be instrumental
+  - song-id string Optional Unique identifier for the generated song
+  - The generated audio file
+
+field_names (request body, as the page lists them; name | type | required):
+  prompt | string or null | Optional (<=4100 characters)
+  composition_plan | object or null | Optional
+  music_length_ms | integer or null | Optional (3000-600000)
+  model_id | enum | Optional (default music_v1; music_v2 exists)
+  seed | integer or null | Optional
+  force_instrumental | boolean | Optional (default false)
+  finetune_id | string or null | Optional (<=100 characters)
+  respect_sections_durations | boolean | Optional (default true)
+  store_for_inpainting | boolean | Optional (default false)
+  sign_with_c2pa | boolean | Optional (default false)
+
+query_parameters: output_format (enum, default auto)

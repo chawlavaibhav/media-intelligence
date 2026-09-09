@@ -26,9 +26,11 @@ if str(HV2) not in sys.path:
 
 import hv2_paths  # noqa: E402,F401
 
-KEY_NAMES = ("FAL_KEY", "SARVAM_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY",
+KEY_NAMES = ("FAL_KEY", "SARVAM_API_KEY", "ELEVENLABS_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY",
              "GOOGLE_CLOUD_VISION_API_KEY")
 
+
+ITEM_BASIS_COMMIT = "0ba06b92ee27"   # freeze package basis: 2026-09-09 ElevenLabs re-point + ref2v 8 s (earlier: 9adc4035d089 arm A2 rows)
 
 class NetworkAttempted(RuntimeError):
     """A test tried to open a real socket. That is a test failure by definition."""
@@ -82,7 +84,9 @@ class NoNetworkTestCase(unittest.TestCase):
         """A TEST-ONLY authorisation file in the signed record's machine_authorisation shape."""
         import hashlib
         fields = {
-            "tranche_id": "EVAL-040-TRANCHE-1", "authorised": True, "item_basis_commit": "0596aa2",
+            # the freeze package's current basis commit (TEST-CASES amended 2026-09-09: Nano Banana arm A2 rows on VID-TOPO3-01);
+            # the planner compares the package at HEAD with this commit, so it moves whenever the package does
+            "tranche_id": "EVAL-040-TRANCHE-1", "authorised": True, "item_basis_commit": ITEM_BASIS_COMMIT,
             "price_basis_roster_sha256": hashlib.sha256(Path(hv2_paths.ROSTER).read_bytes()).hexdigest(),
             "max_consumed_usd_equivalent": ceiling, "cap_1a_usd": caps[0], "cap_1b_usd": caps[1], "sarvam_cap_inr": inr_cap,
             "retries_authorised": 0, "execution_time_route_price_verification": "required_before_every_paid_call",
@@ -94,9 +98,9 @@ class NoNetworkTestCase(unittest.TestCase):
         auth_path.write_text(yaml.safe_dump({"machine_authorisation": fields}, sort_keys=False))
         return auth_path
 
-    def make_ledger(self, ceiling="200.00", caps=("85.00", "115.00"), run_id="run-test", inr_cap="5.00"):
+    def make_ledger(self, ceiling="200.00", caps=("85.00", "115.00"), run_id="run-test", inr_cap="5.00", **overrides):
         import ledger as L
-        auth_path = self.write_auth(ceiling, caps, inr_cap)
+        auth_path = self.write_auth(ceiling, caps, inr_cap, **overrides)
         auth = L.load_battery_authorisation(auth_path)
         run = L.BatteryRun.create(self.tmp / "runs", run_id, auth, mode="fake_live")
         return L.BatteryBudget(run)

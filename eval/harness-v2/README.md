@@ -26,12 +26,17 @@ them read-only (`hv2_paths.py`) and subclasses what it needs. The protected base
 | `store.py` | sealed artifact store: `media/<trial>.<ext>` + `.request.json` (written **before** dispatch) + `.record.json` + `.attempt.json` + append-only manifest; never overwrites |
 | `transports.py` | the **only** module that may open a socket (urllib) or run a network-capable subprocess (`gcloud` token, at dispatch only); plus the fakes the tests use |
 | `casebook.py` | TEST-CASES rows × repeats with each case's blueprint prompt; route catalogue read from COST-TABLE (working tree or a git revision) |
-| `adapters/` | `base` (one builder for dry-run and dispatch, the invariants), `fal_queue`, `vertex_veo`, `vertex_gemini_image`, `vertex_omni`, `vertex_lyria`, `sarvam_tts`; `NullAdapter` for the not-built surfaces |
-| `dry_run.py` | renders body + price for every (case, route row, repeat) and reconciles against COST-TABLE line by line |
+| `adapters/` | `base` (one builder for dry-run and dispatch, the invariants), `fal_queue`, `vertex_veo`, `vertex_gemini_image`, `vertex_omni`, `vertex_lyria`, `sarvam_tts`, `elevenlabs_direct` (2026-09-09: ElevenLabs on the user's own account, `tts` + `music`, mp3 bytes back, billed in PLAN CREDITS - pool `elevenlabs_credits`, 0 USD cash, credits recorded natively from the pinned pricing page, capped by the optional `elevenlabs_cap_credits`; routes `elevenlabs-v3-direct` / `elevenlabs-music-direct` are `surfaces.EXTENSION_ROUTES`, outside the freeze catalogue); `NullAdapter` for the not-built surfaces |
+| `dry_run.py` | renders body + price for every (case, route row, repeat) and reconciles against COST-TABLE line by line; EVAL-041 part 2: takes the input resolver (`inputs_for`) so input rows render with their sealed bytes, refuses `input_unresolved:<role>` otherwise, reports `roster_implied_usd` / `cost_table_unit_price` / `price_basis` and honours `accept_roster_price` on multi-reference FLUX edit rows |
+| `inputs.py` | EVAL-041 part 2: the input resolver - a committed `INPUTS.yaml` maps (case, arm, role) -> a sealed artifact (`fixture:<run>:<id>` or `<run>:<trial>[:<suffix>]`); bytes are loaded from the sealed store, sha256-verified, and handed to the adapter as a data URI (fal) or bytes (Vertex); decoy fixtures refuse; templates `INPUTS.half2.template.yaml` / `INPUTS.topo3.template.yaml` |
+| `fixtures.py` | EVAL-041 part 2: `run_live.py fixtures` - plans (`FIXTURE-PLAN.yaml` + sha) and executes STAND-IN-SPEC.yaml: generations, derived views (parent fixture through the resolver), code overlays (USD 0); every output sealed as a `constructed_synthetic` fixture record under `<out>/artifacts/fixtures/`; same ledger, caps, 0 retries, resumability |
+| `composite.py` | TOPO-02 arm C overlay (exact strings by code); `--video` (EVAL-041 part 2) overlays every frame of a sealed clip via ffmpeg and re-encodes at the source fps, sealed with suffix `composite` |
 | `instruments/` | `imageio` (stdlib PNG codec + ffmpeg wrappers), `common`, `metrics`, `format_probe`, `masked_diff`, `brand_colour`, `av_offset`, `repeat_consistency`, `ledger_metrics`, `gate_wrapper`, `registry_gate`, `PASS-CRITERIA-v0.yaml` |
 | `battery_harness.py` | `BatteryHarness(Harness)`: bytes-aware `generate()` / `measure()`; `write_registry_row` **inherited, never overridden** |
+| `registry_rows.py` | EVAL-041: the first Registry rows from sealed run records under the FROZEN criteria (`--run OUT:RUN_ID ... [--write]`); every row through `BatteryHarness.registry_row_for`; infra faults excluded, refusals counted; dry by default |
+| `evidence_map.py` | EVAL-041: `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml` - the tiered product asset (deterministic rows / human blind acceptance / screened / historical prior) per (question, route); human tiers never `registry: true` |
 | `q1/` | `detector.py` (frozen method), `run_q1.py` (`--preregister`, then `--run`), `check_record.py` (schema checker) |
-| `schemas/` | pinned fal OpenAPI JSON and vendor reference pages (gzipped) with sha256 — the only source of request-body shapes |
+| `schemas/` | pinned fal OpenAPI JSON and vendor reference pages (gzipped) with sha256 — the only source of request-body shapes; `schemas/elevenlabs/` holds extracts over the raw pages pinned under `eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/` |
 | `tests/` | `unittest`, stdlib only; every test runs with sockets and `urlopen` monkeypatched to raise and every key name stripped from the environment |
 | `ENVIRONMENT-2026-09.yaml` | what is installed (names only); nothing was installed |
 | `authorization.example.yaml` | the schema of the authorisation file; `authorised: false`; a live ledger cannot be opened from the committed state (a test proves it) |
@@ -51,6 +56,23 @@ python3 eval/harness-v2/q1/run_q1.py --run
 python3 eval/harness-v2/q1/check_record.py eval/v1/instruments/qualification-records/Q1-deterministic-cv-geometry-2026-09.yaml
 ```
 
+```bash
+# EVAL-041 part 2: stand-in fixtures (dry plan first), image half two with resolved inputs, VID-TOPO3-01 (plates, then video rows)
+python3 eval/harness-v2/run_live.py fixtures --dry --spec eval/experiments/EVAL-040/fixtures/STAND-IN-SPEC.yaml --run-id half2-fixtures \
+    --out eval/experiments/EVAL-040/runs/half2-fixtures --auth eval/harness-v2/authorization.half2.local.yaml       # USD 0: FIXTURE-PLAN.yaml + total
+python3 eval/harness-v2/run_live.py fixtures --spec ... --run-id half2-fixtures --out ... --auth ...                     # LIVE, resumable
+python3 eval/harness-v2/run_live.py plan --run-id half2 --cases IMG-EDIT-01,IMG-EDIT-02,IMG-EXT-01,IMG-COMP-01,IMG-REF-01,IMG-REF-02 \
+    --tranche 1a --inputs INPUTS.yaml [--accept-roster-price] --out <dir> --auth eval/harness-v2/authorization.half2.local.yaml
+python3 eval/harness-v2/run_live.py plan --run-id topo3-video --cases VID-TOPO3-01 --tranche 1a,1b --inputs INPUTS.yaml --out <dir> --auth ...video1...
+python3 eval/harness-v2/composite.py --video --run-id topo3-video --out <dir> --spec <VIDEO-COMPOSITE-SPEC.yaml>   # USD 0, arm C clips
+
+# EVAL-041: Registry rows from Image Round 1's sealed records (dry first; --write appends through the harness writer)
+python3 eval/harness-v2/registry_rows.py --run eval/experiments/EVAL-040/runs/img-r1:img-r1 \
+    --run eval/experiments/EVAL-040/runs/img-r1-redo:img-r1-redo --run eval/experiments/EVAL-040/runs/img-r1-composite:img-r1-composite [--write]
+python3 eval/harness-v2/evidence_map.py --results eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml \
+    --composite-results eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
+```
+
 ## The rules the code enforces (each is a test)
 
 * construction opens no socket and reads no key; a key is read by **name** at dispatch and never enters a body,
@@ -67,7 +89,11 @@ python3 eval/harness-v2/q1/check_record.py eval/v1/instruments/qualification-rec
 * every instrument fails closed (`parse_failure`), reports a missing tool (`instrument_unavailable`), and returns
   `absent / criterion_not_frozen` until its threshold is frozen;
 * only the eight deterministic capabilities, through a `deterministic` or `qualified` instrument, over
-  non-synthetic measurements, can reach the frozen `write_registry_row` (the gate sits in front of it on every path). This task writes no row.
+  non-synthetic measurements, can reach the frozen `write_registry_row` (the gate sits in front of it on every path). This task writes no row;
+* (EVAL-041 part 2) an input reaches an adapter only through `inputs.py` from a sealed, sha256-verified artifact named in a committed
+  `INPUTS.yaml`; the plan's body sha256 is computed WITH the input bytes; execute refuses a changed inputs file, a swapped input or a
+  changed body; a decoy fixture never resolves; a placeholder that nobody resolved keeps the row at `would_dispatch: false`
+  (`input_unresolved:<role>`).
 
 ## What is NOT true yet
 

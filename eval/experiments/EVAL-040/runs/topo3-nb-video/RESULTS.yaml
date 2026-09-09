@@ -1,0 +1,117 @@
+run_id: topo3-nb-video
+case: 'VID-TOPO3-01 arm A2 (addendum): Nano Banana 2 9:16 plate (Controller-accepted draw 2) -> MiniMax H3 Max i2v'
+revealed_utc: '2026-09-09'
+judge: Controller (blind as to draw; single route and arm in this set)
+commitment_verified: false
+commitment_note: MAPPING.json written alongside the blind copies; no off-repo key for this two-clip set
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: 'E1: refusal/hard error >= ceil(0.375 n); E2: accepts <= floor(0.25 n); n = planned trials per (route, question, arm); E5: no artifact = reject'
+trials:
+- trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A2_nb_still_to_cheap_i2v__r2
+  run_id: topo3-nb-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: A2_nb_still_to_cheap_i2v
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: N01
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: correct (Controller)
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A2_nb_still_to_cheap_i2v__r1
+  run_id: topo3-nb-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: A2_nb_still_to_cheap_i2v
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: N02
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: correct (Controller)
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r1
+  run_id: topo3-nb-plates
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: nano-banana-2
+  arm: A2_nb_plate_9x16
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: null
+  verdict: reject
+  verdict_basis: controller_verdict_in_chat_unblinded_plate_pick
+  note: 'two ''श्री'' (Controller: ''Image one has two shri'')'
+  redo_of: null
+- trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+  run_id: topo3-nb-plates
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: nano-banana-2
+  arm: A2_nb_plate_9x16
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: null
+  verdict: accept
+  verdict_basis: controller_verdict_in_chat_unblinded_plate_pick
+  note: spelled correctly (Controller)
+  redo_of: null
+elimination:
+- question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: A2_nb_still_to_cheap_i2v
+  arms:
+  - A2_nb_still_to_cheap_i2v
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-TOPO3
+  route_key: nano-banana-2
+  arm: A2_nb_plate_9x16
+  arms:
+  - A2_nb_plate_9x16
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 1
+  rejects: 1
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+plates:
+  run_id: topo3-nb-plates
+  draw_1: reject - two 'श्री' (Controller)
+  draw_2: accept - spelled correctly (Controller)
+  cost_usd: 0.134
+reading:
+- 'Arm A2 (text-capable cheap still -> cheapest animator): 2/2 accept. With a correctly spelled plate the cheap chain passes; the earlier arm-A 0/4 was the Qwen plate''s
+  spelling, not the animator.'
+- 'Cheap chain cost per accepted clip: plate USD 0.067 (2 draws, 1 accepted -> USD 0.134 per accepted plate) + H3 Max USD 0.48 = about USD 0.61, against Veo 3.1 full
+  USD 2.40 and Kling v3 Pro USD 0.67 per clip at 0/4.'
+- 'H-CHEAP for text in motion is now supported in BOTH cheap forms: code-set type on an animated textless plate (arm C, 2/2) and a text-capable cheap still into a
+  cheap animator (arm A2, 2/2).'
+spend_usd:
+  plates: 0.134
+  clips: 0.96
+  total: 1.094
+  cap_inr: 150

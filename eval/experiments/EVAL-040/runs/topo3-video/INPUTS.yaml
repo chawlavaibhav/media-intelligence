@@ -1,0 +1,16 @@
+inputs_file: EVAL-041 INPUTS
+note: 'TEMPLATE for VID-TOPO3-01 video rows: the accepted 9:16 plates of run `topo3-plates` (run_live.py plan --routes qwen-image-3,flux-2-pro). runs_root defaults
+  to eval/experiments/EVAL-040/runs.'
+data_uri_source: 'pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` with no format constraint; data URIs
+  per fal''s public API documentation (not in the pinned bytes; proven by the first live smoke, never by a test)'
+inputs:
+- case_id: VID-TOPO3-01
+  arm: A_cheap_still_to_cheap_i2v
+  role: plate_accepted_draw
+  ref: topo3-plates:VID-TOPO3-01__qwen-image-3__A_plate_9x16__r2
+  note: the Controller-accepted arm-A 9:16 text plate (draw r1 or r2); replace the trial id with the accepted draw
+- case_id: VID-TOPO3-01
+  arm: C_textless_plate_i2v_composite
+  role: plate_accepted_draw
+  ref: topo3-plates:VID-TOPO3-01__flux-2-pro__C_plate_9x16__r1
+  note: the Controller-accepted arm-C 9:16 textless plate; replace the trial id with the accepted draw

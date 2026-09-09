@@ -46,9 +46,38 @@ def _s(x):
     return None if x is None else str(x)
 
 
+ROSTER_PRICE_ROUTES = ("flux-2-pro-edit",)      # the one route whose roster price disagrees with the COST-TABLE on multi-reference rows
+PRICE_MISMATCH_OPTION = "Controller option: `run_live.py plan --accept-roster-price` dispatches this row at the ROSTER price (the higher one), price_basis roster_over_cost_table; the cap protects the money either way"
+
+
+def _only_price_mismatch(reason: str | None) -> bool:
+    parts = [x.strip() for x in (reason or "").split(";") if x.strip()]
+    return bool(parts) and all(x.startswith("price_mismatch") for x in parts)
+
+
+def price_mismatch_view(pricing: PR.Pricing, route_key: str, row: dict) -> dict:
+    """EVAL-041 part 2: what the Controller needs to decide a price-mismatch row - both prices, side by side."""
+    pc = pricing.evaluate(route_key, row)
+    refs = (row.get("params") or {}).get("refs")
+    try:
+        refs = int(refs or 0)
+    except (TypeError, ValueError):
+        refs = 0
+    roster = pc.unit_price
+    cost_table = row.get("unit_price")
+    eligible = (route_key in ROSTER_PRICE_ROUTES and refs >= 2 and _only_price_mismatch(pc.refusal_reason)
+                and roster is not None and cost_table is not None and roster > Decimal(str(cost_table)))
+    return {"roster_implied_usd": _s(roster), "cost_table_unit_price": _s(cost_table), "refs": refs, "pricing_ok": pc.ok,
+            "refusal_reason": pc.refusal_reason, "roster_price_option_eligible": eligible}
+
+
 def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricing: PR.Pricing,
                    cost_table: PR.CostTable, seed_policy_path: Path | str = hv2_paths.SEED_POLICY,
-                   git_commit: str | None = None) -> dict:
+                   git_commit: str | None = None, inputs_for=None, accept_roster_price: bool = False) -> dict:
+    """One row per (case, route row, repeat). `inputs_for(row, entry)` (inputs.InputResolver.for_row) resolves the
+    sealed inputs a row needs so the body - and its sha256 - are the ones a live dispatch sends; without it every
+    input-taking row renders a placeholder and refuses `input_unresolved:<role>`. `accept_roster_price` dispatches a
+    multi-reference FLUX edit row at the roster-implied price when that is the ONLY thing refusing it."""
     rows_out = []
     adapters_cache: dict[str, object] = {}
     for row in book.rows():
@@ -57,7 +86,16 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
         if ad is None:
             ad = adapter_for(entry, pricing=pricing, seed_policy_path=seed_policy_path)
             adapters_cache[entry.route_key] = ad
-        d = ad.dry_run(row)
+        inputs, resolved, unresolved = inputs_for(row, entry) if inputs_for else ({}, [], [])
+        d = ad.dry_run(row, inputs)
+        price_basis = "cost_table"
+        pm = price_mismatch_view(pricing, entry.route_key, row) if (d["refusal_reason"] and "price_mismatch" in d["refusal_reason"]) else None
+        if pm:
+            d["refusal_reason"] = (d["refusal_reason"] + f" [cost_table {pm['cost_table_unit_price']} vs roster {pm['roster_implied_usd']}; {PRICE_MISMATCH_OPTION}]")
+            if accept_roster_price and pm["roster_price_option_eligible"]:
+                priced_row = {**row, "unit_price": Decimal(pm["roster_implied_usd"])}
+                d = ad.dry_run(priced_row, inputs)                # the same builder, priced at the roster's number
+                price_basis = "roster_over_cost_table"
         price = d["price"]
         computed = Decimal(price["amount_native"]) if price.get("amount_native") is not None else None
         usd = Decimal(price["amount_usd_equiv"]) if price.get("amount_usd_equiv") is not None else None
@@ -75,6 +113,10 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
             "billing_pool": entry.billing_pool, "conditional": row["conditional"], "counted_in_cap": counted,
             "would_dispatch": d["would_dispatch"], "refusal_reason": d["refusal_reason"], "request_notes": d["request_notes"] or None,
             "seed_policy": "unset", "key_name": entry.key_name, "credential_file_name": entry.credential_file_name,
+            # EVAL-041 part 2: inputs resolved at plan time (summaries, never bytes) and the price basis the row was priced on
+            "inputs": resolved or None, "unresolved_inputs": unresolved or None,
+            "price_basis": price_basis, "cost_table_unit_price": _s(pm["cost_table_unit_price"]) if pm else _s(row.get("unit_price")),
+            "roster_implied_usd": (pm["roster_implied_usd"] if pm else price.get("unit_price")),
         })
 
     # ---- counts and totals -------------------------------------------------------------------

@@ -41,10 +41,11 @@ from providers import (AmbiguousDispatch, DispatchRefused, PreDispatchRefusal,  
                        classify_transport_failure)
 from budget_guard import BudgetExceeded  # noqa: F401
 import store as S
+from transports import nothing_left_the_machine   # DNS-class failures: the only exception classification that needs a network module
 
 # Looked up at call time so a test can point it at a throw-away file. Never the real file in tests.
 DEFAULT_KEY_FILE = Path("~/.mi-keys").expanduser()
-KEY_NAMES_ALLOWED = ("FAL_KEY", "SARVAM_API_KEY")
+KEY_NAMES_ALLOWED = ("FAL_KEY", "SARVAM_API_KEY", "ELEVENLABS_API_KEY")
 OUTPUT_COUNT_PARAMS = ("num_images", "num_videos", "num_samples", "num_outputs", "sampleCount",
                        "sample_count", "candidateCount", "n")
 SEED_PARAMS = ("seed",)
@@ -136,6 +137,27 @@ def _has_pending(obj: Any) -> bool:
 
 def pending_artifact(case_row: dict, role: str) -> dict:
     return {"$pending_artifact": f"{case_row.get('case_id')}:{case_row.get('arm')}:{role}"}
+
+
+def pending_roles(obj: Any) -> list[str]:
+    """The ROLE of every placeholder still in a body, in body order: `$pending_artifact` "case:arm:role" -> role,
+    `$pending_choice` what -> "choice:<what>". EVAL-041 part 2: a dry-run row with any of these refuses with
+    `input_unresolved:<role>` until the input resolver (inputs.py) hands the adapter the sealed bytes."""
+    out: list[str] = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == "$pending_artifact":
+                out.append(str(v).rsplit(":", 1)[-1])
+            elif k == "$pending_choice":
+                out.append(f"choice:{v}")
+            elif k in PENDING_KEYS:
+                out.append(f"{k.lstrip('$')}:{v}")
+            else:
+                out += pending_roles(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            out += pending_roles(v)
+    return out
 
 
 def pending_choice(what: str) -> dict:
@@ -278,6 +300,10 @@ class RouteAdapter:
             reasons.append(f"precondition not satisfiable tonight: {pre}")
         if not pc.ok:
             reasons.append(pc.refusal_reason)
+        if req is not None and req.has_pending():
+            # EVAL-041 part 2: a body that still carries a placeholder can never be sent; say which role is missing.
+            roles = pending_roles(req.body) + [r for f in req.followups for r in pending_roles(f.get("body"))]
+            reasons.append("input_unresolved:" + ",".join(dict.fromkeys(roles)) if roles else "input_unresolved:unknown")
         return {
             "method": req.method if req else None, "url": req.url if req else entry.endpoint,
             "headers": req.headers if req else None, "body": req.body if req else None,
@@ -420,15 +446,19 @@ class RouteAdapter:
         return self.entry.credential_file_name
 
     # -- lifecycle helpers ---------------------------------------------------------------------
-    def _submit(self, url: str, headers: dict, payload: bytes, attempt: dict, counts: dict):
-        """Exactly one submit per call. Returns (status, reply) or an ambiguous Outcome."""
+    def _submit(self, url: str, headers: dict, payload: bytes, attempt: dict, counts: dict, raw: bool = False):
+        """Exactly one submit per call. Returns (status, reply) or an ambiguous Outcome.
+        `raw=True` uses the transport's post_bytes verb (the provider answers with audio bytes, not JSON) and
+        returns (status, body_bytes, content_type, response_headers); it is still exactly one submit."""
         self.submits += 1
         self._counts["submits"] = self._counts.get("submits", 0) + 1
         counts["api_calls"] = counts.get("api_calls", 0) + 1
         try:
+            if raw:
+                return self.transport.post_bytes(url, headers, payload)
             return self.transport.post_json(url, headers, payload)
         except Exception as exc:                     # noqa: BLE001 - every post-send failure is ambiguous
-            if _nothing_left_the_machine(exc):
+            if nothing_left_the_machine(exc):
                 # DNS resolution failed: no TCP connection was ever opened, so no byte reached the provider.
                 # This is a local infrastructure fault, not a trial — undo the submit count so dispatch()
                 # releases the reservation, and refuse pre-dispatch. Observed 2026-09-08 (network outage
@@ -482,17 +512,6 @@ class RouteAdapter:
             return Outcome("error", "artifact_download_failed", f"artifact URL answered {code} with {'no' if not data else 'non-byte'} content",
                            ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_meta={"artifact_url": url})
         return bytes(data), ct
-
-
-def _nothing_left_the_machine(exc: BaseException) -> bool:
-    """True only for a name-resolution failure: the socket was never connected, so nothing was sent."""
-    import socket
-    import urllib.error
-    if isinstance(exc, socket.gaierror):
-        return True
-    if isinstance(exc, urllib.error.URLError) and isinstance(getattr(exc, "reason", None), socket.gaierror):
-        return True
-    return False
 
 
 def http_status_outcome(status: int, reply, counts: dict, refusal: bool = False, note: str = "") -> Outcome:

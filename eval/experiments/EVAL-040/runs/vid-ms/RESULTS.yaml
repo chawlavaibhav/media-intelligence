@@ -1,0 +1,203 @@
+run_id: vid-ms
+case: VID-MS-01 (couple story, 3 shots, 15 s) and VID-MS-02 (sleep story, 3 shots, 10 s)
+revealed_utc: '2026-09-09'
+judge: Controller (blind M01-M08; MAPPING.json written alongside the blind copies, no off-repo key)
+commitment_verified: false
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: 'E1: refusal/hard error >= ceil(0.375 n); E2: accepts <= floor(0.25 n); E5: no artifact = reject'
+trials:
+- trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r1
+  run_id: vid-ms
+  case_id: VID-MS-01
+  question: VID-MS
+  route_key: veo-3.1-fast-extend
+  arm: chain
+  repeat_index: 1
+  duration_s: 15.0
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: M01
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: accepted (Controller)
+  redo_of: null
+- trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r2
+  run_id: vid-ms
+  case_id: VID-MS-01
+  question: VID-MS
+  route_key: veo-3.1-fast-extend
+  arm: chain
+  repeat_index: 2
+  duration_s: 15.0
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: M02
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: a little visually bad but technically correct (Controller)
+  redo_of: null
+- trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r2
+  run_id: vid-ms
+  case_id: VID-MS-02
+  question: VID-MS
+  route_key: gemini-omni-1.1-flash-10s
+  arm: core
+  repeat_index: 2
+  duration_s: 10.0
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: M03
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: clean (Controller)
+  redo_of: null
+- trial_id: VID-MS-02__kling-v3-pro-10s__core__r1
+  run_id: vid-ms
+  case_id: VID-MS-02
+  question: VID-MS
+  route_key: kling-v3-pro-10s
+  arm: core
+  repeat_index: 1
+  duration_s: 10.0
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: M04
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: technically correct but visually not amazing (Controller)
+  redo_of: null
+- trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r1
+  run_id: vid-ms
+  case_id: VID-MS-02
+  question: VID-MS
+  route_key: gemini-omni-1.1-flash-10s
+  arm: core
+  repeat_index: 1
+  duration_s: 10.0
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: M05
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: clean (Controller)
+  redo_of: null
+- trial_id: VID-MS-02__kling-v3-pro-10s__core__r2
+  run_id: vid-ms
+  case_id: VID-MS-02
+  question: VID-MS
+  route_key: kling-v3-pro-10s
+  arm: core
+  repeat_index: 2
+  duration_s: 10.0
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: M06
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: technically correct but visually not amazing (Controller)
+  redo_of: null
+- trial_id: VID-MS-01__kling-v3-pro-15s__core__r1
+  run_id: vid-ms
+  case_id: VID-MS-01
+  question: VID-MS
+  route_key: kling-v3-pro-15s
+  arm: core
+  repeat_index: 1
+  duration_s: 15.0
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: M07
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: accepted (Controller)
+  redo_of: null
+- trial_id: VID-MS-01__kling-v3-pro-15s__core__r2
+  run_id: vid-ms
+  case_id: VID-MS-01
+  question: VID-MS
+  route_key: kling-v3-pro-15s
+  arm: core
+  repeat_index: 2
+  duration_s: 15.0
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: M08
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: accepted (Controller)
+  redo_of: null
+elimination:
+- question: VID-MS
+  route_key: gemini-omni-1.1-flash-10s
+  arm: core
+  arms:
+  - core
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-MS
+  route_key: kling-v3-pro-10s
+  arm: core
+  arms:
+  - core
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-MS
+  route_key: kling-v3-pro-15s
+  arm: core
+  arms:
+  - core
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-MS
+  route_key: veo-3.1-fast-extend
+  arm: chain
+  arms:
+  - chain
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+reading:
+- '8/8 accepted: every cheap-first route met the multi-shot contracts (three ordered shots, same people, duration window, no lettering/speech/music).'
+- 'VID-MS-01 (15 s): Kling v3 Pro 15 s (USD 1.68/clip) 2/2 clean; Veo 3.1 fast extend chain (two calls, USD 2.00/clip) 2/2, one ''a little visually bad''.'
+- 'VID-MS-02 (10 s): Gemini Omni 1.1 Flash (USD 1.01/clip) 2/2 ''clean''; Kling v3 Pro 10 s (USD 1.12/clip) 2/2 ''technically correct but visually not amazing''.'
+- Contract-level acceptance does not separate these routes; the Controller's visual notes favour Kling 15 s on the long clip and Gemini Omni on the 10 s clip. Seedance
+  2.5 (USD 7.10 per 15 s clip) was left out at the Controller's instruction and is not needed by this evidence.
+spend_usd:
+  smoke: 1.12
+  lane: 10.6272
+  cap_inr: 1600

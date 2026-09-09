@@ -1,0 +1,83 @@
+run_id: aud-music-lyria
+revealed_utc: '2026-09-09'
+judge: Controller (blind; MAPPING.json written alongside the blind copies)
+commitment_verified: false
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: 'E1: refusal/hard error >= ceil(0.375 n); E2: accepts <= floor(0.25 n); E5: no artifact = reject'
+trials:
+- trial_id: MUS-01__lyria__native__r2
+  run_id: aud-music-lyria
+  case_id: MUS-01
+  question: MUS
+  route_key: lyria
+  arm: native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: L01
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: ''
+  redo_of: null
+- trial_id: MUS-02__lyria__native__r1
+  run_id: aud-music-lyria
+  case_id: MUS-02
+  question: MUS
+  route_key: lyria
+  arm: native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: L02
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: ''
+  redo_of: null
+- trial_id: MUS-02__lyria__native__r2
+  run_id: aud-music-lyria
+  case_id: MUS-02
+  question: MUS
+  route_key: lyria
+  arm: native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: L03
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: ''
+  redo_of: null
+- trial_id: MUS-01__lyria__native__r1
+  run_id: aud-music-lyria
+  case_id: MUS-01
+  question: MUS
+  route_key: lyria
+  arm: native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: L04
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: ''
+  redo_of: null
+elimination:
+- question: MUS
+  route_key: lyria
+  arm: native
+  arms:
+  - native
+  n_planned: 4
+  refusals_or_errors: 0
+  accepts: 4
+  rejects: 0
+  pending: 0
+  not_dispatched: 0
+  e1_threshold: 2
+  e2_threshold: 1
+  eliminated: false
+  eliminated_by: []

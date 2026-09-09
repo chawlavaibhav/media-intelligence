@@ -1,0 +1,111 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: aud-lip-smoke
+  mode: smoke
+  generated_utc: '2026-09-09T12:25:51.626003Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: 5f7bae6a810679b765744af7d175f962dd882b35
+  item_basis_commit: 0ba06b92ee27
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.lip.local.yaml
+  authorisation_sha256: bd2ce5c7a51a2fa6041fc28c27834881f8764989843e9431131291ae29420314
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: c0defa1e64d29e00f58362ab69e66dcaecb2f561ffef61e4ecbd2eb8ce47683c
+  cost_table_sha256: f71f6510da478456f1677c50f52340863ad649f655dc69a2b6ce18dda6c3bc94
+  cases:
+  - AUD-LIP-01
+  routes:
+  - kling-lipsync-a2v
+  tranche: null
+  repeats:
+  - 1
+  inputs_file:
+    path: eval/experiments/EVAL-040/runs/aud-lip/INPUTS.yaml
+    sha256: 669faae55a4743210ddff077b85993daf23c41427df8ba668c41876dfd890bbc
+    runs_root: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/experiments/EVAL-040/runs
+    data_uri_source: 'pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` with no format constraint; data
+      URIs per fal''s public API documentation (not in the pinned bytes; proven by the first live smoke, never by a test)'
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 1
+    excluded: 1
+  estimated_by_pool:
+    cash:
+      calls: 1
+      currency: USD
+      native: '0.140000'
+      usd_equiv: '0.140000'
+  estimated_total_usd_equiv: '0.140000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: AUD-LIP-01__kling-lipsync-a2v__chain__r1
+  case_id: AUD-LIP-01
+  item_id: AUD-LIP-01
+  route_key: kling-lipsync-a2v
+  arm: chain
+  repeat_index: 1
+  tranche: 1b
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/kling-video/lipsync/audio-to-video
+  endpoint: https://queue.fal.run/fal-ai/kling-video/lipsync/audio-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.140000'
+  estimated_usd_equiv: '0.140000'
+  unit_price: '0.014'
+  quantity: '10'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/kling-lipsync-audio-to-video/fal-api-models-kling-lipsync-a2v.json
+  body_sha256: 507a28775a20e36b3aeb09a10a5af4f5fbc16c4f1f325d7828ee02f5fb351c56
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: plate_clip
+    ref: vid-i2v:VID-I2V-02__minimax-h3-max-i2v__core__r1
+    kind: trial
+    run_id: vid-i2v
+    artifact_id: VID-I2V-02__minimax-h3-max-i2v__core__r1
+    suffix: null
+    relative_path: media/VID-I2V-02__minimax-h3-max-i2v__core__r1.mp4
+    sha256: e06f149ccf2be1b14584b270722c0dd3c7f4c9cfa358246a8263c1ffdf339e27
+    bytes: 6090446
+    content_type: video/mp4
+    constructed_synthetic: false
+    for_case: null
+    fixture_role: null
+  - role: drive_audio
+    ref: aud-tts-eleven:AUD-TTS-01__elevenlabs-v3-direct__native__r1
+    kind: trial
+    run_id: aud-tts-eleven
+    artifact_id: AUD-TTS-01__elevenlabs-v3-direct__native__r1
+    suffix: null
+    relative_path: media/AUD-TTS-01__elevenlabs-v3-direct__native__r1.mp3
+    sha256: 6645c4995aa154045ed68c780a80d7a43779ffacad643c76e9397829f02e9b5e
+    bytes: 40586
+    content_type: audio/mpeg
+    constructed_synthetic: false
+    for_case: null
+    fixture_role: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.014'
+  roster_implied_usd: '0.014'
+  constructed_synthetic_inputs: false
+excluded:
+- case_id: AUD-LIP-01
+  route_key: kling-lipsync-a2v
+  arm: chain
+  repeat_index: 2
+  tranche: 1b
+  reason: repeat 2 not requested ([1])

@@ -1,0 +1,296 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: aud-tts-sarvam
+  mode: lane
+  generated_utc: '2026-09-09T11:02:04.732207Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: b4aabdc0f41df7dc56cc6a4bfb81d94c5ef33cd9
+  item_basis_commit: 9adc4035d089
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.tts-sarvam.local.yaml
+  authorisation_sha256: 4447efc4459b8dbc4df0c284903f577101d782a11ace7a9ad30a665c94b1c4d4
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: c2619cdbc56d16af08c02232f08583fcb7f91683c423472e00ee985626b6ff3f
+  cost_table_sha256: 51e28596574114d4ce9fb95bd3ac4d5811240986549d44ec7925b601601907ec
+  cases:
+  - AUD-TTS-01
+  - AUD-TTS-02
+  - AUD-TTS-03
+  routes:
+  - sarvam-bulbul-v3
+  tranche: null
+  repeats: null
+  inputs_file:
+    path: eval/experiments/EVAL-040/runs/aud-tts/INPUTS.yaml
+    sha256: ff7405ad82517099515a24f0ea03699ce9a4161c6f5fb6e5b5b71aa8bd6069a7
+    runs_root: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/experiments/EVAL-040/runs
+    data_uri_source: 'pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` with no format constraint; data
+      URIs per fal''s public API documentation (not in the pinned bytes; proven by the first live smoke, never by a test)'
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 6
+    excluded: 0
+  estimated_by_pool:
+    sarvam_credits:
+      calls: 6
+      currency: INR
+      native: '0.804000'
+      usd_equiv: '0.008426'
+  estimated_total_usd_equiv: '0.008426'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: AUD-TTS-01__sarvam-bulbul-v3__native__r1
+  case_id: AUD-TTS-01
+  item_id: AUD-TTS-01
+  route_key: sarvam-bulbul-v3
+  arm: native
+  repeat_index: 1
+  tranche: 1b
+  surface: sarvam_direct
+  adapter: sarvam_tts
+  surface_model_id: bulbul:v3
+  endpoint: https://api.sarvam.ai/text-to-speech
+  billing_pool: sarvam_credits
+  currency: INR
+  estimated_amount_native: '0.090000'
+  estimated_usd_equiv: '0.000943'
+  unit_price: '3.0'
+  quantity: '30'
+  quantity_unit: chars
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+  body_sha256: 458d92304944c7fe26baef2fae2eac76000ab8650f6329dc7b707884bb45d8b0
+  api_calls_per_trial: 1
+  key_name: SARVAM_API_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: choice:speaker_id_lowercase
+    ref: literal:aditya
+    kind: literal
+    value: aditya
+    sha256: 265719f4e7ee032fe4a0c5ed5735a0530545e4f35c8648155dc5450330327e2a
+    run_id: null
+    artifact_id: null
+    bytes: null
+    mime: null
+    constructed_synthetic: false
+    is_decoy: false
+  price_basis: cost_table
+  cost_table_unit_price: '3.0'
+  roster_implied_usd: '3.0'
+  constructed_synthetic_inputs: false
+- seq: 2
+  trial_id: AUD-TTS-02__sarvam-bulbul-v3__native__r1
+  case_id: AUD-TTS-02
+  item_id: AUD-TTS-02
+  route_key: sarvam-bulbul-v3
+  arm: native
+  repeat_index: 1
+  tranche: 1b
+  surface: sarvam_direct
+  adapter: sarvam_tts
+  surface_model_id: bulbul:v3
+  endpoint: https://api.sarvam.ai/text-to-speech
+  billing_pool: sarvam_credits
+  currency: INR
+  estimated_amount_native: '0.210000'
+  estimated_usd_equiv: '0.002201'
+  unit_price: '3.0'
+  quantity: '70'
+  quantity_unit: chars
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+  body_sha256: 80a9540fcf42049b0af0a9f7ea1e5d5d627bcbc51f57cf9ba5c5bb8f820de427
+  api_calls_per_trial: 1
+  key_name: SARVAM_API_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: choice:speaker_id_lowercase
+    ref: literal:aditya
+    kind: literal
+    value: aditya
+    sha256: 265719f4e7ee032fe4a0c5ed5735a0530545e4f35c8648155dc5450330327e2a
+    run_id: null
+    artifact_id: null
+    bytes: null
+    mime: null
+    constructed_synthetic: false
+    is_decoy: false
+  price_basis: cost_table
+  cost_table_unit_price: '3.0'
+  roster_implied_usd: '3.0'
+  constructed_synthetic_inputs: false
+- seq: 3
+  trial_id: AUD-TTS-03__sarvam-bulbul-v3__native__r1
+  case_id: AUD-TTS-03
+  item_id: AUD-TTS-03
+  route_key: sarvam-bulbul-v3
+  arm: native
+  repeat_index: 1
+  tranche: 1b
+  surface: sarvam_direct
+  adapter: sarvam_tts
+  surface_model_id: bulbul:v3
+  endpoint: https://api.sarvam.ai/text-to-speech
+  billing_pool: sarvam_credits
+  currency: INR
+  estimated_amount_native: '0.102000'
+  estimated_usd_equiv: '0.001069'
+  unit_price: '3.0'
+  quantity: '34'
+  quantity_unit: chars
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+  body_sha256: bb63e9d710979d54914488d45c38c9ffa3c080c38e2782dea8078423947f2917
+  api_calls_per_trial: 1
+  key_name: SARVAM_API_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: choice:speaker_id_lowercase
+    ref: literal:aditya
+    kind: literal
+    value: aditya
+    sha256: 265719f4e7ee032fe4a0c5ed5735a0530545e4f35c8648155dc5450330327e2a
+    run_id: null
+    artifact_id: null
+    bytes: null
+    mime: null
+    constructed_synthetic: false
+    is_decoy: false
+  price_basis: cost_table
+  cost_table_unit_price: '3.0'
+  roster_implied_usd: '3.0'
+  constructed_synthetic_inputs: false
+- seq: 4
+  trial_id: AUD-TTS-01__sarvam-bulbul-v3__native__r2
+  case_id: AUD-TTS-01
+  item_id: AUD-TTS-01
+  route_key: sarvam-bulbul-v3
+  arm: native
+  repeat_index: 2
+  tranche: 1b
+  surface: sarvam_direct
+  adapter: sarvam_tts
+  surface_model_id: bulbul:v3
+  endpoint: https://api.sarvam.ai/text-to-speech
+  billing_pool: sarvam_credits
+  currency: INR
+  estimated_amount_native: '0.090000'
+  estimated_usd_equiv: '0.000943'
+  unit_price: '3.0'
+  quantity: '30'
+  quantity_unit: chars
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+  body_sha256: 458d92304944c7fe26baef2fae2eac76000ab8650f6329dc7b707884bb45d8b0
+  api_calls_per_trial: 1
+  key_name: SARVAM_API_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: choice:speaker_id_lowercase
+    ref: literal:aditya
+    kind: literal
+    value: aditya
+    sha256: 265719f4e7ee032fe4a0c5ed5735a0530545e4f35c8648155dc5450330327e2a
+    run_id: null
+    artifact_id: null
+    bytes: null
+    mime: null
+    constructed_synthetic: false
+    is_decoy: false
+  price_basis: cost_table
+  cost_table_unit_price: '3.0'
+  roster_implied_usd: '3.0'
+  constructed_synthetic_inputs: false
+- seq: 5
+  trial_id: AUD-TTS-02__sarvam-bulbul-v3__native__r2
+  case_id: AUD-TTS-02
+  item_id: AUD-TTS-02
+  route_key: sarvam-bulbul-v3
+  arm: native
+  repeat_index: 2
+  tranche: 1b
+  surface: sarvam_direct
+  adapter: sarvam_tts
+  surface_model_id: bulbul:v3
+  endpoint: https://api.sarvam.ai/text-to-speech
+  billing_pool: sarvam_credits
+  currency: INR
+  estimated_amount_native: '0.210000'
+  estimated_usd_equiv: '0.002201'
+  unit_price: '3.0'
+  quantity: '70'
+  quantity_unit: chars
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+  body_sha256: 80a9540fcf42049b0af0a9f7ea1e5d5d627bcbc51f57cf9ba5c5bb8f820de427
+  api_calls_per_trial: 1
+  key_name: SARVAM_API_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: choice:speaker_id_lowercase
+    ref: literal:aditya
+    kind: literal
+    value: aditya
+    sha256: 265719f4e7ee032fe4a0c5ed5735a0530545e4f35c8648155dc5450330327e2a
+    run_id: null
+    artifact_id: null
+    bytes: null
+    mime: null
+    constructed_synthetic: false
+    is_decoy: false
+  price_basis: cost_table
+  cost_table_unit_price: '3.0'
+  roster_implied_usd: '3.0'
+  constructed_synthetic_inputs: false
+- seq: 6
+  trial_id: AUD-TTS-03__sarvam-bulbul-v3__native__r2
+  case_id: AUD-TTS-03
+  item_id: AUD-TTS-03
+  route_key: sarvam-bulbul-v3
+  arm: native
+  repeat_index: 2
+  tranche: 1b
+  surface: sarvam_direct
+  adapter: sarvam_tts
+  surface_model_id: bulbul:v3
+  endpoint: https://api.sarvam.ai/text-to-speech
+  billing_pool: sarvam_credits
+  currency: INR
+  estimated_amount_native: '0.102000'
+  estimated_usd_equiv: '0.001069'
+  unit_price: '3.0'
+  quantity: '34'
+  quantity_unit: chars
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/sarvam-bulbul-v3/sarvam-api-pricing.html
+  body_sha256: bb63e9d710979d54914488d45c38c9ffa3c080c38e2782dea8078423947f2917
+  api_calls_per_trial: 1
+  key_name: SARVAM_API_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: choice:speaker_id_lowercase
+    ref: literal:aditya
+    kind: literal
+    value: aditya
+    sha256: 265719f4e7ee032fe4a0c5ed5735a0530545e4f35c8648155dc5450330327e2a
+    run_id: null
+    artifact_id: null
+    bytes: null
+    mime: null
+    constructed_synthetic: false
+    is_decoy: false
+  price_basis: cost_table
+  cost_table_unit_price: '3.0'
+  roster_implied_usd: '3.0'
+  constructed_synthetic_inputs: false
+excluded: []
