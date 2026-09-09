@@ -244,18 +244,17 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-**Image Round 1 judged; thresholds frozen; Registry v1 written (167 rows); video piece 1 judged; image half two
-run and awaiting verdicts (9 Sep 2026).** Video piece 1 (VID-TOPO3-01, text into motion, ₹950 cap, USD 10.22 spent):
-blind verdicts — arm C (textless plate → cheap i2v → exact strings by code on every frame) **2/2 accept**; arm A
-(cheapest still model's plate → H3 Max / Wan) 0/4, every reject the plate's own misspelling carried faithfully;
-arm B (Veo 3.1 full, Kling v3 Pro writing Hindi natively) 0/4, fabricated Devanagari. Routing consequence recorded in
-`eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml`. Image half two (edit / extend / compose / reference on
-constructed stand-ins, 36 trials, USD 3.30 of ₹700): blind packet at `runs/half2/judging/` (INDEX.html gallery,
-reference photos, decoy line-ups); Controller verdicts pending. Next gates, each needing its own Controller act:
-(1) half-two verdicts → reveal → Registry rows + evidence-map cells for the four capabilities; (2) whether to add
-Nano Banana plates to arm A (~USD 1.6, small cap addendum); (3) the next video piece (t2v core), with its own spend
-record. Round two is sized from survivors, not pre-authorised. The Canon items below remain a queue, not an
-authorisation.
+**Image Round 1, image half two and video piece 1 all judged; Registry v1 at 282 deterministic rows (9 Sep 2026).**
+Half two (edit / extend / compose / reference on constructed stand-ins, 36 trials, USD 3.30 of ₹700): Seedream 5 Pro edit
+10/12 (survives every question), FLUX.2 Pro edit 4/12, Nano Banana Pro edit 3/12 (eliminated on three of four
+questions). Video piece 1 (VID-TOPO3-01, USD 10.22 of ₹950): arm C (textless plate → cheap i2v → exact strings by code
+per frame) 2/2; arms A and B 0/4 each (plate misspelling carried / premium native Devanagari fabricated). H-CHEAP
+supported in its strong form for text in motion. Summaries: `runs/half2/IMAGE-HALF-TWO-SUMMARY.md`,
+`runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md`; rules RR-4..RR-7 in `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml`.
+Next gates, each needing its own Controller act: (1) whether to add Nano Banana plates to video arm A (~USD 1.6, small
+cap addendum); (2) the next video piece (t2v core / multi-shot / two speakers / music), with its own spend record;
+(3) round two of stills sized from survivors. Fresh isolated cloud resources (MD-9) still need the Controller's own
+session. The Canon items below remain a queue, not an authorisation.
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's
 choice among `canon/CANON-SHAPE-v1.md` §7's remaining items — injection v1 (cached prefix, no
