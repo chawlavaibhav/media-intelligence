@@ -84,3 +84,17 @@ Any video, audio, music or lip-sync call; any edit / reference / extend / compos
 conditional route; any call after the cap; any Registry row from a non-deterministic instrument;
 any conclusion about whether Canon works; any change to the frozen package or the roster (a change
 means a rebuild and a new record).
+
+## 6. Addendum — composite arm re-run (Controller, 2026-09-08 ~15:45 IST: "do it")
+
+Image Round 1 dispatched the composite arm (arm C, FLUX.2 Pro textless plate) of IMG-TEXT-01/02 with the main
+text-bearing prompt, because the harness selected one prompt per case. The blueprints already carried a textless
+plate prompt (`### generation_prompt_textless_plate (arm C only)`); the harness now selects it for `C_composite*`
+arms (`casebook.py`, test `test_casebook_arms.py`). The frozen package and the item basis commit are unchanged.
+
+Authorised under this record's existing scope and cap: run `img-r1-composite` — the same four arm-C rows
+(IMG-TEXT-01 ×2, IMG-TEXT-02 ×2) on FLUX.2 Pro with the textless prompt, ≈ USD 0.12 — plus the deterministic overlay
+step at USD 0 (exact strings rendered with a pinned system font and composited by code onto each plate). The
+composited pictures are judged by the Controller against the same contracts; they cannot be blind as to arm
+(code-set type is visibly code-set), so only the plate order is shuffled. The original arm-C trials in `img-r1`
+stay on the record as what they were: FLUX generating text from the main prompt.

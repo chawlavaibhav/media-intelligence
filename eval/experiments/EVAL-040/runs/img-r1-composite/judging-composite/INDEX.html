@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8"><title>Judging - composite arm</title>
+<style>body{font:15px/1.45 -apple-system,Helvetica,Arial;margin:24px;color:#222;background:#fafafa}pre{white-space:pre-wrap;background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px}.card{background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px}.card img{width:100%;display:block;border-radius:4px}.id{font-weight:600;margin:6px 0 2px}label{margin-right:10px}</style>
+<h1>Judging - composite arm (text set by code)</h1>
+<p>Accept or reject each against the contract, add a note, press the button and paste the YAML back to me.</p>
+<p><button onclick="dump()">Show my verdicts as YAML</button></p><pre id="out" hidden></pre>
+<h2>IMG-TEXT-02 (en)</h2><pre>- ACCEPT only if the lettering reads exactly &quot;FLAT 40% OFF&quot;, &quot;First 100 members only&quot; and &quot;AlphaFit&quot; — same letters, same case, the numerals 40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+- ACCEPT only if the 15 January end date is readable in some wording.
+- REJECT if any person, silhouette or body part appears.
+- ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+- REJECT if any other lettering or pseudo-lettering appears anywhere.</pre><div class="grid">
+<div class="card"><a href="C01.png" target="_blank"><img src="C01.png"></a><div class="id">C01</div><div><label><input type="radio" name="C01" value="accept"> accept</label><label><input type="radio" name="C01" value="reject"> reject</label></div><input type="text" placeholder="note" data-note="C01" style="width:100%;margin-top:4px"></div>
+<div class="card"><a href="C04.png" target="_blank"><img src="C04.png"></a><div class="id">C04</div><div><label><input type="radio" name="C04" value="accept"> accept</label><label><input type="radio" name="C04" value="reject"> reject</label></div><input type="text" placeholder="note" data-note="C04" style="width:100%;margin-top:4px"></div>
+</div>
+<h2>IMG-TEXT-01 (hi)</h2><pre>- ACCEPT only if the lettering reads exactly &quot;दीपावली की शुभकामनाएं&quot;, &quot;सभी मिठाइयों पर 20% छूट&quot; and &quot;श्री गणेश मिष्ठान भंडार&quot; — every matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented character.
+- ACCEPT only if &quot;श्री गणेश मिष्ठान भंडार&quot; is the largest lettering on the poster.
+- REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+- ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+- REJECT if any string is cut by the frame edge or overlaps another string.</pre><div class="grid">
+<div class="card"><a href="C02.png" target="_blank"><img src="C02.png"></a><div class="id">C02</div><div><label><input type="radio" name="C02" value="accept"> accept</label><label><input type="radio" name="C02" value="reject"> reject</label></div><input type="text" placeholder="note" data-note="C02" style="width:100%;margin-top:4px"></div>
+<div class="card"><a href="C03.png" target="_blank"><img src="C03.png"></a><div class="id">C03</div><div><label><input type="radio" name="C03" value="accept"> accept</label><label><input type="radio" name="C03" value="reject"> reject</label></div><input type="text" placeholder="note" data-note="C03" style="width:100%;margin-top:4px"></div>
+</div>
+<script>function dump(){var ids=[...new Set([...document.querySelectorAll('input[type=radio]')].map(r=>r.name))].sort();var y="run_id: img-r1-composite\nverdicts:\n";ids.forEach(id=>{var v=(document.querySelector('input[name="'+id+'"]:checked')||{}).value||null;var n=(document.querySelector('input[data-note="'+id+'"]')||{}).value||"";y+="  "+id+": {verdict: "+(v||"null")+", note: \""+n.replace(/"/g,"'")+"\"}\n";});var o=document.getElementById('out');o.textContent=y;o.hidden=false;}</script>

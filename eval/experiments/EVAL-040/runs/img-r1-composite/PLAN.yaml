@@ -1,0 +1,141 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: img-r1-composite
+  mode: lane
+  generated_utc: '2026-09-08T14:23:18.750668Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: 1c618b47db7662f874c04386e9f22cfe298985fb
+  item_basis_commit: 0596aa2
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/harness-v2/authorization.local.yaml
+  authorisation_sha256: 5a334e8d43023ce7cce7cd8c8a21331c8db83be36907e524935ed058ed9154f7
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: 2681066e36e09d9a80e7d10413300957491625f9074b36a800b04dc776ecbe40
+  cost_table_sha256: 51e28596574114d4ce9fb95bd3ac4d5811240986549d44ec7925b601601907ec
+  cases:
+  - IMG-TEXT-01
+  - IMG-TEXT-02
+  routes:
+  - flux-2-pro
+  tranche: 1a
+  repeats: null
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 4
+    excluded: 0
+  estimated_by_pool:
+    cash:
+      calls: 4
+      currency: USD
+      native: '0.120000'
+      usd_equiv: '0.120000'
+  estimated_total_usd_equiv: '0.120000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r1
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  repeat_index: 1
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 8e2cd950dba1c7235c1d6ade081a9f8c05a921d51b82c4577cbfd9d054431fe2
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 2
+  trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r1
+  case_id: IMG-TEXT-02
+  item_id: IMG-TEXT-02
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  repeat_index: 1
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 6810c7d316f7696814c9e6cd1cb56f173db438ff4f2717e7b60154770f55a920
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 3
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-01
+  item_id: IMG-TEXT-01
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 8e2cd950dba1c7235c1d6ade081a9f8c05a921d51b82c4577cbfd9d054431fe2
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+- seq: 4
+  trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-02
+  item_id: IMG-TEXT-02
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/flux-2-pro
+  endpoint: https://queue.fal.run/fal-ai/flux-2-pro
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.030000'
+  estimated_usd_equiv: '0.030000'
+  unit_price: '0.03'
+  quantity: '1'
+  quantity_unit: images
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
+  body_sha256: 6810c7d316f7696814c9e6cd1cb56f173db438ff4f2717e7b60154770f55a920
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+excluded: []

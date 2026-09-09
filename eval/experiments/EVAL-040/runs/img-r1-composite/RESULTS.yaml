@@ -1,0 +1,51 @@
+# EVAL-040 composite arm results
+run_id: img-r1-composite
+arm: C_composite_textless_base (FLUX.2 Pro textless plate + code overlay, layout composite-v2)
+judged_utc: '2026-09-09'
+blind_as_to_arm: false
+trials:
+- blind_id: C01
+  trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-02
+  arm: C_composite_textless_base
+  layout: composite-v2
+  sha256: fbf673613409418adcd2eda8b2f0b63fccc5f5a347da83999d525cc2b24fae9a
+  verdict: accept
+  note: all accepted (Controller, chat)
+- blind_id: C02
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r1
+  case_id: IMG-TEXT-01
+  arm: C_composite_textless_base
+  layout: composite-v2
+  sha256: 6a7cf0f6f822522d11497f8e63fdeb64fbf37966a1cd21e5bee79e3ebe98b08b
+  verdict: accept
+  note: all accepted (Controller, chat)
+- blind_id: C03
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-01
+  arm: C_composite_textless_base
+  layout: composite-v2
+  sha256: ec4a479ede893105a3640c4f1bf801cb00ee80b3823e123fbd1f113c30e612f9
+  verdict: accept
+  note: all accepted (Controller, chat)
+- blind_id: C04
+  trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r1
+  case_id: IMG-TEXT-02
+  arm: C_composite_textless_base
+  layout: composite-v2
+  sha256: 15a854ebd095e48dc8f4e50fe3942523bd69cf97bf08b2a744da87cea94f1c11
+  verdict: accept
+  note: all accepted (Controller, chat)
+per_case:
+  IMG-TEXT-01:
+    accepted: 2
+    trials: 2
+  IMG-TEXT-02:
+    accepted: 2
+    trials: 2
+cost:
+  plates_usd: 0.12
+  overlay_usd: 0.0
+  per_accepted_usd: 0.03
+note: Product evidence. Exactness is by construction (strings rendered from the contract);
+  the judged question was whether code-set type is acceptable as a poster.

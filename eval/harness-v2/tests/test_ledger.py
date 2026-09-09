@@ -23,9 +23,14 @@ FIELDS = ("tranche_id", "authorised", "item_basis_commit", "price_basis_roster_s
 
 class AuthorisationTest(NoNetworkTestCase):
     def test_m_no_live_ledger_from_the_committed_state(self):
-        self.assertFalse(L.AUTH_LOCAL_PATH.exists(), "authorization.local.yaml must not exist in the committed state")
+        # The committed state carries no authorisation file (it is gitignored). On a machine where the
+        # Controller has materialised one from a signed record, that file is legitimately present, so the
+        # "committed state" is modelled by a path that does not exist — never by the live file.
+        self.assertTrue(any(line.strip() == "eval/harness-v2/authorization.local.yaml"
+                            for line in (L.hv2_paths.REPO_ROOT / ".gitignore").read_text().splitlines()),
+                        "authorization.local.yaml must be gitignored")
         with self.assertRaises(NotAuthorised):
-            L.open_battery_ledger(root=self.tmp / "runs")
+            L.open_battery_ledger(root=self.tmp / "runs", authorisation_path=self.tmp / "absent-authorization.local.yaml")
         with self.assertRaises(NotAuthorised):
             L.open_battery_ledger(root=self.tmp / "runs", authorisation_path=L.AUTH_EXAMPLE_PATH)
         st = L.authorisation_status(L.AUTH_EXAMPLE_PATH)
@@ -144,6 +149,22 @@ class LedgerTest(NoNetworkTestCase):
             t.reserve(Decimal("0.002096"), billing_pool="sarvam_credits", currency="INR", amount_native=Decimal("0.20"), amount_usd_equiv=Decimal("0.002096"))
         with self.assertRaises(BudgetExceeded):                                 # a huge INR amount cannot slip past the USD cap either
             t.reserve(Decimal("2.000000"), billing_pool="sarvam_credits", currency="INR", amount_native=Decimal("190.8422"), amount_usd_equiv=Decimal("2.000000"))
+
+    def test_zero_cap_is_a_valid_signed_statement_that_forbids_the_tranche(self):
+        # Image Round 1 signs cap_1b_usd: 0.00 and sarvam_cap_inr: 0.00 — "nothing in 1b, no Sarvam call".
+        # The loader accepts 0 (only missing or negative is malformed) and the budget refuses every
+        # positive reservation against it; a negative cap is still refused by the loader.
+        good = self.write_auth(name="zero-1b.yaml", cap_1b_usd="0.00", sarvam_cap_inr="0.00")
+        auth = L.load_battery_authorisation(good)
+        self.assertEqual(auth.refusals, ())
+        self.assertEqual(auth.caps_usd["1b"], Decimal("0"))
+        bad = self.write_auth(name="neg-1b.yaml", cap_1b_usd="-0.01")
+        self.assertTrue(any("cap_1b" in r for r in L.load_battery_authorisation(bad).refusals))
+        b = self.make_ledger(ceiling="12.58", caps=("12.58", "0.00"))
+        with self.assertRaises(BudgetExceeded):
+            b.tranche("1b").reserve(Decimal("0.01"), billing_pool="credits", currency="USD", amount_native="0.01", amount_usd_equiv="0.01")
+        self.assertEqual(b.tranche("1b").remaining_usd(), Decimal("0"))
+        b.tranche("1a").reserve(Decimal("0.067"), billing_pool="credits", currency="USD", amount_native="0.067", amount_usd_equiv="0.067")
 
     def test_ceiling_and_tranche_caps(self):
         b = self.make_ledger(ceiling="1.00", caps=("0.30", "0.90"))

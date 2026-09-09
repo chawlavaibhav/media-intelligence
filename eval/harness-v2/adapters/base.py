@@ -376,7 +376,7 @@ class RouteAdapter:
                            else "provisional_pinned_rate"),
             "cost_ref": cost_ref, "ambiguous_dispatch": bool(outcome.ambiguous),
             "outcome_resolved": bool(outcome.outcome_resolved),
-            "provider_request_id": outcome.provider_request_id,
+            "provider_request_id": outcome.provider_request_id or attempt.get("provider_request_id"),   # never lose a known id
             "lifecycle_counts": {**outcome.lifecycle_counts, "submits": self._counts.get("submits", 0), "status_checks": self._counts.get("status_checks", 0)},
             "artifact": ({k: artifact[k] for k in ("artifact_id", "relative_path", "bytes", "sha256", "content_type", "media_kind")}
                          if artifact else None),
@@ -428,6 +428,15 @@ class RouteAdapter:
         try:
             return self.transport.post_json(url, headers, payload)
         except Exception as exc:                     # noqa: BLE001 - every post-send failure is ambiguous
+            if _nothing_left_the_machine(exc):
+                # DNS resolution failed: no TCP connection was ever opened, so no byte reached the provider.
+                # This is a local infrastructure fault, not a trial — undo the submit count so dispatch()
+                # releases the reservation, and refuse pre-dispatch. Observed 2026-09-08 (network outage
+                # mid-lane): four trials had been written off and charged conservatively for nothing sent.
+                self.submits -= 1
+                self._counts["submits"] -= 1
+                counts["api_calls"] -= 1
+                raise PreDispatchRefusal(f"DNS resolution failed for {url} ({exc}); nothing was sent") from exc
             api_status, error_class = classify_transport_failure(exc)
             return Outcome(api_status, error_class,
                            f"{type(exc).__name__} after dispatch to {url}: {exc}",
@@ -445,9 +454,13 @@ class RouteAdapter:
                 done, reply = check()
             except Exception as exc:                 # noqa: BLE001
                 api_status, error_class = classify_transport_failure(exc)
+                # Keep the provider's request id on the record: it is what makes a poll failure RECOVERABLE
+                # (recover_fal.py) instead of a lost, possibly billed job. Observed 2026-09-08: one fal job was
+                # submitted, the network dropped mid-poll, and the id was not persisted.
                 return Outcome(api_status, f"poll_{error_class}",
                                f"{what} poll failed after the submit succeeded; the job may still complete and bill: {exc}",
-                               ambiguous=True, outcome_resolved=False, lifecycle_counts=counts)
+                               ambiguous=True, outcome_resolved=False, lifecycle_counts=counts,
+                               provider_request_id=attempt.get("provider_request_id"))
             if isinstance(reply, Outcome):
                 return reply
             if done:
@@ -469,6 +482,17 @@ class RouteAdapter:
             return Outcome("error", "artifact_download_failed", f"artifact URL answered {code} with {'no' if not data else 'non-byte'} content",
                            ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_meta={"artifact_url": url})
         return bytes(data), ct
+
+
+def _nothing_left_the_machine(exc: BaseException) -> bool:
+    """True only for a name-resolution failure: the socket was never connected, so nothing was sent."""
+    import socket
+    import urllib.error
+    if isinstance(exc, socket.gaierror):
+        return True
+    if isinstance(exc, urllib.error.URLError) and isinstance(getattr(exc, "reason", None), socket.gaierror):
+        return True
+    return False
 
 
 def http_status_outcome(status: int, reply, counts: dict, refusal: bool = False, note: str = "") -> Outcome:

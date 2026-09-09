@@ -266,16 +266,20 @@ class FalQueueAdapter(B.RouteAdapter):
 
         def check():
             code, st = self.transport.get_json(status_url, headers)
-            if code != 200:
-                return True, B.Outcome("error", f"poll_http_{code}", f"status poll answered {code} for {request_id}; final outcome unknown",
-                                       ambiguous=True, outcome_resolved=False, lifecycle_counts=counts)
-            s = (st or {}).get("status")
-            if s == "COMPLETED":
-                return True, st
-            if s in ("IN_QUEUE", "IN_PROGRESS"):
-                return False, st
-            return True, B.Outcome("error", "malformed_response", f"undocumented queue status {s!r} for {request_id}",
-                                   ambiguous=True, outcome_resolved=False, lifecycle_counts=counts)
+            s = ((st or {}).get("status") if isinstance(st, dict) else None)
+            # fal's queue status endpoint answers HTTP 202 while the job is IN_QUEUE / IN_PROGRESS and
+            # HTTP 200 once COMPLETED. Observed live on 2026-09-08 (Image Round 1, first five fal trials):
+            # the earlier reading of any non-200 as "outcome unknown" wrote off completed, billed jobs.
+            # Only a body status decides; 200/202 are both pollable replies.
+            if code in (200, 202):
+                if s == "COMPLETED":
+                    return True, st
+                if s in ("IN_QUEUE", "IN_PROGRESS"):
+                    return False, st
+                return True, B.Outcome("error", "malformed_response", f"undocumented queue status {s!r} (HTTP {code}) for {request_id}",
+                                       ambiguous=True, outcome_resolved=False, lifecycle_counts=counts, provider_request_id=request_id)
+            return True, B.Outcome("error", f"poll_http_{code}", f"status poll answered {code} for {request_id}; final outcome unknown",
+                                   ambiguous=True, outcome_resolved=False, lifecycle_counts=counts, provider_request_id=request_id)
 
         terminal = self._poll(check, attempt, counts, "fal queue")
         if isinstance(terminal, B.Outcome):

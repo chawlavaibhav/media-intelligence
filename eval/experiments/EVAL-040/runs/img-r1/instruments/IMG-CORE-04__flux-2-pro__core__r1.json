@@ -1,0 +1,414 @@
+{
+ "at": "2026-09-08T08:46:22.173128Z",
+ "errors": [],
+ "format_probe": {
+  "absence_reason": "other",
+  "criterion": {
+   "controller_ref": "MD-C1",
+   "criteria_file_sha256": "ffafb55bfc9678252497d982666d312bf151b6dd8c18ff081bfd9f562e511553",
+   "frozen": false,
+   "id": "format_probe",
+   "ref": "eval/harness-v2/instruments/PASS-CRITERIA-v0.yaml#format_probe",
+   "status": "proposed"
+  },
+  "defects": [],
+  "measurement": {
+   "artifact_sha256": "c39febdd0349a4f9119a1b35117aaf2188419cc01683dcff38400df1b449aa04",
+   "checks": {
+    "aspect_ok": true,
+    "audio_ok": true,
+    "decodable": true,
+    "duration_ok": true,
+    "resolution_class_ok": false
+   },
+   "declared": {
+    "aspect": "9:16",
+    "audio": null,
+    "duration_s": null,
+    "resolution": "~1 MP (1024-class)"
+   },
+   "notes": {
+    "aspect": "declared 9:16, observed 9:16 (720x1280)",
+    "audio": "not applicable",
+    "duration": "not applicable (no declared duration)",
+    "resolution": "1024-class: long side 1280"
+   },
+   "probe": {
+    "aspect": "9:16",
+    "aspect_float": 0.5625,
+    "audio_codec": null,
+    "container": "image2",
+    "duration_s": 0.04,
+    "fps": 25.0,
+    "has_audio": false,
+    "has_video": true,
+    "height": 1280,
+    "n_audio_streams": 0,
+    "n_video_streams": 1,
+    "nb_frames": null,
+    "pix_fmt": "yuvj444p",
+    "size_bytes": 346899,
+    "video_codec": "mjpeg",
+    "width": 720
+   }
+  },
+  "note": "criterion_not_frozen",
+  "verdict": "absent",
+  "would_defects": [
+   {
+    "observed_by": "instrument",
+    "term": "resolution_class mismatch: "
+   }
+  ],
+  "would_verdict": "fail"
+ },
+ "gate_post": {
+  "argv": [
+   "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/canon/gate/run_gate.py",
+   "post",
+   "--artifact",
+   "eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__flux-2-pro__core__r1.jpg",
+   "--dispatch",
+   "eval/experiments/EVAL-040/runs/img-r1/artifacts/IMG-CORE-04__flux-2-pro__core__r1.request.json",
+   "--modality",
+   "static_image",
+   "--json",
+   "eval/experiments/EVAL-040/runs/img-r1/instruments/IMG-CORE-04__flux-2-pro__core__r1.gate.json"
+  ],
+  "exit_code": 0,
+  "json_path": "eval/experiments/EVAL-040/runs/img-r1/instruments/IMG-CORE-04__flux-2-pro__core__r1.gate.json",
+  "report": {
+   "gate": "post_draw",
+   "inputs": {
+    "IMG-CORE-04__flux-2-pro__core__r1.jpg": "c39febdd0349a4f9119a1b35117aaf2188419cc01683dcff38400df1b449aa04"
+   },
+   "label": "artifact IMG-CORE-04__flux-2-pro__core__r1.jpg (sha256 c39febdd0349)",
+   "notes": [],
+   "packs_selected": [
+    "composition_and_attention"
+   ],
+   "report_text": "CANON GATE v0 — post-draw — artifact IMG-CORE-04__flux-2-pro__core__r1.jpg (sha256 c39febdd0349) — packs: composition_and_attention\nNOT-RUN         LIMIT-TEXT      no text detector configured; the qualified detector (Cloud Vision TEXT_DETECTION) needs a separate spend authorisation — source: pack_limits \"… composite text deterministically.\"\nNOT-APPLICABLE  PA-D1-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D2-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D3-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D4-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D5-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D6-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D7-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D8-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D9-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D10-check    product_appearance not selected (trigger table: no product/packshot entity)\nNOT-MECHANISED  CA-D1-check     read order and 'one dominant cue' need pixels and attention modelling — not counted as satisfied\nNOT-MECHANISED  CA-D2-check     placement zone and its reason need scene understanding in pixels — not counted as satisfied\nNOT-MECHANISED  CA-D3-check     edge treatment and tangency need pixels — not counted as satisfied\nNOT-MECHANISED  CA-D4-check     framing-element tone/width comparison needs pixels — not counted as satisfied\nNOT-MECHANISED  CA-D5-check     grayscale tonal weight needs pixels — not counted as satisfied\nNOT-RUN         CA-D6-check     no dispatched or declared aspect to compare against\nNOT-APPLICABLE  CA-D7-check     CA-D7 is a video/image_sequence decision ('How does attention travel across cuts (video)?') — not applicable to static_image\nNOT-APPLICABLE  CA-D8-check     CA-D8 is a video/image_sequence decision ('When cut criteria conflict, what is sacrificed first?') — not applicable to static_image\nNOT-APPLICABLE  CA-D9-check     CA-D9 is a video/image_sequence decision ('Screen direction and the line?') — not applicable to static_image\nNOT-APPLICABLE  CA-D10-check    CA-D10 is a video decision ('How long may a shot hold?') — not applicable to static_image\nNOT-APPLICABLE  CA-D11-check    CA-D11 is a video decision ('Does the camera move, and why?') — not applicable to static_image\ndispatch\nNOT-RUN         DISPATCH-ASPECT no dispatched or declared aspect to compare against\nNOT-RUN         DISPATCH-DIMENSIONS no package supplied — declared minimum unknown\ninfra\nPASS            INFRA-CONTAINER jpeg image 720×1280 (SOF0, 8-bit, 3 components; no EXIF orientation tag)\nNOT-RUN         INFRA-RECORD-SHA no record.json supplied\nGATE PASS: 1 mechanised checks hold over the submitted bytes (0 doctrine partials + 1 limit/dispatch/infra row; 0 non-blocking FAILs on record; 4 non-doctrine rows not run: LIMIT-TEXT, DISPATCH-ASPECT, DISPATCH-DIMENSIONS, INFRA-RECORD-SHA); 5 doctrine check lines NOT mechanised, 15 not applicable, 1 not run — none counted as satisfied. This establishes structure over the prompt/artifact bytes — not doctrine satisfaction, quality, outcomes, or adoption.",
+   "results": [
+    {
+     "blocking": true,
+     "check_id": "LIMIT-TEXT",
+     "clause": "",
+     "coverage": "full",
+     "detail": "no text detector configured; the qualified detector (Cloud Vision TEXT_DETECTION) needs a separate spend authorisation — source: pack_limits \"… composite text deterministically.\"",
+     "evidence": [],
+     "family": "limit",
+     "gate": "post_draw",
+     "source_text": "Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.",
+     "status": "NOT_RUN"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D1-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Every key object has exactly one declared finish; two surfaces of the same tone still read differently by finish; no surface reads as both matte and mirror-glossy in one shot.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D2-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Highlight positions agree with the single implied source; highlight brightness does not fall off with implied source distance; a large soft source reads as a large reflection, never a hard point.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D3-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Shadow edge quality and highlight size agree — a soft shadow with a pinpoint specular, or the reverse, is a lighting contradiction.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D4-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "One nameable fictional source; key direction agrees with it; no shadow in frame contradicts the declared direction.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D5-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Product-to-ground tonal contrast survives a grayscale check; where depth planes are staged, nearer planes are darker than farther ones.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D6-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Mood is attributable to light character — direction, hardness, contrast — not to a brightness slider; the key level is declared and consistent across shots.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D7-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "State in one line what the hero image sells at a glance; if that line needs the body copy, the image fails.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D8-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Every specular on glass, dark or glossy surfaces is declared wanted or removed; none is accidental.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D9-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Count visible faces of the product; if a candidate angle shows more surfaces without breaking PA-D2 or PA-D5, prefer it.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "PA-D10-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "product_appearance not selected (trigger table: no product/packshot entity)",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Every deviation from PA-D1..PA-D9 is listed in DOCTRINE_DEVIATIONS with its forcing brief clause; none is silent.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D1-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "read order and 'one dominant cue' need pixels and attention modelling",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Name the 1st/2nd/3rd read; each carried by exactly one dominant cue; no two cues compete for one beat.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D2-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "placement zone and its reason need scene understanding in pixels",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Placement is stated as a zone plus the reason for it; no placement is justified by a named ratio or grid line.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D3-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "edge treatment and tangency need pixels",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "The edge treatment is one of the three, named; no accidental near-tangency between a subject edge and a frame edge.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D4-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "framing-element tone/width comparison needs pixels",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "A framing element used is darker or thinner than the subject it frames.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D5-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "grayscale tonal weight needs pixels",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Declared balanced or deliberately restless; if balanced, a grayscale check shows tonal weight agreeing with size weight.",
+     "status": "NOT_MECHANISED"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D6-check",
+     "clause": "The stated aspect is justified by a named shape in the scene",
+     "coverage": "partial",
+     "detail": "no dispatched or declared aspect to compare against",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "The stated aspect is justified by a named shape in the scene, not by the platform alone.",
+     "status": "NOT_RUN"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D7-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "CA-D7 is a video/image_sequence decision ('How does attention travel across cuts (video)?') — not applicable to static_image",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Per cut, name the new information and motivation; per beat, state the one device: cut, camera move, or blocking.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D8-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "CA-D8 is a video/image_sequence decision ('When cut criteria conflict, what is sacrificed first?') — not applicable to static_image",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "An imperfect cut names the bottom criteria sacrificed; never sacrifice emotion for eye-trace, planarity or 3D continuity.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D9-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "CA-D9 is a video/image_sequence decision ('Screen direction and the line?') — not applicable to static_image",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Screen direction and side-of-frame persist across consecutive shots, or something on screen shows the change (gos_0007), or the crossing is declared in DOCTRINE_DEVIATIONS.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D10-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "CA-D10 is a video decision ('How long may a shot hold?') — not applicable to static_image",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "No shot outlasts its describable content; the stated pace names the prevailing norm it assumes.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": false,
+     "check_id": "CA-D11-check",
+     "clause": "",
+     "coverage": "none",
+     "detail": "CA-D11 is a video decision ('Does the camera move, and why?') — not applicable to static_image",
+     "evidence": [],
+     "family": "doctrine",
+     "gate": "post_draw",
+     "source_text": "Each camera move names its motivation; unmotivated moves are replaced by stillness or a cut.",
+     "status": "NOT_APPLICABLE"
+    },
+    {
+     "blocking": true,
+     "check_id": "DISPATCH-ASPECT",
+     "clause": "",
+     "coverage": "full",
+     "detail": "no dispatched or declared aspect to compare against",
+     "evidence": [],
+     "family": "dispatch",
+     "gate": "post_draw",
+     "source_text": "CANON-SHAPE-v1 §4 'brief-fixed parameters honoured'; INJECTION-CONTRACT-v0 §3.1 — not a pack check_id",
+     "status": "NOT_RUN"
+    },
+    {
+     "blocking": true,
+     "check_id": "DISPATCH-DIMENSIONS",
+     "clause": "",
+     "coverage": "full",
+     "detail": "no package supplied — declared minimum unknown",
+     "evidence": [],
+     "family": "dispatch",
+     "gate": "post_draw",
+     "source_text": "CANON-SHAPE-v1 §4 'brief-fixed parameters honoured'; INJECTION-CONTRACT-v0 §3.1 — not a pack check_id",
+     "status": "NOT_RUN"
+    },
+    {
+     "blocking": true,
+     "check_id": "INFRA-CONTAINER",
+     "clause": "",
+     "coverage": "full",
+     "detail": "jpeg image 720×1280 (SOF0, 8-bit, 3 components; no EXIF orientation tag)",
+     "evidence": [],
+     "family": "infra",
+     "gate": "post_draw",
+     "source_text": "plan §E INFRA rows — container, video track, record sha256; not doctrine",
+     "status": "PASS"
+    },
+    {
+     "blocking": true,
+     "check_id": "INFRA-RECORD-SHA",
+     "clause": "",
+     "coverage": "full",
+     "detail": "no record.json supplied",
+     "evidence": [],
+     "family": "infra",
+     "gate": "post_draw",
+     "source_text": "plan §E INFRA rows — container, video track, record sha256; not doctrine",
+     "status": "NOT_RUN"
+    }
+   ],
+   "verdict": "PASS"
+  },
+  "status": "ran",
+  "stderr": "",
+  "stdout": "CANON GATE v0 — post-draw — artifact IMG-CORE-04__flux-2-pro__core__r1.jpg (sha256 c39febdd0349) — packs: composition_and_attention\nNOT-RUN         LIMIT-TEXT      no text detector configured; the qualified detector (Cloud Vision TEXT_DETECTION) needs a separate spend authorisation — source: pack_limits \"… composite text deterministically.\"\nNOT-APPLICABLE  PA-D1-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D2-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D3-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D4-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D5-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D6-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D7-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D8-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D9-check     product_appearance not selected (trigger table: no product/packshot entity)\nNOT-APPLICABLE  PA-D10-check    product_appearance not selected (trigger table: no product/packshot entity)\nNOT-MECHANISED  CA-D1-check     read order and 'one dominant cue' need pixels and attention modelling — not counted as satisfied\nNOT-MECHANISED  CA-D2-check     placement zone and its reason need scene understanding in pixels — not counted as satisfied\nNOT-MECHANISED  CA-D3-check     edge treatment and tangency need pixels — not counted as satisfied\nNOT-MECHANISED  CA-D4-check     framing-element tone/width comparison needs pixels — not counted as satisfied\nNOT-MECHANISED  CA-D5-check     grayscale tonal weight needs pixels — not counted as satisfied\nNOT-RUN         CA-D"
+ },
+ "repeat_consistency": null,
+ "run_id": "img-r1",
+ "trial_id": "IMG-CORE-04__flux-2-pro__core__r1"
+}

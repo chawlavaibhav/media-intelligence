@@ -52,6 +52,62 @@ class AdapterBase(NoNetworkTestCase):
         return BOOK.row(case_id, route_key, arm)
 
 
+# ============================================================ (a0) fal answers 202 while a job runs (observed live 2026-09-08)
+class FalQueue202Test(AdapterBase):
+    """fal's status endpoint replies HTTP 202 + {status: IN_QUEUE|IN_PROGRESS} until the job is done, then
+    HTTP 200 + {status: COMPLETED}. The first live lane misread every 202 as an unknown outcome and wrote
+    off five completed, billed jobs. This pins the correct reading and keeps the request id on the record."""
+
+    def setUp(self):
+        super().setUp()
+        self.write_fake_key("FAL_KEY", CANARY)
+
+    def _fal_202(self, gets):
+        return T.FakeTransport(
+            posts=[(200, {"request_id": "req-202", "status_url": "https://queue.fal.run/x/requests/req-202/status",
+                          "response_url": "https://queue.fal.run/x/requests/req-202", "status": "IN_QUEUE"})],
+            gets=gets, downloads=[(200, PNG_FIXTURE, "image/png")])
+
+    def test_202_in_progress_is_polled_to_completion(self):
+        t = self._fal_202([(202, {"status": "IN_QUEUE"}), (202, {"status": "IN_PROGRESS"}), (200, {"status": "COMPLETED"}),
+                           (200, {"images": [{"url": "https://v3.fal.media/files/fake/out.png", "content_type": "image/png"}]})])
+        ad = self.make("gpt-image-2", t)
+        rec = ad.dispatch(self.row("IMG-CORE-01", "gpt-image-2"), call_context={"trial_id": "t202"})
+        self.assertEqual(rec["status"], "ok", rec.get("raw_status_note"))
+        self.assertEqual(rec["provider_request_id"], "req-202")
+        self.assertEqual(rec["lifecycle_counts"]["submits"], 1)
+        self.assertEqual(rec["lifecycle_counts"]["status_checks"], 3)
+
+    def test_202_with_undocumented_status_is_malformed_and_keeps_the_request_id(self):
+        t = self._fal_202([(202, {"status": "WEIRD"})])
+        ad = self.make("gpt-image-2", t)
+        rec = ad.dispatch(self.row("IMG-CORE-01", "gpt-image-2"), call_context={"trial_id": "t202b"})
+        self.assertEqual(rec["status"], "error")
+        self.assertEqual(rec["error_class"], "malformed_response")
+        self.assertTrue(rec["ambiguous_dispatch"])
+        self.assertEqual(rec["provider_request_id"], "req-202")
+
+    def test_dns_failure_before_any_byte_is_a_pre_dispatch_refusal_and_releases_the_reservation(self):
+        import socket
+        import urllib.error
+        t = T.FakeTransport(posts=[urllib.error.URLError(socket.gaierror(8, "nodename nor servname provided, or not known"))])
+        ad = self.make("gpt-image-2", t)
+        before = self.budget.spent_usd()
+        with self.assertRaises(PreDispatchRefusal):
+            ad.dispatch(self.row("IMG-CORE-01", "gpt-image-2"), call_context={"trial_id": "tdns"})
+        self.assertEqual(self.budget.spent_usd(), before, "nothing was sent, so nothing is charged")
+        self.assertEqual(ad.submits, 0)
+        self.assertFalse(self.store.attempt_path("tdns").exists(), "a DNS failure is not a trial")
+
+    def test_non_2xx_poll_is_still_unknown_and_keeps_the_request_id(self):
+        t = self._fal_202([(503, {"detail": "down"})])
+        ad = self.make("gpt-image-2", t)
+        rec = ad.dispatch(self.row("IMG-CORE-01", "gpt-image-2"), call_context={"trial_id": "t202c"})
+        self.assertEqual(rec["error_class"], "poll_http_503")
+        self.assertTrue(rec["ambiguous_dispatch"])
+        self.assertEqual(rec["provider_request_id"], "req-202")
+
+
 # ============================================================ (a) construction opens nothing
 class ConstructionTest(AdapterBase):
     def test_a_every_registry_key_constructs_without_socket_or_key(self):
