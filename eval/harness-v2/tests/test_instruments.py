@@ -366,6 +366,14 @@ class FormatProbeTest(NoNetworkTestCase):
         self.assertEqual(m["probe"]["aspect"], "4:5")
         self.assertTrue(m["checks"]["aspect_ok"] and m["checks"]["audio_ok"] and m["checks"]["duration_ok"])
         self.assertFalse(m["checks"]["resolution_class_ok"])          # 40x50 is not 1024-class
+        # amended rule (2026-09-09): total pixels within +-20 % of N*N, regardless of aspect
+        from instruments import format_probe as FPm
+        self.assertTrue(FPm.resolution_class_ok("~1 MP (1024-class)", 928, 1152)[0])
+        self.assertTrue(FPm.resolution_class_ok("1024-class", 720, 1280)[0])
+        self.assertTrue(FPm.resolution_class_ok("1K", 1024, 1024)[0])
+        self.assertFalse(FPm.resolution_class_ok("1024-class", 1080, 1920)[0])
+        self.assertFalse(FPm.resolution_class_ok("1024-class", 512, 512)[0])
+        self.assertTrue(FPm.resolution_class_ok("720p", 1280, 720)[0])
         frozen = freeze_criteria(self, "format_probe")
         self.assertEqual(self.FP.evaluate(img, case, criteria_path=frozen)["verdict"], "fail")
         junk = self.tmp / "junk.mp4"

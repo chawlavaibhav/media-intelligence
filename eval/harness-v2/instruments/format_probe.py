@@ -52,7 +52,7 @@ def declared_audio(case_row: dict) -> bool | None:
 
 
 def resolution_class_ok(declared: str | None, width, height) -> tuple:
-    """(ok | None, note). Classes: 'NNNp' -> short side == NNN; '1024-class' -> long side 960..1100;
+    """(ok | None, note). Classes: 'NNNp' -> short side == NNN; '<N>-class' / '1K' -> total pixels within +-20 % of N*N (amended 2026-09-09);
     'N MP' -> pixel count within +-25 % of N million. Unparseable -> None (not checked)."""
     if not declared or not width or not height:
         return None, "no declared resolution class"
@@ -62,8 +62,16 @@ def resolution_class_ok(declared: str | None, width, height) -> tuple:
     if m:
         target = int(m.group(1))
         return short == target, f"{target}p class: short side {short}"
-    if "1024-class" in d or "1k" in d:
-        return 960 <= long_ <= 1100, f"1024-class: long side {long_}"
+    m = re.search(r"(\d{3,4})-class", d)
+    if m or "1k" in d:
+        # Amended 2026-09-09 (CONTROLLER-FORMAT-PROBE-RESOLUTION-CLASS-AMENDMENT-2026-09-09.md): a "<N>-class"
+        # delivery is judged by TOTAL PIXELS within +-20 % of N*N, regardless of aspect. The v0 rule (long side
+        # 960..1100) failed every non-square delivery providers actually return (928x1152, 720x1280) while passing
+        # aspect - a specification defect, not a model defect. 1080x1920 still fails: that is a 1440-class delivery.
+        n = int(m.group(1)) if m else 1024
+        px = width * height
+        lo, hi = 0.8 * n * n, 1.2 * n * n
+        return lo <= px <= hi, f"{n}-class: {width}x{height} = {px} px vs {int(lo)}..{int(hi)}"
     m = re.search(r"(\d+(?:\.\d+)?)\s*mp\b", d)
     if m:
         mp = float(m.group(1))

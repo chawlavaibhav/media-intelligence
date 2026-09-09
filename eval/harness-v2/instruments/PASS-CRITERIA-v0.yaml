@@ -8,7 +8,9 @@
 # A threshold change is a different instrument (the value is inside the instrument config_hash).
 schema: PASS-CRITERIA-v0
 package: eval/harness-v2
-status: frozen_as_proposed_2026-09-09  # six instrument criteria frozen by the Controller; gate_wrapper stays observation-only
+status: frozen_as_proposed_2026-09-09_amended_v1  # six criteria frozen 09 Sep; format_probe resolution class amended the same day (v1); gate_wrapper stays observation-only
+criteria_version: v1
+amended_ref: coordination/decisions/CONTROLLER-FORMAT-PROBE-RESOLUTION-CLASS-AMENDMENT-2026-09-09.md
 controller_ref: MD-C1
 rule: >-
   frozen: false  ->  the instrument returns absent / other / criterion_not_frozen and keeps the measurement.
@@ -28,6 +30,7 @@ criteria:
       duration_tolerance_s: 0.5                      # |observed - duration_s| <= 0.5 s (video/audio only)
       audio_present_iff_audio_on: true               # audio stream present  <=>  params.audio starts with "on"
       resolution_class_must_match_declared: true     # 720p/1080p/1K class from the case row
+      resolution_class_pixel_tolerance_fraction: 0.20  # amended 2026-09-09: <N>-class = total pixels within +-20 % of N*N (v0 used long side 960..1100)
     source: Planner proposal (task EVAL-039C §3 table; no repo source names these tolerances)
     verified: false
     frozen: true

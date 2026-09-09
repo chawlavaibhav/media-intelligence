@@ -446,15 +446,21 @@ class ParameterRefusalTest(AdapterBase):
             fal_queue.ROUTE_PINS["gpt-image-2"] = saved
 
     def test_pending_inputs_render_in_dry_run_but_refuse_live(self):
+        # EVAL-041 part 2: a placeholder still renders (priced and shaped, the body is inspectable) but the row now REFUSES
+        # in dry-run too, naming the role (`input_unresolved:<role>`), until inputs.py resolves it from a sealed artifact.
         os.environ["FAL_KEY"] = "fake"
         ad = self.make("kling-v3-pro-i2v", fal_ok("https://x/out.mp4"))
         row = self.row("VID-I2V-01", "kling-v3-pro-i2v")
         d = ad.dry_run(row)
         self.assertEqual(d["body"]["start_image_url"], {"$pending_artifact": "VID-I2V-01:core:plate_accepted_draw"})
-        self.assertTrue(d["would_dispatch"])                     # priced and shaped; the plate arrives after 1a acceptance
+        self.assertIsNotNone(d["price"]["amount_usd_equiv"])
+        self.assertFalse(d["would_dispatch"])
+        self.assertEqual(d["refusal_reason"], "input_unresolved:plate_accepted_draw")
         with self.assertRaises(PreDispatchRefusal):
             ad.dispatch(row)
         self.assertEqual(self.budget.records(), [])
+        d2 = ad.dry_run(row, {"image_url": "data:image/png;base64,AAAA"})
+        self.assertTrue(d2["would_dispatch"], d2["refusal_reason"])
 
 
 # ============================================================ (j) store

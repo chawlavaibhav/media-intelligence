@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """EVAL-040 live runner: plan, smoke-test, execute (resumable) and status for one authorised battery run.
 
-    python3 eval/harness-v2/run_live.py plan    --run-id <id> --cases IMG-CORE-01,... [--routes k1,k2] [--tranche 1a] --out <dir>
-    python3 eval/harness-v2/run_live.py smoke   --run-id <id> --case <case_id> --route <route_key> --out <dir>   (ONE dispatch, repeat 1)
+    python3 eval/harness-v2/run_live.py plan    --run-id <id> --cases IMG-CORE-01,... [--routes k1,k2] [--tranche 1a|1a,1b|all] --out <dir>
+                                                [--inputs INPUTS.yaml] [--accept-roster-price]
+    python3 eval/harness-v2/run_live.py smoke   --run-id <id> --case <case_id> --route <route_key> --out <dir> [--inputs INPUTS.yaml]  (ONE dispatch, repeat 1)
     python3 eval/harness-v2/run_live.py execute --run-id <id> --out <dir> [--max-dispatches N]                 (runs the committed plan)
     python3 eval/harness-v2/run_live.py status  --run-id <id> --out <dir>
+    python3 eval/harness-v2/run_live.py fixtures --spec STAND-IN-SPEC.yaml --run-id <id> --out <dir> --auth <file> [--dry] [--max-dispatches N]
+
+    EVAL-041 part 2: `--inputs` names a committed INPUTS.yaml (inputs.py) that maps (case, arm, role) to a sealed
+    artifact - a constructed stand-in fixture or a prior trial's accepted draw. The plan resolves those bytes and
+    commits to a body sha computed WITH them; execute refuses if the file's sha changed, if any resolved input's
+    sha differs from the plan's, or if the rendered body differs. `fixtures` plans and executes the stand-in spec
+    (fixtures.py) under the same ledger, caps, 0 retries and resumability; `--dry` writes FIXTURE-PLAN.yaml only.
 
 WHAT IT DOES, IN PLAIN ENGLISH
 
@@ -50,6 +58,7 @@ import yaml
 import hv2_paths
 import casebook as CB
 import dry_run as DR
+import inputs as INP
 import ledger as L
 import pricing as PR
 import store as S
@@ -158,9 +167,31 @@ def infra_failures(prev_out: Path | str, prev_run_id: str) -> list[dict]:
                 break
     return out
 
+def parse_tranches(tranche) -> set[str] | None:
+    """`1a` | `1a,1b` | `all`/`any`/None -> the tranches a plan admits (None = every tranche)."""
+    if tranche is None:
+        return None
+    if isinstance(tranche, (set, list, tuple)):
+        vals = {str(t).strip() for t in tranche if str(t).strip()}
+    else:
+        vals = {t.strip() for t in str(tranche).split(",") if t.strip()}
+    if not vals or vals & {"all", "any", "*"}:
+        return None
+    return vals
+
+
+def open_inputs(inputs_path: Path | str | None) -> INP.InputsFile | None:
+    if inputs_path is None:
+        return None
+    try:
+        return INP.InputsFile(inputs_path)
+    except INP.InputsError as exc:
+        raise PlanRefused(f"inputs file refused: {exc}") from exc
+
+
 def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str] | None, tranche: str | None,
                auth_path: Path | str, git_rev: str = "HEAD", mode: str = "lane", repeats: tuple | None = None,
-               redo_from: tuple | None = None) -> dict:
+               redo_from: tuple | None = None, inputs_path: Path | str | None = None, accept_roster_price: bool = False) -> dict:
     """Write `<out>/PLAN.yaml` + `PLAN.sha256` before any dispatch. Refuses an empty plan and never overwrites."""
     out = Path(out)
     if (out / PLAN_FILE).exists():
@@ -173,6 +204,9 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
     for r in routes or []:
         if r not in registry.keys():
             raise PlanRefused(f"route {r!r} is not in the SurfaceRegistry")
+    tranches = parse_tranches(tranche)
+    inputs_file = open_inputs(inputs_path)
+    resolver = INP.InputResolver(inputs_file)
 
     book = CB.CaseBook.from_git(git_rev)
     commit = book.source["commit"]
@@ -183,7 +217,11 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
     fbook = _filtered_book(book, cases)
     pricing = PR.Pricing()
     cost_table = PR.CostTable()
-    manifest = DR.build_manifest(fbook, registry, pricing, cost_table, git_commit=commit)
+    try:
+        manifest = DR.build_manifest(fbook, registry, pricing, cost_table, git_commit=commit,
+                                     inputs_for=(resolver.for_row if inputs_file else None), accept_roster_price=accept_roster_price)
+    except INP.InputsError as exc:
+        raise PlanRefused(f"an input could not be resolved: {exc}") from exc
 
     redo_keys, redo_by_key = None, {}
     if redo_from:
@@ -203,8 +241,8 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
             continue                                     # not requested: neither planned nor listed
         if not row["would_dispatch"]:
             reason = row["refusal_reason"] or "would_dispatch: false"
-        elif tranche and row["tranche"] != tranche:
-            reason = f"tranche {row['tranche']} not requested ({tranche})"
+        elif tranches and row["tranche"] not in tranches:
+            reason = f"tranche {row['tranche']} not requested ({sorted(tranches)})"
         elif repeats and row["repeat_index"] not in repeats:
             reason = f"repeat {row['repeat_index']} not requested ({list(repeats)})"
         if reason:
@@ -241,6 +279,10 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
                     "unit_price": r["unit_price"], "quantity": r["quantity"], "quantity_unit": r["quantity_unit"], "price_pin_ref": r["price_pin_ref"],
                     "body_sha256": r["body_sha256"], "api_calls_per_trial": r["api_calls_per_trial"],
                     "key_name": entry.key_name, "credential_file_name": entry.credential_file_name, "seed_policy": r["seed_policy"],
+                    # EVAL-041 part 2: the sealed inputs this body was rendered with (sha256 each, never bytes) and the price basis
+                    "inputs": r.get("inputs"), "price_basis": r.get("price_basis", "cost_table"),
+                    "cost_table_unit_price": r.get("cost_table_unit_price"), "roster_implied_usd": r.get("roster_implied_usd"),
+                    "constructed_synthetic_inputs": bool(any(i.get("constructed_synthetic") for i in (r.get("inputs") or []))),
                     **({"redo_of": redo_by_key[(r["case_id"], r["route_key"], r["arm"], r["repeat_index"])]} if redo_keys is not None else {}),
                 })
     if not trials:
@@ -257,7 +299,11 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
         "git_rev": git_rev, "commit": commit, "item_basis_commit": auth.item_basis_commit, "freeze_matches_item_basis": freeze_ok,
         "tranche_id": auth.tranche_id, "authorisation_path": auth.source_path, "authorisation_sha256": auth.sha256,
         "roster_sha256": pricing.roster.sha256, "test_cases_sha256": book.source["test_cases_sha256"], "cost_table_sha256": book.source["cost_table_sha256"],
-        "cases": list(cases), "routes": list(routes) if routes else None, "tranche": tranche, "repeats": list(repeats) if repeats else None,
+        "cases": list(cases), "routes": list(routes) if routes else None, "tranche": (sorted(tranches) if tranches else None), "repeats": list(repeats) if repeats else None,
+        "inputs_file": ({"path": str(inputs_file.path), "sha256": inputs_file.sha256, "runs_root": str(inputs_file.runs_root),
+                         "data_uri_source": INP.DATA_URI_SOURCE} if inputs_file else None),
+        "accept_roster_price": bool(accept_roster_price),
+        "roster_price_trials": [t["trial_id"] for t in trials if t.get("price_basis") == "roster_over_cost_table"],
         "redo_of": ({"run_id": redo_from[1], "out": str(redo_from[0]), "n_trials": len(redo_keys)} if redo_keys is not None else None),
         "ordering": "repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2",
         "counts": {"trials": len(trials), "excluded": len(excluded)},
@@ -324,6 +370,7 @@ class LiveRunner:
         self.plan: dict | None = None
         self.budget: L.BatteryBudget | None = None
         self.pricing: PR.Pricing | None = None
+        self.resolver: INP.InputResolver | None = None
 
     # -- paths / records ------------------------------------------------------------------------
     def _trial_record_path(self, trial_id: str, kind: str) -> Path:
@@ -366,6 +413,14 @@ class LiveRunner:
     def open(self) -> L.BatteryAuthorisation:
         """Plan first (nothing to execute without it), then the authorisation, then the ledger. Sends nothing."""
         self.plan = load_plan(self.out, self.run_id)
+        inf = self.plan["header"].get("inputs_file")
+        if inf:
+            # the plan was built WITH inputs: the same file, byte for byte, or nothing runs
+            f = open_inputs(inf["path"])
+            if f.sha256 != inf["sha256"]:
+                raise PlanRefused(f"{inf['path']} hashes to {f.sha256[:12]}... but the plan was built with {inf['sha256'][:12]}...; "
+                                  f"the inputs changed after the plan was committed. Nothing was sent.")
+            self.resolver = INP.InputResolver(f)
         auth = L.load_battery_authorisation(self.auth_path)
         _require_permitted(auth, "execute")
         root = self.out / LEDGER_DIR
@@ -378,17 +433,40 @@ class LiveRunner:
         return auth
 
     # -- one trial ---------------------------------------------------------------------------------
+    def _resolve_inputs(self, trial: dict, row: dict, entry) -> dict:
+        """Re-resolve the plan's inputs from the sealed store at dispatch; a swapped, altered or missing input refuses."""
+        planned = trial.get("inputs") or []
+        if not planned and self.resolver is None:
+            return {}
+        if self.resolver is None:
+            raise PreDispatchRefusal(f"{trial['trial_id']}: the plan records inputs but the run has no inputs file; nothing was sent")
+        try:
+            inputs, resolved, unresolved = self.resolver.for_row(row, entry)
+        except INP.InputsError as exc:
+            raise PreDispatchRefusal(f"{trial['trial_id']}: input refused: {exc}") from exc
+        if unresolved:
+            raise PreDispatchRefusal(f"{trial['trial_id']}: input_unresolved:{','.join(unresolved)}; nothing was sent")
+        want = [(i["role"], i["sha256"]) for i in planned]
+        got = [(i["role"], i["sha256"]) for i in resolved]
+        if want != got:
+            raise PreDispatchRefusal(f"{trial['trial_id']}: the inputs resolved now {got} differ from the plan's {want}; an input was swapped. Nothing was sent.")
+        return inputs
+
     def _dispatch(self, trial: dict) -> dict:
         row = self.book.row(trial["case_id"], trial["route_key"], trial["arm"], trial["repeat_index"])
+        if trial.get("price_basis") == "roster_over_cost_table":
+            # --accept-roster-price: the plan priced this row at the ROSTER number; the dispatch-time check sees the same row
+            row = {**row, "unit_price": Decimal(str(trial["unit_price"]))}
         entry = self.registry.get(trial["route_key"])
+        inputs = self._resolve_inputs(trial, row, entry)
         transport = self.transport_factory(entry, trial)
         adapter = self.adapter_for(entry, pricing=self.pricing, transport=transport, budget=self.budget, store=self.store,
                                    allow_default_token_source=True, **self.adapter_kwargs)
-        request = adapter.build_request(row)                      # renders only; refuses bad params before any money moves
+        request = adapter.build_request(row, inputs)              # renders only; refuses bad params before any money moves
         if request.body_sha256 != trial["body_sha256"]:
             raise PreDispatchRefusal(f"{trial['trial_id']}: the rendered body sha256 {request.body_sha256[:12]}... differs from the plan's "
                                      f"{trial['body_sha256'][:12]}...; the plan is executed verbatim or not at all. Nothing was sent.")
-        return adapter.dispatch(row, call_context={"trial_id": trial["trial_id"]})
+        return adapter.dispatch(row, inputs, call_context={"trial_id": trial["trial_id"]})
 
     def _instruments(self, trial: dict, attempt: dict) -> None:
         """format_probe + gate post + (repeat 2) repeat_consistency. Observation only; never raises."""
@@ -499,9 +577,12 @@ class LiveRunner:
 
 
 def smoke(out: Path | str, run_id: str, case_id: str, route_key: str, auth_path: Path | str, transport_factory, adapter_kwargs: dict | None = None,
-          gate_script: Path | str | None = None, git_rev: str = "HEAD", adapter_for=None) -> dict:
-    """ONE dispatch: a one-trial plan (repeat 1 only) executed with max_dispatches=1."""
-    plan = build_plan(out, run_id, cases=[case_id], routes=[route_key], tranche=None, auth_path=auth_path, git_rev=git_rev, mode="smoke", repeats=(1,))
+          gate_script: Path | str | None = None, git_rev: str = "HEAD", adapter_for=None, inputs_path: Path | str | None = None,
+          accept_roster_price: bool = False) -> dict:
+    """ONE dispatch: a one-trial plan (repeat 1 only) executed with max_dispatches=1. A route that carries two arms on the
+    case (H3 Max i2v on VID-TOPO3-01: arms A and C) smokes ONE arm by mapping inputs for that arm only in INPUTS.yaml."""
+    plan = build_plan(out, run_id, cases=[case_id], routes=[route_key], tranche=None, auth_path=auth_path, git_rev=git_rev, mode="smoke", repeats=(1,),
+                      inputs_path=inputs_path, accept_roster_price=accept_roster_price)
     if len(plan["trials"]) != 1:
         raise PlanRefused(f"a smoke plan must hold exactly one trial; got {len(plan['trials'])}")
     runner = LiveRunner(out, run_id, auth_path, transport_factory, adapter_kwargs, gate_script, adapter_for=adapter_for)
@@ -587,20 +668,30 @@ def main(argv=None) -> int:
         p.add_argument("--out", required=True, help="the run directory, e.g. eval/experiments/EVAL-040/runs/<run-id>/")
         p.add_argument("--auth", default=str(L.AUTH_LOCAL_PATH), help="authorisation file (default: eval/harness-v2/authorization.local.yaml)")
 
-    p = sub.add_parser("plan"); common(p)
+    def inputs_opts(p):
+        p.add_argument("--inputs", default=None, metavar="INPUTS.yaml",
+                       help="committed mapping of (case, arm, role) -> sealed artifact (inputs.py); the plan commits to those bytes")
+        p.add_argument("--accept-roster-price", action="store_true",
+                       help="dispatch a multi-reference FLUX edit row at the ROSTER price where the COST-TABLE priced it lower (price_basis roster_over_cost_table)")
+
+    p = sub.add_parser("plan"); common(p); inputs_opts(p)
     p.add_argument("--cases", required=True, help="comma-separated case ids, in the order they will run")
     p.add_argument("--routes", default=None, help="comma-separated route keys (default: every dispatchable route on those cases)")
-    p.add_argument("--tranche", default="1a")
+    p.add_argument("--tranche", default="1a", help="1a | 1b | 1a,1b | all")
     p.add_argument("--git-rev", default="HEAD")
     p.add_argument("--redo-from", default=None, metavar="OUT:RUN_ID",
                    help="plan ONLY the infrastructure-failure trials of a previous run (DNS, token, harness faults with nothing sent) under this new run id")
-    p = sub.add_parser("smoke"); common(p)
+    p = sub.add_parser("smoke"); common(p); inputs_opts(p)
     p.add_argument("--case", required=True)
     p.add_argument("--route", required=True)
     p.add_argument("--git-rev", default="HEAD")
     p = sub.add_parser("execute"); common(p)
     p.add_argument("--max-dispatches", type=int, default=None)
     p = sub.add_parser("status"); common(p)
+    p = sub.add_parser("fixtures"); common(p)
+    p.add_argument("--spec", required=True, help="eval/experiments/EVAL-040/fixtures/STAND-IN-SPEC.yaml")
+    p.add_argument("--dry", action="store_true", help="write FIXTURE-PLAN.yaml (+ sha256) and print its price total; dispatch nothing")
+    p.add_argument("--max-dispatches", type=int, default=None)
     a = ap.parse_args(argv)
 
     try:
@@ -613,17 +704,35 @@ def main(argv=None) -> int:
                 redo = (Path(prev_out), prev_run)
             plan = build_plan(a.out, a.run_id, cases=[c.strip() for c in a.cases.split(",") if c.strip()],
                               routes=([r.strip() for r in a.routes.split(",") if r.strip()] if a.routes else None),
-                              tranche=a.tranche, auth_path=a.auth, git_rev=a.git_rev, redo_from=redo)
+                              tranche=a.tranche, auth_path=a.auth, git_rev=a.git_rev, redo_from=redo,
+                              inputs_path=a.inputs, accept_roster_price=a.accept_roster_price)
             h = plan["header"]
             print(json.dumps({"run_id": h["run_id"], "trials": h["counts"]["trials"], "excluded": h["counts"]["excluded"],
                               "estimated_by_pool": h["estimated_by_pool"], "estimated_total_usd_equiv": h["estimated_total_usd_equiv"],
+                              "roster_price_trials": h["roster_price_trials"], "inputs_file": h["inputs_file"],
+                              "excluded_rows": [f"{e['case_id']}/{e['route_key']}/{e['arm']}/r{e['repeat_index']}: {e['reason'][:120]}" for e in plan["excluded"]],
                               "commit": h["commit"], "plan": str(Path(a.out) / PLAN_FILE)}, indent=1))
             return 0
+        if a.cmd == "fixtures":
+            import fixtures as FX
+            if a.dry:
+                fplan = FX.build_fixture_plan(a.out, a.run_id, a.spec, a.auth)
+                print(json.dumps(FX.plan_summary(fplan), indent=1))
+                return 0
+            print(f"LIVE: paid calls under {a.auth}; fixtures run {a.run_id}; out {a.out}", file=sys.stderr)
+            if not (Path(a.out) / FX.FIXTURE_PLAN_FILE).exists():
+                FX.build_fixture_plan(a.out, a.run_id, a.spec, a.auth)
+            # the one other place the live flag is set - still inside the live runner's CLI (HygieneTest: run_live.py only)
+            fixture_kwargs = {"sleep": time.sleep, "allow_default_token_source": True}
+            summary = FX.FixtureRunner(a.out, a.run_id, a.auth, live_transport_factory, fixture_kwargs).execute(max_dispatches=a.max_dispatches)
+            print(json.dumps(summary, indent=1, default=str))
+            return 0 if summary["status"] == "completed" else 1
         if a.cmd in ("smoke", "execute"):
             print(f"LIVE: paid calls under {a.auth}; run {a.run_id}; out {a.out}", file=sys.stderr)
             live_kwargs = {"sleep": time.sleep}
             if a.cmd == "smoke":
-                summary = smoke(a.out, a.run_id, a.case, a.route, a.auth, live_transport_factory, live_kwargs, git_rev=a.git_rev)
+                summary = smoke(a.out, a.run_id, a.case, a.route, a.auth, live_transport_factory, live_kwargs, git_rev=a.git_rev,
+                                inputs_path=a.inputs, accept_roster_price=a.accept_roster_price)
             else:
                 summary = LiveRunner(a.out, a.run_id, a.auth, live_transport_factory, live_kwargs).execute(max_dispatches=a.max_dispatches)
             print(json.dumps({k: v for k, v in summary.items() if k != "trial_order"}, indent=1, default=str))

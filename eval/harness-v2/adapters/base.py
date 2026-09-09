@@ -139,6 +139,27 @@ def pending_artifact(case_row: dict, role: str) -> dict:
     return {"$pending_artifact": f"{case_row.get('case_id')}:{case_row.get('arm')}:{role}"}
 
 
+def pending_roles(obj: Any) -> list[str]:
+    """The ROLE of every placeholder still in a body, in body order: `$pending_artifact` "case:arm:role" -> role,
+    `$pending_choice` what -> "choice:<what>". EVAL-041 part 2: a dry-run row with any of these refuses with
+    `input_unresolved:<role>` until the input resolver (inputs.py) hands the adapter the sealed bytes."""
+    out: list[str] = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == "$pending_artifact":
+                out.append(str(v).rsplit(":", 1)[-1])
+            elif k == "$pending_choice":
+                out.append(f"choice:{v}")
+            elif k in PENDING_KEYS:
+                out.append(f"{k.lstrip('$')}:{v}")
+            else:
+                out += pending_roles(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            out += pending_roles(v)
+    return out
+
+
 def pending_choice(what: str) -> dict:
     return {"$pending_choice": what}
 
@@ -279,6 +300,10 @@ class RouteAdapter:
             reasons.append(f"precondition not satisfiable tonight: {pre}")
         if not pc.ok:
             reasons.append(pc.refusal_reason)
+        if req is not None and req.has_pending():
+            # EVAL-041 part 2: a body that still carries a placeholder can never be sent; say which role is missing.
+            roles = pending_roles(req.body) + [r for f in req.followups for r in pending_roles(f.get("body"))]
+            reasons.append("input_unresolved:" + ",".join(dict.fromkeys(roles)) if roles else "input_unresolved:unknown")
         return {
             "method": req.method if req else None, "url": req.url if req else entry.endpoint,
             "headers": req.headers if req else None, "body": req.body if req else None,
