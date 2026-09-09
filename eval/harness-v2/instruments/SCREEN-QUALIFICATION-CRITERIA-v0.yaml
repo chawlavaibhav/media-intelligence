@@ -37,7 +37,7 @@ thresholds:
   min_coverage_fraction: 0.80                # compared / (judged trials with an artifact, audio excluded); below -> not qualified
 
 price_pin:                                   # where qualify_screen.py looks for a PINNED Gemini API price; absent -> "price not pinned", no number
-  index: eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml
+  index: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/PIN-INDEX.yaml   # per-directory index (the top-level file is at its byte cap)
   route_key: gemini-api-judge                # the PIN-INDEX entry the Controller pins for the judge model
   required_fields: [usd_per_1m_input_tokens, usd_per_1m_output_tokens, tokens_per_image]
 

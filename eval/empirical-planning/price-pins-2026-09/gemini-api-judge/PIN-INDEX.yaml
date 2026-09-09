@@ -1,0 +1,28 @@
+note: 'Pinned 2026-09-09 for the vision-model judge (Controller: ''allow vision model to judge. approved.''). Gemini Developer API, key GOOGLE_API_KEY (name only). Judge model chosen: gemini-3.5-flash (the
+  page''s strongest non-preview Flash for image understanding); tokens per image from the image-understanding page''s tile rule (258 tokens per tile; a 768-px frame yields up to 6 tiles = 1,548 tokens,
+  used as the per-image allowance).'
+pins:
+- route_key: gemini-api-judge
+  model_id: gemini-3.5-flash
+  pin_kind: price
+  url: https://ai.google.dev/gemini-api/docs/pricing
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
+  fetched_utc: '2026-09-09T14:16:37.698619+00:00'
+  bytes: 249002
+  sha256: 26fd7fc5fa8169c36fae516dad3cb884c45f9d26e6afa91f745816b27414edfb
+  evidence_quote: Gemini 3.5 Flash gemini-3.5-flash ... Paid Tier, per 1M tokens in USD Input price ... $1.50 Output price (including thinking tokens) ... $9.00
+  usd_per_1m_input_tokens: 1.5
+  usd_per_1m_output_tokens: 9.0
+  tokens_per_image: 1548
+  alternatives_on_the_page:
+    gemini-3.1-flash-lite: $0.25 in / $1.50 out
+    gemini-2.5-flash: $0.30 in / $2.50 out
+    gemini-3-flash-preview: $0.50 in / $3.00 out (legacy)
+- route_key: gemini-api-judge
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/image-understanding
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-image-understanding.html
+  fetched_utc: '2026-09-09T14:16:37.698619+00:00'
+  bytes: 241314
+  sha256: 9a1e4387dc3c3c877f6560290d0661ba1c3cc5a364054f0edd2c8a10e183522b
+  evidence_quote: 'Token calculation 258 tokens if both dimensions ... crop unit size which is roughly: floor(min(width, height) / 1.5). Divide each dimension by the crop unit size and multiply together'
