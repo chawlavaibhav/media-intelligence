@@ -655,7 +655,8 @@ def print_status(st: dict) -> None:
     print(f"run {st['run_id']} ({st['mode']}): {st['done']} done / {st['remaining']} remaining of {st['planned']} planned; state {st['state']}"
           + (f" ({st['stop_reason']})" if st.get("stop_reason") else ""))
     for pool, v in sorted(st["settled_by_pool"].items()):
-        print(f"  {pool:15s} {v['currency']} {v['native']}  (USD-equiv {v['usd_equiv']})")
+        unit = "plan credits" if pool == "elevenlabs_credits" else v["currency"]     # the credits pool is not money
+        print(f"  {pool:15s} {unit} {v['native']}  (USD-equiv {v['usd_equiv']})")
     print(f"  spent USD-equiv {st['spent_usd_equiv']} of estimated {st['estimated_total_usd_equiv']}; headroom {st['remaining_headroom_usd_equiv']} [{st['headroom_basis']}]")
     if not st["authorisation_permitted"]:
         print("  authorisation NOT permitted: " + "; ".join(st["authorisation_refusals"]))
