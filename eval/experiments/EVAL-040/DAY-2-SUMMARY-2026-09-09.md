@@ -2,7 +2,7 @@
 
 All verdicts are the Controller's, blind (names hid route and arm), against each case's acceptance contract. Human
 acceptance is product evidence in the routing map; the Capability Registry holds only the deterministic rows
-(format, cost, latency/errors, reliability, repeat consistency), 485 rows at the end of the day, validator PASS.
+(format, cost, latency/errors, reliability, repeat consistency), 480 rows at the end of the day, validator PASS.
 Spend records: `CONTROLLER-SPEND-AUTHORISATION-VIDEO-PIECES-2-TO-5-CHEAP-FIRST-2026-09-09.md` (+ addenda),
 `…-VIDEO-PIECE-1-NB-PLATES-ADDENDUM-…`, `…-SPEECH-AND-MUSIC-STACKED-…`. Seedance 2.5 left out on the Controller's word.
 
