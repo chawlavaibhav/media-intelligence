@@ -17,13 +17,13 @@ reveal, having skipped the fal top-up and the ElevenLabs Indian voice ("i am ski
 |---|---|---|---|---|---|
 | veo-3.1-fast | Vertex, credits | USD 0.10/s × 8 s | 2 | USD 1.60 | runs now |
 | gemini-omni-1.1-flash | Vertex, credits | USD 0.10136/s × 8 s | 2 | USD 1.62 | runs now |
-| kling-v3-pro-audio | fal, cash | USD 0.168/s × 8 s | 2 | USD 2.69 | **deferred** — fal balance exhausted (Controller skipped the top-up) |
-| wan-3.0-prime | fal, cash | USD 0.14/s × 8 s | 2 | USD 2.24 | **deferred** — same |
+| kling-v3-pro-audio | fal, cash | USD 0.168/s × 8 s | 2 | USD 2.69 | runs now (Controller: "fal balance added") |
+| wan-3.0-prime | fal, cash | USD 0.14/s × 8 s | 2 | USD 2.24 | runs now |
 | seedance-2.5 | fal | — | — | — | left out ("leave seedance 2.5 for now") |
 | B_chain rows (plate, H3 Max i2v, TTS, lipsync) | fal / credits | — | 0 | — | recorded_not_screened in the package; fal-bound |
 
-Runs now: **4 clips, USD 3.22 + one smoke (USD 0.81) = USD 4.03.** The two fal routes run under this same record if
-and when the Controller tops up fal; until then the piece is a two-route screen and is reported as such.
+Runs now: **8 clips on four routes, USD 8.15 + one smoke on a fal route (Wan, USD 1.12, proving the topped-up balance)
+= USD 9.27 of the USD 9.96 cap.** (The Controller added the fal balance after the interrupt: "fal balance added".)
 
 ## 3. Cap and hard limits
 
