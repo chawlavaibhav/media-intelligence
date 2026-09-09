@@ -5,7 +5,7 @@ deferred, cancelled; the current empirical floor; Registry state; spend authorit
 next Controller gate. It is a synthesis backed by the durable Controller decisions it links — where
 it and any older prose disagree, the latest durable Controller decision governs.
 
-**Updated:** 8 Sep 2026 — Capability Lab direction ratified and Image Round 1 authorised (PR #87), on top of the 7-Sep gate merge. Byte-for-byte pre-text: `history/CONTROL-STATE-PRE-CAPABILITY-LAB-2026-09-08.md`. Earlier: CANON-GATE-001 merged (PR #88, merge commit `7dd064c`; thirteen
+**Updated:** 9 Sep 2026 — Image Round 1 executed and judged (branch `work/eval-040-image-round-1`); earlier: 8 Sep Capability Lab direction ratified and Image Round 1 authorised (PR #87), on top of the 7-Sep gate merge. Byte-for-byte pre-text: `history/CONTROL-STATE-PRE-CAPABILITY-LAB-2026-09-08.md`. Earlier: CANON-GATE-001 merged (PR #88, merge commit `7dd064c`; thirteen
 Controller records `CONTROLLER-CANON-GATE-001-*`, the last being the merge decision) on top of the
 1-Sep REP-07 / EVAL-038 / CANON-SHAPE-v1 integration, the 31-Aug EVAL-037 conclusion and the 29-Aug
 Media Factory programme reset.
@@ -41,7 +41,7 @@ authorisation file).
 
 | Task | Purpose | Spend / generation authority |
 |---|---|---|
-| **EVAL-040 — Image Round 1** | Cases IMG-CORE-01..04 and IMG-TEXT-01/02 on six image routes, 2 repeats, 76 calls + 1 smoke test; blind Controller acceptance; deterministic-instrument rows only | **₹1,200 = USD 12.58 USD-equivalent cap**, 0 retries — `CONTROLLER-SPEND-AUTHORISATION-IMAGE-ROUND-1-2026-09-08.md` |
+| **EVAL-040 — Image Round 1** | **Executed and judged (8–9 Sep 2026).** 76 + 8 redo + 4 composite-plate calls + 1 smoke; 79 sealed artifacts; blind Controller verdicts 55/75 accept, composite arm 4/4; spend ≈ USD 5.36 of the cap. Results: `eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md`, `RESULTS.yaml`. Registry rows **not yet written** — instrument thresholds unfrozen (MD-C1) | **₹1,200 = USD 12.58 USD-equivalent cap**, 0 retries — `CONTROLLER-SPEND-AUTHORISATION-IMAGE-ROUND-1-2026-09-08.md` (+ §6 addendum, composite re-run) |
 | EVAL-040 — remaining image half, video rounds, Stage B, Stage C | Sized and authorised piece by piece after each judging sitting | **Not authorised** |
 
 Superseded by the ratified direction (explicitly, see the decision's §2): the 29-Aug reset's queue
@@ -236,10 +236,11 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-**The next gate is Capability Lab Image Round 1 (EVAL-040), authorised 8 Sep 2026.** After its blind
-judging: the second image half (needs Controller photos), then video rounds, each with its own spend
-record. Round two is sized from round-one survivors, not pre-authorised. The Canon items below remain a
-queue, not an authorisation.
+**Image Round 1 is complete and judged (9 Sep 2026).** Next gates, each needing its own Controller act: (1) freeze
+`eval/harness-v2/instruments/PASS-CRITERIA-v0.yaml` thresholds so the first Registry rows can be written from the
+round's records; (2) image half two (edit / extend / compose / reference — needs Controller photos or approved
+stand-ins); (3) the first video round, text-into-motion case first, with its own spend record. Round two is sized
+from round-one survivors, not pre-authorised. The Canon items below remain a queue, not an authorisation.
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's
 choice among `canon/CANON-SHAPE-v1.md` §7's remaining items — injection v1 (cached prefix, no
