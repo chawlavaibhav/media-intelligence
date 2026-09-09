@@ -97,7 +97,7 @@ class EvidenceMapTest(NoNetworkTestCase):
         self.assertEqual([r["id"] for r in self.map["routing_rules"]], ["RR-1", "RR-2", "RR-3", "RR-4", "RR-5", "RR-6", "RR-7"])
         self.assertTrue(any("code-set" in r["rule"].lower() or "code-set" in r["rule"] for r in self.map["routing_rules"]))
         self.assertEqual(self.map["routing_rules"][3]["source"], EM.SUMMARY_HALF2)
-        self.assertEqual(self.map["routing_rules"][6]["status"], "untested_in_motion")
+        self.assertEqual(self.map["routing_rules"][6]["status"], "tested_in_motion_2026-09-09")
 
     def test_deterministic_tier_is_registry_only_where_rows_exist(self):
         cells = self.cells()
