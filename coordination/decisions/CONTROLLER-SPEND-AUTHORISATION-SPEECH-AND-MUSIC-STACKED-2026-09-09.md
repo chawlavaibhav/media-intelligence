@@ -70,3 +70,12 @@ plan to use the API."* (the account is on the free plan; nothing was charged). P
 
 `elevenlabs-music-direct` rows on MUS-01/02 are **not run**; the music piece is carried by Lyria alone (4/4 accepted
 by the Controller, 32.8-s tracks). The rows stay in the package as `recorded_not_screened` until a paid plan exists.
+
+## 8. Writer Controller note — lipsync ran 5/6; fal balance exhausted (2026-09-09)
+
+`aud-lip` dispatched six trials; five sealed (USD 0.70 + smoke 0.14). `AUD-LIP-03 r1` was refused by fal with HTTP 403
+*"User is locked. Reason: Exhausted balance. Top up your balance at fal.ai/dashboard/billing."* — an infrastructure
+refusal (nothing generated, nothing charged), recorded as such, not a model failure. Every fal-billed route is blocked
+until the Controller tops up the fal balance; Vertex, Sarvam and ElevenLabs routes are unaffected. The missing draw
+can be re-run under this record's remaining headroom after the top-up (`--redo-from` is not applicable: the refusal
+is a provider-side lock, so it is planned as a fresh single-repeat run).
