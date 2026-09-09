@@ -331,6 +331,18 @@ class BodyEqualityTest(AdapterBase):
             return T.FakeTransport(posts=[(200, {"request_id": "s", "audios": [B.b64(WAV_FIXTURE)]})])
         raise AssertionError(kind)
 
+    def test_lyria_accepts_the_live_response_key_and_records_the_deviation(self):
+        """2026-09-09 live smoke: lyria-002 returns predictions[0].bytesBase64Encoded, not the pinned audioContent."""
+        t = T.FakeTransport(posts=[(200, {"predictions": [{"bytesBase64Encoded": B.b64(WAV_FIXTURE)}]})])
+        ad = self.make("lyria", t)
+        attempt = ad.dispatch(self.row("MUS-01", "lyria"), {})
+        self.assertEqual(attempt["status"], "ok", (attempt["error_class"], attempt["raw_status_note"]))
+        self.assertIn("response key bytesBase64Encoded (pinned page: audioContent)", attempt.get("shape_deviations", []))
+        t2 = T.FakeTransport(posts=[(200, {"predictions": [{"raiFilteredReason": "blocked"}]})])
+        a2 = self.make("lyria", t2).dispatch(dict(self.row("MUS-01", "lyria"), repeat_index=2), {})   # a new trial id: sealed files are immutable
+        self.assertEqual(a2["error_class"], "no_artifact_returned")
+        self.assertIn("raiFilteredReason", a2["raw_status_note"])
+
     def test_g_dry_run_body_bytes_equal_sent_bytes_for_every_family(self):
         os.environ["FAL_KEY"] = "fake"
         os.environ["SARVAM_API_KEY"] = "fake"
