@@ -52,7 +52,7 @@ PINS = "eval/empirical-planning/price-pins-2026-09"
 ELEVENLABS_PRICING_PIN = f"{PINS}/elevenlabs-direct/elevenlabs-pricing.html"
 # Routes outside the freeze catalogue (no TEST-CASES / COST-TABLE row): registered so the adapter, ledger pool and cap
 # are tested code, but never planned by run_live from the catalogue and never counted in the freeze reconciliation.
-EXTENSION_ROUTES = ("elevenlabs-v3-direct", "elevenlabs-music-direct")
+EXTENSION_ROUTES: tuple[str, ...] = ()   # 2026-09-09: the ElevenLabs direct routes entered the freeze catalogue (Controller decision); none left
 
 
 @dataclass(frozen=True)

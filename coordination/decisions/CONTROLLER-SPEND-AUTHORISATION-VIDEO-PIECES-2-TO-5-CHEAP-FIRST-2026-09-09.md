@@ -38,3 +38,11 @@ retries 0; price verified before every paid call; sealed evidence write-once; ke
 
 Seedance 2.5 on any case ("leave seedance 2.5 for now"); text-to-video core, two speakers, music, speech/lipsync
 (caps quoted, not approved); anything beyond the rows above.
+
+## 6. Addendum — reference-to-video duration and cap (Writer Controller, 2026-09-09)
+
+The reference piece's smoke call was refused by Vertex: *"Unsupported output video duration 6 seconds, supported
+durations are [8] for feature reference_to_video."* The frozen rows asked 6 s. Correction under the Controller's
+"proceed with them first": `veo-3.1-fast-ref2v` rows on VID-REF-01/02 move to **8 s** (USD 0.80 a clip; 4 clips
+USD 3.20 + the refused smoke USD 0.60 already charged + one new smoke USD 0.80 = USD 4.60), so the piece-5 cap is
+raised from ₹300 to **₹450 = USD 4.72**. Nothing else changes; the same blind judging and decoy line-ups apply.

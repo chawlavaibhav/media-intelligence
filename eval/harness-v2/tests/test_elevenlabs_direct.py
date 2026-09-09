@@ -69,9 +69,10 @@ class ElevenLabsBase(NoNetworkTestCase):
 
 # ============================================================================ registry + pins
 class RegistryTest(NoNetworkTestCase):
-    def test_two_extension_routes_are_registered_outside_the_catalogue(self):
-        self.assertEqual(surfaces.EXTENSION_ROUTES, ("elevenlabs-v3-direct", "elevenlabs-music-direct"))
-        tts, music = (surfaces.REGISTRY.get(k) for k in surfaces.EXTENSION_ROUTES)
+    def test_two_direct_routes_are_registered_and_in_the_catalogue(self):
+        # 2026-09-09: the Controller re-pointed the package to the direct routes, so they are catalogue rows, not extensions
+        self.assertEqual(surfaces.EXTENSION_ROUTES, ())
+        tts, music = (surfaces.REGISTRY.get(k) for k in ("elevenlabs-v3-direct", "elevenlabs-music-direct"))
         for e in (tts, music):
             self.assertEqual(e.adapter, "elevenlabs_direct")
             self.assertEqual(e.surface, "elevenlabs_direct")

@@ -26,10 +26,10 @@ class SurfaceRegistryTest(unittest.TestCase):
 
     def test_keys_equal_the_route_catalogue(self):
         self.assertEqual(self.reg.catalogue_keys(), set(self.catalogue), "registry keys (minus the extension routes) must equal route_catalogue keys exactly")
-        self.assertEqual(len(self.reg.catalogue_keys()), 47)
+        self.assertEqual(len(self.reg.catalogue_keys()), 49)   # 47 frozen + the two ElevenLabs direct routes (2026-09-09)
         # EXTENSION_ROUTES are registered but deliberately outside the freeze catalogue (no TEST-CASES / COST-TABLE row)
         self.assertEqual(set(surfaces.EXTENSION_ROUTES), self.reg.keys() - set(self.catalogue))
-        self.assertEqual(len(self.reg), 47 + len(surfaces.EXTENSION_ROUTES))
+        self.assertEqual(len(self.reg), 49 + len(surfaces.EXTENSION_ROUTES))
 
     def test_every_entry_names_adapter_surface_and_schema(self):
         for e in self.reg:

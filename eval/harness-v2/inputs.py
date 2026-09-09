@@ -52,7 +52,7 @@ FIXTURES_SUBDIR = "fixtures"                      # <run>/artifacts/fixtures/<fi
 WILDCARD_ARM = "*"
 # adapters whose request carries a recorded CHOICE (`$pending_choice` in adapters/base): (what, adapter input key).
 # Mapped in INPUTS.yaml as role `choice:<what>` with ref `literal:<value>`; a missing line keeps the row refusing.
-CHOICE_ROLES = {"sarvam_tts": (("speaker_id_lowercase", "voice"),)}
+CHOICE_ROLES = {"sarvam_tts": (("speaker_id_lowercase", "voice"),), "elevenlabs_direct": (("voice", "voice"),)}
 DATA_URI_SOURCE = ("pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` "
                    "with no format constraint; data URIs per fal's public API documentation (not in the pinned bytes; proven by the "
                    "first live smoke, never by a test)")
