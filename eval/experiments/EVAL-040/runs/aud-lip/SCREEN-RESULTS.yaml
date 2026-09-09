@@ -1,0 +1,400 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: aud-lip
+results_ref: eval/experiments/EVAL-040/runs/aud-lip/RESULTS.yaml
+results_sha256: 22b91667af45a2d49403f593379d4c3b12c2a0e12e8b8fe0d51e2c2c8ca672ee
+screened_utc: '2026-09-09T17:19:41.334157Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: aud-lip
+  results_run_id: aud-lip
+  trial_id: AUD-LIP-01__kling-lipsync-a2v__chain__r2
+  case_id: AUD-LIP-01
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  controller_verdict: reject
+  controller_note: looking very odd (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-lip/artifacts/media/AUD-LIP-01__kling-lipsync-a2v__chain__r2.mp4
+    sha256: 624f73e75c6ba6bc6f61e0d4436aee8ca3a1f72bfb1b46e595b55713e2f61e22
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the man's mouth opens and closes with the syllables of "इस दवाई से मेरी फसल दोगुनी हुई" — a first-language Hindi judge
+      sees the words being spoken; REJECT if the mouth moves out of time by a visible beat.
+    verdict: fail
+    evidence: The man's mouth remains closed or in a slight smile across all three frames, showing no speech movement for the specified phrase.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if his lips are closed or at rest during the silence after the line.
+    verdict: cannot_judge
+    evidence: The presence or timing of silence after the spoken line cannot be determined from static frames without audio.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the face changes identity, the mouth region shows a visible patch, blur, colour seam or flicker, or the background changes.
+    verdict: pass
+    evidence: The man's identity is consistent, his mouth region is clear of artifacts, and the background remains unchanged across the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the audio in the output is not the supplied voice (re-synthesised, clipped or shifted).
+    verdict: cannot_judge
+    evidence: Audio quality and voice characteristics cannot be evaluated from static image frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3773
+    candidatesTokenCount: 171
+    totalTokenCount: 5276
+    thoughtsTokenCount: 1332
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 779215
+    sha256: 562eac2fc8fef60f8bcc4f3e961875aa87d07162da7c6f5670fa662498d0f293
+  - frame_index: 97
+    time_s: 3.233
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 911434
+    sha256: f5643f7082e7e34cf96145579d5c619a886541c3b7f4fbc83ba17cd3e9b07351
+  - frame_index: 194
+    time_s: 6.467
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 902892
+    sha256: 7858bafb20ba890c1be7f0a21d9d0050fec160ce28790c9a6e3d10cf70366e0c
+  usd_at_pinned_price: '0.019187'
+  agree: true
+- run_id: aud-lip
+  results_run_id: aud-lip
+  trial_id: AUD-LIP-02__kling-lipsync-a2v__chain__r1
+  case_id: AUD-LIP-02
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  controller_verdict: reject
+  controller_note: looking very odd (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-lip/artifacts/media/AUD-LIP-02__kling-lipsync-a2v__chain__r1.mp4
+    sha256: df7643122246d287454ac427387907000cbbec6e7ae726b6569ac222e5579c79
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the mouth follows the whole line "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." in time — including
+      the English words — with no visible lag or lead.
+    verdict: fail
+    evidence: The man's mouth remains closed or smiling in all frames, showing no lip movement to speak the line.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lips rest closed during the pauses and after the line.
+    verdict: cannot_judge
+    evidence: The timing of pauses and the line cannot be determined from static frames without audio.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the face changes identity, or the mouth region shows a patch, blur, seam or flicker.
+    verdict: pass
+    evidence: The face identity is consistent and the mouth region is clear of any patches, blurs, or seams.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the output audio is not the supplied voice.
+    verdict: cannot_judge
+    evidence: The audio track cannot be heard or evaluated from the video frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3747
+    candidatesTokenCount: 160
+    totalTokenCount: 5281
+    thoughtsTokenCount: 1374
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 778942
+    sha256: 916f9fbf33fbbb1c80f68bbf6a52d75dbf8d1912ba255bb70a8bce9ff4ac8649
+  - frame_index: 97
+    time_s: 3.233
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 911798
+    sha256: 94cda32956f6ace0f9106f3ed5e2c5a4ba7bcbb973965a01d2cce2b9c4b72070
+  - frame_index: 194
+    time_s: 6.467
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 903529
+    sha256: 0d9b8326d85807926e5209fe83a35394c35934f2d6165bd2f62e22447f2bacf1
+  usd_at_pinned_price: '0.019427'
+  agree: true
+- run_id: aud-lip
+  results_run_id: aud-lip
+  trial_id: AUD-LIP-02__kling-lipsync-a2v__chain__r2
+  case_id: AUD-LIP-02
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  controller_verdict: reject
+  controller_note: looking very odd (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-lip/artifacts/media/AUD-LIP-02__kling-lipsync-a2v__chain__r2.mp4
+    sha256: b9c1c7d4b683b517cec2f42ba6a15b4cc9462c5882271fe7a988d8fee3e99588
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the mouth follows the whole line "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." in time — including
+      the English words — with no visible lag or lead.
+    verdict: cannot_judge
+    evidence: Mouth movement matching the spoken line cannot be verified from three static frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lips rest closed during the pauses and after the line.
+    verdict: cannot_judge
+    evidence: Lip positions during pauses and after the line cannot be determined without audio.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the face changes identity, or the mouth region shows a patch, blur, seam or flicker.
+    verdict: pass
+    evidence: The face identity remains consistent and the mouth region is clear of artifacts.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the output audio is not the supplied voice.
+    verdict: cannot_judge
+    evidence: Audio content cannot be evaluated from static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3747
+    candidatesTokenCount: 198
+    totalTokenCount: 5379
+    thoughtsTokenCount: 1434
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 779697
+    sha256: f497f8eb6c8a455f7580f7b7c6c7fd9c7593622d580c3c4a26f45090b4643411
+  - frame_index: 97
+    time_s: 3.233
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 910882
+    sha256: bdbf6008df9e78fe4dd6f6ce08181fc5896e761dd0a300c10b27c01941f92447
+  - frame_index: 194
+    time_s: 6.467
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 900760
+    sha256: f5d52422ee55131e7345d7f35d24d5fb8bf7ad42d3608d1f9d89b61bf7cd41ba
+  usd_at_pinned_price: '0.020309'
+  agree: null
+- run_id: aud-lip
+  results_run_id: aud-lip
+  trial_id: AUD-LIP-03__kling-lipsync-a2v__chain__r2
+  case_id: AUD-LIP-03
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  controller_verdict: reject
+  controller_note: looking very odd (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-lip/artifacts/media/AUD-LIP-03__kling-lipsync-a2v__chain__r2.mp4
+    sha256: ab6019f8bda72156c3f1115cfb51fb08656dde155d57a221a05098e443e636ef
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the mouth follows "Zero petrol. Zero noise. All city." in time, sentence by sentence.
+    verdict: fail
+    evidence: The man's mouth remains in a static smile and does not move to speak the words.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lips are closed in each of the two pauses and after the last sentence.
+    verdict: cannot_judge
+    evidence: The timing of the pauses and sentences cannot be determined from the static frames.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the face changes identity, or the mouth region shows a patch, blur, seam or flicker.
+    verdict: pass
+    evidence: The face identity is consistent and the mouth region shows no blurs or artifacts.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the output audio is not the supplied voice.
+    verdict: cannot_judge
+    evidence: Audio quality and voice identity cannot be verified from silent image frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3731
+    candidatesTokenCount: 130
+    totalTokenCount: 5222
+    thoughtsTokenCount: 1361
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 779752
+    sha256: 0b4522f6a0a7005c6b754a33fbe1c78653485a16813f3478dafcef41b25d3d07
+  - frame_index: 97
+    time_s: 3.233
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 914585
+    sha256: e10fd3a71fa583d48e29665186bd293511ab4e4386d2abc16507663523585411
+  - frame_index: 194
+    time_s: 6.467
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 902193
+    sha256: dec5ce2ff6dbeb657d5cda903571284fc2b6da3df46a7b814f7bd9a43751bc2d
+  usd_at_pinned_price: '0.019016'
+  agree: true
+- run_id: aud-lip
+  results_run_id: aud-lip
+  trial_id: AUD-LIP-01__kling-lipsync-a2v__chain__r1
+  case_id: AUD-LIP-01
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  controller_verdict: reject
+  controller_note: looking very odd (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-lip/artifacts/media/AUD-LIP-01__kling-lipsync-a2v__chain__r1.mp4
+    sha256: 0d289d21614e28cd89860a286ea4e846b2b4e621a4e38841a82e57a104710819
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the man's mouth opens and closes with the syllables of "इस दवाई से मेरी फसल दोगुनी हुई" — a first-language Hindi judge
+      sees the words being spoken; REJECT if the mouth moves out of time by a visible beat.
+    verdict: fail
+    evidence: The man's mouth is closed in all three frames, indicating he is not speaking the specified Hindi phrase.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if his lips are closed or at rest during the silence after the line.
+    verdict: cannot_judge
+    evidence: The timing of the silence after the line cannot be determined from the static frames.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the face changes identity, the mouth region shows a visible patch, blur, colour seam or flicker, or the background changes.
+    verdict: pass
+    evidence: The man's identity is consistent, his mouth region is clear, and the background remains unchanged.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the audio in the output is not the supplied voice (re-synthesised, clipped or shifted).
+    verdict: cannot_judge
+    evidence: Audio quality and voice matching cannot be assessed from static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3773
+    candidatesTokenCount: 158
+    totalTokenCount: 5442
+    thoughtsTokenCount: 1511
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 779848
+    sha256: 06e7dc643c0ce1ed22f44168306184133959c041c59fd155fbc8408cb0bb8af1
+  - frame_index: 97
+    time_s: 3.233
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 910256
+    sha256: 9d8984b036586cf132be4931cafd23242ebda257b640b718cca2c1aeef264519
+  - frame_index: 194
+    time_s: 6.467
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 902298
+    sha256: caa266a95cb7a23f72dc8a5d80be25cc0a7db919857285d09286a87be1189e60
+  usd_at_pinned_price: '0.020681'
+  agree: true
+- run_id: aud-lip
+  results_run_id: aud-lip
+  trial_id: AUD-LIP-03__kling-lipsync-a2v__chain__r1
+  case_id: AUD-LIP-03
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  controller_verdict: null
+  controller_note: 'fal: User is locked. Reason: Exhausted balance. (nothing generated, nothing charged)'
+  media_kind: null
+  artifact:
+    path: null
+  screen_overall: null
+  verdict: absent
+  absence_reason: not_measured
+  note: 'skipped: controller verdict None is not accept / reject'
+  rules: []
+  agree: null

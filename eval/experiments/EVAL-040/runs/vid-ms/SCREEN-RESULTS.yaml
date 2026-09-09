@@ -1,0 +1,598 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: vid-ms
+results_ref: eval/experiments/EVAL-040/runs/vid-ms/RESULTS.yaml
+results_sha256: ad194e6134361bb4cbd8cc1cfed2f73e15e43d1b00c10b7b595ea80ec60ae891
+screened_utc: '2026-09-09T17:19:41.743427Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: vid-ms
+  results_run_id: vid-ms
+  trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r1
+  case_id: VID-MS-01
+  question: VID-MS
+  route_key: veo-3.1-fast-extend
+  arm: chain
+  controller_verdict: accept
+  controller_note: accepted (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ms/artifacts/media/VID-MS-01__veo-3.1-fast-extend__chain__r1.call1.mp4
+    sha256: 08dc803b9a46e89a6fd7300bac8d0b6402ef7ae936257f638040e90ed752a807
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the clip contains at least three distinct shots (visible cuts) showing, in order, a home scene with a phone, an airport
+      with the pair running with bags, and a beach.
+    verdict: pass
+    evidence: The frames show a home scene with a phone, an airport with the couple running with bags, and a beach, in order.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the same man and the same woman appear in every shot — same faces, same hair — when paused on one frame per shot.
+    verdict: pass
+    evidence: The same man and woman appear in all three frames with consistent hair and clothing.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any logo or lettering appears anywhere in any shot.
+    verdict: fail
+    evidence: Lettering is visible on the airport sign in the background of the second frame.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if a shot is shorter than one second or the total runs under 13 s or over 17 s.
+    verdict: cannot_judge
+    evidence: The total duration and individual shot lengths cannot be determined from the three frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any speech or music is present.
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3860
+    candidatesTokenCount: 195
+    totalTokenCount: 5824
+    thoughtsTokenCount: 1769
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 387687
+    sha256: 38f86b1def06b2c3b0a23f90b5d4e1901ab8083431808235eae939f4e3e68238
+  - frame_index: 95
+    time_s: 3.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 352803
+    sha256: 289af8a299ddb631fa55ea674fdbdf04d8afd03560e839c0a14a0800c63ee0fb
+  - frame_index: 191
+    time_s: 7.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 359561
+    sha256: 8d8f5ec06f8e74d3392bcfdf7195b16e74ce075acb734479f5f74e36e801ada1
+  usd_at_pinned_price: '0.023466'
+  agree: false
+- run_id: vid-ms
+  results_run_id: vid-ms
+  trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r2
+  case_id: VID-MS-01
+  question: VID-MS
+  route_key: veo-3.1-fast-extend
+  arm: chain
+  controller_verdict: accept
+  controller_note: a little visually bad but technically correct (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ms/artifacts/media/VID-MS-01__veo-3.1-fast-extend__chain__r2.call1.mp4
+    sha256: f7b8dde9cab8b1d736acb1a22d41bb8e0f32095316c1d142c33bc436e8421f3c
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the clip contains at least three distinct shots (visible cuts) showing, in order, a home scene with a phone, an airport
+      with the pair running with bags, and a beach.
+    verdict: fail
+    evidence: The second shot shows a beach instead of an airport.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the same man and the same woman appear in every shot — same faces, same hair — when paused on one frame per shot.
+    verdict: cannot_judge
+    evidence: The faces of the couple are not visible in the beach shots.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any logo or lettering appears anywhere in any shot.
+    verdict: pass
+    evidence: No logos or lettering are visible in any of the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if a shot is shorter than one second or the total runs under 13 s or over 17 s.
+    verdict: cannot_judge
+    evidence: The total duration cannot be determined from the three frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any speech or music is present.
+    verdict: cannot_judge
+    evidence: Audio content cannot be determined from static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3860
+    candidatesTokenCount: 166
+    totalTokenCount: 5731
+    thoughtsTokenCount: 1705
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 474118
+    sha256: 29955b23b759cfd5bd130eb6cdd96bdb8d7f53ff27252f4d12f4804b966fca5b
+  - frame_index: 95
+    time_s: 3.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 503175
+    sha256: 07f2cb605ae564ab85a0c02b7cf3bfcae73e7c530c2bfeb947c354a11b50ee73
+  - frame_index: 191
+    time_s: 7.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 610280
+    sha256: 56d7eb445a270dfaa4b4e777b9c67eb0b02c1b2b2225812db8f616b79ccfcce4
+  usd_at_pinned_price: '0.022629'
+  agree: false
+- run_id: vid-ms
+  results_run_id: vid-ms
+  trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r2
+  case_id: VID-MS-02
+  question: VID-MS
+  route_key: gemini-omni-1.1-flash-10s
+  arm: core
+  controller_verdict: accept
+  controller_note: clean (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ms/artifacts/media/VID-MS-02__gemini-omni-1.1-flash-10s__core__r2.mp4
+    sha256: 6a281100692883ac64eac71670e778a293cd23afb27e34e2d43f76ed249dfc6c
+    media_kind: video
+  screen_overall: null
+  verdict: absent
+  absence_reason: instrument_unavailable
+  note: 'transport failure: TimeoutError: The read operation timed out'
+  rules: []
+  http_status: null
+  usage: null
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 102878
+    sha256: ade42cf427f94de57f7ec9853d7709bdae6042b81986473f828279f627ebbc8e
+  - frame_index: 119
+    time_s: 4.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 250642
+    sha256: e9ca00bde5fb154ca537f697bfaf09173f6b12ad0389cc2f390fb5e47868b8c1
+  - frame_index: 239
+    time_s: 9.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 348599
+    sha256: 900db7378acc630c841579c6812a2711418709e250776457b80a668ceda27625
+  usd_at_pinned_price: null
+  agree: null
+- run_id: vid-ms
+  results_run_id: vid-ms
+  trial_id: VID-MS-02__kling-v3-pro-10s__core__r1
+  case_id: VID-MS-02
+  question: VID-MS
+  route_key: kling-v3-pro-10s
+  arm: core
+  controller_verdict: accept
+  controller_note: technically correct but visually not amazing (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ms/artifacts/media/VID-MS-02__kling-v3-pro-10s__core__r1.mp4
+    sha256: 1d8be408af74ca5ac448d1f91c78e8d2cc7d95aa5fdf7fec3a605e0800804ce2
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: 'ACCEPT only if there are exactly three shots in this order: a person restless in a dark bedroom; a bare mattress in morning light;
+      the same person asleep in a bright room.'
+    verdict: pass
+    evidence: The three frames show a person lying in a dark bedroom, a bare mattress in daylight, and the same person sleeping in a bright room.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the person in shot 3 is recognisably the person in shot 1.
+    verdict: pass
+    evidence: The person's hair color, length, and style in shot 3 match those of the person in shot 1.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if shot 1 is visibly darker than shot 2 and shot 3 is the brightest.
+    verdict: pass
+    evidence: Shot 1 is dark, while shot 3 has the highest overall illumination and brightest highlights.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, voice or music is present, or if the clip runs under 9 s or over 11 s.
+    verdict: cannot_judge
+    evidence: The presence of voice or music cannot be determined from the silent frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3841
+    candidatesTokenCount: 228
+    totalTokenCount: 5955
+    thoughtsTokenCount: 1886
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 290657
+    sha256: d0e9bc8a3cab6ed951a37459b7856368acd9f3ae360dff0aa861672219ff3f2e
+  - frame_index: 120
+    time_s: 5.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 431215
+    sha256: 136b5b961fdae321f468afc9acc5475ae02434f888a845465f52fe59bbdee5e9
+  - frame_index: 240
+    time_s: 10.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 418802
+    sha256: 743c9a9fdacfb789b149bfa8ddf9caa95b71c162818f73af376694d03ee4d435
+  usd_at_pinned_price: '0.024788'
+  agree: null
+- run_id: vid-ms
+  results_run_id: vid-ms
+  trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r1
+  case_id: VID-MS-02
+  question: VID-MS
+  route_key: gemini-omni-1.1-flash-10s
+  arm: core
+  controller_verdict: accept
+  controller_note: clean (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ms/artifacts/media/VID-MS-02__gemini-omni-1.1-flash-10s__core__r1.mp4
+    sha256: d9709c4fdccafea6c56d3a38c4abff3709b01e080820cb786a382a6b7cee3a89
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: 'ACCEPT only if there are exactly three shots in this order: a person restless in a dark bedroom; a bare mattress in morning light;
+      the same person asleep in a bright room.'
+    verdict: pass
+    evidence: The three frames show a person in a dark bedroom, a bare mattress in morning light, and the same person asleep in a bright room,
+      in that order.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the person in shot 3 is recognisably the person in shot 1.
+    verdict: pass
+    evidence: The woman sleeping in frame 239 has the same facial features and dark hair as the woman in frame 0.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if shot 1 is visibly darker than shot 2 and shot 3 is the brightest.
+    verdict: fail
+    evidence: Shot 3 in frame 239 is not the brightest, as shot 2 in frame 119 contains brighter direct sunlight highlights on the mattress.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, voice or music is present, or if the clip runs under 9 s or over 11 s.
+    verdict: cannot_judge
+    evidence: Whether voice or music is present in the video clip cannot be determined from the silent frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3844
+    candidatesTokenCount: 250
+    totalTokenCount: 5429
+    thoughtsTokenCount: 1335
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 189469
+    sha256: 8544df2dbdf0e4034291bf64cab245ce23ee68b868f4bf3d2c6e4162b8e868b9
+  - frame_index: 119
+    time_s: 4.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 286589
+    sha256: e71943cf66f93a22a45db1809366a29db8a7c97ff83a6891b8c676a32414dcac
+  - frame_index: 239
+    time_s: 9.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 330513
+    sha256: c85cfb7c6aca063d092ee254361a1155a222a8df21e18df2dd13a0e83c1b4368
+  usd_at_pinned_price: '0.020031'
+  agree: false
+- run_id: vid-ms
+  results_run_id: vid-ms
+  trial_id: VID-MS-02__kling-v3-pro-10s__core__r2
+  case_id: VID-MS-02
+  question: VID-MS
+  route_key: kling-v3-pro-10s
+  arm: core
+  controller_verdict: accept
+  controller_note: technically correct but visually not amazing (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ms/artifacts/media/VID-MS-02__kling-v3-pro-10s__core__r2.mp4
+    sha256: 8e77e2a4a26207e03132768a583a51219097160d14986e070e8eed37189cbca4
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: 'ACCEPT only if there are exactly three shots in this order: a person restless in a dark bedroom; a bare mattress in morning light;
+      the same person asleep in a bright room.'
+    verdict: pass
+    evidence: The frames show a restless person in a dark room, a bare mattress in daylight, and the person asleep in a bright room.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the person in shot 3 is recognisably the person in shot 1.
+    verdict: pass
+    evidence: The sleeping person in the third frame has the same facial features, hair, and beige shirt as the person in the first frame.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if shot 1 is visibly darker than shot 2 and shot 3 is the brightest.
+    verdict: fail
+    evidence: The third frame is darker than the second frame due to the large dark wooden structure overhead.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, voice or music is present, or if the clip runs under 9 s or over 11 s.
+    verdict: cannot_judge
+    evidence: Whether voice or music is present in the video clip cannot be determined from the silent frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3841
+    candidatesTokenCount: 230
+    totalTokenCount: 5679
+    thoughtsTokenCount: 1608
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 206058
+    sha256: 214dc96047888b1e0db640ee7498c98bf12550e579a31bd088338bffe4720369
+  - frame_index: 120
+    time_s: 5.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 344585
+    sha256: c905f03ed5b54ff2aa18494c148b35d59ccaf9daece3637fd28f879e9fb9b22c
+  - frame_index: 240
+    time_s: 10.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 459919
+    sha256: ef58c7d4c0c2ceece69b2a9d222d31272dc801dcb4dc69fc668ffb5788956794
+  usd_at_pinned_price: '0.022304'
+  agree: false
+- run_id: vid-ms
+  results_run_id: vid-ms
+  trial_id: VID-MS-01__kling-v3-pro-15s__core__r1
+  case_id: VID-MS-01
+  question: VID-MS
+  route_key: kling-v3-pro-15s
+  arm: core
+  controller_verdict: accept
+  controller_note: accepted (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ms/artifacts/media/VID-MS-01__kling-v3-pro-15s__core__r1.mp4
+    sha256: 43ce5e18e36369b547dea5c5f72f5e5195c53711fbe8c08781b8ba71d9fc94da
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the clip contains at least three distinct shots (visible cuts) showing, in order, a home scene with a phone, an airport
+      with the pair running with bags, and a beach.
+    verdict: pass
+    evidence: The frames show a home scene with a phone at t=0.0s, an airport at t=7.5s, and a beach at t=15.0s.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the same man and the same woman appear in every shot — same faces, same hair — when paused on one frame per shot.
+    verdict: fail
+    evidence: The woman's face is not visible in the airport shot at t=7.5s, making it impossible to confirm she is the same person.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any logo or lettering appears anywhere in any shot.
+    verdict: pass
+    evidence: No logos or lettering are visible in any of the provided frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if a shot is shorter than one second or the total runs under 13 s or over 17 s.
+    verdict: cannot_judge
+    evidence: Shot durations and total video length cannot be determined from three static frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any speech or music is present.
+    verdict: cannot_judge
+    evidence: Audio content such as speech or music cannot be detected in static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3858
+    candidatesTokenCount: 287
+    totalTokenCount: 6126
+    thoughtsTokenCount: 1981
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 336088
+    sha256: b48b989b5f48a6f2a181c79789df0b85686d3cc9755ea6cebeeba4a3c4e4cafb
+  - frame_index: 180
+    time_s: 7.5
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 416133
+    sha256: df443767b4dea2f09615fa9118cd5b6065b9cf967ff5af5256b5d9102da2823f
+  - frame_index: 360
+    time_s: 15.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 317876
+    sha256: 1c1a9cccb2f6e3a7fb7f692bfe4aa4d1f2a13c99b1f4d6bfee1d7ec78cbb0b2a
+  usd_at_pinned_price: '0.026199'
+  agree: false
+- run_id: vid-ms
+  results_run_id: vid-ms
+  trial_id: VID-MS-01__kling-v3-pro-15s__core__r2
+  case_id: VID-MS-01
+  question: VID-MS
+  route_key: kling-v3-pro-15s
+  arm: core
+  controller_verdict: accept
+  controller_note: accepted (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ms/artifacts/media/VID-MS-01__kling-v3-pro-15s__core__r2.mp4
+    sha256: b0b274a0cda7ea94d3f37104b8f1a2caa85901cb1945b84465a4f5e4a23365cb
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the clip contains at least three distinct shots (visible cuts) showing, in order, a home scene with a phone, an airport
+      with the pair running with bags, and a beach.
+    verdict: pass
+    evidence: The three frames show a home scene with a phone, an airport with a running couple, and a beach in sequence.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the same man and the same woman appear in every shot — same faces, same hair — when paused on one frame per shot.
+    verdict: pass
+    evidence: The same man and woman appear across all three shots with consistent facial features and hair.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any logo or lettering appears anywhere in any shot.
+    verdict: fail
+    evidence: Lettering is visible on the airplane fuselage and signs in the airport shot.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if a shot is shorter than one second or the total runs under 13 s or over 17 s.
+    verdict: cannot_judge
+    evidence: The exact duration of each shot and the total video length cannot be determined from the three static frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any speech or music is present.
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from silent video frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3858
+    candidatesTokenCount: 266
+    totalTokenCount: 5366
+    thoughtsTokenCount: 1242
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 318683
+    sha256: 67965a6b2b781e96d2f084ae22d964a0fdbb240c041df1f12e9e24d8eb6a1100
+  - frame_index: 180
+    time_s: 7.5
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 407375
+    sha256: 770dd7fe6d547d3c76b0e4708e1bf47a71a472dc267ba609b16231c07dc882ec
+  - frame_index: 360
+    time_s: 15.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 299441
+    sha256: 15bc84e1248b3a2f72993330f6864fae6dbcfae4ebee3c19bdf58a74f31ddf0e
+  usd_at_pinned_price: '0.019359'
+  agree: false

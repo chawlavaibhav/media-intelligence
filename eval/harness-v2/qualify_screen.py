@@ -369,8 +369,8 @@ def build_report(screened: list, rows: list, inst, criteria: dict, cases: dict, 
                    "authorisation": ({"path": _rel(auth["path"]), "sha256": auth.get("sha256"), "screen_cap_usd": str(auth["screen_cap_usd"]),
                                       "screen_max_calls": auth.get("screen_max_calls")} if auth.get("present") else None)},
         "coverage": coverage, "agreement": stats,
-        "per_question": {k: agreement_stats(v) for k, v in sorted(by_q.items())},
-        "per_route": {k: agreement_stats(v) for k, v in sorted(by_r.items())},
+        "per_question": {k: agreement_stats(v) for k, v in sorted(by_q.items(), key=lambda kv: str(kv[0]))},
+        "per_route": {k: agreement_stats(v) for k, v in sorted(by_r.items(), key=lambda kv: str(kv[0]))},   # a None route_key must not crash the report
         "disagreements": disagreements,
         "cannot_judge": [{"trial_id": s["trial_id"], "question": s["question"], "route_key": s["route_key"], "controller_verdict": s["controller_verdict"],
                           "rules_cannot_judge": [r["rule_id"] for r in s.get("rules", []) if r["verdict"] == "cannot_judge"]} for s in cannot],
@@ -448,6 +448,50 @@ def expand_results(patterns: list) -> list:
     return paths
 
 
+class _OfflineSession:
+    """Stands in for the live ScreenSession when a report is rebuilt from written SCREEN-RESULTS files."""
+    def __init__(self, model, prompt_tokens, output_tokens):
+        self.model, self.prompt_tokens, self.output_tokens = model, prompt_tokens, output_tokens
+        self.total_tokens = prompt_tokens + output_tokens
+
+
+class _OfflineInstrument:
+    def __init__(self, doc_instrument: dict, session):
+        self.id = doc_instrument.get("id"); self.version = doc_instrument.get("version"); self.config_hash = doc_instrument.get("config_hash")
+        self.qualification_status = doc_instrument.get("qualification_status", "screened_not_qualified"); self.session = session
+
+
+def report_from_screen_results(a, rows, cases, criteria, pin, results_paths, log) -> int:
+    """Rebuild the report from SCREEN-RESULTS.yaml files already on disk. Nothing is sent; spend is the sum recorded per trial."""
+    import glob as _glob
+    files = sorted(_glob.glob(a.report_from_screen_results))
+    if not files:
+        log(f"REFUSED: no SCREEN-RESULTS files match {a.report_from_screen_results!r}")
+        return 2
+    screened, inst_doc, p_tok, o_tok, spent = [], None, 0, 0, Decimal("0")
+    for f in files:
+        doc = yaml.safe_load(Path(f).read_text(encoding="utf-8")) or {}
+        inst_doc = inst_doc or doc.get("instrument") or {}
+        for t in doc.get("trials", []):
+            screened.append(t)
+            u = t.get("usage") or {}
+            p_tok += int(u.get("promptTokenCount") or 0); o_tok += int((u.get("candidatesTokenCount") or 0) + (u.get("thoughtsTokenCount") or 0))
+            spent += Decimal(str(t.get("usd_at_pinned_price") or 0))
+    calls = sum(1 for t in screened if t.get("screen_overall") is not None or t.get("http_status"))
+    inst = _OfflineInstrument(inst_doc or {}, _OfflineSession((inst_doc or {}).get("model"), p_tok, o_tok))
+    auth = load_auth(a.auth) if a.auth else {"present": False}
+    report = build_report(screened, rows, inst, criteria, cases, auth, pin, calls, spent, results_paths, None, dry=False)
+    report["mode"] = "rebuilt_offline_from_screen_results"
+    report["rebuilt_from"] = [_rel(Path(f)) for f in files]
+    out = Path(a.out); out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("# QUALIFICATION-REPORT-v0 - rebuilt OFFLINE by eval/harness-v2/qualify_screen.py from SCREEN-RESULTS.yaml files (no call); criteria unfrozen until the Controller freezes it.\n"
+                   + yaml.safe_dump(report, allow_unicode=True, sort_keys=False, width=140), encoding="utf-8")
+    q = report["qualification"]
+    log(f"wrote {out}: compared {report['agreement']['n_compared']}, agreement {report['agreement']['agreement_rate']}, kappa {report['agreement']['cohens_kappa']}, "
+        f"false-accept {report['agreement']['false_accept_rate']}; verdict {q['qualification_verdict']} (would be {q['would_verdict']}); calls {calls}, USD {spent}")
+    return 0
+
+
 def main(argv=None, transport=None, key_reader=None, log=print) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--results", action="append", required=True, help="RESULTS.yaml path or glob (repeatable)")
@@ -461,6 +505,8 @@ def main(argv=None, transport=None, key_reader=None, log=print) -> int:
     ap.add_argument("--out", default=str(DEFAULT_REPORT), help="QUALIFICATION-REPORT.yaml path")
     ap.add_argument("--screen-out-dir", default=None, help="write <dir>/<run_id>/SCREEN-RESULTS.yaml instead of beside each RESULTS.yaml")
     ap.add_argument("--limit", type=int, default=None, help="screen only the first N screenable trials (a smoke)")
+    ap.add_argument("--report-from-screen-results", default=None, metavar="GLOB",
+                    help="OFFLINE: rebuild QUALIFICATION-REPORT.yaml from already-written SCREEN-RESULTS.yaml files (no call, no spend)")
     a = ap.parse_args(argv)
     try:
         criteria = VS.load_criteria(a.criteria)
@@ -476,6 +522,8 @@ def main(argv=None, transport=None, key_reader=None, log=print) -> int:
     except ScreenRefused as exc:
         log(f"REFUSED: {exc}")
         return 2
+    if a.report_from_screen_results:
+        return report_from_screen_results(a, rows, cases, criteria, pin, results_paths, log)
     screenable = [r for r in rows if r["calls"]]
     if a.limit is not None:
         keep = {id(r) for r in screenable[:a.limit]}

@@ -253,9 +253,14 @@ Music: Lyria 4/4; ElevenLabs music skipped (free plan). Summary: `eval/experimen
 Infrastructure: fal balance exhausted (one lipsync draw refused; every fal route blocked until the Controller tops up);
 ElevenLabs now direct on the Controller's key (fal rows retired from the package). Lipsync 0/5 (Kling lipsync a2v eliminated on a moving plate; confounds recorded). Two speakers 6/8 native (Veo fast,
 Omni, Wan 2/2 each; Kling v3 Pro audio 0/2 'language bad' after the fal top-up registered). The Controller skipped further fal top-ups and the ElevenLabs Indian
-voice. Next gates, each its own Controller act: (1) Seedance 2.5 only as a premium reference where cheap routes failed
-(the knee brief); (2) round two of stills sized from survivors; (3) Kling two-speaker draws / lipsync redo only after a
-fal top-up he chooses to make. MD-9 fresh cloud resources still need the Controller's own
+voice. Text-to-video core (day-2 tail, 9 Sep): Gemini Omni 8/8, H3 Max 5/7, Wan 4/7, Veo fast 4/8, Kling audio 2/6 (RR-15);
+Registry 546 rows; map 58 cells, RR-1..15. Vision judge (gemini-3.5-flash, Gemini key, USD 3.16): 154 compared,
+agreement 66 %, kappa 0.33, false-accept 22 % -> NOT qualified (over-rejects text/i2v, misses cropping); stays
+`screened_not_qualified`, report at `eval/experiments/EVAL-040/QUALIFICATION-REPORT-2026-09-09.yaml`. Roster gap
+recorded: Wan/Kling ran as mid tiers, not their cheapest (Controller: 'havent we failed the very principle'). Next
+gates: (1) pin the cheapest live Wan/Kling tiers and a floor round (~USD 10-15); (2) Seedance 2.5 only where every
+cheap route failed (the two bottle briefs, ~USD 6); (3) judge v2 (better prompt / stronger model) before any
+re-qualification; (4) round two of stills (~₹4,300); (5) Gemini API adapter switch for Gemini image and Omni. MD-9 fresh cloud resources still need the Controller's own
 session. The Canon items below remain a queue, not an authorisation.
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's

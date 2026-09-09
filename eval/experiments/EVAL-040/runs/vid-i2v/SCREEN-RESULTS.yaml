@@ -1,0 +1,2386 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: vid-i2v
+results_ref: eval/experiments/EVAL-040/runs/vid-i2v/RESULTS.yaml
+results_sha256: 4b0af2678fb298313130df48ba5b57d5de04780d72b739d12da91dd1e24bb730
+screened_utc: '2026-09-09T17:19:41.673838Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-03__kling-v3-pro-i2v__core__r1
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-03__kling-v3-pro-i2v__core__r1.mp4
+    sha256: 2a385aa7c8586f7789aeb37213b0323ff39acc9746eb7a521523dbb0d7087e9d
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the man goes from his starting pose to standing tall with both arms raised within the clip.
+    verdict: pass
+    evidence: The man transitions from looking at his phone to standing tall with both arms raised.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the face in the last second is recognisably the same person as in the first frame.
+    verdict: pass
+    evidence: The face in the final frame is recognisably the same bearded man shown in the first frame.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.
+    verdict: pass
+    evidence: The arms, hands, and phone do not multiply, stretch, pass through the body, or vanish.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.
+    verdict: pass
+    evidence: The clip features a dynamic celebration movement and has no visible lettering.
+  http_status: 200
+  usage:
+    promptTokenCount: 3855
+    candidatesTokenCount: 210
+    totalTokenCount: 5364
+    thoughtsTokenCount: 1299
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 824714
+    sha256: 50031ff48101b11c0789dc3ba4f862e2c2b8993aa7ecfd32d1654d447859558f
+  - frame_index: 72
+    time_s: 3.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 900604
+    sha256: 5102d4f91f6ede98bc5288c50ce9cb274d71870d59f1f433fee99f3d7f15053f
+  - frame_index: 144
+    time_s: 6.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 871763
+    sha256: 3f05a91d71dd809cef53163e84fd20164daccd95e97f9feb6bb69bca677b75a7
+  usd_at_pinned_price: '0.019364'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-02__kling-v3-pro-i2v__core__r1
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: expressesion change to angry in the end
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-02__kling-v3-pro-i2v__core__r1.mp4
+    sha256: 6ff32e3f72b440c288424c84a9fab2afac6df81956cb6b40209b4dbf2d8a5ad2
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the frame edges and background stay fixed for the whole clip (no pan, zoom or drift).
+    verdict: pass
+    evidence: The background and frame edges remain completely static across all frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
+    verdict: pass
+    evidence: The man's facial features and hairline remain consistent between the first and last frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
+    verdict: fail
+    evidence: He is already looking at the phone in all frames, and his expression changes from a wide smile to neutral.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if his hand, the phone or his features distort, or if any lettering appears.
+    verdict: pass
+    evidence: No distortion of his hand, phone, or features occurs, and no lettering appears.
+  http_status: 200
+  usage:
+    promptTokenCount: 3859
+    candidatesTokenCount: 208
+    totalTokenCount: 6058
+    thoughtsTokenCount: 1991
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 827150
+    sha256: 43f44dbc6883147d871b9bade76c709db592d6bfc0dbff8c1432fb72393f729f
+  - frame_index: 72
+    time_s: 3.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 926137
+    sha256: f0dac0667ae986ca408180ce0a686e0e4a10f4dadcbda60608919c0fae5075a5
+  - frame_index: 144
+    time_s: 6.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 935264
+    sha256: 3fd5280d423d128dc923489748cc81744093a575d6a84044f1df32b9faddae72
+  usd_at_pinned_price: '0.025580'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-04__minimax-h3-max-i2v__core__r2
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-04__minimax-h3-max-i2v__core__r2.mp4
+    sha256: 1f96d17f778e5e4f9c60c851370d9511e54d94738a28e4a365612c3f757007d4
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if there is no clip — a blank or black video, or text where the video should be.
+    verdict: pass
+    evidence: The frames show a fully rendered illustrated scene of a girl sitting by a window.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
+    verdict: pass
+    evidence: Rain streaks are visible, ripples appear on the wet street, and the camera framing remains static.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
+    verdict: pass
+    evidence: The girl's facial features remain consistent and the painterly illustration style does not change.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
+    verdict: pass
+    evidence: She shifts her gaze from looking outside in the first frame to looking down at the paper boat with a smile in the later frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears.
+    verdict: pass
+    evidence: No text or lettering is visible in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3837
+    candidatesTokenCount: 263
+    totalTokenCount: 4552
+    thoughtsTokenCount: 452
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 705334
+    sha256: 34984ca222f02d9a907ab7cbdddbab0a2777fedf31b79e4d823130f4748813d4
+  - frame_index: 78
+    time_s: 3.25
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 718568
+    sha256: 37c29e256b3cf41167d0a97444abc75c700d6ce868f788be8b5ea5c11523c18e
+  - frame_index: 157
+    time_s: 6.542
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 687405
+    sha256: dc37b636f1aedee12896c1007a3ec9f627da40d840ed54252686e3eabe3c77ae
+  usd_at_pinned_price: '0.012191'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-01__kling-v3-pro-i2v__core__r2
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-01__kling-v3-pro-i2v__core__r2.mp4
+    sha256: 005ee5a8e1ae2b414065d7a381ba949570e2bd8b5eef51ef34717fb203a646fe
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
+    verdict: pass
+    evidence: The viewpoint travels to reveal a white label on the bottle in the final frame that was not visible in the first frame.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the
+      surface, or grows lettering.
+    verdict: fail
+    evidence: The bottle does not keep the same appearance throughout, as a blank white label appears in the later frames where none existed in
+      the first.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint
+      has changed.
+    verdict: pass
+    evidence: The highlight does not sit on the same physical spot of the bottle's surface in the first and last frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if speech or music is present, or any lettering.
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from the static image frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3869
+    candidatesTokenCount: 231
+    totalTokenCount: 5436
+    thoughtsTokenCount: 1336
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 316075
+    sha256: 9ee6021f287c04b07d86fa1c3c7e33cc2b8c683069bc9aeea57d067701087728
+  - frame_index: 72
+    time_s: 3.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 332197
+    sha256: 94591ab747af7558c721393d810e5a34809d0a641a6cf1908204e2385dbcb63d
+  - frame_index: 144
+    time_s: 6.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 311759
+    sha256: 6b903fb1812ce9c2342fe0888f09bac92a99cb0da8e6c9149b3d4832d629c596
+  usd_at_pinned_price: '0.019907'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-02__veo-3.1-fast-i2v__core__r2
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  arm: core
+  controller_verdict: reject
+  controller_note: zooms in
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-02__veo-3.1-fast-i2v__core__r2.mp4
+    sha256: 73de7c57a02d32cecd9b08d4aee7ceac38a271836463d7f234d16c8a15aa17f6
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the frame edges and background stay fixed for the whole clip (no pan, zoom or drift).
+    verdict: pass
+    evidence: The background structures and frame edges remain perfectly static and aligned across all three frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
+    verdict: pass
+    evidence: The man's facial structure, hairline, jawline, and eye spacing remain consistent and recognizable between the first and last frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
+    verdict: fail
+    evidence: The man is already looking at the phone with a smile in the first frame, showing no change in glance or expression.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if his hand, the phone or his features distort, or if any lettering appears.
+    verdict: pass
+    evidence: No distortion of his hands, phone, or facial features is visible, and no new lettering appears.
+  http_status: 200
+  usage:
+    promptTokenCount: 3833
+    candidatesTokenCount: 226
+    totalTokenCount: 5185
+    thoughtsTokenCount: 1126
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 439390
+    sha256: 35c492eb80d57d883944e93a23587e09c61d17e31a6db51156efd817b36c716b
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 496951
+    sha256: 38fffd273af94885ff27c3d2989b9174d4e691540be4471cb100ab4cb296f950
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 495816
+    sha256: 8f2a7e760c4462584b30ae7f7926c4653ee50825bf8aeeaeb5cd2d2e4ed664b6
+  usd_at_pinned_price: '0.017918'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-03__wan-3.0-prime-i2v__core__r2
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-03__wan-3.0-prime-i2v__core__r2.mp4
+    sha256: cbe7c9ad87182cbdf2d3c132cd5f1ec50b30a17d7c31101aa5aad2716f4a571d
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the man goes from his starting pose to standing tall with both arms raised within the clip.
+    verdict: pass
+    evidence: The man transitions from holding his phone in frame 0 to standing with both arms raised in frames 89 and 179.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the face in the last second is recognisably the same person as in the first frame.
+    verdict: pass
+    evidence: The face in frame 179 is clearly the same person as shown in frame 0.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.
+    verdict: pass
+    evidence: The arms, hands, and phone do not multiply, stretch, vanish, or pass through the body in any of the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.
+    verdict: cannot_judge
+    evidence: The presence of audio cannot be determined from the static frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3859
+    candidatesTokenCount: 228
+    totalTokenCount: 5547
+    thoughtsTokenCount: 1460
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 882844
+    sha256: f886457d1634b98f56b9a63bb04bbf876a5480995a123f83795c8dae0c32aa23
+  - frame_index: 89
+    time_s: 2.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 879282
+    sha256: 8de73e405e906de287a100462b585b659cf00cce8ed7e53fb3164e6fd075ef3a
+  - frame_index: 179
+    time_s: 5.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 904403
+    sha256: 66f41e257f6ce580c89ea139b82e1d160c1642fa9d6b98131e7e434c2599eea8
+  usd_at_pinned_price: '0.020981'
+  agree: null
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-02__minimax-h3-max-i2v__core__r1
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-02__minimax-h3-max-i2v__core__r1.mp4
+    sha256: e06f149ccf2be1b14584b270722c0dd3c7f4c9cfa358246a8263c1ffdf339e27
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the frame edges and background stay fixed for the whole clip (no pan, zoom or drift).
+    verdict: pass
+    evidence: The background columns, windows, and floor lines remain completely stationary across all three frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
+    verdict: pass
+    evidence: The man's hairline, jaw, and facial structure are identical and recognizable between the first and last frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
+    verdict: fail
+    evidence: The man is already looking at the phone with a smile in the first frame, rather than glancing toward it and changing his expression
+      during the clip.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if his hand, the phone or his features distort, or if any lettering appears.
+    verdict: pass
+    evidence: No distortion is visible on his hand, features, or the phone, and no new lettering appears.
+  http_status: 200
+  usage:
+    promptTokenCount: 3751
+    candidatesTokenCount: 228
+    totalTokenCount: 4929
+    thoughtsTokenCount: 950
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 781964
+    sha256: c273033fb612fff9698d798177293d19496210f75eaebfdae72e1328a4b59d07
+  - frame_index: 78
+    time_s: 3.25
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 876484
+    sha256: 61d9eb78e9b50de0ea3f2c89524af3ec767ceddf94f573ba62afaa9bd7d7a441
+  - frame_index: 157
+    time_s: 6.542
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 835558
+    sha256: 374176c7ba1cdb810873fbdbb701d2f6f376db497d7d2745dfc5ad350981a91f
+  usd_at_pinned_price: '0.016229'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-03__veo-3.1-fast-i2v__core__r1
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-03__veo-3.1-fast-i2v__core__r1.mp4
+    sha256: e2565b9bc946b573e04a2f46d2038784f48f5efa1ac4da56f6864c5e047beb9d
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the man goes from his starting pose to standing tall with both arms raised within the clip.
+    verdict: pass
+    evidence: The man starts by looking at his phone and then stands tall with both arms raised in the middle frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the face in the last second is recognisably the same person as in the first frame.
+    verdict: pass
+    evidence: The man's face in the final frame is clearly the same person as shown in the first frame.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.
+    verdict: pass
+    evidence: The arms, hands, and phone remain intact and do not multiply, vanish, or pass through the body.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.
+    verdict: pass
+    evidence: The clip features a dynamic celebration movement and contains no visible overlay lettering.
+  http_status: 200
+  usage:
+    promptTokenCount: 3829
+    candidatesTokenCount: 218
+    totalTokenCount: 4996
+    thoughtsTokenCount: 949
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 443054
+    sha256: cb7969966ac68e60201234478120b8376677a8254712eac813d29f04cf0a0325
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 473130
+    sha256: 983d290ff287abae1d844eee06c88e64ddf71f85d60e5cd0a05df6ee01252f05
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 495123
+    sha256: ec3b18d297b19c5119432f9c8c14b72da1d5f278dd649bd89dcf6a9dbf2edfec
+  usd_at_pinned_price: '0.016247'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-03__wan-3.0-prime-i2v__core__r1
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-03__wan-3.0-prime-i2v__core__r1.mp4
+    sha256: f3499976517ccfbac209703e9483b8f7579ea47639624e19b34db0ed9ed3cf1e
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the man goes from his starting pose to standing tall with both arms raised within the clip.
+    verdict: fail
+    evidence: The man does not raise both arms in any of the frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the face in the last second is recognisably the same person as in the first frame.
+    verdict: pass
+    evidence: The face in the final frame is clearly the same person as in the first frame.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.
+    verdict: pass
+    evidence: No arms, hands, or phone multiply, stretch, or vanish in the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.
+    verdict: fail
+    evidence: The clip is nearly static as the man's pose remains virtually unchanged.
+  http_status: 200
+  usage:
+    promptTokenCount: 3859
+    candidatesTokenCount: 125
+    totalTokenCount: 5467
+    thoughtsTokenCount: 1483
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 883834
+    sha256: 70a283f0b865b8f56418003e05fbad176035be2027ec17fe00db8b05363c3c91
+  - frame_index: 89
+    time_s: 2.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 933578
+    sha256: 9a07741a1e791566c76333e5d3232c3e8c9f9a929249244928ab227ea33cb016
+  - frame_index: 179
+    time_s: 5.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 921020
+    sha256: 65cea8e07d9a23712eaad75361c05027d3a3120f784abca0d3184f89608d1b5e
+  usd_at_pinned_price: '0.020261'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-04__minimax-h3-max-i2v__core__r1
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-04__minimax-h3-max-i2v__core__r1.mp4
+    sha256: e6731a6db58b6f4a714573d80ba435930b6845ad1ed3cf3e45c76560ee55e8de
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if there is no clip — a blank or black video, or text where the video should be.
+    verdict: pass
+    evidence: The frames show a valid illustrated scene of a girl sitting by a window.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
+    verdict: pass
+    evidence: Rain is falling, ripples on the street change, and the camera remains fixed.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
+    verdict: pass
+    evidence: The girl's face and the illustration style remain consistent across all frames.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
+    verdict: pass
+    evidence: She turns her gaze down to the paper boat and smiles slightly in the later frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears.
+    verdict: pass
+    evidence: No lettering is visible in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3837
+    candidatesTokenCount: 245
+    totalTokenCount: 4883
+    thoughtsTokenCount: 801
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 703871
+    sha256: a5e4a2335028df03884578a9ab0468e3ff77ca0a31c163458f3422de93198cfe
+  - frame_index: 78
+    time_s: 3.25
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 697319
+    sha256: a8fb715061868493106cb619086df18e07232058b35f99116c26c9f971159e67
+  - frame_index: 157
+    time_s: 6.542
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 675171
+    sha256: 4aa09a5142a9dd21bb3f3b4c9fd90513de02b4efdb1c82be7873df89a2db9ca4
+  usd_at_pinned_price: '0.015170'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-03__minimax-h3-max-i2v__core__r2
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-03__minimax-h3-max-i2v__core__r2.mp4
+    sha256: 2f46a1c62d2a05b18fc5f8f89957eca132c0a2c504a628cc9919b775545aad0b
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the man goes from his starting pose to standing tall with both arms raised within the clip.
+    verdict: pass
+    evidence: The man transitions from holding his phone at the start to standing with both arms raised by the end.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the face in the last second is recognisably the same person as in the first frame.
+    verdict: pass
+    evidence: The man's face in the final frame is clearly the same person shown in the first frame.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.
+    verdict: pass
+    evidence: The arms, hands, and phone do not multiply, stretch, vanish, or pass through the body.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.
+    verdict: cannot_judge
+    evidence: The presence of audio cannot be determined from the static frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3747
+    candidatesTokenCount: 215
+    totalTokenCount: 5145
+    thoughtsTokenCount: 1183
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 782072
+    sha256: 34e1915d205d4226c5ec100ee768a8c973ee91993f8e089d99afde080869bc5c
+  - frame_index: 78
+    time_s: 3.25
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 833783
+    sha256: 854ba29bed48dc3239d8f9a525ce60c2f316e4ac9fec0a5b81f83d26cdb4c7c0
+  - frame_index: 157
+    time_s: 6.542
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 881776
+    sha256: 870ca8ebd0caa2a463f655d9353635cb6ea991c6aa8f360cd76ee33bf5183fcd
+  usd_at_pinned_price: '0.018203'
+  agree: null
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-02__minimax-h3-max-i2v__core__r2
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: expressesion change to angry
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-02__minimax-h3-max-i2v__core__r2.mp4
+    sha256: abe0f6803c416145715c5b69480acca2bcf3a54a7d0611e9572d815d7beae067
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the frame edges and background stay fixed for the whole clip (no pan, zoom or drift).
+    verdict: pass
+    evidence: The background and frame edges remain completely static across all frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
+    verdict: pass
+    evidence: The man's facial structure, hairline, and features are identical and recognizable in both the first and last frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
+    verdict: pass
+    evidence: He looks at the phone throughout the clip while his expression shifts from a full smile to a slight smile.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if his hand, the phone or his features distort, or if any lettering appears.
+    verdict: pass
+    evidence: No distortion of his hand, phone, or features occurs, and no lettering appears.
+  http_status: 200
+  usage:
+    promptTokenCount: 3751
+    candidatesTokenCount: 213
+    totalTokenCount: 5730
+    thoughtsTokenCount: 1766
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 776842
+    sha256: e50075819a9ea4d8e287657b7011926ea9d90f305f884d7271910ba7bdeec2c6
+  - frame_index: 78
+    time_s: 3.25
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 855215
+    sha256: c9bf76d8ac3ae5e97299547bfd6f3fcab49fa6a8d24767a14b1d31405b9776eb
+  - frame_index: 157
+    time_s: 6.542
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 830093
+    sha256: 62471f00e352a7f3863171f4ee068dd97e2626e22ffbc5f6154f6dae5ef53a68
+  usd_at_pinned_price: '0.023438'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-04__veo-3.1-fast-i2v__core__r2
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-04__veo-3.1-fast-i2v__core__r2.mp4
+    sha256: 6956d655dd8285c86b97a76928f3f854aba486255de9d80868eef7cfd0bddf34
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if there is no clip — a blank or black video, or text where the video should be.
+    verdict: pass
+    evidence: The video clip is fully visible with illustrated content and is not blank or text.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
+    verdict: pass
+    evidence: Rain is falling and water reflections on the street change across frames while the camera remains fixed.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
+    verdict: pass
+    evidence: The girl's face is consistent and the illustration style remains non-photorealistic throughout.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
+    verdict: pass
+    evidence: She turns her gaze down to the paper boat and her expression softens into a slight smile by the second frame.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears.
+    verdict: pass
+    evidence: There is no lettering visible in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3838
+    candidatesTokenCount: 257
+    totalTokenCount: 5412
+    thoughtsTokenCount: 1317
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 678927
+    sha256: 07d3d254cc07d3976403a65f798cbe7ccc73fec79af3aff10ebfa10ad1434dc3
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 719836
+    sha256: 6906e6f59aab30355f1b13a69a6197a8741900275e4569902305b88602879d2c
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 729706
+    sha256: 94ec2bff806c2094a9cde34090eac6be722ca580ac2b1528d398facbf3b76bb1
+  usd_at_pinned_price: '0.019923'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-01__veo-3.1-fast-i2v__core__r1
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-01__veo-3.1-fast-i2v__core__r1.mp4
+    sha256: fbe92ceeb9bfcf0b6016e51e5523196d11e8767623c99a580375e6fd2987ce50
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
+    verdict: fail
+    evidence: The viewpoint remains completely static, showing the exact same side of the bottle from start to end.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the
+      surface, or grows lettering.
+    verdict: pass
+    evidence: The bottle maintains its shape, size, cap, and appearance without any warping or drifting.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint
+      has changed.
+    verdict: pass
+    evidence: The highlight on the glass remains stable and the viewpoint does not change.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if speech or music is present, or any lettering.
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from the silent video frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3843
+    candidatesTokenCount: 208
+    totalTokenCount: 5270
+    thoughtsTokenCount: 1219
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 140059
+    sha256: 4a5c6f95f742fcfde565e30a1138e954bbe54782655d34b8173e45a130fcc86a
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 187162
+    sha256: 19533649ec0fdb98b9a071e61fc83785272a8508cc2b06cd1388af4fdfead17f
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 190595
+    sha256: 43ffb23ad1272b70bbc957235cc8ea607e469ff4063bb04110891f3ba98ddecf
+  usd_at_pinned_price: '0.018608'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-04__wan-3.0-prime-i2v__core__r1
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-04__wan-3.0-prime-i2v__core__r1.mp4
+    sha256: 5f896fe15dd4d71e62e7a6c85eb32d59cd726ab349a44cd82acbf9bfe929c532
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if there is no clip — a blank or black video, or text where the video should be.
+    verdict: pass
+    evidence: The frames show a fully rendered illustration of a girl by a window.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
+    verdict: pass
+    evidence: Rain falls, ripples on the street change, and the camera remains fixed.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
+    verdict: pass
+    evidence: The girl's face and the hand-drawn illustration style remain consistent throughout.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
+    verdict: pass
+    evidence: She looks down at the paper boat and smiles slightly by the final frame.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears.
+    verdict: pass
+    evidence: No lettering is visible in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3706
+    candidatesTokenCount: 148
+    totalTokenCount: 4868
+    thoughtsTokenCount: 1014
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 428
+    height: 767
+    source_width: 716
+    source_height: 1284
+    png_bytes: 685038
+    sha256: fa842279e8e8d4cf3a503ee6f4c8c29eaa767195d0a6a57d76151a419b654626
+  - frame_index: 89
+    time_s: 2.967
+    width: 428
+    height: 767
+    source_width: 716
+    source_height: 1284
+    png_bytes: 721292
+    sha256: 241a117ef8595649c9273ae5d41778ae1b5db19c0b0f61b041a4bde2443b83c2
+  - frame_index: 179
+    time_s: 5.967
+    width: 428
+    height: 767
+    source_width: 716
+    source_height: 1284
+    png_bytes: 723538
+    sha256: 06e3349e7850edc3d5837dd4dba89453a273637ba3f154200c25d3538a695c2b
+  usd_at_pinned_price: '0.016017'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-01__wan-3.0-prime-i2v__core__r1
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-01__wan-3.0-prime-i2v__core__r1.mp4
+    sha256: c8e423f5b7f000915606b1d3e85fc7428ffb51abffb99f54d76c4862165bef4c
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
+    verdict: pass
+    evidence: The camera rotates to reveal a white label on the bottle that was not visible in the first frame.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the
+      surface, or grows lettering.
+    verdict: fail
+    evidence: The bottle does not have a blank label in the first frame, but one appears in the final frame.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint
+      has changed.
+    verdict: cannot_judge
+    evidence: Whether the highlight on the glass flickers cannot be determined from three static frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if speech or music is present, or any lettering.
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from static frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3873
+    candidatesTokenCount: 214
+    totalTokenCount: 6853
+    thoughtsTokenCount: 2766
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 439436
+    sha256: f7c800308ed7f1a72e628b31ec39557e796926ca25802ec42365900430df1bb3
+  - frame_index: 89
+    time_s: 2.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 447765
+    sha256: 8fb73b47315afc101d146ee403f3e06f664e672aa559b6b941bf9c5e7a76b528
+  - frame_index: 179
+    time_s: 5.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 433247
+    sha256: 4caab0b07db54c72b32eaafe2b0836e6f1bed80bb75f61de2e6c7e3387be562f
+  usd_at_pinned_price: '0.032630'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-02__wan-3.0-prime-i2v__core__r1
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: expressesion change to angry
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-02__wan-3.0-prime-i2v__core__r1.mp4
+    sha256: 17a760bf99bf4f69a1f4cdf1cd17efb6023d8a28fcaf7d71f81a3db252aea4a3
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the frame edges and background stay fixed for the whole clip (no pan, zoom or drift).
+    verdict: pass
+    evidence: The background structures and frame edges remain perfectly aligned and static across all three frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
+    verdict: pass
+    evidence: The man's facial features, including his hairline, jawline, and eye spacing, remain completely consistent between the first and
+      last frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
+    verdict: fail
+    evidence: The man is already looking at the phone with a smile in the first frame, so he does not visibly glance toward it or change his expression
+      to a smile during the clip.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if his hand, the phone or his features distort, or if any lettering appears.
+    verdict: pass
+    evidence: There is no distortion of the man's hand, phone, or features, and no new lettering appears in the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3863
+    candidatesTokenCount: 244
+    totalTokenCount: 5096
+    thoughtsTokenCount: 989
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 886333
+    sha256: e10bd904bb1aad42a09a6547f438fe24444e5fe4b855b4aee9ff65385a76a702
+  - frame_index: 89
+    time_s: 2.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 954793
+    sha256: a22c2eb4bbf8f40b5367a47e218ceba763a18e5f3de0555935f2fe2270a00b46
+  - frame_index: 179
+    time_s: 5.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 958005
+    sha256: 42e89b07217c07464a1e859695bad5040f16541e8b7e83defa353ab0b317bb6a
+  usd_at_pinned_price: '0.016892'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-02__veo-3.1-fast-i2v__core__r1
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  arm: core
+  controller_verdict: reject
+  controller_note: zooms in
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-02__veo-3.1-fast-i2v__core__r1.mp4
+    sha256: 0ea21c006dd6ecfeff26c53a5a0fed4b147cfd4b7e1ed192a75adf633304f362
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the frame edges and background stay fixed for the whole clip (no pan, zoom or drift).
+    verdict: fail
+    evidence: The camera zooms in over the course of the clip, causing the background elements to shift and enlarge.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
+    verdict: pass
+    evidence: The man's facial structure, hairline, and features remain consistent and recognizable between the first and last frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
+    verdict: fail
+    evidence: His expression does not transition to a smile while looking at the phone, as he is already smiling in the first frame and neutral
+      in the last.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if his hand, the phone or his features distort, or if any lettering appears.
+    verdict: pass
+    evidence: No distortion is visible on his hand, phone, or face, and no legible lettering appears.
+  http_status: 200
+  usage:
+    promptTokenCount: 3833
+    candidatesTokenCount: 230
+    totalTokenCount: 5371
+    thoughtsTokenCount: 1308
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 436671
+    sha256: 1e402d3e2b9d3fc4b3af65525f6435a8136af69d3c5ceefa02e3db8fed17a5ca
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 502974
+    sha256: 0eb87588ff34b74199906595a50e8152552e6e0a6264b4e9d57995bc1bc509db
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 498454
+    sha256: 29cda9a608d1c45467b636cf961b55eccdef6135f27bc523dc8f2cc21a7a3d97
+  usd_at_pinned_price: '0.019592'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-04__kling-v3-pro-i2v__core__r2
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-04__kling-v3-pro-i2v__core__r2.mp4
+    sha256: 2f96d308bbc4b82995e18bf0df896f8e544222f12a8ba9204073e60d01c05203
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if there is no clip — a blank or black video, or text where the video should be.
+    verdict: pass
+    evidence: The frames show a consistent illustrated scene of a girl sitting by a window.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
+    verdict: pass
+    evidence: Rain streaks are visible, water ripples on the street change, and the camera remains stationary.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
+    verdict: pass
+    evidence: The girl's face remains consistent with the first frame and the illustration style does not change.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
+    verdict: pass
+    evidence: In the final frame, she looks down at the paper boat with a slight smile.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears.
+    verdict: pass
+    evidence: No lettering or text is visible in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3834
+    candidatesTokenCount: 186
+    totalTokenCount: 5519
+    thoughtsTokenCount: 1499
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 429
+    height: 768
+    source_width: 1076
+    source_height: 1924
+    png_bytes: 667823
+    sha256: 68a74713659c4c804bdcd39a6ee6c0860c414008b87fcef69d1d53a345c18152
+  - frame_index: 72
+    time_s: 3.0
+    width: 429
+    height: 768
+    source_width: 1076
+    source_height: 1924
+    png_bytes: 679301
+    sha256: 8a21da147d60f1ab9940e8ba8ef9ba490a2726be1a622e7fead73a53fe1de310
+  - frame_index: 144
+    time_s: 6.0
+    width: 429
+    height: 768
+    source_width: 1076
+    source_height: 1924
+    png_bytes: 682934
+    sha256: a16b247a5568553ce6b542b502eb6220eb544a3f569d66d6535beff4803bae0a
+  usd_at_pinned_price: '0.020916'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-03__minimax-h3-max-i2v__core__r1
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: accept (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-03__minimax-h3-max-i2v__core__r1.mp4
+    sha256: b7838cb0828112864303ad4f890086037c8920f125662c7b112d1be8cf430ea6
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the man goes from his starting pose to standing tall with both arms raised within the clip.
+    verdict: pass
+    evidence: The man transitions from looking at his phone to standing with both arms raised.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the face in the last second is recognisably the same person as in the first frame.
+    verdict: pass
+    evidence: The face in the final frame is clearly the same bearded man from the first frame.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.
+    verdict: pass
+    evidence: No arms, hands, or the phone multiply, stretch, or vanish across the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.
+    verdict: pass
+    evidence: The clip features significant motion and contains no visible lettering or audio.
+  http_status: 200
+  usage:
+    promptTokenCount: 3747
+    candidatesTokenCount: 203
+    totalTokenCount: 4764
+    thoughtsTokenCount: 814
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 779967
+    sha256: 98fed879029c582d3009277c9a764823f8c23fd161d1492b199d5e8dd628768d
+  - frame_index: 78
+    time_s: 3.25
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 837224
+    sha256: d1ff31091853b20915654f8df77a3ce45557e857b30fce5eb765f977eac30b19
+  - frame_index: 157
+    time_s: 6.542
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 875990
+    sha256: beee9e33ab777ceded7af56fff536e42372e4ec8e6de4906a09b00acc187b035
+  usd_at_pinned_price: '0.014774'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-01__wan-3.0-prime-i2v__core__r2
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-01__wan-3.0-prime-i2v__core__r2.mp4
+    sha256: 5362a489cb8fa85fefd7119e4f4a57989a0ea3bea2b16a7cd41e51d353b82074
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
+    verdict: fail
+    evidence: The camera viewpoint does not travel around the bottle, showing the same side throughout.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the
+      surface, or grows lettering.
+    verdict: pass
+    evidence: The bottle maintains its shape, size, cap, and blank surface without warping or drifting.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint
+      has changed.
+    verdict: fail
+    evidence: The highlight on the glass remains in the same spot on the bottle in the first and last frames while the background shifts.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if speech or music is present, or any lettering.
+    verdict: cannot_judge
+    evidence: Presence of speech or music cannot be determined from the silent frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3873
+    candidatesTokenCount: 213
+    totalTokenCount: 5858
+    thoughtsTokenCount: 1772
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 439128
+    sha256: f7e1667517a83a493e58c9430e8df6ca5f1d049a44617531517d81735b83fadd
+  - frame_index: 89
+    time_s: 2.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 443736
+    sha256: b4560e9a17f841a6ff1f5d0343b9a3b8dbf26cb12699b72b4ed7c2905e694204
+  - frame_index: 179
+    time_s: 5.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 410417
+    sha256: d905eca2b6092495b0d0caab8363719abb977be491100a35a59f9f73877eb460
+  usd_at_pinned_price: '0.023675'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-04__veo-3.1-fast-i2v__core__r1
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-04__veo-3.1-fast-i2v__core__r1.mp4
+    sha256: 3d7e546ba94bfd1c2d9b4c00f32ef0dda054e080a8c8e8b83bd01a69abae03da
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if there is no clip — a blank or black video, or text where the video should be.
+    verdict: pass
+    evidence: The frames show a fully rendered animated scene of a girl sitting by a window.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
+    verdict: pass
+    evidence: Rain streaks are visible, reflections on the wet street change, and the camera remains completely stationary.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
+    verdict: pass
+    evidence: The girl's facial features and the hand-drawn illustration style remain consistent throughout.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
+    verdict: pass
+    evidence: She looks down at the paper boat by frame 71 and smiles slightly by frame 143.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears.
+    verdict: pass
+    evidence: No text or lettering is visible anywhere in the scene.
+  http_status: 200
+  usage:
+    promptTokenCount: 3838
+    candidatesTokenCount: 257
+    totalTokenCount: 4934
+    thoughtsTokenCount: 839
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 678439
+    sha256: ac2b6dad6f7408a32bc2a56b8596f817ef094ea2154512ee7831ddffd2bfac60
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 713366
+    sha256: 807a0f6fe72a266e7b95dd0150353d8be09fccd5ef94d444a788cb471aad3c04
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 723392
+    sha256: f6f5ff2bc44a76afd1aa73e34f8a1bba841e6d6c14057ca79f55f767d2fae6e7
+  usd_at_pinned_price: '0.015621'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-03__veo-3.1-fast-i2v__core__r2
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-03__veo-3.1-fast-i2v__core__r2.mp4
+    sha256: a55f0b15d325fd0e7200653350c2263697894d766dc3f00cfdea0cd5464adbcc
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the man goes from his starting pose to standing tall with both arms raised within the clip.
+    verdict: pass
+    evidence: The man moves from holding his phone in frame 0 to standing with both arms raised in frames 71 and 143.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the face in the last second is recognisably the same person as in the first frame.
+    verdict: pass
+    evidence: The man's face in frame 143 is clearly the same person as shown in frame 0.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.
+    verdict: pass
+    evidence: No arms, hands, or the phone multiply, stretch, pass through the body, or vanish across the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.
+    verdict: pass
+    evidence: The clip features a dynamic celebration movement and contains no overlay lettering.
+  http_status: 200
+  usage:
+    promptTokenCount: 3829
+    candidatesTokenCount: 227
+    totalTokenCount: 5222
+    thoughtsTokenCount: 1166
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 442149
+    sha256: c307d72b1416808b0e324bccd6c79405152f86e4dbafa7bd36b31190e5c4ae71
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 474921
+    sha256: 665bed807d868419407cb24939d34ad3b8edfd7c7cb9df4f452a092bb6a05b34
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 478003
+    sha256: 5612ec4ae0b9072cefde5db905888b1c3407e4d3fe3fa0b97ce1f89e2b9a0a29
+  usd_at_pinned_price: '0.018281'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-02__kling-v3-pro-i2v__core__r2
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: expressesion change to angry
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-02__kling-v3-pro-i2v__core__r2.mp4
+    sha256: a69d7b05a7d7e2aaba3ebe7a45e9c564a2547ad59fff9f704e4dde3d75b158fa
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the frame edges and background stay fixed for the whole clip (no pan, zoom or drift).
+    verdict: pass
+    evidence: The frame edges and background elements remain perfectly stationary across all three frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
+    verdict: pass
+    evidence: The man's facial features, hairline, and jawline remain consistent and recognizable between the first and last frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
+    verdict: fail
+    evidence: The man is already looking at the phone in the first frame, and his expression changes from a smile to a neutral look rather than
+      becoming a smile.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if his hand, the phone or his features distort, or if any lettering appears.
+    verdict: pass
+    evidence: There is no distortion of his hand, phone, or features, and no new lettering appears.
+  http_status: 200
+  usage:
+    promptTokenCount: 3859
+    candidatesTokenCount: 170
+    totalTokenCount: 5611
+    thoughtsTokenCount: 1582
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 827960
+    sha256: 88cf1ee8cd6a1bea7fab78ab42ef08320e2ac1c0a5e7b7d750d60cbee308c79d
+  - frame_index: 72
+    time_s: 3.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 932120
+    sha256: 0906b70262c7e1250e9ee18f66b913a663edea257abd871d17442578fdfe66e7
+  - frame_index: 144
+    time_s: 6.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 944164
+    sha256: 7f2cda383a2af0e760553fc91068dca8f60416aba99d300e17d3da8ce119a12a
+  usd_at_pinned_price: '0.021557'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-01__kling-v3-pro-i2v__core__r1
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-01__kling-v3-pro-i2v__core__r1.mp4
+    sha256: 310e9942d1af6074fc76d3b9c1e03b9ecf1132bd9ff9ec039c1c30c2c17078e6
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 3 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
+    verdict: fail
+    evidence: The camera viewpoint remains nearly stationary and does not travel around the bottle to show a different side.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the
+      surface, or grows lettering.
+    verdict: fail
+    evidence: The cap changes between the first and subsequent frames by gaining a white circular sticker on top.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint
+      has changed.
+    verdict: fail
+    evidence: The highlight on the left side of the glass bottle remains in the same position despite a slight shift in the background viewpoint.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if speech or music is present, or any lettering.
+    verdict: cannot_judge
+    evidence: Presence of speech or music cannot be determined from the silent video frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3869
+    candidatesTokenCount: 140
+    totalTokenCount: 5614
+    thoughtsTokenCount: 1605
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 324893
+    sha256: 28ae7b3a5b9ea1c49bb27b9a5ca8f64a40674b3c52c03cc310d116354ec1eb22
+  - frame_index: 72
+    time_s: 3.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 365239
+    sha256: 8620b9d8c709d9cc866f632d598dbb9e0f0d9ef2edb47fc0fdbc0039d7c690e2
+  - frame_index: 144
+    time_s: 6.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 356574
+    sha256: cbed33bb0eb23d43fc1bfd3031526a5df02573cde1879e49ba9ecaf5e587ec38
+  usd_at_pinned_price: '0.021509'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-02__wan-3.0-prime-i2v__core__r2
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-02__wan-3.0-prime-i2v__core__r2.mp4
+    sha256: 0711f28f81d9b8118deed26737a61adb8124a4b5378d5666ebe85be04e76186a
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the frame edges and background stay fixed for the whole clip (no pan, zoom or drift).
+    verdict: pass
+    evidence: The background structures and frame edges remain perfectly aligned and static across all three frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the man's face is recognisably the same person in the first and last frame, with no change of hairline, jaw or eye spacing.
+    verdict: pass
+    evidence: The man's face, hairline, jaw, and eye spacing remain identical and recognizable between the first and last frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.
+    verdict: fail
+    evidence: The man is already looking at the phone and smiling in the first frame, so no change of expression occurs.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if his hand, the phone or his features distort, or if any lettering appears.
+    verdict: pass
+    evidence: There is no distortion of his hand, phone, or features, and no new lettering appears.
+  http_status: 200
+  usage:
+    promptTokenCount: 3863
+    candidatesTokenCount: 221
+    totalTokenCount: 5187
+    thoughtsTokenCount: 1103
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 885861
+    sha256: 584ae62ac53f2973c9e4de60085cb87edbea7a656a01c5b9b6b3bed1485436b9
+  - frame_index: 89
+    time_s: 2.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 951894
+    sha256: a46de106779ee8b43028cf080d283e2ddfbd64ef9ba3765d50ab3108c999b584
+  - frame_index: 179
+    time_s: 5.967
+    width: 618
+    height: 768
+    source_width: 860
+    source_height: 1068
+    png_bytes: 957004
+    sha256: 646555714a7ac362839e1506392340d76e410afdfc70b4e8c65918e579ea4580
+  usd_at_pinned_price: '0.017711'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-01__minimax-h3-max-i2v__core__r2
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  arm: core
+  controller_verdict: reject
+  controller_note: label appeared out of thin air. not by changing angle
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-01__minimax-h3-max-i2v__core__r2.mp4
+    sha256: 7218e20db718039c769fd28da7aa8d897ce91eb3a33e6e13cc47a525819aa862
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
+    verdict: pass
+    evidence: The viewpoint rotates around the bottle, revealing a large white label at the end that was not visible at the start.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the
+      surface, or grows lettering.
+    verdict: fail
+    evidence: The bottle does not keep the same appearance throughout, as a large white label appears in the later frames that was absent in the
+      first frame.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint
+      has changed.
+    verdict: fail
+    evidence: The highlight on the left shoulder of the bottle remains in the same position in both the first and last frames despite the viewpoint
+      changing.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if speech or music is present, or any lettering.
+    verdict: cannot_judge
+    evidence: Presence of speech or music cannot be determined from the silent frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3761
+    candidatesTokenCount: 176
+    totalTokenCount: 5798
+    thoughtsTokenCount: 1861
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 220693
+    sha256: 83a872304cd228108e1ac7b44a7a45f6118baa53db4eb7f24759af91fcac4f19
+  - frame_index: 78
+    time_s: 3.25
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 342232
+    sha256: 5a4b37872790c63b2af32c8b7f0cb6acc959dbe97a874543754ed0cffd03c671
+  - frame_index: 157
+    time_s: 6.542
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 319592
+    sha256: 42b27975888358a9fc4d8dc6bb084bab9950039d407468f5200f3ff114fd3713
+  usd_at_pinned_price: '0.023975'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-03__kling-v3-pro-i2v__core__r2
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-03__kling-v3-pro-i2v__core__r2.mp4
+    sha256: 79c94aca30063e29e892bd07f6185c47962224ce272397130a5ed87b496a2ace
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the man goes from his starting pose to standing tall with both arms raised within the clip.
+    verdict: pass
+    evidence: The man transitions from holding his phone to standing with both arms raised in frame 144.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the face in the last second is recognisably the same person as in the first frame.
+    verdict: pass
+    evidence: The face in frame 144 is recognisably the same person as in frame 0.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.
+    verdict: pass
+    evidence: No arms, hands, or the phone multiply, stretch, or vanish across the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.
+    verdict: cannot_judge
+    evidence: Whether audio is present cannot be determined from the silent frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3855
+    candidatesTokenCount: 213
+    totalTokenCount: 5506
+    thoughtsTokenCount: 1438
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 825679
+    sha256: c5f7ab82316ac9aade31a96c581a5c58218412b5131721270f3b1c8737470b43
+  - frame_index: 72
+    time_s: 3.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 939985
+    sha256: 079203ba0a0534417052b15100132fbf86ff3292d897c8cdae5ae8aed00196dd
+  - frame_index: 144
+    time_s: 6.0
+    width: 618
+    height: 768
+    source_width: 1292
+    source_height: 1604
+    png_bytes: 864442
+    sha256: b88e3de5ace31595c57be7a9ec5616bd240d01a499da33c6d148f8482c8a7896
+  usd_at_pinned_price: '0.020642'
+  agree: null
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-04__kling-v3-pro-i2v__core__r1
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-04__kling-v3-pro-i2v__core__r1.mp4
+    sha256: aa8b2d95a504a7e09d9ab5cdb2ed3d64ed9805c049f36227c1d1363dfb6a00d3
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if there is no clip — a blank or black video, or text where the video should be.
+    verdict: pass
+    evidence: The video contains illustrated scenes of a girl by a window rather than being blank or text.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
+    verdict: pass
+    evidence: Rain is falling, reflections on the wet street shift, and the camera remains completely still.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
+    verdict: pass
+    evidence: The girl's face and the artistic illustration style remain consistent across all frames.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
+    verdict: pass
+    evidence: The girl shifts her gaze from the window down to the paper boat and smiles in the final frame.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears.
+    verdict: pass
+    evidence: No text or lettering is visible in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3834
+    candidatesTokenCount: 256
+    totalTokenCount: 5112
+    thoughtsTokenCount: 1022
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 429
+    height: 768
+    source_width: 1076
+    source_height: 1924
+    png_bytes: 667082
+    sha256: b428f0b487d1e6d5e5f11e6f1e6b46d4b33dc4a60413b36c31a3e5d3ba8d2902
+  - frame_index: 72
+    time_s: 3.0
+    width: 429
+    height: 768
+    source_width: 1076
+    source_height: 1924
+    png_bytes: 676844
+    sha256: 7ca6a4a3f40969f265ed55364bbdf083613237febe5d28ccf7c7809350e59d77
+  - frame_index: 144
+    time_s: 6.0
+    width: 429
+    height: 768
+    source_width: 1076
+    source_height: 1924
+    png_bytes: 688206
+    sha256: 446c6dbd126f1cabf56fe7be10f94908cdaa70868ed968fd1f442c4ae97de528
+  usd_at_pinned_price: '0.017253'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-04__wan-3.0-prime-i2v__core__r2
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-04__wan-3.0-prime-i2v__core__r2.mp4
+    sha256: e5632afa467ff178c4e782a8f69f2d4fbf60da47c87e1e637f0efcaeedb7fbf6
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if there is no clip — a blank or black video, or text where the video should be.
+    verdict: pass
+    evidence: The video contains a fully rendered illustration rather than a blank screen or text.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if rain is visibly falling and the water outside visibly moves, with the camera fixed.
+    verdict: pass
+    evidence: Rain is falling, ripples on the wet street shift between frames, and the camera remains completely stationary.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the girl's face is the same as the first frame and the illustration style does not shift toward photoreal.
+    verdict: pass
+    evidence: The girl's facial features remain consistent with the first frame and the hand-drawn illustration style does not change.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.
+    verdict: pass
+    evidence: She shifts her gaze from looking out the window in the first frame down to the paper boat with a gentle smile by the final frame.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears.
+    verdict: pass
+    evidence: There is no text or lettering visible anywhere in the scene.
+  http_status: 200
+  usage:
+    promptTokenCount: 3706
+    candidatesTokenCount: 269
+    totalTokenCount: 4475
+    thoughtsTokenCount: 500
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 428
+    height: 767
+    source_width: 716
+    source_height: 1284
+    png_bytes: 684563
+    sha256: 988f60de77948e532bfb108bb411b7d2af8eba4c69b246061f1489ddd86a982a
+  - frame_index: 89
+    time_s: 2.967
+    width: 428
+    height: 767
+    source_width: 716
+    source_height: 1284
+    png_bytes: 720594
+    sha256: 64217c6cb4e29dfa40e2df04b3197b90cea4edfe189c64e3170e6e37eb99620f
+  - frame_index: 179
+    time_s: 5.967
+    width: 428
+    height: 767
+    source_width: 716
+    source_height: 1284
+    png_bytes: 721848
+    sha256: f1edb869312973ddf596bc1b069f7c118039c1f94b0c94fbe48a43941523fdef
+  usd_at_pinned_price: '0.012480'
+  agree: true
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-01__minimax-h3-max-i2v__core__r1
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-01__minimax-h3-max-i2v__core__r1.mp4
+    sha256: 27ff7518474318478f43275ecb701cde2be1cd70b36b844572c15ba9f3511109
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
+    verdict: fail
+    evidence: The viewpoint remains completely stationary, showing the exact same side of the bottle in all frames.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the
+      surface, or grows lettering.
+    verdict: pass
+    evidence: The bottle maintains its shape, size, cap, and blank appearance consistently across all frames.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint
+      has changed.
+    verdict: cannot_judge
+    evidence: Whether the highlight flickers cannot be determined from three static frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if speech or music is present, or any lettering.
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from silent video frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3761
+    candidatesTokenCount: 207
+    totalTokenCount: 5516
+    thoughtsTokenCount: 1548
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 223844
+    sha256: 948dfed4ffb042d7089eaec0ca7144f5abe4c9d41bdaeda38a9962da62e53d9d
+  - frame_index: 78
+    time_s: 3.25
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 342807
+    sha256: 1d913850256d6ba802c7a4676a3addf6a89c7e7126fefa4a9cd6b1fc174c6906
+  - frame_index: 157
+    time_s: 6.542
+    width: 614
+    height: 768
+    source_width: 768
+    source_height: 960
+    png_bytes: 352899
+    sha256: 912019f413f575af7fb4ce2fcc0ba1fc87638450b92701485dbf48c715d6d4ba
+  usd_at_pinned_price: '0.021437'
+  agree: false
+- run_id: vid-i2v
+  results_run_id: vid-i2v
+  trial_id: VID-I2V-01__veo-3.1-fast-i2v__core__r2
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  arm: core
+  controller_verdict: reject
+  controller_note: hand appeared
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-i2v/artifacts/media/VID-I2V-01__veo-3.1-fast-i2v__core__r2.mp4
+    sha256: 08ef0d3506a7b0fab0034e50ba2246669613865e77b93181904028489bd30533
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).
+    verdict: fail
+    evidence: The viewpoint remains completely static, showing the same side of the bottle in all frames.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the
+      surface, or grows lettering.
+    verdict: pass
+    evidence: The bottle maintains its shape, size, cap, and label-free appearance consistently.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint
+      has changed.
+    verdict: pass
+    evidence: The highlight on the glass is stable and the viewpoint does not change.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if speech or music is present, or any lettering.
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from the silent frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3843
+    candidatesTokenCount: 205
+    totalTokenCount: 5210
+    thoughtsTokenCount: 1162
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 150310
+    sha256: da3e69d185acc6d787830f36cda628327205dc3ce3ba2e054c52da860d237b68
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 199751
+    sha256: 2679e1bdf0f692e14b70bbbf7847267490703efed2162f00ef1a9477c8b76311
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 195218
+    sha256: 86d8d16ba0f4f9178ed9c3f4b254712ec144383807e2b1bcfd0e6302b8bfdf66
+  usd_at_pinned_price: '0.018068'
+  agree: true

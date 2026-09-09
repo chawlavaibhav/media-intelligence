@@ -1,0 +1,2114 @@
+# QUALIFICATION-REPORT-v0 - rebuilt OFFLINE by eval/harness-v2/qualify_screen.py from SCREEN-RESULTS.yaml files (no call); criteria unfrozen until the Controller freezes it.
+schema: QUALIFICATION-REPORT-v0
+generated_utc: '2026-09-09T17:20:58.406212Z'
+mode: rebuilt_offline_from_screen_results
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status_at_run: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria:
+  ref: eval/harness-v2/instruments/SCREEN-QUALIFICATION-CRITERIA-v0.yaml
+  sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+  frozen: false
+  status: proposed
+inputs:
+  results:
+  - eval/experiments/EVAL-040/runs/aud-lip/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-music-lyria/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-tts-eleven/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-tts-sarvam/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/half2/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/topo3-nb-video/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-2spk/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-i2v/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-knee/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-ms/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-ref/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-t2v/RESULTS.yaml
+  test_cases: eval/empirical-planning/STAGE-A-FREEZE-2026-09/TEST-CASES.yaml
+  test_cases_sha256: c0defa1e64d29e00f58362ab69e66dcaecb2f561ffef61e4ecbd2eb8ce47683c
+  authorisation:
+    path: eval/harness-v2/authorization.screen.local.yaml
+    sha256: b2203957f2788920d185015cd6493eee1c11483eaf232bfb84536be40783fcbf
+    screen_cap_usd: '5.0'
+    screen_max_calls: 200
+coverage:
+  judged_trials: 245
+  screenable_trials: 228
+  audio_planned_cannot_judge: 16
+  skipped_no_artifact_or_case: 1
+  screened: 192
+  compared: 154
+  cannot_judge: 52
+  errors_or_unscreened: 2
+  coverage_fraction: 0.6754
+agreement:
+  n_compared: 154
+  agree: 101
+  agreement_rate: 0.6558
+  cohens_kappa: 0.3265
+  false_accept_rate: 0.2157
+  false_accepts: 11
+  controller_rejects: 51
+  false_reject_rate: 0.4078
+  false_rejects: 42
+  controller_accepts: 103
+  confusion_controller_x_screen:
+    accept:
+      accept: 61
+      reject: 42
+    reject:
+      accept: 11
+      reject: 40
+per_question:
+  AUD-LIP:
+    n_compared: 4
+    agree: 4
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 4
+    false_reject_rate: null
+    false_rejects: 0
+    controller_accepts: 0
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 0
+      reject:
+        accept: 0
+        reject: 4
+  IMG-COMP:
+    n_compared: 5
+    agree: 2
+    agreement_rate: 0.4
+    cohens_kappa: 0.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 2
+    false_reject_rate: 1.0
+    false_rejects: 3
+    controller_accepts: 3
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 3
+      reject:
+        accept: 0
+        reject: 2
+  IMG-CORE:
+    n_compared: 48
+    agree: 32
+    agreement_rate: 0.6667
+    cohens_kappa: -0.0667
+    false_accept_rate: 0.9167
+    false_accepts: 11
+    controller_rejects: 12
+    false_reject_rate: 0.1389
+    false_rejects: 5
+    controller_accepts: 36
+    confusion_controller_x_screen:
+      accept:
+        accept: 31
+        reject: 5
+      reject:
+        accept: 11
+        reject: 1
+  IMG-EDIT:
+    n_compared: 3
+    agree: 2
+    agreement_rate: 0.6667
+    cohens_kappa: 0.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 2
+    false_reject_rate: 1.0
+    false_rejects: 1
+    controller_accepts: 1
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 1
+      reject:
+        accept: 0
+        reject: 2
+  IMG-EXT:
+    n_compared: 6
+    agree: 6
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 4
+    false_reject_rate: 0.0
+    false_rejects: 0
+    controller_accepts: 2
+    confusion_controller_x_screen:
+      accept:
+        accept: 2
+        reject: 0
+      reject:
+        accept: 0
+        reject: 4
+  IMG-REF:
+    n_compared: 1
+    agree: 1
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 1
+    false_reject_rate: null
+    false_rejects: 0
+    controller_accepts: 0
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 0
+      reject:
+        accept: 0
+        reject: 1
+  IMG-TEXT:
+    n_compared: 30
+    agree: 19
+    agreement_rate: 0.6333
+    cohens_kappa: 0.3373
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 7
+    false_reject_rate: 0.4783
+    false_rejects: 11
+    controller_accepts: 23
+    confusion_controller_x_screen:
+      accept:
+        accept: 12
+        reject: 11
+      reject:
+        accept: 0
+        reject: 7
+  VID-2SPK:
+    n_compared: 4
+    agree: 2
+    agreement_rate: 0.5
+    cohens_kappa: 0.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 2
+    false_reject_rate: 1.0
+    false_rejects: 2
+    controller_accepts: 2
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 2
+      reject:
+        accept: 0
+        reject: 2
+  VID-I2V:
+    n_compared: 29
+    agree: 17
+    agreement_rate: 0.5862
+    cohens_kappa: 0.2301
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 4
+    false_reject_rate: 0.48
+    false_rejects: 12
+    controller_accepts: 25
+    confusion_controller_x_screen:
+      accept:
+        accept: 13
+        reject: 12
+      reject:
+        accept: 0
+        reject: 4
+  VID-KNEE:
+    n_compared: 5
+    agree: 4
+    agreement_rate: 0.8
+    cohens_kappa: 0.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 4
+    false_reject_rate: 1.0
+    false_rejects: 1
+    controller_accepts: 1
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 1
+      reject:
+        accept: 0
+        reject: 4
+  VID-MS:
+    n_compared: 6
+    agree: 0
+    agreement_rate: 0.0
+    cohens_kappa: 0.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 1.0
+    false_rejects: 6
+    controller_accepts: 6
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 6
+      reject:
+        accept: 0
+        reject: 0
+  VID-TOPO3:
+    n_compared: 13
+    agree: 12
+    agreement_rate: 0.9231
+    cohens_kappa: 0.806
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 9
+    false_reject_rate: 0.25
+    false_rejects: 1
+    controller_accepts: 4
+    confusion_controller_x_screen:
+      accept:
+        accept: 3
+        reject: 1
+      reject:
+        accept: 0
+        reject: 9
+per_route:
+  null:
+    n_compared: 4
+    agree: 4
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 0.0
+    false_rejects: 0
+    controller_accepts: 4
+    confusion_controller_x_screen:
+      accept:
+        accept: 4
+        reject: 0
+      reject:
+        accept: 0
+        reject: 0
+  flux-2-pro:
+    n_compared: 12
+    agree: 10
+    agreement_rate: 0.8333
+    cohens_kappa: 0.6667
+    false_accept_rate: 0.3333
+    false_accepts: 2
+    controller_rejects: 6
+    false_reject_rate: 0.0
+    false_rejects: 0
+    controller_accepts: 6
+    confusion_controller_x_screen:
+      accept:
+        accept: 6
+        reject: 0
+      reject:
+        accept: 2
+        reject: 4
+  flux-2-pro-edit:
+    n_compared: 6
+    agree: 5
+    agreement_rate: 0.8333
+    cohens_kappa: 0.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 5
+    false_reject_rate: 1.0
+    false_rejects: 1
+    controller_accepts: 1
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 1
+      reject:
+        accept: 0
+        reject: 5
+  gemini-omni-1.1-flash-10s:
+    n_compared: 1
+    agree: 0
+    agreement_rate: 0.0
+    cohens_kappa: 0.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 1.0
+    false_rejects: 1
+    controller_accepts: 1
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 1
+      reject:
+        accept: 0
+        reject: 0
+  gpt-image-2:
+    n_compared: 12
+    agree: 7
+    agreement_rate: 0.5833
+    cohens_kappa: -0.1538
+    false_accept_rate: 1.0
+    false_accepts: 1
+    controller_rejects: 1
+    false_reject_rate: 0.3636
+    false_rejects: 4
+    controller_accepts: 11
+    confusion_controller_x_screen:
+      accept:
+        accept: 7
+        reject: 4
+      reject:
+        accept: 1
+        reject: 0
+  kling-lipsync-a2v:
+    n_compared: 4
+    agree: 4
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 4
+    false_reject_rate: null
+    false_rejects: 0
+    controller_accepts: 0
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 0
+      reject:
+        accept: 0
+        reject: 4
+  kling-v3-pro:
+    n_compared: 2
+    agree: 2
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 2
+    false_reject_rate: null
+    false_rejects: 0
+    controller_accepts: 0
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 0
+      reject:
+        accept: 0
+        reject: 2
+  kling-v3-pro-10s:
+    n_compared: 1
+    agree: 0
+    agreement_rate: 0.0
+    cohens_kappa: 0.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 1.0
+    false_rejects: 1
+    controller_accepts: 1
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 1
+      reject:
+        accept: 0
+        reject: 0
+  kling-v3-pro-15s:
+    n_compared: 2
+    agree: 0
+    agreement_rate: 0.0
+    cohens_kappa: 0.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 1.0
+    false_rejects: 2
+    controller_accepts: 2
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 2
+      reject:
+        accept: 0
+        reject: 0
+  kling-v3-pro-audio:
+    n_compared: 2
+    agree: 2
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 2
+    false_reject_rate: null
+    false_rejects: 0
+    controller_accepts: 0
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 0
+      reject:
+        accept: 0
+        reject: 2
+  kling-v3-pro-i2v:
+    n_compared: 7
+    agree: 3
+    agreement_rate: 0.4286
+    cohens_kappa: 0.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 0.5714
+    false_rejects: 4
+    controller_accepts: 7
+    confusion_controller_x_screen:
+      accept:
+        accept: 3
+        reject: 4
+      reject:
+        accept: 0
+        reject: 0
+  minimax-h3-max-480p:
+    n_compared: 1
+    agree: 1
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 1
+    false_reject_rate: null
+    false_rejects: 0
+    controller_accepts: 0
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 0
+      reject:
+        accept: 0
+        reject: 1
+  minimax-h3-max-i2v:
+    n_compared: 13
+    agree: 10
+    agreement_rate: 0.7692
+    cohens_kappa: 0.5185
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 3
+    false_reject_rate: 0.3
+    false_rejects: 3
+    controller_accepts: 10
+    confusion_controller_x_screen:
+      accept:
+        accept: 7
+        reject: 3
+      reject:
+        accept: 0
+        reject: 3
+  nano-banana-2:
+    n_compared: 13
+    agree: 8
+    agreement_rate: 0.6154
+    cohens_kappa: 0.0845
+    false_accept_rate: 0.5
+    false_accepts: 1
+    controller_rejects: 2
+    false_reject_rate: 0.3636
+    false_rejects: 4
+    controller_accepts: 11
+    confusion_controller_x_screen:
+      accept:
+        accept: 7
+        reject: 4
+      reject:
+        accept: 1
+        reject: 1
+  nano-banana-pro:
+    n_compared: 12
+    agree: 5
+    agreement_rate: 0.4167
+    cohens_kappa: -0.4
+    false_accept_rate: 1.0
+    false_accepts: 4
+    controller_rejects: 4
+    false_reject_rate: 0.375
+    false_rejects: 3
+    controller_accepts: 8
+    confusion_controller_x_screen:
+      accept:
+        accept: 5
+        reject: 3
+      reject:
+        accept: 4
+        reject: 0
+  nano-banana-pro-edit:
+    n_compared: 6
+    agree: 4
+    agreement_rate: 0.6667
+    cohens_kappa: 0.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 4
+    false_reject_rate: 1.0
+    false_rejects: 2
+    controller_accepts: 2
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 2
+      reject:
+        accept: 0
+        reject: 4
+  qwen-image-3:
+    n_compared: 11
+    agree: 8
+    agreement_rate: 0.7273
+    cohens_kappa: 0.2326
+    false_accept_rate: 0.5
+    false_accepts: 1
+    controller_rejects: 2
+    false_reject_rate: 0.2222
+    false_rejects: 2
+    controller_accepts: 9
+    confusion_controller_x_screen:
+      accept:
+        accept: 7
+        reject: 2
+      reject:
+        accept: 1
+        reject: 1
+  recraft-v4:
+    n_compared: 3
+    agree: 2
+    agreement_rate: 0.6667
+    cohens_kappa: 0.4
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 1
+    false_reject_rate: 0.5
+    false_rejects: 1
+    controller_accepts: 2
+    confusion_controller_x_screen:
+      accept:
+        accept: 1
+        reject: 1
+      reject:
+        accept: 0
+        reject: 1
+  seedream-5-pro:
+    n_compared: 12
+    agree: 8
+    agreement_rate: 0.6667
+    cohens_kappa: 0.25
+    false_accept_rate: 0.5
+    false_accepts: 2
+    controller_rejects: 4
+    false_reject_rate: 0.25
+    false_rejects: 2
+    controller_accepts: 8
+    confusion_controller_x_screen:
+      accept:
+        accept: 6
+        reject: 2
+      reject:
+        accept: 2
+        reject: 2
+  seedream-5-pro-edit:
+    n_compared: 3
+    agree: 2
+    agreement_rate: 0.6667
+    cohens_kappa: 0.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 0.3333
+    false_rejects: 1
+    controller_accepts: 3
+    confusion_controller_x_screen:
+      accept:
+        accept: 2
+        reject: 1
+      reject:
+        accept: 0
+        reject: 0
+  veo-3.1-fast:
+    n_compared: 2
+    agree: 0
+    agreement_rate: 0.0
+    cohens_kappa: 0.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 1.0
+    false_rejects: 2
+    controller_accepts: 2
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 2
+      reject:
+        accept: 0
+        reject: 0
+  veo-3.1-fast-extend:
+    n_compared: 2
+    agree: 0
+    agreement_rate: 0.0
+    cohens_kappa: 0.0
+    false_accept_rate: null
+    false_accepts: 0
+    controller_rejects: 0
+    false_reject_rate: 1.0
+    false_rejects: 2
+    controller_accepts: 2
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 2
+      reject:
+        accept: 0
+        reject: 0
+  veo-3.1-fast-i2v:
+    n_compared: 8
+    agree: 7
+    agreement_rate: 0.875
+    cohens_kappa: 0.75
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 3
+    false_reject_rate: 0.2
+    false_rejects: 1
+    controller_accepts: 5
+    confusion_controller_x_screen:
+      accept:
+        accept: 4
+        reject: 1
+      reject:
+        accept: 0
+        reject: 3
+  veo-3.1-full:
+    n_compared: 4
+    agree: 3
+    agreement_rate: 0.75
+    cohens_kappa: 0.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 3
+    false_reject_rate: 1.0
+    false_rejects: 1
+    controller_accepts: 1
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 1
+      reject:
+        accept: 0
+        reject: 3
+  veo-3.1-lite:
+    n_compared: 2
+    agree: 2
+    agreement_rate: 1.0
+    cohens_kappa: 1.0
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 2
+    false_reject_rate: null
+    false_rejects: 0
+    controller_accepts: 0
+    confusion_controller_x_screen:
+      accept:
+        accept: 0
+        reject: 0
+      reject:
+        accept: 0
+        reject: 2
+  wan-3.0-prime-i2v:
+    n_compared: 9
+    agree: 4
+    agreement_rate: 0.4444
+    cohens_kappa: 0.1509
+    false_accept_rate: 0.0
+    false_accepts: 0
+    controller_rejects: 2
+    false_reject_rate: 0.7143
+    false_rejects: 5
+    controller_accepts: 7
+    confusion_controller_x_screen:
+      accept:
+        accept: 2
+        reject: 5
+      reject:
+        accept: 0
+        reject: 2
+disagreements:
+- trial_id: IMG-COMP-01__flux-2-pro-edit__edit__r1
+  run_id: half2
+  question: IMG-COMP
+  route_key: flux-2-pro-edit
+  case_id: IMG-COMP-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not present in the image for comparison.
+  - rule_id: R2
+    verdict: cannot_judge
+    evidence: The supplied packshot and decoy shades are not visible in the image.
+  - rule_id: R4
+    verdict: fail
+    evidence: There is no headline or text of any kind visible in the image.
+- trial_id: IMG-COMP-01__seedream-5-pro-edit__edit__r1
+  run_id: half2
+  question: IMG-COMP
+  route_key: seedream-5-pro-edit
+  case_id: IMG-COMP-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not provided in the image.
+  - rule_id: R2
+    verdict: cannot_judge
+    evidence: The reference packshot and decoy shades are not visible in the image.
+  - rule_id: R4
+    verdict: fail
+    evidence: The required Hindi headline is not present in the image.
+- trial_id: IMG-EDIT-02__nano-banana-pro-edit__edit__r2
+  run_id: half2
+  question: IMG-EDIT
+  route_key: nano-banana-pro-edit
+  case_id: IMG-EDIT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The background is not uniformly white due to a shadow cast beneath the package.
+  - rule_id: R3
+    verdict: cannot_judge
+    evidence: No reference photo was supplied to compare the pack's color.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: The original pack's size, position, and outline cannot be verified without the reference photo.
+- trial_id: IMG-COMP-01__nano-banana-pro-edit__edit__r2
+  run_id: half2
+  question: IMG-COMP
+  route_key: nano-banana-pro-edit
+  case_id: IMG-COMP-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not visible in the image for comparison.
+  - rule_id: R2
+    verdict: cannot_judge
+    evidence: The supplied packshot and decoy shades are not present in the image to verify the lipstick shade.
+  - rule_id: R4
+    verdict: fail
+    evidence: The required headline "नया शेड, वही भरोसा" is completely missing from the image.
+- trial_id: IMG-CORE-01__nano-banana-pro__core__r1
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  case_id: IMG-CORE-01
+  controller_verdict: reject
+  controller_note: has a white label
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: Only one bottle is visible in the frame without any other objects or hands.
+  - rule_id: R2
+    verdict: pass
+    evidence: The bottle clearly shows glass refraction and orange liquid inside.
+  - rule_id: R3
+    verdict: pass
+    evidence: The label is entirely blank with no text or symbols present.
+  - rule_id: R4
+    verdict: pass
+    evidence: The cap, neck, and base are fully formed and completely within the frame.
+  - rule_id: R5
+    verdict: pass
+    evidence: The background is a light, clean, and uncluttered grey.
+- trial_id: IMG-CORE-02__nano-banana-2__core__r1
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: nano-banana-2
+  case_id: IMG-CORE-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: Multiple other men are visible in the background of the image.
+- trial_id: IMG-CORE-04__flux-2-pro__core__r1
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: flux-2-pro
+  case_id: IMG-CORE-04
+  controller_verdict: reject
+  controller_note: looks water will come in
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The image is a stylized 2D digital illustration.
+  - rule_id: R2
+    verdict: pass
+    evidence: A young girl sits on a window sill holding a paper boat while rain falls outside.
+  - rule_id: R3
+    verdict: pass
+    evidence: The child's mouth is closed and she is not crying or in danger.
+  - rule_id: R4
+    verdict: pass
+    evidence: No lettering or numbers are visible in the image.
+  - rule_id: R5
+    verdict: pass
+    evidence: The image is a complete illustration.
+- trial_id: IMG-TEXT-02__nano-banana-2__A_cheap_generated__r1
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: nano-banana-2
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R5
+    verdict: fail
+    evidence: The additional text 'Offer ends 15 January' is present.
+- trial_id: IMG-TEXT-02__gpt-image-2__A_cheap_generated__r1
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: gpt-image-2
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R5
+    verdict: fail
+    evidence: The additional text "Offer ends 15 January" is present in the image.
+- trial_id: IMG-TEXT-02__nano-banana-pro__B_premium_generated__r1
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: nano-banana-pro
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R5
+    verdict: fail
+    evidence: The text "Offer ends 15 January" is present, which constitutes other lettering.
+- trial_id: IMG-TEXT-02__recraft-v4__B_premium_generated__r1
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: recraft-v4
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The image contains the extra text "Offer ends 15 January" which violates the exact lettering requirement.
+  - rule_id: R5
+    verdict: fail
+    evidence: The text "Offer ends 15 January" appears as additional lettering.
+- trial_id: IMG-CORE-01__nano-banana-pro__core__r2
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  case_id: IMG-CORE-01
+  controller_verdict: reject
+  controller_note: has a white label
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: Only one bottle is visible in the frame with no other objects or props.
+  - rule_id: R2
+    verdict: pass
+    evidence: The bottle is clearly glass with a refracted edge and orange liquid inside.
+  - rule_id: R3
+    verdict: pass
+    evidence: The white label on the bottle is completely blank without any text or symbols.
+  - rule_id: R4
+    verdict: pass
+    evidence: The cap, neck, and base are fully formed and completely within the frame.
+  - rule_id: R5
+    verdict: pass
+    evidence: The background is a light, clean, and uncluttered grey-blue color.
+- trial_id: IMG-CORE-02__nano-banana-2__core__r2
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: nano-banana-2
+  case_id: IMG-CORE-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: Multiple other adult men are visible in the background of the image.
+- trial_id: IMG-CORE-02__seedream-5-pro__core__r2
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  case_id: IMG-CORE-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R4
+    verdict: fail
+    evidence: The hand holding the phone has distorted joints and an unnatural grip.
+- trial_id: IMG-CORE-03__nano-banana-pro__core__r2
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  case_id: IMG-CORE-03
+  controller_verdict: reject
+  controller_note: salad getting cutoff
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The camera is positioned directly overhead looking straight down, with a round brass pot of biryani centered in the frame.
+  - rule_id: R2
+    verdict: pass
+    evidence: The image clearly shows a bowl of raita, a plate of salad, sliced onion rings, and lemon halves surrounding the central pot.
+  - rule_id: R3
+    verdict: pass
+    evidence: There is no visible lettering, price, logo, or numeral anywhere in the image.
+  - rule_id: R4
+    verdict: pass
+    evidence: The rice grains, meat pieces, and mint garnishes appear distinct and natural without any visible melting, fusing, or repeating patterns.
+  - rule_id: R5
+    verdict: pass
+    evidence: No luxury props such as gold cutlery, wine glasses, or candles are present in the scene.
+- trial_id: IMG-CORE-03__seedream-5-pro__core__r2
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  case_id: IMG-CORE-03
+  controller_verdict: reject
+  controller_note: slaad, raita snd onions getting cutoff.
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The image shows a top-down view with a round brass pot of biryani centered in the frame.
+  - rule_id: R2
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon—are clearly visible around the main pot.
+  - rule_id: R3
+    verdict: pass
+    evidence: There are no letters, numbers, logos, or prices visible anywhere in the image.
+  - rule_id: R4
+    verdict: pass
+    evidence: The rice, meat, and mint garnish appear distinct and natural without repeating patterns or fusion.
+  - rule_id: R5
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are included in the scene.
+- trial_id: IMG-CORE-03__qwen-image-3__core__r2
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: qwen-image-3
+  case_id: IMG-CORE-03
+  controller_verdict: reject
+  controller_note: slalad gettnig cutoff
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The camera looks straight down at a round pot of biryani positioned in the center.
+  - rule_id: R2
+    verdict: pass
+    evidence: 'All four sides are visible: raita, chopped salad, sliced onions, and cut lemons.'
+  - rule_id: R3
+    verdict: pass
+    evidence: No lettering, prices, logos, or numerals are visible anywhere in the image.
+  - rule_id: R4
+    verdict: pass
+    evidence: The rice, meat, and garnish appear distinct and natural without repeating patterns.
+  - rule_id: R5
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are present.
+- trial_id: IMG-CORE-04__gpt-image-2__core__r2
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: gpt-image-2
+  case_id: IMG-CORE-04
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R2
+    verdict: fail
+    evidence: The child is sitting at an open doorway rather than a window.
+- trial_id: IMG-CORE-04__flux-2-pro__core__r2
+  run_id: img-r1
+  question: IMG-CORE
+  route_key: flux-2-pro
+  case_id: IMG-CORE-04
+  controller_verdict: reject
+  controller_note: sitting outside window
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The image is a stylized digital illustration with painterly textures.
+  - rule_id: R2
+    verdict: pass
+    evidence: A young girl sits on a window ledge holding a paper boat while rain falls outside.
+  - rule_id: R3
+    verdict: pass
+    evidence: The girl's mouth is closed and she is not in any visible danger or crying.
+  - rule_id: R4
+    verdict: pass
+    evidence: No text, letters, or numbers are visible in the image.
+  - rule_id: R5
+    verdict: pass
+    evidence: The image is a complete illustration.
+- trial_id: IMG-TEXT-01__qwen-image-3__A_cheap_generated__r2
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: qwen-image-3
+  case_id: IMG-TEXT-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The bottom text contains spelling deviations including an extra anusvara dot in "मिंष्ठान" and "श्री" instead of "श्री".
+- trial_id: IMG-TEXT-01__nano-banana-pro__B_premium_generated__r2
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: nano-banana-pro
+  case_id: IMG-TEXT-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R2
+    verdict: fail
+    evidence: The lettering 'सभी मिठाइयों पर 20% छूट' is visibly larger than 'श्री गणेश मिष्ठान भंडार'.
+- trial_id: IMG-TEXT-02__nano-banana-2__A_cheap_generated__r2
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: nano-banana-2
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R5
+    verdict: fail
+    evidence: The text "Offer ends 15 January" constitutes extra lettering.
+- trial_id: IMG-TEXT-02__qwen-image-3__A_cheap_generated__r2
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: qwen-image-3
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R5
+    verdict: fail
+    evidence: The additional text 'Offer ends 15 January' is present on the image.
+- trial_id: IMG-TEXT-02__gpt-image-2__A_cheap_generated__r2
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: gpt-image-2
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R5
+    verdict: fail
+    evidence: The additional text 'Offer ends 15 January' is present.
+- trial_id: IMG-TEXT-02__nano-banana-pro__B_premium_generated__r2
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: nano-banana-pro
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R5
+    verdict: fail
+    evidence: The extra text "Offer ends 15 January" is present.
+- trial_id: IMG-TEXT-02__seedream-5-pro__B_premium_generated__r2
+  run_id: img-r1
+  question: IMG-TEXT
+  route_key: seedream-5-pro
+  case_id: IMG-TEXT-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R5
+    verdict: fail
+    evidence: The additional text "Offer ends 15 January" is present on the image.
+- trial_id: IMG-CORE-03__gpt-image-2__core__r1
+  run_id: img-r1-redo
+  question: IMG-CORE
+  route_key: gpt-image-2
+  case_id: IMG-CORE-03
+  controller_verdict: reject
+  controller_note: 'slaad getting cutoff. mint leaves on table. '
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The camera is positioned directly overhead, with a round brass pot of biryani centered in the frame.
+  - rule_id: R2
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon—are clearly visible around the main dish.
+  - rule_id: R3
+    verdict: pass
+    evidence: No text, logos, or numbers are visible on any surface.
+  - rule_id: R4
+    verdict: pass
+    evidence: The rice, meat, and mint garnishes appear distinct and natural without repeating patterns.
+  - rule_id: R5
+    verdict: pass
+    evidence: No luxury props like cutlery, glasses, or candles are included in the image.
+- trial_id: IMG-CORE-03__nano-banana-2__core__r1
+  run_id: img-r1-redo
+  question: IMG-CORE
+  route_key: nano-banana-2
+  case_id: IMG-CORE-03
+  controller_verdict: reject
+  controller_note: slaad getting cutoff
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The camera is positioned directly overhead, and a round brass pot of biryani is centered in the frame.
+  - rule_id: R2
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon halves—are clearly visible around the main dish.
+  - rule_id: R3
+    verdict: pass
+    evidence: No lettering, logos, prices, or numerals are visible anywhere in the image.
+  - rule_id: R4
+    verdict: pass
+    evidence: The rice grains, chicken, and garnishes appear distinct and natural without any repeating patterns or fusion.
+  - rule_id: R5
+    verdict: pass
+    evidence: The table setting features only a wooden spoon and lacks luxury props like gold cutlery, wine glasses, or candles.
+- trial_id: IMG-CORE-03__nano-banana-pro__core__r1
+  run_id: img-r1-redo
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  case_id: IMG-CORE-03
+  controller_verdict: reject
+  controller_note: '  slalad gettnig cutoff'
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The camera looks straight down at a round pot of biryani centered in the frame.
+  - rule_id: R2
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon—are clearly visible around the main dish.
+  - rule_id: R3
+    verdict: pass
+    evidence: No text, logos, or numbers are visible on any surface.
+  - rule_id: R4
+    verdict: pass
+    evidence: The rice, meat, and garnishes appear distinct and natural without repeating patterns.
+  - rule_id: R5
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are present.
+- trial_id: IMG-CORE-03__seedream-5-pro__core__r1
+  run_id: img-r1-redo
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  case_id: IMG-CORE-03
+  controller_verdict: reject
+  controller_note: salad without bowl and getting cutoff
+  screen_overall: accept
+  screen_rules:
+  - rule_id: R1
+    verdict: pass
+    evidence: The camera is positioned directly overhead looking straight down, and a round brass pot filled with biryani is centered in the frame.
+  - rule_id: R2
+    verdict: pass
+    evidence: All four sides—a bowl of raita, a small salad, sliced onions, and lemon halves—are clearly visible around the central pot.
+  - rule_id: R3
+    verdict: pass
+    evidence: There are no visible letters, numbers, prices, or logos anywhere in the image.
+  - rule_id: R4
+    verdict: pass
+    evidence: The rice grains, meat pieces, and mint garnishes appear distinct and natural without any visible melting, fusing, or repeating patterns.
+  - rule_id: R5
+    verdict: pass
+    evidence: No luxury props such as gold cutlery, wine glasses, or candles are present in the scene.
+- trial_id: IMG-CORE-04__gpt-image-2__core__r1
+  run_id: img-r1-redo
+  question: IMG-CORE
+  route_key: gpt-image-2
+  case_id: IMG-CORE-04
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R4
+    verdict: fail
+    evidence: A faint signature or lettering is visible in the bottom right corner.
+- trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A2_nb_still_to_cheap_i2v__r1
+  run_id: topo3-nb-video
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  case_id: VID-TOPO3-01
+  controller_verdict: accept
+  controller_note: correct (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R4
+    verdict: fail
+    evidence: No movement is visible in the diya flames or light across the frames, indicating a still image.
+- trial_id: VID-2SPK-01__veo-3.1-fast__A_native__r2
+  run_id: vid-2spk
+  question: VID-2SPK
+  route_key: veo-3.1-fast
+  case_id: VID-2SPK-01
+  controller_verdict: accept
+  controller_note: approved (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: cannot_judge
+    evidence: The audio track cannot be heard from the static frames.
+  - rule_id: R2
+    verdict: cannot_judge
+    evidence: Lip movements relative to the spoken lines cannot be determined without audio.
+  - rule_id: R3
+    verdict: cannot_judge
+    evidence: Lip movements relative to the spoken lines cannot be determined without audio.
+  - rule_id: R5
+    verdict: fail
+    evidence: Lettering is visible on the label of the paint can.
+- trial_id: VID-2SPK-01__veo-3.1-fast__A_native__r1
+  run_id: vid-2spk
+  question: VID-2SPK
+  route_key: veo-3.1-fast
+  case_id: VID-2SPK-01
+  controller_verdict: accept
+  controller_note: approved (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: cannot_judge
+    evidence: The presence and content of the audio cannot be determined from the static frames.
+  - rule_id: R2
+    verdict: cannot_judge
+    evidence: Lip movement synchronization with specific audio lines cannot be verified from the static frames.
+  - rule_id: R3
+    verdict: cannot_judge
+    evidence: Lip movement timing relative to the audio cannot be evaluated from the static frames.
+  - rule_id: R5
+    verdict: fail
+    evidence: Lettering is visible on the label of the paint can held by the man.
+- trial_id: VID-I2V-02__kling-v3-pro-i2v__core__r1
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  case_id: VID-I2V-02
+  controller_verdict: accept
+  controller_note: expressesion change to angry in the end
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: He is already looking at the phone in all frames, and his expression changes from a wide smile to neutral.
+- trial_id: VID-I2V-01__kling-v3-pro-i2v__core__r2
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  case_id: VID-I2V-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R2
+    verdict: fail
+    evidence: The bottle does not keep the same appearance throughout, as a blank white label appears in the later frames where none existed in
+      the first.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from the static image frames.
+- trial_id: VID-I2V-02__minimax-h3-max-i2v__core__r1
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  case_id: VID-I2V-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: The man is already looking at the phone with a smile in the first frame, rather than glancing toward it and changing his expression
+      during the clip.
+- trial_id: VID-I2V-03__wan-3.0-prime-i2v__core__r1
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  case_id: VID-I2V-03
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The man does not raise both arms in any of the frames.
+  - rule_id: R4
+    verdict: fail
+    evidence: The clip is nearly static as the man's pose remains virtually unchanged.
+- trial_id: VID-I2V-01__veo-3.1-fast-i2v__core__r1
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: veo-3.1-fast-i2v
+  case_id: VID-I2V-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The viewpoint remains completely static, showing the exact same side of the bottle from start to end.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from the silent video frames.
+- trial_id: VID-I2V-01__wan-3.0-prime-i2v__core__r1
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  case_id: VID-I2V-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R2
+    verdict: fail
+    evidence: The bottle does not have a blank label in the first frame, but one appears in the final frame.
+  - rule_id: R3
+    verdict: cannot_judge
+    evidence: Whether the highlight on the glass flickers cannot be determined from three static frames.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from static frames.
+- trial_id: VID-I2V-02__wan-3.0-prime-i2v__core__r1
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  case_id: VID-I2V-02
+  controller_verdict: accept
+  controller_note: expressesion change to angry
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: The man is already looking at the phone with a smile in the first frame, so he does not visibly glance toward it or change his expression
+      to a smile during the clip.
+- trial_id: VID-I2V-01__wan-3.0-prime-i2v__core__r2
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  case_id: VID-I2V-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The camera viewpoint does not travel around the bottle, showing the same side throughout.
+  - rule_id: R3
+    verdict: fail
+    evidence: The highlight on the glass remains in the same spot on the bottle in the first and last frames while the background shifts.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: Presence of speech or music cannot be determined from the silent frames.
+- trial_id: VID-I2V-02__kling-v3-pro-i2v__core__r2
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  case_id: VID-I2V-02
+  controller_verdict: accept
+  controller_note: expressesion change to angry
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: The man is already looking at the phone in the first frame, and his expression changes from a smile to a neutral look rather than
+      becoming a smile.
+- trial_id: VID-I2V-01__kling-v3-pro-i2v__core__r1
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  case_id: VID-I2V-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The camera viewpoint remains nearly stationary and does not travel around the bottle to show a different side.
+  - rule_id: R2
+    verdict: fail
+    evidence: The cap changes between the first and subsequent frames by gaining a white circular sticker on top.
+  - rule_id: R3
+    verdict: fail
+    evidence: The highlight on the left side of the glass bottle remains in the same position despite a slight shift in the background viewpoint.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: Presence of speech or music cannot be determined from the silent video frames.
+- trial_id: VID-I2V-02__wan-3.0-prime-i2v__core__r2
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  case_id: VID-I2V-02
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: The man is already looking at the phone and smiling in the first frame, so no change of expression occurs.
+- trial_id: VID-I2V-01__minimax-h3-max-i2v__core__r1
+  run_id: vid-i2v
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  case_id: VID-I2V-01
+  controller_verdict: accept
+  controller_note: ''
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The viewpoint remains completely stationary, showing the exact same side of the bottle in all frames.
+  - rule_id: R3
+    verdict: cannot_judge
+    evidence: Whether the highlight flickers cannot be determined from three static frames.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from silent video frames.
+- trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r2
+  run_id: vid-knee
+  question: VID-KNEE
+  route_key: veo-3.1-full
+  case_id: VID-KNEE-01
+  controller_verdict: accept
+  controller_note: accept (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The bottle is not present in the first frame.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: Voice and music cannot be detected in static images.
+- trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r1
+  run_id: vid-ms
+  question: VID-MS
+  route_key: veo-3.1-fast-extend
+  case_id: VID-MS-01
+  controller_verdict: accept
+  controller_note: accepted (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: Lettering is visible on the airport sign in the background of the second frame.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: The total duration and individual shot lengths cannot be determined from the three frames.
+  - rule_id: R5
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from static images.
+- trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r2
+  run_id: vid-ms
+  question: VID-MS
+  route_key: veo-3.1-fast-extend
+  case_id: VID-MS-01
+  controller_verdict: accept
+  controller_note: a little visually bad but technically correct (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R1
+    verdict: fail
+    evidence: The second shot shows a beach instead of an airport.
+  - rule_id: R2
+    verdict: cannot_judge
+    evidence: The faces of the couple are not visible in the beach shots.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: The total duration cannot be determined from the three frames.
+  - rule_id: R5
+    verdict: cannot_judge
+    evidence: Audio content cannot be determined from static images.
+- trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r1
+  run_id: vid-ms
+  question: VID-MS
+  route_key: gemini-omni-1.1-flash-10s
+  case_id: VID-MS-02
+  controller_verdict: accept
+  controller_note: clean (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: Shot 3 in frame 239 is not the brightest, as shot 2 in frame 119 contains brighter direct sunlight highlights on the mattress.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: Whether voice or music is present in the video clip cannot be determined from the silent frames.
+- trial_id: VID-MS-02__kling-v3-pro-10s__core__r2
+  run_id: vid-ms
+  question: VID-MS
+  route_key: kling-v3-pro-10s
+  case_id: VID-MS-02
+  controller_verdict: accept
+  controller_note: technically correct but visually not amazing (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: The third frame is darker than the second frame due to the large dark wooden structure overhead.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: Whether voice or music is present in the video clip cannot be determined from the silent frames.
+- trial_id: VID-MS-01__kling-v3-pro-15s__core__r1
+  run_id: vid-ms
+  question: VID-MS
+  route_key: kling-v3-pro-15s
+  case_id: VID-MS-01
+  controller_verdict: accept
+  controller_note: accepted (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R2
+    verdict: fail
+    evidence: The woman's face is not visible in the airport shot at t=7.5s, making it impossible to confirm she is the same person.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: Shot durations and total video length cannot be determined from three static frames.
+  - rule_id: R5
+    verdict: cannot_judge
+    evidence: Audio content such as speech or music cannot be detected in static images.
+- trial_id: VID-MS-01__kling-v3-pro-15s__core__r2
+  run_id: vid-ms
+  question: VID-MS
+  route_key: kling-v3-pro-15s
+  case_id: VID-MS-01
+  controller_verdict: accept
+  controller_note: accepted (Controller)
+  screen_overall: reject
+  screen_rules:
+  - rule_id: R3
+    verdict: fail
+    evidence: Lettering is visible on the airplane fuselage and signs in the airport shot.
+  - rule_id: R4
+    verdict: cannot_judge
+    evidence: The exact duration of each shot and the total video length cannot be determined from the three static frames.
+  - rule_id: R5
+    verdict: cannot_judge
+    evidence: The presence of speech or music cannot be determined from silent video frames.
+cannot_judge:
+- trial_id: AUD-LIP-02__kling-lipsync-a2v__chain__r2
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R4
+- trial_id: MUS-01__lyria__native__r2
+  question: MUS
+  route_key: lyria
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: MUS-02__lyria__native__r1
+  question: MUS
+  route_key: lyria
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: MUS-02__lyria__native__r2
+  question: MUS
+  route_key: lyria
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: MUS-01__lyria__native__r1
+  question: MUS
+  route_key: lyria
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-02__elevenlabs-v3-direct__native__r1
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-01__elevenlabs-v3-direct__native__r2
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-03__elevenlabs-v3-direct__native__r2
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-02__elevenlabs-v3-direct__native__r2
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-01__elevenlabs-v3-direct__native__r1
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-03__elevenlabs-v3-direct__native__r1
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-02__sarvam-bulbul-v3__native__r2
+  question: AUD-TTS
+  route_key: sarvam-bulbul-v3
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-03__sarvam-bulbul-v3__native__r1
+  question: AUD-TTS
+  route_key: sarvam-bulbul-v3
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-02__sarvam-bulbul-v3__native__r1
+  question: AUD-TTS
+  route_key: sarvam-bulbul-v3
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-01__sarvam-bulbul-v3__native__r2
+  question: AUD-TTS
+  route_key: sarvam-bulbul-v3
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-03__sarvam-bulbul-v3__native__r2
+  question: AUD-TTS
+  route_key: sarvam-bulbul-v3
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: AUD-TTS-01__sarvam-bulbul-v3__native__r1
+  question: AUD-TTS
+  route_key: sarvam-bulbul-v3
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-EDIT-01__flux-2-pro-edit__edit__r1
+  question: IMG-EDIT
+  route_key: flux-2-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R2
+- trial_id: IMG-EDIT-01__nano-banana-pro-edit__edit__r1
+  question: IMG-EDIT
+  route_key: nano-banana-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-EDIT-01__seedream-5-pro-edit__edit__r1
+  question: IMG-EDIT
+  route_key: seedream-5-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-EDIT-02__flux-2-pro-edit__edit__r1
+  question: IMG-EDIT
+  route_key: flux-2-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R3
+  - R4
+- trial_id: IMG-EDIT-02__seedream-5-pro-edit__edit__r1
+  question: IMG-EDIT
+  route_key: seedream-5-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R3
+  - R4
+- trial_id: IMG-REF-01__flux-2-pro-edit__edit__r1
+  question: IMG-REF
+  route_key: flux-2-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-REF-01__nano-banana-pro-edit__edit__r1
+  question: IMG-REF
+  route_key: nano-banana-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-REF-01__seedream-5-pro-edit__edit__r1
+  question: IMG-REF
+  route_key: seedream-5-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-REF-02__flux-2-pro-edit__edit__r1
+  question: IMG-REF
+  route_key: flux-2-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+- trial_id: IMG-REF-02__nano-banana-pro-edit__edit__r1
+  question: IMG-REF
+  route_key: nano-banana-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+- trial_id: IMG-REF-02__seedream-5-pro-edit__edit__r1
+  question: IMG-REF
+  route_key: seedream-5-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+- trial_id: IMG-EDIT-01__flux-2-pro-edit__edit__r2
+  question: IMG-EDIT
+  route_key: flux-2-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-EDIT-01__nano-banana-pro-edit__edit__r2
+  question: IMG-EDIT
+  route_key: nano-banana-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R2
+  - R4
+- trial_id: IMG-EDIT-01__seedream-5-pro-edit__edit__r2
+  question: IMG-EDIT
+  route_key: seedream-5-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-EDIT-02__seedream-5-pro-edit__edit__r2
+  question: IMG-EDIT
+  route_key: seedream-5-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R3
+  - R4
+- trial_id: IMG-COMP-01__seedream-5-pro-edit__edit__r2
+  question: IMG-COMP
+  route_key: seedream-5-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R4
+- trial_id: IMG-REF-01__flux-2-pro-edit__edit__r2
+  question: IMG-REF
+  route_key: flux-2-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-REF-01__nano-banana-pro-edit__edit__r2
+  question: IMG-REF
+  route_key: nano-banana-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-REF-01__seedream-5-pro-edit__edit__r2
+  question: IMG-REF
+  route_key: seedream-5-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: IMG-REF-02__nano-banana-pro-edit__edit__r2
+  question: IMG-REF
+  route_key: nano-banana-pro-edit
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+- trial_id: IMG-REF-02__seedream-5-pro-edit__edit__r2
+  question: IMG-REF
+  route_key: seedream-5-pro-edit
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+- trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+  question: VID-TOPO3
+  route_key: nano-banana-2
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R2
+  - R4
+- trial_id: VID-2SPK-01__wan-3.0-prime__A_native__r1
+  question: VID-2SPK
+  route_key: wan-3.0-prime
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+- trial_id: VID-2SPK-01__gemini-omni-1.1-flash__A_native__r2
+  question: VID-2SPK
+  route_key: gemini-omni-1.1-flash
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+- trial_id: VID-2SPK-01__wan-3.0-prime__A_native__r2
+  question: VID-2SPK
+  route_key: wan-3.0-prime
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+- trial_id: VID-2SPK-01__gemini-omni-1.1-flash__A_native__r1
+  question: VID-2SPK
+  route_key: gemini-omni-1.1-flash
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+- trial_id: VID-I2V-03__wan-3.0-prime-i2v__core__r2
+  question: VID-I2V
+  route_key: wan-3.0-prime-i2v
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R4
+- trial_id: VID-I2V-03__minimax-h3-max-i2v__core__r2
+  question: VID-I2V
+  route_key: minimax-h3-max-i2v
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R4
+- trial_id: VID-I2V-03__kling-v3-pro-i2v__core__r2
+  question: VID-I2V
+  route_key: kling-v3-pro-i2v
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R4
+- trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r1
+  question: VID-KNEE
+  route_key: minimax-h3-max-480p
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R4
+- trial_id: VID-MS-02__kling-v3-pro-10s__core__r1
+  question: VID-MS
+  route_key: kling-v3-pro-10s
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R4
+- trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r2
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+- trial_id: VID-REF-02__veo-3.1-fast-ref2v__native__r1
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: VID-REF-02__veo-3.1-fast-ref2v__native__r2
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  controller_verdict: reject
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R3
+  - R4
+- trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r1
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  controller_verdict: accept
+  rules_cannot_judge:
+  - R1
+  - R2
+  - R4
+errors:
+- trial_id: IMG-TEXT-01__recraft-v4__B_premium_generated__r2
+  note: 'transport failure: TimeoutError: The read operation timed out'
+  http_status: null
+- trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r2
+  note: 'transport failure: TimeoutError: The read operation timed out'
+  http_status: null
+spend:
+  calls: 206
+  price_pinned: true
+  price_pin:
+    index: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/PIN-INDEX.yaml
+    route_key: gemini-api-judge
+    pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
+    sha256: 26fd7fc5fa8169c36fae516dad3cb884c45f9d26e6afa91f745816b27414edfb
+    url: https://ai.google.dev/gemini-api/docs/pricing
+    fetched_utc: '2026-09-09T14:16:37.698619+00:00'
+    usd_per_1m_input_tokens: 1.5
+    usd_per_1m_output_tokens: 9.0
+    tokens_per_image: 1548
+  usd_at_pinned_price: '3.156153'
+  prompt_tokens: 464271
+  output_tokens: 273300
+  total_tokens: 737571
+  stopped: null
+qualification:
+  qualification_verdict: screened_not_qualified
+  would_verdict: screened_not_qualified
+  criteria_frozen: false
+  thresholds:
+    cohens_kappa_min: 0.6
+    false_accept_rate_max: 0.1
+    min_compared_trials: 30
+    min_coverage_fraction: 0.8
+  reasons:
+  - cohens_kappa 0.3265 < 0.6
+  - false_accept_rate 0.2157 > 0.1
+  - coverage_fraction 0.6754 < 0.8
+  - 'SCREEN-QUALIFICATION-CRITERIA-v0.yaml is not frozen: the verdict stays screened_not_qualified whatever the numbers say'
+  binding: false
+  note: 'qualified never makes a screen verdict a Registry row: registry_gate admits no capability for vlm_screen'
+rebuilt_from:
+- eval/experiments/EVAL-040/runs/aud-lip/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/aud-music-lyria/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/aud-tts-eleven/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/aud-tts-sarvam/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/half2/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/img-r1-composite/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/img-r1/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/topo3-nb-video/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/topo3-video/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/vid-2spk/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/vid-i2v/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/vid-knee/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/vid-ms/SCREEN-RESULTS.yaml
+- eval/experiments/EVAL-040/runs/vid-ref/SCREEN-RESULTS.yaml
