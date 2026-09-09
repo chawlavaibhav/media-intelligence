@@ -128,7 +128,7 @@ def validate(schema_path=None, data_path=None):
         for e in errors:
             print("  -", e)
         return 1
-    print("\nPASS - schema valid, uncertainty provenance present, registry empty.")
+    print("\nPASS - schema valid, uncertainty provenance present, every row admissible (deterministic/qualified, frozen criteria sha).")
     return 0
 
 

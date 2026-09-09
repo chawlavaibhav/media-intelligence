@@ -112,10 +112,18 @@ where it disagrees with a newer Controller decision, the decision wins.
 
 ## Current empirical floor
 
+**Registry no longer empty (9 Sep 2026).** The Controller froze the six deterministic-instrument criteria
+(`CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md`); the harness then wrote **167 rows** from Image
+Round 1 (delivery_format_compliance, latency_errors_refusals, cost_and_cpao trial cost, reliability_pass_at_k,
+reproducibility; 34 cells; n_items 1–2; `independence_status: NOT ESTABLISHED`). Human acceptance stays in the
+tiered `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml`, never in the Registry. **Known consequence of the
+freeze:** the frozen `format_probe` resolution-class rule (long side 960–1100 for "1024-class") fails every
+non-square delivery that providers return at 928×1152 / 720×1280 / 1080×1920 — a specification defect, not a
+model defect; rows stand as measured until the Controller amends the criterion (a new decision and criteria version).
+
 **Still zero:** qualified models/workflows · qualified subjective/perceptual evaluator families ·
 strict-exactness-qualified text evaluators (5 tested, 5 disqualified, unrewritten) · qualified
-temporal evaluators (pass mark `DOES_NOT_EXIST`) · **Capability Registry rows** (0 — deliberate;
-verified: 0 data rows, validator passes) · customer-outcome CpAO observations · Production IR /
+temporal evaluators (pass mark `DOES_NOT_EXIST`) · **Capability Registry rows** (**167 as of 9 Sep 2026** — deterministic instruments only, under the frozen criteria; validator passes) · customer-outcome CpAO observations · Production IR /
 Planner · **accepted-outcome-rate measurements** (none commissioned) · **8 of the 10 compiled
 packs** · **post-draw text detection on a real artifact** (adapter wired, never invoked — needs
 spend authority) · **any gate run over a production blueprint** (committed EVAL-038 fixtures only).
