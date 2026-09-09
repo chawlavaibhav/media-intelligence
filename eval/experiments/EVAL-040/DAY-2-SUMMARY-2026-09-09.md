@@ -27,7 +27,7 @@ Spend records: `CONTROLLER-SPEND-AUTHORISATION-VIDEO-PIECES-2-TO-5-CHEAP-FIRST-2
 | | ElevenLabs v3 direct (premade male voice) | 4 / 6 | 298 plan credits for six | Hinglish 0/2 "rejected for accent" |
 | Music (2 briefs, 30 s) | Lyria 2 | 4 / 4 | USD 0.06 | tracks 32.8 s (trim by code) |
 | | ElevenLabs Music direct | not run | — | HTTP 402 on the free plan; "skip eleven labs music" |
-| Lipsync (3 scripts on the accepted lobby clip) | Kling lipsync a2v | pending (5 of 6 sealed) | USD 0.14 | one trial refused: fal balance exhausted |
+| Lipsync (3 scripts on the accepted lobby clip) | Kling lipsync a2v | 0 / 5 | USD 0.14 | "looking very odd" (all five); one trial refused: fal balance exhausted |
 
 ## What the day says
 

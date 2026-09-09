@@ -3,7 +3,7 @@
 # No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.
 schema: ROUTING-EVIDENCE-MAP-v0
 status: product_asset; tiers never mixed; human tiers are never Registry rows
-generated_utc: '2026-09-09T12:44:45.373864Z'
+generated_utc: '2026-09-09T12:52:37.257619Z'
 round: EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video,
   topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip)
 sources:
@@ -21,6 +21,7 @@ sources:
   - eval/experiments/EVAL-040/runs/aud-tts-sarvam/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/aud-tts-eleven/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/aud-music-lyria/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-lip/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
   results_run_ids:
   - img-r1
@@ -34,6 +35,7 @@ sources:
   - aud-tts-sarvam
   - aud-tts-eleven
   - aud-music-lyria
+  - aud-lip
   criteria_sha256: 6fce5ea875c0653ad7321a292fcada31594c9512e1297deabba6c525d9d23888
   summary: eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
   summaries:
@@ -253,7 +255,66 @@ questions:
         human_blind_acceptance:
           tier: human_blind_acceptance
           registry: false
-          status: no_verdicts
+          judge: Controller
+          accepts: 0
+          trials: 6
+          rejects: 5
+          n_items: 3
+          arms:
+          - chain
+          no_artifact_rejects: 0
+          per_item:
+            AUD-LIP-01:
+              accepts: 0
+              trials: 2
+            AUD-LIP-02:
+              accepts: 0
+              trials: 2
+            AUD-LIP-03:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: AUD-LIP-01__kling-lipsync-a2v__chain__r2
+            verdict: reject
+            note: looking very odd (Controller)
+          - trial_id: AUD-LIP-02__kling-lipsync-a2v__chain__r1
+            verdict: reject
+            note: looking very odd (Controller)
+          - trial_id: AUD-LIP-02__kling-lipsync-a2v__chain__r2
+            verdict: reject
+            note: looking very odd (Controller)
+          - trial_id: AUD-LIP-03__kling-lipsync-a2v__chain__r2
+            verdict: reject
+            note: looking very odd (Controller)
+          - trial_id: AUD-LIP-01__kling-lipsync-a2v__chain__r1
+            verdict: reject
+            note: looking very odd (Controller)
+          - trial_id: AUD-LIP-03__kling-lipsync-a2v__chain__r1
+            verdict: null
+            note: 'fal: User is locked. Reason: Exhausted balance. (nothing generated, nothing charged)'
+          elimination:
+            question: AUD-LIP
+            route_key: kling-lipsync-a2v
+            arm: chain
+            arms:
+            - chain
+            n_planned: 6
+            refusals_or_errors: 0
+            infra_refusals_not_counted: 1
+            accepts: 0
+            rejects: 5
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 1
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: aud-lip
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - aud-lip
+          source: RESULTS.yaml of run aud-lip
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
