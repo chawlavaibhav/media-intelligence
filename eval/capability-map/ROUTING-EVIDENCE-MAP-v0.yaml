@@ -3,12 +3,12 @@
 # No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.
 schema: ROUTING-EVIDENCE-MAP-v0
 status: product_asset; tiers never mixed; human tiers are never Registry rows
-generated_utc: '2026-09-09T13:14:34.093848Z'
+generated_utc: '2026-09-09T13:38:55.029641Z'
 round: EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video,
-  topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk)
+  topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling)
 sources:
   registry: eval/registry/registry-v1.jsonl
-  registry_sha256: ab4571ad154161e0fd53ae0bc3026f5ebbb324398743430b474238059c1b8035
+  registry_sha256: 68dcab6cec068e4b19122ce9ee9003520ca194dfc9299f44777df73769759b0f
   results:
   - eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/half2/RESULTS.yaml
@@ -182,9 +182,10 @@ routing_rules:
   source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
 - id: RR-14
   scope: two speakers talking in Hindi (native audio)
-  rule: Generate two-speaker Hindi dialogue natively on Veo 3.1 fast, Gemini Omni 1.1 Flash or Wan 3.0 Prime; no plate-plus-lipsync chain is needed.
+  rule: Generate two-speaker Hindi dialogue natively on Veo 3.1 fast, Gemini Omni 1.1 Flash or Wan 3.0 Prime; avoid Kling v3 Pro audio for Hindi
+    dialogue; no plate-plus-lipsync chain is needed.
   evidence: 'vid-2spk VID-2SPK-01: veo-3.1-fast 2/2 (USD 0.80), gemini-omni-1.1-flash 2/2 (USD 0.81), wan-3.0-prime 2/2 (USD 1.12) - ''all 6 approved'';
-    kling-v3-pro-audio not screened (fal balance); lipsync chain 0/5 elsewhere'
+    kling-v3-pro-audio 0/2 (''characters cut off, language bad'', ''language off''); lipsync chain 0/5 elsewhere'
   tier: human_blind_acceptance
   registry: false
   source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
@@ -4038,39 +4039,45 @@ questions:
           tier: deterministic
           registry: true
           rows:
+          - cap-0dc3e35e44b18e10
+          - cap-25152f8e27bc1a0b
           - cap-32763daa34496c20
+          - cap-5b054c7a1ad91673
+          - cap-6891ff46a1005599
           - cap-7f0a6520d67b6bc6
+          - cap-dd8963b5c72d4833
           n_items:
           - VID-2SPK-01
-          counted_trials: 2
+          counted_trials: 4
           status_counts:
             error: 2
+            ok: 2
           refusal_rate: 0.0
-          error_rate: 1.0
+          error_rate: 0.5
           format_compliance:
             passes: 0
-            trials: 0
-            n_items: 0
+            trials: 2
+            n_items: 1
             items_excluded: []
           trial_cost_usd:
-            settled_total: '2.688000'
+            settled_total: '5.376000'
             per_trial_mean: '1.344000'
-            n_settled: 2
+            n_settled: 4
             cost_within_reserved:
-              passes: 2
-              trials: 2
+              passes: 4
+              trials: 4
           latency_s:
-            p50: 0.800819
-            p95: 1.208495
-            n: 2
+            p50: 1.208495
+            p95: 458.091396
+            n: 4
           repeat_variance_unseeded:
-            pairs: 0
-            dhash_hamming_mean: null
-            dhash_hamming_max: null
-            ssim_mean: null
-            ssim_min: null
-            structural_passes: 0
-            structural_trials: 0
+            pairs: 1
+            dhash_hamming_mean: 24.0
+            dhash_hamming_max: 24
+            ssim_mean: 0.6859264086032313
+            ssim_min: 0.6859264086032313
+            structural_passes: 1
+            structural_trials: 1
           uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
         human_blind_acceptance:
           tier: human_blind_acceptance
@@ -4078,7 +4085,7 @@ questions:
           judge: Controller
           accepts: 0
           trials: 2
-          rejects: 0
+          rejects: 2
           n_items: 1
           arms:
           - A_native
@@ -4088,12 +4095,12 @@ questions:
               accepts: 0
               trials: 2
           controller_notes:
-          - trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r1
-            verdict: null
-            note: 'fal: Exhausted balance (nothing generated, nothing charged)'
           - trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r2
-            verdict: null
-            note: 'fal: Exhausted balance (nothing generated, nothing charged)'
+            verdict: reject
+            note: characters cut off, language bad (Controller)
+          - trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r1
+            verdict: reject
+            note: language off (Controller)
           elimination:
             question: VID-2SPK
             route_key: kling-v3-pro-audio
@@ -4102,15 +4109,15 @@ questions:
             - A_native
             n_planned: 2
             refusals_or_errors: 0
-            infra_refusals_not_counted: 2
             accepts: 0
-            rejects: 0
+            rejects: 2
             not_dispatched: 0
             e1_threshold: 1
             e2_threshold: 0
-            eliminated: false
-            eliminated_by: []
-            status: not_screened_infra
+            eliminated: true
+            eliminated_by:
+            - E2
+            note: first two attempts were fal-side balance refusals (run vid-2spk, recorded as infrastructure); the judged draws are run vid-2spk-kling
             results_run_id: vid-2spk
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
           runs:

@@ -96,35 +96,35 @@ trials:
   verdict_basis: blind_verdict
   note: approved (Controller)
   redo_of: null
-- trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r1
-  run_id: vid-2spk
-  case_id: VID-2SPK-01
-  question: VID-2SPK
-  route_key: kling-v3-pro-audio
-  arm: A_native
-  repeat_index: 1
-  dispatched: true
-  status: error
-  error_class: http_403
-  blind_id: null
-  verdict: null
-  verdict_basis: infra_refusal_not_counted
-  note: 'fal: Exhausted balance (nothing generated, nothing charged)'
-  redo_of: null
 - trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r2
-  run_id: vid-2spk
+  run_id: vid-2spk-kling
   case_id: VID-2SPK-01
   question: VID-2SPK
   route_key: kling-v3-pro-audio
   arm: A_native
   repeat_index: 2
   dispatched: true
-  status: error
-  error_class: http_403
-  blind_id: null
-  verdict: null
-  verdict_basis: infra_refusal_not_counted
-  note: 'fal: Exhausted balance (nothing generated, nothing charged)'
+  status: ok
+  error_class: null
+  blind_id: T07
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: characters cut off, language bad (Controller)
+  redo_of: null
+- trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r1
+  run_id: vid-2spk-kling
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: kling-v3-pro-audio
+  arm: A_native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: T08
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: language off (Controller)
   redo_of: null
 elimination:
 - question: VID-2SPK
@@ -176,22 +176,25 @@ elimination:
   - A_native
   n_planned: 2
   refusals_or_errors: 0
-  infra_refusals_not_counted: 2
   accepts: 0
-  rejects: 0
+  rejects: 2
   not_dispatched: 0
   e1_threshold: 1
   e2_threshold: 0
-  eliminated: false
-  eliminated_by: []
-  status: not_screened_infra
+  eliminated: true
+  eliminated_by:
+  - E2
+  note: first two attempts were fal-side balance refusals (run vid-2spk, recorded as infrastructure); the judged draws are run vid-2spk-kling
 reading:
-- '6/6 accepted: Veo 3.1 fast (USD 0.80/clip), Gemini Omni 1.1 Flash (USD 0.81/clip) and Wan 3.0 Prime (USD 1.12/clip) each delivered two Hindi speakers with the
-  right lips moving for the right line, a paint can, no lettering.'
-- Native two-speaker Hindi dialogue is a solved cheap-tier capability on this brief; the B_chain arm (plate, i2v, TTS, lipsync) is unnecessary here - consistent with
-  lipsync's 0/5.
-- Kling v3 Pro audio not screened (fal balance).
+- '6/8 accepted: Veo 3.1 fast (USD 0.80/clip), Gemini Omni 1.1 Flash (USD 0.81/clip) and Wan 3.0 Prime (USD 1.12/clip) each 2/2 - two Hindi speakers, right lips on
+  the right line, paint can, no lettering.'
+- 'Kling v3 Pro audio 0/2 (USD 1.34/clip): ''characters cut off, language bad'' and ''language off'' - the Hindi dialogue was not delivered; eliminated on this brief.'
+- Native two-speaker Hindi dialogue is a solved cheap-tier capability on Veo fast / Omni / Wan; the B_chain arm (plate, i2v, TTS, lipsync) is unnecessary - consistent
+  with lipsync's 0/5.
 spend_usd:
-  smoke: 1.12
+  smoke_wan: 1.12
   lane: 8.14976
-  cap_inr: 950
+  kling_smoke: 1.344
+  kling_lane: 2.688
+  total: 13.3
+  cap_inr: 1300
