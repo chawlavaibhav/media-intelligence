@@ -15,7 +15,7 @@ from pathlib import Path
 
 import yaml
 
-from _support import NoNetworkTestCase, fixed_clock, hv2_paths
+from _support import ITEM_BASIS_COMMIT, NoNetworkTestCase, fixed_clock, hv2_paths
 import run_live as RL
 import store as S
 import surfaces
@@ -184,7 +184,7 @@ class PlanTest(RunnerBase):
         self.assertIn(("IMG-CORE-01", "mai-image-2.6"), excluded)
         self.assertTrue(all(e["reason"] for e in plan["excluded"]))
         self.assertEqual(plan["header"]["roster_sha256"], "99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46")
-        self.assertEqual(plan["header"]["item_basis_commit"], "0596aa2")
+        self.assertEqual(plan["header"]["item_basis_commit"], ITEM_BASIS_COMMIT)
         self.assertEqual(plan["header"]["tranche_id"], "EVAL-040-TRANCHE-1")
         self.assertTrue(plan["header"]["freeze_matches_item_basis"])
 

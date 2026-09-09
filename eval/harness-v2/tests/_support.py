@@ -30,6 +30,8 @@ KEY_NAMES = ("FAL_KEY", "SARVAM_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "A
              "GOOGLE_CLOUD_VISION_API_KEY")
 
 
+ITEM_BASIS_COMMIT = "9adc4035d089"   # freeze package basis: TEST-CASES amended 2026-09-09 (arm A2 rows)
+
 class NetworkAttempted(RuntimeError):
     """A test tried to open a real socket. That is a test failure by definition."""
 
@@ -82,7 +84,9 @@ class NoNetworkTestCase(unittest.TestCase):
         """A TEST-ONLY authorisation file in the signed record's machine_authorisation shape."""
         import hashlib
         fields = {
-            "tranche_id": "EVAL-040-TRANCHE-1", "authorised": True, "item_basis_commit": "0596aa2",
+            # the freeze package's current basis commit (TEST-CASES amended 2026-09-09: Nano Banana arm A2 rows on VID-TOPO3-01);
+            # the planner compares the package at HEAD with this commit, so it moves whenever the package does
+            "tranche_id": "EVAL-040-TRANCHE-1", "authorised": True, "item_basis_commit": ITEM_BASIS_COMMIT,
             "price_basis_roster_sha256": hashlib.sha256(Path(hv2_paths.ROSTER).read_bytes()).hexdigest(),
             "max_consumed_usd_equivalent": ceiling, "cap_1a_usd": caps[0], "cap_1b_usd": caps[1], "sarvam_cap_inr": inr_cap,
             "retries_authorised": 0, "execution_time_route_price_verification": "required_before_every_paid_call",

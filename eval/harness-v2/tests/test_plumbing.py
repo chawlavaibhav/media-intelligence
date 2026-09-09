@@ -591,8 +591,10 @@ class VideoSmokeTest(PlumbingBase):
         t = plan["trials"][0]
         self.assertEqual((t["arm"], t["tranche"], t["quantity"], t["estimated_usd_equiv"]), ("A_cheap_still_to_cheap_i2v", "1b", "6", "0.480000"))
         self.assertEqual(sorted((e["arm"], e["repeat_index"], e["reason"].split(";")[0][:22]) for e in plan["excluded"]),
-                         [("A_cheap_still_to_cheap_i2v", 2, "repeat 2 not requested"), ("C_textless_plate_i2v_composite", 1, "input_unresolved:plate"),
-                          ("C_textless_plate_i2v_composite", 2, "input_unresolved:plate")], "arm C is unmapped in this INPUTS file, so it cannot smoke by accident")
+                         [("A2_nb_still_to_cheap_i2v", 1, "input_unresolved:plate"), ("A2_nb_still_to_cheap_i2v", 2, "input_unresolved:plate"),
+                          ("A_cheap_still_to_cheap_i2v", 2, "repeat 2 not requested"), ("C_textless_plate_i2v_composite", 1, "input_unresolved:plate"),
+                          ("C_textless_plate_i2v_composite", 2, "input_unresolved:plate")],
+                         "arms A2 and C are unmapped in this INPUTS file, so they cannot smoke by accident")
         sent = json.loads(factory.payloads()[0])
         self.assertTrue(sent["image_url"].startswith("data:image/png;base64,"))
         self.assertEqual(sent["prompt"][:14], "Static camera,")
@@ -631,25 +633,44 @@ class VideoSmokeTest(PlumbingBase):
             if p.is_file():
                 self.assertNotIn(b"FAKE-TOKEN-NOT-A-CREDENTIAL", p.read_bytes(), str(p))
 
+    def test_plan_arms_filter_keeps_only_the_named_arm_of_a_multi_arm_route(self):
+        """`--arms` (2026-09-09): minimax-h3-max-i2v carries three arms on VID-TOPO3-01; a plan for one of them lists neither of the others."""
+        plate_a2 = png_bytes(w=72, h=128, rgb=(95, 12, 12))
+        self.seal_trial("plates", "VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r1", plate_a2)
+        ipath = self.inputs_file([{"case_id": "VID-TOPO3-01", "arm": "A2_nb_still_to_cheap_i2v", "role": "plate_accepted_draw",
+                                   "ref": "plates:VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r1"}])
+        plan = RL.build_plan(self.tmp / "a2", "a2", cases=["VID-TOPO3-01"], routes=["minimax-h3-max-i2v"], tranche="1b", auth_path=self.auth,
+                             inputs_path=ipath, arms=["A2_nb_still_to_cheap_i2v"])
+        self.assertEqual(sorted((t["arm"], t["repeat_index"]) for t in plan["trials"]), [("A2_nb_still_to_cheap_i2v", 1), ("A2_nb_still_to_cheap_i2v", 2)])
+        self.assertEqual([e for e in plan["excluded"] if e["route_key"] == "minimax-h3-max-i2v"], [], "the other arms are neither planned nor listed")
+        self.assertEqual(Decimal(plan["header"]["estimated_total_usd_equiv"]), Decimal("0.960"))
+
     def test_topo3_video_plan_resolves_every_arm_with_the_plates(self):
         plate_a = png_bytes(w=72, h=128, rgb=(90, 10, 10))
         plate_c = png_bytes(w=72, h=128, rgb=(80, 5, 5))
         self.seal_trial("plates", "VID-TOPO3-01__qwen-image-3__A_plate_9x16__r1", plate_a)
         self.seal_trial("plates", "VID-TOPO3-01__flux-2-pro__C_plate_9x16__r2", plate_c)
+        plate_a2 = png_bytes(w=72, h=128, rgb=(95, 12, 12))
+        self.seal_trial("plates", "VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r1", plate_a2)
         ipath = self.inputs_file([
             {"case_id": "VID-TOPO3-01", "arm": "A_cheap_still_to_cheap_i2v", "role": "plate_accepted_draw", "ref": "plates:VID-TOPO3-01__qwen-image-3__A_plate_9x16__r1"},
+            {"case_id": "VID-TOPO3-01", "arm": "A2_nb_still_to_cheap_i2v", "role": "plate_accepted_draw", "ref": "plates:VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r1"},
             {"case_id": "VID-TOPO3-01", "arm": "C_textless_plate_i2v_composite", "role": "plate_accepted_draw", "ref": "plates:VID-TOPO3-01__flux-2-pro__C_plate_9x16__r2"}])
         out = self.tmp / "topo3"
         plan = RL.build_plan(out, "topo3", cases=["VID-TOPO3-01"], routes=None, tranche="1a,1b", auth_path=self.auth, inputs_path=ipath)
         by = {}
         for t in plan["trials"]:
             by.setdefault((t["arm"], t["route_key"]), []).append(t)
-        self.assertEqual(sorted(by), [("A_cheap_still_to_cheap_i2v", "minimax-h3-max-i2v"), ("A_cheap_still_to_cheap_i2v", "wan-3.0-prime-i2v"),
+        self.assertEqual(sorted(by), [("A2_nb_plate_9x16", "nano-banana-2"), ("A2_nb_still_to_cheap_i2v", "minimax-h3-max-i2v"),
+                                      ("A_cheap_still_to_cheap_i2v", "minimax-h3-max-i2v"), ("A_cheap_still_to_cheap_i2v", "wan-3.0-prime-i2v"),
                                       ("A_plate_9x16", "qwen-image-3"), ("B_premium_native_t2v", "kling-v3-pro"), ("B_premium_native_t2v", "veo-3.1-full"),
                                       ("C_plate_9x16", "flux-2-pro"), ("C_textless_plate_i2v_composite", "minimax-h3-max-i2v")])
         self.assertTrue(all(len(v) == 2 for v in by.values()))
         self.assertEqual(plan["header"]["tranche"], ["1a", "1b"])
-        self.assertEqual(Decimal(plan["header"]["estimated_total_usd_equiv"]), Decimal("9.884"))
+        # 9.884 (the 2026-09-09 piece) + 0.134 (two Nano Banana 2 plates) + 0.96 (two H3 Max clips) - the arm A2 addendum rows
+        self.assertEqual(Decimal(plan["header"]["estimated_total_usd_equiv"]), Decimal("10.978"))
+        a2_sha = by[("A2_nb_still_to_cheap_i2v", "minimax-h3-max-i2v")][0]["inputs"][0]["sha256"]
+        self.assertEqual(a2_sha, hashlib.sha256(plate_a2).hexdigest())
         lite = [e for e in plan["excluded"] if e["route_key"] == "veo-3.1-lite-i2v"]
         self.assertEqual(len(lite), 2)
         self.assertIn("price_unpinned", lite[0]["reason"])
@@ -657,7 +678,7 @@ class VideoSmokeTest(PlumbingBase):
         c_sha = by[("C_textless_plate_i2v_composite", "minimax-h3-max-i2v")][0]["inputs"][0]["sha256"]
         self.assertEqual((a_sha, c_sha), (hashlib.sha256(plate_a).hexdigest(), hashlib.sha256(plate_c).hexdigest()))
         self.assertNotEqual(by[("A_cheap_still_to_cheap_i2v", "minimax-h3-max-i2v")][0]["body_sha256"], by[("C_textless_plate_i2v_composite", "minimax-h3-max-i2v")][0]["body_sha256"])
-        self.assertTrue(all(t["inputs"] is None for k, v in by.items() for t in v if k[0] in ("A_plate_9x16", "C_plate_9x16", "B_premium_native_t2v")))
+        self.assertTrue(all(t["inputs"] is None for k, v in by.items() for t in v if k[0] in ("A_plate_9x16", "A2_nb_plate_9x16", "C_plate_9x16", "B_premium_native_t2v")))
 
 
 # ============================================================================ prompts + tranches
