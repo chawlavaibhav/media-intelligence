@@ -50,6 +50,9 @@ import store as S
 DEFAULT_RUNS_ROOT = hv2_paths.EVAL_ROOT / "experiments" / "EVAL-040" / "runs"
 FIXTURES_SUBDIR = "fixtures"                      # <run>/artifacts/fixtures/<fixture_id>.fixture.json
 WILDCARD_ARM = "*"
+# adapters whose request carries a recorded CHOICE (`$pending_choice` in adapters/base): (what, adapter input key).
+# Mapped in INPUTS.yaml as role `choice:<what>` with ref `literal:<value>`; a missing line keeps the row refusing.
+CHOICE_ROLES = {"sarvam_tts": (("speaker_id_lowercase", "voice"),)}
 DATA_URI_SOURCE = ("pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` "
                    "with no format constraint; data URIs per fal's public API documentation (not in the pinned bytes; proven by the "
                    "first live smoke, never by a test)")
@@ -98,6 +101,12 @@ def parse_ref(ref: str) -> dict:
     if not isinstance(ref, str) or not ref.strip():
         raise InputsError(f"input ref must be a non-empty string, got {ref!r}")
     parts = ref.strip().split(":")
+    if parts[0] == "literal":
+        # 2026-09-09: a recorded CHOICE (a voice name, a speaker id) - never bytes; the plan commits to the value
+        value = ref.strip()[len("literal:"):]
+        if not value or any(ch.isspace() for ch in value):
+            raise InputsError(f"literal ref {ref!r} must be literal:<value> with no whitespace")
+        return {"kind": "literal", "run_id": None, "artifact_id": value, "suffix": None}
     if parts[0] == "fixture":
         if len(parts) != 3 or not all(parts[1:]):
             raise InputsError(f"fixture ref {ref!r} must be fixture:<run_id>:<fixture_id>")
@@ -157,6 +166,22 @@ def load_trial_artifact(runs_root: Path | str, run_id: str, trial_id: str, suffi
                          data=data, constructed_synthetic=bool(prov.get("constructed_synthetic")), is_decoy=False)
 
 
+@dataclass
+class LiteralInput:
+    """A recorded choice (e.g. the TTS speaker id) mapped through INPUTS.yaml as `literal:<value>`; no bytes, no store."""
+    role: str
+    ref: str
+    value: str
+
+    @property
+    def sha256(self) -> str:
+        return hashlib.sha256(self.value.encode("utf-8")).hexdigest()
+
+    def summary(self) -> dict:
+        return {"role": self.role, "ref": self.ref, "kind": "literal", "value": self.value, "sha256": self.sha256,
+                "run_id": None, "artifact_id": None, "bytes": None, "mime": None, "constructed_synthetic": False, "is_decoy": False}
+
+
 # ----------------------------------------------------------------------------------- file
 class InputsFile:
     """The committed mapping. Read once; its sha256 is recorded on the plan and re-checked at execute."""
@@ -204,6 +229,8 @@ class InputsFile:
 
     def load(self, entry: dict) -> ResolvedInput:
         r = parse_ref(entry["ref"])
+        if r["kind"] == "literal":
+            return LiteralInput(role=entry["role"], ref=entry["ref"], value=r["artifact_id"])
         if r["kind"] == "fixture":
             res = load_fixture(self.runs_root, r["run_id"], r["artifact_id"], entry["role"], entry["ref"])
         else:
@@ -224,6 +251,7 @@ def roles_needed(entry, case_row: dict) -> list[tuple[str, str]]:
     except (TypeError, ValueError):
         refs = 0
     out: list[tuple[str, str]] = []
+    out += [(f"choice:{what}", key) for what, key in CHOICE_ROLES.get(entry.adapter, ())]
     if entry.adapter == "fal_queue":
         from adapters import fal_queue as FQ
         pins = FQ.ROUTE_PINS.get(entry.route_key) or {}
@@ -255,6 +283,9 @@ def build_inputs(entry, needed: list[tuple[str, str]], resolved: dict[str, Resol
     inputs: dict = {}
     for role, key in needed:
         r = resolved[role]
+        if isinstance(r, LiteralInput):
+            inputs[key] = r.value
+            continue
         if entry.adapter == "fal_queue":
             if key == "image_urls":
                 inputs.setdefault("image_urls", []).append(r.data_uri())

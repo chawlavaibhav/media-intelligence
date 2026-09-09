@@ -35,8 +35,8 @@ each: 6 clips, on the Controller-accepted `VID-I2V-02` clip with the accepted re
 
 | Piece | Cash / Vertex credits ceiling | Sarvam cap | ElevenLabs plan-credit cap | Run ids |
 |---|---|---|---|---|
-| 6 music | **₹300 = USD 3.14** (Lyria 4 × 0.06 + smoke) | ₹0 | **5 minutes of generated music** (4 × 30 s + smoke; expressed in the pin's credit unit) | `aud-music(-smoke)` |
-| 7 speech | **₹100 = USD 1.05** (smoke/contingency; TTS itself is credits) | **₹20** (≈ 268 characters at ₹3 per 1,000) | **2,000 characters** (268 planned + smoke) | `aud-tts(-smoke)` |
+| 6 music | **₹300 = USD 3.14** (Lyria 4 × 0.06 + smoke) | ₹0 | **5 minutes of generated music** (4 × 30 s + smoke; expressed in the pin's credit unit) | `aud-music-lyria(-smoke)` now on the 13-field file; `aud-music-eleven(-smoke)` once the direct adapter and its cap field land |
+| 7 speech | **₹100 = USD 1.05** (smoke/contingency; TTS itself is credits) | **₹20** (≈ 268 characters at ₹3 per 1,000) | **2,000 characters** (268 planned + smoke) | `aud-tts-sarvam(-smoke)` now; `aud-tts-eleven(-smoke)` once the direct adapter lands |
 | 7b lipsync | **₹150 = USD 1.57** (6 × 0.14 + smoke) | ₹0 | 0 | `aud-lip(-smoke)` |
 
 Retries 0; price verified before every paid call; sealed evidence write-once; keys read by name only, never printed;
@@ -52,3 +52,11 @@ commit and is named in each authorisation file.
 ## 5. Not authorised
 
 Two-speaker piece (caps quoted, not approved); Seedance 2.5; anything beyond the rows above.
+
+## 6. Writer Controller note — run split (2026-09-09)
+
+The Sarvam and Lyria rows run first under 13-field authorisation files (`authorization.tts-sarvam.local.yaml`,
+`authorization.music-lyria.local.yaml`, item basis commit 9adc4035d089). The ElevenLabs direct rows run as their own
+runs once the adapter, the `elevenlabs_credits` pool and its cap field exist; the same per-piece ceilings apply across
+both runs of a piece. Speaker choice for Sarvam: `aditya` (bulbul:v3; recorded via INPUTS `literal:` — see
+`price-pins-2026-09/sarvam-bulbul-v3/SPEAKERS-PIN.yaml`).
