@@ -1,0 +1,126 @@
+run_id: aud-lip
+case: 'AUD-LIP-01..03: Kling lipsync audio-to-video on the accepted VID-I2V-02 clip (H3 Max), ElevenLabs repeat-1 drives'
+revealed_utc: '2026-09-09'
+judge: Controller (blind P01-P05)
+commitment_verified: false
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: 'E1: refusal/hard error >= ceil(0.375 n); E2: accepts <= floor(0.25 n); E5: no artifact = reject; a provider-side balance lock is an infrastructure refusal,
+  not counted'
+trials:
+- trial_id: AUD-LIP-01__kling-lipsync-a2v__chain__r2
+  run_id: aud-lip
+  case_id: AUD-LIP-01
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: P01
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: looking very odd (Controller)
+  redo_of: null
+- trial_id: AUD-LIP-02__kling-lipsync-a2v__chain__r1
+  run_id: aud-lip
+  case_id: AUD-LIP-02
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: P02
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: looking very odd (Controller)
+  redo_of: null
+- trial_id: AUD-LIP-02__kling-lipsync-a2v__chain__r2
+  run_id: aud-lip
+  case_id: AUD-LIP-02
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: P03
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: looking very odd (Controller)
+  redo_of: null
+- trial_id: AUD-LIP-03__kling-lipsync-a2v__chain__r2
+  run_id: aud-lip
+  case_id: AUD-LIP-03
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: P04
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: looking very odd (Controller)
+  redo_of: null
+- trial_id: AUD-LIP-01__kling-lipsync-a2v__chain__r1
+  run_id: aud-lip
+  case_id: AUD-LIP-01
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: P05
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: looking very odd (Controller)
+  redo_of: null
+- trial_id: AUD-LIP-03__kling-lipsync-a2v__chain__r1
+  run_id: aud-lip
+  case_id: AUD-LIP-03
+  question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  repeat_index: 1
+  dispatched: true
+  status: error
+  error_class: http_403
+  blind_id: null
+  verdict: null
+  verdict_basis: infra_refusal_not_counted
+  note: 'fal: User is locked. Reason: Exhausted balance. (nothing generated, nothing charged)'
+  redo_of: null
+elimination:
+- question: AUD-LIP
+  route_key: kling-lipsync-a2v
+  arm: chain
+  arms:
+  - chain
+  n_planned: 6
+  refusals_or_errors: 0
+  infra_refusals_not_counted: 1
+  accepts: 0
+  rejects: 5
+  not_dispatched: 0
+  e1_threshold: 3
+  e2_threshold: 1
+  eliminated: true
+  eliminated_by:
+  - E2
+reading:
+- Kling lipsync a2v 0/5, every clip 'looking very odd' - eliminated on this plate/drive combination.
+- 'Confounds to separate before ruling on lipsync as a capability: the plate is a generated 6-s clip whose subject already moves (mouth/expression drift noted at
+  i2v), and the drives are ElevenLabs premade-voice files (one script rejected for accent); the contract also wants closed lips in silence, which a moving plate defeats.'
+- 'Next screen (not authorised): a still-faced plate (a static portrait animated minimally, or the accepted still itself via an image-to-talking-head route) with
+  the Sarvam drives; sync-lipsync-v3 once its price is pinned.'
+spend_usd:
+  smoke: 0.14
+  lane: 0.7
+  cap_inr: 150
