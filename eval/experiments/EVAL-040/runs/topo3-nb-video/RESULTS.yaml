@@ -39,6 +39,36 @@ trials:
   note: correct (Controller)
   composited: false
   redo_of: null
+- trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r1
+  run_id: topo3-nb-plates
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: nano-banana-2
+  arm: A2_nb_plate_9x16
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: null
+  verdict: reject
+  verdict_basis: controller_verdict_in_chat_unblinded_plate_pick
+  note: 'two ''श्री'' (Controller: ''Image one has two shri'')'
+  redo_of: null
+- trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+  run_id: topo3-nb-plates
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: nano-banana-2
+  arm: A2_nb_plate_9x16
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: null
+  verdict: accept
+  verdict_basis: controller_verdict_in_chat_unblinded_plate_pick
+  note: spelled correctly (Controller)
+  redo_of: null
 elimination:
 - question: VID-TOPO3
   route_key: minimax-h3-max-i2v
@@ -49,6 +79,20 @@ elimination:
   refusals_or_errors: 0
   accepts: 2
   rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-TOPO3
+  route_key: nano-banana-2
+  arm: A2_nb_plate_9x16
+  arms:
+  - A2_nb_plate_9x16
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 1
+  rejects: 1
   not_dispatched: 0
   e1_threshold: 1
   e2_threshold: 0

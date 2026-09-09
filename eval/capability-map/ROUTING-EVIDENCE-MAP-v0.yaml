@@ -3,7 +3,7 @@
 # No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.
 schema: ROUTING-EVIDENCE-MAP-v0
 status: product_asset; tiers never mixed; human tiers are never Registry rows
-generated_utc: '2026-09-09T12:52:37.257619Z'
+generated_utc: '2026-09-09T12:53:12.804689Z'
 round: EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video,
   topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip)
 sources:
@@ -5502,7 +5502,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 4
+        rank_in_question: 5
         fallback:
           route: wan-3.0-prime-i2v+A_cheap_still_to_cheap_i2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -5729,7 +5729,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 3
+        rank_in_question: 4
         fallback:
           route: kling-v3-pro+B_premium_native_t2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -5844,7 +5844,7 @@ questions:
           status: no_row_for_this_route_family
         rank_in_question: 2
         fallback:
-          route: minimax-h3-max-i2v+A_cheap_still_to_cheap_i2v
+          route: nano-banana-2+A2_nb_plate_9x16
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       nano-banana-2+A2_nb_plate_9x16:
@@ -5904,7 +5904,46 @@ questions:
         human_blind_acceptance:
           tier: human_blind_acceptance
           registry: false
-          status: no_verdicts
+          judge: Controller
+          accepts: 1
+          trials: 2
+          rejects: 1
+          n_items: 1
+          arms:
+          - A2_nb_plate_9x16
+          no_artifact_rejects: 0
+          per_item:
+            VID-TOPO3-01:
+              accepts: 1
+              trials: 2
+          controller_notes:
+          - trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r1
+            verdict: reject
+            note: 'two ''श्री'' (Controller: ''Image one has two shri'')'
+          - trial_id: VID-TOPO3-01__nano-banana-2__A2_nb_plate_9x16__r2
+            verdict: accept
+            note: spelled correctly (Controller)
+          elimination:
+            question: VID-TOPO3
+            route_key: nano-banana-2
+            arm: A2_nb_plate_9x16
+            arms:
+            - A2_nb_plate_9x16
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 1
+            rejects: 1
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: topo3-nb-video
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - topo3-nb-video
+          source: RESULTS.yaml of run topo3-nb-video
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
@@ -5916,9 +5955,9 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 7
+        rank_in_question: 3
         fallback:
-          route: minimax-h3-max-i2v+A2_nb_still_to_cheap_i2v
+          route: minimax-h3-max-i2v+A_cheap_still_to_cheap_i2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       veo-3.1-full+B_premium_native_t2v:
@@ -6030,9 +6069,9 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 6
+        rank_in_question: 7
         fallback:
-          route: nano-banana-2+A2_nb_plate_9x16
+          route: minimax-h3-max-i2v+A2_nb_still_to_cheap_i2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       wan-3.0-prime-i2v+A_cheap_still_to_cheap_i2v:
@@ -6144,7 +6183,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 5
+        rank_in_question: 6
         fallback:
           route: veo-3.1-full+B_premium_native_t2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
