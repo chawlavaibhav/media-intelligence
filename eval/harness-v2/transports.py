@@ -250,3 +250,30 @@ FakeQueueTransport = FakeTransport
 FakeVertexTransport = FakeTransport
 FakeSarvamTransport = FakeTransport
 FakeElevenLabsTransport = FakeTransport
+
+
+# ------------------------------------------------------------------------------- Gemini Developer API (2026-09-09)
+GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta"
+
+
+def gemini_generate_content_url(model: str) -> str:
+    """`models/{model}:generateContent` on the Gemini Developer API. The model id is the caller's config, not a claim."""
+    if not model or "/" in model or ":" in model or any(ch.isspace() for ch in model):
+        raise PreDispatchRefusal(f"gemini model id {model!r} is not a bare model name; nothing was sent")
+    return f"{GEMINI_API_BASE}/models/{model}:generateContent"
+
+
+class GeminiApiTransport(_UrllibTransport):
+    """generativelanguage.googleapis.com with `x-goog-api-key`; JSON in, JSON out (Controller decision
+    CONTROLLER-GEMINI-MODELS-VIA-GEMINI-KEY-2026-09-09: Gemini-named models run on the key NAMED GOOGLE_API_KEY, never
+    Vertex). One `generate_content` = one POST through `post_json`, so `FakeTransport` (which scripts `post_json`)
+    stands in for it unchanged: the instrument calls `transport.post_json(url, headers, payload)` and nothing else.
+    The key value travels in the header of that one request; it is never in the URL, the body, a log or a record."""
+    name = "gemini_api"
+
+    def generate_content(self, model: str, body: dict, api_key: str) -> tuple[int, dict]:
+        return self.post_json(gemini_generate_content_url(model), {"x-goog-api-key": api_key},
+                              json.dumps(body, ensure_ascii=False).encode("utf-8"))
+
+
+FakeGeminiApiTransport = FakeTransport

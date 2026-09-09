@@ -1,0 +1,49 @@
+# SCREEN-QUALIFICATION-CRITERIA-v0 - how a VLM screening instrument (instruments/vlm_screen.py) earns, or is refused,
+# the `qualified` status, measured against the Controller's blind verdicts (EVAL-040 RESULTS.yaml files).
+#
+# STATUS: UNFROZEN. Every number here is a Planner proposal. While `frozen: false`, qualify_screen.py computes the
+# agreement statistics, records what the thresholds WOULD say (`would_verdict`) and writes
+# `qualification_verdict: screened_not_qualified` regardless - the same rule PASS-CRITERIA-v0.yaml applies to the
+# deterministic instruments (Controller between-role note 4). The Controller freezes this file by setting
+# `frozen: true`, `status: frozen` and recording the decision ref; a changed threshold is a different qualification
+# (the file's sha256 sits in the instrument config and in every report).
+schema: SCREEN-QUALIFICATION-CRITERIA-v0
+package: eval/harness-v2
+status: proposed
+frozen: false
+frozen_by: null
+frozen_at: null
+frozen_ref: null
+controller_ref: MD-C1
+rule: >-
+  frozen: false  ->  qualify_screen.py writes qualification_verdict: screened_not_qualified and keeps would_verdict.
+  frozen: true   ->  qualification_verdict = qualified when EVERY threshold below holds, else screened_not_qualified.
+  `qualified` never makes a VLM verdict a Registry row on its own: registry_gate admits an instrument only for the
+  eight deterministic capabilities, and vlm_screen is specified for none of them.
+
+instrument:
+  id: vlm_screen
+  default_model: gemini-3.1-flash            # a config value the runner passes through; not a claim that this id exists or is best
+  surface: gemini_api                        # generativelanguage.googleapis.com, key NAMED GOOGLE_API_KEY (never Vertex)
+  decision_ref: coordination/decisions/CONTROLLER-GEMINI-MODELS-VIA-GEMINI-KEY-2026-09-09.md
+  reference_judge: Controller blind accept / reject per trial (RESULTS.yaml), against the case's acceptance_contract
+  compared_on: trials whose Controller verdict is accept or reject AND whose sealed artifact resolves AND the instrument returned accept or reject
+  cannot_judge_counts_as: coverage loss (reported), never agreement and never disagreement
+
+thresholds:
+  cohens_kappa_min: 0.60                     # Landis & Koch "substantial" boundary (external, verified: false)
+  false_accept_rate_max: 0.10                # instrument accept where the Controller rejected / Controller rejects, over compared trials
+  min_compared_trials: 30                    # below this the verdict is `insufficient_n` whatever the statistics say
+  min_coverage_fraction: 0.80                # compared / (judged trials with an artifact, audio excluded); below -> not qualified
+
+price_pin:                                   # where qualify_screen.py looks for a PINNED Gemini API price; absent -> "price not pinned", no number
+  index: eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml
+  route_key: gemini-api-judge                # the PIN-INDEX entry the Controller pins for the judge model
+  required_fields: [usd_per_1m_input_tokens, usd_per_1m_output_tokens, tokens_per_image]
+
+estimate_assumptions:                        # Planner ALLOWANCES for the dry-run estimate; they price nothing until the pin above exists
+  text_tokens_per_call_allowance: 1200       # prompt + contract text per call (an allowance, not a measurement)
+  output_tokens_per_call_allowance: 400      # the JSON answer per call (an allowance, not a measurement)
+
+source: "Planner proposal 2026-09-09 (task: VLM screening qualification runner); no repo source names these thresholds"
+verified: false

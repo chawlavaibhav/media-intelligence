@@ -429,6 +429,42 @@ class RefuseLiveRenderDryTest(AdapterBase):
                 self.assertEqual(self.budget.records(), [])
 
 
+    def test_h2_re_pinned_fal_routes_render_dry_bodies_and_refuse_live(self):
+        """2026-09-09: sync-lipsync-v3 renders its pinned body (video_url + audio_url, nothing else) against a fake fal transport but
+        stays outside the cap until the freeze package is rebuilt; kling-v3-elements has no schema, so no body can be rendered."""
+        os.environ["FAL_KEY"] = "fake"
+        inputs = {"video_url": "https://example.test/plate.mp4", "audio_url": "https://example.test/drive.wav"}
+        t = fal_ok("https://v3.fal.media/files/fake/out.mp4")
+        ad = self.make("sync-lipsync-v3", t)
+        row = self.row("AUD-LIP-01", "sync-lipsync-v3")
+        d = ad.dry_run(row, inputs)
+        self.assertEqual(d["body"], inputs, "ROUTE_PINS: video_url + audio_url only; no caller parameter, no seed")
+        self.assertEqual(d["body_sha256"], B.sha256_hex(S.canonical_json(d["body"])))
+        self.assertEqual(d["url"], "https://queue.fal.run/fal-ai/sync-lipsync/v3")
+        self.assertEqual(d["shape_status"], "verified")
+        self.assertFalse(d["would_dispatch"])
+        self.assertIn("price_unpinned", d["refusal_reason"])
+        self.assertEqual(ad.entry.price_pin_ref, "eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3-2026-09-09.html")
+        self.assertEqual(d["price"]["route_status"], "unpinned", "the committed roster still carries the route unpinned")
+        with self.assertRaises(DispatchRefused):
+            ad.dispatch(row, inputs)
+        self.assertEqual(t.calls, [], "nothing reached the transport")
+        self.assertEqual(self.budget.records(), [])
+        t2 = fal_ok("https://v3.fal.media/files/fake/out.mp4")
+        ad2 = self.make("kling-v3-elements", t2)
+        row2 = self.row("VID-REF-01", "kling-v3-elements")
+        d2 = ad2.dry_run(row2, {"image_urls": ["https://example.test/a.png", "https://example.test/b.png", "https://example.test/c.png"]})
+        self.assertEqual(d2["body"]["$shape"], "unverified", "no pinned Input component: a placeholder, never a sendable body")
+        self.assertNotIn("image_urls", d2["body"])
+        self.assertEqual(d2["url"], "https://queue.fal.run/fal-ai/kling-video/v3/pro/elements")
+        self.assertFalse(d2["would_dispatch"])
+        self.assertIn("unverified", d2["refusal_reason"])
+        self.assertIn("price_unpinned", d2["refusal_reason"])
+        with self.assertRaises(DispatchRefused):
+            ad2.dispatch(row2, {"image_urls": ["https://example.test/a.png"]})
+        self.assertEqual(t2.calls, [])
+        self.assertEqual(self.budget.records(), [])
+
 # ============================================================ (i) parameter refusals
 class ParameterRefusalTest(AdapterBase):
     def test_i_caller_parameters_are_refused(self):

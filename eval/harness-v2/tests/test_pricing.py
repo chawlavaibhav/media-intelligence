@@ -64,6 +64,20 @@ class PricingTest(NoNetworkTestCase):
         self.assertFalse(pc.ok)
         self.assertIn("route_status_not_pinned", pc.refusal_reason)
 
+    def test_sync_lipsync_v3_quantity_rule_is_output_minutes_rounded_up_or_output_seconds(self):
+        """2026-09-09 pin: the exact id bills 'minutes' at 8; proration unstated -> whole output minutes, rounded up."""
+        row = {"case_id": "AUD-LIP-01", "route_key": "sync-lipsync-v3", "params": {"output_seconds": 6}, "quantity": 6, "quantity_unit": "seconds"}
+        self.assertEqual(pricing.quantity_for("sync-lipsync-v3", "per_minute", row), (Decimal(1), "minutes", "sync_lipsync_minute_rounded_up"))
+        self.assertEqual(pricing.quantity_for("sync-lipsync-v3", "per_minute", {**row, "params": {"output_seconds": 61}}), (Decimal(2), "minutes", "sync_lipsync_minute_rounded_up"))
+        self.assertEqual(pricing.quantity_for("sync-lipsync-v3", "per_second", row), (Decimal(6), "seconds", "per_second"))
+        self.assertEqual(pricing.quantity_for("sync-lipsync-v3", "per_minute", {"params": {}, "quantity": 8, "quantity_unit": "seconds"})[0], Decimal(1))
+        self.assertIsNone(pricing.quantity_for("sync-lipsync-v3", "per_minute", {"params": {}}))
+        # the committed roster still carries the route unpinned: the check refuses and no amount is produced
+        pc = self.p.evaluate("sync-lipsync-v3", {**row, "unit_price": None, "price_status": "unpinned", "route_status": "unpinned"})
+        self.assertFalse(pc.ok)
+        self.assertIn("price_unpinned", pc.refusal_reason)
+        self.assertIsNone(pc.amount_usd_equiv)
+
     def test_quantity_rules(self):
         lip = {"case_id": "AUD-LIP-01", "route_key": "kling-lipsync-a2v", "params": {"billed_input_seconds": "10 (6-s plate rolled up to the 5-s increment)"},
                "quantity": 10, "quantity_unit": "seconds", "unit_price": 0.014, "price_status": "pinned", "route_status": "pinned"}

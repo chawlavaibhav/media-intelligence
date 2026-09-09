@@ -1,0 +1,57 @@
+# PIN-INDEX — kling-v3-elements re-check, fetched 2026-09-09 (UTC). Same conventions as ../PIN-INDEX.yaml (exact file, size, SHA-256,
+# command, exact substrings that must be present in the bytes). Free, unauthenticated GETs; no queue submit, no key. Kept out of
+# ../PIN-INDEX.yaml because that index sits at its 5 MB byte cap; tests/test_surfaces.py verifies this file against the bytes.
+#
+# Result: NO PRICE - the route stays unpinned. fal has no model under the id fal-ai/kling-video/v3/pro/elements on 2026-09-09:
+#   * the model page and its /api sub-page answer HTTP 404;
+#   * fal's own keyword search for the id returns 9 models, none of them this id;
+#   * the schema endpoint answers "OpenAPI schema not available for this endpoint" (byte-identical to the 2026-09-04 fetch).
+# Nothing here is a price for this route. The Controller may re-route the reference-to-video arm to an id that exists (the search shows
+# fal-ai/kling-video/o3/pro/reference-to-video with its own price text) - that would be a NEW route key with its own pin, not this one.
+pins:
+- route_key: kling-v3-elements
+  pin_file: eval/empirical-planning/price-pins-2026-09/kling-v3-elements/fal-api-models-kling-v3-elements-search.json
+  pin_kind: page_only
+  url: https://fal.ai/api/models?keywords=fal-ai/kling-video/v3/pro/elements
+  fetched_utc: '2026-09-09T13:47:47Z'
+  http_status: '200'
+  bytes: 10974
+  sha256: 033d604f9c12ce286161cd91d6e0b93cc134656ccf834de9b107fcae954c615c
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/kling-video/v3/pro/elements" -o fal-api-models-kling-v3-elements-search.json
+  evidence_quote: '"total":9'
+  additional_evidence_quotes:
+  - '"id":"fal-ai/kling-video/v1.6/pro/elements"'
+  - '"id":"fal-ai/kling-video/o3/pro/reference-to-video"'
+  - '"id":"fal-ai/kling-video/v3/pro/image-to-video"'
+  note: 'fal''s keyword search for the exact id returns 9 models and NONE of them is fal-ai/kling-video/v3/pro/elements (ids: fal-ai/kling-video/v3/pro/motion-control,
+    fal-ai/kling-video/v3/pro/image-to-video, fal-ai/kling-video/v3/pro/text-to-video, fal-ai/kling-video/o3/pro/reference-to-video, fal-ai/kling-video/o3/pro/image-to-video,
+    fal-ai/kling-video/o3/pro/video-to-video/edit, fal-ai/kling-video/o3/pro/text-to-video, fal-ai/kling-video/o3/pro/video-to-video/reference, fal-ai/kling-video/v1.6/pro/elements).
+    The nearest ids are an older-generation elements endpoint (v1.6/pro/elements, no price text) and a different model family''s reference-to-video (o3/pro/reference-to-video,
+    ''$0.112 (audio off) or $0.14 (audio on)'' per second). Neither is this route; no price is taken from either.'
+- route_key: kling-v3-elements
+  pin_file: eval/empirical-planning/price-pins-2026-09/kling-v3-elements/fal-kling-v3-elements-404.html
+  pin_kind: page_only
+  url: https://fal.ai/models/fal-ai/kling-video/v3/pro/elements
+  fetched_utc: '2026-09-09T13:47:50Z'
+  http_status: '404'
+  bytes: 102239
+  sha256: 65f1413af80697519e6fd332b2a68978a3d9f07e07d7caf6a3b38f251fe65374
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/kling-video/v3/pro/elements" -o fal-kling-v3-elements-404.html
+  evidence_quote: NEXT_HTTP_ERROR_FALLBACK;404
+  additional_evidence_quotes: null
+  note: HTTP 404 on 2026-09-09, as on 2026-09-04 (access-evidence-2026-09/fal-route-page-status.txt). The /api sub-page answered 404 too (2026-09-09T13:47:53Z,
+    99020 bytes, sha256 4dabf4081d5b9593e4a2263983a3ad5ecf60cc411142fa4b4bf93bce64e2a4d1; not retained). No price text on either.
+- route_key: kling-v3-elements
+  pin_file: eval/empirical-planning/price-pins-2026-09/kling-v3-elements/fal-openapi-kling-v3-elements.json
+  pin_kind: page_only
+  url: https://api.fal.ai/v1/models?endpoint_id=fal-ai/kling-video/v3/pro/elements&expand=openapi-3.0
+  fetched_utc: '2026-09-09T13:47:56Z'
+  http_status: '200'
+  bytes: 209
+  sha256: edcc28905a2081355a194bb8bc8b51e41711d1831a397ed9bcbd4ee33a8e9cf0
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://api.fal.ai/v1/models?endpoint_id=fal-ai/kling-video/v3/pro/elements&expand=openapi-3.0" -o fal-openapi-kling-v3-elements.json
+  evidence_quote: '"message":"OpenAPI schema not available for this endpoint"'
+  additional_evidence_quotes:
+  - '"code":"expansion_failed"'
+  note: 'Byte-identical to the 2026-09-04 schema pin eval/harness-v2/schemas/fal/fal-ai_kling-video_v3_pro_elements.json: fal cannot expand a schema for
+    this id, so the request shape stays unverified and no ROUTE_PINS entry can be checked against a pinned Input component.'

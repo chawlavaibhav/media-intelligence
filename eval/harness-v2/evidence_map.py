@@ -17,7 +17,10 @@ Four tiers per cell, never mixed:
                              compliance, settled trial cost, latency, unseeded repeat variance
     human_blind_acceptance   the Controller's blind accept / reject counts from RESULTS.yaml (registry: false -
                              product evidence, never a Registry row), with n and the Controller's own notes
-    screened_not_qualified   VLM screening - none yet (registry: false)
+    screened_not_qualified   VLM screening (instruments/vlm_screen.py) read from a SCREEN-RESULTS.yaml that sits beside a
+                             RESULTS.yaml: agreement with the Controller per cell, n, the instrument config hash, and a status
+                             that is `qualified` only when a QUALIFICATION-REPORT.yaml (qualify_screen.py) says so for that
+                             config hash (registry: false either way)
     historical_prior         a pointer into eval/historical-priors/media-factory-v1/ where a row exists for the same
                              route family (registry: false, freshness_required: true)
 plus `fallback` (the next-best route by acceptance within the question, ties by settled trial cost), `price_pin_ref`,
@@ -48,6 +51,9 @@ SUMMARY_HALF2 = "eval/experiments/EVAL-040/runs/half2/IMAGE-HALF-TWO-SUMMARY.md"
 SUMMARY_VIDEO1 = "eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md"
 SUMMARY_DAY2 = "eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md"
 COMPOSITE_SUFFIX = "+code_overlay"
+SCREEN_RESULTS_FILE = "SCREEN-RESULTS.yaml"            # written by qualify_screen.py beside a RESULTS.yaml
+QUALIFICATION_REPORT_FILE = "QUALIFICATION-REPORT.yaml"
+SCREEN_JUDGED = ("accept", "reject")
 TRIVIAL_ARMS = (None, "core", "edit")      # arms that do not distinguish a cell: the route name stands alone
 ROUND = "EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling)"
 
@@ -250,6 +256,80 @@ def composite_human_facts(comp: dict) -> dict:
             "cost": comp.get("cost"), "note": comp.get("note"), "source": f"RESULTS.yaml of run {comp.get('run_id')}"}
 
 
+def merge_screens(screen_docs: list) -> list:
+    """SCREEN-RESULTS-v0 documents -> one flat list of screened trials; every trial remembers its screen run, the instrument
+    config hash and model it was screened with. A trial without a screen_overall (skipped / errored) is kept for n."""
+    out = []
+    for doc in screen_docs:
+        if not doc:
+            continue
+        inst = doc.get("instrument") or {}
+        for t in doc.get("trials", []) or []:
+            out.append({**t, "_screen_run_id": doc.get("run_id"), "_config_hash": inst.get("config_hash"), "_model": inst.get("model"),
+                        "_instrument_id": inst.get("id"), "_criteria_sha256": doc.get("criteria_sha256")})
+    return out
+
+
+def _qualified_hashes(reports: list) -> dict:
+    """config_hash -> report ref for every QUALIFICATION-REPORT whose binding verdict is `qualified`."""
+    out = {}
+    for r in reports or []:
+        if not r:
+            continue
+        q = r.get("qualification") or {}
+        if q.get("qualification_verdict") == "qualified" and q.get("binding", q.get("criteria_frozen")) is True:
+            h = (r.get("instrument") or {}).get("config_hash")
+            if h:
+                out[h] = r.get("_path") or r.get("generated_utc")
+    return out
+
+
+def screened_facts(screens: list, question: str, route_key: str, arm=ANY_ARM, reports: list | None = None, run_id: str | None = None) -> dict:
+    """The screened_not_qualified tier of one cell from the merged SCREEN-RESULTS trials. `run_id` restricts to one screen run (the
+    composite cell). Status is `qualified` only when a QUALIFICATION-REPORT says so for the SAME config hash; registry stays False."""
+    rows = [s for s in screens if s.get("question") == question and s.get("route_key") == route_key and _arm_matches(s, arm)
+            and (run_id is None or s.get("_screen_run_id") == run_id)]
+    if not rows:
+        return {"tier": "screened_not_qualified", "registry": False, "status": "none_yet"}
+    compared = [s for s in rows if s.get("screen_overall") in SCREEN_JUDGED and s.get("controller_verdict") in SCREEN_JUDGED]
+    agree = sum(1 for s in compared if s["screen_overall"] == s["controller_verdict"])
+    hashes = sorted({s["_config_hash"] for s in rows if s.get("_config_hash")})
+    qualified = _qualified_hashes(reports or [])
+    matched = [h for h in hashes if h in qualified]
+    status = "qualified" if matched and len(hashes) == 1 else "screened_not_qualified"
+    false_accepts = sum(1 for s in compared if s["screen_overall"] == "accept" and s["controller_verdict"] == "reject")
+    return {
+        "tier": "screened_not_qualified", "registry": False, "status": status,
+        "instrument": {"id": sorted({s.get("_instrument_id") for s in rows if s.get("_instrument_id")}), "model": sorted({s.get("_model") for s in rows if s.get("_model")}),
+                       "config_hash": hashes, "qualification_report": (qualified.get(matched[0]) if matched else None)},
+        "n_screened": len(rows), "n_compared": len(compared), "agreements": agree, "agreement_rate": (round(agree / len(compared), 4) if compared else None),
+        "screen_accepts": sum(1 for s in rows if s.get("screen_overall") == "accept"), "screen_rejects": sum(1 for s in rows if s.get("screen_overall") == "reject"),
+        "cannot_judge": sum(1 for s in rows if s.get("screen_overall") == "cannot_judge"),
+        "unscreened": sum(1 for s in rows if s.get("screen_overall") not in ("accept", "reject", "cannot_judge")),
+        "false_accepts_vs_controller": false_accepts,
+        "per_item": {c: {"compared": sum(1 for s in compared if s.get("case_id") == c), "agreements": sum(1 for s in compared if s.get("case_id") == c and s["screen_overall"] == s["controller_verdict"])}
+                     for c in sorted({s.get("case_id") for s in rows if s.get("case_id")})},
+        "disagreements": [{"trial_id": s.get("trial_id"), "controller_verdict": s["controller_verdict"], "screen_overall": s["screen_overall"], "controller_note": s.get("controller_note") or ""}
+                          for s in compared if s["screen_overall"] != s["controller_verdict"]],
+        "runs": sorted({s.get("_screen_run_id") for s in rows if s.get("_screen_run_id")}),
+        "source": f"{SCREEN_RESULTS_FILE} of run{'s' if len({s.get('_screen_run_id') for s in rows}) > 1 else ''} {', '.join(sorted({str(s.get('_screen_run_id')) for s in rows}))}",
+        "note": "VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never a Registry input",
+    }
+
+
+def sibling_screen_files(results_path: Path | str) -> tuple:
+    """(SCREEN-RESULTS.yaml | None, QUALIFICATION-REPORT.yaml | None) sitting beside a RESULTS.yaml."""
+    d = Path(results_path).parent
+    s, q = d / SCREEN_RESULTS_FILE, d / QUALIFICATION_REPORT_FILE
+    return (s if s.exists() else None), (q if q.exists() else None)
+
+
+def _load_yaml(p: Path | str) -> dict:
+    doc = yaml.safe_load(Path(p).read_text(encoding="utf-8")) or {}
+    doc["_path"] = str(p)
+    return doc
+
+
 def _price_pins(records: list, question: str, route_key: str, arm=ANY_ARM) -> dict:
     rows = [r for r in records if r.get("question") == question and r.get("route_key") == route_key and _arm_matches(r, arm)]
     pins = sorted({p for r in rows for p in ((r.get("cost") or {}).get("price_source") or [])})
@@ -289,9 +369,14 @@ def cell_name(route_key: str, arm: str | None, prompt_basis: str | None = None) 
 
 
 def build_map(records: list, results: dict | list, composite_results: dict | None = None, registry_path: str | None = None,
-              results_paths: list | None = None, criteria_sha256: str | None = None) -> dict:
-    """`results` is one RESULTS.yaml document or a list of them (merged by merge_results)."""
+              results_paths: list | None = None, criteria_sha256: str | None = None, screen_results: list | None = None,
+              qualification_reports: list | None = None) -> dict:
+    """`results` is one RESULTS.yaml document or a list of them (merged by merge_results). `screen_results` is a list of
+    SCREEN-RESULTS-v0 documents (qualify_screen.py) and `qualification_reports` the QUALIFICATION-REPORT-v0 documents that
+    may promote a config hash to `qualified`; the screened tier stays registry: false whatever they say."""
     results = merge_results(results if isinstance(results, list) else [results])
+    screens = merge_screens(screen_results or [])
+    reports = list(qualification_reports or [])
     questions: dict = defaultdict(dict)
     def key_arm(a):            # the trivial arms are one cell: keyed as None, named by the route alone
         return None if a in TRIVIAL_ARMS else a
@@ -304,10 +389,13 @@ def build_map(records: list, results: dict | list, composite_results: dict | Non
             det = deterministic_facts(records, question, route, basis)
             hum = composite_human_facts(composite_results) if composite_results else {"tier": "human_blind_acceptance", "registry": False, "status": "no_verdicts"}
             arm_note = "textless plate (FLUX.2 Pro) + exact strings set by code (composite-v2 layout); deterministic facts describe the PLATE calls"
+            scr = screened_facts(screens, question, route, ANY_ARM, reports, run_id=(composite_results or {}).get("run_id")) if composite_results else \
+                {"tier": "screened_not_qualified", "registry": False, "status": "none_yet"}
         else:
             det = deterministic_facts(records, question, route, basis if basis in ("blueprint_main",) else None, arm)
             hum = human_facts(results, question, route, arm)
             arm_note = None
+            scr = screened_facts([s for s in screens if s.get("_screen_run_id") != (composite_results or {}).get("run_id")], question, route, arm, reports)
         prior_rows = HISTORICAL_PRIORS.get(name) or HISTORICAL_PRIORS.get(route)
         arms_seen = sorted({str(r.get("arm")) for r in records if r.get("question") == question and r.get("route_key") == route and _arm_matches(r, arm) and r.get("arm")}
                            | {str(t.get("arm")) for t in results.get("trials", []) if t.get("question") == question and t.get("route_key") == route and _arm_matches(t, arm) and t.get("arm")})
@@ -315,7 +403,7 @@ def build_map(records: list, results: dict | list, composite_results: dict | Non
             "route_key": route, "arm": arm if arm is not None else (arms_seen[0] if len(arms_seen) == 1 else None), "arm_note": arm_note, **_price_pins(records, question, route, arm),
             "evidence_date": _evidence_date(records, results, question, route, arm) or (str(composite_results.get("judged_utc"))[:10] if composite_results else None),
             "deterministic": det, "human_blind_acceptance": hum,
-            "screened_not_qualified": {"tier": "screened_not_qualified", "registry": False, "status": "none_yet"},
+            "screened_not_qualified": scr,
             "historical_prior": {"tier": "historical_prior", "registry": False, "pointer": PRIOR_FILE, "freshness_required": True,
                                  "rows": prior_rows or [], "status": "row_exists" if prior_rows else "no_row_for_this_route_family"},
         }
@@ -329,6 +417,9 @@ def build_map(records: list, results: dict | list, composite_results: dict | Non
         "round": ROUND,
         "sources": {"registry": registry_path, "registry_sha256": (_sha256_file(registry_path) if registry_path and Path(registry_path).exists() else None),
                     "results": results_paths or [], "results_run_ids": results.get("run_ids"), "criteria_sha256": criteria_sha256,
+                    "screen_results": [d.get("_path") or d.get("results_ref") for d in (screen_results or []) if d],
+                    "screen_config_hashes": sorted({(d.get("instrument") or {}).get("config_hash") for d in (screen_results or []) if d and (d.get("instrument") or {}).get("config_hash")}),
+                    "qualification_reports": [r.get("_path") for r in reports if r], "qualified_config_hashes": sorted(_qualified_hashes(reports)),
                     "summary": SUMMARY_REF, "summaries": [SUMMARY_REF, SUMMARY_HALF2, SUMMARY_VIDEO1, SUMMARY_DAY2], "historical_prior_index": f"{PRIOR_DIR}/PRIOR-INDEX.yaml"},
         "tiers": TIERS, "routing_rules": ROUTING_RULES, "cell_count": n_cells,
         "reading_guide": ["deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation (independence NOT ESTABLISHED)",
@@ -344,13 +435,24 @@ def main(argv=None) -> int:
     ap.add_argument("--results", action="append", required=True, help="RESULTS.yaml of a blind-judged run (repeat for several runs)")
     ap.add_argument("--composite-results", default=None)
     ap.add_argument("--criteria-sha256", default=None)
+    ap.add_argument("--screen-results", action="append", default=[], help="SCREEN-RESULTS.yaml (qualify_screen.py); a file of that name beside any --results is read without being named")
+    ap.add_argument("--qualification-report", action="append", default=[], help="QUALIFICATION-REPORT.yaml; one beside any --results is read without being named")
     ap.add_argument("--out", default=str(MAP_PATH))
     a = ap.parse_args(argv)
     records = load_registry(a.registry)
     results = [yaml.safe_load(Path(p).read_text(encoding="utf-8")) for p in a.results]
     comp = yaml.safe_load(Path(a.composite_results).read_text(encoding="utf-8")) if a.composite_results else None
+    screen_paths, report_paths = list(a.screen_results), list(a.qualification_report)
+    for rp in list(a.results) + ([a.composite_results] if a.composite_results else []):
+        s, q = sibling_screen_files(rp)
+        if s and str(s) not in screen_paths:
+            screen_paths.append(str(s))
+        if q and str(q) not in report_paths:
+            report_paths.append(str(q))
+    screens = [_load_yaml(p) for p in screen_paths]
+    reports = [_load_yaml(p) for p in report_paths]
     m = build_map(records, results, comp, registry_path=a.registry, results_paths=list(a.results) + ([a.composite_results] if a.composite_results else []),
-                  criteria_sha256=a.criteria_sha256)
+                  criteria_sha256=a.criteria_sha256, screen_results=screens, qualification_reports=reports)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     header = ("# ROUTING-EVIDENCE-MAP-v0 - generated by eval/harness-v2/evidence_map.py from the Registry rows and the Controller's verdicts.\n"

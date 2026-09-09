@@ -245,7 +245,10 @@ _ENTRIES: list[SurfaceEntry] = [
     _veo("veo-3.1-fast-ref2v", "veo-3.1-fast-generate-001", "ref2v", "ref2v"),
     _fal("kling-v3-elements", "fal-ai/kling-video/v3/pro/elements", None, None,
          "kling-v3-pro", "elements-ref2v", "ref2v", "general_video", "video", None, shape="unverified",
-         notes="conditional and unpinned: fal returns no model for this endpoint id (HTTP 404 on the model page; empty models list on the schema endpoint)"),
+         notes="conditional and unpinned: fal has no model under this endpoint id (re-checked 2026-09-09: model page and /api sub-page HTTP 404, "
+               "the id is absent from fal's own keyword search, the schema endpoint answers 'OpenAPI schema not available'; bytes in "
+               f"{PINS}/kling-v3-elements/PIN-INDEX.yaml). No price exists for this route; the nearest live ids (kling-video/v1.6/pro/elements, "
+               "kling-video/o3/pro/reference-to-video) are other models and are not pinned to this key"),
     # ---------------------------------------------------------------- video, longer / multi-shot
     _fal("kling-v3-pro-15s", "fal-ai/kling-video/v3/pro/text-to-video",
          "fal-ai_kling-video_v3_pro_text-to-video.json", "KlingVideoV3ProTextToVideoInput",
@@ -286,8 +289,11 @@ _ENTRIES: list[SurfaceEntry] = [
     # ---------------------------------------------------------------- audio, lip-sync
     _fal("sync-lipsync-v3", "fal-ai/sync-lipsync/v3", "fal-ai_sync-lipsync_v3.json", "SyncLipsyncV3Input",
          "sync-lipsync-v3", None, "lipsync", "lipsync", "video",
-         f"{PINS}/sync-lipsync-v3/fal-sync-lipsync-v3.html",
-         notes="price unpinned (the 0.1333/s string belongs to the sibling image-to-video endpoint) - outside the cap, refuses live dispatch (MD-C9)"),
+         f"{PINS}/sync-lipsync-v3/fal-sync-lipsync-v3-2026-09-09.html",
+         notes="price evidence pinned 2026-09-09 for the EXACT id: the model page's endpointBilling record reads billing_unit 'minutes', price 8 "
+               "(USD 8.00 per output minute = 0.1333/s; the prose 0.1333/s string still belongs to the sibling image-to-video endpoint - Auditor AF-1). "
+               f"Index: {PINS}/sync-lipsync-v3/PIN-INDEX.yaml. The roster and the freeze package still carry the route unpinned (roster sha256 is bound "
+               "to the running lane; rebuild staged) - outside the cap, refuses live dispatch until the package is rebuilt (MD-C9)"),
     _fal("kling-lipsync-a2v", "fal-ai/kling-video/lipsync/audio-to-video",
          "fal-ai_kling-video_lipsync_audio-to-video.json", "KlingVideoLipsyncAudioToVideoInput",
          "kling-lipsync-audio-to-video", None, "lipsync", "lipsync", "video",
