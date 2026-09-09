@@ -75,3 +75,15 @@ below E2 on the text question (caveat 1 applies).
   can be written from this round's records.
 - Fix the composite arm (textless prompt variant + overlay tool) — a small package rebuild, then 4 cheap calls.
 - Image half two (edit, extend, compose, reference cases) needs the Controller's photos or constructed inputs.
+
+## Addendum (2026-09-09) — the composite arm, tested properly
+
+Caveat 1 above is closed. Four FLUX.2 Pro plates generated with the blueprints' textless prompt (USD 0.12), the exact
+strings set by code with pinned system fonts (Kohinoor Devanagari Bold, Helvetica Neue Bold; USD 0), judged by the
+Controller against the same contracts: **4/4 accepted** ("all accepted"). Cost per accepted picture ≈ USD 0.03, the
+cheapest of any route, and exact by construction. It could not be blind as to arm.
+
+Routing consequence for stills with exact text: generated text on Nano Banana 2 / GPT Image 2 (2/2 each, ≈ USD 0.06)
+and code-set text on a cheap plate (4/4, ≈ USD 0.03) are both acceptable. Code-set text is the default where exactness
+is contractual (prices, legal lines, brand names) or where a re-render must be free; generated text where the type must
+sit inside the scene (on a pack, a sign, a surface). Evidence: `eval/experiments/EVAL-040/runs/img-r1-composite/`.
