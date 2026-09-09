@@ -13,7 +13,7 @@ USD 1.60, which needs a small cap addendum. This is the one untested leg of the 
 
 ## 2. Scope
 
-`VID-TOPO3-01` only, two new arms on the frozen case (TEST-CASES rows added 2026-09-09, same blueprint, same prompt blocks):
+`VID-TOPO3-01` only, two new arms on the frozen case (TEST-CASES rows added 2026-09-09 in commit 9adc4035d089, which is this record's item basis commit; same blueprint, same prompt blocks):
 
 | Row | Route | Arm | Repeats | Unit price | Cost |
 |---|---|---|---|---|---|
