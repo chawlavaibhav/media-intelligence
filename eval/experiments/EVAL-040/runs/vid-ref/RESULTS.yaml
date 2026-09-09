@@ -1,0 +1,111 @@
+run_id: vid-ref
+case: VID-REF-01 (referenced tin turning) and VID-REF-02 (referenced woman at a cafe), veo-3.1-fast-ref2v 8 s
+revealed_utc: '2026-09-09'
+judge: Controller (blind R01-R04)
+commitment_verified: false
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: 'E1: refusal/hard error >= ceil(0.375 n); E2: accepts <= floor(0.25 n); E5: no artifact = reject; elimination per (route, case) here since one route ran'
+trials:
+- trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r2
+  run_id: vid-ref
+  case_id: VID-REF-01
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: R01
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: accepted (Controller); line-up letter not given
+  redo_of: null
+- trial_id: VID-REF-02__veo-3.1-fast-ref2v__native__r1
+  run_id: vid-ref
+  case_id: VID-REF-02
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: R02
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: 'some different language (lettering appeared; contract: no lettering, signage or logos) (Controller)'
+  redo_of: null
+- trial_id: VID-REF-02__veo-3.1-fast-ref2v__native__r2
+  run_id: vid-ref
+  case_id: VID-REF-02
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: R03
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: some different language (Controller)
+  redo_of: null
+- trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r1
+  run_id: vid-ref
+  case_id: VID-REF-01
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: R04
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: accepted (Controller); line-up letter not given
+  redo_of: null
+elimination:
+- question: VID-REF
+  case_id: VID-REF-01
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  arms:
+  - native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-REF
+  case_id: VID-REF-02
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  arms:
+  - native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 0
+  rejects: 2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
+reading:
+- 'Veo 3.1 fast reference-to-video: tin case 2/2 (product identity carried into motion at USD 0.80 a clip); person case 0/2 - foreign-looking lettering appeared in
+  the cafe scene both times, the contract''s hard no-lettering rule.'
+- Reference fidelity of the person was not the failure the Controller named; text hygiene was - the same weakness Veo showed on the text-into-motion piece (fabricated
+  script).
+- Only one route ran (Seedance 2.5 ref2v left out; Kling elements unpinned); no cross-route comparison yet.
+spend_usd:
+  smoke_refused_6s: 0.6
+  smoke_8s: 0.8
+  lane: 3.2
+  cap_inr: 450
