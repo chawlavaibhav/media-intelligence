@@ -1,0 +1,197 @@
+run_id: vid-2spk
+case: 'VID-2SPK-01: two adults, Hindi dialogue (woman then man), paint can, 8 s 9:16, native audio'
+revealed_utc: '2026-09-09'
+judge: Controller (blind T01-T06)
+commitment_verified: false
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: E1/E2 per (route, question); provider balance locks are infrastructure refusals, not counted
+trials:
+- trial_id: VID-2SPK-01__veo-3.1-fast__A_native__r2
+  run_id: vid-2spk
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: veo-3.1-fast
+  arm: A_native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: T01
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: VID-2SPK-01__wan-3.0-prime__A_native__r1
+  run_id: vid-2spk
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: wan-3.0-prime
+  arm: A_native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: T02
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: VID-2SPK-01__veo-3.1-fast__A_native__r1
+  run_id: vid-2spk
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: veo-3.1-fast
+  arm: A_native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: T03
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: VID-2SPK-01__gemini-omni-1.1-flash__A_native__r2
+  run_id: vid-2spk
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: gemini-omni-1.1-flash
+  arm: A_native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: T04
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: VID-2SPK-01__wan-3.0-prime__A_native__r2
+  run_id: vid-2spk
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: wan-3.0-prime
+  arm: A_native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: T05
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: VID-2SPK-01__gemini-omni-1.1-flash__A_native__r1
+  run_id: vid-2spk
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: gemini-omni-1.1-flash
+  arm: A_native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: T06
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: approved (Controller)
+  redo_of: null
+- trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r1
+  run_id: vid-2spk
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: kling-v3-pro-audio
+  arm: A_native
+  repeat_index: 1
+  dispatched: true
+  status: error
+  error_class: http_403
+  blind_id: null
+  verdict: null
+  verdict_basis: infra_refusal_not_counted
+  note: 'fal: Exhausted balance (nothing generated, nothing charged)'
+  redo_of: null
+- trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r2
+  run_id: vid-2spk
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: kling-v3-pro-audio
+  arm: A_native
+  repeat_index: 2
+  dispatched: true
+  status: error
+  error_class: http_403
+  blind_id: null
+  verdict: null
+  verdict_basis: infra_refusal_not_counted
+  note: 'fal: Exhausted balance (nothing generated, nothing charged)'
+  redo_of: null
+elimination:
+- question: VID-2SPK
+  route_key: veo-3.1-fast
+  arm: A_native
+  arms:
+  - A_native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-2SPK
+  route_key: gemini-omni-1.1-flash
+  arm: A_native
+  arms:
+  - A_native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-2SPK
+  route_key: wan-3.0-prime
+  arm: A_native
+  arms:
+  - A_native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 2
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-2SPK
+  route_key: kling-v3-pro-audio
+  arm: A_native
+  arms:
+  - A_native
+  n_planned: 2
+  refusals_or_errors: 0
+  infra_refusals_not_counted: 2
+  accepts: 0
+  rejects: 0
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+  status: not_screened_infra
+reading:
+- '6/6 accepted: Veo 3.1 fast (USD 0.80/clip), Gemini Omni 1.1 Flash (USD 0.81/clip) and Wan 3.0 Prime (USD 1.12/clip) each delivered two Hindi speakers with the
+  right lips moving for the right line, a paint can, no lettering.'
+- Native two-speaker Hindi dialogue is a solved cheap-tier capability on this brief; the B_chain arm (plate, i2v, TTS, lipsync) is unnecessary here - consistent with
+  lipsync's 0/5.
+- Kling v3 Pro audio not screened (fal balance).
+spend_usd:
+  smoke: 1.12
+  lane: 8.14976
+  cap_inr: 950
