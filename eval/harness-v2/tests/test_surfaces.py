@@ -25,17 +25,20 @@ class SurfaceRegistryTest(unittest.TestCase):
         cls.reg = surfaces.REGISTRY
 
     def test_keys_equal_the_route_catalogue(self):
-        self.assertEqual(self.reg.keys(), set(self.catalogue), "registry keys must equal route_catalogue keys exactly")
-        self.assertEqual(len(self.reg), 47)
+        self.assertEqual(self.reg.catalogue_keys(), set(self.catalogue), "registry keys (minus the extension routes) must equal route_catalogue keys exactly")
+        self.assertEqual(len(self.reg.catalogue_keys()), 47)
+        # EXTENSION_ROUTES are registered but deliberately outside the freeze catalogue (no TEST-CASES / COST-TABLE row)
+        self.assertEqual(set(surfaces.EXTENSION_ROUTES), self.reg.keys() - set(self.catalogue))
+        self.assertEqual(len(self.reg), 47 + len(surfaces.EXTENSION_ROUTES))
 
     def test_every_entry_names_adapter_surface_and_schema(self):
         for e in self.reg:
             self.assertIn(e.adapter, ("fal_queue", "vertex_veo", "vertex_gemini_image", "vertex_omni",
-                                      "vertex_lyria", "sarvam_tts", "none"), e.route_key)
+                                      "vertex_lyria", "sarvam_tts", "elevenlabs_direct", "none"), e.route_key)
             self.assertTrue(e.surface_model_id, e.route_key)
             self.assertTrue(e.params_schema, e.route_key)
             self.assertIn(e.shape_status, ("verified", "unverified", "not_built"), e.route_key)
-            self.assertIn(e.billing_pool, ("cash", "credits", "sarvam_credits"), e.route_key)
+            self.assertIn(e.billing_pool, ("cash", "credits", "sarvam_credits", "elevenlabs_credits"), e.route_key)
 
     def test_surface_and_pool_agree_with_the_catalogue(self):
         for key, cat in self.catalogue.items():
@@ -70,7 +73,8 @@ class SurfaceRegistryTest(unittest.TestCase):
         blob = str(self.reg.as_dict())
         self.assertNotIn("BEGIN PRIVATE" + " KEY", blob)      # split so the Tester grep never hits this file
         for e in self.reg:
-            self.assertIn(e.key_name, (surfaces.FAL_KEY_NAME, surfaces.SARVAM_KEY_NAME, surfaces.GCP_KEY_NAME, "none (no adapter)"))
+            self.assertIn(e.key_name, (surfaces.FAL_KEY_NAME, surfaces.SARVAM_KEY_NAME, surfaces.ELEVENLABS_KEY_NAME,
+                                       surfaces.GCP_KEY_NAME, "none (no adapter)"))
 
     def test_unknown_key_is_refused(self):
         with self.assertRaises(KeyError):

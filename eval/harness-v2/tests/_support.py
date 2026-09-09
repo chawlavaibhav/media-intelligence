@@ -26,7 +26,7 @@ if str(HV2) not in sys.path:
 
 import hv2_paths  # noqa: E402,F401
 
-KEY_NAMES = ("FAL_KEY", "SARVAM_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY",
+KEY_NAMES = ("FAL_KEY", "SARVAM_API_KEY", "ELEVENLABS_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY",
              "GOOGLE_CLOUD_VISION_API_KEY")
 
 
@@ -98,9 +98,9 @@ class NoNetworkTestCase(unittest.TestCase):
         auth_path.write_text(yaml.safe_dump({"machine_authorisation": fields}, sort_keys=False))
         return auth_path
 
-    def make_ledger(self, ceiling="200.00", caps=("85.00", "115.00"), run_id="run-test", inr_cap="5.00"):
+    def make_ledger(self, ceiling="200.00", caps=("85.00", "115.00"), run_id="run-test", inr_cap="5.00", **overrides):
         import ledger as L
-        auth_path = self.write_auth(ceiling, caps, inr_cap)
+        auth_path = self.write_auth(ceiling, caps, inr_cap, **overrides)
         auth = L.load_battery_authorisation(auth_path)
         run = L.BatteryRun.create(self.tmp / "runs", run_id, auth, mode="fake_live")
         return L.BatteryBudget(run)

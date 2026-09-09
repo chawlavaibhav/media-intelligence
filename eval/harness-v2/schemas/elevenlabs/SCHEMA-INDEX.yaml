@@ -1,0 +1,105 @@
+# Pinned vendor pages for the ElevenLabs DIRECT body shapes (routes elevenlabs-v3-direct / elevenlabs-music-direct), 2026-09-09.
+# Same layout as ../vertex/SCHEMA-INDEX.yaml (pages, then shapes). The raw bytes are NOT duplicated here: they are the price pins
+# under eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/ (one fetch, one sha256, indexed there); this directory keeps
+# plain-text extracts of the evidence the adapter uses (the Tester D1 practice: no raw vendor HTML under schemas/).
+purpose: Request-body shapes for adapters/elevenlabs_direct.py, from pinned vendor reference pages. Free, unauthenticated fetches; no provider call, no key.
+fetched_from_this_machine_utc_window: 2026-09-09T10:53Z - 2026-09-09T10:56Z
+pages:
+- id: elevenlabs_tts_convert_ref
+  url: https://elevenlabs.io/docs/api-reference/text-to-speech/convert
+  fetched_utc: '2026-09-09T10:53:01Z'
+  http_status: 200
+  raw_bytes: 1449040
+  raw_sha256: 8fbde8cbd5aad3188c6c6cdd396a14c0667e2f29c4a3b87fa75a004e98e27023
+  raw_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-tts-convert.html
+  stored_file: eval/harness-v2/schemas/elevenlabs/text-to-speech-convert.extract.txt
+  stored_kind: plain_text_extract
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://elevenlabs.io/docs/api-reference/text-to-speech/convert"
+- id: elevenlabs_models_ref
+  url: https://elevenlabs.io/docs/models
+  fetched_utc: '2026-09-09T10:55:56Z'
+  http_status: 200
+  raw_bytes: 1576178
+  raw_sha256: ac4d75e90298b73f8f5ba399858987979af90377df0c4e4482fb4dde0544c353
+  raw_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-models.html
+  stored_file: null
+  stored_kind: raw_pin_only
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://elevenlabs.io/docs/models"
+  note: names the v3 model id the convert page omits ("eleven_v3 5,000 ~5 minutes" in the character-limit table)
+- id: elevenlabs_music_compose_ref
+  url: https://elevenlabs.io/docs/api-reference/music/compose
+  fetched_utc: '2026-09-09T10:53:01Z'
+  http_status: 200
+  raw_bytes: 1384559
+  raw_sha256: a604b5c42d6e2f8c8534d790efadffe5d824b48fbb4533b40943bc0d2a58b1e3
+  raw_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-music-compose.html
+  stored_file: eval/harness-v2/schemas/elevenlabs/music-compose.extract.txt
+  stored_kind: plain_text_extract
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://elevenlabs.io/docs/api-reference/music/compose"
+shapes:
+  elevenlabs_tts:
+    sources:
+    - elevenlabs_tts_convert_ref
+    - elevenlabs_models_ref
+    submit: POST https://api.elevenlabs.io/v1/text-to-speech/{voice_id}?output_format=mp3_44100_128
+    auth: xi-api-key header
+    model_id: eleven_v3          # from the models page; the convert page's default is eleven_multilingual_v2
+    character_limit: 5000        # models page, eleven_v3 row
+    required_fields:
+    - text
+    body_fields_sent:
+    - text
+    - model_id
+    body_fields_pinned:
+    - text
+    - model_id
+    - language_code
+    - voice_settings
+    - pronunciation_dictionary_locators
+    - seed
+    - previous_text
+    - next_text
+    - previous_request_ids
+    - next_request_ids
+    - apply_text_normalization
+    - apply_language_text_normalization
+    - use_pvc_as_ivc
+    output: raw audio bytes; output_format mp3_44100_128 (the pinned default, sent explicitly) -> audio/mpeg
+    evidence_quotes:
+    - text string Required The text that will get converted into speech
+    - model_id string Optional Defaults to eleven_multilingual_v2
+    - output_format enum Optional Defaults to mp3_44100_128
+    - The generated audio file
+    - eleven_v3 5,000 ~5 minutes
+  elevenlabs_music:
+    sources:
+    - elevenlabs_music_compose_ref
+    submit: POST https://api.elevenlabs.io/v1/music?output_format=mp3_44100_128
+    auth: xi-api-key header
+    model_id: music_v1           # the pinned default, sent explicitly so the measured model is recorded
+    required_fields: []          # the page marks every body field Optional; the adapter refuses without a prompt and a duration
+    body_fields_sent:
+    - prompt
+    - music_length_ms
+    - model_id
+    body_fields_pinned:
+    - prompt
+    - composition_plan
+    - music_length_ms
+    - model_id
+    - seed
+    - force_instrumental
+    - finetune_id
+    - respect_sections_durations
+    - store_for_inpainting
+    - sign_with_c2pa
+    limits:
+      prompt_chars_max: 4100
+      music_length_ms: 3000-600000
+    output: raw audio bytes; output_format mp3_44100_128 (what "auto" resolves to for v1 models) -> audio/mpeg; response header song-id
+    evidence_quotes:
+    - prompt string or null Optional <=4100 characters A simple text prompt to generate a song from
+    - music_length_ms integer or null Optional 3000-600000 The length of the song to generate in milliseconds
+    - model_id enum Optional Defaults to music_v1
+    - song-id string Optional Unique identifier for the generated song
+    - The generated audio file in the format specified

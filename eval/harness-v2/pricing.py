@@ -21,6 +21,16 @@ QUANTITY RULES (verbatim sources)
     per_clip                 one 30-s clip per call (Lyria)                 roster billing_unit_verbatim
     flux_edit_addon          0.03 first output MP + 0.015 per input MP      roster price_addons (flux-2-pro-edit)
 
+PLAN CREDITS (pool elevenlabs_credits)
+
+    The ElevenLabs DIRECT routes (surfaces.EXTENSION_ROUTES) are billed from the account's monthly credit pool,
+    never in cash per call. They are priced at 0 USD cash with the CREDITS recorded as `amount_native`, from the
+    pinned pricing page (eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/PIN-INDEX.yaml):
+    "Text to Speech 1 credit per character" and "Eleven Music 900 credits per minute" (whole minutes rounded up;
+    proration is not stated on the page). The roster is NOT consulted for this pool (its ElevenLabs rows are the
+    fal surface); the roster sha binding is still checked, like every other call. ledger.py caps the credits by
+    `elevenlabs_cap_credits`.
+
 INR
 
     Sarvam invoices in INR. The reservation is kept in INR (`amount_native`) and carries a
@@ -43,6 +53,14 @@ from providers import PreDispatchRefusal  # noqa: E402  (read-only import from E
 
 INR_USD_DISPLAY_RATE = Decimal("95.4211")   # COST-TABLE.rules: INR->USD display rate 95.4211
 ONE = Decimal("1")
+ZERO = Decimal("0")
+CREDIT_POOL = "elevenlabs_credits"
+# workflow -> (quantity unit, rule id, credits per quantity unit, rounding step in quantity units or None).
+# Every number here is a quote from the pinned pricing page; nothing is estimated.
+CREDIT_RULES = {
+    "tts": ("chars", "elevenlabs_tts_1_credit_per_character", Decimal(1), None),
+    "music": ("seconds", "elevenlabs_music_900_credits_per_minute_rounded_up", Decimal(900) / Decimal(60), 60),
+}
 
 
 class PricingError(RuntimeError):
@@ -295,6 +313,8 @@ class Pricing:
         """Compute the roster-implied cost of one call and list the reason it would be refused."""
         self.roster.reload()                                   # re-read the file, every time
         entry = self.registry.get(route_key)
+        if entry.billing_pool == CREDIT_POOL:
+            return self._evaluate_credit_pool(entry, case_row, rendered_chars)
         rec = self.roster.record(entry.roster_key, entry.roster_variant)
         rp = rec.get("regular_price") or {}
         currency = rp.get("currency") or entry.currency
@@ -366,6 +386,51 @@ class Pricing:
             amount_usd_equiv=(_round6(amount_usd) if amount_usd is not None else None),
             fx_rate=fx, pin_ref=rec.get("pin_ref"),
             ok=not reasons, refusal_reason=("; ".join(reasons) if reasons else None))
+
+    def _evaluate_credit_pool(self, entry, case_row: dict, rendered_chars: int | None) -> PriceCheck:
+        """Plan-credit pool: 0 USD cash; amount_native = the vendor's credits from the pinned rates; quantity recorded."""
+        params = case_row.get("params") or {}
+        reasons: list[str] = []
+        if self.expected_roster_sha256 and self.roster.sha256 != self.expected_roster_sha256:
+            reasons.append(f"roster_sha256_drift: file sha256 {self.roster.sha256[:12]}... != expected {self.expected_roster_sha256[:12]}...")
+        rule = CREDIT_RULES.get(entry.workflow)
+        q = credits = None
+        if rule is None:
+            reasons.append(f"quantity_rule_unknown: no plan-credit rule for workflow {entry.workflow!r} on {entry.route_key}")
+        else:
+            unit, rule_id, per_unit, step = rule
+            if unit == "chars":
+                qty = Decimal(int(rendered_chars)) if rendered_chars is not None else _dec(params.get("chars"))
+            else:
+                d = params.get("duration_s")
+                qty = Decimal(str(d)) if isinstance(d, (int, float)) and not isinstance(d, bool) else (
+                    Decimal(d.strip()) if isinstance(d, str) and d.strip().isdigit() else None)
+            if qty is None:
+                reasons.append(f"quantity_rule_unknown: the row carries no {unit} for {entry.route_key} ({rule_id})")
+            else:
+                q = (qty, unit, rule_id)
+                billed = _ceil_to(qty, step) if step else qty
+                credits = (per_unit * billed).quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+        if entry.price_pin_ref is None:
+            reasons.append(f"price_unpinned: no pinned pricing page for {entry.route_key}")
+        if case_row.get("price_status") not in (None, "pinned"):
+            reasons.append(f"row_price_status_not_pinned: case row says {case_row.get('price_status')!r}")
+        if case_row.get("route_status") not in (None, "pinned"):
+            reasons.append(f"row_route_status_not_pinned: case row says {case_row.get('route_status')!r}")
+        row_unit_price = _dec(case_row.get("unit_price"))
+        if row_unit_price is not None and row_unit_price != ZERO:
+            reasons.append(f"price_mismatch: case row unit_price {row_unit_price} != 0 USD cash (pool {CREDIT_POOL} bills plan credits)")
+        if q is not None:
+            row_qty = _dec(case_row.get("quantity"))
+            if row_qty is not None and row_qty != q[0]:
+                reasons.append(f"quantity_rule_mismatch: case row quantity {row_qty} {case_row.get('quantity_unit')} != rule {q[0]} {q[1]} ({q[2]})")
+        return PriceCheck(
+            route_key=entry.route_key, roster_key=entry.roster_key, roster_variant=entry.roster_variant,
+            route_status="pinned", price_status=("pinned" if entry.price_pin_ref else "unpinned"),
+            unit_price=ZERO, currency="USD", unit="plan_credits",
+            quantity=(q[0] if q else None), quantity_unit=(q[1] if q else None), quantity_rule=(q[2] if q else None),
+            amount_native=credits, amount_usd_equiv=(ZERO if credits is not None else None), fx_rate=ONE,
+            pin_ref=entry.price_pin_ref, ok=not reasons, refusal_reason=("; ".join(reasons) if reasons else None))
 
     def check(self, route_key: str, case_row: dict, rendered_chars: int | None = None) -> PriceCheck:
         """The dispatch-time gate: refuse (nothing reserved, nothing sent) unless everything pins."""

@@ -1,0 +1,109 @@
+# PIN-INDEX — ElevenLabs DIRECT surface (route keys elevenlabs-v3-direct / elevenlabs-music-direct), fetched 2026-09-09 (UTC).
+# Same conventions as ../PIN-INDEX.yaml: the exact file fetched, its size, its SHA-256 fingerprint, the command used and an exact
+# substring (evidence_quote) that must be present in the bytes. Free, unauthenticated fetches of public documentation pages;
+# no API call, no key. The paid API (api.elevenlabs.io) was NOT contacted.
+#
+# What the pages say (plain English):
+#   * ElevenLabs does not bill the direct API in cash per call. Every plan carries a monthly pool of CREDITS and every product
+#     draws from that one pool. The pricing page names the rates: "Text to Speech 1 credit per character" and
+#     "Eleven Music 900 credits per minute" (with the caveat that the exact TTS cost "depend[s] on the model used").
+#   * The harness therefore models the direct surface as a NEW ledger pool `elevenlabs_credits`: 0 USD cash per call, the
+#     credit quantity recorded natively (characters for TTS x 1 credit; music at 900 credits per minute, minutes rounded UP —
+#     the page does not say whether music is prorated, so the reservation is whole minutes, conservative), capped by
+#     `elevenlabs_cap_credits` in the authorisation file (missing = 0 = forbidden).
+#   * The text-to-speech reference does NOT name the v3 model id (its example uses eleven_multilingual_v2, the documented
+#     default of `model_id`). The models page does: `eleven_v3`, "5,000" character limit. That page was pinned as a fourth
+#     file so the id the adapter sends is a pinned value, not a guess.
+#   * The music reference URL /docs/api-reference/music/compose answered 200; the endpoint it documents is POST /v1/music
+#     (not /v1/music/compose). Body: prompt (<=4100 characters), music_length_ms (3000-600000), model_id (default music_v1).
+#   * Plan sizes on the pricing page (monthly credits): Free $0 (10,000); Starter $6 (30,000); Creator $22 (121,000);
+#     Pro $99 (600,000); Scale $299 (1,800,000); Business $990 (6,000,000). Not used by the harness — recorded for context.
+pins:
+- route_key: elevenlabs-v3-direct
+  pin_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-tts-convert.html
+  pin_kind: schema_page
+  url: https://elevenlabs.io/docs/api-reference/text-to-speech/convert
+  fetched_utc: '2026-09-09T10:53:01Z'
+  http_status: '200'
+  bytes: 1449040
+  sha256: 8fbde8cbd5aad3188c6c6cdd396a14c0667e2f29c4a3b87fa75a004e98e27023
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://elevenlabs.io/docs/api-reference/text-to-speech/convert" -o elevenlabs-tts-convert.html
+  evidence_quote: The text that will get converted into speech
+  additional_evidence_quotes:
+  - text-to-speech/{voice_id}
+  - Identifier of the model that will be used
+  - eleven_multilingual_v2
+  - mp3_44100_128
+  - xi-api-key
+  - The generated audio file
+  note: 'POST /v1/text-to-speech/{voice_id}; header xi-api-key; body text (Required), model_id (Optional, default eleven_multilingual_v2),
+    language_code / voice_settings / seed / previous_text / next_text / ... (Optional); query output_format (default mp3_44100_128);
+    response "The generated audio file" (raw bytes, not JSON). The page does not name eleven_v3 - see the models pin.'
+- route_key: elevenlabs-v3-direct
+  pin_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-models.html
+  pin_kind: schema_page
+  url: https://elevenlabs.io/docs/models
+  fetched_utc: '2026-09-09T10:55:56Z'
+  http_status: '200'
+  bytes: 1576178
+  sha256: ac4d75e90298b73f8f5ba399858987979af90377df0c4e4482fb4dde0544c353
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://elevenlabs.io/docs/models" -o elevenlabs-models.html
+  evidence_quote: eleven_v3
+  additional_evidence_quotes:
+  - eleven_multilingual_v2
+  - music_v1
+  note: 'Fetched in addition to the three pages the task named, because the convert reference does not name the v3 id. Page text:
+    "Model ID Character limit ... eleven_v3 5,000 ~5 minutes"; "Use eleven_v3 or eleven_multilingual_v2 Best for high-fidelity audio
+    output"; "Eleven v3 ... 70+ languages supported 5,000 character limit".'
+- route_key: elevenlabs-music-direct
+  pin_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-music-compose.html
+  pin_kind: schema_page
+  url: https://elevenlabs.io/docs/api-reference/music/compose
+  fetched_utc: '2026-09-09T10:53:01Z'
+  http_status: '200'
+  bytes: 1384559
+  sha256: a604b5c42d6e2f8c8534d790efadffe5d824b48fbb4533b40943bc0d2a58b1e3
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://elevenlabs.io/docs/api-reference/music/compose" -o elevenlabs-music-compose.html
+  evidence_quote: A simple text prompt to generate a song from
+  additional_evidence_quotes:
+  - /v1/music
+  - The length of the song to generate in milliseconds
+  - 3000-600000
+  - music_v1
+  - song-id
+  - Unique identifier for the generated song
+  - The generated audio file
+  note: 'The URL the task named answered 200 (no 404). Endpoint documented: POST /v1/music ("Compose music"); header xi-api-key; body
+    prompt (Optional, <=4100 characters), music_length_ms (Optional, 3000-600000), model_id (enum, default music_v1; music_v2 exists),
+    composition_plan / force_instrumental / seed / ... (Optional); query output_format (default auto = mp3_44100_128 for v1 models);
+    response header song-id; response "The generated audio file in the format specified".'
+- route_key: elevenlabs-v3-direct
+  pin_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-pricing.html
+  pin_kind: price
+  url: https://elevenlabs.io/pricing
+  fetched_utc: '2026-09-09T10:53:02Z'
+  http_status: '200'
+  bytes: 705391
+  sha256: 65e5cdcd2fc60a03f3c0afc2dfa6f299d54b8cdbd510fa8f47928617080c8784
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://elevenlabs.io/pricing" -o elevenlabs-pricing.html
+  evidence_quote: Text to Speech 1 credit per character
+  additional_evidence_quotes:
+  - Each text character you generate consumes credits
+  - 10,000 credits
+  - 600,000 credits
+  note: 'Credits, not cash: "All products draw from one shared monthly credit pool". The TTS caveat on the same page: "Each text
+    character you generate consumes credits, with the exact cost depending on the model used" - the flat 1 credit/character rate
+    is what the page states; a model-specific rate for eleven_v3 is NOT stated on the page and is not assumed.'
+- route_key: elevenlabs-music-direct
+  pin_file: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-pricing.html
+  pin_kind: price
+  url: https://elevenlabs.io/pricing
+  fetched_utc: '2026-09-09T10:53:02Z'
+  http_status: '200'
+  bytes: 705391
+  sha256: 65e5cdcd2fc60a03f3c0afc2dfa6f299d54b8cdbd510fa8f47928617080c8784
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://elevenlabs.io/pricing" -o elevenlabs-pricing.html
+  evidence_quote: Eleven Music 900 credits per minute
+  additional_evidence_quotes: null
+  note: 'Whether a partial minute is prorated is not stated; the harness reserves whole minutes rounded up (the fal surface of the
+    same model, ../elevenlabs-music, says "rounded up to the closest minute").'

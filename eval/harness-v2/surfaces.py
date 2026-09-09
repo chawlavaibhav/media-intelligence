@@ -1,6 +1,8 @@
 """SurfaceRegistry: every Stage A route key mapped to the surface it would be called on.
 
-One entry per key of `TEST-CASES.yaml -> route_catalogue` (47 keys; set equality is a test).
+One entry per key of `TEST-CASES.yaml -> route_catalogue` (47 keys; set equality is a test), plus the
+EXTENSION_ROUTES: surfaces added after the freeze that have no catalogue row (today: the two ElevenLabs
+DIRECT routes on the user's own account, billed in plan credits, pool `elevenlabs_credits`).
 An entry says WHICH adapter family would build the request, WHERE it would go, which pinned
 request-body schema it is built from, which price pin and billing pool it is charged to, and
 which credential NAME would be read at dispatch. It never holds a key value.
@@ -29,6 +31,8 @@ VERTEX_GLOBAL = f"https://aiplatform.googleapis.com/v1/projects/{GCP_PROJECT}/lo
 VERTEX_INTERACTIONS = f"https://aiplatform.googleapis.com/v1beta1/projects/{GCP_PROJECT}/locations/global/interactions"
 FAL_QUEUE = "https://queue.fal.run"
 SARVAM_TTS = "https://api.sarvam.ai/text-to-speech"
+ELEVENLABS_TTS = "https://api.elevenlabs.io/v1/text-to-speech"      # + /{voice_id}?output_format=mp3_44100_128 (adapter)
+ELEVENLABS_MUSIC = "https://api.elevenlabs.io/v1/music"             # the docs URL says /music/compose; the endpoint is /v1/music
 
 AZURE_SUBSCRIPTION = "b832f4a1-79be-4fb2-ae93-6ba6efd209d2"       # getaight; never Wherehouse
 AZURE_PRECONDITION = f"subscription == {AZURE_SUBSCRIPTION}"
@@ -37,6 +41,7 @@ AZURE_PRECONDITION = f"subscription == {AZURE_SUBSCRIPTION}"
 # else the aight-litellm service-account file. Which one was used is recorded on every attempt.
 FAL_KEY_NAME = "FAL_KEY"
 SARVAM_KEY_NAME = "SARVAM_API_KEY"
+ELEVENLABS_KEY_NAME = "ELEVENLABS_API_KEY"
 MI_KEYS_FILE = "~/.mi-keys"
 GCP_CREDENTIAL_CANDIDATES = ("~/.mi-battery-keys/gcp-mi-battery-sa.json",
                              "~/.aight-litellm-keys/vertex-sa.json")
@@ -44,18 +49,22 @@ GCP_KEY_NAME = "gcloud auth print-access-token (service-account key file, MD-C3)
 
 VERTEX_PIN = "eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html"
 PINS = "eval/empirical-planning/price-pins-2026-09"
+ELEVENLABS_PRICING_PIN = f"{PINS}/elevenlabs-direct/elevenlabs-pricing.html"
+# Routes outside the freeze catalogue (no TEST-CASES / COST-TABLE row): registered so the adapter, ledger pool and cap
+# are tested code, but never planned by run_live from the catalogue and never counted in the freeze reconciliation.
+EXTENSION_ROUTES = ("elevenlabs-v3-direct", "elevenlabs-music-direct")
 
 
 @dataclass(frozen=True)
 class SurfaceEntry:
     route_key: str
-    adapter: str                      # fal_queue | vertex_veo | vertex_gemini_image | vertex_omni | vertex_lyria | sarvam_tts | none
-    surface: str                      # fal | vertex | sarvam_direct | bedrock | azure_foundry | cloud_tts
+    adapter: str                      # fal_queue | vertex_veo | vertex_gemini_image | vertex_omni | vertex_lyria | sarvam_tts | elevenlabs_direct | none
+    surface: str                      # fal | vertex | sarvam_direct | elevenlabs_direct | bedrock | azure_foundry | cloud_tts
     surface_model_id: str
     endpoint: str
     params_schema: str                # pinned schema ref (path#Component) or a reason
     price_pin_ref: str | None
-    billing_pool: str                 # cash | credits | sarvam_credits
+    billing_pool: str                 # cash | credits | sarvam_credits | elevenlabs_credits (plan credits, 0 USD cash)
     currency: str                     # USD | INR
     key_name: str
     credential_file_name: str
@@ -63,7 +72,7 @@ class SurfaceEntry:
     roster_key: str
     roster_variant: str | None
     workflow: str                     # t2i | edit | t2v | i2v | ref2v | extend | tts | lipsync | music
-    lane: str                         # V1 lane vocabulary: image | general_video | native_av | lipsync | tts
+    lane: str                         # V1 lane vocabulary: image | general_video | native_av | lipsync | tts | music
     media_kind: str                   # image | video | audio
     dispatch_preconditions: tuple = ()
     api_calls_per_trial: int = 1
@@ -297,11 +306,30 @@ _ENTRIES: list[SurfaceEntry] = [
          "elevenlabs-music", None, "music", "tts", "audio",
          f"{PINS}/elevenlabs-music/fal-api-models-elevenlabs-music.json",
          notes="bills per output minute rounded up (30 s -> 1 minute)"),
+    # ---------------------------------------------------------------- EXTENSION_ROUTES: ElevenLabs DIRECT (plan credits)
+    SurfaceEntry(route_key="elevenlabs-v3-direct", adapter="elevenlabs_direct", surface="elevenlabs_direct",
+                 surface_model_id="eleven_v3", endpoint=ELEVENLABS_TTS,
+                 params_schema="eval/harness-v2/schemas/elevenlabs/SCHEMA-INDEX.yaml#elevenlabs_tts",
+                 price_pin_ref=ELEVENLABS_PRICING_PIN, billing_pool="elevenlabs_credits", currency="USD",
+                 key_name=ELEVENLABS_KEY_NAME, credential_file_name=MI_KEYS_FILE, shape_status="verified",
+                 roster_key="elevenlabs-v3", roster_variant=None, workflow="tts", lane="tts", media_kind="audio",
+                 notes="direct API on the user's account: 0 USD cash, plan credits recorded natively (pinned pricing page: "
+                       "'Text to Speech 1 credit per character'); roster_key names the fal row of the same model, which pricing.py "
+                       "does NOT use for this pool; capped by elevenlabs_cap_credits"),
+    SurfaceEntry(route_key="elevenlabs-music-direct", adapter="elevenlabs_direct", surface="elevenlabs_direct",
+                 surface_model_id="music_v1", endpoint=ELEVENLABS_MUSIC,
+                 params_schema="eval/harness-v2/schemas/elevenlabs/SCHEMA-INDEX.yaml#elevenlabs_music",
+                 price_pin_ref=ELEVENLABS_PRICING_PIN, billing_pool="elevenlabs_credits", currency="USD",
+                 key_name=ELEVENLABS_KEY_NAME, credential_file_name=MI_KEYS_FILE, shape_status="verified",
+                 roster_key="elevenlabs-music", roster_variant=None, workflow="music", lane="music", media_kind="audio",
+                 notes="direct API on the user's account: 0 USD cash, plan credits recorded natively (pinned pricing page: "
+                       "'Eleven Music 900 credits per minute', whole minutes rounded up); roster_key names the fal row of the same "
+                       "model, which pricing.py does NOT use for this pool; capped by elevenlabs_cap_credits"),
 ]
 
 
 class SurfaceRegistry:
-    """The 47 route keys and their surfaces. Set equality with the route catalogue is tested."""
+    """The 47 route keys and their surfaces, plus EXTENSION_ROUTES. Set equality with the route catalogue is tested."""
 
     def __init__(self, entries: Iterable[SurfaceEntry] = _ENTRIES):
         self._entries: dict[str, SurfaceEntry] = {}
@@ -312,6 +340,10 @@ class SurfaceRegistry:
 
     def keys(self) -> set[str]:
         return set(self._entries)
+
+    def catalogue_keys(self) -> set[str]:
+        """The freeze catalogue's keys: every registry key that is not an extension route."""
+        return set(self._entries) - set(EXTENSION_ROUTES)
 
     def get(self, route_key: str) -> SurfaceEntry:
         try:

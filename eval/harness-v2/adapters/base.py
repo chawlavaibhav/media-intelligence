@@ -45,7 +45,7 @@ from transports import nothing_left_the_machine   # DNS-class failures: the only
 
 # Looked up at call time so a test can point it at a throw-away file. Never the real file in tests.
 DEFAULT_KEY_FILE = Path("~/.mi-keys").expanduser()
-KEY_NAMES_ALLOWED = ("FAL_KEY", "SARVAM_API_KEY")
+KEY_NAMES_ALLOWED = ("FAL_KEY", "SARVAM_API_KEY", "ELEVENLABS_API_KEY")
 OUTPUT_COUNT_PARAMS = ("num_images", "num_videos", "num_samples", "num_outputs", "sampleCount",
                        "sample_count", "candidateCount", "n")
 SEED_PARAMS = ("seed",)
@@ -446,12 +446,16 @@ class RouteAdapter:
         return self.entry.credential_file_name
 
     # -- lifecycle helpers ---------------------------------------------------------------------
-    def _submit(self, url: str, headers: dict, payload: bytes, attempt: dict, counts: dict):
-        """Exactly one submit per call. Returns (status, reply) or an ambiguous Outcome."""
+    def _submit(self, url: str, headers: dict, payload: bytes, attempt: dict, counts: dict, raw: bool = False):
+        """Exactly one submit per call. Returns (status, reply) or an ambiguous Outcome.
+        `raw=True` uses the transport's post_bytes verb (the provider answers with audio bytes, not JSON) and
+        returns (status, body_bytes, content_type, response_headers); it is still exactly one submit."""
         self.submits += 1
         self._counts["submits"] = self._counts.get("submits", 0) + 1
         counts["api_calls"] = counts.get("api_calls", 0) + 1
         try:
+            if raw:
+                return self.transport.post_bytes(url, headers, payload)
             return self.transport.post_json(url, headers, payload)
         except Exception as exc:                     # noqa: BLE001 - every post-send failure is ambiguous
             if nothing_left_the_machine(exc):

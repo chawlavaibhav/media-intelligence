@@ -24,6 +24,10 @@ CAPS
     `record` are overridden only to REQUIRE billing_pool / currency / amount_native / amount_usd_equiv and
     to apply the INR sub-cap; the append logic is the inherited one (MD-C14).
 
+    The `elevenlabs_credits` pool (ElevenLabs DIRECT, plan credits) is the symmetrical case: its cash amount is
+    always 0 USD and its NATIVE amount is credits, capped by `elevenlabs_cap_credits`. That field is OPTIONAL in
+    the authorisation file (the signed 13-field record predates it): missing = 0 = every credit call refused.
+
 NO LIVE LEDGER FROM THE COMMITTED STATE
 
     `authorization.local.yaml` is gitignored and does not exist; the committed `authorization.example.yaml`
@@ -45,14 +49,16 @@ from budget_guard import BudgetExceeded, NotAuthorised, _require_decimal  # noqa
 HERE = hv2_paths.HERE
 TRANCHE_ID = "EVAL-040-TRANCHE-1"
 TRANCHE_NAMES = ("1a", "1b")
-POOLS = ("cash", "credits", "sarvam_credits")
+POOLS = ("cash", "credits", "sarvam_credits", "elevenlabs_credits")
 INR_POOL = "sarvam_credits"
+CREDIT_POOL = "elevenlabs_credits"                 # plan credits: cash 0 USD, native = credits, capped by elevenlabs_cap_credits
 CURRENCIES = ("USD", "INR")
 RETRIES_AUTHORISED = 0
 PRICE_VERIFICATION_REQUIRED = "required_before_every_paid_call"
 AUTH_FIELDS = ("tranche_id", "authorised", "item_basis_commit", "price_basis_roster_sha256", "max_consumed_usd_equivalent",
                "cap_1a_usd", "cap_1b_usd", "sarvam_cap_inr", "retries_authorised", "execution_time_route_price_verification",
                "images_before_video", "approved_by", "approved_at")
+OPTIONAL_AUTH_FIELDS = ("elevenlabs_cap_credits",)   # absent from older signed records: absent means 0 (forbidden)
 AUTH_EXAMPLE_PATH = HERE / "authorization.example.yaml"
 AUTH_LOCAL_PATH = HERE / "authorization.local.yaml"
 DEFAULT_RUN_ROOT = hv2_paths.RUN_ROOT
@@ -79,6 +85,7 @@ class BatteryAuthorisation:
     source_path: str
     sha256: str | None
     refusals: tuple = field(default_factory=tuple)
+    elevenlabs_cap_credits: Decimal = Decimal("0")
 
     @property
     def permitted(self) -> bool:
@@ -114,7 +121,7 @@ def load_battery_authorisation(path: Path | str = AUTH_LOCAL_PATH, roster_path: 
     missing = [f for f in AUTH_FIELDS if f not in block]
     if missing:
         refusals.append(f"missing fields {missing}")
-    unknown = [f for f in block if f not in AUTH_FIELDS and f != "media_role"]
+    unknown = [f for f in block if f not in AUTH_FIELDS and f not in OPTIONAL_AUTH_FIELDS and f != "media_role"]
     if unknown:
         refusals.append(f"unknown fields {unknown}; the loader reads exactly the signed record's field names")
     g = block.get
@@ -152,6 +159,10 @@ def load_battery_authorisation(path: Path | str = AUTH_LOCAL_PATH, roster_path: 
     if inr is None or inr < 0:
         refusals.append(f"sarvam_cap_inr {g('sarvam_cap_inr')!r} is not a non-negative INR amount")
         inr = Decimal("0")
+    credits = _dec(g("elevenlabs_cap_credits")) if "elevenlabs_cap_credits" in block else Decimal("0")
+    if credits is None or credits < 0 or credits != credits.to_integral_value():
+        refusals.append(f"elevenlabs_cap_credits {g('elevenlabs_cap_credits')!r} is not a non-negative whole number of credits")
+        credits = Decimal("0")
     if g("retries_authorised") != RETRIES_AUTHORISED:
         refusals.append(f"retries_authorised is {g('retries_authorised')!r}; exactly 0 is authorised")
     if g("execution_time_route_price_verification") != PRICE_VERIFICATION_REQUIRED:
@@ -169,7 +180,8 @@ def load_battery_authorisation(path: Path | str = AUTH_LOCAL_PATH, roster_path: 
         execution_time_route_price_verification=g("execution_time_route_price_verification"),
         images_before_video=g("images_before_video") if isinstance(g("images_before_video"), bool) else None,
         approved_by=g("approved_by"), approved_at=str(g("approved_at")) if g("approved_at") else None,
-        source_path=str(path), sha256=hashlib.sha256(raw).hexdigest(), refusals=tuple(refusals))
+        source_path=str(path), sha256=hashlib.sha256(raw).hexdigest(), refusals=tuple(refusals),
+        elevenlabs_cap_credits=credits)
 
 
 def _require_permitted(auth: BatteryAuthorisation, what: str) -> None:
@@ -199,8 +211,10 @@ class BatteryRun(SL.TrancheRun):
             "total_ceiling_usd": str(authorisation.max_consumed_usd_equivalent),
             "tranche_caps_usd": {k: str(v) for k, v in authorisation.caps_usd.items()},
             "sarvam_cap_inr": str(authorisation.sarvam_cap_inr),
+            "elevenlabs_cap_credits": str(authorisation.elevenlabs_cap_credits),
             "billing_pools": list(POOLS), "retries_authorised": RETRIES_AUTHORISED,
-            "cap_basis": "amount_usd_equiv across every pool; INR at the COST-TABLE display rate 95.4211; sarvam_cap_inr over native INR",
+            "cap_basis": "amount_usd_equiv across every pool; INR at the COST-TABLE display rate 95.4211; sarvam_cap_inr over native INR; "
+                         "elevenlabs_cap_credits over native plan credits (cash 0)",
             "note": "these numbers are a RECORD of the authorisation at creation; every open re-reads the authorisation file and uses the file's numbers",
         }
         run = cls(run_dir, record, authorisation)
@@ -246,6 +260,10 @@ class BatteryRun(SL.TrancheRun):
     @property
     def sarvam_cap_inr(self) -> Decimal:
         return self.authorisation.sarvam_cap_inr
+
+    @property
+    def elevenlabs_cap_credits(self) -> Decimal:
+        return self.authorisation.elevenlabs_cap_credits
 
 
 # ------------------------------------------------------------------------------ budget
@@ -293,6 +311,16 @@ class BatteryBudget(SL.TrancheBudget):
         if after > cap:
             raise BudgetExceeded(f"sarvam_cap_inr: INR {self.inr_native_live()} + {amount_native} would reach {after}, above the authorised INR {cap}.")
 
+    def credits_native_live(self) -> Decimal:
+        return self.totals_by_pool().get(CREDIT_POOL, {}).get("native", Decimal("0"))
+
+    def _check_credits(self, amount_native: Decimal) -> None:
+        cap = self.run.elevenlabs_cap_credits
+        after = self.credits_native_live() + amount_native
+        if after > cap:
+            raise BudgetExceeded(f"elevenlabs_cap_credits: credits {self.credits_native_live()} + {amount_native} would reach {after}, "
+                                 f"above the authorised {cap} (0 = the record authorises no ElevenLabs direct call).")
+
     def tranche(self, name: str) -> "PoolStageBudget":
         if name not in self.run.tranche_caps:
             raise ValueError(f"unknown tranche {name!r}; EVAL-040 tranches are {sorted(self.run.tranche_caps)}")
@@ -327,6 +355,8 @@ class PoolStageBudget(SL.StageBudget):
             raise ValueError("every ledger row needs amount_native (the vendor's own currency amount)")
         if (pool == INR_POOL) != (context.get("currency") == "INR"):
             raise ValueError(f"pool {pool} and currency {context.get('currency')} disagree")
+        if pool == CREDIT_POOL and amount != 0:
+            raise ValueError(f"pool {CREDIT_POOL} bills plan credits: the cash amount must be 0, got {amount}")
 
     def _inr_guard(self, context: dict, settling: bool = False) -> None:
         if context.get("billing_pool") == INR_POOL:
@@ -336,10 +366,19 @@ class PoolStageBudget(SL.StageBudget):
             if native > 0:
                 self.budget._check_inr(native)
 
+    def _credits_guard(self, context: dict, settling: bool = False) -> None:
+        if context.get("billing_pool") == CREDIT_POOL:
+            native = Decimal(str(context["amount_native"]))
+            if settling and self._open_reservation is not None:
+                native -= Decimal(str(self._open_reservation.get("amount_native", "0")))
+            if native > 0:
+                self.budget._check_credits(native)
+
     def reserve(self, estimated_usd: Decimal, **context) -> str:
         _require_decimal(estimated_usd, "estimated_usd")
         self._require_pool_fields(estimated_usd, context)
         self._inr_guard(context)
+        self._credits_guard(context)
         ctx = {k: (str(v) if isinstance(v, Decimal) else v) for k, v in context.items()}
         return super().reserve(estimated_usd, **ctx)
 
@@ -347,6 +386,7 @@ class PoolStageBudget(SL.StageBudget):
         _require_decimal(actual_usd, "actual_usd")
         self._require_pool_fields(actual_usd, context)
         self._inr_guard(context, settling=True)
+        self._credits_guard(context, settling=True)
         ctx = {k: (str(v) if isinstance(v, Decimal) else v) for k, v in context.items()}
         return super().record(actual_usd, **ctx)
 
@@ -367,5 +407,6 @@ def authorisation_status(path: Path | str = AUTH_LOCAL_PATH) -> dict:
     return {"path": auth.source_path, "file_exists": Path(auth.source_path).exists(), "authorised": auth.authorised,
             "tranche_id": auth.tranche_id, "max_consumed_usd_equivalent": str(auth.max_consumed_usd_equivalent),
             "caps_usd": {k: str(v) for k, v in auth.caps_usd.items()}, "sarvam_cap_inr": str(auth.sarvam_cap_inr),
+            "elevenlabs_cap_credits": str(auth.elevenlabs_cap_credits),
             "roster_sha256_bound": auth.price_basis_roster_sha256 == auth.roster_sha256_on_disk,
             "retries_authorised": auth.retries_authorised, "refusals": list(auth.refusals), "paid_execution_permitted": auth.permitted}
