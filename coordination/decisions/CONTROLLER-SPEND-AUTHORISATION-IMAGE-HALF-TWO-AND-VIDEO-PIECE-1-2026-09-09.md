@@ -21,8 +21,9 @@ Cases `IMG-EDIT-01`, `IMG-EDIT-02`, `IMG-EXT-01`, `IMG-COMP-01`, `IMG-REF-01`, `
 package (item basis commit `0596aa2`), on the four edit/reference routes (FLUX.2 Pro edit, Nano Banana Pro edit,
 Seedream 5 Pro edit, GPT Image 2 edit — the last priced on fal's token meter and therefore run only if its price
 pins; otherwise excluded), two repeats: ≤ 48 calls, nominal ≈ USD 3.5. Plus **constructed stand-in inputs**
-generated once on the cheapest Google route (Nano Banana 2, credits) from prompts written from each case's
-`reference_assets` specification — the showroom sofa with a staff member, the masala pack raw shot, the
+generated once from `eval/experiments/EVAL-040/fixtures/STAND-IN-SPEC.yaml` (13 Nano Banana 2 generations, 4 Nano Banana
+Pro edit derivations for extra views of the same tin and the same host, 3 exact labels set by code; ≈ USD 1.41) written from
+each case's `reference_assets` specification — the showroom sofa with a staff member, the masala pack raw shot, the
 mustard-oil tin (three views) with two same-category decoy tins, the recurring host (a synthetic person) with two
 decoy portraits, the backwaters banner, the model portrait and the lipstick packshot: ≤ 16 calls, ≈ USD 1.1.
 Stand-ins are sealed as fixtures with their prompts and are labelled `constructed_synthetic` on every row that
@@ -31,7 +32,8 @@ uses them; they are never presented as customer photos.
 ## 3. Scope B — Video piece 1: text into motion, `VID-TOPO3-01` (cap ₹900 = USD 9.43)
 
 The three arms of the frozen case, at 9:16, 6 s, 720p, two repeats: arm A — the Diwali still WITH cheap-generated
-text (two 9:16 draws of IMG-TEXT-01 on Nano Banana 2) animated by MiniMax H3 Max, Wan 3.0 Prime and Veo 3.1 Lite
+text (two 9:16 plate draws per the frozen package rows of VID-TOPO3-01, on the cheapest pinned cheap text route
+named there) animated by MiniMax H3 Max, Wan 3.0 Prime and Veo 3.1 Lite
 (Veo Lite image input runs only if its price pins); arm B — Veo 3.1 (full) and Kling v3 Pro generating the text
 natively from the text prompt; arm C — a 9:16 textless plate (FLUX.2 Pro) animated by the cheapest pinned
 image-to-video route, then the exact strings composited by code on every frame (static overlay). ≈ 4 image calls
