@@ -244,11 +244,18 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-**Image Round 1 is complete and judged (9 Sep 2026).** Next gates, each needing its own Controller act: (1) freeze
-`eval/harness-v2/instruments/PASS-CRITERIA-v0.yaml` thresholds so the first Registry rows can be written from the
-round's records; (2) image half two (edit / extend / compose / reference — needs Controller photos or approved
-stand-ins); (3) the first video round, text-into-motion case first, with its own spend record. Round two is sized
-from round-one survivors, not pre-authorised. The Canon items below remain a queue, not an authorisation.
+**Image Round 1 judged; thresholds frozen; Registry v1 written (167 rows); video piece 1 judged; image half two
+run and awaiting verdicts (9 Sep 2026).** Video piece 1 (VID-TOPO3-01, text into motion, ₹950 cap, USD 10.22 spent):
+blind verdicts — arm C (textless plate → cheap i2v → exact strings by code on every frame) **2/2 accept**; arm A
+(cheapest still model's plate → H3 Max / Wan) 0/4, every reject the plate's own misspelling carried faithfully;
+arm B (Veo 3.1 full, Kling v3 Pro writing Hindi natively) 0/4, fabricated Devanagari. Routing consequence recorded in
+`eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml`. Image half two (edit / extend / compose / reference on
+constructed stand-ins, 36 trials, USD 3.30 of ₹700): blind packet at `runs/half2/judging/` (INDEX.html gallery,
+reference photos, decoy line-ups); Controller verdicts pending. Next gates, each needing its own Controller act:
+(1) half-two verdicts → reveal → Registry rows + evidence-map cells for the four capabilities; (2) whether to add
+Nano Banana plates to arm A (~USD 1.6, small cap addendum); (3) the next video piece (t2v core), with its own spend
+record. Round two is sized from survivors, not pre-authorised. The Canon items below remain a queue, not an
+authorisation.
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's
 choice among `canon/CANON-SHAPE-v1.md` §7's remaining items — injection v1 (cached prefix, no
