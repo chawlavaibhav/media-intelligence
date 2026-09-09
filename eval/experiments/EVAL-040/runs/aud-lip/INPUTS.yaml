@@ -1,0 +1,34 @@
+inputs_file: EVAL-041 INPUTS
+note: 'AUD-LIP-01..03 (lipsync, 2026-09-09): one plate held constant (the accepted VID-I2V-02 clip) and the repeat-1 ElevenLabs direct drive per script. runs_root defaults to eval/experiments/EVAL-040/runs.'
+data_uri_source: as topo3-video/INPUTS.yaml
+inputs:
+- case_id: AUD-LIP-01
+  arm: '*'
+  role: plate_clip
+  ref: vid-i2v:VID-I2V-02__minimax-h3-max-i2v__core__r1
+  note: the Controller-accepted VID-I2V-02 clip, cheapest accepted route, no expression note
+- case_id: AUD-LIP-01
+  arm: '*'
+  role: drive_audio
+  ref: aud-tts-eleven:AUD-TTS-01__elevenlabs-v3-direct__native__r1
+  note: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule)
+- case_id: AUD-LIP-02
+  arm: '*'
+  role: plate_clip
+  ref: vid-i2v:VID-I2V-02__minimax-h3-max-i2v__core__r1
+  note: the Controller-accepted VID-I2V-02 clip, cheapest accepted route, no expression note
+- case_id: AUD-LIP-02
+  arm: '*'
+  role: drive_audio
+  ref: aud-tts-eleven:AUD-TTS-02__elevenlabs-v3-direct__native__r1
+  note: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule)
+- case_id: AUD-LIP-03
+  arm: '*'
+  role: plate_clip
+  ref: vid-i2v:VID-I2V-02__minimax-h3-max-i2v__core__r1
+  note: the Controller-accepted VID-I2V-02 clip, cheapest accepted route, no expression note
+- case_id: AUD-LIP-03
+  arm: '*'
+  role: drive_audio
+  ref: aud-tts-eleven:AUD-TTS-03__elevenlabs-v3-direct__native__r1
+  note: drive = repeat 1 of ElevenLabs v3 for this script (frozen rule)
