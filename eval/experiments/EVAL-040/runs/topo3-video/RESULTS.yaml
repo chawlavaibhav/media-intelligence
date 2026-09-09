@@ -1,7 +1,224 @@
 run_id: topo3-video
 case: VID-TOPO3-01 (text into motion, Hindi Diwali sweets promo, 9:16, 6 s)
 revealed_utc: '2026-09-09'
-source: judging-video/VERDICTS.yaml (Controller, blind) + MAPPING.json
+judge: 'Controller (blind: ten clips V01-V10, names hid route and arm; MAPPING.json sealed before judging)'
+commitment_verified: false
+commitment_note: judging-video/MAPPING.json was written alongside the blind copies (no off-repo key for this hand-built video packet); the Controller judged from
+  the clips alone
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: 'E1: refusal/hard error >= ceil(0.375 n); E2: accepts <= floor(0.25 n); n = planned trials per (route, question, arm); E5: no artifact = reject'
+trials:
+- trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r2
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V01
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: same 'कली' misspelling as the plate (Controller); rest okay - upstream plate defect, motion/text stability fine
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r1
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: veo-3.1-full
+  arm: B_premium_native_t2v
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V02
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: some other text altogether (Controller)
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r2
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: wan-3.0-prime-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V03
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: same 'कली' misspelling (Controller); rest okay - upstream plate defect
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r2
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: veo-3.1-full
+  arm: B_premium_native_t2v
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V04
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: some other text altogether (Controller)
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r2
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: C_textless_plate_i2v_composite
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V05
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: no mistakes (Controller)
+  composited: true
+  redo_of: null
+- trial_id: VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r1
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: wan-3.0-prime-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V06
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: '''कली'' mistake plus ''छूट'' misspelled (Controller)'
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r1
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: kling-v3-pro
+  arm: B_premium_native_t2v
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V07
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: different text altogether (Controller)
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r2
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: kling-v3-pro
+  arm: B_premium_native_t2v
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V08
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: different text altogether (Controller)
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r1
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V09
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: different text altogether (Controller)
+  composited: false
+  redo_of: null
+- trial_id: VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r1
+  run_id: topo3-video
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: C_textless_plate_i2v_composite
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: V10
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: correct (Controller)
+  composited: true
+  redo_of: null
+elimination:
+- question: VID-TOPO3
+  route_key: kling-v3-pro
+  arm: B_premium_native_t2v
+  n: 2
+  accepts: 0
+  rejects: 2
+  refusals_errors: 0
+  E1_threshold: 1
+  E2_threshold: 0
+  verdict: ELIMINATED E2
+- question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  n: 2
+  accepts: 0
+  rejects: 2
+  refusals_errors: 0
+  E1_threshold: 1
+  E2_threshold: 0
+  verdict: ELIMINATED E2
+- question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: C_textless_plate_i2v_composite
+  n: 2
+  accepts: 2
+  rejects: 0
+  refusals_errors: 0
+  E1_threshold: 1
+  E2_threshold: 0
+  verdict: survives
+- question: VID-TOPO3
+  route_key: veo-3.1-full
+  arm: B_premium_native_t2v
+  n: 2
+  accepts: 0
+  rejects: 2
+  refusals_errors: 0
+  E1_threshold: 1
+  E2_threshold: 0
+  verdict: ELIMINATED E2
+- question: VID-TOPO3
+  route_key: wan-3.0-prime-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  n: 2
+  accepts: 0
+  rejects: 2
+  refusals_errors: 0
+  E1_threshold: 1
+  E2_threshold: 0
+  verdict: ELIMINATED E2
 by_arm:
   A_cheap_still_to_cheap_i2v:
     accept: 0
@@ -12,87 +229,6 @@ by_arm:
   C_textless_plate_i2v_composite:
     accept: 2
     n: 2
-rows:
-- blind_id: V01
-  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r2
-  route_key: minimax-h3-max-i2v
-  arm: A_cheap_still_to_cheap_i2v
-  repeat: r2
-  composited: false
-  verdict: reject
-  note: same 'कली' misspelling as the plate (Controller); rest okay - upstream plate defect, motion/text stability fine
-- blind_id: V02
-  trial_id: VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r1
-  route_key: veo-3.1-full
-  arm: B_premium_native_t2v
-  repeat: r1
-  composited: false
-  verdict: reject
-  note: some other text altogether (Controller)
-- blind_id: V03
-  trial_id: VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r2
-  route_key: wan-3.0-prime-i2v
-  arm: A_cheap_still_to_cheap_i2v
-  repeat: r2
-  composited: false
-  verdict: reject
-  note: same 'कली' misspelling (Controller); rest okay - upstream plate defect
-- blind_id: V04
-  trial_id: VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r2
-  route_key: veo-3.1-full
-  arm: B_premium_native_t2v
-  repeat: r2
-  composited: false
-  verdict: reject
-  note: some other text altogether (Controller)
-- blind_id: V05
-  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r2
-  route_key: minimax-h3-max-i2v
-  arm: C_textless_plate_i2v_composite
-  repeat: r2
-  composited: true
-  verdict: accept
-  note: no mistakes (Controller)
-- blind_id: V06
-  trial_id: VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r1
-  route_key: wan-3.0-prime-i2v
-  arm: A_cheap_still_to_cheap_i2v
-  repeat: r1
-  composited: false
-  verdict: reject
-  note: '''कली'' mistake plus ''छूट'' misspelled (Controller)'
-- blind_id: V07
-  trial_id: VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r1
-  route_key: kling-v3-pro
-  arm: B_premium_native_t2v
-  repeat: r1
-  composited: false
-  verdict: reject
-  note: different text altogether (Controller)
-- blind_id: V08
-  trial_id: VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r2
-  route_key: kling-v3-pro
-  arm: B_premium_native_t2v
-  repeat: r2
-  composited: false
-  verdict: reject
-  note: different text altogether (Controller)
-- blind_id: V09
-  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r1
-  route_key: minimax-h3-max-i2v
-  arm: A_cheap_still_to_cheap_i2v
-  repeat: r1
-  composited: false
-  verdict: reject
-  note: different text altogether (Controller)
-- blind_id: V10
-  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r1
-  route_key: minimax-h3-max-i2v
-  arm: C_textless_plate_i2v_composite
-  repeat: r1
-  composited: true
-  verdict: accept
-  note: correct (Controller)
 reading:
 - 'Arm C (textless plate -> cheap i2v -> exact strings by code on every frame): 2/2 accept; the only accepted clips of the piece; text cost USD 0.'
 - 'Arm A (cheap Qwen plate -> cheap i2v): 0/4; every reject is the plate''s own misspelling carried faithfully (''कली'', ''मिंष्टान'', ''छूट'' on Wan r1) - the animators
@@ -102,3 +238,10 @@ reading:
 routing_consequence: 'For exact Devanagari in motion: set the type by code on an animated textless plate (arm C), or carry a CORRECT still into a cheap animator;
   never ask the premium video model to write the text. Arm A remains viable if the plate comes from a text-capable still model (round one: Nano Banana 2 / GPT Image
   2 spelled Hindi 2/2) - untested here (Nano Banana plates offered to the Controller, not yet authorised).'
+visual_note: 'Controller: V06-V10 visually better than V01-V05 - a mixed-arm split (Wan A r1, Kling B r1/r2, H3 A r1, H3 C r1 vs H3 A r2, Veo B r1/r2, Wan A r2, H3
+  C r2); observation only, not a route effect'
+spend_usd:
+  smoke: 0.48
+  lane: 9.744
+  composite_overlay: 0.0
+  cap_inr: 950
