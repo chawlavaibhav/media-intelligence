@@ -1,0 +1,153 @@
+run_id: vid-knee
+case: 'VID-KNEE-01 (knee: cheapest tier vs Veo 3.1 full, orange-juice bottle, slow camera, condensation, no lettering)'
+revealed_utc: '2026-09-09'
+judge: Controller (blind K01-K06; MAPPING.json written alongside the blind copies, no off-repo key)
+commitment_verified: false
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: 'E1: refusal/hard error >= ceil(0.375 n); E2: accepts <= floor(0.25 n); E5: no artifact = reject'
+trials:
+- trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r2
+  run_id: vid-knee
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: veo-3.1-full
+  arm: knee_premium
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: K01
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: accept (Controller)
+  redo_of: null
+- trial_id: VID-KNEE-01__veo-3.1-lite__knee_cheap__r1
+  run_id: vid-knee
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: veo-3.1-lite
+  arm: knee_cheap
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: K02
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: doesn't look like slow camera (Controller)
+  redo_of: null
+- trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r1
+  run_id: vid-knee
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: veo-3.1-full
+  arm: knee_premium
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: K03
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: doesn't look like slow camera (Controller)
+  redo_of: null
+- trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r2
+  run_id: vid-knee
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: minimax-h3-max-480p
+  arm: knee_cheap
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: K04
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: no condensation on bottle (Controller)
+  redo_of: null
+- trial_id: VID-KNEE-01__veo-3.1-lite__knee_cheap__r2
+  run_id: vid-knee
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: veo-3.1-lite
+  arm: knee_cheap
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: K05
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: got a label, no slow camera (Controller)
+  redo_of: null
+- trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r1
+  run_id: vid-knee
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: minimax-h3-max-480p
+  arm: knee_cheap
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: K06
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: got a label (Controller)
+  redo_of: null
+elimination:
+- question: VID-KNEE
+  route_key: minimax-h3-max-480p
+  arm: knee_cheap
+  arms:
+  - knee_cheap
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 0
+  rejects: 2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
+- question: VID-KNEE
+  route_key: veo-3.1-full
+  arm: knee_premium
+  arms:
+  - knee_premium
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 1
+  rejects: 1
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
+- question: VID-KNEE
+  route_key: veo-3.1-lite
+  arm: knee_cheap
+  arms:
+  - knee_cheap
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 0
+  rejects: 2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
+reading:
+- 'Veo 3.1 full 1/2 (USD 2.40 a clip): one accept, one ''no slow camera''.'
+- 'Veo 3.1 lite 0/2 (USD 0.30 a clip): ''no slow camera'' on both; one grew a label.'
+- 'MiniMax H3 Max 480p 0/2 (USD 0.30 a clip): no condensation on one, a label on the other.'
+- On this brief the cheap tier fails on the physical details the contract names (condensation, blank label, slow camera) - the knee is NOT at the cheap tier for product-hero
+  motion; even the premium tier is 1/2.
+spend_usd:
+  smoke: 0.3
+  lane: 6.0
+  cap_inr: 700
