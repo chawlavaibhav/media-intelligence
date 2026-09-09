@@ -51,3 +51,10 @@ The Controller states the fal balance exists. The two Kling v3 Pro audio draws a
 lane rows) under a cap addendum of **₹150: the piece cap becomes ₹1,100 = USD 11.53**. If fal refuses again with the same
 message while Wan dispatches on the same key, the refusal is recorded as a per-model balance hold on fal's side, with the
 exact message, for the Controller to take up with fal.
+
+## 7. Kling smoke went through; lane rows under a further ₹200 (2026-09-09)
+
+The Kling smoke (USD 1.34) dispatched cleanly on the same key that was refused twice minutes earlier — the earlier
+refusals were fal-side (balance propagation after the top-up), recorded as infrastructure. The Controller: *"fal
+currently has 20 dollars"*. The smoke consumed the addendum's headroom, so the two Kling lane draws (USD 2.69) run under
+a further **₹200: piece cap ₹1,300 = USD 13.63**; expected total USD 13.30. Run id `vid-2spk-kling`.
