@@ -19,6 +19,7 @@ and arm (V01–V10; `judging-video/MAPPING.json`, `VERDICTS.yaml`; reveal in `RE
 | Arm | Route | Accepted | Controller's words |
 |---|---|---|---|
 | C | H3 Max + code overlay | **2 / 2** | "no mistakes", "correct" |
+| A2 (addendum, run `topo3-nb-video`) | Nano Banana 2 plate → H3 Max i2v | **2 / 2** | "both correct." (plate draw 2 accepted; draw 1 "two shri") |
 | A | H3 Max i2v | 0 / 2 | "same kali thing" (the plate's own 'कली'); r1 "different text altogether" (frames show the plate's lettering carried over) |
 | A | Wan 3.0 Prime i2v | 0 / 2 | "same kali thing"; "kali mistake + chhoot has wrong spelling" |
 | B | Veo 3.1 full | 0 / 2 | "some other text altogether" |
@@ -38,8 +39,9 @@ V01–V05 — a split that mixes all three arms, recorded as an observation, not
    animation** (≈ USD 0.03 plate + the i2v call). It is the only route that passed.
 
 H-CHEAP is **supported in its strong form**: the cheap chain beat the strongest video models outright; the strongest
-models scored zero. What is not yet shown is arm A with a text-capable plate (Nano Banana 2 / GPT Image 2) — offered
-to the Controller (~USD 1.6), not authorised at the time of writing.
+models scored zero. The addendum (Controller: "1. do it.", cap ₹150, spent USD 1.09) closed the last gap: a Nano Banana 2
+plate (USD 0.067; draw 2 accepted) animated on H3 Max passed 2/2. Cheap chain ≈ USD 0.61 per accepted clip against
+Veo 3.1 full at USD 2.40 and Kling v3 Pro at USD 0.67 per clip, both 0/4.
 
 ## Routing consequence (recorded in ROUTING-EVIDENCE-MAP-v0 as RR-6, RR-7)
 

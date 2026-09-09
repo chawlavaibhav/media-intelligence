@@ -244,16 +244,16 @@ Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-M
 
 ## Next gate
 
-**Image Round 1, image half two and video piece 1 all judged; Registry v1 at 282 deterministic rows (9 Sep 2026).**
+**Image Round 1, image half two and video piece 1 all judged; Registry v1 at 292 deterministic rows (9 Sep 2026).**
 Half two (edit / extend / compose / reference on constructed stand-ins, 36 trials, USD 3.30 of ₹700): Seedream 5 Pro edit
 10/12 (survives every question), FLUX.2 Pro edit 4/12, Nano Banana Pro edit 3/12 (eliminated on three of four
 questions). Video piece 1 (VID-TOPO3-01, USD 10.22 of ₹950): arm C (textless plate → cheap i2v → exact strings by code
 per frame) 2/2; arms A and B 0/4 each (plate misspelling carried / premium native Devanagari fabricated). H-CHEAP
-supported in its strong form for text in motion. Summaries: `runs/half2/IMAGE-HALF-TWO-SUMMARY.md`,
+supported in its strong form for text in motion; the addendum leg (Nano Banana 2 plate → H3 Max, cap ₹150, USD 1.09) passed 2/2, so
+both cheap forms are proven (code-set type on an animated plate; text-capable cheap still into a cheap animator). Summaries: `runs/half2/IMAGE-HALF-TWO-SUMMARY.md`,
 `runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md`; rules RR-4..RR-7 in `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml`.
-Next gates, each needing its own Controller act: (1) whether to add Nano Banana plates to video arm A (~USD 1.6, small
-cap addendum); (2) the next video piece (t2v core / multi-shot / two speakers / music), with its own spend record;
-(3) round two of stills sized from survivors. Fresh isolated cloud resources (MD-9) still need the Controller's own
+Next gates, each needing its own Controller act: (1) the next video piece (t2v core / multi-shot / two speakers / music), with its own spend record;
+(2) round two of stills sized from survivors. Fresh isolated cloud resources (MD-9) still need the Controller's own
 session. The Canon items below remain a queue, not an authorisation.
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's

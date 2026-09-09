@@ -48,7 +48,7 @@ SUMMARY_HALF2 = "eval/experiments/EVAL-040/runs/half2/IMAGE-HALF-TWO-SUMMARY.md"
 SUMMARY_VIDEO1 = "eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md"
 COMPOSITE_SUFFIX = "+code_overlay"
 TRIVIAL_ARMS = (None, "core", "edit")      # arms that do not distinguish a cell: the route name stands alone
-ROUND = "EVAL-040 Image Round 1 + image half two + video piece 1 (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video)"
+ROUND = "EVAL-040 Image Round 1 + image half two + video piece 1 (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video)"
 
 TIERS = {
     "deterministic": {"registry": True, "meaning": "re-evaluated by a frozen deterministic instrument over sealed bytes; the Registry rows named are the evidence"},
@@ -99,8 +99,8 @@ ROUTING_RULES = [
      "tier": "human_blind_acceptance", "registry": False, "caveat": "video packet was blind as to route and arm but had no off-repo reveal key", "source": SUMMARY_VIDEO1},
     {"id": "RR-7", "scope": "the still that feeds a cheap animator",
      "rule": "A text plate that goes into image-to-video must come from a text-capable still route (RR-2: Nano Banana 2 or GPT Image 2), never from the cheapest still model.",
-     "evidence": "topo3-video arm A: both qwen-image-3 9:16 plates misspelled Hindi (draw 1 rejected before animation, draw 2 accepted then found misspelled); Nano Banana plates for arm A not yet tested in motion",
-     "tier": "human_blind_acceptance", "registry": False, "status": "untested_in_motion", "source": SUMMARY_VIDEO1},
+     "evidence": "topo3-video arm A: both qwen-image-3 9:16 plates misspelled Hindi (0/4 in motion); topo3-nb-video arm A2: nano-banana-2 plate (draw 2 accepted, draw 1 'two shri') -> H3 Max 2/2 - the same animator passes once the plate is right",
+     "tier": "human_blind_acceptance", "registry": False, "status": "tested_in_motion_2026-09-09", "source": SUMMARY_VIDEO1},
 ]
 
 

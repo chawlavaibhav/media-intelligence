@@ -3,20 +3,22 @@
 # No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.
 schema: ROUTING-EVIDENCE-MAP-v0
 status: product_asset; tiers never mixed; human tiers are never Registry rows
-generated_utc: '2026-09-09T08:03:59.871677Z'
-round: EVAL-040 Image Round 1 + image half two + video piece 1 (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video)
+generated_utc: '2026-09-09T10:04:37.925671Z'
+round: EVAL-040 Image Round 1 + image half two + video piece 1 (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video)
 sources:
   registry: eval/registry/registry-v1.jsonl
-  registry_sha256: 04d1e9ccb9e8c580d65b1d4a15573164653602529937c11f8262708bd0e3eb37
+  registry_sha256: 7c78b1d4c2c980cec6d40c08b8b38fbb44dac8019407c910ed714c6c3f78d417
   results:
   - eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/half2/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/topo3-nb-video/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
   results_run_ids:
   - img-r1
   - half2
   - topo3-video
+  - topo3-nb-video
   criteria_sha256: 6fce5ea875c0653ad7321a292fcada31594c9512e1297deabba6c525d9d23888
   summary: eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
   summaries:
@@ -95,13 +97,13 @@ routing_rules:
   scope: the still that feeds a cheap animator
   rule: 'A text plate that goes into image-to-video must come from a text-capable still route (RR-2: Nano Banana 2 or GPT Image 2), never from
     the cheapest still model.'
-  evidence: 'topo3-video arm A: both qwen-image-3 9:16 plates misspelled Hindi (draw 1 rejected before animation, draw 2 accepted then found misspelled);
-    Nano Banana plates for arm A not yet tested in motion'
+  evidence: 'topo3-video arm A: both qwen-image-3 9:16 plates misspelled Hindi (0/4 in motion); topo3-nb-video arm A2: nano-banana-2 plate (draw
+    2 accepted, draw 1 ''two shri'') -> H3 Max 2/2 - the same animator passes once the plate is right'
   tier: human_blind_acceptance
   registry: false
-  status: untested_in_motion
+  status: tested_in_motion_2026-09-09
   source: eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md
-cell_count: 31
+cell_count: 33
 reading_guide:
 - deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation
   (independence NOT ESTABLISHED)
@@ -3402,9 +3404,122 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 3
+        rank_in_question: 4
         fallback:
           route: wan-3.0-prime-i2v+A_cheap_still_to_cheap_i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      minimax-h3-max-i2v+A2_nb_still_to_cheap_i2v:
+        route_key: minimax-h3-max-i2v
+        arm: A2_nb_still_to_cheap_i2v
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-050ae5db16228ff5
+          - cap-520bada1c6d8b3b7
+          - cap-637adad2d62663b1
+          - cap-6df1c1b48a23a004
+          - cap-fdfe3953b6002318
+          n_items:
+          - VID-TOPO3-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.960000'
+            per_trial_mean: '0.480000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 9.199284
+            p95: 9.580868
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 25.0
+            dhash_hamming_max: 25
+            ssim_mean: 0.823316925413967
+            ssim_min: 0.823316925413967
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 2
+          trials: 2
+          rejects: 0
+          n_items: 1
+          arms:
+          - A2_nb_still_to_cheap_i2v
+          no_artifact_rejects: 0
+          per_item:
+            VID-TOPO3-01:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A2_nb_still_to_cheap_i2v__r2
+            verdict: accept
+            note: correct (Controller)
+          - trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A2_nb_still_to_cheap_i2v__r1
+            verdict: accept
+            note: correct (Controller)
+          elimination:
+            question: VID-TOPO3
+            route_key: minimax-h3-max-i2v
+            arm: A2_nb_still_to_cheap_i2v
+            arms:
+            - A2_nb_still_to_cheap_i2v
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: topo3-nb-video
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - topo3-nb-video
+          source: RESULTS.yaml of run topo3-nb-video
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: minimax-h3-max-i2v+C_textless_plate_i2v_composite
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       minimax-h3-max-i2v+A_cheap_still_to_cheap_i2v:
@@ -3516,7 +3631,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 2
+        rank_in_question: 3
         fallback:
           route: kling-v3-pro+B_premium_native_t2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -3629,9 +3744,83 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 1
+        rank_in_question: 2
         fallback:
           route: minimax-h3-max-i2v+A_cheap_still_to_cheap_i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      nano-banana-2+A2_nb_plate_9x16:
+        route_key: nano-banana-2
+        arm: A2_nb_plate_9x16
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.067'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-0e62a80c1bb73d6f
+          - cap-46733d0e0d45f4a3
+          - cap-559c70be9ea329f7
+          - cap-7ecfb81358f09c09
+          - cap-c52f1d4a20b3bebc
+          n_items:
+          - VID-TOPO3-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.134000'
+            per_trial_mean: '0.067000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 9.503707
+            p95: 10.090626
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 25.0
+            dhash_hamming_max: 25
+            ssim_mean: 0.7192471522449414
+            ssim_min: 0.7192471522449414
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          status: no_verdicts
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 7
+        fallback:
+          route: minimax-h3-max-i2v+A2_nb_still_to_cheap_i2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       veo-3.1-full+B_premium_native_t2v:
@@ -3743,9 +3932,9 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 5
+        rank_in_question: 6
         fallback:
-          route: minimax-h3-max-i2v+C_textless_plate_i2v_composite
+          route: nano-banana-2+A2_nb_plate_9x16
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       wan-3.0-prime-i2v+A_cheap_still_to_cheap_i2v:
@@ -3857,7 +4046,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 4
+        rank_in_question: 5
         fallback:
           route: veo-3.1-full+B_premium_native_t2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
