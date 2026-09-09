@@ -1,0 +1,227 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: vid-knee
+  mode: lane
+  generated_utc: '2026-09-09T10:07:27.870819Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: bf0b0832ecc79d2cc5f41ddab912eee2cfdcd823
+  item_basis_commit: 9adc4035d089
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.knee.local.yaml
+  authorisation_sha256: 195830e83ca1ef1489f5f3c6fb795f916ee904d25e78599bc194610434e34775
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: c2619cdbc56d16af08c02232f08583fcb7f91683c423472e00ee985626b6ff3f
+  cost_table_sha256: 51e28596574114d4ce9fb95bd3ac4d5811240986549d44ec7925b601601907ec
+  cases:
+  - VID-KNEE-01
+  routes: null
+  tranche: null
+  repeats: null
+  inputs_file: null
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 6
+    excluded: 0
+  estimated_by_pool:
+    credits:
+      calls: 4
+      currency: USD
+      native: '5.400000'
+      usd_equiv: '5.400000'
+    cash:
+      calls: 2
+      currency: USD
+      native: '0.600000'
+      usd_equiv: '0.600000'
+  estimated_total_usd_equiv: '6.000000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: VID-KNEE-01__veo-3.1-lite__knee_cheap__r1
+  case_id: VID-KNEE-01
+  item_id: VID-KNEE-01
+  route_key: veo-3.1-lite
+  arm: knee_cheap
+  repeat_index: 1
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_veo
+  surface_model_id: veo-3.1-lite-generate-001
+  endpoint: https://us-central1-aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/us-central1/publishers/google/models/veo-3.1-lite-generate-001:predictLongRunning
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.300000'
+  estimated_usd_equiv: '0.300000'
+  unit_price: '0.05'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 5c59e71ce82004b0f3951f48d090a53a97bf510c2f3698a4cb316c9721d115b8
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.05'
+  roster_implied_usd: '0.05'
+  constructed_synthetic_inputs: false
+- seq: 2
+  trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r1
+  case_id: VID-KNEE-01
+  item_id: VID-KNEE-01
+  route_key: veo-3.1-full
+  arm: knee_premium
+  repeat_index: 1
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_veo
+  surface_model_id: veo-3.1-generate-001
+  endpoint: https://us-central1-aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/us-central1/publishers/google/models/veo-3.1-generate-001:predictLongRunning
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '2.400000'
+  estimated_usd_equiv: '2.400000'
+  unit_price: '0.4'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 5c59e71ce82004b0f3951f48d090a53a97bf510c2f3698a4cb316c9721d115b8
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.4'
+  roster_implied_usd: '0.4'
+  constructed_synthetic_inputs: false
+- seq: 3
+  trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r1
+  case_id: VID-KNEE-01
+  item_id: VID-KNEE-01
+  route_key: minimax-h3-max-480p
+  arm: knee_cheap
+  repeat_index: 1
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: minimax/h3-max/text-to-video
+  endpoint: https://queue.fal.run/minimax/h3-max/text-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.300000'
+  estimated_usd_equiv: '0.300000'
+  unit_price: '0.05'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json
+  body_sha256: 26448c14b62c2f4c83bd22759c39971afa01d564e18b045fbde8b2e99bc3ed13
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.05'
+  roster_implied_usd: '0.05'
+  constructed_synthetic_inputs: false
+- seq: 4
+  trial_id: VID-KNEE-01__veo-3.1-lite__knee_cheap__r2
+  case_id: VID-KNEE-01
+  item_id: VID-KNEE-01
+  route_key: veo-3.1-lite
+  arm: knee_cheap
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_veo
+  surface_model_id: veo-3.1-lite-generate-001
+  endpoint: https://us-central1-aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/us-central1/publishers/google/models/veo-3.1-lite-generate-001:predictLongRunning
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.300000'
+  estimated_usd_equiv: '0.300000'
+  unit_price: '0.05'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 5c59e71ce82004b0f3951f48d090a53a97bf510c2f3698a4cb316c9721d115b8
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.05'
+  roster_implied_usd: '0.05'
+  constructed_synthetic_inputs: false
+- seq: 5
+  trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r2
+  case_id: VID-KNEE-01
+  item_id: VID-KNEE-01
+  route_key: veo-3.1-full
+  arm: knee_premium
+  repeat_index: 2
+  tranche: 1a
+  surface: vertex
+  adapter: vertex_veo
+  surface_model_id: veo-3.1-generate-001
+  endpoint: https://us-central1-aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/us-central1/publishers/google/models/veo-3.1-generate-001:predictLongRunning
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '2.400000'
+  estimated_usd_equiv: '2.400000'
+  unit_price: '0.4'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: 5c59e71ce82004b0f3951f48d090a53a97bf510c2f3698a4cb316c9721d115b8
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.4'
+  roster_implied_usd: '0.4'
+  constructed_synthetic_inputs: false
+- seq: 6
+  trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r2
+  case_id: VID-KNEE-01
+  item_id: VID-KNEE-01
+  route_key: minimax-h3-max-480p
+  arm: knee_cheap
+  repeat_index: 2
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: minimax/h3-max/text-to-video
+  endpoint: https://queue.fal.run/minimax/h3-max/text-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.300000'
+  estimated_usd_equiv: '0.300000'
+  unit_price: '0.05'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json
+  body_sha256: 26448c14b62c2f4c83bd22759c39971afa01d564e18b045fbde8b2e99bc3ed13
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.05'
+  roster_implied_usd: '0.05'
+  constructed_synthetic_inputs: false
+excluded: []
