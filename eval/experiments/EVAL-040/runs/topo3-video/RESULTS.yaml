@@ -172,53 +172,77 @@ elimination:
 - question: VID-TOPO3
   route_key: kling-v3-pro
   arm: B_premium_native_t2v
-  n: 2
+  arms:
+  - B_premium_native_t2v
+  n_planned: 2
+  refusals_or_errors: 0
   accepts: 0
   rejects: 2
-  refusals_errors: 0
-  E1_threshold: 1
-  E2_threshold: 0
-  verdict: ELIMINATED E2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
 - question: VID-TOPO3
   route_key: minimax-h3-max-i2v
   arm: A_cheap_still_to_cheap_i2v
-  n: 2
+  arms:
+  - A_cheap_still_to_cheap_i2v
+  n_planned: 2
+  refusals_or_errors: 0
   accepts: 0
   rejects: 2
-  refusals_errors: 0
-  E1_threshold: 1
-  E2_threshold: 0
-  verdict: ELIMINATED E2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
 - question: VID-TOPO3
   route_key: minimax-h3-max-i2v
   arm: C_textless_plate_i2v_composite
-  n: 2
+  arms:
+  - C_textless_plate_i2v_composite
+  n_planned: 2
+  refusals_or_errors: 0
   accepts: 2
   rejects: 0
-  refusals_errors: 0
-  E1_threshold: 1
-  E2_threshold: 0
-  verdict: survives
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: false
+  eliminated_by: []
 - question: VID-TOPO3
   route_key: veo-3.1-full
   arm: B_premium_native_t2v
-  n: 2
+  arms:
+  - B_premium_native_t2v
+  n_planned: 2
+  refusals_or_errors: 0
   accepts: 0
   rejects: 2
-  refusals_errors: 0
-  E1_threshold: 1
-  E2_threshold: 0
-  verdict: ELIMINATED E2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
 - question: VID-TOPO3
   route_key: wan-3.0-prime-i2v
   arm: A_cheap_still_to_cheap_i2v
-  n: 2
+  arms:
+  - A_cheap_still_to_cheap_i2v
+  n_planned: 2
+  refusals_or_errors: 0
   accepts: 0
   rejects: 2
-  refusals_errors: 0
-  E1_threshold: 1
-  E2_threshold: 0
-  verdict: ELIMINATED E2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
 by_arm:
   A_cheap_still_to_cheap_i2v:
     accept: 0

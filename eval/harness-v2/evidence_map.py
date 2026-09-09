@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""evidence_map: ROUTING-EVIDENCE-MAP-v0.yaml - the TIERED product asset for every (question, route) cell of Image Round 1.
+"""evidence_map: ROUTING-EVIDENCE-MAP-v0.yaml - the TIERED product asset for every (question, route, arm) cell of EVAL-040.
 
     python3 eval/harness-v2/evidence_map.py --registry eval/registry/registry-v1.jsonl \\
         --results eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml \\
+        --results eval/experiments/EVAL-040/runs/half2/RESULTS.yaml \\
+        --results eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml \\
         --composite-results eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml \\
         --out eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml
+
+`--results` repeats: the runs' trials and elimination lists are concatenated and every trial remembers the run it came
+from. A cell is (question, route_key, arm); the arms None / "core" / "edit" name the cell by the route alone, the
+composite plate (prompt_basis blueprint_textless_plate) is route + "+code_overlay", every other arm is route + "+" + arm.
 
 Four tiers per cell, never mixed:
     deterministic            facts read back from the Registry rows (registry: true): refusal / error rate, format
@@ -38,7 +44,11 @@ MAP_PATH = hv2_paths.EVAL_ROOT / "capability-map" / "ROUTING-EVIDENCE-MAP-v0.yam
 PRIOR_DIR = "eval/historical-priors/media-factory-v1"
 PRIOR_FILE = f"{PRIOR_DIR}/MEDIA-FACTORY-ROUTING-PRIOR.md"
 SUMMARY_REF = "eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md"
+SUMMARY_HALF2 = "eval/experiments/EVAL-040/runs/half2/IMAGE-HALF-TWO-SUMMARY.md"
+SUMMARY_VIDEO1 = "eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md"
 COMPOSITE_SUFFIX = "+code_overlay"
+TRIVIAL_ARMS = (None, "core", "edit")      # arms that do not distinguish a cell: the route name stands alone
+ROUND = "EVAL-040 Image Round 1 + image half two + video piece 1 (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video)"
 
 TIERS = {
     "deterministic": {"registry": True, "meaning": "re-evaluated by a frozen deterministic instrument over sealed bytes; the Registry rows named are the evidence"},
@@ -74,6 +84,23 @@ ROUTING_RULES = [
     {"id": "RR-3", "scope": "Devanagari text on stills", "rule": "Avoid Seedream 5 Pro, Recraft V4 and FLUX.2 Pro for Devanagari text.",
      "evidence": "img-r1 IMG-TEXT-01 (Hindi): seedream-5-pro 0/2, recraft-v4 0/2, flux-2-pro 0/2 - every rejection 'wrong spelling'; qwen-image-3 1/2",
      "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_REF},
+    {"id": "RR-4", "scope": "edit / extend / compose / reference on a supplied photo",
+     "rule": "Seedream 5 Pro edit is the DEFAULT for work on a supplied photo (remove an object, extend a banner, compose a supplied face and pack, reproduce a referenced product or person).",
+     "evidence": "half2: seedream-5-pro-edit 10/12 (IMG-EDIT 2/4, IMG-EXT 2/2, IMG-COMP 2/2, IMG-REF 4/4) at USD 0.0675 a call; flux-2-pro-edit 4/12; nano-banana-pro-edit 3/12 at USD 0.15 a call",
+     "tier": "human_blind_acceptance", "registry": False,
+     "caveat": "n = 2 per (case, route); two Controller rejects on IMG-REF-02 ('clothes changed') read the contract more strictly than it is written", "source": SUMMARY_HALF2},
+    {"id": "RR-5", "scope": "extend a banner (outpaint to 9:16)",
+     "rule": "Only Seedream 5 Pro edit extended the banner without resizing or cutting it; avoid FLUX.2 Pro edit and Nano Banana Pro edit for extension.",
+     "evidence": "half2 IMG-EXT-01: seedream-5-pro-edit 2/2; flux-2-pro-edit 0/2 'changed size'; nano-banana-pro-edit 0/2 'slight cutoff, not consistent'",
+     "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_HALF2},
+    {"id": "RR-6", "scope": "exact Devanagari text in motion (video)",
+     "rule": "Never ask the premium video model to write the text. Set the type by code on an animated textless plate (cheap image-to-video), or carry a CORRECT still into a cheap animator.",
+     "evidence": "topo3-video VID-TOPO3-01: arm C (FLUX.2 Pro textless plate -> MiniMax H3 Max i2v -> exact strings by code on every frame) 2/2; arm B native text on veo-3.1-full 0/2 and kling-v3-pro 0/2 ('different text altogether'); arm A (qwen-image-3 plate -> H3 Max / Wan 3.0 Prime i2v) 0/4, every reject the plate's own misspelling carried faithfully - the animators preserved the lettering",
+     "tier": "human_blind_acceptance", "registry": False, "caveat": "video packet was blind as to route and arm but had no off-repo reveal key", "source": SUMMARY_VIDEO1},
+    {"id": "RR-7", "scope": "the still that feeds a cheap animator",
+     "rule": "A text plate that goes into image-to-video must come from a text-capable still route (RR-2: Nano Banana 2 or GPT Image 2), never from the cheapest still model.",
+     "evidence": "topo3-video arm A: both qwen-image-3 9:16 plates misspelled Hindi (draw 1 rejected before animation, draw 2 accepted then found misspelled); Nano Banana plates for arm A not yet tested in motion",
+     "tier": "human_blind_acceptance", "registry": False, "status": "untested_in_motion", "source": SUMMARY_VIDEO1},
 ]
 
 
@@ -93,9 +120,37 @@ def _rate(num, den):
     return (num / den) if den else None
 
 
-def deterministic_facts(records: list, question: str, route_key: str, prompt_basis: str | None = None) -> dict:
+ANY_ARM = object()      # default: do not filter by arm at all
+
+
+def _arm_matches(row: dict, arm) -> bool:
+    """ANY_ARM: no filter. A trivial arm (None / core / edit) matches any trivial arm on the row; a named arm must match exactly."""
+    if arm is ANY_ARM:
+        return True
+    if arm in TRIVIAL_ARMS:
+        return row.get("arm") in TRIVIAL_ARMS
+    return row.get("arm") == arm
+
+
+def merge_results(results_list: list) -> dict:
+    """Concatenate several RESULTS.yaml documents. Every trial and elimination entry remembers its run (`results_run_id`);
+    `revealed_utc` is the latest reveal; `commitment_verified_by_run` keeps each run's own flag."""
+    docs = [r for r in results_list if r]
+    trials, elim = [], []
+    for r in docs:
+        rid = r.get("run_id")
+        trials += [{**t, "results_run_id": rid} for t in r.get("trials", [])]
+        elim += [{**e, "results_run_id": rid} for e in r.get("elimination", [])]
+    revealed = [str(r["revealed_utc"]) for r in docs if r.get("revealed_utc")]
+    rules = [r.get("rules_ref") for r in docs if r.get("rules_ref")]
+    return {"run_ids": [r.get("run_id") for r in docs], "revealed_utc": max(revealed) if revealed else None,
+            "commitment_verified_by_run": {r.get("run_id"): bool(r.get("commitment_verified")) for r in docs},
+            "rules_ref": rules[0] if len(set(rules)) == 1 else (sorted(set(rules)) or None), "trials": trials, "elimination": elim}
+
+
+def deterministic_facts(records: list, question: str, route_key: str, prompt_basis: str | None = None, arm=ANY_ARM) -> dict:
     rows = [r for r in records if r.get("question") == question and r.get("route_key") == route_key and r.get("evidence_tier") == "deterministic"
-            and (prompt_basis is None or r.get("prompt_basis") == prompt_basis)]
+            and (prompt_basis is None or r.get("prompt_basis") == prompt_basis) and _arm_matches(r, arm)]
     if not rows:
         return {"tier": "deterministic", "registry": False, "status": "no_rows", "rows": []}
     by_cap: dict = defaultdict(list)
@@ -136,21 +191,28 @@ def deterministic_facts(records: list, question: str, route_key: str, prompt_bas
     }
 
 
-def human_facts(results: dict, question: str, route_key: str, arm: str | None = None) -> dict:
-    trials = [t for t in results.get("trials", []) if t.get("question") == question and t.get("route_key") == route_key and (arm is None or t.get("arm") == arm)]
+def human_facts(results: dict, question: str, route_key: str, arm=ANY_ARM) -> dict:
+    """`results` is one RESULTS.yaml document or the output of merge_results. An elimination entry that carries an `arm` key
+    (the video runs do) must match the cell's arm; entries without one (the image runs) match on question and route."""
+    trials = [t for t in results.get("trials", []) if t.get("question") == question and t.get("route_key") == route_key and _arm_matches(t, arm)]
     if not trials:
         return {"tier": "human_blind_acceptance", "registry": False, "status": "no_verdicts"}
     accepts = sum(1 for t in trials if t.get("verdict") == "accept")
-    elim = next((e for e in results.get("elimination", []) if e.get("question") == question and e.get("route_key") == route_key), None)
+    elim = next((e for e in results.get("elimination", []) if e.get("question") == question and e.get("route_key") == route_key
+                 and ("arm" not in e or _arm_matches(e, arm))), None)
+    runs = sorted({t.get("results_run_id") or results.get("run_id") for t in trials if t.get("results_run_id") or results.get("run_id")})
+    by_run = results.get("commitment_verified_by_run") or {results.get("run_id"): bool(results.get("commitment_verified"))}
+    verified = bool(runs) and all(by_run.get(r, False) for r in runs)
     return {
-        "tier": "human_blind_acceptance", "registry": False, "judge": "Controller (blind, commitment verified)" if results.get("commitment_verified") else "Controller",
+        "tier": "human_blind_acceptance", "registry": False, "judge": "Controller (blind, commitment verified)" if verified else "Controller",
         "accepts": accepts, "trials": len(trials), "rejects": sum(1 for t in trials if t.get("verdict") == "reject"),
         "n_items": len({t.get("case_id") for t in trials}), "arms": sorted({t.get("arm") for t in trials if t.get("arm")}),
         "no_artifact_rejects": sum(1 for t in trials if str(t.get("verdict_basis", "")).startswith("no_artifact")),
         "per_item": {c: {"accepts": sum(1 for t in trials if t.get("case_id") == c and t.get("verdict") == "accept"),
                          "trials": sum(1 for t in trials if t.get("case_id") == c)} for c in sorted({t.get("case_id") for t in trials})},
         "controller_notes": [{"trial_id": t["trial_id"], "verdict": t.get("verdict"), "note": t["note"]} for t in trials if t.get("note")],
-        "elimination": elim, "rules_ref": results.get("rules_ref"), "source": f"RESULTS.yaml of run {results.get('run_id')}",
+        "elimination": elim, "rules_ref": results.get("rules_ref"), "runs": runs,
+        "source": f"RESULTS.yaml of run{'s' if len(runs) > 1 else ''} {', '.join(runs) if runs else results.get('run_id')}",
         "note": "acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number",
     }
 
@@ -166,16 +228,17 @@ def composite_human_facts(comp: dict) -> dict:
             "cost": comp.get("cost"), "note": comp.get("note"), "source": f"RESULTS.yaml of run {comp.get('run_id')}"}
 
 
-def _price_pins(records: list, question: str, route_key: str) -> dict:
-    rows = [r for r in records if r.get("question") == question and r.get("route_key") == route_key]
+def _price_pins(records: list, question: str, route_key: str, arm=ANY_ARM) -> dict:
+    rows = [r for r in records if r.get("question") == question and r.get("route_key") == route_key and _arm_matches(r, arm)]
     pins = sorted({p for r in rows for p in ((r.get("cost") or {}).get("price_source") or [])})
     prices = sorted({p for r in rows for p in ((r.get("cost") or {}).get("unit_price_pinned") or [])})
     pools = sorted({p for r in rows for p in ((r.get("cost") or {}).get("billing_pool") or [])})
     return {"price_pin_ref": pins, "unit_price_usd_pinned": prices, "billing_pool": pools, "surface": sorted({r.get("surface") for r in rows if r.get("surface")})}
 
 
-def _evidence_date(records: list, results: dict, question: str, route_key: str) -> str | None:
-    dates = [str(r.get("tested_date"))[:10] for r in records if r.get("question") == question and r.get("route_key") == route_key and r.get("tested_date")]
+def _evidence_date(records: list, results: dict, question: str, route_key: str, arm=ANY_ARM) -> str | None:
+    dates = [str(r.get("tested_date"))[:10] for r in records if r.get("question") == question and r.get("route_key") == route_key and r.get("tested_date")
+             and _arm_matches(r, arm)]
     if not dates and results.get("revealed_utc"):
         dates = [str(results["revealed_utc"])[:10]]
     return max(dates) if dates else None
@@ -196,34 +259,44 @@ def assign_fallbacks(cells: dict) -> None:
                          "registry": False}
 
 
-def build_map(records: list, results: dict, composite_results: dict | None = None, registry_path: str | None = None,
+def cell_name(route_key: str, arm: str | None, prompt_basis: str | None = None) -> str:
+    """The composite plate is route+code_overlay; a trivial arm (None / core / edit) is the bare route; any other arm is route+arm."""
+    if prompt_basis == "blueprint_textless_plate":
+        return route_key + COMPOSITE_SUFFIX
+    return route_key if arm in TRIVIAL_ARMS else f"{route_key}+{arm}"
+
+
+def build_map(records: list, results: dict | list, composite_results: dict | None = None, registry_path: str | None = None,
               results_paths: list | None = None, criteria_sha256: str | None = None) -> dict:
+    """`results` is one RESULTS.yaml document or a list of them (merged by merge_results)."""
+    results = merge_results(results if isinstance(results, list) else [results])
     questions: dict = defaultdict(dict)
-    keys = {(r["question"], r["route_key"], r.get("prompt_basis")) for r in records if r.get("evidence_tier") == "deterministic"}
+    def key_arm(a):            # the trivial arms are one cell: keyed as None, named by the route alone
+        return None if a in TRIVIAL_ARMS else a
+    keys = {(r["question"], r["route_key"], key_arm(r.get("arm")), r.get("prompt_basis")) for r in records if r.get("evidence_tier") == "deterministic"}
     for t in results.get("trials", []):
-        keys.add((t.get("question"), t.get("route_key"), "blueprint_main"))
-    for question, route, basis in sorted(keys, key=lambda k: (str(k[0]), str(k[1]), str(k[2]))):
+        keys.add((t.get("question"), t.get("route_key"), key_arm(t.get("arm")), "blueprint_main"))
+    for question, route, arm, basis in sorted(keys, key=lambda k: tuple(str(x) for x in k)):
+        name = cell_name(route, arm, basis)
         if basis == "blueprint_textless_plate":
-            name = route + COMPOSITE_SUFFIX
             det = deterministic_facts(records, question, route, basis)
             hum = composite_human_facts(composite_results) if composite_results else {"tier": "human_blind_acceptance", "registry": False, "status": "no_verdicts"}
             arm_note = "textless plate (FLUX.2 Pro) + exact strings set by code (composite-v2 layout); deterministic facts describe the PLATE calls"
         else:
-            name = route
-            det = deterministic_facts(records, question, route, basis if basis in ("blueprint_main",) else None)
-            hum = human_facts(results, question, route)
+            det = deterministic_facts(records, question, route, basis if basis in ("blueprint_main",) else None, arm)
+            hum = human_facts(results, question, route, arm)
             arm_note = None
+        prior_rows = HISTORICAL_PRIORS.get(name) or HISTORICAL_PRIORS.get(route)
+        arms_seen = sorted({str(r.get("arm")) for r in records if r.get("question") == question and r.get("route_key") == route and _arm_matches(r, arm) and r.get("arm")}
+                           | {str(t.get("arm")) for t in results.get("trials", []) if t.get("question") == question and t.get("route_key") == route and _arm_matches(t, arm) and t.get("arm")})
         cell = {
-            "route_key": route, "arm_note": arm_note, **_price_pins(records, question, route),
-            "evidence_date": _evidence_date(records, results, question, route) or (str(composite_results.get("judged_utc"))[:10] if composite_results else None),
+            "route_key": route, "arm": arm if arm is not None else (arms_seen[0] if len(arms_seen) == 1 else None), "arm_note": arm_note, **_price_pins(records, question, route, arm),
+            "evidence_date": _evidence_date(records, results, question, route, arm) or (str(composite_results.get("judged_utc"))[:10] if composite_results else None),
             "deterministic": det, "human_blind_acceptance": hum,
             "screened_not_qualified": {"tier": "screened_not_qualified", "registry": False, "status": "none_yet"},
             "historical_prior": {"tier": "historical_prior", "registry": False, "pointer": PRIOR_FILE, "freshness_required": True,
-                                 "rows": HISTORICAL_PRIORS.get(name) or HISTORICAL_PRIORS.get(route) if name.endswith(COMPOSITE_SUFFIX) else HISTORICAL_PRIORS.get(route),
-                                 "status": "row_exists" if (HISTORICAL_PRIORS.get(name) if name.endswith(COMPOSITE_SUFFIX) else HISTORICAL_PRIORS.get(route)) else "no_row_for_this_route_family"},
+                                 "rows": prior_rows or [], "status": "row_exists" if prior_rows else "no_row_for_this_route_family"},
         }
-        if cell["historical_prior"]["rows"] is None:
-            cell["historical_prior"]["rows"] = []
         questions[question][name] = cell
     for q, cells in questions.items():
         assign_fallbacks(cells)
@@ -231,12 +304,13 @@ def build_map(records: list, results: dict, composite_results: dict | None = Non
     return {
         "schema": "ROUTING-EVIDENCE-MAP-v0", "status": "product_asset; tiers never mixed; human tiers are never Registry rows",
         "generated_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
-        "round": "EVAL-040 Image Round 1 (img-r1, img-r1-redo, img-r1-composite)",
+        "round": ROUND,
         "sources": {"registry": registry_path, "registry_sha256": (_sha256_file(registry_path) if registry_path and Path(registry_path).exists() else None),
-                    "results": results_paths or [], "criteria_sha256": criteria_sha256, "summary": SUMMARY_REF, "historical_prior_index": f"{PRIOR_DIR}/PRIOR-INDEX.yaml"},
+                    "results": results_paths or [], "results_run_ids": results.get("run_ids"), "criteria_sha256": criteria_sha256,
+                    "summary": SUMMARY_REF, "summaries": [SUMMARY_REF, SUMMARY_HALF2, SUMMARY_VIDEO1], "historical_prior_index": f"{PRIOR_DIR}/PRIOR-INDEX.yaml"},
         "tiers": TIERS, "routing_rules": ROUTING_RULES, "cell_count": n_cells,
         "reading_guide": ["deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation (independence NOT ESTABLISHED)",
-                          "human acceptance is the Controller's blind verdict against the acceptance contract; n is small (4-8 trials over 1-4 items); never a Registry row",
+                          "human acceptance is the Controller's blind verdict against the acceptance contract; n is small (2-8 trials over 1-4 items); never a Registry row",
                           "fallback is a ranking by acceptance within the question, not a score; the Production Planner decides routing"],
         "questions": {q: {"cells": cells} for q, cells in questions.items()},
     }
@@ -245,15 +319,15 @@ def build_map(records: list, results: dict, composite_results: dict | None = Non
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--registry", default=str(hv2_paths.EVAL_ROOT / "registry" / "registry-v1.jsonl"))
-    ap.add_argument("--results", required=True, help="RESULTS.yaml of the blind-judged run")
+    ap.add_argument("--results", action="append", required=True, help="RESULTS.yaml of a blind-judged run (repeat for several runs)")
     ap.add_argument("--composite-results", default=None)
     ap.add_argument("--criteria-sha256", default=None)
     ap.add_argument("--out", default=str(MAP_PATH))
     a = ap.parse_args(argv)
     records = load_registry(a.registry)
-    results = yaml.safe_load(Path(a.results).read_text(encoding="utf-8"))
+    results = [yaml.safe_load(Path(p).read_text(encoding="utf-8")) for p in a.results]
     comp = yaml.safe_load(Path(a.composite_results).read_text(encoding="utf-8")) if a.composite_results else None
-    m = build_map(records, results, comp, registry_path=a.registry, results_paths=[a.results] + ([a.composite_results] if a.composite_results else []),
+    m = build_map(records, results, comp, registry_path=a.registry, results_paths=list(a.results) + ([a.composite_results] if a.composite_results else []),
                   criteria_sha256=a.criteria_sha256)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -3,16 +3,26 @@
 # No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.
 schema: ROUTING-EVIDENCE-MAP-v0
 status: product_asset; tiers never mixed; human tiers are never Registry rows
-generated_utc: '2026-09-09T03:31:34.384736Z'
-round: EVAL-040 Image Round 1 (img-r1, img-r1-redo, img-r1-composite)
+generated_utc: '2026-09-09T08:03:59.871677Z'
+round: EVAL-040 Image Round 1 + image half two + video piece 1 (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video)
 sources:
-  registry: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/registry/registry-v1.jsonl
-  registry_sha256: d34ace4814bc5885d39f248cb0c2306bab441632e24e9cc34c32fe91451797f2
+  registry: eval/registry/registry-v1.jsonl
+  registry_sha256: 04d1e9ccb9e8c580d65b1d4a15573164653602529937c11f8262708bd0e3eb37
   results:
   - eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/half2/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
-  criteria_sha256: ab049398a3e3ed4658651267e03ef3dc98c267b4e34488b2358c72007672caa1
+  results_run_ids:
+  - img-r1
+  - half2
+  - topo3-video
+  criteria_sha256: 6fce5ea875c0653ad7321a292fcada31594c9512e1297deabba6c525d9d23888
   summary: eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
+  summaries:
+  - eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
+  - eval/experiments/EVAL-040/runs/half2/IMAGE-HALF-TWO-SUMMARY.md
+  - eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md
   historical_prior_index: eval/historical-priors/media-factory-v1/PRIOR-INDEX.yaml
 tiers:
   deterministic:
@@ -53,18 +63,383 @@ routing_rules:
   tier: human_blind_acceptance
   registry: false
   source: eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
-cell_count: 14
+- id: RR-4
+  scope: edit / extend / compose / reference on a supplied photo
+  rule: Seedream 5 Pro edit is the DEFAULT for work on a supplied photo (remove an object, extend a banner, compose a supplied face and pack,
+    reproduce a referenced product or person).
+  evidence: 'half2: seedream-5-pro-edit 10/12 (IMG-EDIT 2/4, IMG-EXT 2/2, IMG-COMP 2/2, IMG-REF 4/4) at USD 0.0675 a call; flux-2-pro-edit 4/12;
+    nano-banana-pro-edit 3/12 at USD 0.15 a call'
+  tier: human_blind_acceptance
+  registry: false
+  caveat: n = 2 per (case, route); two Controller rejects on IMG-REF-02 ('clothes changed') read the contract more strictly than it is written
+  source: eval/experiments/EVAL-040/runs/half2/IMAGE-HALF-TWO-SUMMARY.md
+- id: RR-5
+  scope: extend a banner (outpaint to 9:16)
+  rule: Only Seedream 5 Pro edit extended the banner without resizing or cutting it; avoid FLUX.2 Pro edit and Nano Banana Pro edit for extension.
+  evidence: 'half2 IMG-EXT-01: seedream-5-pro-edit 2/2; flux-2-pro-edit 0/2 ''changed size''; nano-banana-pro-edit 0/2 ''slight cutoff, not consistent'''
+  tier: human_blind_acceptance
+  registry: false
+  source: eval/experiments/EVAL-040/runs/half2/IMAGE-HALF-TWO-SUMMARY.md
+- id: RR-6
+  scope: exact Devanagari text in motion (video)
+  rule: Never ask the premium video model to write the text. Set the type by code on an animated textless plate (cheap image-to-video), or carry
+    a CORRECT still into a cheap animator.
+  evidence: 'topo3-video VID-TOPO3-01: arm C (FLUX.2 Pro textless plate -> MiniMax H3 Max i2v -> exact strings by code on every frame) 2/2; arm
+    B native text on veo-3.1-full 0/2 and kling-v3-pro 0/2 (''different text altogether''); arm A (qwen-image-3 plate -> H3 Max / Wan 3.0 Prime
+    i2v) 0/4, every reject the plate''s own misspelling carried faithfully - the animators preserved the lettering'
+  tier: human_blind_acceptance
+  registry: false
+  caveat: video packet was blind as to route and arm but had no off-repo reveal key
+  source: eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md
+- id: RR-7
+  scope: the still that feeds a cheap animator
+  rule: 'A text plate that goes into image-to-video must come from a text-capable still route (RR-2: Nano Banana 2 or GPT Image 2), never from
+    the cheapest still model.'
+  evidence: 'topo3-video arm A: both qwen-image-3 9:16 plates misspelled Hindi (draw 1 rejected before animation, draw 2 accepted then found misspelled);
+    Nano Banana plates for arm A not yet tested in motion'
+  tier: human_blind_acceptance
+  registry: false
+  status: untested_in_motion
+  source: eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMARY.md
+cell_count: 31
 reading_guide:
 - deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation
   (independence NOT ESTABLISHED)
-- human acceptance is the Controller's blind verdict against the acceptance contract; n is small (4-8 trials over 1-4 items); never a Registry
+- human acceptance is the Controller's blind verdict against the acceptance contract; n is small (2-8 trials over 1-4 items); never a Registry
   row
 - fallback is a ranking by acceptance within the question, not a score; the Production Planner decides routing
 questions:
+  IMG-COMP:
+    cells:
+      flux-2-pro-edit:
+        route_key: flux-2-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.060'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-0f5ae911f1be8210
+          - cap-210fed1a9ecf9889
+          - cap-6616a47b7b38cc95
+          - cap-adba054f6328769c
+          - cap-c8dff55ba3d3a48d
+          n_items:
+          - IMG-COMP-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.120000'
+            per_trial_mean: '0.060000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 27.629692
+            p95: 28.679682
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 29.0
+            dhash_hamming_max: 29
+            ssim_mean: 0.6739424643864586
+            ssim_min: 0.6739424643864586
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 1
+          trials: 2
+          rejects: 1
+          n_items: 1
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-COMP-01:
+              accepts: 1
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-COMP-01__flux-2-pro-edit__edit__r2
+            verdict: reject
+            note: face seems a litle changed. unsure. could be me
+          elimination:
+            question: IMG-COMP
+            route_key: flux-2-pro-edit
+            arms:
+            - edit
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 1
+            rejects: 1
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: nano-banana-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      nano-banana-pro-edit:
+        route_key: nano-banana-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.15'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-64847dc3655ab997
+          - cap-c2a70ebfeaec979c
+          - cap-c688bbb5f6f589cc
+          - cap-d7c85929457a53a9
+          - cap-f6318e34a33041de
+          n_items:
+          - IMG-COMP-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.300000'
+            per_trial_mean: '0.150000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 30.469086
+            p95: 39.390013
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 23.0
+            dhash_hamming_max: 23
+            ssim_mean: 0.6260439787287918
+            ssim_min: 0.6260439787287918
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 1
+          trials: 2
+          rejects: 1
+          n_items: 1
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-COMP-01:
+              accepts: 1
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-COMP-01__nano-banana-pro-edit__edit__r1
+            verdict: reject
+            note: face looks fairer
+          elimination:
+            question: IMG-COMP
+            route_key: nano-banana-pro-edit
+            arms:
+            - edit
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 1
+            rejects: 1
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: seedream-5-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      seedream-5-pro-edit:
+        route_key: seedream-5-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.0675'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-1e7db1e4e62bbe1c
+          - cap-1e7e9d019fbad61d
+          - cap-403e94e21b408b42
+          - cap-49f215d0d77b3300
+          - cap-f0ce1bb19a455751
+          n_items:
+          - IMG-COMP-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.135000'
+            per_trial_mean: '0.067500'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 35.150862
+            p95: 98.097895
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 21.0
+            dhash_hamming_max: 21
+            ssim_mean: 0.6451473188098985
+            ssim_min: 0.6451473188098985
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 2
+          trials: 2
+          rejects: 0
+          n_items: 1
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-COMP-01:
+              accepts: 2
+              trials: 2
+          controller_notes: []
+          elimination:
+            question: IMG-COMP
+            route_key: seedream-5-pro-edit
+            arms:
+            - edit
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: flux-2-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
   IMG-CORE:
     cells:
       flux-2-pro:
         route_key: flux-2-pro
+        arm: core
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
@@ -79,21 +454,21 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-16e0e67a61f55c85
-          - cap-2074a9b5d5ed8f9f
-          - cap-2726728e7af1f339
-          - cap-3346af240f716acc
-          - cap-4726ac1ac1ba3769
-          - cap-4bb3bdf0bcdcab92
-          - cap-5f3fae2359424b34
-          - cap-6e967b7c17b33703
-          - cap-76c42b78e7c671a0
-          - cap-bf4de292c2d4171c
-          - cap-da358ae0e1561c97
-          - cap-ee71e50e93d1a5aa
-          - cap-eeabbaf6056317ee
-          - cap-f3a667a50835679b
-          - cap-f9e829fc53c4c059
+          - cap-15bb426bd6e0afbf
+          - cap-367bc916dceaf631
+          - cap-37367396f9098fc4
+          - cap-40fca47beefc8c63
+          - cap-74a35e777d643ff5
+          - cap-7a7e0cc3e9987e1b
+          - cap-82930ca23cd1292e
+          - cap-90a642c7a81ad365
+          - cap-9bbc3554ecb39d8e
+          - cap-b21255333d7359c0
+          - cap-b8dcde8e02d3eb72
+          - cap-c855dac926634a62
+          - cap-cc3671d197a7e271
+          - cap-d3d3cc9f843d5b20
+          - cap-ed75a0919e946c3c
           n_items:
           - IMG-CORE-01
           - IMG-CORE-02
@@ -105,7 +480,7 @@ questions:
           refusal_rate: 0.0
           error_rate: 0.0
           format_compliance:
-            passes: 6
+            passes: 4
             trials: 8
             n_items: 4
             items_excluded: []
@@ -180,7 +555,10 @@ questions:
             e2_threshold: 2
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -205,6 +583,7 @@ questions:
           registry: false
       gpt-image-2:
         route_key: gpt-image-2
+        arm: core
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
@@ -219,21 +598,21 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-122f27a886c424a4
-          - cap-21269107e578c4c1
-          - cap-21655e15addd768f
-          - cap-2485baaad96f3985
-          - cap-2c3e452e75fa5e07
-          - cap-3086a01e7b78502c
-          - cap-56a51c67d0b71343
-          - cap-5b1ba12f2e15a27c
-          - cap-688a17c4cd76fc4b
-          - cap-6ca81c1e6dd9a6ac
-          - cap-782d34b776762a06
-          - cap-87260c1b6be87790
-          - cap-b29339a049f0866f
-          - cap-c44bd7e407c77aae
-          - cap-e3c0fcbb80c1350c
+          - cap-06a2d782fcdba43c
+          - cap-0f4ea75ab0c53877
+          - cap-187519cb9961c581
+          - cap-59d2df161f7d4e0e
+          - cap-6d76862c90ec91f1
+          - cap-9ec70028663fb072
+          - cap-a745a15aee8ef3de
+          - cap-ab5ae4a75ddf6c41
+          - cap-b233014f82f2dd02
+          - cap-bc2ec5adaa0312d7
+          - cap-c33d9dc1318e030a
+          - cap-c9d37fc642995c34
+          - cap-cf2c538bf5bcbc7f
+          - cap-d2a36787a043b959
+          - cap-ee44a8e33b7b43d2
           n_items:
           - IMG-CORE-01
           - IMG-CORE-02
@@ -245,7 +624,7 @@ questions:
           refusal_rate: 0.0
           error_rate: 0.0
           format_compliance:
-            passes: 6
+            passes: 4
             trials: 8
             n_items: 4
             items_excluded: []
@@ -314,7 +693,10 @@ questions:
             e2_threshold: 2
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -339,6 +721,7 @@ questions:
           registry: false
       nano-banana-2:
         route_key: nano-banana-2
+        arm: core
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
@@ -353,21 +736,21 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-0565aecdb7fbaae2
-          - cap-115f9b15b159367e
-          - cap-19fddc347b8f37bd
-          - cap-46330acedba2e423
-          - cap-61683b7b99e87bb0
-          - cap-7f71ebf2685f68e0
-          - cap-8bf29867fd64093a
-          - cap-92cb3d0141a44d6b
-          - cap-9565606f79d29992
-          - cap-971d79005cd3c838
-          - cap-9fe89d67d83a118b
-          - cap-b7aef9ab27b5ffb0
-          - cap-c3d753604933b593
-          - cap-d241600624ebc73a
-          - cap-f16b308f9105305a
+          - cap-026430868cd11378
+          - cap-2f2fef9d7954bd6e
+          - cap-417b57a727ab45ef
+          - cap-52a9f7114431c0d6
+          - cap-547ed3621bd7b777
+          - cap-6eae14cd7dafcbbc
+          - cap-8174dd6ce15f2e3e
+          - cap-a48b9f6c07c5eee1
+          - cap-a6bbf7a76b8f7e12
+          - cap-bc00b6e308260ccf
+          - cap-c36807e6545169bd
+          - cap-d29d49b9d32ce78d
+          - cap-d4938d93507abcfd
+          - cap-e85d0bfc1905beb1
+          - cap-e9de6b863bb0dcc6
           n_items:
           - IMG-CORE-01
           - IMG-CORE-02
@@ -379,7 +762,7 @@ questions:
           refusal_rate: 0.0
           error_rate: 0.0
           format_compliance:
-            passes: 2
+            passes: 8
             trials: 8
             n_items: 4
             items_excluded: []
@@ -448,7 +831,10 @@ questions:
             e2_threshold: 2
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -469,6 +855,7 @@ questions:
           registry: false
       nano-banana-pro:
         route_key: nano-banana-pro
+        arm: core
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
@@ -483,21 +870,21 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-173bc5d0198163ef
-          - cap-25d7d36665f1e8e9
-          - cap-287ef6b620bcde4f
-          - cap-4a8dd6ef462219df
-          - cap-574fd3d390a6c715
-          - cap-58dfcc33f00bb5c4
-          - cap-7e5d30b57580a9c5
-          - cap-843d14cc5d81aff4
-          - cap-925867ca0ae5b0a2
-          - cap-98c7208e8377ecdf
-          - cap-a060ee4663332f88
-          - cap-c52bcbb2d527ddf3
-          - cap-d1f52c8ed18c4fbe
-          - cap-e5a3a51dd4ec8fba
-          - cap-ff4ef242887fd04c
+          - cap-0c0bf9689dcfc802
+          - cap-150e4a0e8ae73f36
+          - cap-416a0fc41d31a429
+          - cap-4c24ec5d3105a908
+          - cap-57109e93d1fa9215
+          - cap-58f09ecab29bf132
+          - cap-5a4144c8a12b5446
+          - cap-6a0aa0aeacae2194
+          - cap-9b4748914af37dc5
+          - cap-beb0dcf4edeab612
+          - cap-cd63827eb56e8e2d
+          - cap-cee7716c03470d14
+          - cap-d48bd940880cb7c8
+          - cap-f0b1e18f06a270e7
+          - cap-fd565aaa56d9b5d0
           n_items:
           - IMG-CORE-01
           - IMG-CORE-02
@@ -509,7 +896,7 @@ questions:
           refusal_rate: 0.0
           error_rate: 0.0
           format_compliance:
-            passes: 2
+            passes: 8
             trials: 8
             n_items: 4
             items_excluded: []
@@ -584,7 +971,10 @@ questions:
             e2_threshold: 2
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -609,6 +999,7 @@ questions:
           registry: false
       qwen-image-3:
         route_key: qwen-image-3
+        arm: core
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
@@ -623,21 +1014,21 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-07190d9bfc0d435d
-          - cap-3197fb61063c4dcc
-          - cap-5bf08d2173901c8e
-          - cap-6054785f1206c202
-          - cap-65d64b33d1dcfbe3
-          - cap-78c9c75dba093dad
-          - cap-88fc55b7c8a24f49
-          - cap-90b19099fc29b919
-          - cap-97d30777ce9f609a
-          - cap-9aa41c6c12f1eecd
-          - cap-a3c1945bc1123da2
-          - cap-d6c851c2fa296461
-          - cap-de86cb5b48425d59
-          - cap-e0b16c16f8854b0b
-          - cap-e2074c04ab5ce1f2
+          - cap-0ad14d2aabb53d70
+          - cap-1771a5fd8be99778
+          - cap-4e27c6e27b7317dc
+          - cap-7503edf7b064b85d
+          - cap-9f76e950809aaf02
+          - cap-a04e166463a5b3a2
+          - cap-a38c976ba13bf7b7
+          - cap-aeaa249e64a2415e
+          - cap-b33121cfc5060721
+          - cap-b4077dec01a87145
+          - cap-bc6da9b66ff103fa
+          - cap-bd7d1e724295768d
+          - cap-c148249df9473adb
+          - cap-ccad060dd1d1b3da
+          - cap-eaeac03c9b3fab98
           n_items:
           - IMG-CORE-01
           - IMG-CORE-02
@@ -649,7 +1040,7 @@ questions:
           refusal_rate: 0.0
           error_rate: 0.0
           format_compliance:
-            passes: 6
+            passes: 4
             trials: 8
             n_items: 4
             items_excluded: []
@@ -715,7 +1106,10 @@ questions:
             e2_threshold: 2
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -736,6 +1130,7 @@ questions:
           registry: false
       seedream-5-pro:
         route_key: seedream-5-pro
+        arm: core
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
@@ -750,21 +1145,21 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-0d4908e7eb4813b8
-          - cap-1ea35ea87978b132
-          - cap-273238af3e6a2f52
-          - cap-3de8434b6aa4eb0f
-          - cap-4030d3a08d92586d
-          - cap-462087b22ab931b0
-          - cap-5d6231b620677631
-          - cap-61a12f1796eaa37b
-          - cap-726ad88f82e9d094
-          - cap-7738db745525f6e6
-          - cap-c36bd88be0fb24cd
-          - cap-c3a031a7619bcfca
-          - cap-dd51253ef0996558
-          - cap-ed88126b4fc6737b
-          - cap-fd20548b49ae5c91
+          - cap-03039e97c1aa904b
+          - cap-05e026599e46ff4e
+          - cap-2fa658d40de76690
+          - cap-31a6d33d76e8a717
+          - cap-3a942033e7c16519
+          - cap-527f5a74d6aae447
+          - cap-5594ca12ee273657
+          - cap-55d7879268064b53
+          - cap-6e780497ddd165b7
+          - cap-74d32e3f1713a2db
+          - cap-91a67f75ca3171a1
+          - cap-9d9514462faeea6b
+          - cap-b98164da61229b8c
+          - cap-cd53f29a69d798df
+          - cap-ef690998c89610c9
           n_items:
           - IMG-CORE-01
           - IMG-CORE-02
@@ -848,7 +1243,10 @@ questions:
             e2_threshold: 2
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -875,10 +1273,1081 @@ questions:
           route: flux-2-pro
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
+  IMG-EDIT:
+    cells:
+      flux-2-pro-edit:
+        route_key: flux-2-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.045'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-2d1c14749e34f3e3
+          - cap-481c4b5885061465
+          - cap-57c4b98e6e954e47
+          - cap-658f456ddda06e13
+          - cap-7d0615a15d92b94e
+          - cap-8f27afe9251aea4c
+          - cap-93b7db531a0e0f5f
+          - cap-994cb6736f80fa23
+          - cap-a7618e3e92dacba3
+          - cap-eb1ec141545fde85
+          n_items:
+          - IMG-EDIT-01
+          - IMG-EDIT-02
+          counted_trials: 4
+          status_counts:
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 4
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.180000'
+            per_trial_mean: '0.045000'
+            n_settled: 4
+            cost_within_reserved:
+              passes: 4
+              trials: 4
+          latency_s:
+            p50: 21.221911
+            p95: 21.718214
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 10.0
+            dhash_hamming_max: 11
+            ssim_mean: 0.9000015271494632
+            ssim_min: 0.8753847700830996
+            structural_passes: 2
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 3
+          trials: 4
+          rejects: 1
+          n_items: 2
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-EDIT-01:
+              accepts: 2
+              trials: 2
+            IMG-EDIT-02:
+              accepts: 1
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-EDIT-02__flux-2-pro-edit__edit__r2
+            verdict: reject
+            note: 'next text appeared '
+          elimination:
+            question: IMG-EDIT
+            route_key: flux-2-pro-edit
+            arms:
+            - edit
+            n_planned: 4
+            refusals_or_errors: 0
+            accepts: 3
+            rejects: 1
+            not_dispatched: 0
+            e1_threshold: 2
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: seedream-5-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      nano-banana-pro-edit:
+        route_key: nano-banana-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.15'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-1bcfc48de702068a
+          - cap-24dcc460104224f4
+          - cap-33fde983b731e283
+          - cap-4113cf8707589a35
+          - cap-670868026dde658c
+          - cap-989bc83bbd012391
+          - cap-9ef6fef7a7f42712
+          - cap-b702476d554ce3b2
+          - cap-d2d99a6a0e38fbc3
+          - cap-f98a57292c4ca082
+          n_items:
+          - IMG-EDIT-01
+          - IMG-EDIT-02
+          counted_trials: 4
+          status_counts:
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 4
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.600000'
+            per_trial_mean: '0.150000'
+            n_settled: 4
+            cost_within_reserved:
+              passes: 4
+              trials: 4
+          latency_s:
+            p50: 27.031601
+            p95: 33.127194
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 14.5
+            dhash_hamming_max: 27
+            ssim_mean: 0.65135081618898
+            ssim_min: 0.3196748602000429
+            structural_passes: 2
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 1
+          trials: 4
+          rejects: 3
+          n_items: 2
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-EDIT-01:
+              accepts: 0
+              trials: 2
+            IMG-EDIT-02:
+              accepts: 1
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-EDIT-01__nano-banana-pro-edit__edit__r1
+            verdict: reject
+            note: sofa colour cahnged a bit
+          - trial_id: IMG-EDIT-02__nano-banana-pro-edit__edit__r1
+            verdict: reject
+            note: background came in
+          - trial_id: IMG-EDIT-01__nano-banana-pro-edit__edit__r2
+            verdict: reject
+            note: 'sofa colour cahnged a bit (Controller resolved in chat: j16 -reject)'
+          elimination:
+            question: IMG-EDIT
+            route_key: nano-banana-pro-edit
+            arms:
+            - edit
+            n_planned: 4
+            refusals_or_errors: 0
+            accepts: 1
+            rejects: 3
+            not_dispatched: 0
+            e1_threshold: 2
+            e2_threshold: 1
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: flux-2-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      seedream-5-pro-edit:
+        route_key: seedream-5-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.0675'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-00e7e0f0ba855228
+          - cap-0def1f9d4e153490
+          - cap-11f856e00f6e406b
+          - cap-741636bce14c655c
+          - cap-97e2919c5622782b
+          - cap-9d484bd660e9fe6c
+          - cap-a189edba833da082
+          - cap-b3d5fb2904c950cc
+          - cap-e2ccd62eb9156da7
+          - cap-fa1616ac9dff0977
+          n_items:
+          - IMG-EDIT-01
+          - IMG-EDIT-02
+          counted_trials: 4
+          status_counts:
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 4
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.270000'
+            per_trial_mean: '0.067500'
+            n_settled: 4
+            cost_within_reserved:
+              passes: 4
+              trials: 4
+          latency_s:
+            p50: 85.66782
+            p95: 92.401824
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 14.5
+            dhash_hamming_max: 20
+            ssim_mean: 0.889838022240151
+            ssim_min: 0.8752838868770387
+            structural_passes: 2
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 2
+          trials: 4
+          rejects: 2
+          n_items: 2
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-EDIT-01:
+              accepts: 1
+              trials: 2
+            IMG-EDIT-02:
+              accepts: 1
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-EDIT-02__seedream-5-pro-edit__edit__r1
+            verdict: reject
+            note: size increaseed
+          - trial_id: IMG-EDIT-01__seedream-5-pro-edit__edit__r2
+            verdict: reject
+            note: sofa colour cahnged a bit
+          elimination:
+            question: IMG-EDIT
+            route_key: seedream-5-pro-edit
+            arms:
+            - edit
+            n_planned: 4
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 2
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: nano-banana-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  IMG-EXT:
+    cells:
+      flux-2-pro-edit:
+        route_key: flux-2-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.045'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-0009ce371ce14080
+          - cap-3b24972a40e57f88
+          - cap-b22871677d893ca9
+          - cap-cb7e83901df09734
+          - cap-f1f9799e0ecfbc43
+          n_items:
+          - IMG-EXT-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.090000'
+            per_trial_mean: '0.045000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 21.351767
+            p95: 21.732266
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 19.0
+            dhash_hamming_max: 19
+            ssim_mean: 0.786015697656401
+            ssim_min: 0.786015697656401
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-EXT-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-EXT-01__flux-2-pro-edit__edit__r1
+            verdict: reject
+            note: changed size
+          - trial_id: IMG-EXT-01__flux-2-pro-edit__edit__r2
+            verdict: reject
+            note: changed size
+          elimination:
+            question: IMG-EXT
+            route_key: flux-2-pro-edit
+            arms:
+            - edit
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: nano-banana-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      nano-banana-pro-edit:
+        route_key: nano-banana-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.15'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-24d44bbe586ff1f8
+          - cap-305ed57c49797687
+          - cap-373b8a7b28344cd6
+          - cap-4b05cbd4c67cd584
+          - cap-de67f3ee2066f1e7
+          n_items:
+          - IMG-EXT-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.300000'
+            per_trial_mean: '0.150000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 35.110349
+            p95: 44.901099
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 12.0
+            dhash_hamming_max: 12
+            ssim_mean: 0.665921082686319
+            ssim_min: 0.665921082686319
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-EXT-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-EXT-01__nano-banana-pro-edit__edit__r1
+            verdict: reject
+            note: doesn't look consistent. slight cutoff exists
+          - trial_id: IMG-EXT-01__nano-banana-pro-edit__edit__r2
+            verdict: reject
+            note: doesn't look consistent. slight cutoff exists
+          elimination:
+            question: IMG-EXT
+            route_key: nano-banana-pro-edit
+            arms:
+            - edit
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: seedream-5-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      seedream-5-pro-edit:
+        route_key: seedream-5-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.0675'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-49b543f921be12f3
+          - cap-80581ac06b368c50
+          - cap-b19ea7ff7cf95925
+          - cap-bfbdef42815aa228
+          - cap-e7b95d8df3033014
+          n_items:
+          - IMG-EXT-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.135000'
+            per_trial_mean: '0.067500'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 69.43684
+            p95: 75.8507
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 12.0
+            dhash_hamming_max: 12
+            ssim_mean: 0.6280716239931907
+            ssim_min: 0.6280716239931907
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 2
+          trials: 2
+          rejects: 0
+          n_items: 1
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-EXT-01:
+              accepts: 2
+              trials: 2
+          controller_notes: []
+          elimination:
+            question: IMG-EXT
+            route_key: seedream-5-pro-edit
+            arms:
+            - edit
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: flux-2-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  IMG-REF:
+    cells:
+      flux-2-pro-edit:
+        route_key: flux-2-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.075'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-189b1a83fff107cd
+          - cap-1e03a0b7353d92c5
+          - cap-24eb6b06647e85c6
+          - cap-3a409836cd0b3b78
+          - cap-4a4b5fda3da7aad8
+          - cap-582f19f020753e19
+          - cap-888d83e285655a1e
+          - cap-cc9f24f69fb807f9
+          - cap-d9c1844a74c0b117
+          - cap-e842b38919b69cd3
+          n_items:
+          - IMG-REF-01
+          - IMG-REF-02
+          counted_trials: 4
+          status_counts:
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.300000'
+            per_trial_mean: '0.075000'
+            n_settled: 4
+            cost_within_reserved:
+              passes: 4
+              trials: 4
+          latency_s:
+            p50: 28.387712
+            p95: 32.228412
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 23.5
+            dhash_hamming_max: 27
+            ssim_mean: 0.714063068862957
+            ssim_min: 0.5936548362683204
+            structural_passes: 2
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 0
+          trials: 4
+          rejects: 4
+          n_items: 2
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-REF-01:
+              accepts: 0
+              trials: 2
+            IMG-REF-02:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-REF-01__flux-2-pro-edit__edit__r1
+            verdict: reject
+            note: tin look bruised
+          - trial_id: IMG-REF-02__flux-2-pro-edit__edit__r1
+            verdict: reject
+            note: doesn't look like a cafe setup
+          - trial_id: IMG-REF-01__flux-2-pro-edit__edit__r2
+            verdict: reject
+            note: tin look bruised
+          - trial_id: IMG-REF-02__flux-2-pro-edit__edit__r2
+            verdict: reject
+            note: not a cafe setup
+          elimination:
+            question: IMG-REF
+            route_key: flux-2-pro-edit
+            arms:
+            - edit
+            n_planned: 4
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 4
+            not_dispatched: 0
+            e1_threshold: 2
+            e2_threshold: 1
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: seedream-5-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      nano-banana-pro-edit:
+        route_key: nano-banana-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.15'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-053051a41c7f175c
+          - cap-1683eeccd95aefac
+          - cap-44619d78b0516db3
+          - cap-44ba4563db8ba27a
+          - cap-4cdcce5e301d63ee
+          - cap-541cc174bd5cb3b2
+          - cap-755ab10328906b8c
+          - cap-8e1a55f63d9df76c
+          - cap-9f79f7362e7792a4
+          - cap-a6386aca9cc140ff
+          n_items:
+          - IMG-REF-01
+          - IMG-REF-02
+          counted_trials: 4
+          status_counts:
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.600000'
+            per_trial_mean: '0.150000'
+            n_settled: 4
+            cost_within_reserved:
+              passes: 4
+              trials: 4
+          latency_s:
+            p50: 41.243923
+            p95: 57.637877
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 30.5
+            dhash_hamming_max: 34
+            ssim_mean: 0.5340985686593871
+            ssim_min: 0.3238147008828215
+            structural_passes: 2
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 1
+          trials: 4
+          rejects: 3
+          n_items: 2
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-REF-01:
+              accepts: 1
+              trials: 2
+            IMG-REF-02:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: IMG-REF-01__nano-banana-pro-edit__edit__r1
+            verdict: reject
+            note: tin look bruised
+          - trial_id: IMG-REF-02__nano-banana-pro-edit__edit__r1
+            verdict: reject
+            note: clothes changed
+          - trial_id: IMG-REF-02__nano-banana-pro-edit__edit__r2
+            verdict: reject
+            note: clothes changed
+          elimination:
+            question: IMG-REF
+            route_key: nano-banana-pro-edit
+            arms:
+            - edit
+            n_planned: 4
+            refusals_or_errors: 0
+            accepts: 1
+            rejects: 3
+            not_dispatched: 0
+            e1_threshold: 2
+            e2_threshold: 1
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: flux-2-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      seedream-5-pro-edit:
+        route_key: seedream-5-pro-edit
+        arm: edit
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json
+        unit_price_usd_pinned:
+        - '0.0675'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-29d3c28e7957ac2c
+          - cap-38331233c59e7548
+          - cap-9285aa2547969fd2
+          - cap-9ff3b1ffc66efc0e
+          - cap-b01fb0d13334199f
+          - cap-c4d4dfd139081e41
+          - cap-dbbbb300ff96f4c4
+          - cap-ddf207e9c929ed45
+          - cap-ec4bfbec9ca30da7
+          - cap-f6d89fa3f6571ec2
+          n_items:
+          - IMG-REF-01
+          - IMG-REF-02
+          counted_trials: 4
+          status_counts:
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 4
+            n_items: 2
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.270000'
+            per_trial_mean: '0.067500'
+            n_settled: 4
+            cost_within_reserved:
+              passes: 4
+              trials: 4
+          latency_s:
+            p50: 88.078702
+            p95: 98.460847
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 29.0
+            dhash_hamming_max: 29
+            ssim_mean: 0.5508506066681121
+            ssim_min: 0.41930703972679945
+            structural_passes: 1
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller (blind, commitment verified)
+          accepts: 4
+          trials: 4
+          rejects: 0
+          n_items: 2
+          arms:
+          - edit
+          no_artifact_rejects: 0
+          per_item:
+            IMG-REF-01:
+              accepts: 2
+              trials: 2
+            IMG-REF-02:
+              accepts: 2
+              trials: 2
+          controller_notes: []
+          elimination:
+            question: IMG-REF
+            route_key: seedream-5-pro-edit
+            arms:
+            - edit
+            n_planned: 4
+            refusals_or_errors: 0
+            accepts: 4
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 2
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: half2
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - half2
+          source: RESULTS.yaml of run half2
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: nano-banana-pro-edit
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
   IMG-TEXT:
     cells:
-      flux-2-pro:
+      flux-2-pro+C_composite_textless_base:
         route_key: flux-2-pro
+        arm: C_composite_textless_base
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
@@ -893,16 +2362,16 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-31d4f7143b25acc3
-          - cap-617b3cad6c9e6d54
-          - cap-911fcdb9dc08172c
-          - cap-9b7280c6a92e0ec4
-          - cap-aa7dfdd85b42b2d7
-          - cap-aad9c88c39f2b21d
-          - cap-b8e9c66d4c5ca825
-          - cap-e873f1148275bb31
-          - cap-e9b4d4eb22d0434f
-          - cap-feb61125a733ed53
+          - cap-00b4e230c9481100
+          - cap-026d2782ba4531cd
+          - cap-1f240d64ce510668
+          - cap-2705c5b6c8d9f428
+          - cap-3177058b8b3dce97
+          - cap-50378956761cd399
+          - cap-a35912cb0110ff1d
+          - cap-deade2499bb6d482
+          - cap-e8171dacf3919ce5
+          - cap-ea48415eb3c14be2
           n_items:
           - IMG-TEXT-01
           - IMG-TEXT-02
@@ -979,7 +2448,10 @@ questions:
             eliminated: true
             eliminated_by:
             - E2
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -1000,6 +2472,7 @@ questions:
           registry: false
       flux-2-pro+code_overlay:
         route_key: flux-2-pro
+        arm: C_composite_textless_base
         arm_note: textless plate (FLUX.2 Pro) + exact strings set by code (composite-v2 layout); deterministic facts describe the PLATE calls
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json
@@ -1014,16 +2487,16 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-143f52c5a64a6b03
-          - cap-209412e848ca689a
-          - cap-20cd1fe023e317cb
-          - cap-24bbf3bce0f68373
-          - cap-42690881dc68ec96
-          - cap-7246cf0f9b43642a
-          - cap-797b094dc17d3339
-          - cap-7cee27ff6d0f8d1f
-          - cap-c2722dba77a5ce2e
-          - cap-d92124bf68cc1711
+          - cap-032c83540ded909f
+          - cap-0c029b28476cfda8
+          - cap-35121408e079bdf6
+          - cap-3e1dc1a3ba470092
+          - cap-3e5653f45713a40c
+          - cap-641a8b605386b39f
+          - cap-65a0d7df187d0797
+          - cap-8f4b8cdb5b4fb9ef
+          - cap-b8f22b5fe325d089
+          - cap-ee9251da0de6cdbe
           n_items:
           - IMG-TEXT-01
           - IMG-TEXT-02
@@ -1112,11 +2585,12 @@ questions:
           status: row_exists
         rank_in_question: 1
         fallback:
-          route: gpt-image-2
+          route: gpt-image-2+A_cheap_generated
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
-      gpt-image-2:
+      gpt-image-2+A_cheap_generated:
         route_key: gpt-image-2
+        arm: A_cheap_generated
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/gpt-image-2/fal-openai-gpt-image-2.html
@@ -1131,16 +2605,16 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-221c76d0babbcf7f
-          - cap-22e81c88c4219af9
-          - cap-3a3276b1ef38d6d9
-          - cap-3af5c227661070f4
-          - cap-3bbf4f17d3509003
-          - cap-89cec23dc3f942d1
-          - cap-9d43fead6caebd8c
-          - cap-bab85d3a498d1971
-          - cap-f89256418a0cfdbc
-          - cap-fb387c09d500a0c5
+          - cap-217e442394553556
+          - cap-2a038e42143d4457
+          - cap-6731d2f7b2833b8f
+          - cap-6805a73a180a653a
+          - cap-6d24c220c9680af6
+          - cap-702fa2b3aeb9da23
+          - cap-813d48ca52a3294e
+          - cap-8252b14cac6e9056
+          - cap-8377d897962329f6
+          - cap-8e2af09b7e28c475
           n_items:
           - IMG-TEXT-01
           - IMG-TEXT-02
@@ -1207,7 +2681,10 @@ questions:
             e2_threshold: 1
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -1223,11 +2700,12 @@ questions:
           status: row_exists
         rank_in_question: 2
         fallback:
-          route: nano-banana-2
+          route: nano-banana-2+A_cheap_generated
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
-      nano-banana-2:
+      nano-banana-2+A_cheap_generated:
         route_key: nano-banana-2
+        arm: A_cheap_generated
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
@@ -1242,16 +2720,16 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-058855623d6f90a5
-          - cap-0703ac8df9f28c6c
-          - cap-5b51f67d579b6fae
-          - cap-5b89712e521b6c5c
-          - cap-6248ec8651459e1d
-          - cap-6be72200e8b0e688
-          - cap-829f481b3f68b840
-          - cap-8d574c7987c18c27
-          - cap-dacc11e841158878
-          - cap-dcc79a4bc9151983
+          - cap-0a0cbde01a7940aa
+          - cap-470f7e19258700ec
+          - cap-5319283b02820e64
+          - cap-53ca4d2d6b1d1203
+          - cap-559688e6238d8130
+          - cap-65a572eeefb260bb
+          - cap-9e0ab4f738f9e249
+          - cap-b4342f855807c8a9
+          - cap-bfc90c62dd7611a0
+          - cap-d8e9626c43c17b4c
           n_items:
           - IMG-TEXT-01
           - IMG-TEXT-02
@@ -1318,7 +2796,10 @@ questions:
             e2_threshold: 1
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -1334,11 +2815,12 @@ questions:
           status: no_row_for_this_route_family
         rank_in_question: 3
         fallback:
-          route: nano-banana-pro
+          route: nano-banana-pro+B_premium_generated
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
-      nano-banana-pro:
+      nano-banana-pro+B_premium_generated:
         route_key: nano-banana-pro
+        arm: B_premium_generated
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
@@ -1353,16 +2835,16 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-220f72afca41789f
-          - cap-7c032d128c5385e9
-          - cap-80881786562b17f7
-          - cap-942a3767fc1c6799
-          - cap-a78dff334f18bf19
-          - cap-af86878b252e8730
-          - cap-b2e77f8e431d9b79
-          - cap-e3e3dd401590f08e
-          - cap-e5f20d0a406d2b15
-          - cap-ff61b8ce0184b468
+          - cap-0123c49f4ca53aeb
+          - cap-10b365b850c60837
+          - cap-21c3b239aa9b0bca
+          - cap-416c6d323224ebc0
+          - cap-51655969bc39be72
+          - cap-5354604adf63ad85
+          - cap-8334a1ba4460b653
+          - cap-8754cfab1c4b9486
+          - cap-8b92e33f1f80ba20
+          - cap-e9b52d17e8713642
           n_items:
           - IMG-TEXT-01
           - IMG-TEXT-02
@@ -1429,7 +2911,10 @@ questions:
             e2_threshold: 1
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -1445,11 +2930,12 @@ questions:
           status: row_exists
         rank_in_question: 4
         fallback:
-          route: qwen-image-3
+          route: qwen-image-3+A_cheap_generated
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
-      qwen-image-3:
+      qwen-image-3+A_cheap_generated:
         route_key: qwen-image-3
+        arm: A_cheap_generated
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json
@@ -1464,13 +2950,13 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-04f74b2c6468c717
-          - cap-083f5fc4def91733
-          - cap-1d6ee5ab07c27698
-          - cap-243b8096365df337
-          - cap-b82ea0620b1357be
-          - cap-f8f819a6b04c5922
-          - cap-fc0ae9b992c21ba2
+          - cap-3b9fc63edc1da065
+          - cap-aec10c74675776cc
+          - cap-be1e786cfd7d1123
+          - cap-c1cabb89a31a07de
+          - cap-c3f239e9ea8eda0d
+          - cap-ecaff144101768f1
+          - cap-ef8315c1405df742
           n_items:
           - IMG-TEXT-01
           - IMG-TEXT-02
@@ -1541,7 +3027,10 @@ questions:
             e2_threshold: 1
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -1557,11 +3046,12 @@ questions:
           status: no_row_for_this_route_family
         rank_in_question: 5
         fallback:
-          route: recraft-v4
+          route: recraft-v4+B_premium_generated
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
-      recraft-v4:
+      recraft-v4+B_premium_generated:
         route_key: recraft-v4
+        arm: B_premium_generated
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/recraft-v4/fal-recraft-v4-text-to-image.html
@@ -1576,16 +3066,16 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-1fb85d4f63bfcfb9
-          - cap-2c6d328e4e88c9cf
-          - cap-3dd8d0bce85aae1c
-          - cap-7a6571e32631d830
-          - cap-81773b22723eb384
-          - cap-945793ca20f9a0e8
-          - cap-d02936f4dbf07767
-          - cap-db64f843261975cf
-          - cap-dd09cada1d01c804
-          - cap-e69f113d44488991
+          - cap-13edd4c4ff0652e1
+          - cap-30b2e80af37aa6a8
+          - cap-33aa83e8a3d038ed
+          - cap-3cc2e1d970cdafc3
+          - cap-458287b8e0d95dbb
+          - cap-76b96efc3b105e70
+          - cap-798b1cf1bef77a2e
+          - cap-8a114287caaad8a0
+          - cap-db3ce1eb8bf71d68
+          - cap-fa1922fdc3579d99
           n_items:
           - IMG-TEXT-01
           - IMG-TEXT-02
@@ -1658,7 +3148,10 @@ questions:
             e2_threshold: 1
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -1674,11 +3167,12 @@ questions:
           status: no_row_for_this_route_family
         rank_in_question: 6
         fallback:
-          route: seedream-5-pro
+          route: seedream-5-pro+B_premium_generated
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
-      seedream-5-pro:
+      seedream-5-pro+B_premium_generated:
         route_key: seedream-5-pro
+        arm: B_premium_generated
         arm_note: null
         price_pin_ref:
         - eval/empirical-planning/price-pins-2026-09/seedream-5-pro/fal-api-models-seedream-v5-pro-t2i.json
@@ -1693,16 +3187,16 @@ questions:
           tier: deterministic
           registry: true
           rows:
-          - cap-433cef49ae87e099
-          - cap-504662dc7f3c097e
-          - cap-524d95bebdd92fa4
-          - cap-5714365d9b8d06a0
-          - cap-a3e4e33c10fde402
-          - cap-a424b4d6ca2639c7
-          - cap-d01157dc01649bcd
-          - cap-e9ee9f9846819b7d
-          - cap-f2029a3f7ef7f421
-          - cap-fed59b1dae884993
+          - cap-058e3a16e28920ab
+          - cap-0b7a7cdc7c47208f
+          - cap-0e2f3806109fdc73
+          - cap-1bc4be3aa718fdb5
+          - cap-3076d3ee0e453996
+          - cap-63d4d9d2f757c532
+          - cap-685a6d097c08dab4
+          - cap-713aae2f96752398
+          - cap-83380a1cb2c07cfb
+          - cap-a3595f4e654cb462
           n_items:
           - IMG-TEXT-01
           - IMG-TEXT-02
@@ -1775,7 +3269,10 @@ questions:
             e2_threshold: 1
             eliminated: false
             eliminated_by: []
+            results_run_id: img-r1
           rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - img-r1
           source: RESULTS.yaml of run img-r1
           note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
         screened_not_qualified:
@@ -1791,6 +3288,577 @@ questions:
           status: row_exists
         rank_in_question: 7
         fallback:
-          route: flux-2-pro
+          route: flux-2-pro+C_composite_textless_base
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  VID-TOPO3:
+    cells:
+      kling-v3-pro+B_premium_native_t2v:
+        route_key: kling-v3-pro
+        arm: B_premium_native_t2v
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+        unit_price_usd_pinned:
+        - '0.112'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-03bec2b5833e6526
+          - cap-48d8a6974d45f24e
+          - cap-9e6913832302945c
+          - cap-c3114659e864a513
+          - cap-f0c6ff1c8bfa7636
+          n_items:
+          - VID-TOPO3-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '1.344000'
+            per_trial_mean: '0.672000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 283.52409
+            p95: 460.208907
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 28.0
+            dhash_hamming_max: 28
+            ssim_mean: 0.6513301487214278
+            ssim_min: 0.6513301487214278
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - B_premium_native_t2v
+          no_artifact_rejects: 0
+          per_item:
+            VID-TOPO3-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r1
+            verdict: reject
+            note: different text altogether (Controller)
+          - trial_id: VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r2
+            verdict: reject
+            note: different text altogether (Controller)
+          elimination:
+            question: VID-TOPO3
+            route_key: kling-v3-pro
+            arm: B_premium_native_t2v
+            arms:
+            - B_premium_native_t2v
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: topo3-video
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - topo3-video
+          source: RESULTS.yaml of run topo3-video
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: wan-3.0-prime-i2v+A_cheap_still_to_cheap_i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      minimax-h3-max-i2v+A_cheap_still_to_cheap_i2v:
+        route_key: minimax-h3-max-i2v
+        arm: A_cheap_still_to_cheap_i2v
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-2de89dbbc2f7e984
+          - cap-71043592dcc6c4b9
+          - cap-792e69cca615dec8
+          - cap-b704e920f0f2f408
+          - cap-cc1c9bd8c8ddc7f1
+          n_items:
+          - VID-TOPO3-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.960000'
+            per_trial_mean: '0.480000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 9.174444
+            p95: 10.425451
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 22.0
+            dhash_hamming_max: 22
+            ssim_mean: 0.9180252650846462
+            ssim_min: 0.9180252650846462
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - A_cheap_still_to_cheap_i2v
+          no_artifact_rejects: 0
+          per_item:
+            VID-TOPO3-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r2
+            verdict: reject
+            note: same 'कली' misspelling as the plate (Controller); rest okay - upstream plate defect, motion/text stability fine
+          - trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r1
+            verdict: reject
+            note: different text altogether (Controller)
+          elimination:
+            question: VID-TOPO3
+            route_key: minimax-h3-max-i2v
+            arm: A_cheap_still_to_cheap_i2v
+            arms:
+            - A_cheap_still_to_cheap_i2v
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: topo3-video
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - topo3-video
+          source: RESULTS.yaml of run topo3-video
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: kling-v3-pro+B_premium_native_t2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      minimax-h3-max-i2v+C_textless_plate_i2v_composite:
+        route_key: minimax-h3-max-i2v
+        arm: C_textless_plate_i2v_composite
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-181a5b9f1ed2de07
+          - cap-25b96280356f7328
+          - cap-81ef1130621571c3
+          - cap-e31bafcbbb236daa
+          - cap-ff0c0198f7ac9efe
+          n_items:
+          - VID-TOPO3-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 0
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '0.960000'
+            per_trial_mean: '0.480000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 8.761225
+            p95: 9.188657
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 11.0
+            dhash_hamming_max: 11
+            ssim_mean: 0.8493786160149199
+            ssim_min: 0.8493786160149199
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 2
+          trials: 2
+          rejects: 0
+          n_items: 1
+          arms:
+          - C_textless_plate_i2v_composite
+          no_artifact_rejects: 0
+          per_item:
+            VID-TOPO3-01:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r2
+            verdict: accept
+            note: no mistakes (Controller)
+          - trial_id: VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r1
+            verdict: accept
+            note: correct (Controller)
+          elimination:
+            question: VID-TOPO3
+            route_key: minimax-h3-max-i2v
+            arm: C_textless_plate_i2v_composite
+            arms:
+            - C_textless_plate_i2v_composite
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 2
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: false
+            eliminated_by: []
+            results_run_id: topo3-video
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - topo3-video
+          source: RESULTS.yaml of run topo3-video
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: minimax-h3-max-i2v+A_cheap_still_to_cheap_i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      veo-3.1-full+B_premium_native_t2v:
+        route_key: veo-3.1-full
+        arm: B_premium_native_t2v
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.4'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-2120a2a385ae0487
+          - cap-5ba52cbb2b013a18
+          - cap-a0c45114183c9b4c
+          - cap-a3f129a6d326e1ce
+          - cap-cda278372c33ce8a
+          n_items:
+          - VID-TOPO3-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '4.800000'
+            per_trial_mean: '2.400000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 52.551433
+            p95: 60.737122
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 27.0
+            dhash_hamming_max: 27
+            ssim_mean: 0.4043276756944288
+            ssim_min: 0.4043276756944288
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - B_premium_native_t2v
+          no_artifact_rejects: 0
+          per_item:
+            VID-TOPO3-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r1
+            verdict: reject
+            note: some other text altogether (Controller)
+          - trial_id: VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r2
+            verdict: reject
+            note: some other text altogether (Controller)
+          elimination:
+            question: VID-TOPO3
+            route_key: veo-3.1-full
+            arm: B_premium_native_t2v
+            arms:
+            - B_premium_native_t2v
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: topo3-video
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - topo3-video
+          source: RESULTS.yaml of run topo3-video
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 5
+        fallback:
+          route: minimax-h3-max-i2v+C_textless_plate_i2v_composite
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      wan-3.0-prime-i2v+A_cheap_still_to_cheap_i2v:
+        route_key: wan-3.0-prime-i2v
+        arm: A_cheap_still_to_cheap_i2v
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-i2v.json
+        unit_price_usd_pinned:
+        - '0.14'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-8f7839ded3f8ad2c
+          - cap-a31e9878a3dd1b8c
+          - cap-c8b618c545bf02df
+          - cap-e93520004662f51e
+          - cap-ede98e33471104c1
+          n_items:
+          - VID-TOPO3-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '1.680000'
+            per_trial_mean: '0.840000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 55.900649
+            p95: 73.307256
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 19.0
+            dhash_hamming_max: 19
+            ssim_mean: 0.8866764531828628
+            ssim_min: 0.8866764531828628
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - A_cheap_still_to_cheap_i2v
+          no_artifact_rejects: 0
+          per_item:
+            VID-TOPO3-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r2
+            verdict: reject
+            note: same 'कली' misspelling (Controller); rest okay - upstream plate defect
+          - trial_id: VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r1
+            verdict: reject
+            note: '''कली'' mistake plus ''छूट'' misspelled (Controller)'
+          elimination:
+            question: VID-TOPO3
+            route_key: wan-3.0-prime-i2v
+            arm: A_cheap_still_to_cheap_i2v
+            arms:
+            - A_cheap_still_to_cheap_i2v
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: topo3-video
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - topo3-video
+          source: RESULTS.yaml of run topo3-video
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 4
+        fallback:
+          route: veo-3.1-full+B_premium_native_t2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
