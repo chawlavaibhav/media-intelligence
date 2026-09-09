@@ -2,7 +2,7 @@
 
 All verdicts are the Controller's, blind (names hid route and arm), against each case's acceptance contract. Human
 acceptance is product evidence in the routing map; the Capability Registry holds only the deterministic rows
-(format, cost, latency/errors, reliability, repeat consistency), 459 rows at the end of the day, validator PASS.
+(format, cost, latency/errors, reliability, repeat consistency), 480 rows at the end of the day, validator PASS.
 Spend records: `CONTROLLER-SPEND-AUTHORISATION-VIDEO-PIECES-2-TO-5-CHEAP-FIRST-2026-09-09.md` (+ addenda),
 `…-VIDEO-PIECE-1-NB-PLATES-ADDENDUM-…`, `…-SPEECH-AND-MUSIC-STACKED-…`. Seedance 2.5 left out on the Controller's word.
 
@@ -28,6 +28,10 @@ Spend records: `CONTROLLER-SPEND-AUTHORISATION-VIDEO-PIECES-2-TO-5-CHEAP-FIRST-2
 | Music (2 briefs, 30 s) | Lyria 2 | 4 / 4 | USD 0.06 | tracks 32.8 s (trim by code) |
 | | ElevenLabs Music direct | not run | — | HTTP 402 on the free plan; "skip eleven labs music" |
 | Lipsync (3 scripts on the accepted lobby clip) | Kling lipsync a2v | 0 / 5 | USD 0.14 | "looking very odd" (all five); one trial refused: fal balance exhausted |
+| Two speakers, Hindi dialogue, 8 s (after the fal top-up) | Veo 3.1 fast | 2 / 2 | USD 0.80 | "all 6 approved" |
+| | Gemini Omni 1.1 Flash | 2 / 2 | USD 0.81 | |
+| | Wan 3.0 Prime | 2 / 2 | USD 1.12 | |
+| | Kling v3 Pro audio | 0 / 2 | USD 1.34 | "characters cut off, language bad", "language off" (after the fal top-up registered) |
 
 ## What the day says
 
@@ -42,7 +46,9 @@ Spend records: `CONTROLLER-SPEND-AUTHORISATION-VIDEO-PIECES-2-TO-5-CHEAP-FIRST-2
    H3 Max (USD 0.48) passed 2/2 where Veo 3.1 full and Kling v3 Pro scored 0/4.
 5. **Speech: Sarvam is the Indian-language default** (6/6 at a paisa scale); ElevenLabs on the account's American
    premade voice passes Hindi and English but not Hinglish. **Music: Lyria on credits** at USD 0.06 a track.
-6. **Stacked productions work as a judging method**: music was judged raw and under the accepted clips; lipsync rode on
+6. **Two-speaker Hindi dialogue is native and cheap**: Veo fast, Gemini Omni and Wan each 2/2 with the right lips on the
+   right line and a paint can in frame; no plate-plus-lipsync chain needed (RR-14).
+7. **Stacked productions work as a judging method**: music was judged raw and under the accepted clips; lipsync rode on
    the accepted image-to-video clip with the ElevenLabs drives; no video was bought for the audio pieces.
 
 ## Infrastructure facts recorded today
@@ -55,6 +61,6 @@ Spend records: `CONTROLLER-SPEND-AUTHORISATION-VIDEO-PIECES-2-TO-5-CHEAP-FIRST-2
 
 ## Open
 
-Lipsync verdicts (set P) and the one refused lipsync draw after a fal top-up; an Indian voice on the ElevenLabs
-account for the Hinglish retry; the two-speaker piece (caps quoted, not approved); Seedance 2.5 as a premium reference
-only where the cheap routes failed (the knee brief).
+The refused lipsync draw and Kling's two two-speaker draws (fal balance; the Controller skipped further top-ups); an Indian
+voice on the ElevenLabs account for the Hinglish retry (skipped); Seedance 2.5 as a premium reference only where the
+cheap routes failed (the knee brief).

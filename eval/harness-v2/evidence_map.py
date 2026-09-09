@@ -49,7 +49,7 @@ SUMMARY_VIDEO1 = "eval/experiments/EVAL-040/runs/topo3-video/VIDEO-PIECE-1-SUMMA
 SUMMARY_DAY2 = "eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md"
 COMPOSITE_SUFFIX = "+code_overlay"
 TRIVIAL_ARMS = (None, "core", "edit")      # arms that do not distinguish a cell: the route name stands alone
-ROUND = "EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip)"
+ROUND = "EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling)"
 
 TIERS = {
     "deterministic": {"registry": True, "meaning": "re-evaluated by a frozen deterministic instrument over sealed bytes; the Registry rows named are the evidence"},
@@ -119,6 +119,9 @@ ROUTING_RULES = [
      "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_DAY2},
     {"id": "RR-13", "scope": "instrumental music beds (30 s)", "rule": "Lyria 2 on Vertex credits is the default music route (USD 0.06 a track); tracks measure 32.8 s, trim by code to the brief. ElevenLabs music needs a paid plan (skipped by the Controller).",
      "evidence": "aud-music-lyria 4/4 accepted (home-kitchen and city-running briefs), judged raw and stacked under the accepted multi-shot clips; elevenlabs-music-direct refused HTTP 402 on the free plan",
+     "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_DAY2},
+    {"id": "RR-14", "scope": "two speakers talking in Hindi (native audio)", "rule": "Generate two-speaker Hindi dialogue natively on Veo 3.1 fast, Gemini Omni 1.1 Flash or Wan 3.0 Prime; avoid Kling v3 Pro audio for Hindi dialogue; no plate-plus-lipsync chain is needed.",
+     "evidence": "vid-2spk VID-2SPK-01: veo-3.1-fast 2/2 (USD 0.80), gemini-omni-1.1-flash 2/2 (USD 0.81), wan-3.0-prime 2/2 (USD 1.12) - 'all 6 approved'; kling-v3-pro-audio 0/2 ('characters cut off, language bad', 'language off'); lipsync chain 0/5 elsewhere",
      "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_DAY2},
 ]
 

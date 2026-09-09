@@ -1,0 +1,80 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: vid-2spk-kling-smoke
+  mode: smoke
+  generated_utc: '2026-09-09T13:15:43.257353Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: 726454af73517dccd7f50702f07276c5dbb9c883
+  item_basis_commit: 0ba06b92ee27
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.2spk.local.yaml
+  authorisation_sha256: 602445c6c9670578c5602b780a6a140c19942300af9c1452e253333e7e89f468
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: c0defa1e64d29e00f58362ab69e66dcaecb2f561ffef61e4ecbd2eb8ce47683c
+  cost_table_sha256: f71f6510da478456f1677c50f52340863ad649f655dc69a2b6ce18dda6c3bc94
+  cases:
+  - VID-2SPK-01
+  routes:
+  - kling-v3-pro-audio
+  tranche: null
+  repeats:
+  - 1
+  inputs_file: null
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 1
+    excluded: 1
+  estimated_by_pool:
+    cash:
+      calls: 1
+      currency: USD
+      native: '1.344000'
+      usd_equiv: '1.344000'
+  estimated_total_usd_equiv: '1.344000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: VID-2SPK-01__kling-v3-pro-audio__A_native__r1
+  case_id: VID-2SPK-01
+  item_id: VID-2SPK-01
+  route_key: kling-v3-pro-audio
+  arm: A_native
+  repeat_index: 1
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/kling-video/v3/pro/text-to-video
+  endpoint: https://queue.fal.run/fal-ai/kling-video/v3/pro/text-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '1.344000'
+  estimated_usd_equiv: '1.344000'
+  unit_price: '0.168'
+  quantity: '8'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+  body_sha256: f7d7c3d6fb4a4954262885f7b5129a66cc00c8405917d73a5bc1a3f1642536d2
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.168'
+  roster_implied_usd: '0.168'
+  constructed_synthetic_inputs: false
+excluded:
+- case_id: VID-2SPK-01
+  route_key: kling-v3-pro-audio
+  arm: A_native
+  repeat_index: 2
+  tranche: 1a
+  reason: repeat 2 not requested ([1])
