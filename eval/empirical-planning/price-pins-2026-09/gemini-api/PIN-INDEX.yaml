@@ -1,0 +1,380 @@
+# PIN-INDEX - Gemini Developer API surface for the Gemini-named routes (nano-banana-2, nano-banana-pro, nano-banana-pro-edit,
+# gemini-omni-1.1-flash / -10s / -long), pinned 2026-09-09 after CONTROLLER-GEMINI-MODELS-VIA-GEMINI-KEY-2026-09-09 and
+# CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09. Free, unauthenticated fetches (curl); no key, no spend.
+# schema_page pins document the request / response shapes the gemini_api_image and gemini_api_omni adapters send and read;
+# price pins point at the pricing page already pinned for the judge (gemini-api-judge/) and quote the exact price strings.
+# Every bytes / sha256 value is computed from the file by the generator (scratchpad pin_gemini_api.py); each evidence_quote is
+# a verbatim substring of the pinned bytes. The pinned pages are Google devsite HTML and carry the site's own public browser
+# config keys, as the earlier gemini-api-judge/ and vertex-shared/ pins do; nothing of the user's is in them.
+surface: gemini_api
+key_name: GOOGLE_API_KEY (name only; ~/.mi-keys)
+billing_pool: credits
+billing_note: GCP credits via the Gemini API key
+what_the_gemini_api_exposes:
+  image: 'Nano Banana 2 (gemini-3.1-flash-image) and Nano Banana Pro (gemini-3-pro-image): the guide documents the Interactions API (POST /v1beta/interactions,
+    response_format{type:image, aspect_ratio, image_size}); the generateContent reference documents generationConfig.responseModalities / imageConfig{aspectRatio,
+    imageSize} for the same models. The adapter sends the generateContent form (reference-documented, live-proven on this surface by EVAL-038
+    on 2026-09-01, byte-identical to the Vertex body).'
+  omni_video: 'Gemini Omni Flash (gemini-omni-1.1-flash, ''now generally available to developers on the paid tier of the Gemini API'') via the
+    Interactions API only: POST /v1beta/interactions with response_format{type:video, aspect_ratio 16:9|9:16, resolution 360p|720p|1080p|4k, duration,
+    delivery inline|uri}; inline base64 mp4 back. No generateContent video form exists.'
+pins:
+- route_key: nano-banana-2
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-image-generation.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/image-generation
+  fetched_utc: '2026-09-09T17:36:50.423050+00:00'
+  http_status: '200'
+  bytes: 716195
+  sha256: 7ba7d0c1a613a1e8ee0a833e91f49cf592c9fbbf2180745129e57d60eb17d682
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/image-generation" -o gemini-api-image-generation.html
+  evidence_quote: Gemini 3 image models generate 1K images by default
+  additional_evidence_quotes:
+  - x-goog-api-key
+  - gemini-3.1-flash-image
+  - gemini-3-pro-image
+  - generativelanguage.googleapis.com/v1beta/interactions
+  - Image generation does not support audio inputs
+  note: 'Gemini API image-generation guide: model ids, the x-goog-api-key header, inline reference images for editing, 1K default output size
+    (so the adapter sends no imageSize and the 1K price line applies). The guide''s REST examples use the Interactions API; the generateContent
+    form the adapter sends is documented by the reference below and live-proven on this surface by EVAL-038.'
+- route_key: nano-banana-pro
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-image-generation.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/image-generation
+  fetched_utc: '2026-09-09T17:36:50.423050+00:00'
+  http_status: '200'
+  bytes: 716195
+  sha256: 7ba7d0c1a613a1e8ee0a833e91f49cf592c9fbbf2180745129e57d60eb17d682
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/image-generation" -o gemini-api-image-generation.html
+  evidence_quote: Gemini 3 image models generate 1K images by default
+  additional_evidence_quotes:
+  - x-goog-api-key
+  - gemini-3.1-flash-image
+  - gemini-3-pro-image
+  - generativelanguage.googleapis.com/v1beta/interactions
+  - Image generation does not support audio inputs
+  note: 'Gemini API image-generation guide: model ids, the x-goog-api-key header, inline reference images for editing, 1K default output size
+    (so the adapter sends no imageSize and the 1K price line applies). The guide''s REST examples use the Interactions API; the generateContent
+    form the adapter sends is documented by the reference below and live-proven on this surface by EVAL-038.'
+- route_key: nano-banana-pro-edit
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-image-generation.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/image-generation
+  fetched_utc: '2026-09-09T17:36:50.423050+00:00'
+  http_status: '200'
+  bytes: 716195
+  sha256: 7ba7d0c1a613a1e8ee0a833e91f49cf592c9fbbf2180745129e57d60eb17d682
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/image-generation" -o gemini-api-image-generation.html
+  evidence_quote: Gemini 3 image models generate 1K images by default
+  additional_evidence_quotes:
+  - x-goog-api-key
+  - gemini-3.1-flash-image
+  - gemini-3-pro-image
+  - generativelanguage.googleapis.com/v1beta/interactions
+  - Image generation does not support audio inputs
+  note: 'Gemini API image-generation guide: model ids, the x-goog-api-key header, inline reference images for editing, 1K default output size
+    (so the adapter sends no imageSize and the 1K price line applies). The guide''s REST examples use the Interactions API; the generateContent
+    form the adapter sends is documented by the reference below and live-proven on this surface by EVAL-038.'
+- route_key: nano-banana-2
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-generate-content-reference.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/api/generate-content
+  fetched_utc: '2026-09-09T17:36:51.725458+00:00'
+  http_status: '200'
+  bytes: 1216811
+  sha256: 3e9d026f9b65fc781d232f480163684946ecf51c56d3716271c1745716e5411b
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/api/generate-content" -o gemini-api-generate-content-reference.html
+  evidence_quote: Candidates blocked due to unsafe image generation content
+  additional_evidence_quotes:
+  - responseModalities
+  - imageConfig
+  - 'Supported aspect ratios:'
+  - imageSize
+  - candidateCount
+  - blockReason
+  - :generateContent
+  note: 'Gemini API generateContent reference: GenerationConfig.responseModalities / candidateCount / imageConfig{aspectRatio, imageSize}; FinishReason
+    IMAGE_SAFETY; PromptFeedback.blockReason - every field the gemini_api_image adapter sends or reads.'
+- route_key: nano-banana-pro
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-generate-content-reference.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/api/generate-content
+  fetched_utc: '2026-09-09T17:36:51.725458+00:00'
+  http_status: '200'
+  bytes: 1216811
+  sha256: 3e9d026f9b65fc781d232f480163684946ecf51c56d3716271c1745716e5411b
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/api/generate-content" -o gemini-api-generate-content-reference.html
+  evidence_quote: Candidates blocked due to unsafe image generation content
+  additional_evidence_quotes:
+  - responseModalities
+  - imageConfig
+  - 'Supported aspect ratios:'
+  - imageSize
+  - candidateCount
+  - blockReason
+  - :generateContent
+  note: 'Gemini API generateContent reference: GenerationConfig.responseModalities / candidateCount / imageConfig{aspectRatio, imageSize}; FinishReason
+    IMAGE_SAFETY; PromptFeedback.blockReason - every field the gemini_api_image adapter sends or reads.'
+- route_key: nano-banana-pro-edit
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-generate-content-reference.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/api/generate-content
+  fetched_utc: '2026-09-09T17:36:51.725458+00:00'
+  http_status: '200'
+  bytes: 1216811
+  sha256: 3e9d026f9b65fc781d232f480163684946ecf51c56d3716271c1745716e5411b
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/api/generate-content" -o gemini-api-generate-content-reference.html
+  evidence_quote: Candidates blocked due to unsafe image generation content
+  additional_evidence_quotes:
+  - responseModalities
+  - imageConfig
+  - 'Supported aspect ratios:'
+  - imageSize
+  - candidateCount
+  - blockReason
+  - :generateContent
+  note: 'Gemini API generateContent reference: GenerationConfig.responseModalities / candidateCount / imageConfig{aspectRatio, imageSize}; FinishReason
+    IMAGE_SAFETY; PromptFeedback.blockReason - every field the gemini_api_image adapter sends or reads.'
+- route_key: gemini-omni-1.1-flash
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-omni.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/omni
+  fetched_utc: '2026-09-09T17:36:52.774991+00:00'
+  http_status: '200'
+  bytes: 446911
+  sha256: a4fd6f2b19b66bfd426b35a2a7ed035386f6e9a6074284fc2c3e0a94092f4825
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/omni" -o gemini-api-omni.html
+  evidence_quote: Prompts that violate usage policies are blocked
+  additional_evidence_quotes:
+  - generativelanguage.googleapis.com/v1beta/interactions
+  - gemini-omni-1.1-flash
+  - video_config
+  - text_to_video
+  - The default resolution is 720p
+  - '"type": "video"'
+  - model_output
+  note: 'Gemini API guide ''Generate and edit videos with Gemini Omni Flash'': POST /v1beta/interactions, model gemini-omni-1.1-flash, response_format{type:video,
+    aspect_ratio, resolution}, generation_config.video_config.task, inline base64 video in steps[model_output].content[type=video].data; safety
+    filters block violating prompts (no block shape given).'
+- route_key: gemini-omni-1.1-flash-10s
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-omni.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/omni
+  fetched_utc: '2026-09-09T17:36:52.774991+00:00'
+  http_status: '200'
+  bytes: 446911
+  sha256: a4fd6f2b19b66bfd426b35a2a7ed035386f6e9a6074284fc2c3e0a94092f4825
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/omni" -o gemini-api-omni.html
+  evidence_quote: Prompts that violate usage policies are blocked
+  additional_evidence_quotes:
+  - generativelanguage.googleapis.com/v1beta/interactions
+  - gemini-omni-1.1-flash
+  - video_config
+  - text_to_video
+  - The default resolution is 720p
+  - '"type": "video"'
+  - model_output
+  note: 'Gemini API guide ''Generate and edit videos with Gemini Omni Flash'': POST /v1beta/interactions, model gemini-omni-1.1-flash, response_format{type:video,
+    aspect_ratio, resolution}, generation_config.video_config.task, inline base64 video in steps[model_output].content[type=video].data; safety
+    filters block violating prompts (no block shape given).'
+- route_key: gemini-omni-1.1-flash-long
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-omni.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/omni
+  fetched_utc: '2026-09-09T17:36:52.774991+00:00'
+  http_status: '200'
+  bytes: 446911
+  sha256: a4fd6f2b19b66bfd426b35a2a7ed035386f6e9a6074284fc2c3e0a94092f4825
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/omni" -o gemini-api-omni.html
+  evidence_quote: Prompts that violate usage policies are blocked
+  additional_evidence_quotes:
+  - generativelanguage.googleapis.com/v1beta/interactions
+  - gemini-omni-1.1-flash
+  - video_config
+  - text_to_video
+  - The default resolution is 720p
+  - '"type": "video"'
+  - model_output
+  note: 'Gemini API guide ''Generate and edit videos with Gemini Omni Flash'': POST /v1beta/interactions, model gemini-omni-1.1-flash, response_format{type:video,
+    aspect_ratio, resolution}, generation_config.video_config.task, inline base64 video in steps[model_output].content[type=video].data; safety
+    filters block violating prompts (no block shape given).'
+- route_key: gemini-omni-1.1-flash
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-models-gemini-omni-flash.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash
+  fetched_utc: '2026-09-09T17:36:54.451114+00:00'
+  http_status: '200'
+  bytes: 105120
+  sha256: 73ba83d0a68bd6673ece56c0cad3cc85662154260363f3bf49c234cc76cc0220
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash" -o gemini-api-models-gemini-omni-flash.html
+  evidence_quote: 360p/720p/1080p/4K, 24 FPS
+  additional_evidence_quotes:
+  - gemini-omni-1.1-flash
+  - gemini-omni-flash-preview
+  - 'Stable:'
+  note: 'Gemini API model page: stable id gemini-omni-1.1-flash (preview id gemini-omni-flash-preview); output video 3s-10s at 360p/720p/1080p/4K,
+    24 FPS.'
+- route_key: gemini-omni-1.1-flash-10s
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-models-gemini-omni-flash.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash
+  fetched_utc: '2026-09-09T17:36:54.451114+00:00'
+  http_status: '200'
+  bytes: 105120
+  sha256: 73ba83d0a68bd6673ece56c0cad3cc85662154260363f3bf49c234cc76cc0220
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash" -o gemini-api-models-gemini-omni-flash.html
+  evidence_quote: 360p/720p/1080p/4K, 24 FPS
+  additional_evidence_quotes:
+  - gemini-omni-1.1-flash
+  - gemini-omni-flash-preview
+  - 'Stable:'
+  note: 'Gemini API model page: stable id gemini-omni-1.1-flash (preview id gemini-omni-flash-preview); output video 3s-10s at 360p/720p/1080p/4K,
+    24 FPS.'
+- route_key: gemini-omni-1.1-flash-long
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-models-gemini-omni-flash.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash
+  fetched_utc: '2026-09-09T17:36:54.451114+00:00'
+  http_status: '200'
+  bytes: 105120
+  sha256: 73ba83d0a68bd6673ece56c0cad3cc85662154260363f3bf49c234cc76cc0220
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash" -o gemini-api-models-gemini-omni-flash.html
+  evidence_quote: 360p/720p/1080p/4K, 24 FPS
+  additional_evidence_quotes:
+  - gemini-omni-1.1-flash
+  - gemini-omni-flash-preview
+  - 'Stable:'
+  note: 'Gemini API model page: stable id gemini-omni-1.1-flash (preview id gemini-omni-flash-preview); output video 3s-10s at 360p/720p/1080p/4K,
+    24 FPS.'
+- route_key: gemini-omni-1.1-flash
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-interactions-api-reference.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/api/interactions-api
+  fetched_utc: '2026-09-09T17:36:56.003370+00:00'
+  http_status: '200'
+  bytes: 718603
+  sha256: 8e4abcd25928222105a0af49d2715af89fca469e1167f93ff633786f09c0d8e4
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/api/interactions-api" -o gemini-api-interactions-api-reference.html
+  evidence_quote: The duration for the video output
+  additional_evidence_quotes:
+  - VideoResponseFormat
+  - Defaults to 720p
+  - Video data is returned inline in the response
+  - The interaction failed
+  - The interaction is completed, but contains incomplete results
+  - budget_exceeded
+  - Diagnostic faults / platform errors recorded on the interaction
+  note: 'Interactions API reference: VideoResponseFormat{aspect_ratio 16:9|9:16, resolution 360p|720p|1080p|4k (default 720p), delivery inline|uri,
+    duration string (format not stated)}; Interaction.status enum; errors[] {code, message}.'
+- route_key: gemini-omni-1.1-flash-10s
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-interactions-api-reference.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/api/interactions-api
+  fetched_utc: '2026-09-09T17:36:56.003370+00:00'
+  http_status: '200'
+  bytes: 718603
+  sha256: 8e4abcd25928222105a0af49d2715af89fca469e1167f93ff633786f09c0d8e4
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/api/interactions-api" -o gemini-api-interactions-api-reference.html
+  evidence_quote: The duration for the video output
+  additional_evidence_quotes:
+  - VideoResponseFormat
+  - Defaults to 720p
+  - Video data is returned inline in the response
+  - The interaction failed
+  - The interaction is completed, but contains incomplete results
+  - budget_exceeded
+  - Diagnostic faults / platform errors recorded on the interaction
+  note: 'Interactions API reference: VideoResponseFormat{aspect_ratio 16:9|9:16, resolution 360p|720p|1080p|4k (default 720p), delivery inline|uri,
+    duration string (format not stated)}; Interaction.status enum; errors[] {code, message}.'
+- route_key: gemini-omni-1.1-flash-long
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-interactions-api-reference.html
+  pin_kind: schema_page
+  url: https://ai.google.dev/api/interactions-api
+  fetched_utc: '2026-09-09T17:36:56.003370+00:00'
+  http_status: '200'
+  bytes: 718603
+  sha256: 8e4abcd25928222105a0af49d2715af89fca469e1167f93ff633786f09c0d8e4
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/api/interactions-api" -o gemini-api-interactions-api-reference.html
+  evidence_quote: The duration for the video output
+  additional_evidence_quotes:
+  - VideoResponseFormat
+  - Defaults to 720p
+  - Video data is returned inline in the response
+  - The interaction failed
+  - The interaction is completed, but contains incomplete results
+  - budget_exceeded
+  - Diagnostic faults / platform errors recorded on the interaction
+  note: 'Interactions API reference: VideoResponseFormat{aspect_ratio 16:9|9:16, resolution 360p|720p|1080p|4k (default 720p), delivery inline|uri,
+    duration string (format not stated)}; Interaction.status enum; errors[] {code, message}.'
+- route_key: nano-banana-2
+  model_id: gemini-3.1-flash-image
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
+  pin_kind: price
+  url: https://ai.google.dev/gemini-api/docs/pricing
+  fetched_utc: '2026-09-09T14:16:37.698619+00:00'
+  http_status: '200'
+  bytes: 249002
+  sha256: 26fd7fc5fa8169c36fae516dad3cb884c45f9d26e6afa91f745816b27414edfb
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/pricing" -o gemini-api-pricing.html
+  evidence_quote: $0.067 per 1K image
+  additional_evidence_quotes:
+  - gemini-3.1-flash-image
+  - $60.00 (images)
+  note: 'Gemini 3.1 Flash Image (Nano Banana 2), Standard tier: output images $60.00 per 1M tokens; a 1K image is 1120 tokens = $0.067 per 1K
+    image.'
+  usd_per_image_1k: 0.067
+- route_key: nano-banana-pro
+  model_id: gemini-3-pro-image
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
+  pin_kind: price
+  url: https://ai.google.dev/gemini-api/docs/pricing
+  fetched_utc: '2026-09-09T14:16:37.698619+00:00'
+  http_status: '200'
+  bytes: 249002
+  sha256: 26fd7fc5fa8169c36fae516dad3cb884c45f9d26e6afa91f745816b27414edfb
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/pricing" -o gemini-api-pricing.html
+  evidence_quote: $0.134 per 1K/2K image
+  additional_evidence_quotes:
+  - gemini-3-pro-image
+  - $120.00 (images)
+  note: 'Gemini 3 Pro Image (Nano Banana Pro), Standard tier: output images $120.00 per 1M tokens; a 1K/2K image is 1120 tokens = $0.134 per 1K/2K
+    image.'
+  usd_per_image_1k: 0.134
+- route_key: nano-banana-pro-edit
+  model_id: gemini-3-pro-image
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
+  pin_kind: price
+  url: https://ai.google.dev/gemini-api/docs/pricing
+  fetched_utc: '2026-09-09T14:16:37.698619+00:00'
+  http_status: '200'
+  bytes: 249002
+  sha256: 26fd7fc5fa8169c36fae516dad3cb884c45f9d26e6afa91f745816b27414edfb
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/pricing" -o gemini-api-pricing.html
+  evidence_quote: $0.134 per 1K/2K image
+  additional_evidence_quotes:
+  - Image input is set at 560 tokens
+  - $0.0011 per image
+  note: 'Same model with reference images: output $0.134 per 1K/2K image plus input images at 560 tokens = $0.0011 per image.'
+  usd_per_image_1k: 0.134
+  usd_per_input_image: 0.0011
+- route_key: gemini-omni-1.1-flash
+  model_id: gemini-omni-1.1-flash
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
+  pin_kind: price
+  url: https://ai.google.dev/gemini-api/docs/pricing
+  fetched_utc: '2026-09-09T14:16:37.698619+00:00'
+  http_status: '200'
+  bytes: 249002
+  sha256: 26fd7fc5fa8169c36fae516dad3cb884c45f9d26e6afa91f745816b27414edfb
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://ai.google.dev/gemini-api/docs/pricing" -o gemini-api-pricing.html
+  evidence_quote: $17.50 (video)
+  additional_evidence_quotes:
+  - gemini-omni-1.1-flash
+  - 5,792 tokens per second of 720p video
+  - approximately $0.10 per second
+  note: 'Gemini Omni Flash, Standard tier: video output $17.50 per 1M tokens at 5,792 tokens per second of 720p video (page: ''approximately $0.10
+    per second''); derived 17.50 x 5792 / 1e6 = 0.10136 USD/s, the roster''s Vertex-derived figure.'
+  usd_per_1m_video_output_tokens: 17.5
+  tokens_per_second_720p: 5792
+  usd_per_second_720p_derived: 0.10136

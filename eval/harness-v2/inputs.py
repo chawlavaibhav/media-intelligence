@@ -244,7 +244,7 @@ class InputsFile:
 # ----------------------------------------------------------------------------------- roles
 def roles_needed(entry, case_row: dict) -> list[tuple[str, str]]:
     """[(role, adapter input key)] this route needs for this row, in the order the adapter consumes them.
-    Mirrors the placeholder roles the adapters render (fal_queue._resolve, vertex_gemini_image, vertex_veo)."""
+    Mirrors the placeholder roles the adapters render (fal_queue._resolve, vertex_gemini_image / gemini_api_image, vertex_veo)."""
     params = case_row.get("params") or {}
     try:
         refs = int(params.get("refs") or 0)
@@ -267,7 +267,7 @@ def roles_needed(entry, case_row: dict) -> list[tuple[str, str]]:
                 out.append(("plate_clip", "video_url"))
             elif key == "audio_url":
                 out.append(("drive_audio", "audio_url"))
-    elif entry.adapter == "vertex_gemini_image":
+    elif entry.adapter in ("vertex_gemini_image", "gemini_api_image"):
         if entry.workflow == "edit" or refs > 0:
             out += [(f"reference_asset_{i + 1}", "reference_images") for i in range(max(refs, 1))]
     elif entry.adapter == "vertex_veo":

@@ -97,6 +97,7 @@ class PlumbingBase(NoNetworkTestCase):
     def setUp(self):
         super().setUp()
         os.environ["FAL_KEY"] = CANARY
+        os.environ["GOOGLE_API_KEY"] = "FAKE-GOOGLE-API-KEY-NOT-A-CREDENTIAL"   # the Gemini routes read this name (2026-09-09)
         self.runs = self.tmp / "runs"
         self.auth = self.write_auth()
         self.adapter_kwargs = {"token_source": T.FakeTokenSource(), "sleep": lambda s: None, "clock": fixed_clock()}
@@ -226,7 +227,9 @@ class ResolverTest(PlumbingBase):
         book = CB.CaseBook.from_git("HEAD")
         row = book.row("IMG-REF-01", "nano-banana-pro-edit")
         inputs, resolved, unresolved = INP.InputResolver(f).for_row(row, surfaces.REGISTRY.get("nano-banana-pro-edit"))
-        self.assertEqual([base64.b64decode(u.split(",", 1)[1]) for u in inputs["image_urls"]], [views["tin_front"], views["tin_side"], views["tin_top"]])
+        # 2026-09-09: nano-banana-pro-edit runs on the Gemini API (inline reference bytes), no longer on fal (data URIs)
+        self.assertEqual([b for b, _ in inputs["reference_images"]], [views["tin_front"], views["tin_side"], views["tin_top"]])
+        self.assertEqual({m for _, m in inputs["reference_images"]}, {"image/png"})
         self.assertEqual([r["role"] for r in resolved], ["reference_asset_1", "reference_asset_2", "reference_asset_3"])
         # IMG-COMP-01: the portrait first, then the packshot
         self.seal_fixture("fx", "model_portrait", png_bytes(rgb=(4, 4, 4)), for_case="IMG-COMP-01", role="identity_person")
@@ -441,9 +444,10 @@ class FixturesModeTest(PlumbingBase):
         self.assertEqual(recs["tin_front"]["parent_sha256"], recs["tin_front__raw"]["sha256"])
         self.assertEqual(recs["tin_front"]["overlay"]["strings"][0]["text"], "सरसों तेल")
         self.assertTrue(recs["tin_front"]["overlay"]["exact_strings_by_code"])
-        # the derive call carried the OVERLAID parent as a data URI, and the record names the parent's sha
-        derive_payload = json.loads([p for p in factory.payloads() if b"image_urls" in p][0])
-        sent = base64.b64decode(derive_payload["image_urls"][0].split(",", 1)[1])
+        # the derive call carried the OVERLAID parent inline (2026-09-09: the derivation route nano-banana-pro-edit runs on the Gemini API,
+        # reference bytes as inlineData, no longer a fal data URI), and the record names the parent's sha
+        derive_payload = json.loads([p for p in factory.payloads() if b"inlineData" in p][0])
+        sent = base64.b64decode([part for part in derive_payload["contents"][0]["parts"] if "inlineData" in part][0]["inlineData"]["data"])
         self.assertEqual(hashlib.sha256(sent).hexdigest(), recs["tin_front"]["sha256"])
         self.assertEqual(recs["tin_side"]["parent_sha256"], recs["tin_front"]["sha256"])
         self.assertEqual(recs["tin_side"]["parent_fixture_id"], "tin_front")

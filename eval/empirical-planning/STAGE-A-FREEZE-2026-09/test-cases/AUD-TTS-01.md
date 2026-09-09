@@ -54,7 +54,7 @@
 
 ## Routes
 
-See `TEST-CASES.yaml` → `routes[]`: azure-neural-tts-hi-in, chirp-3-hd-hi-in, elevenlabs-v3, sarvam-bulbul-v3.
+See `TEST-CASES.yaml` → `routes[]`: azure-neural-tts-hi-in, chirp-3-hd-hi-in, elevenlabs-v3-direct, sarvam-bulbul-v3.
 
 **Blueprint:** `BLUEPRINTS/AUD-TTS-01.blueprint.md` (sha256 `3c10c117788072ed…`, author executor_agent)
 

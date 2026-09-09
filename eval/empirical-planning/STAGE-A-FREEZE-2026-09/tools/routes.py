@@ -78,6 +78,10 @@ route("minimax-h3-max", "minimax/h3-max/text-to-video (768p)", "fal", "cash", "p
       note="regular 0.08/s; the 0.02/s promotion ending 7 Sep is recorded in the roster and never used")
 route("wan-3.0-prime", "alibaba/wan-3.0-prime/text-to-video", "fal", "cash", "pinned", "cheap", "per_second", 0.14, "pinned",
       PINS + "wan-3.0-prime/fal-api-models-wan-3.0-prime-t2v.json", "undocumented", roster_variant="t2v")
+route("wan-2.2-a14b", "fal-ai/wan/v2.2-a14b/text-to-video", "fal", "cash", "pinned", "cheap", "per_second", 0.08, "pinned",
+      PINS + "wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html", "undocumented", roster_variant="t2v",
+      quantity_rule="per generated video second at 16 fps (pinned prose); the harness sends num_frames = 16 x duration + 1 (the model's native 4n+1 count, fal's default 81 = 5 s), so a 6-s row may bill 6.0625 s (USD 0.485) and an 8-s row 8.0625 s (USD 0.645) — the 1/16-s tail is recorded, not projected",
+      note="Wan 2 contender (Controller decision 2026-09-09, coordination/decisions/CONTROLLER-WAN2-CONTENDER-PREMIUM-DEFERRED-2026-09-09.md): the cheapest LIVE Wan 2.x tier on fal that renders the frozen 6-s / 8-s rows (pinned OpenAPI: num_frames 17-161 at 16 fps); USD 0.08 per video second at 720p from the exact id's endpointBilling record and prose (ladder in price-pins-2026-09/wan-2.2-a14b/PIN-INDEX.yaml); silent family (no audio field). Runs only on the rows where Wan 3.0 Prime scored 2/2 or 1/1: VID-T2V-01/02/03, VID-I2V-01..04, VID-2SPK-01")
 route("gemini-omni-1.1-flash", "gemini-omni-1.1-flash-preview", "vertex", "credits", "pinned", "cheap", "per_second", 0.10136, "pinned", VX, "exposed",
       roster_key="gemini-omni-flash-1.1", roster_variant="t2v")
 route("seedance-2.5", "bytedance/seedance-2.5/text-to-video", "fal", "cash", "pinned", "premium", "per_second", 0.473, "pinned",
@@ -101,6 +105,10 @@ route("minimax-h3-max-i2v", "minimax/h3-max/image-to-video (768p)", "fal", "cash
       note="cheapest PINNED image-to-video route at 720p-class (0.08/s) — used for TOPO-03 arm C and the VID-2SPK-01 chain; H3 Max i2v-480p (0.05/s) is cheaper but below round one's 720p")
 route("wan-3.0-prime-i2v", "alibaba/wan-3.0-prime/image-to-video", "fal", "cash", "pinned", "cheap", "per_second", 0.14, "pinned",
       PINS + "wan-3.0-prime/fal-api-models-wan-3.0-prime-i2v.json", "undocumented", roster_key="wan-3.0-prime", roster_variant="i2v", family="wan-3.0-prime")
+route("wan-2.2-a14b-i2v", "fal-ai/wan/v2.2-a14b/image-to-video", "fal", "cash", "pinned", "cheap", "per_second", 0.08, "pinned",
+      PINS + "wan-2.2-a14b/fal-wan-v2.2-a14b-image-to-video-2026-09-09.html", "undocumented", roster_key="wan-2.2-a14b", roster_variant="i2v", family="wan-2.2-a14b",
+      quantity_rule="per generated video second at 16 fps (pinned prose); the harness sends num_frames = 16 x duration + 1 (the model's native 4n+1 count, fal's default 81 = 5 s), so a 6-s row may bill 6.0625 s (USD 0.485) and an 8-s row 8.0625 s (USD 0.645) — the 1/16-s tail is recorded, not projected",
+      note="Wan 2 contender (Controller decision 2026-09-09, coordination/decisions/CONTROLLER-WAN2-CONTENDER-PREMIUM-DEFERRED-2026-09-09.md): the cheapest LIVE Wan 2.x tier on fal that renders the frozen 6-s / 8-s rows (pinned OpenAPI: num_frames 17-161 at 16 fps); USD 0.08 per video second at 720p from the exact id's endpointBilling record and prose (ladder in price-pins-2026-09/wan-2.2-a14b/PIN-INDEX.yaml); silent family (no audio field). Runs only on the rows where Wan 3.0 Prime scored 2/2 or 1/1: VID-T2V-01/02/03, VID-I2V-01..04, VID-2SPK-01 (image-to-video: the plate is the same accepted still as the wan-3.0-prime-i2v row; aspect follows the plate)")
 route("seedance-2.5-i2v", "bytedance/seedance-2.5/image-to-video", "fal", "cash", "pinned", "premium", "per_second", 0.473, "pinned",
       PINS + "seedance-2.5/fal-api-models-seedance-2.5-i2v.json", "undocumented", roster_key="seedance-2.5", roster_variant="i2v", family="seedance-2.5")
 route("veo-3.1-lite-i2v", "veo-3.1-lite-generate-001 (image input)", "vertex", "credits", "unpinned", "cheap", "per_second", None, "unpinned",
@@ -136,6 +144,12 @@ route("sarvam-bulbul-v3", "bulbul:v3", "direct", "sarvam_credits", "pinned", "na
       note="key present: the Controller session stated it and EVAL-039B's Tester (DEFECT-1, commit a24b197) corrected the overnight 'empty value' reading to a 36-character value (length check only; never read by this task); price pinned ₹3.00 per 1,000 characters; the roster labels Sarvam's prepaid balance 'cash', this package keeps the task's 'sarvam_credits' pool name — same money")
 route("elevenlabs-v3", "fal-ai/elevenlabs/tts/eleven-v3", "fal", "cash", "pinned", "native", "per_1k_chars", 0.10, "pinned",
       PINS + "elevenlabs-v3/fal-elevenlabs-tts-eleven-v3.html", "exposed", note="EVAL-010: ElevenLabs direct exposes seed; the fal wrapper's seed support is what the harness records")
+# ElevenLabs DIRECT routes (Controller 2026-09-09, commit 0ba06b9): the user's own account, 0 USD cash, plan credits from the pinned pricing page;
+# the roster is NOT consulted for this pool (pricing.py CREDIT_POOL), so build.py's roster cross-check records them as not_consulted; outside the USD cap
+# (capped by elevenlabs_cap_credits in the authorisation). Until 2026-09-09 (Wan 2 contender rebuild) these records lived only in the hand-edited package.
+route("elevenlabs-v3-direct", "eleven_v3 (api.elevenlabs.io, own account)", "elevenlabs_direct", "elevenlabs_credits", "pinned", "native", "plan_credits_per_char", 0, "pinned",
+      PINS + "elevenlabs-direct/elevenlabs-pricing.html", "exposed", roster_key="elevenlabs-v3", in_cap=False,
+      note="2026-09-09 Controller: use eleven labs from the key added, not from fal - replaces the fal-hosted elevenlabs-v3 row; 0 USD cash, 1 plan credit per character (pinned pricing page), capped by elevenlabs_cap_credits")
 route("chirp-3-hd-hi-in", "hi-IN-Chirp3-HD-<voice> (Cloud Text-to-Speech)", "vertex", "credits", "needs_controller_enablement", "native", "per_1M_chars", None, "unpinned",
       None, "undocumented", plan_ref="plan §C.3c", conditional=True, note="Text-to-Speech API not enabled in the project; price page JS-rendered")
 route("azure-neural-tts-hi-in", "Azure Neural TTS hi-IN", "azure", "credits", "needs_controller_enablement", "native", "per_1M_chars", 15.0, "pinned",
@@ -154,6 +168,10 @@ route("lyria", "lyria-002", "vertex", "credits", "pinned", "native", "per_clip",
 route("elevenlabs-music", "fal-ai/elevenlabs/music", "fal", "cash", "pinned", "native", "per_minute", 0.6, "pinned",
       PINS + "elevenlabs-music/fal-api-models-elevenlabs-music.json", "undocumented", plan_ref="plan §C.3d",
       quantity_rule="per output minute, rounded up (a 30-s clip bills as 1 minute)")
+route("elevenlabs-music-direct", "music_v1 (api.elevenlabs.io, own account)", "elevenlabs_direct", "elevenlabs_credits", "pinned", "native", "plan_credits_per_minute", 0, "pinned",
+      PINS + "elevenlabs-direct/elevenlabs-pricing.html", "undocumented", roster_key="elevenlabs-music", plan_ref="plan §C.3d", in_cap=False,
+      quantity_rule="900 plan credits per output minute, rounded up (a 30-s clip bills as 1 minute = 900 credits)",
+      note="2026-09-09 Controller decision - replaces the fal-hosted elevenlabs-music row")
 
 # Evaluator unit prices (nominal, plan §E) — not provider generation calls; not pinned by the roster.
 EVAL_PRICES = {

@@ -10,7 +10,7 @@
 # `promo_price` is recorded only to be avoided: used_in_totals is always false. `capabilities` fields are null unless
 # the pinned bytes state them. `variants` are parameter sub-rows (10-s, 480p, i2v) of the same route, not new routes.
 # Surfaces: vertex (GCP), bedrock (AWS; Polly recorded here for want of an 'aws' value), azure_foundry, fal, sarvam_direct, runway_direct.
-# Counts: 35 routes — needs_controller_enablement 5, no_access 2, pinned 26, unpinned 2.
+# Counts: 36 routes — needs_controller_enablement 5, no_access 2, pinned 27, unpinned 2 (wan-2.2-a14b added 2026-09-09, Controller decision: Wan 2 contender).
 meta:
   task: EVAL-039B
   generated_utc: '2026-09-04T21:00:00Z'
@@ -20,10 +20,10 @@ meta:
   access_status: eval/empirical-planning/ACCESS-STATUS-2026-09.yaml
   morning_decisions: eval/empirical-planning/MORNING-DECISIONS.md
   status: PLANNING_ONLY_NOT_AUTHORISED
-  route_count: 35
+  route_count: 36
   route_status_counts:
     needs_controller_enablement: 5
-    pinned: 26
+    pinned: 27
     no_access: 2
     unpinned: 2
   promo_rule: promotional prices are recorded, flagged and never used in totals (decision §3 rule 3)
@@ -851,6 +851,67 @@ routes:
     pin_ref: eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-i2v.json
     route_status: pinned
     notes: 720p
+- route_key: wan-2.2-a14b
+  question_slots:
+  - VID-01
+  - VID-03a
+  model_family: Wan 2.2 A14B (Alibaba, open weights hosted by fal) — the Wan 2 contender
+  model_version_string: Wan 2.2 A14B (fal title 'Wan 2.2 A14B'); fal endpoints fal-ai/wan/v2.2-a14b/text-to-video and /image-to-video
+  surface: fal
+  surface_model_id: fal-ai/wan/v2.2-a14b/text-to-video
+  surface_rule_note: not on any hyperscaler → fal, cash
+  billing_pool: cash
+  billing_unit_verbatim: 'fal page bytes (exact id): endpointBilling {endpoint: fal-ai/wan/v2.2-a14b/text-to-video, billing_unit: seconds, price: 0.08}; prose bound
+    to the same id: ''Your request will cost **$0.08** per **video second** for **720p**, **$0.06** per **video second** for **580p**, **$0.04** per **video
+    second** for **480p**. Video seconds are calculated at 16 frames per second.'''
+  regular_price:
+    value: 0.08
+    currency: USD
+    unit: per_second
+  promo_price: null
+  capabilities:
+    durations_s: null
+    resolutions:
+    - 480p
+    - 580p
+    - 720p
+    max_refs: null
+    native_audio: false
+    seed_supported: null
+  key_present: *id002
+  route_status: pinned
+  screen_status: screened
+  pin_ref: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+  fallback: null
+  source: 'pin-2026-09-09 (fal model page bytes: endpointBilling record + pricingInfoOverride prose for the exact id; fal.ai/api/models?keywords=<id> JSON; OpenAPI
+    expand=openapi-3.0 in eval/harness-v2/schemas/fal/) — index eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/PIN-INDEX.yaml'
+  notes: 'Added 2026-09-09 under the Controller decision CONTROLLER-WAN2-CONTENDER-PREMIUM-DEFERRED-2026-09-09 ("where wan 3 is passing, we will keep wan 2 as
+    contender"). The cheapest LIVE Wan 2.x tier on fal that renders the frozen rows (6 s and 8 s, 9:16, 720p) — the pinned OpenAPI takes num_frames 17-161
+    at 16 fps, so 6 s = 97 frames and 8 s = 129 frames; the cheaper-per-clip rungs (a14b turbo USD 0.10 per video, 5B fast-wan 0.025 per video) have no
+    duration field, and Wan 2.5 preview / Wan 2.6 take only 5/10(/15) s (ladder in the PIN-INDEX). Silent family (no audio field in the schema; native_audio
+    false). Billing counts video seconds at 16 fps; whether the model''s native +1 frame (4n+1) is billed is not stated — a 6-s row may bill 6.0625 s
+    (USD 0.485), recorded, not projected. The 580p / 480p rungs are recorded, never used (the battery runs 720p).'
+  variants:
+  - variant: t2v
+    surface_model_id: fal-ai/wan/v2.2-a14b/text-to-video
+    regular_price:
+      value: 0.08
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+    route_status: pinned
+    notes: 720p; video seconds at 16 fps
+  - variant: i2v
+    surface_model_id: fal-ai/wan/v2.2-a14b/image-to-video
+    regular_price:
+      value: 0.08
+      currency: USD
+      unit: per_second
+    promo_price: null
+    pin_ref: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-image-to-video-2026-09-09.html
+    route_status: pinned
+    notes: 720p; video seconds at 16 fps; the exact image-to-video id carries its own endpointBilling {billing_unit seconds, price 0.08} record
 - route_key: gemini-omni-flash-1.1
   question_slots:
   - VID-01

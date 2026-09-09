@@ -27,13 +27,18 @@ import pricing as PR
 import surfaces
 from adapters import adapter_for
 
-# Controller between-role note 6 (2026-09-05): the committed HEAD after the EVAL-039A Auditor fixes carries
-# 192 / 96 / 288 calls + 32 conditional and USD 156.46 nominal in cap (cash 115.45 + GCP credits 41.01 + Rs 0.80).
+# Package totals after the 2026-09-09 rebuild (tools/build.py): Controller between-role note 6 (2026-09-05) carried 192 / 96 / 288 calls and
+# USD 156.46; since then the package gained, by hand, the VID-TOPO3-01 arm A2 rows (commit 9adc403, +4 calls, +1.09), the ElevenLabs direct
+# re-point (commit 0ba06b9: 10 calls moved from fal cash to plan credits, -2.43) and the 8-s ref2v rows (+0.80 credits) - the COST-TABLE was not
+# regenerated for those - and now the Wan 2 contender rows (CONTROLLER-WAN2-CONTENDER-PREMIUM-DEFERRED-2026-09-09: wan-2.2-a14b on
+# VID-T2V-01/02/03 and VID-2SPK-01, wan-2.2-a14b-i2v on VID-I2V-01..04; 16 calls, USD 8.00). The regenerated COST-TABLE carries all of it:
+# 202 / 106 / 308 calls + 32 conditional, USD 163.93 nominal in cap (cash 121.98 + GCP credits 41.94 + Rs 0.80; ElevenLabs plan credits 0 USD).
 # The task file's older 186 / 112 / 298 and 155.71 are superseded and kept only for the record.
-TASK_FIXED = {"tranche_1a": 192, "tranche_1b": 96, "total": 288, "conditional": 32, "nominal_usd_in_cap": "156.46",
-              "nominal_usd_cash": "115.45", "nominal_usd_credits": "41.01", "nominal_inr_sarvam": "0.80",
-              "source": "COST-TABLE.yaml totals at the committed HEAD (Controller between-role note 6)",
-              "superseded_task_file_figures": {"tranche_1a": 186, "tranche_1b": 112, "total": 298, "nominal_usd_in_cap": "155.71"}}
+TASK_FIXED = {"tranche_1a": 202, "tranche_1b": 106, "total": 308, "conditional": 32, "nominal_usd_in_cap": "163.93",
+              "nominal_usd_cash": "121.98", "nominal_usd_credits": "41.94", "nominal_inr_sarvam": "0.80",
+              "source": "COST-TABLE.yaml totals after the 2026-09-09 rebuild (Wan 2 contender rows + the hand-edited A2 / ElevenLabs-direct / ref2v-8s rows now generated); before them, Controller between-role note 6",
+              "superseded_figures": {"between_role_note_6_2026_09_05": {"tranche_1a": 192, "tranche_1b": 96, "total": 288, "nominal_usd_in_cap": "156.46"},
+                                     "task_file": {"tranche_1a": 186, "tranche_1b": 112, "total": 298, "nominal_usd_in_cap": "155.71"}}}
 ROUNDING_TOLERANCE_PER_CALL = Decimal("0.0001")    # COST-TABLE rounds line_usd to 4 decimals
 
 
@@ -80,8 +85,14 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
     multi-reference FLUX edit row at the roster-implied price when that is the ONLY thing refusing it."""
     rows_out = []
     adapters_cache: dict[str, object] = {}
+    # A registry entry may already run on a surface / pool the Controller decided but the freeze package has not been rebuilt for
+    # (surfaces.GEMINI_API_REPOINT_PENDING_PACKAGE, 2026-09-09). The row keeps BOTH pools; the reconciliation below is against the
+    # package's pool (the COST-TABLE basis), and the header lists every such re-point so nothing is hidden.
+    pending_repoints = dict(getattr(surfaces, "GEMINI_API_REPOINT_PENDING_PACKAGE", None) or {})
+    catalogue = dict(cost_table.route_catalogue or {})
     for row in book.rows():
         entry = registry.get(row["route_key"])
+        package_pool = (catalogue.get(entry.route_key) or {}).get("billing_pool") or entry.billing_pool
         ad = adapters_cache.get(entry.route_key)
         if ad is None:
             ad = adapter_for(entry, pricing=pricing, seed_policy_path=seed_policy_path)
@@ -110,7 +121,9 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
             "unit_price": price.get("unit_price"), "price_status": price.get("price_status"), "route_status": price.get("route_status"),
             "row_unit_price": _s(row.get("unit_price")), "computed_amount": _s(computed), "currency": price.get("currency"),
             "amount_usd_equiv": _s(usd), "fx_rate": price.get("fx_rate"), "price_pin_ref": price.get("pin_ref"),
-            "billing_pool": entry.billing_pool, "conditional": row["conditional"], "counted_in_cap": counted,
+            "billing_pool": entry.billing_pool, "package_billing_pool": package_pool,
+            "pool_repoint_pending_package": bool(entry.route_key in pending_repoints and package_pool != entry.billing_pool),
+            "conditional": row["conditional"], "counted_in_cap": counted,
             "would_dispatch": d["would_dispatch"], "refusal_reason": d["refusal_reason"], "request_notes": d["request_notes"] or None,
             "seed_policy": "unset", "key_name": entry.key_name, "credential_file_name": entry.credential_file_name,
             # EVAL-041 part 2: inputs resolved at plan time (summaries, never bytes) and the price basis the row was priced on
@@ -132,19 +145,24 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
         "counts_match_task": (len(non_cond) == TASK_FIXED["total"] and len(cond) == TASK_FIXED["conditional"]),
     }
 
-    def totals(rs):
+    def totals(rs, pool_field="billing_pool"):
         agg: dict[tuple, dict] = {}
         for r in rs:
-            k = (r["tranche"], r["billing_pool"])
+            k = (r["tranche"], r[pool_field])
             a = agg.setdefault(k, {"tranche": k[0], "billing_pool": k[1], "calls": 0, "priced_calls": 0, "unpinned_calls": 0,
-                                   "usd_nominal": Decimal("0"), "inr_nominal": Decimal("0"), "usd_equiv_nominal": Decimal("0")})
+                                   "usd_nominal": Decimal("0"), "inr_nominal": Decimal("0"), "usd_equiv_nominal": Decimal("0"),
+                                   "plan_credits_nominal": Decimal("0")})
             a["calls"] += 1
             if r["computed_amount"] is None:
                 a["unpinned_calls"] += 1
                 continue
             a["priced_calls"] += 1
             amt = Decimal(r["computed_amount"])
-            if r["currency"] == "INR":
+            if r["billing_pool"] == PR.CREDIT_POOL:
+                # ElevenLabs direct (2026-09-09): computed_amount is the vendor's plan credits, 0 USD cash (amount_usd_equiv)
+                a["plan_credits_nominal"] += amt
+                a["usd_nominal"] += Decimal(r["amount_usd_equiv"])
+            elif r["currency"] == "INR":
                 a["inr_nominal"] += amt
             else:
                 a["usd_nominal"] += amt
@@ -152,12 +170,29 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
         out = []
         for k in sorted(agg):
             a = agg[k]
-            out.append({**a, "usd_nominal": str(_d2(a["usd_nominal"])), "inr_nominal": str(_d2(a["inr_nominal"])),
-                        "usd_equiv_nominal": str(_d2(a["usd_equiv_nominal"]))})
+            o = {**a, "usd_nominal": str(_d2(a["usd_nominal"])), "inr_nominal": str(_d2(a["inr_nominal"])),
+                 "usd_equiv_nominal": str(_d2(a["usd_equiv_nominal"]))}
+            if a["plan_credits_nominal"]:
+                o["plan_credits_nominal"] = str(a["plan_credits_nominal"])
+            else:
+                o.pop("plan_credits_nominal")
+            out.append(o)
         return out
 
-    by_pool = totals(non_cond)
+    by_pool = totals(non_cond)                                   # by the REGISTRY pool: where the money would actually go
     cond_by_pool = totals(cond)
+    recon_by_pool = totals(non_cond, "package_billing_pool")     # by the PACKAGE pool: the COST-TABLE basis the reconciliation is against
+    recon_cond_by_pool = totals(cond, "package_billing_pool")
+    repoints = {}
+    for r in rows_out:
+        if r["pool_repoint_pending_package"]:
+            k = r["route_key"]
+            e = repoints.setdefault(k, {"route_key": k, "registry_pool": r["billing_pool"], "package_pool": r["package_billing_pool"],
+                                        "surface": r["surface"], "calls": 0, "usd_nominal": Decimal("0")})
+            e["calls"] += 1
+            if r["computed_amount"] is not None and r["currency"] == "USD":
+                e["usd_nominal"] += Decimal(r["computed_amount"])
+    pool_repoints = [{**e, "usd_nominal": str(_d2(e["usd_nominal"]))} for e in repoints.values()]
     in_cap_usd = sum(Decimal(r["amount_usd_equiv"]) for r in non_cond if r["counted_in_cap"] and r["currency"] == "USD")
     in_cap_inr = sum(Decimal(r["computed_amount"]) for r in non_cond if r["counted_in_cap"] and r["currency"] == "INR")
     in_cap_usd_equiv = sum(Decimal(r["amount_usd_equiv"]) for r in non_cond if r["counted_in_cap"])
@@ -167,14 +202,14 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
     ct_by = {(t["tranche"], t["billing_pool"]): t for t in ct_tot.get("by_tranche_and_pool", [])}
     ct_cond = {(t["tranche"], t["billing_pool"]): t for t in ct_tot.get("conditional_by_pool", [])}
     recon = []
-    for t in by_pool:
+    for t in recon_by_pool:
         c = ct_by.get((t["tranche"], t["billing_pool"]), {})
         delta = Decimal(t["usd_nominal"]) - Decimal(str(c.get("usd_nominal", 0)))
         recon.append({"tranche": t["tranche"], "billing_pool": t["billing_pool"], "manifest_calls": t["calls"], "cost_table_calls": c.get("calls"),
                       "manifest_usd": t["usd_nominal"], "cost_table_usd": _s(c.get("usd_nominal")), "delta_usd": str(_d2(delta)),
                       "within_0_01": abs(delta) <= Decimal("0.01"), "manifest_inr": t["inr_nominal"], "cost_table_inr": _s(c.get("inr_nominal"))})
     recon_cond = []
-    for t in cond_by_pool:
+    for t in recon_cond_by_pool:
         c = ct_cond.get((t["tranche"], t["billing_pool"]), {})
         delta = Decimal(t["usd_nominal"]) - Decimal(str(c.get("usd_nominal", 0)))
         recon_cond.append({"tranche": t["tranche"], "billing_pool": t["billing_pool"], "manifest_calls": t["calls"], "cost_table_calls": c.get("calls"),
@@ -190,6 +225,8 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
             continue
         c = ct_rows.get(k)
         mine = Decimal(r["computed_amount"]) if r["computed_amount"] is not None else None
+        if r["billing_pool"] == PR.CREDIT_POOL and r["amount_usd_equiv"] is not None:
+            mine = Decimal(r["amount_usd_equiv"])          # plan credits are not USD; the COST-TABLE line for this pool is 0 USD
         theirs = None
         line_key = "line_inr" if r["currency"] == "INR" else "line_usd"
         if c and c.get(line_key) is not None and c.get("calls"):
@@ -207,7 +244,7 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
                           "explanation": r["refusal_reason"] or "; ".join(r["request_notes"] or []) or "see quantity_rule / price_pin_ref"})
 
     # closure: per pool, the explained line totals must account for the pool delta (mechanical, Tester check 4)
-    pool_of = {(r["case_id"], r["item_id"], r["route_key"], r["arm"]): (r["tranche"], r["billing_pool"], r["conditional"]) for r in rows_out}
+    pool_of = {(r["case_id"], r["item_id"], r["route_key"], r["arm"]): (r["tranche"], r["package_billing_pool"], r["conditional"]) for r in rows_out}
     explained_by_pool: dict[tuple, Decimal] = {}
     for e in explained:
         tp = pool_of[(e["case_id"], e["item_id"], e["route_key"], e["arm"])]
@@ -242,6 +279,10 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
         "counts": counts,
         "totals_by_tranche_and_pool": by_pool,
         "conditional_by_tranche_and_pool": cond_by_pool,
+        "pool_repoints_pending_package": {"routes": pool_repoints,
+                                          "note": ("registry entries the Controller re-pointed (surface / pool) before the freeze package was rebuilt for it; "
+                                                   "totals_by_tranche_and_pool follow the registry (where the money would go), the reconciliation follows "
+                                                   "the package pool (the COST-TABLE basis); empty once the package is rebuilt")},
         "nominal_in_cap": {"usd": nominal_in_cap, "inr": str(_d2(in_cap_inr)), "usd_equiv_all_pools": str(_d2(in_cap_usd_equiv)),
                            "cost_table_nominal_usd_in_cap": str(ct_in_cap), "delta_usd": str(_d2(in_cap_usd - ct_in_cap)),
                            "within_0_01": abs(in_cap_usd - ct_in_cap) <= Decimal("0.01"),

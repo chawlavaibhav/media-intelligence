@@ -59,6 +59,11 @@ def roster_price(R0):
 XCHECK = []
 for k, R0 in R.items():
     st, val, pin = roster_price(R0)
+    if R0["billing_pool"] == "elevenlabs_credits":
+        # plan-credit pool (ElevenLabs direct, 2026-09-09): 0 USD cash, credits from the pinned pricing page; the roster's fal rows for the
+        # same models are NOT the price basis (harness pricing.py CREDIT_POOL rule) - recorded, not cross-checked against a roster value
+        XCHECK.append(dict(route_key=k, roster=R0["roster_key"], roster_status="not_consulted_plan_credits", roster_price=val, package_price=R0["unit_price"], package_price_status=R0["price_status"]))
+        continue
     if R0["price_status"] == "pinned":
         base = R0["roster_base_price"] if R0["roster_base_price"] is not None else R0["unit_price"]
         assert st in ("pinned", "needs_controller_enablement", "no_access") and val is not None and abs(float(val) - float(base)) < 1e-9, (k, st, val, base)
@@ -333,6 +338,7 @@ def cost_rows(c):
             elif R0["unit"] == "per_1k_chars": line = price * q / 1000 * calls
             elif R0["unit"] == "per_1M_chars": line = price * q / 1e6 * calls
             elif R0["unit"] == "per_1k_chars_inr": inr = price * q / 1000 * calls; line = inr / USD_INR_REF
+            elif R0["unit"] in ("plan_credits_per_char", "plan_credits_per_minute"): line = 0.0   # plan credits (ElevenLabs direct): 0 USD cash, outside the USD cap
             else: raise ValueError(R0["unit"])
         rows.append(dict(case_id=c["case_id"], item_id=r.get("item_id", c["case_id"]), route_key=r["route_key"], arm=r["arm"],
                          surface=R0["surface"], billing_pool=R0["billing_pool"], tranche=r["tranche"], items=1, repeats=calls, calls=calls,

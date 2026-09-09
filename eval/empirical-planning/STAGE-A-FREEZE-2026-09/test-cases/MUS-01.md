@@ -53,7 +53,7 @@
 
 ## Routes
 
-See `TEST-CASES.yaml` → `routes[]`: elevenlabs-music, lyria.
+See `TEST-CASES.yaml` → `routes[]`: elevenlabs-music-direct, lyria.
 
 **Blueprint:** `BLUEPRINTS/MUS-01.blueprint.md` (sha256 `4d03a82e214c4c54…`, author executor_agent)
 

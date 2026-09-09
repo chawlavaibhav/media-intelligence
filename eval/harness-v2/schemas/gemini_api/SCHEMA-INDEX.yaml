@@ -1,0 +1,83 @@
+# SCHEMA-INDEX - request / response shapes for the Gemini Developer API surface (`surface: gemini_api`), 2026-09-09.
+# The pinned bytes live in eval/empirical-planning/price-pins-2026-09/gemini-api/ (PIN-INDEX.yaml carries url, fetched_utc, bytes,
+# sha256, fetch_command and every evidence_quote; nothing here is typed by hand that the index does not verify against the bytes).
+# Controller decisions: CONTROLLER-GEMINI-MODELS-VIA-GEMINI-KEY-2026-09-09 (Gemini-named models on the key NAMED GOOGLE_API_KEY),
+# CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09 (a model on both fal and GCP is called on GCP).
+surface: gemini_api
+host: https://generativelanguage.googleapis.com
+auth: header x-goog-api-key, value read by NAME (GOOGLE_API_KEY) at dispatch only; never in the URL (the Omni guide's `?key=` form is not used)
+transport: eval/harness-v2/transports.py#GeminiApiTransport (post_json; one POST = one trial)
+pins_index: eval/empirical-planning/price-pins-2026-09/gemini-api/PIN-INDEX.yaml
+sources:
+- id: image_generation_guide
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-image-generation.html
+  url: https://ai.google.dev/gemini-api/docs/image-generation
+- id: generate_content_reference
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-generate-content-reference.html
+  url: https://ai.google.dev/api/generate-content
+- id: omni_guide
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-omni.html
+  url: https://ai.google.dev/gemini-api/docs/omni
+- id: omni_model_page
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-models-gemini-omni-flash.html
+  url: https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash
+- id: interactions_reference
+  pin_file: eval/empirical-planning/price-pins-2026-09/gemini-api/gemini-api-interactions-api-reference.html
+  url: https://ai.google.dev/api/interactions-api
+- id: live_proof_eval_038
+  module: eval/experiments/EVAL-038/tools/generate_media.py
+  note: generateContent + responseModalities + imageConfig.aspectRatio with inline image bytes back, live on the Gemini Developer API, 2026-09-01
+shapes:
+  gemini_image:
+    adapter: eval/harness-v2/adapters/gemini_api_image.py (GeminiApiImageAdapter)
+    models: [gemini-3.1-flash-image, gemini-3-pro-image]
+    sources: [generate_content_reference, image_generation_guide, live_proof_eval_038]
+    submit: POST https://generativelanguage.googleapis.com/v1beta/models/MODEL_ID:generateContent
+    body_fields:
+    - 'contents[{role:user, parts:[{text}, {inlineData:{mimeType,data}}...]}]'
+    - generationConfig.responseModalities ["IMAGE"]
+    - generationConfig.candidateCount 1
+    - 'generationConfig.imageConfig.aspectRatio (imageSize not sent - "Gemini 3 image models generate 1K images by default")'
+    response: 'candidates[0].content.parts[*].inlineData.{mimeType,data}; refusal = no candidates (promptFeedback.blockReason) or finishReason IMAGE_SAFETY / SAFETY / PROHIBITED_CONTENT / BLOCKLIST'
+    evidence_quotes:
+    - responseModalities
+    - imageConfig
+    - 'Supported aspect ratios:'
+    - imageSize
+    - candidateCount
+    - Candidates blocked due to unsafe image generation content
+    - blockReason
+    - Gemini 3 image models generate 1K images by default
+    - x-goog-api-key
+    note: the guide's own REST examples use the Interactions API (POST /v1beta/interactions, response_format{type:image, aspect_ratio, image_size});
+      the generateContent form is kept because the reference documents every field sent and the bytes are live-proven on this surface, and it is
+      byte-identical to the Vertex body (adapters/vertex_gemini_image.py _build_body), so the Vertex and Gemini API draws are the same request.
+  omni_interactions:
+    adapter: eval/harness-v2/adapters/gemini_api_omni.py (GeminiApiOmniAdapter)
+    models: [gemini-omni-1.1-flash]
+    sources: [omni_guide, omni_model_page, interactions_reference]
+    submit: POST https://generativelanguage.googleapis.com/v1beta/interactions
+    body_fields:
+    - model
+    - 'input[{type:text,text}|{type:image,data,mime_type}]'
+    - 'response_format{type:video, aspect_ratio 16:9|9:16, resolution 360p|720p|1080p|4k, duration "<3..10>s"}'
+    - generation_config.video_config.task text_to_video|image_to_video
+    response: '{id, status: completed|failed|cancelled|incomplete|budget_exceeded|..., steps[{type:model_output, content:[{type:video, mime_type:video/mp4, data:<b64>}]}], errors[{code,message}]}'
+    evidence_quotes:
+    - generativelanguage.googleapis.com/v1beta/interactions
+    - gemini-omni-1.1-flash
+    - video_config
+    - text_to_video
+    - The default resolution is 720p
+    - '"type": "video"'
+    - model_output
+    - VideoResponseFormat
+    - The duration for the video output
+    - Video data is returned inline in the response
+    - The interaction failed
+    - Prompts that violate usage policies are blocked
+    - 360p/720p/1080p/4K, 24 FPS
+    note: duration's value format is not stated by the Gemini API reference ("duration string (optional) The duration for the video output"); the
+      adapter keeps the pinned Vertex form for the same model ('integers between 3 and 10, followed by "s"'), inside the model page's 3s-10s range.
+      A block has no documented shape; a non-completed interaction whose errors[] speak of safety / policy / blocked content is a refusal
+      (moderation_block), any other non-completed status an error interaction_<status>, as the Vertex adapter classifies.

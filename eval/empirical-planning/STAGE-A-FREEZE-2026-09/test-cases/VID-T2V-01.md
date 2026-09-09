@@ -58,7 +58,7 @@
 
 ## Routes
 
-See `TEST-CASES.yaml` → `routes[]`: gemini-omni-1.1-flash, kling-v3-pro-audio, minimax-h3-max, seedance-2.5, sora-2, veo-3.1-fast, wan-3.0-prime.
+See `TEST-CASES.yaml` → `routes[]`: gemini-omni-1.1-flash, kling-v3-pro-audio, minimax-h3-max, seedance-2.5, sora-2, veo-3.1-fast, wan-2.2-a14b, wan-3.0-prime.
 
 **Blueprint:** `BLUEPRINTS/VID-T2V-01.blueprint.md` (sha256 `22a6b861659cc8f8…`, author executor_agent)
 

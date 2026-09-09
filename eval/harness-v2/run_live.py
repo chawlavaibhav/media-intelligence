@@ -351,7 +351,7 @@ def live_transport_factory(entry, trial):
     """The REAL urllib transports (transports.py is the only module that opens a socket). Used by main() only."""
     import transports as T
     fam = {"fal": T.FalQueueTransport, "vertex": T.VertexTransport, "sarvam_direct": T.SarvamTransport,
-           "elevenlabs_direct": T.ElevenLabsTransport}.get(entry.surface)
+           "elevenlabs_direct": T.ElevenLabsTransport, "gemini_api": T.GeminiApiTransport}.get(entry.surface)
     if fam is None:
         raise DispatchRefused(f"{entry.route_key}: no live transport for surface {entry.surface}; nothing was sent")
     return fam()

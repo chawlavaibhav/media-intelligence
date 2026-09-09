@@ -33,6 +33,20 @@ class VertexOmniAdapter(B.RouteAdapter):
     def build_request(self, case_row: dict, inputs: dict | None = None) -> B.Request:
         e = self.entry
         inputs = self._check_inputs(inputs)
+        prompt, a, res, d, input_parts, notes = self._render_fields(case_row, inputs)
+        body = {
+            "model": e.surface_model_id,
+            "input": input_parts,
+            "response_format": [{"type": "video", "aspect_ratio": a, "resolution": res, "duration": f"{d}s"}],
+            "generation_config": {"video_config": {"task": "image_to_video" if "image_bytes" in inputs else "text_to_video"}},
+        }
+        self._guard_body(body, {"model", "input", "response_format", "generation_config"}, e.route_key)
+        headers = {"Authorization": "Bearer <TOKEN:gcloud-service-account>", "Content-Type": "application/json"}
+        return B.Request("POST", e.endpoint, headers, body, notes=notes)
+
+    def _render_fields(self, case_row: dict, inputs: dict) -> tuple:
+        """(prompt, aspect, resolution, duration_s, input_parts, notes) - the pinned enums, shared with the Gemini
+        Developer API variant (adapters/gemini_api_omni.py), which wraps them in the Interactions body of that surface."""
         notes: list[str] = []
         prompt = case_row.get("prompt")
         if not prompt or not str(prompt).strip():
@@ -54,15 +68,7 @@ class VertexOmniAdapter(B.RouteAdapter):
         input_parts: list = [{"type": "text", "text": prompt}]
         if "image_bytes" in inputs:
             input_parts.append({"type": "image", "data": B.b64(inputs["image_bytes"]), "mime_type": inputs.get("image_mime") or "image/png"})
-        body = {
-            "model": e.surface_model_id,
-            "input": input_parts,
-            "response_format": [{"type": "video", "aspect_ratio": a, "resolution": res, "duration": f"{d}s"}],
-            "generation_config": {"video_config": {"task": "image_to_video" if "image_bytes" in inputs else "text_to_video"}},
-        }
-        self._guard_body(body, {"model", "input", "response_format", "generation_config"}, e.route_key)
-        headers = {"Authorization": "Bearer <TOKEN:gcloud-service-account>", "Content-Type": "application/json"}
-        return B.Request("POST", e.endpoint, headers, body, notes=notes)
+        return prompt, a, res, d, input_parts, notes
 
     def _credential(self) -> str:
         if self.token_source is None:
@@ -84,6 +90,9 @@ class VertexOmniAdapter(B.RouteAdapter):
         reply = reply if isinstance(reply, dict) else {}
         attempt["completed_at"] = self._now()
         iid = reply.get("id")
+        if status == 200 and reply.get("$unparseable_body"):
+            return B.Outcome("error", "malformed_response", f"200 reply was not JSON ({reply.get('$bytes')} bytes)", ambiguous=False,
+                             outcome_resolved=True, lifecycle_counts=counts)
         if status != 200:
             o = B.http_status_outcome(status, reply, counts, note=str(reply))
             err = B.error_of(reply)
@@ -92,8 +101,7 @@ class VertexOmniAdapter(B.RouteAdapter):
             o.provider_request_id = iid
             return o
         if reply.get("status") not in ("completed", None):
-            return B.Outcome("error", f"interaction_{reply.get('status')}", str(reply.get("error") or reply.get("status"))[:300],
-                             ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_request_id=iid)
+            return self._not_completed(reply, counts, iid)
         for step in reply.get("steps") or []:
             if step.get("type") != "model_output":
                 continue
@@ -102,7 +110,9 @@ class VertexOmniAdapter(B.RouteAdapter):
                     if c.get("data"):
                         import base64
                         try:
-                            data = base64.b64decode(c["data"])
+                            data = base64.b64decode(c["data"], validate=True)
+                            if not data:
+                                raise ValueError("decoded to zero bytes")
                         except Exception as exc:  # noqa: BLE001
                             return B.Outcome("error", "malformed_response", f"video bytes were not valid base64: {exc}", ambiguous=False,
                                              outcome_resolved=True, lifecycle_counts=counts, provider_request_id=iid)
@@ -114,3 +124,8 @@ class VertexOmniAdapter(B.RouteAdapter):
                                          ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_request_id=iid)
         return B.Outcome("error", "no_artifact_returned", "completed interaction carried no video content", ambiguous=False,
                          outcome_resolved=True, lifecycle_counts=counts, provider_request_id=iid)
+
+    def _not_completed(self, reply: dict, counts: dict, iid) -> B.Outcome:
+        """A 200 interaction whose status is not `completed`: a resolved provider error, classified by status."""
+        return B.Outcome("error", f"interaction_{reply.get('status')}", str(reply.get("error") or reply.get("errors") or reply.get("status"))[:300],
+                         ambiguous=False, outcome_resolved=True, lifecycle_counts=counts, provider_request_id=iid)

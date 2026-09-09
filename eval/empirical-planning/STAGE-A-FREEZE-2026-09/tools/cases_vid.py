@@ -5,17 +5,27 @@ T2V5 = ["veo-3.1-fast", "kling-v3-pro-audio", "minimax-h3-max", "wan-3.0-prime",
 I2V4 = ["veo-3.1-fast-i2v", "kling-v3-pro-i2v", "minimax-h3-max-i2v", "wan-3.0-prime-i2v"]
 NATIVE4 = ["veo-3.1-fast", "kling-v3-pro-audio", "gemini-omni-1.1-flash", "seedance-2.5", "wan-3.0-prime"]
 AUDIO_NOTE = "on where native (README OQ-2)"
+# Wan 2 contender (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on fal (Wan 2.2 A14B, USD 0.08/s at 720p), added ONLY on the
+# rows where Wan 3.0 Prime passed (VID-T2V-01/02/03, VID-I2V-01..04, VID-2SPK-01), two repeats each; a silent family, judged on the same contracts.
+WAN2 = "wan-2.2-a14b"
+WAN2_I2V = "wan-2.2-a14b-i2v"
+WAN2_AUDIO_NOTE = "off: the family renders no audio track (no audio field in the pinned schema)"
+WAN2_NOTE = "Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1"
 
-def t2v_routes(duration=6, seedance=False, audio="on"):
+def t2v_routes(duration=6, seedance=False, audio="on", wan2=False):
     rs = [rt(k, "core", "1a", vidp(duration_s=duration, audio=audio, audio_note=AUDIO_NOTE), duration, quantity_unit="seconds") for k in T2V5]
+    if wan2:
+        rs.append(rt(WAN2, "core", "1a", vidp(duration_s=duration, audio="off", audio_note=WAN2_AUDIO_NOTE, note=WAN2_NOTE), duration, quantity_unit="seconds"))
     if seedance:
         rs.append(rt("seedance-2.5", "premium", "1a", vidp(duration_s=duration, audio=audio, audio_note=AUDIO_NOTE), duration, quantity_unit="seconds",
                      exception="Seedance 2.5 runs only VID-T2V-01 and VID-T2V-02 (breadth deferred, repeats kept at 2 — contradiction 2 / decision 7)"))
     rs.append(rt("sora-2", "conditional", "1a", vidp(duration_s=duration, audio=audio, audio_note=AUDIO_NOTE), duration, quantity_unit="seconds"))
     return rs
 
-def i2v_routes(plate, duration=6, seedance=False, audio="on"):
+def i2v_routes(plate, duration=6, seedance=False, audio="on", wan2=False):
     rs = [rt(k, "core", "1b", vidp(duration_s=duration, audio=audio, refs=1, plate=plate, audio_note=AUDIO_NOTE), duration, quantity_unit="seconds") for k in I2V4]
+    if wan2:
+        rs.append(rt(WAN2_I2V, "core", "1b", vidp(duration_s=duration, audio="off", refs=1, plate=plate, audio_note=WAN2_AUDIO_NOTE, note=WAN2_NOTE), duration, quantity_unit="seconds"))
     if seedance:
         rs.append(rt("seedance-2.5-i2v", "premium", "1b", vidp(duration_s=duration, audio=audio, refs=1, plate=plate, audio_note=AUDIO_NOTE), duration, quantity_unit="seconds",
                      exception="Seedance 2.5 i2v runs VID-I2V-02 and VID-I2V-03 only (breadth deferred, repeats kept at 2)"))
@@ -69,7 +79,7 @@ VID.append(dict(
         "ACCEPT only if a bottle is held in his hand for the whole clip and stays the same object.",
         "REJECT if any lettering appears anywhere in any frame.",
     ],
-    routes=t2v_routes(seedance=True),
+    routes=t2v_routes(seedance=True, wan2=True),
     downstream_reuse=dict(feeds=[], consumes=[]),
     cut_order_rank=None, irreducibility_ref="C.VID-T2V-01",
     irreducibility="Drop it and TOPO-01 has no arm A and the video core has no Hindi item, so the native-dialogue routing question is unanswered; it cannot merge with VID-2SPK-01 because a single speaker isolates lip-sync from turn assignment, and it cannot merge with AUD-LIP-01 because that is the chain arm (a transform over our own inputs) — the two arms are the comparison.",
@@ -136,7 +146,7 @@ VID.append(dict(
         "REJECT if any speech, music or lettering is present.",
         "REJECT if she never reaches or passes the camera (a jog in place or a distant figure does not satisfy the request).",
     ],
-    routes=t2v_routes(seedance=True),
+    routes=t2v_routes(seedance=True, wan2=True),
     downstream_reuse=dict(feeds=[], consumes=[]),
     cut_order_rank=None, irreducibility_ref="C.VID-T2V-02",
     irreducibility="Drop it and the video core has no high-motion item, so COND-MOTION has no level above 'low' and the 'best high-motion / action route' row is empty; it cannot merge with VID-I2V-03 (high motion from a supplied still) because i2v is handed its first frame and identity, while t2v must invent both under fast locomotion.",
@@ -202,7 +212,7 @@ VID.append(dict(
         "REJECT if the child reads as in danger, injured or terrified rather than a little scared, or if the ending is not the embrace.",
         "REJECT if any speech, music or lettering is present.",
     ],
-    routes=t2v_routes(seedance=False),
+    routes=t2v_routes(seedance=False, wan2=True),
     downstream_reuse=dict(feeds=[], consumes=[]),
     cut_order_rank=None, irreducibility_ref="C.VID-T2V-03",
     irreducibility="Drop it and the video core has no policy-edge item, so the refusal-rate Registry row for text-to-video routes has no trigger and freshness item 1 (Veo's refusal on this shape) is untested; it cannot merge with VID-I2V-04 (same shape, animate) because the historical refusal was on the i2v mode and the two workflow modes may refuse differently — that difference is the finding.",
@@ -340,12 +350,13 @@ VID.append(dict(
         "REJECT if either person changes identity within the clip, or if any lettering appears.",
     ],
     routes=[rt(k, "A_native", "1a", vidp(duration_s=8, audio="on", audio_note=AUDIO_NOTE), 8, quantity_unit="seconds") for k in NATIVE4] + [
+        rt(WAN2, "A_native", "1a", vidp(duration_s=8, audio="off", audio_note=WAN2_AUDIO_NOTE, note=WAN2_NOTE + "; a silent family on the native-dialogue arm: the two-speaker visual turn assignment is what it can show, the spoken lines it cannot"), 8, quantity_unit="seconds"),
         rt("flux-2-pro", "B_chain_plate", "1b", imgp("9:16", note="two-person plate (recorded, not screened)"), 1, repeats=0, screen_status=CHAIN_NS),
         rt("minimax-h3-max-i2v", "B_chain_i2v", "1b", vidp(duration_s=8, resolution="768p", audio="off", refs=1, plate="B_chain_plate draw"), 8, quantity_unit="seconds", repeats=0, screen_status=CHAIN_NS),
         rt("sarvam-bulbul-v3", "B_chain_tts_L1", "1b", dict(line=L1, voice="female", chars=len(L1)), len(L1), quantity_unit="chars", item_id="VID-2SPK-01-tts-L1", repeats=0, screen_status=CHAIN_NS),
         rt("sarvam-bulbul-v3", "B_chain_tts_L2", "1b", dict(line=L2, voice="male", chars=len(L2)), len(L2), quantity_unit="chars", item_id="VID-2SPK-01-tts-L2", repeats=0, screen_status=CHAIN_NS),
-        rt("elevenlabs-v3", "B_chain_tts_L1", "1b", dict(line=L1, voice="female", chars=len(L1)), len(L1), quantity_unit="chars", item_id="VID-2SPK-01-tts-L1", repeats=0, screen_status=CHAIN_NS),
-        rt("elevenlabs-v3", "B_chain_tts_L2", "1b", dict(line=L2, voice="male", chars=len(L2)), len(L2), quantity_unit="chars", item_id="VID-2SPK-01-tts-L2", repeats=0, screen_status=CHAIN_NS),
+        rt("elevenlabs-v3-direct", "B_chain_tts_L1", "1b", dict(line=L1, voice="female", chars=len(L1)), len(L1), quantity_unit="chars", item_id="VID-2SPK-01-tts-L1", repeats=0, screen_status=CHAIN_NS),
+        rt("elevenlabs-v3-direct", "B_chain_tts_L2", "1b", dict(line=L2, voice="male", chars=len(L2)), len(L2), quantity_unit="chars", item_id="VID-2SPK-01-tts-L2", repeats=0, screen_status=CHAIN_NS),
         rt("sync-lipsync-v3", "B_chain_lipsync", "1b", dict(plate="B_chain_i2v clip (8 s)", drive="L1 + 0.6 s silence + L2, joined by code", output_seconds=8), 8, quantity_unit="seconds", repeats=0, screen_status=CHAIN_NS),
         rt("kling-lipsync-a2v", "B_chain_lipsync", "1b", dict(plate="B_chain_i2v clip (8 s)", drive="same drive file", billed_input_seconds="10"), 10, quantity_unit="seconds", repeats=0, screen_status=CHAIN_NS),
     ],
@@ -447,6 +458,9 @@ VID.append(dict(
     ],
     routes=[rt("qwen-image-3", "A_plate_9x16", "1a", imgp("9:16", note="9:16 re-draw of the IMG-TEXT-01 brief with the three strings, on the cheapest pinned cheap text route (Qwen Image 3, USD 0.04) — AF-1; prompt: arm_A_plate_prompt_9x16 in this case's blueprint"), 1),
             rt("flux-2-pro", "C_plate_9x16", "1a", imgp("9:16", note="9:16 textless base re-draw on the cheapest pinned image route (FLUX.2 Pro, USD 0.03) — AF-1; prompt: arm_C_textless_plate_prompt_9x16"), 1),
+            # Controller addendum 2026-09-09 (commit 9adc403, cap Rs 150): Nano Banana 2 plate for video arm A + the cheapest animator on it
+            rt("nano-banana-2", "A2_nb_plate_9x16", "1a", imgp("9:16", note="9:16 re-draw of the same three-string brief on a TEXT-CAPABLE cheap still route (Nano Banana 2, USD 0.067; round one spelled Hindi 2/2) — added 2026-09-09 after arm A's Qwen plates misspelled both draws (Controller: \"1. do it.\"); prompt: arm_A_plate_prompt_9x16 (same block as arm A)"), 1),
+            rt("minimax-h3-max-i2v", "A2_nb_still_to_cheap_i2v", "1b", vidp(duration_s=6, audio="off", refs=1, plate="arm-A2 9:16 plate: the Controller-accepted A2_nb_plate_9x16 draw", note="arm A re-run with the Nano Banana 2 plate on the cheapest animator only (H3 Max); Wan already shown to preserve plate lettering in topo3-video"), 6, quantity_unit="seconds"),
             rt("minimax-h3-max-i2v", "A_cheap_still_to_cheap_i2v", "1b", vidp(duration_s=6, audio="off", refs=1, plate="arm-A 9:16 plate: the Controller-accepted A_plate_9x16 draw; else draw 1"), 6, quantity_unit="seconds"),
             rt("wan-3.0-prime-i2v", "A_cheap_still_to_cheap_i2v", "1b", vidp(duration_s=6, audio="off", refs=1, plate="arm-A 9:16 plate: the Controller-accepted A_plate_9x16 draw; else draw 1"), 6, quantity_unit="seconds"),
             rt("veo-3.1-lite-i2v", "A_cheap_still_to_cheap_i2v", "1b", vidp(duration_s=6, audio="off", refs=1, plate="arm-A 9:16 plate: the Controller-accepted A_plate_9x16 draw; else draw 1"), 6, quantity_unit="seconds"),
@@ -523,7 +537,7 @@ VID.append(dict(
         "REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint has changed.",
         "REJECT if speech or music is present, or any lettering.",
     ],
-    routes=i2v_routes("IMG-CORE-01 accepted draw", audio="off"),
+    routes=i2v_routes("IMG-CORE-01 accepted draw", audio="off", wan2=True),
     downstream_reuse=dict(feeds=[], consumes=["IMG-CORE-01 accepted draw"]),
     cut_order_rank=None, irreducibility_ref="C.VID-I2V-01",
     irreducibility="Drop it and VID-03a has no product plate — the historically proven 'hero still → i2v' topology that the Media Factory prior calls the plate, and RX-05's cleanest camera/subject separation (camera moves, subject must not); it cannot merge with VID-T2V-04 because i2v is handed the bottle and tests motion only.",
@@ -587,7 +601,7 @@ VID.append(dict(
         "ACCEPT only if he visibly glances toward the phone and his expression changes to a slight smile within the clip.",
         "REJECT if his hand, the phone or his features distort, or if any lettering appears.",
     ],
-    routes=i2v_routes("IMG-CORE-02 accepted draw", seedance=True, audio="off"),
+    routes=i2v_routes("IMG-CORE-02 accepted draw", seedance=True, audio="off", wan2=True),
     downstream_reuse=dict(feeds=["AUD-LIP-01/02/03 plate (the Controller-accepted clip)"], consumes=["IMG-CORE-02 accepted draw"]),
     cut_order_rank=None, irreducibility_ref="C.VID-I2V-02",
     irreducibility="Drop it and VID-03a has no person plate and no Hindi item, and all three lip-sync cases lose their plate (TOPO-01 arm B collapses); it cannot merge with VID-I2V-03 (same still, high motion) because the lip-sync plate must be a near-static talking-shot, the inverse of the high-motion test.",
@@ -650,7 +664,7 @@ VID.append(dict(
         "REJECT if arms, hands or the phone multiply, stretch, pass through the body or vanish during the movement.",
         "REJECT if the clip is nearly static (a slight sway is not the requested celebration), or if any lettering or audio is present.",
     ],
-    routes=i2v_routes("IMG-CORE-02 accepted draw", seedance=True, audio="off"),
+    routes=i2v_routes("IMG-CORE-02 accepted draw", seedance=True, audio="off", wan2=True),
     downstream_reuse=dict(feeds=[], consumes=["IMG-CORE-02 accepted draw"]),
     cut_order_rank=None, irreducibility_ref="C.VID-I2V-03",
     irreducibility="Drop it and the i2v core has no high-motion item and the Seedance 2.5 i2v line has only one item; it cannot merge with VID-T2V-02 (high motion from text) because the routing question is whether a route holds a *given* identity through fast motion, which only i2v can ask.",
@@ -713,7 +727,7 @@ VID.append(dict(
         "ACCEPT only if she visibly turns her gaze to the boat and her expression softens into a slight smile.",
         "REJECT if any lettering appears.",
     ],
-    routes=i2v_routes("IMG-CORE-04 accepted draw", audio="on (rain ambience where supported)"),
+    routes=i2v_routes("IMG-CORE-04 accepted draw", audio="on (rain ambience where supported)", wan2=True),
     downstream_reuse=dict(feeds=[], consumes=["IMG-CORE-04 accepted draw"]),
     cut_order_rank=None, irreducibility_ref="C.VID-I2V-04",
     irreducibility="Drop it and freshness item 1 is untested on the exact mode it was observed on (i2v) and the i2v core has no policy-edge or Hindi item; it cannot merge with VID-T2V-03 (same shape, t2v) for the reason stated there — the two modes may refuse differently and that difference is the finding.",
@@ -778,7 +792,7 @@ VID.append(dict(
         "REJECT if the pack's proportions or colours change during the clip, or if any added lettering, voice or music is present.",
     ],
     routes=[rt("seedance-2.5-ref2v", "premium", "1b", vidp(duration_s=6, audio="off", refs=3), 6, quantity_unit="seconds"),
-            rt("veo-3.1-fast-ref2v", "native", "1b", vidp(duration_s=6, audio="off", refs=3), 6, quantity_unit="seconds"),
+            rt("veo-3.1-fast-ref2v", "native", "1b", vidp(duration_s=8, audio="off", refs=3), 8, quantity_unit="seconds"),   # Vertex supports only 8 s for reference-to-video (commit 0ba06b9)
             rt("kling-v3-elements", "conditional", "1b", vidp(duration_s=6, audio="off", refs=3), 6, quantity_unit="seconds")],
     downstream_reuse=dict(feeds=[], consumes=["IMG-REF-01 reference pack"]),
     cut_order_rank=2, irreducibility_ref="C.VID-REF-01",
@@ -853,7 +867,7 @@ VID.append(dict(
         "REJECT if any lettering or speech is present.",
     ],
     routes=[rt("seedance-2.5-ref2v", "premium", "1b", vidp(duration_s=6, audio="on (ambient)", refs=3), 6, quantity_unit="seconds"),
-            rt("veo-3.1-fast-ref2v", "native", "1b", vidp(duration_s=6, audio="on (ambient)", refs=3), 6, quantity_unit="seconds"),
+            rt("veo-3.1-fast-ref2v", "native", "1b", vidp(duration_s=8, audio="on (ambient)", refs=3), 8, quantity_unit="seconds"),   # Vertex supports only 8 s for reference-to-video (commit 0ba06b9)
             rt("kling-v3-elements", "conditional", "1b", vidp(duration_s=6, audio="on (ambient)", refs=3), 6, quantity_unit="seconds")],
     downstream_reuse=dict(feeds=[], consumes=["IMG-REF-02 reference pack"]),
     cut_order_rank=2, irreducibility_ref="C.VID-REF-02",

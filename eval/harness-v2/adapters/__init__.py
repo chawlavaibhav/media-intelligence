@@ -5,6 +5,8 @@
     vertex_veo           :predictLongRunning -> :fetchPredictOperation (t2v / i2v / ref2v / extend)
     vertex_gemini_image  :generateContent on the global endpoint (image bytes inline)
     vertex_omni          /locations/global/interactions (Gemini Omni Flash video)
+    gemini_api_image     generativelanguage.googleapis.com models/<id>:generateContent, key NAMED GOOGLE_API_KEY (2026-09-09)
+    gemini_api_omni      generativelanguage.googleapis.com /v1beta/interactions (Gemini Omni Flash), key NAMED GOOGLE_API_KEY
     vertex_lyria         lyria-002:predict (30-s WAV inline)
     sarvam_tts           api.sarvam.ai/text-to-speech (WAV inline)
     elevenlabs_direct    api.elevenlabs.io/v1/text-to-speech/{voice_id} and /v1/music (mp3 bytes; plan credits)
@@ -20,12 +22,15 @@ from . import base as base  # noqa: F401
 
 def adapter_for(entry, **kw):
     """Construct the adapter family named by a SurfaceEntry, or a NullAdapter for `adapter: none`."""
-    from . import elevenlabs_direct, fal_queue, sarvam_tts, vertex_gemini_image, vertex_lyria, vertex_omni, vertex_veo
+    from . import (elevenlabs_direct, fal_queue, gemini_api_image, gemini_api_omni, sarvam_tts, vertex_gemini_image,
+                   vertex_lyria, vertex_omni, vertex_veo)
     families = {
         "fal_queue": fal_queue.FalQueueAdapter,
         "vertex_veo": vertex_veo.VertexVeoAdapter,
         "vertex_gemini_image": vertex_gemini_image.VertexGeminiImageAdapter,
         "vertex_omni": vertex_omni.VertexOmniAdapter,
+        "gemini_api_image": gemini_api_image.GeminiApiImageAdapter,
+        "gemini_api_omni": gemini_api_omni.GeminiApiOmniAdapter,
         "vertex_lyria": vertex_lyria.VertexLyriaAdapter,
         "sarvam_tts": sarvam_tts.SarvamTTSAdapter,
         "elevenlabs_direct": elevenlabs_direct.ElevenLabsDirectAdapter,
