@@ -1,0 +1,80 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: aud-music-eleven-smoke
+  mode: smoke
+  generated_utc: '2026-09-09T12:21:39.873530Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: a681b23a005a00493ca574dbd8ce1062201ccdf1
+  item_basis_commit: 0ba06b92ee27
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.music-eleven.local.yaml
+  authorisation_sha256: 23415d4ddd804da89e84f3c36a1e594bb634f9334eda6d19355e29939033da00
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: c0defa1e64d29e00f58362ab69e66dcaecb2f561ffef61e4ecbd2eb8ce47683c
+  cost_table_sha256: f71f6510da478456f1677c50f52340863ad649f655dc69a2b6ce18dda6c3bc94
+  cases:
+  - MUS-01
+  routes:
+  - elevenlabs-music-direct
+  tranche: null
+  repeats:
+  - 1
+  inputs_file: null
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 1
+    excluded: 1
+  estimated_by_pool:
+    elevenlabs_credits:
+      calls: 1
+      currency: USD
+      native: '900'
+      usd_equiv: '0'
+  estimated_total_usd_equiv: '0'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: MUS-01__elevenlabs-music-direct__native__r1
+  case_id: MUS-01
+  item_id: MUS-01
+  route_key: elevenlabs-music-direct
+  arm: native
+  repeat_index: 1
+  tranche: 1b
+  surface: elevenlabs_direct
+  adapter: elevenlabs_direct
+  surface_model_id: music_v1
+  endpoint: https://api.elevenlabs.io/v1/music?output_format=mp3_44100_128
+  billing_pool: elevenlabs_credits
+  currency: USD
+  estimated_amount_native: '900'
+  estimated_usd_equiv: '0'
+  unit_price: '0'
+  quantity: '30'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/elevenlabs-direct/elevenlabs-pricing.html
+  body_sha256: b2c70475ab6a74eeb909ef14f27445ce586e03c9f86aed7dc58d5f86b07c3231
+  api_calls_per_trial: 1
+  key_name: ELEVENLABS_API_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0'
+  roster_implied_usd: '0'
+  constructed_synthetic_inputs: false
+excluded:
+- case_id: MUS-01
+  route_key: elevenlabs-music-direct
+  arm: native
+  repeat_index: 2
+  tranche: 1b
+  reason: repeat 2 not requested ([1])

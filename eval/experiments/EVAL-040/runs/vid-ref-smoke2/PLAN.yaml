@@ -1,0 +1,124 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: vid-ref-smoke2
+  mode: smoke
+  generated_utc: '2026-09-09T12:16:14.579785Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: a681b23a005a00493ca574dbd8ce1062201ccdf1
+  item_basis_commit: 0ba06b92ee27
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.ref2.local.yaml
+  authorisation_sha256: 7fa949c69603ea7a7ab25b7209da85c8776d656bfca2c0b3a6aa997e6dc7a2c4
+  roster_sha256: 99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46
+  test_cases_sha256: c0defa1e64d29e00f58362ab69e66dcaecb2f561ffef61e4ecbd2eb8ce47683c
+  cost_table_sha256: f71f6510da478456f1677c50f52340863ad649f655dc69a2b6ce18dda6c3bc94
+  cases:
+  - VID-REF-01
+  routes:
+  - veo-3.1-fast-ref2v
+  tranche: null
+  repeats:
+  - 1
+  inputs_file:
+    path: eval/experiments/EVAL-040/runs/vid-ref/INPUTS.yaml
+    sha256: 58e9c05b13dee5e09d8b22472d71cb767e0bf3177c83873875a309a971cb3a56
+    runs_root: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/experiments/EVAL-040/runs
+    data_uri_source: 'pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` with no format constraint; data
+      URIs per fal''s public API documentation (not in the pinned bytes; proven by the first live smoke, never by a test)'
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 1
+    excluded: 1
+  estimated_by_pool:
+    credits:
+      calls: 1
+      currency: USD
+      native: '0.800000'
+      usd_equiv: '0.800000'
+  estimated_total_usd_equiv: '0.800000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r1
+  case_id: VID-REF-01
+  item_id: VID-REF-01
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  repeat_index: 1
+  tranche: 1b
+  surface: vertex
+  adapter: vertex_veo
+  surface_model_id: veo-3.1-fast-generate-001
+  endpoint: https://us-central1-aiplatform.googleapis.com/v1/projects/vertexaiproject-507518/locations/us-central1/publishers/google/models/veo-3.1-fast-generate-001:predictLongRunning
+  billing_pool: credits
+  currency: USD
+  estimated_amount_native: '0.800000'
+  estimated_usd_equiv: '0.800000'
+  unit_price: '0.1'
+  quantity: '8'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  body_sha256: d998f4b5157424e1d5c67456849cf5ee8ee1657e5f9075775ce7b5dee7bd2371
+  api_calls_per_trial: 1
+  key_name: gcloud auth print-access-token (service-account key file, MD-C3)
+  credential_file_name: ~/.mi-battery-keys/gcp-mi-battery-sa.json | ~/.aight-litellm-keys/vertex-sa.json
+  seed_policy: unset
+  inputs:
+  - role: reference_asset_1
+    ref: fixture:half2-fixtures:tin_front
+    kind: fixture
+    run_id: half2-fixtures
+    artifact_id: tin_front
+    suffix: null
+    relative_path: media/FIXTURE__tin_front__overlay__r1.png
+    sha256: 27eeb26c494bb51e2f7055935ccfcb5f7e68142c6c045d43c55e0b065a444eb6
+    bytes: 2040469
+    content_type: image/png
+    constructed_synthetic: true
+    for_case: IMG-REF-01
+    fixture_role: identity_product
+  - role: reference_asset_2
+    ref: fixture:half2-fixtures:tin_side
+    kind: fixture
+    run_id: half2-fixtures
+    artifact_id: tin_side
+    suffix: null
+    relative_path: media/FIXTURE__tin_side__nano-banana-pro-edit__r1.png
+    sha256: 82c9af17d1a57c6916c131ec25e8a9f6d389694604c037ff50c50ae86862d73d
+    bytes: 1311876
+    content_type: image/png
+    constructed_synthetic: true
+    for_case: IMG-REF-01
+    fixture_role: identity_product
+  - role: reference_asset_3
+    ref: fixture:half2-fixtures:tin_top
+    kind: fixture
+    run_id: half2-fixtures
+    artifact_id: tin_top
+    suffix: null
+    relative_path: media/FIXTURE__tin_top__nano-banana-pro-edit__r1.png
+    sha256: f9e8ec89a2d9fbf6abb69b87cc4e3f1c7366f7f128e197c4e54c735537e0c843
+    bytes: 1233686
+    content_type: image/png
+    constructed_synthetic: true
+    for_case: IMG-REF-01
+    fixture_role: identity_product
+  price_basis: cost_table
+  cost_table_unit_price: '0.1'
+  roster_implied_usd: '0.1'
+  constructed_synthetic_inputs: true
+excluded:
+- case_id: VID-REF-01
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  repeat_index: 2
+  tranche: 1b
+  reason: repeat 2 not requested ([1])
