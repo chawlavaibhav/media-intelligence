@@ -44,3 +44,10 @@ Kling v3 Pro audio draws were refused with HTTP 403 *"Exhausted balance"* — th
 Kling rows (USD 1.34 each). Infrastructure refusal, nothing generated or charged. Six clips sealed (Veo fast, Gemini
 Omni, Wan); spend USD 9.27 of the USD 9.96 cap. The Kling rows can run under this record's headroom (USD 0.69 —
 insufficient for two draws at 1.34; a further top-up AND a ₹150 cap addendum would be needed) — the Controller decides.
+
+## 6. Controller — "blance exits on fal." (2026-09-09): Kling rows retried under a ₹150 addendum
+
+The Controller states the fal balance exists. The two Kling v3 Pro audio draws are retried (a Kling smoke first, then the
+lane rows) under a cap addendum of **₹150: the piece cap becomes ₹1,100 = USD 11.53**. If fal refuses again with the same
+message while Wan dispatches on the same key, the refusal is recorded as a per-model balance hold on fal's side, with the
+exact message, for the Controller to take up with fal.
