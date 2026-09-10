@@ -1,0 +1,426 @@
+run_id: vid-wan2 + vid-wan2-i2v
+case: Wan 2.2 A14B (USD 0.08/s, silent) as the contender on the rows Wan 3.0 Prime passed
+revealed_utc: '2026-09-10'
+judge: Controller (blind W01-W16, two pages)
+commitment_verified: false
+rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+rule_text: E1/E2 per (route, question); harness request-shape faults not counted
+trials:
+- trial_id: VID-2SPK-01__wan-2.2-a14b__A_native__r1
+  run_id: vid-wan2
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: wan-2.2-a14b
+  arm: A_native
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W01
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: lettering on the screen; visually great (Controller)
+  redo_of: null
+- trial_id: VID-T2V-02__wan-2.2-a14b__core__r1
+  run_id: vid-wan2
+  case_id: VID-T2V-02
+  question: VID-T2V
+  route_key: wan-2.2-a14b
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W02
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'approved (Controller: ''rest all approved'')'
+  redo_of: null
+- trial_id: VID-I2V-04__wan-2.2-a14b-i2v__core__r2
+  run_id: vid-wan2
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W03
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'approved (Controller: ''rest all approved'')'
+  redo_of: null
+- trial_id: VID-T2V-03__wan-2.2-a14b__core__r1
+  run_id: vid-wan2
+  case_id: VID-T2V-03
+  question: VID-T2V
+  route_key: wan-2.2-a14b
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W04
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: rain is missing; otherwise great (Controller)
+  redo_of: null
+- trial_id: VID-I2V-04__wan-2.2-a14b-i2v__core__r1
+  run_id: vid-wan2
+  case_id: VID-I2V-04
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W05
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'approved (Controller: ''rest all approved'')'
+  redo_of: null
+- trial_id: VID-T2V-01__wan-2.2-a14b__core__r2
+  run_id: vid-wan2
+  case_id: VID-T2V-01
+  question: VID-T2V
+  route_key: wan-2.2-a14b
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W06
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'approved (Controller: ''rest all approved'')'
+  redo_of: null
+- trial_id: VID-T2V-02__wan-2.2-a14b__core__r2
+  run_id: vid-wan2
+  case_id: VID-T2V-02
+  question: VID-T2V
+  route_key: wan-2.2-a14b
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W07
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'approved (Controller: ''rest all approved'')'
+  redo_of: null
+- trial_id: VID-T2V-03__wan-2.2-a14b__core__r2
+  run_id: vid-wan2
+  case_id: VID-T2V-03
+  question: VID-T2V
+  route_key: wan-2.2-a14b
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W08
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: rain is missing; otherwise great (Controller)
+  redo_of: null
+- trial_id: VID-T2V-01__wan-2.2-a14b__core__r1
+  run_id: vid-wan2
+  case_id: VID-T2V-01
+  question: VID-T2V
+  route_key: wan-2.2-a14b
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W09
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'approved (Controller: ''rest all approved'')'
+  redo_of: null
+- trial_id: VID-2SPK-01__wan-2.2-a14b__A_native__r2
+  run_id: vid-wan2
+  case_id: VID-2SPK-01
+  question: VID-2SPK
+  route_key: wan-2.2-a14b
+  arm: A_native
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W10
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: lettering on the screen; visually great (Controller)
+  redo_of: null
+- trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r1
+  run_id: vid-wan2-i2v
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W11
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'accepted (Controller: ''rest all accepted'')'
+  redo_of: null
+- trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r2
+  run_id: vid-wan2-i2v
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W12
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'accepted (Controller: ''rest all accepted'')'
+  redo_of: null
+- trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r2
+  run_id: vid-wan2-i2v
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W13
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'accepted (Controller: ''rest all accepted'')'
+  redo_of: null
+- trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r2
+  run_id: vid-wan2-i2v
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W14
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'accepted (Controller: ''rest all accepted'')'
+  redo_of: null
+- trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r1
+  run_id: vid-wan2-i2v
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W15
+  verdict: reject
+  verdict_basis: blind_verdict
+  note: looking outside, not in the phone (Controller)
+  redo_of: null
+- trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r1
+  run_id: vid-wan2-i2v
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: ok
+  error_class: null
+  blind_id: W16
+  verdict: accept
+  verdict_basis: blind_verdict
+  note: 'approved with a note: camera is still (Controller)'
+  redo_of: null
+- trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r1
+  run_id: vid-wan2
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: error
+  error_class: http_422
+  blind_id: null
+  verdict: null
+  verdict_basis: harness_request_shape_fault_not_counted
+  note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+  redo_of: null
+- trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r2
+  run_id: vid-wan2
+  case_id: VID-I2V-01
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: error
+  error_class: http_422
+  blind_id: null
+  verdict: null
+  verdict_basis: harness_request_shape_fault_not_counted
+  note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+  redo_of: null
+- trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r1
+  run_id: vid-wan2
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: error
+  error_class: http_422
+  blind_id: null
+  verdict: null
+  verdict_basis: harness_request_shape_fault_not_counted
+  note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+  redo_of: null
+- trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r2
+  run_id: vid-wan2
+  case_id: VID-I2V-02
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: error
+  error_class: http_422
+  blind_id: null
+  verdict: null
+  verdict_basis: harness_request_shape_fault_not_counted
+  note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+  redo_of: null
+- trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r1
+  run_id: vid-wan2
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 1
+  dispatched: true
+  status: error
+  error_class: http_422
+  blind_id: null
+  verdict: null
+  verdict_basis: harness_request_shape_fault_not_counted
+  note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+  redo_of: null
+- trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r2
+  run_id: vid-wan2
+  case_id: VID-I2V-03
+  question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 2
+  dispatched: true
+  status: error
+  error_class: http_422
+  blind_id: null
+  verdict: null
+  verdict_basis: harness_request_shape_fault_not_counted
+  note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+  redo_of: null
+elimination:
+- question: VID-T2V
+  route_key: wan-2.2-a14b
+  arm: core
+  arms:
+  - core
+  n_planned: 6
+  refusals_or_errors: 0
+  accepts: 4
+  rejects: 2
+  not_dispatched: 0
+  e1_threshold: 3
+  e2_threshold: 1
+  eliminated: false
+  eliminated_by: []
+- question: VID-2SPK
+  route_key: wan-2.2-a14b
+  arm: A_native
+  arms:
+  - A_native
+  n_planned: 2
+  refusals_or_errors: 0
+  accepts: 0
+  rejects: 2
+  not_dispatched: 0
+  e1_threshold: 1
+  e2_threshold: 0
+  eliminated: true
+  eliminated_by:
+  - E2
+- question: VID-I2V
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  arms:
+  - core
+  n_planned: 8
+  refusals_or_errors: 0
+  accepts: 7
+  rejects: 1
+  not_dispatched: 0
+  e1_threshold: 3
+  e2_threshold: 2
+  eliminated: false
+  eliminated_by: []
+by_question:
+  VID-T2V: 4/6
+  VID-2SPK: 0/2
+  VID-I2V: 7/8
+side_by_side_with_wan3:
+  VID-2SPK-01:
+    wan_2.2_a14b: 0/2
+    wan_3.0_prime: 2/2
+  VID-I2V-01:
+    wan_2.2_a14b: 2/2
+    wan_3.0_prime: 2/2
+  VID-I2V-02:
+    wan_2.2_a14b: 1/2
+    wan_3.0_prime: 2/2
+  VID-I2V-03:
+    wan_2.2_a14b: 2/2
+    wan_3.0_prime: 2/2
+  VID-I2V-04:
+    wan_2.2_a14b: 2/2
+    wan_3.0_prime: 2/2
+  VID-T2V-01:
+    wan_2.2_a14b: 2/2
+    wan_3.0_prime: 1/2
+  VID-T2V-02:
+    wan_2.2_a14b: 2/2
+    wan_3.0_prime: 1/1
+  VID-T2V-03:
+    wan_2.2_a14b: 0/2
+    wan_3.0_prime: 2/2
+reading:
+- 'Wan 2.2 A14B 11/16 at USD 0.08/s: text-to-video 4/6 (bike 2/2, shoes 2/2, umbrella 0/2 ''rain is missing''), two speakers 0/2 (''lettering on the screen; visually
+  great'' - and silent, so the dialogue contract cannot be met), image-to-video 7/8 (one ''looking outside, not in the phone''; one ''camera is still'' accepted with
+  a note).'
+- 'Against Wan 3.0 Prime on the same rows: Wan 2 matches or beats it on the bike, shoes and every image-to-video still; loses the umbrella (physics: rain) and the
+  two-speaker brief (silent + lettering).'
+- 'Routing: Wan 2.2 A14B replaces Wan 3.0 Prime as the cheap Wan tier for silent image-to-video and plain silent briefs at 57% of the price; Wan 3.0 Prime stays where
+  sound or weather physics are in the contract.'
+spend_usd:
+  smoke: 0.48
+  lane_reserved: 8.0
+  i2v_smoke: 0.48
+  i2v_rerun: 2.88
+  generated_actual: 8.96
+  cap_inr: 1100

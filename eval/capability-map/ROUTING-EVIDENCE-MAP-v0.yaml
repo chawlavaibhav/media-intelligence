@@ -3,12 +3,13 @@
 # No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.
 schema: ROUTING-EVIDENCE-MAP-v0
 status: product_asset; tiers never mixed; human tiers are never Registry rows
-generated_utc: '2026-09-09T17:21:40.762550Z'
+generated_utc: '2026-09-10T03:23:53.504195Z'
 round: EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video,
-  topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling, vid-t2v)
+  topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling, vid-t2v,
+  vid-wan2, vid-wan2-i2v)
 sources:
   registry: eval/registry/registry-v1.jsonl
-  registry_sha256: b6c950263c2067e73d3210f883e9863c0c0ae363b4bf79a408b85dacec9ee5a7
+  registry_sha256: 84c5d48c2d3e17b35dff03976b9ae22c98361baad32c5bb005afdb357dcc26e3
   results:
   - eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/half2/RESULTS.yaml
@@ -24,6 +25,7 @@ sources:
   - eval/experiments/EVAL-040/runs/aud-lip/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/vid-2spk/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/vid-t2v/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-wan2/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
   results_run_ids:
   - img-r1
@@ -40,6 +42,7 @@ sources:
   - aud-lip
   - vid-2spk
   - vid-t2v
+  - vid-wan2 + vid-wan2-i2v
   criteria_sha256: 6fce5ea875c0653ad7321a292fcada31594c9512e1297deabba6c525d9d23888
   screen_results:
   - eval/experiments/EVAL-040/runs/img-r1/SCREEN-RESULTS.yaml
@@ -221,7 +224,17 @@ routing_rules:
   registry: false
   caveat: four fal draws refused on balance (not counted); Wan and Kling ran as their mid tiers, not their cheapest (roster gap recorded)
   source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
-cell_count: 58
+- id: RR-16
+  scope: the Wan tier (contender round)
+  rule: Wan 2.2 A14B (USD 0.08/s, silent) replaces Wan 3.0 Prime as the cheap Wan tier for image-to-video and plain silent briefs; keep Wan 3.0
+    Prime where the contract needs sound or weather physics.
+  evidence: 'vid-wan2 + vid-wan2-i2v vs Wan 3.0 Prime on the same rows: i2v 7/8 vs 8/8; bike 2/2 vs 1/2; shoes 2/2 vs 1/1; umbrella 0/2 (''rain
+    is missing'') vs 2/2; two speakers 0/2 (''lettering on the screen'', silent) vs 2/2'
+  tier: human_blind_acceptance
+  registry: false
+  caveat: Wan 2.2 A14B has no audio field; six i2v draws were first refused on a harness aspect fault and re-run
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+cell_count: 61
 reading_guide:
 - deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation
   (independence NOT ESTABLISHED)
@@ -5242,7 +5255,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 4
+        rank_in_question: 5
         fallback:
           route: veo-3.1-fast+A_native
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -5395,6 +5408,120 @@ questions:
           route: gemini-omni-1.1-flash+A_native
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
+      wan-2.2-a14b+A_native:
+        route_key: wan-2.2-a14b
+        arm: A_native
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-10'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-2fa011f25fc81077
+          - cap-453210b2d3ed3a01
+          - cap-948c8c479197af21
+          - cap-96cda8f51ffb9ea6
+          - cap-f604b73700cc7cbe
+          n_items:
+          - VID-2SPK-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '1.280000'
+            per_trial_mean: '0.640000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 89.732583
+            p95: 95.545469
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 32.0
+            dhash_hamming_max: 32
+            ssim_mean: 0.5441036110184931
+            ssim_min: 0.5441036110184931
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - A_native
+          no_artifact_rejects: 0
+          per_item:
+            VID-2SPK-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-2SPK-01__wan-2.2-a14b__A_native__r1
+            verdict: reject
+            note: lettering on the screen; visually great (Controller)
+          - trial_id: VID-2SPK-01__wan-2.2-a14b__A_native__r2
+            verdict: reject
+            note: lettering on the screen; visually great (Controller)
+          elimination:
+            question: VID-2SPK
+            route_key: wan-2.2-a14b
+            arm: A_native
+            arms:
+            - A_native
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: vid-wan2 + vid-wan2-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-wan2 + vid-wan2-i2v
+          source: RESULTS.yaml of run vid-wan2 + vid-wan2-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 4
+        fallback:
+          route: kling-v3-pro-audio+A_native
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
       wan-3.0-prime+A_native:
         route_key: wan-3.0-prime
         arm: A_native
@@ -5531,7 +5658,7 @@ questions:
           status: no_row_for_this_route_family
         rank_in_question: 3
         fallback:
-          route: kling-v3-pro-audio+A_native
+          route: wan-2.2-a14b+A_native
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
   VID-I2V:
@@ -6097,6 +6224,172 @@ questions:
           rows: []
           status: no_row_for_this_route_family
         rank_in_question: 4
+        fallback:
+          route: wan-2.2-a14b-i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      wan-2.2-a14b-i2v:
+        route_key: wan-2.2-a14b-i2v
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-image-to-video-2026-09-09.html
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-10'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-10a5308dff510ca5
+          - cap-29d06d81f20e55d0
+          - cap-44cc0a85de52eff7
+          - cap-4a61dd46d1b190a9
+          - cap-63990c3273d9a5c3
+          - cap-6dc4f0ff3cac22b4
+          - cap-7cf8a8dd61a405e3
+          - cap-82875b6d9a6e02e0
+          - cap-b2135aa05b30ad38
+          n_items:
+          - VID-I2V-01
+          - VID-I2V-02
+          - VID-I2V-03
+          - VID-I2V-04
+          counted_trials: 6
+          status_counts:
+            error: 2
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.3333333333333333
+          format_compliance:
+            passes: 8
+            trials: 8
+            n_items: 4
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '2.880000'
+            per_trial_mean: '0.480000'
+            n_settled: 6
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 62.44738
+            p95: 86.111608
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 9.0
+            dhash_hamming_max: 9
+            ssim_mean: 0.7568053616126036
+            ssim_min: 0.7568053616126036
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 7
+          trials: 14
+          rejects: 1
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-I2V-01:
+              accepts: 2
+              trials: 4
+            VID-I2V-02:
+              accepts: 1
+              trials: 4
+            VID-I2V-03:
+              accepts: 2
+              trials: 4
+            VID-I2V-04:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-I2V-04__wan-2.2-a14b-i2v__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-I2V-04__wan-2.2-a14b-i2v__core__r1
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r1
+            verdict: reject
+            note: looking outside, not in the phone (Controller)
+          - trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r1
+            verdict: accept
+            note: 'approved with a note: camera is still (Controller)'
+          - trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r1
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r2
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r1
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r2
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r1
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r2
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          elimination:
+            question: VID-I2V
+            route_key: wan-2.2-a14b-i2v
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            refusals_or_errors: 0
+            accepts: 7
+            rejects: 1
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 2
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-wan2 + vid-wan2-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-wan2 + vid-wan2-i2v
+          source: RESULTS.yaml of run vid-wan2 + vid-wan2-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 5
         fallback:
           route: kling-v3-pro-i2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -7622,7 +7915,7 @@ questions:
           status: no_row_for_this_route_family
         rank_in_question: 1
         fallback:
-          route: minimax-h3-max
+          route: wan-2.2-a14b
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       kling-v3-pro-audio:
@@ -7783,7 +8076,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 5
+        rank_in_question: 6
         fallback:
           route: gemini-omni-1.1-flash
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -7936,7 +8229,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 2
+        rank_in_question: 3
         fallback:
           route: veo-3.1-fast
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -8091,9 +8384,152 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 3
+        rank_in_question: 4
         fallback:
           route: wan-3.0-prime
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      wan-2.2-a14b:
+        route_key: wan-2.2-a14b
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-10'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-1de179767b8d3d9d
+          - cap-22f082b7692b8010
+          - cap-26d6440e120ec985
+          - cap-334f3d62f1579c38
+          - cap-47a77e77d396e578
+          - cap-4db73ed63d011160
+          - cap-5abb8419a7dabc18
+          - cap-6960a2698fd66c47
+          - cap-7ca99de87ad4e96f
+          - cap-80ae0fc6fd4f7929
+          - cap-88a11a2038897e4d
+          - cap-b583b5b70ceef1f1
+          - cap-cf9d2ed1511d1a92
+          - cap-de0d00232e673741
+          - cap-e2999b12c58b19d8
+          n_items:
+          - VID-T2V-01
+          - VID-T2V-02
+          - VID-T2V-03
+          counted_trials: 6
+          status_counts:
+            ok: 6
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 6
+            trials: 6
+            n_items: 3
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '2.880000'
+            per_trial_mean: '0.480000'
+            n_settled: 6
+            cost_within_reserved:
+              passes: 6
+              trials: 6
+          latency_s:
+            p50: 66.069293
+            p95: 101.620565
+            n: 6
+          repeat_variance_unseeded:
+            pairs: 3
+            dhash_hamming_mean: 29.0
+            dhash_hamming_max: 31
+            ssim_mean: 0.34541154485507636
+            ssim_min: 0.3162031328364278
+            structural_passes: 3
+            structural_trials: 3
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 4
+          trials: 6
+          rejects: 2
+          n_items: 3
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-T2V-01:
+              accepts: 2
+              trials: 2
+            VID-T2V-02:
+              accepts: 2
+              trials: 2
+            VID-T2V-03:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-T2V-02__wan-2.2-a14b__core__r1
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-T2V-03__wan-2.2-a14b__core__r1
+            verdict: reject
+            note: rain is missing; otherwise great (Controller)
+          - trial_id: VID-T2V-01__wan-2.2-a14b__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-T2V-02__wan-2.2-a14b__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-T2V-03__wan-2.2-a14b__core__r2
+            verdict: reject
+            note: rain is missing; otherwise great (Controller)
+          - trial_id: VID-T2V-01__wan-2.2-a14b__core__r1
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          elimination:
+            question: VID-T2V
+            route_key: wan-2.2-a14b
+            arm: core
+            arms:
+            - core
+            n_planned: 6
+            refusals_or_errors: 0
+            accepts: 4
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-wan2 + vid-wan2-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-wan2 + vid-wan2-i2v
+          source: RESULTS.yaml of run vid-wan2 + vid-wan2-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: minimax-h3-max
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       wan-3.0-prime:
@@ -8254,7 +8690,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 4
+        rank_in_question: 5
         fallback:
           route: kling-v3-pro-audio
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first

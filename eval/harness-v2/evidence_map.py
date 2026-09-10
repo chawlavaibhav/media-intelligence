@@ -55,7 +55,7 @@ SCREEN_RESULTS_FILE = "SCREEN-RESULTS.yaml"            # written by qualify_scre
 QUALIFICATION_REPORT_FILE = "QUALIFICATION-REPORT.yaml"
 SCREEN_JUDGED = ("accept", "reject")
 TRIVIAL_ARMS = (None, "core", "edit")      # arms that do not distinguish a cell: the route name stands alone
-ROUND = "EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling, vid-t2v)"
+ROUND = "EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling, vid-t2v, vid-wan2, vid-wan2-i2v)"
 
 TIERS = {
     "deterministic": {"registry": True, "meaning": "re-evaluated by a frozen deterministic instrument over sealed bytes; the Registry rows named are the evidence"},
@@ -132,6 +132,9 @@ ROUTING_RULES = [
     {"id": "RR-15", "scope": "plain text-to-video (an ordinary brief, no still, no reference)", "rule": "Gemini Omni 1.1 Flash on GCP credits is the default; MiniMax H3 Max the cash fallback for everyday briefs; do not rely on Veo 3.1 fast or Kling v3 Pro audio where the brief names physical detail (labels, rain, slow motion) or spoken audio.",
      "evidence": "vid-t2v (4 briefs x 5 routes x 2, 36 judged): gemini-omni-1.1-flash 8/8 (USD 0.61); minimax-h3-max 5/7 (USD 0.48; 0/2 on the bottle brief); wan-3.0-prime 4/7 (USD 0.84); veo-3.1-fast 4/8 (USD 0.60; 0/2 umbrella brief 'rain doesn't appear, looks fake'); kling-v3-pro-audio 2/6 (USD 1.01; eliminated)",
      "tier": "human_blind_acceptance", "registry": False, "caveat": "four fal draws refused on balance (not counted); Wan and Kling ran as their mid tiers, not their cheapest (roster gap recorded)", "source": SUMMARY_DAY2},
+    {"id": "RR-16", "scope": "the Wan tier (contender round)", "rule": "Wan 2.2 A14B (USD 0.08/s, silent) replaces Wan 3.0 Prime as the cheap Wan tier for image-to-video and plain silent briefs; keep Wan 3.0 Prime where the contract needs sound or weather physics.",
+     "evidence": "vid-wan2 + vid-wan2-i2v vs Wan 3.0 Prime on the same rows: i2v 7/8 vs 8/8; bike 2/2 vs 1/2; shoes 2/2 vs 1/1; umbrella 0/2 ('rain is missing') vs 2/2; two speakers 0/2 ('lettering on the screen', silent) vs 2/2",
+     "tier": "human_blind_acceptance", "registry": False, "caveat": "Wan 2.2 A14B has no audio field; six i2v draws were first refused on a harness aspect fault and re-run", "source": SUMMARY_DAY2},
 ]
 
 

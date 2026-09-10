@@ -94,7 +94,7 @@ class EvidenceMapTest(NoNetworkTestCase):
         for rule in self.map["routing_rules"]:
             self.assertIs(rule["registry"], False)
             self.assertEqual(rule["tier"], "human_blind_acceptance")
-        self.assertEqual([r["id"] for r in self.map["routing_rules"]], [f"RR-{i}" for i in range(1, 16)])
+        self.assertEqual([r["id"] for r in self.map["routing_rules"]], [f"RR-{i}" for i in range(1, 17)])
         self.assertTrue(any("code-set" in r["rule"].lower() or "code-set" in r["rule"] for r in self.map["routing_rules"]))
         self.assertEqual(self.map["routing_rules"][3]["source"], EM.SUMMARY_HALF2)
         self.assertEqual(self.map["routing_rules"][6]["status"], "tested_in_motion_2026-09-09")
