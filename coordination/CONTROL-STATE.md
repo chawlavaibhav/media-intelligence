@@ -263,6 +263,15 @@ cheap route failed (the two bottle briefs, ~USD 6); (3) judge v2 (better prompt 
 re-qualification; (4) round two of stills (~₹4,300); (5) Gemini API adapter switch for Gemini image and Omni. MD-9 fresh cloud resources still need the Controller's own
 session. The Canon items below remain a queue, not an authorisation.
 
+**Audit index (10 Sep 2026, end of the two-day Capability Lab run).** 35/35 package cases run and judged. Ledger total
+USD 110.7 (cash USD 67.0 on fal; GCP credits USD 43.8 incl. the USD 3.16 judge run; Sarvam ₹0.89; 1,198 ElevenLabs plan
+credits) across ten signed tranches, no cap crossed. Registry 546 deterministic rows; map 58 cells, RR-1..RR-15. Package is
+now generated (`tools/build.py`, roster sha 311f6631, commit d8399d8): Gemini image/Omni/NB-Pro-edit on the Gemini API,
+Wan 2.2 A14B pinned as the contender where Wan 3 passed (draft record ₹800, awaiting "go"). Judge: kappa 0.33, not
+qualified. Decisions of 9–10 Sep: Gemini on the Gemini key; GCP over fal for any model on both; Wan 2 contender; premium
+tiers deferred to a real brief; round two later; ElevenLabs music skipped; fal top-up / Indian voice skipped then fal
+topped up. PR #91, #92 merged; PR #93 open. Review page published to the Controller as an Artifact.
+
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's
 choice among `canon/CANON-SHAPE-v1.md` §7's remaining items — injection v1 (cached prefix, no
 receipts), the template library, remaining packs only as the gate needs them — and the
