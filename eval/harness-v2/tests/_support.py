@@ -30,7 +30,7 @@ KEY_NAMES = ("FAL_KEY", "SARVAM_API_KEY", "ELEVENLABS_API_KEY", "GOOGLE_API_KEY"
              "GOOGLE_CLOUD_VISION_API_KEY")
 
 
-ITEM_BASIS_COMMIT = "10464b2eaed2"   # freeze package basis: the committed package at HEAD (2026-09-09 Wan 2 contender rebuild; earlier 0ba06b92ee27 ElevenLabs
+ITEM_BASIS_COMMIT = "d8399d84b8b4"   # freeze package basis: the committed package at HEAD (2026-09-09 Wan 2 contender rebuild; earlier 0ba06b92ee27 ElevenLabs
                                      # re-point + ref2v 8 s, 9adc4035d089 arm A2 rows). It moves with every package commit: once the 2026-09-10 Gemini API
                                      # re-point rebuild is committed, set it to that commit (run_live plans from the committed package and refuses drift).
 
