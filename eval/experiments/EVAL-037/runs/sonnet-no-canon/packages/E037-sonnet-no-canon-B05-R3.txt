@@ -1,0 +1,82 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+A 40-second, 16:9 narrative video sequence, exactly six shots, depicting a restrained confrontation between two people at a café table after one discovers the other concealed something important.
+
+OBJECTIVE_INTERPRETATION
+The customer wants an emotionally charged but quiet two-hander — no yelling, no camera acrobatics — where the drama comes from stillness, subtext, and precise staging. The single hardest craft requirement is spatial clarity: the viewer must never lose track of who is sitting where relative to the other, even across cuts. This means the entire piece must obey a strict 180-degree axis and consistent eyelines, built once in a master shot and never violated.
+
+CORE_CREATIVE_IDEA
+"The Space Between Cups." The café table becomes the visual fault line of the relationship — physically unchanged, emotionally unbridgeable. All six shots orbit that same fixed axis: two people, one table, one piece of evidence lying between them. Tension is carried by stillness, controlled voices, and the negative space each character refuses to close.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Primary: trust has just been broken — visible in the moment the object is revealed and read.
+2. Secondary: both people are choosing restraint over confrontation; the discipline of that restraint is the drama.
+3. Tertiary: unspoken history between them — implied, never explained.
+
+VISUAL_SYSTEM
+- Two characters: MARA (late 30s, discoverer) and DANIEL (early 40s, concealer). Wardrobe fixed across all shots: Mara in a muted teal blouse, hair pulled back; Daniel in a charcoal button-down, sleeves rolled. No wardrobe changes.
+- Setting: small interior café, warm window backlight (afternoon), soft ambient bokeh of blurred background patrons, two ceramic cups, one folded photograph/envelope on the table as the "discovered" object.
+- Fixed 180-degree line runs along the table's long axis: Mara always frame-left, Daniel always frame-right, in every shot, master and singles alike.
+- Lighting: single warm key from camera-left window, soft fill, consistent color temperature (~3800K) across all six shots to avoid continuity breaks.
+- Grade: desaturated warm tones, slightly crushed blacks, gentle contrast — restrained visual mood matching restrained performances.
+- Camera: locked-off tripod for every shot; no pans, no handheld, no dolly. At most an imperceptible, very slow push (under 5% frame change) is allowed on the two tightest singles (shots 4 and 5) to add tension without reading as "movement."
+
+PRODUCTION_RECIPE
+1. Build one master shot first and treat it as the geometric ground truth (camera height, lens, character placement, table angle).
+2. Derive all subsequent singles as reverse-angle pairs matched to that master's eyeline and axis — same lens height, same distance-to-subject ratio, mirrored only in framing side.
+3. Maintain identical wardrobe, prop position (cups, envelope), and lighting direction descriptors in every shot's prompt so cross-shot consistency is enforced textually, not just visually.
+4. Cut on action/reaction (glance down, jaw tighten, hand withdrawal) rather than on dialogue midpoints, to preserve the "restrained" feel.
+5. Return to the master shot for the final beat to close the geometry loop and let the scene breathe in silence.
+
+GENERATION_PROMPTS
+
+SHOT 1 — WIDE MASTER (establishing) — 8s
+"Static locked-off wide shot, 16:9, eye-level camera at seated height, small warm-lit café interior, soft window backlight from camera-left, shallow depth of field with blurred background patrons. Mara (woman, late 30s, teal blouse, hair pulled back) seated frame-left; Daniel (man, early 40s, charcoal button-down) seated frame-right; a small round café table between them with two ceramic cups. Mara slowly places a folded photograph on the table between them and withdraws her hand. Daniel's eyes flick down to it. Both remain still. No camera movement. Ambient café murmur, no dialogue."
+
+SHOT 2 — MEDIUM SINGLE, MARA (over Daniel's near shoulder, frame-left favored) — 6s
+"Static locked-off medium shot, 16:9, eye-level, shallow depth of field, warm window backlight, Daniel's blurred shoulder in near-frame right edge, Mara centered, same wardrobe and lighting as previous shot. Mara speaks quietly, controlled, no raised voice: 'You said you'd never kept anything from me.' Minimal facial movement, steady gaze down at the table, then up. No camera movement."
+
+SHOT 3 — MEDIUM SINGLE, DANIEL (over Mara's near shoulder, frame-right favored) — 6s
+"Static locked-off medium shot, 16:9, eye-level, matching lens height and distance to previous shot, Mara's blurred shoulder in near-frame left edge, Daniel centered, same wardrobe and lighting. Daniel looks down at the photograph, jaw tightens almost imperceptibly, replies low and even: 'It wasn't what you think.' No camera movement."
+
+SHOT 4 — TIGHT SINGLE, MARA — 6s
+"Static shot, 16:9, tighter framing than shot 2, same eyeline and axis, same lighting, extremely slow near-imperceptible push-in (under 5% over the shot). Mara's expression hardens slightly, voice still quiet: 'Then what was it, Daniel?' Hands remain still on the table edge, no gesture."
+
+SHOT 5 — TIGHT SINGLE, DANIEL — 6s
+"Static shot, 16:9, tighter framing than shot 3, matching axis and lighting, same extremely slow near-imperceptible push-in. Daniel pauses, looks away toward the window, then back to meet her eyes, says quietly: 'I was protecting you.' Controlled, restrained delivery, no raised volume."
+
+SHOT 6 — RETURN TO WIDE MASTER — 8s
+"Static locked-off wide shot, identical framing and lighting to Shot 1, same table, cups, and photograph position. Mara slowly withdraws her hand fully into her lap. Daniel remains motionless, gaze lowered to the table. Neither speaks. Ambient café murmur continues under silence. Hold on stillness to end of shot. No camera movement."
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- Fixed prop continuity: two ceramic cups and one folded photograph, identical position and orientation across all six shots (locked via shared description in every prompt).
+- Fixed wardrobe and hairstyle descriptors repeated verbatim in every shot prompt to prevent model drift.
+- Fixed camera height/lens/distance ratios repeated verbatim per shot pairing (master vs. singles) to preserve the 180-degree axis.
+- Color grade LUT applied uniformly in post across all six shots (single pass) rather than relying on per-shot generation consistency alone.
+
+AUDIO_AND_EDIT
+- Two short spoken lines only (Mara's line in Shot 2/4, Daniel's line in Shot 3/5); all other shots are silent but for ambient café tone.
+- Continuous low-level café ambience (murmur, faint cup clinks) bed under the entire 40 seconds for spatial and temporal continuity between cuts.
+- No non-diegetic score, or at most a single sustained low tone/drone beginning at Shot 4 and fading out by end of Shot 6 — kept minimal so it doesn't compete with restraint of performance.
+- Straight hard cuts only (no dissolves), timed to physical micro-actions (glance down, jaw tighten, hand withdrawal) rather than dialogue starts, per the recipe.
+- Final shot holds 1–2 seconds of silence before cut to black to let restraint land.
+
+FAILURE_PREVENTION
+- Risk: 180-degree line violation across cuts → Mitigation: every prompt explicitly fixes Mara frame-left/Daniel frame-right and repeats identical lens height/axis language.
+- Risk: performances escalating into shouting → Mitigation: every dialogue line is explicitly tagged "quiet," "controlled," "low," "no raised voice" in the prompt itself.
+- Risk: camera drift or unintended movement reading as "coverage" rather than cinematic stillness → Mitigation: all shots explicitly locked-off; only shots 4–5 permit a barely perceptible push, capped numerically (<5%).
+- Risk: character/wardrobe inconsistency across separately generated shots → Mitigation: identical descriptor blocks (wardrobe, lighting, color temperature) copy-pasted into every prompt rather than paraphrased.
+- Risk: pacing overshoot beyond 40s → Mitigation: per-shot durations pre-allocated (8/6/6/6/6/8=40s) and stated as targets in each prompt.
+
+HARD_CONSTRAINT_CHECK
+- Exactly six shots: confirmed (1 wide, 4 singles, 1 return-to-wide).
+- Minimal camera movement: confirmed, locked-off with negligible push only on two shots.
+- ~40 seconds total: confirmed (8+6+6+6+6+8=40).
+- 16:9 aspect ratio: confirmed in every prompt.
+- No shouting, restrained tense dialogue: confirmed, explicitly scripted.
+- Continuous spatial clarity (viewer always knows relative positions): confirmed via fixed axis, fixed frame-left/frame-right assignment, and matched master/single geometry.
+- No external website used: confirmed, none referenced.
+
+KNOWLEDGE_AND_WEBSITE_USE
+None. No external website or knowledge source was used or required for this package.

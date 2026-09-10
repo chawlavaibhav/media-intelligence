@@ -1,0 +1,65 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+One premium, print/social-ready still image, 4:5 aspect ratio, high resolution (minimum 4000×5000px), for a new Indian sparkling mosambi (sweet lime) beverage. Single hero product shot, no variants delivered.
+
+OBJECTIVE_INTERPRETATION
+The client needs a launch-grade hero image for a new category-defining drink, targeted at urban Indian 22–35-year-olds who associate "Indian-ness" with confidence and modern design fluency, not folklore. The image must do three things simultaneously: (1) make the product instantly, unmistakably the hero, (2) signal premium beverage codes (craft tonic / artisanal soda / boutique sparkling water aesthetics) rather than mass-market fizzy-drink codes, (3) retain just enough mosambi-fruit recognizability that the flavor promise is legible at a glance — without leaning on turbans, marigolds, rangoli, temples, or other stereotypical "Indian" visual shorthand.
+
+CORE_CREATIVE_IDEA
+"Mosambi, reimagined as a modern ritual." The ad treats mosambi not as a nostalgic roadside-juice fruit but as a premium botanical ingredient — photographed the way a craft tonic or fine spirit brand would photograph citrus. A single elegant bottle stands as the unquestioned hero, accompanied only by one halved mosambi and suspended water droplets/bubbles, set against a quiet, softly lit gradient backdrop. Cultural contemporariness comes through restraint, materiality (stone, brass, frosted glass) and typographic confidence — not iconography.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Primary: The bottle (product form + brand name) — largest, sharpest, most lit element, center-right on a lower rule-of-thirds point.
+2. Secondary: The mosambi half (fruit cue) — foreground, slightly soft-focus, confirms flavor without competing with the bottle.
+3. Tertiary: Condensation, rising bubbles, light bloom — sensory cues of "refreshing" and "sparkling."
+4. Background: Minimal gradient + material surface — establishes "premium" tier, carries zero competing information.
+No text overlay, tagline, or logo lockup beyond the on-bottle label itself; the image must work as a clean hero asset that other layouts can add copy to later.
+
+VISUAL_SYSTEM
+- Palette: warm cream-to-charcoal-olive gradient background; bottle in frosted sage/chartreuse glass; brass/gold foil cap and neck band; mosambi flesh in pale yellow-green with visible juicy segments.
+- Materials: frosted glass, brushed brass, honed travertine or warm stone surface — signals craft/premium, not plastic.
+- Lighting: single soft key light from upper-left (softbox quality), gentle rim light from behind-right to separate bottle from background, controlled specular highlights on glass and droplets — studio beverage-photography lighting, not flat e-commerce lighting.
+- Composition: bottle occupies ~55–60% of frame height, positioned right-of-center; mosambi half and a few droplets/bubbles in lower-left third; generous negative space upper-left for potential later copy placement (kept empty in this deliverable).
+- Mood: calm, confident, adult, tactile — closer to a craft tonic/artisanal soda campaign than a soft-drink commercial.
+
+PRODUCTION_RECIPE
+Step 1 — Generate base scene: bottle, mosambi, surface, background, lighting, bubbles/droplets, with label area left as a clean, distraction-free zone with plausible but non-final markings (to avoid garbled text from the generative model).
+Step 2 — Composite: place a separately designed, pixel-precise vector label (brand wordmark, tagline, minimal mark) onto the bottle in post-production, matched to the bottle's perspective, lighting, and glass refraction using layer-based compositing (curvature warp + highlight/shadow pass).
+Step 3 — Color grade: unify highlights/shadows, ensure bottle remains highest local contrast + sharpest focus point in the frame.
+Step 4 — Final crop/export at 4:5.
+
+GENERATION_PROMPTS
+Single final image-generation prompt (base scene, pre-label-compositing):
+
+"Ultra-premium studio product photography, 4:5 vertical composition. A tall, slender frosted sage-green glass bottle of sparkling mosambi (Indian sweet lime) beverage stands right-of-center on a honed warm travertine surface. The bottle has a brushed brass cap and a thin brass neck band, with a clean, minimal, unlabeled or softly blurred placeholder label area on the body (no legible text). Beside it in the lower-left foreground, one mosambi (sweet lime) cut in half reveals pale yellow-green juicy segments, resting on the same stone surface with a few natural water droplets. Fine effervescent bubbles rise gently through the bottle's liquid and hover faintly in the air near the neck, frozen mid-motion. Condensation droplets bead naturally on the glass. Background is a soft, seamless gradient from warm cream at the top to deep charcoal-olive at the bottom, softly lit studio backdrop, no props, no people, no hands, no text, no logos other than the bottle's own blank label zone. Lighting: single soft key light upper-left, subtle rim light from behind-right creating clean glass highlights and soft shadow falloff onto the stone surface. Mood: sophisticated, refreshing, contemporary, adult, editorial beverage-campaign quality, comparable to premium craft tonic or artisanal sparkling water advertising — not a mass-market soft drink. Sharp focus on bottle and cap, gentle shallow depth of field on mosambi half and background. No celebrity, no human figures, no clichéd Indian iconography (no marigolds, no rangoli, no temples, no turbans, no Taj Mahal, no paisley). High-resolution, clean commercial product photography, physically accurate reflections and refractions through glass."
+
+Negative/avoid list to include in the same generation call: "no plastic bottle look, no bright primary-color soda branding, no cartoon fruit splash graphics, no extra hands or fingers, no distorted or garbled text, no busy background, no multiple bottles, no low-quality stock-photo lighting, no oversaturated colors, no visible brand logos other than blank label zone."
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- Final brand wordmark, tagline, and any mark/logo must be built as a vector asset outside the generative model and composited onto the bottle in post-production, to guarantee typographic accuracy (generative models are unreliable for crisp small text).
+- Label graphic spec (deterministic): brand name set in a modern, confident sans-serif (e.g., a geometric grotesque), small tagline "Sparkling Mosambi" beneath it, one restrained graphic mark (a single abstracted citrus-slice line-icon or minimal geometric motif — not a literal fruit cartoon), color: brass foil or deep olive ink on a frosted/pale-sage label field.
+- This compositing pass is treated as a deterministic production step, not a generative one.
+
+AUDIO_AND_EDIT
+Not applicable — this is a single static image deliverable, no audio or edit timeline required.
+
+FAILURE_PREVENTION
+- Risk: generative text/logo distortion → mitigated by leaving label area blank/placeholder in generation and compositing final vector label in post.
+- Risk: image drifting toward "cheap soda" codes (bright primary colors, plastic sheen, cartoon splash) → explicitly excluded via negative prompt and material choices (frosted glass, brass, stone).
+- Risk: cliché "Indian" iconography creeping in → explicitly excluded via negative prompt; cultural contemporariness carried instead through material/typographic restraint.
+- Risk: mosambi becoming unrecognizable → mitigated by including one clearly cut, visibly juicy mosambi half in sharp-enough focus in foreground.
+- Risk: product not reading as hero → mitigated by compositional dominance (largest, sharpest, most lit object), rule-of-thirds placement, and empty negative space elsewhere.
+- Risk: stray human hands/figures appearing → explicitly excluded via negative prompt.
+
+HARD_CONSTRAINT_CHECK
+- 4:5 aspect ratio: satisfied.
+- Premium, refreshing, sophisticated, culturally contemporary while retaining mosambi familiarity: satisfied via material/lighting choices + visible mosambi half.
+- Avoids clichéd Indian visual shorthand: satisfied, explicitly excluded in prompt.
+- Avoids cheap soft-drink look: satisfied via glass/brass/stone materiality and negative prompt exclusions.
+- Product is unmistakable hero: satisfied via composition, scale, focus, lighting hierarchy.
+- No celebrity: satisfied, no human figures at all.
+- No external website: satisfied, no such element used or referenced anywhere in the package.
+
+KNOWLEDGE_AND_WEBSITE_USE
+None. No external websites, brand references, or knowledge sources were used or required for this package; all creative decisions are self-contained and based on standard premium beverage photography conventions.
