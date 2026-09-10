@@ -23,6 +23,13 @@ class VertexGeminiImageAdapter(B.RouteAdapter):
     family = "vertex_gemini_image"
 
     def build_request(self, case_row: dict, inputs: dict | None = None) -> B.Request:
+        body, notes = self._build_body(case_row, inputs)
+        headers = {"Authorization": "Bearer <TOKEN:gcloud-service-account>", "Content-Type": "application/json"}
+        return B.Request("POST", self.entry.endpoint, headers, body, notes=notes)
+
+    def _build_body(self, case_row: dict, inputs: dict | None) -> tuple[dict, list[str]]:
+        """The generateContent body. Shared verbatim by the Gemini Developer API variant (adapters/gemini_api_image.py):
+        the same model takes the same body on both surfaces; only the URL and the credential differ."""
         e = self.entry
         inputs = self._check_inputs(inputs)
         notes: list[str] = []
@@ -30,21 +37,26 @@ class VertexGeminiImageAdapter(B.RouteAdapter):
         if not prompt or not str(prompt).strip():
             raise PreDispatchRefusal("a generation request needs a non-empty prompt")
         a = B.aspect(case_row)
-        if a not in ALLOWED_ASPECTS:
-            raise PreDispatchRefusal(f"aspect {a!r} is not an aspect this adapter pins")
         parts: list = [{"text": prompt}]
         refs = inputs.get("reference_images")
-        if e.workflow == "edit" or refs:
+        editing = e.workflow == "edit" or bool(refs)
+        if a is None and editing:
+            # the edit rows carry no aspect (the fal edit route never needed one); the pinned generateContent reference:
+            # "If not specified, the model will choose a default aspect ratio based on any reference images provided"
+            notes.append("no aspect in the row: imageConfig.aspectRatio omitted, the model follows the reference images (pinned reference)")
+        elif a not in ALLOWED_ASPECTS:
+            raise PreDispatchRefusal(f"aspect {a!r} is not an aspect this adapter pins")
+        if editing:
             if refs:
                 parts += [{"inlineData": {"mimeType": mime, "data": B.b64(data)}} for data, mime in refs]
             else:
                 n = int((case_row.get("params") or {}).get("refs") or 1)
                 parts += [{"inlineData": B.pending_artifact(case_row, f"reference_asset_{i + 1}")} for i in range(n)]
-        gen = {"responseModalities": ["IMAGE"], "candidateCount": 1, "imageConfig": {"aspectRatio": a}}
+        gen = {"responseModalities": ["IMAGE"], "candidateCount": 1}
+        if a is not None:
+            gen["imageConfig"] = {"aspectRatio": a}
         self._guard_body(gen, GEN_CONFIG_FIELDS, e.route_key)
-        body = {"contents": [{"role": "user", "parts": parts}], "generationConfig": gen}
-        headers = {"Authorization": "Bearer <TOKEN:gcloud-service-account>", "Content-Type": "application/json"}
-        return B.Request("POST", e.endpoint, headers, body, notes=notes)
+        return {"contents": [{"role": "user", "parts": parts}], "generationConfig": gen}, notes
 
     def _credential(self) -> str:
         if self.token_source is None:
@@ -66,6 +78,9 @@ class VertexGeminiImageAdapter(B.RouteAdapter):
         reply = reply if isinstance(reply, dict) else {}
         attempt["completed_at"] = self._now()
         rid = reply.get("responseId")
+        if status == 200 and reply.get("$unparseable_body"):
+            return B.Outcome("error", "malformed_response", f"200 reply was not JSON ({reply.get('$bytes')} bytes)", ambiguous=False,
+                             outcome_resolved=True, lifecycle_counts=counts)
         if status != 200:
             o = B.http_status_outcome(status, reply, counts, note=str(reply))
             err = B.error_of(reply)
@@ -86,7 +101,9 @@ class VertexGeminiImageAdapter(B.RouteAdapter):
             if blob and blob.get("data"):
                 import base64
                 try:
-                    data = base64.b64decode(blob["data"])
+                    data = base64.b64decode(blob["data"], validate=True)
+                    if not data:
+                        raise ValueError("decoded to zero bytes")
                 except Exception as exc:          # noqa: BLE001
                     return B.Outcome("error", "malformed_response", f"image bytes were not valid base64: {exc}", ambiguous=False,
                                      outcome_resolved=True, lifecycle_counts=counts, provider_request_id=rid)

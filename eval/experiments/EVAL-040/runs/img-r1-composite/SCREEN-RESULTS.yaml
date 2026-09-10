@@ -1,0 +1,237 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: img-r1-composite
+results_ref: eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
+results_sha256: 9ea62f47b2355fda0ddbaa8bbb17a4f8a0ba878a65dd7fba121c9fb2803d89c7
+screened_utc: '2026-09-09T17:19:41.463842Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: img-r1-composite
+  results_run_id: img-r1-composite
+  trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: null
+  arm: C_composite_textless_base
+  controller_verdict: accept
+  controller_note: all accepted (Controller, chat)
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-composite/artifacts/media/IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r2.composite-v2.png
+    sha256: fbf673613409418adcd2eda8b2f0b63fccc5f5a347da83999d525cc2b24fae9a
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The image contains the exact text strings 'FLAT 40% OFF', 'First 100 members only', and 'AlphaFit' with correct casing and numbers.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text 'Offer ends 15 January' is clearly visible, satisfying the end date requirement.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: There are no people, silhouettes, or body parts depicted in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: The dominant colors are black and neon yellow, and the bottom-right corner is completely empty of text and graphics.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: pass
+    evidence: No additional lettering or pseudo-lettering is present beyond the specified texts.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 213
+    totalTokenCount: 3332
+    thoughtsTokenCount: 1559
+  frames: null
+  usd_at_pinned_price: '0.018288'
+  agree: true
+- run_id: img-r1-composite
+  results_run_id: img-r1-composite
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r1
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: null
+  arm: C_composite_textless_base
+  controller_verdict: accept
+  controller_note: all accepted (Controller, chat)
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-composite/artifacts/media/IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r1.composite-v2.png
+    sha256: 6a7cf0f6f822522d11497f8e63fdeb64fbf37966a1cd21e5bee79e3ebe98b08b
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: pass
+    evidence: The text reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट", and "श्री गणेश मिष्ठान भंडार" with all characters and
+      matras correct.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The text "श्री गणेश मिष्ठान भंडार" is visibly the largest lettering on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is visible anywhere in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: A box filled with various sweets and three lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: All text strings are fully within the frame and do not overlap with each other.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 276
+    totalTokenCount: 2976
+    thoughtsTokenCount: 1116
+  frames: null
+  usd_at_pinned_price: '0.014904'
+  agree: true
+- run_id: img-r1-composite
+  results_run_id: img-r1-composite
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: null
+  arm: C_composite_textless_base
+  controller_verdict: accept
+  controller_note: all accepted (Controller, chat)
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-composite/artifacts/media/IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r2.composite-v2.png
+    sha256: ec4a479ede893105a3640c4f1bf801cb00ee80b3823e123fbd1f113c30e612f9
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: pass
+    evidence: The text matches the required Hindi phrases exactly with correct characters and matras.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The phrase 'श्री गणेश मिष्ठान भंडार' is visibly the largest text on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is visible on the poster.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a sweet box and lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: No text strings are cut by the frame or overlapping.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 243
+    totalTokenCount: 3175
+    thoughtsTokenCount: 1348
+  frames: null
+  usd_at_pinned_price: '0.016695'
+  agree: true
+- run_id: img-r1-composite
+  results_run_id: img-r1-composite
+  trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r1
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: null
+  arm: C_composite_textless_base
+  controller_verdict: accept
+  controller_note: all accepted (Controller, chat)
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-composite/artifacts/media/IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r1.composite-v2.png
+    sha256: 15a854ebd095e48dc8f4e50fe3942523bd69cf97bf08b2a744da87cea94f1c11
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The required text blocks 'FLAT 40% OFF', 'First 100 members only', and 'AlphaFit' are printed exactly as specified.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text 'Offer ends 15 January' is clearly visible and readable.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No human figures, silhouettes, or body parts are present in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: The image is dominated by black and neon yellow, with the bottom-right corner remaining entirely empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: pass
+    evidence: No additional or pseudo-lettering is visible beyond the permitted text.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 270
+    totalTokenCount: 3631
+    thoughtsTokenCount: 1801
+  frames: null
+  usd_at_pinned_price: '0.020979'
+  agree: true

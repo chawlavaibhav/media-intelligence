@@ -1,0 +1,312 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: vid-ref
+results_ref: eval/experiments/EVAL-040/runs/vid-ref/RESULTS.yaml
+results_sha256: 4ef7be336652b4c569ee1b413160ba4f1f34e798cfbaa204f8ffd67526f2dd49
+screened_utc: '2026-09-09T17:19:41.759613Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: vid-ref
+  results_run_id: vid-ref
+  trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r2
+  case_id: VID-REF-01
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  controller_verdict: accept
+  controller_note: accepted (Controller); line-up letter not given
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ref/artifacts/media/VID-REF-01__veo-3.1-fast-ref2v__native__r2.mp4
+    sha256: 49170fe8677c968d29282b350f288ca9cabf81c8153ccf41d771f9ef719133e8
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the pack in the clip is the referenced pack and not either decoy, judged on a paused mid-clip frame beside the references
+      and decoys.
+    verdict: cannot_judge
+    evidence: No reference pack or decoys are provided to verify the pack's identity.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the pack's label stays as printed on the references in every sampled frame (start, middle, end); REJECT if lettering
+      morphs, blurs into new shapes or re-arranges.
+    verdict: cannot_judge
+    evidence: The reference label is not provided to confirm if the text matches exactly.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the pack visibly turns or the viewpoint visibly changes during the clip.
+    verdict: pass
+    evidence: The pack visibly rotates from the front to the back across the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the pack's proportions or colours change during the clip, or if any added lettering, voice or music is present.
+    verdict: pass
+    evidence: The pack's proportions and colors remain stable, and no extra text is added.
+  http_status: 200
+  usage:
+    promptTokenCount: 3854
+    candidatesTokenCount: 128
+    totalTokenCount: 5555
+    thoughtsTokenCount: 1573
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 168850
+    sha256: 03f40cac945e3bc9aa1918f100c0ab9eb6ab65c747ad22373ffd622c2b5d5754
+  - frame_index: 95
+    time_s: 3.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 224045
+    sha256: 74474ca12d3f4c9633b6cd045a3afdd8ea97441710294cadf4feb7dc7cba0c22
+  - frame_index: 191
+    time_s: 7.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 216562
+    sha256: c5fbc92846c06ea46fdc2ca1261c75dd8f8e56d3e81fa0317e446e102c2edeea
+  usd_at_pinned_price: '0.021090'
+  agree: null
+- run_id: vid-ref
+  results_run_id: vid-ref
+  trial_id: VID-REF-02__veo-3.1-fast-ref2v__native__r1
+  case_id: VID-REF-02
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  controller_verdict: reject
+  controller_note: 'some different language (lettering appeared; contract: no lettering, signage or logos) (Controller)'
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ref/artifacts/media/VID-REF-02__veo-3.1-fast-ref2v__native__r1.mp4
+    sha256: 9f3264d90a4e29063b5d1f6aaf38e53cc8377b97ba9dfeb1e5c0ef84d15e4961
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if, on a paused frame where she faces the camera, the judge picks the referenced person as the match against the two decoy
+      sets.
+    verdict: cannot_judge
+    evidence: The referenced person and decoy sets are not provided for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if she enters the frame walking, sits at a table and looks at the camera before the clip ends.
+    verdict: cannot_judge
+    evidence: The actions of walking and sitting down cannot be verified from static frames.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if her face or hair changes between the walking frames and the seated frames.
+    verdict: cannot_judge
+    evidence: The woman's face and hair are not visible in the initial frame.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering or speech is present.
+    verdict: cannot_judge
+    evidence: The presence of speech cannot be determined from static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3815
+    candidatesTokenCount: 200
+    totalTokenCount: 5851
+    thoughtsTokenCount: 1836
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 366019
+    sha256: 4cd03c955f420ae19c6ecbc230a30b82df1b5fae61063f1d1edebd3c2a80ea10
+  - frame_index: 95
+    time_s: 3.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 480283
+    sha256: 19765708edf245b205fcfd2ee7731e1d453e454d0b70c736da63b5763469e1b0
+  - frame_index: 191
+    time_s: 7.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 512661
+    sha256: 7e071b7751b47e7c63056bebf0c53a0788f748e700d6d5063d39d70ed648235d
+  usd_at_pinned_price: '0.024047'
+  agree: null
+- run_id: vid-ref
+  results_run_id: vid-ref
+  trial_id: VID-REF-02__veo-3.1-fast-ref2v__native__r2
+  case_id: VID-REF-02
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  controller_verdict: reject
+  controller_note: some different language (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ref/artifacts/media/VID-REF-02__veo-3.1-fast-ref2v__native__r2.mp4
+    sha256: 4e77ff76d1979ccf3b2d00138251aeefc3e1ec08dddfb8a7ce044d76db370168
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if, on a paused frame where she faces the camera, the judge picks the referenced person as the match against the two decoy
+      sets.
+    verdict: cannot_judge
+    evidence: The reference person and decoy sets are not provided in the frames.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if she enters the frame walking, sits at a table and looks at the camera before the clip ends.
+    verdict: cannot_judge
+    evidence: The actions of walking and sitting down occur between the provided frames and cannot be observed.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if her face or hair changes between the walking frames and the seated frames.
+    verdict: cannot_judge
+    evidence: The woman's face and hair are not visible in the first frame to compare with the seated frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering or speech is present.
+    verdict: cannot_judge
+    evidence: The presence of speech cannot be determined from silent static frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3815
+    candidatesTokenCount: 211
+    totalTokenCount: 5768
+    thoughtsTokenCount: 1742
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 440170
+    sha256: a1c7395f29c52b5294c5437d61b4afbc19bfc4e498ec056df5868674820f1d13
+  - frame_index: 95
+    time_s: 3.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 557250
+    sha256: d3fc591b2fea0f0609c49b2a8342c9edd67a20fc3c8a77c2ec7654724fe8ba13
+  - frame_index: 191
+    time_s: 7.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 591583
+    sha256: b7a37cce4ad4ebcf763f56b0c3426e90db8a148c56a317bfb2891e17e9f59556
+  usd_at_pinned_price: '0.023300'
+  agree: null
+- run_id: vid-ref
+  results_run_id: vid-ref
+  trial_id: VID-REF-01__veo-3.1-fast-ref2v__native__r1
+  case_id: VID-REF-01
+  question: VID-REF
+  route_key: veo-3.1-fast-ref2v
+  arm: native
+  controller_verdict: accept
+  controller_note: accepted (Controller); line-up letter not given
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-ref/artifacts/media/VID-REF-01__veo-3.1-fast-ref2v__native__r1.mp4
+    sha256: 25dc546b8bd3cecb302309f68c7a8c6f8172f0ee795eb80ef8652a87717da2e4
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the pack in the clip is the referenced pack and not either decoy, judged on a paused mid-clip frame beside the references
+      and decoys.
+    verdict: cannot_judge
+    evidence: The reference and decoy packs are not provided for comparison.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the pack's label stays as printed on the references in every sampled frame (start, middle, end); REJECT if lettering
+      morphs, blurs into new shapes or re-arranges.
+    verdict: cannot_judge
+    evidence: The label is turned away in the middle and end frames, so its continuity cannot be evaluated.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the pack visibly turns or the viewpoint visibly changes during the clip.
+    verdict: pass
+    evidence: The pack visibly rotates to show different sides across the three frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the pack's proportions or colours change during the clip, or if any added lettering, voice or music is present.
+    verdict: cannot_judge
+    evidence: The presence of background voice or music cannot be determined from static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3854
+    candidatesTokenCount: 203
+    totalTokenCount: 5510
+    thoughtsTokenCount: 1453
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 150325
+    sha256: d1204bb8b6763914f58e282502ce85f5b328860f1ce268262478eed894b5fd50
+  - frame_index: 95
+    time_s: 3.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 223250
+    sha256: 6a4dd302b07e4b45b05a45c850affebd36c74223acb1108970bf802b601ea2d2
+  - frame_index: 191
+    time_s: 7.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 237743
+    sha256: 3a7f283d3df73fd245e6cfc6087c3da987a4aa8f782ae7f9014e1b683e692bd4
+  usd_at_pinned_price: '0.020685'
+  agree: null

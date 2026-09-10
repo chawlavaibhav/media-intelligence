@@ -45,7 +45,8 @@ from transports import nothing_left_the_machine   # DNS-class failures: the only
 
 # Looked up at call time so a test can point it at a throw-away file. Never the real file in tests.
 DEFAULT_KEY_FILE = Path("~/.mi-keys").expanduser()
-KEY_NAMES_ALLOWED = ("FAL_KEY", "SARVAM_API_KEY", "ELEVENLABS_API_KEY")
+KEY_NAMES_ALLOWED = ("FAL_KEY", "SARVAM_API_KEY", "ELEVENLABS_API_KEY",
+                     "GOOGLE_API_KEY")   # 2026-09-09: Gemini Developer API (CONTROLLER-GEMINI-MODELS-VIA-GEMINI-KEY-2026-09-09)
 OUTPUT_COUNT_PARAMS = ("num_images", "num_videos", "num_samples", "num_outputs", "sampleCount",
                        "sample_count", "candidateCount", "n")
 SEED_PARAMS = ("seed",)

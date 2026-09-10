@@ -1,0 +1,288 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: aud-tts-eleven
+results_ref: eval/experiments/EVAL-040/runs/aud-tts-eleven/RESULTS.yaml
+results_sha256: d9811ca148bf23d9678ebf4733b2cef0711290b5f27aa1300c2a841f864c1e23
+screened_utc: '2026-09-09T17:19:41.372600Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: aud-tts-eleven
+  results_run_id: aud-tts-eleven
+  trial_id: AUD-TTS-02__elevenlabs-v3-direct__native__r1
+  case_id: AUD-TTS-02
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  controller_verdict: reject
+  controller_note: rejected for accent (Controller)
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-tts-eleven/artifacts/media/AUD-TTS-02__elevenlabs-v3-direct__native__r1.mp3
+    sha256: 5f2c0177ff15f1bcb66a5d77f6744e9bed451da6bc975e90719c01b79d887881
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the listener hears exactly "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." — every word, in
+      order.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if "Kaushal Setu" is heard as the Hindi words कौशल सेतु; REJECT if either word is heard as something else.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: mixed
+    rule: ACCEPT only if every word, English and Hindi, is understood on a single listen by a Hindi-English speaker; REJECT if any word has to
+      be replayed to be made out.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any music, effect or second voice is present, or if the file is longer than 6 seconds.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: aud-tts-eleven
+  results_run_id: aud-tts-eleven
+  trial_id: AUD-TTS-01__elevenlabs-v3-direct__native__r2
+  case_id: AUD-TTS-01
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  controller_verdict: accept
+  controller_note: approved (Controller)
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-tts-eleven/artifacts/media/AUD-TTS-01__elevenlabs-v3-direct__native__r2.mp3
+    sha256: 29556187c3312c19cb4389050adde2ccf00299493db94234268ff8460163b993
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if a first-language Hindi listener hears exactly "इस दवाई से मेरी फसल दोगुनी हुई" — every word, in order, no extra word.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if it is one male voice speaking clear Hindi; REJECT if any word is heard as a different word (e.g. दवाई or दोगुनी mispronounced
+      into another word).
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any music, effect, second voice or English word is present.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the file is silent, truncated mid-word, or longer than 6 seconds.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: aud-tts-eleven
+  results_run_id: aud-tts-eleven
+  trial_id: AUD-TTS-03__elevenlabs-v3-direct__native__r2
+  case_id: AUD-TTS-03
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  controller_verdict: accept
+  controller_note: approved (Controller)
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-tts-eleven/artifacts/media/AUD-TTS-03__elevenlabs-v3-direct__native__r2.mp3
+    sha256: a395446fab0f58407b64504d0bbd9a8a00042a8372e7842bd58dfbc4f269f79e
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the listener hears exactly "Zero petrol. Zero noise. All city." — three sentences, no added or missing word.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if there is an audible pause between each sentence.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: mixed
+    rule: ACCEPT only if the accent is recognisably Indian English; REJECT if it is American or British.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any music, effect or second voice is present, or if the file is longer than 6 seconds.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: aud-tts-eleven
+  results_run_id: aud-tts-eleven
+  trial_id: AUD-TTS-02__elevenlabs-v3-direct__native__r2
+  case_id: AUD-TTS-02
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  controller_verdict: reject
+  controller_note: rejected for accent (Controller)
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-tts-eleven/artifacts/media/AUD-TTS-02__elevenlabs-v3-direct__native__r2.mp3
+    sha256: 1a139c8e1480fe7e8a0a97832ab2bc810d1afc3e2d05d5e2e1963d468b0747c5
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the listener hears exactly "Job chahiye? Skill upgrade karo. Aaj hi enroll karo, Kaushal Setu par." — every word, in
+      order.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if "Kaushal Setu" is heard as the Hindi words कौशल सेतु; REJECT if either word is heard as something else.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: mixed
+    rule: ACCEPT only if every word, English and Hindi, is understood on a single listen by a Hindi-English speaker; REJECT if any word has to
+      be replayed to be made out.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any music, effect or second voice is present, or if the file is longer than 6 seconds.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: aud-tts-eleven
+  results_run_id: aud-tts-eleven
+  trial_id: AUD-TTS-01__elevenlabs-v3-direct__native__r1
+  case_id: AUD-TTS-01
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  controller_verdict: accept
+  controller_note: approved (Controller)
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-tts-eleven/artifacts/media/AUD-TTS-01__elevenlabs-v3-direct__native__r1.mp3
+    sha256: 6645c4995aa154045ed68c780a80d7a43779ffacad643c76e9397829f02e9b5e
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if a first-language Hindi listener hears exactly "इस दवाई से मेरी फसल दोगुनी हुई" — every word, in order, no extra word.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if it is one male voice speaking clear Hindi; REJECT if any word is heard as a different word (e.g. दवाई or दोगुनी mispronounced
+      into another word).
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any music, effect, second voice or English word is present.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the file is silent, truncated mid-word, or longer than 6 seconds.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: aud-tts-eleven
+  results_run_id: aud-tts-eleven
+  trial_id: AUD-TTS-03__elevenlabs-v3-direct__native__r1
+  case_id: AUD-TTS-03
+  question: AUD-TTS
+  route_key: elevenlabs-v3-direct
+  arm: native
+  controller_verdict: accept
+  controller_note: approved (Controller)
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-tts-eleven/artifacts/media/AUD-TTS-03__elevenlabs-v3-direct__native__r1.mp3
+    sha256: 7be20a4582755a51f35b74e6a0b5a618d84cd33a360ece09ac0255ab8622f187
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the listener hears exactly "Zero petrol. Zero noise. All city." — three sentences, no added or missing word.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if there is an audible pause between each sentence.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: mixed
+    rule: ACCEPT only if the accent is recognisably Indian English; REJECT if it is American or British.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any music, effect or second voice is present, or if the file is longer than 6 seconds.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null

@@ -1,0 +1,194 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: aud-music-lyria
+results_ref: eval/experiments/EVAL-040/runs/aud-music-lyria/RESULTS.yaml
+results_sha256: 49a268db64a9678d13d410a9b55fae0b09046b59d77707df1ddee11ba9528538
+screened_utc: '2026-09-09T17:19:41.359815Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: aud-music-lyria
+  results_run_id: aud-music-lyria
+  trial_id: MUS-01__lyria__native__r2
+  case_id: MUS-01
+  question: MUS
+  route_key: lyria
+  arm: native
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-music-lyria/artifacts/media/MUS-01__lyria__native__r2.wav
+    sha256: df20cff8cf20c969bcc0d3eaa77f7bcbe166a024df5a2a6f455a8887a2f91354
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the track is 28–32 s long and has no sung or spoken words.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if drums or heavy percussion dominate the mix, or if an orchestral string or brass swell is present.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if at least one recognisably Indian instrument colour (flute/bansuri or tabla-like percussion) is audible.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the file is silent, clipped or ends with an abrupt cut mid-phrase.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: aud-music-lyria
+  results_run_id: aud-music-lyria
+  trial_id: MUS-02__lyria__native__r1
+  case_id: MUS-02
+  question: MUS
+  route_key: lyria
+  arm: native
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-music-lyria/artifacts/media/MUS-02__lyria__native__r1.wav
+    sha256: 1cbeb8fcd23f84393fb0c908f94803f710e16e085bfb79019ac479444862a43c
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the track is 28–32 s long and has no sung or spoken words.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the energy audibly builds from the start to the end (more elements or a stronger pulse by the last third).
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if there is a large orchestral or 'trailer' swell, or if the arrangement is so dense it would mask street ambience.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the file is silent, clipped or ends abruptly mid-phrase.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: aud-music-lyria
+  results_run_id: aud-music-lyria
+  trial_id: MUS-02__lyria__native__r2
+  case_id: MUS-02
+  question: MUS
+  route_key: lyria
+  arm: native
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-music-lyria/artifacts/media/MUS-02__lyria__native__r2.wav
+    sha256: 4bde7613a2098b5fa5f8a40f57ff041ca6b8fe4d88c716788a58efa62eedb975
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the track is 28–32 s long and has no sung or spoken words.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the energy audibly builds from the start to the end (more elements or a stronger pulse by the last third).
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if there is a large orchestral or 'trailer' swell, or if the arrangement is so dense it would mask street ambience.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the file is silent, clipped or ends abruptly mid-phrase.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: aud-music-lyria
+  results_run_id: aud-music-lyria
+  trial_id: MUS-01__lyria__native__r1
+  case_id: MUS-01
+  question: MUS
+  route_key: lyria
+  arm: native
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: audio
+  artifact:
+    path: eval/experiments/EVAL-040/runs/aud-music-lyria/artifacts/media/MUS-01__lyria__native__r1.wav
+    sha256: 2f5188d3a0e5a0122512b56e5b40fabe39a1f804ece239e3742d1a046d982410
+    media_kind: audio
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: audio'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the track is 28–32 s long and has no sung or spoken words.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if drums or heavy percussion dominate the mix, or if an orchestral string or brass swell is present.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if at least one recognisably Indian instrument colour (flute/bansuri or tabla-like percussion) is audible.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the file is silent, clipped or ends with an abrupt cut mid-phrase.
+    verdict: cannot_judge
+    evidence: 'audio: a vision screen cannot hear'
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null

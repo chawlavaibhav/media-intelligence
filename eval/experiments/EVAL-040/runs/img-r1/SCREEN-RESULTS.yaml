@@ -1,0 +1,4059 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: img-r1
+results_ref: eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml
+results_sha256: 32861c99d69ea602a73f8b31f0acdb725519f812d22e490b86b712c7f4605362
+screened_utc: '2026-09-09T17:19:41.509541Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__gpt-image-2__core__r1
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: gpt-image-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__gpt-image-2__core__r1.png
+    sha256: e5dc91df48908f934eb21bc8f0dc121f417dae20ef62cfbac760bfaf6aa3a351
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Exactly one bottle is visible in the frame with no other objects or props.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle shows clear glass edges and a visible liquid level inside.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: No text, logo, or symbol is present on the bottle or in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully visible and well-formed.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a light, uncluttered grey surface.
+  http_status: 200
+  usage:
+    promptTokenCount: 1536
+    candidatesTokenCount: 175
+    totalTokenCount: 2866
+    thoughtsTokenCount: 1155
+  frames: null
+  usd_at_pinned_price: '0.014274'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__nano-banana-2__core__r1
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: nano-banana-2
+  arm: core
+  controller_verdict: accept
+  controller_note: acceptable bot not exciting
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__nano-banana-2__core__r1.png
+    sha256: be08e0ccf0f9cff6a16db3b6e2b6d47734be8469dcf3cf74b248b0c434aa36e0
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible in the frame without any other objects.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle is clear glass showing a refracted edge and orange liquid.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: There are no labels, letters, or symbols anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully visible and properly formed.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a clean, light-colored surface.
+  http_status: 200
+  usage:
+    promptTokenCount: 1573
+    candidatesTokenCount: 169
+    totalTokenCount: 2934
+    thoughtsTokenCount: 1192
+  frames: null
+  usd_at_pinned_price: '0.014609'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__nano-banana-pro__core__r1
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: has a white label
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__nano-banana-pro__core__r1.png
+    sha256: dc29f7ee5acb148677c1704ab0d066a66b7a870d561de7da29756ed873a7e95a
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible in the frame without any other objects or hands.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle clearly shows glass refraction and orange liquid inside.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: The label is entirely blank with no text or symbols present.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully formed and completely within the frame.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a light, clean, and uncluttered grey.
+  http_status: 200
+  usage:
+    promptTokenCount: 1573
+    candidatesTokenCount: 239
+    totalTokenCount: 2566
+    thoughtsTokenCount: 754
+  frames: null
+  usd_at_pinned_price: '0.011297'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__seedream-5-pro__core__r1
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: fairly odd sized but conifrms the rules
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__seedream-5-pro__core__r1.jpg
+    sha256: 4302e6ec6237717e4c91249f5b14ceacabf45e411e358bb78754e91461e77448
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible on a plain surface with no other objects or hands.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle shows a clear glass neck and refracted edges with orange liquid inside.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: There is no label, text, or symbol anywhere on the bottle or in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully intact and not deformed or cut off.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a light, clean, and uncluttered plain surface.
+  http_status: 200
+  usage:
+    promptTokenCount: 1536
+    candidatesTokenCount: 203
+    totalTokenCount: 2334
+    thoughtsTokenCount: 595
+  frames: null
+  usd_at_pinned_price: '0.009486'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__flux-2-pro__core__r1
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: flux-2-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__flux-2-pro__core__r1.jpg
+    sha256: 74186ecb61c12e0459c16e1ef18c240c8bb44f722a1d29146ebff794a3c402a5
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible in the frame with no other objects.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle is clearly glass with a visible refracted edge and orange liquid inside.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: There is no lettering, logo, or symbol anywhere on the bottle or image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully intact and not deformed or cut off.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a clean, light grey color.
+  http_status: 200
+  usage:
+    promptTokenCount: 1536
+    candidatesTokenCount: 149
+    totalTokenCount: 2384
+    thoughtsTokenCount: 699
+  frames: null
+  usd_at_pinned_price: '0.009936'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__qwen-image-3__core__r1
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: qwen-image-3
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__qwen-image-3__core__r1.png
+    sha256: 3c88b429f6fc644251ec9d07eb614ada546a01cd5a55c9d3edb2c44fe27b0550
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one glass bottle is present in the frame with no other objects.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle has clear glass edges and a visible glow through the liquid.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: There are no labels, text, or symbols anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully visible and well-formed.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a clean, light grey color.
+  http_status: 200
+  usage:
+    promptTokenCount: 1536
+    candidatesTokenCount: 171
+    totalTokenCount: 2729
+    thoughtsTokenCount: 1022
+  frames: null
+  usd_at_pinned_price: '0.013041'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__gpt-image-2__core__r1
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: gpt-image-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__gpt-image-2__core__r1.png
+    sha256: 73ef60b51f2e6ea5c418c2ab25967d3ba15bfa4534527aa8f1d77bdb98ed64f5
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: One adult man in his late twenties is in the foreground holding a phone.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The visible side of the phone is entirely dark and blank.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No text, logos, or numbers are visible anywhere in the frame.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has a normal shape and finger count.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural, pleasant smiling expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1546
+    candidatesTokenCount: 239
+    totalTokenCount: 2607
+    thoughtsTokenCount: 822
+  frames: null
+  usd_at_pinned_price: '0.011868'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__nano-banana-2__core__r1
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: nano-banana-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__nano-banana-2__core__r1.png
+    sha256: f953205dd6de77e087d8843ef038aaf7e665af7e67d0b22f6339db5e7ffa2ae3
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: fail
+    evidence: Multiple other men are visible in the background of the image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is facing away from the camera, showing no readable content.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No lettering, logos, or numerals are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has a natural appearance with no anatomical errors.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural smiling expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1583
+    candidatesTokenCount: 170
+    totalTokenCount: 3542
+    thoughtsTokenCount: 1789
+  frames: null
+  usd_at_pinned_price: '0.020006'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__nano-banana-pro__core__r1
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__nano-banana-pro__core__r1.png
+    sha256: eecfac4b99d03cbb99e880199d9d1a491e9d6ab858d7f9ded84b172e49d671db
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: One young adult man is holding a phone in his hand.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is completely dark and blank.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No text, logos, or numbers are visible in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has five normal fingers without deformities.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is well-formed with a natural, pleasant smile.
+  http_status: 200
+  usage:
+    promptTokenCount: 1583
+    candidatesTokenCount: 232
+    totalTokenCount: 2869
+    thoughtsTokenCount: 1054
+  frames: null
+  usd_at_pinned_price: '0.013949'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__seedream-5-pro__core__r1
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__seedream-5-pro__core__r1.jpg
+    sha256: 2a97c36ad78f27be493d48ab16542bc0ea3f017290948d82fb1b997cfff7ebe6
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: A single young adult man is holding a phone with his visible right hand.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is completely dark and blank.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No lettering, logos, or numerals are visible in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has five normal fingers with no anatomical errors.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural, pleasant smile.
+  http_status: 200
+  usage:
+    promptTokenCount: 1546
+    candidatesTokenCount: 167
+    totalTokenCount: 2969
+    thoughtsTokenCount: 1256
+  frames: null
+  usd_at_pinned_price: '0.015126'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__flux-2-pro__core__r1
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: flux-2-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__flux-2-pro__core__r1.jpg
+    sha256: d5f5c89b59dcddf39f4f7559eda97d6cbce745524986380a455f60a6d16ad5b7
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: A single young adult man is holding a smartphone in his hand.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is facing away from the camera, showing no content.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No legible text, logos, or numbers are visible in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has normal anatomy and finger count.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural, smiling expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1546
+    candidatesTokenCount: 238
+    totalTokenCount: 2605
+    thoughtsTokenCount: 821
+  frames: null
+  usd_at_pinned_price: '0.011850'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__qwen-image-3__core__r1
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: qwen-image-3
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__qwen-image-3__core__r1.png
+    sha256: 589cd7944cfe475f561089d73c106500810b2c79a66cb114bb49fd3844af720c
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: There is exactly one young adult man in the foreground holding a phone.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The screen of the phone is not visible, showing only the dark back of the device.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No letters, logos, or numbers are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has five normal fingers with no anatomical anomalies.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The man's face is fully formed with a natural, smiling expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1546
+    candidatesTokenCount: 248
+    totalTokenCount: 2839
+    thoughtsTokenCount: 1045
+  frames: null
+  usd_at_pinned_price: '0.013956'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__nano-banana-pro__core__r1
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__nano-banana-pro__core__r1.png
+    sha256: 71417afb316c1b6f4539d2f4cd951d0d282ed737955b590fd9142de287879da5
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized digital illustration with painterly textures.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits on a window sill holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed, and she shows no signs of tears or immediate physical danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: There is no text, lettering, or numerals visible anywhere in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image contains a full illustration of a girl at a window.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 181
+    totalTokenCount: 2758
+    thoughtsTokenCount: 1002
+  frames: null
+  usd_at_pinned_price: '0.013010'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__seedream-5-pro__core__r1
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__seedream-5-pro__core__r1.jpg
+    sha256: d7a447a38958c27e01d968dc92d5c33d499c86fd8b1e98a4c2c15699df3cbff8
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized digital painting with visible brushstrokes and painterly rendering.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young child sits on a wooden sill holding a white paper boat while rain falls in the street outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child has a closed, smiling mouth with no tears or signs of danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: There is no text, lettering, or numbers visible anywhere in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image contains a fully rendered illustration of a child looking out at a rainy street.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 257
+    totalTokenCount: 2426
+    thoughtsTokenCount: 594
+  frames: null
+  usd_at_pinned_price: '0.010022'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__flux-2-pro__core__r1
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: flux-2-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: looks water will come in
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__flux-2-pro__core__r1.jpg
+    sha256: c39febdd0349a4f9119a1b35117aaf2188419cc01683dcff38400df1b449aa04
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized 2D digital illustration.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits on a window sill holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed and she is not crying or in danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No lettering or numbers are visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a complete illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 165
+    totalTokenCount: 3069
+    thoughtsTokenCount: 1329
+  frames: null
+  usd_at_pinned_price: '0.015809'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__qwen-image-3__core__r1
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: qwen-image-3
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__qwen-image-3__core__r1.png
+    sha256: de1f143a1f8245475fa0c397be71dcac2ebab51bf8df3d54bb96cb4cdb8bf668
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized digital illustration with a painterly rendering style.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits at a window holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The girl's mouth is closed and she is sitting safely without tears.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No text, letters, or numbers are present in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a fully rendered illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 170
+    totalTokenCount: 2628
+    thoughtsTokenCount: 883
+  frames: null
+  usd_at_pinned_price: '0.011840'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__nano-banana-2__A_cheap_generated__r1
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: nano-banana-2
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__nano-banana-2__A_cheap_generated__r1.png
+    sha256: 1b38926d7d8e0b554974e0267be93a75d9821747113debdf9f9630126c0380ca
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: pass
+    evidence: The text matches the required Hindi strings exactly with correct spelling and characters.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The text 'श्री गणेश मिष्ठान भंडार' is the largest lettering on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a sweet box and lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: No text strings are cut by the frame edge or overlap each other.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 244
+    totalTokenCount: 3395
+    thoughtsTokenCount: 1567
+  frames: null
+  usd_at_pinned_price: '0.018675'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__qwen-image-3__A_cheap_generated__r1
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: qwen-image-3
+  arm: A_cheap_generated
+  controller_verdict: reject
+  controller_note: wrong spelling
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__qwen-image-3__A_cheap_generated__r1.png
+    sha256: 46d899b98647d9d6696167d9408bc92ab1c1d36180d58dbb81f36e76a677af89
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: fail
+    evidence: The top line contains spelling errors, reading 'दीपावत्ली कदी शुभकामनाएं' instead of 'दीपावली की शुभकामनाएं'.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The text 'श्री गणेश मिष्ठान भंडार' is the largest lettering on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No additional or scribbled lettering is present in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a box of sweets and lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: No text strings are cut by the edges or overlap with each other.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 256
+    totalTokenCount: 3166
+    thoughtsTokenCount: 1326
+  frames: null
+  usd_at_pinned_price: '0.016614'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__gpt-image-2__A_cheap_generated__r1
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: gpt-image-2
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__gpt-image-2__A_cheap_generated__r1.png
+    sha256: 962d0129be0cdbacc8fd5a22ecba7defaab679c4002c0d1432be72c393881180
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: pass
+    evidence: The text matches the required strings "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट", and "श्री गणेश मिष्ठान भंडार" exactly.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The text "श्री गणेश मिष्ठान भंडार" is visibly the largest lettering on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is visible on the poster.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a sweet box and lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: No text strings are cut by the frame edge or overlap with each other.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 267
+    totalTokenCount: 2746
+    thoughtsTokenCount: 895
+  frames: null
+  usd_at_pinned_price: '0.012834'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__nano-banana-pro__B_premium_generated__r1
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: nano-banana-pro
+  arm: B_premium_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__nano-banana-pro__B_premium_generated__r1.png
+    sha256: e840c9006b301d82d86e287a11c888a1872ef8986f8f1586ce7f8bcb2775c638
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: pass
+    evidence: The text matches the required strings exactly, including all characters and matras.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The bottom text is visibly the largest lettering on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a sweet box and lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: No text strings are cut by the frame edge or overlap each other.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 239
+    totalTokenCount: 3133
+    thoughtsTokenCount: 1310
+  frames: null
+  usd_at_pinned_price: '0.016317'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__seedream-5-pro__B_premium_generated__r1
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: seedream-5-pro
+  arm: B_premium_generated
+  controller_verdict: reject
+  controller_note: wrong spelling
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__seedream-5-pro__B_premium_generated__r1.jpg
+    sha256: ee6083ff010606dbbd11efa353308858060475d0981e6b7b15185c02d1e9739c
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: fail
+    evidence: The text contains spelling errors like 'मिताईयों' instead of 'मिठाइयों' and 'गगेश मिधान' instead of 'गणेश मिष्ठान'.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: fail
+    evidence: The exact phrase 'श्री गणेश मिष्ठान भंडार' is not present due to spelling errors.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No additional or pseudo-lettering is present on the poster.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: A box of sweets and three lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: No text strings are cut by the frame edge or overlap each other.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 199
+    totalTokenCount: 3180
+    thoughtsTokenCount: 1397
+  frames: null
+  usd_at_pinned_price: '0.016740'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__recraft-v4__B_premium_generated__r1
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: recraft-v4
+  arm: B_premium_generated
+  controller_verdict: reject
+  controller_note: wrong spelling
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__recraft-v4__B_premium_generated__r1.webp
+    sha256: 8679cd206dcaf8302f78ee0899e773a492b5c0048e2e62efa97b0b67badd3915
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 3 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: fail
+    evidence: The text reads 'तीपावली जी युमबवमनारं' and 'सग्मी तियइयी पर 20% छुट' instead of the required phrases.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: fail
+    evidence: The phrase 'श्री गणेश मिष्ठान भंडार' is completely missing from the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: fail
+    evidence: The poster contains incorrect and garbled lettering instead of the specified text.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a box filled with sweets and multiple lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: All text strings are fully within the frame and do not overlap.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 201
+    totalTokenCount: 3266
+    thoughtsTokenCount: 1481
+  frames: null
+  usd_at_pinned_price: '0.017514'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r1
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  controller_verdict: reject
+  controller_note: wrong spelling
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r1.jpg
+    sha256: 6aad4ff007935bd22da9f007231d6052bc685f02e862994d4ae7b35e8ee632fb
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 3 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: fail
+    evidence: The text contains spelling errors and incorrect characters like 'दीणंवदी की शुभकामनाएं'.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: fail
+    evidence: The text 'श्री गणेश मिष्ठान भंडार' is completely missing from the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: fail
+    evidence: Unapproved and incorrect lettering is present on the poster.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: A box of sweets and lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: All text strings are fully within the frame and do not overlap.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 148
+    totalTokenCount: 2995
+    thoughtsTokenCount: 1263
+  frames: null
+  usd_at_pinned_price: '0.015075'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__nano-banana-2__A_cheap_generated__r1
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: nano-banana-2
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__nano-banana-2__A_cheap_generated__r1.png
+    sha256: 9a8d7d5eab67a57d09bf48a325303fb683c710bf8fa544d5f66105bdc3097b39
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The texts 'FLAT 40% OFF', 'First 100 members only', and 'AlphaFit' appear exactly as specified.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text 'Offer ends 15 January' is clearly readable.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No people, silhouettes, or body parts are present.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are dominant, and the bottom-right corner is empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The additional text 'Offer ends 15 January' is present.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 189
+    totalTokenCount: 3386
+    thoughtsTokenCount: 1637
+  frames: null
+  usd_at_pinned_price: '0.018774'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__qwen-image-3__A_cheap_generated__r1
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: qwen-image-3
+  arm: A_cheap_generated
+  controller_verdict: reject
+  controller_note: ''
+  media_kind: null
+  artifact:
+    path: null
+  screen_overall: null
+  verdict: absent
+  absence_reason: not_measured
+  note: 'skipped: no sealed artifact (E5: judged without a file)'
+  rules: []
+  agree: null
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__gpt-image-2__A_cheap_generated__r1
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: gpt-image-2
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__gpt-image-2__A_cheap_generated__r1.png
+    sha256: bcb757701996fb271fb1f308a9a7d3d3d35b8f4fb58ac67e458f75e7fbcb2c2b
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The required texts "FLAT 40% OFF", "First 100 members only", and "AlphaFit" are printed exactly as specified.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text "Offer ends 15 January" is clearly visible, showing the end date.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: There are no people, silhouettes, or body parts depicted in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: The dominant colors are black and neon yellow, and the bottom-right corner is empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The additional text "Offer ends 15 January" is present in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 179
+    totalTokenCount: 3132
+    thoughtsTokenCount: 1393
+  frames: null
+  usd_at_pinned_price: '0.016488'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__nano-banana-pro__B_premium_generated__r1
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: nano-banana-pro
+  arm: B_premium_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__nano-banana-pro__B_premium_generated__r1.png
+    sha256: fe635dcd476b33a583a9c6c0bbddf772074e91441798a903d17eb6f486bf7ebd
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The image contains the exact required text strings "FLAT 40% OFF", "First 100 members only", and "AlphaFit".
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text "Offer ends 15 January" is clearly visible in the image.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No people, silhouettes, or body parts are visible in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are the dominant colors, and the bottom-right corner is empty of graphics and text.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The text "Offer ends 15 January" is present, which constitutes other lettering.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 275
+    totalTokenCount: 2849
+    thoughtsTokenCount: 1014
+  frames: null
+  usd_at_pinned_price: '0.013941'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__seedream-5-pro__B_premium_generated__r1
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: seedream-5-pro
+  arm: B_premium_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__seedream-5-pro__B_premium_generated__r1.jpg
+    sha256: 7402a44340c04a4e2e4d25df55f8a830e6ec12ead478cc8851137b35db0dd33b
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The required texts "FLAT 40% OFF", "First 100 members only", and "AlphaFit" are present and spelled exactly as specified.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text "Offer ends 15 January" is clearly visible and readable.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No people, silhouettes, or body parts are visible in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are the dominant colors, and the top-right corner is empty of graphics and text.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present beyond the specified promotional and date texts.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 276
+    totalTokenCount: 3483
+    thoughtsTokenCount: 1647
+  frames: null
+  usd_at_pinned_price: '0.019647'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__recraft-v4__B_premium_generated__r1
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: recraft-v4
+  arm: B_premium_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__recraft-v4__B_premium_generated__r1.webp
+    sha256: 20e4c0bebd311a3e4dda3590c8cfbba53f24fc14f881cdc3cfd29a1373800ee8
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: fail
+    evidence: The image contains the extra text "Offer ends 15 January" which violates the exact lettering requirement.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text "Offer ends 15 January" is clearly visible in the image.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No people, silhouettes, or body parts are visible in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are the dominant colors, and the top-right corner is empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The text "Offer ends 15 January" appears as additional lettering.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 257
+    totalTokenCount: 2686
+    thoughtsTokenCount: 869
+  frames: null
+  usd_at_pinned_price: '0.012474'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r1
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  controller_verdict: reject
+  controller_note: 40% twice
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r1.jpg
+    sha256: d8e79b33d9741e6240e865dcd76003803da78a6154b4f625bc77b53a7cedf822
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: fail
+    evidence: The image contains extra lettering including "OFF 40%" and "Offer ends 15 January" which violates the exact text requirement.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text "Offer ends 15 January" is clearly visible and readable.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No people, silhouettes, or body parts are visible in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are the dominant colors, and the bottom-right corner is empty of all elements.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: Additional lettering "OFF 40%" and "Offer ends 15 January" is present in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 276
+    totalTokenCount: 2676
+    thoughtsTokenCount: 840
+  frames: null
+  usd_at_pinned_price: '0.012384'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__gpt-image-2__core__r2
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: gpt-image-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__gpt-image-2__core__r2.png
+    sha256: 5953cbfe515ab4a9db8f13eece2cf728c5f34f9c0b45a353fa956db3628aedf1
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible in the frame with no other objects or hands.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle shows a clear glass edge and a light-through-liquid glow.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: There are no letters, logos, or symbols anywhere on the bottle or image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully intact and not deformed or cut off.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a light, clean, and uncluttered grey surface.
+  http_status: 200
+  usage:
+    promptTokenCount: 1536
+    candidatesTokenCount: 156
+    totalTokenCount: 2356
+    thoughtsTokenCount: 664
+  frames: null
+  usd_at_pinned_price: '0.009684'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__nano-banana-2__core__r2
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: nano-banana-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__nano-banana-2__core__r2.png
+    sha256: 300d0b9ec26fcccc0244f44d15408ebde2d8fb46f2860ffa51d7d1c7b1495721
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible in the frame without any other objects or hands.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle shows clear glass edges and a light glow through the orange liquid.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: No labels, text, logos, or symbols are present on the bottle or in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully visible and properly shaped.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is light-colored and completely uncluttered.
+  http_status: 200
+  usage:
+    promptTokenCount: 1573
+    candidatesTokenCount: 152
+    totalTokenCount: 2561
+    thoughtsTokenCount: 836
+  frames: null
+  usd_at_pinned_price: '0.011252'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__nano-banana-pro__core__r2
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: has a white label
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__nano-banana-pro__core__r2.png
+    sha256: ed9e37706011997c614344f31bab84cfeb831ab182bd4753d1c74867c0e5432e
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible in the frame with no other objects or props.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle is clearly glass with a refracted edge and orange liquid inside.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: The white label on the bottle is completely blank without any text or symbols.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully formed and completely within the frame.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a light, clean, and uncluttered grey-blue color.
+  http_status: 200
+  usage:
+    promptTokenCount: 1573
+    candidatesTokenCount: 154
+    totalTokenCount: 2983
+    thoughtsTokenCount: 1256
+  frames: null
+  usd_at_pinned_price: '0.015050'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__seedream-5-pro__core__r2
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__seedream-5-pro__core__r2.jpg
+    sha256: d6413da284dd41968cd888258e1ebe2b2d3fe96b1b5c3d9b99e279d028c243d8
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible in the frame with no other objects or hands.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle has clear glass edges with visible light refraction and liquid inside.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: There are no labels, letters, logos, or symbols anywhere on the bottle or image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully visible and properly shaped.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a clean, light-colored surface with simple shadows.
+  http_status: 200
+  usage:
+    promptTokenCount: 1536
+    candidatesTokenCount: 248
+    totalTokenCount: 2385
+    thoughtsTokenCount: 601
+  frames: null
+  usd_at_pinned_price: '0.009945'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__flux-2-pro__core__r2
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: flux-2-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: opaque
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__flux-2-pro__core__r2.jpg
+    sha256: 03da9c5a5876396bc942ec2ad59dc5be23c53b683313dccd5d7f378c71567b88
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is present in the frame with no other objects or hands.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle shows clear glass edges and a light-through-liquid appearance.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: fail
+    evidence: Faint embossed lettering and numbers are visible near the bottom edge of the glass bottle.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base of the bottle are fully intact and not deformed or cut off.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a clean, light grey surface with no clutter.
+  http_status: 200
+  usage:
+    promptTokenCount: 1536
+    candidatesTokenCount: 252
+    totalTokenCount: 2615
+    thoughtsTokenCount: 827
+  frames: null
+  usd_at_pinned_price: '0.012015'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-01__qwen-image-3__core__r2
+  case_id: IMG-CORE-01
+  question: IMG-CORE
+  route_key: qwen-image-3
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-01__qwen-image-3__core__r2.png
+    sha256: b69ef304a882acbe6c1bead7133ea2464be5908ef83a4cd92ab4b6b71da8a74f
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.
+    verdict: pass
+    evidence: Only one bottle is visible in the frame with no other objects.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as
+      an opaque or plastic body.
+    verdict: pass
+    evidence: The bottle has a clear glass neck and base showing liquid inside.
+  - rule_id: R3
+    kind: accept_only
+    rule: 'ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.'
+    verdict: pass
+    evidence: No text, logos, or symbols are present on the bottle or background.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.
+    verdict: pass
+    evidence: The cap, neck, and base are fully intact and not deformed.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the background is dark or cluttered (the customer asked for a light background).
+    verdict: pass
+    evidence: The background is a simple, light grey surface.
+  http_status: 200
+  usage:
+    promptTokenCount: 1536
+    candidatesTokenCount: 169
+    totalTokenCount: 2741
+    thoughtsTokenCount: 1036
+  frames: null
+  usd_at_pinned_price: '0.013149'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__gpt-image-2__core__r2
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: gpt-image-2
+  arm: core
+  controller_verdict: accept
+  controller_note: 'verdict given in chat after the sheet: accept'
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__gpt-image-2__core__r2.png
+    sha256: 6961e8b9410a425491c3d17867a3c679002bf43dabcc264014ef88e27edda677
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: One young adult man is holding a phone with his hand.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is completely dark and blank.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No text, logos, or numbers are visible in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has five normal fingers without defects.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural smiling expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1546
+    candidatesTokenCount: 229
+    totalTokenCount: 2801
+    thoughtsTokenCount: 1026
+  frames: null
+  usd_at_pinned_price: '0.013614'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__nano-banana-2__core__r2
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: nano-banana-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__nano-banana-2__core__r2.png
+    sha256: 7cb5f5a4c7ef7b2ce4904077ba272bc5e283e0078772a3441790963d9c947681
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: fail
+    evidence: Multiple other adult men are visible in the background of the image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is dark and shows no readable content.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No lettering, logos, or numerals are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone appears anatomically correct with no extra fingers.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural smiling expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1583
+    candidatesTokenCount: 167
+    totalTokenCount: 3361
+    thoughtsTokenCount: 1611
+  frames: null
+  usd_at_pinned_price: '0.018377'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__nano-banana-pro__core__r2
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__nano-banana-pro__core__r2.png
+    sha256: cf43cc06e2bbfaa11387c74ac120c85a414db3201d3fd7f354a2e4f3f1665bfa
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: One young adult man is holding a phone.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is dark and shows no readable content.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No text, logos, or numbers are visible in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has normal fingers with no deformities.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural, pleasant expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1583
+    candidatesTokenCount: 230
+    totalTokenCount: 2732
+    thoughtsTokenCount: 919
+  frames: null
+  usd_at_pinned_price: '0.012716'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__seedream-5-pro__core__r2
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__seedream-5-pro__core__r2.jpg
+    sha256: edc0b4572e3ebae22413dc846fbf7d38955bc158166453ef53128b5758434a52
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: Exactly one adult man is visible holding a phone.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is completely dark and blank.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No lettering, logos, or numerals are visible anywhere.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: fail
+    evidence: The hand holding the phone has distorted joints and an unnatural grip.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural smile.
+  http_status: 200
+  usage:
+    promptTokenCount: 1546
+    candidatesTokenCount: 225
+    totalTokenCount: 3720
+    thoughtsTokenCount: 1949
+  frames: null
+  usd_at_pinned_price: '0.021885'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__flux-2-pro__core__r2
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: flux-2-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__flux-2-pro__core__r2.jpg
+    sha256: 508b4b522fdef48a417245ff2102d8b1c2585641a94f6d67ebf900b4c0e95e5f
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: One adult man of about 25-28 years old is in the frame holding a phone.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The back of the phone is shown, so no screen content is visible.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No lettering, logos, or numerals are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone appears anatomically correct with no clipping.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural smiling expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1546
+    candidatesTokenCount: 246
+    totalTokenCount: 2715
+    thoughtsTokenCount: 923
+  frames: null
+  usd_at_pinned_price: '0.012840'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-02__qwen-image-3__core__r2
+  case_id: IMG-CORE-02
+  question: IMG-CORE
+  route_key: qwen-image-3
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-02__qwen-image-3__core__r2.png
+    sha256: 76c7a37e44cdd1c78fb7608fb0f1a0d6849c4feced33ae96eed85f64fdba172c
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if exactly one adult man, plausibly 25–28, is in frame holding a phone with a visible hand.
+    verdict: pass
+    evidence: Exactly one young adult man is in the foreground holding a phone with his visible right hand.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the phone screen shows no readable content — blank, dark or plain glow.
+    verdict: pass
+    evidence: The phone screen is facing away from the camera, so no readable content is visible.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears anywhere in the image (including signage in the background).
+    verdict: pass
+    evidence: No lettering, logos, or numerals are visible anywhere in the scene.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the hand holding the phone has the wrong number of fingers, a bent-through joint, or fingers passing through the phone.
+    verdict: pass
+    evidence: The hand holding the phone has five well-formed fingers with no anatomical anomalies.
+  - rule_id: R5
+    kind: mixed
+    rule: ACCEPT only if the face is fully formed (two eyes, natural mouth, no doubled features); REJECT if the expression is angry, fearful or
+      a fixed blank stare.
+    verdict: pass
+    evidence: The face is fully formed with a natural, gentle smiling expression.
+  http_status: 200
+  usage:
+    promptTokenCount: 1546
+    candidatesTokenCount: 250
+    totalTokenCount: 3507
+    thoughtsTokenCount: 1711
+  frames: null
+  usd_at_pinned_price: '0.019968'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__gpt-image-2__core__r2
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: gpt-image-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-03__gpt-image-2__core__r2.png
+    sha256: 5d972eb0aedcf724554f91e0c22af53e09bc65b613b7207f98eff89ad4b045c5
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera looks straight down at a round brass pot of biryani positioned in the center of the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: 'All four sides are present: a bowl of raita, a bowl of salad, sliced onions, and lemon halves.'
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: No lettering, prices, logos, or numerals are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice grains, meat pieces, and mint garnishes appear distinct and natural without repeating patterns.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are included in the scene.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 270
+    totalTokenCount: 2253
+    thoughtsTokenCount: 431
+  frames: null
+  usd_at_pinned_price: '0.008637'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__nano-banana-2__core__r2
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: nano-banana-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-03__nano-banana-2__core__r2.png
+    sha256: 5cd0eb4ab90d2b2b840173d671e6fc86aaa789e8a1286bf86cc031d450b535cc
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera is positioned directly overhead, and a round brass pot of biryani is centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: The image clearly shows a bowl of raita, a salad, sliced onions, and cut lemons.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: No text, logos, prices, or numbers are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice, meat, and garnishes look distinct and natural without any repeating patterns or fusion.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props such as gold cutlery, wine glasses, or candles are present.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 264
+    totalTokenCount: 2993
+    thoughtsTokenCount: 1177
+  frames: null
+  usd_at_pinned_price: '0.015297'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__nano-banana-pro__core__r2
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: salad getting cutoff
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-03__nano-banana-pro__core__r2.png
+    sha256: 9923872ca3b33ce7fe850f6299559ccb44c88e0a99156c563c80cdcfa174f38d
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera is positioned directly overhead looking straight down, with a round brass pot of biryani centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: The image clearly shows a bowl of raita, a plate of salad, sliced onion rings, and lemon halves surrounding the central pot.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: There is no visible lettering, price, logo, or numeral anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice grains, meat pieces, and mint garnishes appear distinct and natural without any visible melting, fusing, or repeating patterns.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props such as gold cutlery, wine glasses, or candles are present in the scene.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 284
+    totalTokenCount: 2460
+    thoughtsTokenCount: 624
+  frames: null
+  usd_at_pinned_price: '0.010500'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__seedream-5-pro__core__r2
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: slaad, raita snd onions getting cutoff.
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-03__seedream-5-pro__core__r2.jpg
+    sha256: 084a41a0054e7808bd36f888f47f56e049c7dda2efb3796462ba19fc3f7d8973
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The image shows a top-down view with a round brass pot of biryani centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon—are clearly visible around the main pot.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: There are no letters, numbers, logos, or prices visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice, meat, and mint garnish appear distinct and natural without repeating patterns or fusion.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are included in the scene.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 269
+    totalTokenCount: 2690
+    thoughtsTokenCount: 869
+  frames: null
+  usd_at_pinned_price: '0.012570'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__flux-2-pro__core__r2
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: flux-2-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: okay. but not great. briyani dish size is small. onions look pooor.
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-03__flux-2-pro__core__r2.jpg
+    sha256: c6ae7ea9e5df3484079e60581ed5ca4b1bddc94257cfd9837e39e0fcacaaf612
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera is positioned directly overhead, showing a round pot of biryani centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: The four sides—raita, salad, sliced onions, and lemon slices—are clearly arranged around the main dish.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: There are no visible letters, numbers, logos, or prices anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice, meat, and garnishes look distinct and natural without repeating patterns or fusion.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury items like gold cutlery, wine glasses, or candles are included in the setup.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 268
+    totalTokenCount: 3076
+    thoughtsTokenCount: 1256
+  frames: null
+  usd_at_pinned_price: '0.016044'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__qwen-image-3__core__r2
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: qwen-image-3
+  arm: core
+  controller_verdict: reject
+  controller_note: slalad gettnig cutoff
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-03__qwen-image-3__core__r2.png
+    sha256: dfbf3c3c1d8c46417981e4eaafe040148061e3b6f6c629d2fc7888b9bcaedab1
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera looks straight down at a round pot of biryani positioned in the center.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: 'All four sides are visible: raita, chopped salad, sliced onions, and cut lemons.'
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: No lettering, prices, logos, or numerals are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice, meat, and garnish appear distinct and natural without repeating patterns.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are present.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 254
+    totalTokenCount: 2925
+    thoughtsTokenCount: 1119
+  frames: null
+  usd_at_pinned_price: '0.014685'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__gpt-image-2__core__r2
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: gpt-image-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__gpt-image-2__core__r2.png
+    sha256: 1fab5503318cf4e0f42d5f0cd086731b7b68cb34eae90f4e224557d2ca005108
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized, painterly illustration rather than a photograph.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: fail
+    evidence: The child is sitting at an open doorway rather than a window.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed and she is not crying or in danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No lettering, titles, or numerals are visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a fully rendered illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 142
+    totalTokenCount: 2290
+    thoughtsTokenCount: 573
+  frames: null
+  usd_at_pinned_price: '0.008798'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__nano-banana-2__core__r2
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: nano-banana-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__nano-banana-2__core__r2.png
+    sha256: 56a1cd2a329eee2d5446c0a9d15469d2657f68ff8d873514d9f4cb963c8572c9
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized digital illustration with painterly textures.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits on a window sill holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed, and she is not crying or in danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No lettering, titles, or numerals are visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a fully rendered illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 239
+    totalTokenCount: 2634
+    thoughtsTokenCount: 820
+  frames: null
+  usd_at_pinned_price: '0.011894'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__nano-banana-pro__core__r2
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__nano-banana-pro__core__r2.png
+    sha256: c617a72f835df1615cba3f27e9f2866a26bcaa4b4ecf6367f4f9c4fbb67e46b9
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized digital illustration with painterly rendering.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits on a window sill holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed, and she is not crying or in danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No text, lettering, or numbers are present in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a complete illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 170
+    totalTokenCount: 2602
+    thoughtsTokenCount: 857
+  frames: null
+  usd_at_pinned_price: '0.011606'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__seedream-5-pro__core__r2
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__seedream-5-pro__core__r2.jpg
+    sha256: 9a25d71ec08cd38bd43188d1aae76c96c43d5f225068e32974a653a047bdccfd
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized painterly illustration of a young girl.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits on a window sill holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed, and she is not crying or in danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No text, lettering, or numbers are visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a fully rendered illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 146
+    totalTokenCount: 2693
+    thoughtsTokenCount: 972
+  frames: null
+  usd_at_pinned_price: '0.012425'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__flux-2-pro__core__r2
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: flux-2-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: sitting outside window
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__flux-2-pro__core__r2.jpg
+    sha256: 9249a25a979790cff1d5475fb213ffe0b5225d45bfb339a62a8de69bf01f5531
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized digital illustration with painterly textures.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits on a window ledge holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The girl's mouth is closed and she is not in any visible danger or crying.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No text, letters, or numbers are visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a complete illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 239
+    totalTokenCount: 2601
+    thoughtsTokenCount: 787
+  frames: null
+  usd_at_pinned_price: '0.011597'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__qwen-image-3__core__r2
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: qwen-image-3
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-CORE-04__qwen-image-3__core__r2.png
+    sha256: 7a8ed6af2c25c9e6c77b84b70604c2723af9b763c7e835a835107e0c8d2b91ff
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized digital illustration with painterly textures.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits on a window sill holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed and she is not crying or in danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No lettering, titles, or numerals are present in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a complete illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 143
+    totalTokenCount: 2471
+    thoughtsTokenCount: 753
+  frames: null
+  usd_at_pinned_price: '0.010427'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__nano-banana-2__A_cheap_generated__r2
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: nano-banana-2
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__nano-banana-2__A_cheap_generated__r2.png
+    sha256: b4cec945ec08dac29ccf2193c246cbb59126a37dcdf36f98a0dc20715217a54b
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: pass
+    evidence: The image contains the exact Hindi texts 'दीपावली की शुभकामनाएं', 'सभी मिठाइयों पर 20% छूट', and 'श्री गणेश मिष्ठान भंडार' with
+      correct spelling.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The text 'श्री गणेश मिष्ठान भंडार' at the bottom is the largest lettering on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a box of sweets and three lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: All text strings are fully within the frame and do not overlap.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 272
+    totalTokenCount: 3402
+    thoughtsTokenCount: 1546
+  frames: null
+  usd_at_pinned_price: '0.018738'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__qwen-image-3__A_cheap_generated__r2
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: qwen-image-3
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__qwen-image-3__A_cheap_generated__r2.png
+    sha256: b66baa2b6ced287f1ab3edf0d31cdc8212af57719c57b36c5d8c94ee590f990d
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: fail
+    evidence: The bottom text contains spelling deviations including an extra anusvara dot in "मिंष्ठान" and "श्री" instead of "श्री".
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The text "श्री गणेश मिंष्ठान भंडार" at the bottom is rendered in the largest font size on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or scribbled pseudo-lettering is present anywhere on the poster.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: A box of assorted sweets and three lit diyas are clearly visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: All text strings are fully contained within the frame and do not overlap with one another.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 279
+    totalTokenCount: 3294
+    thoughtsTokenCount: 1431
+  frames: null
+  usd_at_pinned_price: '0.017766'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__gpt-image-2__A_cheap_generated__r2
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: gpt-image-2
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__gpt-image-2__A_cheap_generated__r2.png
+    sha256: b68e90382d97408cf9793079091db0a07fcfdb13f64e1f11cce2e8cb59ff15f0
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: pass
+    evidence: The text matches the required strings exactly with correct spelling and characters.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: pass
+    evidence: The text "श्री गणेश मिष्ठान भंडार" is visibly the largest lettering on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or scribbled text is present in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: A box of sweets and three lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: All text strings are fully within the frame and do not overlap.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 243
+    totalTokenCount: 3207
+    thoughtsTokenCount: 1380
+  frames: null
+  usd_at_pinned_price: '0.016983'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__nano-banana-pro__B_premium_generated__r2
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: nano-banana-pro
+  arm: B_premium_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__nano-banana-pro__B_premium_generated__r2.png
+    sha256: 2623c01a55b0225989881442ba35a2c12bfa98ae035460fabbd2ef2b89266e65
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: pass
+    evidence: The text on the poster exactly matches 'दीपावली की शुभकामनाएं', 'सभी मिठाइयों पर 20% छूट', and 'श्री गणेश मिष्ठान भंडार' with all
+      characters and matras correct.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: fail
+    evidence: The lettering 'सभी मिठाइयों पर 20% छूट' is visibly larger than 'श्री गणेश मिष्ठान भंडार'.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present on the poster.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a box of sweets and three lit diyas are clearly visible and recognizable.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: None of the text strings are cut by the frame edge or overlap with each other.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 286
+    totalTokenCount: 3549
+    thoughtsTokenCount: 1679
+  frames: null
+  usd_at_pinned_price: '0.020061'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__seedream-5-pro__B_premium_generated__r2
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: seedream-5-pro
+  arm: B_premium_generated
+  controller_verdict: reject
+  controller_note: wrong spelling (verdict given in chat after the sheet)
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__seedream-5-pro__B_premium_generated__r2.jpg
+    sha256: 9d51805b61b43fd8690fb208f0511eff7ef54b60b7eec43aefc4c057ed6bd917
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: fail
+    evidence: The text contains spelling errors including 'मिताईयों' and 'गगेश मिधान' instead of the requested words.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: fail
+    evidence: The required string is absent and the bottom text is not the largest lettering.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: pass
+    evidence: No additional or scribbled lettering is visible on the poster.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: Both a box of sweets and lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: All text strings are fully within the frame and do not overlap.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 156
+    totalTokenCount: 3102
+    thoughtsTokenCount: 1362
+  frames: null
+  usd_at_pinned_price: '0.016038'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__recraft-v4__B_premium_generated__r2
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: recraft-v4
+  arm: B_premium_generated
+  controller_verdict: reject
+  controller_note: wrong spelling
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__recraft-v4__B_premium_generated__r2.webp
+    sha256: 7c11dbbde91f0def9ccccb31e185e678cb38d247820cd59bdc36cbe70cdb6fa8
+    media_kind: image
+  screen_overall: null
+  verdict: absent
+  absence_reason: instrument_unavailable
+  note: 'transport failure: TimeoutError: The read operation timed out'
+  rules: []
+  http_status: null
+  usage: null
+  frames: null
+  usd_at_pinned_price: null
+  agree: null
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-01
+  question: IMG-TEXT
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  controller_verdict: reject
+  controller_note: wrong spelling
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-01__flux-2-pro__C_composite_textless_base__r2.jpg
+    sha256: 6634b21c85107395869fff8661b8b500c903fe0da1a2fdd76be804e13958f0c4
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 3 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट" and "श्री गणेश मिष्ठान भंडार" — every
+      matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented
+      character.
+    verdict: fail
+    evidence: The text is garbled, reading 'हीपाल्दी की श्रुश्रकाननोएँ' instead of 'दीपावली की शुभकामनाएं'.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering on the poster.
+    verdict: fail
+    evidence: The exact text 'श्री गणेश मिष्ठान भंडार' is not present on the poster.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.
+    verdict: fail
+    evidence: The poster contains incorrect and pseudo-lettering such as 'हीपाल्दी की श्रुश्रकाननोएँ'.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if at least one of a sweet box or lit diyas is recognisable.
+    verdict: pass
+    evidence: A box of sweets and three lit diyas are clearly visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any string is cut by the frame edge or overlaps another string.
+    verdict: pass
+    evidence: No text strings are cut by the frame edge or overlap each other.
+  http_status: 200
+  usage:
+    promptTokenCount: 1584
+    candidatesTokenCount: 268
+    totalTokenCount: 2768
+    thoughtsTokenCount: 916
+  frames: null
+  usd_at_pinned_price: '0.013032'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__nano-banana-2__A_cheap_generated__r2
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: nano-banana-2
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__nano-banana-2__A_cheap_generated__r2.png
+    sha256: 1c1b51fc1af431fae870b8304824ae4080fdeb489854999baa5c1db5774292de
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The text strings "FLAT 40% OFF", "First 100 members only", and "AlphaFit" are exactly present.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text "Offer ends 15 January" is clearly readable.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No people, silhouettes, or body parts are visible.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are dominant, and the bottom-right corner is empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The text "Offer ends 15 January" constitutes extra lettering.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 163
+    totalTokenCount: 2950
+    thoughtsTokenCount: 1227
+  frames: null
+  usd_at_pinned_price: '0.014850'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__qwen-image-3__A_cheap_generated__r2
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: qwen-image-3
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__qwen-image-3__A_cheap_generated__r2.png
+    sha256: 82a97281501061cb30dcbdffa3ed39fa1a1e7f1ffc4057c6a1ddf99dce534de2
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The text blocks 'FLAT 40% OFF', 'First 100 members only', and 'AlphaFit' are written exactly as specified.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text 'Offer ends 15 January' clearly displays the required end date.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No people, silhouettes, or body parts are visible in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are dominant, and the bottom-right corner is empty of text and graphics.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The additional text 'Offer ends 15 January' is present on the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 205
+    totalTokenCount: 3393
+    thoughtsTokenCount: 1628
+  frames: null
+  usd_at_pinned_price: '0.018837'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__gpt-image-2__A_cheap_generated__r2
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: gpt-image-2
+  arm: A_cheap_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__gpt-image-2__A_cheap_generated__r2.png
+    sha256: 5ef768910f50851ae76a7eaf19833d6b0cd98d46fc735302c9606e60aa41ba08
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The specified texts 'FLAT 40% OFF', 'First 100 members only', and 'AlphaFit' appear exactly as required.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text 'Offer ends 15 January' is clearly visible.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No human figures or body parts are depicted.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: The image uses black and neon yellow dominantly, leaving the bottom-right corner empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The additional text 'Offer ends 15 January' is present.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 258
+    totalTokenCount: 2982
+    thoughtsTokenCount: 1164
+  frames: null
+  usd_at_pinned_price: '0.015138'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__nano-banana-pro__B_premium_generated__r2
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: nano-banana-pro
+  arm: B_premium_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__nano-banana-pro__B_premium_generated__r2.png
+    sha256: f5231a0da65078472db585d21b6da9944d0d2ffbd1c98030bda65fd66d50dcfd
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The required texts "FLAT 40% OFF", "First 100 members only", and "AlphaFit" are written exactly as specified.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text "Offer ends 15 January" is clearly readable.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No human figures, silhouettes, or body parts are present.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are the dominant colors, and the bottom-right corner is empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The extra text "Offer ends 15 January" is present.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 262
+    totalTokenCount: 3008
+    thoughtsTokenCount: 1186
+  frames: null
+  usd_at_pinned_price: '0.015372'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__seedream-5-pro__B_premium_generated__r2
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: seedream-5-pro
+  arm: B_premium_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__seedream-5-pro__B_premium_generated__r2.jpg
+    sha256: df5ae44ad2455db1a2923d01f43788f020ed971b4b483fae26ae1c0e4f70e556
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The image contains the exact strings "FLAT 40% OFF", "First 100 members only", and "AlphaFit" with correct spelling and casing.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text "Offer ends 15 January" is clearly visible, indicating the required end date.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No people, silhouettes, or body parts are visible in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: Black and neon yellow are the dominant colors, and the bottom-right corner is completely empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: fail
+    evidence: The additional text "Offer ends 15 January" is present on the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 209
+    totalTokenCount: 3165
+    thoughtsTokenCount: 1396
+  frames: null
+  usd_at_pinned_price: '0.016785'
+  agree: false
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__recraft-v4__B_premium_generated__r2
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: recraft-v4
+  arm: B_premium_generated
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__recraft-v4__B_premium_generated__r2.webp
+    sha256: 0cbba0f8bd7583ea5f6f666826ec146a09223af7c207f73bcdeb942c5ee534c6
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The image correctly displays the exact texts 'FLAT 40% OFF', 'First 100 members only', and 'AlphaFit' without any typos.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The text 'Offer ends 15 January' is clearly legible near the center of the image.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: There are no human figures, silhouettes, or body parts depicted in the image.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: The dominant colors are black and neon yellow, and the bottom right corner contains no text or graphics.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: pass
+    evidence: No additional or extraneous lettering or pseudo-lettering is present in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 278
+    totalTokenCount: 4010
+    thoughtsTokenCount: 2172
+  frames: null
+  usd_at_pinned_price: '0.024390'
+  agree: true
+- run_id: img-r1
+  results_run_id: img-r1
+  trial_id: IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r2
+  case_id: IMG-TEXT-02
+  question: IMG-TEXT
+  route_key: flux-2-pro
+  arm: C_composite_textless_base
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1/artifacts/media/IMG-TEXT-02__flux-2-pro__C_composite_textless_base__r2.jpg
+    sha256: 93f49ead6eebd52d83888b2926bf0a809468e71501f5b1d92d898c336b274b59
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if the lettering reads exactly "FLAT 40% OFF", "First 100 members only" and "AlphaFit" — same letters, same case, the numerals
+      40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.
+    verdict: pass
+    evidence: The required texts 'FLAT 40% OFF', 'First 100 members only', and 'AlphaFit' are present with correct spelling and case.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the 15 January end date is readable in some wording.
+    verdict: pass
+    evidence: The end date is readable as 'Offer ends 15 January'.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any person, silhouette or body part appears.
+    verdict: pass
+    evidence: No human figures, silhouettes, or body parts are shown.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics.
+    verdict: pass
+    evidence: The image uses black and neon yellow dominantly, leaving the bottom-right corner empty.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears anywhere.
+    verdict: pass
+    evidence: No additional or unauthorized lettering is visible.
+  http_status: 200
+  usage:
+    promptTokenCount: 1560
+    candidatesTokenCount: 258
+    totalTokenCount: 3553
+    thoughtsTokenCount: 1735
+  frames: null
+  usd_at_pinned_price: '0.020277'
+  agree: true
+- run_id: img-r1-redo
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__gpt-image-2__core__r1
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: gpt-image-2
+  arm: core
+  controller_verdict: reject
+  controller_note: 'slaad getting cutoff. mint leaves on table. '
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-redo/artifacts/media/IMG-CORE-03__gpt-image-2__core__r1.png
+    sha256: f459bdda60d7b645f6027f3053cfc0d7b459dc435506734a9992664437f4759f
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera is positioned directly overhead, with a round brass pot of biryani centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon—are clearly visible around the main dish.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: No text, logos, or numbers are visible on any surface.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice, meat, and mint garnishes appear distinct and natural without repeating patterns.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props like cutlery, glasses, or candles are included in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 261
+    totalTokenCount: 2921
+    thoughtsTokenCount: 1108
+  frames: null
+  usd_at_pinned_price: '0.014649'
+  agree: false
+- run_id: img-r1-redo
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__nano-banana-2__core__r1
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: nano-banana-2
+  arm: core
+  controller_verdict: reject
+  controller_note: slaad getting cutoff
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-redo/artifacts/media/IMG-CORE-03__nano-banana-2__core__r1.png
+    sha256: 7a74565c31ad098ebf3b20e55b6da5ba5f4b3c23305a701eca894573b3e7d047
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera is positioned directly overhead, and a round brass pot of biryani is centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon halves—are clearly visible around the main dish.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: No lettering, logos, prices, or numerals are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice grains, chicken, and garnishes appear distinct and natural without any repeating patterns or fusion.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: The table setting features only a wooden spoon and lacks luxury props like gold cutlery, wine glasses, or candles.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 275
+    totalTokenCount: 2568
+    thoughtsTokenCount: 741
+  frames: null
+  usd_at_pinned_price: '0.011472'
+  agree: false
+- run_id: img-r1-redo
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__nano-banana-pro__core__r1
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: nano-banana-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: '  slalad gettnig cutoff'
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-redo/artifacts/media/IMG-CORE-03__nano-banana-pro__core__r1.png
+    sha256: f661e85bb1a13121003d2f87d175504f469783fb8cc9d99dc0a4e59aab315444
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera looks straight down at a round pot of biryani centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon—are clearly visible around the main dish.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: No text, logos, or numbers are visible on any surface.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice, meat, and garnishes appear distinct and natural without repeating patterns.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are present.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 256
+    totalTokenCount: 2646
+    thoughtsTokenCount: 838
+  frames: null
+  usd_at_pinned_price: '0.012174'
+  agree: false
+- run_id: img-r1-redo
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__seedream-5-pro__core__r1
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: seedream-5-pro
+  arm: core
+  controller_verdict: reject
+  controller_note: salad without bowl and getting cutoff
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-redo/artifacts/media/IMG-CORE-03__seedream-5-pro__core__r1.jpg
+    sha256: e356f9b3656c53ac9011083740dfed11b2247c39d1c84fb3ebee435dbbf9020b
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera is positioned directly overhead looking straight down, and a round brass pot filled with biryani is centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: All four sides—a bowl of raita, a small salad, sliced onions, and lemon halves—are clearly visible around the central pot.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: There are no visible letters, numbers, prices, or logos anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice grains, meat pieces, and mint garnishes appear distinct and natural without any visible melting, fusing, or repeating patterns.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props such as gold cutlery, wine glasses, or candles are present in the scene.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 288
+    totalTokenCount: 2446
+    thoughtsTokenCount: 606
+  frames: null
+  usd_at_pinned_price: '0.010374'
+  agree: false
+- run_id: img-r1-redo
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__flux-2-pro__core__r1
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: flux-2-pro
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-redo/artifacts/media/IMG-CORE-03__flux-2-pro__core__r1.jpg
+    sha256: 1af2129160fa4fe3a0e1c5eff9d1dcee96a53bc1f9bd636b6f7f12591b294bde
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera looks straight down at a round pot of biryani positioned in the center.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: The image shows a bowl of raita, salad, sliced onion, and lemon halves.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: No text, logos, or numbers are visible on any items.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice, meat, and garnishes appear distinct and natural without repeating patterns.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are present.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 252
+    totalTokenCount: 2966
+    thoughtsTokenCount: 1162
+  frames: null
+  usd_at_pinned_price: '0.015054'
+  agree: true
+- run_id: img-r1-redo
+  results_run_id: img-r1
+  trial_id: IMG-CORE-03__qwen-image-3__core__r1
+  case_id: IMG-CORE-03
+  question: IMG-CORE
+  route_key: qwen-image-3
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-redo/artifacts/media/IMG-CORE-03__qwen-image-3__core__r1.png
+    sha256: 4380d43bdeb4661dd1ade407d10df06d6e6b5eea8113aea7d39aa7f7b6fedc37
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the camera looks straight down (top view) and a round pot of biryani sits at the centre.
+    verdict: pass
+    evidence: The camera is positioned directly overhead looking straight down, and a round brass pot of biryani is centered in the frame.
+  - rule_id: R2
+    kind: accept_only
+    rule: 'ACCEPT only if all four named sides are identifiable: a bowl of raita, salad, sliced onion, and lemon.'
+    verdict: pass
+    evidence: All four sides—raita, salad, sliced onion, and lemon—are clearly visible around the main pot.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, price, logo or numeral appears anywhere (including on crockery or napkins).
+    verdict: pass
+    evidence: No text, logos, prices, or numbers are visible anywhere in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if rice grains, meat pieces or garnish are visibly melted, fused or duplicated in a repeating pattern.
+    verdict: pass
+    evidence: The rice grains, meat, and herb garnishes appear distinct and natural without any repeating patterns or fusion.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if the spread includes luxury props (gold cutlery, wine glass, candles) — the customer asked for premium but not over the top.
+    verdict: pass
+    evidence: No luxury props like gold cutlery, wine glasses, or candles are present in the scene.
+  http_status: 200
+  usage:
+    promptTokenCount: 1552
+    candidatesTokenCount: 274
+    totalTokenCount: 2396
+    thoughtsTokenCount: 570
+  frames: null
+  usd_at_pinned_price: '0.009924'
+  agree: true
+- run_id: img-r1-redo
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__gpt-image-2__core__r1
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: gpt-image-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-redo/artifacts/media/IMG-CORE-04__gpt-image-2__core__r1.png
+    sha256: 33434b0fcf23f26f1e237f925bbea31e71c6bee0f227a139e5294d77c5d2de22
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized illustration with a painterly rendering rather than a photograph.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits on a window sill holding a paper boat with rain falling outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed, and she shows no signs of crying or danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: fail
+    evidence: A faint signature or lettering is visible in the bottom right corner.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image is a fully rendered illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 176
+    totalTokenCount: 2824
+    thoughtsTokenCount: 1073
+  frames: null
+  usd_at_pinned_price: '0.013604'
+  agree: false
+- run_id: img-r1-redo
+  results_run_id: img-r1
+  trial_id: IMG-CORE-04__nano-banana-2__core__r1
+  case_id: IMG-CORE-04
+  question: IMG-CORE
+  route_key: nano-banana-2
+  arm: core
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/img-r1-redo/artifacts/media/IMG-CORE-04__nano-banana-2__core__r1.png
+    sha256: f2dadeca91b796778bbeef0019ae7d8098809189797c018fabbc0f7e20f1a30c
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the image is clearly an illustration (flat or painterly rendering, visible stylisation) and not a photograph.
+    verdict: pass
+    evidence: The image is a stylized digital illustration with painterly rendering.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if one child, plausibly 6–7, sits at a window with a paper boat in her hand and rain is visible outside.
+    verdict: pass
+    evidence: A young girl sits by a window holding a paper boat while rain falls outside.
+  - rule_id: R3
+    kind: mixed
+    rule: REJECT if the child is shown with an open crying mouth or visible tears, or in physical danger (water reaching her, a fall); ACCEPT
+      only if her mouth is closed or nearly closed.
+    verdict: pass
+    evidence: The child's mouth is closed, and she is not crying or in danger.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any lettering, title or numeral appears anywhere in the image.
+    verdict: pass
+    evidence: No text, lettering, or numbers are visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if there is no picture — a blank or black frame, or text where the image should be.
+    verdict: pass
+    evidence: The image contains a fully rendered illustration.
+  http_status: 200
+  usage:
+    promptTokenCount: 1575
+    candidatesTokenCount: 144
+    totalTokenCount: 2327
+    thoughtsTokenCount: 608
+  frames: null
+  usd_at_pinned_price: '0.009131'
+  agree: true

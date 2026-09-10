@@ -56,7 +56,7 @@
 
 ## Routes
 
-See `TEST-CASES.yaml` → `routes[]`: kling-v3-pro-i2v, minimax-h3-max-i2v, seedance-2.5-i2v, veo-3.1-fast-i2v, wan-3.0-prime-i2v.
+See `TEST-CASES.yaml` → `routes[]`: kling-v3-pro-i2v, minimax-h3-max-i2v, seedance-2.5-i2v, veo-3.1-fast-i2v, wan-2.2-a14b-i2v, wan-3.0-prime-i2v.
 
 **Blueprint:** `BLUEPRINTS/VID-I2V-02.blueprint.md` (sha256 `08fb8cbd2803a34b…`, author executor_agent)
 

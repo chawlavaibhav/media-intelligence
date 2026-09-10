@@ -1,0 +1,1849 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: half2
+results_ref: eval/experiments/EVAL-040/runs/half2/RESULTS.yaml
+results_sha256: d66d6a035b8e1d50b9aa058b0d793e31f9ca4f39c6a89052cdfa08a64a62f763
+screened_utc: '2026-09-09T17:19:41.415293Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-01__flux-2-pro-edit__edit__r1
+  case_id: IMG-EDIT-01
+  question: IMG-EDIT
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-01__flux-2-pro-edit__edit__r1.jpg
+    sha256: 29dcabd73609c5e904f1159ffa9baba6434f5896fb24d5a54c6d93634d4020e2
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if any person, or part of a person, remains anywhere in the image.
+    verdict: pass
+    evidence: No people or parts of people are visible anywhere in the showroom image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the sofa is the same object — same outline, same colour, same position in frame — when the result is flicked against
+      the supplied photo.
+    verdict: cannot_judge
+    evidence: The original photo is not provided to compare the sofa's outline, color, and position.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the vacated area shows a smudge, a repeated texture patch, a colour seam or an object that was not in the original.
+    verdict: pass
+    evidence: The sofa cushions show no visible smudges, repeated textures, or color seams.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the lighting direction or overall brightness of the room has changed.
+    verdict: pass
+    evidence: The lighting direction and overall brightness of the room appear consistent and unchanged.
+  http_status: 200
+  usage:
+    promptTokenCount: 1493
+    candidatesTokenCount: 205
+    totalTokenCount: 2550
+    thoughtsTokenCount: 852
+  frames: null
+  usd_at_pinned_price: '0.011753'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-01__nano-banana-pro-edit__edit__r1
+  case_id: IMG-EDIT-01
+  question: IMG-EDIT
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: sofa colour cahnged a bit
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-01__nano-banana-pro-edit__edit__r1.png
+    sha256: 19603d80a8268c4adddc882bc1c2ad40231e9c1ae7ec063df663920c64054b13
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if any person, or part of a person, remains anywhere in the image.
+    verdict: pass
+    evidence: No people or parts of people are visible anywhere in the showroom image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the sofa is the same object — same outline, same colour, same position in frame — when the result is flicked against
+      the supplied photo.
+    verdict: cannot_judge
+    evidence: The supplied photo is not available for comparison to verify the sofa's properties.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the vacated area shows a smudge, a repeated texture patch, a colour seam or an object that was not in the original.
+    verdict: cannot_judge
+    evidence: The original image is not provided to identify any vacated area or changes.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the lighting direction or overall brightness of the room has changed.
+    verdict: cannot_judge
+    evidence: The original image is missing, making it impossible to compare the lighting or brightness.
+  http_status: 200
+  usage:
+    promptTokenCount: 1493
+    candidatesTokenCount: 150
+    totalTokenCount: 2764
+    thoughtsTokenCount: 1121
+  frames: null
+  usd_at_pinned_price: '0.013679'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-01__seedream-5-pro-edit__edit__r1
+  case_id: IMG-EDIT-01
+  question: IMG-EDIT
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-01__seedream-5-pro-edit__edit__r1.jpg
+    sha256: 24f04e13a3d5095b2a43b429e3c0be2fcda5c83b61671f27213f639d6da7e24c
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if any person, or part of a person, remains anywhere in the image.
+    verdict: pass
+    evidence: No people or parts of people are visible anywhere in the showroom scene.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the sofa is the same object — same outline, same colour, same position in frame — when the result is flicked against
+      the supplied photo.
+    verdict: cannot_judge
+    evidence: The reference photo is not provided to compare the sofa's appearance and position.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the vacated area shows a smudge, a repeated texture patch, a colour seam or an object that was not in the original.
+    verdict: cannot_judge
+    evidence: The original image is missing, making it impossible to identify any vacated area.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the lighting direction or overall brightness of the room has changed.
+    verdict: cannot_judge
+    evidence: The absence of the original photo prevents comparison of lighting and brightness.
+  http_status: 200
+  usage:
+    promptTokenCount: 1493
+    candidatesTokenCount: 127
+    totalTokenCount: 2431
+    thoughtsTokenCount: 811
+  frames: null
+  usd_at_pinned_price: '0.010682'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-02__flux-2-pro-edit__edit__r1
+  case_id: IMG-EDIT-02
+  question: IMG-EDIT
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-02__flux-2-pro-edit__edit__r1.jpg
+    sha256: e3c1dbaaa3c3ab6425bce5d0fc6d60296f241ba8fc72b176b62795ed247d2402
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the background is uniformly white with no leftover clutter, edge halo or colour cast.
+    verdict: pass
+    evidence: The background is clean white with only a soft natural shadow beneath the pack.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the pack still reads exactly "शुद्ध मसाले" and "५०० ग्राम" — the conjunct द्ध and the Devanagari digits ५०० unchanged;
+      REJECT if any character is altered, blurred into a different form or re-rendered in a different typeface.
+    verdict: pass
+    evidence: The text on the pack reads exactly "शुद्ध मसाले" and "५०० ग्राम" in the correct typeface.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the pack's colour matches the supplied photo when flicked side by side.
+    verdict: cannot_judge
+    evidence: The reference photo is not provided to compare the pack's color.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the pack's outline, size or position has changed, or if any part of the pack is cut off.
+    verdict: cannot_judge
+    evidence: The original pack's size, position, and outline cannot be verified without the reference photo.
+  http_status: 200
+  usage:
+    promptTokenCount: 1548
+    candidatesTokenCount: 138
+    totalTokenCount: 2759
+    thoughtsTokenCount: 1073
+  frames: null
+  usd_at_pinned_price: '0.013221'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-02__nano-banana-pro-edit__edit__r1
+  case_id: IMG-EDIT-02
+  question: IMG-EDIT
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: background came in
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-02__nano-banana-pro-edit__edit__r1.png
+    sha256: ae2539a3c309a2f8ae7d50856857c6162e8f4f4b2f1ab94ee12052252fcd57da
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the background is uniformly white with no leftover clutter, edge halo or colour cast.
+    verdict: fail
+    evidence: The background is a detailed kitchen scene rather than being uniformly white.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the pack still reads exactly "शुद्ध मसाले" and "५०० ग्राम" — the conjunct द्ध and the Devanagari digits ५०० unchanged;
+      REJECT if any character is altered, blurred into a different form or re-rendered in a different typeface.
+    verdict: pass
+    evidence: The pack clearly displays the exact text "शुद्ध मसाले" and "५०० ग्राम" in the correct typeface.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the pack's colour matches the supplied photo when flicked side by side.
+    verdict: cannot_judge
+    evidence: The reference photo is not provided to compare the pack's color.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the pack's outline, size or position has changed, or if any part of the pack is cut off.
+    verdict: cannot_judge
+    evidence: The original pack's outline and position cannot be verified without a reference image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1548
+    candidatesTokenCount: 154
+    totalTokenCount: 3128
+    thoughtsTokenCount: 1426
+  frames: null
+  usd_at_pinned_price: '0.016542'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-02__seedream-5-pro-edit__edit__r1
+  case_id: IMG-EDIT-02
+  question: IMG-EDIT
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: size increaseed
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-02__seedream-5-pro-edit__edit__r1.jpg
+    sha256: a556b0fdb0c81f52b45f4df2ce700f8cfb9d7717cdb00f5c6350fc13f2a4a2bb
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the background is uniformly white with no leftover clutter, edge halo or colour cast.
+    verdict: pass
+    evidence: The background is clean white with no clutter or color cast.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the pack still reads exactly "शुद्ध मसाले" and "५०० ग्राम" — the conjunct द्ध and the Devanagari digits ५०० unchanged;
+      REJECT if any character is altered, blurred into a different form or re-rendered in a different typeface.
+    verdict: pass
+    evidence: The label clearly displays the exact text "शुद्ध मसाले" and "५०० ग्राम".
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the pack's colour matches the supplied photo when flicked side by side.
+    verdict: cannot_judge
+    evidence: The reference photo is missing to compare the color.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the pack's outline, size or position has changed, or if any part of the pack is cut off.
+    verdict: cannot_judge
+    evidence: The reference photo is missing to compare the outline, size, or position.
+  http_status: 200
+  usage:
+    promptTokenCount: 1548
+    candidatesTokenCount: 123
+    totalTokenCount: 2783
+    thoughtsTokenCount: 1112
+  frames: null
+  usd_at_pinned_price: '0.013437'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EXT-01__flux-2-pro-edit__edit__r1
+  case_id: IMG-EXT-01
+  question: IMG-EXT
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: changed size
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EXT-01__flux-2-pro-edit__edit__r1.jpg
+    sha256: c8e91706fc8985a3b523edef29ab5a6b2c721a219d834b7e7aea5ad0ef8c4670
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the result is 9:16 and contains the whole supplied banner uncropped — the boat and every letter of the headline fully
+      visible.
+    verdict: fail
+    evidence: The image is in a 16:9 landscape aspect ratio instead of the required 9:16 portrait format.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the boat and the headline sit in the same relationship to each other as in the supplied banner.
+    verdict: pass
+    evidence: The boat and the headline maintain their original spatial relationship.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the headline's letters have changed shape, spacing or spelling.
+    verdict: pass
+    evidence: The headline letters in 'Kerala Backwaters — Book Your Stay' are unchanged in shape, spelling, and spacing.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the added sky or water shows a visible seam, a repeated tile, a horizon that does not line up, or a second boat.
+    verdict: pass
+    evidence: No seams, repeated tiles, misaligned horizons, or extra boats are visible in the sky or water.
+  http_status: 200
+  usage:
+    promptTokenCount: 1537
+    candidatesTokenCount: 164
+    totalTokenCount: 2541
+    thoughtsTokenCount: 840
+  frames: null
+  usd_at_pinned_price: '0.011342'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EXT-01__nano-banana-pro-edit__edit__r1
+  case_id: IMG-EXT-01
+  question: IMG-EXT
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: doesn't look consistent. slight cutoff exists
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EXT-01__nano-banana-pro-edit__edit__r1.png
+    sha256: af85f044adfba2f4452ce0676e10e87627f49967a7ed02414ae3173c783f63c8
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the result is 9:16 and contains the whole supplied banner uncropped — the boat and every letter of the headline fully
+      visible.
+    verdict: pass
+    evidence: The image is 9:16 and displays the complete banner with the boat and headline intact.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the boat and the headline sit in the same relationship to each other as in the supplied banner.
+    verdict: pass
+    evidence: The relative positioning of the boat and the headline is preserved.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the headline's letters have changed shape, spacing or spelling.
+    verdict: pass
+    evidence: The text 'Kerala Backwaters — Book Your Stay' shows no alterations in spelling or font style.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the added sky or water shows a visible seam, a repeated tile, a horizon that does not line up, or a second boat.
+    verdict: fail
+    evidence: Distinct horizontal seams are visible where the added sky and water join the original banner.
+  http_status: 200
+  usage:
+    promptTokenCount: 1537
+    candidatesTokenCount: 208
+    totalTokenCount: 2682
+    thoughtsTokenCount: 937
+  frames: null
+  usd_at_pinned_price: '0.012611'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EXT-01__seedream-5-pro-edit__edit__r1
+  case_id: IMG-EXT-01
+  question: IMG-EXT
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EXT-01__seedream-5-pro-edit__edit__r1.jpg
+    sha256: 3deeb4d90fd9fd2b39b528a2214ec4a2b702abff69a52ff8bfcac1c049689de3
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the result is 9:16 and contains the whole supplied banner uncropped — the boat and every letter of the headline fully
+      visible.
+    verdict: pass
+    evidence: The image is in a 9:16 aspect ratio and fully displays the boat and the headline "Kerala Backwaters — Book Your Stay".
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the boat and the headline sit in the same relationship to each other as in the supplied banner.
+    verdict: pass
+    evidence: The boat and the headline maintain their original relative positioning.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the headline's letters have changed shape, spacing or spelling.
+    verdict: pass
+    evidence: The headline letters show no changes in shape, spacing, or spelling.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the added sky or water shows a visible seam, a repeated tile, a horizon that does not line up, or a second boat.
+    verdict: pass
+    evidence: The sky and water are seamless without any visible tiling, misaligned horizon, or extra boats.
+  http_status: 200
+  usage:
+    promptTokenCount: 1537
+    candidatesTokenCount: 214
+    totalTokenCount: 2468
+    thoughtsTokenCount: 717
+  frames: null
+  usd_at_pinned_price: '0.010685'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-COMP-01__flux-2-pro-edit__edit__r1
+  case_id: IMG-COMP-01
+  question: IMG-COMP
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-COMP-01__flux-2-pro-edit__edit__r1.jpg
+    sha256: 069df212b074ee7b36e71b50ff257ca5a16853bec576928a9a3ebfdfe53fa048
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy
+      portraits (the judge must pick the supplied portrait as the match).
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not present in the image for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade.
+    verdict: cannot_judge
+    evidence: The supplied packshot and decoy shades are not visible in the image.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the model's hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.
+    verdict: pass
+    evidence: The model's hand is clearly holding the lipstick tube with fingers wrapped around it.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct.
+    verdict: fail
+    evidence: There is no headline or text of any kind visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if a second person, a second product or any other lettering appears.
+    verdict: pass
+    evidence: No second person, second product, or lettering is present in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1538
+    candidatesTokenCount: 157
+    totalTokenCount: 3572
+    thoughtsTokenCount: 1877
+  frames: null
+  usd_at_pinned_price: '0.020613'
+  agree: false
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-COMP-01__nano-banana-pro-edit__edit__r1
+  case_id: IMG-COMP-01
+  question: IMG-COMP
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: face looks fairer
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-COMP-01__nano-banana-pro-edit__edit__r1.png
+    sha256: 7720e9dbf1dcb566c0603ff5143532757d4026cb0c2193ac1f128b7eb3aefafc
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy
+      portraits (the judge must pick the supplied portrait as the match).
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not visible in the image for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade.
+    verdict: cannot_judge
+    evidence: The supplied packshot and decoy shades are not present in the image to verify the lipstick shade.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the model's hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.
+    verdict: pass
+    evidence: The model's hand is clearly shown holding the lipstick tube with fingers wrapped around it.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct.
+    verdict: fail
+    evidence: The required headline is completely missing from the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if a second person, a second product or any other lettering appears.
+    verdict: pass
+    evidence: No second person, second product, or any lettering is present in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1554
+    candidatesTokenCount: 254
+    totalTokenCount: 2869
+    thoughtsTokenCount: 1061
+  frames: null
+  usd_at_pinned_price: '0.014166'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-COMP-01__seedream-5-pro-edit__edit__r1
+  case_id: IMG-COMP-01
+  question: IMG-COMP
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-COMP-01__seedream-5-pro-edit__edit__r1.jpg
+    sha256: 9963fc4e80489003900fbf791f26e2ef4b7e66959c1d34ab26a0192a88afcb78
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy
+      portraits (the judge must pick the supplied portrait as the match).
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not provided in the image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade.
+    verdict: cannot_judge
+    evidence: The reference packshot and decoy shades are not visible in the image.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the model's hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.
+    verdict: pass
+    evidence: The model's fingers are wrapped around the lipstick tube, holding it securely.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct.
+    verdict: fail
+    evidence: The required Hindi headline is not present in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if a second person, a second product or any other lettering appears.
+    verdict: pass
+    evidence: No second person, second product, or lettering is visible.
+  http_status: 200
+  usage:
+    promptTokenCount: 1538
+    candidatesTokenCount: 242
+    totalTokenCount: 2876
+    thoughtsTokenCount: 1096
+  frames: null
+  usd_at_pinned_price: '0.014349'
+  agree: false
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-01__flux-2-pro-edit__edit__r1
+  case_id: IMG-REF-01
+  question: IMG-REF
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: tin look bruised
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-01__flux-2-pro-edit__edit__r1.jpg
+    sha256: 32486c485802e7624e3899b4e127bd4eac9546ffa4c8caa95c9fca3fd91b8e11
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the tin in the result is the referenced tin and not either decoy when the judge sees the result beside the three references
+      and the two decoys.
+    verdict: cannot_judge
+    evidence: References and decoys are not provided for comparison.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the printed label reads as on the references — same words, same arrangement, same colours; REJECT if lettering is re-drawn,
+      garbled or re-arranged.
+    verdict: cannot_judge
+    evidence: Reference labels are missing, preventing verification of text and colors.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the tin's yellow matches the references when flicked side by side.
+    verdict: cannot_judge
+    evidence: Reference yellow color is not available for comparison.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the tin's proportions, cap or handle differ from the references, or if a second tin appears.
+    verdict: cannot_judge
+    evidence: Reference tin features are not provided to check for differences.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears outside the tin itself.
+    verdict: pass
+    evidence: No lettering is visible outside the tin.
+  http_status: 200
+  usage:
+    promptTokenCount: 1555
+    candidatesTokenCount: 136
+    totalTokenCount: 2890
+    thoughtsTokenCount: 1199
+  frames: null
+  usd_at_pinned_price: '0.014348'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-01__nano-banana-pro-edit__edit__r1
+  case_id: IMG-REF-01
+  question: IMG-REF
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: tin look bruised
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-01__nano-banana-pro-edit__edit__r1.png
+    sha256: 51940d0c810bdf0abeed413f6b5984a2e5f5ee2dec0a8f93b880a2ba8fc6f970
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the tin in the result is the referenced tin and not either decoy when the judge sees the result beside the three references
+      and the two decoys.
+    verdict: cannot_judge
+    evidence: The reference tins and decoys are not provided for comparison.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the printed label reads as on the references — same words, same arrangement, same colours; REJECT if lettering is re-drawn,
+      garbled or re-arranged.
+    verdict: cannot_judge
+    evidence: The reference labels are not available to verify the text and layout.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the tin's yellow matches the references when flicked side by side.
+    verdict: cannot_judge
+    evidence: The reference yellow color is not available for side-by-side comparison.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the tin's proportions, cap or handle differ from the references, or if a second tin appears.
+    verdict: cannot_judge
+    evidence: The reference tin's proportions, cap, and handle are not provided for comparison.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears outside the tin itself.
+    verdict: pass
+    evidence: No lettering is visible outside of the tin itself.
+  http_status: 200
+  usage:
+    promptTokenCount: 1555
+    candidatesTokenCount: 247
+    totalTokenCount: 2772
+    thoughtsTokenCount: 970
+  frames: null
+  usd_at_pinned_price: '0.013286'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-01__seedream-5-pro-edit__edit__r1
+  case_id: IMG-REF-01
+  question: IMG-REF
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-01__seedream-5-pro-edit__edit__r1.jpg
+    sha256: 83709b0d7409d08570435abcc7ba5ffac1969e0dd039eeef253635c1a760789a
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the tin in the result is the referenced tin and not either decoy when the judge sees the result beside the three references
+      and the two decoys.
+    verdict: cannot_judge
+    evidence: The reference tins and decoys are not visible in the image.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the printed label reads as on the references — same words, same arrangement, same colours; REJECT if lettering is re-drawn,
+      garbled or re-arranged.
+    verdict: cannot_judge
+    evidence: The reference labels are not provided for comparison.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the tin's yellow matches the references when flicked side by side.
+    verdict: cannot_judge
+    evidence: The reference tins are missing, preventing a color comparison.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the tin's proportions, cap or handle differ from the references, or if a second tin appears.
+    verdict: cannot_judge
+    evidence: The reference tins are not visible to compare proportions, caps, or handles.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears outside the tin itself.
+    verdict: pass
+    evidence: There is no lettering visible outside of the tin.
+  http_status: 200
+  usage:
+    promptTokenCount: 1555
+    candidatesTokenCount: 238
+    totalTokenCount: 2636
+    thoughtsTokenCount: 843
+  frames: null
+  usd_at_pinned_price: '0.012062'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-02__flux-2-pro-edit__edit__r1
+  case_id: IMG-REF-02
+  question: IMG-REF
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: doesn't look like a cafe setup
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-02__flux-2-pro-edit__edit__r1.jpg
+    sha256: 8958626a4ebbb26f06c1a7360a3ffd4c35f35e76fa7de51d20f5efe1f8826856
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if, shown the result beside the three references and the two decoy sets, the judge identifies the referenced person as the
+      match (same face, same hair, same build).
+    verdict: cannot_judge
+    evidence: No reference or decoy images are provided for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if she sits at a cafe table with an open laptop whose screen shows nothing readable, smiling toward the camera.
+    verdict: pass
+    evidence: The woman is smiling at the camera next to an open laptop with a blank screen.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears (including cafe signage or the laptop lid).
+    verdict: pass
+    evidence: There are no visible letters, logos, or numbers in the image.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if hands or face show anatomical faults (extra fingers, doubled features).
+    verdict: pass
+    evidence: The face and hands show no anatomical anomalies.
+  http_status: 200
+  usage:
+    promptTokenCount: 1497
+    candidatesTokenCount: 136
+    totalTokenCount: 2896
+    thoughtsTokenCount: 1263
+  frames: null
+  usd_at_pinned_price: '0.014837'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-02__nano-banana-pro-edit__edit__r1
+  case_id: IMG-REF-02
+  question: IMG-REF
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: clothes changed
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-02__nano-banana-pro-edit__edit__r1.png
+    sha256: 51c7479abbe3298cfd8354ce0751e74f30355fc70e3f0c13aebd780b13ececbb
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if, shown the result beside the three references and the two decoy sets, the judge identifies the referenced person as the
+      match (same face, same hair, same build).
+    verdict: cannot_judge
+    evidence: Reference images and decoy sets are not provided in the image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if she sits at a cafe table with an open laptop whose screen shows nothing readable, smiling toward the camera.
+    verdict: pass
+    evidence: The woman is sitting at a cafe table with a blank-screen laptop, smiling at the camera.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears (including cafe signage or the laptop lid).
+    verdict: pass
+    evidence: No lettering, logos, or numerals are visible in the scene.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if hands or face show anatomical faults (extra fingers, doubled features).
+    verdict: pass
+    evidence: The hands and face show no anatomical faults or extra digits.
+  http_status: 200
+  usage:
+    promptTokenCount: 1497
+    candidatesTokenCount: 199
+    totalTokenCount: 2814
+    thoughtsTokenCount: 1118
+  frames: null
+  usd_at_pinned_price: '0.014099'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-02__seedream-5-pro-edit__edit__r1
+  case_id: IMG-REF-02
+  question: IMG-REF
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-02__seedream-5-pro-edit__edit__r1.jpg
+    sha256: f490842474875899bb5f22d6a43b69e1017e09559f773a761b2b83c50a3df233
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if, shown the result beside the three references and the two decoy sets, the judge identifies the referenced person as the
+      match (same face, same hair, same build).
+    verdict: cannot_judge
+    evidence: The reference images and decoy sets are not provided in the image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if she sits at a cafe table with an open laptop whose screen shows nothing readable, smiling toward the camera.
+    verdict: pass
+    evidence: The woman is smiling at the camera at a table with an open laptop whose screen is not visible.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears (including cafe signage or the laptop lid).
+    verdict: pass
+    evidence: No text, logos, or numbers are visible anywhere in the scene.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if hands or face show anatomical faults (extra fingers, doubled features).
+    verdict: pass
+    evidence: The visible hand and face show no anatomical abnormalities or extra digits.
+  http_status: 200
+  usage:
+    promptTokenCount: 1513
+    candidatesTokenCount: 202
+    totalTokenCount: 2548
+    thoughtsTokenCount: 833
+  frames: null
+  usd_at_pinned_price: '0.011585'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-01__flux-2-pro-edit__edit__r2
+  case_id: IMG-EDIT-01
+  question: IMG-EDIT
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-01__flux-2-pro-edit__edit__r2.jpg
+    sha256: 77b1bd5c6088e77c71813bb51180347aacc380d2a50033054f30f54a6ecd530e
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if any person, or part of a person, remains anywhere in the image.
+    verdict: pass
+    evidence: No people or parts of people are visible in the image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the sofa is the same object — same outline, same colour, same position in frame — when the result is flicked against
+      the supplied photo.
+    verdict: cannot_judge
+    evidence: The original photo is not supplied to compare the sofa.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the vacated area shows a smudge, a repeated texture patch, a colour seam or an object that was not in the original.
+    verdict: cannot_judge
+    evidence: The original photo is missing to identify any vacated area.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the lighting direction or overall brightness of the room has changed.
+    verdict: cannot_judge
+    evidence: The original photo is needed to compare lighting and brightness.
+  http_status: 200
+  usage:
+    promptTokenCount: 1493
+    candidatesTokenCount: 191
+    totalTokenCount: 2763
+    thoughtsTokenCount: 1079
+  frames: null
+  usd_at_pinned_price: '0.013670'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-01__nano-banana-pro-edit__edit__r2
+  case_id: IMG-EDIT-01
+  question: IMG-EDIT
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: 'sofa colour cahnged a bit (Controller resolved in chat: j16 -reject)'
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-01__nano-banana-pro-edit__edit__r2.png
+    sha256: a8fcfcde3380058f143046449da586a4a0702f51c4ed67fb306f97412d11cf99
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if any person, or part of a person, remains anywhere in the image.
+    verdict: pass
+    evidence: No people are visible in the image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the sofa is the same object — same outline, same colour, same position in frame — when the result is flicked against
+      the supplied photo.
+    verdict: cannot_judge
+    evidence: The reference photo is missing, preventing comparison of the sofa.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the vacated area shows a smudge, a repeated texture patch, a colour seam or an object that was not in the original.
+    verdict: pass
+    evidence: The sofa surface is clean and free of any visible smudges or seams.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the lighting direction or overall brightness of the room has changed.
+    verdict: cannot_judge
+    evidence: The reference photo is missing, so changes in lighting cannot be determined.
+  http_status: 200
+  usage:
+    promptTokenCount: 1493
+    candidatesTokenCount: 193
+    totalTokenCount: 3091
+    thoughtsTokenCount: 1405
+  frames: null
+  usd_at_pinned_price: '0.016622'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-01__seedream-5-pro-edit__edit__r2
+  case_id: IMG-EDIT-01
+  question: IMG-EDIT
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: sofa colour cahnged a bit
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-01__seedream-5-pro-edit__edit__r2.jpg
+    sha256: 24ab46ecaff64a117140babd35b2ac2fd0949c92029332b6e2f70be506a79ab7
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: reject
+    rule: REJECT if any person, or part of a person, remains anywhere in the image.
+    verdict: pass
+    evidence: No people or parts of people are visible in the showroom.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the sofa is the same object — same outline, same colour, same position in frame — when the result is flicked against
+      the supplied photo.
+    verdict: cannot_judge
+    evidence: The original photo is not provided to compare the sofa.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the vacated area shows a smudge, a repeated texture patch, a colour seam or an object that was not in the original.
+    verdict: cannot_judge
+    evidence: The original photo is missing to identify the vacated area.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the lighting direction or overall brightness of the room has changed.
+    verdict: cannot_judge
+    evidence: The original photo is not available to compare the lighting.
+  http_status: 200
+  usage:
+    promptTokenCount: 1493
+    candidatesTokenCount: 114
+    totalTokenCount: 3331
+    thoughtsTokenCount: 1724
+  frames: null
+  usd_at_pinned_price: '0.018782'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-02__flux-2-pro-edit__edit__r2
+  case_id: IMG-EDIT-02
+  question: IMG-EDIT
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: 'next text appeared '
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-02__flux-2-pro-edit__edit__r2.jpg
+    sha256: 60eff23dc00f5fcbd58cf30bd7a24abd212da758110ea39355c1874d7c0bbe83
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the background is uniformly white with no leftover clutter, edge halo or colour cast.
+    verdict: fail
+    evidence: The background is not uniformly white due to a soft grey shadow cast on the surface beneath the package.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the pack still reads exactly "शुद्ध मसाले" and "५०० ग्राम" — the conjunct द्ध and the Devanagari digits ५०० unchanged;
+      REJECT if any character is altered, blurred into a different form or re-rendered in a different typeface.
+    verdict: pass
+    evidence: The package clearly displays the exact text 'शुद्ध मसाले' and '५०० ग्राम' without any alterations to the characters or typeface.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the pack's colour matches the supplied photo when flicked side by side.
+    verdict: cannot_judge
+    evidence: The original reference photo is not provided to compare the package color side by side.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the pack's outline, size or position has changed, or if any part of the pack is cut off.
+    verdict: cannot_judge
+    evidence: The original image is missing, making it impossible to verify if the pack's outline, size, or position has changed.
+  http_status: 200
+  usage:
+    promptTokenCount: 1548
+    candidatesTokenCount: 176
+    totalTokenCount: 3078
+    thoughtsTokenCount: 1354
+  frames: null
+  usd_at_pinned_price: '0.016092'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-02__nano-banana-pro-edit__edit__r2
+  case_id: IMG-EDIT-02
+  question: IMG-EDIT
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-02__nano-banana-pro-edit__edit__r2.png
+    sha256: da439a138c8a4a1f59c31a7bebd2e0c16bebeec249558379c03eb4c315a28a4c
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the background is uniformly white with no leftover clutter, edge halo or colour cast.
+    verdict: fail
+    evidence: The background is not uniformly white due to a shadow cast beneath the package.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the pack still reads exactly "शुद्ध मसाले" and "५०० ग्राम" — the conjunct द्ध and the Devanagari digits ५०० unchanged;
+      REJECT if any character is altered, blurred into a different form or re-rendered in a different typeface.
+    verdict: pass
+    evidence: The label clearly displays the exact text "शुद्ध मसाले" and "५०० ग्राम" without alterations.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the pack's colour matches the supplied photo when flicked side by side.
+    verdict: cannot_judge
+    evidence: No reference photo was supplied to compare the pack's color.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the pack's outline, size or position has changed, or if any part of the pack is cut off.
+    verdict: cannot_judge
+    evidence: The original pack's size, position, and outline cannot be verified without the reference photo.
+  http_status: 200
+  usage:
+    promptTokenCount: 1548
+    candidatesTokenCount: 135
+    totalTokenCount: 3190
+    thoughtsTokenCount: 1507
+  frames: null
+  usd_at_pinned_price: '0.017100'
+  agree: false
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EDIT-02__seedream-5-pro-edit__edit__r2
+  case_id: IMG-EDIT-02
+  question: IMG-EDIT
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EDIT-02__seedream-5-pro-edit__edit__r2.jpg
+    sha256: 8f316fde9d46b3ea411ae0016d42fb752eb9dc0c190f9eed5420c2d31ec623ad
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the background is uniformly white with no leftover clutter, edge halo or colour cast.
+    verdict: pass
+    evidence: The background is clean white with only a soft shadow beneath the pack.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the pack still reads exactly "शुद्ध मसाले" and "५०० ग्राम" — the conjunct द्ध and the Devanagari digits ५०० unchanged;
+      REJECT if any character is altered, blurred into a different form or re-rendered in a different typeface.
+    verdict: pass
+    evidence: The label clearly displays the exact text 'शुद्ध मसाले' and '५०० ग्राम' in the correct Devanagari script.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the pack's colour matches the supplied photo when flicked side by side.
+    verdict: cannot_judge
+    evidence: The reference photo is not available to compare the pack's color.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the pack's outline, size or position has changed, or if any part of the pack is cut off.
+    verdict: cannot_judge
+    evidence: The original image is not provided to verify changes in outline, size, or position.
+  http_status: 200
+  usage:
+    promptTokenCount: 1548
+    candidatesTokenCount: 216
+    totalTokenCount: 2585
+    thoughtsTokenCount: 821
+  frames: null
+  usd_at_pinned_price: '0.011655'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EXT-01__flux-2-pro-edit__edit__r2
+  case_id: IMG-EXT-01
+  question: IMG-EXT
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: changed size
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EXT-01__flux-2-pro-edit__edit__r2.jpg
+    sha256: b09c9306fd5f667e49ab567863cd5a3a15290a4624a5a461e43fdba117cf7fda
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the result is 9:16 and contains the whole supplied banner uncropped — the boat and every letter of the headline fully
+      visible.
+    verdict: fail
+    evidence: The image has a 16:9 landscape aspect ratio rather than the required 9:16 portrait ratio.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the boat and the headline sit in the same relationship to each other as in the supplied banner.
+    verdict: pass
+    evidence: The boat and headline maintain their original relative positioning.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the headline's letters have changed shape, spacing or spelling.
+    verdict: pass
+    evidence: The headline text is spelled correctly with no changes to letter shape or spacing.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the added sky or water shows a visible seam, a repeated tile, a horizon that does not line up, or a second boat.
+    verdict: pass
+    evidence: The sky and water appear seamless with a single boat and aligned horizon.
+  http_status: 200
+  usage:
+    promptTokenCount: 1537
+    candidatesTokenCount: 203
+    totalTokenCount: 2648
+    thoughtsTokenCount: 908
+  frames: null
+  usd_at_pinned_price: '0.012305'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EXT-01__nano-banana-pro-edit__edit__r2
+  case_id: IMG-EXT-01
+  question: IMG-EXT
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: doesn't look consistent. slight cutoff exists
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EXT-01__nano-banana-pro-edit__edit__r2.png
+    sha256: 5a23fabf8d582a0d35022864d83940ca189c45df6d837e1d485b41bc5bc4a74d
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the result is 9:16 and contains the whole supplied banner uncropped — the boat and every letter of the headline fully
+      visible.
+    verdict: pass
+    evidence: The image is 9:16 and contains the entire uncropped banner with the boat and the headline 'Kerala Backwaters — Book Your Stay' fully
+      visible.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the boat and the headline sit in the same relationship to each other as in the supplied banner.
+    verdict: pass
+    evidence: The boat and the headline maintain their original spatial relationship.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the headline's letters have changed shape, spacing or spelling.
+    verdict: pass
+    evidence: The headline letters show no changes in shape, spacing, or spelling.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the added sky or water shows a visible seam, a repeated tile, a horizon that does not line up, or a second boat.
+    verdict: fail
+    evidence: A prominent horizontal seam is visible in the water where the added bottom section meets the original banner.
+  http_status: 200
+  usage:
+    promptTokenCount: 1537
+    candidatesTokenCount: 161
+    totalTokenCount: 2729
+    thoughtsTokenCount: 1031
+  frames: null
+  usd_at_pinned_price: '0.013034'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-EXT-01__seedream-5-pro-edit__edit__r2
+  case_id: IMG-EXT-01
+  question: IMG-EXT
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-EXT-01__seedream-5-pro-edit__edit__r2.jpg
+    sha256: 5ce8408b24526773354152937bb521fb9731451cbbb2b23e5664d8b676861296
+    media_kind: image
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the result is 9:16 and contains the whole supplied banner uncropped — the boat and every letter of the headline fully
+      visible.
+    verdict: pass
+    evidence: The image is in a 9:16 aspect ratio with the boat and the headline "Kerala Backwaters — Book Your Stay" fully visible.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the boat and the headline sit in the same relationship to each other as in the supplied banner.
+    verdict: pass
+    evidence: The spatial relationship between the headline and the boat remains consistent and uncropped.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if the headline's letters have changed shape, spacing or spelling.
+    verdict: pass
+    evidence: The headline text "Kerala Backwaters — Book Your Stay" shows no changes in spelling, letter shape, or spacing.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the added sky or water shows a visible seam, a repeated tile, a horizon that does not line up, or a second boat.
+    verdict: pass
+    evidence: The extended sky and water are seamless with a continuous horizon and no duplicate boats.
+  http_status: 200
+  usage:
+    promptTokenCount: 1537
+    candidatesTokenCount: 225
+    totalTokenCount: 2418
+    thoughtsTokenCount: 656
+  frames: null
+  usd_at_pinned_price: '0.010235'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-COMP-01__flux-2-pro-edit__edit__r2
+  case_id: IMG-COMP-01
+  question: IMG-COMP
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: face seems a litle changed. unsure. could be me
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-COMP-01__flux-2-pro-edit__edit__r2.jpg
+    sha256: ba87c3a06f2cdb00650243b4e3df3fb8af8705838700aa05634219e1c30adc71
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy
+      portraits (the judge must pick the supplied portrait as the match).
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not provided for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade.
+    verdict: cannot_judge
+    evidence: The supplied packshot and decoy shades are not available to compare.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the model's hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.
+    verdict: pass
+    evidence: The model's hand is clearly holding the lipstick tube.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct.
+    verdict: fail
+    evidence: The required Hindi headline is completely missing from the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if a second person, a second product or any other lettering appears.
+    verdict: pass
+    evidence: No second person, second product, or extra lettering is present.
+  http_status: 200
+  usage:
+    promptTokenCount: 1538
+    candidatesTokenCount: 238
+    totalTokenCount: 2676
+    thoughtsTokenCount: 900
+  frames: null
+  usd_at_pinned_price: '0.012549'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-COMP-01__nano-banana-pro-edit__edit__r2
+  case_id: IMG-COMP-01
+  question: IMG-COMP
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-COMP-01__nano-banana-pro-edit__edit__r2.png
+    sha256: 84b67fea503c0b361d849c9a0dbecac4682c7209674b3958bb4cc0807e9380a5
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy
+      portraits (the judge must pick the supplied portrait as the match).
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not visible in the image for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade.
+    verdict: cannot_judge
+    evidence: The supplied packshot and decoy shades are not present in the image to verify the lipstick shade.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the model's hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.
+    verdict: pass
+    evidence: The model's hand is clearly shown holding the lipstick tube with fingers wrapped around it.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct.
+    verdict: fail
+    evidence: The required headline "नया शेड, वही भरोसा" is completely missing from the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if a second person, a second product or any other lettering appears.
+    verdict: pass
+    evidence: There is no second person, second product, or any lettering visible in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1554
+    candidatesTokenCount: 170
+    totalTokenCount: 3176
+    thoughtsTokenCount: 1452
+  frames: null
+  usd_at_pinned_price: '0.016929'
+  agree: false
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-COMP-01__seedream-5-pro-edit__edit__r2
+  case_id: IMG-COMP-01
+  question: IMG-COMP
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-COMP-01__seedream-5-pro-edit__edit__r2.jpg
+    sha256: 49e0fd73bb6737b954a6049ca9075562416f67628caa908961b1d817769623d5
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the face in the result is the same person as in the supplied portrait when the two are shown side by side with two decoy
+      portraits (the judge must pick the supplied portrait as the match).
+    verdict: cannot_judge
+    evidence: The supplied portrait and decoy portraits are not visible in the image for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if the lipstick's shade matches the supplied packshot and not either decoy shade.
+    verdict: cannot_judge
+    evidence: The supplied packshot and decoy shades are not present in the image to verify the lipstick shade match.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the model's hand visibly holds the pack — fingers wrap it, the pack does not float or pass through the hand.
+    verdict: pass
+    evidence: The model's fingers are visibly wrapped around the lipstick tube, holding it naturally.
+  - rule_id: R4
+    kind: accept_only
+    rule: ACCEPT only if the headline reads exactly "नया शेड, वही भरोसा" with every matra correct.
+    verdict: cannot_judge
+    evidence: There is no headline or text of any kind visible in the image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if a second person, a second product or any other lettering appears.
+    verdict: pass
+    evidence: No second person, second product, or lettering is present in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1538
+    candidatesTokenCount: 165
+    totalTokenCount: 3080
+    thoughtsTokenCount: 1377
+  frames: null
+  usd_at_pinned_price: '0.016185'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-01__flux-2-pro-edit__edit__r2
+  case_id: IMG-REF-01
+  question: IMG-REF
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: tin look bruised
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-01__flux-2-pro-edit__edit__r2.jpg
+    sha256: 51c6950b85e45a4fa339041bbf6e2c04fbff612c594ab6df96542fdf8a8a9cd6
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the tin in the result is the referenced tin and not either decoy when the judge sees the result beside the three references
+      and the two decoys.
+    verdict: cannot_judge
+    evidence: The reference tins and decoys are not provided for comparison.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the printed label reads as on the references — same words, same arrangement, same colours; REJECT if lettering is re-drawn,
+      garbled or re-arranged.
+    verdict: cannot_judge
+    evidence: The reference labels are not available to verify the text, arrangement, and colors.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the tin's yellow matches the references when flicked side by side.
+    verdict: cannot_judge
+    evidence: The reference images are missing, preventing a color comparison of the yellow tin.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the tin's proportions, cap or handle differ from the references, or if a second tin appears.
+    verdict: cannot_judge
+    evidence: Proportions, cap, and handle cannot be compared to the missing references, though only one tin is visible.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears outside the tin itself.
+    verdict: pass
+    evidence: No lettering is visible outside the tin itself in the image.
+  http_status: 200
+  usage:
+    promptTokenCount: 1555
+    candidatesTokenCount: 189
+    totalTokenCount: 3186
+    thoughtsTokenCount: 1442
+  frames: null
+  usd_at_pinned_price: '0.017012'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-01__nano-banana-pro-edit__edit__r2
+  case_id: IMG-REF-01
+  question: IMG-REF
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-01__nano-banana-pro-edit__edit__r2.png
+    sha256: eb01ccc5c8c41f15dbe1bd135abed0d6694f86f30b59e552e71cd135ea8ea6b1
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the tin in the result is the referenced tin and not either decoy when the judge sees the result beside the three references
+      and the two decoys.
+    verdict: cannot_judge
+    evidence: The references and decoys are not visible in the image to perform a side-by-side comparison.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the printed label reads as on the references — same words, same arrangement, same colours; REJECT if lettering is re-drawn,
+      garbled or re-arranged.
+    verdict: cannot_judge
+    evidence: The references are not visible to verify if the printed label matches them.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the tin's yellow matches the references when flicked side by side.
+    verdict: cannot_judge
+    evidence: The references are not visible to compare the yellow color side by side.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the tin's proportions, cap or handle differ from the references, or if a second tin appears.
+    verdict: cannot_judge
+    evidence: The references are not visible to determine if the tin's proportions, cap, or handle differ.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears outside the tin itself.
+    verdict: pass
+    evidence: No lettering is visible outside the yellow tin itself.
+  http_status: 200
+  usage:
+    promptTokenCount: 1555
+    candidatesTokenCount: 191
+    totalTokenCount: 3016
+    thoughtsTokenCount: 1270
+  frames: null
+  usd_at_pinned_price: '0.015482'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-01__seedream-5-pro-edit__edit__r2
+  case_id: IMG-REF-01
+  question: IMG-REF
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-01__seedream-5-pro-edit__edit__r2.jpg
+    sha256: 5a9aaed5644f115e162a46f7651c69d230a03c3e6717f05cf63c2a89500fce9b
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if the tin in the result is the referenced tin and not either decoy when the judge sees the result beside the three references
+      and the two decoys.
+    verdict: cannot_judge
+    evidence: Reference and decoy tins are not provided for comparison.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the printed label reads as on the references — same words, same arrangement, same colours; REJECT if lettering is re-drawn,
+      garbled or re-arranged.
+    verdict: cannot_judge
+    evidence: Reference labels are not available to verify the text and layout.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if the tin's yellow matches the references when flicked side by side.
+    verdict: cannot_judge
+    evidence: Reference images are missing to compare the yellow color.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if the tin's proportions, cap or handle differ from the references, or if a second tin appears.
+    verdict: cannot_judge
+    evidence: Cannot compare proportions, cap, or handle without the reference images.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any lettering appears outside the tin itself.
+    verdict: pass
+    evidence: No text or lettering is visible outside of the tin.
+  http_status: 200
+  usage:
+    promptTokenCount: 1555
+    candidatesTokenCount: 142
+    totalTokenCount: 3145
+    thoughtsTokenCount: 1448
+  frames: null
+  usd_at_pinned_price: '0.016643'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-02__flux-2-pro-edit__edit__r2
+  case_id: IMG-REF-02
+  question: IMG-REF
+  route_key: flux-2-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: not a cafe setup
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-02__flux-2-pro-edit__edit__r2.jpg
+    sha256: 6bdb0f5efa981d3ed2e73de1e680f489d30e91d3f8e52aa05b441e39eda246f0
+    media_kind: image
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if, shown the result beside the three references and the two decoy sets, the judge identifies the referenced person as the
+      match (same face, same hair, same build).
+    verdict: cannot_judge
+    evidence: Reference and decoy images are not provided for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if she sits at a cafe table with an open laptop whose screen shows nothing readable, smiling toward the camera.
+    verdict: pass
+    evidence: The woman is sitting at a table with a blank-screen laptop and smiling at the camera.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears (including cafe signage or the laptop lid).
+    verdict: fail
+    evidence: Small lettering is visible on the lower bezel of the laptop screen.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if hands or face show anatomical faults (extra fingers, doubled features).
+    verdict: pass
+    evidence: The hands and face show no anatomical anomalies.
+  http_status: 200
+  usage:
+    promptTokenCount: 1497
+    candidatesTokenCount: 193
+    totalTokenCount: 2587
+    thoughtsTokenCount: 897
+  frames: null
+  usd_at_pinned_price: '0.012056'
+  agree: true
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-02__nano-banana-pro-edit__edit__r2
+  case_id: IMG-REF-02
+  question: IMG-REF
+  route_key: nano-banana-pro-edit
+  arm: edit
+  controller_verdict: reject
+  controller_note: clothes changed
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-02__nano-banana-pro-edit__edit__r2.png
+    sha256: 5724b2625dd356484f3b0c965ebf8da789bb9bd4d5d384ec27988a44ae6f73dc
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if, shown the result beside the three references and the two decoy sets, the judge identifies the referenced person as the
+      match (same face, same hair, same build).
+    verdict: cannot_judge
+    evidence: The reference images and decoy sets are not provided in the context for comparison.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if she sits at a cafe table with an open laptop whose screen shows nothing readable, smiling toward the camera.
+    verdict: pass
+    evidence: The woman is sitting at a cafe table with an open, blank-screen laptop while smiling at the camera.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears (including cafe signage or the laptop lid).
+    verdict: pass
+    evidence: No legible lettering, logos, or numerals are visible on the laptop, cup, or blurred background signs.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if hands or face show anatomical faults (extra fingers, doubled features).
+    verdict: pass
+    evidence: The woman's face and hands appear anatomically normal without any extra digits or doubled features.
+  http_status: 200
+  usage:
+    promptTokenCount: 1497
+    candidatesTokenCount: 219
+    totalTokenCount: 2590
+    thoughtsTokenCount: 874
+  frames: null
+  usd_at_pinned_price: '0.012083'
+  agree: null
+- run_id: half2
+  results_run_id: half2
+  trial_id: IMG-REF-02__seedream-5-pro-edit__edit__r2
+  case_id: IMG-REF-02
+  question: IMG-REF
+  route_key: seedream-5-pro-edit
+  arm: edit
+  controller_verdict: accept
+  controller_note: ''
+  media_kind: image
+  artifact:
+    path: eval/experiments/EVAL-040/runs/half2/artifacts/media/IMG-REF-02__seedream-5-pro-edit__edit__r2.jpg
+    sha256: 4e0f8890ed412bff6a478bd96cc6a2736cb17ad644db3006e0731af9f94894d2
+    media_kind: image
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if, shown the result beside the three references and the two decoy sets, the judge identifies the referenced person as the
+      match (same face, same hair, same build).
+    verdict: cannot_judge
+    evidence: The three reference images and two decoy sets mentioned are not present in the provided image.
+  - rule_id: R2
+    kind: accept_only
+    rule: ACCEPT only if she sits at a cafe table with an open laptop whose screen shows nothing readable, smiling toward the camera.
+    verdict: pass
+    evidence: The woman is sitting at a cafe table with an open, blank-screen laptop while smiling at the camera.
+  - rule_id: R3
+    kind: reject
+    rule: REJECT if any lettering, logo or numeral appears (including cafe signage or the laptop lid).
+    verdict: pass
+    evidence: No lettering, logos, or numerals are visible anywhere in the image, including on the laptop or in the background.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if hands or face show anatomical faults (extra fingers, doubled features).
+    verdict: pass
+    evidence: The woman's face and hands appear anatomically correct with no extra fingers or doubled features.
+  http_status: 200
+  usage:
+    promptTokenCount: 1497
+    candidatesTokenCount: 223
+    totalTokenCount: 2539
+    thoughtsTokenCount: 819
+  frames: null
+  usd_at_pinned_price: '0.011624'
+  agree: null

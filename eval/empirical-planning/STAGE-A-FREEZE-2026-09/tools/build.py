@@ -59,6 +59,11 @@ def roster_price(R0):
 XCHECK = []
 for k, R0 in R.items():
     st, val, pin = roster_price(R0)
+    if R0["billing_pool"] == "elevenlabs_credits":
+        # plan-credit pool (ElevenLabs direct, 2026-09-09): 0 USD cash, credits from the pinned pricing page; the roster's fal rows for the
+        # same models are NOT the price basis (harness pricing.py CREDIT_POOL rule) - recorded, not cross-checked against a roster value
+        XCHECK.append(dict(route_key=k, roster=R0["roster_key"], roster_status="not_consulted_plan_credits", roster_price=val, package_price=R0["unit_price"], package_price_status=R0["price_status"]))
+        continue
     if R0["price_status"] == "pinned":
         base = R0["roster_base_price"] if R0["roster_base_price"] is not None else R0["unit_price"]
         assert st in ("pinned", "needs_controller_enablement", "no_access") and val is not None and abs(float(val) - float(base)) < 1e-9, (k, st, val, base)
@@ -333,6 +338,7 @@ def cost_rows(c):
             elif R0["unit"] == "per_1k_chars": line = price * q / 1000 * calls
             elif R0["unit"] == "per_1M_chars": line = price * q / 1e6 * calls
             elif R0["unit"] == "per_1k_chars_inr": inr = price * q / 1000 * calls; line = inr / USD_INR_REF
+            elif R0["unit"] in ("plan_credits_per_char", "plan_credits_per_minute"): line = 0.0   # plan credits (ElevenLabs direct): 0 USD cash, outside the USD cap
             else: raise ValueError(R0["unit"])
         rows.append(dict(case_id=c["case_id"], item_id=r.get("item_id", c["case_id"]), route_key=r["route_key"], arm=r["arm"],
                          surface=R0["surface"], billing_pool=R0["billing_pool"], tranche=r["tranche"], items=1, repeats=calls, calls=calls,
@@ -452,7 +458,7 @@ open(f"{OUT}/COST-TABLE.yaml", "w", encoding="utf-8").write(HEAD + yd(dict(packa
     rules=["rows = route × case × arm; calls = items × repeats", "regular prices only; promotions (H3 Max 0.02/s until 7 Sep) recorded in the roster, never used",
            "price_status pinned = the unit price and pin path are taken from EVAL-039B's ROSTER-REFRESH-2026-09.yaml record named in roster_route_key (bytes + sha256 in price-pins-2026-09/PIN-INDEX.yaml) and cross-checked at build time; unpinned = no projectable price in the roster → line_usd null, summed under unpinned_calls_excluded_from_cap",
            "route_status no_access (Sarvam: key present by name, value empty per the roster; the Controller session says present — morning decision 2 / MD-10) → lines shown in INR, excluded from the cap under no_access_calls_excluded_from_cap",
-           "pools: Google → Vertex credits; gpt-image-2 / FLUX.2 Pro → Azure credits only if the Controller deploys them, else fal cash (recorded as cash here); Sora 2 / MAI → credits, conditional, excluded; SD3.5 → Bedrock credits, conditional, excluded; fal-only → cash; Sarvam → Sarvam credits (INR); ElevenLabs → cash",
+           "pools: Google → GCP credits (the Gemini-named routes on the Gemini Developer API key since 2026-09-10, Veo / Lyria on Vertex); gpt-image-2 / FLUX.2 Pro → Azure credits only if the Controller deploys them, else fal cash (recorded as cash here); Sora 2 / MAI → credits, conditional, excluded; SD3.5 → Bedrock credits, conditional, excluded; fal-only → cash; Sarvam → Sarvam credits (INR); ElevenLabs → cash",
            "i2v / ref2v / 15-s / extend seconds use the roster's pinned variant price for that path (no cross-path assumption remains except Omni Flash's ≤ 15-s ceiling, priced at the pinned 10-s rate × 15 s, and Veo Lite i2v, which has no pinned variant and is unpinned)",
            "quantity rules from the pinned bytes: Kling lipsync bills input seconds rolled up to 5-s increments (6-s or 8-s plate → 10 s); ElevenLabs music bills per output minute rounded up (30-s clip → 1 minute); sync-lipsync bills per output second",
            f"INR→USD display rate {USD_INR_REF} from the August file; Sarvam invoices in INR",

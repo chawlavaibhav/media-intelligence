@@ -24,8 +24,8 @@ Before any money is spent on the model screen, every test item must exist the wa
 ## Counts
 
 - Cases: **35** · blueprints: **35** (one per case; `VID-KNEE-01` carries the same production spec as `VID-T2V-04` under its own header).
-- Calls: **1a = 192**, **1b = 96**, **total = 288**, plus **32 conditional** (SD3.5 Large 8, MAI-Image-2.6 8, Sora 2 8, Chirp 3 HD 2, Azure Neural TTS 2, Kling v3 elements 4) listed but outside the cap.
-- Deviation from the task's fixed counts: **192 / 96 / 288 + 32** against the task's 186 / 112 / 298 + 32 — three Controller-disposed Auditor fixes: AF-1 adds 4 image calls to 1a (9:16 plates for TOPO-03 arms A and C, drawn under VID-TOPO3-01); AF-3 adds 2 calls to 1a (Wan 3.0 Prime in the VID-2SPK-01 native arm) and removes the chain arm's 16 calls from 1b (plate 2 + i2v 2 + TTS drives 8 + lipsync 4 → recorded, not screened, 0 calls). Image lane 124 → 128; TTS 20 → 12; lipsync 12 (unchanged); 2SPK native 8 → 10; chain 8 → 0.
+- Calls: **1a = 202**, **1b = 106**, **total = 308**, plus **32 conditional** (SD3.5 Large 8, MAI-Image-2.6 8, Sora 2 8, Chirp 3 HD 2, Azure Neural TTS 2, Kling v3 elements 4) listed but outside the cap.
+- Deviation from the task's fixed counts: **202 / 106 / 308 + 32** against the task's 186 / 112 / 298 + 32 — three Controller-disposed Auditor fixes: AF-1 adds 4 image calls to 1a (9:16 plates for TOPO-03 arms A and C, drawn under VID-TOPO3-01); AF-3 adds 2 calls to 1a (Wan 3.0 Prime in the VID-2SPK-01 native arm) and removes the chain arm's 16 calls from 1b (plate 2 + i2v 2 + TTS drives 8 + lipsync 4 → recorded, not screened, 0 calls). Image lane 124 → 128; TTS 20 → 12; lipsync 12 (unchanged); 2SPK native 8 → 10; chain 8 → 0.
 - Language mix (by the language the customer wrote in): en 15, hi 12, hg 8 → Hindi + Hinglish = 20/35 = 57 %.
 
 | lane | en | hi | hg | total |
@@ -53,10 +53,11 @@ Two roster facts changed this package after its first build: the second lip-sync
 
 | tranche | pool | calls | priced calls | unpinned calls | nominal USD |
 |---|---|---|---|---|---|
-| 1a | cash | 142 | 130 | 12 | 50.15 |
-| 1a | credits | 50 | 50 | 0 | 25.5 |
-| 1b | cash | 66 | 60 | 6 | 65.3 |
-| 1b | credits | 24 | 22 | 2 | 15.51 |
+| 1a | cash | 138 | 126 | 12 | 52.51 |
+| 1a | credits | 64 | 64 | 0 | 27.24 |
+| 1b | cash | 66 | 60 | 6 | 67.67 |
+| 1b | credits | 24 | 22 | 2 | 16.31 |
+| 1b | elevenlabs_credits | 10 | 10 | 0 | 0.0 |
 | 1b | sarvam_credits | 6 | 6 | 0 | 0.01 |
 
 Conditional (listed, outside the cap):
@@ -67,18 +68,18 @@ Conditional (listed, outside the cap):
 | 1b | cash | 4 | 0 | 4 | 0.0 |
 | 1b | credits | 4 | 2 | 2 | 0.0 |
 
-- Nominal in-cap total: **USD 156.46** (1a ≈ 75.65, 1b ≈ 80.81); of which cash ≈ 115.45, GCP credits ≈ 41.01.
+- Nominal in-cap total: **USD 163.74** (1a ≈ 79.75, 1b ≈ 83.99); of which cash ≈ 120.18, GCP credits ≈ 43.55.
 - Unpinned calls excluded from the cap: **20** on routes `gpt-image-2-edit`, `sync-lipsync-v3`, `veo-3.1-lite-i2v` (sync-lipsync v3 became unpinned at the committed roster — its exact endpoint carries no price; the 0.1333/s string belongs to the sibling image-to-video endpoint — so all 12 of its calls sit outside the cap until pinned).
 - Priced against `ROSTER-REFRESH-2026-09.yaml` at the commit and sha256 recorded in `COST-TABLE.yaml` → `priced_against_roster`; `gpt-image-2` and `flux-2-pro` are `route_status: pinned` on their fal fallback records (the credit surfaces stay `needs_controller_enablement`), stated in `route_catalogue.priced_surface`.
 - Sarvam lines are inside the cap in INR: ≈ ₹0.8 (Sarvam's prepaid balance; shown as USD-equivalent 0.01 at the August display rate).
-- Evaluator lines (nominal): ≈ USD 3.71 (Cloud Vision + VLM triage; ASR unpinned). Controller judging time: see `COST-TABLE.yaml` → `evaluator_rows` → `controller_blind_judging.minutes`.
+- Evaluator lines (nominal): ≈ USD 4.01 (Cloud Vision + VLM triage; ASR unpinned). Controller judging time: see `COST-TABLE.yaml` → `evaluator_rows` → `controller_blind_judging.minutes`.
 - The task's INFERRED planning figure was ≈ USD 150–165 nominal with ≈ 45–55 credit-eligible; the pinned figure sits in that range. gpt-image-2 and FLUX.2 Pro (base, edit and the arm-C/chain plates) are carried as fal cash until deployed on Azure; once deployed those lines move from cash to Azure credits at the same list price. The 1a nominal is above the plan's ≈ USD 60 line — morning decision 8 (raise the 1a cap, or apply the cut order in `IRREDUCIBILITY.md`).
 
 ## Morning decisions for the Controller (recorded, never attempted)
 
 The task's eleven human-approval triggers, with the state this package assumes:
 
-1. Ratify this package and the counts (35 cases / 288 + 32 conditional) or apply the cut order in `IRREDUCIBILITY.md`.
+1. Ratify this package and the counts (35 cases / 308 + 32 conditional) or apply the cut order in `IRREDUCIBILITY.md`.
 2. Sarvam key — **confirmed present**: the Controller session stated it, EVAL-039B's overnight check first reported the value empty, and EVAL-039B's Tester corrected that as a measurement error (DEFECT-1, commit `a24b197`: a 36-character value; length check only). The roster now records Sarvam bulbul:v3 as `pinned` and this package runs AUD-TTS-* on Sarvam (Sarvam credits, ₹3 per 1,000 characters) and ElevenLabs v3 via fal (cash). No key value was read by this task.
 3. Azure deployments for gpt-image-2 / FLUX.2 Pro (credits) — carried as fal cash here; whether Sora 2 / MAI-Image-2.6 join — listed conditional.
 4. Bedrock access for SD3.5 Large — listed conditional.
@@ -104,7 +105,7 @@ The task's eleven human-approval triggers, with the state this package assumes:
 - OQ-10 The baked-text scan (E5) uses Cloud Vision TEXT_DETECTION; whether it bills against GCP credits is unverified (survey §4).
 - OQ-11 Omni Flash 1.1's longest supported duration (≤ 15 s) is not in the survey; VID-MS-01 records "longest supported ≤ 15 s".
 - OQ-12 VID-REF-01 reads the localised buyer's request (three references, free camera) as `generate` with identity references; MKT-014's own reading of its one-image posting is `animate`. Recorded, not silently resolved.
-- OQ-14 `nano-banana-pro/edit`: the roster records the fal edit route (0.15/image, cash) as the plan names it and notes the same model edits on Vertex for 0.134 on credits; this package follows the roster so the two deliverables agree, and flags that the credits-first rule would move it to Vertex — the Controller may switch (counts unchanged).
+- OQ-14 (closed 2026-09-10) `nano-banana-pro-edit`: the roster and this package now record the same model on the Gemini Developer API (`gemini-3-pro-image` with inline reference images, 0.134 per 1K/2K output image on GCP credits via the Gemini API key, plus 0.0011 per input image carried in the quantity rule and recorded, not projected) in place of the fal edit route (0.15/image, cash) the plan named — the Controller's credits-first / fal-last decision of 2026-09-09. `nano-banana-2`, `nano-banana-pro` and the Omni Flash rows moved from Vertex to the same surface at unchanged prices; route keys and counts unchanged.
 - OQ-15 `openai/gpt-image-2` on fal is pinned at 0.053 only at quality=medium (fal's default is high at 0.211): the harness must set quality=medium, or the 1a projection rises by ≈ USD 4.
 - OQ-18 (after audit) TOPO-01's residual confound: arm A (VID-T2V-01, farmer in a field) and arm B (AUD-LIP-01, the VID-I2V-02 young-man plate) now share the brief shape and the spoken line "इस दवाई से मेरी फसल दोगुनी हुई" (AUD-TTS-01 re-sourced from BR-F07-HI), but the subject differs; making arm B's plate a farmer still → i2v would add 2 image + 2 i2v calls — a Controller decision, not taken here.
 - OQ-19 (after audit) The VID-2SPK-01 chain arm (two-person plate → i2v → TTS both lines → lipsync) is recorded, not screened (0 calls): its lipsync step would drive a two-person clip through single-face routes (sync-lipsync v3, Kling lipsync audio-to-video) that document no speaker-assignment or mask parameter, so without masks the trial is a near-certain reject, not evidence (Auditor AF-3). Re-open as a new task if a route exposes a face/region parameter; cut-order item 7 is therefore a no-op.

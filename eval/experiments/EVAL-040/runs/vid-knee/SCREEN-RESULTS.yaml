@@ -1,0 +1,462 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: vid-knee
+results_ref: eval/experiments/EVAL-040/runs/vid-knee/RESULTS.yaml
+results_sha256: ac0f9a86af9cd0c8702649de526caaf38f9926f7986fdd8bf247a56a1ee4c6d0
+screened_utc: '2026-09-09T17:19:41.727767Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: vid-knee
+  results_run_id: vid-knee
+  trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r2
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: veo-3.1-full
+  arm: knee_premium
+  controller_verdict: accept
+  controller_note: accept (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-knee/artifacts/media/VID-KNEE-01__veo-3.1-full__knee_premium__r2.mp4
+    sha256: be51e2766e065a4a5329f42a04038e174376ecb618466dcfc2ed14b9f9e45e93
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if one glass bottle of orange juice with a blank label is the subject for the whole clip and no hand, person or second bottle
+      appears.
+    verdict: fail
+    evidence: The bottle is not present in the first frame.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the camera moves slowly (a reveal or drift) while the bottle itself stays still and keeps its shape; REJECT if the bottle
+      warps, changes size or shifts on the surface.
+    verdict: pass
+    evidence: The camera tilts up to reveal the bottle, which remains still and retains its shape.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if condensation droplets are visible on the glass at some point.
+    verdict: pass
+    evidence: Condensation droplets are visible on the glass bottle in the second and third frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any voice, music or lettering is present.
+    verdict: cannot_judge
+    evidence: Voice and music cannot be detected in static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3832
+    candidatesTokenCount: 196
+    totalTokenCount: 5517
+    thoughtsTokenCount: 1489
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 419922
+    sha256: f95eaa8b3168c717bbbc1cb9d6e5dbcf7dd7da3fd209611d645bf00dbf4fb732
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 493033
+    sha256: 90f1d0c72021e62a45eb69967bbe939f79473d9a5c48725231cabc1519e644e4
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 431240
+    sha256: 4ae9749503c496da03d91c2786144d36ddbbc0d21fef7b2dd9fa72400cf4af78
+  usd_at_pinned_price: '0.020913'
+  agree: false
+- run_id: vid-knee
+  results_run_id: vid-knee
+  trial_id: VID-KNEE-01__veo-3.1-lite__knee_cheap__r1
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: veo-3.1-lite
+  arm: knee_cheap
+  controller_verdict: reject
+  controller_note: doesn't look like slow camera (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-knee/artifacts/media/VID-KNEE-01__veo-3.1-lite__knee_cheap__r1.mp4
+    sha256: e55429bae33e05ae1cfc8c5876cb1b3edc03a95dcdb9cd561b4e658389bcb827
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if one glass bottle of orange juice with a blank label is the subject for the whole clip and no hand, person or second bottle
+      appears.
+    verdict: fail
+    evidence: The glass bottle is absent in the first frame, so it is not the subject for the entire clip.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the camera moves slowly (a reveal or drift) while the bottle itself stays still and keeps its shape; REJECT if the bottle
+      warps, changes size or shifts on the surface.
+    verdict: pass
+    evidence: The camera moves to reveal the bottle, which remains still and keeps its shape.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if condensation droplets are visible on the glass at some point.
+    verdict: pass
+    evidence: Condensation droplets are visible on the glass bottle in frames 71 and 143.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any voice, music or lettering is present.
+    verdict: fail
+    evidence: The lettering "250ml" is visible on the neck of the bottle.
+  http_status: 200
+  usage:
+    promptTokenCount: 3832
+    candidatesTokenCount: 158
+    totalTokenCount: 5015
+    thoughtsTokenCount: 1025
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 337215
+    sha256: faab910c83022e93d4fc04663e65d1c4f18254b51e0f9e7be43390033952c72e
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 492652
+    sha256: 7ddd8ed05bee88de0102ecb2aa5c28c79a9ea38dd73538ee158e4b092fe5e837
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 506288
+    sha256: 25ed7b4cb2ca05dd0e61679b242fe06ee68eaa1bdbfd294be52b9449296da4bf
+  usd_at_pinned_price: '0.016395'
+  agree: true
+- run_id: vid-knee
+  results_run_id: vid-knee
+  trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r1
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: veo-3.1-full
+  arm: knee_premium
+  controller_verdict: reject
+  controller_note: doesn't look like slow camera (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-knee/artifacts/media/VID-KNEE-01__veo-3.1-full__knee_premium__r1.mp4
+    sha256: f27eb41190fe25c443b99ef026ea7b59f2e5a3c9e0f0ab65c3b7f3158e70db29
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if one glass bottle of orange juice with a blank label is the subject for the whole clip and no hand, person or second bottle
+      appears.
+    verdict: fail
+    evidence: The glass bottle of orange juice is absent in the first frame, so it is not the subject for the entire clip.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the camera moves slowly (a reveal or drift) while the bottle itself stays still and keeps its shape; REJECT if the bottle
+      warps, changes size or shifts on the surface.
+    verdict: pass
+    evidence: The camera tilts up to reveal the bottle, which remains still and retains its shape without warping.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if condensation droplets are visible on the glass at some point.
+    verdict: pass
+    evidence: Condensation droplets are clearly visible on the glass bottle in the middle and final frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any voice, music or lettering is present.
+    verdict: cannot_judge
+    evidence: The presence of voice or music cannot be determined from static images.
+  http_status: 200
+  usage:
+    promptTokenCount: 3832
+    candidatesTokenCount: 215
+    totalTokenCount: 4973
+    thoughtsTokenCount: 926
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 302874
+    sha256: 81941da76bd1348da1efa9c14f8281d413d796b3e6968be2092eeca676e27342
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 401704
+    sha256: bcfed18ea93485565c09cb3ca65fbc6544b3ac74f14d0de7deba09b8e1895554
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 387371
+    sha256: 0cf2d9e37c5ae531a3fe1e7c15940c42a4612b9a8b79f47d1f6ca54e2013ff24
+  usd_at_pinned_price: '0.016017'
+  agree: true
+- run_id: vid-knee
+  results_run_id: vid-knee
+  trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r2
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: minimax-h3-max-480p
+  arm: knee_cheap
+  controller_verdict: reject
+  controller_note: no condensation on bottle (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-knee/artifacts/media/VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r2.mp4
+    sha256: c2d690e267de082b04007da0e983c58743ed08374dc37df786011d40de1470f0
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 1 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if one glass bottle of orange juice with a blank label is the subject for the whole clip and no hand, person or second bottle
+      appears.
+    verdict: pass
+    evidence: A single glass bottle of orange juice with a blank label is the sole subject, with no hands or other people present.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the camera moves slowly (a reveal or drift) while the bottle itself stays still and keeps its shape; REJECT if the bottle
+      warps, changes size or shifts on the surface.
+    verdict: pass
+    evidence: The camera drifts to reveal the cap while the bottle remains stable and keeps its shape.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if condensation droplets are visible on the glass at some point.
+    verdict: fail
+    evidence: No condensation droplets are visible on the glass bottle in any of the frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any voice, music or lettering is present.
+    verdict: cannot_judge
+    evidence: The presence of voice or music cannot be determined from the static frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3831
+    candidatesTokenCount: 213
+    totalTokenCount: 5772
+    thoughtsTokenCount: 1728
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 443
+    height: 768
+    source_width: 480
+    source_height: 832
+    png_bytes: 378160
+    sha256: 88345c02b768e1b08ec77c3745c2e64d6ed8078e8ab3ab5b4b6094bf6484ca14
+  - frame_index: 78
+    time_s: 3.25
+    width: 443
+    height: 768
+    source_width: 480
+    source_height: 832
+    png_bytes: 446183
+    sha256: 8f6ed87f879125cba91e951b09deaa8179ba8b7cbe4892e08b2713ad0468df0d
+  - frame_index: 157
+    time_s: 6.542
+    width: 443
+    height: 768
+    source_width: 480
+    source_height: 832
+    png_bytes: 363347
+    sha256: 9529474d9d8706f1102bbe91084dd44bfb167b6ff460b9cd96cf2fd61f174927
+  usd_at_pinned_price: '0.023216'
+  agree: true
+- run_id: vid-knee
+  results_run_id: vid-knee
+  trial_id: VID-KNEE-01__veo-3.1-lite__knee_cheap__r2
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: veo-3.1-lite
+  arm: knee_cheap
+  controller_verdict: reject
+  controller_note: got a label, no slow camera (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-knee/artifacts/media/VID-KNEE-01__veo-3.1-lite__knee_cheap__r2.mp4
+    sha256: 56606b21431dbc3e2270c25a56887c1c3af2094dcc0eaf670778d8b353e208a9
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if one glass bottle of orange juice with a blank label is the subject for the whole clip and no hand, person or second bottle
+      appears.
+    verdict: fail
+    evidence: The bottle is absent in the first frame and its label contains visible text on the side.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the camera moves slowly (a reveal or drift) while the bottle itself stays still and keeps its shape; REJECT if the bottle
+      warps, changes size or shifts on the surface.
+    verdict: pass
+    evidence: The camera performs a reveal while the bottle remains still and maintains its shape.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if condensation droplets are visible on the glass at some point.
+    verdict: pass
+    evidence: Condensation droplets are clearly visible on the glass bottle in the later frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any voice, music or lettering is present.
+    verdict: fail
+    evidence: Printed lettering is visible on the right side of the bottle's label.
+  http_status: 200
+  usage:
+    promptTokenCount: 3832
+    candidatesTokenCount: 203
+    totalTokenCount: 5307
+    thoughtsTokenCount: 1272
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 289439
+    sha256: 318a737ddd05eda934f99f61132ab06778507fd6727290099118d12c9aec4cc1
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 478279
+    sha256: c1e7b6ffe1561e8dc8b2d56dfc3e4485a444ab2b3ebc87d1d8f79a034968d864
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 487678
+    sha256: e2e4cc518d686b466e89916bd831cc3c638065dbc4a902ff02346e0da52f279f
+  usd_at_pinned_price: '0.019023'
+  agree: true
+- run_id: vid-knee
+  results_run_id: vid-knee
+  trial_id: VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r1
+  case_id: VID-KNEE-01
+  question: VID-KNEE
+  route_key: minimax-h3-max-480p
+  arm: knee_cheap
+  controller_verdict: reject
+  controller_note: got a label (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/vid-knee/artifacts/media/VID-KNEE-01__minimax-h3-max-480p__knee_cheap__r1.mp4
+    sha256: e2ad038e7e30778ff576fe9099620915ca772a82c1bac9222846202cd383a14d
+    media_kind: video
+  screen_overall: cannot_judge
+  verdict: absent
+  absence_reason: other
+  note: 'cannot_judge: no line failed and at least one could not be judged'
+  rules:
+  - rule_id: R1
+    kind: accept_only
+    rule: ACCEPT only if one glass bottle of orange juice with a blank label is the subject for the whole clip and no hand, person or second bottle
+      appears.
+    verdict: pass
+    evidence: A single glass bottle of orange juice with a blank label is the sole subject, with no hands or other people visible.
+  - rule_id: R2
+    kind: mixed
+    rule: ACCEPT only if the camera moves slowly (a reveal or drift) while the bottle itself stays still and keeps its shape; REJECT if the bottle
+      warps, changes size or shifts on the surface.
+    verdict: pass
+    evidence: The camera drifts upward to reveal the bottle cap while the bottle remains stationary and maintains its shape.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if condensation droplets are visible on the glass at some point.
+    verdict: pass
+    evidence: Numerous condensation droplets are clearly visible on the glass surface of the bottle across all frames.
+  - rule_id: R4
+    kind: reject
+    rule: REJECT if any voice, music or lettering is present.
+    verdict: cannot_judge
+    evidence: The presence of voice or music cannot be determined from static images, though no lettering is visible.
+  http_status: 200
+  usage:
+    promptTokenCount: 3831
+    candidatesTokenCount: 221
+    totalTokenCount: 5517
+    thoughtsTokenCount: 1465
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 443
+    height: 768
+    source_width: 480
+    source_height: 832
+    png_bytes: 335596
+    sha256: 3fdf7da5764fca3735922157760c9d846475fffc32f552ee1de2aa16f0bb48e9
+  - frame_index: 78
+    time_s: 3.25
+    width: 443
+    height: 768
+    source_width: 480
+    source_height: 832
+    png_bytes: 441570
+    sha256: 117066a243646d726113e1467e7e9d46edf6315b21fa55e2ead2f207c6e798fe
+  - frame_index: 157
+    time_s: 6.542
+    width: 443
+    height: 768
+    source_width: 480
+    source_height: 832
+    png_bytes: 336469
+    sha256: e5b3340dd7d310106c8884adec0daa74e8a7df95f857cc26e4d22441a0a19023
+  usd_at_pinned_price: '0.020921'
+  agree: null

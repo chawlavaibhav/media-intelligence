@@ -6,6 +6,7 @@ from decimal import Decimal
 
 from _support import MP4_FIXTURE, PNG_FIXTURE, WAV_FIXTURE, NoNetworkTestCase, fixed_clock
 import casebook as CB
+import hv2_paths
 import pricing as PR
 import store as S
 import surfaces
@@ -344,6 +345,7 @@ class BodyEqualityTest(AdapterBase):
     def test_g_dry_run_body_bytes_equal_sent_bytes_for_every_family(self):
         os.environ["FAL_KEY"] = "fake"
         os.environ["SARVAM_API_KEY"] = "fake"
+        os.environ["GOOGLE_API_KEY"] = "fake"        # nano-banana-2 / gemini-omni-1.1-flash run on the Gemini API key (2026-09-09)
         for case, route, inputs, kind in self.ROUTES:
             with self.subTest(route=route):
                 t = self._transport(kind)
@@ -428,6 +430,42 @@ class RefuseLiveRenderDryTest(AdapterBase):
                     ad.dispatch(row)
                 self.assertEqual(self.budget.records(), [])
 
+
+    def test_h2_re_pinned_fal_routes_render_dry_bodies_and_refuse_live(self):
+        """2026-09-09: sync-lipsync-v3 renders its pinned body (video_url + audio_url, nothing else) against a fake fal transport but
+        stays outside the cap until the freeze package is rebuilt; kling-v3-elements has no schema, so no body can be rendered."""
+        os.environ["FAL_KEY"] = "fake"
+        inputs = {"video_url": "https://example.test/plate.mp4", "audio_url": "https://example.test/drive.wav"}
+        t = fal_ok("https://v3.fal.media/files/fake/out.mp4")
+        ad = self.make("sync-lipsync-v3", t)
+        row = self.row("AUD-LIP-01", "sync-lipsync-v3")
+        d = ad.dry_run(row, inputs)
+        self.assertEqual(d["body"], inputs, "ROUTE_PINS: video_url + audio_url only; no caller parameter, no seed")
+        self.assertEqual(d["body_sha256"], B.sha256_hex(S.canonical_json(d["body"])))
+        self.assertEqual(d["url"], "https://queue.fal.run/fal-ai/sync-lipsync/v3")
+        self.assertEqual(d["shape_status"], "verified")
+        self.assertFalse(d["would_dispatch"])
+        self.assertIn("price_unpinned", d["refusal_reason"])
+        self.assertEqual(ad.entry.price_pin_ref, "eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3-2026-09-09.html")
+        self.assertEqual(d["price"]["route_status"], "unpinned", "the committed roster still carries the route unpinned")
+        with self.assertRaises(DispatchRefused):
+            ad.dispatch(row, inputs)
+        self.assertEqual(t.calls, [], "nothing reached the transport")
+        self.assertEqual(self.budget.records(), [])
+        t2 = fal_ok("https://v3.fal.media/files/fake/out.mp4")
+        ad2 = self.make("kling-v3-elements", t2)
+        row2 = self.row("VID-REF-01", "kling-v3-elements")
+        d2 = ad2.dry_run(row2, {"image_urls": ["https://example.test/a.png", "https://example.test/b.png", "https://example.test/c.png"]})
+        self.assertEqual(d2["body"]["$shape"], "unverified", "no pinned Input component: a placeholder, never a sendable body")
+        self.assertNotIn("image_urls", d2["body"])
+        self.assertEqual(d2["url"], "https://queue.fal.run/fal-ai/kling-video/v3/pro/elements")
+        self.assertFalse(d2["would_dispatch"])
+        self.assertIn("unverified", d2["refusal_reason"])
+        self.assertIn("price_unpinned", d2["refusal_reason"])
+        with self.assertRaises(DispatchRefused):
+            ad2.dispatch(row2, {"image_urls": ["https://example.test/a.png"]})
+        self.assertEqual(t2.calls, [])
+        self.assertEqual(self.budget.records(), [])
 
 # ============================================================ (i) parameter refusals
 class ParameterRefusalTest(AdapterBase):
@@ -633,3 +671,57 @@ class AuditorFixesTest(AdapterBase):
     def test_af10_default_poll_budget_is_at_least_fifteen_minutes(self):
         ad = self.make("kling-v3-pro", fal_ok())
         self.assertGreaterEqual(ad.max_status_checks * ad.poll_interval_s, 900)
+
+
+# ============================================================ (w) Wan 2 contender bodies (Controller decision 2026-09-09)
+class Wan2ContenderBodyTest(AdapterBase):
+    """wan-2.2-a14b / wan-2.2-a14b-i2v: the pinned schema takes a frame count, not a duration, so the adapter sends
+    num_frames = 16 x duration_s + 1 (fal's default 81 = 5 s); resolution pinned to 720p (the pinned USD 0.08 rung);
+    no audio field exists (silent family) and none is sent. The rows come from the WORKING-TREE package (the freeze
+    rebuilt with the contender rows), not from HEAD."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.book = CB.CaseBook.from_paths(hv2_paths.TEST_CASES, hv2_paths.FREEZE)
+
+    def test_t2v_body_is_frames_at_16fps_720p_and_silent(self):
+        os.environ["FAL_KEY"] = "fake"
+        ad = self.make("wan-2.2-a14b", fal_ok("https://v3.fal.media/files/fake/out.mp4"))
+        row = self.book.row("VID-T2V-01", "wan-2.2-a14b")
+        d = ad.dry_run(row)
+        self.assertEqual(set(d["body"]), {"prompt", "aspect_ratio", "resolution", "num_frames"})
+        self.assertEqual((d["body"]["aspect_ratio"], d["body"]["resolution"], d["body"]["num_frames"]), ("9:16", "720p", 97))
+        self.assertTrue(d["body"]["prompt"].startswith("Vertical video, one continuous static shot, 6 seconds."))
+        self.assertEqual(d["url"], "https://queue.fal.run/fal-ai/wan/v2.2-a14b/text-to-video")
+        self.assertEqual(d["shape_status"], "verified")
+        self.assertTrue(d["would_dispatch"], d.get("refusal_reason"))
+        self.assertEqual(Decimal(d["price"]["amount_usd_equiv"]), Decimal("0.48"))
+        self.assertTrue(any("num_frames=97" in n for n in d["request_notes"]))
+        row8 = self.book.row("VID-2SPK-01", "wan-2.2-a14b", "A_native")
+        d8 = ad.dry_run(row8)
+        self.assertEqual(d8["body"]["num_frames"], 129)
+        self.assertEqual(Decimal(d8["price"]["amount_usd_equiv"]), Decimal("0.64"))
+
+    def test_i2v_body_takes_the_plate_and_the_rows_aspect(self):
+        """2026-09-10 live: aspect left at the endpoint default 'auto' made a 4:5 still resolve to 848x1056, which fal refused (422);
+        the pin now sends the row's aspect so the output size is one the endpoint supports."""
+        os.environ["FAL_KEY"] = "fake"
+        ad = self.make("wan-2.2-a14b-i2v", fal_ok("https://v3.fal.media/files/fake/out.mp4"))
+        row = self.book.row("VID-I2V-01", "wan-2.2-a14b-i2v")
+        d = ad.dry_run(row, {"image_url": "https://example.test/plate.png"})
+        self.assertEqual(d["body"], {"prompt": row["prompt"], "image_url": "https://example.test/plate.png", "aspect_ratio": "9:16", "resolution": "720p", "num_frames": 97},
+                         "prompt + plate + the row's 9:16 + 720p + frames; no audio field")
+        self.assertEqual(d["url"], "https://queue.fal.run/fal-ai/wan/v2.2-a14b/image-to-video")
+        self.assertTrue(d["would_dispatch"], d.get("refusal_reason"))
+        d2 = ad.dry_run(row)
+        self.assertEqual(d2["body"]["image_url"], {"$pending_artifact": "VID-I2V-01:core:plate_accepted_draw"})
+        self.assertFalse(d2["would_dispatch"])
+
+    def test_a_duration_the_schema_cannot_take_is_refused_not_guessed(self):
+        os.environ["FAL_KEY"] = "fake"
+        ad = self.make("wan-2.2-a14b", fal_ok("https://v3.fal.media/files/fake/out.mp4"))
+        row = dict(self.book.row("VID-T2V-01", "wan-2.2-a14b"))
+        row["params"] = {**row["params"], "duration_s": 15}          # 241 frames > the pinned maximum 161
+        with self.assertRaises(PreDispatchRefusal):
+            ad.build_request(row)

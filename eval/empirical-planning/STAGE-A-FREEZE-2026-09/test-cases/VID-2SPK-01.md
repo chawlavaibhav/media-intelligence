@@ -58,7 +58,7 @@
 
 ## Routes
 
-See `TEST-CASES.yaml` → `routes[]`: elevenlabs-v3, flux-2-pro, gemini-omni-1.1-flash, kling-lipsync-a2v, kling-v3-pro-audio, minimax-h3-max-i2v, sarvam-bulbul-v3, seedance-2.5, sync-lipsync-v3, veo-3.1-fast, wan-3.0-prime.
+See `TEST-CASES.yaml` → `routes[]`: elevenlabs-v3-direct, flux-2-pro, gemini-omni-1.1-flash, kling-lipsync-a2v, kling-v3-pro-audio, minimax-h3-max-i2v, sarvam-bulbul-v3, seedance-2.5, sync-lipsync-v3, veo-3.1-fast, wan-2.2-a14b, wan-3.0-prime.
 
 **Blueprint:** `BLUEPRINTS/VID-2SPK-01.blueprint.md` (sha256 `3450eb2363323b49…`, author executor_agent)
 

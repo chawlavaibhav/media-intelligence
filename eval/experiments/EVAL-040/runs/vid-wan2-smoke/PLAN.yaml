@@ -1,0 +1,80 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: vid-wan2-smoke
+  mode: smoke
+  generated_utc: '2026-09-10T02:43:46.059732Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: 7403cd88a45b62c18aa839ea22b1e02e68f01e34
+  item_basis_commit: d8399d84b8b4
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.wan2.local.yaml
+  authorisation_sha256: e54512d228d9c212265105404f40f061270d558d2b8b125b74a2ee9607e1a1e0
+  roster_sha256: 311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c
+  test_cases_sha256: 8c2430e760279bb60a0ce429b933c64bb85340e2089be9ebad3f28d49e7cdb9c
+  cost_table_sha256: e7047c193c78c4d218f7bcbde6fabf89d4c10be978c2080b098cc84e722241f3
+  cases:
+  - VID-T2V-02
+  routes:
+  - wan-2.2-a14b
+  tranche: null
+  repeats:
+  - 1
+  inputs_file: null
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 1
+    excluded: 1
+  estimated_by_pool:
+    cash:
+      calls: 1
+      currency: USD
+      native: '0.480000'
+      usd_equiv: '0.480000'
+  estimated_total_usd_equiv: '0.480000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: VID-T2V-02__wan-2.2-a14b__core__r1
+  case_id: VID-T2V-02
+  item_id: VID-T2V-02
+  route_key: wan-2.2-a14b
+  arm: core
+  repeat_index: 1
+  tranche: 1a
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/wan/v2.2-a14b/text-to-video
+  endpoint: https://queue.fal.run/fal-ai/wan/v2.2-a14b/text-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.480000'
+  estimated_usd_equiv: '0.480000'
+  unit_price: '0.08'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+  body_sha256: e4f27507c73965692a0aecf8264825b501a691f573b0848d061c7c8128e6576c
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.08'
+  roster_implied_usd: '0.08'
+  constructed_synthetic_inputs: false
+excluded:
+- case_id: VID-T2V-02
+  route_key: wan-2.2-a14b
+  arm: core
+  repeat_index: 2
+  tranche: 1a
+  reason: repeat 2 not requested ([1])

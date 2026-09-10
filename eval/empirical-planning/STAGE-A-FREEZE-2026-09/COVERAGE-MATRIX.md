@@ -1,6 +1,6 @@
 # Coverage matrix — Stage A freeze
 
-35 cases, 288 calls (1a 192 / 1b 96) + 32 conditional. **4K recorded as a Stage B COND-DELIVERY level only; round one runs 720p.**
+35 cases, 308 calls (1a 202 / 1b 106) + 32 conditional. **4K recorded as a Stage B COND-DELIVERY level only; round one runs 720p.**
 
 ## 1. Plan §C.1 routing questions → cases
 
@@ -70,6 +70,8 @@
 | IMG-TEXT-02 | C_composite_textless_base | `fal-ai/flux-2-pro` ×2 (1a) |
 | VID-TOPO3-01 | A_plate_9x16 | `alibaba/qwen-image-3` ×2 (1a) |
 | VID-TOPO3-01 | C_plate_9x16 | `fal-ai/flux-2-pro` ×2 (1a) |
+| VID-TOPO3-01 | A2_nb_plate_9x16 | `gemini-3.1-flash-image` ×2 (1a) |
+| VID-TOPO3-01 | A2_nb_still_to_cheap_i2v | `minimax/h3-max/image-to-video (768p)` ×2 (1b) |
 | VID-TOPO3-01 | A_cheap_still_to_cheap_i2v | `minimax/h3-max/image-to-video (768p)` ×2 (1b); `alibaba/wan-3.0-prime/image-to-video` ×2 (1b); `veo-3.1-lite-generate-001 (image input)` ×2 (1b) |
 | VID-TOPO3-01 | B_premium_native_t2v | `veo-3.1-generate-001` ×2 (1a); `fal-ai/kling-video/v3/pro/text-to-video (silent)` ×2 (1a) |
 | VID-TOPO3-01 | C_textless_plate_i2v_composite | `minimax/h3-max/image-to-video (768p)` ×2 (1b) |

@@ -57,7 +57,7 @@
 
 ## Routes
 
-See `TEST-CASES.yaml` → `routes[]`: flux-2-pro, kling-v3-pro, minimax-h3-max-i2v, qwen-image-3, veo-3.1-full, veo-3.1-lite-i2v, wan-3.0-prime-i2v.
+See `TEST-CASES.yaml` → `routes[]`: flux-2-pro, kling-v3-pro, minimax-h3-max-i2v, nano-banana-2, qwen-image-3, veo-3.1-full, veo-3.1-lite-i2v, wan-3.0-prime-i2v.
 
 **Blueprint:** `BLUEPRINTS/VID-TOPO3-01.blueprint.md` (sha256 `3a97d8f39498f254…`, author executor_agent)
 

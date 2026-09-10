@@ -1,0 +1,138 @@
+# PIN-INDEX — wan-2.2-a14b (the Wan 2 contender), fetched 2026-09-09 (UTC). Same conventions as ../PIN-INDEX.yaml: the exact file, its
+# size, its SHA-256 fingerprint, the command used and exact substrings (evidence_quote + additional_evidence_quotes) that must be present
+# in the bytes. Free, unauthenticated GETs of public pages; no queue submit, no key. Kept out of ../PIN-INDEX.yaml because that index
+# sits at its 5 MB byte cap (4998 KB); tests/test_surfaces.py verifies this file against the bytes.
+#
+# Why this tier (plain English): the Controller decided on 2026-09-09 (coordination/decisions/CONTROLLER-WAN2-CONTENDER-PREMIUM-DEFERRED-
+# 2026-09-09.md) that wherever Wan 3.0 Prime passed, the cheapest LIVE Wan 2.x tier on fal is the contender on those exact rows
+# (VID-T2V-01/02/03 at 6 s, VID-I2V-01..04 at 6 s, VID-2SPK-01 at 8 s; 9:16; the battery's 720p admission resolution). Every live Wan 2.x
+# id on fal was read (fal's keyword search 'wan', 40 items, plus each candidate's model page and OpenAPI, all HTTP 200 unless noted).
+# The price ladder at 720p, quoted from the pages, and why each rung is or is not usable for these rows:
+#   * fal-ai/wan/v2.2-5b/text-to-video/fast-wan   "**$0.025** per **video** for **720p**" (search JSON)  — distilled 5B, per video, no duration
+#     control on the id (not fetched further); cannot render a 6-s or 8-s row.
+#   * fal-ai/wan/v2.2-a14b/text-to-video/turbo + /image-to-video/turbo   "Your request will cost **$0.10** per **video** for **720p**, **$0.075**
+#     per **video** for **580p**, **$0.05** per **video** for **480p**." — endpointBilling {billing_unit: videos, price: 0.1}; its pinned OpenAPI
+#     (sha256 06928fb9… t2v / 15781991… i2v, 2026-09-09T17:31Z, not retained) has NO num_frames / duration field: a fixed-length clip
+#     (fal's Wan 2.2 default is 81 frames = 5 s). It cannot render the 6-s / 8-s rows, so it is not the contender; it is the cheapest
+#     Wan 2.x clip on fal and is recorded here as the boundary.
+#   * fal-ai/wan/v2.2-5b/text-to-video + /image-to-video   endpointBilling {billing_unit: videos, price: 0.15}; pricingInfoOverride
+#     "$undefined" (no prose price). num_frames 17-161 at 24 fps → at most 6.7 s: no 8-s row; 5B class. Not the contender.
+#   * fal-ai/wan/v2.2-a14b/text-to-video + /image-to-video   "Your request will cost **$0.08** per **video second** for **720p**, **$0.06**
+#     per **video second** for **580p**, **$0.04** per **video second** for **480p**. Video seconds are calculated at 16 frames per second."
+#     endpointBilling {billing_unit: seconds, price: 0.08}. num_frames 17-161 at 16 fps → 6 s (97 frames) and 8 s (129 frames) both render;
+#     720p; 9:16. THE CONTENDER: the cheapest live Wan 2.x tier that can make the rows as frozen. Silent family (no audio field).
+#   * wan/v2.6/image-to-video/flash   "Your request will cost  **$0.05** per second for **720p**, **$0.075** per second for **1080p**." —
+#     i2v only, duration enum 5/10/15 (OpenAPI sha256 f62f1db3…, 2026-09-09T17:31:43Z, not retained): no 6-s row.
+#   * fal-ai/wan-25-preview/text-to-video + /image-to-video   "Your request will cost **$0.05** per second for **480p**, **$0.10** per second
+#     for **720p**, **$0.15** per second for **1080p**." — endpointBilling {billing_unit: seconds, price: 0.05} (the 480p rung); duration enum
+#     5/10 only (OpenAPI sha256 c45f4fa8… t2v / bc408e6d… i2v, 2026-09-09T17:28Z, not retained): no 6-s or 8-s row. This is the id Media
+#     Factory ran at USD 0.05/s (eval/historical-priors/media-factory-v1/COST-SUMMARY.md), i.e. its 480p price.
+#   * wan/v2.6/text-to-video, wan/v2.6/image-to-video   "**$0.10** per second for **720p**" (search JSON; the t2v model page answered
+#     HTTP 404 twice while its OpenAPI answered 200); duration 5/10/15. Dearer than a14b and no 6-s row.
+#   * alibaba/wan-3.0/text-to-video (non-Prime Wan 3.0, "$0.05 480p, $0.10 720p") is Wan 3, outside the decision; Wan 2.1 (fal-ai/wan-t2v,
+#     0.4/video), wan-pro (0.8 per 5 s) and the krea-wan-14b fine-tune (0.025/s, not an Alibaba tier) are dearer or not Wan 2.x tiers.
+# What the pinned bytes say for the exact ids: both model pages embed endpointBilling {endpoint: <exact id>, billing_unit: seconds,
+# price: 0.08} AND a pricingInfoOverride prose string bound to the same id (the nearest "id"/"endpointId" before the string is the exact id;
+# the page also embeds sibling records — fal-ai/wan/v2.2-14b/speech-to-video carries "$0.20 per video second for 720p" — which are NOT this
+# price). The fal search JSON repeats the prose for the exact id. Not stated in the bytes: whether fal bills the +1 frame of the model's
+# native 4n+1 frame count (the harness sends num_frames = 16 x duration + 1; a 6-s row may bill 6.0625 s = USD 0.485; recorded, not
+# projected). No promotion on either page.
+pins:
+- route_key: wan-2.2-a14b
+  pin_file: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+  pin_kind: price
+  url: https://fal.ai/models/fal-ai/wan/v2.2-a14b/text-to-video
+  fetched_utc: '2026-09-09T17:36:24Z'
+  http_status: '200'
+  bytes: 678008
+  sha256: bf1972966cd50b5555ca7f84f2c72d54e0e1d3947f6d2c8b5f1f6b060f5b434c
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/wan/v2.2-a14b/text-to-video" -o fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+  evidence_quote: endpointBilling\":{\"endpoint\":\"fal-ai/wan/v2.2-a14b/text-to-video\",\"billing_unit\":\"seconds\",\"price\":0.08
+  additional_evidence_quotes:
+  - \"endpointId\":\"fal-ai/wan/v2.2-a14b/text-to-video\"
+  - Your request will cost **$0.08** per **video second** for **720p**, **$0.06** per **video second** for **580p**, **$0.04** per **video second** for **480p**. Video seconds are calculated at 16 frames per second.
+  - \"status\":\"public\"
+  note: 'THE PRICE FOR THE EXACT ID (text-to-video): USD 0.08 per video second at 720p, from the page''s endpointBilling record and from the pricingInfoOverride
+    prose bound to the same id (the 580p / 480p rungs are 0.06 / 0.04 and are not used: the battery runs 720p). Video seconds are counted at 16 frames per
+    second. The page is live (status public; metadata updated_at 2026-09-09).'
+- route_key: wan-2.2-a14b
+  pin_file: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-image-to-video-2026-09-09.html
+  pin_kind: price
+  url: https://fal.ai/models/fal-ai/wan/v2.2-a14b/image-to-video
+  fetched_utc: '2026-09-09T17:36:27Z'
+  http_status: '200'
+  bytes: 686962
+  sha256: d7e55a1661ed92e89358898571040332a9df1c316c6a66a43f5d31c455d90f23
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/wan/v2.2-a14b/image-to-video" -o fal-wan-v2.2-a14b-image-to-video-2026-09-09.html
+  evidence_quote: endpointBilling\":{\"endpoint\":\"fal-ai/wan/v2.2-a14b/image-to-video\",\"billing_unit\":\"seconds\",\"price\":0.08
+  additional_evidence_quotes:
+  - \"endpointId\":\"fal-ai/wan/v2.2-a14b/image-to-video\"
+  - Your request will cost **$0.08** per **video second** for **720p**, **$0.06** per **video second** for **580p**, **$0.04** per **video second** for **480p**. Video seconds are calculated at 16 frames per second.
+  - \"status\":\"public\"
+  note: 'THE PRICE FOR THE EXACT ID (image-to-video): the same USD 0.08 per video second at 720p, from the exact id''s endpointBilling record and the
+    pricingInfoOverride prose bound to it. Live (status public).'
+- route_key: wan-2.2-a14b
+  pin_file: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-api-models-wan-v2.2-a14b-t2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/wan/v2.2-a14b/text-to-video
+  fetched_utc: '2026-09-09T17:36:31Z'
+  http_status: '200'
+  bytes: 7635
+  sha256: d0538b3878cfc759349ae7fee6791e842b655fff336904d30587e670b4140597
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/wan/v2.2-a14b/text-to-video" -o fal-api-models-wan-v2.2-a14b-t2v.json
+  evidence_quote: '"id":"fal-ai/wan/v2.2-a14b/text-to-video","modelId"'
+  additional_evidence_quotes:
+  - '"pricingInfoOverride":"Your request will cost **$0.08** per **video second** for **720p**, **$0.06** per **video second** for **580p**, **$0.04** per **video second** for **480p**. Video seconds are calculated at 16 frames per second."'
+  - '"id":"fal-ai/wan/v2.2-a14b/text-to-video/turbo","modelId"'
+  - '"pricingInfoOverride":"Your request will cost **$0.10** per **video** for **720p**, **$0.075** per **video** for **580p**, **$0.05** per **video** for **480p**."'
+  note: 'fal''s own search result for the exact id (7 items): the exact id''s pricingInfoOverride carries the same 0.08 per video second prose. The same file
+    records the turbo sibling at 0.10 per video (third and fourth quotes) and fast-wan 5B at 0.025 per video — the cheaper-per-clip rungs that cannot take a
+    duration (ladder in the header). Same bytes as the 2026-09-09T17:28:19Z fetch (identical sha256).'
+- route_key: wan-2.2-a14b
+  pin_file: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-api-models-wan-v2.2-a14b-i2v.json
+  pin_kind: price
+  url: https://fal.ai/api/models?keywords=fal-ai/wan/v2.2-a14b/image-to-video
+  fetched_utc: '2026-09-09T17:36:34Z'
+  http_status: '200'
+  bytes: 5457
+  sha256: ea374fcadc386921ad44e37226c50f1b8a0e57d6248092063657df2de74c1b8c
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/wan/v2.2-a14b/image-to-video" -o fal-api-models-wan-v2.2-a14b-i2v.json
+  evidence_quote: '"id":"fal-ai/wan/v2.2-a14b/image-to-video","modelId"'
+  additional_evidence_quotes:
+  - '"pricingInfoOverride":"Your request will cost **$0.08** per **video second** for **720p**, **$0.06** per **video second** for **580p**, **$0.04** per **video second** for **480p**. Video seconds are calculated at 16 frames per second."'
+  - '"id":"fal-ai/wan/v2.2-a14b/image-to-video/turbo","modelId"'
+  note: 'fal''s own search result for the exact image-to-video id (5 items): the same 0.08 per video second prose on the exact id; the turbo sibling at 0.10
+    per video. Same bytes as the 2026-09-09T17:28:27Z fetch (identical sha256).'
+- route_key: wan-2.2-a14b
+  pin_file: eval/harness-v2/schemas/fal/fal-ai_wan_v2.2-a14b_text-to-video.json
+  pin_kind: schema_page
+  url: https://api.fal.ai/v1/models?endpoint_id=fal-ai/wan/v2.2-a14b/text-to-video&expand=openapi-3.0
+  fetched_utc: '2026-09-09T17:28:15Z'
+  http_status: '200'
+  bytes: 11336
+  sha256: b3f50464b32d0a0e415f73d9b1d707df9f798de201ab66bdcea70b045e716efe
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://api.fal.ai/v1/models?endpoint_id=fal-ai/wan/v2.2-a14b/text-to-video&expand=openapi-3.0" -o fal-ai_wan_v2.2-a14b_text-to-video.json
+  evidence_quote: '"endpoint_id":"fal-ai/wan/v2.2-a14b/text-to-video"'
+  additional_evidence_quotes:
+  - '"WanV22A14bTextToVideoInput"'
+  - '"required":["prompt"]'
+  - '"num_frames"'
+  note: 'The request-body shape (kept in eval/harness-v2/schemas/fal/, indexed in SCHEMA-INDEX.yaml and FETCH-LOG.txt; this index points at the same bytes).
+    Input: prompt required; num_frames integer 17-161 (default 81) at frames_per_second 16; resolution enum 480p/580p/720p; aspect_ratio enum 16:9/9:16/1:1;
+    seed; no audio field. No price in this document.'
+- route_key: wan-2.2-a14b
+  pin_file: eval/harness-v2/schemas/fal/fal-ai_wan_v2.2-a14b_image-to-video.json
+  pin_kind: schema_page
+  url: https://api.fal.ai/v1/models?endpoint_id=fal-ai/wan/v2.2-a14b/image-to-video&expand=openapi-3.0
+  fetched_utc: '2026-09-09T17:28:22Z'
+  http_status: '200'
+  bytes: 11684
+  sha256: af3881820fb56d079ca9c731b287cbcf905510e41376133aed8f04830bbd5b20
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://api.fal.ai/v1/models?endpoint_id=fal-ai/wan/v2.2-a14b/image-to-video&expand=openapi-3.0" -o fal-ai_wan_v2.2-a14b_image-to-video.json
+  evidence_quote: '"endpoint_id":"fal-ai/wan/v2.2-a14b/image-to-video"'
+  additional_evidence_quotes:
+  - '"WanV22A14bImageToVideoInput"'
+  - '"required":["prompt","image_url"]'
+  - '"num_frames"'
+  note: 'The image-to-video request-body shape. Input: prompt + image_url required; num_frames 17-161 at 16 fps; resolution enum 480p/580p/720p; aspect_ratio
+    enum auto/16:9/9:16/1:1 (auto follows the plate); seed; no audio field. No price in this document.'

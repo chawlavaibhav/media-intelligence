@@ -97,6 +97,7 @@ class PlumbingBase(NoNetworkTestCase):
     def setUp(self):
         super().setUp()
         os.environ["FAL_KEY"] = CANARY
+        os.environ["GOOGLE_API_KEY"] = "FAKE-GOOGLE-API-KEY-NOT-A-CREDENTIAL"   # the Gemini routes read this name (2026-09-09)
         self.runs = self.tmp / "runs"
         self.auth = self.write_auth()
         self.adapter_kwargs = {"token_source": T.FakeTokenSource(), "sleep": lambda s: None, "clock": fixed_clock()}
@@ -226,7 +227,9 @@ class ResolverTest(PlumbingBase):
         book = CB.CaseBook.from_git("HEAD")
         row = book.row("IMG-REF-01", "nano-banana-pro-edit")
         inputs, resolved, unresolved = INP.InputResolver(f).for_row(row, surfaces.REGISTRY.get("nano-banana-pro-edit"))
-        self.assertEqual([base64.b64decode(u.split(",", 1)[1]) for u in inputs["image_urls"]], [views["tin_front"], views["tin_side"], views["tin_top"]])
+        # 2026-09-09: nano-banana-pro-edit runs on the Gemini API (inline reference bytes), no longer on fal (data URIs)
+        self.assertEqual([b for b, _ in inputs["reference_images"]], [views["tin_front"], views["tin_side"], views["tin_top"]])
+        self.assertEqual({m for _, m in inputs["reference_images"]}, {"image/png"})
         self.assertEqual([r["role"] for r in resolved], ["reference_asset_1", "reference_asset_2", "reference_asset_3"])
         # IMG-COMP-01: the portrait first, then the packshot
         self.seal_fixture("fx", "model_portrait", png_bytes(rgb=(4, 4, 4)), for_case="IMG-COMP-01", role="identity_person")
@@ -409,7 +412,8 @@ class FixturesModeTest(PlumbingBase):
         plan = FX.build_fixture_plan(self.out, "fx", self.spec, self.auth)
         kinds = [(s["kind"], s["fixture_id"]) for s in plan["steps"]]
         self.assertEqual(kinds, [("generate", "sofa"), ("generate", "sofa_decoy_1"), ("generate", "tin_front__raw"), ("overlay", "tin_front"), ("derive", "tin_side")])
-        self.assertEqual(Decimal(plan["header"]["estimated_total_usd_equiv"]), Decimal("0.067") * 3 + Decimal("0.15"))
+        # the derivation route (nano-banana-pro-edit) prices at the roster's Gemini API line, 0.134 per 1K/2K output image (re-pointed 2026-09-10; was fal 0.15)
+        self.assertEqual(Decimal(plan["header"]["estimated_total_usd_equiv"]), Decimal("0.067") * 3 + Decimal("0.134"))
         gen, ov, der = plan["steps"][0], plan["steps"][3], plan["steps"][4]
         self.assertTrue(gen["body_sha256"] and gen["template_body_sha256"] is None)
         self.assertTrue(der["template_body_sha256"] and der["body_sha256"] is None)
@@ -441,16 +445,17 @@ class FixturesModeTest(PlumbingBase):
         self.assertEqual(recs["tin_front"]["parent_sha256"], recs["tin_front__raw"]["sha256"])
         self.assertEqual(recs["tin_front"]["overlay"]["strings"][0]["text"], "सरसों तेल")
         self.assertTrue(recs["tin_front"]["overlay"]["exact_strings_by_code"])
-        # the derive call carried the OVERLAID parent as a data URI, and the record names the parent's sha
-        derive_payload = json.loads([p for p in factory.payloads() if b"image_urls" in p][0])
-        sent = base64.b64decode(derive_payload["image_urls"][0].split(",", 1)[1])
+        # the derive call carried the OVERLAID parent inline (2026-09-09: the derivation route nano-banana-pro-edit runs on the Gemini API,
+        # reference bytes as inlineData, no longer a fal data URI), and the record names the parent's sha
+        derive_payload = json.loads([p for p in factory.payloads() if b"inlineData" in p][0])
+        sent = base64.b64decode([part for part in derive_payload["contents"][0]["parts"] if "inlineData" in part][0]["inlineData"]["data"])
         self.assertEqual(hashlib.sha256(sent).hexdigest(), recs["tin_front"]["sha256"])
         self.assertEqual(recs["tin_side"]["parent_sha256"], recs["tin_front"]["sha256"])
         self.assertEqual(recs["tin_side"]["parent_fixture_id"], "tin_front")
         # ledger: reservation + spend per PAID step, nothing for the overlay
         rows = [json.loads(l) for l in (self.out / "ledger" / "fx" / "spend-ledger.jsonl").read_text().splitlines()]
         self.assertEqual([r["type"] for r in rows], ["reservation", "spend"] * 4)
-        self.assertEqual(sum(Decimal(str(r["amount_usd"])) for r in rows if r["type"] == "spend"), Decimal("0.067") * 3 + Decimal("0.15"))
+        self.assertEqual(sum(Decimal(str(r["amount_usd"])) for r in rows if r["type"] == "spend"), Decimal("0.067") * 3 + Decimal("0.134"))
         # the resolver accepts the sealed fixtures for the battery (and still refuses the decoy)
         f = INP.InputsFile(self.inputs_file([{"case_id": "IMG-REF-01", "role": "reference_asset_1", "ref": "fixture:fx:tin_front"},
                                              {"case_id": "IMG-REF-01", "role": "reference_asset_2", "ref": "fixture:fx:tin_side"},
@@ -498,12 +503,12 @@ class FixturesModeTest(PlumbingBase):
         plan = FX.build_fixture_plan(self.tmp / "real-dry", "real-dry", STAND_IN_SPEC, self.auth)
         c = plan["header"]["counts"]
         # the spec's own sum line (1+1+1+1+2+1+2+1+2+1+2) is 15 generations (7 assets + 8 decoys), not the 13 it wrote; the
-        # derivation route prices at the roster's pinned fal number (0.15), not the ~0.134 the spec assumed -> USD 1.605,
-        # USD 0.005 above the "<= 1.6" sizing and well inside the half-two cap (7.34). Reported to the Controller, not hidden.
+        # derivation route prices at the roster's pinned Gemini API number (0.134 since the 2026-09-10 re-point; the fal 0.15 it
+        # carried before made this 1.605) -> USD 1.541, inside the "<= 1.6" sizing and well inside the half-two cap (7.34).
         self.assertEqual((c["generate"], c["decoys"], c["overlay"], c["derive"]), (15, 8, 3, 4))
         total = Decimal(plan["header"]["estimated_total_usd_equiv"])
-        self.assertEqual(total, Decimal("0.067") * 15 + Decimal("0.15") * 4)
-        self.assertEqual(total, Decimal("1.605"))
+        self.assertEqual(total, Decimal("0.067") * 15 + Decimal("0.134") * 4)
+        self.assertEqual(total, Decimal("1.541"))
         self.assertLessEqual(total, Decimal("7.34"))
         for s in plan["steps"]:
             if s["kind"] == "derive":

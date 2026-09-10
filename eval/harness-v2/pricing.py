@@ -225,6 +225,18 @@ def quantity_for(route_key: str, unit: str | None, case_row: dict, rendered_char
         return Decimal(int(math.ceil(secs / Decimal(60)))), "minutes", "elevenlabs_music_minute"
     if route_key == "veo-3.1-fast-extend":
         return Decimal(15), "seconds", "veo_extend_15s"
+    if route_key == "sync-lipsync-v3":
+        # pinned page (price-pins-2026-09/sync-lipsync-v3/PIN-INDEX.yaml, 2026-09-09): the exact id's endpointBilling record says
+        # billing_unit 'minutes', price 8. Whether fal prorates to the second is not stated for this id, so a per_minute roster unit
+        # reserves whole OUTPUT minutes rounded UP (conservative, as elevenlabs-music); a per_second unit bills the output seconds.
+        secs = _dec(params.get("output_seconds")) or _dec(case_row.get("output_seconds"))
+        if secs is None and row_unit == "seconds" and row_qty is not None:
+            secs = row_qty
+        if secs is None:
+            return None
+        if unit == "per_minute":
+            return Decimal(int(math.ceil(secs / Decimal(60)))), "minutes", "sync_lipsync_minute_rounded_up"
+        return secs, "seconds", "per_second"
     if unit in ("per_1000_characters", "per_1M_characters"):
         chars = Decimal(int(rendered_chars)) if rendered_chars is not None else _dec(params.get("chars"))
         if chars is None:

@@ -14,7 +14,7 @@ def aud_lang(code, n_speakers=1):
 
 def tts_routes(script, conditional_hindi=False):
     rs = [rt("sarvam-bulbul-v3", "native", "1b", dict(script=script, chars=len(script), voice="one male voice, chosen by ear at dispatch and recorded", language_code="as the script"), len(script), quantity_unit="chars"),
-          rt("elevenlabs-v3", "native", "1b", dict(script=script, chars=len(script), voice="one male voice, recorded", model="eleven_v3"), len(script), quantity_unit="chars")]
+          rt("elevenlabs-v3-direct", "native", "1b", dict(script=script, chars=len(script), voice="one male voice, recorded", model="eleven_v3"), len(script), quantity_unit="chars")]
     if conditional_hindi:
         rs += [rt("chirp-3-hd-hi-in", "conditional", "1b", dict(script=script, chars=len(script), voice="hi-IN male"), len(script), quantity_unit="chars"),
                rt("azure-neural-tts-hi-in", "conditional", "1b", dict(script=script, chars=len(script), voice="hi-IN male"), len(script), quantity_unit="chars")]
@@ -200,7 +200,7 @@ def mus_case(cid, lang, text, source, brief_params, contract, irr, prompt):
         reference_assets=[],
         acceptance_contract=contract,
         routes=[rt("lyria", "native", "1b", dict(duration_s=30, format="wav"), 1, quantity_unit="clips"),
-                rt("elevenlabs-music", "native", "1b", dict(duration_s=30, format="wav", billed_minutes="1 (30-s clip rounded up)"), 1, quantity_unit="minutes")],
+                rt("elevenlabs-music-direct", "native", "1b", dict(duration_s=30, format="wav", billed_minutes="1 (30-s clip rounded up)"), 30, quantity_unit="seconds")],
         downstream_reuse=dict(feeds=[], consumes=[]),
         cut_order_rank=8 if cid == "MUS-02" else None, irreducibility_ref="C." + cid, irreducibility=irr,
         bp=dict(advertising=True, audio=True, decisions=[], text_handling="none (audio)",

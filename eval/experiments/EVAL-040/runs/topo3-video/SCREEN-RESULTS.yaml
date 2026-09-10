@@ -1,0 +1,800 @@
+# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.
+schema: SCREEN-RESULTS-v0
+run_id: topo3-video
+results_ref: eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml
+results_sha256: a47a93e38d7bad784875542c44767f7d7a7e94065d3b497b1e27c01520486f4f
+screened_utc: '2026-09-09T17:19:41.621491Z'
+instrument:
+  id: vlm_screen
+  version: 0.1.0
+  model: gemini-3.5-flash
+  config_hash: c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_status: screened_not_qualified
+  surface: gemini_api
+  credential_name: GOOGLE_API_KEY
+criteria_sha256: 8d9263c770680bbb1505cfaff5b08fe1dbffc84288c6236707500b728c5b8b4d
+registry: false
+note: screened_not_qualified tier input for evidence_map.py; never a Registry row; qualification is decided by QUALIFICATION-REPORT.yaml
+trials:
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r2
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  controller_verdict: reject
+  controller_note: same 'कली' misspelling as the plate (Controller); rest okay - upstream plate defect, motion/text stability fine
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r2.mp4
+    sha256: ded0bf9cbcafd5a65e66315da46c32ba8f02f5f167a1f4ca42ee9f7087827bfd
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 2 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: fail
+    evidence: The top text reads 'दीपावली कली शुभकामनाएं' instead of 'दीपावली की शुभकामनाएं'.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text strings remain stable and do not drift or wobble across the frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: fail
+    evidence: The text '20% छूट' is larger than 'श्री गणेश मिंष्ठान भंडार' in every frame.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: pass
+    evidence: A light flare appears on the text in the middle frame, indicating movement.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: pass
+    evidence: No additional lettering or pseudo-lettering is present in the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3889
+    candidatesTokenCount: 261
+    totalTokenCount: 5839
+    thoughtsTokenCount: 1689
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 320569
+    sha256: 107782e94288a584115a1e9995a904bb4b15160efdf1ddf38f710505ecde922a
+  - frame_index: 78
+    time_s: 3.25
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 388596
+    sha256: 30f24984c41b47564e08589ef9cce24c1abd2773f0e404c30ec01a9c98987e8c
+  - frame_index: 157
+    time_s: 6.542
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 352195
+    sha256: 2c10506cc4e2e2e7370528bf61ac55b03f73793e5e490efa83df4b571f5b5a55
+  usd_at_pinned_price: '0.023384'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r1
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: veo-3.1-full
+  arm: B_premium_native_t2v
+  controller_verdict: reject
+  controller_note: some other text altogether (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r1.mp4
+    sha256: c928f77b8b4e4b7337d29196e1b72abd899dbbea6fbd31f6e527e6a294a37c90
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 3 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: fail
+    evidence: The lettering in the frames does not match the required Hindi strings.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text strings remain stable and do not drift or wobble across the frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: fail
+    evidence: The required string is entirely absent from all frames.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: pass
+    evidence: Movement is visible as a white banner appears at the bottom of the frame.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: fail
+    evidence: Unapproved pseudo-lettering is present in all three frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3890
+    candidatesTokenCount: 170
+    totalTokenCount: 5969
+    thoughtsTokenCount: 1909
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 362350
+    sha256: 462d66142e8d27388a35f5ac4a8b5a098f32c2557739d84d41825b127381b393
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 409968
+    sha256: 30e8f25b5b1bae91996112563a46f80428446bfe56c3e1d4abb69664496f1964
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 429871
+    sha256: 68a0bd9309203805fca96c0cfbb002826ed4169218d4c3db8289370c1feaca03
+  usd_at_pinned_price: '0.024546'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r2
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: wan-3.0-prime-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  controller_verdict: reject
+  controller_note: same 'कली' misspelling (Controller); rest okay - upstream plate defect
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r2.mp4
+    sha256: a714c358ccc4deacf0c13df9833b1d006f2f8eba5dede0f8f6fe707df4824a90
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 3 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: fail
+    evidence: The text reads "दीपावली कली" instead of "दीपावली की" and "मिंष्ठान" instead of "मिष्ठान".
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text strings are completely static and do not drift, wobble, or flicker.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: fail
+    evidence: The text "20% छूट" is the largest lettering in all frames, not "श्री गणेश मिष्ठान भंडार".
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: fail
+    evidence: No movement is visible in the diya flames or background, indicating a still image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is visible in any frame.
+  http_status: 200
+  usage:
+    promptTokenCount: 3890
+    candidatesTokenCount: 277
+    totalTokenCount: 5848
+    thoughtsTokenCount: 1681
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 407237
+    sha256: 1a9b96a1c6568c7e1dc7b224432ecf39ab7572a8bee7467429299a9752f518a4
+  - frame_index: 89
+    time_s: 2.967
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 451683
+    sha256: 767265ac7ed62bdc7a2cea7e10c32b1e9a59addd164f644b1dbc789e4820e24d
+  - frame_index: 179
+    time_s: 5.967
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 458631
+    sha256: d24e82aeded74dbb2c8cf3b972c527b4a9641c6087a71751f5e30894f614217d
+  usd_at_pinned_price: '0.023457'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r2
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: veo-3.1-full
+  arm: B_premium_native_t2v
+  controller_verdict: reject
+  controller_note: some other text altogether (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__veo-3.1-full__B_premium_native_t2v__r2.mp4
+    sha256: a7739e75601224a697c5adbafd2bbcc6c8258a335d1d5ab388ce9448f5e0ce5f
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 4 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: fail
+    evidence: The text in the frames does not match the required strings.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text is completely static across all frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: fail
+    evidence: The required string 'श्री गणेश मिष्ठान भंडार' is missing from all frames.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: fail
+    evidence: No movement is visible in the diya flames or light across the frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: fail
+    evidence: Other lettering is present in all frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3890
+    candidatesTokenCount: 232
+    totalTokenCount: 5681
+    thoughtsTokenCount: 1559
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 328219
+    sha256: 17bc69ee056b919ec4ad2afc89860a9d310d713d6a727d539a21b797f976661d
+  - frame_index: 71
+    time_s: 2.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 380863
+    sha256: e77eebcd62b03cfb506709844b159b887e3aad32e9bd2cae0cf5e0590fae9f93
+  - frame_index: 143
+    time_s: 5.958
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 405640
+    sha256: 5e1d14b66efbc9b157e0c5aa935f001966502dc5bac824723f2ab8c379537f4e
+  usd_at_pinned_price: '0.021954'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r2
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: C_textless_plate_i2v_composite
+  controller_verdict: accept
+  controller_note: no mistakes (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r2.composite.mp4
+    sha256: 2813690593b8aa7ac7c7a56c281a4629f719f6c3fc75cbad672aff2485b77882
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: pass
+    evidence: The text in all three frames matches the specified strings exactly without any character differences.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text strings remain perfectly still and stable across all frames without any drift or flicker.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: pass
+    evidence: The string 'श्री गणेश मिष्ठान भंडार' is visibly the largest lettering in all three frames.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: pass
+    evidence: Flames appear on the sweets inside the box in the middle and last frames, showing clear movement.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3889
+    candidatesTokenCount: 261
+    totalTokenCount: 5753
+    thoughtsTokenCount: 1603
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 239149
+    sha256: 7dbdf574233065a568084d8ab8a42f7b6cd4419efa80fab6e58c8cad9ab8c51f
+  - frame_index: 78
+    time_s: 3.25
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 322263
+    sha256: 5c2d37ef5f317af4e85539f79012897382aacc93754a7878d11dfcaa4a2cefa3
+  - frame_index: 157
+    time_s: 6.542
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 309596
+    sha256: 998d8a3d55f7d87c8d8fe922b9983e71643b3d3651f7947b496e85a2b1b48d5a
+  usd_at_pinned_price: '0.022610'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r1
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: wan-3.0-prime-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  controller_verdict: reject
+  controller_note: '''कली'' mistake plus ''छूट'' misspelled (Controller)'
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__wan-3.0-prime-i2v__A_cheap_still_to_cheap_i2v__r1.mp4
+    sha256: 1d8437a7753193d29723f73b69d7409648edd22cfad5107f8cf12eadbac9d113
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 3 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: fail
+    evidence: The top lettering reads 'दीपावली कली शुभकामनाएं' instead of 'दीपावली की शुभकामनाएं'.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text strings do not drift, wobble, smear, or flicker across the frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: fail
+    evidence: The lettering '20% छूट' is larger than 'श्री गणेश मिंष्ठान भंडार' in all frames.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: fail
+    evidence: No movement is visible in the diya flames or light across the three frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present in any frame.
+  http_status: 200
+  usage:
+    promptTokenCount: 3890
+    candidatesTokenCount: 263
+    totalTokenCount: 5788
+    thoughtsTokenCount: 1635
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 408031
+    sha256: 82ac6dacc03b30178daae9b856092e4d657217705e0ffb98cc9e10222d063b43
+  - frame_index: 89
+    time_s: 2.967
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 451775
+    sha256: 8e7ab345077b8fd458c34edcd0572508166f5d477f625bd0684e3a6447a954fb
+  - frame_index: 179
+    time_s: 5.967
+    width: 432
+    height: 768
+    source_width: 720
+    source_height: 1280
+    png_bytes: 459806
+    sha256: b50434a358b6c3fa26bc16a5504597f4c5f08c725e2cbf291f2272e3100352f6
+  usd_at_pinned_price: '0.022917'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r1
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: kling-v3-pro
+  arm: B_premium_native_t2v
+  controller_verdict: reject
+  controller_note: different text altogether (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r1.mp4
+    sha256: 7ddc55c7bff7583e1499621d6cc8572720a1f42297e2d74b54fae94cde24a390
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 4 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: fail
+    evidence: The text in the frames is gibberish and does not match the required Hindi phrases.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text is completely stable and does not drift or flicker between frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: fail
+    evidence: The required phrase is entirely missing from the frames.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: fail
+    evidence: The video is a completely still image with no movement in the flames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: fail
+    evidence: Gibberish pseudo-lettering is visible in all frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3886
+    candidatesTokenCount: 147
+    totalTokenCount: 5254
+    thoughtsTokenCount: 1221
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 366873
+    sha256: c49abf4e259999b9f978933df30eac62434b7044bc7855a53d9b594d927a879e
+  - frame_index: 72
+    time_s: 3.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 412228
+    sha256: f87dff9db201d912c6b817f01e592dad7c43b208037c3bda5a49af8d5bdf1be9
+  - frame_index: 144
+    time_s: 6.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 420052
+    sha256: 092123648c6aed3203179c3ce0d0ec6099d99f1c74572af5ce6b0df16ebd08ff
+  usd_at_pinned_price: '0.018141'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r2
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: kling-v3-pro
+  arm: B_premium_native_t2v
+  controller_verdict: reject
+  controller_note: different text altogether (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__kling-v3-pro__B_premium_native_t2v__r2.mp4
+    sha256: a1981b12229095e5beb01d41a7e3b77e16fafeab665e1b3540ae0cd152bf8eb7
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 4 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: fail
+    evidence: The text in the frames does not match the required strings 'दीपावली की शुभकामनाएं', 'सभी मिठाइयों पर 20% छूट', or 'श्री गणेश मिष्ठान
+      भंडार'.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text remains completely static and does not drift, wobble, smear, or flicker across the frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: fail
+    evidence: The required string 'श्री गणेश मिष्ठान भंडार' is not present in any of the frames.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: fail
+    evidence: No movement is visible in the diya flames or light, indicating a completely still image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: fail
+    evidence: Other Devanagari lettering and pseudo-lettering are present in all frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3886
+    candidatesTokenCount: 284
+    totalTokenCount: 5119
+    thoughtsTokenCount: 949
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 338975
+    sha256: c940ec60de673dff9662feb750e5e83f1b77629d418cde364fff98e509b63af6
+  - frame_index: 72
+    time_s: 3.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 399785
+    sha256: 52d3bd6d5dcd87b4b8aab8c57b585a2023bfc91b0bf0589549b71bf0d3856eba
+  - frame_index: 144
+    time_s: 6.0
+    width: 432
+    height: 768
+    source_width: 1080
+    source_height: 1920
+    png_bytes: 407681
+    sha256: ffc27aa1ec26a4a8381582cc7b35d236317e50860b325cd95ef7f46a9a375f93
+  usd_at_pinned_price: '0.016926'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r1
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: A_cheap_still_to_cheap_i2v
+  controller_verdict: reject
+  controller_note: different text altogether (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__minimax-h3-max-i2v__A_cheap_still_to_cheap_i2v__r1.mp4
+    sha256: d993433092ccbe01f2084dc76ed69c85edde972a71549d2ee963177de38026e1
+    media_kind: video
+  screen_overall: reject
+  verdict: fail
+  absence_reason: null
+  note: 'reject: 3 contract line(s) failed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: fail
+    evidence: The lettering reads 'दीपावली कली शुभकामनाएं' and 'श्री गणेश मिंष्ठान भंडार', which differs from the required strings.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text remains perfectly static and does not drift, wobble, smear, or flicker across the frames.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: fail
+    evidence: The text '20% छूट' is visibly larger than 'श्री गणेश मिंष्ठान भंडार' in all frames.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: fail
+    evidence: No movement is visible in the diya flames or any other elements, indicating a completely still image.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3889
+    candidatesTokenCount: 280
+    totalTokenCount: 5308
+    thoughtsTokenCount: 1139
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 321790
+    sha256: ac7f9f22e1e7c414de9b9cb53c9fcffdf504dd5ce1fd8c15cc491c247cee7032
+  - frame_index: 78
+    time_s: 3.25
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 371867
+    sha256: 0fad0f65a40d7e8ac58336f63cd4472371989f01cad06a76b4505f33ae2e834a
+  - frame_index: 157
+    time_s: 6.542
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 341631
+    sha256: 5049911c4ee5cda7eb8296229929761bbe60bbdff110a71abbff3fd4c9ee1305
+  usd_at_pinned_price: '0.018605'
+  agree: true
+- run_id: topo3-video
+  results_run_id: topo3-video
+  trial_id: VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r1
+  case_id: VID-TOPO3-01
+  question: VID-TOPO3
+  route_key: minimax-h3-max-i2v
+  arm: C_textless_plate_i2v_composite
+  controller_verdict: accept
+  controller_note: correct (Controller)
+  media_kind: video
+  artifact:
+    path: eval/experiments/EVAL-040/runs/topo3-video/artifacts/media/VID-TOPO3-01__minimax-h3-max-i2v__C_textless_plate_i2v_composite__r1.composite.mp4
+    sha256: a553d6cb8ec8c4312308d9a3b0100d43f8d291a4121f54a341688ecf502a96e2
+    media_kind: video
+  screen_overall: accept
+  verdict: pass
+  absence_reason: null
+  note: 'accept: every contract line passed'
+  rules:
+  - rule_id: R1
+    kind: mixed
+    rule: ACCEPT only if, in the first, middle and last frame, the lettering reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट"
+      and "श्री गणेश मिष्ठान भंडार" (the figure 20 as 20 or २०); REJECT if any character differs between frames or from the strings.
+    verdict: pass
+    evidence: The text in all three frames reads exactly "दीपावली की शुभकामनाएं", "सभी मिठाइयों पर 20% छूट", and "श्री गणेश मिष्ठान भंडार" without
+      any changes.
+  - rule_id: R2
+    kind: reject
+    rule: REJECT if any string drifts, wobbles, smears or flickers across the clip.
+    verdict: pass
+    evidence: The text strings remain perfectly still and stable across all frames without any drift or wobble.
+  - rule_id: R3
+    kind: accept_only
+    rule: ACCEPT only if "श्री गणेश मिष्ठान भंडार" is the largest lettering in every frame.
+    verdict: pass
+    evidence: The text "श्री गणेश मिष्ठान भंडार" is visibly the largest lettering in all three frames.
+  - rule_id: R4
+    kind: mixed
+    rule: ACCEPT only if some movement is visible (diya flames or light) — a still image held for 6 s is a reject.
+    verdict: pass
+    evidence: Movement is clearly visible in the rising flames and smoke from the candles inside the box across the frames.
+  - rule_id: R5
+    kind: reject
+    rule: REJECT if any other lettering or pseudo-lettering appears in any frame.
+    verdict: pass
+    evidence: No other lettering or pseudo-lettering is present in any of the frames.
+  http_status: 200
+  usage:
+    promptTokenCount: 3889
+    candidatesTokenCount: 284
+    totalTokenCount: 5824
+    thoughtsTokenCount: 1651
+  frames:
+  - frame_index: 0
+    time_s: 0.0
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 239629
+    sha256: 650ef3a9ba01b26aec1fc259012e952c560cc859e62262f0e0458499bf1e24ba
+  - frame_index: 78
+    time_s: 3.25
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 325591
+    sha256: 3e89f5ebd76ac40191659ae50978e581a7794927887e17b1440a088d88a1d037
+  - frame_index: 157
+    time_s: 6.542
+    width: 438
+    height: 768
+    source_width: 768
+    source_height: 1344
+    png_bytes: 322456
+    sha256: 26f45d1e95ed33e7007c27c45089df869ecf22dbd66c824de47f1adbf6bcef11
+  usd_at_pinned_price: '0.023249'
+  agree: true

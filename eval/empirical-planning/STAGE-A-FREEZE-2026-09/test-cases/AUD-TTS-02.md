@@ -55,7 +55,7 @@
 
 ## Routes
 
-See `TEST-CASES.yaml` → `routes[]`: elevenlabs-v3, sarvam-bulbul-v3.
+See `TEST-CASES.yaml` → `routes[]`: elevenlabs-v3-direct, sarvam-bulbul-v3.
 
 **Blueprint:** `BLUEPRINTS/AUD-TTS-02.blueprint.md` (sha256 `87944aca072597cd…`, author executor_agent)
 

@@ -80,6 +80,7 @@ class RunnerBase(NoNetworkTestCase):
     def setUp(self):
         super().setUp()
         os.environ["FAL_KEY"] = CANARY
+        os.environ["GOOGLE_API_KEY"] = "FAKE-GOOGLE-API-KEY-NOT-A-CREDENTIAL"   # the Gemini routes read this name (2026-09-09)
         self.out = self.tmp / "runs" / "run-x"
         self.auth = self.write_auth()
         self.factory = FakeFactory()
@@ -183,7 +184,7 @@ class PlanTest(RunnerBase):
         self.assertIn(("IMG-CORE-01", "sd3.5-large"), excluded)
         self.assertIn(("IMG-CORE-01", "mai-image-2.6"), excluded)
         self.assertTrue(all(e["reason"] for e in plan["excluded"]))
-        self.assertEqual(plan["header"]["roster_sha256"], "99cde63c8c668e57457915ee1aae69e7ba7f09ed9c8b2d26bc5a3a0537aa2b46")
+        self.assertEqual(plan["header"]["roster_sha256"], "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c")
         self.assertEqual(plan["header"]["item_basis_commit"], ITEM_BASIS_COMMIT)
         self.assertEqual(plan["header"]["tranche_id"], "EVAL-040-TRANCHE-1")
         self.assertTrue(plan["header"]["freeze_matches_item_basis"])

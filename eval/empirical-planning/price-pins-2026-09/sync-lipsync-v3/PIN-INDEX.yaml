@@ -1,0 +1,86 @@
+# PIN-INDEX — sync-lipsync-v3 re-pin, fetched 2026-09-09 (UTC). Same conventions as ../PIN-INDEX.yaml: the exact file, its size,
+# its SHA-256 fingerprint, the command used and exact substrings (evidence_quote + additional_evidence_quotes) that must be present in
+# the bytes. Free, unauthenticated GETs of public pages; no queue submit, no key. Kept out of ../PIN-INDEX.yaml because that index sits
+# at its 5 MB byte cap (4998 KB); tests/test_surfaces.py verifies this file against the bytes.
+#
+# What the bytes say (plain English):
+#   * The route was carried UNPINNED since EVAL-039B Auditor AF-1: the only prose price on the page ("$0.1333 per output second")
+#     belongs to the sibling endpoint fal-ai/sync-lipsync/v3/image-to-video, and the exact id's pricingInfoOverride is empty.
+#   * The same page ALSO embeds a structured billing record for the endpoint it serves - endpointBilling {endpoint: fal-ai/sync-lipsync/v3,
+#     billing_unit: minutes, price: 8} - i.e. USD 8.00 per output minute for the EXACT id (= 0.1333/s, the 26-Aug figure). It was already
+#     in the 2026-09-04 bytes; it was not searched for. Both fetches carry it; the quotes below bind it to the id.
+#   * Not stated in the bytes: whether fal prorates minutes to the second. The harness reserves whole output minutes rounded UP
+#     (conservative; a 6-s output reserves 1 minute = USD 8.00) until a metered call shows the real proration.
+#   * Not retained (redundant): https://fal.ai/models/fal-ai/sync-lipsync/v3/api fetched 2026-09-09T13:48:05Z, HTTP 200, 361684 bytes,
+#     sha256 1f6834324775261c248a78847cb39979f3d4a2a112eef64618417dbf62857716 - carries the identical endpointBilling record.
+#   * Applying the price to the freeze package means: roster record regular_price {value: 8, unit: per_minute}, route_status pinned,
+#     pin_ref -> the 2026-09-09 page; tools/routes.py + tools/cases_aud.py (quantity 1 minute); rebuild with tools/build.py (new
+#     priced_against_roster sha256); regenerate DRY-RUN-MANIFEST. Not done in the working tree on 2026-09-09: the roster sha256 is bound
+#     to the live lane running from this tree and to every test's authorisation fixture. Until then the route refuses live dispatch.
+pins:
+- route_key: sync-lipsync-v3
+  pin_file: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3-2026-09-09.html
+  pin_kind: price
+  url: https://fal.ai/models/fal-ai/sync-lipsync/v3
+  fetched_utc: '2026-09-09T13:48:02Z'
+  http_status: '200'
+  bytes: 314752
+  sha256: cce249ef1c210910a63f05204a345f5f82cddb04899bc8c367188c83e4f09872
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/sync-lipsync/v3" -o fal-sync-lipsync-v3-2026-09-09.html
+  evidence_quote: endpointBilling\":{\"endpoint\":\"fal-ai/sync-lipsync/v3\",\"billing_unit\":\"minutes\",\"price\":8
+  additional_evidence_quotes:
+  - \"endpointId\":\"fal-ai/sync-lipsync/v3\"
+  - \"id\":\"fal-ai/sync-lipsync/v3/image-to-video\"
+  - Your request will cost **$0.1333** per output second.
+  note: 'THE PRICE FOR THE EXACT ID. The page embeds a machine-readable billing record for the endpoint it serves: endpointBilling {endpoint: fal-ai/sync-lipsync/v3,
+    billing_unit: minutes, price: 8, provider_type: partner} = USD 8.00 per output minute (0.1333 per second). The only prose price string on the page (the
+    third additional quote) still sits inside the embedded record of the SIBLING endpoint (second additional quote), exactly as Auditor AF-1 found; the
+    exact id''s own pricingInfoOverride is null. The endpointBilling record does not say whether fal prorates to the second; the harness reserves whole
+    minutes rounded up (pricing.quantity_for, rule sync_lipsync_minute_rounded_up) until a metered call shows otherwise.'
+- route_key: sync-lipsync-v3
+  pin_file: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-sync-lipsync-v3.html
+  pin_kind: price
+  url: https://fal.ai/models/fal-ai/sync-lipsync/v3
+  fetched_utc: '2026-09-04T20:35:27Z'
+  http_status: '200'
+  bytes: 318464
+  sha256: d38bf225721ececcb97fb2e1181141af8a64c2162fa7fa4dcf329a86c7a91abc
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/models/fal-ai/sync-lipsync/v3" -o fal-sync-lipsync-v3.html
+  evidence_quote: endpointBilling\":{\"endpoint\":\"fal-ai/sync-lipsync/v3\",\"billing_unit\":\"minutes\",\"price\":8
+  additional_evidence_quotes:
+  - \"endpointId\":\"fal-ai/sync-lipsync/v3\"
+  - \"id\":\"fal-ai/sync-lipsync/v3/image-to-video\"
+  - Your request will cost **$0.1333** per output second.
+  note: 'The 2026-09-04 fetch (listed page_only in ../PIN-INDEX.yaml) carries the SAME endpointBilling record for the exact id: the price was there at the
+    original pin and was missed because only prose price strings were searched. Re-read 2026-09-09; bytes unchanged.'
+- route_key: sync-lipsync-v3
+  pin_file: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-api-models-sync-lipsync-v3.json
+  pin_kind: page_only
+  url: https://fal.ai/api/models?keywords=fal-ai/sync-lipsync/v3
+  fetched_utc: '2026-09-09T13:47:59Z'
+  http_status: '200'
+  bytes: 6106
+  sha256: 07cc9546c586d85cf3e10acf4abd6e61616c231a072c7db4813a647c6781263f
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://fal.ai/api/models?keywords=fal-ai/sync-lipsync/v3" -o fal-api-models-sync-lipsync-v3.json
+  evidence_quote: '"id":"fal-ai/sync-lipsync/v3"'
+  additional_evidence_quotes:
+  - '"id":"fal-ai/sync-lipsync/v3/image-to-video","modelId"'
+  - '"pricingInfoOverride":"Your request will cost **$0.1333** per output second."'
+  note: 'Re-fetched 2026-09-09: byte-identical to the 2026-09-04 file (same sha256), so the 2026-09-04 bytes are kept as the pin file. The exact id fal-ai/sync-lipsync/v3
+    still has no pricingInfoOverride field; the 0.1333/s string belongs to the sibling image-to-video id. This JSON carries no endpointBilling record -
+    only the model page does.'
+- route_key: sync-lipsync-v3
+  pin_file: eval/empirical-planning/price-pins-2026-09/sync-lipsync-v3/fal-openapi-sync-lipsync-v3-2026-09-09.json
+  pin_kind: schema_page
+  url: https://api.fal.ai/v1/models?endpoint_id=fal-ai/sync-lipsync/v3&expand=openapi-3.0
+  fetched_utc: '2026-09-09T13:48:08Z'
+  http_status: '200'
+  bytes: 9053
+  sha256: 41a8886056dad963e9441ecc2ed4f36c6212b7e099e9e7fa2dd141f041cf00d1
+  fetch_command: curl -sL -A "Mozilla/5.0" "https://api.fal.ai/v1/models?endpoint_id=fal-ai/sync-lipsync/v3&expand=openapi-3.0" -o fal-openapi-sync-lipsync-v3-2026-09-09.json
+  evidence_quote: '"endpoint_id":"fal-ai/sync-lipsync/v3"'
+  additional_evidence_quotes:
+  - '"SyncLipsyncV3Input"'
+  - '"required":["video_url","audio_url"]'
+  note: 'Shape re-check: components.schemas are identical to the 2026-09-04 schema pin eval/harness-v2/schemas/fal/fal-ai_sync-lipsync_v3.json (Input: video_url
+    + audio_url required; options, sync_mode optional). Bytes differ from that pin only outside the schema. No price in this document.'

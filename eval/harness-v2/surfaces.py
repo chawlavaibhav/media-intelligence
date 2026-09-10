@@ -50,6 +50,27 @@ GCP_KEY_NAME = "gcloud auth print-access-token (service-account key file, MD-C3)
 VERTEX_PIN = "eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html"
 PINS = "eval/empirical-planning/price-pins-2026-09"
 ELEVENLABS_PRICING_PIN = f"{PINS}/elevenlabs-direct/elevenlabs-pricing.html"
+
+# 2026-09-09 Gemini Developer API surface (CONTROLLER-GEMINI-MODELS-VIA-GEMINI-KEY-2026-09-09 + CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST):
+# every Gemini-named model is called on generativelanguage.googleapis.com with the key NAMED GOOGLE_API_KEY in ~/.mi-keys (name only),
+# billed as GCP credits via that key (pool `credits`). Veo / Lyria stay on Vertex. Pins: price-pins-2026-09/gemini-api/PIN-INDEX.yaml.
+GEMINI_API_KEY_NAME = "GOOGLE_API_KEY"
+GEMINI_API_MODELS = "https://generativelanguage.googleapis.com/v1beta/models"          # + /<id>:generateContent (image)
+GEMINI_API_INTERACTIONS = "https://generativelanguage.googleapis.com/v1beta/interactions"   # Omni video (Interactions API)
+GEMINI_API_PRICING_PIN = f"{PINS}/gemini-api-judge/gemini-api-pricing.html"
+GEMINI_API_PIN_INDEX = f"{PINS}/gemini-api/PIN-INDEX.yaml"
+GEMINI_API_SCHEMA = "eval/harness-v2/schemas/gemini_api/SCHEMA-INDEX.yaml"
+GEMINI_API_BILLING_NOTE = "GCP credits via the Gemini API key"
+GEMINI_API_PRICES = {   # exact strings on the pinned Gemini API pricing page (Standard tier); test_surfaces checks them against the bytes
+    "gemini-3.1-flash-image": "$0.067 per 1K image",
+    "gemini-3-pro-image": "$0.134 per 1K/2K image",
+    "gemini-omni-1.1-flash": "$17.50 (video)",     # per 1M output tokens; "5,792 tokens per second of 720p video" -> 0.10136 USD/s derived
+}
+# Route keys whose registry surface / pool the freeze package (COST-TABLE route_catalogue, roster) has NOT yet been rebuilt for, as
+# {route_key: (package surface, package pool)}. test_surfaces checks this table EXACTLY against the committed catalogue and dry_run.py lists
+# every entry in the manifest. EMPTY since 2026-09-10: the roster records were re-pointed to gemini_api / credits and the package rebuilt
+# (tools/build.py), so the catalogue, the roster and this registry agree for every Gemini-named key.
+GEMINI_API_REPOINT_PENDING_PACKAGE: dict[str, tuple[str, str]] = {}
 # Routes outside the freeze catalogue (no TEST-CASES / COST-TABLE row): registered so the adapter, ledger pool and cap
 # are tested code, but never planned by run_live from the catalogue and never counted in the freeze reconciliation.
 EXTENSION_ROUTES: tuple[str, ...] = ()   # 2026-09-09: the ElevenLabs direct routes entered the freeze catalogue (Controller decision); none left
@@ -58,8 +79,8 @@ EXTENSION_ROUTES: tuple[str, ...] = ()   # 2026-09-09: the ElevenLabs direct rou
 @dataclass(frozen=True)
 class SurfaceEntry:
     route_key: str
-    adapter: str                      # fal_queue | vertex_veo | vertex_gemini_image | vertex_omni | vertex_lyria | sarvam_tts | elevenlabs_direct | none
-    surface: str                      # fal | vertex | sarvam_direct | elevenlabs_direct | bedrock | azure_foundry | cloud_tts
+    adapter: str                      # fal_queue | vertex_veo | vertex_gemini_image | vertex_omni | gemini_api_image | gemini_api_omni | vertex_lyria | sarvam_tts | elevenlabs_direct | none
+    surface: str                      # fal | vertex | gemini_api | sarvam_direct | elevenlabs_direct | bedrock | azure_foundry | cloud_tts
     surface_model_id: str
     endpoint: str
     params_schema: str                # pinned schema ref (path#Component) or a reason
@@ -111,14 +132,37 @@ def _veo(key, model_id, variant, workflow, roster_key="veo-3.1-fast", calls=1, n
 
 
 def _omni(key, variant, notes=""):
+    """Gemini Omni Flash on the Gemini Developer API (2026-09-09; before that the same routes ran on Vertex, adapter vertex_omni,
+    model gemini-omni-1.1-flash-preview at VERTEX_INTERACTIONS - the Vertex adapter stays importable and tested, the registry rows
+    are not duplicated because the catalogue key set is frozen). Draws already made on Vertex are evidence of the same model."""
     return SurfaceEntry(
-        route_key=key, adapter="vertex_omni", surface="vertex",
-        surface_model_id="gemini-omni-1.1-flash-preview", endpoint=VERTEX_INTERACTIONS,
-        params_schema="eval/harness-v2/schemas/vertex/SCHEMA-INDEX.yaml#omni (Interactions API on the Vertex guide pages)",
-        price_pin_ref=VERTEX_PIN, billing_pool="credits", currency="USD",
-        key_name=GCP_KEY_NAME, credential_file_name=" | ".join(GCP_CREDENTIAL_CANDIDATES),
+        route_key=key, adapter="gemini_api_omni", surface="gemini_api",
+        surface_model_id="gemini-omni-1.1-flash", endpoint=GEMINI_API_INTERACTIONS,
+        params_schema=f"{GEMINI_API_SCHEMA}#omni_interactions (Gemini API Omni guide + model page + Interactions API reference)",
+        price_pin_ref=GEMINI_API_PRICING_PIN, billing_pool="credits", currency="USD",
+        key_name=GEMINI_API_KEY_NAME, credential_file_name=MI_KEYS_FILE,
         shape_status="verified", roster_key="gemini-omni-flash-1.1", roster_variant=variant,
-        workflow="t2v", lane="native_av", media_kind="video", notes=notes)
+        workflow="t2v", lane="native_av", media_kind="video",
+        notes=(f"{GEMINI_API_BILLING_NOTE}; pinned Gemini API price (Standard): video output '{GEMINI_API_PRICES['gemini-omni-1.1-flash']}' per 1M "
+               "tokens at '5,792 tokens per second of 720p video' = 0.10136 USD/s derived (the roster's figure, from the Vertex page); "
+               "the roster record (re-pointed 2026-09-10) carries the same surface, id and pin"
+               + (f"; {notes}" if notes else "")))
+
+
+def _gemini_image(key, model_id, workflow, roster_key, notes=""):
+    """Gemini image models on the Gemini Developer API (2026-09-09): the generateContent body the Vertex adapter sends, byte for byte,
+    on generativelanguage.googleapis.com with the key NAMED GOOGLE_API_KEY. The Vertex rows are not kept under a -vertex suffix (the
+    catalogue key set is frozen); adapters/vertex_gemini_image.py stays importable and tested."""
+    return SurfaceEntry(
+        route_key=key, adapter="gemini_api_image", surface="gemini_api", surface_model_id=model_id,
+        endpoint=f"{GEMINI_API_MODELS}/{model_id}:generateContent",
+        params_schema=f"{GEMINI_API_SCHEMA}#gemini_image (generateContent reference + image-generation guide; live-proven by "
+                      "eval/experiments/EVAL-038/tools/generate_media.py on this surface)",
+        price_pin_ref=GEMINI_API_PRICING_PIN, billing_pool="credits", currency="USD",
+        key_name=GEMINI_API_KEY_NAME, credential_file_name=MI_KEYS_FILE, shape_status="verified",
+        roster_key=roster_key, roster_variant=None, workflow=workflow, lane="image", media_kind="image",
+        notes=f"{GEMINI_API_BILLING_NOTE}; pinned Gemini API price (Standard, 1K output, no imageSize sent): '{GEMINI_API_PRICES[model_id]}'"
+              + (f"; {notes}" if notes else ""))
 
 
 def _none(key, surface, model_id, roster_key, pool, workflow, lane, media_kind, pin, precond=(),
@@ -138,22 +182,10 @@ _ENTRIES: list[SurfaceEntry] = [
          "gpt-image-2", "fallback", "t2i", "image", "image",
          f"{PINS}/gpt-image-2/fal-openai-gpt-image-2.html",
          notes="quality=medium is pinned (README OQ-15 / MD-C8); the credit surface (Azure) is needs_controller_enablement"),
-    SurfaceEntry(route_key="nano-banana-2", adapter="vertex_gemini_image", surface="vertex",
-                 surface_model_id="gemini-3.1-flash-image",
-                 endpoint=f"{VERTEX_GLOBAL}/gemini-3.1-flash-image:generateContent",
-                 params_schema="eval/experiments/EVAL-038/tools/generate_media.py (live-proven body) + eval/harness-v2/schemas/vertex/SCHEMA-INDEX.yaml#gemini_image",
-                 price_pin_ref=VERTEX_PIN, billing_pool="credits", currency="USD",
-                 key_name=GCP_KEY_NAME, credential_file_name=" | ".join(GCP_CREDENTIAL_CANDIDATES),
-                 shape_status="verified", roster_key="nano-banana-2", roster_variant=None,
-                 workflow="t2i", lane="image", media_kind="image"),
-    SurfaceEntry(route_key="nano-banana-pro", adapter="vertex_gemini_image", surface="vertex",
-                 surface_model_id="gemini-3-pro-image",
-                 endpoint=f"{VERTEX_GLOBAL}/gemini-3-pro-image:generateContent",
-                 params_schema="eval/experiments/EVAL-038/tools/generate_media.py (live-proven body) + eval/harness-v2/schemas/vertex/SCHEMA-INDEX.yaml#gemini_image",
-                 price_pin_ref=VERTEX_PIN, billing_pool="credits", currency="USD",
-                 key_name=GCP_KEY_NAME, credential_file_name=" | ".join(GCP_CREDENTIAL_CANDIDATES),
-                 shape_status="verified", roster_key="nano-banana-pro", roster_variant=None,
-                 workflow="t2i", lane="image", media_kind="image"),
+    _gemini_image("nano-banana-2", "gemini-3.1-flash-image", "t2i", "nano-banana-2",
+                  notes="0.067 USD per 1K image, the same figure as the Vertex line the roster carried until its 2026-09-10 re-point"),
+    _gemini_image("nano-banana-pro", "gemini-3-pro-image", "t2i", "nano-banana-pro",
+                  notes="0.134 USD per 1K/2K image, the same figure as the Vertex line the roster carried until its 2026-09-10 re-point"),
     _fal("seedream-5-pro", "bytedance/seedream/v5/pro/text-to-image",
          "bytedance_seedream_v5_pro_text-to-image.json", "Seedream5ProTextToImageInput",
          "seedream-5-pro", None, "t2i", "image", "image",
@@ -180,9 +212,12 @@ _ENTRIES: list[SurfaceEntry] = [
          "flux-2-pro-edit", None, "edit", "image", "image",
          f"{PINS}/flux-2-pro-edit/fal-api-models-flux-2-pro-edit.json",
          notes="price = 0.03 first output megapixel + 0.015 per input megapixel (roster price_addons)"),
-    _fal("nano-banana-pro-edit", "fal-ai/nano-banana-pro/edit", "fal-ai_nano-banana-pro_edit.json",
-         "NanoBananaProEditInput", "nano-banana-pro-edit", None, "edit", "image", "image",
-         f"{PINS}/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json"),
+    _gemini_image("nano-banana-pro-edit", "gemini-3-pro-image", "edit", "nano-banana-pro-edit",
+                  notes="re-pointed 2026-09-09 from fal-ai/nano-banana-pro/edit (cash, 0.15 USD per image) to the same model on the Gemini API "
+                        "(Controller: fal is the last choice); reference images go inline; the pinned page adds input images at "
+                        "'Image input is set at 560 tokens' = '$0.0011 per image'. Roster re-pointed 2026-09-10 (surface gemini_api, id gemini-3-pro-image, "
+                        "pool credits, regular_price 0.134 per_image, price_addons.input_image 0.0011, pin_ref the Gemini API pricing page): pricing.py "
+                        "reserves the 0.134 output line per call; the input-image addon is recorded in the roster / COST-TABLE quantity rule, not projected"),
     _fal("seedream-5-pro-edit", "bytedance/seedream/v5/pro/edit", "bytedance_seedream_v5_pro_edit.json",
          "Seedream5ProEditInput", "seedream-5-pro-edit", None, "edit", "image", "image",
          f"{PINS}/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json",
@@ -208,6 +243,12 @@ _ENTRIES: list[SurfaceEntry] = [
     _fal("wan-3.0-prime", "alibaba/wan-3.0-prime/text-to-video", "alibaba_wan-3.0-prime_text-to-video.json",
          "Wan3PrimeTextToVideoInput", "wan-3.0-prime", "t2v", "t2v", "native_av", "video",
          f"{PINS}/wan-3.0-prime/fal-api-models-wan-3.0-prime-t2v.json"),
+    _fal("wan-2.2-a14b", "fal-ai/wan/v2.2-a14b/text-to-video", "fal-ai_wan_v2.2-a14b_text-to-video.json",
+         "WanV22A14bTextToVideoInput", "wan-2.2-a14b", "t2v", "t2v", "general_video", "video",
+         f"{PINS}/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html",
+         notes="Wan 2 contender (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on fal that renders the 6-s / 8-s rows; pinned USD 0.08 per "
+               "video second at 720p from the exact id's endpointBilling record and prose; silent family (no audio field in the pinned schema); "
+               "num_frames = 16 x duration + 1; rows only where Wan 3.0 Prime passed"),
     _omni("gemini-omni-1.1-flash", "t2v"),
     _fal("seedance-2.5", "bytedance/seedance-2.5/text-to-video", "bytedance_seedance-2.5_text-to-video.json",
          "Seedance25TextToVideoInput", "seedance-2.5", "t2v", "t2v", "native_av", "video",
@@ -232,6 +273,11 @@ _ENTRIES: list[SurfaceEntry] = [
     _fal("wan-3.0-prime-i2v", "alibaba/wan-3.0-prime/image-to-video", "alibaba_wan-3.0-prime_image-to-video.json",
          "Wan3PrimeImageToVideoInput", "wan-3.0-prime", "i2v", "i2v", "general_video", "video",
          f"{PINS}/wan-3.0-prime/fal-api-models-wan-3.0-prime-i2v.json"),
+    _fal("wan-2.2-a14b-i2v", "fal-ai/wan/v2.2-a14b/image-to-video", "fal-ai_wan_v2.2-a14b_image-to-video.json",
+         "WanV22A14bImageToVideoInput", "wan-2.2-a14b", "i2v", "i2v", "general_video", "video",
+         f"{PINS}/wan-2.2-a14b/fal-wan-v2.2-a14b-image-to-video-2026-09-09.html",
+         notes="Wan 2 contender (Controller decision 2026-09-09): image-to-video on the same accepted stills as the wan-3.0-prime-i2v rows; pinned USD 0.08 per "
+               "video second at 720p (exact id's endpointBilling record); silent family; aspect follows the plate (schema default auto)"),
     _fal("seedance-2.5-i2v", "bytedance/seedance-2.5/image-to-video", "bytedance_seedance-2.5_image-to-video.json",
          "Seedance25ImageToVideoInput", "seedance-2.5", "i2v", "i2v", "general_video", "video",
          f"{PINS}/seedance-2.5/fal-api-models-seedance-2.5-i2v.json"),
@@ -245,7 +291,10 @@ _ENTRIES: list[SurfaceEntry] = [
     _veo("veo-3.1-fast-ref2v", "veo-3.1-fast-generate-001", "ref2v", "ref2v"),
     _fal("kling-v3-elements", "fal-ai/kling-video/v3/pro/elements", None, None,
          "kling-v3-pro", "elements-ref2v", "ref2v", "general_video", "video", None, shape="unverified",
-         notes="conditional and unpinned: fal returns no model for this endpoint id (HTTP 404 on the model page; empty models list on the schema endpoint)"),
+         notes="conditional and unpinned: fal has no model under this endpoint id (re-checked 2026-09-09: model page and /api sub-page HTTP 404, "
+               "the id is absent from fal's own keyword search, the schema endpoint answers 'OpenAPI schema not available'; bytes in "
+               f"{PINS}/kling-v3-elements/PIN-INDEX.yaml). No price exists for this route; the nearest live ids (kling-video/v1.6/pro/elements, "
+               "kling-video/o3/pro/reference-to-video) are other models and are not pinned to this key"),
     # ---------------------------------------------------------------- video, longer / multi-shot
     _fal("kling-v3-pro-15s", "fal-ai/kling-video/v3/pro/text-to-video",
          "fal-ai_kling-video_v3_pro_text-to-video.json", "KlingVideoV3ProTextToVideoInput",
@@ -286,8 +335,11 @@ _ENTRIES: list[SurfaceEntry] = [
     # ---------------------------------------------------------------- audio, lip-sync
     _fal("sync-lipsync-v3", "fal-ai/sync-lipsync/v3", "fal-ai_sync-lipsync_v3.json", "SyncLipsyncV3Input",
          "sync-lipsync-v3", None, "lipsync", "lipsync", "video",
-         f"{PINS}/sync-lipsync-v3/fal-sync-lipsync-v3.html",
-         notes="price unpinned (the 0.1333/s string belongs to the sibling image-to-video endpoint) - outside the cap, refuses live dispatch (MD-C9)"),
+         f"{PINS}/sync-lipsync-v3/fal-sync-lipsync-v3-2026-09-09.html",
+         notes="price evidence pinned 2026-09-09 for the EXACT id: the model page's endpointBilling record reads billing_unit 'minutes', price 8 "
+               "(USD 8.00 per output minute = 0.1333/s; the prose 0.1333/s string still belongs to the sibling image-to-video endpoint - Auditor AF-1). "
+               f"Index: {PINS}/sync-lipsync-v3/PIN-INDEX.yaml. The roster and the freeze package still carry the route unpinned (roster sha256 is bound "
+               "to the running lane; rebuild staged) - outside the cap, refuses live dispatch until the package is rebuilt (MD-C9)"),
     _fal("kling-lipsync-a2v", "fal-ai/kling-video/lipsync/audio-to-video",
          "fal-ai_kling-video_lipsync_audio-to-video.json", "KlingVideoLipsyncAudioToVideoInput",
          "kling-lipsync-audio-to-video", None, "lipsync", "lipsync", "video",

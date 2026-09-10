@@ -3,12 +3,13 @@
 # No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.
 schema: ROUTING-EVIDENCE-MAP-v0
 status: product_asset; tiers never mixed; human tiers are never Registry rows
-generated_utc: '2026-09-09T13:38:55.029641Z'
+generated_utc: '2026-09-10T03:23:53.504195Z'
 round: EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video,
-  topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling)
+  topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling, vid-t2v,
+  vid-wan2, vid-wan2-i2v)
 sources:
   registry: eval/registry/registry-v1.jsonl
-  registry_sha256: 68dcab6cec068e4b19122ce9ee9003520ca194dfc9299f44777df73769759b0f
+  registry_sha256: 84c5d48c2d3e17b35dff03976b9ae22c98361baad32c5bb005afdb357dcc26e3
   results:
   - eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/half2/RESULTS.yaml
@@ -23,6 +24,8 @@ sources:
   - eval/experiments/EVAL-040/runs/aud-music-lyria/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/aud-lip/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/vid-2spk/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-t2v/RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-wan2/RESULTS.yaml
   - eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml
   results_run_ids:
   - img-r1
@@ -38,7 +41,28 @@ sources:
   - aud-music-lyria
   - aud-lip
   - vid-2spk
+  - vid-t2v
+  - vid-wan2 + vid-wan2-i2v
   criteria_sha256: 6fce5ea875c0653ad7321a292fcada31594c9512e1297deabba6c525d9d23888
+  screen_results:
+  - eval/experiments/EVAL-040/runs/img-r1/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/half2/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/topo3-video/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/topo3-nb-video/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-knee/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-ms/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-i2v/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-ref/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-tts-sarvam/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-tts-eleven/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-music-lyria/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/aud-lip/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/vid-2spk/SCREEN-RESULTS.yaml
+  - eval/experiments/EVAL-040/runs/img-r1-composite/SCREEN-RESULTS.yaml
+  screen_config_hashes:
+  - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+  qualification_reports: []
+  qualified_config_hashes: []
   summary: eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
   summaries:
   - eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md
@@ -189,7 +213,28 @@ routing_rules:
   tier: human_blind_acceptance
   registry: false
   source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
-cell_count: 53
+- id: RR-15
+  scope: plain text-to-video (an ordinary brief, no still, no reference)
+  rule: Gemini Omni 1.1 Flash on GCP credits is the default; MiniMax H3 Max the cash fallback for everyday briefs; do not rely on Veo 3.1 fast
+    or Kling v3 Pro audio where the brief names physical detail (labels, rain, slow motion) or spoken audio.
+  evidence: 'vid-t2v (4 briefs x 5 routes x 2, 36 judged): gemini-omni-1.1-flash 8/8 (USD 0.61); minimax-h3-max 5/7 (USD 0.48; 0/2 on the bottle
+    brief); wan-3.0-prime 4/7 (USD 0.84); veo-3.1-fast 4/8 (USD 0.60; 0/2 umbrella brief ''rain doesn''t appear, looks fake''); kling-v3-pro-audio
+    2/6 (USD 1.01; eliminated)'
+  tier: human_blind_acceptance
+  registry: false
+  caveat: four fal draws refused on balance (not counted); Wan and Kling ran as their mid tiers, not their cheapest (roster gap recorded)
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+- id: RR-16
+  scope: the Wan tier (contender round)
+  rule: Wan 2.2 A14B (USD 0.08/s, silent) replaces Wan 3.0 Prime as the cheap Wan tier for image-to-video and plain silent briefs; keep Wan 3.0
+    Prime where the contract needs sound or weather physics.
+  evidence: 'vid-wan2 + vid-wan2-i2v vs Wan 3.0 Prime on the same rows: i2v 7/8 vs 8/8; bike 2/2 vs 1/2; shoes 2/2 vs 1/1; umbrella 0/2 (''rain
+    is missing'') vs 2/2; two speakers 0/2 (''lettering on the screen'', silent) vs 2/2'
+  tier: human_blind_acceptance
+  registry: false
+  caveat: Wan 2.2 A14B has no audio field; six i2v draws were first refused on a harness aspect fault and re-run
+  source: eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md
+cell_count: 61
 reading_guide:
 - deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation
   (independence NOT ESTABLISHED)
@@ -329,7 +374,40 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 6
+          n_compared: 4
+          agreements: 4
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 4
+          cannot_judge: 1
+          unscreened: 1
+          false_accepts_vs_controller: 0
+          per_item:
+            AUD-LIP-01:
+              compared: 2
+              agreements: 2
+            AUD-LIP-02:
+              compared: 1
+              agreements: 1
+            AUD-LIP-03:
+              compared: 1
+              agreements: 1
+          disagreements: []
+          runs:
+          - aud-lip
+          source: SCREEN-RESULTS.yaml of run aud-lip
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -472,7 +550,40 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 6
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 6
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            AUD-TTS-01:
+              compared: 0
+              agreements: 0
+            AUD-TTS-02:
+              compared: 0
+              agreements: 0
+            AUD-TTS-03:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - aud-tts-eleven
+          source: SCREEN-RESULTS.yaml of run aud-tts-eleven
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -595,7 +706,40 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 6
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 6
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            AUD-TTS-01:
+              compared: 0
+              agreements: 0
+            AUD-TTS-02:
+              compared: 0
+              agreements: 0
+            AUD-TTS-03:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - aud-tts-sarvam
+          source: SCREEN-RESULTS.yaml of run aud-tts-sarvam
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -706,7 +850,38 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 1
+          agreement_rate: 0.5
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-COMP-01:
+              compared: 2
+              agreements: 1
+          disagreements:
+          - trial_id: IMG-COMP-01__flux-2-pro-edit__edit__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -815,7 +990,38 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 1
+          agreement_rate: 0.5
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-COMP-01:
+              compared: 2
+              agreements: 1
+          disagreements:
+          - trial_id: IMG-COMP-01__nano-banana-pro-edit__edit__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -921,7 +1127,38 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 1
+          agreements: 0
+          agreement_rate: 0.0
+          screen_accepts: 0
+          screen_rejects: 1
+          cannot_judge: 1
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-COMP-01:
+              compared: 1
+              agreements: 0
+          disagreements:
+          - trial_id: IMG-COMP-01__seedream-5-pro-edit__edit__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -1063,7 +1300,51 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 8
+          agreements: 6
+          agreement_rate: 0.75
+          screen_accepts: 7
+          screen_rejects: 1
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 2
+          per_item:
+            IMG-CORE-01:
+              compared: 2
+              agreements: 2
+            IMG-CORE-02:
+              compared: 2
+              agreements: 2
+            IMG-CORE-03:
+              compared: 2
+              agreements: 2
+            IMG-CORE-04:
+              compared: 2
+              agreements: 0
+          disagreements:
+          - trial_id: IMG-CORE-04__flux-2-pro__core__r1
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: looks water will come in
+          - trial_id: IMG-CORE-04__flux-2-pro__core__r2
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: sitting outside window
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -1201,7 +1482,55 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 8
+          agreements: 5
+          agreement_rate: 0.625
+          screen_accepts: 6
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 1
+          per_item:
+            IMG-CORE-01:
+              compared: 2
+              agreements: 2
+            IMG-CORE-02:
+              compared: 2
+              agreements: 2
+            IMG-CORE-03:
+              compared: 2
+              agreements: 1
+            IMG-CORE-04:
+              compared: 2
+              agreements: 0
+          disagreements:
+          - trial_id: IMG-CORE-04__gpt-image-2__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-CORE-03__gpt-image-2__core__r1
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: 'slaad getting cutoff. mint leaves on table. '
+          - trial_id: IMG-CORE-04__gpt-image-2__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -1339,7 +1668,55 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 8
+          agreements: 5
+          agreement_rate: 0.625
+          screen_accepts: 6
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 1
+          per_item:
+            IMG-CORE-01:
+              compared: 2
+              agreements: 2
+            IMG-CORE-02:
+              compared: 2
+              agreements: 0
+            IMG-CORE-03:
+              compared: 2
+              agreements: 1
+            IMG-CORE-04:
+              compared: 2
+              agreements: 2
+          disagreements:
+          - trial_id: IMG-CORE-02__nano-banana-2__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-CORE-02__nano-banana-2__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-CORE-03__nano-banana-2__core__r1
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: slaad getting cutoff
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -1479,7 +1856,59 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 8
+          agreements: 4
+          agreement_rate: 0.5
+          screen_accepts: 8
+          screen_rejects: 0
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 4
+          per_item:
+            IMG-CORE-01:
+              compared: 2
+              agreements: 0
+            IMG-CORE-02:
+              compared: 2
+              agreements: 2
+            IMG-CORE-03:
+              compared: 2
+              agreements: 0
+            IMG-CORE-04:
+              compared: 2
+              agreements: 2
+          disagreements:
+          - trial_id: IMG-CORE-01__nano-banana-pro__core__r1
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: has a white label
+          - trial_id: IMG-CORE-01__nano-banana-pro__core__r2
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: has a white label
+          - trial_id: IMG-CORE-03__nano-banana-pro__core__r2
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: salad getting cutoff
+          - trial_id: IMG-CORE-03__nano-banana-pro__core__r1
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: '  slalad gettnig cutoff'
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -1614,7 +2043,47 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 8
+          agreements: 7
+          agreement_rate: 0.875
+          screen_accepts: 8
+          screen_rejects: 0
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 1
+          per_item:
+            IMG-CORE-01:
+              compared: 2
+              agreements: 2
+            IMG-CORE-02:
+              compared: 2
+              agreements: 2
+            IMG-CORE-03:
+              compared: 2
+              agreements: 1
+            IMG-CORE-04:
+              compared: 2
+              agreements: 2
+          disagreements:
+          - trial_id: IMG-CORE-03__qwen-image-3__core__r2
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: slalad gettnig cutoff
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -1751,7 +2220,55 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 8
+          agreements: 5
+          agreement_rate: 0.625
+          screen_accepts: 7
+          screen_rejects: 1
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 2
+          per_item:
+            IMG-CORE-01:
+              compared: 2
+              agreements: 2
+            IMG-CORE-02:
+              compared: 2
+              agreements: 1
+            IMG-CORE-03:
+              compared: 2
+              agreements: 0
+            IMG-CORE-04:
+              compared: 2
+              agreements: 2
+          disagreements:
+          - trial_id: IMG-CORE-02__seedream-5-pro__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-CORE-03__seedream-5-pro__core__r2
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: slaad, raita snd onions getting cutoff.
+          - trial_id: IMG-CORE-03__seedream-5-pro__core__r1
+            controller_verdict: reject
+            screen_overall: accept
+            controller_note: salad without bowl and getting cutoff
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -1879,7 +2396,37 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 1
+          agreements: 1
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 1
+          cannot_judge: 3
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-EDIT-01:
+              compared: 0
+              agreements: 0
+            IMG-EDIT-02:
+              compared: 1
+              agreements: 1
+          disagreements: []
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2004,7 +2551,41 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 2
+          agreements: 1
+          agreement_rate: 0.5
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 2
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-EDIT-01:
+              compared: 0
+              agreements: 0
+            IMG-EDIT-02:
+              compared: 2
+              agreements: 1
+          disagreements:
+          - trial_id: IMG-EDIT-02__nano-banana-pro-edit__edit__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2125,7 +2706,37 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 4
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-EDIT-01:
+              compared: 0
+              agreements: 0
+            IMG-EDIT-02:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2240,7 +2851,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-EXT-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2353,7 +2991,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-EXT-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2459,7 +3124,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 2
+          screen_rejects: 0
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-EXT-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2589,7 +3281,37 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 1
+          agreements: 1
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 1
+          cannot_judge: 3
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-REF-01:
+              compared: 0
+              agreements: 0
+            IMG-REF-02:
+              compared: 1
+              agreements: 1
+          disagreements: []
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2714,7 +3436,37 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 4
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-REF-01:
+              compared: 0
+              agreements: 0
+            IMG-REF-02:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2829,7 +3581,37 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 4
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-REF-01:
+              compared: 0
+              agreements: 0
+            IMG-REF-02:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - half2
+          source: SCREEN-RESULTS.yaml of run half2
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -2956,7 +3738,37 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 4
+          agreements: 4
+          agreement_rate: 1.0
+          screen_accepts: 1
+          screen_rejects: 3
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-TEXT-01:
+              compared: 2
+              agreements: 2
+            IMG-TEXT-02:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -3189,7 +4001,45 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 4
+          agreements: 2
+          agreement_rate: 0.5
+          screen_accepts: 2
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-TEXT-01:
+              compared: 2
+              agreements: 2
+            IMG-TEXT-02:
+              compared: 2
+              agreements: 0
+          disagreements:
+          - trial_id: IMG-TEXT-02__gpt-image-2__A_cheap_generated__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-TEXT-02__gpt-image-2__A_cheap_generated__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -3304,7 +4154,45 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 4
+          agreements: 2
+          agreement_rate: 0.5
+          screen_accepts: 2
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-TEXT-01:
+              compared: 2
+              agreements: 2
+            IMG-TEXT-02:
+              compared: 2
+              agreements: 0
+          disagreements:
+          - trial_id: IMG-TEXT-02__nano-banana-2__A_cheap_generated__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-TEXT-02__nano-banana-2__A_cheap_generated__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -3419,7 +4307,49 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 4
+          agreements: 1
+          agreement_rate: 0.25
+          screen_accepts: 1
+          screen_rejects: 3
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-TEXT-01:
+              compared: 2
+              agreements: 1
+            IMG-TEXT-02:
+              compared: 2
+              agreements: 0
+          disagreements:
+          - trial_id: IMG-TEXT-02__nano-banana-pro__B_premium_generated__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-TEXT-01__nano-banana-pro__B_premium_generated__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-TEXT-02__nano-banana-pro__B_premium_generated__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -3535,7 +4465,45 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 3
+          agreements: 1
+          agreement_rate: 0.3333
+          screen_accepts: 0
+          screen_rejects: 3
+          cannot_judge: 0
+          unscreened: 1
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-TEXT-01:
+              compared: 2
+              agreements: 1
+            IMG-TEXT-02:
+              compared: 1
+              agreements: 0
+          disagreements:
+          - trial_id: IMG-TEXT-01__qwen-image-3__A_cheap_generated__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: IMG-TEXT-02__qwen-image-3__A_cheap_generated__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -3656,7 +4624,41 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 3
+          agreements: 2
+          agreement_rate: 0.6667
+          screen_accepts: 1
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 1
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-TEXT-01:
+              compared: 1
+              agreements: 1
+            IMG-TEXT-02:
+              compared: 2
+              agreements: 1
+          disagreements:
+          - trial_id: IMG-TEXT-02__recraft-v4__B_premium_generated__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -3777,7 +4779,41 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 4
+          agreements: 3
+          agreement_rate: 0.75
+          screen_accepts: 1
+          screen_rejects: 3
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            IMG-TEXT-01:
+              compared: 2
+              agreements: 2
+            IMG-TEXT-02:
+              compared: 2
+              agreements: 1
+          disagreements:
+          - trial_id: IMG-TEXT-02__seedream-5-pro__B_premium_generated__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - img-r1
+          source: SCREEN-RESULTS.yaml of run img-r1
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -3894,7 +4930,37 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 4
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            MUS-01:
+              compared: 0
+              agreements: 0
+            MUS-02:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - aud-music-lyria
+          source: SCREEN-RESULTS.yaml of run aud-music-lyria
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -4009,7 +5075,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 2
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-2SPK-01:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - vid-2spk
+          source: SCREEN-RESULTS.yaml of run vid-2spk
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -4127,7 +5220,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-2SPK-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - vid-2spk
+          source: SCREEN-RESULTS.yaml of run vid-2spk
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -4135,7 +5255,7 @@ questions:
           freshness_required: true
           rows: []
           status: no_row_for_this_route_family
-        rank_in_question: 4
+        rank_in_question: 5
         fallback:
           route: veo-3.1-fast+A_native
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -4240,7 +5360,42 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 0
+          agreement_rate: 0.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-2SPK-01:
+              compared: 2
+              agreements: 0
+          disagreements:
+          - trial_id: VID-2SPK-01__veo-3.1-fast__A_native__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: approved (Controller)
+          - trial_id: VID-2SPK-01__veo-3.1-fast__A_native__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: approved (Controller)
+          runs:
+          - vid-2spk
+          source: SCREEN-RESULTS.yaml of run vid-2spk
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -4251,6 +5406,120 @@ questions:
         rank_in_question: 1
         fallback:
           route: gemini-omni-1.1-flash+A_native
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      wan-2.2-a14b+A_native:
+        route_key: wan-2.2-a14b
+        arm: A_native
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-10'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-2fa011f25fc81077
+          - cap-453210b2d3ed3a01
+          - cap-948c8c479197af21
+          - cap-96cda8f51ffb9ea6
+          - cap-f604b73700cc7cbe
+          n_items:
+          - VID-2SPK-01
+          counted_trials: 2
+          status_counts:
+            ok: 2
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 2
+            trials: 2
+            n_items: 1
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '1.280000'
+            per_trial_mean: '0.640000'
+            n_settled: 2
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 89.732583
+            p95: 95.545469
+            n: 2
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 32.0
+            dhash_hamming_max: 32
+            ssim_mean: 0.5441036110184931
+            ssim_min: 0.5441036110184931
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 0
+          trials: 2
+          rejects: 2
+          n_items: 1
+          arms:
+          - A_native
+          no_artifact_rejects: 0
+          per_item:
+            VID-2SPK-01:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-2SPK-01__wan-2.2-a14b__A_native__r1
+            verdict: reject
+            note: lettering on the screen; visually great (Controller)
+          - trial_id: VID-2SPK-01__wan-2.2-a14b__A_native__r2
+            verdict: reject
+            note: lettering on the screen; visually great (Controller)
+          elimination:
+            question: VID-2SPK
+            route_key: wan-2.2-a14b
+            arm: A_native
+            arms:
+            - A_native
+            n_planned: 2
+            refusals_or_errors: 0
+            accepts: 0
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 1
+            e2_threshold: 0
+            eliminated: true
+            eliminated_by:
+            - E2
+            results_run_id: vid-wan2 + vid-wan2-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-wan2 + vid-wan2-i2v
+          source: RESULTS.yaml of run vid-wan2 + vid-wan2-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 4
+        fallback:
+          route: kling-v3-pro-audio+A_native
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
       wan-3.0-prime+A_native:
@@ -4352,7 +5621,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 2
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-2SPK-01:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - vid-2spk
+          source: SCREEN-RESULTS.yaml of run vid-2spk
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -4362,7 +5658,7 @@ questions:
           status: no_row_for_this_route_family
         rank_in_question: 3
         fallback:
-          route: kling-v3-pro-audio+A_native
+          route: wan-2.2-a14b+A_native
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
   VID-I2V:
@@ -4495,7 +5791,59 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 7
+          agreements: 3
+          agreement_rate: 0.4286
+          screen_accepts: 3
+          screen_rejects: 4
+          cannot_judge: 1
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-I2V-01:
+              compared: 2
+              agreements: 0
+            VID-I2V-02:
+              compared: 2
+              agreements: 0
+            VID-I2V-03:
+              compared: 1
+              agreements: 1
+            VID-I2V-04:
+              compared: 2
+              agreements: 2
+          disagreements:
+          - trial_id: VID-I2V-02__kling-v3-pro-i2v__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: expressesion change to angry in the end
+          - trial_id: VID-I2V-01__kling-v3-pro-i2v__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: VID-I2V-02__kling-v3-pro-i2v__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: expressesion change to angry
+          - trial_id: VID-I2V-01__kling-v3-pro-i2v__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - vid-i2v
+          source: SCREEN-RESULTS.yaml of run vid-i2v
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -4639,7 +5987,51 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 7
+          agreements: 5
+          agreement_rate: 0.7143
+          screen_accepts: 4
+          screen_rejects: 3
+          cannot_judge: 1
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-I2V-01:
+              compared: 2
+              agreements: 1
+            VID-I2V-02:
+              compared: 2
+              agreements: 1
+            VID-I2V-03:
+              compared: 1
+              agreements: 1
+            VID-I2V-04:
+              compared: 2
+              agreements: 2
+          disagreements:
+          - trial_id: VID-I2V-02__minimax-h3-max-i2v__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: VID-I2V-01__minimax-h3-max-i2v__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - vid-i2v
+          source: SCREEN-RESULTS.yaml of run vid-i2v
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -4783,7 +6175,47 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 8
+          agreements: 7
+          agreement_rate: 0.875
+          screen_accepts: 4
+          screen_rejects: 4
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-I2V-01:
+              compared: 2
+              agreements: 1
+            VID-I2V-02:
+              compared: 2
+              agreements: 2
+            VID-I2V-03:
+              compared: 2
+              agreements: 2
+            VID-I2V-04:
+              compared: 2
+              agreements: 2
+          disagreements:
+          - trial_id: VID-I2V-01__veo-3.1-fast-i2v__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - vid-i2v
+          source: SCREEN-RESULTS.yaml of run vid-i2v
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -4792,6 +6224,172 @@ questions:
           rows: []
           status: no_row_for_this_route_family
         rank_in_question: 4
+        fallback:
+          route: wan-2.2-a14b-i2v
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      wan-2.2-a14b-i2v:
+        route_key: wan-2.2-a14b-i2v
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-image-to-video-2026-09-09.html
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-10'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-10a5308dff510ca5
+          - cap-29d06d81f20e55d0
+          - cap-44cc0a85de52eff7
+          - cap-4a61dd46d1b190a9
+          - cap-63990c3273d9a5c3
+          - cap-6dc4f0ff3cac22b4
+          - cap-7cf8a8dd61a405e3
+          - cap-82875b6d9a6e02e0
+          - cap-b2135aa05b30ad38
+          n_items:
+          - VID-I2V-01
+          - VID-I2V-02
+          - VID-I2V-03
+          - VID-I2V-04
+          counted_trials: 6
+          status_counts:
+            error: 2
+            ok: 4
+          refusal_rate: 0.0
+          error_rate: 0.3333333333333333
+          format_compliance:
+            passes: 8
+            trials: 8
+            n_items: 4
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '2.880000'
+            per_trial_mean: '0.480000'
+            n_settled: 6
+            cost_within_reserved:
+              passes: 2
+              trials: 2
+          latency_s:
+            p50: 62.44738
+            p95: 86.111608
+            n: 4
+          repeat_variance_unseeded:
+            pairs: 1
+            dhash_hamming_mean: 9.0
+            dhash_hamming_max: 9
+            ssim_mean: 0.7568053616126036
+            ssim_min: 0.7568053616126036
+            structural_passes: 1
+            structural_trials: 1
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 7
+          trials: 14
+          rejects: 1
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-I2V-01:
+              accepts: 2
+              trials: 4
+            VID-I2V-02:
+              accepts: 1
+              trials: 4
+            VID-I2V-03:
+              accepts: 2
+              trials: 4
+            VID-I2V-04:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-I2V-04__wan-2.2-a14b-i2v__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-I2V-04__wan-2.2-a14b-i2v__core__r1
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r1
+            verdict: reject
+            note: looking outside, not in the phone (Controller)
+          - trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r1
+            verdict: accept
+            note: 'approved with a note: camera is still (Controller)'
+          - trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r1
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r2
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r1
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-02__wan-2.2-a14b-i2v__core__r2
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r1
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          - trial_id: VID-I2V-03__wan-2.2-a14b-i2v__core__r2
+            verdict: null
+            note: aspect 'auto' resolved to 848x1056, refused by fal; re-run in vid-wan2-i2v
+          elimination:
+            question: VID-I2V
+            route_key: wan-2.2-a14b-i2v
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            refusals_or_errors: 0
+            accepts: 7
+            rejects: 1
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 2
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-wan2 + vid-wan2-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-wan2 + vid-wan2-i2v
+          source: RESULTS.yaml of run vid-wan2 + vid-wan2-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 5
         fallback:
           route: kling-v3-pro-i2v
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
@@ -4920,7 +6518,63 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 8
+          n_compared: 7
+          agreements: 2
+          agreement_rate: 0.2857
+          screen_accepts: 2
+          screen_rejects: 5
+          cannot_judge: 1
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-I2V-01:
+              compared: 2
+              agreements: 0
+            VID-I2V-02:
+              compared: 2
+              agreements: 0
+            VID-I2V-03:
+              compared: 1
+              agreements: 0
+            VID-I2V-04:
+              compared: 2
+              agreements: 2
+          disagreements:
+          - trial_id: VID-I2V-03__wan-3.0-prime-i2v__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: VID-I2V-01__wan-3.0-prime-i2v__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: VID-I2V-02__wan-3.0-prime-i2v__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: expressesion change to angry
+          - trial_id: VID-I2V-01__wan-3.0-prime-i2v__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          - trial_id: VID-I2V-02__wan-3.0-prime-i2v__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: ''
+          runs:
+          - vid-i2v
+          source: SCREEN-RESULTS.yaml of run vid-i2v
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5036,7 +6690,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 1
+          agreements: 1
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 1
+          cannot_judge: 1
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-KNEE-01:
+              compared: 1
+              agreements: 1
+          disagreements: []
+          runs:
+          - vid-knee
+          source: SCREEN-RESULTS.yaml of run vid-knee
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5149,7 +6830,38 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 1
+          agreement_rate: 0.5
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-KNEE-01:
+              compared: 2
+              agreements: 1
+          disagreements:
+          - trial_id: VID-KNEE-01__veo-3.1-full__knee_premium__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: accept (Controller)
+          runs:
+          - vid-knee
+          source: SCREEN-RESULTS.yaml of run vid-knee
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5263,7 +6975,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-KNEE-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - vid-knee
+          source: SCREEN-RESULTS.yaml of run vid-knee
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5378,7 +7117,38 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 1
+          agreements: 0
+          agreement_rate: 0.0
+          screen_accepts: 0
+          screen_rejects: 1
+          cannot_judge: 0
+          unscreened: 1
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-MS-02:
+              compared: 1
+              agreements: 0
+          disagreements:
+          - trial_id: VID-MS-02__gemini-omni-1.1-flash-10s__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: clean (Controller)
+          runs:
+          - vid-ms
+          source: SCREEN-RESULTS.yaml of run vid-ms
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5491,7 +7261,38 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 1
+          agreements: 0
+          agreement_rate: 0.0
+          screen_accepts: 0
+          screen_rejects: 1
+          cannot_judge: 1
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-MS-02:
+              compared: 1
+              agreements: 0
+          disagreements:
+          - trial_id: VID-MS-02__kling-v3-pro-10s__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: technically correct but visually not amazing (Controller)
+          runs:
+          - vid-ms
+          source: SCREEN-RESULTS.yaml of run vid-ms
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5604,7 +7405,42 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 0
+          agreement_rate: 0.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-MS-01:
+              compared: 2
+              agreements: 0
+          disagreements:
+          - trial_id: VID-MS-01__kling-v3-pro-15s__core__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: accepted (Controller)
+          - trial_id: VID-MS-01__kling-v3-pro-15s__core__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: accepted (Controller)
+          runs:
+          - vid-ms
+          source: SCREEN-RESULTS.yaml of run vid-ms
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5716,7 +7552,42 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 0
+          agreement_rate: 0.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-MS-01:
+              compared: 2
+              agreements: 0
+          disagreements:
+          - trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: accepted (Controller)
+          - trial_id: VID-MS-01__veo-3.1-fast-extend__chain__r2
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: a little visually bad but technically correct (Controller)
+          runs:
+          - vid-ms
+          source: SCREEN-RESULTS.yaml of run vid-ms
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5847,7 +7718,37 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 4
+          n_compared: 0
+          agreements: 0
+          agreement_rate: null
+          screen_accepts: 0
+          screen_rejects: 0
+          cannot_judge: 4
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-REF-01:
+              compared: 0
+              agreements: 0
+            VID-REF-02:
+              compared: 0
+              agreements: 0
+          disagreements: []
+          runs:
+          - vid-ref
+          source: SCREEN-RESULTS.yaml of run vid-ref
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -5858,6 +7759,940 @@ questions:
         rank_in_question: 1
         fallback:
           route: null
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+  VID-T2V:
+    cells:
+      gemini-omni-1.1-flash:
+        route_key: gemini-omni-1.1-flash
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.10136'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-0a134c24816972d3
+          - cap-4084baa6cf8b2e9c
+          - cap-5af5533c981fe468
+          - cap-6eff5b93ef31d858
+          - cap-800de63d5f2669bb
+          - cap-946a0aa82776ea14
+          - cap-a09f129f6be06269
+          - cap-a4bb6439320debae
+          - cap-a79bca58f2f5537f
+          - cap-c27a29c9989d2cbd
+          - cap-cb41b4070e221d93
+          - cap-d8ac5fd42ea3f989
+          - cap-d9fbf11155867d9c
+          - cap-e119534c616a03c8
+          - cap-eca1b8e6c6c70cd2
+          n_items:
+          - VID-T2V-01
+          - VID-T2V-02
+          - VID-T2V-03
+          - VID-T2V-04
+          counted_trials: 8
+          status_counts:
+            ok: 8
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 8
+            trials: 8
+            n_items: 4
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '4.865280'
+            per_trial_mean: '0.608160'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 32.086674
+            p95: 39.903035
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 4
+            dhash_hamming_mean: 27.5
+            dhash_hamming_max: 32
+            ssim_mean: 0.5246127101328041
+            ssim_min: 0.44763238057416394
+            structural_passes: 4
+            structural_trials: 4
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 8
+          trials: 8
+          rejects: 0
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-T2V-01:
+              accepts: 2
+              trials: 2
+            VID-T2V-02:
+              accepts: 2
+              trials: 2
+            VID-T2V-03:
+              accepts: 2
+              trials: 2
+            VID-T2V-04:
+              accepts: 2
+              trials: 2
+          controller_notes:
+          - trial_id: VID-T2V-01__gemini-omni-1.1-flash__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted on this'')'
+          - trial_id: VID-T2V-03__gemini-omni-1.1-flash__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest approved'')'
+          - trial_id: VID-T2V-04__gemini-omni-1.1-flash__core__r1
+            verdict: accept
+            note: approved (Controller)
+          - trial_id: VID-T2V-04__gemini-omni-1.1-flash__core__r2
+            verdict: accept
+            note: approved (Controller)
+          - trial_id: VID-T2V-02__gemini-omni-1.1-flash__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-T2V-03__gemini-omni-1.1-flash__core__r1
+            verdict: accept
+            note: 'approved (Controller: ''rest approved'')'
+          - trial_id: VID-T2V-01__gemini-omni-1.1-flash__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted on this'')'
+          - trial_id: VID-T2V-02__gemini-omni-1.1-flash__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          elimination:
+            question: VID-T2V
+            route_key: gemini-omni-1.1-flash
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            n_judged: 8
+            refusals_or_errors: 0
+            infra_refusals_not_counted: 0
+            accepts: 8
+            rejects: 0
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 2
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-t2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-t2v
+          source: RESULTS.yaml of run vid-t2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 1
+        fallback:
+          route: wan-2.2-a14b
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      kling-v3-pro-audio:
+        route_key: kling-v3-pro-audio
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/kling-v3-pro/fal-api-models-kling-v3-pro-t2v.json
+        unit_price_usd_pinned:
+        - '0.168'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-07b3d44ab813ba72
+          - cap-20985d3d002c8638
+          - cap-308ac248836adcb8
+          - cap-3a9ed052c0736aa1
+          - cap-44b169cce9cd7c86
+          - cap-66329ef629a5578b
+          - cap-7d6ceb249b4236c8
+          - cap-980d02e4d9426e00
+          - cap-9c413742e2acaf73
+          - cap-b1ae509e0e5bf989
+          - cap-d752b568a1ec77cb
+          - cap-f57c65bf208d8545
+          n_items:
+          - VID-T2V-01
+          - VID-T2V-02
+          - VID-T2V-03
+          - VID-T2V-04
+          counted_trials: 8
+          status_counts:
+            error: 2
+            ok: 6
+          refusal_rate: 0.0
+          error_rate: 0.25
+          format_compliance:
+            passes: 0
+            trials: 4
+            n_items: 2
+            items_excluded:
+            - absent: []
+              item_id: VID-T2V-02
+              no_artifact:
+              - error_class: http_403
+                item_id: VID-T2V-02
+                run_id: vid-t2v
+                status: error
+                trial_id: VID-T2V-02__kling-v3-pro-audio__core__r1
+              required: 2
+              scoreable: 1
+          trial_cost_usd:
+            settled_total: '8.064000'
+            per_trial_mean: '1.008000'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 94.744674
+            p95: 127.309514
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 2
+            dhash_hamming_mean: 34.0
+            dhash_hamming_max: 36
+            ssim_mean: 0.5194670936659311
+            ssim_min: 0.5118859119687293
+            structural_passes: 2
+            structural_trials: 2
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 2
+          trials: 8
+          rejects: 4
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-T2V-01:
+              accepts: 1
+              trials: 2
+            VID-T2V-02:
+              accepts: 1
+              trials: 2
+            VID-T2V-03:
+              accepts: 0
+              trials: 2
+            VID-T2V-04:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-T2V-01__kling-v3-pro-audio__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted on this'')'
+          - trial_id: VID-T2V-01__kling-v3-pro-audio__core__r2
+            verdict: reject
+            note: voice was breaking (Controller)
+          - trial_id: VID-T2V-03__kling-v3-pro-audio__core__r2
+            verdict: reject
+            note: bag is on the opposite side; no shoes (Controller)
+          - trial_id: VID-T2V-04__kling-v3-pro-audio__core__r2
+            verdict: reject
+            note: no label (Controller)
+          - trial_id: VID-T2V-02__kling-v3-pro-audio__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-T2V-04__kling-v3-pro-audio__core__r1
+            verdict: reject
+            note: no label (Controller)
+          - trial_id: VID-T2V-02__kling-v3-pro-audio__core__r1
+            verdict: null
+            note: fal 403 TOP_UP (nothing generated, nothing charged)
+          - trial_id: VID-T2V-03__kling-v3-pro-audio__core__r1
+            verdict: null
+            note: fal 403 Exhausted balance (nothing generated, nothing charged)
+          elimination:
+            question: VID-T2V
+            route_key: kling-v3-pro-audio
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            n_judged: 6
+            refusals_or_errors: 0
+            infra_refusals_not_counted: 2
+            accepts: 2
+            rejects: 4
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-t2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-t2v
+          source: RESULTS.yaml of run vid-t2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 6
+        fallback:
+          route: gemini-omni-1.1-flash
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      minimax-h3-max:
+        route_key: minimax-h3-max
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-t2v.json
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-03d0fefc635f9789
+          - cap-051e9573e27be72b
+          - cap-07ee121f652b4074
+          - cap-430f15feddc27e54
+          - cap-4f05effb6836e454
+          - cap-9a3016c457054006
+          - cap-9cc27ffe13a2fa9b
+          - cap-b9d5f03f80298757
+          - cap-c501e249cefaa6aa
+          - cap-cd619798a038bfaf
+          - cap-d11199b9d2bdd7dc
+          - cap-d3d8014d71251f55
+          n_items:
+          - VID-T2V-01
+          - VID-T2V-02
+          - VID-T2V-03
+          - VID-T2V-04
+          counted_trials: 8
+          status_counts:
+            ok: 7
+            error: 1
+          refusal_rate: 0.0
+          error_rate: 0.125
+          format_compliance:
+            passes: 0
+            trials: 6
+            n_items: 3
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '3.840000'
+            per_trial_mean: '0.480000'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 7.461087
+            p95: 9.736285
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 3
+            dhash_hamming_mean: 28.333333333333332
+            dhash_hamming_max: 35
+            ssim_mean: 0.5262024704607777
+            ssim_min: 0.4966582559828816
+            structural_passes: 3
+            structural_trials: 3
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 5
+          trials: 8
+          rejects: 2
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-T2V-01:
+              accepts: 2
+              trials: 2
+            VID-T2V-02:
+              accepts: 2
+              trials: 2
+            VID-T2V-03:
+              accepts: 1
+              trials: 2
+            VID-T2V-04:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-T2V-02__minimax-h3-max__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-T2V-02__minimax-h3-max__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-T2V-04__minimax-h3-max__core__r2
+            verdict: reject
+            note: no label, popping voice (Controller)
+          - trial_id: VID-T2V-03__minimax-h3-max__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest approved'')'
+          - trial_id: VID-T2V-04__minimax-h3-max__core__r1
+            verdict: reject
+            note: no label, popping sound (Controller)
+          - trial_id: VID-T2V-01__minimax-h3-max__core__r1
+            verdict: accept
+            note: technically correct but looks visually broken; speech is robotic (Controller) - accepted under the contract, visual note kept
+          - trial_id: VID-T2V-01__minimax-h3-max__core__r2
+            verdict: accept
+            note: technically correct but looks visually broken; speech is robotic (Controller) - accepted under the contract, visual note kept
+          - trial_id: VID-T2V-03__minimax-h3-max__core__r1
+            verdict: null
+            note: fal 403 Exhausted balance (nothing generated, nothing charged)
+          elimination:
+            question: VID-T2V
+            route_key: minimax-h3-max
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            n_judged: 7
+            refusals_or_errors: 0
+            infra_refusals_not_counted: 1
+            accepts: 5
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-t2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-t2v
+          source: RESULTS.yaml of run vid-t2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 3
+        fallback:
+          route: veo-3.1-fast
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      veo-3.1-fast:
+        route_key: veo-3.1-fast
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+        unit_price_usd_pinned:
+        - '0.1'
+        billing_pool:
+        - credits
+        surface:
+        - vertex
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-21effdf8860945b9
+          - cap-2f322605d893b9a6
+          - cap-5eea3807cc7b6a42
+          - cap-7c00630bd28e8c2e
+          - cap-9c84542bb1744945
+          - cap-ba3623c1e63756ab
+          - cap-bae4549199bf61bc
+          - cap-bb5fe0f71ccdc7ad
+          - cap-c879d6e3148c3e74
+          - cap-c908acd0b100f89f
+          - cap-ca289f84741eca9e
+          - cap-cc9a15200d26fe23
+          - cap-e48198e9a538b9bb
+          - cap-e7f3dcb72393ce16
+          - cap-ea5c49e4bd192464
+          n_items:
+          - VID-T2V-01
+          - VID-T2V-02
+          - VID-T2V-03
+          - VID-T2V-04
+          counted_trials: 8
+          status_counts:
+            ok: 8
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 8
+            trials: 8
+            n_items: 4
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '4.800000'
+            per_trial_mean: '0.600000'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 46.890129
+            p95: 53.850986
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 4
+            dhash_hamming_mean: 27.0
+            dhash_hamming_max: 30
+            ssim_mean: 0.3824292314666118
+            ssim_min: 0.2770603978860952
+            structural_passes: 4
+            structural_trials: 4
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 4
+          trials: 8
+          rejects: 4
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-T2V-01:
+              accepts: 2
+              trials: 2
+            VID-T2V-02:
+              accepts: 1
+              trials: 2
+            VID-T2V-03:
+              accepts: 0
+              trials: 2
+            VID-T2V-04:
+              accepts: 1
+              trials: 2
+          controller_notes:
+          - trial_id: VID-T2V-04__veo-3.1-fast__core__r2
+            verdict: reject
+            note: hand appears and no label (Controller)
+          - trial_id: VID-T2V-02__veo-3.1-fast__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-T2V-01__veo-3.1-fast__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted on this'')'
+          - trial_id: VID-T2V-02__veo-3.1-fast__core__r1
+            verdict: reject
+            note: shoe voice is weird (Controller)
+          - trial_id: VID-T2V-03__veo-3.1-fast__core__r2
+            verdict: reject
+            note: rain doesn't appear on the umbrella; looks fake (Controller)
+          - trial_id: VID-T2V-04__veo-3.1-fast__core__r1
+            verdict: accept
+            note: approved (Controller)
+          - trial_id: VID-T2V-03__veo-3.1-fast__core__r1
+            verdict: reject
+            note: 'same as V24: rain doesn''t appear on the umbrella; looks fake (Controller)'
+          - trial_id: VID-T2V-01__veo-3.1-fast__core__r2
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted on this'')'
+          elimination:
+            question: VID-T2V
+            route_key: veo-3.1-fast
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            n_judged: 8
+            refusals_or_errors: 0
+            infra_refusals_not_counted: 0
+            accepts: 4
+            rejects: 4
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 2
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-t2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-t2v
+          source: RESULTS.yaml of run vid-t2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 4
+        fallback:
+          route: wan-3.0-prime
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      wan-2.2-a14b:
+        route_key: wan-2.2-a14b
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-text-to-video-2026-09-09.html
+        unit_price_usd_pinned:
+        - '0.08'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-10'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-1de179767b8d3d9d
+          - cap-22f082b7692b8010
+          - cap-26d6440e120ec985
+          - cap-334f3d62f1579c38
+          - cap-47a77e77d396e578
+          - cap-4db73ed63d011160
+          - cap-5abb8419a7dabc18
+          - cap-6960a2698fd66c47
+          - cap-7ca99de87ad4e96f
+          - cap-80ae0fc6fd4f7929
+          - cap-88a11a2038897e4d
+          - cap-b583b5b70ceef1f1
+          - cap-cf9d2ed1511d1a92
+          - cap-de0d00232e673741
+          - cap-e2999b12c58b19d8
+          n_items:
+          - VID-T2V-01
+          - VID-T2V-02
+          - VID-T2V-03
+          counted_trials: 6
+          status_counts:
+            ok: 6
+          refusal_rate: 0.0
+          error_rate: 0.0
+          format_compliance:
+            passes: 6
+            trials: 6
+            n_items: 3
+            items_excluded: []
+          trial_cost_usd:
+            settled_total: '2.880000'
+            per_trial_mean: '0.480000'
+            n_settled: 6
+            cost_within_reserved:
+              passes: 6
+              trials: 6
+          latency_s:
+            p50: 66.069293
+            p95: 101.620565
+            n: 6
+          repeat_variance_unseeded:
+            pairs: 3
+            dhash_hamming_mean: 29.0
+            dhash_hamming_max: 31
+            ssim_mean: 0.34541154485507636
+            ssim_min: 0.3162031328364278
+            structural_passes: 3
+            structural_trials: 3
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 4
+          trials: 6
+          rejects: 2
+          n_items: 3
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-T2V-01:
+              accepts: 2
+              trials: 2
+            VID-T2V-02:
+              accepts: 2
+              trials: 2
+            VID-T2V-03:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-T2V-02__wan-2.2-a14b__core__r1
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-T2V-03__wan-2.2-a14b__core__r1
+            verdict: reject
+            note: rain is missing; otherwise great (Controller)
+          - trial_id: VID-T2V-01__wan-2.2-a14b__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-T2V-02__wan-2.2-a14b__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          - trial_id: VID-T2V-03__wan-2.2-a14b__core__r2
+            verdict: reject
+            note: rain is missing; otherwise great (Controller)
+          - trial_id: VID-T2V-01__wan-2.2-a14b__core__r1
+            verdict: accept
+            note: 'approved (Controller: ''rest all approved'')'
+          elimination:
+            question: VID-T2V
+            route_key: wan-2.2-a14b
+            arm: core
+            arms:
+            - core
+            n_planned: 6
+            refusals_or_errors: 0
+            accepts: 4
+            rejects: 2
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-wan2 + vid-wan2-i2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-wan2 + vid-wan2-i2v
+          source: RESULTS.yaml of run vid-wan2 + vid-wan2-i2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 2
+        fallback:
+          route: minimax-h3-max
+          basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
+          registry: false
+      wan-3.0-prime:
+        route_key: wan-3.0-prime
+        arm: core
+        arm_note: null
+        price_pin_ref:
+        - eval/empirical-planning/price-pins-2026-09/wan-3.0-prime/fal-api-models-wan-3.0-prime-t2v.json
+        unit_price_usd_pinned:
+        - '0.14'
+        billing_pool:
+        - cash
+        surface:
+        - fal
+        evidence_date: '2026-09-09'
+        deterministic:
+          tier: deterministic
+          registry: true
+          rows:
+          - cap-1316787db987aa26
+          - cap-168a01b12504b5c6
+          - cap-7614deab318c4413
+          - cap-82360fcf8a18df2e
+          - cap-892f2ea07163ce49
+          - cap-917ab13f3cc7e3cf
+          - cap-acb8c858eacaded7
+          - cap-e8595777e1784e73
+          - cap-eacbf5508f866918
+          - cap-f4623d52982363e5
+          - cap-f50891c1a6ac1db3
+          - cap-f7340aa212afa638
+          n_items:
+          - VID-T2V-01
+          - VID-T2V-02
+          - VID-T2V-03
+          - VID-T2V-04
+          counted_trials: 8
+          status_counts:
+            error: 1
+            ok: 7
+          refusal_rate: 0.0
+          error_rate: 0.125
+          format_compliance:
+            passes: 6
+            trials: 6
+            n_items: 3
+            items_excluded:
+            - absent: []
+              item_id: VID-T2V-02
+              no_artifact:
+              - error_class: http_403
+                item_id: VID-T2V-02
+                run_id: vid-t2v
+                status: error
+                trial_id: VID-T2V-02__wan-3.0-prime__core__r2
+              required: 2
+              scoreable: 1
+          trial_cost_usd:
+            settled_total: '6.720000'
+            per_trial_mean: '0.840000'
+            n_settled: 8
+            cost_within_reserved:
+              passes: 8
+              trials: 8
+          latency_s:
+            p50: 83.267186
+            p95: 112.084773
+            n: 8
+          repeat_variance_unseeded:
+            pairs: 0
+            dhash_hamming_mean: null
+            dhash_hamming_max: null
+            ssim_mean: null
+            ssim_min: null
+            structural_passes: 0
+            structural_trials: 0
+          uncertainty: Clopper-Pearson 95 % over base items on every row; independence NOT ESTABLISHED; reference calculation only
+        human_blind_acceptance:
+          tier: human_blind_acceptance
+          registry: false
+          judge: Controller
+          accepts: 4
+          trials: 8
+          rejects: 3
+          n_items: 4
+          arms:
+          - core
+          no_artifact_rejects: 0
+          per_item:
+            VID-T2V-01:
+              accepts: 1
+              trials: 2
+            VID-T2V-02:
+              accepts: 1
+              trials: 2
+            VID-T2V-03:
+              accepts: 2
+              trials: 2
+            VID-T2V-04:
+              accepts: 0
+              trials: 2
+          controller_notes:
+          - trial_id: VID-T2V-02__wan-3.0-prime__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted'')'
+          - trial_id: VID-T2V-01__wan-3.0-prime__core__r1
+            verdict: accept
+            note: 'accepted (Controller: ''rest all accepted on this'')'
+          - trial_id: VID-T2V-04__wan-3.0-prime__core__r1
+            verdict: reject
+            note: no slow motion; close to pass, just not slow motion (Controller)
+          - trial_id: VID-T2V-03__wan-3.0-prime__core__r2
+            verdict: accept
+            note: 'approved (Controller: ''rest approved'')'
+          - trial_id: VID-T2V-03__wan-3.0-prime__core__r1
+            verdict: accept
+            note: 'approved (Controller: ''rest approved'')'
+          - trial_id: VID-T2V-04__wan-3.0-prime__core__r2
+            verdict: reject
+            note: no label (Controller)
+          - trial_id: VID-T2V-01__wan-3.0-prime__core__r2
+            verdict: reject
+            note: double repeated twice - the line repeated (Controller)
+          - trial_id: VID-T2V-02__wan-3.0-prime__core__r2
+            verdict: null
+            note: fal 403 Exhausted balance (nothing generated, nothing charged)
+          elimination:
+            question: VID-T2V
+            route_key: wan-3.0-prime
+            arm: core
+            arms:
+            - core
+            n_planned: 8
+            n_judged: 7
+            refusals_or_errors: 0
+            infra_refusals_not_counted: 1
+            accepts: 4
+            rejects: 3
+            not_dispatched: 0
+            e1_threshold: 3
+            e2_threshold: 1
+            eliminated: false
+            eliminated_by: []
+            results_run_id: vid-t2v
+          rules_ref: eval/empirical-planning/STAGE-A-FREEZE-2026-09/ELIMINATION-RULES.md
+          runs:
+          - vid-t2v
+          source: RESULTS.yaml of run vid-t2v
+          note: acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number
+        screened_not_qualified:
+          tier: screened_not_qualified
+          registry: false
+          status: none_yet
+        historical_prior:
+          tier: historical_prior
+          registry: false
+          pointer: eval/historical-priors/media-factory-v1/MEDIA-FACTORY-ROUTING-PRIOR.md
+          freshness_required: true
+          rows: []
+          status: no_row_for_this_route_family
+        rank_in_question: 5
+        fallback:
+          route: kling-v3-pro-audio
           basis: next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first
           registry: false
   VID-TOPO3:
@@ -5963,7 +8798,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-TOPO3-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - topo3-video
+          source: SCREEN-RESULTS.yaml of run topo3-video
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -6076,7 +8938,38 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 1
+          agreement_rate: 0.5
+          screen_accepts: 1
+          screen_rejects: 1
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-TOPO3-01:
+              compared: 2
+              agreements: 1
+          disagreements:
+          - trial_id: VID-TOPO3-01__minimax-h3-max-i2v__A2_nb_still_to_cheap_i2v__r1
+            controller_verdict: accept
+            screen_overall: reject
+            controller_note: correct (Controller)
+          runs:
+          - topo3-nb-video
+          source: SCREEN-RESULTS.yaml of run topo3-nb-video
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -6190,7 +9083,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-TOPO3-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - topo3-video
+          source: SCREEN-RESULTS.yaml of run topo3-video
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -6303,7 +9223,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 2
+          screen_rejects: 0
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-TOPO3-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - topo3-video
+          source: SCREEN-RESULTS.yaml of run topo3-video
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -6416,7 +9363,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 1
+          agreements: 1
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 1
+          cannot_judge: 1
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-TOPO3-01:
+              compared: 1
+              agreements: 1
+          disagreements: []
+          runs:
+          - topo3-nb-video
+          source: SCREEN-RESULTS.yaml of run topo3-nb-video
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -6530,7 +9504,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-TOPO3-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - topo3-video
+          source: SCREEN-RESULTS.yaml of run topo3-video
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false
@@ -6644,7 +9645,34 @@ questions:
         screened_not_qualified:
           tier: screened_not_qualified
           registry: false
-          status: none_yet
+          status: screened_not_qualified
+          instrument:
+            id:
+            - vlm_screen
+            model:
+            - gemini-3.5-flash
+            config_hash:
+            - c1e1f30459efd80541c9da758a7580523dfb4a459c18d287788d31f1d2ae6517
+            qualification_report: null
+          n_screened: 2
+          n_compared: 2
+          agreements: 2
+          agreement_rate: 1.0
+          screen_accepts: 0
+          screen_rejects: 2
+          cannot_judge: 0
+          unscreened: 0
+          false_accepts_vs_controller: 0
+          per_item:
+            VID-TOPO3-01:
+              compared: 2
+              agreements: 2
+          disagreements: []
+          runs:
+          - topo3-video
+          source: SCREEN-RESULTS.yaml of run topo3-video
+          note: VLM screening by an unqualified instrument; agreement is measured against the Controller's verdicts on the same artifacts; never
+            a Registry input
         historical_prior:
           tier: historical_prior
           registry: false

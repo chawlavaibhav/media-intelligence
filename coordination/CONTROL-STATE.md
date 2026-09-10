@@ -253,10 +253,26 @@ Music: Lyria 4/4; ElevenLabs music skipped (free plan). Summary: `eval/experimen
 Infrastructure: fal balance exhausted (one lipsync draw refused; every fal route blocked until the Controller tops up);
 ElevenLabs now direct on the Controller's key (fal rows retired from the package). Lipsync 0/5 (Kling lipsync a2v eliminated on a moving plate; confounds recorded). Two speakers 6/8 native (Veo fast,
 Omni, Wan 2/2 each; Kling v3 Pro audio 0/2 'language bad' after the fal top-up registered). The Controller skipped further fal top-ups and the ElevenLabs Indian
-voice. Next gates, each its own Controller act: (1) Seedance 2.5 only as a premium reference where cheap routes failed
-(the knee brief); (2) round two of stills sized from survivors; (3) Kling two-speaker draws / lipsync redo only after a
-fal top-up he chooses to make. MD-9 fresh cloud resources still need the Controller's own
+voice. Text-to-video core (day-2 tail, 9 Sep): Gemini Omni 8/8, H3 Max 5/7, Wan 4/7, Veo fast 4/8, Kling audio 2/6 (RR-15);
+Registry 546 rows; map 58 cells, RR-1..15. Vision judge (gemini-3.5-flash, Gemini key, USD 3.16): 154 compared,
+agreement 66 %, kappa 0.33, false-accept 22 % -> NOT qualified (over-rejects text/i2v, misses cropping); stays
+`screened_not_qualified`, report at `eval/experiments/EVAL-040/QUALIFICATION-REPORT-2026-09-09.yaml`. Roster gap
+recorded: Wan/Kling ran as mid tiers, not their cheapest (Controller: 'havent we failed the very principle'). Next
+gates: (1) pin the cheapest live Wan/Kling tiers and a floor round (~USD 10-15); (2) Seedance 2.5 only where every
+cheap route failed (the two bottle briefs, ~USD 6); (3) judge v2 (better prompt / stronger model) before any
+re-qualification; (4) round two of stills (~₹4,300); (5) Gemini API adapter switch for Gemini image and Omni. MD-9 fresh cloud resources still need the Controller's own
 session. The Canon items below remain a queue, not an authorisation.
+
+**Audit index (10 Sep 2026, end of the two-day Capability Lab run).** 35/35 package cases run and judged. Ledger total
+USD 110.7 (cash USD 67.0 on fal; GCP credits USD 43.8 incl. the USD 3.16 judge run; Sarvam ₹0.89; 1,198 ElevenLabs plan
+credits) across ten signed tranches, no cap crossed. Registry 575 deterministic rows; map 61 cells, RR-1..RR-16. Package is
+now generated (`tools/build.py`, roster sha 311f6631, commit d8399d8): Gemini image/Omni/NB-Pro-edit on the Gemini API,
+Wan 2.2 A14B ran as the contender where Wan 3 passed ("go on Wan 2", cap ₹1,100 after a ₹300 addendum for a harness
+aspect fault): 11/16 — i2v 7/8, bike and shoes 2/2, umbrella 0/2 (rain missing), two speakers 0/2 (silent + lettering);
+RR-16: Wan 2.2 A14B is the cheap Wan tier for silent work, Wan 3.0 Prime where sound or weather physics are in the contract. Judge: kappa 0.33, not
+qualified. Decisions of 9–10 Sep: Gemini on the Gemini key; GCP over fal for any model on both; Wan 2 contender; premium
+tiers deferred to a real brief; round two later; ElevenLabs music skipped; fal top-up / Indian voice skipped then fal
+topped up. PR #91, #92 merged; PR #93 open. Review page published to the Controller as an Artifact.
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's
 choice among `canon/CANON-SHAPE-v1.md` §7's remaining items — injection v1 (cached prefix, no

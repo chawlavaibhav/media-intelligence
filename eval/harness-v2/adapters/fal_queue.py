@@ -75,6 +75,12 @@ ROUTE_PINS: dict[str, dict] = {
     "minimax-h3-max-i2v": {"prompt": "prompt", "prompt_expansion_mode": K("balanced"), "image_url": "in:image_url", "resolution": K("768P"), "duration": "duration_int"},
     "wan-3.0-prime":      {"prompt": "prompt", "aspect_ratio": "aspect", "resolution": K("720p"), "duration": "duration_int", "audio": "audio_bool"},
     "wan-3.0-prime-i2v":  {"prompt": "prompt", "start_image_url": "in:image_url", "resolution": K("720p"), "duration": "duration_int", "audio": "audio_bool"},
+    # Wan 2 contender (Controller decision 2026-09-09): Wan 2.2 A14B takes a frame count, not a duration - num_frames = 16 x duration_s + 1
+    # (the model's native 4n+1 count; fal's default 81 = 5 s); no audio field exists in the pinned schema (silent family); i2v aspect follows the plate (schema default auto)
+    "wan-2.2-a14b":       {"prompt": "prompt", "aspect_ratio": "aspect", "resolution": K("720p"), "num_frames": "frames_16fps"},
+    # 2026-09-10 live: with aspect_ratio left at the endpoint default ("auto") a 4:5 still resolves to 848x1056, which fal's
+    # distributed GPU endpoint refuses (422: "Use aspect_ratio='16:9', '9:16', or '1:1' instead of 'auto'"); the row's aspect is sent.
+    "wan-2.2-a14b-i2v":   {"prompt": "prompt", "image_url": "in:image_url", "aspect_ratio": "aspect", "resolution": K("720p"), "num_frames": "frames_16fps"},
     "seedance-2.5":       {"prompt": "prompt", "aspect_ratio": "aspect", "duration": "duration_str", "resolution": K("720p"), "generate_audio": "audio_bool"},
     "seedance-2.5-15s":   {"prompt": "prompt", "aspect_ratio": "aspect", "duration": "duration_str", "resolution": K("720p"), "generate_audio": "audio_bool"},
     "seedance-2.5-i2v":   {"prompt": "prompt", "image_url": "in:image_url", "duration": "duration_str", "resolution": K("720p"), "generate_audio": "audio_bool"},
@@ -170,6 +176,16 @@ class FalQueueAdapter(B.RouteAdapter):
             if d is None:
                 raise PreDispatchRefusal("no duration_s for the music length")
             return d * 1000
+        if spec == "frames_16fps":
+            # Wan 2.2 A14B (pinned schema: num_frames 17-161 at frames_per_second 16): the row's seconds as the model's native 4n+1 frame count
+            d = B.duration_s(case_row)
+            if d is None:
+                raise PreDispatchRefusal(f"no integer duration_s on the case row ({params.get('duration_s')!r}); refusing to guess a frame count")
+            n = 16 * d + 1
+            if not 17 <= n <= 161:
+                raise PreDispatchRefusal(f"duration_s={d} needs num_frames={n}, outside the pinned schema range 17-161 (max 10 s at 16 fps)")
+            notes.append(f"num_frames={n} = 16 fps x {d} s + 1 (the model's native 4n+1 count); fal bills video seconds at 16 fps, so the +1 frame may bill 1/16 s")
+            return n
         if spec == "audio_bool":
             v = B.audio_flag(case_row)
             if v is None:

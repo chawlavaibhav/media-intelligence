@@ -8,9 +8,9 @@ base: cb92f1e
 counts:
   cases: 35
   blueprints: 35
-  calls_1a: 192
-  calls_1b: 96
-  calls_total: 288
+  calls_1a: 202
+  calls_1b: 106
+  calls_total: 308
   calls_conditional: 32
   language_mix: {en: 15, hi: 12, hg: 8}
   language_mix_by_lane:
@@ -129,7 +129,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-2
     route_id: gemini-3.1-flash-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -142,7 +142,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-pro
     route_id: gemini-3-pro-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -344,7 +344,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-2
     route_id: gemini-3.1-flash-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -357,7 +357,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-pro
     route_id: gemini-3-pro-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -558,7 +558,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-2
     route_id: gemini-3.1-flash-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -571,7 +571,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-pro
     route_id: gemini-3-pro-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -770,7 +770,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-2
     route_id: gemini-3.1-flash-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -783,7 +783,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-pro
     route_id: gemini-3-pro-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -976,7 +976,7 @@ cases:
   routes:
   - route_key: nano-banana-2
     route_id: gemini-3.1-flash-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: A_cheap_generated
@@ -1015,7 +1015,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-pro
     route_id: gemini-3-pro-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: B_premium_generated
@@ -1174,7 +1174,7 @@ cases:
   routes:
   - route_key: nano-banana-2
     route_id: gemini-3.1-flash-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: A_cheap_generated
@@ -1213,7 +1213,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-pro
     route_id: gemini-3-pro-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: B_premium_generated
@@ -1373,9 +1373,9 @@ cases:
     quantity_unit: images
     price_status: pinned
   - route_key: nano-banana-pro-edit
-    route_id: fal-ai/nano-banana-pro/edit
-    surface: fal
-    billing_pool: cash
+    route_id: gemini-3-pro-image (inline reference images)
+    surface: gemini_api
+    billing_pool: credits
     route_status: pinned
     arm: edit
     params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
@@ -1524,9 +1524,9 @@ cases:
     quantity_unit: images
     price_status: pinned
   - route_key: nano-banana-pro-edit
-    route_id: fal-ai/nano-banana-pro/edit
-    surface: fal
-    billing_pool: cash
+    route_id: gemini-3-pro-image (inline reference images)
+    surface: gemini_api
+    billing_pool: credits
     route_status: pinned
     arm: edit
     params: {aspect: as supplied, resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
@@ -1679,9 +1679,9 @@ cases:
     quantity_unit: images
     price_status: pinned
   - route_key: nano-banana-pro-edit
-    route_id: fal-ai/nano-banana-pro/edit
-    surface: fal
-    billing_pool: cash
+    route_id: gemini-3-pro-image (inline reference images)
+    surface: gemini_api
+    billing_pool: credits
     route_status: pinned
     arm: edit
     params: {aspect: '9:16', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 1, seed: unset}
@@ -1855,9 +1855,9 @@ cases:
     quantity_unit: images
     price_status: pinned
   - route_key: nano-banana-pro-edit
-    route_id: fal-ai/nano-banana-pro/edit
-    surface: fal
-    billing_pool: cash
+    route_id: gemini-3-pro-image (inline reference images)
+    surface: gemini_api
+    billing_pool: credits
     route_status: pinned
     arm: edit
     params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 2, seed: unset}
@@ -2021,9 +2021,9 @@ cases:
     quantity_unit: images
     price_status: pinned
   - route_key: nano-banana-pro-edit
-    route_id: fal-ai/nano-banana-pro/edit
-    surface: fal
-    billing_pool: cash
+    route_id: gemini-3-pro-image (inline reference images)
+    surface: gemini_api
+    billing_pool: credits
     route_status: pinned
     arm: edit
     params: {aspect: '1:1', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
@@ -2188,9 +2188,9 @@ cases:
     quantity_unit: images
     price_status: pinned
   - route_key: nano-banana-pro-edit
-    route_id: fal-ai/nano-banana-pro/edit
-    surface: fal
-    billing_pool: cash
+    route_id: gemini-3-pro-image (inline reference images)
+    surface: gemini_api
+    billing_pool: credits
     route_status: pinned
     arm: edit
     params: {aspect: '4:5', resolution: ~1 MP (1024-class), audio: not_applicable, refs: 3, seed: unset}
@@ -2398,12 +2398,25 @@ cases:
     quantity_unit: seconds
     price_status: pinned
   - route_key: gemini-omni-1.1-flash
-    route_id: gemini-omni-1.1-flash-preview
-    surface: vertex
+    route_id: gemini-omni-1.1-flash
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
     params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
+    repeats: 2
+    tranche: 1a
+    item_id: VID-T2V-01
+    quantity: 6
+    quantity_unit: seconds
+    price_status: pinned
+  - route_key: wan-2.2-a14b
+    route_id: fal-ai/wan/v2.2-a14b/text-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: core
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 0, audio_note: 'off: the family renders no audio track (no audio field in the pinned schema)', note: 'Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1', seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-01
@@ -2607,12 +2620,25 @@ cases:
     quantity_unit: seconds
     price_status: pinned
   - route_key: gemini-omni-1.1-flash
-    route_id: gemini-omni-1.1-flash-preview
-    surface: vertex
+    route_id: gemini-omni-1.1-flash
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
     params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
+    repeats: 2
+    tranche: 1a
+    item_id: VID-T2V-02
+    quantity: 6
+    quantity_unit: seconds
+    price_status: pinned
+  - route_key: wan-2.2-a14b
+    route_id: fal-ai/wan/v2.2-a14b/text-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: core
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 0, audio_note: 'off: the family renders no audio track (no audio field in the pinned schema)', note: 'Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1', seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-02
@@ -2816,12 +2842,25 @@ cases:
     quantity_unit: seconds
     price_status: pinned
   - route_key: gemini-omni-1.1-flash
-    route_id: gemini-omni-1.1-flash-preview
-    surface: vertex
+    route_id: gemini-omni-1.1-flash
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
     params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
+    repeats: 2
+    tranche: 1a
+    item_id: VID-T2V-03
+    quantity: 6
+    quantity_unit: seconds
+    price_status: pinned
+  - route_key: wan-2.2-a14b
+    route_id: fal-ai/wan/v2.2-a14b/text-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: core
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 0, audio_note: 'off: the family renders no audio track (no audio field in the pinned schema)', note: 'Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1', seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-T2V-03
@@ -3008,8 +3047,8 @@ cases:
     quantity_unit: seconds
     price_status: pinned
   - route_key: gemini-omni-1.1-flash
-    route_id: gemini-omni-1.1-flash-preview
-    surface: vertex
+    route_id: gemini-omni-1.1-flash
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -3190,8 +3229,8 @@ cases:
     quantity_unit: seconds
     price_status: pinned
   - route_key: gemini-omni-1.1-flash
-    route_id: gemini-omni-1.1-flash-preview
-    surface: vertex
+    route_id: gemini-omni-1.1-flash
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: A_native
@@ -3222,6 +3261,19 @@ cases:
     route_status: pinned
     arm: A_native
     params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'on', refs: 0, audio_note: on where native (README OQ-2), seed: unset}
+    repeats: 2
+    tranche: 1a
+    item_id: VID-2SPK-01
+    quantity: 8
+    quantity_unit: seconds
+    price_status: pinned
+  - route_key: wan-2.2-a14b
+    route_id: fal-ai/wan/v2.2-a14b/text-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: A_native
+    params: {aspect: '9:16', duration_s: 8, resolution: 720p, audio: 'off', refs: 0, audio_note: 'off: the family renders no audio track (no audio field in the pinned schema)', note: 'Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1; a silent family on the native-dialogue arm: the two-speaker visual turn assignment is what it can show, the spoken lines it cannot', seed: unset}
     repeats: 2
     tranche: 1a
     item_id: VID-2SPK-01
@@ -3639,7 +3691,7 @@ cases:
     price_status: pinned
   - route_key: nano-banana-2
     route_id: gemini-3.1-flash-image
-    surface: vertex
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: A2_nb_plate_9x16
@@ -3656,7 +3708,7 @@ cases:
     billing_pool: cash
     route_status: pinned
     arm: A2_nb_still_to_cheap_i2v
-    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: 'arm-A2 9:16 plate: the Controller-accepted A2_nb_plate_9x16 draw', note: 'arm A re-run with the Nano Banana 2 plate on the cheapest animator only (H3 Max); Wan already shown to preserve plate lettering in topo3-video', seed: unset}
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: 'arm-A2 9:16 plate: the Controller-accepted A2_nb_plate_9x16 draw', note: arm A re-run with the Nano Banana 2 plate on the cheapest animator only (H3 Max); Wan already shown to preserve plate lettering in topo3-video, seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-TOPO3-01
@@ -3906,6 +3958,19 @@ cases:
     quantity: 6
     quantity_unit: seconds
     price_status: pinned
+  - route_key: wan-2.2-a14b-i2v
+    route_id: fal-ai/wan/v2.2-a14b/image-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: core
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-01 accepted draw, audio_note: 'off: the family renders no audio track (no audio field in the pinned schema)', note: 'Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1', seed: unset}
+    repeats: 2
+    tranche: 1b
+    item_id: VID-I2V-01
+    quantity: 6
+    quantity_unit: seconds
+    price_status: pinned
   downstream_reuse:
     feeds: []
     consumes: [IMG-CORE-01 accepted draw]
@@ -4066,6 +4131,19 @@ cases:
     route_status: pinned
     arm: core
     params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
+    repeats: 2
+    tranche: 1b
+    item_id: VID-I2V-02
+    quantity: 6
+    quantity_unit: seconds
+    price_status: pinned
+  - route_key: wan-2.2-a14b-i2v
+    route_id: fal-ai/wan/v2.2-a14b/image-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: core
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: 'off: the family renders no audio track (no audio field in the pinned schema)', note: 'Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-02
@@ -4254,6 +4332,19 @@ cases:
     quantity: 6
     quantity_unit: seconds
     price_status: pinned
+  - route_key: wan-2.2-a14b-i2v
+    route_id: fal-ai/wan/v2.2-a14b/image-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: core
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-02 accepted draw, audio_note: 'off: the family renders no audio track (no audio field in the pinned schema)', note: 'Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1', seed: unset}
+    repeats: 2
+    tranche: 1b
+    item_id: VID-I2V-03
+    quantity: 6
+    quantity_unit: seconds
+    price_status: pinned
   - route_key: seedance-2.5-i2v
     route_id: bytedance/seedance-2.5/image-to-video
     surface: fal
@@ -4426,6 +4517,19 @@ cases:
     route_status: pinned
     arm: core
     params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: on (rain ambience where supported), refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: on where native (README OQ-2), seed: unset}
+    repeats: 2
+    tranche: 1b
+    item_id: VID-I2V-04
+    quantity: 6
+    quantity_unit: seconds
+    price_status: pinned
+  - route_key: wan-2.2-a14b-i2v
+    route_id: fal-ai/wan/v2.2-a14b/image-to-video
+    surface: fal
+    billing_pool: cash
+    route_status: pinned
+    arm: core
+    params: {aspect: '9:16', duration_s: 6, resolution: 720p, audio: 'off', refs: 1, plate: IMG-CORE-04 accepted draw, audio_note: 'off: the family renders no audio track (no audio field in the pinned schema)', note: 'Wan 2 contender row (Controller decision 2026-09-09): the cheapest live Wan 2.x tier on the rows Wan 3.0 Prime passed; num_frames = 16 x duration + 1', seed: unset}
     repeats: 2
     tranche: 1b
     item_id: VID-I2V-04
@@ -4901,8 +5005,8 @@ cases:
     quantity_unit: seconds
     price_status: pinned
   - route_key: gemini-omni-1.1-flash-long
-    route_id: gemini-omni-1.1-flash-preview (longest supported ≤ 15 s)
-    surface: vertex
+    route_id: gemini-omni-1.1-flash (longest supported ≤ 15 s)
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
@@ -5053,8 +5157,8 @@ cases:
     quantity_unit: seconds
     price_status: pinned
   - route_key: gemini-omni-1.1-flash-10s
-    route_id: gemini-omni-1.1-flash-preview (10 s)
-    surface: vertex
+    route_id: gemini-omni-1.1-flash (10 s)
+    surface: gemini_api
     billing_pool: credits
     route_status: pinned
     arm: core
