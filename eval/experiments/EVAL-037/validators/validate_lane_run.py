@@ -221,6 +221,71 @@ def main():
          all(tc.get("snapshot_sha256") in sealed and tc.get("live_browsing") is False
              for tc in wcalls), f"{len(wcalls)} calls")
 
+    # ---- CONTROLLED_CANON treatment (supplemental lanes only) --------------------
+    if result.get("treatment") == "CONTROLLED_CANON":
+        import controlled_canon as CC
+        ok34 = ok35 = ok36 = ok37 = ok38 = ok39 = True
+        max_exposed = worst_search = 0
+        for t in result["trials"]:
+            g = t.get("canon_governor") or {}
+            led = g.get("governor_ledger") or []
+            allowed_s = [e for e in led if e["tool"] == "canon_search" and e["decision"] == "allowed"]
+            allowed_r = [e for e in led if e["tool"] == "canon_read" and e["decision"] == "allowed"]
+            # counters are DERIVED from the governor ledger, never merely asserted
+            ok34 &= t.get("canon_search_calls") == len(allowed_s) == g.get("searches_used", -1)
+            ok34 &= t.get("canon_read_calls") == len(allowed_r) == g.get("reads_used", -1)
+            # the harness-enforced maxima actually held
+            ok35 &= len(allowed_s) <= CC.MAX_SEARCHES
+            ok35 &= len(allowed_r) <= CC.MAX_READS_TOTAL
+            for e in allowed_s:
+                n = e.get("results_returned", 0)
+                worst_search = max(worst_search, n)
+                ok36 &= n <= CC.MAX_RESULTS_PER_SEARCH
+                ok36 &= e.get("applied_limit", 99) <= CC.MAX_RESULTS_PER_SEARCH
+                # a model asking for MORE than the cap was clamped, not obeyed
+                req = e.get("requested_limit")
+                if isinstance(req, int) and req > CC.MAX_RESULTS_PER_SEARCH:
+                    ok36 &= e["applied_limit"] == CC.MAX_RESULTS_PER_SEARCH
+            exposed = t.get("canon_results_exposed") or 0
+            max_exposed = max(max_exposed, exposed)
+            ok36 &= exposed <= CC.MAX_SEARCHES * CC.MAX_RESULTS_PER_SEARCH
+            ok36 &= exposed == sum(e.get("results_returned", 0) for e in allowed_s)
+            # per-research-question read allowance
+            since = 0
+            for e in led:
+                if e["tool"] == "canon_search" and e["decision"] == "allowed":
+                    since = 0
+                elif e["tool"] == "canon_read" and e["decision"] == "allowed":
+                    since += 1
+                    ok37 &= since <= CC.MAX_READS_PER_QUESTION
+            # the model composed its own query, and the harness never rewrote it
+            for e in allowed_s:
+                ok38 &= isinstance(e.get("query"), str) and bool(e["query"].strip())
+            # compliance and status
+            derived = bool(allowed_s) and bool(allowed_r)
+            ok39 &= t.get("required_canon_use_satisfied") is derived
+            if not derived and t["format_outcome"] in ("complete", "format_repaired",
+                                                       "failed_format"):
+                ok39 &= (t["status"] == "failed_required_canon_use"
+                         and t["eligible_for_media_generation"] is False)
+            elif not derived:
+                ok39 &= t["status"] == t["format_outcome"] != "failed_required_canon_use"
+            else:
+                ok39 &= t["status"] != "failed_required_canon_use"
+        gate("R34 search/read counters are DERIVED from the governor ledger", ok34)
+        gate("R35 harness maxima held: <=3 searches and <=4 reads per trial", ok35)
+        gate("R36 every search returned <=6 items; <=18 exposed per trial",
+             ok36, f"worst single search={worst_search}, worst trial={max_exposed}")
+        gate("R37 <=2 reads per research question", ok37)
+        gate("R38 every search carries the model's OWN non-empty query", ok38)
+        gate("R39 compliance status is correct and never masks a provider failure", ok39)
+        base = yaml.safe_load((PKG / "conditions/full-canon.yaml").read_text())["addendum"]
+        req = yaml.safe_load((PKG / "conditions/full-canon-controlled.yaml").read_text())["addendum"]
+        gate("R40 the treatment addendum contains the frozen FULL_CANON text verbatim",
+             req.startswith(base.rstrip("\n"))
+             and "Canon research is required for this task." in req
+             and "Do not research broadly." in req)
+
     # ---- substrate identity ------------------------------------------------------
     sub = result["substrate"]
     gate("R31 substrate identity records the fingerprint and names the Canon commit "

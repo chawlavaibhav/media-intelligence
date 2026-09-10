@@ -1,0 +1,60 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+One premium 4:5 e-commerce hero image.
+
+OBJECTIVE_INTERPRETATION
+Produce a high-conversion, luxury product image for the Aster Meridian 38. The image must prioritize material truth (brushed steel vs. polished, sunburst dial behavior) and tactile desire over abstract art. It must look like a physical photograph taken in a professional studio, not a floating 3D render.
+
+CORE_CREATIVE_IDEA
+"The Horologist's Study": An atmospheric, macro-perspective shot of the watch resting on a dark, textured surface (charcoal slate or aged walnut). The composition uses a tight 3/4 angle to emphasize the depth of the domed sapphire crystal and the radial light-play of the sunburst dial, grounding the fictional product in a world of tangible craftsmanship.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1.  **The Dial:** The deep blue sunburst effect is the primary visual hook.
+2.  **The Materials:** The contrast between the matte brushed steel case and the glossy sapphire crystal.
+3.  **The Details:** Precise silver dauphine hands and baton markers (no date window).
+4.  **The Feel:** The rich texture of the dark brown leather strap.
+
+VISUAL_SYSTEM
+*   **Color Palette:** Deep Navy, Silver/Steel, Dark Espresso Brown, Charcoal/Deep Wood.
+*   **Lighting:** "Studio Macro" setup. A primary large softbox positioned at 10 o'clock to create a diagonal gradient across the dial; a subtle rim light at 2 o'clock to define the brushed edges of the case; deep, soft shadows to create dimensionality.
+*   **Composition:** 4:5 vertical. Watch positioned slightly off-center, angled 45 degrees toward the viewer. Shallow depth of field (f/5.6 - f/8 equivalent) to keep the dial and crystal in sharp focus while the leather strap and background softly blur.
+
+PRODUCTION_RECIPE
+1.  **Base Geometry:** Define the 38mm case as brushed stainless steel (avoiding mirrored reflections).
+2.  **Dial Surface:** Implement a radial sunburst texture on a deep blue base; lighting must be directional to activate the "sweep" effect.
+3.  **Hands/Indices:** Render sharp, polished silver dauphine hands and silver baton markers. Ensure the dial is clean with no date window.
+4.  **Glass:** Apply a high-index domed sapphire crystal with a single, crisp white highlight on the upper curve to indicate volume and curvature.
+5.  **Environment:** Place the watch on a dark, matte, textured surface (charcoal slate) to provide a high-contrast backdrop for the silver and blue.
+6.  **Post-Processing:** Fine-grain film texture to remove "CGI smoothness"; slight vignette to draw the eye to the dial.
+
+GENERATION_PROMPTS
+**Final Generation Prompt:**
+> Professional studio macro photography of a luxury mechanical wristwatch, the Aster Meridian 38. 38mm brushed stainless-steel case with a visible fine grain texture. Deep blue sunburst dial with a dramatic radial light sweep, silver baton hour markers, and silver dauphine hands. No date window. A prominent domed sapphire crystal with a soft, curved specular highlight. Dark brown grained leather strap. The watch is resting on a dark charcoal slate surface with natural stone texture. Lighting: one large overhead softbox creating soft gradients and a subtle rim light to define the case edges. Shallow depth of field, sharp focus on the dial and crystal, soft blur on the strap and background. 8k resolution, hyper-realistic, commercial product photography, high contrast, muted luxury tones, 4:5 aspect ratio.
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+*   **Aspect Ratio:** Fixed at 4:5.
+*   **Geometry Invariants:** 38mm case size, no date window, dauphine hand shape, baton marker shape.
+
+AUDIO_AND_EDIT
+N/A (Static Image).
+
+FAILURE_PREVENTION
+*   **Date Window:** Explicitly prompt "no date window" and "clean dial" to prevent the AI from adding a default date complication.
+*   **Case Finish:** Specify "brushed" and "fine grain" to avoid a generic mirrored/chrome finish which looks "cheap/CGI."
+*   **CGI Look:** Avoid terms like "octane render" or "unreal engine"; use "studio macro photography" and "film grain" to ensure a photographic aesthetic.
+*   **Dial Effect:** Ensure the light source is directional; a centered light will flatten the sunburst effect.
+
+HARD_CONSTRAINT_CHECK
+*   4:5 Ratio? Yes.
+*   Brushed stainless-steel case? Yes.
+*   Deep blue sunburst dial? Yes.
+*   Silver baton markers/dauphine hands? Yes.
+*   No date window? Yes.
+*   Domed sapphire crystal? Yes.
+*   Dark brown leather strap? Yes.
+*   No floating CGI? Yes (Resting on slate).
+*   No external websites? Yes.
+
+KNOWLEDGE_AND_WEBSITE_USE
+*   *Light: Science & Magic (via Canon):* Applied principles of "family of angles" for metal lighting and the "elegant compromise" (large soft source) to balance the brushed steel tone against a dark background.
