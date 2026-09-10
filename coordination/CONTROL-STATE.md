@@ -265,7 +265,7 @@ session. The Canon items below remain a queue, not an authorisation.
 
 **Audit index (10 Sep 2026, end of the two-day Capability Lab run).** 35/35 package cases run and judged. Ledger total
 USD 110.7 (cash USD 67.0 on fal; GCP credits USD 43.8 incl. the USD 3.16 judge run; Sarvam ₹0.89; 1,198 ElevenLabs plan
-credits) across ten signed tranches, no cap crossed. Registry 566 deterministic rows; map 61 cells, RR-1..RR-16. Package is
+credits) across ten signed tranches, no cap crossed. Registry 575 deterministic rows; map 61 cells, RR-1..RR-16. Package is
 now generated (`tools/build.py`, roster sha 311f6631, commit d8399d8): Gemini image/Omni/NB-Pro-edit on the Gemini API,
 Wan 2.2 A14B ran as the contender where Wan 3 passed ("go on Wan 2", cap ₹1,100 after a ₹300 addendum for a harness
 aspect fault): 11/16 — i2v 7/8, bike and shoes 2/2, umbrella 0/2 (rain missing), two speakers 0/2 (silent + lettering);
