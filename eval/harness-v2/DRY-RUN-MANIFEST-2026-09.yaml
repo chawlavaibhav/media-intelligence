@@ -5,35 +5,36 @@ header:
   status: PLANNING_EVIDENCE_NOT_A_SPEND_AUTHORISATION
   statement: Every row is a request body rendered by the same builder a live dispatch would use, priced from the roster at the recorded commit. Nothing was sent.
     This manifest authorises nothing; the Controller's spend record for EVAL-040 is the only authority for a paid call, and it must name the roster sha256 below.
-  generated_utc: '2026-09-09T17:56:14.267618Z'
+  generated_utc: '2026-09-10T02:22:28.560411Z'
   inputs:
     test_cases:
       kind: working_tree
       test_cases_path: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/empirical-planning/STAGE-A-FREEZE-2026-09/TEST-CASES.yaml
-      test_cases_sha256: 0db3704a0e800db560c841d3f4d9de310ab75472cd7a1c314c365ce0d20a5933
+      test_cases_sha256: 8c2430e760279bb60a0ce429b933c64bb85340e2089be9ebad3f28d49e7cdb9c
       cost_table_path: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/empirical-planning/STAGE-A-FREEZE-2026-09/COST-TABLE.yaml
-      cost_table_sha256: f221f0bb94dcf691b199bb555ac1448865f52afe429d478183c780150b2e3975
+      cost_table_sha256: e7047c193c78c4d218f7bcbde6fabf89d4c10be978c2080b098cc84e722241f3
     roster:
       path: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml
-      sha256: 587f904e9c68bef4e867c427d8aa8875a281a761a23a4ce9e5ce8e0cd7be242e
-      roster_last_commit_sha: 3434b370c3ca4002ec014f9fa58f418806aeeb16
+      sha256: 311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c
+      roster_last_commit_sha: 10464b2eaed2c7aa6887677fca15830d3b772782
       matches_cost_table_priced_against_roster: true
       repo_commit_at_generation: null
     cost_table:
       path: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/empirical-planning/STAGE-A-FREEZE-2026-09/COST-TABLE.yaml
-      sha256: f221f0bb94dcf691b199bb555ac1448865f52afe429d478183c780150b2e3975
+      sha256: e7047c193c78c4d218f7bcbde6fabf89d4c10be978c2080b098cc84e722241f3
       priced_against_roster:
         file: eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml
-        sha256: 587f904e9c68bef4e867c427d8aa8875a281a761a23a4ce9e5ce8e0cd7be242e
-        roster_last_commit: '3434b37 EVAL-039B Auditor fixes AF-1..AF-3: sync-lipsync-v3 unpinned (price only on sibling endpoint), FLUX.2-pro edit addon priced 0.045,
-          missing fetches logged; Tranche 1 now USD 155.01 (cash 120.44 + credits 34.58 + Rs 4.50)'
+        sha256: 311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c
+        roster_last_commit: '10464b2 No-spend package work: Wan 2.2 A14B pinned (USD 0.08/s at 720p) and added as the contender on the rows Wan 3.0 Prime passed (t2v
+          01-03, i2v 01-04, 2spk); generator ported for the hand-edited rows and package rebuilt (catalogue 51 keys, roster sha 587f904e); Gemini image and Omni adapters
+          on the Gemini Developer API (key by name), surfaces re-pointed, roster re-point pending; 326 tests green'
         working_tree_matches_head: false
         note: the branch HEAD is deliberately not embedded (Auditor AF-15) so this file rebuilds byte-identical after its own commit; the roster's own last commit
           and sha256 identify the pricing basis
         rule: the spend record must name this sha256; if the roster changes, rebuild with tools/build.py rather than editing numbers by hand
     seed_policy:
       path: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/empirical-planning/STAGE-A-FREEZE-2026-09/SEED-POLICY.yaml
-      sha256: 743a93289dcdb2965f5a3c5a8734817f35d0a12d880fea67bdd8f9435e6551a3
+      sha256: d5b0a68b903781ccee117cb9cf4c0c67d9ac1199782059dc78fc9d242751b31a
     schemas: eval/harness-v2/schemas/{fal,vertex,sarvam}/SCHEMA-INDEX.yaml
   counts:
     rows: 340
@@ -49,13 +50,18 @@ header:
       tranche_1b: 106
       total: 308
       conditional: 32
-      nominal_usd_in_cap: '163.93'
-      nominal_usd_cash: '121.98'
-      nominal_usd_credits: '41.94'
+      nominal_usd_in_cap: '163.74'
+      nominal_usd_cash: '120.18'
+      nominal_usd_credits: '43.55'
       nominal_inr_sarvam: '0.80'
-      source: COST-TABLE.yaml totals after the 2026-09-09 rebuild (Wan 2 contender rows + the hand-edited A2 / ElevenLabs-direct / ref2v-8s rows now generated); before
-        them, Controller between-role note 6
+      source: COST-TABLE.yaml totals after the 2026-09-10 rebuild (Gemini-named routes re-pointed to the Gemini Developer API); before it the 2026-09-09 rebuild (Wan
+        2 contender rows + the hand-edited A2 / ElevenLabs-direct / ref2v-8s rows generated) and Controller between-role note 6
       superseded_figures:
+        rebuild_2026_09_09:
+          tranche_1a: 202
+          tranche_1b: 106
+          total: 308
+          nominal_usd_in_cap: '163.93'
         between_role_note_6_2026_09_05:
           tranche_1a: 192
           tranche_1b: 96
@@ -81,9 +87,9 @@ header:
     calls: 64
     priced_calls: 64
     unpinned_calls: 0
-    usd_nominal: '27.43'
+    usd_nominal: '27.24'
     inr_nominal: '0.00'
-    usd_equiv_nominal: '27.43'
+    usd_equiv_nominal: '27.24'
   - tranche: 1b
     billing_pool: cash
     calls: 66
@@ -143,20 +149,14 @@ header:
     inr_nominal: '0.00'
     usd_equiv_nominal: '0.00'
   pool_repoints_pending_package:
-    routes:
-    - route_key: nano-banana-pro-edit
-      registry_pool: credits
-      package_pool: cash
-      surface: gemini_api
-      calls: 12
-      usd_nominal: '1.80'
+    routes: []
     note: registry entries the Controller re-pointed (surface / pool) before the freeze package was rebuilt for it; totals_by_tranche_and_pool follow the registry
       (where the money would go), the reconciliation follows the package pool (the COST-TABLE basis); empty once the package is rebuilt
   nominal_in_cap:
-    usd: '163.06'
+    usd: '162.87'
     inr: '0.80'
-    usd_equiv_all_pools: '163.07'
-    cost_table_nominal_usd_in_cap: '163.93'
+    usd_equiv_all_pools: '162.88'
+    cost_table_nominal_usd_in_cap: '163.74'
     delta_usd: '-0.87'
     within_0_01: false
     explained_delta_usd: '-0.86'
@@ -167,10 +167,10 @@ header:
     by_tranche_and_pool:
     - tranche: 1a
       billing_pool: cash
-      manifest_calls: 150
-      cost_table_calls: 150
-      manifest_usd: '54.46'
-      cost_table_usd: '54.31'
+      manifest_calls: 138
+      cost_table_calls: 138
+      manifest_usd: '52.66'
+      cost_table_usd: '52.51'
       delta_usd: '0.15'
       within_0_01: false
       manifest_inr: '0.00'
@@ -180,10 +180,10 @@ header:
       closed: true
     - tranche: 1a
       billing_pool: credits
-      manifest_calls: 52
-      cost_table_calls: 52
-      manifest_usd: '25.63'
-      cost_table_usd: '25.63'
+      manifest_calls: 64
+      cost_table_calls: 64
+      manifest_usd: '27.24'
+      cost_table_usd: '27.24'
       delta_usd: '0.00'
       within_0_01: true
       manifest_inr: '0.00'
@@ -275,8 +275,9 @@ header:
       price-pins-2026-09/PIN-INDEX.yaml) and cross-checked at build time; unpinned = no projectable price in the roster → line_usd null, summed under unpinned_calls_excluded_from_cap
     - 'route_status no_access (Sarvam: key present by name, value empty per the roster; the Controller session says present — morning decision 2 / MD-10) → lines
       shown in INR, excluded from the cap under no_access_calls_excluded_from_cap'
-    - 'pools: Google → Vertex credits; gpt-image-2 / FLUX.2 Pro → Azure credits only if the Controller deploys them, else fal cash (recorded as cash here); Sora 2
-      / MAI → credits, conditional, excluded; SD3.5 → Bedrock credits, conditional, excluded; fal-only → cash; Sarvam → Sarvam credits (INR); ElevenLabs → cash'
+    - 'pools: Google → GCP credits (the Gemini-named routes on the Gemini Developer API key since 2026-09-10, Veo / Lyria on Vertex); gpt-image-2 / FLUX.2 Pro → Azure
+      credits only if the Controller deploys them, else fal cash (recorded as cash here); Sora 2 / MAI → credits, conditional, excluded; SD3.5 → Bedrock credits,
+      conditional, excluded; fal-only → cash; Sarvam → Sarvam credits (INR); ElevenLabs → cash'
     - i2v / ref2v / 15-s / extend seconds use the roster's pinned variant price for that path (no cross-path assumption remains except Omni Flash's ≤ 15-s ceiling,
       priced at the pinned 10-s rate × 15 s, and Veo Lite i2v, which has no pinned variant and is unpinned)
     - 'quantity rules from the pinned bytes: Kling lipsync bills input seconds rolled up to 5-s increments (6-s or 8-s plate → 10 s); ElevenLabs music bills per output
@@ -501,7 +502,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -562,7 +563,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -623,7 +624,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -684,7 +685,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -1392,7 +1393,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -1452,7 +1453,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -1512,7 +1513,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -1572,7 +1573,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -2277,7 +2278,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -2338,7 +2339,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -2399,7 +2400,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -2460,7 +2461,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -3168,7 +3169,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -3228,7 +3229,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -3288,7 +3289,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -3348,7 +3349,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -3939,7 +3940,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -4000,7 +4001,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -4287,7 +4288,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -4348,7 +4349,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -4738,7 +4739,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -4798,7 +4799,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -5080,7 +5081,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -5140,7 +5141,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -5617,18 +5618,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -5642,8 +5643,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-EDIT-01
   item_id: IMG-EDIT-01
   route_key: nano-banana-pro-edit
@@ -5677,18 +5678,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -5702,8 +5703,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-EDIT-01
   item_id: IMG-EDIT-01
   route_key: seedream-5-pro-edit
@@ -6055,18 +6056,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -6080,8 +6081,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-EDIT-02
   item_id: IMG-EDIT-02
   route_key: nano-banana-pro-edit
@@ -6115,18 +6116,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -6140,8 +6141,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-EDIT-02
   item_id: IMG-EDIT-02
   route_key: seedream-5-pro-edit
@@ -6495,18 +6496,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -6519,8 +6520,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-EXT-01
   item_id: IMG-EXT-01
   route_key: nano-banana-pro-edit
@@ -6556,18 +6557,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -6580,8 +6581,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-EXT-01
   item_id: IMG-EXT-01
   route_key: seedream-5-pro-edit
@@ -6946,18 +6947,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -6970,8 +6971,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-COMP-01
   item_id: IMG-COMP-01
   route_key: nano-banana-pro-edit
@@ -7010,18 +7011,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -7034,8 +7035,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-COMP-01
   item_id: IMG-COMP-01
   route_key: seedream-5-pro-edit
@@ -7412,18 +7413,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -7436,8 +7437,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-REF-01
   item_id: IMG-REF-01
   route_key: nano-banana-pro-edit
@@ -7478,18 +7479,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -7502,8 +7503,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-REF-01
   item_id: IMG-REF-01
   route_key: seedream-5-pro-edit
@@ -7882,18 +7883,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -7906,8 +7907,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-REF-02
   item_id: IMG-REF-02
   route_key: nano-banana-pro-edit
@@ -7948,18 +7949,18 @@ rows:
   quantity: '1'
   quantity_unit: images
   quantity_rule: per_image
-  unit_price: '0.15'
+  unit_price: '0.134'
   price_status: pinned
   route_status: pinned
-  row_unit_price: '0.15'
-  computed_amount: '0.150000'
+  row_unit_price: '0.134'
+  computed_amount: '0.134000'
   currency: USD
-  amount_usd_equiv: '0.150000'
+  amount_usd_equiv: '0.134000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/nano-banana-pro-edit/fal-api-models-nano-banana-pro-edit.json
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
-  package_billing_pool: cash
-  pool_repoint_pending_package: true
+  package_billing_pool: credits
+  pool_repoint_pending_package: false
   conditional: false
   counted_in_cap: true
   would_dispatch: false
@@ -7972,8 +7973,8 @@ rows:
   inputs: null
   unresolved_inputs: null
   price_basis: cost_table
-  cost_table_unit_price: '0.15'
-  roster_implied_usd: '0.15'
+  cost_table_unit_price: '0.134'
+  roster_implied_usd: '0.134'
 - case_id: IMG-REF-02
   item_id: IMG-REF-02
   route_key: seedream-5-pro-edit
@@ -8687,7 +8688,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.608160'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -8751,7 +8752,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.608160'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -9579,7 +9580,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.608160'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -9643,7 +9644,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.608160'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -10465,7 +10466,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.608160'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -10529,7 +10530,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.608160'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -11254,7 +11255,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.608160'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -11319,7 +11320,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.608160'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -11707,7 +11708,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.810880'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -11771,7 +11772,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.810880'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -12731,7 +12732,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -12792,7 +12793,7 @@ rows:
   currency: USD
   amount_usd_equiv: '0.067000'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -16960,7 +16961,7 @@ rows:
   currency: USD
   amount_usd_equiv: '1.013600'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -17026,7 +17027,7 @@ rows:
   currency: USD
   amount_usd_equiv: '1.013600'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -17356,7 +17357,7 @@ rows:
   currency: USD
   amount_usd_equiv: '1.013600'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false
@@ -17421,7 +17422,7 @@ rows:
   currency: USD
   amount_usd_equiv: '1.013600'
   fx_rate: '1'
-  price_pin_ref: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/gemini-api-judge/gemini-api-pricing.html
   billing_pool: credits
   package_billing_pool: credits
   pool_repoint_pending_package: false

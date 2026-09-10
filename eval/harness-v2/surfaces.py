@@ -66,13 +66,11 @@ GEMINI_API_PRICES = {   # exact strings on the pinned Gemini API pricing page (S
     "gemini-3-pro-image": "$0.134 per 1K/2K image",
     "gemini-omni-1.1-flash": "$17.50 (video)",     # per 1M output tokens; "5,792 tokens per second of 720p video" -> 0.10136 USD/s derived
 }
-# The freeze package (COST-TABLE route_catalogue, roster) still records the pre-decision surface / pool for these keys; the route keys are
-# unchanged so no package row needs an edit, and the roster / package re-point is the roster owner's change (reported, not made here).
-# test_surfaces checks this table EXACTLY against the committed catalogue, so a package rebuild that re-points a key must delete its row.
-GEMINI_API_REPOINT_PENDING_PACKAGE = {
-    "nano-banana-2": ("vertex", "credits"), "nano-banana-pro": ("vertex", "credits"), "nano-banana-pro-edit": ("fal", "cash"),
-    "gemini-omni-1.1-flash": ("vertex", "credits"), "gemini-omni-1.1-flash-10s": ("vertex", "credits"), "gemini-omni-1.1-flash-long": ("vertex", "credits"),
-}
+# Route keys whose registry surface / pool the freeze package (COST-TABLE route_catalogue, roster) has NOT yet been rebuilt for, as
+# {route_key: (package surface, package pool)}. test_surfaces checks this table EXACTLY against the committed catalogue and dry_run.py lists
+# every entry in the manifest. EMPTY since 2026-09-10: the roster records were re-pointed to gemini_api / credits and the package rebuilt
+# (tools/build.py), so the catalogue, the roster and this registry agree for every Gemini-named key.
+GEMINI_API_REPOINT_PENDING_PACKAGE: dict[str, tuple[str, str]] = {}
 # Routes outside the freeze catalogue (no TEST-CASES / COST-TABLE row): registered so the adapter, ledger pool and cap
 # are tested code, but never planned by run_live from the catalogue and never counted in the freeze reconciliation.
 EXTENSION_ROUTES: tuple[str, ...] = ()   # 2026-09-09: the ElevenLabs direct routes entered the freeze catalogue (Controller decision); none left
@@ -147,7 +145,7 @@ def _omni(key, variant, notes=""):
         workflow="t2v", lane="native_av", media_kind="video",
         notes=(f"{GEMINI_API_BILLING_NOTE}; pinned Gemini API price (Standard): video output '{GEMINI_API_PRICES['gemini-omni-1.1-flash']}' per 1M "
                "tokens at '5,792 tokens per second of 720p video' = 0.10136 USD/s derived (the roster's figure, from the Vertex page); "
-               "the roster still records surface vertex / id gemini-omni-1.1-flash-preview / the Vertex pin for this key"
+               "the roster record (re-pointed 2026-09-10) carries the same surface, id and pin"
                + (f"; {notes}" if notes else "")))
 
 
@@ -185,9 +183,9 @@ _ENTRIES: list[SurfaceEntry] = [
          f"{PINS}/gpt-image-2/fal-openai-gpt-image-2.html",
          notes="quality=medium is pinned (README OQ-15 / MD-C8); the credit surface (Azure) is needs_controller_enablement"),
     _gemini_image("nano-banana-2", "gemini-3.1-flash-image", "t2i", "nano-banana-2",
-                  notes="same 0.067 USD per 1K image as the roster's Vertex line; the roster still records surface vertex / the Vertex pin"),
+                  notes="0.067 USD per 1K image, the same figure as the Vertex line the roster carried until its 2026-09-10 re-point"),
     _gemini_image("nano-banana-pro", "gemini-3-pro-image", "t2i", "nano-banana-pro",
-                  notes="same 0.134 USD per 1K/2K image as the roster's Vertex line; the roster still records surface vertex / the Vertex pin"),
+                  notes="0.134 USD per 1K/2K image, the same figure as the Vertex line the roster carried until its 2026-09-10 re-point"),
     _fal("seedream-5-pro", "bytedance/seedream/v5/pro/text-to-image",
          "bytedance_seedream_v5_pro_text-to-image.json", "Seedream5ProTextToImageInput",
          "seedream-5-pro", None, "t2i", "image", "image",
@@ -217,10 +215,9 @@ _ENTRIES: list[SurfaceEntry] = [
     _gemini_image("nano-banana-pro-edit", "gemini-3-pro-image", "edit", "nano-banana-pro-edit",
                   notes="re-pointed 2026-09-09 from fal-ai/nano-banana-pro/edit (cash, 0.15 USD per image) to the same model on the Gemini API "
                         "(Controller: fal is the last choice); reference images go inline; the pinned page adds input images at "
-                        "'Image input is set at 560 tokens' = '$0.0011 per image'. The roster still prices this key at the fal 0.15 cash rate, so "
-                        "pricing.py reserves 0.15 per call (conservative) until the roster is re-pointed - ROSTER CHANGE NEEDED: surface gemini_api, "
-                        "surface_model_id gemini-3-pro-image, billing_pool credits, regular_price 0.134 per_image (+0.0011 per input image), "
-                        "pin_ref the Gemini API pricing page"),
+                        "'Image input is set at 560 tokens' = '$0.0011 per image'. Roster re-pointed 2026-09-10 (surface gemini_api, id gemini-3-pro-image, "
+                        "pool credits, regular_price 0.134 per_image, price_addons.input_image 0.0011, pin_ref the Gemini API pricing page): pricing.py "
+                        "reserves the 0.134 output line per call; the input-image addon is recorded in the roster / COST-TABLE quantity rule, not projected"),
     _fal("seedream-5-pro-edit", "bytedance/seedream/v5/pro/edit", "bytedance_seedream_v5_pro_edit.json",
          "Seedream5ProEditInput", "seedream-5-pro-edit", None, "edit", "image", "image",
          f"{PINS}/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json",

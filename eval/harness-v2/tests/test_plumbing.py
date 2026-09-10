@@ -412,7 +412,8 @@ class FixturesModeTest(PlumbingBase):
         plan = FX.build_fixture_plan(self.out, "fx", self.spec, self.auth)
         kinds = [(s["kind"], s["fixture_id"]) for s in plan["steps"]]
         self.assertEqual(kinds, [("generate", "sofa"), ("generate", "sofa_decoy_1"), ("generate", "tin_front__raw"), ("overlay", "tin_front"), ("derive", "tin_side")])
-        self.assertEqual(Decimal(plan["header"]["estimated_total_usd_equiv"]), Decimal("0.067") * 3 + Decimal("0.15"))
+        # the derivation route (nano-banana-pro-edit) prices at the roster's Gemini API line, 0.134 per 1K/2K output image (re-pointed 2026-09-10; was fal 0.15)
+        self.assertEqual(Decimal(plan["header"]["estimated_total_usd_equiv"]), Decimal("0.067") * 3 + Decimal("0.134"))
         gen, ov, der = plan["steps"][0], plan["steps"][3], plan["steps"][4]
         self.assertTrue(gen["body_sha256"] and gen["template_body_sha256"] is None)
         self.assertTrue(der["template_body_sha256"] and der["body_sha256"] is None)
@@ -454,7 +455,7 @@ class FixturesModeTest(PlumbingBase):
         # ledger: reservation + spend per PAID step, nothing for the overlay
         rows = [json.loads(l) for l in (self.out / "ledger" / "fx" / "spend-ledger.jsonl").read_text().splitlines()]
         self.assertEqual([r["type"] for r in rows], ["reservation", "spend"] * 4)
-        self.assertEqual(sum(Decimal(str(r["amount_usd"])) for r in rows if r["type"] == "spend"), Decimal("0.067") * 3 + Decimal("0.15"))
+        self.assertEqual(sum(Decimal(str(r["amount_usd"])) for r in rows if r["type"] == "spend"), Decimal("0.067") * 3 + Decimal("0.134"))
         # the resolver accepts the sealed fixtures for the battery (and still refuses the decoy)
         f = INP.InputsFile(self.inputs_file([{"case_id": "IMG-REF-01", "role": "reference_asset_1", "ref": "fixture:fx:tin_front"},
                                              {"case_id": "IMG-REF-01", "role": "reference_asset_2", "ref": "fixture:fx:tin_side"},
@@ -502,12 +503,12 @@ class FixturesModeTest(PlumbingBase):
         plan = FX.build_fixture_plan(self.tmp / "real-dry", "real-dry", STAND_IN_SPEC, self.auth)
         c = plan["header"]["counts"]
         # the spec's own sum line (1+1+1+1+2+1+2+1+2+1+2) is 15 generations (7 assets + 8 decoys), not the 13 it wrote; the
-        # derivation route prices at the roster's pinned fal number (0.15), not the ~0.134 the spec assumed -> USD 1.605,
-        # USD 0.005 above the "<= 1.6" sizing and well inside the half-two cap (7.34). Reported to the Controller, not hidden.
+        # derivation route prices at the roster's pinned Gemini API number (0.134 since the 2026-09-10 re-point; the fal 0.15 it
+        # carried before made this 1.605) -> USD 1.541, inside the "<= 1.6" sizing and well inside the half-two cap (7.34).
         self.assertEqual((c["generate"], c["decoys"], c["overlay"], c["derive"]), (15, 8, 3, 4))
         total = Decimal(plan["header"]["estimated_total_usd_equiv"])
-        self.assertEqual(total, Decimal("0.067") * 15 + Decimal("0.15") * 4)
-        self.assertEqual(total, Decimal("1.605"))
+        self.assertEqual(total, Decimal("0.067") * 15 + Decimal("0.134") * 4)
+        self.assertEqual(total, Decimal("1.541"))
         self.assertLessEqual(total, Decimal("7.34"))
         for s in plan["steps"]:
             if s["kind"] == "derive":

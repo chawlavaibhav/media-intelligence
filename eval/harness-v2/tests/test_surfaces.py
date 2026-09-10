@@ -45,14 +45,14 @@ class SurfaceRegistryTest(unittest.TestCase):
         for key, cat in self.catalogue.items():
             e = self.reg.get(key)
             if key in surfaces.GEMINI_API_REPOINT_PENDING_PACKAGE:
-                # 2026-09-09: the registry runs these on the Gemini API (Controller decision); the committed package still records the
-                # pre-decision surface / pool EXACTLY as the table says. A package rebuild that re-points a key must delete its row.
+                # a registry re-point the committed package has not been rebuilt for: the package records the pre-decision surface / pool
+                # EXACTLY as the table says (empty since the 2026-09-10 rebuild; a rebuild that re-points a key must delete its row)
                 self.assertEqual((cat["surface"], cat["billing_pool"]), surfaces.GEMINI_API_REPOINT_PENDING_PACKAGE[key], key)
                 self.assertEqual((e.surface, e.billing_pool, e.key_name), ("gemini_api", "credits", surfaces.GEMINI_API_KEY_NAME), key)
                 continue
             self.assertEqual(e.billing_pool, cat["billing_pool"], key)
             cat_surface = {"fal": "fal", "vertex": "vertex", "direct": "sarvam_direct", "bedrock": "bedrock",
-                           "azure": "azure_foundry", "elevenlabs_direct": "elevenlabs_direct"}[cat["surface"]]
+                           "azure": "azure_foundry", "elevenlabs_direct": "elevenlabs_direct", "gemini_api": "gemini_api"}[cat["surface"]]
             if key == "chirp-3-hd-hi-in":
                 cat_surface = "cloud_tts"
             self.assertEqual(e.surface, cat_surface, key)

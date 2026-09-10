@@ -33,11 +33,15 @@ from adapters import adapter_for
 # regenerated for those - and now the Wan 2 contender rows (CONTROLLER-WAN2-CONTENDER-PREMIUM-DEFERRED-2026-09-09: wan-2.2-a14b on
 # VID-T2V-01/02/03 and VID-2SPK-01, wan-2.2-a14b-i2v on VID-I2V-01..04; 16 calls, USD 8.00). The regenerated COST-TABLE carries all of it:
 # 202 / 106 / 308 calls + 32 conditional, USD 163.93 nominal in cap (cash 121.98 + GCP credits 41.94 + Rs 0.80; ElevenLabs plan credits 0 USD).
+# 2026-09-10 rebuild: the roster's Gemini-named records were re-pointed to the Gemini Developer API (surface gemini_api, GCP credits via the Gemini
+# API key); nano-banana-pro-edit moved from fal cash 0.15 to credits 0.134 (12 calls: cash -1.80, credits +1.61), the other five keys kept their
+# prices - USD 163.74 nominal in cap (cash 120.18 + GCP credits 43.55 + Rs 0.80); call counts unchanged.
 # The task file's older 186 / 112 / 298 and 155.71 are superseded and kept only for the record.
-TASK_FIXED = {"tranche_1a": 202, "tranche_1b": 106, "total": 308, "conditional": 32, "nominal_usd_in_cap": "163.93",
-              "nominal_usd_cash": "121.98", "nominal_usd_credits": "41.94", "nominal_inr_sarvam": "0.80",
-              "source": "COST-TABLE.yaml totals after the 2026-09-09 rebuild (Wan 2 contender rows + the hand-edited A2 / ElevenLabs-direct / ref2v-8s rows now generated); before them, Controller between-role note 6",
-              "superseded_figures": {"between_role_note_6_2026_09_05": {"tranche_1a": 192, "tranche_1b": 96, "total": 288, "nominal_usd_in_cap": "156.46"},
+TASK_FIXED = {"tranche_1a": 202, "tranche_1b": 106, "total": 308, "conditional": 32, "nominal_usd_in_cap": "163.74",
+              "nominal_usd_cash": "120.18", "nominal_usd_credits": "43.55", "nominal_inr_sarvam": "0.80",
+              "source": "COST-TABLE.yaml totals after the 2026-09-10 rebuild (Gemini-named routes re-pointed to the Gemini Developer API); before it the 2026-09-09 rebuild (Wan 2 contender rows + the hand-edited A2 / ElevenLabs-direct / ref2v-8s rows generated) and Controller between-role note 6",
+              "superseded_figures": {"rebuild_2026_09_09": {"tranche_1a": 202, "tranche_1b": 106, "total": 308, "nominal_usd_in_cap": "163.93"},
+                                     "between_role_note_6_2026_09_05": {"tranche_1a": 192, "tranche_1b": 96, "total": 288, "nominal_usd_in_cap": "156.46"},
                                      "task_file": {"tranche_1a": 186, "tranche_1b": 112, "total": 298, "nominal_usd_in_cap": "155.71"}}}
 ROUNDING_TOLERANCE_PER_CALL = Decimal("0.0001")    # COST-TABLE rounds line_usd to 4 decimals
 
@@ -85,9 +89,9 @@ def build_manifest(book: CB.CaseBook, registry: surfaces.SurfaceRegistry, pricin
     multi-reference FLUX edit row at the roster-implied price when that is the ONLY thing refusing it."""
     rows_out = []
     adapters_cache: dict[str, object] = {}
-    # A registry entry may already run on a surface / pool the Controller decided but the freeze package has not been rebuilt for
-    # (surfaces.GEMINI_API_REPOINT_PENDING_PACKAGE, 2026-09-09). The row keeps BOTH pools; the reconciliation below is against the
-    # package's pool (the COST-TABLE basis), and the header lists every such re-point so nothing is hidden.
+    # A registry entry may run on a surface / pool the Controller decided but the freeze package has not been rebuilt for
+    # (surfaces.GEMINI_API_REPOINT_PENDING_PACKAGE; empty since the 2026-09-10 rebuild). The row keeps BOTH pools; the reconciliation
+    # below is against the package's pool (the COST-TABLE basis), and the header lists every such re-point so nothing is hidden.
     pending_repoints = dict(getattr(surfaces, "GEMINI_API_REPOINT_PENDING_PACKAGE", None) or {})
     catalogue = dict(cost_table.route_catalogue or {})
     for row in book.rows():

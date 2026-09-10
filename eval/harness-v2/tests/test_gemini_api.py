@@ -14,7 +14,7 @@ import os
 import unittest
 from decimal import Decimal
 
-from _support import MP4_FIXTURE, PNG_FIXTURE, NoNetworkTestCase, fixed_clock
+from _support import MP4_FIXTURE, PNG_FIXTURE, NoNetworkTestCase, fixed_clock, hv2_paths
 import casebook as CB
 import inputs as INP
 import pricing as PR
@@ -27,7 +27,9 @@ from adapters import base as B
 from adapters import gemini_api_image, gemini_api_omni, vertex_gemini_image, vertex_omni
 from providers import PreDispatchRefusal
 
-BOOK = CB.CaseBook.from_git("HEAD")
+# the WORKING-TREE package (as test_surfaces reads it): the rows these bodies are priced against must be the package pricing.Pricing()
+# and the registry are checked with, so a package rebuild that re-points these routes is tested before it is committed (2026-09-10)
+BOOK = CB.CaseBook.from_paths(hv2_paths.TEST_CASES, hv2_paths.FREEZE)
 CANARY = "CANARY-google-api-key-value-7a1b2c3d4e5f"
 IMAGE_ROUTES = ("nano-banana-2", "nano-banana-pro", "nano-banana-pro-edit")
 OMNI_ROUTES = ("gemini-omni-1.1-flash", "gemini-omni-1.1-flash-10s", "gemini-omni-1.1-flash-long")
@@ -97,7 +99,8 @@ class RegistryTest(unittest.TestCase):
         others = [e for e in surfaces.REGISTRY if e.route_key not in IMAGE_ROUTES + OMNI_ROUTES]
         self.assertFalse([e.route_key for e in others if e.key_name == "GOOGLE_API_KEY" or e.surface == "gemini_api"])
         self.assertFalse([e.route_key for e in others if "gemini" in e.surface_model_id.lower()])
-        self.assertEqual(set(surfaces.GEMINI_API_REPOINT_PENDING_PACKAGE), set(IMAGE_ROUTES + OMNI_ROUTES))
+        # 2026-09-10: the roster and the freeze package were re-pointed with the registry, so nothing is pending against the package
+        self.assertEqual(surfaces.GEMINI_API_REPOINT_PENDING_PACKAGE, {})
 
     def test_live_transport_factory_maps_the_surface_and_opens_nothing(self):
         for key in ("nano-banana-2", "gemini-omni-1.1-flash"):

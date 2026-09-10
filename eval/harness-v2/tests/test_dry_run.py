@@ -2,7 +2,9 @@
 
     counts: conditional false = 308 (202 / 106), conditional true = 32 (Controller between-role note 6 = 288 (192 / 96); + 4 arm A2 rows
     (commit 9adc403) + 16 Wan 2 contender calls (Controller decision 2026-09-09); the ElevenLabs direct re-point moved 10 calls to plan credits);
-    every pool reconciles within USD 0.01 or is closed by explained lines; nominal in cap closes on 163.93 (the regenerated COST-TABLE);
+    every pool reconciles within USD 0.01 or is closed by explained lines; nominal in cap closes on 163.74 (the COST-TABLE regenerated
+    2026-09-10 after the Gemini-named routes were re-pointed to the Gemini Developer API: nano-banana-pro-edit 12 calls fal cash 0.15 ->
+    credits 0.134, the rest at unchanged prices; before that 163.93);
     every would_dispatch: true row is price pinned, route pinned and shape verified; the manifest is
     planning evidence and says so; unpinned / needs_controller_enablement keys never dispatch.
 """
@@ -41,7 +43,7 @@ class ManifestTest(NoNetworkTestCase):
         for t in self.h["reconciliation"]["conditional_by_tranche_and_pool"]:
             self.assertTrue(t["within_0_01"], t)
         n = self.h["nominal_in_cap"]
-        self.assertEqual(n["cost_table_nominal_usd_in_cap"], "163.93")
+        self.assertEqual(n["cost_table_nominal_usd_in_cap"], "163.74")
         self.assertTrue(n["closed"] and n["all_pools_closed"], n)
         for e in self.h["reconciliation"]["explained_deltas"]:
             self.assertTrue(e["explanation"], e)
@@ -63,7 +65,7 @@ class ManifestTest(NoNetworkTestCase):
         self.assertIn("<KEY:FAL_KEY>", text)
         self.assertNotIn("Key fal_", text)
         self.assertEqual(self.h["status"], "PLANNING_EVIDENCE_NOT_A_SPEND_AUTHORISATION")
-        self.assertEqual(self.h["inputs"]["roster"]["sha256"], "587f904e9c68bef4e867c427d8aa8875a281a761a23a4ce9e5ce8e0cd7be242e")
+        self.assertEqual(self.h["inputs"]["roster"]["sha256"], "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c")
         self.assertTrue(self.h["inputs"]["roster"]["roster_last_commit_sha"])
 
     def test_unpinned_and_enablement_keys_never_dispatch(self):
@@ -77,13 +79,19 @@ class ManifestTest(NoNetworkTestCase):
         self.assertEqual(seen, never)
         self.assertEqual(sum(1 for r in self.rows if r["route_key"] == "veo-3.1-fast-extend" and r["api_calls_per_trial"] == 2), 2)
 
-    def test_package_pools_reconcile_across_the_pending_gemini_repoint_and_the_plan_credit_pool(self):
-        # 2026-09-09: the registry already runs nano-banana-pro-edit on the Gemini API (credits) while the package still says fal / cash;
-        # the manifest lists the re-point and reconciles by the PACKAGE pool. The ElevenLabs direct pool bills plan credits, 0 USD.
-        rep = self.h["pool_repoints_pending_package"]["routes"]
-        self.assertEqual([(r["route_key"], r["registry_pool"], r["package_pool"], r["calls"]) for r in rep], [("nano-banana-pro-edit", "credits", "cash", 12)])
+    def test_package_pools_reconcile_with_no_pending_repoint_and_the_plan_credit_pool(self):
+        # 2026-09-10: the roster and the package were re-pointed with the registry (the Gemini-named routes on the Gemini API, credits), so
+        # no re-point is pending and every Gemini row's registry pool IS its package pool; nano-banana-pro-edit's 12 calls left 1a cash
+        # (150 -> 138) for credits. The ElevenLabs direct pool bills plan credits, 0 USD.
+        self.assertEqual(self.h["pool_repoints_pending_package"]["routes"], [])
+        self.assertEqual(surfaces.GEMINI_API_REPOINT_PENDING_PACKAGE, {})
+        gem = [r for r in self.rows if r["surface"] == "gemini_api"]
+        self.assertEqual(sorted({r["route_key"] for r in gem}), ["gemini-omni-1.1-flash", "gemini-omni-1.1-flash-10s", "gemini-omni-1.1-flash-long", "nano-banana-2", "nano-banana-pro", "nano-banana-pro-edit"])
+        self.assertTrue(all((r["billing_pool"], r["package_billing_pool"], r["pool_repoint_pending_package"]) == ("credits", "credits", False) for r in gem), "no Gemini row carries two pools")
+        self.assertEqual(sum(1 for r in gem if r["route_key"] == "nano-banana-pro-edit" and r["unit_price"] == "0.134"), 12)
         pools = {(t["tranche"], t["billing_pool"]): t for t in self.h["reconciliation"]["by_tranche_and_pool"]}
-        self.assertEqual(pools[("1a", "cash")]["cost_table_calls"], 150)
+        self.assertEqual(pools[("1a", "cash")]["cost_table_calls"], 138)
+        self.assertEqual(pools[("1a", "credits")]["cost_table_calls"], 64)
         el = pools[("1b", "elevenlabs_credits")]
         self.assertEqual((el["manifest_calls"], el["cost_table_calls"], el["manifest_usd"], el["closed"]), (10, 10, "0.00", True))
         credits = [t for t in self.h["totals_by_tranche_and_pool"] if t["billing_pool"] == "elevenlabs_credits"][0]

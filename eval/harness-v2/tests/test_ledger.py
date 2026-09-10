@@ -67,10 +67,10 @@ class AuthorisationTest(NoNetworkTestCase):
         self.assertTrue(L.load_battery_authorisation(flat).refusals)
 
     def test_af1_roster_sha_is_checked_against_the_roster_on_disk(self):
-        p = self.write_auth(price_basis_roster_sha256="587f904e9c68bef4e867c427d8aa8875a281a761a23a4ce9e5ce8e0cd7be242e")
+        p = self.write_auth(price_basis_roster_sha256="311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c")
         auth = L.load_battery_authorisation(p)
         on_disk = hashlib.sha256(Path(hv2_paths.ROSTER).read_bytes()).hexdigest()
-        self.assertEqual(auth.refusals == (), on_disk == "587f904e9c68bef4e867c427d8aa8875a281a761a23a4ce9e5ce8e0cd7be242e")
+        self.assertEqual(auth.refusals == (), on_disk == "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c")
         self.assertEqual(auth.roster_sha256_on_disk, on_disk)
 
 
