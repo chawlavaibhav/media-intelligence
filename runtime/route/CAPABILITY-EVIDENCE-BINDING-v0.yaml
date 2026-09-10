@@ -1,0 +1,167 @@
+# CAPABILITY-EVIDENCE-BINDING-v0 — how a spec's capability requirement finds evidence.
+#
+# WHY THIS FILE EXISTS. A PRODUCTION-SPEC says what the maker must be able to DO
+# (`capability_requirements`), and is forbidden from naming a model or a route. The routing evidence
+# map is organised by QUESTION (IMG-CORE, VID-I2V, …), not by capability. Something has to join the
+# two, and if that join lived in code it would be a routing decision hidden in a function. It lives
+# here instead: one row per capability, each row naming the question it is answered by, the arms of
+# that question that answer it, and the routing rule that says so.
+#
+# A capability the router cannot find here is NOT routed by guesswork. It becomes an
+# unsupported_requirement and the decision says manual_route_required. Adding a capability is a row
+# here, exactly as adding a deliverable is a row in DELIVERABLE-KINDS.yaml.
+#
+# `dispatches: false` means the requirement is met by code the runtime runs itself (composing exact
+# strings onto a picture), so no provider call is priced for it — but its EVIDENCE is still gated,
+# because the strategy rests on a measured cell and a blocked cell blocks the strategy.
+schema: CAPABILITY-EVIDENCE-BINDING-v0
+status: runtime input; no limit, price or threshold appears here
+
+sources:
+  routing_evidence_map: eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml
+  taint_register: eval/capability-map/TAINT-REGISTER-v1.yaml
+  policy_profiles: runtime/contracts/POLICY-PROFILES.yaml
+  deliverable_kinds: runtime/contracts/DELIVERABLE-KINDS.yaml
+  roster: eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml
+  price_pin_root: eval/empirical-planning/price-pins-2026-09
+  harness: eval/harness-v2
+
+# The register's own fingerprint binding is checked at load: TAINT-REGISTER-v1 carries
+# sources.routing_evidence_map_sha256, and the router refuses to run if the map on disk differs.
+fingerprint_binding:
+  register_field: sources.routing_evidence_map_sha256
+  binds: routing_evidence_map
+  on_mismatch: refuse
+
+capabilities:
+
+- capability: image_generation
+  question: IMG-CORE
+  arms: null                      # any arm recorded in the question
+  dispatches: true
+  basis: "DELIVERABLE-KINDS static_ad → image_generation; map question IMG-CORE (base image generation)"
+
+- capability: exact_text_composition
+  levels:
+  - level: code_set_on_textless_plate
+    question: IMG-TEXT
+    arms: [code_overlay, C_composite_textless_base]
+    dispatches: false
+    basis: "RR-1 — code-set text on a cheap textless plate; exact by construction, composed by the runtime, not by the provider"
+  - level: generated_in_scene
+    question: IMG-TEXT
+    arms: [A_cheap_generated, B_premium_generated]
+    dispatches: true
+    basis: "RR-2 — the type must sit inside the scene, so the maker draws it"
+  note: >-
+    The level is REQUIRED. A spec that asks for exact text without naming the strategy level is not
+    routed on a guess; the requirement is reported unsupported and a person chooses. PRODUCTION-SPEC
+    carries the strategy in exact_text.strategy, so the compiler always has it.
+
+- capability: image_edit
+  levels:
+  - level: null                   # the unlevelled case: an in-place edit of a supplied photograph
+    question: IMG-EDIT
+    arms: null
+    dispatches: true
+    basis: "RR-4 — edit on a supplied photo"
+  - level: extend
+    question: IMG-EXT
+    arms: null
+    dispatches: true
+    basis: "RR-5 — outpaint / extend a banner"
+  - level: compose
+    question: IMG-COMP
+    arms: null
+    dispatches: true
+    basis: "RR-4 — compose a supplied face and pack"
+
+- capability: reference_fidelity
+  question: IMG-REF
+  arms: null
+  dispatches: true
+  basis: "RR-4 — reproduce a referenced product or person faithfully"
+
+- capability: image_to_video
+  question: VID-I2V
+  arms: null
+  dispatches: true
+  basis: "RR-8 — animate an accepted still"
+
+- capability: text_to_video
+  question: VID-T2V
+  arms: null
+  dispatches: true
+  basis: "RR-15 — plain text-to-video, no still, no reference"
+
+- capability: long_form_video
+  question: VID-MS
+  arms: null
+  dispatches: true
+  basis: "RR-9 — multi-shot and 10-15 s clips"
+
+- capability: native_av_video
+  question: VID-2SPK
+  arms: null
+  dispatches: true
+  basis: "RR-14 — two speakers talking, native audio"
+
+- capability: video_reference
+  question: VID-REF
+  arms: null
+  dispatches: true
+  basis: "RR-11 — a referenced product or person carried into motion"
+
+- capability: physical_detail_video
+  question: VID-KNEE
+  arms: null
+  dispatches: true
+  basis: "RR-10 — briefs naming strict physical detail (condensation, blank label, slow camera)"
+
+- capability: text_in_motion_chain
+  question: VID-TOPO3
+  arms: null
+  dispatches: true
+  basis: "RR-6 / RR-7 — exact type that moves, via a correct plate into a cheap animator"
+
+- capability: tts
+  question: AUD-TTS
+  arms: null
+  dispatches: true
+  basis: "RR-12 — Hindi / Hinglish / Indian-English speech"
+
+- capability: music_generation
+  question: MUS
+  arms: null
+  dispatches: true
+  basis: "RR-13 — instrumental beds"
+
+- capability: lipsync
+  question: AUD-LIP
+  arms: null
+  dispatches: true
+  basis: "map question AUD-LIP — re-voice an existing clip with matching lips"
+
+selection_order:
+  rule: hard_requirements -> evidence_envelope -> cost -> fallback
+  stages:
+  - id: hard_requirements
+    what: "capability coverage, the spec's route_exclusions, and the profile's deliverable_kinds_allowed"
+    note: "a route dropped here is never reconsidered, whatever it costs"
+  - id: evidence_envelope
+    what: "the taint register's status and production_use_allowed, then the active profile's auto_routable_evidence_status"
+    note: "the register is read, never overridden; a cell awaiting a Controller ruling is never auto-routed"
+  - id: price
+    what: "a live price pin resolved through the roster; a route with no live pin cannot be auto-selected"
+    note: "the routing map's cost figures are NEVER read as prices — they were measured on surfaces the roster has since re-pointed"
+  - id: cost
+    what: "cheapest expected cost first, among the routes that survived every stage above"
+    note: "cost only orders survivors; it can never rescue a route or overrule a hard requirement"
+  - id: fallback
+    what: "the next survivor with a different route_key, declared before dispatch with named triggers"
+    note: "a fallback is a different route for the same requirement, never a second attempt at the same one"
+
+fallback_triggers:
+  vocabulary: [provider_refusal, timeout, gate_fail, capability_unsupported]
+  basis: "ROUTE-DECISION-v0.fallback.trigger"
+  note: "no implicit retry exists anywhere; a failure hands over to this route or the job stops cleanly"

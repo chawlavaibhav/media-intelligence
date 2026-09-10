@@ -1,0 +1,42 @@
+# ROUTE-IDENTITY-v0 — the namespace every customer provider attempt is named in.
+#
+# WHY THIS FILE EXISTS. The Lab and the runtime both call the same providers. The audit that produced
+# TAINT-REGISTER-v1 found eight cells where a Lab smoke attempt and a Lab core attempt shared one
+# identity, and nobody could say afterwards which draw had been paid for twice
+# (problem `smoke_shared_identity`). That was inside one system. A customer attempt sharing an
+# identity with a Lab or liveness attempt would be worse: it would put a paying customer's picture
+# and an experiment on the same row.
+#
+# So the runtime mints its attempt ids in its own namespace, and refuses to mint one that could be
+# read as a Lab identity. The patterns below are the shapes the Lab actually uses, quoted from its
+# own records. Nothing here is a limit; it is a naming rule.
+schema: ROUTE-IDENTITY-v0
+
+customer_namespace:
+  prefix: cust
+  template: "{prefix}:{customer_ref}:{job_id}:{decision_id}:{route_key}:draw{draw_index}"
+  must_match: "^cust:[^:]+:[^:]+:[^:]+:[^:]+:draw[0-9]+$"
+  note: >-
+    customer_ref is the opaque account id from PRODUCTION-JOB.customer_ref — never a person's name.
+    draw_index counts the draws the policy profile allows for this deliverable; it is not a retry
+    counter, because no implicit retry exists.
+
+reserved_foreign_identities:
+- id: lab_trial_id
+  pattern: "__"
+  match: contains
+  source: "eval/experiments/EVAL-040/runs/*/PLAN.yaml trial_id, e.g. AUD-LIP-01__kling-lipsync-a2v__chain__r1"
+- id: lab_registry_row
+  pattern: "^cap-"
+  match: regex
+  source: "eval/registry/registry-v1.jsonl row ids, e.g. cap-02dddbbf39b648a2"
+- id: lab_run_id
+  pattern: "^(img-r1|half2|topo3-video|topo3-nb-video|vid-knee|vid-ms|vid-i2v|vid-ref|vid-2spk|vid-t2v|vid-wan2|aud-tts-sarvam|aud-tts-eleven|aud-music-lyria|aud-lip)"
+  match: regex
+  source: "ROUTING-EVIDENCE-MAP-v0.sources.results_run_ids"
+- id: liveness_or_smoke
+  pattern: "(smoke|liveness|probe)"
+  match: regex
+  source: "the -smoke run ids in the same sources list; the register's smoke_shared_identity problem is what this rule exists to prevent"
+
+on_collision: refuse
