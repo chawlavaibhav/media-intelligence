@@ -265,9 +265,11 @@ session. The Canon items below remain a queue, not an authorisation.
 
 **Audit index (10 Sep 2026, end of the two-day Capability Lab run).** 35/35 package cases run and judged. Ledger total
 USD 110.7 (cash USD 67.0 on fal; GCP credits USD 43.8 incl. the USD 3.16 judge run; Sarvam ₹0.89; 1,198 ElevenLabs plan
-credits) across ten signed tranches, no cap crossed. Registry 546 deterministic rows; map 58 cells, RR-1..RR-15. Package is
+credits) across ten signed tranches, no cap crossed. Registry 566 deterministic rows; map 61 cells, RR-1..RR-16. Package is
 now generated (`tools/build.py`, roster sha 311f6631, commit d8399d8): Gemini image/Omni/NB-Pro-edit on the Gemini API,
-Wan 2.2 A14B pinned as the contender where Wan 3 passed (draft record ₹800, awaiting "go"). Judge: kappa 0.33, not
+Wan 2.2 A14B ran as the contender where Wan 3 passed ("go on Wan 2", cap ₹1,100 after a ₹300 addendum for a harness
+aspect fault): 11/16 — i2v 7/8, bike and shoes 2/2, umbrella 0/2 (rain missing), two speakers 0/2 (silent + lettering);
+RR-16: Wan 2.2 A14B is the cheap Wan tier for silent work, Wan 3.0 Prime where sound or weather physics are in the contract. Judge: kappa 0.33, not
 qualified. Decisions of 9–10 Sep: Gemini on the Gemini key; GCP over fal for any model on both; Wan 2 contender; premium
 tiers deferred to a real brief; round two later; ElevenLabs music skipped; fal top-up / Indian voice skipped then fal
 topped up. PR #91, #92 merged; PR #93 open. Review page published to the Controller as an Artifact.
