@@ -45,6 +45,11 @@ SECTIONS = ["DELIVERABLE", "OBJECTIVE_INTERPRETATION", "CORE_CREATIVE_IDEA",
             "AUDIO_AND_EDIT", "FAILURE_PREVENTION", "HARD_CONSTRAINT_CHECK",
             "KNOWLEDGE_AND_WEBSITE_USE"]
 
+# Conditions that expose the Canon tools. Both use the SAME corpus, the SAME three
+# read-only tools and the SAME ACCEPTED/HOLD/Q&A status semantics; they differ only in
+# the prompt-level retrieval treatment (unbounded vs objective-driven and controlled).
+CANON_CONDITIONS = ("FULL_CANON", "CONTROLLED_CANON")
+
 MAX_TRANSIENT_RETRIES = 2      # per phase (creative, then repair)
 MAX_FORMAT_REPAIRS = 1
 
@@ -117,9 +122,21 @@ def canon_fingerprints():
                             for p in glob.glob(str(REPO / "canon/qa/canon-014/*-qa-bank.yaml"))))}
 
 
-def expected_trial_order(lane_id):
+def trial_id_prefix(lane):
+    """The lane's trial-id stem. Defaults to the original `E037-<lane_id>` exactly.
+
+    A lane may declare its own `trial_id_prefix` so a supplemental run carries distinct
+    trial ids and can never collide with, or be mistaken for, an existing lane's
+    evidence. The ORDERING METHOD is untouched: the ids, whatever their stem, are still
+    sorted by sha256("EVAL-037|" + trial_id).
+    """
+    return lane.get("trial_id_prefix") or f"E037-{lane['lane_id']}"
+
+
+def expected_trial_order(lane):
     """Recompute the frozen order: sort trial ids by sha256('EVAL-037|' + trial_id)."""
-    ids = [f"E037-{lane_id}-{b}-R{r}"
+    stem = trial_id_prefix(lane)
+    ids = [f"{stem}-{b}-R{r}"
            for r in (1, 2, 3) for b in ["B01", "B02", "B03", "B04", "B05", "B06"]]
     return sorted(ids, key=lambda t: sha256_text("EVAL-037|" + t))
 
@@ -170,7 +187,7 @@ def preflight(lane, fake=None):
                 if got != site[dk]:
                     problems.append(f"{bid} {k} digest mismatch: {got}")
 
-    if lane["condition"] == "FULL_CANON":
+    if lane["condition"] in CANON_CONDITIONS:
         fps = lane["condition_detail"]["fingerprints"]
         live = canon_fingerprints()
         if live["full_knowledge"] != fps["full_knowledge"]["combined_digest"]:
@@ -185,7 +202,7 @@ def preflight(lane, fake=None):
     if len(ids) != 18 or len(set(ids)) != 18:
         problems.append(f"trials_plan has {len(ids)} entries ({len(set(ids))} unique), "
                         f"expected 18 unique")
-    expected = expected_trial_order(lane["lane_id"])
+    expected = expected_trial_order(lane)
     if ids != expected:
         problems.append("trial order does not match the frozen SHA-256 ordering")
     notes.append("trial order recomputed from sha256('EVAL-037|'+trial_id) and matches")
@@ -244,9 +261,9 @@ def build_tools(lane, brief_id):
     import website_tools
     schemas, canon, site = [], None, None
 
-    if lane["condition"] == "FULL_CANON":
+    if lane["condition"] in CANON_CONDITIONS:
         import canon_tools
-        canon = canon_tools.Canon(REPO, condition="FULL_CANON")
+        canon = canon_tools.Canon(REPO, condition=lane["condition"])
         schemas += canon_tools.TOOL_SCHEMAS
 
     ws = website_tools.schema_for(brief_id)
@@ -267,7 +284,7 @@ def build_tools(lane, brief_id):
 
 def system_prompt_for(lane):
     text = (ROOT / lane["prompt"]["system_prompt_path"]).read_text(encoding="utf-8")
-    if lane["condition"] == "FULL_CANON":
+    if lane["condition"] in CANON_CONDITIONS:
         cond = yaml.safe_load(
             (ROOT / lane["condition_detail"]["addendum_path"]).read_text(encoding="utf-8"))
         text = (text.rstrip("\n") + "\n\n"
@@ -286,6 +303,27 @@ def make_adapter(lane, schemas, fake, fake_target):
 
 
 # --------------------------------------------------------------------------
+def write_transcript(outdir, trial_id, idx, tools):
+    """Persist the complete tool transcript for one attempt. Returns its relative path.
+
+    EVIDENCE-002: called on the SUCCESS path and on the FAILURE path alike. A trial
+    that overflowed its context or hit the tool-loop guard has still pulled real
+    knowledge through the tools, and losing that transcript makes a failed trial
+    indistinguishable from one that never retrieved anything.
+    """
+    if not tools:
+        return None
+    tpath = outdir / "transcripts" / f"{trial_id}-a{idx}.jsonl"
+    tpath.parent.mkdir(parents=True, exist_ok=True)
+    with open(tpath, "w", encoding="utf-8") as fh:
+        for n, tc in enumerate(tools):
+            full = tc.pop("_full_result", None)
+            tc["transcript_ref"] = f"{tpath.relative_to(outdir)}#{n}"
+            fh.write(json.dumps({"line": n, "call": tc, "full_result": full},
+                                default=str) + "\n")
+    return str(tpath.relative_to(outdir))
+
+
 def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
     """One trial: creative phase, then at most one format-repair phase."""
     import providers as P
@@ -295,7 +333,7 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
     schemas, dispatch = build_tools(lane, trial["brief_id"])
     adapter = make_adapter(lane, schemas, fake, fake_target)
 
-    attempts, all_turns, all_tools = [], [], []
+    attempts, all_turns, all_tools, all_notes = [], [], [], []
     transient_retries = {"creative": 0, "repair": 0}
     repairs = 0
     status = package = package_path = None
@@ -339,14 +377,38 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
             resp = adapter.call(request, **kw)
         except Exception as e:  # noqa: BLE001 — classified, never blanket-retried
             fc = getattr(e, "failure_class", None) or P.classify_exception(e)
-            turns = (getattr(e, "detail", {}) or {}).get("turns", [])
+            detail = getattr(e, "detail", {}) or {}
+            turns = detail.get("turns", [])
+            # EVIDENCE-002. A failed call has usually already been BILLED for several
+            # turns and has already pulled knowledge through the tools. Retain both,
+            # exactly as the success path does, so spend and retrieval evidence survive
+            # the failure instead of being silently discarded.
+            ftools = [tc for tc in (detail.get("tool_calls") or []) if isinstance(tc, dict)]
+            fnotes = detail.get("intermediate_text") or []
+            ftref = write_transcript(outdir, trial["trial_id"], idx, ftools)
             all_turns += turns
+            all_tools += ftools
+            all_notes += fnotes
+            fusage = sum_usage(turns) if turns else None
+            fcost, fbasis = (cost_for(prices, lane["model"]["model_id"],
+                                      fusage["input_tokens"], fusage["output_tokens"])
+                             if fusage else (None, "no provider turn completed"))
             row.update(ended_at=now(),
                        outcome="transient_failure" if P.is_transient(fc)
                        else "deterministic_failure",
                        failure_class=fc, failure_is_transient=P.is_transient(fc),
-                       error=str(e)[:600], provider_turns=turns,
-                       usage=sum_usage(turns) if turns else None)
+                       error=str(e)[:600], provider_turns=turns, usage=fusage,
+                       price_snapshot=prices["snapshot_id"],
+                       calculated_cost_usd=fcost, cost_basis=fbasis,
+                       transcript_path=ftref, intermediate_text=fnotes,
+                       tool_calls=[{k: v for k, v in tc.items() if k != "_full_result"}
+                                   for tc in ftools],
+                       website_reads=[tc["snapshot_sha256"] for tc in ftools
+                                      if tc.get("tool_family") == "website"],
+                       evidence_note=("EVIDENCE-002: provider turns and Canon tool "
+                                      "transcripts completed before this failure are "
+                                      "retained. Anything billed after the last "
+                                      "completed turn is not observable here."))
             attempts.append(row)
             if P.is_transient(fc) and transient_retries[phase] < MAX_TRANSIENT_RETRIES:
                 transient_retries[phase] += 1
@@ -363,18 +425,10 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
         tools = resp.get("tool_calls", [])
 
         # Full tool transcript: real arguments, per-item identity, full result.
-        tref = None
-        if tools:
-            tpath = outdir / "transcripts" / f"{trial['trial_id']}-a{idx}.jsonl"
-            tpath.parent.mkdir(parents=True, exist_ok=True)
-            with open(tpath, "w", encoding="utf-8") as fh:
-                for n, tc in enumerate(tools):
-                    full = tc.pop("_full_result", None)
-                    tc["transcript_ref"] = f"{tpath.relative_to(outdir)}#{n}"
-                    fh.write(json.dumps({"line": n, "call": tc, "full_result": full},
-                                        default=str) + "\n")
-            tref = str(tpath.relative_to(outdir))
+        tref = write_transcript(outdir, trial["trial_id"], idx, tools)
         all_tools += tools
+        notes = resp.get("intermediate_text") or []
+        all_notes += notes
 
         resp_path = outdir / "raw" / f"{trial['trial_id']}-a{idx}.response.json"
         resp_path.parent.mkdir(parents=True, exist_ok=True)
@@ -385,7 +439,8 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
                                usage["input_tokens"], usage["output_tokens"])
         row.update(ended_at=now(), response_digest=sha256_text(text),
                    raw_response_path=str(resp_path.relative_to(outdir)),
-                   transcript_path=tref, provider_turns=turns, usage=usage,
+                   transcript_path=tref, intermediate_text=notes,
+                   provider_turns=turns, usage=usage,
                    price_snapshot=prices["snapshot_id"],
                    calculated_cost_usd=cost, cost_basis=basis,
                    tool_calls=[{k: v for k, v in tc.items() if k != "_full_result"}
@@ -428,6 +483,19 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
                              totals["input_tokens"], totals["output_tokens"])
     canon_calls = [t for t in all_tools if t.get("tool_family") == "canon"]
     web_calls = [t for t in all_tools if t.get("tool_family") == "website"]
+
+    # CONTROLLED_CANON: measure what was actually retrieved against the treatment
+    # allowance. MEASUREMENT ONLY — nothing was capped, blocked or repaired at run
+    # time. A trial that would otherwise have completed but exceeded the allowance is
+    # `failed_controlled_retrieval`: the treatment was not followed, so the trial is
+    # not a valid observation OF the treatment. It is never re-run for this.
+    controlled = None
+    if lane["condition"] == "CONTROLLED_CANON":
+        import controlled_retrieval as CR
+        controlled = CR.assess(all_tools, all_notes)
+        if not controlled["compliant"] and status in ("complete", "format_repaired"):
+            status = CR.VIOLATION_STATUS
+
     eligible = package is not None and status in ("complete", "format_repaired")
 
     result = {
@@ -443,7 +511,7 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
         "package_digest": sha256_text(package) if package else None,
         "sections_present": sections_present(package) if package else [],
         "eligible_for_media_generation": eligible,
-        "canon_used": (bool(canon_calls) if lane["condition"] == "FULL_CANON" else None),
+        "canon_used": (bool(canon_calls) if lane["condition"] in CANON_CONDITIONS else None),
         "canon_tool_calls": len(canon_calls),
         "canon_items_returned": {
             "accepted": sum(t.get("accepted_items", 0) for t in canon_calls),
@@ -453,6 +521,7 @@ def run_trial(trial, lane, system_prompt, outdir, fake, fake_target, prices):
         "website_tool_calls": len(web_calls),
         "website_snapshot_used": bool(web_calls),
         "website_snapshot_digests": sorted({t["snapshot_sha256"] for t in web_calls}),
+        "controlled_retrieval": controlled,
         "usage_totals": totals,
         "price_snapshot": prices["snapshot_id"],
         "calculated_cost_usd": tcost,
@@ -496,9 +565,14 @@ def main():
     for trial in lane["execution"]["trials_plan"]:
         res, atts = run_trial(trial, lane, system_prompt, outdir, a.fake, a.fake_target, prices)
         trials.append(res); all_attempts += atts
+        cr = res.get("controlled_retrieval") or {}
+        extra = (f"  search={cr.get('canon_search_calls')}/{cr.get('search_results_total')}"
+                 f"  read={cr.get('canon_read_calls')}"
+                 f"  needs={cr.get('declared_knowledge_needs_count')}") if cr else ""
         print(f"  [{res['order_index']:2d}/18] {res['trial_id']}  {res['status']}  "
               f"attempts={res['attempts_used']}  turns={res['usage_totals']['provider_turns']}"
-              f"  web={res['website_tool_calls']}  canon={res['canon_tool_calls']}")
+              f"  web={res['website_tool_calls']}  canon={res['canon_tool_calls']}{extra}",
+              flush=True)
 
     # Substrate identity recorded into the evidence: the freeze fingerprint is
     # COMPUTED from the tree that actually ran (preflight already proved it matches
@@ -524,7 +598,7 @@ def main():
               "lane_usage_totals": lane_totals,
               "lane_calculated_cost_usd": lcost, "lane_cost_basis": lbasis,
               "trials": trials}
-    if lane["condition"] == "FULL_CANON":
+    if lane["condition"] in CANON_CONDITIONS:
         fps = lane["condition_detail"]["fingerprints"]
         result["canon_fingerprints"] = {
             "full_knowledge": fps["full_knowledge"]["combined_digest"],
