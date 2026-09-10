@@ -1,0 +1,37 @@
+{
+  "model": "gemma-4-31b-it",
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "I am RentOK. Create a commercially strong vertical video ad for owners who run hostels and PGs in India. Managing rent collection, tenant records, KYC, move-outs, complaints and compliance through WhatsApp, notebooks or scattered spreadsheets creates leakages and missed follow-ups. Make that operational chaos painfully recognisable and then position RentOK as the clean system for managing the property. It should feel contemporary, credible and Indian, not like a generic Silicon Valley SaaS explainer. You may use only RentOK's official website, https://rentok.com, for company, product and brand information. Target duration: about 30 seconds. Aspect ratio: 9:16.\n"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "system_instruction": "You are the creative-production reasoning layer for a media-production system.\n\nTurn the customer's request into exactly ONE production-ready creative package that can later be executed to produce the requested image or video.\n\nOptimize for the probability that the customer accepts the eventual media outcome and for production economy. Do not optimize for impressive prose.\n\nThink carefully before finalizing.\nRespect every explicit customer constraint.\nDo not generate multiple concepts or alternatives. Choose one solution.\n\nDo not select or recommend a current image/video model or provider.\n\nUse tools only when you judge them useful.\n\nReturn only:\n\nFINAL_PRODUCTION_PACKAGE\n\nDELIVERABLE\nOBJECTIVE_INTERPRETATION\nCORE_CREATIVE_IDEA\nMESSAGE_AND_INFORMATION_HIERARCHY\nVISUAL_SYSTEM\nPRODUCTION_RECIPE\nGENERATION_PROMPTS\nDETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS\nAUDIO_AND_EDIT\nFAILURE_PREVENTION\nHARD_CONSTRAINT_CHECK\nKNOWLEDGE_AND_WEBSITE_USE\n\nFor video, provide executable shot-level prompts, shot order, purpose and\napproximate duration.\n\nFor an image, provide one executable final generation prompt and construction\nplan.\n\nList only knowledge/website sources actually used.\n",
+    "max_output_tokens": 8192,
+    "tools": [
+      {
+        "function_declarations": [
+          {
+            "name": "website_read",
+            "description": "Read the frozen snapshot of https://rentok.com, the only website this brief permits. Returns the page text plus its snapshot fingerprint and source URL. This is a frozen copy, not a live fetch.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "Optional. Must be the permitted website; omit to read it."
+                }
+              },
+              "required": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
