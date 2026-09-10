@@ -29,3 +29,12 @@ authorisation file `eval/harness-v2/authorization.wan2.local.yaml` (gitignored, 
 ## 3. Not authorised
 
 Anything else on Wan 2; Seedance / Wan premium (deferred to a real brief); round two of stills (later).
+
+## 4. Addendum — six image-to-video draws refused on output size; re-run under ₹300 more (Writer Controller, 2026-09-10)
+
+Ten clips sealed (text-to-video 01–03, two speakers, image-to-video 04). The six image-to-video draws on the 4:5
+Nano Banana stills (VID-I2V-01..03) were refused by fal with HTTP 422: *"The resolved output size 848x1056 is not
+supported by this distributed GPU endpoint. Use aspect_ratio='16:9', '9:16', or '1:1' instead of 'auto' for this input
+image."* — a harness request-shape fault (the pin left aspect_ratio at the endpoint default), nothing generated, nothing
+charged. The pin now sends the row's 9:16. The ledger had reserved the six calls at estimate, so the re-run
+(6 × USD 0.48 = USD 2.88 + one smoke USD 0.48) needs **₹300 more: piece cap ₹1,100 = USD 11.53**. Run id `vid-wan2-i2v`.
