@@ -24,7 +24,11 @@ fields:
 
   primary:
     type: object
-    required: true
+    required: false
+    note_on_absence: >-
+      Absent exactly when manual_route_required is true - a decision to hand the choice to a person
+      has no primary route by definition. CORRECTED: v0 marked this required, which made a manual
+      decision unrepresentable.
     fields:
       route_key: {type: string, required: true}
       surface: {type: string, required: true}
@@ -34,10 +38,13 @@ fields:
         type: string
         required: true
         note: >-
-          Open vocabulary supplied by the evidence map, e.g. launch_eligible / clean_observed /
-          directional_only / method_tainted / insufficient. The runtime may dispatch automatically
-          ONLY on a status the active policy profile lists as auto-routable. Everything else produces
-          manual_route_required. The runtime never decides for itself that weak evidence is good enough.
+          The vocabulary is supplied by eval/capability-map/TAINT-REGISTER-v1.yaml and is exactly:
+          clean_observed / directional_only / awaiting_controller_ruling / method_tainted /
+          insufficient. CORRECTED: this note previously offered `launch_eligible` as its first
+          example. No such status exists - whether a cell may carry customer traffic is a Controller
+          ruling plus the policy profile, never a label an auditor stamps on the evidence. The
+          runtime may dispatch automatically ONLY on a status the active profile lists as
+          auto-routable, and never decides for itself that weak evidence is good enough.
       evidence_n: {type: object, required: true, note: "draws and items behind the cell, carried forward honestly; 2 draws is 2 draws"}
       price_pin_ref: {type: string, required: true, note: "path to the pinned vendor bytes; a route with no live pin cannot be auto-selected"}
       unit_price: {type: decimal, required: true}

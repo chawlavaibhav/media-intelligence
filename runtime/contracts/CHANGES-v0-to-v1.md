@@ -48,3 +48,46 @@ The lane observed that `strategy_basis` inevitably names routes, which sits oddl
 nothing in a spec may name a route. It does, and the rule stands, with `route_exclusions` as its
 single declared exception. A rule that forbids routes is useless if it cannot say which ones. Both
 are now written down rather than left as an inconsistency for someone to discover later.
+
+---
+
+# Second round — what the router lane found
+
+The router lane was built against v1 and found four more defects. Three of them were mine, introduced
+while writing the contracts; one is a standing Controller decision that nothing implemented.
+
+**1. A status that does not exist, named in the profile that matters.** `alpha_human_release` said it
+would auto-route cells whose evidence status was `launch_eligible`. The taint register has no such
+status and says in writing that it never will — whether a cell may carry customer traffic is a
+Controller ruling plus a policy profile, not a label an auditor stamps on evidence. The effect was
+total: under the shipped alpha profile the router could auto-route **0 of 61 cells**. Corrected to
+`clean_observed`.
+
+**2. I planted it in the contract too.** `ROUTE-DECISION-v0`'s note offered `launch_eligible` as its
+first example of a status, which is where the profile copied it from. Corrected, and the note now
+names the register as the single source of the vocabulary.
+
+**3. A manual decision could not be represented.** `primary` was marked required, but a decision to
+hand the route choice to a person has no primary by definition. Now optional, absent exactly when
+`manual_route_required` is true.
+
+**4. An unscoped prohibition is too blunt.** RR-3 forbids certain routes from *drawing* Devanagari
+text. Excluding those routes outright also deleted the RR-1 evidence, in which the same route makes a
+textless plate and code sets the text — where nothing is drawn at all, and which is the cheapest exact
+-text path the project has. `route_exclusions` now carries a `scope`.
+
+**5. A Controller decision nothing implemented.** `CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09`
+says that when one model is offered on both fal and a GCP surface, it is called on GCP. Nothing in the
+runtime knew that. It is now `surface_preference` on the profile, with the decision cited.
+
+The same record also warns against the misreading it invites: it is a rule about *where a given model
+is called*, not a preference for credit-funded models over cash-funded ones. That decision says
+plainly that preference between different models stays what the blind verdicts say, with cost as a
+tie-break only. A router that quietly preferred cheaper credit routes over better cash routes would be
+breaking the decision it believed it was obeying — so the profile field says so in words.
+
+## The pattern worth noticing
+
+Across two rounds, thirteen defects. Not one was found by reading a contract; every one was found by
+building something that had to use it. Three of the four in this round were introduced by the same
+hand that wrote the rule they broke.

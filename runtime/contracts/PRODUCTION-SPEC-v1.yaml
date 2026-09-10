@@ -106,6 +106,16 @@ fields:
       route_key: {type: string, required: true}
       reason: {type: string, required: true}
       basis: {type: string, required: true, note: "the routing rule id and map cell"}
+      scope:
+        type: string
+        required: true
+        note: >-
+          What the prohibition actually covers. ADDED because an unscoped exclusion is too blunt:
+          RR-3 forbids certain routes from DRAWING Devanagari text, but excluding those routes
+          outright also deletes the RR-1 evidence in which the same route makes a textless plate and
+          code sets the text - where nothing is drawn at all, and which is the cheapest exact-text
+          path the project has. Open vocabulary; today's values are `generated_text_only` and
+          `whole_route`.
 
   gate_requirements:
     type: list[string]
@@ -125,6 +135,15 @@ fields:
     type: list[string]
     required: true
     note: "format probe, baked-text scan, aspect and duration; run by code, never shown to the approver"
+
+  policy_profile:
+    type: string
+    required: true
+    note: >-
+      The profile row this spec was compiled under. ADDED after the router lane found that the spec
+      carried only the two budget numbers copied out of the row, so the router could not read
+      auto_routable_evidence_status or fallback_required and had to be handed the profile separately.
+      A spec that cannot name its own operating rules is a spec someone will run under the wrong ones.
 
   budget:
     type: object

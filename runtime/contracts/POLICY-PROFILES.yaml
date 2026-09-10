@@ -19,11 +19,28 @@ profiles:
   deliverable_kinds_allowed: [static_ad, static_ad_from_supplied_photo, short_motion_from_accepted_still]
   max_provider_draws_per_deliverable: 2
   repair_allowance: 1
-  auto_routable_evidence_status: [launch_eligible]
+  auto_routable_evidence_status: [clean_observed]
+  # CORRECTED. This row previously said `launch_eligible`, a status that does not exist and never
+  # will: eval/capability-map/TAINT-REGISTER-v1.yaml states in writing that whether a cell may carry
+  # customer traffic is a Controller ruling plus this profile, not an auditor's label. The effect of
+  # the mistake was total - the alpha profile could auto-route 0 of 61 cells - and it was found by
+  # building the router, not by reading the file. The real vocabulary is:
+  #   clean_observed | directional_only | awaiting_controller_ruling | method_tainted | insufficient
   on_non_auto_routable: manual_route_required
   acceptance_authority: human
   automated_judge_in_release_path: false
   autonomous_external_delivery: false
+  surface_preference:
+    rule: same_model_prefers_gcp
+    basis: coordination/decisions/CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09.md
+    note: >-
+      When ONE model is offered on both fal and a GCP surface, call it on GCP - the Controller's
+      words: "fal is the last choice since it costs me money ... if the model exists on fal and
+      gemini key, we use it from gemini key". This is a rule about WHERE a given model is called.
+      It is NOT a preference for credit-funded models over cash-funded ones: that same decision says
+      preference between different models stays what the blind verdicts say, with cost as a tie-break
+      only. A router that quietly preferred cheap credit routes over better cash routes would be
+      breaking the decision it thought it was obeying.
   default_job_cost_ceiling_usd: 5.00
   fallback_required: true
   retention_days_default: 30
@@ -40,7 +57,7 @@ profiles:
   deliverable_kinds_allowed: [static_ad, static_ad_from_supplied_photo, short_motion_from_accepted_still, text_in_motion, multi_shot_story, spoken_voiceover, music_bed]
   max_provider_draws_per_deliverable: 4
   repair_allowance: 2
-  auto_routable_evidence_status: [launch_eligible, clean_observed]
+  auto_routable_evidence_status: [clean_observed, directional_only]
   on_non_auto_routable: manual_route_required
   acceptance_authority: human
   automated_judge_in_release_path: false
@@ -56,7 +73,7 @@ profiles:
   deliverable_kinds_allowed: [__all__]
   max_provider_draws_per_deliverable: 0
   repair_allowance: 0
-  auto_routable_evidence_status: [launch_eligible, clean_observed, directional_only, method_tainted, insufficient]
+  auto_routable_evidence_status: [clean_observed, directional_only, awaiting_controller_ruling, method_tainted, insufficient]
   on_non_auto_routable: annotate_and_continue
   acceptance_authority: none
   automated_judge_in_release_path: false
