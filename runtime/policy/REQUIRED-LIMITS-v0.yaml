@@ -1,0 +1,29 @@
+# REQUIRED-LIMITS-v0 — the limits THIS lane reads out of a job's policy profile.
+#
+# POLICY-PROFILES-v0 invariant: "A limit that is not in the named profile is not a limit the
+# runtime may invent. Missing limit = refuse." This file is how the runtime says which limits it
+# is going to need, so the refusal happens at intake — before any spend — rather than halfway
+# through a job. A later lane adds its own rows here; no code changes.
+schema: REQUIRED-LIMITS-v0
+lane: PC-03A (intake + spec compilation)
+
+# Checked at intake. A named profile missing any of these is refused before anything else runs.
+required_at_intake:
+- deliverable_kinds_allowed
+- max_provider_draws_per_deliverable
+- repair_allowance
+
+# Read while compiling the spec. Every one of these must also appear above, so the refusal is
+# never discovered late.
+read_by_spec_compiler:
+  budget.max_provider_draws: max_provider_draws_per_deliverable
+  budget.repair_allowance: repair_allowance
+
+# The profile value used when the job omits an optional job-level field. This is not a code
+# default: the value still comes from the named profile, and a profile without it refuses.
+job_field_defaults:
+  cost_ceiling_usd: default_job_cost_ceiling_usd
+  retention.delete_after_days: retention_days_default
+
+# The value that means "every kind in the registry" in deliverable_kinds_allowed.
+allow_all_token: __all__

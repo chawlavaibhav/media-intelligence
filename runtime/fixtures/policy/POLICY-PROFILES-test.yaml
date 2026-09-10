@@ -1,0 +1,26 @@
+# Test-only policy rows. The frozen runtime/contracts/POLICY-PROFILES.yaml is never edited.
+schema: POLICY-PROFILES-v0
+profiles:
+
+- profile: missing_a_limit
+  purpose: "a profile that forgot repair_allowance; the runtime must refuse, not assume"
+  deliverable_kinds_allowed: [static_ad]
+  max_provider_draws_per_deliverable: 2
+  default_job_cost_ceiling_usd: 1.00
+  retention_days_default: 7
+
+- profile: narrow_kinds
+  purpose: "allows one kind only, so a second kind is refused at intake"
+  deliverable_kinds_allowed: [short_motion_from_accepted_still]
+  max_provider_draws_per_deliverable: 1
+  repair_allowance: 0
+  default_job_cost_ceiling_usd: 1.00
+  retention_days_default: 7
+
+- profile: wide_and_generous
+  purpose: "shows that widening every limit is a row edit and nothing else"
+  deliverable_kinds_allowed: [__all__]
+  max_provider_draws_per_deliverable: 9
+  repair_allowance: 4
+  default_job_cost_ceiling_usd: 99.00
+  retention_days_default: 90

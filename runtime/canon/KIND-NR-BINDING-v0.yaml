@@ -1,0 +1,114 @@
+# KIND-NR-BINDING-v0 — the only thing the runtime needs in order to normalise a job into a
+# CANON-010 Normalized Request: which grammar values a deliverable kind implies.
+#
+# WHY THIS FILE AND NOT CODE. The Canon pack lookup must be a table lookup over NR fields
+# (CANON-SHAPE-v1 §4) and must run before any model is consulted, so the modality (R05) and the
+# requested_operation (R01) have to come from the job. PRODUCTION-JOB-v0 carries neither: it
+# carries the deliverable kind the customer chose. This file binds one to the other as ROWS.
+# Adding a deliverable kind is a row in runtime/contracts/DELIVERABLE-KINDS.yaml plus a row here.
+# No code in runtime/ names a kind.
+#
+# grammar: canon/experiments/pre-execution-freeze/MEDIA-REQUEST-GRAMMAR-v1.yaml
+#   R01 requested_operation | R05 modality | R16 specification_provenance
+# R01 provenance may never be system_derived. The customer chose the kind, so the operation the
+# kind names is customer_stated; anything the runtime notices on top of that is an ambiguity
+# marker (R17), never a quiet decision.
+schema: KIND-NR-BINDING-v0
+
+# Roles in PRODUCTION-JOB-v0.reference_assets that stand for a product/packshot entity (R06),
+# which is what fires the product_appearance conditional pack.
+product_entity_roles: [product, logo, prior_creative]
+
+# Roles whose identity must survive into the deliverable. Drives identity_requirements and the
+# line-up acceptance statements.
+identity_roles: [product, person, logo]
+
+# Roles that count as a supplied artefact (R02).
+supplied_asset_roles: [product, logo, person, scene, prior_creative, other]
+
+kinds:
+
+- kind: static_ad
+  modality: static_image
+  modality_provenance: customer_stated
+  requested_operation: generate
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: true      # R18
+  product_entity_implied: false
+
+- kind: static_ad_from_supplied_photo
+  modality: static_image
+  modality_provenance: customer_stated
+  requested_operation: edit
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: true
+  product_entity_implied: false
+
+- kind: short_motion_from_accepted_still
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: animate
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: true
+  product_entity_implied: false
+
+- kind: text_in_motion
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: animate
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: true
+  product_entity_implied: false
+
+- kind: multi_shot_story
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: generate
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: true
+  product_entity_implied: false
+
+- kind: spoken_voiceover
+  modality: audio
+  modality_provenance: customer_stated
+  requested_operation: generate
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: true
+  product_entity_implied: false
+
+- kind: music_bed
+  modality: audio
+  modality_provenance: customer_stated
+  requested_operation: generate
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: false
+  product_entity_implied: false
+
+- kind: two_speaker_dialogue
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: generate
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: true
+  product_entity_implied: false
+
+- kind: lipsync_to_supplied_audio
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: edit
+  operation_provenance: customer_stated
+  advertising_acceptance_intent: true
+  product_entity_implied: false
+
+# Facts the runtime notices about a job that make the customer's modality genuinely uncertain.
+# pack-triggers-v0.yaml resolves uncertainty by injecting the bounded UNION of base sets rather
+# than guessing (the EVAL-037 lesson: a model will not fetch what was omitted).
+ambiguity_markers:
+- marker: motion_requested_on_a_still_modality
+  when: motion_requested AND modality != video
+  note: "the customer asked for a moving version of a still deliverable; both base sets apply"
+  sets_modality_provenance: customer_implied
+- marker: exact_text_script_without_stated_language
+  when: exact_text_present AND script_beyond_latin AND brief.language absent
+  note: "a non-Latin script with no stated language; the language topology is inferred, not stated"
+  sets_modality_provenance: null
