@@ -78,7 +78,9 @@ ROUTE_PINS: dict[str, dict] = {
     # Wan 2 contender (Controller decision 2026-09-09): Wan 2.2 A14B takes a frame count, not a duration - num_frames = 16 x duration_s + 1
     # (the model's native 4n+1 count; fal's default 81 = 5 s); no audio field exists in the pinned schema (silent family); i2v aspect follows the plate (schema default auto)
     "wan-2.2-a14b":       {"prompt": "prompt", "aspect_ratio": "aspect", "resolution": K("720p"), "num_frames": "frames_16fps"},
-    "wan-2.2-a14b-i2v":   {"prompt": "prompt", "image_url": "in:image_url", "resolution": K("720p"), "num_frames": "frames_16fps"},
+    # 2026-09-10 live: with aspect_ratio left at the endpoint default ("auto") a 4:5 still resolves to 848x1056, which fal's
+    # distributed GPU endpoint refuses (422: "Use aspect_ratio='16:9', '9:16', or '1:1' instead of 'auto'"); the row's aspect is sent.
+    "wan-2.2-a14b-i2v":   {"prompt": "prompt", "image_url": "in:image_url", "aspect_ratio": "aspect", "resolution": K("720p"), "num_frames": "frames_16fps"},
     "seedance-2.5":       {"prompt": "prompt", "aspect_ratio": "aspect", "duration": "duration_str", "resolution": K("720p"), "generate_audio": "audio_bool"},
     "seedance-2.5-15s":   {"prompt": "prompt", "aspect_ratio": "aspect", "duration": "duration_str", "resolution": K("720p"), "generate_audio": "audio_bool"},
     "seedance-2.5-i2v":   {"prompt": "prompt", "image_url": "in:image_url", "duration": "duration_str", "resolution": K("720p"), "generate_audio": "audio_bool"},

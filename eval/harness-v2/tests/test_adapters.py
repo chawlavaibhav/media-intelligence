@@ -703,13 +703,15 @@ class Wan2ContenderBodyTest(AdapterBase):
         self.assertEqual(d8["body"]["num_frames"], 129)
         self.assertEqual(Decimal(d8["price"]["amount_usd_equiv"]), Decimal("0.64"))
 
-    def test_i2v_body_takes_the_plate_and_no_aspect(self):
+    def test_i2v_body_takes_the_plate_and_the_rows_aspect(self):
+        """2026-09-10 live: aspect left at the endpoint default 'auto' made a 4:5 still resolve to 848x1056, which fal refused (422);
+        the pin now sends the row's aspect so the output size is one the endpoint supports."""
         os.environ["FAL_KEY"] = "fake"
         ad = self.make("wan-2.2-a14b-i2v", fal_ok("https://v3.fal.media/files/fake/out.mp4"))
         row = self.book.row("VID-I2V-01", "wan-2.2-a14b-i2v")
         d = ad.dry_run(row, {"image_url": "https://example.test/plate.png"})
-        self.assertEqual(d["body"], {"prompt": row["prompt"], "image_url": "https://example.test/plate.png", "resolution": "720p", "num_frames": 97},
-                         "prompt + plate + 720p + frames; aspect follows the plate (schema default auto); no audio field")
+        self.assertEqual(d["body"], {"prompt": row["prompt"], "image_url": "https://example.test/plate.png", "aspect_ratio": "9:16", "resolution": "720p", "num_frames": 97},
+                         "prompt + plate + the row's 9:16 + 720p + frames; no audio field")
         self.assertEqual(d["url"], "https://queue.fal.run/fal-ai/wan/v2.2-a14b/image-to-video")
         self.assertTrue(d["would_dispatch"], d.get("refusal_reason"))
         d2 = ad.dry_run(row)
