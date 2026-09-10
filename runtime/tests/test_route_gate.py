@@ -81,13 +81,30 @@ class NoInventedStatus(unittest.TestCase):
         ev = B.evidence_base()
         self.assertNotIn("launch_eligible", ev.status_vocabulary)
 
-    def test_the_alpha_profile_auto_routes_nothing_and_the_decision_says_so(self):
+    def test_every_status_a_profile_names_is_one_the_register_actually_has(self):
+        """The defect this replaces: `alpha_human_release` named `launch_eligible`, a status the
+        register does not have and says in writing it never will. The effect was total - the profile
+        auto-routed 0 of 61 cells. A profile naming a status that does not exist is now a test
+        failure rather than a silent shutdown."""
+        ev = B.evidence_base()
+        for name in ("alpha_human_release", "alpha_wider_example", "dry"):
+            prof = B.profile(name)
+            for status in prof.auto_routable_evidence_status:
+                self.assertIn(status, ev.status_vocabulary,
+                              f"profile {name} names status {status!r}, which the taint register does not have")
+
+    def test_the_alpha_profile_now_routes_the_motion_job_and_still_refuses_a_blocked_cell(self):
+        """Corrected behaviour. The shipped alpha profile allows `clean_observed` only, so the motion
+        job routes; a cell held by a Controller ruling is still refused by name."""
         d = B.plan(B.SPEC_MOTION, "alpha_human_release")
-        self.assertTrue(d["manual_route_required"])
-        preflight = " ".join(d["selection_basis"]["preflight"])
-        self.assertIn("launch_eligible", preflight)
-        self.assertIn("auto-routes NOTHING", preflight)
-        self.assertIsNone(d["primary"])
+        self.assertFalse(d["manual_route_required"])
+        self.assertIsNotNone(d["primary"])
+        self.assertEqual(d["primary"]["evidence_status"], "clean_observed")
+        ev = B.evidence_base()
+        gate = ev.gate(ev.cells["VID-I2V/wan-2.2-a14b-i2v"],
+                       B.profile("alpha_human_release").auto_routable_evidence_status)
+        self.assertFalse(gate.allowed)
+        self.assertIn("C-6b", gate.reason)
 
 
 class RouterNeverScores(unittest.TestCase):
@@ -147,6 +164,14 @@ class HowMuchOfTheMapIsRoutableToday(unittest.TestCase):
                                     "AUD-TTS/elevenlabs-v3-direct+native",
                                     "AUD-TTS/sarvam-bulbul-v3+native"])
 
-    def test_none_of_the_sixty_one_are_routable_under_the_shipped_alpha_profile(self):
-        _, auto, _ = self._counts("alpha_human_release")
-        self.assertEqual(auto, [])
+    def test_the_shipped_alpha_profile_routes_the_same_sixteen(self):
+        """Was: asserted zero, because the profile named a status that did not exist. The alpha
+        profile allows `clean_observed` only, so it reaches exactly the sixteen cells that are clean
+        AND marked usable - no more, and never a cell awaiting a ruling."""
+        ev, auto, _ = self._counts("alpha_human_release")
+        self.assertEqual(len(auto), 16)
+        for key in auto:
+            cell = ev.cells[key]
+            self.assertEqual(cell.evidence_status, "clean_observed")
+            self.assertTrue(cell.production_use_allowed)
+        self.assertNotIn("VID-I2V/wan-2.2-a14b-i2v", auto)
