@@ -1,0 +1,142 @@
+# PRODUCTION-SPEC-v1 — what must be made, derived deterministically from a PRODUCTION-JOB.
+# Frozen contract.
+#
+# The spec is the object a person could hand to a good studio. It is produced by code plus one
+# reasoning pass; nothing in it is hand-authored in the middle of a job. It is the runtime twin of the
+# Lab's frozen blueprint (eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/*.blueprint.md)
+# and deliberately keeps that file's deterministic pack-lookup shape.
+schema: PRODUCTION-SPEC-v1
+status: FROZEN_CONTRACT
+
+fields:
+
+  spec_id: {type: string, required: true}
+  job_id: {type: string, required: true}
+  job_sha256: {type: string, required: true, note: "fingerprint of the job object this spec was compiled from"}
+  compiled_utc: {type: timestamp, required: true}
+
+  objective: {type: string, required: true, note: "what the customer is trying to achieve, in one sentence"}
+
+  deliverable:
+    type: object
+    required: true
+    fields:
+      kind: {type: string, required: true}
+      aspect: {type: string, required: true}
+      resolution_class: {type: string, required: false}
+      motion: {type: object, required: false}
+
+  hard_constraints:
+    type: list[string]
+    required: true
+    note: "customer statements that are non-negotiable; a draw that breaks one is a reject, never a debate"
+
+  exact_text:
+    type: object
+    required: true
+    fields:
+      strings: {type: "list[object]", required: true}
+      strategy:
+        type: string
+        required: true
+        note: >-
+          Open vocabulary. Today's evidence-backed values are `code_set_on_textless_plate` (RR-1: 4/4
+          accepted, exact by construction, about USD 0.03 per accepted picture) and
+          `generated_in_scene` (RR-2: Nano Banana 2 and GPT Image 2 4/4). `generated_in_scene` must
+          not be chosen for Devanagari on the routes RR-3 names, and never for text that must move
+          (RR-6). The strategy is chosen by rule from the evidence, and the rule is named in
+          strategy_basis so it can be audited later.
+      strategy_basis: {type: string, required: true, note: "the routing rule id and map cell that justify the strategy"}
+
+  identity_requirements:
+    type: object
+    required: false
+    note: "product / logo / person fidelity; drives whether a reference-capable route is required at all"
+    fields:
+      preserve: {type: "list[string]", required: true}
+      decoy_check: {type: bool, default: false}
+
+  composition: {type: object, required: false, note: "hierarchy, focal intent, crop safety, brand placement"}
+  materials_and_light: {type: object, required: false}
+
+  canon:
+    type: object
+    required: true
+    note: >-
+      Deterministic pack lookup, exactly as canon/CANON-SHAPE-v1.md section 4 defines it and as the
+      frozen blueprints already do it: the Normalized Request fires pack triggers, the matching
+      accepted compiled packs are injected by id, and nothing decides at runtime whether to "search"
+      Canon. No HOLD material, no Q&A corpus, no free-form retrieval.
+    fields:
+      packs_selected: {type: "list[object]", required: true, note: "pack_id, trigger id, compiled|uncompiled"}
+      injected_context_sha256: {type: string, required: true, note: "fingerprint of the exact bytes the reasoning model received"}
+      canon_gap: {type: bool, default: false}
+      missing_domains:
+        type: "list[string]"
+        required: false
+        note: >-
+          A list in v1. v0 had a single string, but several triggers routinely fire with no compiled
+          pack behind them - six on the first real fixture brief - and joining them into one string
+          loses which doctrine is actually absent.
+    invariant: >-
+      A missing compiled pack sets canon_gap and the job continues. It never blocks a job and never
+      triggers a compilation programme on its own; a real production failure is what earns the next
+      pack.
+
+  capability_requirements:
+    type: list[object]
+    required: true
+    note: >-
+      What the maker must be able to do, expressed as requirements — not as a model name. This is the
+      only thing the router is allowed to match on.
+    fields:
+      capability: {type: string, required: true}
+      level: {type: string, required: false}
+      mandatory: {type: bool, default: true}
+
+  route_exclusions:
+    type: "list[object]"
+    required: false
+    note: >-
+      Routes this deliverable must NOT use, computed from the evidence during spec compilation - for
+      example the routes RR-3 names as unusable for Devanagari text. v0 had nowhere to put this, so the
+      prohibition survived only as prose inside strategy_basis and the routing lane had to re-derive
+      it. A prohibition that has to be re-derived is a prohibition that will one day be forgotten.
+    fields:
+      route_key: {type: string, required: true}
+      reason: {type: string, required: true}
+      basis: {type: string, required: true, note: "the routing rule id and map cell"}
+
+  gate_requirements:
+    type: list[string]
+    required: true
+    note: "which CANON-GATE-001 check lines must run pre-dispatch and post-draw for this job"
+
+  acceptance_contract:
+    type: list[string]
+    required: true
+    note: >-
+      Three to six statements, decidable from the artifact alone, phrased `ACCEPT only if …` /
+      `REJECT if …`, carrying no route name, arm, cost or rule id — the same discipline as
+      eval/empirical-planning/STAGE-A-FREEZE-2026-09/ACCEPTANCE-CONTRACTS.md. This is what the person
+      approving the delivery reads, and it is frozen BEFORE the first draw.
+
+  deterministic_checks:
+    type: list[string]
+    required: true
+    note: "format probe, baked-text scan, aspect and duration; run by code, never shown to the approver"
+
+  budget:
+    type: object
+    required: true
+    fields:
+      cost_ceiling_usd: {type: decimal, required: true}
+      max_provider_draws: {type: int, required: true, note: "value comes from the job's policy profile"}
+      repair_allowance: {type: int, required: true, note: "value comes from the job's policy profile"}
+
+invariants:
+  - "A spec compiles from a job with no human authoring step in between; if it cannot, it fails loudly."
+  - "The acceptance contract is frozen before the first draw and is never edited after a rejection."
+  - "capability_requirements never name a model, a provider or a route. route_exclusions is the single, deliberate exception: it names routes in order to forbid them, and a forbidding rule is useless unless it can say what it forbids."
+  - "Every input the compiler reads - the policy profile, the trigger table, the compiled packs - must be adopted, not merely proposed. An input still marked proposed refuses the job, in the same way the Lab refuses a dispatch without a signed authorisation."
+  - "Both budget numbers are read from the policy profile. Neither is a constant anywhere in code."

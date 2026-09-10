@@ -57,6 +57,14 @@ fields:
       expected_cost_usd: {type: decimal, required: true}
       trigger: {type: "list[string]", required: true, note: "the named conditions that hand over: provider_refusal, timeout, gate_fail, capability_unsupported"}
 
+  exclusions_applied:
+    type: "list[object]"
+    required: false
+    note: >-
+      The spec's route_exclusions that actually bit here, each with the rule id that forbade it. A
+      route excluded by the spec may never appear as primary or fallback, and the decision must show
+      that the exclusion was seen rather than leaving it to be inferred.
+
   unsupported_requirements:
     type: "list[object]"
     required: false
@@ -83,3 +91,5 @@ invariants:
   - "No implicit retry exists. A failure either hands over to the declared fallback or stops cleanly."
   - "Every provider attempt gets its own attempt id in its own namespace; a liveness or smoke attempt can never share an identity with a customer attempt."
   - "The runtime reads evidence status and evidence_n. It never computes or consumes a route score."
+  - "Evidence status comes from eval/capability-map/TAINT-REGISTER-v1.yaml, which is generated from the sealed evidence and pins the routing map's fingerprint. A cell marked awaiting_controller_ruling is never auto-routed."
+  - "A route named in the spec's route_exclusions can be neither primary nor fallback."

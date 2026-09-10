@@ -79,6 +79,10 @@ kinds:
   note: "the only kind here whose evidence is actively negative. It needs a different route, not a profile change."
 
 extension_rule: >-
-  A new kind needs three things and nothing else: a row here, its capability requirements, and either
-  an evidence cell the router may use or an explicit manual_route_required. It never needs a change to
-  PRODUCTION-JOB-v0, PRODUCTION-SPEC-v0, ROUTE-DECISION-v0 or OUTCOME-EVENT-v0.
+  CORRECTED after the first lane built against this file. A new kind needs FOUR things, not three: a
+  row here; its capability requirements; a binding that says which normalized-request facts the kind
+  implies, so Canon's pack lookup can run before any model sees the job
+  (runtime/canon/KIND-NR-BINDING-v0.yaml); and either an evidence cell the router may use or an
+  explicit manual_route_required. It still never needs a change to any of the four frozen contracts.
+  The earlier wording said "three things and nothing else", which was simply wrong - the lane could
+  not compile a spec without the fourth.

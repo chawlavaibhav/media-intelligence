@@ -15,6 +15,7 @@ profiles:
 - profile: alpha_human_release
   purpose: "the first private alpha: real customer briefs, human release authority, tight money"
   status: proposed_awaiting_controller
+  adopted: false
   deliverable_kinds_allowed: [static_ad, static_ad_from_supplied_photo, short_motion_from_accepted_still]
   max_provider_draws_per_deliverable: 2
   repair_allowance: 1
@@ -35,6 +36,7 @@ profiles:
 - profile: alpha_wider_example
   purpose: "illustrative only — shows that widening is a data change, nothing more"
   status: illustrative_not_active
+  adopted: false
   deliverable_kinds_allowed: [static_ad, static_ad_from_supplied_photo, short_motion_from_accepted_still, text_in_motion, multi_shot_story, spoken_voiceover, music_bed]
   max_provider_draws_per_deliverable: 4
   repair_allowance: 2
@@ -50,6 +52,7 @@ profiles:
 - profile: dry
   purpose: "plan and price a job end to end without sending anything to a provider"
   status: active
+  adopted: true
   deliverable_kinds_allowed: [__all__]
   max_provider_draws_per_deliverable: 0
   repair_allowance: 0
@@ -64,6 +67,16 @@ profiles:
   note: "the profile every runtime lane develops against. Zero draws means zero spend, enforced by the ledger, not by good intentions."
 
 invariants:
+  - >-
+    ADDED after the first lane built against this file. A profile with adopted:false may plan, price
+    and dry-run a job, and may never spend a rupee. The Controller adopts a profile the same way a
+    spend record is signed in the Lab; until then the runtime refuses to dispatch under it. The first
+    alpha profile is deliberately shipped adopted:false, so the system cannot spend customer money
+    before anyone has agreed to its limits.
+  - >-
+    The same gate applies to every other input the runtime reads. The pack trigger table and both
+    compiled packs are currently marked PROPOSED; a paid run under a proposed input is refused. This
+    was found by building the first lane, not by reading the contract.
   - "A limit that is not in the named profile is not a limit the runtime may invent. Missing limit = refuse."
   - "No limit in this file is referenced by a constant anywhere in runtime code."
   - "Widening the alpha is editing a row here or adding a profile. It is never a contract change."
