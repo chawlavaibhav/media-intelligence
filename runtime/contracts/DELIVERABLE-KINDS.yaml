@@ -1,0 +1,84 @@
+# DELIVERABLE-KINDS — the open registry of things the runtime can be asked to make.
+#
+# THIS FILE IS A REGISTRY, NOT A LIMIT. Adding a kind is an entry here plus the capability
+# requirements it implies. No schema, no contract and no code enumerates these values, so nothing in
+# the product architecture forecloses a deliverable that is not listed today.
+#
+# `evidence_today` records what the Capability Lab has actually shown for that kind, so a reader can
+# see the difference between "we have not built this" and "we have built it and it works". An empty
+# evidence line is an invitation to run one job, not a prohibition.
+schema: DELIVERABLE-KINDS-v0
+
+kinds:
+
+- kind: static_ad
+  what: "one commercially usable still advertisement, customer text set exactly"
+  capability_requirements: [image_generation, exact_text_composition]
+  evidence_today: >-
+    Strong. Code-set text on a cheap textless plate accepted 4/4 at about USD 0.03 per accepted
+    picture (RR-1); in-scene generated text 4/4 on Nano Banana 2 and GPT Image 2 (RR-2); base image
+    generation 5/8 to 7/8 across six routes (map cells IMG-CORE/*).
+  in_first_alpha_profile: true
+
+- kind: static_ad_from_supplied_photo
+  what: "edit, extend, compose or reference-match a customer's own photograph"
+  capability_requirements: [image_edit, reference_fidelity]
+  evidence_today: >-
+    Good but conditional. Seedream 5 Pro edit 10/12 across edit, extend, compose and reference (RR-4,
+    RR-5). CAUTION: every one of those draws used a constructed stand-in image, not a real customer
+    photograph. The first real customer photo is genuinely new ground.
+  in_first_alpha_profile: true
+
+- kind: short_motion_from_accepted_still
+  what: "a single-shot moving version of an already accepted still"
+  capability_requirements: [image_to_video]
+  evidence_today: >-
+    Strong. Kling v3 Pro 8/8 and Wan 3.0 Prime 8/8, MiniMax H3 Max 7/8 as the cheapest, Veo 3.1 fast
+    5/8 (RR-8). Note the input bias: those stills were ones a person had already accepted.
+  in_first_alpha_profile: true
+
+- kind: text_in_motion
+  what: "exact customer copy that moves"
+  capability_requirements: [image_generation, image_to_video, exact_text_composition]
+  evidence_today: >-
+    Proven end to end by the cheap chain (RR-6, RR-7): a correct text plate into a cheap animator, or
+    strings composited by code on every frame — 2/2. Asking a premium video model to write the text
+    failed 0/4.
+  in_first_alpha_profile: false
+  note: "left out of the first profile for focus, not for capability. Turning it on is one profile edit."
+
+- kind: multi_shot_story
+  what: "a 10-15 second story across several shots"
+  capability_requirements: [long_form_video]
+  evidence_today: "8/8 across Kling v3 Pro 15s, Kling 10s, Gemini Omni 10s and the Veo fast extend chain (RR-9)."
+  in_first_alpha_profile: false
+
+- kind: spoken_voiceover
+  what: "Hindi, English or Hinglish narration"
+  capability_requirements: [tts]
+  evidence_today: "Sarvam bulbul:v3 6/6 at paisa scale; ElevenLabs 4/6, failing Hinglish on accent (RR-12)."
+  in_first_alpha_profile: false
+
+- kind: music_bed
+  what: "a 30 second instrumental bed"
+  capability_requirements: [music_generation]
+  evidence_today: "Lyria 4/4 at USD 0.06 a track (RR-13)."
+  in_first_alpha_profile: false
+
+- kind: two_speaker_dialogue
+  what: "two people talking, native audio"
+  capability_requirements: [native_av_video]
+  evidence_today: "6/8 native across Veo fast, Gemini Omni and Wan 3.0 Prime (RR-14)."
+  in_first_alpha_profile: false
+
+- kind: lipsync_to_supplied_audio
+  what: "an existing clip re-voiced with matching lips"
+  capability_requirements: [lipsync]
+  evidence_today: "0/5 on the one route tested; eliminated on a moving plate (map cell AUD-LIP/kling-lipsync-a2v+chain)."
+  in_first_alpha_profile: false
+  note: "the only kind here whose evidence is actively negative. It needs a different route, not a profile change."
+
+extension_rule: >-
+  A new kind needs three things and nothing else: a row here, its capability requirements, and either
+  an evidence cell the router may use or an explicit manual_route_required. It never needs a change to
+  PRODUCTION-JOB-v0, PRODUCTION-SPEC-v0, ROUTE-DECISION-v0 or OUTCOME-EVENT-v0.

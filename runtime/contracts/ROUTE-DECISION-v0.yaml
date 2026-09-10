@@ -1,0 +1,85 @@
+# ROUTE-DECISION-v0 — which route will make this deliverable, why, at what price, and what happens if
+# it fails. Frozen contract.
+#
+# The decision is written BEFORE any dispatch and is part of the job record whether or not the call
+# succeeds. It is a reasoned selection over evidence and price, never a leaderboard lookup: the
+# routing map carries no score and the runtime must not invent one.
+schema: ROUTE-DECISION-v0
+status: FROZEN_CONTRACT
+
+fields:
+
+  decision_id: {type: string, required: true}
+  spec_id: {type: string, required: true}
+  decided_utc: {type: timestamp, required: true}
+
+  selection_basis:
+    type: object
+    required: true
+    note: "the order is fixed: hard requirements first, then evidence, then cost. Cost never overrides a hard requirement."
+    fields:
+      required_capabilities: {type: "list[string]", required: true}
+      candidates_considered: {type: "list[object]", required: true, note: "route_key, why kept or dropped"}
+      rule: {type: string, default: "hard_requirements -> evidence_envelope -> cost -> fallback"}
+
+  primary:
+    type: object
+    required: true
+    fields:
+      route_key: {type: string, required: true}
+      surface: {type: string, required: true}
+      arm: {type: string, required: false}
+      evidence_cells: {type: "list[string]", required: true, note: "cell keys in the routing evidence map, e.g. IMG-TEXT/nano-banana-2+A_cheap_generated"}
+      evidence_status:
+        type: string
+        required: true
+        note: >-
+          Open vocabulary supplied by the evidence map, e.g. launch_eligible / clean_observed /
+          directional_only / method_tainted / insufficient. The runtime may dispatch automatically
+          ONLY on a status the active policy profile lists as auto-routable. Everything else produces
+          manual_route_required. The runtime never decides for itself that weak evidence is good enough.
+      evidence_n: {type: object, required: true, note: "draws and items behind the cell, carried forward honestly; 2 draws is 2 draws"}
+      price_pin_ref: {type: string, required: true, note: "path to the pinned vendor bytes; a route with no live pin cannot be auto-selected"}
+      unit_price: {type: decimal, required: true}
+      expected_cost_usd: {type: decimal, required: true}
+      billing_pool: {type: string, required: true, note: "cash | credits | <provider>_credits — the runtime must know whose money it is"}
+
+  fallback:
+    type: object
+    required: false
+    note: >-
+      Declared BEFORE dispatch. A fallback is a different route for the same requirement, not a second
+      attempt at the same one. Falling through to it is a routing event, never a retry.
+    fields:
+      route_key: {type: string, required: true}
+      evidence_cells: {type: "list[string]", required: true}
+      evidence_status: {type: string, required: true}
+      expected_cost_usd: {type: decimal, required: true}
+      trigger: {type: "list[string]", required: true, note: "the named conditions that hand over: provider_refusal, timeout, gate_fail, capability_unsupported"}
+
+  unsupported_requirements:
+    type: "list[object]"
+    required: false
+    note: "requirements no live route satisfies; each one forces manual_route_required rather than a silent downgrade"
+
+  manual_route_required: {type: bool, default: false}
+  manual_route_reason: {type: string, required: false}
+
+  cost_envelope:
+    type: object
+    required: true
+    fields:
+      job_ceiling_usd: {type: decimal, required: true}
+      already_committed_usd: {type: decimal, required: true}
+      this_decision_max_usd: {type: decimal, required: true}
+    invariant: "already_committed + this_decision_max must not exceed job_ceiling. Checked before dispatch, not after."
+
+  why_selected: {type: string, required: true, note: "one paragraph a person can read and disagree with"}
+
+invariants:
+  - "Written before dispatch. A dispatch with no route decision is impossible."
+  - "Auto-routing is allowed only through evidence statuses the active policy profile permits."
+  - "A route with no live price pin is never auto-selected."
+  - "No implicit retry exists. A failure either hands over to the declared fallback or stops cleanly."
+  - "Every provider attempt gets its own attempt id in its own namespace; a liveness or smoke attempt can never share an identity with a customer attempt."
+  - "The runtime reads evidence status and evidence_n. It never computes or consumes a route score."

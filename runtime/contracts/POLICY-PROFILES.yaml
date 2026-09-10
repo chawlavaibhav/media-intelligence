@@ -1,0 +1,70 @@
+# POLICY-PROFILES — every operating limit the runtime obeys, as data.
+#
+# WHY THIS FILE EXISTS. The first alpha is deliberately narrow: one static ad, an optional short
+# motion version, two provider draws, a person approving every delivery. Those are CHOICES FOR THE
+# FIRST WEEK, and they are written here as values so that widening them is an edit to a row — never a
+# change to a contract, a schema or a line of code. Nothing in this system is capped by its
+# architecture.
+#
+# A job names its profile. The runtime reads every limit from that row and refuses to run if the row
+# is missing a limit it needs (fail closed, never a default hidden in code).
+schema: POLICY-PROFILES-v0
+
+profiles:
+
+- profile: alpha_human_release
+  purpose: "the first private alpha: real customer briefs, human release authority, tight money"
+  status: proposed_awaiting_controller
+  deliverable_kinds_allowed: [static_ad, static_ad_from_supplied_photo, short_motion_from_accepted_still]
+  max_provider_draws_per_deliverable: 2
+  repair_allowance: 1
+  auto_routable_evidence_status: [launch_eligible]
+  on_non_auto_routable: manual_route_required
+  acceptance_authority: human
+  automated_judge_in_release_path: false
+  autonomous_external_delivery: false
+  default_job_cost_ceiling_usd: 5.00
+  fallback_required: true
+  retention_days_default: 30
+  note: >-
+    The automated judge is out of the release path because it agrees with the human judge only about
+    two thirds of the time and wrongly accepts 22 % of what the human rejects
+    (eval/experiments/EVAL-040/QUALIFICATION-REPORT-2026-09-09.yaml). That is a fact about today's
+    judge, not a permanent property of the product.
+
+- profile: alpha_wider_example
+  purpose: "illustrative only — shows that widening is a data change, nothing more"
+  status: illustrative_not_active
+  deliverable_kinds_allowed: [static_ad, static_ad_from_supplied_photo, short_motion_from_accepted_still, text_in_motion, multi_shot_story, spoken_voiceover, music_bed]
+  max_provider_draws_per_deliverable: 4
+  repair_allowance: 2
+  auto_routable_evidence_status: [launch_eligible, clean_observed]
+  on_non_auto_routable: manual_route_required
+  acceptance_authority: human
+  automated_judge_in_release_path: false
+  autonomous_external_delivery: false
+  default_job_cost_ceiling_usd: 25.00
+  fallback_required: true
+  retention_days_default: 30
+
+- profile: dry
+  purpose: "plan and price a job end to end without sending anything to a provider"
+  status: active
+  deliverable_kinds_allowed: [__all__]
+  max_provider_draws_per_deliverable: 0
+  repair_allowance: 0
+  auto_routable_evidence_status: [launch_eligible, clean_observed, directional_only, method_tainted, insufficient]
+  on_non_auto_routable: annotate_and_continue
+  acceptance_authority: none
+  automated_judge_in_release_path: false
+  autonomous_external_delivery: false
+  default_job_cost_ceiling_usd: 0.00
+  fallback_required: false
+  retention_days_default: 0
+  note: "the profile every runtime lane develops against. Zero draws means zero spend, enforced by the ledger, not by good intentions."
+
+invariants:
+  - "A limit that is not in the named profile is not a limit the runtime may invent. Missing limit = refuse."
+  - "No limit in this file is referenced by a constant anywhere in runtime code."
+  - "Widening the alpha is editing a row here or adding a profile. It is never a contract change."
+  - "acceptance_authority may name an automated judge only after that judge has passed qualification against its frozen criteria."
