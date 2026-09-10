@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """EVAL-040 live runner: plan, smoke-test, execute (resumable) and status for one authorised battery run.
 
+A run draws either CANDIDATES or LIVENESS. `smoke` is a liveness draw: its plan header records `draw_class: liveness`
+and every one of its trial ids carries an explicit `__smoke` marker, so a smoke draw can never share an identity with
+the candidate draw of the same case x route x arm x repeat. Consumers ask `plan_draw_class(header)`; they never guess
+from the run-id string.
+
     python3 eval/harness-v2/run_live.py plan    --run-id <id> --cases IMG-CORE-01,... [--routes k1,k2] [--tranche 1a|1a,1b|all] --out <dir>
                                                 [--inputs INPUTS.yaml] [--accept-roster-price]
     python3 eval/harness-v2/run_live.py smoke   --run-id <id> --case <case_id> --route <route_key> --out <dir> [--inputs INPUTS.yaml]  (ONE dispatch, repeat 1)
@@ -80,6 +85,31 @@ ARTIFACTS_DIR = "artifacts"
 LEDGER_DIR = "ledger"
 MODALITY_BY_MEDIA_KIND = {"image": "static_image", "video": "video", "audio": "audio"}
 FREEZE_FILES = ("TEST-CASES.yaml", "COST-TABLE.yaml")
+# A run either draws CANDIDATES (evidence: judged, screened, eligible for a Registry row) or proves LIVENESS
+# (a smoke test: one call to show the wiring works, paid for and sealed, but never judged and never evidence).
+# The plan states which; consumers read that, never the run-id string.
+DRAW_CANDIDATE = "candidate"
+DRAW_LIVENESS = "liveness"
+LIVENESS_MODES = ("smoke",)
+
+
+def draw_class_for_mode(mode: str | None) -> str:
+    return DRAW_LIVENESS if str(mode or "") in LIVENESS_MODES else DRAW_CANDIDATE
+
+
+def plan_draw_class(header: dict | None) -> str:
+    """What class of draw a plan records. Plans written from EVAL-044 on state `draw_class` outright; older sealed
+    plans carry only `mode`, which is equally explicit (`mode: smoke`). Neither reads the run id."""
+    dc = (header or {}).get("draw_class")
+    if dc in (DRAW_CANDIDATE, DRAW_LIVENESS):
+        return dc
+    return draw_class_for_mode((header or {}).get("mode"))
+
+
+def is_liveness_plan(header: dict | None) -> bool:
+    return plan_draw_class(header) == DRAW_LIVENESS
+
+
 PLAN_STATEMENT = ("This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. "
                   "Every trial's body sha256 is the dry-run body of the same builder a live dispatch sends; execute refuses a trial whose "
                   "rendered body differs. The plan authorises nothing by itself: the ledger re-reads the authorisation file at every open.")
@@ -196,6 +226,8 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
     """Write `<out>/PLAN.yaml` + `PLAN.sha256` before any dispatch. Refuses an empty plan and never overwrites.
     `arms` (optional) keeps only rows whose arm is listed - for a route that carries several arms on one case."""
     out = Path(out)
+    draw_class = draw_class_for_mode(mode)
+    liveness = draw_class == DRAW_LIVENESS
     if (out / PLAN_FILE).exists():
         raise PlanRefused(f"{out / PLAN_FILE} already exists; a plan is written once. Use a new run id for a new plan.")
     if not cases:
@@ -275,7 +307,7 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
                 seq += 1
                 entry = registry.get(r["route_key"])
                 trials.append({
-                    "seq": seq, "trial_id": B.make_trial_id(r), "case_id": r["case_id"], "item_id": r["item_id"],
+                    "seq": seq, "trial_id": B.make_trial_id(r, liveness=liveness), "case_id": r["case_id"], "item_id": r["item_id"],
                     "route_key": r["route_key"], "arm": r["arm"], "repeat_index": r["repeat_index"], "tranche": r["tranche"],
                     "surface": entry.surface, "adapter": entry.adapter, "surface_model_id": entry.surface_model_id, "endpoint": r["url"],
                     "billing_pool": entry.billing_pool, "currency": r["currency"],
@@ -292,6 +324,11 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
     if not trials:
         raise PlanRefused(f"the plan is empty for cases {cases}, routes {routes}, tranche {tranche!r}: "
                           + "; ".join(f"{e['case_id']}/{e['route_key']}: {e['reason']}" for e in excluded[:12]))
+    dupes = sorted({t["trial_id"] for t in trials if [x["trial_id"] for x in trials].count(t["trial_id"]) > 1})
+    if dupes:
+        raise PlanRefused(f"the plan draws the same trial id twice: {dupes[:6]}; a trial id is one draw")
+    if liveness != all(B.is_liveness_trial_id(t["trial_id"]) for t in trials):
+        raise PlanRefused(f"a {draw_class} plan must carry {'' if liveness else 'no '}liveness trial ids")
     by_pool: dict[str, dict] = {}
     for t in trials:
         slot = by_pool.setdefault(t["billing_pool"], {"calls": 0, "currency": t["currency"], "native": Decimal("0"), "usd_equiv": Decimal("0")})
@@ -299,7 +336,7 @@ def build_plan(out: Path | str, run_id: str, cases: list[str], routes: list[str]
         slot["native"] += Decimal(t["estimated_amount_native"])
         slot["usd_equiv"] += Decimal(t["estimated_usd_equiv"])
     header = {
-        "plan": "EVAL-040-RUN-PLAN", "run_id": run_id, "mode": mode, "generated_utc": _now(), "statement": PLAN_STATEMENT,
+        "plan": "EVAL-040-RUN-PLAN", "run_id": run_id, "mode": mode, "draw_class": draw_class, "generated_utc": _now(), "statement": PLAN_STATEMENT,
         "git_rev": git_rev, "commit": commit, "item_basis_commit": auth.item_basis_commit, "freeze_matches_item_basis": freeze_ok,
         "tranche_id": auth.tranche_id, "authorisation_path": auth.source_path, "authorisation_sha256": auth.sha256,
         "roster_sha256": pricing.roster.sha256, "test_cases_sha256": book.source["test_cases_sha256"], "cost_table_sha256": book.source["cost_table_sha256"],

@@ -24,6 +24,31 @@ CAPS
     `record` are overridden only to REQUIRE billing_pool / currency / amount_native / amount_usd_equiv and
     to apply the INR sub-cap; the append logic is the inherited one (MD-C14).
 
+ONE AUTHORISATION = ONE CAP, ACROSS EVERY RUN THAT USED IT (Auditor AF-4)
+
+    A cap used to be enforced inside ONE run directory, so a second run under the same signed record was
+    handed the whole cap again: `topo3-plates` + `topo3-smoke` + `topo3-video` spent USD 10.364 under a
+    USD 9.96 record, and the `wan2` runs spent past their record the same way. The ledger therefore pools:
+    every OTHER run under the pooling scope whose `run.json` records the SAME `authorisation_sha256` (the bytes
+    of the signed record, never its filename) is counted into the ceiling, the 1a / 1b caps, the INR sub-cap,
+    the credits sub-cap and the call limit - so is this run's own ledger, exactly as before. The pooling
+    scope is the run root itself plus, when that root is a runner's `<out>/ledger` directory, the `ledger`
+    directory of every sibling `<out>`; that is one run per `--out`, which is how the runners lay runs out.
+    `BatteryRun.create` refuses outright when the pooled total has already consumed the ceiling (or the call
+    limit), naming the sibling runs and the combined total, so a new run cannot dispatch at all. It fails
+    CLOSED: a sibling `run.json` or ledger that cannot be read raises `LedgerCorrupt` rather than counting
+    zero. Per-run numbers stay reportable (`spent_usd`, `paid_calls`) beside the pooled ones
+    (`combined_spent_usd`, `combined_paid_calls`, `sibling_run_ids`).
+
+CALLS ARE CAPPED TOO, WHEN THE RECORD SAYS SO (Auditor AF-5)
+
+    A signed record that says "no more than N paid calls" was enforced nowhere: a fixtures run made 19 paid
+    calls under a "<= 16 calls" record and a vision-judge run made 206 against 200. `max_paid_calls` is an
+    OPTIONAL field of the same `machine_authorisation` block, read like every other limit - there is no call
+    constant in code. Absent means the record sets NO call limit (`authorisation_status` says so in words).
+    Present, it is enforced over the same pooled set of runs, and the call that would exceed it is refused
+    at `reserve()`, before any dispatch.
+
     The `elevenlabs_credits` pool (ElevenLabs DIRECT, plan credits) is the symmetrical case: its cash amount is
     always 0 USD and its NATIVE amount is credits, capped by `elevenlabs_cap_credits`. That field is OPTIONAL in
     the authorisation file (the signed 13-field record predates it): missing = 0 = every credit call refused.
@@ -58,10 +83,13 @@ PRICE_VERIFICATION_REQUIRED = "required_before_every_paid_call"
 AUTH_FIELDS = ("tranche_id", "authorised", "item_basis_commit", "price_basis_roster_sha256", "max_consumed_usd_equivalent",
                "cap_1a_usd", "cap_1b_usd", "sarvam_cap_inr", "retries_authorised", "execution_time_route_price_verification",
                "images_before_video", "approved_by", "approved_at")
-OPTIONAL_AUTH_FIELDS = ("elevenlabs_cap_credits",)   # absent from older signed records: absent means 0 (forbidden)
+OPTIONAL_AUTH_FIELDS = ("elevenlabs_cap_credits",       # absent from older signed records: absent means 0 (forbidden)
+                        "max_paid_calls")              # absent means the record sets NO limit on the number of paid calls
 AUTH_EXAMPLE_PATH = HERE / "authorization.example.yaml"
 AUTH_LOCAL_PATH = HERE / "authorization.local.yaml"
 DEFAULT_RUN_ROOT = hv2_paths.RUN_ROOT
+LEDGER_DIR_NAME = "ledger"    # the runners' `<out>/ledger` (run_live.LEDGER_DIR / fixtures.LEDGER_DIR); one run per --out,
+                              # so the pooling scope reaches the sibling out directories' ledgers as well as this root
 
 LedgerCorrupt = SL.LedgerCorrupt
 
@@ -86,6 +114,7 @@ class BatteryAuthorisation:
     sha256: str | None
     refusals: tuple = field(default_factory=tuple)
     elevenlabs_cap_credits: Decimal = Decimal("0")
+    max_paid_calls: int | None = None          # None = the record names no call limit; it is never a constant in code
 
     @property
     def permitted(self) -> bool:
@@ -163,6 +192,13 @@ def load_battery_authorisation(path: Path | str = AUTH_LOCAL_PATH, roster_path: 
     if credits is None or credits < 0 or credits != credits.to_integral_value():
         refusals.append(f"elevenlabs_cap_credits {g('elevenlabs_cap_credits')!r} is not a non-negative whole number of credits")
         credits = Decimal("0")
+    calls = None
+    if "max_paid_calls" in block:
+        raw_calls = _dec(g("max_paid_calls"))
+        if raw_calls is None or raw_calls < 0 or raw_calls != raw_calls.to_integral_value():
+            refusals.append(f"max_paid_calls {g('max_paid_calls')!r} is not a non-negative whole number of calls")
+        else:
+            calls = int(raw_calls)
     if g("retries_authorised") != RETRIES_AUTHORISED:
         refusals.append(f"retries_authorised is {g('retries_authorised')!r}; exactly 0 is authorised")
     if g("execution_time_route_price_verification") != PRICE_VERIFICATION_REQUIRED:
@@ -181,7 +217,7 @@ def load_battery_authorisation(path: Path | str = AUTH_LOCAL_PATH, roster_path: 
         images_before_video=g("images_before_video") if isinstance(g("images_before_video"), bool) else None,
         approved_by=g("approved_by"), approved_at=str(g("approved_at")) if g("approved_at") else None,
         source_path=str(path), sha256=hashlib.sha256(raw).hexdigest(), refusals=tuple(refusals),
-        elevenlabs_cap_credits=credits)
+        elevenlabs_cap_credits=credits, max_paid_calls=calls)
 
 
 def _require_permitted(auth: BatteryAuthorisation, what: str) -> None:
@@ -191,6 +227,162 @@ def _require_permitted(auth: BatteryAuthorisation, what: str) -> None:
         raise NotAuthorised(f"EVAL-040 paid execution is not authorised ({auth.source_path}):\n  - " + "\n  - ".join(auth.refusals))
 
 
+# ------------------------------------------------------------------- pooling (Auditor AF-4 / AF-5)
+@dataclass(frozen=True)
+class PooledSpend:
+    """What the OTHER runs under this authorisation have already consumed. Never a guess: unreadable = refused."""
+    run_ids: tuple = field(default_factory=tuple)
+    usd_equiv: Decimal = Decimal("0")
+    by_tranche: dict = field(default_factory=dict)
+    inr_native: Decimal = Decimal("0")
+    credits_native: Decimal = Decimal("0")
+    paid_calls: int = 0
+
+    @property
+    def named(self) -> str:
+        return ", ".join(self.run_ids) if self.run_ids else "(none)"
+
+
+def pooling_scope(root: Path | str) -> list[Path]:
+    """The run roots one authorisation's spend is pooled over.
+
+    The root itself always. And, because each runner is given its own `--out` and keeps its ledger in
+    `<out>/ledger/<run_id>/`, a root that IS such a `ledger` directory also pools every sibling out
+    directory's `ledger`: those runs are siblings in every sense that matters to a signed cap.
+    """
+    root = Path(root)
+    roots = [root]
+    if root.name == LEDGER_DIR_NAME:
+        outs = root.parent.parent
+        if outs.is_dir():
+            for sib in sorted(outs.iterdir()):
+                if sib.is_dir() and sib != root.parent and (sib / LEDGER_DIR_NAME).is_dir():
+                    roots.append(sib / LEDGER_DIR_NAME)
+    return roots
+
+
+def _ledger_rows(path: Path) -> list[dict]:
+    """Read one OTHER run's ledger, with the same refusals the inherited reader applies to our own."""
+    rows: list[dict] = []
+    if not path.exists():
+        return rows
+    for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise LedgerCorrupt(f"{path} line {n} is not valid JSON; a sibling run's spend cannot be read, and counting it as zero is how a cap leaks") from exc
+        if not isinstance(row, dict) or row.get("type") not in SL.RECORD_TYPES:
+            raise LedgerCorrupt(f"{path} line {n}: unknown record type {row.get('type') if isinstance(row, dict) else row!r} in a sibling run's ledger")
+        if row.get("seq") != len(rows) + 1:
+            raise LedgerCorrupt(f"{path} line {n}: expected seq {len(rows) + 1}, found {row.get('seq')!r}; a gap in a sibling run's ledger means a record was lost")
+        rows.append(row)
+    return rows
+
+
+def _stat_sig(path: Path) -> tuple:
+    """(size, mtime) of a ledger file, so pooled totals are recomputed the moment a sibling run appends."""
+    if not path.exists():
+        return (-1, -1)
+    st = path.stat()
+    return (st.st_size, st.st_mtime_ns)
+
+
+def _rows_totals(rows: list[dict]) -> dict:
+    """Live totals for one ledger's rows: USD-equivalent, per tranche, native INR, native credits, paid calls."""
+    settled = {r["reservation_id"] for r in rows if r["type"] in ("spend", "release") and r.get("reservation_id")}
+    released = {r["reservation_id"] for r in rows if r["type"] == "release" and r.get("reservation_id")}
+    usd, by_tranche, inr, credits = Decimal("0"), {}, Decimal("0"), Decimal("0")
+    for r in rows:
+        if not (r["type"] in ("spend", "correction") or (r["type"] == "reservation" and r.get("reservation_id") not in settled)):
+            continue
+        amount = Decimal(str(r.get("amount_usd", "0")))
+        usd += amount
+        stage = r.get("stage", "unknown")
+        by_tranche[stage] = by_tranche.get(stage, Decimal("0")) + amount
+        native = Decimal(str(r.get("amount_native", r.get("amount_usd", "0"))))
+        if r.get("billing_pool") == INR_POOL:
+            inr += native
+        elif r.get("billing_pool") == CREDIT_POOL:
+            credits += native
+    # one paid call = one reservation that was not released, plus any spend recorded without one.
+    calls = len({r["reservation_id"] for r in rows if r["type"] == "reservation" and r.get("reservation_id") not in released})
+    calls += sum(1 for r in rows if r["type"] == "spend" and not r.get("reservation_id"))
+    return {"usd": usd, "by_tranche": by_tranche, "inr": inr, "credits": credits, "calls": calls}
+
+
+class SiblingLedgers:
+    """Every OTHER run in the pooling scope that was authorised by the SAME authorisation.
+
+    "The same" is the `authorisation_sha256` each run recorded in its `run.json` - the bytes of the signed
+    record, not its filename. Editing the file in place therefore starts a NEW pool (that is what the wan2
+    record did when its cap was raised mid-flight): the runs under the old bytes are still capped together,
+    and the runs under the new bytes are capped together, but the two are not one pool. A cap raised in
+    place is a new authorisation, and only the Controller can decide whether it re-authorises what is spent.
+    """
+
+    def __init__(self, root: Path | str, run_id: str, authorisation: BatteryAuthorisation, own_dir: Path | None = None):
+        self.root = Path(root)
+        self.run_id = run_id
+        self.authorisation = authorisation
+        self.own_dir = Path(own_dir) if own_dir is not None else self.root / run_id
+        self._sig = None
+        self._cached = PooledSpend()
+
+    def _matches(self, record: dict) -> bool:
+        sha = record.get("authorisation_sha256")
+        return bool(sha) and sha == self.authorisation.sha256
+
+    def runs(self) -> list[tuple[str, Path]]:
+        """(run_id, run_dir) for every pooled sibling. Refuses rather than skipping what it cannot read."""
+        found: list[tuple[str, Path]] = []
+        for root in pooling_scope(self.root):
+            if not root.is_dir():
+                continue
+            for run_dir in sorted(root.iterdir()):
+                if not run_dir.is_dir() or run_dir.resolve() == self.own_dir.resolve():
+                    continue
+                run_json, ledger = run_dir / "run.json", run_dir / "spend-ledger.jsonl"
+                if not run_json.exists():
+                    if ledger.exists() and ledger.stat().st_size > 0:
+                        raise LedgerCorrupt(f"{ledger} records spend but {run_json} is missing; a run whose authorisation cannot be identified "
+                                            f"must not be assumed to be someone else's spend")
+                    continue
+                try:
+                    record = json.loads(run_json.read_text(encoding="utf-8"))
+                except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+                    raise LedgerCorrupt(f"{run_json} is not readable JSON; a sibling run under this ledger root cannot be read, so the pooled "
+                                        f"spend under {Path(self.authorisation.source_path).name} is unknown. Refusing rather than counting it as zero.") from exc
+                if not isinstance(record, dict) or record.get("tranche_id") != TRANCHE_ID:
+                    continue
+                if not record.get("authorisation_sha256"):
+                    raise LedgerCorrupt(f"{run_json} names no authorisation_sha256; there is no way to tell whether its spend belongs to this cap")
+                if self._matches(record):
+                    found.append((record.get("run_id") or run_dir.name, run_dir))
+        return found
+
+    def totals(self) -> PooledSpend:
+        """Pooled totals, recomputed whenever a sibling ledger changed on disk (a concurrent run appends to it)."""
+        runs = self.runs()
+        sig = tuple((str(d), *_stat_sig(d / "spend-ledger.jsonl")) for _, d in runs)
+        if sig == self._sig:
+            return self._cached
+        usd, by_tranche, inr, credits, calls = Decimal("0"), {}, Decimal("0"), Decimal("0"), 0
+        for _, run_dir in runs:
+            t = _rows_totals(_ledger_rows(run_dir / "spend-ledger.jsonl"))
+            usd += t["usd"]
+            inr += t["inr"]
+            credits += t["credits"]
+            calls += t["calls"]
+            for stage, amount in t["by_tranche"].items():
+                by_tranche[stage] = by_tranche.get(stage, Decimal("0")) + amount
+        self._cached = PooledSpend(run_ids=tuple(rid for rid, _ in runs), usd_equiv=usd, by_tranche=by_tranche,
+                                   inr_native=inr, credits_native=credits, paid_calls=calls)
+        self._sig = sig
+        return self._cached
+
+
 # --------------------------------------------------------------------------------- run
 class BatteryRun(SL.TrancheRun):
     """One EVAL-040 run directory. Its numbers are the AUTHORISATION's, re-validated on every open."""
@@ -198,11 +390,25 @@ class BatteryRun(SL.TrancheRun):
     def __init__(self, run_dir: Path, record: dict, authorisation: BatteryAuthorisation):
         super().__init__(run_dir, record)
         self.authorisation = authorisation
+        # the OTHER runs this authorisation already paid for; read lazily, refreshed whenever one of them appends
+        self.siblings = SiblingLedgers(self.run_dir.parent, self.run_id, authorisation, own_dir=self.run_dir)
 
     @classmethod
     def create(cls, root: Path | str, run_id: str, authorisation: BatteryAuthorisation, mode: str = "live") -> "BatteryRun":
         _require_permitted(authorisation, "BatteryRun.create")
         run_dir = Path(root) / run_id
+        # AF-4: one authorisation is ONE cap. What the sibling runs already spent under this same signed
+        # record is counted BEFORE the run exists, so a new run under a consumed cap never reaches dispatch.
+        pooled = SiblingLedgers(root, run_id, authorisation, own_dir=run_dir).totals()
+        if pooled.usd_equiv >= authorisation.max_consumed_usd_equivalent:
+            raise BudgetExceeded(
+                f"EVAL-040 ceiling: the authorisation {Path(authorisation.source_path).name} has already been consumed by "
+                f"{len(pooled.run_ids)} run(s) [{pooled.named}] totalling USD {pooled.usd_equiv} of the authorised "
+                f"{authorisation.max_consumed_usd_equivalent}. A new run does not get the cap again; nothing was dispatched.")
+        if authorisation.max_paid_calls is not None and pooled.paid_calls >= authorisation.max_paid_calls:
+            raise BudgetExceeded(
+                f"max_paid_calls: the authorisation {Path(authorisation.source_path).name} authorises {authorisation.max_paid_calls} paid call(s) "
+                f"and {pooled.paid_calls} have already been made by run(s) [{pooled.named}]. Nothing was dispatched.")
         run_dir.mkdir(parents=True, exist_ok=True)
         record = {
             "tranche_id": TRANCHE_ID, "run_id": run_id, "created_at": SL._now(), "mode": mode,
@@ -212,6 +418,7 @@ class BatteryRun(SL.TrancheRun):
             "tranche_caps_usd": {k: str(v) for k, v in authorisation.caps_usd.items()},
             "sarvam_cap_inr": str(authorisation.sarvam_cap_inr),
             "elevenlabs_cap_credits": str(authorisation.elevenlabs_cap_credits),
+            "max_paid_calls": (str(authorisation.max_paid_calls) if authorisation.max_paid_calls is not None else None),
             "billing_pools": list(POOLS), "retries_authorised": RETRIES_AUTHORISED,
             "cap_basis": "amount_usd_equiv across every pool; INR at the COST-TABLE display rate 95.4211; sarvam_cap_inr over native INR; "
                          "elevenlabs_cap_credits over native plan credits (cash 0)",
@@ -247,7 +454,9 @@ class BatteryRun(SL.TrancheRun):
             if rc is not None and rc > cap:
                 raise NotAuthorised(f"{run_json} records cap {name}={rc} above the authorisation file's {cap}")
         (run_dir / "spend-ledger.jsonl").touch()
-        return cls(run_dir, record, authorisation)
+        run = cls(run_dir, record, authorisation)
+        run.siblings.totals()   # AF-4: read the pooled runs now; an unreadable sibling refuses here, not at dispatch
+        return run
 
     @property
     def ceiling_usd(self) -> Decimal:
@@ -265,27 +474,92 @@ class BatteryRun(SL.TrancheRun):
     def elevenlabs_cap_credits(self) -> Decimal:
         return self.authorisation.elevenlabs_cap_credits
 
+    @property
+    def max_paid_calls(self) -> int | None:
+        """The record's call limit, or None when it names none. Never a constant in code."""
+        return self.authorisation.max_paid_calls
+
+    def pooled_spend(self) -> PooledSpend:
+        """What the OTHER runs under this same authorisation have already consumed."""
+        return self.siblings.totals()
+
 
 # ------------------------------------------------------------------------------ budget
 class BatteryBudget(SL.TrancheBudget):
-    """Cumulative spend for one EVAL-040 run; the ceiling and caps are the AUTHORISATION's, never constants."""
+    """Cumulative spend for one EVAL-040 run AND for every other run under the same authorisation.
 
+    The ceiling and caps are the AUTHORISATION's, never constants, and they are checked over the COMBINED
+    total: this run's ledger plus every pooled sibling's (Auditor AF-4). Both numbers stay reportable -
+    `spent_usd()` / `paid_calls()` are this run, `combined_spent_usd()` / `combined_paid_calls()` are the cap's.
+    """
+
+    # -- pooled reading -------------------------------------------------------------------
+    def pooled(self) -> PooledSpend:
+        return self.run.pooled_spend()
+
+    def sibling_run_ids(self) -> tuple:
+        return self.pooled().run_ids
+
+    def sibling_spent_usd(self) -> Decimal:
+        return self.pooled().usd_equiv
+
+    def combined_spent_usd(self) -> Decimal:
+        """What the authorisation has consumed in total: this run plus every run that shares it."""
+        return self.spent_usd() + self.pooled().usd_equiv
+
+    def paid_calls(self) -> int:
+        """Paid calls made by THIS run: every reservation that was not released, plus any unreserved spend."""
+        rows = self.records()
+        cached = getattr(self, "_calls_cache", None)     # the ledger is append-only, so a count is stable per length
+        if cached is not None and cached[0] == len(rows):
+            return cached[1]
+        n = _rows_totals(rows)["calls"]
+        self._calls_cache = (len(rows), n)
+        return n
+
+    def combined_paid_calls(self) -> int:
+        return self.paid_calls() + self.pooled().paid_calls
+
+    def _pooled_note(self, pooled: PooledSpend) -> str:
+        if not pooled.run_ids:
+            return ""
+        return (f" Pooled with {len(pooled.run_ids)} other run(s) under {Path(self.run.authorisation.source_path).name} "
+                f"[{pooled.named}] which already consumed USD {pooled.usd_equiv}.")
+
+    # -- the caps -------------------------------------------------------------------------
     def _check(self, stage: str, amount: Decimal) -> None:
         caps = self.run.tranche_caps
         if stage not in caps:
             raise ValueError(f"unknown tranche {stage!r}. EVAL-040 tranches are {sorted(caps)}; a tranche with no declared cap must not inherit the whole ceiling.")
         committed, pending, by_stage = self._totals()
-        total_after = committed + pending + amount
+        pooled = self.pooled()
+        own = committed + pending
+        total_after = own + pooled.usd_equiv + amount
         ceiling = self.run.ceiling_usd
         if total_after > ceiling:
-            raise BudgetExceeded(f"EVAL-040 ceiling: spent {committed + pending} + {amount} would reach {total_after}, above the authorised {ceiling} (USD-equivalent across pools).")
+            raise BudgetExceeded(f"EVAL-040 ceiling: spent {own + pooled.usd_equiv} + {amount} would reach {total_after}, above the authorised "
+                                 f"{ceiling} (USD-equivalent across pools).{self._pooled_note(pooled)}")
         cap = caps[stage]
-        stage_after = by_stage.get(stage, Decimal("0")) + amount
+        stage_before = by_stage.get(stage, Decimal("0")) + pooled.by_tranche.get(stage, Decimal("0"))
+        stage_after = stage_before + amount
         if stage_after > cap:
-            raise BudgetExceeded(f"tranche {stage} cap: {by_stage.get(stage, Decimal('0'))} + {amount} would reach {stage_after}, above the authorised {cap}.")
+            raise BudgetExceeded(f"tranche {stage} cap: {stage_before} + {amount} would reach {stage_after}, above the authorised "
+                                 f"{cap}.{self._pooled_note(pooled)}")
+
+    def _check_calls(self, new_calls: int = 1) -> None:
+        """AF-5: the record's OPTIONAL call limit, over the same pooled set. Absent = no limit."""
+        limit = self.run.max_paid_calls
+        if limit is None:
+            return
+        pooled = self.pooled()
+        made = self.paid_calls() + pooled.paid_calls
+        if made + new_calls > limit:
+            raise BudgetExceeded(f"max_paid_calls: {made} paid call(s) have been made and this call would make {made + new_calls}, above the "
+                                 f"authorised {limit} in {Path(self.run.authorisation.source_path).name}. Nothing was dispatched."
+                                 + (f" Pooled with run(s) [{pooled.named}], which made {pooled.paid_calls}." if pooled.run_ids else ""))
 
     def remaining_usd(self) -> Decimal:
-        return self.run.ceiling_usd - self.spent_usd()
+        return self.run.ceiling_usd - self.combined_spent_usd()
 
     def totals_by_pool(self) -> dict[str, dict[str, Decimal]]:
         """Per-pool totals (committed + pending), native and USD-equivalent."""
@@ -307,19 +581,21 @@ class BatteryBudget(SL.TrancheBudget):
 
     def _check_inr(self, amount_native: Decimal) -> None:
         cap = self.run.sarvam_cap_inr
-        after = self.inr_native_live() + amount_native
+        before = self.inr_native_live() + self.pooled().inr_native
+        after = before + amount_native
         if after > cap:
-            raise BudgetExceeded(f"sarvam_cap_inr: INR {self.inr_native_live()} + {amount_native} would reach {after}, above the authorised INR {cap}.")
+            raise BudgetExceeded(f"sarvam_cap_inr: INR {before} + {amount_native} would reach {after}, above the authorised INR {cap}.{self._pooled_note(self.pooled())}")
 
     def credits_native_live(self) -> Decimal:
         return self.totals_by_pool().get(CREDIT_POOL, {}).get("native", Decimal("0"))
 
     def _check_credits(self, amount_native: Decimal) -> None:
         cap = self.run.elevenlabs_cap_credits
-        after = self.credits_native_live() + amount_native
+        before = self.credits_native_live() + self.pooled().credits_native
+        after = before + amount_native
         if after > cap:
-            raise BudgetExceeded(f"elevenlabs_cap_credits: credits {self.credits_native_live()} + {amount_native} would reach {after}, "
-                                 f"above the authorised {cap} (0 = the record authorises no ElevenLabs direct call).")
+            raise BudgetExceeded(f"elevenlabs_cap_credits: credits {before} + {amount_native} would reach {after}, "
+                                 f"above the authorised {cap} (0 = the record authorises no ElevenLabs direct call).{self._pooled_note(self.pooled())}")
 
     def tranche(self, name: str) -> "PoolStageBudget":
         if name not in self.run.tranche_caps:
@@ -337,7 +613,8 @@ class PoolStageBudget(SL.StageBudget):
     def remaining_usd(self) -> Decimal:
         tranche_left = self.budget.remaining_usd()
         cap = self.budget.run.tranche_caps[self.stage]
-        return min(tranche_left, cap - self.budget.stage_spent_usd(self.stage))
+        pooled_stage = self.budget.pooled().by_tranche.get(self.stage, Decimal("0"))
+        return min(tranche_left, cap - self.budget.stage_spent_usd(self.stage) - pooled_stage)
 
     @staticmethod
     def _require_pool_fields(amount: Decimal, context: dict) -> None:
@@ -377,6 +654,7 @@ class PoolStageBudget(SL.StageBudget):
     def reserve(self, estimated_usd: Decimal, **context) -> str:
         _require_decimal(estimated_usd, "estimated_usd")
         self._require_pool_fields(estimated_usd, context)
+        self.budget._check_calls(1)          # AF-5: a reservation IS the call, and it is written before dispatch
         self._inr_guard(context)
         self._credits_guard(context)
         ctx = {k: (str(v) if isinstance(v, Decimal) else v) for k, v in context.items()}
@@ -385,6 +663,8 @@ class PoolStageBudget(SL.StageBudget):
     def record(self, actual_usd: Decimal, **context) -> str:
         _require_decimal(actual_usd, "actual_usd")
         self._require_pool_fields(actual_usd, context)
+        if self._open_reservation is None:   # an unreserved settlement is a call the limit has not counted yet
+            self.budget._check_calls(1)
         self._inr_guard(context, settling=True)
         self._credits_guard(context, settling=True)
         ctx = {k: (str(v) if isinstance(v, Decimal) else v) for k, v in context.items()}
@@ -408,5 +688,9 @@ def authorisation_status(path: Path | str = AUTH_LOCAL_PATH) -> dict:
             "tranche_id": auth.tranche_id, "max_consumed_usd_equivalent": str(auth.max_consumed_usd_equivalent),
             "caps_usd": {k: str(v) for k, v in auth.caps_usd.items()}, "sarvam_cap_inr": str(auth.sarvam_cap_inr),
             "elevenlabs_cap_credits": str(auth.elevenlabs_cap_credits),
+            "max_paid_calls": (str(auth.max_paid_calls) if auth.max_paid_calls is not None else None),
+            "paid_call_limit": (f"{auth.max_paid_calls} paid calls, pooled across every run under this authorisation"
+                                if auth.max_paid_calls is not None else
+                                "absent: this record sets NO limit on the number of paid calls (only the USD caps apply)"),
             "roster_sha256_bound": auth.price_basis_roster_sha256 == auth.roster_sha256_on_disk,
             "retries_authorised": auth.retries_authorised, "refusals": list(auth.refusals), "paid_execution_permitted": auth.permitted}

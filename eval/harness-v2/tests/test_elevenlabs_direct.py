@@ -367,7 +367,8 @@ class CreditCapTest(ElevenLabsBase):
     def test_authorisation_loader_keeps_the_signed_13_fields_and_reads_the_optional_cap(self):
         self.assertEqual(len(L.AUTH_FIELDS), 13)
         self.assertNotIn("elevenlabs_cap_credits", L.AUTH_FIELDS)
-        self.assertEqual(L.OPTIONAL_AUTH_FIELDS, ("elevenlabs_cap_credits",))
+        # AF-5 (2026-09-10) added a second optional field, max_paid_calls; the signed 13 are still the signed 13
+        self.assertEqual(L.OPTIONAL_AUTH_FIELDS, ("elevenlabs_cap_credits", "max_paid_calls"))
         plain = L.load_battery_authorisation(self.write_auth(name="plain.yaml"))
         self.assertEqual(plain.refusals, ())
         self.assertEqual(plain.elevenlabs_cap_credits, Decimal(0))

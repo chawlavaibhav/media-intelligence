@@ -200,7 +200,12 @@ def _leaks(text: str, needles: list[str]) -> list[str]:
 def _runs(out, run_id, extra_runs):
     """[(out_dir, run_id, plan, store)] — the primary run first, then any extra runs (e.g. a redo run) judged in ONE blind set."""
     runs = [(Path(out), run_id)] + [(Path(o), r) for o, r in (extra_runs or [])]
-    return [(o, r, RL.load_plan(o, r), S.SealedStore(o / RL.ARTIFACTS_DIR)) for o, r in runs]
+    loaded = [(o, r, RL.load_plan(o, r), S.SealedStore(o / RL.ARTIFACTS_DIR)) for o, r in runs]
+    live = [r for _, r, pl, _ in loaded if RL.is_liveness_plan(pl["header"])]
+    if live:
+        raise PacketRefused(f"run(s) {live} are liveness (smoke) draws, not candidate draws: their plan records "
+                            f"draw_class {RL.DRAW_LIVENESS}. A smoke call proves the wiring, it is never judged.")
+    return loaded
 
 
 def build(out: Path | str, run_id: str, key_dir: Path | str, seed: str | None = None, extra_runs: list | None = None) -> dict:
@@ -404,7 +409,8 @@ def reveal(out: Path | str, run_id: str, key_dir: Path | str) -> dict:
             row.update(verdict="reject", verdict_basis="not_dispatched")
         rows.append(row)
     elimination = apply_elimination(rows)
-    results = {"run_id": run_id, "revealed_utc": _now(), "commitment_verified": True, "commitment": committed, "key_path": str(key_path),
+    draw_class = RL.plan_draw_class(RL.load_plan(out, run_id)["header"])
+    results = {"run_id": run_id, "draw_class": draw_class, "revealed_utc": _now(), "commitment_verified": True, "commitment": committed, "key_path": str(key_path),
                "seed": key["seed"], "salt": key["salt"], "rules_ref": RULES_REF,
                "rule_text": "E1: refusal/hard error >= ceil(0.375 n); E2: accepts <= floor(0.25 n); n = planned trials per (route, question); E5: no artifact = reject",
                "trials": rows, "elimination": elimination}

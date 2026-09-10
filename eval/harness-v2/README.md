@@ -22,7 +22,7 @@ them read-only (`hv2_paths.py`) and subclasses what it needs. The protected base
 | `hv2_paths.py` | read-only import paths to the frozen packages (harness-v2 first, so its `adapters/` package shadows the frozen `adapters.py`) |
 | `surfaces.py` | `SurfaceRegistry`: the 47 route keys → adapter, surface, model id, endpoint, pinned schema, price pin, pool, credential **name**, `shape_status` |
 | `pricing.py` | roster + COST-TABLE reader; execution-time price check (re-reads the roster every time; refuses drift, promos, unpinned or non-projectable prices, unknown quantity rules) |
-| `ledger.py` | `BatteryRun / BatteryBudget / PoolStageBudget` = subclasses of EMP-001's ledger; EVERY ceiling / cap / INR sub-cap comes from `authorization.local.yaml` (the signed record's `machine_authorisation` block; gitignored, absent tonight) - no constant in code; the roster sha256 named there must equal the roster on disk; every open re-validates the file |
+| `ledger.py` | `BatteryRun / BatteryBudget / PoolStageBudget` = subclasses of EMP-001's ledger; EVERY ceiling / cap / INR sub-cap comes from `authorization.local.yaml` (the signed record's `machine_authorisation` block; gitignored, absent tonight) - no constant in code; the roster sha256 named there must equal the roster on disk; every open re-validates the file. 2026-09-10 (Auditor AF-4 / AF-5): **one authorisation = one cap across every run that used it** - spend recorded by sibling runs (same `authorisation_sha256` in their `run.json`, under this ledger root or a sibling `<out>/ledger` root) is pooled into the ceiling, the 1a / 1b caps and the INR / credits sub-caps, a new run under a consumed cap is refused at `BatteryRun.create` naming those runs and the combined total, and an unreadable sibling refuses rather than counting zero; the OPTIONAL `max_paid_calls` field caps the NUMBER of paid calls over the same pooled set (absent = no call limit, said in words by `authorisation_status`) |
 | `store.py` | sealed artifact store: `media/<trial>.<ext>` + `.request.json` (written **before** dispatch) + `.record.json` + `.attempt.json` + append-only manifest; never overwrites |
 | `transports.py` | the **only** module that may open a socket (urllib) or run a network-capable subprocess (`gcloud` token, at dispatch only); plus the fakes the tests use |
 | `casebook.py` | TEST-CASES rows × repeats with each case's blueprint prompt; route catalogue read from COST-TABLE (working tree or a git revision) |
@@ -83,6 +83,9 @@ python3 eval/harness-v2/evidence_map.py --results eval/experiments/EVAL-040/runs
   under SEED-POLICY `held` (today: never);
 * one `dispatch()` = one submit; polls, result reads and downloads are lifecycle steps of that trial; the poll loop
   is bounded and can never resubmit; 0 retries;
+* a signed authorisation is ONE cap however many runs use it: the ceiling, the tranche caps and (when the record
+  names `max_paid_calls`) the number of paid calls are checked over this run PLUS every sibling run that recorded the
+  same authorisation sha256; a sibling whose `run.json` or ledger cannot be read refuses the run rather than counting zero;
 * the reservation is written **before** the first byte leaves; only a refusal raised by our own code before any send
   releases it; ANY other exception after the reservation persists an attempt and settles it as ambiguous, with
   credential values scrubbed from the record (Auditor AF-3);

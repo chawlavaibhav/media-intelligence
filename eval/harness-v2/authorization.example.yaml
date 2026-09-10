@@ -16,8 +16,11 @@ machine_authorisation:
   cap_1a_usd: null                     # proposed 85.00
   cap_1b_usd: null                     # proposed 115.00
   sarvam_cap_inr: null                 # proposed 5.00; enforced natively over the sarvam_credits pool
-  # OPTIONAL 14th field (not part of the signed 13-field record; older files omit it and the loader reads 0):
-  #   elevenlabs_cap_credits: 0          # whole plan credits for the elevenlabs_credits pool (ElevenLabs DIRECT); 0 = forbidden
+  # OPTIONAL fields (not part of the signed 13-field record; older files omit them):
+  #   elevenlabs_cap_credits: 0          # whole plan credits for the elevenlabs_credits pool (ElevenLabs DIRECT); 0 = forbidden (absent = 0)
+  #   max_paid_calls: 16                 # the record's "no more than N paid calls" limit, enforced over every run that shares this
+  #                                      # authorisation (matched by its sha256); the call that would exceed it is refused BEFORE dispatch.
+  #                                      # ABSENT = no call limit at all - only the USD caps apply. There is no call constant in code.
   retries_authorised: 0                # one call = one trial; 0 is the only accepted value
   execution_time_route_price_verification: required_before_every_paid_call
   images_before_video: true

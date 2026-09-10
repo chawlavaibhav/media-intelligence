@@ -6,7 +6,11 @@ authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
 **Last refresh:** 7 Sep 2026 — CANON-GATE-001 merged (PR #88, merge commit `7dd064c`): the
-compiled-doctrine gate exists as code. The
+compiled-doctrine gate exists as code.
+**Correction notice (10 Sep 2026):** three factual corrections were applied to this file by the
+zero-spend audit repair — the Capability Registry is no longer empty (575 deterministic rows). The
+rest of this file still predates the two-day Capability Lab run of 8–10 Sep and needs a full
+Governor refresh; see `coordination/audits/AUDIT-2026-09-10-REPORT-B.md`, finding F-5. The
 last full Governor reconciliation remains **GOV-006** against `main` at `91984f5`
 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`, PASS WITH NON-BLOCKING NOTES);
 CANON-014 received a bounded Level-1 review at
@@ -36,8 +40,10 @@ evaluation → repair → accepted outcome → empirical memory.
 **What exists vs what does not (verified at GOV-006):** the Normalized Request grammar, Creative IR
 v0.1, accepted Canon knowledge, frozen measurement contracts and benchmark harnesses **exist**.
 **Production IR, the Production Planner, routing, a request compiler, a repair runtime and any
-customer-facing API do not exist.** The Capability Registry exists as a schema and validator with
-**zero rows**.
+customer-facing API do not exist.** The Capability Registry **now holds 575 deterministic rows**
+(EVAL-040, written 9–10 Sep 2026 under the frozen instrument criteria; validator passes). *Corrected
+10 Sep 2026 — this paragraph said "zero rows", which was true only until the Capability Lab ran.
+Evidence: `eval/registry/registry-v1.jsonl`, `eval/registry/validate_registry.py`.*
 
 ## 2. Where truth comes from — typed authority
 
@@ -104,7 +110,9 @@ Current authorisation state always comes from `coordination/CONTROL-STATE.md`. T
 **Still zero (mechanically verified where possible):** qualified models/workflows · qualified
 subjective/perceptual evaluator families · strict-exactness-qualified text evaluators (five
 configurations tested, five disqualified, unrewritten) · qualified temporal-video evaluators (no
-numeric pass mark exists) · **Capability Registry rows — a deliberate decision, not an absence** ·
+numeric pass mark exists) · ~~**Capability Registry rows — a deliberate decision, not an
+absence**~~ *(no longer zero: 575 deterministic rows as of 10 Sep 2026; the admission bar was never
+weakened — the rows are deterministic-instrument rows only)* ·
 customer-outcome CpAO observations (Stage C
 only; not authorised) · Production IR / Planner ·
 **accepted-outcome-rate measurements** (no acceptance-rate run has ever been commissioned) ·
@@ -225,7 +233,8 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
 - **EVAL-036 remains authorised at USD 0** as a historical-prior import, but its sequencing must now be justified by outcome value rather than treated as an automatic gate.
 - **No new paid tranche is currently authorised.**
 - **Production IR, Planner, routing runtime, repair runtime and customer-facing API still do not exist.** They should be extracted/implemented from proven outcome-producing workflows, not designed abstractly first.
-- Persistent blockers include HED-1 for fully loaded CpAO and the empty Capability Registry by deliberate admission policy.
+- Persistent blockers include HED-1 for fully loaded CpAO. *(Corrected 10 Sep 2026: the Capability
+  Registry is no longer empty — 575 deterministic rows. Human acceptance still never enters it.)*
 
 ## 7. Critical traps for a fresh session
 

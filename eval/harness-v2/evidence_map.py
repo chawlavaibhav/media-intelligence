@@ -166,10 +166,31 @@ def _arm_matches(row: dict, arm) -> bool:
     return row.get("arm") == arm
 
 
+DRAW_CANDIDATE = "candidate"
+DRAW_LIVENESS = "liveness"
+
+
+def draw_class_of(doc: dict | None) -> str:
+    """What class of draw a RESULTS.yaml / SCREEN-RESULTS.yaml document records. A document written from EVAL-044 on
+    states `draw_class`; the sealed September documents carry none, and every one of them is a judged candidate run
+    (a liveness draw is never blinded, never judged and so never reaches a RESULTS.yaml). Read, never guessed from
+    the run-id string."""
+    dc = (doc or {}).get("draw_class")
+    return dc if dc in (DRAW_CANDIDATE, DRAW_LIVENESS) else DRAW_CANDIDATE
+
+
+class EvidenceMapRefused(RuntimeError):
+    """A source document may not go into the map."""
+
+
 def merge_results(results_list: list) -> dict:
     """Concatenate several RESULTS.yaml documents. Every trial and elimination entry remembers its run (`results_run_id`);
     `revealed_utc` is the latest reveal; `commitment_verified_by_run` keeps each run's own flag."""
     docs = [r for r in results_list if r]
+    live = [r.get("run_id") for r in docs if draw_class_of(r) == DRAW_LIVENESS]
+    if live:
+        raise EvidenceMapRefused(f"RESULTS document(s) of run(s) {live} record draw_class {DRAW_LIVENESS}: a liveness "
+                                 f"(smoke) draw is not evidence and never enters the evidence map")
     trials, elim = [], []
     for r in docs:
         rid = r.get("run_id")
@@ -269,6 +290,9 @@ def merge_screens(screen_docs: list) -> list:
     for doc in screen_docs:
         if not doc:
             continue
+        if draw_class_of(doc) == DRAW_LIVENESS:
+            raise EvidenceMapRefused(f"{SCREEN_RESULTS_FILE} of run {doc.get('run_id')!r} records draw_class "
+                                     f"{DRAW_LIVENESS}: a liveness draw is not evidence")
         inst = doc.get("instrument") or {}
         for t in doc.get("trials", []) or []:
             out.append({**t, "_screen_run_id": doc.get("run_id"), "_config_hash": inst.get("config_hash"), "_model": inst.get("model"),

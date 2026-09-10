@@ -170,6 +170,9 @@ class Run:
         self.plan = RL.load_plan(self.out, run_id)
         self.plan_sha256 = self.plan["_sha256"]
         self.header = self.plan["header"]
+        # candidate or liveness, as the PLAN records it - never inferred from the run-id string
+        self.draw_class = RL.plan_draw_class(self.header)
+        self.is_liveness = self.draw_class == RL.DRAW_LIVENESS
         self.store = S.SealedStore(self.out / RL.ARTIFACTS_DIR)
         self.ledger_path = self.out / RL.LEDGER_DIR / run_id / "spend-ledger.jsonl"
         self.ledger_rows = ([json.loads(l) for l in self.ledger_path.read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -737,6 +740,10 @@ def append_records(path: Path | str, records: list) -> int:
 def build_rows(run_specs: list, book: CB.CaseBook | None = None, harness_root: Path | str | None = None, criteria_path: Path | str | None = None,
                capabilities=tuple(CAPABILITIES)) -> dict:
     runs = [Run.from_spec(s) if isinstance(s, str) else s for s in run_specs]
+    live = [r.run_id for r in runs if r.is_liveness]
+    if live:
+        raise RegistryRowsError(f"run(s) {live} are liveness (smoke) draws, not candidate draws: their plan records "
+                                f"draw_class {RL.DRAW_LIVENESS}. A smoke call is never judged and is never a Registry row.")
     instruments = frozen_instruments(criteria_path)
     crit_sha = criteria_sha256(criteria_path)
     cells = build_cells(runs, book)

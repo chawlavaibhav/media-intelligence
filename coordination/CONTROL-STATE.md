@@ -115,7 +115,10 @@ where it disagrees with a newer Controller decision, the decision wins.
 **Registry no longer empty (9 Sep 2026).** The Controller froze the six deterministic-instrument criteria
 (`CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md`); the harness then wrote **167 rows** from Image
 Round 1 (delivery_format_compliance, latency_errors_refusals, cost_and_cpao trial cost, reliability_pass_at_k,
-reproducibility; 34 cells; n_items 1–2; `independence_status: NOT ESTABLISHED`). Human acceptance stays in the
+reproducibility; 34 cells; n_items 1–2; `independence_status: NOT ESTABLISHED`). **Current state after the
+full two-day run: 575 rows over 61 cells** (validator passes; re-verified independently 10 Sep 2026 —
+524 of the 575 rows rest on a single base item, and every row still carries
+`independence NOT ESTABLISHED`, so they are reference calculations, not statistics). Human acceptance stays in the
 tiered `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml`, never in the Registry. **Known consequence of the
 freeze:** the frozen `format_probe` resolution-class rule (long side 960–1100 for "1024-class") fails every
 non-square delivery that providers return at 928×1152 / 720×1280 / 1080×1920 — a specification defect, not a
@@ -263,16 +266,34 @@ cheap route failed (the two bottle briefs, ~USD 6); (3) judge v2 (better prompt 
 re-qualification; (4) round two of stills (~₹4,300); (5) Gemini API adapter switch for Gemini image and Omni. MD-9 fresh cloud resources still need the Controller's own
 session. The Canon items below remain a queue, not an authorisation.
 
-**Audit index (10 Sep 2026, end of the two-day Capability Lab run).** 35/35 package cases run and judged. Ledger total
-USD 110.7 (cash USD 67.0 on fal; GCP credits USD 43.8 incl. the USD 3.16 judge run; Sarvam ₹0.89; 1,198 ElevenLabs plan
-credits) across ten signed tranches, no cap crossed. Registry 575 deterministic rows; map 61 cells, RR-1..RR-16. Package is
-now generated (`tools/build.py`, roster sha 311f6631, commit d8399d8): Gemini image/Omni/NB-Pro-edit on the Gemini API,
+**Audit index (10 Sep 2026, end of the two-day Capability Lab run).** 35/35 package cases run and judged
+(independently verified). **Spend — corrected 10 Sep 2026 against the ledgers themselves; the earlier figures
+in this paragraph (USD 110.7 total, cash USD 67.0, credits USD 43.8, "no cap crossed") did not reconcile and
+are superseded:** ledger consumed **USD 119.085109** across the run ledgers (cash **USD 77.5235** on fal;
+cloud credits **USD 41.5522**; Sarvam **₹0.894**; **1,198** ElevenLabs plan credits), plus the vision-judge run
+at **USD 3.156153** outside every run ledger = **USD 122.241262** counted against caps. Of the ledgered amount
+**USD 108.9706 produced a sealed artifact and USD 10.1145 produced nothing** — the upper bound on money the
+vendors may never have billed (the six Wan 2 HTTP 422 draws, USD 2.88, are recorded in the Wan 2 spend record
+itself as "nothing generated, nothing charged"). **Vendor-billed amounts are not in this repository and have
+never been reconciled.** **Two caps were crossed at the level the Controller signs them:** video piece 1
+(`authorization.video1`) consumed USD 10.364 against a USD 9.96 cap, and the Wan 2 round
+(`authorization.wan2`) consumed USD 11.840 against its final USD 11.53 cap — neither was caught because the
+ledger enforces a cap per run directory, not per authorisation. **Disposition of both crossings is an open
+Controller decision.** Recompute at any time with
+`python3 coordination/audits/tools/reconcile_spend.py`; full evidence in
+`coordination/audits/AUDIT-2026-09-10-REPORT-B.md` (findings F-1, F-2, F-3, F-4). Registry 575 deterministic rows; map 61 cells, RR-1..RR-16. Package is
+now generated (`tools/build.py`, roster sha 311f6631, commit d8399d8): Gemini image/Omni/NB-Pro-edit **re-pointed
+to** the Gemini API — *note added 10 Sep 2026: the re-point is a package/roster change only; **no paid call has ever
+run on the `gemini_api` surface** (all 319 paid calls ran on fal, Vertex, Sarvam or ElevenLabs), so the prices now
+carried for those routes are untested in execution*,
 Wan 2.2 A14B ran as the contender where Wan 3 passed ("go on Wan 2", cap ₹1,100 after a ₹300 addendum for a harness
 aspect fault): 11/16 — i2v 7/8, bike and shoes 2/2, umbrella 0/2 (rain missing), two speakers 0/2 (silent + lettering);
 RR-16: Wan 2.2 A14B is the cheap Wan tier for silent work, Wan 3.0 Prime where sound or weather physics are in the contract. Judge: kappa 0.33, not
 qualified. Decisions of 9–10 Sep: Gemini on the Gemini key; GCP over fal for any model on both; Wan 2 contender; premium
 tiers deferred to a real brief; round two later; ElevenLabs music skipped; fal top-up / Indian voice skipped then fal
-topped up. PR #91, #92 merged; PR #93 open. Review page published to the Controller as an Artifact.
+topped up. PR #91, #92 and #93 all merged — `main` is PR #93's merge commit `dcfa6af` *(corrected 10 Sep 2026;
+this line previously said PR #93 was open)*. Review page published to the Controller as an Artifact; **that page
+is not in the repository, so its numbers are outside the evidence trail.**
 
 **The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's
 choice among `canon/CANON-SHAPE-v1.md` §7's remaining items — injection v1 (cached prefix, no

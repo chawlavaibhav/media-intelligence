@@ -483,6 +483,92 @@ class RunnerTest(NoNetworkTestCase):
                      transport=ft, key_reader=key_reader, log=self.log)
         self.assertEqual(rc, 0)
         self.assertEqual(ft.submits, 2)
+        rep = yaml.safe_load((self.tmp / "R.yaml").read_text())
+        self.assertEqual(rep["spend"]["calls"], 2)
+        self.assertEqual(rep["spend"]["stopped_by"], "screen_max_calls")
+        self.assertEqual(rep["spend"]["authorised_screen_max_calls"], 2)
+        self.assertTrue(rep["spend"]["calls_at_or_above_authorised_limit"])
+        self.assertIn("ATTENTION", rep["spend"]["calls_note"])
+
+    # -------------------------------------------------------------- audit finding B (2026-09-10)
+    def _live_screen(self, screen_dir="s", max_calls=None):
+        idx = write_pin_index(self.tmp / "PIN-INDEX.yaml")
+        auth = self.tmp / "auth.yaml"
+        a = {"screen_cap_usd": 5.0}
+        if max_calls is not None:
+            a["screen_max_calls"] = max_calls
+        auth.write_text(yaml.safe_dump({"screen_authorisation": a}))
+        ft = T.FakeTransport(posts=[answer(["pass", "pass", "pass"])] * 4)
+        rc = QS.main(self.base_args("--auth", str(auth), "--pin-index", str(idx), "--out", str(self.tmp / "R.yaml"),
+                                    "--screen-out-dir", str(self.tmp / screen_dir)),
+                     transport=ft, key_reader=key_reader, log=self.log)
+        self.assertEqual(rc, 0, self.out)
+        return ft, auth, idx
+
+    def test_a_live_run_persists_its_own_call_counters(self):
+        """The live loop's count of calls SENT is written into SCREEN-RESULTS, so nobody has to recompute it later."""
+        ft, _, _ = self._live_screen()
+        sr = yaml.safe_load((self.tmp / "s" / "syn-screen" / "SCREEN-RESULTS.yaml").read_text())
+        c = sr[QS.COUNTERS_KEY]
+        self.assertEqual(c["schema"], QS.COUNTERS_SCHEMA)
+        self.assertEqual(c["source"], QS.BASIS_LIVE)
+        self.assertEqual(c["screening_calls_sent"], 4)
+        self.assertEqual(c["screening_calls_sent"], ft.submits, "the counter must equal the calls the transport saw")
+        self.assertEqual(c["screening_calls_refused"], 0)
+        self.assertIsNone(c["stopped"])
+        self.assertIsNone(c["stopped_by"])
+        self.assertEqual(len(sr["trials"]), 5, "5 rows for 4 calls: the audio row is cannot_judge with no call")
+        self.assertEqual([t["call_sent"] for t in sr["trials"]], [True, True, True, True, False])
+
+    def test_an_offline_rebuild_reports_the_live_count_not_a_row_count(self):
+        """Finding B: the September rebuild recomputed `calls` by counting screened rows and printed 206 against a
+        200 limit. With a live counter on disk the rebuild must report THAT number - here 4 calls, not 5 rows."""
+        self._live_screen()
+        rebuilt = self.tmp / "REBUILT.yaml"
+        rc = QS.main(self.base_args("--auth", str(self.tmp / "auth.yaml"), "--pin-index", str(self.tmp / "PIN-INDEX.yaml"),
+                                    "--out", str(rebuilt), "--report-from-screen-results",
+                                    str(self.tmp / "s" / "*" / "SCREEN-RESULTS.yaml")),
+                     transport=T.FakeTransport(), key_reader=key_reader, log=self.log)
+        self.assertEqual(rc, 0, self.out)
+        rep = yaml.safe_load(rebuilt.read_text())
+        self.assertEqual(rep["mode"], "rebuilt_offline_from_screen_results")
+        self.assertEqual(rep["spend"]["calls"], 4, "the LIVE count")
+        self.assertEqual(rep["spend"]["calls_basis"], QS.BASIS_LIVE)
+        self.assertEqual(rep["spend"]["screened_rows"], 5, "the row count is reported separately and never as `calls`")
+
+    def test_a_rebuild_without_a_live_counter_says_so_instead_of_printing_a_number(self):
+        """Exactly the September situation: SCREEN-RESULTS files written before counters existed."""
+        self._live_screen()
+        sr_path = self.tmp / "s" / "syn-screen" / "SCREEN-RESULTS.yaml"
+        doc = yaml.safe_load(sr_path.read_text())
+        doc.pop(QS.COUNTERS_KEY)
+        sr_path.write_text(yaml.safe_dump(doc, sort_keys=False))
+        rebuilt = self.tmp / "REBUILT2.yaml"
+        rc = QS.main(self.base_args("--auth", str(self.tmp / "auth.yaml"), "--pin-index", str(self.tmp / "PIN-INDEX.yaml"),
+                                    "--out", str(rebuilt), "--report-from-screen-results", str(sr_path)),
+                     transport=T.FakeTransport(), key_reader=key_reader, log=self.log)
+        self.assertEqual(rc, 0, self.out)
+        rep = yaml.safe_load(rebuilt.read_text())
+        self.assertIsNone(rep["spend"]["calls"], "no live counter: print no number at all")
+        self.assertEqual(rep["spend"]["calls_basis"], QS.BASIS_MISSING)
+        self.assertIn("NOT KNOWN", rep["spend"]["calls_note"])
+        self.assertIsNone(rep["spend"]["calls_at_or_above_authorised_limit"])
+        self.assertIn("NOT RECORDED", self.out[-1], "the CLI line must not print a number either")
+
+    def test_the_rebuild_states_the_authorised_limit_and_keeps_the_verdict(self):
+        self._live_screen(max_calls=4)
+        rebuilt = self.tmp / "REBUILT3.yaml"
+        rc = QS.main(self.base_args("--auth", str(self.tmp / "auth.yaml"), "--pin-index", str(self.tmp / "PIN-INDEX.yaml"),
+                                    "--out", str(rebuilt), "--report-from-screen-results",
+                                    str(self.tmp / "s" / "*" / "SCREEN-RESULTS.yaml")),
+                     transport=T.FakeTransport(), key_reader=key_reader, log=self.log)
+        self.assertEqual(rc, 0, self.out)
+        rep = yaml.safe_load(rebuilt.read_text())
+        self.assertEqual(rep["spend"]["authorised_screen_max_calls"], 4)
+        self.assertTrue(rep["spend"]["calls_at_or_above_authorised_limit"], "4 calls sent against a limit of 4")
+        self.assertIn("ATTENTION", rep["spend"]["calls_note"])
+        self.assertEqual(rep["qualification"]["qualification_verdict"], "screened_not_qualified",
+                         "the qualification verdict logic is untouched by this fix")
 
 
 def screen_doc(run_id, trials, config_hash="h" * 64, model="gemini-3.1-flash"):
