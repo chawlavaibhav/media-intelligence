@@ -1,7 +1,9 @@
-# Controller — Spend Authorisation (DRAFT awaiting "go"): Wan 2 contender round — 2026-09-10
+# Controller — Spend Authorisation: Wan 2 contender round — 2026-09-10
 
-**Status:** PREPARED by the Writer Controller under `CONTROLLER-WAN2-CONTENDER-PREMIUM-DEFERRED-2026-09-09.md`
-("where wan 3 is passing, we will keep wan 2 as contender"). **Becomes an authorisation only on the Controller's "go".**
+**Status:** APPROVED CONTROLLER DECISION. Prepared under `CONTROLLER-WAN2-CONTENDER-PREMIUM-DEFERRED-2026-09-09.md`; the
+Controller's words on 2026-09-10:
+
+> **"go on Wan 2"**
 
 ## 1. Scope — `wan-2.2-a14b` (fal, USD 0.08 per video second at 720p, pinned) on exactly the rows Wan 3.0 Prime passed
 
