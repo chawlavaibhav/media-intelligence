@@ -1,0 +1,98 @@
+# EVAL-040 RUN PLAN - the ordered list of calls run_live.py will make; written BEFORE any dispatch; execute refuses if these bytes change.
+header:
+  plan: EVAL-040-RUN-PLAN
+  run_id: vid-wan2-i2v-smoke
+  mode: smoke
+  generated_utc: '2026-09-10T03:06:28.016655Z'
+  statement: 'This plan is the ordered list of the calls run_live.py will make under the named authorisation and nothing else. Every trial''s body sha256 is the dry-run
+    body of the same builder a live dispatch sends; execute refuses a trial whose rendered body differs. The plan authorises nothing by itself: the ledger re-reads
+    the authorisation file at every open.'
+  git_rev: HEAD
+  commit: fc2a9f999c762b435893e2d6c84a4033797f9b8c
+  item_basis_commit: d8399d84b8b4
+  freeze_matches_item_basis: true
+  tranche_id: EVAL-040-TRANCHE-1
+  authorisation_path: eval/harness-v2/authorization.wan2.local.yaml
+  authorisation_sha256: 062ab2f0c9db068445f7f92e716b98f5cbcbbb5b290cb0ba3a0ce6fdc55d453f
+  roster_sha256: 311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c
+  test_cases_sha256: 8c2430e760279bb60a0ce429b933c64bb85340e2089be9ebad3f28d49e7cdb9c
+  cost_table_sha256: e7047c193c78c4d218f7bcbde6fabf89d4c10be978c2080b098cc84e722241f3
+  cases:
+  - VID-I2V-01
+  routes:
+  - wan-2.2-a14b-i2v
+  tranche: null
+  repeats:
+  - 1
+  inputs_file:
+    path: eval/experiments/EVAL-040/runs/vid-wan2/INPUTS.yaml
+    sha256: 206496bad4f9151c6cc00662d23bf32914c75f862702321df06087fc637f59e6
+    runs_root: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-wt-controller/eval/experiments/EVAL-040/runs
+    data_uri_source: 'pinned fal OpenAPI extracts (schemas/fal/*.json): image_url / image_urls / start_image_url are `type: string` with no format constraint; data
+      URIs per fal''s public API documentation (not in the pinned bytes; proven by the first live smoke, never by a test)'
+  accept_roster_price: false
+  roster_price_trials: []
+  redo_of: null
+  ordering: repeat-major; every case's repeat 1 (cases in requested order, routes in catalogue order) before any repeat 2
+  counts:
+    trials: 1
+    excluded: 1
+  estimated_by_pool:
+    cash:
+      calls: 1
+      currency: USD
+      native: '0.480000'
+      usd_equiv: '0.480000'
+  estimated_total_usd_equiv: '0.480000'
+  retries_authorised: 0
+trials:
+- seq: 1
+  trial_id: VID-I2V-01__wan-2.2-a14b-i2v__core__r1
+  case_id: VID-I2V-01
+  item_id: VID-I2V-01
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 1
+  tranche: 1b
+  surface: fal
+  adapter: fal_queue
+  surface_model_id: fal-ai/wan/v2.2-a14b/image-to-video
+  endpoint: https://queue.fal.run/fal-ai/wan/v2.2-a14b/image-to-video
+  billing_pool: cash
+  currency: USD
+  estimated_amount_native: '0.480000'
+  estimated_usd_equiv: '0.480000'
+  unit_price: '0.08'
+  quantity: '6'
+  quantity_unit: seconds
+  price_pin_ref: eval/empirical-planning/price-pins-2026-09/wan-2.2-a14b/fal-wan-v2.2-a14b-image-to-video-2026-09-09.html
+  body_sha256: 7233064d51a7142c89f1bc3a3fa4b35bffaf8d5db350760a7ad7963e3e8f1adf
+  api_calls_per_trial: 1
+  key_name: FAL_KEY
+  credential_file_name: ~/.mi-keys
+  seed_policy: unset
+  inputs:
+  - role: plate_accepted_draw
+    ref: img-r1:IMG-CORE-01__nano-banana-2__core__r1
+    kind: trial
+    run_id: img-r1
+    artifact_id: IMG-CORE-01__nano-banana-2__core__r1
+    suffix: null
+    relative_path: media/IMG-CORE-01__nano-banana-2__core__r1.png
+    sha256: be08e0ccf0f9cff6a16db3b6e2b6d47734be8469dcf3cf74b248b0c434aa36e0
+    bytes: 1169098
+    content_type: image/png
+    constructed_synthetic: false
+    for_case: null
+    fixture_role: null
+  price_basis: cost_table
+  cost_table_unit_price: '0.08'
+  roster_implied_usd: '0.08'
+  constructed_synthetic_inputs: false
+excluded:
+- case_id: VID-I2V-01
+  route_key: wan-2.2-a14b-i2v
+  arm: core
+  repeat_index: 2
+  tranche: 1b
+  reason: repeat 2 not requested ([1])
