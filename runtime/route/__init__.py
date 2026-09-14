@@ -5,8 +5,10 @@
     profile.py     the active policy profile, failing closed on any limit it does not carry
     spec.py        PRODUCTION-SPEC-v1, the only thing the router matches on
     attempt_id.py  the customer identity namespace a provider attempt would carry
-    decision.py    candidate discovery, the fixed selection order, the cost envelope, execute's refusals
-    cli.py         --plan (offline), --cells (audit), --execute (refuses)
+    decision.py    candidate discovery, the fixed selection order, the cost envelope, execute's refusals and
+                   its hand-off to runtime/execute (dry runs; live refuses)
+    cli.py         --plan (offline), --cells (audit), --manifest (rendered attempts), --execute (dry only)
 
-Nothing in this package dispatches. There is no provider client here to call by accident.
+Nothing in this package dispatches. There is no provider client here to call by accident; the execution
+bridge (runtime/execute) renders attempts through the harness's dry_run() and constructs no transport.
 """

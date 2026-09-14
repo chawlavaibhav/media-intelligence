@@ -140,12 +140,10 @@ class SpendAuthorityIsSeparateFromAdoption(unittest.TestCase):
         with self.assertRaises(Exception):
             _ = IntakeProfile(name="in_memory", row=row, source=str(PROFILES_PATH)).spend_authority
 
-    @unittest.expectedFailure
     def test_execute_refuses_because_spend_authority_is_none(self):
-        """DEFECT, recorded mechanically: Router.execute() checks only `profile.adopted`. Now that
-        alpha_human_release is adopted, the only thing between it and a dispatch is the absence of a
-        provider client. execute() must also check spend_authority — Wave 2 (execution bridge)
-        closes this. When it does, this test starts passing and the decorator comes off."""
+        """CLOSED 14 Sep 2026 by lane F (execution bridge): Router.execute() checks spend_authority
+        for a live-mode profile before it plans. alpha_human_release is adopted, dispatch_mode live,
+        spend_authority none, so execute refuses and names the missing spend authorisation."""
         r = B.router()
         with self.assertRaises(ExecuteRefused) as ctx:
             r.execute(B.spec(B.SPEC_MOTION), B.profile("alpha_human_release"),

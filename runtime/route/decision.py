@@ -57,8 +57,8 @@ class CostEnvelopeExceeded(RouterRefusal):
 class ExecuteRefused(RuntimeError):
     """`--execute` was asked for and the preconditions for spending are not met."""
 
-    def __init__(self, reasons: list):
-        self.reasons = list(reasons)
+    def __init__(self, reasons):
+        self.reasons = [reasons] if isinstance(reasons, str) else list(reasons)
         super().__init__("; ".join(self.reasons))
 
 
@@ -461,14 +461,26 @@ class Router:
 
     def _fallback_slot(self, cand: Candidate, binding) -> dict:
         q = cand.quote
+        cell_any = next(iter(cand.cells.values()))
         return {
             "route_key": cand.route_key,
             "surface": q.surface,
+            "surface_model_id": q.surface_model_id,
+            "arm": cell_any.arm,
             "evidence_cells": sorted(c.cell_key for c in cand.cells.values()),
             "evidence_status": "+".join(sorted({c.evidence_status for c in cand.cells.values()})),
             "expected_cost_usd": str(q.expected_cost_usd),
+            # added 14 Sep 2026 (lane F): the execution bridge prices a fallback attempt from the same
+            # fields the primary carries, so the slot now carries them too (added, never removed)
+            "unit_price": str(q.unit_price),
+            "unit": q.unit,
+            "quantity": str(q.quantity),
+            "quantity_unit": q.quantity_unit,
             "price_pin_ref": q.price_pin_ref,
+            "price_pin_indexes": q.pin_indexes,
             "billing_pool": q.billing_pool,
+            "credential_name": q.credential_name,
+            "adapter_family": q.adapter,
             "trigger": binding.fallback_triggers,
             "note": "a different route for the same requirement, declared before dispatch. Falling "
                     "through to it is a routing event, never a retry.",
@@ -524,12 +536,23 @@ class Router:
     def execute(self, spec: Spec, profile: PolicyProfile, *,
                 request_cost_ceiling_usd: Decimal | str | None = None,
                 already_committed_usd: Decimal | str | int = 0,
-                customer_ref: str = "unknown-customer") -> dict:
-        """Refuses unless a request-level ceiling AND an adopted profile are both present.
+                customer_ref: str = "unknown-customer",
+                prompt_text: str | None = None,
+                inputs: dict | None = None) -> dict:
+        """Plan, then hand the decision to the execution bridge. Refuses BEFORE planning when:
 
-        Nothing beyond those checks is wired: there is no provider client in this package. The
-        refusal is deliberately the first thing that happens, before a decision is even planned, so
-        that no code path exists in which a non-adopted profile reaches a dispatch.
+            * no request-level cost ceiling was supplied;
+            * the profile is not adopted (a non-adopted input may plan and price, never spend);
+            * the profile's dispatch_mode is live and may_spend() is False - i.e. spend_authority is
+              not signed or names no record (Controller rider, 14 Sep 2026: adoption is not spend
+              authorisation). A dry profile needs no spend authority: nothing is sent, reservations are 0;
+            * the profile carries a dispatch_mode the runtime does not know (or none: MissingLimit).
+
+        Then the decision must not require a person and must fit the cost envelope. What follows is the
+        bridge (runtime/execute/bridge.py): under dispatch_mode dry it renders and prices every attempt
+        through the harness and sends nothing; under live it refuses, because no signed runtime spend
+        authorisation exists and no transport is wired in this tranche. Returns
+        {"decision", "manifest", "run"} for a dry run; raises ExecuteRefused otherwise.
         """
         reasons = []
         if request_cost_ceiling_usd is None:
@@ -540,8 +563,17 @@ class Router:
         if not profile.adopted:
             reasons.append(
                 f"policy profile {profile.name!r} is {profile.status!r} with adopted: false. A "
-                f"non-adopted input may plan and price, never spend (POLICY-PROFILES invariant). "
-                f"alpha_human_release ships adopted: false, so execute refuses under it today.")
+                f"non-adopted input may plan and price, never spend (POLICY-PROFILES invariant).")
+        mode = str(profile.limit("dispatch_mode"))          # missing -> MissingLimit, a refusal by name
+        if mode == "live":
+            ok, why = profile.may_spend()
+            if not ok:
+                reasons.append(f"spend_authority is not signed: {why}. Adoption is not spend authorisation "
+                               f"(Controller rider, 14 Sep 2026); a live dispatch needs a signed runtime spend "
+                               f"authorisation record named in the profile row, and none exists.")
+        elif mode != "dry":
+            reasons.append(f"policy profile {profile.name!r} carries dispatch_mode {mode!r}; the runtime knows "
+                           f"dry and live and refuses to guess")
         if reasons:
             raise ExecuteRefused(reasons)
 
@@ -551,6 +583,10 @@ class Router:
             raise ExecuteRefused([f"the route decision requires a person: {decision['manual_route_reason']}"])
         if not decision["cost_envelope"]["within_ceiling"]:
             raise CostEnvelopeExceeded(decision["cost_envelope"])
-        raise ExecuteRefused([
-            "no provider client is wired in this lane. The decision is complete and dispatchable, and "
-            "dispatch itself is deliberately absent: this branch plans, prices and refuses."])
+
+        from runtime.execute.bridge import ExecutionBridge   # local import: the bridge imports this module
+        bridge = ExecutionBridge(evidence=self.ev, prices=self.prices, identities=self.identities)
+        manifest = bridge.build(spec, decision, profile, prompt_text=prompt_text, inputs=inputs,
+                                customer_ref=customer_ref, request_ceiling_usd=request_cost_ceiling_usd)
+        result = bridge.run(manifest, profile)                # dry -> dry_complete; live -> ExecuteRefused
+        return {"decision": decision, "manifest": manifest, "run": result}
