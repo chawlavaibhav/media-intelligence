@@ -39,6 +39,43 @@ class PolicyProfile:
     def has(self, limit_name: str) -> bool:
         return self.row.get(limit_name) is not None
 
+    # Named accessors for the limits the 14 Sep 2026 rulings added. Each is a plain read of the
+    # row; absent is a refusal, by name, like every other limit.
+    @property
+    def spend_authority(self) -> dict:
+        value = self.limit("spend_authority")
+        if not isinstance(value, dict):
+            raise Refusal(
+                Refusal.POLICY_LIMIT_MISSING,
+                f"policy profile {self.name!r} carries spend_authority but not as a "
+                "{status, record, note} block; the runtime refuses rather than guessing its shape",
+                profile=self.name,
+                limit="spend_authority",
+                source=self.source,
+            )
+        return dict(value)
+
+    @property
+    def exact_text_strategies_allowed(self) -> list:
+        return list(self.limit("exact_text_strategies_allowed"))
+
+    @property
+    def motion_requires_accepted_still(self) -> bool:
+        return bool(self.limit("motion_requires_accepted_still"))
+
+    @property
+    def adopted(self) -> bool:
+        return bool(self.limit("adopted"))
+
+    def may_spend(self) -> tuple[bool, str]:
+        """(True, why) only when adopted AND spend_authority.status == "signed" AND a record path is
+        named; otherwise (False, exactly what is missing). Adoption is a policy agreement, spend
+        authority is money; neither implies the other (Controller rider, 14 Sep 2026). The record is
+        not opened or validated here; the execution bridge (Wave 2) wires that check."""
+        from ..route.profile import may_spend as _may_spend
+
+        return _may_spend(self.name, self.adopted, self.spend_authority)
+
 
 class PolicyProfiles:
     """The rows of POLICY-PROFILES-v0, plus this lane's declared limit needs."""

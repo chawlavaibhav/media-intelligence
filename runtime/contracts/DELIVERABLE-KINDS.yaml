@@ -19,6 +19,7 @@ kinds:
     picture (RR-1); in-scene generated text 4/4 on Nano Banana 2 and GPT Image 2 (RR-2); base image
     generation 5/8 to 7/8 across six routes (map cells IMG-CORE/*).
   in_first_alpha_profile: true
+  alpha_1_note: "C-7 (14 Sep 2026): exact OVERLAY copy only; generated in-scene exact text is out of Alpha 1 by ruling, not by capability (see POLICY-PROFILES alpha_human_release.exact_text_strategies_allowed)"
 
 - kind: static_ad_from_supplied_photo
   what: "edit, extend, compose or reference-match a customer's own photograph"
@@ -28,6 +29,7 @@ kinds:
     RR-5). CAUTION: every one of those draws used a constructed stand-in image, not a real customer
     photograph. The first real customer photo is genuinely new ground.
   in_first_alpha_profile: true
+  alpha_1_note: "C-7 (14 Sep 2026): CONDITIONAL — behind the identifiable-person / consent gate (POLICY-PROFILES alpha_human_release.supplied_photo_conditions)"
 
 - kind: short_motion_from_accepted_still
   what: "a single-shot moving version of an already accepted still"
@@ -36,6 +38,7 @@ kinds:
     Strong. Kling v3 Pro 8/8 and Wan 3.0 Prime 8/8, MiniMax H3 Max 7/8 as the cheapest, Veo 3.1 fast
     5/8 (RR-8). Note the input bias: those stills were ones a person had already accepted.
   in_first_alpha_profile: true
+  alpha_1_note: "C-7 (14 Sep 2026): derived ONLY from the accepted still — motion.from accepted_still and motion.depends_on naming it (POLICY-PROFILES alpha_human_release.motion_requires_accepted_still)"
 
 - kind: text_in_motion
   what: "exact customer copy that moves"
@@ -45,7 +48,7 @@ kinds:
     strings composited by code on every frame — 2/2. Asking a premium video model to write the text
     failed 0/4.
   in_first_alpha_profile: false
-  note: "left out of the first profile for focus, not for capability. Turning it on is one profile edit."
+  note: "left out of the first profile for focus, not for capability. Turning it on is one profile edit — after a Controller ruling, since C-7 (14 Sep 2026) freezes the Alpha 1 family to the kinds it names."
 
 - kind: multi_shot_story
   what: "a 10-15 second story across several shots"
