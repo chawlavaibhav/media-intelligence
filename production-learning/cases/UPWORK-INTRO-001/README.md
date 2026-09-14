@@ -24,7 +24,7 @@ outcome: **UNDERPERFORMED**. This case is the baseline for the next comparable p
 --pilot-ref work/pilot-upwork-intro-video-v4` (the ref check is skipped with a note when the branch is not
 present locally). Ledger figures: `python3 production-learning/tools/reconcile_pilot_ledgers.py`.
 
-**Raw evidence.** Branch `work/pilot-upwork-intro-video-v4` (V4.1 = `f6ca66f`), never merged to `main`;
+**Raw evidence.** Branch `work/pilot-upwork-intro-video-v4` (V4.1 = `f6ca66f`; on origin since 15 Sep 2026), never merged to `main`;
 inventory in `coordination/audits/UPWORK-INTRO-PILOT-EVIDENCE-INVENTORY-2026-09-14.md`.
 
 ## OUTCOME-EVENT-v1 mapping gap (documented, not fixed)

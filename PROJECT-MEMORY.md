@@ -117,7 +117,7 @@ Current authorisation state always comes from `coordination/CONTROL-STATE.md`. T
 
 **No longer zero (15 Sep 2026): one human-accepted real commercial showcase asset.** The Upwork profile
 introduction film V4.1 (57 s; sha256 `d1a5edf8…e008a`; pilot branch `work/pilot-upwork-intro-video-v4`,
-commit `f6ca66f`, local-only until pushed) was accepted by the Controller on 14 Sep after five assembled
+commit `f6ca66f`, on origin since 15 Sep, never merged) was accepted by the Controller on 14 Sep after five assembled
 versions. Produced outside Alpha-1 (speaking presenter, multi-shot) by pilot scripts under the Controller's
 pilot spend packages; reconciled provider spend **USD 15.39318**; **TTAO ≈ 7–8 h (Controller estimate;
 mechanical lower bound 7 h 54 m)**. **Two conclusions, kept apart: final quality SUCCESS, pipeline
@@ -269,7 +269,7 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
 - **Next real productions measure TTAO from the first production input** (session start or package
   receipt) and record the ACCEPT timestamp mechanically; one ledger per production so the CpAO numerator
   is complete. The Upwork intro case is the baseline (7 h 54 m / USD 15.39 / 5 versions / 5 review
-  cycles for one 57-s asset). Open Controller decisions: push the raw pilot branch; TTAO as primary KPI;
+  cycles for one 57-s asset). Open Controller decisions: TTAO as primary KPI;
   when to promote speaker micro-qualification; when to design COMPLEX-PRODUCTION-EVENT.
 - **Nothing paid is authorised.** Every runtime profile carries `spend_authority.status: none`; every
   Group-3 Lab item (C-12…C-18) needs its own signed record. The first paid act the runtime justifies is

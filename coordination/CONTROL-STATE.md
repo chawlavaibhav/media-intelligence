@@ -66,8 +66,8 @@ force: `CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md` (as narrowed by C-9),
   `production-learning/cases/UPWORK-INTRO-001/` (outcome, human verdicts, revision trace, time + cost,
   system defects, route observations, accepted template, promotion queue, evidence map) and
   `coordination/audits/UPWORK-INTRO-PILOT-EVIDENCE-INVENTORY-2026-09-14.md`. **The raw pilot branch is
-  local-only** until the Controller pushes it (the integration session's push was blocked by its own
-  permission classifier, not by GitHub); it is never merged to `main`. **This does not prove commercial
+  on origin** (`origin/work/pilot-upwork-intro-video-v4` = `f6ca66f`, pushed 15 Sep unrewritten); it is
+  never merged to `main`. **This does not prove commercial
   advantage** over a direct human + LLM workflow; it is the baseline the next real production is measured
   against.
 
@@ -290,8 +290,7 @@ In the Controller's order (nothing here is authorised by this file):
 4. Stage B / Stage C (C-17 / C-18) — only after the runtime and baseline are frozen; HED-1 first.
 
 **Open Controller decisions from the Upwork intro integration (15 Sep 2026; none decided by this file):**
-(a) push `work/pilot-upwork-intro-video-v4` to origin (raw evidence durability; the integration session
-could not); (b) adopt **TTAO** formally as a primary production KPI alongside CpAO (recommended YES);
+(a) ~~push the raw pilot branch~~ (done 15 Sep); (b) adopt **TTAO** formally as a primary production KPI alongside CpAO (recommended YES);
 (c) when to promote **speaker micro-qualification** from candidate pattern to standard workflow
 (proposed: after two more real productions); (d) when enough complex runs exist to justify
 **COMPLEX-PRODUCTION-EVENT / OUTCOME-EVENT-v2** (proposed: after the second); (e) merge PR
