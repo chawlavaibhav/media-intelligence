@@ -549,8 +549,19 @@ def scrub(obj, secrets: list):
     return obj
 
 
-def make_trial_id(case_row: dict) -> str:
-    return S.safe_id(f"{case_row.get('case_id')}__{case_row.get('route_key')}__{case_row.get('arm')}__r{case_row.get('repeat_index', 1)}")
+SMOKE_MARKER = "smoke"          # the marker a liveness/smoke trial id carries; a candidate trial id never ends in it
+
+
+def make_trial_id(case_row: dict, liveness: bool = False) -> str:
+    """The logical identity of one draw. A liveness (smoke) draw carries an explicit `__smoke` marker so it can
+    NEVER collide with the candidate draw of the same case x route x arm x repeat that a real run plans next."""
+    base = f"{case_row.get('case_id')}__{case_row.get('route_key')}__{case_row.get('arm')}__r{case_row.get('repeat_index', 1)}"
+    return S.safe_id(f"{base}__{SMOKE_MARKER}" if liveness else base)
+
+
+def is_liveness_trial_id(trial_id: str | None) -> bool:
+    """True when the id itself says it is a liveness draw. Reads the marker, never the run id."""
+    return str(trial_id or "").endswith(f"__{SMOKE_MARKER}")
 
 
 def extract_prompt(body: dict) -> str | None:

@@ -1,0 +1,74 @@
+# FIXTURE SPEC B — an edit of a photograph the customer took themselves.
+#
+# The brief behind it is the one CHANGES-v0-to-v1 says exposed the consent hole: a Rajkot furniture
+# showroom sends a photograph of its own floor and asks for a member of staff to be removed. The
+# person is real and identifiable, the asset's role is `scene`, and under v0 that photograph walked
+# through the consent gate. Under v1 the job answers depicts_identifiable_person and intake refuses
+# it without a consent reference — which is intake's job, not the router's. By the time this spec
+# exists, consent has been answered.
+#
+# What the router has to see: the rest of the room must survive the edit unchanged, so this is an
+# edit AND a reference-fidelity requirement, and one provider call has to satisfy both.
+schema: PRODUCTION-SPEC-v1
+spec_id: spec-fixture-B-showroom-removal
+job_id: job-fixture-B
+job_sha256: 1111111111111111111111111111111111111111111111111111111111111111
+compiled_utc: '2026-09-10T09:00:00Z'
+
+objective: "Publish the showroom's own floor photograph with a member of staff removed."
+
+deliverable:
+  kind: static_ad_from_supplied_photo
+  aspect: '1:1'
+  resolution_class: social_still
+
+hard_constraints:
+- "Everything the customer photographed other than the removed person must be unchanged: the sofa, the floor, the light."
+- "No lettering may be added anywhere."
+- "The removed person must not be replaced by another person."
+
+exact_text:
+  strings: []
+  strategy: none_required
+  strategy_basis: "no exact strings in this deliverable; no IMG-TEXT rule applies"
+
+identity_requirements:
+  preserve: [supplied_room, supplied_furniture]
+  decoy_check: true
+
+canon:
+  packs_selected: []
+  injected_context_sha256: '1111111111111111111111111111111111111111111111111111111111111111'
+  canon_gap: true
+  missing_domains: [retail_interior_photography]
+
+capability_requirements:
+- capability: image_edit
+  level: null
+  mandatory: true
+- capability: reference_fidelity
+  level: null
+  mandatory: true
+
+route_exclusions: []
+
+gate_requirements:
+- pre_dispatch_consent_check
+- pre_dispatch_identifiable_person_check
+- post_draw_baked_text_scan
+
+acceptance_contract:
+- "ACCEPT only if the named person is absent from the picture."
+- "REJECT if any other person appears where they were not in the supplied photograph."
+- "ACCEPT only if the furniture, floor and lighting are the ones in the supplied photograph."
+- "REJECT if any lettering appears."
+
+deterministic_checks:
+- format_probe
+- baked_text_scan
+- aspect_check
+
+budget:
+  cost_ceiling_usd: 5.00
+  max_provider_draws: 2
+  repair_allowance: 1

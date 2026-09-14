@@ -1,0 +1,112 @@
+# RULE-INTERPRETATION-v0 — how the runtime reads ROUTING-EVIDENCE-MAP-v0's routing_rules.
+#
+# WHY THIS FILE EXISTS. The evidence map is regenerated from Registry rows and Controller
+# verdicts; its rules WILL change (a rule is added, a route is cleared, a prohibition is lifted).
+# So the runtime must not carry the rules. It carries this: a small lexicon that says which
+# words in a rule mean "prohibited", which mean "the default", and which request facts a rule's
+# scope is about. Everything else — which routes a rule names, which strategy it bites on,
+# which map cells back it — is read out of the map itself at call time.
+#
+# When RR-3 changes to name a different route, nothing here and no code changes.
+# When a genuinely new CONCEPT appears (a strategy nobody has had before), a row is added here.
+schema: RULE-INTERPRETATION-v0
+reads: eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml
+
+# Lexical markers, matched case-insensitively against a clause of a rule's text.
+directives:
+  prohibit:
+  - avoid
+  - never
+  - do not
+  - "don't"
+  - is not enough
+  - not needed
+  default:
+  - is the default
+  - are the default
+  - the default
+  prefer:
+  - use
+  - set
+  - carry
+  - route
+
+# Directive precedence when several rules are in scope. A prohibition always outranks.
+directive_rank: [prohibit, default, prefer]
+
+# Exact-text strategies, as an OPEN vocabulary keyed to what the map's own prose and arm names
+# call them. PRODUCTION-SPEC-v0.exact_text.strategy is open on purpose; adding a strategy is a
+# row here plus whatever the map says about it.
+# A rule that prohibits a ROUTE because of what that route does to LETTERING does not constrain a
+# strategy under which the maker never draws lettering. `lettering_drawn_by` states which is which;
+# `lettering_facets` names the facets that make a prohibition a lettering prohibition.
+lettering_facets: [exact_text_present, exactness_contractual, text_in_scene, script_devanagari, text_must_move]
+
+strategies:
+  code_set_on_textless_plate:
+    lettering_drawn_by: code
+    rule_phrases: ["code-set text", "textless plate", "set the type by code", "by code on every frame",
+                   "composited by code", "strings by code", "set the label by code"]
+    arm_phrases: ["code_overlay", "composite", "textless"]
+    means: "the exact strings are set by code on a plate that carries no lettering; exact by construction"
+  generated_in_scene:
+    lettering_drawn_by: maker
+    rule_phrases: ["generated text", "generated in-scene", "in-scene", "inside the scene",
+                   "write the text", "native text", "generate devanagari"]
+    arm_phrases: ["generated", "native"]
+    means: "the maker draws the lettering as part of the picture"
+  no_exact_text:
+    lettering_drawn_by: none
+    rule_phrases: []
+    arm_phrases: []
+    means: "the customer named no character-exact string; nothing about lettering is contractual"
+
+# Request facts a rule's scope (and conditional clauses in its text) can be about. A rule is in
+# scope only when EVERY facet its scope mentions is true of this request.
+facets:
+  exact_text_present:
+    phrases: ["text on stills", "text on still", "exact text", "text in motion", "in-scene text"]
+  exactness_contractual:
+    phrases: ["exactness is contractual", "must appear character-exact", "exact"]
+  text_in_scene:
+    phrases: ["in-scene text", "inside the scene"]
+  script_devanagari:
+    phrases: ["devanagari"]
+  text_must_move:
+    phrases: ["in motion", "that moves", "must move"]
+
+# Words in a route key that are shape, not identity. Used both to derive the acceptance-contract
+# style guard's model-name tokens and to find the routes a prohibition names.
+route_token_stoplist:
+- pro
+- fast
+- lite
+- full
+- max
+- mini
+- edit
+- image
+- audio
+- video
+- flash
+- prime
+- direct
+- native
+- chain
+- extend
+- plus
+- api
+- i2v
+- a2v
+- t2v
+- ref2v
+- v2v
+- lipsync
+
+# The evidence map keys its questions by deliverable family. This is the map's own naming
+# convention, recorded so the runtime can find the cells for a modality without naming a route.
+question_prefix_modality:
+  IMG: static_image
+  VID: video
+  AUD: audio
+  MUS: audio

@@ -22,7 +22,7 @@ them read-only (`hv2_paths.py`) and subclasses what it needs. The protected base
 | `hv2_paths.py` | read-only import paths to the frozen packages (harness-v2 first, so its `adapters/` package shadows the frozen `adapters.py`) |
 | `surfaces.py` | `SurfaceRegistry`: the 47 route keys → adapter, surface, model id, endpoint, pinned schema, price pin, pool, credential **name**, `shape_status` |
 | `pricing.py` | roster + COST-TABLE reader; execution-time price check (re-reads the roster every time; refuses drift, promos, unpinned or non-projectable prices, unknown quantity rules) |
-| `ledger.py` | `BatteryRun / BatteryBudget / PoolStageBudget` = subclasses of EMP-001's ledger; EVERY ceiling / cap / INR sub-cap comes from `authorization.local.yaml` (the signed record's `machine_authorisation` block; gitignored, absent tonight) - no constant in code; the roster sha256 named there must equal the roster on disk; every open re-validates the file |
+| `ledger.py` | `BatteryRun / BatteryBudget / PoolStageBudget` = subclasses of EMP-001's ledger; EVERY ceiling / cap / INR sub-cap comes from `authorization.local.yaml` (the signed record's `machine_authorisation` block; gitignored, absent tonight) - no constant in code; the roster sha256 named there must equal the roster on disk; every open re-validates the file. 2026-09-10 (Auditor AF-4 / AF-5): **one authorisation = one cap across every run that used it** - spend recorded by sibling runs (same `authorisation_sha256` in their `run.json`, under this ledger root or a sibling `<out>/ledger` root) is pooled into the ceiling, the 1a / 1b caps and the INR / credits sub-caps, a new run under a consumed cap is refused at `BatteryRun.create` naming those runs and the combined total, and an unreadable sibling refuses rather than counting zero; the OPTIONAL `max_paid_calls` field caps the NUMBER of paid calls over the same pooled set (absent = no call limit, said in words by `authorisation_status`). 2026-09-14 (Controller ruling C-6a): **an amendment never resets what was spent** - the OPTIONAL `budget_id` (a stable name) and `amends` (the sha256 of every earlier version of the file) make every run charged to any version of the file ONE cumulative pool checked against the CURRENT file's cap; a silent in-place edit is refused. See "Budgets and amendments" below |
 | `store.py` | sealed artifact store: `media/<trial>.<ext>` + `.request.json` (written **before** dispatch) + `.record.json` + `.attempt.json` + append-only manifest; never overwrites |
 | `transports.py` | the **only** module that may open a socket (urllib) or run a network-capable subprocess (`gcloud` token, at dispatch only); plus the fakes the tests use |
 | `casebook.py` | TEST-CASES rows × repeats with each case's blueprint prompt; route catalogue read from COST-TABLE (working tree or a git revision) |
@@ -83,6 +83,10 @@ python3 eval/harness-v2/evidence_map.py --results eval/experiments/EVAL-040/runs
   under SEED-POLICY `held` (today: never);
 * one `dispatch()` = one submit; polls, result reads and downloads are lifecycle steps of that trial; the poll loop
   is bounded and can never resubmit; 0 retries;
+* a signed authorisation is ONE cap however many runs use it: the ceiling, the tranche caps and (when the record
+  names `max_paid_calls`) the number of paid calls are checked over this run PLUS every sibling run that recorded the
+  same authorisation sha256 - or the same `budget_id`, or a sha256 the current file declares in `amends`; a sibling whose
+  `run.json` or ledger cannot be read refuses the run rather than counting zero; an undeclared amendment refuses the run;
 * the reservation is written **before** the first byte leaves; only a refusal raised by our own code before any send
   releases it; ANY other exception after the reservation persists an attempt and settles it as ambiguous, with
   credential values scrubbed from the record (Auditor AF-3);
@@ -96,6 +100,41 @@ python3 eval/harness-v2/evidence_map.py --results eval/experiments/EVAL-040/runs
   `INPUTS.yaml`; the plan's body sha256 is computed WITH the input bytes; execute refuses a changed inputs file, a swapped input or a
   changed body; a decoy fixture never resolves; a placeholder that nobody resolved keeps the row at `would_dispatch: false`
   (`input_unresolved:<role>`).
+
+## Budgets and amendments (ledger; Controller ruling C-6a, 14 September 2026)
+
+**What an amendment is.** The Controller's signed authorisation file is edited *in place* when a cap is raised
+(Wan 2 went from USD 8.39 to 11.53 mid-round). Editing the file changes its byte fingerprint (`authorisation_sha256`),
+which is the only thing the 10 September repair used to decide which runs share one cap. So a raised cap quietly became
+a brand-new, empty budget: Wan 2 spent 8.48 under the first file and 3.36 more under the second, 11.84 in all against a
+final cap of 11.53, and only the first half could ever have been refused. The ruling: *an amendment does not create a
+fresh economic budget; all amendments remain one cumulative budget.*
+
+**Two optional fields in the `machine_authorisation` block** (documented in `authorization.example.yaml`):
+
+* `budget_id` - a short stable name for the budget, e.g. `EVAL-040-TRANCHE-1/wan2`. New runs write it into `run.json`.
+* `amends` - the sha256 of every earlier version of this file, newest first. To raise a cap: note the current file's
+  sha256, edit the cap, keep the `budget_id`, append that sha256 to `amends`. The current file is the only one on disk,
+  so it carries the whole chain.
+
+**Why the pool is cumulative.** A sibling run is charged to this budget if its `run.json` names the same `budget_id`,
+or its `authorisation_sha256` is this file's own, or that sha256 appears in `amends`. Everything those runs spent -
+and every paid call they made - counts against the *current* file's cap and call limit. A raise therefore buys only
+the difference (11.53 minus 8.48 leaves 3.05; the Wan 2 call that made 11.84 would have been refused - a test replays the
+sealed ledgers and shows exactly that).
+
+**What is refused** (`NotAuthorised`, before any run folder exists): a *silent edit* - the same `budget_id`, new bytes,
+no `amends` naming the version the earlier runs used; an amendment that *renames or drops* the `budget_id`; re-opening
+a run under a different budget's file. The message says which run and which bytes are undeclared and how to declare them.
+
+**What is preserved** (ruling C-1: history is not rewritten): a file with neither field behaves exactly as on 10 September -
+it pools by its own fingerprint only. A sibling with no `budget_id` and a different fingerprint is not pooled unless the
+current file declares that fingerprint in `amends`. The historical Wan 2 and video-piece-1 crossings stay as recorded.
+
+**Ledger versus bill (ruling C-2).** Caps are enforced against the ledger's conservative consumption at dispatch time -
+never against a vendor bill, and never waiting for one. Vendor-billed cost is a separate reconciliation field, read from
+the statements by `coordination/audits/tools/reconcile_spend.py`; with no statements filed it prints
+"not reconciled (no statement filed)" and blocks nothing.
 
 ## What is NOT true yet
 

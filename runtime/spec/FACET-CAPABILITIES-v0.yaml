@@ -1,0 +1,45 @@
+# FACET-CAPABILITIES-v0 — what a fact about a job adds to capability_requirements.
+#
+# PRODUCTION-SPEC-v0: capability_requirements are "what the maker must be able to do, expressed
+# as requirements — not as a model name. This is the only thing the router is allowed to match
+# on." The base list is the deliverable kind's own row in DELIVERABLE-KINDS.yaml. This file adds
+# the requirements a job's shape implies on top of it, as rows keyed to facts, never to kinds.
+schema: FACET-CAPABILITIES-v0
+
+facets:
+- facet: exact_text_present
+  capabilities: [exact_text_composition]
+  level: character_exact
+- facet: exactness_contractual
+  capabilities: [exact_text_composition]
+  level: character_exact
+- facet: supplied_asset_present
+  capabilities: [reference_fidelity]
+- facet: product_entity_present
+  capabilities: [product_surface_fidelity]
+  mandatory: false
+
+# A motion block on any deliverable adds the capability its `from` names. `from` is an open
+# vocabulary in PRODUCTION-JOB-v0; a new value is a row here.
+motion_from:
+  accepted_still: [image_to_video]
+  text_to_video: [text_to_video]
+  reference: [reference_to_video]
+
+# Deterministic checks, as rows keyed to facts about the job. Mirrors the E5 list at the end of
+# eval/empirical-planning/STAGE-A-FREEZE-2026-09/ACCEPTANCE-CONTRACTS.md.
+deterministic_checks:
+- when: always
+  check: "format probe vs the deliverable (container, aspect, resolution, duration, audio track)"
+- when: always
+  check: "refusal / error / empty artifact -> reject"
+- when: exact_text_present
+  check: "required string absent (text scan over the artifact) -> reject before a person sees it"
+- when: not_exact_text_present
+  check: "baked-text scan (text scan over the artifact): any lettering -> reject"
+- when: motion_requested
+  check: "duration or aspect mismatch vs the deliverable -> reject"
+- when: lettering_set_by_code
+  check: "the plate prompt carries an explicit no-lettering instruction; lettering on a plate is a reject"
+- when: lettering_drawn_by_maker
+  check: "every required string appears in the generation prompt byte-identical to the customer's string"

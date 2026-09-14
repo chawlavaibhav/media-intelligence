@@ -1,0 +1,41 @@
+# Test-only policy rows, so the tests never edit runtime/contracts/POLICY-PROFILES.yaml (that file
+# changes only by Controller ruling; the rows below are scaffolding).
+# 14 Sep 2026: REQUIRED-LIMITS-v0 required_at_intake grew by six (Alpha-1 rulings), so the two rows
+# that must pass intake carry them. `missing_a_limit` still lacks repair_allowance on purpose.
+schema: POLICY-PROFILES-v0
+profiles:
+
+- profile: missing_a_limit
+  purpose: "a profile that forgot repair_allowance; the runtime must refuse, not assume"
+  deliverable_kinds_allowed: [static_ad]
+  max_provider_draws_per_deliverable: 2
+  default_job_cost_ceiling_usd: 1.00
+  retention_days_default: 7
+
+- profile: narrow_kinds
+  purpose: "allows one kind only, so a second kind is refused at intake"
+  deliverable_kinds_allowed: [short_motion_from_accepted_still]
+  max_provider_draws_per_deliverable: 1
+  repair_allowance: 0
+  spend_authority: {status: none, record: null, note: "test row; never spends"}
+  exact_text_strategies_allowed: [code_set_on_textless_plate, generated_in_scene]
+  motion_requires_accepted_still: false
+  acceptance_authority: human
+  autonomous_external_delivery: false
+  human_approval_required_before_external_delivery: true
+  default_job_cost_ceiling_usd: 1.00
+  retention_days_default: 7
+
+- profile: wide_and_generous
+  purpose: "shows that widening every limit is a row edit and nothing else"
+  deliverable_kinds_allowed: [__all__]
+  max_provider_draws_per_deliverable: 9
+  repair_allowance: 4
+  spend_authority: {status: none, record: null, note: "test row; never spends"}
+  exact_text_strategies_allowed: [code_set_on_textless_plate, generated_in_scene]
+  motion_requires_accepted_still: false
+  acceptance_authority: human
+  autonomous_external_delivery: false
+  human_approval_required_before_external_delivery: true
+  default_job_cost_ceiling_usd: 99.00
+  retention_days_default: 90

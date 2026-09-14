@@ -2,10 +2,13 @@
 
 Proven here: every (question, route, arm) cell carries all four tiers and each tier names itself; every human, screened
 and historical tier is marked registry: false; the deterministic tier is registry: true only where rows exist; the
-fallback is the next-best route by acceptance within the question; the Controller's routing rules are carried as
-human-tier statements (registry: false); the CLI writes a YAML file that reloads to the same map; several --results
-files merge with every cell naming its run(s); a non-trivial arm keys its own cell (route+arm) while None / core / edit
-keep the bare route name.
+fallback is the next-best SURVIVING route by acceptance within the question (an eliminated route is never a fallback);
+the Controller's routing rules are carried as human-tier statements (registry: false); the CLI writes a YAML file that
+reloads to the same map; several --results files merge with every cell naming its run(s); a non-trivial arm keys its own
+cell (route+arm) while None / core / edit keep the bare route name.
+Since the 14 September 2026 close-out the human numbers (accepts / trials / eliminated) are COMPUTED under the frozen rule
+by coordination/audits/tools/recompute_elimination.py, never read from a results file's table; these synthetic tests run
+in results-only mode (no run directory). The rulings themselves are proven in test_evidence_map_rulings.py.
 Nothing here touches eval/capability-map/ or eval/registry/.
 """
 import json
@@ -58,9 +61,12 @@ def synthetic_results():
 
 
 def synthetic_composite():
-    return {"run_id": "syn-composite", "arm": "C_composite (plate + overlay)", "judged_utc": "2026-09-09", "blind_as_to_arm": False,
+    """Shaped like img-r1-composite/RESULTS.yaml: every judged row records layout composite-v2 (C-6c: code composed the text)."""
+    rows = [{"trial_id": f"Q2-0{c}__alpha__C_composite__r{r}", "case_id": f"Q2-0{c}", "arm": "C_composite", "layout": "composite-v2",
+             "verdict": "accept", "note": "all accepted"} for c in (1, 2) for r in (1, 2)]
+    return {"run_id": "syn-composite", "arm": "C_composite (plate + overlay, layout composite-v2)", "judged_utc": "2026-09-09", "blind_as_to_arm": False,
             "per_case": {"Q2-01": {"accepted": 2, "trials": 2}, "Q2-02": {"accepted": 2, "trials": 2}}, "cost": {"per_accepted_usd": 0.03},
-            "note": "product evidence", "trials": [{"trial_id": "x", "verdict": "accept", "note": "all accepted"}]}
+            "note": "product evidence", "trials": rows}
 
 
 class EvidenceMapTest(NoNetworkTestCase):
@@ -116,23 +122,31 @@ class EvidenceMapTest(NoNetworkTestCase):
         self.assertEqual(gamma["status"], "no_rows")
         comp = cells[("Q2", "alpha+code_overlay")]
         self.assertIs(comp["deterministic"]["registry"], True)
-        self.assertEqual(comp["human_blind_acceptance"]["accepts"], 4)
+        self.assertEqual((comp["human_blind_acceptance"]["accepts"], comp["human_blind_acceptance"]["trials"], comp["human_blind_acceptance"]["eliminated"]), (4, 4, False))
         self.assertIs(comp["human_blind_acceptance"]["blind_as_to_arm"], False)
         self.assertIn("plate", comp["arm_note"])
+        self.assertEqual((comp["route_key"], comp["registry_route_key"], comp["text_mechanism"]), ("alpha+code_overlay", "alpha", "deterministic_text_composition"))
 
     def test_human_tier_carries_n_notes_and_elimination(self):
         h = self.cells()[("Q1", "beta")]["human_blind_acceptance"]
         self.assertEqual((h["accepts"], h["trials"], h["n_items"]), (4, 8, 4))
-        self.assertEqual(h["controller_notes"], [{"trial_id": "Q1-04__beta__core__r2", "verdict": "reject", "note": "cut off"}])
+        self.assertEqual(h["controller_notes"], [{"trial_id": "Q1-04__beta__core__r2", "run_id": "syn", "verdict": "reject", "note": "cut off"}])
+        self.assertEqual((h["refusals_or_errors"], h["eliminated"], h["eliminated_by"]), (0, False, []))
+        self.assertEqual(sum(v["trials"] for v in h["per_item"].values()), 8)
         g = self.cells()[("Q1", "gamma")]["human_blind_acceptance"]
-        self.assertTrue(g["elimination"]["eliminated"])
+        self.assertEqual((g["accepts"], g["trials"], g["eliminated"], g["eliminated_by"]), (0, 8, True, ["E2"]), "computed, not read")
+        self.assertEqual(g["recorded_in_results_file"]["eliminated"], True)
+        self.assertIn("results-only", g["rule_basis"])
+        self.assertEqual(g["smoke_draws_excluded"], [])
 
     def test_fallback_is_next_best_by_acceptance_within_the_question(self):
         cells = self.cells()
         self.assertEqual(cells[("Q1", "alpha")]["rank_in_question"], 1)
         self.assertEqual(cells[("Q1", "alpha")]["fallback"]["route"], "beta")
-        self.assertEqual(cells[("Q1", "beta")]["fallback"]["route"], "gamma")
-        self.assertEqual(cells[("Q1", "gamma")]["fallback"]["route"], "alpha", "the last-ranked falls back to the first")
+        self.assertEqual(cells[("Q1", "beta")]["fallback"]["route"], "alpha", "the last surviving route falls back to the first survivor")
+        self.assertEqual(cells[("Q1", "gamma")]["rank_in_question"], 3)
+        self.assertIsNone(cells[("Q1", "gamma")]["fallback"]["route"], "gamma is eliminated (0/8, E2): never a fallback and nothing falls back to it")
+        self.assertIs(cells[("Q1", "gamma")]["fallback"]["eliminated"], True)
         self.assertIsNone(cells[("Q2", "alpha+code_overlay")]["fallback"]["route"], "a single cell has nothing to fall back to")
 
     def test_two_results_files_merge_and_name_their_runs(self):
@@ -152,7 +166,7 @@ class EvidenceMapTest(NoNetworkTestCase):
         self.assertEqual((delta["accepts"], delta["trials"], delta["runs"]), (2, 2, ["syn-two"]))
         self.assertEqual(delta["source"], "RESULTS.yaml of run syn-two")
         self.assertEqual(delta["judge"], "Controller", "a run without a verified commitment is not called verified")
-        self.assertIs(delta["elimination"]["eliminated"], False)
+        self.assertIs(delta["eliminated"], False)
         alpha = cells[("Q1", "alpha")]["human_blind_acceptance"]
         self.assertEqual((alpha["accepts"], alpha["trials"], alpha["runs"]), (7, 9, ["syn", "syn-two"]))
         self.assertEqual(alpha["source"], "RESULTS.yaml of runs syn, syn-two")
@@ -185,10 +199,10 @@ class EvidenceMapTest(NoNetworkTestCase):
         self.assertAlmostEqual(a["deterministic"]["error_rate"], 0.5)
         self.assertEqual((c["human_blind_acceptance"]["accepts"], c["human_blind_acceptance"]["trials"]), (2, 2))
         self.assertEqual((a["human_blind_acceptance"]["accepts"], a["human_blind_acceptance"]["trials"]), (0, 2))
-        self.assertIs(c["human_blind_acceptance"]["elimination"]["eliminated"], False)
-        self.assertIs(a["human_blind_acceptance"]["elimination"]["eliminated"], True)
-        self.assertEqual(c["fallback"]["route"], "r+A_other")
-        self.assertEqual(a["fallback"]["route"], "r+C_something")
+        self.assertIs(c["human_blind_acceptance"]["eliminated"], False)
+        self.assertEqual((a["human_blind_acceptance"]["eliminated"], a["human_blind_acceptance"]["eliminated_by"]), (True, ["E2"]), "0 of 2 is on the E2 line")
+        self.assertIsNone(c["fallback"]["route"], "the only survivor has nothing to fall back to; the eliminated arm is never a target")
+        self.assertIsNone(a["fallback"]["route"])
 
     def test_trivial_arms_keep_the_bare_route_name(self):
         for arm in (None, "core", "edit"):
@@ -217,10 +231,11 @@ class EvidenceMapTest(NoNetworkTestCase):
         comp = self.tmp / "RESULTS-composite.yaml"
         comp.write_text(yaml.safe_dump(synthetic_composite()))
         out = self.tmp / "map" / "MAP.yaml"
-        self.assertEqual(EM.main(["--registry", str(reg), "--results", str(res), "--composite-results", str(comp), "--out", str(out)]), 0)
+        self.assertEqual(EM.main(["--registry", str(reg), "--results", str(res), "--composite-results", str(comp), "--runs-dir", EM.RESULTS_ONLY, "--out", str(out)]), 0)
         m = yaml.safe_load(out.read_text())
         self.assertEqual(m["schema"], "ROUTING-EVIDENCE-MAP-v0")
         self.assertEqual(m["cell_count"], 4)
+        self.assertEqual(m["sources"]["human_acceptance_basis"]["mode"], EM.RESULTS_ONLY)
         self.assertEqual(m["sources"]["registry"], str(reg))
         self.assertTrue(m["sources"]["registry_sha256"])
         for q, block in m["questions"].items():

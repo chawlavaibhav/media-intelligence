@@ -6,6 +6,24 @@
 # response saved with selected fields only (Bedrock offer rate cards; no offer accepted).
 # Every 'Tester check 3' quantity is recomputed from the files by the generator; nothing here is typed by hand.
 # Total unique pin bytes: 5118349 (4998 KB) — cap 5 MB.
+#
+# SUPERSESSION NOTE (added 2026-09-10 by the zero-spend audit repair; no fetched bytes were touched).
+# This index is the 4-Sep EVAL-039B fetch. Four route records were later re-pointed to another surface and
+# are now priced from NEWER pinned bytes held in their own sub-indexes. Anyone pricing those routes from
+# THIS file alone will read a superseded number:
+#   nano-banana-2         -> price-pins-2026-09/gemini-api/PIN-INDEX.yaml  (Gemini Developer API)
+#   nano-banana-pro       -> price-pins-2026-09/gemini-api/PIN-INDEX.yaml
+#   nano-banana-pro-edit  -> price-pins-2026-09/gemini-api/PIN-INDEX.yaml   (USD 0.134/image, NOT the
+#                            USD 0.15 fal figure recorded below)
+#   gemini-omni-flash-1.1 -> price-pins-2026-09/gemini-api/PIN-INDEX.yaml
+#   wan-2.2-a14b          -> price-pins-2026-09/wan-2.2-a14b/PIN-INDEX.yaml (added 2026-09-09; it has no
+#                            entry in this file at all)
+# The roster (ROSTER-REFRESH-2026-09.yaml) already carries the newer prices; this note only stops a reader
+# of the master index from silently using the older ones. Authority for the re-point:
+# coordination/decisions/CONTROLLER-GEMINI-MODELS-VIA-GEMINI-KEY-2026-09-09.md and
+# coordination/decisions/CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09.md.
+# CAUTION: no paid call has ever run on the gemini_api surface, so those prices are untested in execution
+# (audit 2026-09-10, finding F-9).
 pins:
 - route_key: veo-3.1-full
   pin_file: eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html

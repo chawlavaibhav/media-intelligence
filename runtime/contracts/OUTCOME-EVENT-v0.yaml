@@ -1,0 +1,117 @@
+# OUTCOME-EVENT-v0 — what actually happened on one job, written once, never edited.
+# Frozen contract. This is the project's empirical memory for production, and the input to every
+# later question about accepted-outcome rate and cost per accepted outcome.
+schema: OUTCOME-EVENT-v0
+status: FROZEN_CONTRACT
+
+fields:
+
+  event_id: {type: string, required: true}
+  job_id: {type: string, required: true}
+  spec_id: {type: string, required: true}
+  written_utc: {type: timestamp, required: true}
+
+  fingerprints:
+    type: object
+    required: true
+    fields:
+      job_sha256: {type: string, required: true}
+      spec_sha256: {type: string, required: true}
+      canon_injected_context_sha256: {type: string, required: true}
+      acceptance_contract_sha256: {type: string, required: true, note: "proves the contract was not edited after a rejection"}
+
+  canon:
+    type: object
+    required: true
+    fields:
+      packs_selected: {type: "list[string]", required: true}
+      canon_gap: {type: bool, required: true}
+      missing_domain: {type: string, required: false}
+
+  attempts:
+    type: "list[object]"
+    required: true
+    note: "every provider attempt, successful or not, in order"
+    fields:
+      attempt_id: {type: string, required: true, note: "unique; customer namespace, never shared with a Lab or smoke attempt"}
+      route_decision_id: {type: string, required: true}
+      route_key: {type: string, required: true}
+      surface: {type: string, required: true}
+      requested_utc: {type: timestamp, required: true}
+      latency_s: {type: number, required: false}
+      status: {type: string, required: true, note: "ok | refusal | provider_error | timeout | local_fault"}
+      artifact_sha256: {type: string, required: false}
+      reserved_usd: {type: decimal, required: true}
+      settled_usd: {type: decimal, required: true}
+      billing_state: {type: string, required: true, note: "reported | unknown_provisional — the Lab audit showed these are different things and must stay separate"}
+      billing_pool: {type: string, required: true}
+      is_repair_of: {type: string, required: false}
+
+  gate:
+    type: object
+    required: true
+    fields:
+      pre_dispatch: {type: "list[object]", required: true}
+      post_draw: {type: "list[object]", required: true}
+      blocking_failures: {type: "list[string]", required: true}
+
+  deterministic_checks: {type: "list[object]", required: true}
+
+  repair:
+    type: object
+    required: false
+    note: >-
+      A repair states what failed, what changes and what must stay the same. "Try again" is not a
+      repair and must be rejected by the schema check.
+    fields:
+      failure_observed: {type: string, required: true}
+      failure_category: {type: string, required: true}
+      what_changes: {type: string, required: true}
+      what_stays_invariant: {type: string, required: true}
+      route_changed: {type: bool, required: true}
+      incremental_cost_usd: {type: decimal, required: true}
+
+  acceptance:
+    type: object
+    required: true
+    fields:
+      authority: {type: string, required: true, note: "who decided — for the first alpha this is a person; an automated judge may appear here only after it qualifies"}
+      decision: {type: string, required: true, note: "accepted | rejected | abandoned"}
+      decided_utc: {type: timestamp, required: true}
+      contract_lines_failed: {type: "list[string]", required: false}
+      note: {type: string, required: false}
+      human_minutes: {type: number, required: false, note: "needed for fully loaded cost per accepted outcome; HED-1 decides which minutes count"}
+
+  delivered:
+    type: object
+    required: false
+    fields:
+      artifact_sha256: {type: string, required: true}
+      content_type: {type: string, required: true}
+      delivered_utc: {type: timestamp, required: true}
+      released_by: {type: string, required: true}
+
+  cost:
+    type: object
+    required: true
+    fields:
+      provider_usd_total: {type: decimal, required: true}
+      by_pool: {type: object, required: true}
+      draws: {type: int, required: true}
+      draws_per_accepted_outcome: {type: number, required: false}
+      vendor_billed_usd: {type: decimal, required: false, note: "left empty until a statement is reconciled; the Lab audit showed ledger and bill are not the same number"}
+
+  template_candidate:
+    type: object
+    required: false
+    note: "an accepted outcome makes its spec eligible to become a reusable template; eligibility is recorded here, promotion is a separate decision"
+    fields:
+      eligible: {type: bool, required: true}
+      reason: {type: string, required: false}
+
+invariants:
+  - "Written once. A correction is a new event that supersedes this one by id; nothing is edited in place."
+  - "Every attempt appears, including the ones that produced nothing, with reserved and settled money kept separate."
+  - "An outcome event is never a Capability Registry row and never enters eval/. Production learning and Lab evidence stay in separate stores."
+  - "acceptance.authority records a person for as long as no automated judge has qualified."
+  - "A repair without what_stays_invariant is invalid."

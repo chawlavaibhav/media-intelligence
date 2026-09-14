@@ -1,0 +1,158 @@
+# PRODUCTION-JOB-v1 — one customer request entering the production path.
+# Frozen contract. v0 is kept beside this file, unedited, as the record.
+# v1 exists because the first lane that USED v0 found nine defects in it. See CHANGES-v0-to-v1.md.
+# The most serious was a consent hole: v0 required a consent reference only when an asset's declared
+# role was 'person', so a photograph of a shop interior containing a real, identifiable member of
+# staff passed the gate untouched. v1 keys consent on whether a person is DEPICTED, not on how the
+# asset was labelled.
+#
+# This object is written ONCE when a job is accepted into the system and never edited afterwards.
+# Everything that happens later hangs off job_id.
+schema: PRODUCTION-JOB-v1
+status: FROZEN_CONTRACT
+
+fields:
+
+  job_id:
+    type: string
+    required: true
+    note: >-
+      Client-supplied idempotency key. Submitting the same job_id twice must return the existing job
+      and must never dispatch a second provider call. This is the single defence against a retry
+      storm costing money twice.
+
+  received_utc: {type: timestamp, required: true}
+  customer_ref: {type: string, required: true, note: "opaque customer/account id; never a person's name in this field"}
+
+  brief:
+    type: object
+    required: true
+    fields:
+      text: {type: string, required: true, note: "the customer's own words, stored verbatim, never rewritten in place"}
+      language: {type: string, required: false, note: "en | hi | hg | other; free string, never pooled downstream"}
+      market: {type: string, required: false}
+
+  exact_text_strings:
+    type: list[object]
+    required: false
+    note: >-
+      Strings that MUST appear character-exact in the deliverable (price, offer, legal line, brand
+      name). The evidence is unambiguous that these are set by code, not generated
+      (eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml RR-1, RR-3, RR-6). Each entry carries the
+      string, its script, and whether it may be re-flowed.
+    fields:
+      value: {type: string, required: true}
+      script: {type: string, required: false, note: "latin | devanagari | other"}
+      may_reflow: {type: bool, default: false}
+      placement:
+        type: string
+        default: overlay
+        note: >-
+          overlay = the string is composed onto the picture by code (exact by construction).
+          in_scene = the string must appear as part of the scene itself, on a pack, a sign or a
+          surface, and must therefore be drawn by the maker. v0 had no way to say this, which made
+          the whole in-scene branch of the evidence (RR-2: Nano Banana 2 and GPT Image 2, 4/4)
+          unreachable from a real customer job. Open vocabulary.
+
+  reference_assets:
+    type: list[object]
+    required: false
+    note: "customer-supplied product shots, logos, faces, previous creative"
+    fields:
+      asset_id: {type: string, required: true}
+      role: {type: string, required: true, note: "product | logo | person | scene | prior_creative | other"}
+      sha256: {type: string, required: true}
+      content_type: {type: string, required: true}
+      provenance: {type: string, required: true, note: "customer_supplied | generated_stand_in | library"}
+      depicts_identifiable_person:
+        type: bool
+        required: true
+        note: >-
+          Answered for EVERY asset, whatever its role. A shop interior, a product held in a hand, a
+          crowd behind a signboard - all of these depict people. This is the field the consent gate
+          reads. It is required rather than defaulted so that nobody can pass a person through by
+          omission.
+      consent_ref: {type: string, required: false, note: "required whenever depicts_identifiable_person is true, regardless of role"}
+
+  deliverable_request:
+    type: object
+    required: true
+    fields:
+      kind: {type: string, required: true, note: "open vocabulary, resolved against runtime/contracts/DELIVERABLE-KINDS.yaml; NOT a closed enum"}
+      operation:
+        type: string
+        required: true
+        note: >-
+          What is being done: generate | edit | extend | compose | reference | animate. Canon's pack
+          lookup must run before any model sees the job, so the operation has to be readable FROM the
+          job. v0 forced the lane to infer it from the deliverable kind through a side table.
+      modality:
+        type: string
+        required: true
+        note: "static_image | video | audio | mixed. Same reason as operation."
+      subject:
+        type: object
+        required: false
+        note: >-
+          What the picture is OF, when the customer says so: entity kind (product, packshot, person,
+          place, abstract), brand, category. v0 could only infer a product's presence from a supplied
+          reference asset, so a product advertisement with no customer photograph never fired the
+          product-appearance doctrine.
+      aspect: {type: string, required: true}
+      count: {type: int, default: 1}
+      motion:
+        type: object
+        required: false
+        note: "present only when the customer wants a moving version; absence is not a limitation, only an absence"
+        fields:
+          seconds: {type: number, required: true}
+          from: {type: string, default: accepted_still, note: "accepted_still | text_to_video | reference; see RR-8 and RR-15"}
+          audio: {type: bool, default: false}
+          depends_on:
+            type: string
+            required: false
+            note: >-
+              Names the deliverable in this job that must be ACCEPTED before this one may start. v0
+              said 'from: accepted_still' but gave no way to order the two, so one job could animate a
+              still nobody had accepted yet - which is exactly the input bias the Lab evidence
+              carries (RR-8's 8/8 was measured on already-accepted stills).
+
+  policy_profile:
+    type: string
+    required: true
+    note: >-
+      Names the row in runtime/contracts/POLICY-PROFILES.yaml that supplies every limit for this job
+      (draw budget, repair allowance, acceptance authority, retention, fallback behaviour). The limits
+      live in the profile, never in code, so a wider profile is a configuration change.
+
+  cost_ceiling_usd:
+    type: decimal
+    required: false
+    note: >-
+      Hard per-job ceiling, checked BEFORE every dispatch, on the same reserve-then-settle discipline
+      the Lab ledger uses. A job that would cross it stops cleanly and reports; it never half-delivers.
+      Optional in v1 ONLY because the named policy profile carries default_job_cost_ceiling_usd; when
+      the customer does not state a ceiling, intake fills it from the profile row before validating.
+      The value still always comes from data. There is no ceiling in code, and a job with neither a
+      stated ceiling nor a profile default is refused.
+
+  deadline_utc: {type: timestamp, required: false}
+
+  retention:
+    type: object
+    required: true
+    fields:
+      policy_ref: {type: string, required: true}
+      delete_after_days: {type: int, required: true}
+    note: "customer media retention is a contract field, not an operational afterthought"
+
+  submitted_by: {type: string, required: true}
+
+invariants:
+  - "job_id is idempotent: a repeat submission returns the existing job and dispatches nothing."
+  - "The job object is immutable after creation. Corrections create a new job that references this one."
+  - "No limit is read from code. Every limit comes from cost_ceiling_usd or the named policy_profile."
+  - "deliverable_request.kind is an open vocabulary. Adding a deliverable never edits this contract."
+  - "Any reference asset with depicts_identifiable_person true and no consent_ref is refused at intake, before any spend, whatever its declared role."
+  - "operation and modality are readable from the job itself; no downstream lane may infer them from the deliverable kind."
+  - "A job with neither cost_ceiling_usd nor a profile default is refused. A ceiling is never invented in code."

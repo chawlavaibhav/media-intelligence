@@ -16,6 +16,11 @@ import spend_ledger as SL
 from budget_guard import BudgetExceeded, NotAuthorised
 
 CTX = dict(billing_pool="cash", currency="USD", amount_native=Decimal("0.053"), amount_usd_equiv=Decimal("0.053"))
+
+
+def cash(amount: Decimal) -> dict:
+    """The pool fields every row needs, for a plain USD cash amount."""
+    return dict(billing_pool="cash", currency="USD", amount_native=amount, amount_usd_equiv=amount)
 FIELDS = ("tranche_id", "authorised", "item_basis_commit", "price_basis_roster_sha256", "max_consumed_usd_equivalent",
           "cap_1a_usd", "cap_1b_usd", "sarvam_cap_inr", "retries_authorised", "execution_time_route_price_verification",
           "images_before_video", "approved_by", "approved_at")
@@ -195,6 +200,164 @@ class LedgerTest(NoNetworkTestCase):
             b.correct("1a", Decimal("-1"), "no")
         b.correct("1a", Decimal("0.10"), "billing evidence")
         self.assertEqual(b.committed_usd(), Decimal("0.10"))
+
+
+class PooledAuthorisationTest(NoNetworkTestCase):
+    """Auditor AF-4 / AF-5 (2026-09-10): one signed authorisation is ONE cap however many runs use it, and a
+    record that names `max_paid_calls` caps the NUMBER of paid calls over that same set of runs.
+
+    Before this, a cap was enforced inside one run directory only: `topo3-plates` + `topo3-smoke` + `topo3-video`
+    each got the whole USD 9.96 record and together spent USD 10.364.
+    """
+
+    def budget(self, auth, run_id, root=None):
+        root = self.tmp / "runs" if root is None else root
+        return L.BatteryBudget(L.BatteryRun.create(root, run_id, auth, mode="fake_live"))
+
+    def auth(self, name="pool.yaml", ceiling="1.00", caps=("1.00", "1.00"), **kw):
+        return L.load_battery_authorisation(self.write_auth(ceiling, caps, name=name, **kw))
+
+    # -- AF-4: the money cap -------------------------------------------------------------------
+    def test_af4_sibling_runs_under_one_authorisation_share_one_cap(self):
+        auth = self.auth()
+        a = self.budget(auth, "run-a")
+        a.tranche("1a").record(Decimal("0.60"), **cash(Decimal("0.60")))
+        b = self.budget(auth, "run-b")
+        self.assertEqual(b.sibling_run_ids(), ("run-a",))
+        self.assertEqual(b.spent_usd(), Decimal("0"))                    # per-run accounting is still visible
+        self.assertEqual(b.sibling_spent_usd(), Decimal("0.60"))         # and so is the pooled number
+        self.assertEqual(b.combined_spent_usd(), Decimal("0.60"))
+        self.assertEqual(b.remaining_usd(), Decimal("0.40"))
+        self.assertEqual(b.tranche("1a").remaining_usd(), Decimal("0.40"))
+        b.tranche("1a").reserve(Decimal("0.40"), **cash(Decimal("0.40")))   # exactly the headroom the pool has left
+        with self.assertRaises(BudgetExceeded) as cm:
+            b.tranche("1a").reserve(Decimal("0.01"), **cash(Decimal("0.01")))
+        self.assertIn("run-a", str(cm.exception))
+        self.assertIn("pool.yaml", str(cm.exception))
+        self.assertEqual(b.spent_usd(), Decimal("0.40"))
+        self.assertEqual(b.combined_spent_usd(), Decimal("1.00"))
+        # the pool is shared both ways, and live: run-a, opened before run-b existed, now sees run-b's spend
+        self.assertEqual(a.sibling_run_ids(), ("run-b",))
+        self.assertEqual(a.sibling_spent_usd(), Decimal("0.40"))
+        self.assertEqual(a.combined_spent_usd(), Decimal("1.00"))
+        with self.assertRaises(BudgetExceeded):
+            a.tranche("1a").reserve(Decimal("0.05"), **cash(Decimal("0.05")))
+
+    def test_af4_the_tranche_caps_are_pooled_too(self):
+        auth = self.auth(name="tranche-pool.yaml", ceiling="2.00", caps=("0.50", "1.50"))
+        a = self.budget(auth, "run-a")
+        a.tranche("1a").record(Decimal("0.50"), **cash(Decimal("0.50")))
+        b = self.budget(auth, "run-b")
+        self.assertEqual(b.tranche("1a").remaining_usd(), Decimal("0"))   # 1a is spent, by a DIFFERENT run
+        with self.assertRaises(BudgetExceeded) as cm:
+            b.tranche("1a").reserve(Decimal("0.01"), **cash(Decimal("0.01")))
+        self.assertIn("tranche 1a cap", str(cm.exception))
+        b.tranche("1b").reserve(Decimal("1.00"), **cash(Decimal("1.00")))  # 1b is untouched and still spendable
+
+    def test_af4_pooling_spans_the_sibling_out_directories_ledger_roots(self):
+        # the runners give every run its own --out and keep the ledger in <out>/ledger/<run_id>/
+        auth = self.auth(name="outs.yaml")
+        a = self.budget(auth, "run-a", root=self.tmp / "outs" / "run-a" / "ledger")
+        a.tranche("1a").record(Decimal("0.90"), **cash(Decimal("0.90")))
+        b = self.budget(auth, "run-b", root=self.tmp / "outs" / "run-b" / "ledger")
+        self.assertEqual(b.sibling_run_ids(), ("run-a",))
+        self.assertEqual(b.remaining_usd(), Decimal("0.10"))
+        with self.assertRaises(BudgetExceeded):
+            b.tranche("1a").reserve(Decimal("0.11"), **cash(Decimal("0.11")))
+
+    def test_af4_a_different_authorisation_sha_does_not_pool(self):
+        one = self.auth(name="one.yaml")
+        two = self.auth(name="two.yaml", approved_by="a-different-signature")
+        self.assertNotEqual(one.sha256, two.sha256)
+        a = self.budget(one, "run-a")
+        a.tranche("1a").record(Decimal("0.90"), **cash(Decimal("0.90")))
+        b = self.budget(two, "run-b")
+        self.assertEqual(b.sibling_run_ids(), ())                        # another signed record, another cap
+        self.assertEqual(b.sibling_spent_usd(), Decimal("0"))
+        self.assertEqual(b.remaining_usd(), Decimal("1.00"))
+        b.tranche("1a").reserve(Decimal("0.90"), **cash(Decimal("0.90")))
+
+    def test_af4_a_second_run_refuses_before_dispatch_when_the_first_consumed_the_cap(self):
+        auth = self.auth(name="consumed.yaml", ceiling="0.50", caps=("0.50", "0.50"))
+        a = self.budget(auth, "run-a")
+        a.tranche("1a").record(Decimal("0.50"), **cash(Decimal("0.50")))
+        with self.assertRaises(BudgetExceeded) as cm:
+            L.BatteryRun.create(self.tmp / "runs", "run-b", auth, mode="fake_live")
+        self.assertIn("run-a", str(cm.exception))
+        self.assertIn("0.50", str(cm.exception))
+        self.assertIn("consumed.yaml", str(cm.exception))
+        self.assertFalse((self.tmp / "runs" / "run-b").exists())         # refused before the run directory exists
+
+    def test_af4_an_unreadable_sibling_refuses_rather_than_counting_zero(self):
+        auth = self.auth(name="unreadable.yaml")
+        a = self.budget(auth, "run-a")
+        a.tranche("1a").record(Decimal("0.10"), **cash(Decimal("0.10")))
+        self.budget(auth, "run-c")                                        # opened again below
+        (self.tmp / "runs" / "run-a" / "run.json").write_text("{ not json")
+        with self.assertRaises(SL.LedgerCorrupt):
+            L.BatteryRun.create(self.tmp / "runs", "run-b", auth, mode="fake_live")
+        with self.assertRaises(SL.LedgerCorrupt):
+            L.BatteryRun.open(self.tmp / "runs", "run-c", auth)
+        # a directory that records spend but has no run record at all is refused for the same reason
+        (self.tmp / "runs" / "run-a" / "run.json").unlink()
+        with self.assertRaises(SL.LedgerCorrupt):
+            L.BatteryRun.create(self.tmp / "runs", "run-d", auth, mode="fake_live")
+
+    # -- AF-5: the call limit ------------------------------------------------------------------
+    def test_af5_max_paid_calls_absent_means_no_call_limit(self):
+        path = self.write_auth("1.00", ("1.00", "1.00"), name="nolimit.yaml")
+        auth = L.load_battery_authorisation(path)
+        self.assertEqual(auth.refusals, ())
+        self.assertIsNone(auth.max_paid_calls)
+        st = L.authorisation_status(path)
+        self.assertIsNone(st["max_paid_calls"])
+        self.assertIn("NO limit", st["paid_call_limit"])
+        b = self.budget(auth, "run-a")
+        self.assertIsNone(b.run.max_paid_calls)
+        for _ in range(9):
+            b.tranche("1a").record(Decimal("0.01"), **cash(Decimal("0.01")))
+        self.assertEqual(b.paid_calls(), 9)                               # nine calls, no limit to refuse them
+        self.assertEqual(b.combined_paid_calls(), 9)
+        t = b.tranche("1a")
+        t.reserve(Decimal("0.01"), **cash(Decimal("0.01")))
+        t.release()
+        self.assertEqual(b.paid_calls(), 9)                               # a released reservation never became a call
+
+    def test_af5_max_paid_calls_is_read_from_the_file_and_refuses_a_bad_value(self):
+        auth = L.load_battery_authorisation(self.write_auth("1.00", ("1.00", "1.00"), name="limit.yaml", max_paid_calls=16))
+        self.assertEqual(auth.refusals, ())
+        self.assertEqual(auth.max_paid_calls, 16)
+        st = L.authorisation_status(self.write_auth("1.00", ("1.00", "1.00"), name="limit-st.yaml", max_paid_calls=16))
+        self.assertEqual(st["max_paid_calls"], "16")
+        self.assertIn("pooled", st["paid_call_limit"])
+        for bad in ("-1", "2.5", "sixteen"):
+            with self.subTest(bad=bad):
+                a = L.load_battery_authorisation(self.write_auth("1.00", ("1.00", "1.00"), name=f"bad-calls-{bad}.yaml", max_paid_calls=bad))
+                self.assertTrue(any("max_paid_calls" in r for r in a.refusals), a.refusals)
+        self.assertIn("max_paid_calls", L.OPTIONAL_AUTH_FIELDS)
+        self.assertNotIn("max_paid_calls", L.AUTH_FIELDS)                 # optional: it is not one of the signed 13
+
+    def test_af5_the_call_that_would_exceed_max_paid_calls_is_refused_before_dispatch(self):
+        auth = self.auth(name="calls.yaml", max_paid_calls=3)
+        a = self.budget(auth, "run-a")
+        a.tranche("1a").record(Decimal("0.01"), **cash(Decimal("0.01")))
+        a.tranche("1a").record(Decimal("0.01"), **cash(Decimal("0.01")))
+        self.assertEqual(a.run.record["max_paid_calls"], "3")
+        b = self.budget(auth, "run-b")
+        self.assertEqual(b.combined_paid_calls(), 2)                      # the two calls the SIBLING made
+        b.tranche("1a").reserve(Decimal("0.01"), **cash(Decimal("0.01")))  # the third call is authorised
+        before = len(b.records())
+        with self.assertRaises(BudgetExceeded) as cm:
+            b.tranche("1b").reserve(Decimal("0.01"), **cash(Decimal("0.01")))
+        self.assertIn("max_paid_calls", str(cm.exception))
+        self.assertIn("run-a", str(cm.exception))
+        self.assertEqual(len(b.records()), before)                        # nothing was written, so nothing was dispatched
+        self.assertEqual(b.remaining_usd(), Decimal("0.97"))              # money was left; the CALL limit is what refused
+        # and a further run cannot start at all once the pool has used every authorised call
+        self.assertEqual(b.combined_paid_calls(), 3)
+        with self.assertRaises(BudgetExceeded) as cm2:
+            L.BatteryRun.create(self.tmp / "runs", "run-c", auth, mode="fake_live")
+        self.assertIn("max_paid_calls", str(cm2.exception))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,80 @@
+# FIXTURE SPEC C — a 6-second silent moving version of a still the customer has already accepted.
+#
+# The sweet-shop creative from fixture A came back approved, and the shop wants it moving for a
+# Reel. No sound: it will play muted in a feed. `motion.depends_on` names the still's spec, because
+# v0 had no way to order the two and could have animated a picture nobody had accepted — which is
+# precisely the input bias RR-8's 8/8 carries (those stills were already accepted).
+#
+# The brief forbids a camera move, so RR-8's own caution about Veo 3.1 fast i2v is carried as a route
+# exclusion rather than left as prose for the router to re-derive.
+schema: PRODUCTION-SPEC-v1
+spec_id: spec-fixture-C-sweetshop-reel
+job_id: job-fixture-C
+job_sha256: 2222222222222222222222222222222222222222222222222222222222222222
+compiled_utc: '2026-09-10T09:00:00Z'
+
+objective: "Give the accepted Diwali still a short moving version for a muted feed placement."
+
+deliverable:
+  kind: short_motion_from_accepted_still
+  aspect: '9:16'
+  resolution_class: social_video
+  motion:
+    seconds: 6
+    from: accepted_still
+    audio: false
+    depends_on: spec-fixture-A-sweetshop-diwali
+
+hard_constraints:
+- "The picture must not be re-composed: this is the accepted still, moving."
+- "No camera move — the frame holds."
+- "Silent. No audio track of any kind."
+- "No lettering may appear or change."
+
+exact_text:
+  strings: []
+  strategy: none_required
+  strategy_basis: "the strings are already on the accepted still; nothing is re-set in motion"
+
+identity_requirements:
+  preserve: [accepted_still]
+  decoy_check: false
+
+canon:
+  packs_selected: []
+  injected_context_sha256: '2222222222222222222222222222222222222222222222222222222222222222'
+  canon_gap: true
+  missing_domains: [festival_commerce_hindi]
+
+capability_requirements:
+- capability: image_to_video
+  level: null
+  mandatory: true
+
+route_exclusions:
+- route_key: veo-3.1-fast-i2v
+  reason: "the brief forbids a camera move and this route moves the camera"
+  basis: >-
+    RR-8 ('avoid Veo 3.1 fast i2v where the brief forbids camera moves'), evidenced by map cell
+    VID-I2V/veo-3.1-fast-i2v (5/8; 0/2 on the phone still, 'zooms in')
+
+gate_requirements:
+- pre_dispatch_dependency_check
+- post_draw_duration_probe
+- post_draw_baked_text_scan
+
+acceptance_contract:
+- "ACCEPT only if the first frame is the accepted still."
+- "REJECT if the camera moves."
+- "REJECT if the file carries an audio track."
+- "ACCEPT only if the clip is 6 seconds."
+
+deterministic_checks:
+- duration_probe
+- audio_track_probe
+- aspect_check
+
+budget:
+  cost_ceiling_usd: 5.00
+  max_provider_draws: 2
+  repair_allowance: 1

@@ -1,0 +1,91 @@
+# FIXTURE SPEC A2 — the SAME brief, but the customer wants the price printed on the box in the scene.
+#
+# Written by this lane to develop the router against, in the shape PC-03A's compiler will emit. The
+# brief behind it: a Nagpur sweet shop wants a Diwali offer creative for Instagram, with the price
+# line set exactly in Hindi. Nothing about it is unusual — it is the single most ordinary job the
+# first alpha expects to see.
+#
+# This is the in-scene branch v0 could not express at all (CHANGES-v0-to-v1 defect 3). It is here to
+# show the Controller what the same brief costs when the maker has to draw the type itself.
+schema: PRODUCTION-SPEC-v1
+spec_id: spec-fixture-A2-sweetshop-diwali-in-scene
+job_id: job-fixture-A2
+job_sha256: 0000000000000000000000000000000000000000000000000000000000000000
+compiled_utc: '2026-09-10T09:00:00Z'
+
+objective: "Sell the shop's Diwali gift box at a stated price to Instagram users in Nagpur."
+
+deliverable:
+  kind: static_ad
+  aspect: '4:5'
+  resolution_class: social_still
+
+hard_constraints:
+- "The price line must read exactly as the customer wrote it, in Devanagari, with no substitution."
+- "No human face in the picture."
+- "The sweets must look like mithai, not like European confectionery."
+
+exact_text:
+  strings:
+  - value: "मिठाई गिफ्ट बॉक्स ₹499"
+    script: devanagari
+    may_reflow: false
+    placement: in_scene
+  strategy: generated_in_scene
+  strategy_basis: >-
+    RR-2 (generated text where the type must sit inside the scene), evidenced by map cells
+    IMG-TEXT/nano-banana-2+A_cheap_generated and IMG-TEXT/gpt-image-2+A_cheap_generated, both 4/4
+    with Devanagari 2/2. RR-3's prohibition still applies and is carried in route_exclusions.
+
+identity_requirements:
+  preserve: []
+  decoy_check: false
+
+composition:
+  focal_intent: "the gift box, centred, the price printed on the box lid itself"
+
+canon:
+  packs_selected: []
+  injected_context_sha256: '0000000000000000000000000000000000000000000000000000000000000000'
+  canon_gap: true
+  missing_domains: [festival_commerce_hindi, price_line_typography]
+
+capability_requirements:
+- capability: image_generation
+  level: null
+  mandatory: true
+- capability: exact_text_composition
+  level: generated_in_scene
+  mandatory: true
+
+route_exclusions:
+- route_key: seedream-5-pro
+  reason: "Devanagari spelling failures on every draw"
+  basis: "RR-3 / IMG-TEXT/seedream-5-pro+B_premium_generated (0/2, every rejection 'wrong spelling')"
+- route_key: recraft-v4
+  reason: "Devanagari spelling failures on every draw"
+  basis: "RR-3 / IMG-TEXT/recraft-v4+B_premium_generated (0/2, every rejection 'wrong spelling')"
+- route_key: flux-2-pro
+  reason: "Devanagari spelling failures on every draw"
+  basis: "RR-3 / IMG-TEXT/flux-2-pro+C_composite_textless_base (0/2, every rejection 'wrong spelling')"
+
+gate_requirements:
+- pre_dispatch_consent_check
+- post_draw_baked_text_scan
+- post_draw_format_probe
+
+acceptance_contract:
+- "ACCEPT only if the price line is character-for-character what the customer supplied."
+- "REJECT if any lettering other than the supplied strings appears anywhere in the picture."
+- "ACCEPT only if the food reads as Indian mithai."
+- "REJECT if a human face appears."
+
+deterministic_checks:
+- format_probe
+- baked_text_scan
+- aspect_check
+
+budget:
+  cost_ceiling_usd: 5.00
+  max_provider_draws: 2
+  repair_allowance: 1

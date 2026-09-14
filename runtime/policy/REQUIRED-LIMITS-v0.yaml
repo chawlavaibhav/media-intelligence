@@ -1,0 +1,70 @@
+# REQUIRED-LIMITS-v0 — the limits THIS lane reads out of a job's policy profile.
+#
+# POLICY-PROFILES-v0 invariant: "A limit that is not in the named profile is not a limit the
+# runtime may invent. Missing limit = refuse." This file is how the runtime says which limits it
+# is going to need, so the refusal happens at intake — before any spend — rather than halfway
+# through a job. A later lane adds its own rows here; no code changes.
+schema: REQUIRED-LIMITS-v0
+lane: PC-03A (intake + spec compilation); router (PC-03B) and execution-bridge rows added 14 Sep 2026
+
+# Checked at intake. A named profile missing any of these is refused before anything else runs.
+# The six added on 14 Sep 2026 encode the Alpha-1 rulings (C-7, C-8) and the Controller's rider that
+# adoption is not spend authority; requiring them here means a profile without them refuses at
+# intake, before any spend, rather than in a lane that runs later.
+required_at_intake:
+- deliverable_kinds_allowed
+- max_provider_draws_per_deliverable
+- repair_allowance
+- spend_authority
+- exact_text_strategies_allowed
+- motion_requires_accepted_still
+- acceptance_authority
+- autonomous_external_delivery
+- human_approval_required_before_external_delivery
+
+# Read by the router (runtime/route/decision.py via runtime/route/profile.py). Listed so the data
+# completeness test can prove every profile carries them; the router itself still fails closed on
+# any it finds missing.
+read_by_router:
+- adopted
+- status
+- deliverable_kinds_allowed
+- max_provider_draws_per_deliverable
+- repair_allowance
+- auto_routable_evidence_status
+- on_non_auto_routable
+- fallback_required
+- default_job_cost_ceiling_usd
+- acceptance_authority
+- autonomous_external_delivery
+- surface_preference
+
+# Read by the execution bridge (being built in Wave 2; nothing dispatches on this branch). Listed
+# NOW so that the bridge has no reason to invent a default: every name here is on every profile row
+# today, and spend_authority is first because it is the check that runs before any other.
+read_by_execution_bridge:
+- spend_authority
+- max_provider_draws_per_deliverable
+- repair_allowance
+- fallback_required
+- acceptance_authority
+- autonomous_external_delivery
+- surface_preference
+- auto_routable_evidence_status
+- on_non_auto_routable
+- default_job_cost_ceiling_usd
+
+# Read while compiling the spec. Every one of these must also appear above, so the refusal is
+# never discovered late.
+read_by_spec_compiler:
+  budget.max_provider_draws: max_provider_draws_per_deliverable
+  budget.repair_allowance: repair_allowance
+
+# The profile value used when the job omits an optional job-level field. This is not a code
+# default: the value still comes from the named profile, and a profile without it refuses.
+job_field_defaults:
+  cost_ceiling_usd: default_job_cost_ceiling_usd
+  retention.delete_after_days: retention_days_default
+
+# The value that means "every kind in the registry" in deliverable_kinds_allowed.
+allow_all_token: __all__

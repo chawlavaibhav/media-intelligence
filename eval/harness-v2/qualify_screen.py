@@ -19,6 +19,11 @@ pinned under eval/empirical-planning/price-pins-2026-09/ (PIN-INDEX.yaml entry n
 otherwise it prints "price not pinned" and no number. A live run refuses without `--auth <file>` carrying
 `screen_cap_usd` (missing = 0 = forbidden), refuses when the price is not pinned (a cap nobody can enforce is no cap),
 projects every call against the cap before it is made and stops at the first call that would cross it. 0 retries.
+A live run writes its OWN counters (calls sent, calls refused, which limit stopped it) into every SCREEN-RESULTS file
+under `call_counters`. An offline rebuild reports THAT number and never recomputes one from the screened rows - a row
+is not a call (audio is cannot_judge with no call). With no live counter the report prints no call number at all and
+says in words that the count is not known. The report always states the authorised screen_max_calls and flags plainly
+when the recorded count is at or above it.
 The key is read by NAME (GOOGLE_API_KEY) at the first call and never printed. Only transports.py opens a socket.
 """
 from __future__ import annotations
@@ -35,6 +40,7 @@ from pathlib import Path
 
 import yaml
 
+import evidence_map as EM
 import hv2_paths
 from instruments import vlm_screen as VS
 
@@ -290,12 +296,15 @@ def qualification(stats: dict, coverage: dict, criteria: dict) -> dict:
 def screen_rows(rows: list, cases: dict, inst, pin: dict | None, cap_usd: Decimal, criteria: dict, max_calls: int | None = None, log=print) -> dict:
     """Runs the instrument over the planned rows in order, projecting each call against the cap BEFORE it is made."""
     spent = D("0")
-    calls = 0
+    calls = 0                 # calls SENT. Incremented once per dispatch, never recomputed from the rows afterwards.
+    refused = 0               # screenable calls NOT sent because the run had already stopped
     out = []
     stopped = None
+    stopped_by = None
     for row in rows:
         rec = {k: row[k] for k in ("run_id", "results_run_id", "trial_id", "case_id", "question", "route_key", "arm", "controller_verdict", "controller_note", "media_kind")}
         rec["artifact"] = {"path": _rel(row["artifact"]) if row["artifact"] else None}
+        rec["call_sent"] = False
         if row["skip"] and row["media_kind"] != "audio":
             rec.update({"screen_overall": None, "verdict": "absent", "absence_reason": "not_measured", "note": f"skipped: {row['skip']}", "rules": [], "agree": None})
             out.append(rec)
@@ -303,12 +312,15 @@ def screen_rows(rows: list, cases: dict, inst, pin: dict | None, cap_usd: Decima
         case = cases["cases"][row["case_id"]]
         if row["calls"]:
             if stopped:
+                refused += 1
                 rec.update({"screen_overall": None, "verdict": "absent", "absence_reason": "not_measured", "note": stopped, "rules": [], "agree": None})
                 out.append(rec)
                 continue
             est = per_call_estimate_usd(row["images"], pin, criteria) if pin else D("0")
             if max_calls is not None and calls >= max_calls:
                 stopped = f"stopped: screen_max_calls {max_calls} reached; nothing further was sent"
+                stopped_by = "screen_max_calls"
+                refused += 1
                 rec.update({"screen_overall": None, "verdict": "absent", "absence_reason": "not_measured", "note": stopped, "rules": [], "agree": None})
                 out.append(rec)
                 continue
@@ -317,10 +329,13 @@ def screen_rows(rows: list, cases: dict, inst, pin: dict | None, cap_usd: Decima
             if spent + est > cap_usd or (calls + 1) * est > cap_usd:
                 stopped = (f"stopped: call {calls + 1} would cross screen_cap_usd {cap_usd} (reserved {calls} x USD {est} + USD {est}; settled USD {spent}); "
                            f"nothing further was sent")
+                stopped_by = "screen_cap_usd"
+                refused += 1
                 rec.update({"screen_overall": None, "verdict": "absent", "absence_reason": "not_measured", "note": stopped, "rules": [], "agree": None})
                 out.append(rec)
                 continue
             calls += 1
+            rec["call_sent"] = True
         r = inst.fn(row["artifact"], {"instrument_inputs": {"acceptance_contract": case["acceptance_contract"], "case_row": case}}, "acceptance_contract_screen")
         m = r.get("measurement") or {}
         usd = actual_usd(m.get("usage") or {}, pin)
@@ -333,11 +348,72 @@ def screen_rows(rows: list, cases: dict, inst, pin: dict | None, cap_usd: Decima
                     "agree": ((r.get("overall") == row["controller_verdict"]) if r.get("overall") in JUDGED else None)})
         out.append(rec)
         log(f"  {row['trial_id']}: controller={row['controller_verdict']} screen={r.get('overall')} ({r['verdict']}{'/' + str(r.get('absence_reason')) if r.get('absence_reason') else ''})")
-    return {"rows": out, "calls": calls, "spent_usd": spent, "stopped": stopped}
+    return {"rows": out, "calls": calls, "refused": refused, "spent_usd": spent, "stopped": stopped, "stopped_by": stopped_by}
 
 
-def build_report(screened: list, rows: list, inst, criteria: dict, cases: dict, auth: dict, pin: dict | None, calls: int, spent: Decimal,
-                 results_paths: list, stopped: str | None, dry: bool) -> dict:
+COUNTERS_KEY = "call_counters"
+COUNTERS_SCHEMA = "SCREEN-CALL-COUNTERS-v0"
+BASIS_LIVE = "live_counter"
+BASIS_MISSING = "not_recorded_by_the_live_run"
+NO_LIVE_COUNT = ("this report was rebuilt offline from SCREEN-RESULTS files that carry no live call counter, so the number of "
+                 "calls the screening run actually sent is NOT KNOWN from the repository. Counting screened rows is not the same "
+                 "number: a row is not a call (audio rows are decided cannot_judge without any call, and a skipped or refused row "
+                 "sends nothing). Re-run the screening to record a counter, or read the run log.")
+
+
+def call_counters(calls: int, refused: int, stopped: str | None, stopped_by: str | None, auth: dict,
+                  this_file: int | None = None) -> dict:
+    """The live run's own account of what it sent. Written into every SCREEN-RESULTS file so a later offline rebuild
+    reports THIS number instead of recomputing one from the rows (a row is not a call)."""
+    return {"schema": COUNTERS_SCHEMA, "source": BASIS_LIVE,
+            "screening_calls_sent": int(calls), "screening_calls_refused": int(refused),
+            "calls_sent_for_trials_in_this_file": (int(this_file) if this_file is not None else None),
+            "screen_max_calls": auth.get("screen_max_calls"),
+            "screen_cap_usd": (str(auth["screen_cap_usd"]) if auth.get("present") else None),
+            "stopped": stopped, "stopped_by": stopped_by}
+
+
+def live_call_counters(docs: list) -> dict:
+    """What the LIVE screening run recorded, read back off its SCREEN-RESULTS documents. Returns calls None (and a basis
+    saying why) whenever there is no single live counter to report - the report then prints no number at all."""
+    none = {"calls": None, "refused": None, "stopped": None, "stopped_by": None, "basis": BASIS_MISSING}
+    counters = [d[COUNTERS_KEY] for d in docs if isinstance((d or {}).get(COUNTERS_KEY), dict)]
+    if not counters:
+        return none
+    sent = {int(c["screening_calls_sent"]) for c in counters if c.get("screening_calls_sent") is not None}
+    if len(sent) != 1:
+        return {**none, "basis": (f"conflicting_live_counters:{sorted(sent)}" if sent else BASIS_MISSING)}
+    return {"calls": sent.pop(), "basis": BASIS_LIVE,
+            "refused": max((int(c.get("screening_calls_refused") or 0) for c in counters), default=None),
+            "stopped": next((c.get("stopped") for c in counters if c.get("stopped")), None),
+            "stopped_by": next((c.get("stopped_by") for c in counters if c.get("stopped_by")), None)}
+
+
+def calls_section(calls: int | None, basis: str, auth: dict, stopped: str | None, stopped_by: str | None) -> dict:
+    """How the report is allowed to talk about the call count. `calls` is None whenever no live counter exists - the
+    report then says so in words and prints NO number that could be mistaken for an authoritative one."""
+    limit = auth.get("screen_max_calls")
+    at_limit = (calls is not None and limit is not None and int(calls) >= int(limit))
+    sec = {"calls": (int(calls) if calls is not None else None), "calls_basis": basis,
+           "authorised_screen_max_calls": limit,
+           "calls_at_or_above_authorised_limit": (at_limit if (calls is not None and limit is not None) else None),
+           "stopped": stopped, "stopped_by": stopped_by}
+    if calls is None:
+        sec["calls_note"] = NO_LIVE_COUNT
+    elif limit is None:
+        sec["calls_note"] = f"{calls} call(s) sent (live counter); no screen_max_calls was authorised, so there is no limit to compare against"
+    elif at_limit:
+        sec["calls_note"] = (f"ATTENTION: the live counter records {calls} call(s) sent against an authorised screen_max_calls of {limit}. "
+                             f"The run is at or above its authorised limit"
+                             + (f" and stopped on {stopped_by}." if stopped_by else "; no stop was recorded, which needs explaining."))
+    else:
+        sec["calls_note"] = f"{calls} call(s) sent (live counter), within the authorised screen_max_calls of {limit}"
+    return sec
+
+
+def build_report(screened: list, rows: list, inst, criteria: dict, cases: dict, auth: dict, pin: dict | None, calls: int | None, spent: Decimal,
+                 results_paths: list, stopped: str | None, dry: bool, calls_basis: str = BASIS_LIVE, refused: int | None = None,
+                 stopped_by: str | None = None) -> dict:
     judged = [r for r in rows if r["controller_verdict"] in JUDGED]
     with_art = [r for r in judged if r["artifact"] and r["media_kind"] in ("image", "video")]
     audio = [r for r in judged if r["media_kind"] == "audio"]
@@ -375,16 +451,19 @@ def build_report(screened: list, rows: list, inst, criteria: dict, cases: dict, 
         "cannot_judge": [{"trial_id": s["trial_id"], "question": s["question"], "route_key": s["route_key"], "controller_verdict": s["controller_verdict"],
                           "rules_cannot_judge": [r["rule_id"] for r in s.get("rules", []) if r["verdict"] == "cannot_judge"]} for s in cannot],
         "errors": [{"trial_id": s["trial_id"], "note": s.get("note"), "http_status": s.get("http_status")} for s in errors],
-        "spend": {"calls": calls, "price_pinned": pin is not None, "price_pin": pin, "usd_at_pinned_price": (str(spent) if pin else None),
-                  "prompt_tokens": inst.session.prompt_tokens, "output_tokens": inst.session.output_tokens, "total_tokens": inst.session.total_tokens,
-                  "stopped": stopped},
+        "spend": {**calls_section(calls, calls_basis, auth, stopped, stopped_by),
+                  "calls_refused": refused, "screened_rows": len(screened),
+                  "price_pinned": pin is not None, "price_pin": pin, "usd_at_pinned_price": (str(spent) if pin else None),
+                  "prompt_tokens": inst.session.prompt_tokens, "output_tokens": inst.session.output_tokens, "total_tokens": inst.session.total_tokens},
         "qualification": q,
     }
 
 
-def screen_results_doc(run_results_path: Path, rows: list, inst, criteria: dict) -> dict:
+def screen_results_doc(run_results_path: Path, rows: list, inst, criteria: dict, counters: dict | None = None) -> dict:
     doc = yaml.safe_load(Path(run_results_path).read_text(encoding="utf-8")) or {}
     return {"schema": "SCREEN-RESULTS-v0", "run_id": doc.get("run_id") or Path(run_results_path).parent.name, "results_ref": _rel(run_results_path),
+            "draw_class": EM.draw_class_of(doc),
+            **({COUNTERS_KEY: counters} if counters else {}),
             "results_sha256": _sha256_file(run_results_path), "screened_utc": _now(),
             "instrument": {"id": inst.id, "version": inst.version, "model": inst.session.model, "config_hash": inst.config_hash,
                            "qualification_status": inst.qualification_status, "surface": VS.SURFACE, "credential_name": VS.KEY_NAME},
@@ -469,18 +548,24 @@ def report_from_screen_results(a, rows, cases, criteria, pin, results_paths, log
         log(f"REFUSED: no SCREEN-RESULTS files match {a.report_from_screen_results!r}")
         return 2
     screened, inst_doc, p_tok, o_tok, spent = [], None, 0, 0, Decimal("0")
+    docs = []
     for f in files:
         doc = yaml.safe_load(Path(f).read_text(encoding="utf-8")) or {}
+        docs.append(doc)
         inst_doc = inst_doc or doc.get("instrument") or {}
         for t in doc.get("trials", []):
             screened.append(t)
             u = t.get("usage") or {}
             p_tok += int(u.get("promptTokenCount") or 0); o_tok += int((u.get("candidatesTokenCount") or 0) + (u.get("thoughtsTokenCount") or 0))
             spent += Decimal(str(t.get("usd_at_pinned_price") or 0))
-    calls = sum(1 for t in screened if t.get("screen_overall") is not None or t.get("http_status"))
+    # The call count is the LIVE run's own counter or nothing. It is never recomputed from the screened rows:
+    # a row is not a call (an audio row is cannot_judge with no call; a skipped or refused row sends nothing).
+    live = live_call_counters(docs)
+    calls, refused, stopped, stopped_by, calls_basis = live["calls"], live["refused"], live["stopped"], live["stopped_by"], live["basis"]
     inst = _OfflineInstrument(inst_doc or {}, _OfflineSession((inst_doc or {}).get("model"), p_tok, o_tok))
     auth = load_auth(a.auth) if a.auth else {"present": False}
-    report = build_report(screened, rows, inst, criteria, cases, auth, pin, calls, spent, results_paths, None, dry=False)
+    report = build_report(screened, rows, inst, criteria, cases, auth, pin, calls, spent, results_paths, stopped, dry=False,
+                          calls_basis=calls_basis, refused=refused, stopped_by=stopped_by)
     report["mode"] = "rebuilt_offline_from_screen_results"
     report["rebuilt_from"] = [_rel(Path(f)) for f in files]
     out = Path(a.out); out.parent.mkdir(parents=True, exist_ok=True)
@@ -488,7 +573,8 @@ def report_from_screen_results(a, rows, cases, criteria, pin, results_paths, log
                    + yaml.safe_dump(report, allow_unicode=True, sort_keys=False, width=140), encoding="utf-8")
     q = report["qualification"]
     log(f"wrote {out}: compared {report['agreement']['n_compared']}, agreement {report['agreement']['agreement_rate']}, kappa {report['agreement']['cohens_kappa']}, "
-        f"false-accept {report['agreement']['false_accept_rate']}; verdict {q['qualification_verdict']} (would be {q['would_verdict']}); calls {calls}, USD {spent}")
+        f"false-accept {report['agreement']['false_accept_rate']}; verdict {q['qualification_verdict']} (would be {q['would_verdict']}); "
+        f"calls {calls if calls is not None else 'NOT RECORDED by the live run (see spend.calls_note)'}, USD {spent}")
     return 0
 
 
@@ -543,10 +629,13 @@ def main(argv=None, transport=None, key_reader=None, log=print) -> int:
         rp = Path(rp)
         dest = (Path(a.screen_out_dir) / rp.parent.name / SCREEN_RESULTS_FILE) if a.screen_out_dir else rp.parent / SCREEN_RESULTS_FILE
         dest.parent.mkdir(parents=True, exist_ok=True)
+        counters = call_counters(res["calls"], res["refused"], res["stopped"], res["stopped_by"], auth,
+                                 this_file=sum(1 for r in recs if r.get("call_sent")))
         dest.write_text("# SCREEN-RESULTS-v0 - written by eval/harness-v2/qualify_screen.py; screened_not_qualified tier input; never a Registry row.\n"
-                        + yaml.safe_dump(screen_results_doc(rp, recs, inst, criteria), allow_unicode=True, sort_keys=False, width=140), encoding="utf-8")
+                        + yaml.safe_dump(screen_results_doc(rp, recs, inst, criteria, counters), allow_unicode=True, sort_keys=False, width=140), encoding="utf-8")
         log(f"wrote {dest} ({len(recs)} trials)")
-    report = build_report(res["rows"], rows, inst, criteria, cases, auth, pin, res["calls"], res["spent_usd"], results_paths, res["stopped"], dry=False)
+    report = build_report(res["rows"], rows, inst, criteria, cases, auth, pin, res["calls"], res["spent_usd"], results_paths, res["stopped"], dry=False,
+                          calls_basis=BASIS_LIVE, refused=res["refused"], stopped_by=res["stopped_by"])
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("# QUALIFICATION-REPORT-v0 - written by eval/harness-v2/qualify_screen.py against SCREEN-QUALIFICATION-CRITERIA-v0.yaml (unfrozen until the Controller freezes it).\n"

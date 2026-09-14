@@ -1,0 +1,70 @@
+# ACCEPTANCE-STYLE-v0 — the discipline every acceptance contract in the production path obeys.
+#
+# Lifted, deliberately, from the Lab's frozen contracts:
+#   eval/empirical-planning/STAGE-A-FREEZE-2026-09/ACCEPTANCE-CONTRACTS.md
+#   eval/empirical-planning/STAGE-A-FREEZE-2026-09/tools/build.py  (the build-time LEAK guard)
+#
+# Three to six statements a first-language judge can decide FROM THE ARTIFACT ALONE, with no
+# prompt, route name, model name, arm, cost, rule id or Canon reference in front of them. This is
+# what the person approving the delivery reads, and PRODUCTION-SPEC-v0 freezes it before the
+# first draw.
+schema: ACCEPTANCE-STYLE-v0
+
+count:
+  min: 3
+  max: 6
+
+# Every statement opens with one of these. No rubric scores, no adjective without an observable.
+required_openings:
+- "ACCEPT only if "
+- "REJECT if "
+
+# A statement matching any of these leaks something the judge must not see. Case-insensitive.
+banned_patterns:
+- name: leak_from_stage_a_build
+  pattern: "\\b(E[1-5]|USD|arm [ABC]|arm-[ABC]|route|Canon|PA-D\\d+|CA-D\\d+|composited|pinned|tranche|Registry)\\b"
+  why: "the Stage-A build's own guard, kept byte-for-byte so the two contracts read alike"
+- name: rule_id
+  pattern: "\\bRR-\\d+\\b"
+  why: "a routing rule id is evidence bookkeeping, not something visible in a picture"
+- name: pack_or_check_id
+  pattern: "\\b[A-Z]{2}-D\\d+(-check)?\\b"
+  why: "a doctrine decision id is not decidable from the artifact"
+- name: price
+  pattern: "\\b(cost|price|per (accepted )?(picture|draw|call)|\\$\\s*\\d)\\b"
+  why: "money never reaches the judge"
+- name: strategy_name
+  pattern: "\\b(code_set_on_textless_plate|generated_in_scene|textless plate|code overlay)\\b"
+  why: "how it was made is not a property of the artifact"
+- name: provider_word
+  pattern: "\\b(provider|generator|api|prompt|pipeline)\\b"
+  why: "the judge is shown a picture, not a pipeline. NB the bare word `model` is deliberately\n    allowed: a human model may be the subject of a statement (Stage A: \"the model's hand visibly\n    holds the pack\"). Model NAMES are caught by the derived provider tokens instead."
+
+# Model / route identity tokens are NOT listed here. They are derived at call time from the route
+# keys in ROUTING-EVIDENCE-MAP-v0.yaml, so a provider added to the map is guarded the same day,
+# with no edit to this file. See runtime/evidence/evidence_map.py:brand_tokens.
+derive_model_name_tokens_from_evidence_map: true
+
+# Statements the compiler derives from the job itself, before the reasoning pass adds any. Each
+# is emitted only when its condition is true of the job; none of them names a deliverable kind.
+derived_statements:
+- id: exact_strings_read_exactly
+  when: exact_text_present
+  template: >-
+    ACCEPT only if the lettering reads exactly {strings} — every character as given; REJECT on any
+    wrong, missing, doubled or invented character.
+- id: no_other_lettering
+  when: exact_text_present
+  template: >-
+    REJECT if any other lettering or pseudo-lettering appears anywhere, or if any of the required
+    lettering is cut by the frame edge or overlaps other lettering.
+- id: identity_line_up
+  when: identity_reference_present
+  template: >-
+    ACCEPT only if the {role} in the result is the one in the supplied picture when the two are
+    shown side by side with two look-alikes; REJECT if a different one is picked.
+- id: nothing_added
+  when: supplied_asset_edit
+  template: >-
+    REJECT if anything that was not in the supplied picture appears in it, or if a smudge, a
+    repeated texture patch or a colour seam is visible where something was changed.

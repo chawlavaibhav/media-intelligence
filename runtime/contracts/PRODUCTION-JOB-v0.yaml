@@ -1,0 +1,103 @@
+# PRODUCTION-JOB-v0 — one customer request entering the production path.
+# Frozen contract. A field may be added in v1; a v0 field is never re-meaning-ed in place.
+#
+# This object is written ONCE when a job is accepted into the system and never edited afterwards.
+# Everything that happens later hangs off job_id.
+schema: PRODUCTION-JOB-v0
+status: FROZEN_CONTRACT
+
+fields:
+
+  job_id:
+    type: string
+    required: true
+    note: >-
+      Client-supplied idempotency key. Submitting the same job_id twice must return the existing job
+      and must never dispatch a second provider call. This is the single defence against a retry
+      storm costing money twice.
+
+  received_utc: {type: timestamp, required: true}
+  customer_ref: {type: string, required: true, note: "opaque customer/account id; never a person's name in this field"}
+
+  brief:
+    type: object
+    required: true
+    fields:
+      text: {type: string, required: true, note: "the customer's own words, stored verbatim, never rewritten in place"}
+      language: {type: string, required: false, note: "en | hi | hg | other; free string, never pooled downstream"}
+      market: {type: string, required: false}
+
+  exact_text_strings:
+    type: list[object]
+    required: false
+    note: >-
+      Strings that MUST appear character-exact in the deliverable (price, offer, legal line, brand
+      name). The evidence is unambiguous that these are set by code, not generated
+      (eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml RR-1, RR-3, RR-6). Each entry carries the
+      string, its script, and whether it may be re-flowed.
+    fields:
+      value: {type: string, required: true}
+      script: {type: string, required: false, note: "latin | devanagari | other"}
+      may_reflow: {type: bool, default: false}
+
+  reference_assets:
+    type: list[object]
+    required: false
+    note: "customer-supplied product shots, logos, faces, previous creative"
+    fields:
+      asset_id: {type: string, required: true}
+      role: {type: string, required: true, note: "product | logo | person | scene | prior_creative | other"}
+      sha256: {type: string, required: true}
+      content_type: {type: string, required: true}
+      provenance: {type: string, required: true, note: "customer_supplied | generated_stand_in | library"}
+      consent_ref: {type: string, required: false, note: "required when role is person"}
+
+  deliverable_request:
+    type: object
+    required: true
+    fields:
+      kind: {type: string, required: true, note: "open vocabulary, resolved against runtime/contracts/DELIVERABLE-KINDS.yaml; NOT a closed enum"}
+      aspect: {type: string, required: true}
+      count: {type: int, default: 1}
+      motion:
+        type: object
+        required: false
+        note: "present only when the customer wants a moving version; absence is not a limitation, only an absence"
+        fields:
+          seconds: {type: number, required: true}
+          from: {type: string, default: accepted_still, note: "accepted_still | text_to_video | reference; see RR-8 and RR-15"}
+          audio: {type: bool, default: false}
+
+  policy_profile:
+    type: string
+    required: true
+    note: >-
+      Names the row in runtime/contracts/POLICY-PROFILES.yaml that supplies every limit for this job
+      (draw budget, repair allowance, acceptance authority, retention, fallback behaviour). The limits
+      live in the profile, never in code, so a wider profile is a configuration change.
+
+  cost_ceiling_usd:
+    type: decimal
+    required: true
+    note: >-
+      Hard per-job ceiling, checked BEFORE every dispatch, on the same reserve-then-settle discipline
+      the Lab ledger uses. A job that would cross it stops cleanly and reports; it never half-delivers.
+
+  deadline_utc: {type: timestamp, required: false}
+
+  retention:
+    type: object
+    required: true
+    fields:
+      policy_ref: {type: string, required: true}
+      delete_after_days: {type: int, required: true}
+    note: "customer media retention is a contract field, not an operational afterthought"
+
+  submitted_by: {type: string, required: true}
+
+invariants:
+  - "job_id is idempotent: a repeat submission returns the existing job and dispatches nothing."
+  - "The job object is immutable after creation. Corrections create a new job that references this one."
+  - "No limit is read from code. Every limit comes from cost_ceiling_usd or the named policy_profile."
+  - "deliverable_request.kind is an open vocabulary. Adding a deliverable never edits this contract."
+  - "A reference asset with role 'person' without consent_ref is refused at intake, before any spend."

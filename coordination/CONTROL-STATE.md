@@ -5,299 +5,242 @@ deferred, cancelled; the current empirical floor; Registry state; spend authorit
 next Controller gate. It is a synthesis backed by the durable Controller decisions it links — where
 it and any older prose disagree, the latest durable Controller decision governs.
 
-**Updated:** 9 Sep 2026 — Image Round 1 executed and judged (branch `work/eval-040-image-round-1`); earlier: 8 Sep Capability Lab direction ratified and Image Round 1 authorised (PR #87), on top of the 7-Sep gate merge. Byte-for-byte pre-text: `history/CONTROL-STATE-PRE-CAPABILITY-LAB-2026-09-08.md`. Earlier: CANON-GATE-001 merged (PR #88, merge commit `7dd064c`; thirteen
-Controller records `CONTROLLER-CANON-GATE-001-*`, the last being the merge decision) on top of the
-1-Sep REP-07 / EVAL-038 / CANON-SHAPE-v1 integration, the 31-Aug EVAL-037 conclusion and the 29-Aug
-Media Factory programme reset.
-The current programme direction is governed by
-`coordination/decisions/CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md` and
-`coordination/decisions/CONTROLLER-EVAL-037-CONCLUSION-2026-08-31.md`, plus the newer 1-Sep trio:
-`CONTROLLER-REP-07-ADMISSION-BATCH-2026-09-01.md`,
-`CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md` and
-`CONTROLLER-CANON-SHAPE-V1-DIRECTION-2026-09-01.md`; CANON-014 integration remains recorded in
-`coordination/decisions/CONTROLLER-CANON-014-INTEGRATION-2026-08-30.md`. The text immediately before
-this refresh is preserved byte-for-byte at
-`history/CONTROL-STATE-PRE-GATE-001-REFRESH-2026-09-07.md` (the 1 Sep text at
-`history/CONTROL-STATE-PRE-EVAL-038-REFRESH-2026-09-01.md`), and the pre-migration full text at
-`history/CONTROL-STATE-PRE-CONTEXT-MIGRATION-2026-08-28.md`; the last full Governor
-reconciliation remains GOV-006 (`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`).
+**Updated:** 14 Sep 2026 — full Governor refresh ordered by ruling C-6
+(`coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md`) after the 10-Sep audit's
+fifteen open items were ruled on and the derivative routing map and taint register were regenerated
+under those rulings. The text immediately before this refresh is preserved byte-for-byte at
+`history/CONTROL-STATE-PRE-AUDIT-CLOSEOUT-REFRESH-2026-09-14.md` (earlier snapshots:
+`history/CONTROL-STATE-PRE-CAPABILITY-LAB-2026-09-08.md`, `…-PRE-GATE-001-REFRESH-2026-09-07.md`,
+`…-PRE-EVAL-038-REFRESH-2026-09-01.md`, `…-PRE-CONTEXT-MIGRATION-2026-08-28.md`).
+
+**Governing decisions of 14 Sep 2026** (all under `coordination/decisions/`; each quotes the
+Controller's words verbatim and states what it does not authorise):
+
+| Record | Rules on |
+|---|---|
+| `CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md` | C-1 (two cap crossings accepted as recorded), C-5b (19-vs-16 call limit accepted as recorded), C-2 (caps enforced against the ledger at dispatch; vendor billing is a separate reconciliation field) |
+| `CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md` | C-3 (frozen elimination rule applied literally), C-4 (affected human cells are descriptive until recomputed or replaced), C-6b (strict: a failed draw stays a failure; RR-16 withdrawn), C-6c (two exact-text mechanisms, two route identities; RR-1 rewritten), C-6d (elimination per route and question) |
+| `CONTROLLER-AUTHORISATION-LINEAGE-CUMULATIVE-BUDGET-2026-09-14.md` | C-6a (an amendment never resets consumed spend) |
+| `CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md` | C-6 (this refresh) |
+| `CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md` | C-7 (Alpha 1 frozen), C-8 (human approval before every external delivery), C-11 (twelve-condition public-release gate) |
+| `CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md` | C-9 (stop widening the Lab), C-10 (USD-0 Canon Injection v1 + template/empirical memory authorised; no further packs) |
+
+The Controller's rider applies to every one of them: **adopting the Alpha policy is NOT spend
+authorisation; no paid dispatch is authorised by any 14-Sep decision.** Earlier direction still in
+force: `CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md` (as narrowed by C-9),
+`CONTROLLER-CANON-SHAPE-V1-DIRECTION-2026-09-01.md`, `CONTROLLER-EVAL-038-…-2026-09-01.md`,
+`CONTROLLER-EVAL-037-CONCLUSION-2026-08-31.md`, `CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md`.
 
 **Read `PROJECT-MEMORY.md` first.**
 
-## Active / authorised
+## 1. Where the work is (14 Sep 2026)
 
-### Capability Lab (ratified 8 Sep 2026)
+- `main` = `dcfa6af` (PR #93's merge commit; EVAL-043).
+- Integration branch `work/audit-closeout-and-runtime-v0` carries, in order: the 10-Sep audit set
+  and nine zero-spend repairs (`850003f`), the runtime contracts v0→v1 and lanes PC-03A (brief →
+  Production Specification) and PC-03B (evidence-aware router), and the 14-Sep closeout: the six
+  Controller records, the recomputed routing map and taint register, cumulative budget lineage in
+  the ledger, the Alpha-1 policy as data, and this refresh. It is pushed and opened as a PR to
+  `main`; **the Controller merges**, nobody else.
+- A child branch `work/runtime-alpha-vertical-slice-v0` (stacked on the closeout branch) carries the
+  USD-0 runtime tranche that follows: the dry execution bridge, pre/post gates, bounded repair,
+  human-acceptance states, the empirical-memory event, Canon Injection v1, the template library and
+  the one-command dry battery. Its own state is described in `runtime/ALPHA-1.md` and its PR.
+- PR #94 (`work/audit-brief-2026-09-10`, the audit brief itself) is still open and untouched.
 
-**Governing decision:** `coordination/decisions/CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md`
-(Controller: *"Go for it. Approved now"*, 8 Sep). The programme is centred on the empirical
-model/workflow battery whose output is a **conditional routing map**, not a leaderboard. Plan:
-`coordination/plans/2026-09-05-CAPABILITY-LAB-CAMPAIGN-v1.md`. Frozen inputs on `main`: the Stage A
-test-case package `eval/empirical-planning/STAGE-A-FREEZE-2026-09/` (35 customer-shaped cases, 35
-Canon blueprints; EVAL-039A, PASS WITH NOTES), the September roster and price pins
-`eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml` (EVAL-039B, PASS WITH NOTES), and the
-execution harness `eval/harness-v2/` with seven deterministic instruments and the Q1 geometry
-qualification record (EVAL-039C, PASS WITH NOTES; 140 tests; refuses every dispatch without a signed
-authorisation file).
+## 2. Active / authorised
 
-| Task | Purpose | Spend / generation authority |
+| Item | What is authorised | Spend authority |
 |---|---|---|
-| **EVAL-040 — Image Round 1** | **Executed and judged (8–9 Sep 2026).** 76 + 8 redo + 4 composite-plate calls + 1 smoke; 79 sealed artifacts; blind Controller verdicts 55/75 accept, composite arm 4/4; spend ≈ USD 5.36 of the cap. Results: `eval/experiments/EVAL-040/runs/img-r1/IMAGE-ROUND-1-SUMMARY.md`, `RESULTS.yaml`. Registry rows **not yet written** — instrument thresholds unfrozen (MD-C1) | **₹1,200 = USD 12.58 USD-equivalent cap**, 0 retries — `CONTROLLER-SPEND-AUTHORISATION-IMAGE-ROUND-1-2026-09-08.md` (+ §6 addendum, composite re-run) |
-| EVAL-040 — remaining image half, video rounds, Stage B, Stage C | Sized and authorised piece by piece after each judging sitting | **Not authorised** |
+| **Alpha 1 product family** (C-7) | One static commercial ad with exact **overlay** copy (text composed by code onto a textless plate — exact-text mechanism B), optionally followed by one short motion version derived **only** from the accepted still. Supplied-photo work is conditional behind the identifiable-person / consent gate. Excluded: talking heads, lip-sync, native speech, multi-shot stories, generated in-scene exact text. Encoded as data in `runtime/contracts/POLICY-PROFILES.yaml` (`alpha_human_release`, `adopted: true`); described for a new engineer in `runtime/ALPHA-1.md` | **None.** `spend_authority.status: none` on every profile. Adoption is a policy agreement, not money |
+| **Human release** (C-8) | Every Alpha-1 output needs human approval before external delivery; no autonomous external delivery; the automated judge is out of the release path (agreement 66 %, false-accept 22 %) | — |
+| **Public-release gate** (C-11) | Auditor A's twelve T8 conditions adopted as the bar for public delivery; held as data on the alpha profile. **None of the twelve is met today** | — |
+| **Canon Injection v1 + template / empirical-memory integration** (C-10) | USD-0 implementation only, following `canon/CANON-SHAPE-v1.md` §4: deterministic pack lookup, accepted Canon only, stable cached prefix, no compliance receipts, mechanical gates, accepted blueprint → reusable template. **The remaining eight packs are not compiled** unless a real runtime failure demands one | USD 0; no tokens, no model, no provider call to "prove" it |
+| **Runtime engineering at USD 0** | Everything on the two branches above: contracts, intake, spec compiler, router, dry execution, gates, repair/acceptance states, memory event, CLI, dry battery. The `dry` operating profile sends nothing | USD 0 |
+| **Capability Lab** (C-9) | **Stopped widening.** No generic model battery, no premium-model sweep, no expansion to make tables prettier. New evidence work only when the production runtime exposes a launch-critical hole. The 8-Sep direction stands only as narrowed here | **Not authorised** — every Group-3 item (C-12 cheapest-tier round, C-13 Gemini API smoke, C-14 judge v2, C-15 clean reruns, C-16 still round two, C-17 Stage B, C-18 Stage C) needs its own signed spend record; none exists |
 
-Superseded by the ratified direction (explicitly, see the decision's §2): the 29-Aug reset's queue
-item 4 ("no new media before T2B") and its "USD 25 T2 screen remains declined" line. Preserved:
-EVAL-037/038 dispositions, CANON-SHAPE-v1, the Registry admission bar, the reserved Canon verdict.
+Merged and closed earlier (unchanged): CANON-012, CANON-013, EVAL-035, RES-007, PILOT-001 freeze
+and its USD 2.00 authorisation (never executed under the runtime; the PILOT-001 recipe is superseded
+in practice by the Alpha-1 family but its record is not withdrawn).
 
-Four **zero-spend pre-pilot tasks are authorised in parallel**:
-
-| Task | Purpose | Spend / generation authority |
-|---|---|---|
-| **CANON-012** | **Merged / closed.** Corrected Aight NR + Creative IR seed integrated; official Aight wordmark/master remains a PILOT-001 input gate | USD 0; 0 generations |
-| **CANON-013** | **Merged / closed.** Feasibility triage integrated; proposed 8/8 development/holdout split remains **unfrozen** | USD 0; 0 generations |
-| **EVAL-035** | **Merged / closed.** Direct Gemini/Veo pilot substrate integrated; merged RES-007 writer/validator integration and persistent PILOT-001 spend/cost_ref continuity proven | USD 0; **no real provider call** |
-| **RES-007** | **Merged / closed.** Pilot outcome writer + final G12 enforcement integrated; Governor Level-1 PASS WITH NON-BLOCKING NOTES | USD 0; synthetic bytes only |
-
-Authority: `coordination/decisions/CONTROLLER-REVISED-PROGRAM-AND-PREPILOT-TRANCHE-2026-08-28.md`.
-
-The next integration target is **PILOT-001**: customer prompt → Normalized Request → Creative IR
-→ frozen manual production recipe → real generation → deterministic brand/text composition →
-explicit human inspection → bounded repair → candidate accepted outcome. It is product-learning only
-— not Registry evidence, not Stage C.
-
-**PILOT-001 brief / brand source / production recipe / acceptance contract are now frozen** under
-`CONTROLLER-PILOT-001-AIGHT-FREEZE-2026-08-28.md`. The previous wordmark blocker is resolved by the
-official Aight website-source definition. **Paid PILOT-001 execution is now authorised** under
-`CONTROLLER-PILOT-001-SPEND-AUTHORISATION-2026-08-28.md` with a hard max consumed API spend of
-**USD 2.00** and **0 retries**. Execution still requires a matching local runtime authorisation,
-execution-time route/price verification, and `GEMINI_API_KEY` availability.
-
-CANON-013 runs independently because its output gates the later architecture experiment, not the
-Aight pilot.
-
-## Stopped / deferred / cancelled
+## 3. Stopped / deferred / cancelled
 
 | Item | Disposition | Authority (under `coordination/decisions/` unless noted) |
 |---|---|---|
-| EVAL-031 | **Stopped — do not start as written** | `CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md` |
-| EVAL-032, EVAL-033 | **Stopped as immediate priorities**; valid future lab tasks only when automated temporal-evaluator qualification is again the objective | `CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md` |
-| EVAL-034 | **Cancelled** | `CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md` |
-| RES-006 | **Deferred** | same |
-| EVAL-028 | **Cancelled — must not be executed**; no mandatory human-in-the-loop step exists in the production API architecture | `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md` |
-| EVAL-006 | **Paused — do not execute**; spend authority withdrawn | `CONTROLLER-PAUSE-EVAL-006-PENDING-MASTER-PLAN-2026-08-26.md` |
-| GOV-007 | **Not authorised** | `CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md` |
-| Historical E7 paid admission / E8 deep qualification | Blocked | pre-execution decisions |
-| Canon value gate / EVAL-037 | **Concluded for programme direction:** Canon helps; retrieval/consumption is not mature | `CONTROLLER-EVAL-037-CONCLUSION-2026-08-31.md` |
-| EVAL-038 substitution configuration | **Closed — refuted 0/6; do not rerun to reconfirm.** The verdict on whether Canon works is **reserved to the Controller** | `CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md` |
-| Forced-consumption receipt schema (`INJECTION-CONTRACT-v0.md`) | **Retired as a production mechanism**; the gate verifies mechanically instead | `CONTROLLER-CANON-SHAPE-V1-DIRECTION-2026-09-01.md` |
+| Capability Lab widening (further battery rounds, premium sweep, "prettier tables") | **Stopped** | `CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md` (C-9) |
+| The "next gates" listed on 10 Sep (cheapest Wan/Kling floor round, Seedance on the bottle briefs, judge v2, still round two, Gemini API adapter smoke) | **Not gates any more.** Recorded as Group-3 items C-12…C-18; each is authorised only by its own future spend record, and only where the runtime exposes a launch-critical hole | same |
+| Compiling the remaining eight Canon packs | **Not authorised** unless a real runtime failure demands one | same (C-10) |
+| EVAL-031 | Stopped — do not start as written | `CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md` |
+| EVAL-032, EVAL-033 | Stopped as immediate priorities | `CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md` |
+| EVAL-034 | Cancelled | `CONTROLLER-PARALLEL-EMPIRICAL-UNBLOCK-CORRECTION-2026-08-28.md` |
+| RES-006 | Deferred | same |
+| EVAL-028 | Cancelled — must not be executed | `eval/status/EVAL-028-SUPERSEDED-2026-08-28.md` |
+| EVAL-006 | Paused; spend authority withdrawn | `CONTROLLER-PAUSE-EVAL-006-PENDING-MASTER-PLAN-2026-08-26.md` |
+| GOV-007 | Not authorised | `CONTROLLER-STOP-TEMPORAL-PREP-PRIORITISE-PRODUCT-PILOT-2026-08-28.md` |
+| EVAL-038 substitution configuration | Closed — refuted 0/6; the verdict on whether Canon works stays reserved to the Controller | `CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md` |
+| Forced-consumption receipt schema (`INJECTION-CONTRACT-v0.md` §1) | Retired as a production mechanism; the gate verifies mechanically | `CONTROLLER-CANON-SHAPE-V1-DIRECTION-2026-09-01.md` |
 
-**No worker may infer authorisation from an old task file.** A task file is not an authorisation;
-where it disagrees with a newer Controller decision, the decision wins.
+**No worker may infer authorisation from an old task file.** Where a task file, handoff or summary
+disagrees with a newer Controller decision, the decision wins.
 
-## Settled lanes — all merged, none active (do not restart, re-run or regenerate)
+## 4. Settled lanes — all merged, none active (do not restart, re-run or regenerate)
 
-| Lane | One-line result | Spend | Authority (under `coordination/decisions/`) |
+| Lane | One-line result | Spend | Authority |
 |---|---|---|---|
-| **CANON-GATE-001** | **Merged / closed (PR #88, 7 Sep 2026).** The compiled-doctrine gate as code under `canon/gate/`: 21 check lines rendered by id, pre-dispatch over package + prompts, post-draw over artifact bytes; blocking set = baked-text guard, delivered-vs-declared, named-ratio prohibition, integrity rows, extraction errors; declaration partials report only. 10 of 21 lines mechanised partially, 11 not — printed on every run. Fails both EVAL-038 video packages on the baked-text sentences; passes the accepted image. Built maker/checker, nine bounded checker passes; final merge line "no known PASS-over-unscanned-text path not already ruled deferred: none". **A PASS is structure, never quality; nothing here bears on whether Canon works.** CANON-GATE-002 register opened, not authorised | USD 0; zero provider calls; Cloud Vision adapter wired, never invoked | `CONTROLLER-CANON-GATE-001-MERGE-2026-09-07.md` (Ruling 13) + `CONTROLLER-CANON-GATE-001-BUILD-AUTHORISATION-2026-09-03.md` and Rulings 1–12 |
-| **EVAL-038** | **Merged / closed.** Weak model + the two compiled packs vs a strong model alone, blind, extended to real media: substitution **refuted 0/6** (18/18 top-3 slots to the baseline), the cheap arm cost **more** per package. Media generated is **product learning only — never Registry evidence**. **Decision authority: the verdict on whether Canon works is reserved to the Controller; no worker concludes further.** `canon/findings/PROPOSED-EVAL-038-CONCLUSION.md` is a proposal, not an adopted finding | **USD 2.260122** of a USD 10.00 cap, 0 retries | `CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md` |
-| **REP-07** | **Merged / closed.** 13 inspected candidates admitted; live accepted Canon **24 → 37 sources / 1,300 objects**; `google-abcd` marked `platform_contingent` and `sontag` `critique_context`; three same-work extensions admitted as scoped extensions, never independent origins; `ries` retired for Binet. HOLD now **5** | USD 0 | `CONTROLLER-REP-07-ADMISSION-BATCH-2026-09-01.md` |
-| CANON-014 | **Merged / closed.** Full durable Canon reconciliation: 24 accepted sources total, 18 HOLD/candidate sources retained, 1,028 grounded/ungraded/uncalibrated Q&A items; candidate/Q&A retrieval is **not** enabled in ordinary runtime. *(Those two counts are the state as of 30 Aug 2026 and are preserved, not corrected — REP-07 has since taken live Canon to **37 accepted / 5 HOLD**.)* | USD 0 | `CONTROLLER-CANON-014-INTEGRATION-2026-08-30.md` |
-| CANON-011 | 18 marketplace-derived buyer cases (Upwork buyer postings only), 16 runnable; preferred real-demand pool for Stage-C; grammar **not** reopened (GG-01…GG-04 observations only); `MKT-015` blocked evidence only | USD 0 | `CONTROLLER-CANON-011-INTEGRATION-2026-08-28.md` |
-| EVAL-024 | 16/16 A-TEXT coordinates generated and **sealed as committed bytes** — durable evidence, **do not regenerate** (manifest fingerprint `1e124343…`) | USD 0.904 | `CONTROLLER-EVAL-024-INTEGRATION-2026-08-28.md` |
-| EVAL-029 | Cloud Vision `TEXT_DETECTION` (no language hints) **benchmark-qualified** on Devanagari and Latin; **strict-exactness disqualified**; evidence sealed, recomputable from a fresh clone | USD 0.4320 | `CONTROLLER-EVAL-029-REVIEW-SEAL-EVIDENCE-BEFORE-MERGE-2026-08-28.md` |
-| EVAL-030 | The exact sealed images scored without regeneration: GPT Image 2 **6/8**, Ideogram v3 **1/8**, overall **7/16** — directional signal, not certification. **Registry stays 0** | USD 0.024 | `CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md` |
-| EVAL-026 | Temporal qualification **machinery only**: 13 perturbation types over all 9 frozen `temporal_video` capabilities (7 full, 2 negative-direction-only). No evaluator qualified, no pass mark | USD 0 | `CONTROLLER-EVAL-026-INTEGRATION-2026-08-28.md` |
-| RES-005 | 12 rights-cleared clips from 12 distinct works, 12/12 clean screen; **only 3/3 representative ingest** (not 12/12); role `MAT-TEMPORAL-BASE`, not `PACK-AV-CLEAN` | USD 0 | `CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-MATERIAL-RESOLUTION-2026-08-28.md` |
-| GOV-005 | Closed and merged (PR #48); do not reopen for parallel-lane drift | — | `CONTROLLER-GOV-005-CLOSURE-AND-GOV-006-TRIGGER-2026-08-28.md` |
-| EVAL-012…016 (EMP-001 machinery) | Execution implementation accepted and integrated: persistent spend ledger, mechanical caps, ambiguous-dispatch semantics (pre-dispatch may release headroom; ambiguous post-dispatch must not, retries 0, fail-closed), fingerprint-bound qualification→A-TEXT handoff | USD 0 | `CONTROLLER-EVAL-012…016-REVIEW-*.md` |
+| **EVAL-040…043 (the two-day Capability Lab run, 8–10 Sep)** | 35/35 Stage-A package cases run and judged; 311 sealed media re-hash exactly; **575 deterministic Registry rows** (validator PASS); routing map 61 cells + RR-1…RR-16, **regenerated 14 Sep under the rulings** (see §5); vision judge screened, **not qualified** (kappa 0.33, false-accept 22 %) | ledger **USD 122.241262** counted against caps (see §6) | PRs #90–#93; spend records `CONTROLLER-SPEND-AUTHORISATION-*-2026-09-0[89].md`, `…-WAN2-CONTENDER-ROUND-2026-09-10.md` |
+| **Audit of 10 Sep 2026** | Two independent audits; nine zero-spend repairs; four re-runnable tools (`coordination/audits/tools/`: `reconcile_spend.py`, `recompute_elimination.py`, `verify_price_pins.py`, `build_taint_register.py`) plus `verify_sealed_evidence.py` (14 Sep); fifteen open items → **all ruled 14 Sep** | USD 0 | `coordination/audits/HANDOFF-TO-CONTROLLER-2026-09-10.md` (corrected 14 Sep) and the six 14-Sep records |
+| CANON-GATE-001 | Compiled-doctrine gate as code (`canon/gate/`); 21 check lines by id; blocking set = baked-text guard, delivered-vs-declared, named-ratio, integrity, extraction errors; a PASS is structure, never quality | USD 0 | `CONTROLLER-CANON-GATE-001-MERGE-2026-09-07.md` |
+| EVAL-038 | Weak model + two packs vs strong model alone: refuted 0/6; media is product learning only | USD 2.260122 | `CONTROLLER-EVAL-038-…-2026-09-01.md` |
+| REP-07 | Live accepted Canon 24 → **37 sources / 1,300 objects**; HOLD 5 | USD 0 | `CONTROLLER-REP-07-ADMISSION-BATCH-2026-09-01.md` |
+| CANON-014, CANON-011, EVAL-024, EVAL-029, EVAL-030, EVAL-026, RES-005, GOV-005, EVAL-012…016 | unchanged from the 9-Sep state; see `history/CONTROL-STATE-PRE-AUDIT-CLOSEOUT-REFRESH-2026-09-14.md` §"Settled lanes" for the one-line results | as recorded there | as recorded there |
 
-## Current empirical floor
+## 5. Current empirical floor — four kinds of evidence, never mixed
 
-**Registry no longer empty (9 Sep 2026).** The Controller froze the six deterministic-instrument criteria
-(`CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md`); the harness then wrote **167 rows** from Image
-Round 1 (delivery_format_compliance, latency_errors_refusals, cost_and_cpao trial cost, reliability_pass_at_k,
-reproducibility; 34 cells; n_items 1–2; `independence_status: NOT ESTABLISHED`). Human acceptance stays in the
-tiered `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml`, never in the Registry. **Known consequence of the
-freeze:** the frozen `format_probe` resolution-class rule (long side 960–1100 for "1024-class") fails every
-non-square delivery that providers return at 928×1152 / 720×1280 / 1080×1920 — a specification defect, not a
-model defect; rows stand as measured until the Controller amends the criterion (a new decision and criteria version).
+**A. Deterministic Registry evidence (unchanged by every 14-Sep ruling).** `eval/registry/registry-v1.jsonl`:
+**575 rows over 61 cells**, every row `evidence_tier: deterministic` under the frozen criteria
+(`CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md`); five capabilities only
+(delivery_format_compliance, reliability_pass_at_k, latency_errors_refusals, cost_and_cpao,
+reproducibility); every row `independence NOT ESTABLISHED` — reference calculations, not statistics;
+524 of 575 rest on a single base item. The rows record the failures the run files excluded (they never
+read a human verdict), and where a trial identity was sent twice the Registry holds two rows,
+distinguishable by `run_ids`, which must never be added together. Recompute:
+`python3 eval/registry/validate_registry.py`. **Human acceptance never enters the Registry.**
+
+**B. Clean human-routing evidence.** `eval/capability-map/TAINT-REGISTER-v1.yaml` (regenerated 14 Sep
+under C-3/C-4/C-6b/C-6c/C-6d; `build_taint_register.py --check` = UNCHANGED): **36 of 61 cells
+`clean_observed`** (the literal frozen rule reproduces the number from sealed files, every named
+problem disposed of by a listed ruling, ≥ 4 settled draws). **Production use allowed on 29 cells**; the
+runtime's `alpha_human_release` profile auto-routes **26 of 61** (the 29 minus the three audio cells the
+router cannot price by duration). Every `clean_observed` number is 4–8 draws judged by one person —
+honest evidence, not proof, and never a launch clearance.
+
+**C. Directional / descriptive product evidence.** **25 cells `directional_only`** (fewer than four
+settled draws; a person routes them — `production_use_allowed: manual_only`, 15 cells — or they are
+eliminated). Plus the **descriptive re-sends** retained under C-4/C-6b: the six successful Wan 2.2 A14B
+image-to-video re-sends (5 of 6 accepted) live in the map cell as `descriptive_resends`, labelled "not
+counted", never deleted. Plus every EVAL-038 artifact and the 64-item Media Factory prior
+(`eval/historical-priors/media-factory-v1/`): product learning, never Registry evidence.
+
+**D. Tainted / awaiting / eliminated.** **0 cells awaiting a Controller ruling; 0 `method_tainted`.**
+**17 cells are eliminated on their question under the frozen rule** (`production_use_allowed: false`),
+including VID-I2V/`wan-2.2-a14b-i2v` (2/8 with six HTTP-422 failures counted — E1 and E2),
+VID-T2V/`kling-v3-pro-audio` (2/8, E2) and VID-2SPK/`kling-v3-pro-audio+A_native` (0/2 with two
+failures, E1 and E2). **`replacement_needed: true` on exactly those three**: their elimination rests on
+failures the run classified as infrastructure or request-shape faults; no ruling can re-test them —
+only a clean rerun (Group-3 item C-15, not authorised).
+
+**Routing rules after the rulings.** **RR-16 is withdrawn** as Stage-A image-to-video routing truth
+(`status: withdrawn_as_stage_a_i2v_routing_truth (C-6b)`); Wan 3.0 Prime remains the Wan tier for
+image-to-video (RR-8). **RR-1 now says what was accepted:** a FLUX.2 Pro textless plate onto which
+deterministic code composed the exact strings, 4/4 — the image model did not render the accepted copy;
+the same plates judged bare were 1/4 (eliminated). The two IMG-TEXT cells carry distinct route identities
+(`flux-2-pro` mechanism `model_draws_text`; `flux-2-pro+code_overlay` mechanism
+`deterministic_text_composition`) and every map cell carries `text_mechanism`. RR-15's fractions are the
+literal ones (2/8, 5/8, 4/8); its advice is unchanged. RR-11/RR-12 keep their per-case advice; the
+routes are kept on their questions (C-6d). Regenerate: the commands in
+`coordination/audits/AUDIT-2026-09-10-EVIDENCE-RECOMPUTE.md` §Addendum.
 
 **Still zero:** qualified models/workflows · qualified subjective/perceptual evaluator families ·
-strict-exactness-qualified text evaluators (5 tested, 5 disqualified, unrewritten) · qualified
-temporal evaluators (pass mark `DOES_NOT_EXIST`) · **Capability Registry rows** (**167 as of 9 Sep 2026** — deterministic instruments only, under the frozen criteria; validator passes) · customer-outcome CpAO observations · Production IR /
-Planner · **accepted-outcome-rate measurements** (none commissioned) · **8 of the 10 compiled
-packs** · **post-draw text detection on a real artifact** (adapter wired, never invoked — needs
-spend authority) · **any gate run over a production blueprint** (committed EVAL-038 fixtures only).
+strict-exactness-qualified text evaluators (5 tested, 5 disqualified) · qualified temporal evaluators
+(pass mark `DOES_NOT_EXIST`) · customer-outcome CpAO observations · **accepted-outcome-rate
+measurements** (none commissioned) · **8 of the 10 compiled packs** (and none will be compiled without a
+real runtime failure — C-10) · post-draw text detection on a real artifact (Cloud Vision adapter wired,
+never invoked) · any real (non-dry) run of the production runtime · vendor-billed cost (§6).
 
-**The gate is no longer zero (CANON-GATE-001, below); building it moved none of the zeros above.
-EVAL-038 moved none of them either.** It produced real media and the Controller judged it, but
-that authority labelled media generation **product learning only — never Capability Registry
-evidence**. EVAL-038 artifacts are not a qualified model, not a qualified evaluator, not a Registry
-row, and not a customer-outcome CpAO observation.
+**No longer zero (unchanged from 9 Sep unless marked):** 1 benchmark-qualified text evaluator (Cloud
+Vision `TEXT_DETECTION`, `benchmark_text_ocr_v1`; still not strict-exactness qualified) · 16 sealed
+A-TEXT images scored 7/16 · 12 rights-cleared temporal base clips · EVAL-037 programme conclusion
+("Canon helps; retrieval/consumption not mature") · 37 accepted Canon sources / 1,300 objects / 2 of
+10 compiled packs · the compiled-doctrine gate as code · EVAL-038's committed negative result · **the
+575 deterministic Registry rows and the 61-cell routing map (9–10 Sep)** · **a production runtime that
+exists as code on the integration branch (14 Sep): intake, brief → Production Specification with
+deterministic Canon lookup, evidence-aware router with declared fallback and price pins; every run to
+date is dry — no provider has ever been called by the runtime.**
 
-**No longer zero:**
+**Two text standards** still exist and every text result must name its standard (strict exactness
+certification — nothing has passed; benchmark-grade OCR — Cloud Vision passes). Exact-text imperfection
+is not a programme-wide blocker; under Alpha 1 exact copy is composed by code (mechanism B), which is
+exact by construction and does not depend on any text evaluator.
 
-- **1 benchmark-qualified text evaluator** — Cloud Vision `TEXT_DETECTION`, no language hints,
-  under `benchmark_text_ocr_v1`: Devanagari false-pass 0.1250 / false-fail 0.0208 / consistency
-  1.0; Latin 0.1042 / 0.0000 / 1.0. Still `strict_exactness_qualified: false`. Benchmark
-  qualification never certifies an individual output as exact.
-- **16 A-TEXT generations**, sealed and scored **7/16 exact**.
-- **12 real temporal base clips**, rights-cleared, 12/12 clean.
-- **5 instrument configurations scientifically disqualified** under the strict standard, with the
-  literalness mechanism finding attached (`history/EMP-001.md`).
-- **EVAL-037 programme conclusion:** Canon is worth carrying forward, while the current retrieval / consumption protocol is not mature. This is a bounded programme-direction conclusion, not a universal quantified treatment effect and not Registry evidence. See `eval/experiments/EVAL-037/CONCLUSION.md`.
-- **Canon corpus expanded (REP-07):** **37 live accepted sources · 1,300 SourceKnowledge objects ·
-  132 concept systems · 291 bindings**, with **5 HOLD** (desai, airey, freeman-beyond, samara-ch2;
-  ries retired). Recompute with `python3 canon/validation/validate_audit_gate_v02.py` — 37 records,
-  0 errors. `google-abcd` carries a `platform_contingent` marker and `sontag` a `critique_context`
-  marker; three same-work extensions are scoped extensions, never independent origins. **2 of 10
-  compiled packs** exist. The 1,028 grounded, ungraded, uncalibrated Q&A items remain. The separate
-  accepted/full/Q&A fingerprints are in
-  `canon/knowledge/CANON-CORPUS-INDEX.yaml`. HOLD material remains non-accepted and ordinary
-  runtime retrieval remains `canon/knowledge/current/**` only. **The live count is 37; the
-  CANON-003 method-test corpus stays 16, fixed forever — never confuse the two.**
-- **The compiled-doctrine gate exists as code (CANON-GATE-001, PR #88):** every check traces to a
-  committed pack `check_id` or the pack limit line; every unmechanised line is reported, never
-  counted; the extractor fails closed on curly quotes, sub-floor runs, unbalanced runs, unknown,
-  before-only and repeated headings after the prompts. Recompute: the eight `tests.test_gate_*`
-  modules (274 tests) and `python3 -m tests.test_gate_regression_battery --table` (172 rows).
-  What it does **not** establish: doctrine satisfaction, quality, outcomes, adoption, or any
-  verdict on Canon.
-- **EVAL-038 evidence exists and the substitution question is answered:** 0/6, refuted, committed
-  and never to be rewritten; the pack-guided image won the B06 pair; the compiled doctrine forbids
-  both PILOT-001 candidates the Controller rejected. **Whether Canon works remains the Controller's
-  call.** Evidence: `eval/experiments/EVAL-038/`.
-
-**The Registry is empty deliberately.** `benchmark_qualified` is weaker than the Registry's
-`qualified`/`deterministic` admission bar; **admission must not be weakened to create a first row**
-(`coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md`).
-
-**Important reset clarification (29 Aug): Registry = 0 does NOT mean empirical workflow memory = 0.**
-The Controller has reviewed recovered Media Factory evidence containing dated historical workflow/model
-observations (including a 64-item human-scored still set). These are to be imported as **historical
-empirical priors**, not current Registry rows, under
-`CONTROLLER-PROGRAMME-RESET-MEDIA-FACTORY-PRIORS-2026-08-29.md`.
-
-**A-TEXT manual review is not project evidence.** Any human re-reading of the 16 images outside
-GitHub must not be recorded or used for a Registry row without a new explicit Controller decision.
-The accepted result is the OCR-observed 7/16.
-
-## Spend authority
+## 6. Spend authority and spend of record
 
 | Item | Figure | Authority |
 |---|---|---|
-| **EVAL-040 Image Round 1** (8 Sep 2026) | **₹1,200 = USD 12.58 USD-equivalent** across cash and credits; 0 retries; images only; 76 calls + smoke test | `CONTROLLER-SPEND-AUTHORISATION-IMAGE-ROUND-1-2026-09-08.md` |
-| EMP-001 ceiling (user-approved, **covers EMP-001 only**) | **USD 10.00** total; USD 6.00 qualification sub-cap; 0 retries; no pre-funding above ceiling | `coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md` |
-| Recorded cumulative through EVAL-024 | **USD 2.6397905** | sealed generation manifest + EVAL-024 decision |
-| EVAL-030 evaluator stage | USD 0.024 | sealed scoring evidence + EVAL-030 decision |
-| EVAL-038 (extended to media) ceiling — **spent, not renewed** | **USD 10.00** authorised; **USD 2.260122 consumed**, 0 retries, no cap breach (ledger conservatively 2.760122 with an annotated phantom entry) | `coordination/decisions/CONTROLLER-EVAL-038-AUTHORISATION-AND-DISPOSITION-2026-09-01.md` |
-| Stage-A 90-generation planning estimate (~USD 52 + ₹4.50 Sarvam) | **Unapproved** | `CONTROLLER-VEO-PRICING-UNIT-CORRECTION-2026-08-26.md` (per-second Veo pricing) |
+| **All Capability Lab spend, 8–10 Sep 2026** (ledger consumed, conservative, USD-equivalent across pools) | **USD 119.085109** across the run ledgers (cash USD 77.5235 on fal; cloud credits USD 41.5522; Sarvam ₹0.894; 1,198 ElevenLabs plan credits) **+ USD 3.156153** vision judge outside every run ledger **= USD 122.241262 counted against caps.** USD 108.9706 produced a sealed artifact; USD 10.1145 produced nothing (the upper bound on money vendors may never have billed) | `python3 coordination/audits/tools/reconcile_spend.py`; `AUDIT-2026-09-10-SPEND-RECONCILIATION.md` (+ 14-Sep addendum) |
+| **Two cap crossings** — video piece 1 USD 10.364 vs 9.96; Wan 2 round USD 11.840 vs its final 11.53 | **Accepted as recorded (C-1).** History preserved; nothing annulled. Mechanism fixed: the ledger pools spend per authorisation and, since 14 Sep, per **budget lineage** (`budget_id` / `amends`) so an in-place cap amendment can never reset consumed spend (C-6a; replay test shows the 11.53 crossing would now be refused) | `CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md`; `…-AUTHORISATION-LINEAGE-CUMULATIVE-BUDGET-2026-09-14.md`; `eval/harness-v2/ledger.py` |
+| **19 paid calls against a "≤ 16" record** (stand-in picture run) | **Accepted as recorded (C-5b).** `max_paid_calls` is now enforced across the pooled runs | same record |
+| **Vendor-billed cost** | **Not reconciled.** No statement is filed; `reconcile_spend.py` prints the column as "not reconciled" and exits 0. Caps are enforced against the ledger, never against a bill (C-2). The four statements (fal, Google Cloud, Sarvam, ElevenLabs) still need one reading; who reads them is not settled | C-2 record |
+| EMP-001 (Aug) | USD 2.6397905 through EVAL-024 + USD 0.024 EVAL-030 under a USD 10.00 ceiling | `CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md` |
+| EVAL-038 | USD 2.260122 of USD 10.00; spent, not renewed | `CONTROLLER-EVAL-038-…-2026-09-01.md` |
+| **Any new paid dispatch** — Lab or runtime | **Not authorised.** The runtime's every profile carries `spend_authority.status: none`; the Lab's `authorization.local.yaml` authorises nothing without a new signed record | Controller rider of 14 Sep |
 
-No committed artifact states a cumulative total including EVAL-030's USD 0.024 (GOV-006 **G6-02**,
-routed). The mechanical ceiling and sub-cap are enforced by the live ledger, which stays local by
-design. **Any tranche beyond EMP-001 needs explicit user approval.**
+Mechanical enforcement stays local by design (the live ledger and the local authorisation file are
+never committed). **Any paid tranche needs explicit Controller approval in writing, before dispatch.**
 
-## Frozen foundations (unchanged)
+## 7. Frozen foundations (unchanged)
 
-CANON-010 request contract · Capability Contract v2 (**44 = 43 active + 1 dormant**) · 13 condition
+CANON-010 request contract · Capability Contract v2 (44 = 43 active + 1 dormant) · 13 condition
 families · 12 core + 2 reserve scientific slots · Resources topology v3 / CpAO v3 / four
-controlled-pack families · EVAL-011 staged design (Q=0, A=90, B≤404, C=32 outcome attempts) ·
-EMP-001's frozen paid shape and its results (complete; **not** an authorisation to re-run —
-`history/EMP-001.md`). Several merged contracts still carry stale `NOT IN FORCE` status headers;
-this file governs.
+controlled-pack families · EVAL-011 staged design (Q=0, A=90, B≤404, C=32) · the Stage-A frozen package
+(`eval/empirical-planning/STAGE-A-FREEZE-2026-09/`: 35 cases, 35 blueprints, **ELIMINATION-RULES.md
+applied literally — C-3**) · the six frozen deterministic-instrument criteria · EMP-001's frozen paid
+shape. Several merged contracts still carry stale `NOT IN FORCE` status headers; this file governs.
+**Sealed evidence is never edited**: `python3 coordination/audits/tools/verify_sealed_evidence.py
+--against origin/main` proves the 311 media re-hash and the sealed trees are unchanged.
 
-## Still blocked / not authorised
+## 8. Still blocked / not authorised
 
-- Mandatory human-in-the-loop exact-text review in the production API architecture (withdrawn
-  28 Aug 2026);
-- treating benchmark-grade OCR as a perfect exactness certifier;
-- Registry population from text metrics — **decided: no** (see above);
-- any temporal checker qualification run — requires all four: a selected checker; **full 12-clip
-  ingest** under a recorded execution condition; Controller-approved numeric pass marks frozen
-  **before** observations; preserved human adjudication wherever the frozen
-  `EVALUATOR-QUALIFICATION-MAP.yaml` says `model_based_plus_human` (**five** capabilities);
-- reopening the Media Request Grammar because CANON-011 observed GG-01…GG-04;
-- regenerating any sealed A-TEXT artifact;
-- importing the chat-only manual A-TEXT review as project truth;
-- further Tesseract/OCR configuration sweeps without a new mechanism-level rationale
-  (general-purpose multimodal LLMs stay frozen as the strict exact-text judge family);
-- broad Stage-B/C execution without their own instrument readiness;
-- broad controlled-pack acquisition;
-- Production IR / Planner implementation before sufficient empirical capability evidence exists;
-- **rerunning the refuted EVAL-038 substitution configuration** to reconfirm it;
-- **any worker conclusion on whether Canon works** — that verdict is reserved to the Controller;
-- **injection v1, the template library, or any further pack** — the shape document's open-work
-  list is a queue, not an authorisation (the gate itself is built and merged);
-- **invoking the gate's Cloud Vision text detector**, or any paid post-draw scan — needs its own
-  spend authorisation; the adapter refuses before any socket;
-- **any CANON-GATE-002 item** (vocabulary/negation residuals; schema-level prompt boundary) — the
-  register is recorded limitations, not a task;
-- **any acceptance-rate / accepted-outcome measurement run** — not yet commissioned;
-- **further paid execution under the EVAL-038 authority** — it is spent and not renewed.
+- **any paid or network provider call by the runtime** — every profile has `spend_authority: none`; a
+  signed runtime spend record does not exist and is not created by any 14-Sep decision;
+- **any Group-3 item** (C-12…C-18) until its own spend record exists — and, under C-9, only where the
+  runtime exposes a launch-critical hole;
+- compiling any of the remaining eight Canon packs (C-10);
+- **generated in-scene exact text, talking heads, lip-sync, native speech, multi-shot stories** inside
+  Alpha 1 (C-7) — RR-2's evidence for in-scene text exists and is untouched; it is out by ruling;
+- autonomous external delivery of anything (C-8);
+- treating any `clean_observed` cell as a launch clearance, a statistic, or a production SLA;
+- adding the two Registry rows of a twice-sent trial identity together;
+- rewriting any sealed results file to match the literal rule (the correction lives in the map and
+  register); correcting `redo_of: null` in the three undeclared re-do runs (OPEN-2 closed by the
+  sealed-evidence rule);
+- mandatory human-in-the-loop *exact-text review* in the production API architecture (withdrawn
+  28 Aug) — **distinct from C-8**, which is human approval of the finished output before external
+  delivery; the two coexist;
+- treating benchmark-grade OCR as an exactness certifier; Registry population from text metrics;
+- any temporal checker qualification run without all four preconditions (checker, full 12-clip
+  ingest, frozen numeric pass marks, preserved human adjudication);
+- regenerating any sealed A-TEXT artifact; importing the chat-only manual A-TEXT review;
+- rerunning the refuted EVAL-038 configuration; any worker verdict on whether Canon works;
+- invoking the gate's Cloud Vision text detector or any paid post-draw scan;
+- any CANON-GATE-002 item; any acceptance-rate / accepted-outcome measurement run (not commissioned);
+- HED-1 stays undecided and blocks fully loaded CpAO.
 
-### Temporal material contract (resolved, pack-level)
+### Temporal material contract (resolved, pack-level) — unchanged
 
-The family-4 content requirement is **pack-level** — an individual clip needs only the feature its
-perturbation requires. Opportunity counts (coverage counts, never precision claims): base 12,
-multi-shot 6, on-screen text 6, product region 5, rendered-character identity 4, photographed-face
-identity 3 — **the two identity populations must not be pooled**.
-Authority: `coordination/decisions/CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-MATERIAL-RESOLUTION-2026-08-28.md`.
+Pack-level content requirement; opportunity counts base 12 · multi-shot 6 · on-screen text 6 · product
+region 5 · rendered-character identity 4 · photographed-face identity 3; identity populations never
+pooled. `CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-MATERIAL-RESOLUTION-2026-08-28.md`.
 
-## Next gate
+## 9. Next gate
 
-**Day 2 (9 Sep 2026): video pieces 2–5, speech, music, lipsync and the two-speaker piece run and judged. Registry v1 at 480
-deterministic rows; routing map 53 cells, rules RR-1..RR-14. PR #91 merged to main; day-2 tail on `work/eval-042-two-speaker`.** Cheap-first held for image-to-video (Kling 8/8, Wan 8/8,
-H3 Max 7/8, Veo fast 5/8) and multi-shot stories (8/8 across Kling, Omni, Veo extend); its boundary is the product-hero
-knee brief (cheap tier 0/4, Veo full 1/2). Reference-to-video: tin 2/2, person 0/2 (stray lettering). Text in motion
-closed end to end (Nano Banana 2 plate → H3 Max 2/2). Speech: Sarvam 6/6, ElevenLabs direct 4/6 (Hinglish accent).
-Music: Lyria 4/4; ElevenLabs music skipped (free plan). Summary: `eval/experiments/EVAL-040/DAY-2-SUMMARY-2026-09-09.md`.
-Infrastructure: fal balance exhausted (one lipsync draw refused; every fal route blocked until the Controller tops up);
-ElevenLabs now direct on the Controller's key (fal rows retired from the package). Lipsync 0/5 (Kling lipsync a2v eliminated on a moving plate; confounds recorded). Two speakers 6/8 native (Veo fast,
-Omni, Wan 2/2 each; Kling v3 Pro audio 0/2 'language bad' after the fal top-up registered). The Controller skipped further fal top-ups and the ElevenLabs Indian
-voice. Text-to-video core (day-2 tail, 9 Sep): Gemini Omni 8/8, H3 Max 5/7, Wan 4/7, Veo fast 4/8, Kling audio 2/6 (RR-15);
-Registry 546 rows; map 58 cells, RR-1..15. Vision judge (gemini-3.5-flash, Gemini key, USD 3.16): 154 compared,
-agreement 66 %, kappa 0.33, false-accept 22 % -> NOT qualified (over-rejects text/i2v, misses cropping); stays
-`screened_not_qualified`, report at `eval/experiments/EVAL-040/QUALIFICATION-REPORT-2026-09-09.yaml`. Roster gap
-recorded: Wan/Kling ran as mid tiers, not their cheapest (Controller: 'havent we failed the very principle'). Next
-gates: (1) pin the cheapest live Wan/Kling tiers and a floor round (~USD 10-15); (2) Seedance 2.5 only where every
-cheap route failed (the two bottle briefs, ~USD 6); (3) judge v2 (better prompt / stronger model) before any
-re-qualification; (4) round two of stills (~₹4,300); (5) Gemini API adapter switch for Gemini image and Omni. MD-9 fresh cloud resources still need the Controller's own
-session. The Canon items below remain a queue, not an authorisation.
+**The next Controller gate is the merge of the two branches** (`work/audit-closeout-and-runtime-v0`,
+then `work/runtime-alpha-vertical-slice-v0`) after reading their PRs, and then **the first paid
+Alpha-1 run**, which needs a new signed runtime spend record naming: the profile, the job ceiling, the
+routes it may call (the recommendation is in the runtime PR's handoff), 0 retries, and the human
+approver. Until that record exists the runtime is dry-only by construction.
 
-**Audit index (10 Sep 2026, end of the two-day Capability Lab run).** 35/35 package cases run and judged. Ledger total
-USD 110.7 (cash USD 67.0 on fal; GCP credits USD 43.8 incl. the USD 3.16 judge run; Sarvam ₹0.89; 1,198 ElevenLabs plan
-credits) across ten signed tranches, no cap crossed. Registry 575 deterministic rows; map 61 cells, RR-1..RR-16. Package is
-now generated (`tools/build.py`, roster sha 311f6631, commit d8399d8): Gemini image/Omni/NB-Pro-edit on the Gemini API,
-Wan 2.2 A14B ran as the contender where Wan 3 passed ("go on Wan 2", cap ₹1,100 after a ₹300 addendum for a harness
-aspect fault): 11/16 — i2v 7/8, bike and shoes 2/2, umbrella 0/2 (rain missing), two speakers 0/2 (silent + lettering);
-RR-16: Wan 2.2 A14B is the cheap Wan tier for silent work, Wan 3.0 Prime where sound or weather physics are in the contract. Judge: kappa 0.33, not
-qualified. Decisions of 9–10 Sep: Gemini on the Gemini key; GCP over fal for any model on both; Wan 2 contender; premium
-tiers deferred to a real brief; round two later; ElevenLabs music skipped; fal top-up / Indian voice skipped then fal
-topped up. PR #91, #92 merged; PR #93 open. Review page published to the Controller as an Artifact.
+What follows the merge, in the Controller's order (nothing here is authorised by this file):
 
-**The gate is built and merged (CANON-GATE-001, 7 Sep 2026).** The next gate is the Controller's
-choice among `canon/CANON-SHAPE-v1.md` §7's remaining items — injection v1 (cached prefix, no
-receipts), the template library, remaining packs only as the gate needs them — and the
-measurement the shape document names as the cheapest decisive one: an acceptance-rate run, many
-draws per arm, blind accept/reject. **None is authorised by this file.** The gate's own register
-(CANON-GATE-002) is opened by the merge decision and is not a task.
+1. **First paid Alpha-1 vertical-slice run** — one static overlay ad through the whole chain
+   (intake → spec → route → dispatch → gates → human acceptance → outcome event); the smallest
+   paid experiment now justified by the runtime. Size: single-digit USD.
+2. **C-13 Gemini API smoke** — the two recommended still routes are priced on a surface that has
+   never carried a call (`NOTE-UNTESTED-PRICING-SURFACE`); ~USD 1.
+3. **C-15 clean reruns** only for the three `replacement_needed` cells, and only if Alpha traffic
+   needs them (Alpha 1 does not use image-to-video Wan 2.2, Kling audio or two-speaker routes).
+4. Stage B / Stage C (C-17 / C-18) — only after the runtime and baseline are frozen; HED-1 first.
 
-**Routed, not fixed (Governor):** `canon/HANDOFF.md` still describes the branch state before the
-PR #83 merge and does not mention the gate; it is Canon-stream-owned and awaits the stream's
-update.
-
-**`canon/CANON-SHAPE-v1.md` is the governing consumption shape** for Canon, adopted by the
-Controller under `CONTROLLER-CANON-SHAPE-V1-DIRECTION-2026-09-01.md`. It settles what Canon is,
-what it is for, and how it is consumed. It carries **no verdict on whether Canon works**, and
-adoption adds none.
-
-1. **EVAL-037 / T2B is concluded for programme direction.** Canon remains in the product thesis; the current retrieval / consumption mechanism is explicitly not accepted as production-ready.
-2. **EVAL-038 is settled.** The substitution question is closed for the configuration tested. The
-   verdict on Canon is the Controller's, to be measured rather than argued; the cheapest decisive
-   measurement available is an acceptance-rate run (many draws per arm, blind accept/reject), which
-   the Controller may commission and which is **not** authorised here.
-3. **Return to Controller planning mode before authorising more execution.** Rebase the T3-T8 path around the shortest route to a working end-to-end accepted-outcome system, rather than another broad research tranche.
-4. **No new paid execution, media propagation, retrieval experiment, Production IR implementation, or Planner implementation is authorised by the EVAL-037 conclusion, the EVAL-038 disposition, or the adoption of CANON-SHAPE-v1.**
-5. **EVAL-036 / T2A remains an authorised USD-0 historical-prior import, but it is no longer an automatic prerequisite to every next product step.** Its place in the rebased programme must be decided for outcome value, not because an older sequence says so.
-6. **The next programme plan must preserve the final product chain:** customer request -> intelligence/Canon -> production specification -> route selection -> execution -> evaluation -> bounded repair -> accepted outcome -> empirical memory.
-7. **Primary decision metrics remain accepted-outcome rate, CpAO, repeatability, and incremental value over the strongest simpler baseline.**
-8. HED-1 remains undecided and must be resolved before fully-loaded holdout/Stage-C CpAO scoring.
+**Routed, not fixed (Governor):** `canon/HANDOFF.md` and `canon/CANON-SHAPE-v1.md` §7 carry 14-Sep
+status notes but remain Canon-stream-owned; `eval/HANDOFF.md` predates the Capability Lab entirely and
+needs the eval stream's rewrite; `coordination/WORKSTREAM-STATUS.md` is a derived view and is stale
+where it says the Registry is empty or that Production IR/Planner do not exist — this file governs.
