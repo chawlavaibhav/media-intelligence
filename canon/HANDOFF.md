@@ -1,3 +1,9 @@
+> **Status note, 14 Sep 2026 (Governor, routed to the Canon stream):** this handoff describes the branch state
+> before the PR #83 and PR #88 merges. Since then: the compiled-doctrine gate is merged (CANON-GATE-001); Canon
+> Injection v1 and the template library are authorised at USD 0 (ruling C-10, 14 Sep 2026) and built on the runtime
+> branch; the remaining eight packs are not to be compiled without a real runtime failure. The Canon stream owns
+> the rewrite of this file. `coordination/CONTROL-STATE.md` governs.
+
 # Canon — Handoff
 
 **PURPOSE:** Build and maintain durable creative/media expertise, and make it consumable in the

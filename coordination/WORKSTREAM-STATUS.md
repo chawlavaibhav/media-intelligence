@@ -1,3 +1,8 @@
+> **Status note, 14 Sep 2026 (Governor):** this derived view predates the Capability Lab run of 8–10 Sep. Where it
+> says the Registry is empty, that Production IR / Planner do not exist, or that injection v1 is unauthorised, it is
+> stale: the Registry holds 575 deterministic rows, PRODUCTION-SPEC-v1 and the router exist on the integration
+> branch, and ruling C-10 authorises injection v1 at USD 0. `coordination/CONTROL-STATE.md` governs.
+
 # Workstream Status
 
 > **Derived convenience view — not authority and not mandatory startup reading.** Since the

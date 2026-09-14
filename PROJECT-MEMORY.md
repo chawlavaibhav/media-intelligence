@@ -5,21 +5,17 @@ itself.** Read this first, every session; then `coordination/CONTROL-STATE.md` f
 authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
-**Last refresh:** 7 Sep 2026 — CANON-GATE-001 merged (PR #88, merge commit `7dd064c`): the
-compiled-doctrine gate exists as code.
-**Correction notice (10 Sep 2026):** three factual corrections were applied to this file by the
-zero-spend audit repair — the Capability Registry is no longer empty (575 deterministic rows). The
-rest of this file still predates the two-day Capability Lab run of 8–10 Sep and needs a full
-Governor refresh; see `coordination/audits/AUDIT-2026-09-10-REPORT-B.md`, finding F-5. The
-last full Governor reconciliation remains **GOV-006** against `main` at `91984f5`
-(`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`, PASS WITH NON-BLOCKING NOTES);
-CANON-014 received a bounded Level-1 review at
-`governance/reviews/GOV-L1-CANON-014-FULL-CORPUS.md`. The text immediately before this refresh is
-preserved byte-for-byte at `history/PROJECT-MEMORY-PRE-GATE-001-REFRESH-2026-09-07.md` (the
-1 Sep text at `history/PROJECT-MEMORY-PRE-EVAL-038-REFRESH-2026-09-01.md`), and the
-full pre-migration text at
-`history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md`; detailed narrative now lives under
-`history/` (see §8).
+**Last refresh:** 14 Sep 2026 — the audit-closeout refresh ordered by Controller ruling C-6
+(`coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md`), after the two-day
+Capability Lab run (8–10 Sep, EVAL-040…043), the two independent audits of 10 Sep, the Controller's
+fifteen rulings of 14 Sep (C-1…C-11, six records dated 2026-09-14 under `coordination/decisions/`),
+the regeneration of the routing map and taint register under those rulings, and the first runtime
+lanes. The last full Governor reconciliation *review* remains **GOV-006**
+(`governance/reviews/GOV-006-POST-PARALLEL-RECONCILIATION.md`); this refresh is a state-of-record
+refresh, not a Governor review. The text immediately before it is preserved byte-for-byte at
+`history/PROJECT-MEMORY-PRE-AUDIT-CLOSEOUT-REFRESH-2026-09-14.md` (earlier snapshots:
+`…-PRE-GATE-001-REFRESH-2026-09-07.md`, `…-PRE-EVAL-038-REFRESH-2026-09-01.md`,
+`…-PRE-CONTEXT-MIGRATION-2026-08-28.md`); detailed narrative lives under `history/` (see §8).
 
 ## 1. What this project is
 
@@ -37,13 +33,20 @@ model that is cheap per image but needs six retries is not cheap. Full statement
 Creative IR → production planning/routing (consulting the Capability Registry) → generation tools →
 evaluation → repair → accepted outcome → empirical memory.
 
-**What exists vs what does not (verified at GOV-006):** the Normalized Request grammar, Creative IR
-v0.1, accepted Canon knowledge, frozen measurement contracts and benchmark harnesses **exist**.
-**Production IR, the Production Planner, routing, a request compiler, a repair runtime and any
-customer-facing API do not exist.** The Capability Registry **now holds 575 deterministic rows**
-(EVAL-040, written 9–10 Sep 2026 under the frozen instrument criteria; validator passes). *Corrected
-10 Sep 2026 — this paragraph said "zero rows", which was true only until the Capability Lab ran.
-Evidence: `eval/registry/registry-v1.jsonl`, `eval/registry/validate_registry.py`.*
+**What exists vs what does not (14 Sep 2026).** The Normalized Request grammar, Creative IR v0.1,
+accepted Canon knowledge (37 sources, 2 of 10 compiled packs), the compiled-doctrine gate as code,
+the frozen measurement contracts, the Stage-A execution harness with sealed evidence, **the Capability
+Registry (575 deterministic rows)** and the tiered routing map with its taint register **exist**. On the
+integration branch `work/audit-closeout-and-runtime-v0` a **production runtime exists as code**
+(`runtime/`): four frozen contracts (PRODUCTION-JOB, PRODUCTION-SPEC, ROUTE-DECISION,
+OUTCOME-EVENT), intake, a brief → Production Specification compiler with deterministic Canon lookup
+(PC-03A), an evidence-aware router with declared fallback and live price pins (PC-03B), and policy
+profiles carrying every operating limit as data. **PRODUCTION-SPEC-v1 is the Production IR; the router
+is the Production Planner's first half.** What does **not** exist on that branch: an execution bridge
+to a provider, post-draw checks on a real artifact, a repair loop, acceptance states, the
+empirical-memory event writer, a customer-facing API — the child branch
+`work/runtime-alpha-vertical-slice-v0` builds those at USD 0 in dry mode (see `runtime/ALPHA-1.md`).
+**The runtime has never called a provider; every run to date is dry.**
 
 ## 2. Where truth comes from — typed authority
 
@@ -85,7 +88,8 @@ Not reopened without an approved integration task. Full list:
 session:
 
 1. **Creative IR ("what should exist") ≠ Production IR ("how today's tools make it").** Production
-   IR does not exist yet.
+   IR now exists as PRODUCTION-SPEC-v1 (`runtime/contracts/`), compiled from a job by code plus one
+   recorded reasoning pass; it is still the "how, today" object and never the Creative IR.
 2. **Book knowledge is never evidence about model capability.** The Registry is empirical only, and
    admits only `qualified`/`deterministic` instruments — **admission must not be weakened to create
    a first row** (`coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md`).
@@ -110,26 +114,50 @@ Current authorisation state always comes from `coordination/CONTROL-STATE.md`. T
 **Still zero (mechanically verified where possible):** qualified models/workflows · qualified
 subjective/perceptual evaluator families · strict-exactness-qualified text evaluators (five
 configurations tested, five disqualified, unrewritten) · qualified temporal-video evaluators (no
-numeric pass mark exists) · ~~**Capability Registry rows — a deliberate decision, not an
-absence**~~ *(no longer zero: 575 deterministic rows as of 10 Sep 2026; the admission bar was never
-weakened — the rows are deterministic-instrument rows only)* ·
-customer-outcome CpAO observations (Stage C
-only; not authorised) · Production IR / Planner ·
+numeric pass mark exists) · customer-outcome CpAO observations (Stage C only; not authorised) ·
 **accepted-outcome-rate measurements** (no acceptance-rate run has ever been commissioned) ·
-**8 of the 10 compiled packs** · **post-draw text detection on a real artifact** (the gate's
-Cloud Vision adapter is wired and has never been invoked; invoking it needs a spend authorisation)
-· **any gate run over a production blueprint** (only committed EVAL-038 packages and artifacts have
-been gated).
+**8 of the 10 compiled packs** (and none is compiled without a real runtime failure — C-10) ·
+**post-draw text detection on a real artifact** (the gate's Cloud Vision adapter is wired and has
+never been invoked) · **any real, paid run of the production runtime** · **vendor-billed cost** (no
+provider statement has been reconciled; the ledger figure is an upper bound).
 
-**The gate itself is no longer zero** — see "No longer zero" below — but building it moved none of
-the zeros above. **EVAL-038 did not move any of those zeros either.** It generated real media (2 images + 2 videos + a
+**Four kinds of evidence, never mixed (the distinction every reader must keep):**
+
+1. **Deterministic Registry evidence** — 575 rows, frozen instruments over sealed bytes; untouched by
+   every 14-Sep ruling; never reads a human verdict; `independence NOT ESTABLISHED` on every row.
+2. **Clean human-routing evidence** — 36 of the 61 routing-map cells are `clean_observed` in
+   `eval/capability-map/TAINT-REGISTER-v1.yaml` (the literal frozen elimination rule reproduces the
+   number, every named problem disposed of by a ruling, ≥ 4 settled draws); production use allowed on
+   29; the Alpha-1 profile auto-routes 26. One judge, 4–8 draws — honest evidence, not proof.
+3. **Directional / descriptive product evidence** — 25 cells `directional_only` (< 4 settled draws);
+   the successful Wan 2.2 re-sends kept as `descriptive_resends` (C-6b: "do not delete them"); all
+   EVAL-038 media; the Media Factory historical priors.
+4. **Tainted / awaiting / eliminated** — 0 cells awaiting a ruling, 0 `method_tainted`; 17 cells
+   eliminated on their question under the frozen rule (`production_use_allowed: false`), three of them
+   needing a clean rerun before the route can be re-tested (`replacement_needed`).
+
+**The gate, the Registry, the routing map and the runtime are no longer zero** — see "No longer
+zero" below — but none of them moved the zeros above. **EVAL-038 did not move any of those zeros either.** It generated real media (2 images + 2 videos + a
 replay pair) and the Controller judged it, but that authority labelled media generation **product
 learning only — never Capability Registry evidence**. Do not read EVAL-038 artifacts as a qualified
 model, a qualified evaluator, a Registry row, or a customer-outcome CpAO observation.
 
 **No longer zero:**
 
-- **Paid execution happened.** The user approved EMP-001 at **USD 10 total / USD 6 qualification
+- **The Capability Lab ran (EVAL-040…043, 8–10 Sep 2026).** 35/35 Stage-A cases dispatched and
+  blind-judged; 311 sealed media files (re-hash exactly:
+  `python3 coordination/audits/tools/verify_sealed_evidence.py`); **575 deterministic Registry rows**
+  (`python3 eval/registry/validate_registry.py` — PASS); a 61-cell routing map with rules RR-1…RR-16
+  regenerated 14 Sep under the Controller's rulings (**RR-16 withdrawn** as image-to-video routing
+  truth; **RR-1 rewritten** to say code, not the image model, produced the accepted exact copy); ledger
+  spend **USD 122.241262** counted against caps, two cap crossings and one call-limit breach **accepted
+  as recorded** (C-1, C-5b), the mechanisms fixed (per-authorisation pooling; cumulative budget lineage
+  under C-6a). The vision judge is **not qualified** (agreement 66 %, false-accept 22 %).
+- **The production runtime exists as code (14 Sep 2026, integration branch)** — see §1. Adopted Alpha-1
+  policy: **one static commercial ad with exact overlay copy, optionally one short motion version from
+  the accepted still; human approval before every external delivery; no spend authority** (C-7, C-8;
+  `runtime/contracts/POLICY-PROFILES.yaml`, `runtime/ALPHA-1.md`).
+- **Paid execution happened (EMP-001, Aug 2026).** The user approved EMP-001 at **USD 10 total / USD 6 qualification
   sub-cap / 0 retries** (`coordination/decisions/CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md`).
   Recorded spend: **USD 2.6397905** cumulative through EVAL-024, plus **USD 0.024** for EVAL-030 (no
   committed artifact states a consolidated total including it — GOV-006 G6-02).
@@ -212,6 +240,15 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
 
 **Read `coordination/CONTROL-STATE.md` for the live version.**
 
+- **The programme changed mode on 14 Sep 2026: from widening the Capability Lab to building the
+  smallest complete production path.** C-9 stops Lab widening (no generic battery, no premium sweep,
+  no prettier tables; new evidence only where the runtime exposes a launch-critical hole). C-7 freezes
+  Alpha 1. C-10 authorises Canon Injection v1 and template/empirical-memory integration at USD 0 and
+  forbids compiling the remaining eight packs without a real runtime failure. C-11 adopts the
+  twelve-condition public-release gate; none of the twelve is met.
+- **Nothing paid is authorised.** Every runtime profile carries `spend_authority.status: none`; every
+  Group-3 Lab item (C-12…C-18) needs its own signed record. The first paid act the runtime justifies is
+  one Alpha-1 vertical-slice run (single-digit USD) — a recommendation, not an authorisation.
 - **EVAL-037 / T2B is concluded for programme direction:** Canon helps; the current retrieval / consumption interface is not mature.
 - **EVAL-038 is a settled lane.** The substitution question is closed for the configuration tested
   (0/6, refuted). **The verdict on whether Canon works is reserved to the Controller** and is not to
@@ -222,19 +259,19 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
   is, what it is for, and how it is consumed: packs injected unconditionally as a cached prefix, no
   forced-consumption receipts, mechanical gates in code, blueprints amortised over cheap redraws.
   **Adopting the shape authorises no build.**
-- **The gate is built and merged (CANON-GATE-001).** What follows is the Controller's choice, not
-  a queue item: `canon/CANON-SHAPE-v1.md` §7 lists injection v1 (cached prefix, no receipts) and
-  the template library as the next builds, and names the acceptance-rate run — many draws per arm,
-  blind accept/reject — as the cheapest decisive measurement of the reserved question. **None is
-  authorised.** The **CANON-GATE-002 register** (vocabulary and negation semantics; a schema-level
-  prompt boundary so extraction is a lookup, not a guess) is opened by the merge decision and is
-  **not** a task.
-- **The programme is back in Controller planning mode.** The next move is not another broad Canon-value experiment; it is a rebase of T3-T8 around the shortest route to an end-to-end accepted-outcome product.
+- **The gate is built and merged (CANON-GATE-001).** Of `canon/CANON-SHAPE-v1.md` §7's open items,
+  **injection v1 and the template library are now authorised at USD 0 (C-10, 14 Sep 2026)** and are
+  built on the runtime child branch; the remaining packs are not; the acceptance-rate run (the cheapest
+  decisive measurement of the reserved question) is **not** commissioned. The **CANON-GATE-002
+  register** is opened by the merge decision and is **not** a task.
 - **EVAL-036 remains authorised at USD 0** as a historical-prior import, but its sequencing must now be justified by outcome value rather than treated as an automatic gate.
-- **No new paid tranche is currently authorised.**
-- **Production IR, Planner, routing runtime, repair runtime and customer-facing API still do not exist.** They should be extracted/implemented from proven outcome-producing workflows, not designed abstractly first.
-- Persistent blockers include HED-1 for fully loaded CpAO. *(Corrected 10 Sep 2026: the Capability
-  Registry is no longer empty — 575 deterministic rows. Human acceptance still never enters it.)*
+- **Production IR (PRODUCTION-SPEC-v1), intake, the spec compiler and the router exist on the
+  integration branch; the execution bridge, gates, repair, acceptance states and memory event are
+  being built dry on the child branch.** A customer-facing API does not exist. Nothing has been run for
+  money.
+- Persistent blockers: HED-1 for fully loaded CpAO; the four provider statements are unreconciled
+  (upper-bound costs only); the two recommended still routes are priced on the Gemini Developer API,
+  a surface that has never carried a paid call (C-13 would close it).
 
 ## 7. Critical traps for a fresh session
 
@@ -272,6 +309,21 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
     reading the merge decision first.
 15. Longer lessons list (paid for, do not rediscover): `history/EMP-001.md` §Lessons and
     `history/PROJECT-MEMORY-PRE-CONTEXT-MIGRATION-2026-08-28.md` §6.
+16. **Do not read a `clean_observed` cell as a launch clearance, a statistic or an SLA.** It means the
+    literal frozen rule reproduces a 4–8 draw number judged by one person, with every named problem
+    disposed of by a ruling. The runtime's policy profile, not the register, decides what may be
+    auto-routed (`eval/capability-map/TAINT-REGISTER-v1.yaml` header).
+17. **Do not read RR-1's 4/4 as "the image model wrote the text".** Code composed the exact strings onto
+    a textless plate (mechanism B, cell `IMG-TEXT/flux-2-pro+code_overlay`); the same plates judged bare
+    were 1/4 (C-6c). And **do not read RR-16 as routing truth** — Wan 2.2 A14B is eliminated from
+    image-to-video under the frozen rule; its successful re-sends are descriptive only (C-6b).
+18. **Do not treat `adopted: true` on a policy profile as permission to spend.** Adoption is a policy
+    agreement (C-7/C-8); `spend_authority` is money, and it is `none` everywhere (Controller rider,
+    14 Sep 2026). **No 14-Sep decision authorises a paid dispatch.**
+19. **Do not edit a sealed results file to match the literal rule.** The correction lives in the
+    regenerated map and register and in the recompute tool (C-3, C-6d; OPEN-2 closed by this rule).
+20. **Do not widen the Capability Lab** — no new battery round, premium sweep or "tidier" two-draw cell
+    without a launch-critical hole exposed by the runtime and a signed spend record (C-9).
 
 ## 8. History — where the narrative went
 
@@ -305,7 +357,14 @@ Detailed chronology moved out of this file on 28 Aug 2026 (nothing was lost):
 | Which validator verifies which artifact family | `verify/VALIDATOR-INDEX.yaml` |
 | Per-stream status convenience view | `coordination/WORKSTREAM-STATUS.md` — derived; `CONTROL-STATE.md` governs |
 | Current exact-text posture | `coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md` |
-| Why the Registry is empty despite a benchmark result | `coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md` |
+| Why the Registry held 0 rows until 9 Sep 2026 despite a benchmark result | `coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md` |
+| The Registry's 575 deterministic rows and their admission criteria | `eval/registry/registry-v1.jsonl`, `eval/registry/validate_registry.py`, `coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md` |
+| The routing map (61 cells, RR-1…RR-16) and what each number is worth | `eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml` (generated), `eval/capability-map/TAINT-REGISTER-v1.yaml` (generated); regenerate per `coordination/audits/AUDIT-2026-09-10-EVIDENCE-RECOMPUTE.md` §Addendum |
+| What the 10-Sep audits found and how every item was ruled | `coordination/audits/HANDOFF-TO-CONTROLLER-2026-09-10.md`, `AUDIT-2026-09-10-CONTROLLER-DECISIONS.md` (dispositions), the six `CONTROLLER-*-2026-09-14.md` records |
+| Spend of record, cap crossings, budget lineage | `coordination/audits/AUDIT-2026-09-10-SPEND-RECONCILIATION.md`; `python3 coordination/audits/tools/reconcile_spend.py`; `eval/harness-v2/ledger.py` |
+| Sealed evidence intact | `python3 coordination/audits/tools/verify_sealed_evidence.py --against origin/main` |
+| What Alpha 1 is, and the difference between adopted and spend-authorised | `runtime/ALPHA-1.md`; `runtime/contracts/POLICY-PROFILES.yaml`; `coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md` |
+| The production runtime's contracts and what building them found | `runtime/contracts/README.md`, `runtime/contracts/CHANGES-v0-to-v1.md`; tests `python3 -m unittest discover -s runtime/tests -p 'test_*.py'` |
 | The 16 A-TEXT images + hashes | `eval/empirical-tranche-1/atex/sealed-generation-v1/atex-generation-only-manifest.json` |
 | What they scored | `eval/empirical-tranche-1/evidence/EMP-001/atex-scoring/atex-benchmark-scoring-v1.json` |
 | Sealed text-OCR evidence | `eval/empirical-tranche-1/evidence/EMP-001/text-ocr/` |

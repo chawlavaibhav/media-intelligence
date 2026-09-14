@@ -112,6 +112,13 @@ measured per §3.
 
 ## 7. Open work, in order (none authorised by this document)
 
+> **Status note, 14 Sep 2026 (Governor):** items 1 (the gate) is built and merged (CANON-GATE-001, PR #88).
+> Items 2 and 3 — Injection v1 and the template library / empirical memory — are **authorised at USD 0** by
+> ruling C-10 (`coordination/decisions/CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md`)
+> and are built on the runtime branch `work/runtime-alpha-vertical-slice-v0`. Item 4 (remaining packs) is
+> explicitly **not** authorised unless a real runtime failure demands one. Item 6 (acceptance-rate run) is not
+> commissioned. This document itself still authorises nothing; `coordination/CONTROL-STATE.md` governs.
+
 1. **Build the gate** — derive pre-dispatch and post-draw checks as code from PA-D1..D10 and
    CA-D1..D11; baked-text scan first. This is the next build.
 2. **Injection v1** — cached stable prefix, no receipts; pin cache pricing; retire the v0

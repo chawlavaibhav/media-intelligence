@@ -116,10 +116,15 @@ fallback refuses to proceed without one.
 That is the single most useful sentence in this handoff: **the first alpha needs a second usable route
 far more than it needs a better first one.** C-4 and C-6b supply most of them for free.
 
-*(14 Sep 2026: this sentence assumed the lenient readings. C-6b was ruled STRICT and C-4 adopted as quarantine, so
-those rulings remove or hold cells rather than supply them; how many cells become automatically routable after
-regeneration is for the evidence lane's rebuilt taint register to state, not this handoff. See
-`coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md`.)*
+*(14 Sep 2026, OBSERVED after regeneration: the rulings did supply the second routes. C-4 was adopted and every
+affected cell was recomputed under the frozen rule (`c4_disposition: recomputed_under_frozen_rule`), C-6b was
+ruled STRICT, C-6c re-keyed the two exact-text cells. Of the 21 cells that were awaiting a ruling, 18 became
+`clean_observed` and 3 `directional_only`; the register now has 36 clean / 25 directional / 0 awaiting, production
+use allowed on 29, and the `alpha_human_release` profile auto-routes **26 of 61 cells** (was 16). The static overlay
+ad and the motion job both route with a declared fallback; the customer-photo edit still goes to a person (IMG-EDIT
+cells are directional, n = 2 per route). RR-16 is withdrawn: Wan 2.2 A14B is eliminated from image-to-video. See
+`coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md` and
+`AUDIT-2026-09-10-EVIDENCE-RECOMPUTE.md` §Addendum.)*
 
 Still missing, unchanged by any of this work: no intake for a customer, no repair loop, no measured
 cost per accepted outcome, and nothing commercial — no terms, no output-rights position, no provider
