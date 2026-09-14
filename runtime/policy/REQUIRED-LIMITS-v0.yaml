@@ -5,7 +5,7 @@
 # is going to need, so the refusal happens at intake — before any spend — rather than halfway
 # through a job. A later lane adds its own rows here; no code changes.
 schema: REQUIRED-LIMITS-v0
-lane: PC-03A (intake + spec compilation); router (PC-03B) and execution-bridge rows added 14 Sep 2026
+lane: PC-03A (intake + spec compilation); router (PC-03B) and execution-bridge (PC-03C, lane F) rows added 14 Sep 2026
 
 # Checked at intake. A named profile missing any of these is refused before anything else runs.
 # The six added on 14 Sep 2026 encode the Alpha-1 rulings (C-7, C-8) and the Controller's rider that
@@ -21,6 +21,10 @@ required_at_intake:
 - acceptance_authority
 - autonomous_external_delivery
 - human_approval_required_before_external_delivery
+# Added 14 Sep 2026 (lane F, execution bridge): whether a dispatch under the profile would send bytes
+# (live) or only render and price them (dry). Required at intake so a profile that does not say is
+# refused before any lane could guess.
+- dispatch_mode
 
 # Read by the router (runtime/route/decision.py via runtime/route/profile.py). Listed so the data
 # completeness test can prove every profile carries them; the router itself still fails closed on
@@ -39,11 +43,15 @@ read_by_router:
 - autonomous_external_delivery
 - surface_preference
 
-# Read by the execution bridge (being built in Wave 2; nothing dispatches on this branch). Listed
-# NOW so that the bridge has no reason to invent a default: every name here is on every profile row
-# today, and spend_authority is first because it is the check that runs before any other.
+# Read by the execution bridge (runtime/execute/, lane F, 14 Sep 2026; dispatch_mode dry renders and
+# prices every attempt through the harness adapter's dry_run() and sends nothing; live refuses until a
+# signed runtime spend authorisation exists). Listed so that the bridge has no reason to invent a
+# default: every name here is on every profile row, and spend_authority is first because it is the
+# check that runs before any other; dispatch_mode is second because it decides whether that check
+# is even the relevant one (dry needs no spend authority: nothing is sent, reservations are 0).
 read_by_execution_bridge:
 - spend_authority
+- dispatch_mode
 - max_provider_draws_per_deliverable
 - repair_allowance
 - fallback_required

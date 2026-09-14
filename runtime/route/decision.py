@@ -41,7 +41,7 @@ from . import attempt_id as identity
 from .evidence import EvidenceBase, GateResult
 from .price import PriceBook, Quote
 from .profile import PolicyProfile
-from .spec import Exclusion, Requirement, Spec
+from .spec import EXCLUSION_SCOPES, Exclusion, Requirement, Spec
 
 STAGES = ("hard_requirements", "evidence_envelope", "price", "cost", "fallback")
 
@@ -178,10 +178,15 @@ class Router:
                 g = self.ev.gate(cell, auto_statuses)
                 if cell.route_key in excl:
                     e = excl[cell.route_key]
-                    exclusions_applied.append(self._exclusion_row(e, cell, "hard_requirements"))
-                    why.append(f"{cell.cell_key}: excluded by the spec ({e.basis}). Its evidence, had "
-                               f"the exclusion not applied: {g.reason}")
-                    continue
+                    # the cell's own recorded mechanism decides here: a self-composed cell draws nothing
+                    bites, scope_reason = self._exclusion_bites(e, spec, mechanism=cell.text_mechanism)
+                    exclusions_applied.append(self._exclusion_row(e, cell, "hard_requirements",
+                                                                  bites=bites, scope_reason=scope_reason))
+                    if bites:
+                        why.append(f"{cell.cell_key}: excluded by the spec ({e.basis}; scope {e.scope}). "
+                                   f"Its evidence, had the exclusion not applied: {g.reason}")
+                        continue
+                    why.append(f"{cell.cell_key}: spec exclusion scoped out ({scope_reason})")
                 why.append(f"{cell.cell_key}: {g.reason}")
                 if g.allowed and chosen is None:
                     chosen = cell
@@ -238,14 +243,26 @@ class Router:
                 candidates[rk] = cand
 
         # -- stage 1: hard requirements (exclusions) ------------------------------------------------
+        # An exclusion bites according to its SCOPE (PRODUCTION-SPEC-v1 route_exclusions.scope). A
+        # whole_route exclusion always bites. A generated_text_only exclusion bites only when this job
+        # would have the model draw the exact text - and, failing closed, when the spec cannot say.
+        # Defect found by the lead 14 Sep 2026: the router had no scope and dropped flux-2-pro as a
+        # textless PLATE route on the overlay job, where nothing is drawn.
         for rk, cand in candidates.items():
             if rk in excl and cand.kept:
                 e = excl[rk]
+                bites, scope_reason = self._exclusion_bites(e, spec, mechanism=spec.text_mechanism)
                 for cell in cand.cells.values():
-                    exclusions_applied.append(self._exclusion_row(e, cell, "hard_requirements"))
-                cand.drop("hard_requirements",
-                          f"the spec excludes this route: {e.reason} (basis {e.basis}). An excluded "
-                          f"route may be neither primary nor fallback, whatever it costs.")
+                    exclusions_applied.append(self._exclusion_row(e, cell, "hard_requirements",
+                                                                  bites=bites, scope_reason=scope_reason))
+                if bites:
+                    cand.drop("hard_requirements",
+                              f"the spec excludes this route: {e.reason} (basis {e.basis}; scope "
+                              f"{e.scope}). An excluded route may be neither primary nor fallback, "
+                              f"whatever it costs.")
+                else:
+                    cand.why.append(f"spec exclusion {e.route_key!r} (scope {e.scope}) does not bite "
+                                    f"here: {scope_reason}")
 
         # -- stage 2: the evidence gate -------------------------------------------------------------
         for cand in candidates.values():
@@ -366,11 +383,41 @@ class Router:
                                    and c.evidence_status != "awaiting_controller_ruling"
                                    for c in cells)
 
-    def _exclusion_row(self, e: Exclusion, cell, stage: str) -> dict:
+    def _exclusion_bites(self, e: Exclusion, spec: Spec, *, mechanism: str | None) -> tuple[bool, str]:
+        """Does this exclusion remove the route on this job? (bites, plain-English reason).
+
+        whole_route: always. generated_text_only: only when the model would draw the exact text -
+        i.e. `mechanism` is model_draws_text - or when the mechanism is unknown while a text
+        requirement exists (fail closed). An unknown scope word is treated as whole_route and named.
+        """
+        scope = e.scope
+        if scope not in EXCLUSION_SCOPES:
+            return True, (f"scope {scope!r} is not a scope the router knows ({list(EXCLUSION_SCOPES)}); "
+                          f"treated as whole_route, the stricter reading")
+        if scope == "whole_route":
+            return True, ("whole_route" + ("" if e.scope_declared else
+                                           " (the spec declared no scope; whole_route is the default)"))
+        # generated_text_only
+        if mechanism == "model_draws_text":
+            return True, "the model draws the exact text on this job (text_mechanism model_draws_text)"
+        if mechanism in ("deterministic_text_composition", "not_applicable"):
+            return False, (f"text_mechanism {mechanism}: the provider draws no exact text on this job, so a "
+                           f"prohibition on drawing it does not remove the route")
+        if mechanism is None and spec.has_text_requirement():
+            return True, ("the spec carries exact text but no exact_text.text_mechanism, so the router "
+                          "cannot show the model draws nothing; fail closed, whole route excluded")
+        if mechanism is None:
+            return False, "the job has no exact-text requirement; nothing is drawn as text"
+        return True, f"text_mechanism {mechanism!r} is not one the router knows; fail closed"
+
+    def _exclusion_row(self, e: Exclusion, cell, stage: str, *, bites: bool = True,
+                       scope_reason: str = "whole_route") -> dict:
         return {"route_key": e.route_key, "reason": e.reason, "basis": e.basis,
+                "scope": e.scope, "scope_declared": e.scope_declared,
                 "would_have_supplied": cell.cell_key, "question": cell.question,
                 "applied_at_stage": stage,
-                "effect": "neither primary nor fallback"}
+                "effect": "neither primary nor fallback" if bites else "scoped_out",
+                "scope_reason": scope_reason}
 
     def _dedupe_notes(self, notes: list) -> list:
         seen, out = set(), []
