@@ -511,3 +511,173 @@ Finally, for the record: this worktree showed uncommitted modifications under
 made by other sessions, not by this audit. This audit created only
 `coordination/audits/AUDIT-2026-09-10-EVIDENCE-RECOMPUTE.md` and
 `coordination/audits/tools/recompute_elimination.py`, and committed nothing.
+
+---
+
+## Addendum — 14 September 2026: rulings applied
+
+Everything above this line is the 10 September report, unchanged. On 14 September 2026 the
+Controller ruled on the decisions it left open (record:
+`coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md`), and this
+addendum records what changed when those rulings were applied to the routing map and the taint
+register. Nothing under `eval/experiments/`, `eval/registry/` or `eval/empirical-planning/` was
+touched; the 575 Registry rows are the same bytes.
+
+### The rulings, in one line each
+
+| Ruling | Plain meaning | Decision above it answers |
+|---|---|---|
+| **C-3** | Count the way the frozen rule says: planned denominator, every refusal or error is a failure. | Decision 2 — option A (literal) |
+| **C-4** | A cell touched by a duplicated identity, a smoke draw sharing its name, or an excluded infrastructure failure is descriptive only **until recomputed** — so every cell was recomputed. | — |
+| **C-6b** | **Strict.** A draw that failed once stays a failure; a later re-send is descriptive product evidence, kept but never counted. RR-16 is withdrawn as image-to-video routing truth. | Decision 1 — option A (strict) |
+| **C-6c** | The model drawing exact text and code composing exact text on a textless plate are **different routes** and get different identities. | Decision 3 — option B (two different objects), with a naming rule |
+| **C-6d** | Elimination is per (route, question), exactly as frozen E4. | Decision 4 — option A (enforce E4) |
+
+### How the numbers are now produced (one arithmetic, one place)
+
+The routing map used to copy accepts, denominators and `eliminated` flags out of the tables each
+`RESULTS.yaml` recorded. It no longer does. `eval/harness-v2/evidence_map.py` imports
+`coordination/audits/tools/recompute_elimination.py` — the tool this report was built with — and
+computes every cell's human-acceptance numbers from the sealed plans, run logs and results under
+the frozen rule. The taint register reads those same numbers back through the same function
+(`cell_numbers`). Each map cell now carries: `accepts`, `trials` (the planned denominator),
+`refusals_or_errors`, `eliminated`, `eliminated_by`, `rule_basis`, `recorded_in_results_file`
+(what the sealed table said, for transparency), `descriptive_resends` where a draw was sent again
+(listed per attempt, labelled "not counted"), and `smoke_draws_excluded`.
+
+### Every map cell whose number or flag changed (before → after)
+
+"Before" is the committed map at `e57bb36`; "after" is the regenerated map. Fourteen cells; every
+other cell's accepts and trials are identical to before (asserted by
+`eval/harness-v2/tests/test_evidence_map_rulings.py`).
+
+| Cell | Before | After | Ruling | Advice changes? |
+|---|---|---|---|---|
+| VID-I2V / `wan-2.2-a14b-i2v` | 7/14, kept | **2/8, 6 failures, eliminated E1+E2** | C-3, C-6b | **Yes.** Wan 2.2 A14B leaves image-to-video; RR-16 withdrawn; the six successful re-sends (5 of 6 accepted) are kept as descriptive evidence. |
+| VID-T2V / `kling-v3-pro-audio` | 2/8, kept | **2/8, 2 failures, eliminated E2** | C-3 | Flag only. The route was already ranked last; RR-15 already said "eliminated". |
+| IMG-TEXT / `flux-2-pro+C_composite_textless_base` | 1/4, eliminated E2 (route_key `flux-2-pro`) | 1/4, eliminated E2; `text_mechanism: model_draws_text`; arm note names it as the bare plate | C-6c | No. Its verdict was never contested; only its identity is now distinct. |
+| IMG-TEXT / `flux-2-pro+code_overlay` | 4/4, no elimination entry (route_key `flux-2-pro` — same as the cell above) | **4/4, kept; route_key `flux-2-pro+code_overlay`; `text_mechanism: deterministic_text_composition`** | C-6c | Identity only. The cell key is unchanged. RR-1 now says code, not the model, produced the accepted copy. |
+| VID-2SPK / `kling-v3-pro-audio+A_native` | 0/2, eliminated E2 | 0/2, **2 failures**, eliminated **E1+E2** | C-3, C-6b | No. Out either way. |
+| AUD-LIP / `kling-lipsync-a2v+chain` | 0/6, eliminated E2 | 0/6, **1 failure**, eliminated E2 | C-3 | No. |
+| IMG-CORE / `flux-2-pro` | 5/8 | **4/8**, 1 failure (the img-r1 network failure counts; the img-r1-redo accept is descriptive) | C-3, C-6b | No. Rank unchanged (5th). |
+| IMG-CORE / `gpt-image-2` | 7/8, rank 2 | **6/8**, 2 failures, rank 3 | C-3, C-6b | Rank only: nano-banana-2 (7/8) is now first. |
+| IMG-CORE / `qwen-image-3` | 7/8, rank 1 | **6/8**, 1 failure, rank 2 | C-3, C-6b | Rank only. |
+| IMG-CORE / `seedream-5-pro` | 6/8, 0 failures | 6/8, **1 failure** | C-3, C-6b | No. |
+| VID-T2V / `minimax-h3-max` | 5/8 (results file said 5/7) | 5/8, **1 failure counted** | C-3 | No. |
+| VID-T2V / `wan-3.0-prime` | 4/8 (results file said 4/7) | 4/8, **1 failure counted** | C-3 | No. |
+| AUD-TTS / `elevenlabs-v3-direct+native` | 4/6 (results file: per case, Hinglish "eliminated") | 4/6, kept **on its question** | C-6d | No. RR-12's per-case advice stands. |
+| VID-REF / `veo-3.1-fast-ref2v+native` | 2/4 (results file: per case, person "eliminated") | 2/4, kept **on its question** | C-6d | No. RR-11's per-case advice stands. |
+
+Two further changes touch many cells but no number:
+
+* **An eliminated route is never a fallback.** Fallback pointers now chain among survivors only;
+  every eliminated cell has `fallback: null` and ranks after the survivors. Sixteen cells' fallback
+  pointers moved for this reason (for example IMG-EDIT / `seedream-5-pro-edit` now falls back to
+  `flux-2-pro-edit`, not to the eliminated `nano-banana-pro-edit`).
+* **Every cell has `text_mechanism`**: `deterministic_text_composition` for the code-overlay cell
+  and for VID-TOPO3 arm C (its own results note says "exact strings by code on every frame");
+  `model_draws_text` for every other IMG-TEXT cell; `not_applicable` for everything else.
+
+### The routing-rule rewordings
+
+* **RR-1** — evidence now reads: 4/4 accepted, and what was accepted was a FLUX.2 Pro textless plate
+  onto which deterministic code composed the exact strings; the image model did not render the
+  accepted copy (the same plates judged bare were 1/4, eliminated). Route identity
+  `IMG-TEXT/flux-2-pro+code_overlay`; `mechanism: deterministic_text_composition`;
+  `rulings_applied: [C-6c]`.
+* **RR-15** — "kling-v3-pro-audio 2/6 … eliminated" → "2/8 … eliminated E2 (literal denominator,
+  C-3)"; "minimax-h3-max 5/7" → "5/8 (one fal 403 refusal counted)"; "wan-3.0-prime 4/7" → "4/8
+  (one fal 403 refusal counted)"; the caveat now says the four refused fal draws are counted as
+  failures and the advice does not change. `rulings_applied: [C-3]`.
+* **RR-16** — `status: withdrawn_as_stage_a_i2v_routing_truth (C-6b)`. The rule now says Wan 2.2
+  A14B is eliminated from image-to-video under the frozen rule (2/8, six HTTP-422 failures counted),
+  Wan 3.0 Prime remains the Wan tier for image-to-video (RR-8), and the plain silent text-to-video
+  cells stand on their own recomputed numbers. The 7/8 is labelled descriptive product evidence
+  only — retained, not deleted. `rulings_applied: [C-3, C-6b]`.
+* **RR-11 and RR-12** — `rulings_applied: [C-6d]` and a note that per-question elimination keeps the
+  route on its question while the per-case advice stands. No other rule's advice text changed.
+
+### The taint register after the rulings
+
+| | 10 Sep register | 14 Sep register |
+|---|---|---|
+| clean_observed | 18 | **36** |
+| directional_only | 22 | **25** |
+| awaiting_controller_ruling | 21 | **0** |
+| method_tainted | 0 | 0 |
+| insufficient | 0 | 0 |
+| production_use_allowed: true | 16 | **29** |
+| production_use_allowed: manual_only | 35 | **15** |
+| production_use_allowed: false | 10 | **17** (every eliminated route) |
+| replacement_needed | 18 | **3** |
+
+The three `replacement_needed` cells are the ones whose elimination rests on failures the run
+itself had classified as infrastructure or request-shape faults and that are now counted:
+VID-I2V / `wan-2.2-a14b-i2v` (six HTTP-422), VID-2SPK / `kling-v3-pro-audio+A_native` (two
+HTTP-403) and VID-T2V / `kling-v3-pro-audio` (two HTTP-403; without them 2/6 would survive). No
+ruling can re-test those routes; only a clean rerun (Controller item C-15) can. Twenty-one cells
+left `awaiting_controller_ruling`: nineteen became `clean_observed`, two `directional_only`
+(fewer than four settled draws). Forty cells kept the status and production reading they had.
+
+New register fields: a `rulings` block quoting the five rulings verbatim; per cell
+`rulings_applied`, `c4_disposition` (all 19 C-4 cells: `recomputed_under_frozen_rule`),
+`eliminated`, `eliminated_by`, `text_mechanism`, `descriptive_resend_attempts`,
+`smoke_attempts_excluded` and a `descriptive_attempts` list. `problem`, `problem_evidence`,
+`recorded_in_results_file` and `literal_verdict` are kept, so the history of what went wrong is not
+erased by the ruling that repaired it. OPEN-1 is closed by C-6d; OPEN-2 is closed (sealed files are
+never edited; the dispatch chain lives in the recompute tool and the register); OPEN-3 is moot for
+counting under C-6c, though the factual question about the plate bytes is still unresolved.
+
+### What the recompute tool itself now prints differently
+
+Section A marks the four `img-r1-composite` dispatches `distinct_mechanism (C-6c)` instead of
+`redo (undeclared)` — they were never a re-send of the same object. Section B groups them as
+`IMG-TEXT / flux-2-pro+code_overlay / C_composite_textless_base` (4/4, kept; recorded as per-case
+totals with no elimination table) apart from `IMG-TEXT / flux-2-pro / C_composite_textless_base`
+(1/4, eliminated E2, strict and lenient agree). The tool now reports 63 groups and 12
+disagreements between the sealed tables and the literal rule (was 62 and 13): the contested-verdict
+group is gone because the contest was an identity error.
+
+### How to regenerate everything (from the repository root; USD 0, no network)
+
+```
+# 1. the recompute (read-only report)
+python3 coordination/audits/tools/recompute_elimination.py
+
+# 2. the routing map (the human numbers come from the sealed run directories via the recompute tool)
+python3 eval/harness-v2/evidence_map.py --registry eval/registry/registry-v1.jsonl \
+  --results eval/experiments/EVAL-040/runs/img-r1/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/half2/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/topo3-nb-video/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/vid-knee/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/vid-ms/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/vid-i2v/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/vid-ref/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/aud-tts-sarvam/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/aud-tts-eleven/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/aud-music-lyria/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/aud-lip/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/vid-2spk/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/vid-t2v/RESULTS.yaml \
+  --results eval/experiments/EVAL-040/runs/vid-wan2/RESULTS.yaml \
+  --composite-results eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml \
+  --criteria-sha256 6fce5ea875c0653ad7321a292fcada31594c9512e1297deabba6c525d9d23888 \
+  --runs-dir eval/experiments/EVAL-040/runs \
+  --out eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml
+
+# 3. the taint register (refuses to run unless MAP_SHA256 in the builder matches the map)
+python3 coordination/audits/tools/build_taint_register.py          # write
+python3 coordination/audits/tools/build_taint_register.py --check  # UNCHANGED means it is current
+```
+
+The map regenerates identically except its `generated_utc` stamp. The register regenerates
+byte-for-byte. The tests that prove the numbers above are
+`eval/harness-v2/tests/test_evidence_map_rulings.py` (run from `eval/harness-v2`:
+`python3 -m unittest discover -s tests -p 'test_evidence_map*.py'`).
+
+### What this addendum does not claim
+
+The rulings settle how the existing draws are counted. They do not put new evidence behind any
+route: the three `replacement_needed` cells still need a clean rerun before any number can be
+defended for them, and every "clean" number is still four to eight draws judged by one person.
