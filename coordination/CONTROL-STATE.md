@@ -6,7 +6,7 @@ next Controller gate. It is a synthesis backed by the durable Controller decisio
 it and any older prose disagree, the latest durable Controller decision governs.
 
 **Updated:** 15 Sep 2026 — production-learning integration of the Upwork intro pilot (branch
-`work/production-learning-upwork-intro-001`, PR open, not merged): see §1 "First accepted commercial
+`work/production-learning-upwork-intro-001`, **PR #98** open, not merged): see §1 "First accepted commercial
 showcase asset" and §5 E. Previous refresh 14 Sep 2026 (second of the day) — **PR #95 and PR #96 merged to `main`** on the
 Controller's instruction ("Merge #95 then #96"): `main` = `bf92c53` (PR #96's merge commit; PR #95's is
 `191a224`). Earlier the same day: the full Governor refresh ordered by ruling C-6
@@ -293,7 +293,7 @@ In the Controller's order (nothing here is authorised by this file):
 (a) ~~push the raw pilot branch~~ (done 15 Sep); (b) adopt **TTAO** formally as a primary production KPI alongside CpAO (recommended YES);
 (c) when to promote **speaker micro-qualification** from candidate pattern to standard workflow
 (proposed: after two more real productions); (d) when enough complex runs exist to justify
-**COMPLEX-PRODUCTION-EVENT / OUTCOME-EVENT-v2** (proposed: after the second); (e) merge PR
+**COMPLEX-PRODUCTION-EVENT / OUTCOME-EVENT-v2** (proposed: after the second); (e) merge **PR #98**
 "Production learning: ingest accepted Upwork intro pilot and harden runtime QA".
 
 **Routed, not fixed (Governor):** `canon/HANDOFF.md` and `canon/CANON-SHAPE-v1.md` §7 carry 14-Sep

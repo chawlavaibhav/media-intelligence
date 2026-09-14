@@ -79,4 +79,4 @@ compositor gates · `c6c39b8` frame hygiene · `dcddedb` pools + provider errors
 1. ~~Push the raw pilot branch~~ (done, §A). 2. Adopt TTAO as a primary production KPI (recommended
 YES). 3. When to promote speaker micro-qualification (proposed: after two more real productions).
 4. When to design COMPLEX-PRODUCTION-EVENT / OUTCOME-EVENT-v2 (proposed: after the second complex run).
-5. Merge the PR.
+5. Merge PR #98 (https://github.com/chawlavaibhav/media-intelligence/pull/98).

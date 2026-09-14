@@ -6,7 +6,7 @@ authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
 **Last refresh:** 15 Sep 2026 — first accepted commercial showcase asset recorded as production learning
-(`production-learning/cases/UPWORK-INTRO-001/`, PR open from `work/production-learning-upwork-intro-001`);
+(`production-learning/cases/UPWORK-INTRO-001/`, PR #98 open from `work/production-learning-upwork-intro-001`);
 previous: 14 Sep 2026 (second of the day, after PR #95 and PR #96 merged to `main` at `bf92c53`) — the audit-closeout refresh ordered by Controller ruling C-6
 (`coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md`), after the two-day
 Capability Lab run (8–10 Sep, EVAL-040…043), the two independent audits of 10 Sep, the Controller's
