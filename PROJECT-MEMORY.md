@@ -5,7 +5,9 @@ itself.** Read this first, every session; then `coordination/CONTROL-STATE.md` f
 authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
-**Last refresh:** 14 Sep 2026 (second of the day, after PR #95 and PR #96 merged to `main` at `bf92c53`) — the audit-closeout refresh ordered by Controller ruling C-6
+**Last refresh:** 15 Sep 2026 — first accepted commercial showcase asset recorded as production learning
+(`production-learning/cases/UPWORK-INTRO-001/`, PR open from `work/production-learning-upwork-intro-001`);
+previous: 14 Sep 2026 (second of the day, after PR #95 and PR #96 merged to `main` at `bf92c53`) — the audit-closeout refresh ordered by Controller ruling C-6
 (`coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md`), after the two-day
 Capability Lab run (8–10 Sep, EVAL-040…043), the two independent audits of 10 Sep, the Controller's
 fifteen rulings of 14 Sep (C-1…C-11, six records dated 2026-09-14 under `coordination/decisions/`),
@@ -113,15 +115,31 @@ session:
 
 Current authorisation state always comes from `coordination/CONTROL-STATE.md`. The stable picture:
 
+**No longer zero (15 Sep 2026): one human-accepted real commercial showcase asset.** The Upwork profile
+introduction film V4.1 (57 s; sha256 `d1a5edf8…e008a`; pilot branch `work/pilot-upwork-intro-video-v4`,
+commit `f6ca66f`, local-only until pushed) was accepted by the Controller on 14 Sep after five assembled
+versions. Produced outside Alpha-1 (speaking presenter, multi-shot) by pilot scripts under the Controller's
+pilot spend packages; reconciled provider spend **USD 15.39318**; **TTAO ≈ 7–8 h (Controller estimate;
+mechanical lower bound 7 h 54 m)**. **Two conclusions, kept apart: final quality SUCCESS, pipeline
+efficiency UNDERPERFORMED.** Zero media-model failures reached the Controller — every named defect was
+compositor / orchestration / creative direction / QA timing / a route choice. From that evidence the
+runtime gained deterministic gates (compositor bounds · contrast · fit · tokens · disjointness;
+video-frame text hygiene; provider-pool liquidity; transient-error classification); the model
+observations stay directional (no Registry change, 575 rows); no Canon was expanded; the accepted
+`service_intro_with_portfolio_proof` template and speaker micro-qualification are **candidates**; TTAO as
+a primary KPI is **recommended, undecided**. It does **not** prove commercial advantage over a direct
+human + LLM workflow. Record: `production-learning/cases/UPWORK-INTRO-001/`.
+
 **Still zero (mechanically verified where possible):** qualified models/workflows · qualified
 subjective/perceptual evaluator families · strict-exactness-qualified text evaluators (five
 configurations tested, five disqualified, unrewritten) · qualified temporal-video evaluators (no
 numeric pass mark exists) · customer-outcome CpAO observations (Stage C only; not authorised) ·
 **accepted-outcome-rate measurements** (no acceptance-rate run has ever been commissioned) ·
 **8 of the 10 compiled packs** (and none is compiled without a real runtime failure — C-10) ·
-**post-draw text detection on a real artifact** (the gate's Cloud Vision adapter is wired and has
-never been invoked) · **any real, paid run of the production runtime** · **vendor-billed cost** (no
-provider statement has been reconciled; the ledger figure is an upper bound).
+**post-draw text detection on a real artifact by the gate's own detector** (the Cloud Vision adapter is
+wired and has never been invoked; the pilot's frame scans used its own triage tooling) · **any real,
+paid run of the production runtime** (the accepted pilot ran outside `runtime/`) · **vendor-billed cost**
+(no provider statement has been reconciled; every ledger figure, the pilot's included, is an upper bound).
 
 **Four kinds of evidence, never mixed (the distinction every reader must keep):**
 
@@ -248,6 +266,11 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
   Alpha 1. C-10 authorises Canon Injection v1 and template/empirical-memory integration at USD 0 and
   forbids compiling the remaining eight packs without a real runtime failure. C-11 adopts the
   twelve-condition public-release gate; none of the twelve is met.
+- **Next real productions measure TTAO from the first production input** (session start or package
+  receipt) and record the ACCEPT timestamp mechanically; one ledger per production so the CpAO numerator
+  is complete. The Upwork intro case is the baseline (7 h 54 m / USD 15.39 / 5 versions / 5 review
+  cycles for one 57-s asset). Open Controller decisions: push the raw pilot branch; TTAO as primary KPI;
+  when to promote speaker micro-qualification; when to design COMPLEX-PRODUCTION-EVENT.
 - **Nothing paid is authorised.** Every runtime profile carries `spend_authority.status: none`; every
   Group-3 Lab item (C-12…C-18) needs its own signed record. The first paid act the runtime justifies is
   one Alpha-1 vertical-slice run (single-digit USD) — a recommendation, not an authorisation.
@@ -358,6 +381,7 @@ Detailed chronology moved out of this file on 28 Aug 2026 (nothing was lost):
 | When a worker may run unattended | `shared/AUTONOMY-POLICY.md` |
 | Which validator verifies which artifact family | `verify/VALIDATOR-INDEX.yaml` |
 | Per-stream status convenience view | `coordination/WORKSTREAM-STATUS.md` — derived; `CONTROL-STATE.md` governs |
+| What a real production taught us (accepted asset, verdicts, TTAO, cost, defects, promotions) | `production-learning/cases/<CASE>/` — validator `production-learning/tools/check_case.py`; never Registry, never Canon |
 | Current exact-text posture | `coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMARK-THRESHOLD-2026-08-28.md` |
 | Why the Registry held 0 rows until 9 Sep 2026 despite a benchmark result | `coordination/decisions/CONTROLLER-EVAL-030-INTEGRATION-AND-REGISTRY-DISPOSITION-2026-08-28.md` |
 | The Registry's 575 deterministic rows and their admission criteria | `eval/registry/registry-v1.jsonl`, `eval/registry/validate_registry.py`, `coordination/decisions/CONTROLLER-INSTRUMENT-THRESHOLDS-FROZEN-2026-09-09.md` |

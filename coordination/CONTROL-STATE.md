@@ -5,7 +5,9 @@ deferred, cancelled; the current empirical floor; Registry state; spend authorit
 next Controller gate. It is a synthesis backed by the durable Controller decisions it links — where
 it and any older prose disagree, the latest durable Controller decision governs.
 
-**Updated:** 14 Sep 2026 (second refresh of the day) — **PR #95 and PR #96 merged to `main`** on the
+**Updated:** 15 Sep 2026 — production-learning integration of the Upwork intro pilot (branch
+`work/production-learning-upwork-intro-001`, PR open, not merged): see §1 "First accepted commercial
+showcase asset" and §5 E. Previous refresh 14 Sep 2026 (second of the day) — **PR #95 and PR #96 merged to `main`** on the
 Controller's instruction ("Merge #95 then #96"): `main` = `bf92c53` (PR #96's merge commit; PR #95's is
 `191a224`). Earlier the same day: the full Governor refresh ordered by ruling C-6
 (`coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md`) after the 10-Sep audit's
@@ -51,6 +53,23 @@ force: `CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md` (as narrowed by C-9),
   `runtime/ALPHA-1.md`, then `coordination/audits/HANDOFF-USD0-TRANCHE-2026-09-14.md` (refs, defects,
   the 14-run dry battery, blockers, the first-paid-tranche recommendation).
 - PR #94 (`work/audit-brief-2026-09-10`, the audit brief itself) is still open and untouched.
+- **First human-accepted real commercial showcase asset exists (14 Sep 2026).** The Upwork profile
+  introduction film **V4.1** (`pilots/upwork-intro-video-2026-09-14/v4/assembly/v4.1/upwork-intro-v4.1.mp4`,
+  sha256 `d1a5edf8…e008a`, 57.1 s, commit `f6ca66f` on `work/pilot-upwork-intro-video-v4`) was
+  **ACCEPTED by the Controller** after V1 (specific repair) → V2 (rebuild) → V3 (reject) → V4 (specific
+  repair). It was produced **outside the narrow Alpha-1 family** (speaking presenter, multi-shot) by pilot
+  scripts, not by `runtime/alpha`, under the Controller's own pilot spend packages (INR 3,000 then INR
+  2,000). Reconciled provider spend **USD 15.39318** (V1+V2 8.082 · V3 3.28358 · V4 4.0276 · V4.1 0; the
+  "USD 7.31" in the final pilot report covers V3–V4.1 only). **TTAO ≈ 7–8 h (Controller estimate;
+  mechanical lower bound 7 h 54 m from session start to the V4.1 file).** Two conclusions, never blended:
+  **final quality succeeded; pipeline efficiency did not.** Durable record:
+  `production-learning/cases/UPWORK-INTRO-001/` (outcome, human verdicts, revision trace, time + cost,
+  system defects, route observations, accepted template, promotion queue, evidence map) and
+  `coordination/audits/UPWORK-INTRO-PILOT-EVIDENCE-INVENTORY-2026-09-14.md`. **The raw pilot branch is
+  local-only** until the Controller pushes it (the integration session's push was blocked by its own
+  permission classifier, not by GitHub); it is never merged to `main`. **This does not prove commercial
+  advantage** over a direct human + LLM workflow; it is the baseline the next real production is measured
+  against.
 
 ## 2. Active / authorised
 
@@ -166,6 +185,29 @@ certification — nothing has passed; benchmark-grade OCR — Cloud Vision passe
 is not a programme-wide blocker; under Alpha 1 exact copy is composed by code (mechanism B), which is
 exact by construction and does not depend on any text evaluator.
 
+**E. Production learning (new, 15 Sep 2026) — never Registry, never Canon.** `production-learning/cases/`
+holds real productions' records. UPWORK-INTRO-001: the accepted V4.1 asset; **zero media-model failures
+reached the Controller — every defect he named was compositor, orchestration, creative direction, QA
+timing or a route choice** (`SYSTEM-DEFECTS.yaml`). Model observations from the job (Veo 3.1 Fast
+speaker 1/1 accepted after two transient UNAVAILABLE failures; Gemini Omni 1.1 Flash speaker 0/1, inserted
+a word, synthetic timbre; Nano Banana 2 drew paper-like text once; Kling sharpened blurred signage into
+letters once; Lyria refused one wording three times) are **directional only** (`ROUTE-OBSERVATIONS.yaml`,
+`routing_authority: none`); **no Registry row was created or changed (575), no Canon pack compiled or
+edited** — no new Canon source or domain was proven necessary by the pilot. **Deterministic gates
+promoted into the runtime from this evidence:** text bounds, contrast with opaque-backing rule,
+contain/native/declared-cover fit, one design-token source, critical-region disjointness
+(`runtime/compositor/`); video-frame text hygiene — a video's text verdict comes only from sampled frames,
+no frames → NOT_RUN never PASS (`runtime/loop/frame_hygiene.py`, wired into the loop and the dry battery);
+provider-pool liquidity on the execution manifest (`runtime/execute/pools.py`, additive fields on
+EXECUTION-MANIFEST-v0); transient-error classification that can never yield `model_quality_failure`
+(`runtime/execute/provider_errors.py`). **Candidate patterns, not policy:** speaker micro-qualification
+(test the unresolved speaker route first → human gate → freeze → build), the accepted
+`service_intro_with_portfolio_proof` template (pacing values scoped to that one accepted instance), and
+**TTAO as a primary production KPI alongside CpAO (recommended YES; awaiting the Controller)**.
+OUTCOME-EVENT-v1 is **not** mutated — it cannot represent a five-version, nine-route, assembly-repaired
+production honestly; a COMPLEX-PRODUCTION-EVENT is a design candidate after a second complex run.
+**Next real productions measure TTAO from the first production input and record the ACCEPT timestamp.**
+
 ## 6. Spend authority and spend of record
 
 | Item | Figure | Authority |
@@ -176,6 +218,7 @@ exact by construction and does not depend on any text evaluator.
 | **Vendor-billed cost** | **Not reconciled.** No statement is filed; `reconcile_spend.py` prints the column as "not reconciled" and exits 0. Caps are enforced against the ledger, never against a bill (C-2). The four statements (fal, Google Cloud, Sarvam, ElevenLabs) still need one reading; who reads them is not settled | C-2 record |
 | EMP-001 (Aug) | USD 2.6397905 through EVAL-024 + USD 0.024 EVAL-030 under a USD 10.00 ceiling | `CONTROLLER-EMP-001-SPEND-AUTHORISATION-2026-08-27.md` |
 | EVAL-038 | USD 2.260122 of USD 10.00; spent, not renewed | `CONTROLLER-EVAL-038-…-2026-09-01.md` |
+| **Upwork intro showcase pilot (14 Sep 2026, outside the Lab and the runtime)** | **USD 15.39318 reserved at pinned prices across three pilot ledgers** (V1+V2 USD 8.082 under the INR 3,000 record; V3 3.28358 + V4 4.0276 under the INR 2,000 record; V4.1 0). Pools: Vertex/Gemini credits 11.8696, fal cash 3.479, Sarvam ₹4.3. Five provider failures (Lyria ×3, Veo UNAVAILABLE ×2) reserved conservatively; vendor statements not reconciled | Controller pilot packages recorded in `plan/SHOT-MAP-AND-SPEND-RECORD.md`, `v3/plan/SPEND-RECORD-V3.md`, `v4/plan/SPEND-AMENDMENT-V4.md` on the pilot branch; reconciled by `production-learning/tools/reconcile_pilot_ledgers.py` |
 | **Any new paid dispatch** — Lab or runtime | **Not authorised.** The runtime's every profile carries `spend_authority.status: none`; the Lab's `authorization.local.yaml` authorises nothing without a new signed record | Controller rider of 14 Sep |
 
 Mechanical enforcement stays local by design (the live ledger and the local authorisation file are
@@ -245,6 +288,14 @@ In the Controller's order (nothing here is authorised by this file):
 3. **C-15 clean reruns** only for the three `replacement_needed` cells, and only if Alpha traffic
    needs them (Alpha 1 does not use image-to-video Wan 2.2, Kling audio or two-speaker routes).
 4. Stage B / Stage C (C-17 / C-18) — only after the runtime and baseline are frozen; HED-1 first.
+
+**Open Controller decisions from the Upwork intro integration (15 Sep 2026; none decided by this file):**
+(a) push `work/pilot-upwork-intro-video-v4` to origin (raw evidence durability; the integration session
+could not); (b) adopt **TTAO** formally as a primary production KPI alongside CpAO (recommended YES);
+(c) when to promote **speaker micro-qualification** from candidate pattern to standard workflow
+(proposed: after two more real productions); (d) when enough complex runs exist to justify
+**COMPLEX-PRODUCTION-EVENT / OUTCOME-EVENT-v2** (proposed: after the second); (e) merge PR
+"Production learning: ingest accepted Upwork intro pilot and harden runtime QA".
 
 **Routed, not fixed (Governor):** `canon/HANDOFF.md` and `canon/CANON-SHAPE-v1.md` §7 carry 14-Sep
 status notes but remain Canon-stream-owned; `eval/HANDOFF.md` predates the Capability Lab entirely and
