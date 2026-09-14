@@ -61,7 +61,12 @@ fields:
         type: object
         required: true
         fields:
-          main: {type: string, required: true}
+          # CORRECTED at integration (14 Sep 2026, same day the contract was written, before any
+          # template existed): `main` was required, but under code-composed exact text (C-6c
+          # mechanism B) the only dispatched prompt is the textless plate and `main` is legitimately
+          # absent. The invariant is now "the prompt the text mechanism dispatches is present",
+          # enforced by runtime/canon/templates.py, never by a per-field requirement.
+          main: {type: string, required: false}
           textless_plate: {type: string, required: false}
           motion: {type: string, required: false}
 

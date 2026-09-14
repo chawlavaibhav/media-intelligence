@@ -1,0 +1,327 @@
+{
+  "attempts": [
+    {
+      "adapter_family": "fal_queue",
+      "arm": "core",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-core-01:rd-bc7f8224dacb4d86:flux-2-pro:draw1",
+      "blocked_by_ceiling": false,
+      "ceiling": {
+        "job_ceiling_usd": "5.0",
+        "reserved_before_this_usd": "0.000000",
+        "this_attempt_usd": "0.030000",
+        "within": true
+      },
+      "draw_index": 1,
+      "evidence": {
+        "cells": [
+          "IMG-CORE/flux-2-pro"
+        ],
+        "status": "clean_observed",
+        "text_mechanism": "not_applicable"
+      },
+      "price": {
+        "billing_pool": "cash",
+        "expected_cost_usd": "0.030000",
+        "harness_amount_usd_equiv": "0.030000",
+        "pin_indexes": [
+          "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+        ],
+        "price_agrees_with_harness": true,
+        "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json",
+        "quantity": "1",
+        "quantity_unit": "images",
+        "unit": "per_image_first_megapixel",
+        "unit_price": "0.03"
+      },
+      "refusal_reason": null,
+      "request": {
+        "api_calls_per_trial": 1,
+        "body": {
+          "image_size": {
+            "height": 1024,
+            "width": 816
+          },
+          "prompt": "Product photograph, one 250 ml round-shoulder clear glass bottle of orange juice with a polished metal cap, blank label area with no label, standing on a pale cool-grey matte surface. Single large soft window light from the left and slightly above; one long soft highlight down the bottle's left shoulder, one small reflection on the cap, soft shadow falling to the right. Warm orange liquid glowing where the light passes through; cool quiet background. Three-quarter view from slightly above showing the front, the shoulder and the top of the cap. Bottle placed right of centre with a small gap above and below it. Nothing else in frame. No text, no lettering, no logo, no numerals anywhere in the image."
+        },
+        "body_sha256": "65f260e2db284152d7549e074bb209d2e00812a992719fa6e01863385f850e3d",
+        "credential_name": "FAL_KEY",
+        "followups": [],
+        "method": "POST",
+        "rendered_by": "harness adapter dry_run",
+        "request_notes": [
+          "size_policy=size_a: 4:5 -> 816x1024"
+        ],
+        "shape_status": "verified",
+        "url": "https://queue.fal.run/fal-ai/flux-2-pro"
+      },
+      "route_key": "flux-2-pro",
+      "slot": "primary",
+      "surface": "fal",
+      "surface_model_id": "fal-ai/flux-2-pro",
+      "would_dispatch": true
+    },
+    {
+      "adapter_family": "fal_queue",
+      "arm": "core",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-core-01:rd-bc7f8224dacb4d86:flux-2-pro:draw2",
+      "blocked_by_ceiling": false,
+      "ceiling": {
+        "job_ceiling_usd": "5.0",
+        "reserved_before_this_usd": "0.030000",
+        "this_attempt_usd": "0.030000",
+        "within": true
+      },
+      "draw_index": 2,
+      "evidence": {
+        "cells": [
+          "IMG-CORE/flux-2-pro"
+        ],
+        "status": "clean_observed",
+        "text_mechanism": "not_applicable"
+      },
+      "price": {
+        "billing_pool": "cash",
+        "expected_cost_usd": "0.030000",
+        "harness_amount_usd_equiv": "0.030000",
+        "pin_indexes": [
+          "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+        ],
+        "price_agrees_with_harness": true,
+        "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json",
+        "quantity": "1",
+        "quantity_unit": "images",
+        "unit": "per_image_first_megapixel",
+        "unit_price": "0.03"
+      },
+      "refusal_reason": null,
+      "request": {
+        "api_calls_per_trial": 1,
+        "body": {
+          "image_size": {
+            "height": 1024,
+            "width": 816
+          },
+          "prompt": "Product photograph, one 250 ml round-shoulder clear glass bottle of orange juice with a polished metal cap, blank label area with no label, standing on a pale cool-grey matte surface. Single large soft window light from the left and slightly above; one long soft highlight down the bottle's left shoulder, one small reflection on the cap, soft shadow falling to the right. Warm orange liquid glowing where the light passes through; cool quiet background. Three-quarter view from slightly above showing the front, the shoulder and the top of the cap. Bottle placed right of centre with a small gap above and below it. Nothing else in frame. No text, no lettering, no logo, no numerals anywhere in the image."
+        },
+        "body_sha256": "65f260e2db284152d7549e074bb209d2e00812a992719fa6e01863385f850e3d",
+        "credential_name": "FAL_KEY",
+        "followups": [],
+        "method": "POST",
+        "rendered_by": "harness adapter dry_run",
+        "request_notes": [
+          "size_policy=size_a: 4:5 -> 816x1024"
+        ],
+        "shape_status": "verified",
+        "url": "https://queue.fal.run/fal-ai/flux-2-pro"
+      },
+      "route_key": "flux-2-pro",
+      "slot": "primary",
+      "surface": "fal",
+      "surface_model_id": "fal-ai/flux-2-pro",
+      "would_dispatch": true
+    },
+    {
+      "adapter_family": "fal_queue",
+      "arm": "core",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-core-01:rd-bc7f8224dacb4d86:qwen-image-3:draw1",
+      "blocked_by_ceiling": false,
+      "ceiling": {
+        "job_ceiling_usd": "5.0",
+        "reserved_before_this_usd": "0.060000",
+        "this_attempt_usd": "0.040000",
+        "within": true
+      },
+      "conditional_note": "a fallback attempt is dispatched only if a named trigger fires on the primary; never alongside it and never as a retry of it",
+      "conditional_on": [
+        "provider_refusal",
+        "timeout",
+        "gate_fail",
+        "capability_unsupported"
+      ],
+      "draw_index": 1,
+      "evidence": {
+        "cells": [
+          "IMG-CORE/qwen-image-3"
+        ],
+        "status": "clean_observed",
+        "text_mechanism": "not_applicable"
+      },
+      "if_triggered_would_dispatch": true,
+      "price": {
+        "billing_pool": "cash",
+        "expected_cost_usd": "0.040000",
+        "harness_amount_usd_equiv": "0.040000",
+        "pin_indexes": [
+          "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+        ],
+        "price_agrees_with_harness": true,
+        "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json",
+        "quantity": "1",
+        "quantity_unit": "images",
+        "unit": "per_image",
+        "unit_price": "0.04"
+      },
+      "refusal_reason": null,
+      "request": {
+        "api_calls_per_trial": 1,
+        "body": {
+          "image_size": {
+            "height": 1024,
+            "width": 816
+          },
+          "num_images": 1,
+          "prompt": "Product photograph, one 250 ml round-shoulder clear glass bottle of orange juice with a polished metal cap, blank label area with no label, standing on a pale cool-grey matte surface. Single large soft window light from the left and slightly above; one long soft highlight down the bottle's left shoulder, one small reflection on the cap, soft shadow falling to the right. Warm orange liquid glowing where the light passes through; cool quiet background. Three-quarter view from slightly above showing the front, the shoulder and the top of the cap. Bottle placed right of centre with a small gap above and below it. Nothing else in frame. No text, no lettering, no logo, no numerals anywhere in the image."
+        },
+        "body_sha256": "8c340f57feee84202b093bcaa918d61e616a17d068d7a27b05f5b395f17ec72e",
+        "credential_name": "FAL_KEY",
+        "followups": [],
+        "method": "POST",
+        "rendered_by": "harness adapter dry_run",
+        "request_notes": [
+          "size_policy=size_a: 4:5 -> 816x1024"
+        ],
+        "shape_status": "verified",
+        "url": "https://queue.fal.run/alibaba/qwen-image-3/text-to-image"
+      },
+      "route_key": "qwen-image-3",
+      "slot": "fallback",
+      "surface": "fal",
+      "surface_model_id": "alibaba/qwen-image-3/text-to-image",
+      "would_dispatch": false
+    },
+    {
+      "adapter_family": "fal_queue",
+      "arm": "core",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-core-01:rd-bc7f8224dacb4d86:qwen-image-3:draw2",
+      "blocked_by_ceiling": false,
+      "ceiling": {
+        "job_ceiling_usd": "5.0",
+        "reserved_before_this_usd": "0.100000",
+        "this_attempt_usd": "0.040000",
+        "within": true
+      },
+      "conditional_note": "a fallback attempt is dispatched only if a named trigger fires on the primary; never alongside it and never as a retry of it",
+      "conditional_on": [
+        "provider_refusal",
+        "timeout",
+        "gate_fail",
+        "capability_unsupported"
+      ],
+      "draw_index": 2,
+      "evidence": {
+        "cells": [
+          "IMG-CORE/qwen-image-3"
+        ],
+        "status": "clean_observed",
+        "text_mechanism": "not_applicable"
+      },
+      "if_triggered_would_dispatch": true,
+      "price": {
+        "billing_pool": "cash",
+        "expected_cost_usd": "0.040000",
+        "harness_amount_usd_equiv": "0.040000",
+        "pin_indexes": [
+          "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+        ],
+        "price_agrees_with_harness": true,
+        "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json",
+        "quantity": "1",
+        "quantity_unit": "images",
+        "unit": "per_image",
+        "unit_price": "0.04"
+      },
+      "refusal_reason": null,
+      "request": {
+        "api_calls_per_trial": 1,
+        "body": {
+          "image_size": {
+            "height": 1024,
+            "width": 816
+          },
+          "num_images": 1,
+          "prompt": "Product photograph, one 250 ml round-shoulder clear glass bottle of orange juice with a polished metal cap, blank label area with no label, standing on a pale cool-grey matte surface. Single large soft window light from the left and slightly above; one long soft highlight down the bottle's left shoulder, one small reflection on the cap, soft shadow falling to the right. Warm orange liquid glowing where the light passes through; cool quiet background. Three-quarter view from slightly above showing the front, the shoulder and the top of the cap. Bottle placed right of centre with a small gap above and below it. Nothing else in frame. No text, no lettering, no logo, no numerals anywhere in the image."
+        },
+        "body_sha256": "8c340f57feee84202b093bcaa918d61e616a17d068d7a27b05f5b395f17ec72e",
+        "credential_name": "FAL_KEY",
+        "followups": [],
+        "method": "POST",
+        "rendered_by": "harness adapter dry_run",
+        "request_notes": [
+          "size_policy=size_a: 4:5 -> 816x1024"
+        ],
+        "shape_status": "verified",
+        "url": "https://queue.fal.run/alibaba/qwen-image-3/text-to-image"
+      },
+      "route_key": "qwen-image-3",
+      "slot": "fallback",
+      "surface": "fal",
+      "surface_model_id": "alibaba/qwen-image-3/text-to-image",
+      "would_dispatch": false
+    }
+  ],
+  "blocked": null,
+  "built_utc": "2026-09-14T12:00:00Z",
+  "ceiling": {
+    "already_committed_usd": "0",
+    "attempts_blocked_by_ceiling": 0,
+    "effective_ceiling_usd": "5.0",
+    "job_ceiling_usd": "5.0",
+    "request_ceiling_usd": null,
+    "reserved_total_usd": "0.140000",
+    "rule": "attempts reserve in listed order; the running total never crosses the effective ceiling; an attempt that would is blocked_by_ceiling and stays visible"
+  },
+  "customer_ref": "acct-stage-a-img",
+  "decision_id": "rd-bc7f8224dacb4d86",
+  "dispatch_mode": "dry",
+  "fallback_triggers": [
+    "provider_refusal",
+    "timeout",
+    "gate_fail",
+    "capability_unsupported"
+  ],
+  "job_id": "alpha-dry-img-core-01",
+  "manifest_id": "em-c8e0cbcc7ea0bc39",
+  "policy_profile": "dry",
+  "provenance": {
+    "decision_sha256": "71a4d5f788de3bc29947ec45c7526a4c2835e50f12b3220cc17593ae711af2c3",
+    "dispatched": false,
+    "harness_modules": [
+      "eval/harness-v2/pricing.py",
+      "eval/harness-v2/surfaces.py"
+    ],
+    "harness_providers_stubbed": false,
+    "may_spend": false,
+    "may_spend_reason": "profile 'dry' may plan, price and dry-run only: spend_authority.status is 'none', not 'signed' (adoption is not spend authorisation); spend_authority.record names no signed spend authorisation record",
+    "network": "none",
+    "policy_profile": "dry",
+    "policy_profile_adopted": true,
+    "roster_sha256": "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c",
+    "routing_evidence_map_sha256": "8df6ead0712d6b67070e7475ab56aa12be7f9480916a79a273bec5ff25c7f707",
+    "spec_path": "runs/alpha-dry-img-core-01/02-spec.json",
+    "spec_sha256": "702df2846a0f5eba6b7b8a8f68475aa6973bc62d621dc0366675e36c0da8e3e8",
+    "spend_authority_status": "none",
+    "taint_register_sha256": "acd0cf87d7d0ee494c73f2c44159040f46f029eb436e5357cd9add5b41c62651"
+  },
+  "schema": "EXECUTION-MANIFEST-v0",
+  "self_composed": [],
+  "spec_id": "spec-74bf2aeb83c04209",
+  "surface_preference": {
+    "applied": false,
+    "basis": "coordination/decisions/CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09.md",
+    "primary_surface": "fal",
+    "reason": "the roster offers this model on ['azure_foundry', 'fal']; neither pair is fal + GCP, so the rule does not bite",
+    "roster_surfaces_for_model": [
+      {
+        "record": "route",
+        "route_status": "needs_controller_enablement",
+        "surface": "azure_foundry"
+      },
+      {
+        "record": "fallback",
+        "route_status": "pinned",
+        "surface": "fal"
+      }
+    ],
+    "rule": "same_model_prefers_gcp"
+  }
+}

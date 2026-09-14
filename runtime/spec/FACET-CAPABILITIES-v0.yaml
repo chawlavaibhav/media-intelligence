@@ -21,9 +21,23 @@ facets:
   level: exact_text_strategy
 - facet: supplied_asset_present
   capabilities: [reference_fidelity]
+  # ADDED at integration (lead, 14 Sep 2026; dry battery run B05): fidelity to a supplied STILL is an
+  # image question (IMG-REF). For a motion deliverable derived from the accepted still, fidelity to
+  # that still is what image-to-video itself was measured on (RR-8), so this facet applies to
+  # static-image jobs only; without this the motion job demanded a route that answers both VID-I2V
+  # and IMG-REF, which no route does, and went to a person for the wrong reason.
+  modalities: [static_image]
 - facet: product_entity_present
   capabilities: [product_surface_fidelity]
   mandatory: false
+
+# A capability a KIND row demands unconditionally is waived when the fact it exists for is absent.
+# ADDED at integration (lead, 14 Sep 2026; dry battery run B04): DELIVERABLE-KINDS.static_ad demands
+# exact_text_composition, but a static ad with no exact strings has no strategy level to route on,
+# so the router sent it to a person although the job was routable. The waiver is recorded on the
+# spec (`waived_capabilities`), never silent.
+kind_capability_conditions:
+  exact_text_composition: exact_text_present
 
 # A motion block on any deliverable adds the capability its `from` names. `from` is an open
 # vocabulary in PRODUCTION-JOB-v0; a new value is a row here.

@@ -1,0 +1,261 @@
+{
+  "cost_envelope": {
+    "already_committed_usd": "0",
+    "basis": "worst-case unit cost 0.600000 x max_provider_draws_per_deliverable 2 from profile 'dry'",
+    "job_ceiling_usd": "5.0",
+    "this_decision_max_usd": "1.200000",
+    "within_ceiling": true
+  },
+  "decided_utc": "2026-09-14T12:00:00Z",
+  "decision_id": "rd-efae6299ed6cca4d",
+  "exclusions_applied": [],
+  "fallback": {
+    "adapter_family": "vertex_veo",
+    "arm": "core",
+    "billing_pool": "credits",
+    "credential_name": "gcloud auth print-access-token (service-account key file, MD-C3)",
+    "evidence_cells": [
+      "VID-I2V/veo-3.1-fast-i2v"
+    ],
+    "evidence_status": "clean_observed",
+    "expected_cost_usd": "0.600000",
+    "note": "a different route for the same requirement, declared before dispatch. Falling through to it is a routing event, never a retry.",
+    "price_pin_indexes": [
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml",
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml",
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml",
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml",
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml",
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml",
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+    ],
+    "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/vertex-shared/vertex-generative-ai-pricing.html",
+    "quantity": "6",
+    "quantity_unit": "seconds",
+    "route_key": "veo-3.1-fast-i2v",
+    "surface": "vertex",
+    "surface_model_id": "veo-3.1-fast-generate-001",
+    "trigger": [
+      "provider_refusal",
+      "timeout",
+      "gate_fail",
+      "capability_unsupported"
+    ],
+    "unit": "per_second",
+    "unit_price": "0.1"
+  },
+  "manual_route_reason": null,
+  "manual_route_required": false,
+  "primary": {
+    "adapter_family": "fal_queue",
+    "arm": "core",
+    "attempt_ids_if_dispatched": [
+      "cust:acct-stage-a-vid:alpha-dry-vid-i2v-01:rd-efae6299ed6cca4d:minimax-h3-max-i2v:draw1",
+      "cust:acct-stage-a-vid:alpha-dry-vid-i2v-01:rd-efae6299ed6cca4d:minimax-h3-max-i2v:draw2"
+    ],
+    "billing_pool": "cash",
+    "credential_name": "FAL_KEY",
+    "evidence_cells": [
+      "VID-I2V/minimax-h3-max-i2v"
+    ],
+    "evidence_n": {
+      "image_to_video": {
+        "accepts": 7,
+        "items": 4,
+        "note": "human blind acceptance, one judge; never a Registry row and never a score",
+        "settled_draw_floor": 4,
+        "trials": 8
+      }
+    },
+    "evidence_status": "clean_observed",
+    "expected_cost_usd": "0.480000",
+    "price_pin_evidence_quote": "after which 480p is $0.05/second and 768p is $0.08/second",
+    "price_pin_indexes": [
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+    ],
+    "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json",
+    "quantity": "6",
+    "quantity_rule": "per_second",
+    "quantity_unit": "seconds",
+    "route_key": "minimax-h3-max-i2v",
+    "surface": "fal",
+    "surface_model_id": "minimax/h3-max/image-to-video",
+    "unit": "per_second",
+    "unit_price": "0.08",
+    "unit_price_note": "variant:i2v-768p"
+  },
+  "provenance": {
+    "binding": "runtime/route/CAPABILITY-EVIDENCE-BINDING-v0.yaml",
+    "dispatched": false,
+    "evidence_status_vocabulary": [
+      "clean_observed",
+      "directional_only",
+      "awaiting_controller_ruling",
+      "method_tainted",
+      "insufficient"
+    ],
+    "harness_modules": [
+      "eval/harness-v2/pricing.py",
+      "eval/harness-v2/surfaces.py"
+    ],
+    "harness_providers_stubbed": false,
+    "map_prices_note": "the routing map's unit_price_usd_pinned and per-question cost figures are never read as prices; they were measured on surfaces the roster has since re-pointed",
+    "map_prices_used": false,
+    "network": "none — planning opens no socket",
+    "pin_indexes_read": 7,
+    "policy_profile": "dry",
+    "policy_profile_adopted": true,
+    "policy_profile_source": "supplied_alongside_spec (PRODUCTION-SPEC-v1 carries no profile name)",
+    "policy_profile_status": "active",
+    "roster": "eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml",
+    "roster_sha256": "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c",
+    "routing_evidence_map_sha256": "8df6ead0712d6b67070e7475ab56aa12be7f9480916a79a273bec5ff25c7f707",
+    "spec": "runs/alpha-dry-vid-i2v-01/02-spec.json",
+    "taint_register": "eval/capability-map/TAINT-REGISTER-v1.yaml",
+    "taint_register_sha256": "acd0cf87d7d0ee494c73f2c44159040f46f029eb436e5357cd9add5b41c62651"
+  },
+  "schema": "ROUTE-DECISION-v0",
+  "selection_basis": {
+    "candidates_considered": [
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "VID-I2V/kling-v3-pro-i2v"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.672000",
+          "priced": true,
+          "why": "roster kling-v3-pro variant i2v, 0.112 USD per_second x 6 seconds"
+        },
+        "route_key": "kling-v3-pro-i2v",
+        "why": [
+          "image_to_video: VID-I2V/kling-v3-pro-i2v is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "VID-I2V/minimax-h3-max-i2v"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.480000",
+          "priced": true,
+          "why": "roster minimax-h3-max variant i2v-768p, 0.08 USD per_second x 6 seconds"
+        },
+        "route_key": "minimax-h3-max-i2v",
+        "why": [
+          "image_to_video: VID-I2V/minimax-h3-max-i2v is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "VID-I2V/veo-3.1-fast-i2v"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.600000",
+          "priced": true,
+          "why": "roster veo-3.1-fast variant i2v, 0.1 USD per_second x 6 seconds"
+        },
+        "route_key": "veo-3.1-fast-i2v",
+        "why": [
+          "image_to_video: VID-I2V/veo-3.1-fast-i2v is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      },
+      {
+        "dropped_at": "evidence_envelope",
+        "evidence_cells": [
+          "VID-I2V/wan-2.2-a14b-i2v"
+        ],
+        "kept": false,
+        "route_key": "wan-2.2-a14b-i2v",
+        "why": [
+          "image_to_video: VID-I2V/wan-2.2-a14b-i2v is eliminated on its question under the frozen rule (rulings ['C-3', 'C-4', 'C-6b']): eliminated on its question under the frozen rule (E1+E2): 2/8 on 8 settled draw(s); C-3 (the planned denominator is kept and every refusal or error is counted); C-4 (the cell was recomputed under the frozen rule, so its number stands); C-6b (the first sending of a draw is the one that counts; a re-send is descriptive only). The elimination rests on 6 failure(s) the run classified as an infrastructure / request-shape fault, now counted under C-3 / C-6b; a clean rerun (Controller item C-15) is the only thing that could re-test this route."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "VID-I2V/wan-3.0-prime-i2v"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.840000",
+          "priced": true,
+          "why": "roster wan-3.0-prime variant i2v, 0.14 USD per_second x 6 seconds"
+        },
+        "route_key": "wan-3.0-prime-i2v",
+        "why": [
+          "image_to_video: VID-I2V/wan-3.0-prime-i2v is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      }
+    ],
+    "keyed_on": "cell_key, never (route_key, arm); exact-text cells are further narrowed by text_mechanism (C-6c, 14 Sep 2026)",
+    "preflight": [],
+    "register_notes_applied": [],
+    "required_capabilities": [
+      "image_to_video",
+      "product_surface_fidelity"
+    ],
+    "requirements_resolved": [
+      {
+        "arms": null,
+        "basis": "RR-8 — animate an accepted still",
+        "capability": "image_to_video",
+        "cells_considered": [
+          "VID-I2V/kling-v3-pro-i2v",
+          "VID-I2V/minimax-h3-max-i2v",
+          "VID-I2V/veo-3.1-fast-i2v",
+          "VID-I2V/wan-2.2-a14b-i2v",
+          "VID-I2V/wan-3.0-prime-i2v"
+        ],
+        "dispatches": true,
+        "level": null,
+        "question": "VID-I2V",
+        "text_mechanism": null
+      }
+    ],
+    "rule": "hard_requirements -> evidence_envelope -> cost -> fallback",
+    "self_composed_requirements": [],
+    "stages": [
+      {
+        "id": "hard_requirements",
+        "note": "a route dropped here is never reconsidered, whatever it costs",
+        "what": "capability coverage, the spec's route_exclusions, and the profile's deliverable_kinds_allowed"
+      },
+      {
+        "id": "evidence_envelope",
+        "note": "the register is read, never overridden; a cell awaiting a Controller ruling is never auto-routed",
+        "what": "the taint register's status and production_use_allowed, then the active profile's auto_routable_evidence_status"
+      },
+      {
+        "id": "price",
+        "note": "the routing map's cost figures are NEVER read as prices — they were measured on surfaces the roster has since re-pointed",
+        "what": "a live price pin resolved through the roster; a route with no live pin cannot be auto-selected"
+      },
+      {
+        "id": "cost",
+        "note": "cost only orders survivors; it can never rescue a route or overrule a hard requirement",
+        "what": "cheapest expected cost first, among the routes that survived every stage above"
+      },
+      {
+        "id": "fallback",
+        "note": "a fallback is a different route for the same requirement, never a second attempt at the same one",
+        "what": "the next survivor with a different route_key, declared before dispatch with named triggers"
+      }
+    ]
+  },
+  "spec_id": "spec-6915eaeebb020a82",
+  "unsupported_requirements": [
+    {
+      "capability": "product_surface_fidelity",
+      "level": null,
+      "mandatory": false,
+      "reason": "capability 'product_surface_fidelity' has no row in CAPABILITY-EVIDENCE-BINDING-v0.yaml; it is not routed by guesswork. Adding it is a row there, not a code change."
+    }
+  ],
+  "why_selected": "Spec spec-6915eaeebb020a82 asks for short_motion_from_accepted_still. Among the routes that satisfy every mandatory requirement, are not excluded by the spec, pass the taint register and carry a live price pin, minimax-h3-max-i2v is the cheapest at 0.480000 USD (0.08 per_second x 6 seconds, pool cash, priced from eval/empirical-planning/price-pins-2026-09/minimax-h3-max/fal-api-models-minimax-h3-max-i2v.json). Cost decided the order, never the eligibility: every route dropped above was dropped before any price was compared. veo-3.1-fast-i2v is declared as the fallback at 0.600000 USD, before any dispatch. Acceptance authority under dry is human."
+}

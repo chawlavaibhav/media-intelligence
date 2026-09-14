@@ -1,0 +1,236 @@
+{
+  "acceptance_contract": [
+    "ACCEPT only if the lettering reads exactly \"FLAT 40% OFF\", \"First 100 members only\" and \"AlphaFit\" — every character as given; REJECT on any wrong, missing, doubled or invented character.",
+    "REJECT if any other lettering or pseudo-lettering appears anywhere, or if any of the required lettering is cut by the frame edge or overlaps other lettering.",
+    "ACCEPT only if the lettering reads exactly \"FLAT 40% OFF\", \"First 100 members only\" and \"AlphaFit\" — same letters, same case, the numerals 40 and 100 correct; REJECT on any missing, extra, swapped or malformed character.",
+    "ACCEPT only if the 15 January end date is readable in some wording.",
+    "REJECT if any person, silhouette or body part appears.",
+    "ACCEPT only if black and neon yellow are the two dominant colours and one corner is empty of lettering and graphics."
+  ],
+  "blueprint": {
+    "case_values": {
+      "CA-D1": "1st read: \"FLAT 40% OFF\" (largest, neon yellow on black — contrast); 2nd: \"First 100 members only\"; 3rd: \"AlphaFit\" and the date. One cue per read.",
+      "CA-D2": "Headline block off-centre, upper-left zone; the lower-right corner is left clean for the customer's logo (a visible reason for the asymmetry, fre_0021).",
+      "CA-D3": "Sparse frame: tight fit with a deliberate margin around the headline (fre_0006); no letter touches the frame edge.",
+      "CA-D4": "None used.",
+      "CA-D5": "Deliberately restless (fre_0032) — the brief says bold and energetic; declared as the energetic exception per CF-06.",
+      "CA-D6": "1:1 justified by the stacked block of three lines forming a near-square shape."
+    },
+    "generation_prompts": {
+      "main": "Bold square social-media poster for a gym offer. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. Text set in a heavy grotesque typeface: the headline \"FLAT 40% OFF\" in large neon yellow letters at the upper left; beneath it in white \"First 100 members only\"; beneath that in smaller white \"Offer ends 15 January\"; the gym name \"AlphaFit\" in neon yellow at the lower left. The lower-right corner stays completely empty. High contrast, energetic. No other words, letters, numerals or symbols anywhere.",
+      "motion": null,
+      "textless_plate": "Bold square social-media poster background. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. The upper-left two-thirds and the lower-left are plain black space; the lower-right corner stays completely empty. High contrast, energetic. No text, no letters, no numerals, no symbols anywhere in the image."
+    },
+    "planner": "stage_a_blueprint_fixture",
+    "production_parameters": {
+      "blueprint_header": {
+        "author": "executor_agent",
+        "blueprint_author": "executor_agent",
+        "case_id": "IMG-TEXT-02",
+        "frozen": "2026-09-05",
+        "gate_pre": "not_available_on_base — canon/gate/run_gate.py is absent from base cb92f1e (CANON-GATE-001 unmerged); run `pre` on this file when it lands",
+        "held_constant_across_routes": "True",
+        "packs_source": "canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers canon/packs/pack-triggers-v0.yaml; DEFAULT/CHECK text rendered by id, never paraphrased; no HOLD material"
+      },
+      "brief_only_parameters": {
+        "light/mood": [
+          "(scene mood) Key set by genre: high-contrast, hard-edged; mood from contrast, not from brightness."
+        ]
+      },
+      "decision_questions": {
+        "CA-D1": "What reads first, second, third?",
+        "CA-D2": "Where does the subject sit in frame?",
+        "CA-D3": "How does the frame hold the subject at its edges?",
+        "CA-D4": "Use a frame within the frame?",
+        "CA-D5": "Balance the frame, or refuse the eye rest?",
+        "CA-D6": "Which orientation and aspect?"
+      },
+      "dispatch_parameters": {
+        "aspect": "1:1",
+        "audio": "not_applicable",
+        "reference_slots": "0",
+        "resolution": "~1 MP"
+      },
+      "text_handling": [
+        "mode: generated (arms A/B) and composite (arm C)",
+        "string `t1` (latin, headline, exact): **FLAT 40% OFF**",
+        "string `t2` (latin, body, exact): **First 100 members only**",
+        "string `t3` (latin, brand_name, exact): **AlphaFit**",
+        "string `t4` (latin, body, approximate): **Offer ends 15 January**",
+        "composite arm: font Inter Black / Inter Bold (bundled, deterministic); positions: t1 upper-left, largest, neon yellow #E6FF00 on black; t2 below it, white; t3 lower-left, yellow; t4 small, white, under t2; lower-right corner empty; colour: neon yellow #E6FF00, white, on black #000000; rule: overlay by code at USD 0 on the textless plate; identical overlay on both base draws"
+      ]
+    },
+    "source_ref": "eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/IMG-TEXT-02.blueprint.md sha256:335be8f8dd06c9511cb82056e25a1045bb1820af6e6ce1bfb896d4cdf375608e"
+  },
+  "budget": {
+    "cost_ceiling_usd": "5.0",
+    "max_provider_draws": 2,
+    "repair_allowance": 1
+  },
+  "canon": {
+    "canon_gap": true,
+    "injected_context_sha256": "c81644f61d9d39a5b25f18058ff5c29c30256c287a3b4f037be40cb0d52e3945",
+    "missing_domains": [
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "indian_indic_context",
+      "typography_and_copy"
+    ],
+    "packs_selected": [
+      {
+        "compiled": false,
+        "pack_id": "concept_and_distinctiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": false,
+        "pack_id": "critique_and_effectiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": true,
+        "pack_id": "composition_and_attention",
+        "status": "compiled_accepted",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "colour_and_visual_register",
+        "status": "selected_uncompiled",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "typography_and_copy",
+        "status": "selected_uncompiled",
+        "trigger": "text_requirements_nonempty (text_requirements)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "indian_indic_context",
+        "status": "selected_uncompiled",
+        "trigger": "language_topology_present_or_market_IN (language_topology | market)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "commercial_communication",
+        "status": "selected_uncompiled",
+        "trigger": "advertising_acceptance_intent (acceptance_intent)"
+      }
+    ]
+  },
+  "capability_requirements": [
+    {
+      "capability": "exact_text_composition",
+      "level": "code_set_on_textless_plate",
+      "mandatory": true
+    },
+    {
+      "capability": "image_generation",
+      "mandatory": true
+    }
+  ],
+  "compiled_utc": "2026-09-14T12:00:00Z",
+  "composition": {
+    "aspect_justification": "1:1 justified by the stacked block of three lines forming a near-square shape.",
+    "attention_order": "1st read: \"FLAT 40% OFF\" (largest, neon yellow on black — contrast); 2nd: \"First 100 members only\"; 3rd: \"AlphaFit\" and the date. One cue per read.",
+    "balance": "Deliberately restless (fre_0032) — the brief says bold and energetic; declared as the energetic exception per CF-06.",
+    "edge_treatment": "Sparse frame: tight fit with a deliberate margin around the headline (fre_0006); no letter touches the frame edge.",
+    "placement_zone": "Headline block off-centre, upper-left zone; the lower-right corner is left clean for the customer's logo (a visible reason for the asymmetry, fre_0021)."
+  },
+  "deliverable": {
+    "aspect": "1:1",
+    "kind": "static_ad",
+    "resolution_class": "~1 MP"
+  },
+  "deterministic_checks": [
+    "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+    "refusal / error / empty artifact -> reject",
+    "required string absent (text scan over the artifact) -> reject before a person sees it",
+    "the plate prompt carries an explicit no-lettering instruction; lettering on a plate is a reject"
+  ],
+  "exact_text": {
+    "strategy": "code_set_on_textless_plate",
+    "strategy_basis": "RR-1 [default] — text on stills; map cells: IMG-TEXT/flux-2-pro+C_composite_textless_base, IMG-TEXT/flux-2-pro+code_overlay",
+    "strings": [
+      {
+        "content": "FLAT 40% OFF",
+        "exactness": "contractual",
+        "id": "t1",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "latin",
+        "script_detected": "LATIN"
+      },
+      {
+        "content": "First 100 members only",
+        "exactness": "contractual",
+        "id": "t2",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "latin",
+        "script_detected": "LATIN"
+      },
+      {
+        "content": "AlphaFit",
+        "exactness": "contractual",
+        "id": "t3",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "latin",
+        "script_detected": "LATIN"
+      },
+      {
+        "content": "Offer ends 15 January",
+        "exactness": "reflowable",
+        "id": "t4",
+        "may_reflow": true,
+        "placement": "overlay",
+        "script": "latin",
+        "script_detected": "LATIN"
+      }
+    ],
+    "text_mechanism": "deterministic_text_composition"
+  },
+  "gate_requirements": [
+    "CA-D1-check",
+    "CA-D2-check",
+    "CA-D3-check",
+    "CA-D4-check",
+    "CA-D5-check",
+    "CA-D6-check",
+    "CA-D7-check",
+    "CA-D8-check",
+    "CA-D9-check",
+    "CA-D10-check",
+    "CA-D11-check",
+    "pack limit: Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar, samara-making-breaking-grid-ch1 (term t_sam_c003_0018 only, CF-16) and alton-painting-with-light-ch2 for this pack's domains; no claim of theirs is compiled — their doctrine (frontality/darshan attention order, symmetry-as-authority, grid structure) is absent, not arbitrated.",
+    "canon gap: no compiled pack answers colour_and_visual_register, commercial_communication, concept_and_distinctiveness, critique_and_effectiveness, indian_indic_context, typography_and_copy; the plan states this and attributes nothing to doctrine there"
+  ],
+  "hard_constraints": [
+    "the string 'FLAT 40% OFF' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the string 'First 100 members only' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the string 'AlphaFit' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the deliverable is 1:1",
+    "three exact strings",
+    "date communicated",
+    "no human figures",
+    "brand colours",
+    "clean corner"
+  ],
+  "job_id": "alpha-dry-img-text-02",
+  "job_sha256": "9871b194af156ee98ab3a36b703057d3a9d32571091825d81175c66629cfc28e",
+  "materials_and_light": {
+    "implied_light_source": "(scene mood) Key set by genre: high-contrast, hard-edged; mood from contrast, not from brightness."
+  },
+  "objective": "Produce one static_ad at 1:1 that answers the customer's request: \"Hi team, we need an Instagram post for our New Year offer.\"",
+  "policy_profile": "dry",
+  "route_exclusions": [],
+  "schema": "PRODUCTION-SPEC-v1",
+  "spec_id": "spec-2f4559ba9dd8f09f"
+}

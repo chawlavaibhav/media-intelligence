@@ -1,0 +1,218 @@
+{
+  "acceptance_contract": [
+    "ACCEPT only if exactly one bottle is in frame and no other object, hand or prop appears.",
+    "ACCEPT only if the bottle reads as clear glass with liquid inside — a visible refracted edge or a light-through-liquid glow — not as an opaque or plastic body.",
+    "ACCEPT only if the label area is blank: no lettering, logo, numeral or symbol anywhere on the bottle or the image.",
+    "REJECT if the cap, neck or base is deformed, doubled or cut off by the frame edge.",
+    "REJECT if the background is dark or cluttered (the customer asked for a light background)."
+  ],
+  "blueprint": {
+    "case_values": {
+      "CA-D1": "1st read: the bottle (contrast of warm liquid on cool ground); 2nd: the cap highlight; 3rd: the soft shadow. One dominant element.",
+      "CA-D2": "Off-centre, right-of-centre zone, because the shadow needs room camera-right; not centred (scene does not point inward).",
+      "CA-D3": "Tight fit with a slight deliberate gap above the cap and below the base (fre_0006); no tangency.",
+      "CA-D4": "None used.",
+      "CA-D5": "Balanced; the dark shadow mass camera-right weighs against the bright bottle.",
+      "CA-D6": "4:5 justified by the bottle's tall shape; note CA-D6 LIMIT on feed frames.",
+      "PA-D1": "juice_bottle body: direct (glossy) glass; liquid: diffuse-through-translucent; metal cap: direct (polished); background: diffuse matte.",
+      "PA-D10": "No deviation; the blank label is a brief clause, not a doctrine override.",
+      "PA-D2": "One elongated soft highlight down the bottle's left shoulder from a single large source camera-left; cap holds one small reflection of the same source.",
+      "PA-D3": "Large soft source relative to the bottle; shadow edge soft; highlight size large — no pinpoint speculars.",
+      "PA-D4": "Fictional source: a tall north-facing window camera-left, slightly above bottle height; one direction; shadow falls camera-right.",
+      "PA-D5": "Warm orange liquid against a cool pale-grey ground (sk_alt_c003_0003 direction); ground stays quiet; no staged depth planes.",
+      "PA-D6": "High key, calm; mood from soft directional window light, not from brightness.",
+      "PA-D7": "Sells at a glance: 'a fresh cold-pressed juice in real glass'.",
+      "PA-D8": "Glass in frame: the shoulder highlight is the one wanted specular; any second reflection on the body is removed; cap reflection wanted.",
+      "PA-D9": "Three-quarter front from slightly above: front face, shoulder and cap top visible (three surfaces)."
+    },
+    "generation_prompts": {
+      "main": "Product photograph, one 250 ml round-shoulder clear glass bottle of orange juice with a polished metal cap, blank label area with no label, standing on a pale cool-grey matte surface. Single large soft window light from the left and slightly above; one long soft highlight down the bottle's left shoulder, one small reflection on the cap, soft shadow falling to the right. Warm orange liquid glowing where the light passes through; cool quiet background. Three-quarter view from slightly above showing the front, the shoulder and the top of the cap. Bottle placed right of centre with a small gap above and below it. Nothing else in frame. No text, no lettering, no logo, no numerals anywhere in the image.",
+      "motion": null,
+      "textless_plate": null
+    },
+    "planner": "stage_a_blueprint_fixture",
+    "production_parameters": {
+      "blueprint_header": {
+        "author": "executor_agent",
+        "blueprint_author": "executor_agent",
+        "case_id": "IMG-CORE-01",
+        "frozen": "2026-09-05",
+        "gate_pre": "not_available_on_base — canon/gate/run_gate.py is absent from base cb92f1e (CANON-GATE-001 unmerged); run `pre` on this file when it lands",
+        "held_constant_across_routes": "True",
+        "packs_source": "canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers canon/packs/pack-triggers-v0.yaml; DEFAULT/CHECK text rendered by id, never paraphrased; no HOLD material"
+      },
+      "brief_only_parameters": {},
+      "decision_questions": {
+        "CA-D1": "What reads first, second, third?",
+        "CA-D2": "Where does the subject sit in frame?",
+        "CA-D3": "How does the frame hold the subject at its edges?",
+        "CA-D4": "Use a frame within the frame?",
+        "CA-D5": "Balance the frame, or refuse the eye rest?",
+        "CA-D6": "Which orientation and aspect?",
+        "PA-D1": "What reflection type dominates each key product surface — diffuse (matte), direct (glossy), or glare?",
+        "PA-D10": "When may any of the above be overridden?",
+        "PA-D2": "Where may the highlight sit on each glossy surface?",
+        "PA-D3": "Hard or soft source?",
+        "PA-D4": "What is the fictional light source, and does everything agree with it?",
+        "PA-D5": "How does the product separate from its ground?",
+        "PA-D6": "What key level does the mood require?",
+        "PA-D7": "Does the imagery earn its space commercially?",
+        "PA-D8": "Glass, dark or mirror-glossy object in frame — special handling?",
+        "PA-D9": "Which angle is the hero angle?"
+      },
+      "dispatch_parameters": {
+        "aspect": "4:5",
+        "audio": "not_applicable",
+        "reference_slots": "0",
+        "resolution": "~1 MP"
+      },
+      "text_handling": [
+        "mode: `none`"
+      ]
+    },
+    "source_ref": "eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/IMG-CORE-01.blueprint.md sha256:dba8636060372bc5d6be46a781d2b8ce50e2e340343d0f9f6f9c321c9a8a847f"
+  },
+  "budget": {
+    "cost_ceiling_usd": "5.0",
+    "max_provider_draws": 2,
+    "repair_allowance": 1
+  },
+  "canon": {
+    "canon_gap": true,
+    "injected_context_sha256": "4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe",
+    "missing_domains": [
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "indian_indic_context"
+    ],
+    "packs_selected": [
+      {
+        "compiled": false,
+        "pack_id": "concept_and_distinctiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": false,
+        "pack_id": "critique_and_effectiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": true,
+        "pack_id": "composition_and_attention",
+        "status": "compiled_accepted",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "colour_and_visual_register",
+        "status": "selected_uncompiled",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": true,
+        "pack_id": "product_appearance",
+        "status": "compiled_accepted",
+        "trigger": "product_or_packshot_entity_present (entities)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "indian_indic_context",
+        "status": "selected_uncompiled",
+        "trigger": "language_topology_present_or_market_IN (language_topology | market)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "commercial_communication",
+        "status": "selected_uncompiled",
+        "trigger": "advertising_acceptance_intent (acceptance_intent)"
+      }
+    ]
+  },
+  "capability_requirements": [
+    {
+      "capability": "image_generation",
+      "mandatory": true
+    },
+    {
+      "capability": "product_surface_fidelity",
+      "mandatory": false
+    }
+  ],
+  "compiled_utc": "2026-09-14T12:00:00Z",
+  "composition": {
+    "aspect_justification": "4:5 justified by the bottle's tall shape; note CA-D6 LIMIT on feed frames.",
+    "attention_order": "1st read: the bottle (contrast of warm liquid on cool ground); 2nd: the cap highlight; 3rd: the soft shadow. One dominant element.",
+    "balance": "Balanced; the dark shadow mass camera-right weighs against the bright bottle.",
+    "edge_treatment": "Tight fit with a slight deliberate gap above the cap and below the base (fre_0006); no tangency.",
+    "placement_zone": "Off-centre, right-of-centre zone, because the shadow needs room camera-right; not centred (scene does not point inward)."
+  },
+  "deliverable": {
+    "aspect": "4:5",
+    "kind": "static_ad",
+    "resolution_class": "~1 MP"
+  },
+  "deterministic_checks": [
+    "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+    "refusal / error / empty artifact -> reject",
+    "baked-text scan (text scan over the artifact): any lettering -> reject"
+  ],
+  "exact_text": {
+    "strategy": "no_exact_text",
+    "strategy_basis": "no rule consulted: the job names no character-exact string, so nothing about lettering is contractual (PRODUCTION-JOB-v0.exact_text_strings empty)",
+    "strings": [],
+    "text_mechanism": "not_applicable"
+  },
+  "gate_requirements": [
+    "CA-D1-check",
+    "CA-D2-check",
+    "CA-D3-check",
+    "CA-D4-check",
+    "CA-D5-check",
+    "CA-D6-check",
+    "CA-D7-check",
+    "CA-D8-check",
+    "CA-D9-check",
+    "CA-D10-check",
+    "CA-D11-check",
+    "PA-D1-check",
+    "PA-D2-check",
+    "PA-D3-check",
+    "PA-D4-check",
+    "PA-D5-check",
+    "PA-D6-check",
+    "PA-D7-check",
+    "PA-D8-check",
+    "PA-D9-check",
+    "PA-D10-check",
+    "pack limit: Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar, samara-making-breaking-grid-ch1 (term t_sam_c003_0018 only, CF-16) and alton-painting-with-light-ch2 for this pack's domains; no claim of theirs is compiled — their doctrine (frontality/darshan attention order, symmetry-as-authority, grid structure) is absent, not arbitrated.",
+    "pack limit: Coverage note (GAP-16 resolved by the DN-06 admission): the source's later chapters are accepted as light-science-magic-beyond-ch3, a scoped extension of ch3. Its three self-qualification claims are compiled where they bite (PA-D8: sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost grounds; glossy-box remedy ladder ordered cheapest-first; black-on-black lit as if metal). The remainder of the extension awaits the full live-37 pack compile.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide as contributors to this pack's domains; none is compiled here — their doctrine (frontality/darshan staging, iconographic correctness, props-as-vocabulary) is absent, not arbitrated.",
+    "pack limit: Category-surface gap: no accepted claim covers watch conventions (hand positions) or anisotropic brushed/sunburst surfaces — the diffuse/direct/glare contrast set (PA-D1) does not model radial anisotropic glow; state the gap rather than force one of the three types.",
+    "canon gap: no compiled pack answers colour_and_visual_register, commercial_communication, concept_and_distinctiveness, critique_and_effectiveness, indian_indic_context; the plan states this and attributes nothing to doctrine there"
+  ],
+  "hard_constraints": [
+    "the deliverable is 4:5",
+    "single product, nothing else in frame",
+    "blank label area",
+    "no text or logo"
+  ],
+  "job_id": "alpha-dry-img-core-01",
+  "job_sha256": "eff8043302d94e3cd2e4dcf05d62534810ce39e52755b38250b21c4822625138",
+  "materials_and_light": {
+    "highlight_placement": "One elongated soft highlight down the bottle's left shoulder from a single large source camera-left; cap holds one small reflection of the same source.",
+    "implied_light_source": "Fictional source: a tall north-facing window camera-left, slightly above bottle height; one direction; shadow falls camera-right.",
+    "key_level": "High key, calm; mood from soft directional window light, not from brightness.",
+    "separation": "Warm orange liquid against a cool pale-grey ground (sk_alt_c003_0003 direction); ground stays quiet; no staged depth planes.",
+    "surface_finish_per_key_object": "juice_bottle body: direct (glossy) glass; liquid: diffuse-through-translucent; metal cap: direct (polished); background: diffuse matte."
+  },
+  "objective": "Produce one static_ad at 4:5 that answers the customer's request: \"Hi, need a clean product shot of our 250ml cold pressed orange juice bottle for the launch page.\"",
+  "policy_profile": "dry",
+  "route_exclusions": [],
+  "schema": "PRODUCTION-SPEC-v1",
+  "spec_id": "spec-74bf2aeb83c04209"
+}

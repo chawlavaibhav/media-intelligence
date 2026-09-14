@@ -1,0 +1,114 @@
+# DRY-ALPHA-BATTERY-2026-09-14 — the committed brief set the one-command dry chain is proven on.
+#
+# Every brief is an EXISTING repository case: nine are derived mechanically from the frozen Stage-A
+# customer-shaped cases (runtime/tools/brief_from_stage_a_case.py; the customer's own words verbatim),
+# one from the marketplace-derived bank (runtime/tools/brief_from_marketplace_case.py), and one
+# (img-text-02-conformant) is the SAME Stage-A customer brief served from a runtime-authored recorded
+# plan whose plate prompt obeys the gate — labelled as such in the brief and the fixture. Nothing is
+# invented to make the runtime pass: where the frozen material fails the gate, the run refuses and the
+# refusal is the recorded result.
+#
+# Success criterion (Controller brief §10): every run either reaches its intended dry end state with no
+# manually-authored intermediate object, or refuses for a precise, policy-supported reason. A crash, a
+# hidden default, an arbitrary route or a silent downgrade is a failure. `expect` below is what the
+# lead predicted before running; `runtime/battery/results/2026-09-14/SUMMARY.yaml` is what happened.
+#
+# Runs are sequential in ONE store so a motion job can find the accepted still it depends on. `overrides`
+# are customer-stated job fields applied to the brief before intake (a stated cost ceiling is customer
+# input, not an intermediate object). All runs use the `dry` profile — the dry twin of alpha_human_release
+# (identical limits, dispatch_mode dry, spend_authority none). USD 0.
+schema: DRY-ALPHA-BATTERY-v0
+at: "2026-09-14T12:00:00Z"
+profile: dry
+runs:
+- id: B02-static-ad-frozen-blueprint-plate-prompt
+  brief: runtime/fixtures/alpha-briefs/img-text-02.json
+  exercises: [the frozen Stage-A blueprint as the recorded plan, pre-dispatch gate over it; runs BEFORE B01 so no template of the same job shape exists yet]
+  human_verdict: accept
+  post_draw: clean
+  expect: {final_state: abandoned, refusal: PRE_DISPATCH_GATE_FAIL, note: "frozen plate prompt says 'poster' in sentence 1 with no deferral term - defect DEF-GATE-PLATE-PROMPTS"}
+- id: B03-devanagari-overlay-with-scoped-exclusions
+  brief: runtime/fixtures/alpha-briefs/img-text-01.json
+  exercises: [Devanagari exact overlay copy, RR-3 exclusions scoped generated_text_only (plate route stays usable), gate over the frozen plate prompt]
+  human_verdict: accept
+  post_draw: clean
+  expect: {route: {exclusions: scoped_out}, final_state: abandoned, refusal: PRE_DISPATCH_GATE_FAIL}
+- id: B01-static-ad-exact-overlay-copy-happy-path
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  exercises: [static commercial ad, exact deterministic overlay copy, clean primary + fallback, human acceptance, empirical-memory event, template promotion]
+  human_verdict: accept
+  post_draw: clean
+  expect: {final_state: accepted, template: promoted}
+- id: B04-static-ad-no-text-product-hero
+  brief: runtime/fixtures/alpha-briefs/img-core-01.json
+  exercises: [static ad with no exact text, product_appearance pack fires, clean primary + fallback]
+  human_verdict: accept
+  post_draw: clean
+  expect: {final_state: "accepted or gate refusal - unknown before running"}
+- id: B05-short-motion-from-the-accepted-still
+  brief: runtime/fixtures/alpha-briefs/vid-i2v-01.json
+  exercises: [optional still -> short motion dependency (depends_on alpha-dry-img-core-01), VID-I2V clean primary + fallback, harness input for the accepted still]
+  human_verdict: accept
+  post_draw: clean
+  expect: {final_state: "depends on B04; if B04 accepted the still is handed over as image_url, else the harness records input_unresolved"}
+- id: B06-supplied-photo-identifiable-person-no-consent
+  brief: runtime/fixtures/alpha-briefs/img-edit-01.json
+  exercises: [consent gate for supplied identifiable-person imagery (staff member in a showroom photo, role scene)]
+  human_verdict: null
+  post_draw: clean
+  expect: {refusal: CONSENT_MISSING, stage: intake}
+- id: B07-supplied-photo-with-consent-manual-route
+  brief: runtime/fixtures/alpha-briefs/img-edit-01.json
+  consent_ref: CONSENT-STAND-IN-2026-09-14
+  exercises: [consent gate passed, edit on a supplied photo, directional-only evidence -> manual_route_required (no auto route, no silent downgrade)]
+  human_verdict: null
+  post_draw: clean
+  expect: {refusal: MANUAL_ROUTE_REQUIRED, stage: route}
+- id: B08-supplied-person-references-manual-route
+  brief: runtime/fixtures/alpha-briefs/img-ref-02.json
+  consent_ref: CONSENT-STAND-IN-2026-09-14
+  exercises: [identifiable person references with consent, reference fidelity + image generation in one call - no route answers both (lane E defect 3)]
+  human_verdict: null
+  post_draw: clean
+  expect: {refusal: MANUAL_ROUTE_REQUIRED, stage: route}
+- id: B09-text-in-motion-outside-alpha-1
+  brief: runtime/fixtures/alpha-briefs/vid-topo3-01.json
+  exercises: [a kind C-7 leaves outside Alpha 1 (text_in_motion) refused by the profile, not by code]
+  human_verdict: null
+  post_draw: clean
+  expect: {refusal: KIND_NOT_IN_PROFILE, stage: intake}
+- id: B10-marketplace-talking-head-excluded
+  brief: runtime/fixtures/alpha-briefs/mkt-001.json
+  exercises: [a real marketplace buyer brief (Upwork UW-008) for a talking-head avatar ad - excluded by C-7]
+  human_verdict: null
+  post_draw: clean
+  expect: {refusal: KIND_NOT_IN_PROFILE, stage: intake}
+- id: B11-cost-ceiling-propagation
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  overrides: {job_id: alpha-dry-img-text-02-ceiling, cost_ceiling_usd: "0.02"}
+  exercises: [a customer-stated job ceiling below one draw; the envelope is checked before dispatch and hands to a person]
+  human_verdict: null
+  post_draw: clean
+  expect: {refusal: MANUAL_ROUTE_REQUIRED, stage: route, note: cost_envelope_exceeded}
+- id: B12-bounded-repair-then-accept
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  overrides: {job_id: alpha-dry-img-text-02-repair}
+  exercises: [post-draw baked lettering on draw 1 (scripted), one bounded repair, draw 2 clean, human accept]
+  human_verdict: accept
+  post_draw: lettering_then_clean
+  expect: {final_state: accepted, repairs: 1, attempts: 2}
+- id: B13-repair-allowance-exhausted
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  overrides: {job_id: alpha-dry-img-text-02-exhausted}
+  exercises: [lettering on every draw; the profile's repair allowance (1) is spent; no hidden retry; abandoned]
+  human_verdict: accept
+  post_draw: lettering_always
+  expect: {final_state: abandoned, refusal: REPAIR_ALLOWANCE_EXHAUSTED}
+- id: B14-repeat-job-served-from-the-template
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  overrides: {job_id: alpha-dry-img-text-02-repeat}
+  strip_provenance: true
+  exercises: [empirical memory: the template promoted by B01 serves an identical repeat job with no reasoning pass]
+  human_verdict: accept
+  post_draw: clean
+  expect: {final_state: accepted, planner: "template:<B01 template id>"}

@@ -272,9 +272,17 @@ class TemplateLibrary:
 
     def _blueprint(self, spec: dict) -> dict:
         prompts = ((spec.get("blueprint") or {}).get("generation_prompts") or {})
-        if not prompts.get("main"):
-            self._refuse("the spec carries no blueprint.generation_prompts.main; a template without prompts "
-                         "cannot serve a repeat job and nothing is invented for it", field="blueprint.generation_prompts")
+        # The prompt a repeat job needs is the one the mechanism DISPATCHES (lead integration, 14 Sep
+        # 2026): under code-composed exact text (C-6c mechanism B) that is the textless plate and
+        # `main` is legitimately absent; under a motion deliverable it is the motion prompt.
+        mechanism = (spec.get("exact_text") or {}).get("text_mechanism")
+        needed = ("textless_plate" if mechanism == "deterministic_text_composition"
+                  else "motion" if (spec.get("deliverable") or {}).get("motion") and prompts.get("motion")
+                  else "main")
+        if not prompts.get(needed):
+            self._refuse(f"the spec carries no blueprint.generation_prompts.{needed} (the prompt its text mechanism "
+                         f"{mechanism!r} dispatches); a template without that prompt cannot serve a repeat job and "
+                         "nothing is invented for it", field="blueprint.generation_prompts")
         out = {
             "objective": spec["objective"],
             "hard_constraints": list(spec.get("hard_constraints") or []),

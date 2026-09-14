@@ -110,6 +110,12 @@ def parse_blueprint(text: str) -> dict:
     main = casebook.extract_prompt(text)
     textless = _first_block(casebook, text, _TEXTLESS_ARMS)
     motion = _first_block(casebook, text, _MOTION_ARMS)
+    if motion is None and str(head.get("case_id") or "").startswith(("VID-I2V", "VID-T2V", "VID-MS", "VID-REF", "VID-KNEE", "VID-2SPK")):
+        # A video case whose blueprint carries only the single §6 generation_prompt: that prompt IS
+        # the motion prompt (the blueprint says it is "byte-identical across every route listed for
+        # this case"). Recorded at integration (lead, 14 Sep 2026; dry battery run B05) - the renderer
+        # dispatches the `motion` slot for a motion deliverable and never guesses another slot.
+        motion = main
 
     return {
         "case_id": head.get("case_id"),

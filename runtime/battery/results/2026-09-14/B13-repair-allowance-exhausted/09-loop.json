@@ -1,0 +1,81 @@
+{
+  "acceptance_state": "abandoned",
+  "acceptance_transcript": {
+    "authority": "human",
+    "decided_utc": "2026-09-14T12:00:00Z",
+    "decision": "abandoned",
+    "note": "REPAIR_ALLOWANCE_EXHAUSTED: 1 repair(s) already proposed under profile 'dry' whose repair_allowance is 1; the next repair would be number 2 and is refused — no retry is hidden here",
+    "state": "abandoned",
+    "transcript_sha256": "d669e88086f8d359d85759fba6a0ca8ae86c85b3134b037382935bfcdc8d613a"
+  },
+  "attempts": [
+    {
+      "artifact_origin": "synthetic",
+      "artifact_sha256": "eff40d0eadf91f7ab2adc44329dd5b9e7d92d438a27e1b1101dd829e1cbad557",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-exhausted:rd-7c86b7f68ddd322c:flux-2-pro:draw1",
+      "billing_pool": "cash",
+      "billing_state": "not_dispatched",
+      "draw_index": 1,
+      "gate_post_report_sha256": "18f6c114b2dd492ae49859e3ec5d7d00ed30c7f35da1577e010fa92e80f8d593",
+      "gate_post_verdict": "FAIL",
+      "gate_pre_report_sha256": "d50ae18a496ffd723d034c18b348045a032e09c28651cf6d69e9ba73f3c38c30",
+      "is_repair_of": null,
+      "latency_s": null,
+      "repair_id": null,
+      "requested_utc": "2026-09-14T12:00:00Z",
+      "reserved_usd": "0",
+      "route_decision_id": "rd-7c86b7f68ddd322c",
+      "route_key": "flux-2-pro",
+      "settled_usd": "0",
+      "slot": "primary",
+      "status": "dry_not_sent",
+      "surface": "fal",
+      "surface_model_id": "fal-ai/flux-2-pro"
+    },
+    {
+      "artifact_origin": "synthetic",
+      "artifact_sha256": "af4faf14ee6bb4e3b6e80dcd7eb2704baaf9ef37fc5478020d4350fa9eb92fbb",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-exhausted:rd-7c86b7f68ddd322c:flux-2-pro:draw2",
+      "billing_pool": "cash",
+      "billing_state": "not_dispatched",
+      "draw_index": 2,
+      "gate_post_report_sha256": "ee7638b0b78b5e204da3328c4fcb346f2c876016ab45e91914521e6b4f6860a2",
+      "gate_post_verdict": "FAIL",
+      "gate_pre_report_sha256": "d50ae18a496ffd723d034c18b348045a032e09c28651cf6d69e9ba73f3c38c30",
+      "is_repair_of": "cust:acct-stage-a-img:alpha-dry-img-text-02-exhausted:rd-7c86b7f68ddd322c:flux-2-pro:draw1",
+      "latency_s": null,
+      "repair_id": "4284c6157f5792449cb8e565d07fef8a6f6fc641302596e8afc1ecfdece95696",
+      "requested_utc": "2026-09-14T12:00:00Z",
+      "reserved_usd": "0",
+      "route_decision_id": "rd-7c86b7f68ddd322c",
+      "route_key": "flux-2-pro",
+      "settled_usd": "0",
+      "slot": "primary",
+      "status": "dry_not_sent",
+      "surface": "fal",
+      "surface_model_id": "fal-ai/flux-2-pro"
+    }
+  ],
+  "human_verdict_supplied": "accept",
+  "post_draw_scenario": "lettering_always",
+  "reason": "",
+  "refusal": "REPAIR_ALLOWANCE_EXHAUSTED",
+  "repairs": [
+    {
+      "attempt_index": 2,
+      "failing_ids": [
+        "LIMIT-TEXT"
+      ],
+      "failure_category": "baked_lettering",
+      "failure_observed": "LIMIT-TEXT: text detected ('40% 40%') per scripted — source: pack_limits \"… composite text deterministically.\"",
+      "fallback_route": null,
+      "incremental_cost_usd": "0.030000",
+      "repair_id": "4284c6157f5792449cb8e565d07fef8a6f6fc641302596e8afc1ecfdece95696",
+      "route_changed": false,
+      "source": "gate",
+      "what_changes": "re-draw the plate; the plate prompt's no-lettering instruction is repeated verbatim and the draw seed is not held",
+      "what_stays_invariant": "acceptance contract, route, exact strings, aspect"
+    }
+  ],
+  "state": "terminal"
+}

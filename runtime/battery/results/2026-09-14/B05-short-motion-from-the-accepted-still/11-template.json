@@ -1,0 +1,95 @@
+{
+  "accepted_event_id": "oe-7ddec187c006fff4a139b3f66602f0d83378871a2ebe1fdb90e9309ad020e41c",
+  "blueprint": {
+    "acceptance_statements": [
+      "REJECT if anything that was not in the supplied picture appears in it, or if a smudge, a repeated texture patch or a colour seam is visible where something was changed.",
+      "ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).",
+      "ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the surface, or grows lettering.",
+      "REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint has changed.",
+      "REJECT if speech or music is present, or any lettering."
+    ],
+    "composition": {
+      "aspect_justification": "4:5 as the still.",
+      "attention_order": "1st read stays the bottle; no new cue is introduced by the move.",
+      "edge_treatment": "The orbit must keep the deliberate gap above the cap in every frame (fre_0006)."
+    },
+    "generation_prompts": {
+      "main": "Animate this product still, 6 seconds, silent. The camera moves slowly in a small arc around the bottle, about a quarter turn, keeping the bottle the same size in frame with a small gap above the cap. The bottle, its blank label, the cap and the surface stay exactly as in the image; only the viewpoint changes, and the highlight on the glass and the reflection on the surface move naturally with it. Nothing else moves. No text or lettering.",
+      "motion": "Animate this product still, 6 seconds, silent. The camera moves slowly in a small arc around the bottle, about a quarter turn, keeping the bottle the same size in frame with a small gap above the cap. The bottle, its blank label, the cap and the surface stay exactly as in the image; only the viewpoint changes, and the highlight on the glass and the reflection on the surface move naturally with it. Nothing else moves. No text or lettering."
+    },
+    "hard_constraints": [
+      "the deliverable is 4:5",
+      "the moving version runs 6 seconds",
+      "the moving version carries no audio track",
+      "bottle does not move or deform",
+      "label stays blank",
+      "no text, no audio"
+    ],
+    "materials_and_light": {
+      "highlight_placement": "The single highlight must travel across the glass as the viewpoint changes (a direct reflection moves with the family of angles, scs_lsm_c003_002); it must not stay painted on.",
+      "implied_light_source": "The still's window source camera-left is preserved; the orbit is small enough that the source stays on one side.",
+      "surface_finish_per_key_object": "As the still: glass direct, liquid translucent, cap polished, ground matte — finishes must persist through the orbit."
+    },
+    "objective": "Produce one short_motion_from_accepted_still at 4:5 that answers the customer's request: \"Take the bottle still you made (juice_hero_final.png) and give me a 6 second clip for the website hero.\"",
+    "resolution_class": "720p-class"
+  },
+  "canon": {
+    "corpus_digest": "3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc",
+    "packs_injected": [
+      "composition_and_attention",
+      "product_appearance"
+    ],
+    "packs_selected": [
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "composition_and_attention",
+      "colour_and_visual_register",
+      "camera_and_spatial_grammar",
+      "editing_pacing_and_short_form",
+      "product_appearance",
+      "indian_indic_context",
+      "commercial_communication"
+    ],
+    "prefix_sha256": "4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe"
+  },
+  "created_utc": "2026-09-14T12:00:00Z",
+  "identity_fields": {
+    "aspect": "4:5",
+    "entity_roles": [],
+    "exact_text": [],
+    "identity_version": 1,
+    "kind": "short_motion_from_accepted_still",
+    "language": "en",
+    "market": "IN",
+    "modality": "video",
+    "motion": {
+      "audio": false,
+      "from": "accepted_still",
+      "seconds": 6
+    },
+    "requested_operation": "animate",
+    "supplied_asset_roles": [
+      "scene"
+    ]
+  },
+  "identity_version": 1,
+  "normalized_identity": "520087eb9fbf35a26d950bbd2231011097b96007a1d82b1a8c2f66a7faa27857",
+  "provenance": {
+    "acceptance_authority": "human",
+    "dry_run": true,
+    "promoted_by": "runtime"
+  },
+  "route_hint": {
+    "cell_key": "VID-I2V/minimax-h3-max-i2v",
+    "route_key": "minimax-h3-max-i2v",
+    "text_mechanism": "not_applicable"
+  },
+  "schema": "TEMPLATE-v0",
+  "slots": [],
+  "source": {
+    "job_id": "alpha-dry-vid-i2v-01",
+    "spec_id": "spec-6915eaeebb020a82"
+  },
+  "status": "reusable_dry_only",
+  "template_id": "tpl-60b838949fd068cc"
+}

@@ -1,0 +1,301 @@
+{
+  "cost_envelope": {
+    "already_committed_usd": "0",
+    "basis": "worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'",
+    "job_ceiling_usd": "5.0",
+    "this_decision_max_usd": "0.080000",
+    "within_ceiling": true
+  },
+  "decided_utc": "2026-09-14T12:00:00Z",
+  "decision_id": "rd-4b5b4641f93a3f0a",
+  "exclusions_applied": [],
+  "fallback": {
+    "adapter_family": "fal_queue",
+    "arm": "core",
+    "billing_pool": "cash",
+    "credential_name": "FAL_KEY",
+    "evidence_cells": [
+      "IMG-CORE/qwen-image-3"
+    ],
+    "evidence_status": "clean_observed",
+    "expected_cost_usd": "0.040000",
+    "note": "a different route for the same requirement, declared before dispatch. Falling through to it is a routing event, never a retry.",
+    "price_pin_indexes": [
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+    ],
+    "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json",
+    "quantity": "1",
+    "quantity_unit": "images",
+    "route_key": "qwen-image-3",
+    "surface": "fal",
+    "surface_model_id": "alibaba/qwen-image-3/text-to-image",
+    "trigger": [
+      "provider_refusal",
+      "timeout",
+      "gate_fail",
+      "capability_unsupported"
+    ],
+    "unit": "per_image",
+    "unit_price": "0.04"
+  },
+  "manual_route_reason": null,
+  "manual_route_required": false,
+  "primary": {
+    "adapter_family": "fal_queue",
+    "arm": "core",
+    "attempt_ids_if_dispatched": [
+      "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-4b5b4641f93a3f0a:flux-2-pro:draw1",
+      "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-4b5b4641f93a3f0a:flux-2-pro:draw2"
+    ],
+    "billing_pool": "cash",
+    "credential_name": "FAL_KEY",
+    "evidence_cells": [
+      "IMG-CORE/flux-2-pro"
+    ],
+    "evidence_n": {
+      "image_generation": {
+        "accepts": 4,
+        "items": 4,
+        "note": "human blind acceptance, one judge; never a Registry row and never a score",
+        "settled_draw_floor": 4,
+        "trials": 8
+      }
+    },
+    "evidence_status": "clean_observed",
+    "expected_cost_usd": "0.030000",
+    "price_pin_evidence_quote": "**$0.03** for the first megapixel of output",
+    "price_pin_indexes": [
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+    ],
+    "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json",
+    "quantity": "1",
+    "quantity_rule": "per_image",
+    "quantity_unit": "images",
+    "route_key": "flux-2-pro",
+    "surface": "fal",
+    "surface_model_id": "fal-ai/flux-2-pro",
+    "unit": "per_image_first_megapixel",
+    "unit_price": "0.03",
+    "unit_price_note": "fallback"
+  },
+  "provenance": {
+    "binding": "runtime/route/CAPABILITY-EVIDENCE-BINDING-v0.yaml",
+    "dispatched": false,
+    "evidence_status_vocabulary": [
+      "clean_observed",
+      "directional_only",
+      "awaiting_controller_ruling",
+      "method_tainted",
+      "insufficient"
+    ],
+    "harness_modules": [
+      "eval/harness-v2/pricing.py",
+      "eval/harness-v2/surfaces.py"
+    ],
+    "harness_providers_stubbed": false,
+    "map_prices_note": "the routing map's unit_price_usd_pinned and per-question cost figures are never read as prices; they were measured on surfaces the roster has since re-pointed",
+    "map_prices_used": false,
+    "network": "none — planning opens no socket",
+    "pin_indexes_read": 7,
+    "policy_profile": "dry",
+    "policy_profile_adopted": true,
+    "policy_profile_source": "supplied_alongside_spec (PRODUCTION-SPEC-v1 carries no profile name)",
+    "policy_profile_status": "active",
+    "roster": "eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml",
+    "roster_sha256": "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c",
+    "routing_evidence_map_sha256": "8df6ead0712d6b67070e7475ab56aa12be7f9480916a79a273bec5ff25c7f707",
+    "spec": "runs/alpha-dry-img-text-02-repair/02-spec.json",
+    "taint_register": "eval/capability-map/TAINT-REGISTER-v1.yaml",
+    "taint_register_sha256": "acd0cf87d7d0ee494c73f2c44159040f46f029eb436e5357cd9add5b41c62651"
+  },
+  "schema": "ROUTE-DECISION-v0",
+  "selection_basis": {
+    "candidates_considered": [
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "IMG-CORE/flux-2-pro"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.030000",
+          "priced": true,
+          "why": "roster flux-2-pro variant fallback, 0.03 USD per_image_first_megapixel x 1 images"
+        },
+        "route_key": "flux-2-pro",
+        "why": [
+          "image_generation: IMG-CORE/flux-2-pro is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "IMG-CORE/gpt-image-2"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.053000",
+          "priced": true,
+          "why": "roster gpt-image-2 variant fallback, 0.053 USD per_image x 1 images"
+        },
+        "route_key": "gpt-image-2",
+        "why": [
+          "image_generation: IMG-CORE/gpt-image-2 is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "IMG-CORE/nano-banana-2"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.067000",
+          "priced": true,
+          "why": "roster nano-banana-2, 0.067 USD per_image x 1 images"
+        },
+        "route_key": "nano-banana-2",
+        "why": [
+          "image_generation: IMG-CORE/nano-banana-2 is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "IMG-CORE/nano-banana-pro"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.134000",
+          "priced": true,
+          "why": "roster nano-banana-pro, 0.134 USD per_image x 1 images"
+        },
+        "route_key": "nano-banana-pro",
+        "why": [
+          "image_generation: IMG-CORE/nano-banana-pro is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "IMG-CORE/qwen-image-3"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.040000",
+          "priced": true,
+          "why": "roster qwen-image-3, 0.04 USD per_image x 1 images"
+        },
+        "route_key": "qwen-image-3",
+        "why": [
+          "image_generation: IMG-CORE/qwen-image-3 is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "IMG-CORE/seedream-5-pro"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.067500",
+          "priced": true,
+          "why": "roster seedream-5-pro, 0.0675 USD per_image x 1 images"
+        },
+        "route_key": "seedream-5-pro",
+        "why": [
+          "image_generation: IMG-CORE/seedream-5-pro is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      }
+    ],
+    "keyed_on": "cell_key, never (route_key, arm); exact-text cells are further narrowed by text_mechanism (C-6c, 14 Sep 2026)",
+    "preflight": [],
+    "register_notes_applied": [
+      {
+        "blocking_ruling": null,
+        "cells": [
+          "IMG-TEXT/flux-2-pro+C_composite_textless_base",
+          "IMG-TEXT/flux-2-pro+code_overlay"
+        ],
+        "id": "NOTE-ROUTE-KEY-COLLISION",
+        "text": "RESOLVED by C-6c. IMG-TEXT held two cells -- flux-2-pro+C_composite_textless_base and flux-2-pro+code_overlay -- with the SAME route_key ('flux-2-pro') and the SAME arm ('C_composite_textless_base'), resting on the same four trial identities with two different verdicts (1 of 4 eliminated versus 4 of 4). C-6c rules that the two are DIFFERENT route mechanisms: the model drawing the text (route identity flux-2-pro, text_mechanism model_draws_text) and code composing the text on a textless plate (route identity flux-2-pro+code_overlay, text_mechanism deterministic_text_composition). The map now carries distinct route_key values and a text_mechanism field on every cell, the recompute tool groups the two judgings apart, and a router keyed on (route_key, arm) gets one answer. The cell KEYS are unchanged so consumers keep their references."
+      }
+    ],
+    "required_capabilities": [
+      "exact_text_composition",
+      "image_generation"
+    ],
+    "requirements_resolved": [
+      {
+        "arms": null,
+        "basis": "DELIVERABLE-KINDS static_ad → image_generation; map question IMG-CORE (base image generation)",
+        "capability": "image_generation",
+        "cells_considered": [
+          "IMG-CORE/flux-2-pro",
+          "IMG-CORE/gpt-image-2",
+          "IMG-CORE/nano-banana-2",
+          "IMG-CORE/nano-banana-pro",
+          "IMG-CORE/qwen-image-3",
+          "IMG-CORE/seedream-5-pro"
+        ],
+        "dispatches": true,
+        "level": null,
+        "question": "IMG-CORE",
+        "text_mechanism": null
+      }
+    ],
+    "rule": "hard_requirements -> evidence_envelope -> cost -> fallback",
+    "self_composed_requirements": [
+      {
+        "arms": null,
+        "basis": "RR-1 — code-set text on a cheap textless plate; exact by construction, composed by the runtime, not by the provider (cell IMG-TEXT/flux-2-pro+code_overlay; the image model did not render the accepted copy)",
+        "capability": "exact_text_composition",
+        "cell_selected": "IMG-TEXT/flux-2-pro+code_overlay",
+        "cells_considered": [
+          "IMG-TEXT/flux-2-pro+code_overlay"
+        ],
+        "dispatches": false,
+        "evidence_status": "clean_observed",
+        "expected_cost_usd": "0.000000",
+        "level": "code_set_on_textless_plate",
+        "price_note": "composed by the runtime; no provider call, so no price pin applies",
+        "price_pin_ref": null,
+        "question": "IMG-TEXT",
+        "text_mechanism": "deterministic_text_composition",
+        "why": [
+          "IMG-TEXT/flux-2-pro+code_overlay: IMG-TEXT/flux-2-pro+code_overlay is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "hard_requirements",
+        "note": "a route dropped here is never reconsidered, whatever it costs",
+        "what": "capability coverage, the spec's route_exclusions, and the profile's deliverable_kinds_allowed"
+      },
+      {
+        "id": "evidence_envelope",
+        "note": "the register is read, never overridden; a cell awaiting a Controller ruling is never auto-routed",
+        "what": "the taint register's status and production_use_allowed, then the active profile's auto_routable_evidence_status"
+      },
+      {
+        "id": "price",
+        "note": "the routing map's cost figures are NEVER read as prices — they were measured on surfaces the roster has since re-pointed",
+        "what": "a live price pin resolved through the roster; a route with no live pin cannot be auto-selected"
+      },
+      {
+        "id": "cost",
+        "note": "cost only orders survivors; it can never rescue a route or overrule a hard requirement",
+        "what": "cheapest expected cost first, among the routes that survived every stage above"
+      },
+      {
+        "id": "fallback",
+        "note": "a fallback is a different route for the same requirement, never a second attempt at the same one",
+        "what": "the next survivor with a different route_key, declared before dispatch with named triggers"
+      }
+    ]
+  },
+  "spec_id": "spec-0c8027485790d449",
+  "unsupported_requirements": [],
+  "why_selected": "Spec spec-0c8027485790d449 asks for static_ad. Among the routes that satisfy every mandatory requirement, are not excluded by the spec, pass the taint register and carry a live price pin, flux-2-pro is the cheapest at 0.030000 USD (0.03 per_image_first_megapixel x 1 images, pool cash, priced from eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json). Cost decided the order, never the eligibility: every route dropped above was dropped before any price was compared. qwen-image-3 is declared as the fallback at 0.040000 USD, before any dispatch. Acceptance authority under dry is human."
+}

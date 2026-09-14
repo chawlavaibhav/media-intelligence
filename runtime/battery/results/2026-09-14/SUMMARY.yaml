@@ -1,0 +1,1040 @@
+schema: DRY-ALPHA-BATTERY-RESULTS-v0
+manifest: runtime/battery/DRY-ALPHA-BATTERY-2026-09-14.yaml
+at: '2026-09-14T12:00:00Z'
+profile: dry
+runs:
+- id: B02-static-ad-frozen-blueprint-plate-prompt
+  brief: runtime/fixtures/alpha-briefs/img-text-02.json
+  job_id: alpha-dry-img-text-02
+  profile: dry
+  exercises:
+  - the frozen Stage-A blueprint as the recorded plan
+  - pre-dispatch gate over it; runs BEFORE B01 so no template of the same job shape exists yet
+  expect:
+    final_state: abandoned
+    refusal: PRE_DISPATCH_GATE_FAIL
+    note: frozen plate prompt says 'poster' in sentence 1 with no deferral term - defect DEF-GATE-PLATE-PROMPTS
+  observed:
+    final_state: abandoned
+    refusal:
+      code: PRE_DISPATCH_GATE_FAIL
+      message: LIMIT-TEXT
+      context: {}
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-text-02 accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-2f4559ba9dd8f09f kind=static_ad text=code_set_on_textless_plate planner=stage_a_blueprint_fixture
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
+        'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context', 'typography_and_copy']; prefix
+        sha c81644f61d9d
+    - stage: route
+      status: ok
+      summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
+    - stage: manifest
+      status: ok
+      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+    - stage: dry_execution
+      status: ok
+      summary: dry_complete; network=none
+    - stage: loop
+      status: refused
+      summary: pre=FAIL attempts=0 repairs=0 acceptance=abandoned
+    - stage: outcome_event
+      status: ok
+      summary: oe-82eedbffd69c19e12d277d4cbd0d8918b668103abe77a7767a9602fc473bda7d decision=abandoned dry_run=True
+    - stage: template
+      status: skipped
+      summary: outcome abandoned; nothing to promote
+    route:
+      primary: flux-2-pro
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: qwen-image-3
+      manual_route_required: false
+      manual_route_reason: null
+      exclusions_applied: []
+      text_composed_from_cell: IMG-TEXT/flux-2-pro+code_overlay
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.080000'
+        basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-2f4559ba9dd8f09f
+      kind: static_ad
+      text_strategy: code_set_on_textless_plate
+      text_mechanism: deterministic_text_composition
+      planner: stage_a_blueprint_fixture
+      packs_injected:
+      - composition_and_attention
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+      - typography_and_copy
+    gate_pre:
+      verdict: FAIL
+      blocking_failures:
+      - LIMIT-TEXT
+    manifest:
+      attempts_rendered: 4
+      primary_would_dispatch:
+      - true
+      - true
+      fallback_executable_if_triggered:
+      - true
+      - true
+      harness_refusals: []
+    attempts: 0
+    repairs: 0
+    acceptance: abandoned
+    event_id: oe-82eedbffd69c19e12d277d4cbd0d8918b668103abe77a7767a9602fc473bda7d
+    template_id: null
+- id: B03-devanagari-overlay-with-scoped-exclusions
+  brief: runtime/fixtures/alpha-briefs/img-text-01.json
+  job_id: alpha-dry-img-text-01
+  profile: dry
+  exercises:
+  - Devanagari exact overlay copy
+  - RR-3 exclusions scoped generated_text_only (plate route stays usable)
+  - gate over the frozen plate prompt
+  expect:
+    route:
+      exclusions: scoped_out
+    final_state: abandoned
+    refusal: PRE_DISPATCH_GATE_FAIL
+  observed:
+    final_state: abandoned
+    refusal:
+      code: PRE_DISPATCH_GATE_FAIL
+      message: LIMIT-TEXT
+      context: {}
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-text-01 accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-4baacd1259afc622 kind=static_ad text=code_set_on_textless_plate planner=stage_a_blueprint_fixture
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention', 'product_appearance']; missing_domains=['colour_and_visual_register',
+        'commercial_communication', 'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context', 'typography_and_copy'];
+        prefix sha 4d7a5b27e17c
+    - stage: route
+      status: ok
+      summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
+    - stage: manifest
+      status: ok
+      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+    - stage: dry_execution
+      status: ok
+      summary: dry_complete; network=none
+    - stage: loop
+      status: refused
+      summary: pre=FAIL attempts=0 repairs=0 acceptance=abandoned
+    - stage: outcome_event
+      status: ok
+      summary: oe-cbc6bea48d06e870d84016620294efa7abb82d0db1512139469a8c210ddfe13f decision=abandoned dry_run=True
+    - stage: template
+      status: skipped
+      summary: outcome abandoned; nothing to promote
+    route:
+      primary: flux-2-pro
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: qwen-image-3
+      manual_route_required: false
+      manual_route_reason: null
+      exclusions_applied:
+      - route_key: flux-2-pro
+        effect: scoped_out
+      - route_key: seedream-5-pro
+        effect: scoped_out
+      text_composed_from_cell: IMG-TEXT/flux-2-pro+code_overlay
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.080000'
+        basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-4baacd1259afc622
+      kind: static_ad
+      text_strategy: code_set_on_textless_plate
+      text_mechanism: deterministic_text_composition
+      planner: stage_a_blueprint_fixture
+      packs_injected:
+      - composition_and_attention
+      - product_appearance
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+      - typography_and_copy
+    gate_pre:
+      verdict: FAIL
+      blocking_failures:
+      - LIMIT-TEXT
+    manifest:
+      attempts_rendered: 4
+      primary_would_dispatch:
+      - true
+      - true
+      fallback_executable_if_triggered:
+      - true
+      - true
+      harness_refusals: []
+    attempts: 0
+    repairs: 0
+    acceptance: abandoned
+    event_id: oe-cbc6bea48d06e870d84016620294efa7abb82d0db1512139469a8c210ddfe13f
+    template_id: null
+- id: B01-static-ad-exact-overlay-copy-happy-path
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  job_id: alpha-dry-img-text-02-conformant
+  profile: dry
+  exercises:
+  - static commercial ad
+  - exact deterministic overlay copy
+  - clean primary + fallback
+  - human acceptance
+  - empirical-memory event
+  - template promotion
+  expect:
+    final_state: accepted
+    template: promoted
+  observed:
+    final_state: accepted
+    refusal: null
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-text-02-conformant accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-4fb81b146a89312b kind=static_ad text=code_set_on_textless_plate planner=recorded_fixture
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
+        'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context', 'typography_and_copy']; prefix
+        sha c81644f61d9d
+    - stage: route
+      status: ok
+      summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
+    - stage: manifest
+      status: ok
+      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+    - stage: dry_execution
+      status: ok
+      summary: dry_complete; network=none
+    - stage: loop
+      status: ok
+      summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
+    - stage: outcome_event
+      status: ok
+      summary: oe-e8707925f49f5fc544053e3f343cc9f7fe232e5f23b51f87944cec935771e2f6 decision=accepted dry_run=True
+    - stage: template
+      status: ok
+      summary: tpl-a799a6e76b70c105 status=reusable_dry_only
+    route:
+      primary: flux-2-pro
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: qwen-image-3
+      manual_route_required: false
+      manual_route_reason: null
+      exclusions_applied: []
+      text_composed_from_cell: IMG-TEXT/flux-2-pro+code_overlay
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.080000'
+        basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-4fb81b146a89312b
+      kind: static_ad
+      text_strategy: code_set_on_textless_plate
+      text_mechanism: deterministic_text_composition
+      planner: recorded_fixture
+      packs_injected:
+      - composition_and_attention
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+      - typography_and_copy
+    gate_pre:
+      verdict: PASS
+      blocking_failures: []
+    manifest:
+      attempts_rendered: 4
+      primary_would_dispatch:
+      - true
+      - true
+      fallback_executable_if_triggered:
+      - true
+      - true
+      harness_refusals: []
+    attempts: 1
+    repairs: 0
+    acceptance: accepted
+    event_id: oe-e8707925f49f5fc544053e3f343cc9f7fe232e5f23b51f87944cec935771e2f6
+    template_id: tpl-a799a6e76b70c105
+- id: B04-static-ad-no-text-product-hero
+  brief: runtime/fixtures/alpha-briefs/img-core-01.json
+  job_id: alpha-dry-img-core-01
+  profile: dry
+  exercises:
+  - static ad with no exact text
+  - product_appearance pack fires
+  - clean primary + fallback
+  expect:
+    final_state: accepted or gate refusal - unknown before running
+  observed:
+    final_state: accepted
+    refusal: null
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-core-01 accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-74bf2aeb83c04209 kind=static_ad text=no_exact_text planner=stage_a_blueprint_fixture
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention', 'product_appearance']; missing_domains=['colour_and_visual_register',
+        'commercial_communication', 'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context'];
+        prefix sha 4d7a5b27e17c
+    - stage: route
+      status: ok
+      summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
+    - stage: manifest
+      status: ok
+      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+    - stage: dry_execution
+      status: ok
+      summary: dry_complete; network=none
+    - stage: loop
+      status: ok
+      summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
+    - stage: outcome_event
+      status: ok
+      summary: oe-5f4d15571d0ab5113b3328077fa06ba2ff7b4b7facb92a331c35cb0330268c80 decision=accepted dry_run=True
+    - stage: template
+      status: ok
+      summary: tpl-55f3d90b61bbcc27 status=reusable_dry_only
+    route:
+      primary: flux-2-pro
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: qwen-image-3
+      manual_route_required: false
+      manual_route_reason: null
+      exclusions_applied: []
+      text_composed_from_cell: null
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.080000'
+        basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-74bf2aeb83c04209
+      kind: static_ad
+      text_strategy: no_exact_text
+      text_mechanism: not_applicable
+      planner: stage_a_blueprint_fixture
+      packs_injected:
+      - composition_and_attention
+      - product_appearance
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+    gate_pre:
+      verdict: PASS
+      blocking_failures: []
+    manifest:
+      attempts_rendered: 4
+      primary_would_dispatch:
+      - true
+      - true
+      fallback_executable_if_triggered:
+      - true
+      - true
+      harness_refusals: []
+    attempts: 1
+    repairs: 0
+    acceptance: accepted
+    event_id: oe-5f4d15571d0ab5113b3328077fa06ba2ff7b4b7facb92a331c35cb0330268c80
+    template_id: tpl-55f3d90b61bbcc27
+- id: B05-short-motion-from-the-accepted-still
+  brief: runtime/fixtures/alpha-briefs/vid-i2v-01.json
+  job_id: alpha-dry-vid-i2v-01
+  profile: dry
+  exercises:
+  - optional still -> short motion dependency (depends_on alpha-dry-img-core-01)
+  - VID-I2V clean primary + fallback
+  - harness input for the accepted still
+  expect:
+    final_state: depends on B04; if B04 accepted the still is handed over as image_url, else the harness records input_unresolved
+  observed:
+    final_state: accepted
+    refusal: null
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-vid-i2v-01 accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-6915eaeebb020a82 kind=short_motion_from_accepted_still text=no_exact_text planner=stage_a_blueprint_fixture
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention', 'product_appearance']; missing_domains=['camera_and_spatial_grammar',
+        'colour_and_visual_register', 'commercial_communication', 'concept_and_distinctiveness', 'critique_and_effectiveness',
+        'editing_pacing_and_short_form', 'indian_indic_context']; prefix sha 4d7a5b27e17c
+    - stage: route
+      status: ok
+      summary: primary=minimax-h3-max-i2v fallback=veo-3.1-fast-i2v manual=False
+    - stage: manifest
+      status: ok
+      summary: '4 attempts rendered; would_dispatch=2; reasons=["harness: PreDispatchRefusal: aspect ''4:5'' is not in the
+        pinned Veo enum (''16:9'', ''9:16'')"]'
+    - stage: dry_execution
+      status: ok
+      summary: dry_complete; network=none
+    - stage: loop
+      status: ok
+      summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
+    - stage: outcome_event
+      status: ok
+      summary: oe-7ddec187c006fff4a139b3f66602f0d83378871a2ebe1fdb90e9309ad020e41c decision=accepted dry_run=True
+    - stage: template
+      status: ok
+      summary: tpl-60b838949fd068cc status=reusable_dry_only
+    route:
+      primary: minimax-h3-max-i2v
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: veo-3.1-fast-i2v
+      manual_route_required: false
+      manual_route_reason: null
+      exclusions_applied: []
+      text_composed_from_cell: null
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '1.200000'
+        basis: worst-case unit cost 0.600000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-6915eaeebb020a82
+      kind: short_motion_from_accepted_still
+      text_strategy: no_exact_text
+      text_mechanism: not_applicable
+      planner: stage_a_blueprint_fixture
+      packs_injected:
+      - composition_and_attention
+      - product_appearance
+      missing_domains:
+      - camera_and_spatial_grammar
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - editing_pacing_and_short_form
+      - indian_indic_context
+    gate_pre:
+      verdict: PASS
+      blocking_failures: []
+    manifest:
+      attempts_rendered: 4
+      primary_would_dispatch:
+      - true
+      - true
+      fallback_executable_if_triggered:
+      - false
+      - false
+      harness_refusals:
+      - 'harness: PreDispatchRefusal: aspect ''4:5'' is not in the pinned Veo enum (''16:9'', ''9:16'')'
+    attempts: 1
+    repairs: 0
+    acceptance: accepted
+    event_id: oe-7ddec187c006fff4a139b3f66602f0d83378871a2ebe1fdb90e9309ad020e41c
+    template_id: tpl-60b838949fd068cc
+- id: B06-supplied-photo-identifiable-person-no-consent
+  brief: runtime/fixtures/alpha-briefs/img-edit-01.json
+  job_id: alpha-dry-img-edit-01
+  profile: dry
+  exercises:
+  - consent gate for supplied identifiable-person imagery (staff member in a showroom photo
+  - role scene)
+  expect:
+    refusal: CONSENT_MISSING
+    stage: intake
+  observed:
+    final_state: refused_at_intake
+    refusal:
+      code: CONSENT_MISSING
+      message: 'reference asset ''showroom_sofa_01'' depicts an identifiable person (depicts_identifiable_person: true) and
+        carries no consent_ref; refused at intake, before any spend, whatever its declared role (here ''scene'')'
+      context:
+        asset_id: showroom_sofa_01
+        job_id: alpha-dry-img-edit-01
+        role: scene
+    stages:
+    - stage: intake
+      status: refused
+      summary: CONSENT_MISSING
+    route: null
+    spec: null
+    gate_pre: null
+    manifest: null
+    attempts: null
+    repairs: null
+    acceptance: null
+    event_id: null
+    template_id: null
+- id: B07-supplied-photo-with-consent-manual-route
+  brief: runtime/fixtures/alpha-briefs/img-edit-01.json
+  job_id: alpha-dry-img-edit-01
+  profile: dry
+  exercises:
+  - consent gate passed
+  - edit on a supplied photo
+  - directional-only evidence -> manual_route_required (no auto route
+  - no silent downgrade)
+  expect:
+    refusal: MANUAL_ROUTE_REQUIRED
+    stage: route
+  observed:
+    final_state: manual_route_required
+    refusal:
+      code: MANUAL_ROUTE_REQUIRED
+      message: 'profile ''dry'' sets fallback_required: true and no second eligible route exists for this requirement, so
+        there is nothing to hand over to. A second attempt at ''seedream-5-pro-edit'' is not a fallback.'
+      context: {}
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-edit-01 accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-f2602e3090898406 kind=static_ad_from_supplied_photo text=no_exact_text planner=stage_a_blueprint_fixture
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention', 'product_appearance']; missing_domains=['colour_and_visual_register',
+        'commercial_communication', 'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context'];
+        prefix sha 4d7a5b27e17c
+    - stage: route
+      status: refused
+      summary: primary=seedream-5-pro-edit fallback=None manual=True
+    route:
+      primary: seedream-5-pro-edit
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: null
+      manual_route_required: true
+      manual_route_reason: 'profile ''dry'' sets fallback_required: true and no second eligible route exists for this requirement,
+        so there is nothing to hand over to. A second attempt at ''seedream-5-pro-edit'' is not a fallback.'
+      exclusions_applied: []
+      text_composed_from_cell: null
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.135000'
+        basis: worst-case unit cost 0.067500 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-f2602e3090898406
+      kind: static_ad_from_supplied_photo
+      text_strategy: no_exact_text
+      text_mechanism: not_applicable
+      planner: stage_a_blueprint_fixture
+      packs_injected:
+      - composition_and_attention
+      - product_appearance
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+    gate_pre: null
+    manifest: null
+    attempts: null
+    repairs: null
+    acceptance: null
+    event_id: null
+    template_id: null
+- id: B08-supplied-person-references-manual-route
+  brief: runtime/fixtures/alpha-briefs/img-ref-02.json
+  job_id: alpha-dry-img-ref-02
+  profile: dry
+  exercises:
+  - identifiable person references with consent
+  - reference fidelity + image generation in one call - no route answers both (lane E defect 3)
+  expect:
+    refusal: MANUAL_ROUTE_REQUIRED
+    stage: route
+  observed:
+    final_state: refused_at_spec
+    refusal:
+      code: ACCEPTANCE_STYLE_VIOLATION
+      message: 'acceptance statement rejected: a statement must open with one of [''ACCEPT only if '', ''REJECT if '']'
+      context:
+        statement: ACCEPT only if, shown the result beside the three references and the two decoy sets, the judge identifies
+          the referenced person as the match (same face, same hair, same build).
+        token: ACCEPT only if, shown th
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-ref-02 accepted under profile dry
+    - stage: spec
+      status: refused
+      summary: ACCEPTANCE_STYLE_VIOLATION
+    route: null
+    spec: null
+    gate_pre: null
+    manifest: null
+    attempts: null
+    repairs: null
+    acceptance: null
+    event_id: null
+    template_id: null
+- id: B09-text-in-motion-outside-alpha-1
+  brief: runtime/fixtures/alpha-briefs/vid-topo3-01.json
+  job_id: alpha-dry-vid-topo3-01
+  profile: dry
+  exercises:
+  - a kind C-7 leaves outside Alpha 1 (text_in_motion) refused by the profile
+  - not by code
+  expect:
+    refusal: KIND_NOT_IN_PROFILE
+    stage: intake
+  observed:
+    final_state: refused_at_intake
+    refusal:
+      code: KIND_NOT_IN_PROFILE
+      message: deliverable kind 'text_in_motion' is not in the allowed list of policy profile 'dry'; widening the profile
+        is a row edit, never a code change
+      context:
+        allowed:
+        - static_ad
+        - short_motion_from_accepted_still
+        - static_ad_from_supplied_photo
+        job_id: alpha-dry-vid-topo3-01
+        kind: text_in_motion
+        profile: dry
+    stages:
+    - stage: intake
+      status: refused
+      summary: KIND_NOT_IN_PROFILE
+    route: null
+    spec: null
+    gate_pre: null
+    manifest: null
+    attempts: null
+    repairs: null
+    acceptance: null
+    event_id: null
+    template_id: null
+- id: B10-marketplace-talking-head-excluded
+  brief: runtime/fixtures/alpha-briefs/mkt-001.json
+  job_id: alpha-dry-mkt-001
+  profile: dry
+  exercises:
+  - a real marketplace buyer brief (Upwork UW-008) for a talking-head avatar ad - excluded by C-7
+  expect:
+    refusal: KIND_NOT_IN_PROFILE
+    stage: intake
+  observed:
+    final_state: refused_at_intake
+    refusal:
+      code: KIND_NOT_IN_PROFILE
+      message: deliverable kind 'talking_head_ad' is not in the allowed list of policy profile 'dry'; widening the profile
+        is a row edit, never a code change
+      context:
+        allowed:
+        - static_ad
+        - short_motion_from_accepted_still
+        - static_ad_from_supplied_photo
+        job_id: alpha-dry-mkt-001
+        kind: talking_head_ad
+        profile: dry
+    stages:
+    - stage: intake
+      status: refused
+      summary: KIND_NOT_IN_PROFILE
+    route: null
+    spec: null
+    gate_pre: null
+    manifest: null
+    attempts: null
+    repairs: null
+    acceptance: null
+    event_id: null
+    template_id: null
+- id: B11-cost-ceiling-propagation
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  job_id: alpha-dry-img-text-02-ceiling
+  profile: dry
+  exercises:
+  - a customer-stated job ceiling below one draw; the envelope is checked before dispatch and hands to a person
+  expect:
+    refusal: MANUAL_ROUTE_REQUIRED
+    stage: route
+    note: cost_envelope_exceeded
+  observed:
+    final_state: manual_route_required
+    refusal:
+      code: MANUAL_ROUTE_REQUIRED
+      message: 'cost_envelope_exceeded: already_committed 0 + this_decision_max 0.080000 exceeds the job ceiling 0.02. Checked
+        before dispatch, not after.'
+      context: {}
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-text-02-ceiling accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-2d380a9d14d5ab97 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a799a6e76b70c105
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
+        'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context', 'typography_and_copy']; prefix
+        sha c81644f61d9d
+    - stage: route
+      status: refused
+      summary: primary=flux-2-pro fallback=qwen-image-3 manual=True
+    route:
+      primary: flux-2-pro
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: qwen-image-3
+      manual_route_required: true
+      manual_route_reason: 'cost_envelope_exceeded: already_committed 0 + this_decision_max 0.080000 exceeds the job ceiling
+        0.02. Checked before dispatch, not after.'
+      exclusions_applied: []
+      text_composed_from_cell: IMG-TEXT/flux-2-pro+code_overlay
+      cost_envelope:
+        job_ceiling_usd: '0.02'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.080000'
+        basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: false
+    spec:
+      spec_id: spec-2d380a9d14d5ab97
+      kind: static_ad
+      text_strategy: code_set_on_textless_plate
+      text_mechanism: deterministic_text_composition
+      planner: template:tpl-a799a6e76b70c105
+      packs_injected:
+      - composition_and_attention
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+      - typography_and_copy
+    gate_pre: null
+    manifest: null
+    attempts: null
+    repairs: null
+    acceptance: null
+    event_id: null
+    template_id: null
+- id: B12-bounded-repair-then-accept
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  job_id: alpha-dry-img-text-02-repair
+  profile: dry
+  exercises:
+  - post-draw baked lettering on draw 1 (scripted)
+  - one bounded repair
+  - draw 2 clean
+  - human accept
+  expect:
+    final_state: accepted
+    repairs: 1
+    attempts: 2
+  observed:
+    final_state: accepted
+    refusal: null
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-text-02-repair accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-0c8027485790d449 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a799a6e76b70c105
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
+        'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context', 'typography_and_copy']; prefix
+        sha c81644f61d9d
+    - stage: route
+      status: ok
+      summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
+    - stage: manifest
+      status: ok
+      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+    - stage: dry_execution
+      status: ok
+      summary: dry_complete; network=none
+    - stage: loop
+      status: ok
+      summary: pre=PASS attempts=2 repairs=1 acceptance=accepted
+    - stage: outcome_event
+      status: ok
+      summary: oe-1531a979d823ce6e0917b8fca377085036c3c1c793cb01fcf918f16d995d30f7 decision=accepted dry_run=True
+    - stage: template
+      status: ok
+      summary: tpl-980ab80908fb4edf status=reusable_dry_only
+    route:
+      primary: flux-2-pro
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: qwen-image-3
+      manual_route_required: false
+      manual_route_reason: null
+      exclusions_applied: []
+      text_composed_from_cell: IMG-TEXT/flux-2-pro+code_overlay
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.080000'
+        basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-0c8027485790d449
+      kind: static_ad
+      text_strategy: code_set_on_textless_plate
+      text_mechanism: deterministic_text_composition
+      planner: template:tpl-a799a6e76b70c105
+      packs_injected:
+      - composition_and_attention
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+      - typography_and_copy
+    gate_pre:
+      verdict: PASS
+      blocking_failures: []
+    manifest:
+      attempts_rendered: 4
+      primary_would_dispatch:
+      - true
+      - true
+      fallback_executable_if_triggered:
+      - true
+      - true
+      harness_refusals: []
+    attempts: 2
+    repairs: 1
+    acceptance: accepted
+    event_id: oe-1531a979d823ce6e0917b8fca377085036c3c1c793cb01fcf918f16d995d30f7
+    template_id: tpl-980ab80908fb4edf
+- id: B13-repair-allowance-exhausted
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  job_id: alpha-dry-img-text-02-exhausted
+  profile: dry
+  exercises:
+  - lettering on every draw; the profile's repair allowance (1) is spent; no hidden retry; abandoned
+  expect:
+    final_state: abandoned
+    refusal: REPAIR_ALLOWANCE_EXHAUSTED
+  observed:
+    final_state: abandoned
+    refusal: null
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-text-02-exhausted accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-a6645f6f5cfb6e5a kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a799a6e76b70c105
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
+        'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context', 'typography_and_copy']; prefix
+        sha c81644f61d9d
+    - stage: route
+      status: ok
+      summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
+    - stage: manifest
+      status: ok
+      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+    - stage: dry_execution
+      status: ok
+      summary: dry_complete; network=none
+    - stage: loop
+      status: ok
+      summary: pre=PASS attempts=2 repairs=1 acceptance=abandoned refusal=REPAIR_ALLOWANCE_EXHAUSTED
+    - stage: outcome_event
+      status: ok
+      summary: oe-dfcd32326bbcab0006b483a7c896e476cc34ba1e794c1ffec047296ed2630a3b decision=abandoned dry_run=True
+    - stage: template
+      status: skipped
+      summary: outcome abandoned; nothing to promote
+    route:
+      primary: flux-2-pro
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: qwen-image-3
+      manual_route_required: false
+      manual_route_reason: null
+      exclusions_applied: []
+      text_composed_from_cell: IMG-TEXT/flux-2-pro+code_overlay
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.080000'
+        basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-a6645f6f5cfb6e5a
+      kind: static_ad
+      text_strategy: code_set_on_textless_plate
+      text_mechanism: deterministic_text_composition
+      planner: template:tpl-a799a6e76b70c105
+      packs_injected:
+      - composition_and_attention
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+      - typography_and_copy
+    gate_pre:
+      verdict: PASS
+      blocking_failures: []
+    manifest:
+      attempts_rendered: 4
+      primary_would_dispatch:
+      - true
+      - true
+      fallback_executable_if_triggered:
+      - true
+      - true
+      harness_refusals: []
+    attempts: 2
+    repairs: 1
+    acceptance: abandoned
+    event_id: oe-dfcd32326bbcab0006b483a7c896e476cc34ba1e794c1ffec047296ed2630a3b
+    template_id: null
+- id: B14-repeat-job-served-from-the-template
+  brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
+  job_id: alpha-dry-img-text-02-repeat
+  profile: dry
+  exercises:
+  - empirical memory: the template promoted by B01 serves an identical repeat job with no reasoning pass
+  expect:
+    final_state: accepted
+    planner: template:<B01 template id>
+  observed:
+    final_state: accepted
+    refusal: null
+    stages:
+    - stage: intake
+      status: ok
+      summary: job alpha-dry-img-text-02-repeat accepted under profile dry
+    - stage: spec
+      status: ok
+      summary: spec-b86175606f1a4450 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a799a6e76b70c105
+    - stage: canon
+      status: ok
+      summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
+        'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context', 'typography_and_copy']; prefix
+        sha c81644f61d9d
+    - stage: route
+      status: ok
+      summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
+    - stage: manifest
+      status: ok
+      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+    - stage: dry_execution
+      status: ok
+      summary: dry_complete; network=none
+    - stage: loop
+      status: ok
+      summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
+    - stage: outcome_event
+      status: ok
+      summary: oe-7454f480515f196e43da7a262b4ba217703aab13d1ac174ef80dac6458d67bde decision=accepted dry_run=True
+    - stage: template
+      status: ok
+      summary: tpl-52719074c5144106 status=reusable_dry_only
+    route:
+      primary: flux-2-pro
+      primary_surface: fal
+      primary_evidence: clean_observed
+      fallback: qwen-image-3
+      manual_route_required: false
+      manual_route_reason: null
+      exclusions_applied: []
+      text_composed_from_cell: IMG-TEXT/flux-2-pro+code_overlay
+      cost_envelope:
+        job_ceiling_usd: '5.0'
+        already_committed_usd: '0'
+        this_decision_max_usd: '0.080000'
+        basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
+        within_ceiling: true
+    spec:
+      spec_id: spec-b86175606f1a4450
+      kind: static_ad
+      text_strategy: code_set_on_textless_plate
+      text_mechanism: deterministic_text_composition
+      planner: template:tpl-a799a6e76b70c105
+      packs_injected:
+      - composition_and_attention
+      missing_domains:
+      - colour_and_visual_register
+      - commercial_communication
+      - concept_and_distinctiveness
+      - critique_and_effectiveness
+      - indian_indic_context
+      - typography_and_copy
+    gate_pre:
+      verdict: PASS
+      blocking_failures: []
+    manifest:
+      attempts_rendered: 4
+      primary_would_dispatch:
+      - true
+      - true
+      fallback_executable_if_triggered:
+      - true
+      - true
+      harness_refusals: []
+    attempts: 1
+    repairs: 0
+    acceptance: accepted
+    event_id: oe-7454f480515f196e43da7a262b4ba217703aab13d1ac174ef80dac6458d67bde
+    template_id: tpl-52719074c5144106
+totals:
+  runs: 14
+  reached_intended_end_state_or_precise_refusal: 14
+  crashes: 0
+  network: none (no socket is ever opened; see runtime/tests/test_alpha_cli.py)
+  spend_usd: '0'

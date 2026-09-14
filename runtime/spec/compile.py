@@ -58,7 +58,7 @@ from .planner_seam import FixturePlanner, build_prompt
 
 SPEC_SCHEMA = "PRODUCTION-SPEC-v1"
 # Keys the spec carries beyond the frozen v1 contract's declared fields (see the module docstring).
-INTERFACE_KEYS = ("schema", "blueprint")
+INTERFACE_KEYS = ("schema", "blueprint", "waived_capabilities")
 EXACT_TEXT_INTERFACE_KEYS = ("text_mechanism",)
 # Prohibition scopes, PRODUCTION-SPEC-v1.route_exclusions[].scope (open vocabulary; today's values).
 SCOPE_GENERATED_TEXT_ONLY = "generated_text_only"
@@ -194,6 +194,7 @@ class SpecCompiler:
         extension = {
             "schema": SPEC_SCHEMA,
             "blueprint": self._blueprint(plan),
+            "waived_capabilities": list(self._waived),
             "text_mechanism": text_mechanism_for(drawn_by, self.facets),
         }
         # spec_id is a fingerprint of the spec's own content (interface keys included), so the same
@@ -316,10 +317,20 @@ class SpecCompiler:
 
     def _capabilities(self, kind_row, nr, strategy) -> list:
         rows = []
+        conditions = self.facets.get("kind_capability_conditions") or {}
+        self._waived = []
         for capability in kind_row.capability_requirements:
+            facet = conditions.get(capability)
+            if facet and not nr.facets.get(facet, False):
+                # the kind demands it unconditionally; the fact it exists for is absent -> waived, on record
+                self._waived.append({"capability": capability, "waived_because_facet_false": facet,
+                                     "basis": "FACET-CAPABILITIES-v0 kind_capability_conditions"})
+                continue
             rows.append({"capability": capability, "mandatory": True})
         for row in self.facets.get("facets", []):
             if not nr.facets.get(row["facet"], False):
+                continue
+            if row.get("modalities") and nr.modality not in row["modalities"]:
                 continue
             for capability in row["capabilities"]:
                 entry = {"capability": capability, "mandatory": bool(row.get("mandatory", True))}

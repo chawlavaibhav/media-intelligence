@@ -1,0 +1,537 @@
+{
+  "acceptance": {
+    "authority": "human",
+    "decided_utc": "2026-09-14T12:00:00Z",
+    "decision": "abandoned",
+    "note": "REPAIR_ALLOWANCE_EXHAUSTED: 1 repair(s) already proposed under profile 'dry' whose repair_allowance is 1; the next repair would be number 2 and is refused — no retry is hidden here",
+    "state": "abandoned",
+    "transcript_sha256": "d669e88086f8d359d85759fba6a0ca8ae86c85b3134b037382935bfcdc8d613a"
+  },
+  "attempts": [
+    {
+      "artifact_origin": "synthetic",
+      "artifact_sha256": "eff40d0eadf91f7ab2adc44329dd5b9e7d92d438a27e1b1101dd829e1cbad557",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-exhausted:rd-7c86b7f68ddd322c:flux-2-pro:draw1",
+      "billing_pool": "cash",
+      "billing_state": "not_dispatched",
+      "draw_index": 1,
+      "gate_post_report_sha256": "18f6c114b2dd492ae49859e3ec5d7d00ed30c7f35da1577e010fa92e80f8d593",
+      "gate_post_verdict": "FAIL",
+      "gate_pre_report_sha256": "d50ae18a496ffd723d034c18b348045a032e09c28651cf6d69e9ba73f3c38c30",
+      "requested_utc": "2026-09-14T12:00:00Z",
+      "reserved_usd": "0",
+      "route_decision_id": "rd-7c86b7f68ddd322c",
+      "route_key": "flux-2-pro",
+      "settled_usd": "0",
+      "slot": "primary",
+      "status": "dry_not_sent",
+      "surface": "fal",
+      "surface_model_id": "fal-ai/flux-2-pro"
+    },
+    {
+      "artifact_origin": "synthetic",
+      "artifact_sha256": "af4faf14ee6bb4e3b6e80dcd7eb2704baaf9ef37fc5478020d4350fa9eb92fbb",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-exhausted:rd-7c86b7f68ddd322c:flux-2-pro:draw2",
+      "billing_pool": "cash",
+      "billing_state": "not_dispatched",
+      "draw_index": 2,
+      "gate_post_report_sha256": "ee7638b0b78b5e204da3328c4fcb346f2c876016ab45e91914521e6b4f6860a2",
+      "gate_post_verdict": "FAIL",
+      "gate_pre_report_sha256": "d50ae18a496ffd723d034c18b348045a032e09c28651cf6d69e9ba73f3c38c30",
+      "is_repair_of": "cust:acct-stage-a-img:alpha-dry-img-text-02-exhausted:rd-7c86b7f68ddd322c:flux-2-pro:draw1",
+      "repair_id": "4284c6157f5792449cb8e565d07fef8a6f6fc641302596e8afc1ecfdece95696",
+      "requested_utc": "2026-09-14T12:00:00Z",
+      "reserved_usd": "0",
+      "route_decision_id": "rd-7c86b7f68ddd322c",
+      "route_key": "flux-2-pro",
+      "settled_usd": "0",
+      "slot": "primary",
+      "status": "dry_not_sent",
+      "surface": "fal",
+      "surface_model_id": "fal-ai/flux-2-pro"
+    }
+  ],
+  "blueprint": {
+    "planner": "template:tpl-a799a6e76b70c105",
+    "source_ref": "not stated by the plan"
+  },
+  "canon": {
+    "canon_gap": true,
+    "corpus_digest": "3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc",
+    "injection_prefix_sha256": "c81644f61d9d39a5b25f18058ff5c29c30256c287a3b4f037be40cb0d52e3945",
+    "missing_domains": [
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "indian_indic_context",
+      "typography_and_copy"
+    ],
+    "packs_selected": [
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "composition_and_attention",
+      "colour_and_visual_register",
+      "typography_and_copy",
+      "indian_indic_context",
+      "commercial_communication"
+    ]
+  },
+  "cost": {
+    "by_pool": {
+      "cash": "0"
+    },
+    "draws": 2,
+    "provider_usd_total": "0"
+  },
+  "deterministic_checks": [
+    {
+      "check": "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "refusal / error / empty artifact -> reject",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "required string absent (text scan over the artifact) -> reject before a person sees it",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "the plate prompt carries an explicit no-lettering instruction; lettering on a plate is a reject",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    }
+  ],
+  "dry_run": true,
+  "event_id": "oe-dfcd32326bbcab0006b483a7c896e476cc34ba1e794c1ffec047296ed2630a3b",
+  "fingerprints": {
+    "acceptance_contract_sha256": "d639290bab65fe183e44aad3140eda3376cea429586e0097b83399fae6fea122",
+    "canon_injected_context_sha256": "c81644f61d9d39a5b25f18058ff5c29c30256c287a3b4f037be40cb0d52e3945",
+    "decision_sha256": "bbd90a94d1213c3222a3c7aeb45bcadde2f0df861d5ed6651e3e55ebd9026d6f",
+    "job_sha256": "ce246fb0dc4fe8f85b171f6298a23365160f11e9541fa8a241364afac063e6ee",
+    "manifest_sha256": "61566918d3cec61977f1edc04c9cc85a4729c1672cc9fa6805cc59ad59b1356f",
+    "package_sha256": "e58e38d15090a873f0dea3c1aba3da8fc1676d617a3185175b9347bafa553427",
+    "spec_sha256": "274fad4a80c78e1ff89a8ddf232617b92d109c31cc082c29c934cd7ae1298c3f"
+  },
+  "gate": {
+    "blocking_failures": [
+      "LIMIT-TEXT"
+    ],
+    "post_draw": [
+      {
+        "blocking": true,
+        "check_id": "LIMIT-TEXT",
+        "detail": "text detected ('40% 40%') per scripted — source: pack_limits \"… composite text deterministically.\"",
+        "family": "limit",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D1-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D2-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D3-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D4-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D5-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D6-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D7-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D8-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D9-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D10-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D1-check",
+        "detail": "read order and 'one dominant cue' need pixels and attention modelling",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D2-check",
+        "detail": "placement zone and its reason need scene understanding in pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D3-check",
+        "detail": "edge treatment and tangency need pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D4-check",
+        "detail": "framing-element tone/width comparison needs pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D5-check",
+        "detail": "grayscale tonal weight needs pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D6-check",
+        "detail": "artifact 64×64 (ratio 1.0000) matches 1:1 (1.0000) within ±0.01",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D7-check",
+        "detail": "CA-D7 is a video/image_sequence decision ('How does attention travel across cuts (video)?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D8-check",
+        "detail": "CA-D8 is a video/image_sequence decision ('When cut criteria conflict, what is sacrificed first?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D9-check",
+        "detail": "CA-D9 is a video/image_sequence decision ('Screen direction and the line?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D10-check",
+        "detail": "CA-D10 is a video decision ('How long may a shot hold?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D11-check",
+        "detail": "CA-D11 is a video decision ('Does the camera move, and why?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": true,
+        "check_id": "DISPATCH-ASPECT",
+        "detail": "artifact 64×64 (ratio 1.0000) matches 1:1 (1.0000) within ±0.01",
+        "family": "dispatch",
+        "status": "PASS"
+      },
+      {
+        "blocking": true,
+        "check_id": "DISPATCH-DIMENSIONS",
+        "detail": "package declares no minimum dimensions",
+        "family": "dispatch",
+        "status": "NOT-RUN"
+      },
+      {
+        "blocking": true,
+        "check_id": "INFRA-CONTAINER",
+        "detail": "png image 64×64 (bit depth 8, colour type 2)",
+        "family": "infra",
+        "status": "PASS"
+      },
+      {
+        "blocking": true,
+        "check_id": "INFRA-RECORD-SHA",
+        "detail": "no record.json supplied",
+        "family": "infra",
+        "status": "NOT-RUN"
+      }
+    ],
+    "post_draw_by_attempt": [
+      {
+        "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-exhausted:rd-7c86b7f68ddd322c:flux-2-pro:draw1",
+        "blocking_failures": [
+          "LIMIT-TEXT"
+        ],
+        "report_sha256": "18f6c114b2dd492ae49859e3ec5d7d00ed30c7f35da1577e010fa92e80f8d593",
+        "verdict": "FAIL"
+      },
+      {
+        "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-exhausted:rd-7c86b7f68ddd322c:flux-2-pro:draw2",
+        "blocking_failures": [
+          "LIMIT-TEXT"
+        ],
+        "report_sha256": "ee7638b0b78b5e204da3328c4fcb346f2c876016ab45e91914521e6b4f6860a2",
+        "verdict": "FAIL"
+      }
+    ],
+    "pre_dispatch": [
+      {
+        "blocking": true,
+        "check_id": "LIMIT-TEXT",
+        "detail": "no Devanagari, requested text or text-bearing surface in 1 prompt(s); explicit no-text clause present (prompt 1) — source: pack_limits \"… composite text deterministically.\"",
+        "family": "limit",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D1-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D2-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D3-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D4-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D5-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D6-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D7-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D8-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D9-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D10-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D1-check",
+        "detail": "ordered reads (1st/2nd/3rd read) in VISUAL_SYSTEM.attention_order (3 items)",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D2-check",
+        "detail": "placement term(s) (off-centre, centre, upper, zone) in VISUAL_SYSTEM.placement_zone, GENERATION_PROMPTS, FAILURE_PREVENTION; no named ratio or grid line",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D3-check",
+        "detail": "accepted packages describe edges in free prose that no closed vocabulary of the three treatments matches without false failures; tangency needs pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D4-check",
+        "detail": "conditional on a frame-within-frame being used, then a tonal/width comparison in pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D5-check",
+        "detail": "no balance/restless declaration in VISUAL_SYSTEM, GENERATION_PROMPTS, FAILURE_PREVENTION",
+        "family": "doctrine",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D6-check",
+        "detail": "aspect stated: 1:1 (DELIVERABLE)",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D7-check",
+        "detail": "CA-D7 is a video/image_sequence decision ('How does attention travel across cuts (video)?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D8-check",
+        "detail": "CA-D8 is a video/image_sequence decision ('When cut criteria conflict, what is sacrificed first?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D9-check",
+        "detail": "CA-D9 is a video/image_sequence decision ('Screen direction and the line?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D10-check",
+        "detail": "CA-D10 is a video decision ('How long may a shot hold?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D11-check",
+        "detail": "CA-D11 is a video decision ('Does the camera move, and why?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": true,
+        "check_id": "DISPATCH-ASPECT",
+        "detail": "package declares 1:1 = dispatched 1:1",
+        "family": "dispatch",
+        "status": "PASS"
+      },
+      {
+        "blocking": true,
+        "check_id": "RUNTIME-PLATE-NO-LETTERING-INSTRUCTION",
+        "detail": "the plate prompt carries an explicit no-lettering instruction ('No text') — gate vocabulary NO_TEXT_CLAUSE",
+        "family": "runtime",
+        "status": "PASS"
+      }
+    ]
+  },
+  "job_id": "alpha-dry-img-text-02-exhausted",
+  "policy_profile": "dry",
+  "repairs": [
+    {
+      "attempt_index": 2,
+      "failing_ids": [
+        "LIMIT-TEXT"
+      ],
+      "failure_category": "baked_lettering",
+      "failure_observed": "LIMIT-TEXT: text detected ('40% 40%') per scripted — source: pack_limits \"… composite text deterministically.\"",
+      "incremental_cost_usd": "0.030000",
+      "repair_id": "4284c6157f5792449cb8e565d07fef8a6f6fc641302596e8afc1ecfdece95696",
+      "route_changed": false,
+      "source": "gate",
+      "what_changes": "re-draw the plate; the plate prompt's no-lettering instruction is repeated verbatim and the draw seed is not held",
+      "what_stays_invariant": "acceptance contract, route, exact strings, aspect"
+    }
+  ],
+  "route": {
+    "cell_key": "IMG-CORE/flux-2-pro",
+    "cells": [
+      "IMG-CORE/flux-2-pro"
+    ],
+    "evidence_status": "clean_observed",
+    "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json",
+    "route_key": "flux-2-pro",
+    "surface": "fal",
+    "surface_model_id": "fal-ai/flux-2-pro",
+    "text_mechanism": "deterministic_text_composition"
+  },
+  "spec_id": "spec-a6645f6f5cfb6e5a",
+  "template_candidate": {
+    "eligible": false,
+    "reason": "acceptance decision 'abandoned'; only an accepted outcome is eligible"
+  },
+  "written_utc": "2026-09-14T12:00:00Z"
+}
