@@ -1,0 +1,98 @@
+# ROUTE OBSERVATIONS — directional production evidence ONLY.
+# Every row: evidence_class directional_production_observation, exact n, exact job context, routing_authority none.
+# These rows create or modify NO Capability Registry row and NO routing rule. They are one job's observations.
+case_id: UPWORK-INTRO-001
+evidence_class_default: directional_production_observation
+routing_authority_default: none
+forbidden_claims:
+  - "Veo is best for presenters"
+  - "Omni is bad for presenters"
+  - any per-model ranking derived from this job
+
+observations:
+  - id: RO-01
+    route: veo-3.1-fast-generate-001 / i2v + native speech / 1080p / Vertex
+    context: "V4 speaker micro-qualification: one 22-word English line, 8 s, from an accepted Nano Banana 2 anchor still"
+    n: 1
+    accepted: 1
+    observation: "verbatim transcript, natural pause 0.76 s, ~99 wpm, Indian English, eye contact and identity held; framing drifted slightly wider than the still; a hand entered the frame edge briefly despite 'hands out of frame'; scored 53/60 by the pilot's gate; Controller accepted the presenter in V4"
+    preceded_by: "2 provider-side gRPC 14 UNAVAILABLE failures (infrastructure_transient, not counted against the route)"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-02
+    route: veo-3.1-fast-generate-001 / i2v + native speech ×3 takes, then extend ×2 / Vertex
+    context: "V1 three 8-s takes from one still; V2 chained extends 8+7+7 s at 1080p plus one bounded re-extend"
+    n: 5
+    accepted: "V1 takes 3/3 verbatim; V2 chain judged by the Controller as degrading later in the film"
+    observation: "cross-take identity from a shared still held; chained extends drifted in quality by the third piece"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-03
+    route: gemini-omni-1.1-flash-preview / i2v + native speech / 10 s 720p / Vertex
+    context: "V4 speaker candidate A, same anchor still and line"
+    n: 1
+    accepted: 0
+    observation: "identity and room held; framing widened; transcript not verbatim (inserted 'make'); timbre judged synthetic/robotic by the triage model and the executor; scored 45/60; rejected on this job"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-04
+    route: gemini-3.1-flash-image (Nano Banana 2) / Gemini API
+    context: "V4 speaker anchor still, 'creative studio' scene with 'no readable text'"
+    n: 2
+    accepted: 1
+    observation: "r1 drew blurred handwriting-like sheets on the wall despite the no-text instruction; r2 with paper/notes/posters explicitly forbidden was clean"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-05
+    route: sarvam bulbul:v3 speaker aditya / narration
+    context: "V3, eight paragraphs ≈ 1,000 characters, two pace settings, ~48 s of speech in a 60-s film"
+    n: 16
+    accepted: "all 16 verbatim on transcript; the Controller rejected the voice as robotic in the assembled film"
+    observation: "long continuous narration exposes cadence that the Lab's ≤ 70-character lines did not; output not deterministic across calls (pace 1.08 produced longer reads on two paragraphs)"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-06
+    route: fal-ai/kling-video/v3/pro/image-to-video
+    context: "V3, five 4–5-s clips from Seedream product-scene stills"
+    n: 5
+    accepted: 4
+    observation: "product geometry held in all five; one clip (city-street background) sharpened blurred shop signage into letter shapes and widened the framing — the still had passed the text scan"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-07
+    route: bytedance/seedream/v5/pro/edit (packshot as reference)
+    context: "V3, six product-scene edits from two GPT Image 2 packshots"
+    n: 6
+    accepted: 6
+    observation: "bottle/kettle geometry, colour and mark held in 6/6 first draws; two scene instructions partly ignored (diya placement, 'dark burgundy' world)"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-08
+    route: openai/gpt-image-2 (quality medium) and fal-ai/flux-2-pro
+    context: "V3 packshots / base visuals and one seven-element flat-lay"
+    n: 5
+    accepted: "GPT Image 2 4/4; FLUX.2 Pro 0/1 (extra rice bowl, no copy space) — GPT Image 2 redraw accepted"
+    observation: "GPT Image 2 medium sufficed for premium packshots; FLUX.2 Pro failed a count + negative-space brief once"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-09
+    route: lyria-002 / Vertex
+    context: "V3 music bed; frozen prompt mentioning 'advertising', 'creative studio', '58-second'"
+    n: 4
+    accepted: 1
+    observation: "3 provider errors (503, 500, 500) on the frozen wording; a neutral rewrite ('design-studio showreel', 30 s) succeeded on the first try; wording sensitivity suspected, unproven"
+    evidence_class: directional_production_observation
+    routing_authority: none
+  - id: RO-10
+    route: minimax/h3-max/image-to-video
+    context: "V1 9:16 plate animation for a phone insert"
+    n: 1
+    accepted: 1
+    observation: "plate animated cleanly; code-set text per frame over it"
+    evidence_class: directional_production_observation
+    routing_authority: none
+
+what_these_do_not_establish:
+  - "no Registry cell for single-speaker English native speech from an anchored still exists; these rows do not create one"
+  - "n = 1 for both speaker candidates — a designed test, not a conclusion"
+  - "the pilot's 53/60 and 45/60 scores are the pilot's own triage instrument, not a qualified evaluator"

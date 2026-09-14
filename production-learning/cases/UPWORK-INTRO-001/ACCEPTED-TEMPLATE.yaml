@@ -1,0 +1,40 @@
+# ACCEPTED TEMPLATE — the structural template of the accepted V4.1 film.
+# Every pacing value below carries evidence_scope: this_accepted_template. None is a Canon rule; none is
+# written into Canon; none is a universal pacing norm. Beat starts come from v4/assembly/v4.1/timeline.json.
+case_id: UPWORK-INTRO-001
+template_id: service_intro_with_portfolio_proof
+template_class: service_intro_with_portfolio_proof
+status: accepted_once            # one human-accepted instance; not a promoted runtime template
+source_asset_sha256: d1a5edf8836936eb7e27cec4350f4cce6f21f1d966778f7241544a2ad07e008a
+total_duration_s: 57.133
+evidence_scope: this_accepted_template
+
+structure:
+  - {n: 1, beat: direct_to_camera_point_of_view, v41_beat: b1-speaker, start_s: 0.0, end_s: 8.5, content: "AI presenter, one frozen line, native speech (Veo 3.1 Fast); the only narration in the film"}
+  - {n: 2, beat: sharp_thesis_punch, v41_beat: b2-handoff, start_s: 8.5, end_s: 13.033, content: "AND IT CAN'T SUCK. then MORE CREATIVE. / FASTER. / WITHOUT LOWERING THE BAR."}
+  - {n: 3, beat: static_quality_proof, v41_beat: b3-proof1, start_s: 13.033, end_s: 18.533, content: "master static 4:5, contain-fit, one card"}
+  - {n: 4, beat: advertising_craft_proof, v41_beat: b4-proof2, start_s: 18.533, end_s: 25.033, content: "hook → offer → CTA spotlight over a real layout; disjoint elements"}
+  - {n: 5, beat: product_reference_fidelity_proof, v41_beat: b5-proof3, start_s: 25.033, end_s: 30.533, content: "packshot → placed scene, still-to-still, no crop"}
+  - {n: 6, beat: uninterrupted_video_proof, v41_beat: b6-proof4, start_s: 30.533, end_s: 38.533, content: "hero motion 8.0 s full screen, no bubble, no wrapper copy"}
+  - {n: 7, beat: creative_range_proof, v41_beat: b6b-kora, start_s: 38.533, end_s: 41.333, content: "a radically different creative world (Kora poster), native full screen"}
+  - {n: 8, beat: systematic_variation_proof, v41_beat: b7-proof5, start_s: 41.333, end_s: 46.833, content: "one direction → formats / hooks / Hindi; reveals at 0.9 / 2.1 / 3.3 s"}
+  - {n: 9, beat: speed_promise, v41_beat: b8-speed, start_s: 46.833, end_s: 51.633, content: "STANDARD 24 HOURS first and larger; 4-HOUR EXPRESS measured-fit, subordinate"}
+  - {n: 10, beat: human_cta, v41_beat: b9-cta, start_s: 51.633, end_s: 57.133, content: "speaker bubble returns (same frozen frame) + CTA card"}
+
+observed_pacing:
+  - {rule: important_still_min_hold_s, value: 3.3, note: "every still ≥ 3.3 s in V4.1; the Controller's V3 objection was 'too rushed to focus'", evidence_scope: this_accepted_template}
+  - {rule: hero_video_hold_s, value: "6–8 (V4.1: 8.0 uninterrupted)", evidence_scope: this_accepted_template}
+  - {rule: narration_distribution, value: "concentrated in the opening 7.75 s; sparse/none after", evidence_scope: this_accepted_template}
+  - {rule: speaker_bubble_role, value: "trust anchor at open and CTA only; never over full-screen creative (read as a watermark in V4)", evidence_scope: this_accepted_template}
+  - {rule: proof_beat_length_s, value: "5.5–6.5", evidence_scope: this_accepted_template}
+  - {rule: thesis_punch_hold_s, value: 1.3, evidence_scope: this_accepted_template}
+
+compositor_invariants_used:
+  - text boxes measured and kept inside a 120×90 px safe area (29 boxes in V4.1)
+  - one card radius (26 px) from one token source
+  - WCAG contrast measured over real pixels (min worst-case 5.67:1 in V4.1)
+  - contain / native fit only; declared covers logged with a reason (23 placements, 0 unintended crops)
+  - critical ad elements disjoint (assertion logged)
+
+not_a_canon_rule: true
+canon_disposition: "no Canon pack is created or edited from this template; see PROMOTION-QUEUE.yaml"

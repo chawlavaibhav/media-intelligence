@@ -1,0 +1,68 @@
+# OUTCOME record — production-learning case UPWORK-INTRO-001
+# Everything here is either mechanically verified (git, ledgers, ffprobe, sha256) or labelled as a human judgment.
+case_id: UPWORK-INTRO-001
+class: commercial_showcase_pilot
+schema: PRODUCTION-LEARNING-CASE-v0
+written_utc: "2026-09-14T18:30:00Z"
+
+final_outcome: accepted
+accepted_version: V4.1
+accepted_by: human_controller
+acceptance_evidence: chat_only_human_evidence          # no verdict file on disk; see HUMAN-VERDICTS.yaml
+accepted_utc_approx: "2026-09-14T17:30:00Z"            # after the V4.1 handoff at 17:26:51Z; exact minute not recorded
+
+final_asset:
+  path: pilots/upwork-intro-video-2026-09-14/v4/assembly/v4.1/upwork-intro-v4.1.mp4
+  git_ref: work/pilot-upwork-intro-video-v4
+  commit: f6ca66f
+  git_blob: 5c12db9dcfe020397d3cde3a6fa39579ffcd4245
+  sha256: d1a5edf8836936eb7e27cec4350f4cce6f21f1d966778f7241544a2ad07e008a
+  bytes: 27422140
+  duration_s: 57.133
+  width: 1920
+  height: 1080
+  fps: 30
+  video_codec: h264
+  audio_codec: aac
+  audio_sample_rate_hz: 48000
+  audio_channels: 2
+  loudness_lufs_integrated: -14.9      # from the pilot's audio-measure.json (self-reported by the assembly tool)
+  true_peak_dbtp: -1.9
+  byte_unchanged_rule: "this file is never re-encoded, trimmed or re-mixed by any integration work; the sha256 above is the identity"
+
+commercial_purpose: "Upwork profile introduction / sales asset for an images + video creative service"
+scope: images + video creative service
+job_family_note: "speaking presenter + multi-shot showcase — OUTSIDE the Alpha-1 product family (C-7); produced by pilot scripts, not by runtime/alpha"
+
+not_evidence_for:
+  - Capability Registry
+  - Alpha-1
+  - Canon effectiveness
+  - Stage A/B/C benchmark
+  - "any claim that Media Intelligence beats a direct human + LLM workflow"
+
+versions_produced:
+  - {version: V1, commit: "7629894", film: assembly/v1/upwork-intro-first-pass.mp4, sha256: c073e9ab0cf67f5754be0fba6505483d375ea314353e4d691e31e468fda8f4bd, duration_s: 56.333, human_verdict: specific_repair}
+  - {version: V2, commit: "7b39aeb", film: assembly/v2/upwork-intro-v2.mp4, sha256: bdd4566eee1b494e802b055a212e6026c664761dad243f43fa01eb37d34915d5, duration_s: 59.125, human_verdict: rebuild_direction}
+  - {version: V3, commit: "70f687e", film: v3/assembly/v3/upwork-intro-v3.mp4, sha256: ea81264d4103faa346b8937b50da4f785d5351f08aefc1e9bceb8d5df0052e51, duration_s: 59.867, human_verdict: reject}
+  - {version: V4, commit: "11d3e59", film: v4/assembly/v4/upwork-intro-v4.mp4, sha256: 09ed32c54d601f68bd31733dfc1749326d89c9e40a43ba89fc0e6a14d60a29fc, duration_s: 55.300, human_verdict: specific_repair}
+  - {version: V4.1, commit: "f6ca66f", film: v4/assembly/v4.1/upwork-intro-v4.1.mp4, sha256: d1a5edf8836936eb7e27cec4350f4cce6f21f1d966778f7241544a2ad07e008a, duration_s: 57.133, human_verdict: accept}
+
+major_human_review_cycles: 5          # one verdict per assembled version
+versions_to_accept: 5
+
+spend:
+  cumulative_known_media_spend_usd: 15.39318
+  basis: "every `reserved` ledger line at pinned prices across gen/LEDGER.jsonl (V1+V2), v3/gen/LEDGER.jsonl, v4/gen/LEDGER.jsonl; failed provider calls included (conservative)"
+  reported_in_final_pilot_report_usd: 7.3112
+  reported_figure_covers: "V3 + V4 only (the INR 2,000 lineage); it EXCLUDES the V1/V2 INR 3,000 lineage (USD 8.082)"
+  known_uncertainty:
+    - "vendor statements (fal, GCP, Sarvam) never reconciled; fal balance reads show USD 2.9726 billed vs 3.0500 reserved on fal routes in V3"
+    - "unknown whether Lyria's 3 failed calls (V3) or Veo's 2 UNAVAILABLE operations (V4) billed"
+    - "≈12 triage transcript/timing calls on gemini-3.6-flash credits (< USD 0.10) and an ElevenLabs free-tier voice isolation are not in any ledger"
+    - "Vertex / Gemini credit balances not readable by API; only fal cash was read"
+
+two_conclusions:
+  final_quality: SUCCESS
+  pipeline_efficiency_time_to_accepted_outcome: UNDERPERFORMED
+  rule: "these are reported side by side and never blended into one score"

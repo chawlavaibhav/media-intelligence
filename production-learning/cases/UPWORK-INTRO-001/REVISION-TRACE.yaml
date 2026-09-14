@@ -1,0 +1,143 @@
+# REVISION TRACE — V1 → V2 → V3 → V4 → V4.1
+# One of the two primary outputs of the integration. Mechanical facts (routes, spend, times) come from the
+# pilot ledgers, ASSETS.jsonl, CLOCK.json, commit times and file mtimes; verdicts and defects are the
+# Controller's (HUMAN-VERDICTS.yaml). Root-cause classes are restricted to the eleven below.
+case_id: UPWORK-INTRO-001
+root_cause_classes:
+  - creative_direction
+  - model_generation
+  - model_audio
+  - routing
+  - compositor
+  - deterministic_qa
+  - pacing_edit
+  - product_fidelity
+  - commercial_positioning
+  - infrastructure
+  - orchestration
+
+versions:
+  - version: V1
+    commit: "7629894"
+    input_source: "Controller package 'Upwork intro video' (session 1, created 09:32Z); concept draft → script v4 frozen; Canon brief; preprod route analysis"
+    generation_status: "12 paid dispatches shared with V2 on gen/LEDGER.jsonl — V1 share: NB2 stills ×6 (USD 0.402), Veo 3.1 Fast i2v + native speech ×3 (2.88), MiniMax H3 Max i2v ×1 (0.48) = USD 3.762; sealed EVAL-040 media reused at USD 0"
+    assembly_status: assembled
+    film: assembly/v1/upwork-intro-first-pass.mp4
+    human_verdict: specific_repair
+    defects:
+      - {defect: "actual video proof too small; too much phone/mockup framing", root_cause_class: creative_direction}
+      - {defect: "opening not visually exceptional", root_cause_class: creative_direction}
+      - {defect: "presenter blocks too long", root_cause_class: pacing_edit}
+      - {defect: "creative range insufficient", root_cause_class: creative_direction}
+      - {defect: "24h / 4h differentiation undersold", root_cause_class: commercial_positioning}
+    repair_requested: "stronger proof, shorter presenter, better opening, wider range, sharper 24h/4h"
+    repair_made_in_next: "script v5 approved; one-voice presenter chain (Veo extend); cross-product showcase; one caption rule"
+    repair_succeeded: partial
+    cost_usd: 3.762
+    elapsed:
+      mechanical: "session created 09:32:14Z (15:02 IST) → first paid call 10:40:29Z → film on disk 16:42:12 IST → commit 16:44:13 IST; ≈ 1 h 42 m from session start to film"
+      source: ledger_utc + file_mtime + git_commit + session_metadata
+
+  - version: V2
+    commit: "7b39aeb"
+    input_source: "V1 verdict (specific repair) + Maya value spine + script v5 for approval + copy deck v4"
+    generation_status: "Veo 3.1 Fast extend ×2 at 1080p (USD 4.32 = presenter chain 2.64 + one bounded repair re-extending the two 7-s pieces from the clean first 8 s, 1.68); ElevenLabs voice isolation (free tier); ≈12 triage transcript calls (credits, unledgered)"
+    assembly_status: assembled
+    film: assembly/v2/upwork-intro-v2.mp4
+    human_verdict: rebuild_direction
+    defects:
+      - {defect: "presenter quality degraded later in the film (chained extends)", root_cause_class: model_generation}
+      - {defect: "still cautious phone/mockup presentation", root_cause_class: creative_direction}
+      - {defect: "opening still not strong enough", root_cause_class: creative_direction}
+      - {defect: "competent, not extraordinary", root_cause_class: creative_direction}
+    repair_requested: "REBUILD: images and video co-equal; one product → campaign; work owns most of the screen"
+    repair_made_in_next: "new lineage (INR 2,000 cap): no presenter; packshot → Seedream edits → Kling i2v; every string composed by code; Sarvam narration"
+    repair_succeeded: false
+    cost_usd: 4.32
+    elapsed:
+      mechanical: "V1 commit 16:44 → V2 film 17:20:49 → commit 17:21:32 IST (≈ 37 min); ledger last call 11:42:18Z (17:12 IST)"
+      source: ledger_utc + file_mtime + git_commit
+    lineage_note: "V1/V2 ran under the INR 3,000 record (plan/SHOT-MAP-AND-SPEND-RECORD.md); closed here at USD 8.082"
+
+  - version: V3
+    commit: "70f687e"
+    input_source: "Controller package 'UPWORK INTRO V3' (session 2, created 12:27:53Z = 17:57 IST); frozen copy deck v3; SPEND-RECORD-V3 written 18:10 IST before the first call"
+    generation_status: "36 dispatches USD 3.2836 (GPT Image 2 ×4, Seedream 5 Pro Edit ×6, FLUX.2 Pro ×1, Kling v3 Pro i2v ×5, Lyria ×4 (3 failed: 503/500/500), Sarvam bulbul:v3 ×16); 0 refused; fal cash (USD 3.23 at start) was the binding constraint, not the cap"
+    assembly_status: assembled
+    film: v3/assembly/v3/upwork-intro-v3.mp4
+    human_verdict: reject
+    defects:
+      - {defect: "text cut off (brief card, statement)", root_cause_class: compositor, detail: "no measured text bounds; drawing clipped at the canvas/card edge"}
+      - {defect: "text colour disappearing against backgrounds", root_cause_class: compositor, detail: "labels drawn over photos with no contrast measurement or backing surface"}
+      - {defect: "creatives/images cropped", root_cause_class: compositor, detail: "cover-fit by default; no crop declaration"}
+      - {defect: "inconsistent card geometry: square + rounded", root_cause_class: compositor, detail: "radius/border written per call; no token source"}
+      - {defect: "voice horribly robotic (Sarvam bulbul:v3 over ~48 s of narration)", root_cause_class: model_audio, detail: "route/voice selection — the Lab's 6/6 was on ≤ 70-char lines; long reads expose cadence"}
+      - {defect: "pacing too rushed to focus on one creative", root_cause_class: pacing_edit}
+      - {defect: "no direct-to-camera speaker", root_cause_class: creative_direction, detail: "became a hard requirement"}
+      - {defect: "Kling B2 clip sharpened background signage into letter shapes although the still was text-clean (executor-caught, clip excluded)", root_cause_class: deterministic_qa, detail: "post-draw text scan ran on the still only, never on video frames"}
+      - {defect: "Lyria refused the frozen prompt three times (503/500/500)", root_cause_class: infrastructure, detail: "transient/prompt-sensitive provider errors, counted conservatively as spend; not a content failure"}
+      - {defect: "B3 and Kora motion slots not animated: fal balance exhausted (USD 0.26 left)", root_cause_class: orchestration, detail: "cap INR 2,000 was 6× the real constraint; the plan did not know pool liquidity"}
+    repair_requested: "speaker first; measured layout; contain-fit; one geometry; natural voice; slower proof beats"
+    repair_made_in_next: "speaker micro-qualification (Omni vs Veo) before any dependent spend; design4 token source + bounds/contrast/crop gates + reports; V3 accepted media reused; narration only in the first 7.75 s"
+    repair_succeeded: mostly
+    cost_usd: 3.2836
+    elapsed:
+      mechanical: "session 2 created 17:57 IST → brief complete 18:13:59 IST (CLOCK.json) → sample bundle 18:40:52 (1,612 s) → film 18:48:08 → commit 18:55:57 IST (≈ 58 min from session start to film)"
+      source: session_metadata + CLOCK.json + ledger_utc + file_mtime + git_commit
+
+  - version: V4
+    commit: "11d3e59"
+    input_source: "Controller package 'UPWORK INTRO VIDEO V4' after the V3 REJECT (V4 planning files 22:09–22:13 IST; SPEND-AMENDMENT-V4 — its own '~19:40 IST' label is wrong by ≈2.5 h against the ledger)"
+    generation_status: "6 dispatches USD 4.0276 (NB2 speaker still ×2 — r1 rejected for handwriting-like paper, r2 accepted; Gemini Omni 1.1 Flash i2v+speech ×1 rejected 45/60 — inserted a word, synthetic timbre; Veo 3.1 Fast i2v+speech ×3 — r1/r2 gRPC 14 UNAVAILABLE, r3 accepted 53/60); Wan 3.0 Prime fallback structurally not callable (fal USD 0.26 < 1.12)"
+    assembly_status: assembled
+    film: v4/assembly/v4/upwork-intro-v4.mp4
+    human_verdict: specific_repair
+    worked: [architecture, direct-to-camera trust, pacing, full-screen proof, compositor consistency]
+    defects:
+      - {defect: "ad-craft beat: offer pill and code line side by side read as a collision although boxes were disjoint", root_cause_class: compositor, detail: "hierarchy defect at equal visual weight; gates checked overlap, not read order"}
+      - {defect: "strongest positioning phrase 'and it can't suck' lost", root_cause_class: commercial_positioning}
+      - {defect: "speaker bubble persisted over hero creative — read as a watermark", root_cause_class: pacing_edit}
+      - {defect: "not enough creative-range proof", root_cause_class: creative_direction}
+      - {defect: "4-Hour Express treatment too weak (relative scale vs '24 HOURS')", root_cause_class: compositor}
+      - {defect: "Veo returned UNAVAILABLE twice before succeeding (Addendum 1 raised the V4 ceiling by USD 1.00)", root_cause_class: infrastructure, detail: "transient provider outage; NOT a model-quality failure"}
+    repair_requested: "restore the phrase; re-lay the ad (hook → offer → CTA, disjoint); bubble only where it earns trust; add a range beat; strengthen Express"
+    repair_made_in_next: "V4.1 assembly-only repair at USD 0"
+    repair_succeeded: true
+    cost_usd: 4.0276
+    elapsed:
+      mechanical: "V3 commit 18:55 → V4 planning 22:09 IST (3 h 14 m gap: Controller review of V3 + V4 package; not attributable further) → paid calls 22:12–22:24 → film 22:38:16 → commit 22:40:00 IST (≈ 31 min from planning to film)"
+      source: ledger_utc + file_mtime + git_commit
+
+  - version: V4.1
+    commit: "f6ca66f"
+    input_source: "Controller verdict on V4 (specific repair)"
+    generation_status: "no paid call; ledger unchanged (cumulative USD 7.3112 on the V3/V4 lineage)"
+    assembly_status: assembled
+    film: v4/assembly/v4.1/upwork-intro-v4.1.mp4
+    human_verdict: accept
+    defects: []
+    repair_requested: none
+    repair_made: "AND IT CAN'T SUCK. beat (152 px, accent rule, 1.3 s); ad re-laid hook → offer → CTA with a disjointness assertion over every element; bubble off every full-screen creative beat; Kora hook full-screen 2.8 s at USD 0; Express 136 px measured-fit; proof trims to keep hero 8 s uninterrupted; QA re-run (29 boxes inside safe area, radii [26], contrast min 5.67:1, 23 placements 0 unintended crops)"
+    repair_succeeded: true
+    cost_usd: 0
+    elapsed:
+      mechanical: "V4 commit 22:40 → tools edited 22:52–22:54 → film 22:55:50 → commit 22:56:19 IST (≈ 16 min)"
+      source: file_mtime + git_commit
+
+summary:
+  paid_versions: [V1, V2, V3, V4]
+  zero_cost_versions: [V4.1]
+  verdict_sequence: [specific_repair, rebuild_direction, reject, specific_repair, accept]
+  root_cause_histogram:
+    creative_direction: 8
+    compositor: 7
+    pacing_edit: 3
+    commercial_positioning: 2
+    model_generation: 1
+    model_audio: 1
+    deterministic_qa: 1
+    infrastructure: 2
+    orchestration: 1
+    routing: 0
+    product_fidelity: 0
+  reading: "the accepted asset's media (Veo speaker, V3 stills/clips) was largely in hand after V3; V4/V4.1 spent USD 4.03 on the speaker and USD 0 on assembly — most of the elapsed time went to creative architecture and compositor correctness, not to model quality"

@@ -1,0 +1,142 @@
+# TIME AND COST — the efficiency record of case UPWORK-INTRO-001.
+# TWO CLOCKS, NEVER MIXED: `mechanical` figures are computed from ledger UTC stamps, ASSETS.jsonl start/end,
+# CLOCK.json, git commit times, file mtimes in the pilot worktree, and the two executing sessions' metadata
+# (created / last activity). `human_estimate` figures are the Controller's words. A human estimate is never
+# converted into a timestamp; a mechanical figure is never rounded to match the estimate.
+case_id: UPWORK-INTRO-001
+timezone_note: "IST = UTC+05:30; ledgers are UTC; mtimes and commits shown in IST"
+reconciliation_tool: production-learning/tools/reconcile_pilot_ledgers.py
+
+metric_definitions:
+  TTAO: "Time To Accepted Outcome — wall clock from the first production input to the human ACCEPT of the delivered asset"
+  CpAO: "Cost per Accepted Outcome — provider spend fully loaded (failed/refused calls, retries, repairs, rejected versions) per accepted asset"
+  FULL_CpAO: "proposed extension: provider generation cost + paid reasoning cost where applicable + human production/review time (recorded as hours; no INR/hour value assigned without authority)"
+
+anchors_mechanical:
+  session_1_created_utc: "2026-09-14T09:32:14Z"      # 15:02:14 IST — 'Upwork introduction video' (Claude desktop session metadata)
+  first_plan_artifact_ist: "15:39:15"                 # plan/CONCEPT-DRAFT.md mtime
+  first_paid_call_utc: "2026-09-14T10:40:29Z"         # gen/LEDGER.jsonl line 1 (16:10:29 IST)
+  v1_film_ist: "16:42:12"
+  v1_commit_ist: "16:44:13"
+  v2_film_ist: "17:20:49"
+  v2_commit_ist: "17:21:32"
+  session_1_last_activity_utc: "2026-09-14T11:51:50Z" # 17:21:50 IST
+  session_2_created_utc: "2026-09-14T12:27:53Z"      # 17:57:53 IST — 'Upwork Intro V3 production execution'
+  v3_brief_complete_utc: "2026-09-14T12:43:59Z"       # v3/gen/CLOCK.json
+  v3_bundle_complete_utc: "2026-09-14T13:10:52Z"      # CLOCK.json, 1,612 s
+  v3_film_ist: "18:48:08"
+  v3_commit_ist: "18:55:57"
+  v4_planning_start_ist: "22:09:10"                   # v4/plan/NORMALIZED-REQUEST-V4.yaml mtime
+  v4_first_paid_call_utc: "2026-09-14T16:42:23Z"      # 22:12:23 IST
+  v4_last_paid_call_utc: "2026-09-14T16:54:15Z"       # 22:24:15 IST
+  v4_film_ist: "22:38:16"
+  v4_commit_ist: "22:40:00"
+  v41_film_ist: "22:55:50"
+  v41_commit_ist: "22:56:19"
+  session_2_last_activity_utc: "2026-09-14T17:26:51Z" # 22:56:51 IST — the V4.1 handoff
+  controller_accept_utc: null
+  controller_accept_reason: "the ACCEPT was given in chat after the 22:56 handoff; its minute is not recorded anywhere mechanical"
+  clock_label_discrepancy: "v4/plan/SPEND-AMENDMENT-V4.md self-labels '~19:40 IST' / '19:58 IST'; ledger UTC and file mtimes put the same events at 22:12–22:17 IST. The document's labels are wrong by ≈2.5 h; the mechanical record governs"
+
+time:
+  time_to_first_output:
+    mechanical: {value_hms: "1:39:57", from: session_1_created, to: v1_film, source: [session_metadata, file_mtime]}
+    note: "creative development (concept, script v3→v4, Karl review, shot map) took 15:02→16:10; generation + assembly 16:10→16:42"
+  time_to_first_human_review:
+    mechanical: {value_hms: "1:41:59", from: session_1_created, to: v1_commit_handoff, source: [session_metadata, git_commit]}
+  time_to_accepted_outcome_mechanical:
+    value_hms: "7:53:35"
+    from: session_1_created
+    to: v41_film
+    lower_bound: true
+    reason_lower_bound: "ends at the final artifact's mtime; the Controller's ACCEPT minute is unrecorded, so the true figure is slightly larger"
+    source: [session_metadata, file_mtime]
+    cross_checks:
+      first_paid_call_to_v41_film_hms: "6:45:21"
+      first_plan_artifact_to_v41_film_hms: "7:16:35"
+  time_to_accepted_outcome_human_estimate:
+    value: "approximately 7–8 hours"
+    source: human_estimate
+    confidence: approximate
+    who: human_controller
+    consistency_with_mechanical: "the mechanical lower bound 7 h 54 m lies inside the estimate; recorded as corroboration, not as a conversion"
+  generation_wait_time:
+    mechanical:
+      sum_of_per_call_latency_s: 3942       # V1/V2 reserved→ok pairs 1,090 s + V3 latencies 2,369 s + V4 latencies 483 s
+      sum_of_per_call_latency_hms: "1:05:42"
+      generation_windows_wall_clock: {v1_v2: "1:01:49", v3: "0:40:10", v4: "0:11:52"}
+      note: "calls overlapped inside V3 (Seedream, Lyria, Kling ran concurrently), so the wall-clock windows are the honest ceiling and the latency sum the honest floor of 'waiting on providers'"
+    share_of_ttao: "≈ 14 % (latency sum) to ≈ 24 % (windows) of 7 h 54 m — generation wait was NOT the dominant cost"
+  assembly_time:
+    mechanical:
+      v4_speaker_accepted_to_v4_film_hms: "0:11:25"     # 22:26:51 → 22:38:16
+      v2_last_call_to_v2_film_hms: "0:08:31"            # 17:12:18 → 17:20:49
+    whole_run: null
+    reason: "V1 and V3 assembled while calls were still returning (V3's rejected B2 clip returned after the film); assembly cannot be separated from generation on those versions"
+  repair_time:
+    mechanical:
+      v41_assembly_only_repair_hms: "0:16:19"           # v4 commit 22:40:00 → v4.1 commit 22:56:19; USD 0
+      v2_bounded_reextend: "inside the V2 window; not separable"
+  human_review_and_unattributed_gaps:
+    mechanical:
+      v2_handoff_to_session_2_hms: "0:36:21"            # 17:21:32 → 17:57:53
+      v3_handoff_to_v4_planning_hms: "3:13:13"          # 18:55:57 → 22:09:10
+      total_hms: "3:49:34"
+    note: "these gaps hold the Controller's review of V2 and V3, the writing of the V3 and V4 packages, and any idle time; no mechanical source splits them — ≈ 48 % of TTAO"
+  human_minutes_or_hours:
+    controller_review_and_direction: null
+    reason: "not measured; bounded above by the 3 h 50 m of gaps plus the five verdict exchanges"
+    executor_agent_wall_clock_hms: "≈ 4:04"            # 7:53:35 minus the 3:49:34 unattributed gaps
+
+counts:
+  human_review_cycles: 5
+  versions_to_accept: 5
+  paid_generation_attempts: 54                        # every reserved ledger line, all three ledgers
+  failed_at_provider: 5                               # Lyria ×3 (V3), Veo UNAVAILABLE ×2 (V4) — infrastructure, reserved conservatively
+  rejected_paid_attempts: 4                           # explicit rejections in ASSETS.jsonl: V3 dhaba-r1, vid-b2-r1; V4 still-r1, omni-r1
+  not_selected_paid_attempts: 3                       # V1 presenter still alternates r1/r3, plate r2 — usable, not chosen
+  accepted_paid_attempts_at_the_time: 42
+  paid_attempts_whose_output_is_in_v41: 
+    value: null
+    reason: "V4.1 is built from the V4 speaker (2 accepted draws) and V3 media (per v4/plan/V3-ASSET-INVENTORY.md: a0, a1, a2, a3, brewa0, b1 stills; a1, a3 clips; music-r4; plus code-set deliverables); the V1/V2 lineage (USD 8.082, 12 dispatches) contributes NO media to V4.1. An exact attempt count needs a per-frame provenance map the pilot did not write"
+  lineage_media_discarded_entirely: {lineage: "V1/V2 (INR 3,000 record)", dispatches: 12, usd: 8.082}
+
+cost:
+  currency_note: "USD at pinned prices; INR at the repo display rate 95.4211"
+  known_v3_to_v4_1_provider_cost_usd: {value: 7.31118, rounded_as_reported: 7.3112, inr_approx: 697.6, covers: "V3 (3.2836) + V4 (4.0276) + V4.1 (0) — the figure the final pilot report quoted"}
+  known_v1_v2_provider_cost_usd: {value: 8.082, inr_approx: 771.2, covers: "V1 (3.762) + V2 (4.320) under the INR 3,000 record"}
+  verified_pilot_provider_cost_usd: {value: 15.39318, rounded: 15.3932, inr_approx: 1468.8, covers: "all 54 reserved dispatches across the three ledgers, failed calls included", label_rule: "this — not 7.31 — is the number to call the pilot's provider cost"}
+  total_known_provider_cost_usd: 15.39318
+  cost_by_pool:
+    fal_cash: {usd: 3.479, calls: 17, note: "V3 2.999 (GPT Image 2 0.212, Seedream 0.405, FLUX 0.03, Kling 2.352) + V1 H3 Max 0.48; fal balance reads show ≈ 2.97 actually billed in V3 (GPT Image 2 metered under the pin)"}
+    vertex_gemini_credits: {usd: 11.8696, calls: 21, note: "Veo i2v ×6 (5.76) + Veo extend ×2 (4.32) + NB2 ×8 (0.536) + Omni ×1 (1.0136) + Lyria ×4 (0.24); a credit pool, not cash"}
+    sarvam_prepaid: {usd: 0.04458, calls: 16, inr: 4.3, note: "exact ledger sum; the pilot report rounded it to 0.0446"}
+  cost_of_discarded_attempts_usd:
+    value: null
+    lower_bound_usd: 9.32
+    reason: "at least the entire V1/V2 lineage (8.082) + the four explicit rejections (FLUX dhaba 0.03, Kling b2 0.448, NB2 still-r1 0.067, Omni 1.0136 = 1.559) — but V3/V4 media accepted at the time and dropped by the V4 architecture (a2/b1 clips, b2/b3/kora/dhaba stills, all 16 Sarvam takes) are neither cleanly 'discarded' nor 'used'"
+  cost_of_failed_provider_calls_reserved_usd: 2.10    # Lyria 3 × 0.06 = 0.18 + Veo 2 × 0.96 = 1.92; whether billed is unknown
+  cost_per_accepted_outcome:
+    media_cost_to_accepted_outcome_usd: 15.39318
+    numerator_complete: false
+    missing_components: ["≈12 triage transcript/timing calls on gemini-3.6-flash credits (< USD 0.10)", "ElevenLabs free-tier voice isolation (USD 0, plan credits)", "vendor-billed reconciliation for every pool", "paid reasoning cost (the executing sessions ran on a Claude subscription; not metered per job)"]
+    statement: "lower bound USD 15.39 ≈ INR 1,469 of provider spend for one accepted 57-s asset; the true full CpAO is higher by the missing components and by the human time below"
+  full_cpao_proposed:
+    provider_generation_cost_usd: 15.39318
+    paid_reasoning_cost_usd: {value: null, reason: "subscription-metered sessions; no per-job figure"}
+    human_production_review_time: {value: "≤ 3 h 50 m of unattributed gaps + five verdict exchanges", inr_per_hour: null, reason: "no labour rate assigned without Controller authority"}
+    note: "the 7–8 h total is itself commercially meaningful before any labour cost is assigned"
+
+product_conclusion:
+  final_quality: SUCCESS
+  pipeline_efficiency: UNDERPERFORMED
+  statement: "final quality succeeded; pipeline efficiency did not. One accepted 57-s asset took five assembled versions, five human review cycles, 54 paid dispatches (USD 15.39 reserved) and ≈ 7 h 54 m wall clock, of which provider waiting was ≈ 1 h 06 m (latency sum) — the time went to creative re-architecture (V1→V2→V3), a compositor without gates (V3), and review/packaging gaps between versions"
+  baseline_status: "this record is the BASELINE for comparable future commercial productions; no universal target is set here"
+  next_productions_must: "measure TTAO from the first production input (session start or package receipt), record the ACCEPT timestamp mechanically, and keep one ledger per production so the numerator is complete"
+
+controller_decision_candidates:
+  - id: CD-TTAO-KPI
+    question: "Should TTAO become a formal primary production KPI alongside CpAO?"
+    recommendation: "YES"
+    status: candidate — not policy until the Controller rules
+    rationale: "this run shows a quality success and an efficiency failure that CpAO alone (USD 15.39) would under-report; the cost of the 7–8 h is the larger commercial fact"
