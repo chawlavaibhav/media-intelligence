@@ -126,7 +126,6 @@ def seg_brief(plate: Image.Image, out: Path, dur: float = 3.0):
             if k < len(line) and int(t * 3) % 2 == 0:
                 d = ImageDraw.Draw(f); x = m + 440 + g.width + 6
                 d.rectangle([x, ly, x + 3, ly + g.height], fill=A._hex_to_rgba(GOLD))
-        place_demo(f)
         w.add(f)
     USED_STRINGS.add(line)
     return w.close()
@@ -343,16 +342,37 @@ def seg_endcard(out: Path, dur: float = 5.5):
     return w.close()
 
 
-def burn_supers(take: Path, out: Path, cues: list, insert: tuple | None = None, trim_s: float | None = None):
+def seg_textcard(lines: list[tuple[str, str, int, str, int]], out: Path, dur: float = 3.0, demo: bool = True):
+    """Solid cream card with a few lines fading in: lines = [(text, font, size, colour, alpha)]."""
+    w = Writer(out); n = int(dur * FPS)
+    glyphs = [deck_text(t_, f_, s_, c_, a_) for (t_, f_, s_, c_, a_) in lines]
+    total = sum(g.height for g in glyphs) + sum(int(l[2] * 0.5) for l in lines[:-1])
+    m = int(W * 0.09); y0 = (H - total) // 2
+    for i in range(n):
+        t = i / FPS
+        f = ground(); y = y0
+        for j, (g, l) in enumerate(zip(glyphs, lines)):
+            a = ease((t - 0.25 * j) / 0.5)
+            if a > 0:
+                gg = g.copy(); gg.putalpha(gg.getchannel("A").point(lambda v: int(v * a)))
+                A.paste(f, gg, m, y)
+            y += g.height + int(l[2] * 0.5)
+        if demo:
+            place_demo(f)
+        w.add(f)
+    return w.close()
+
+
+def burn_supers(take: Path, out: Path, cues: list, insert: tuple | None = None, trim_s: float | None = None, start_s: float = 0.0):
     """Burn word-identical supers onto a presenter take. cues = [(t_in, t_out, text) | (t_in, t_out, text, qualifier)].
     insert=(png_path, until_s) shows a still card instead of the picture until `until_s` while the take's audio leads
     (J-cut). trim_s cuts the take. Keeps the take's audio."""
     probe = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(take)], capture_output=True, text=True)
-    dur = float(probe.stdout.strip())
+    dur = float(probe.stdout.strip()) - start_s
     if trim_s:
         dur = min(dur, trim_s)
     n = int(round(dur * FPS))
-    dec = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-i", str(take), "-vf", f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS}",
+    dec = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-ss", f"{start_s:.3f}", "-i", str(take), "-vf", f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS}",
                             "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
     tmp = out.with_suffix(".video.mp4")
     w = Writer(tmp)
@@ -379,7 +399,7 @@ def burn_supers(take: Path, out: Path, cues: list, insert: tuple | None = None, 
                     place_super(f, s_, a)
         w.add(f); i += 1
     w.close(); dec.stdout.close(); dec.kill(); dec.wait()
-    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(tmp), "-i", str(take), "-map", "0:v", "-map", "1:a?", "-c:v", "copy",
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(tmp), "-ss", f"{start_s:.3f}", "-i", str(take), "-map", "0:v", "-map", "1:a?", "-c:v", "copy",
                     "-c:a", "aac", "-b:a", "192k", "-t", f"{dur:.3f}", str(out)], check=True)
     tmp.unlink(missing_ok=True)
     return dur

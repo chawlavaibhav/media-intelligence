@@ -59,7 +59,7 @@ def veo(args):
     if args.mode == "ref2v" and dur != 8:
         sys.exit("Vertex ref2v accepted only 8 s in the Lab (6 s refused; DAY-2 summary)")
     inst = {"prompt": args.prompt}
-    if args.mode == "i2v":
+    if args.mode in ("i2v", "extend") and args.image:
         b, mime = C.b64file(args.image); inst["image"] = {"bytesBase64Encoded": b, "mimeType": mime}
     elif args.mode == "ref2v":
         if not args.refs or len(args.refs) > 3:
@@ -67,19 +67,24 @@ def veo(args):
         inst["referenceImages"] = [{"image": dict(zip(("bytesBase64Encoded", "mimeType"), C.b64file(p))), "referenceType": "asset"} for p in args.refs]
     params = {"sampleCount": 1, "aspectRatio": args.aspect, "resolution": args.resolution, "durationSeconds": dur, "generateAudio": bool(args.audio)}
     body = {"instances": [inst], "parameters": params}
-    billed = 15 if args.mode == "extend" else dur
+    billed = ((0 if args.from_video else 8) + 7 * len(args.extend_prompt or [args.prompt])) if args.mode == "extend" else dur
     price = VEO_PRICE[model][args.resolution]
     shown = {"instances": [{k: (v if k == "prompt" else "<bytes>") for k, v in inst.items()}], "parameters": params}
     print("endpoint:", f"{REGIONAL}/{model}:predictLongRunning"); print("body:", shown)
     ledger = C.spend_guard(args, f"{model}/{args.mode}/{args.resolution}", billed, "seconds", price, "google_video.veo")
     tok = C.gcloud_sa_token(); hdr = {"Authorization": f"Bearer {tok}"}
-    data, mime, name = _veo_op(f"{REGIONAL}/{model}", hdr, body, ledger)
+    if args.mode == "extend" and args.from_video:
+        data, mime, name = Path(args.from_video).read_bytes(), "video/mp4", f"from:{args.from_video}"
+    else:
+        data, mime, name = _veo_op(f"{REGIONAL}/{model}", hdr, body, ledger)
     if args.mode == "extend":
-        ext = {"instances": [{"prompt": args.prompt, "video": {"bytesBase64Encoded": base64.b64encode(data).decode(), "mimeType": mime}}],
-               "parameters": {k: v for k, v in params.items() if k != "durationSeconds"}}
-        C.save(str(args.out).replace(".mp4", ".call1.mp4"), data)
-        data, mime, name2 = _veo_op(f"{REGIONAL}/{model}", hdr, ext, ledger)
-        name = f"{name} + {name2}"
+        prompts = args.extend_prompt or [args.prompt]
+        for k, ep in enumerate(prompts, start=1):
+            ext = {"instances": [{"prompt": ep, "video": {"bytesBase64Encoded": base64.b64encode(data).decode(), "mimeType": mime}}],
+                   "parameters": {kk: v for kk, v in params.items() if kk != "durationSeconds"}}
+            C.save(str(args.out).replace(".mp4", f".call{k}.mp4"), data)
+            data, mime, name2 = _veo_op(f"{REGIONAL}/{model}", hdr, ext, ledger)
+            name = f"{name} + {name2}"
     C.save(args.out, data); C.settle(ledger, name, "ok", f"{mime} -> {args.out}")
 
 
@@ -151,6 +156,8 @@ def main(argv=None):
     ap.add_argument("--surface", choices=["vertex", "gemini_api"], default="vertex")
     ap.add_argument("--prompt", required=True); ap.add_argument("--out", required=True)
     ap.add_argument("--image"); ap.add_argument("--refs", nargs="*")
+    ap.add_argument("--from-video", help="extend mode: skip the first generation and extend this existing clip")
+    ap.add_argument("--extend-prompt", nargs="*", help="extend mode: one prompt per 7 s extension, in order (defaults to --prompt once)")
     ap.add_argument("--duration", type=int, default=8); ap.add_argument("--aspect", default="16:9"); ap.add_argument("--resolution", default="720p")
     ap.add_argument("--audio", action="store_true")
     ap.add_argument("--dry-run", action="store_true"); ap.add_argument("--confirm-spend", action="store_true"); ap.add_argument("--ledger")

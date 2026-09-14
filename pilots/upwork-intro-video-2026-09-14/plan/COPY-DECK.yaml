@@ -1,31 +1,44 @@
 # Every string that appears on screen. The composer reads ONLY from here; the D3 check asserts
 # that no rendered text falls outside this deck. Devanagari is composed with Kohinoor Devanagari
 # via hb-view — never generated.
-version: 4
-supers:                                  # word-identical to the presenter's speech (sk_ogx_0042)
-  t1a: "Meta ads for brands that test every week."
-  t1b: "Back in twenty-four hours."
-  t1c: "I'm not real. The ads are."
-  t2a: "You approve the words. The machine builds."
-  t2b: "Vaibhav checks every file before it reaches you."
-  t3a: "Standard delivery: twenty-four hours. Express: four."
-  t3a_qualifier: "Express: orders 09:00–19:00 IST, Mon–Sat."
-  t3b: "Send your product link. You'll get a straight price for a first test pack."
-work_supers:
-  sizes: "One layout. Four sizes."
-  hooks: "Six hooks. Then Hindi."
-  check: "Exactly as you wrote it."
-  demo: "Demonstration · invented brands"
-  video: "10 to 15 second video ads."
+version: 5
+supers:                                  # word-identical to the presenter's speech (sk_ogx_0042) — v5, one continuous take
+  s1: "Meta ads for this week's test."
+  s2: "Your offer, word for word."
+  s3: "I'm not real. The ads are."
+  s4: "You approve the words first."
+  s5: "Vaibhav checks every file before it reaches you."
+  s6: "Standard, twenty-four hours. Express, four hours."
+  s6_qualifier: "Express: orders 09:00–19:00 IST, Mon–Sat."
+  s7: "Send your product link. You get a straight price."
+benefit_tabs:                            # one per showcase group, benefit not feature (Maya)
+  g1: "Feed, Stories, Reels, WhatsApp. Ready."
+  g2: "Six angles, one approval. Hindi too."
+  g3: "Caught here, not in your feed."
+  g4: "Reels for the same test. No shoot."
+  g5: "Any category. Any look."
+labels:                                  # the same small label on every showcase piece: format · size · language
+  build: "Static · Feed 4:5 · English"
+  sizes: "Static · four sizes · English"
+  biryani: "Static · Feed 4:5 · Hindi"
+  hooks: "Static · six variants · English, Hindi"
+  sweets_static: "Static · Feed 4:5 · Hindi"
+  check: "Static · price line · English"
+  aarohi_motion: "Video ad · 9:16 · English"
+  sweets_motion: "Video ad · 9:16 · Hindi"
+  juice: "Video ad · 9:16 · English"
+  chai: "Product film · 16:9 · Hindi"
+  watch: "Product still · 4:5"
+  mumbai: "Scene still · 16:9"
 cards:
   brief_title: "Your brief."
   brief_line: "Flat 30% off · Radiance Serum · ₹1,299 · Code GLOW30"
-  brief_sub: "One product photo. One line."
+  brief_sub: "One photo. One line. Demonstration, invented brands."
 end_card:
   cta: "Send your product link."
   standard_line: "AI-generated. Human-directed. Custom per order."
   wordmark: "Adwisely"
-  small: "Standard 24 h on every package. Express 4 h: orders 09:00–19:00 IST, Mon–Sat."
+  small: "Standard 24 h on every package. Express 4 h, orders 09:00–19:00 IST, Mon–Sat. A straight price for a first test pack."
 aarohi_en:
   headline: ["Glass skin", "in three weeks"]
   pill: "Flat 30% off"
@@ -61,3 +74,13 @@ phone_overlays:                          # code-set text on the two library clip
   juice_sub: "Cold, today."
   aarohi_motion_pill: "Flat 30% off"
   aarohi_motion_line: ["Glass skin", "in three weeks"]
+dhaba_hi:                                # Dhaba 47 — Hindi copy from adwisely-order-mode/examples/dhaba47-hi.yaml (origination, not translation)
+  headline: ["घर जैसा खाना,", "ढाबे का स्वाद"]
+  pill: "हर थाली पर 25% छूट"
+  product: "दम बिरयानी"
+  price: "₹249"
+  was: "₹329"
+  code: "कोड DHABA25"
+  cta: "अभी ऑर्डर करें"
+  legal: "ऑफ़र 30 सितंबर तक। शर्तें लागू।"
+  wordmark: "Dhaba 47"
