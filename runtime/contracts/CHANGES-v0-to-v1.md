@@ -173,3 +173,57 @@ outcome event; a dry event yields a dry-only template; exact strings are slots a
 from the job; a template is a plan asset, never a route decision and never Registry evidence; templates
 live under `runtime/store/templates`, never under `eval/`; written once; no HOLD id and no receipt
 vocabulary; match is exact, newest wins.
+
+---
+
+# Third round — lane G (PC-03D product loop, 14 Sep 2026)
+
+Lane G built the chain that runs AFTER a route is chosen: the package the Canon gate reads, the two
+gate passes, bounded repair, the human decision, and the one immutable record of what happened. It
+built against OUTCOME-EVENT-v0 and found that v0 could not hold what the chain produces. v0 is not
+edited; `OUTCOME-EVENT-v1.yaml` sits beside it. What changed and why, in plain terms:
+
+| # | v0 said | What building the loop showed | v1 |
+|---|---|---|---|
+| 1 | Nothing says whether the event is real | Every event this tranche writes comes from a dry run over a synthetic artifact. Without a flag, a later count of "accepted outcomes" or "cost per accepted outcome" would include rehearsals as if they were deliveries. | `dry_run: bool`, required, with the contract header saying what a dry event is memory OF (the chain) and is not (an outcome) |
+| 2 | `canon.missing_domain` one string | Same defect the spec fixed in round one | `missing_domains`, a list; plus `packs_selected` as ids, and optional `corpus_digest` / `injection_prefix_sha256` for Canon injection v1 |
+| 3 | No route identity on the event | C-6c makes the exact-text mechanism part of the route identity; an event that names only `route_key` cannot answer "how did code-composed plates fare on this route?" | `route {route_key, cell_key, cells, text_mechanism, surface, surface_model_id, evidence_status, price_pin_ref}` |
+| 4 | No planner identity | The template library (lane H) promotes from accepted events and needs to know whether the plan came from a frozen blueprint, a recorded fixture or an existing template | `blueprint {planner, source_ref, template_id}` |
+| 5 | One optional `repair` object | A job may carry more than one repair (a gate repair then a human one) and each attempt must say which repair it executes; a single object loses the chain | `repairs[]` with `repair_id`, `attempt_index`, `source`; `attempts[].is_repair_of` and `attempts[].repair_id` |
+| 6 | Attempt status vocabulary has no dry value; billing_state has no "never sent" value | A dry attempt is neither ok nor an error, and its money was never reserved | `status` admits `dry_not_sent`; `billing_state` admits `not_dispatched`; `artifact_origin` says provider / synthetic / none so a synthetic PNG is never mistaken for a draw |
+| 7 | Gate rows had nowhere to be linked to an attempt | The post-draw gate runs once per attempt; one `post_draw` list cannot say which attempt failed | `attempts[].gate_pre_report_sha256`, `gate_post_report_sha256`, `gate_post_verdict`; `gate.post_draw_by_attempt` |
+| 8 | `acceptance` records authority and decision but not WHO | The store must refuse an "accepted" that no person recorded, and nothing in v0 carried the person or proved the transitions | `acceptance.decided_by`, `acceptance.transcript_sha256`, `acceptance.state`; the store refuses accepted without a human |
+| 9 | No manifest or decision fingerprint | The attempts come from an EXECUTION-MANIFEST; an event that cannot name it cannot be audited against it | `fingerprints.decision_sha256`, `fingerprints.manifest_sha256`, optional `package_sha256` |
+| 10 | `template_candidate` optional | Every terminal event answers the question (eligible or not, and why) | required, with `resulting_template_ref` for the superseding event a promotion writes |
+
+## Things the gate or the contracts could not express (reported, not patched)
+
+1. **The frozen IMG-TEXT-01 textless-plate prompt fails the gate.** Copied verbatim from
+   `eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/IMG-TEXT-01.blueprint.md` § textless plate,
+   LIMIT-TEXT reports FAIL: sub-check T3, the word "poster" is in `TEXT_SURFACE_TERMS`
+   (canon/gate/vocab.py) and the sentence "Diwali festive poster background, square." carries no
+   illegibility or deferral term. The blueprint's own header records that the gate had not been run on
+   it. The renderer does not touch prompts, so the loop's pre-dispatch blocks on this blueprint; the
+   passing paths use a runtime-authored fixture (`runtime/fixtures/synthetic/blueprint-plate-clean.json`)
+   that says so in its `_note`. Whether "poster" should count as a text-bearing surface in a
+   background-plate prompt is a Canon-stream question, not the runtime's.
+2. **The gate's LIMIT-TEXT does not fail a plate prompt that lacks a no-lettering instruction** — it
+   reports the clause's presence in its PASS detail only. The loop adds its own blocking row,
+   `RUNTIME-PLATE-NO-LETTERING-INSTRUCTION`, using the gate's `NO_TEXT_CLAUSE` vocabulary over the same
+   extracted prompt (runtime/loop/predispatch.py).
+3. **An empty pack override switches the limit off.** `run_predispatch(..., packs=[])` makes LIMIT-TEXT
+   NOT-APPLICABLE. The committed spec fixtures carry `canon.packs_selected: []`, so a literal reading of
+   "pass the compiled packs" would have silenced the baked-text limit on exactly the job it exists for.
+   The loop passes `packs=None` (trigger table) when the spec names no compiled pack.
+4. **PRODUCTION-SPEC-v1 carries no pixel minimum**, only `resolution_class`, so DISPATCH-DIMENSIONS is
+   NOT-RUN on every runtime package. Not invented.
+5. **The spec fixtures' `job_sha256` is an unquoted run of zeros**, which YAML reads as the integer 0.
+   The event refuses a fingerprint that is not 64 hex characters (`FINGERPRINT_INVALID`); the lane-G
+   tests restore the intended placeholder when loading. Lane F/E own the fixtures.
+6. **The `dry` profile row has `acceptance_authority: none` and `repair_allowance: 0`** at this commit,
+   so the loop's acceptance cannot record under it (refused by name). The lead's decision makes `dry`
+   the twin of `alpha_human_release`; lane F owns that change. Lane G's tests run under
+   `alpha_human_release`, whose `spend_authority.status` is `none` — nothing can dispatch under it.
+7. **Video text scan.** stdlib cannot decode frames from an MP4, so LIMIT-TEXT post-draw is NOT-RUN on
+   every motion attempt and the verdict rests on geometry, duration and track rows. The synthetic MP4 is
+   header-only (ftyp + moov), enough for the probe, and is labelled as such.
