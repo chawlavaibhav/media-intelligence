@@ -1,0 +1,113 @@
+# TEMPLATE-v0 — an accepted production plan kept as a reusable asset (CANON-SHAPE-v1 §4, last stage:
+# "the accepted blueprint becomes a template asset; later similar requests match it and fill slots
+# in code — no reasoning tokens for routine volume").
+# Frozen contract. Built under Controller ruling C-10 (14 Sep 2026): "Authorise USD-0
+# implementation of: Canon Injection v1; template / empirical-memory integration."
+#
+# What a template is: the plan a person ACCEPTED for one job, with the customer's exact strings
+# turned into slots, plus the record of which doctrine was injected when it was written. A repeat
+# job whose Normalized Request has the same identity is served from it in code, and the compiler
+# skips the reasoning pass. What a template is not: a route decision (the router still decides from
+# evidence), Registry evidence (it says nothing about model capability), or Lab data (it never
+# enters eval/).
+schema: TEMPLATE-v0
+status: FROZEN_CONTRACT
+
+fields:
+
+  schema: {type: string, required: true, note: "always TEMPLATE-v0"}
+  template_id: {type: string, required: true, note: "tpl- + the first 16 hex of sha256 over the canonical template content without template_id and created_utc; the same accepted event always yields the same id"}
+
+  identity_version: {type: int, required: true, note: "the version of the FIELD SET behind normalized_identity; a change to which NR facts are in or out is a new version, never a silent change"}
+  normalized_identity: {type: string, required: true, note: "sha256 over the canonical identity_fields dict; match() compares this and nothing else — exact, no fuzzy matching, no search"}
+  identity_fields:
+    type: object
+    required: true
+    note: >-
+      The facts the sha covers, kept in clear so a reader can see what a match means without
+      recomputing. identity_version 1 covers exactly: kind, modality, requested_operation, aspect,
+      exact_text (sorted list of {content, script, placement}), motion ({seconds, from, audio} or
+      null), supplied_asset_roles (sorted role names, never bytes or asset ids), entity_roles
+      (sorted), market, language. OUT of the identity: brief prose, deliverable count, job_id,
+      customer_ref, asset hashes, policy profile, cost ceiling, retention, ambiguity markers,
+      provenance fields. Exact-text CONTENT is in the identity on purpose: a template's objective and
+      prompts describe one customer's product, so "the same job shape" for Alpha 1 means the same
+      copy for the same product, not any Devanagari overlay ad.
+
+  status: {type: string, required: true, note: "reusable | reusable_dry_only. A dry-run event (nothing was drawn) can only make a dry-only template: nobody accepted a real artifact made from this plan, so the plan has no claim to serve a live job. match() returns a dry-only template only under dispatch_mode dry"}
+
+  accepted_event_id: {type: string, required: true, note: "the OUTCOME-EVENT whose human acceptance authorised this promotion"}
+  created_utc: {type: timestamp, required: true}
+
+  source:
+    type: object
+    required: true
+    fields:
+      job_id: {type: string, required: true}
+      spec_id: {type: string, required: true}
+
+  blueprint:
+    type: object
+    required: true
+    note: "the plan fields of runtime/spec/planner_seam.py RESPONSE_FIELDS plus the generation prompts; every string in here may contain slot content and is re-filled on use"
+    fields:
+      objective: {type: string, required: true}
+      hard_constraints: {type: "list[string]", required: true}
+      acceptance_statements: {type: "list[string]", required: true, note: "the accepted job's frozen acceptance contract; re-filled, then re-guarded by the compiler on the new job"}
+      composition: {type: object, required: false}
+      materials_and_light: {type: object, required: false}
+      resolution_class: {type: string, required: false}
+      generation_prompts:
+        type: object
+        required: true
+        fields:
+          main: {type: string, required: true}
+          textless_plate: {type: string, required: false}
+          motion: {type: string, required: false}
+
+  slots:
+    type: "list[object]"
+    required: true
+    note: "the exact strings the template was promoted with, by id and position; fill() replaces every one with the new job's string at the same position and refuses if the counts differ (TEMPLATE_SLOT_MISMATCH)"
+    fields:
+      id: {type: string, required: true}
+      content: {type: string, required: true}
+      script: {type: string, required: false}
+      placement: {type: string, required: false}
+
+  canon:
+    type: object
+    required: true
+    fields:
+      packs_selected: {type: "list[string]", required: true, note: "every pack id the trigger table selected for the accepted job, compiled or not"}
+      packs_injected: {type: "list[string]", required: true, note: "the accepted compiled packs actually in the prefix"}
+      corpus_digest: {type: string, required: true, note: "fingerprints.accepted_canon.combined_digest at promotion time, from the outcome event"}
+      prefix_sha256: {type: string, required: true, note: "the cache-served Canon prefix the plan was written behind"}
+      injection_version: {type: string, required: false, note: "v0 | v1; absent when the spec predates the field"}
+
+  route_hint:
+    type: object
+    required: true
+    note: "what the accepted job was made on. A HINT for the router's tie-breaks, never a decision: the router plans from evidence status and the policy profile on every job, and may pick something else"
+    fields:
+      route_key: {type: string, required: false}
+      cell_key: {type: string, required: false}
+      text_mechanism: {type: string, required: false}
+
+  provenance:
+    type: object
+    required: true
+    fields:
+      acceptance_authority: {type: string, required: true, note: "human, for as long as no automated judge has qualified"}
+      dry_run: {type: bool, required: true}
+      promoted_by: {type: string, required: true}
+
+invariants:
+  - "Promotion only from a human-accepted outcome event: acceptance.decision == accepted AND acceptance.authority == human. A rejected, abandoned, pending or judge-decided event never makes a template."
+  - "A dry event yields a dry-only template. Under dispatch_mode dry nothing was drawn and nobody accepted an artifact, so the plan is unproven on media; it may serve another dry job (status reusable_dry_only) and never a live one. It also needs template_candidate.eligible true on the event — a dry acceptance alone is not enough."
+  - "Exact strings are slots and are always re-filled from the job. A template never carries one customer's strings into another job: every slot is replaced by position, and a count mismatch is a refusal, never a partial fill."
+  - "A template is a plan asset, never a route decision and never Registry evidence. route_hint is advisory; the router decides; nothing here says what a model can do."
+  - "Templates live under runtime/store/templates, never under eval/. Production memory and Lab evidence stay in separate stores."
+  - "A template file is written once and never overwritten; the same accepted event yields the same template_id, so a second promotion of one event is a refusal by name."
+  - "A template contains no HOLD-lane id and no retired receipt vocabulary; promotion scans for both and refuses."
+  - "match() is an exact identity comparison; no fuzzy matching, no similarity search, no model. If several templates share an identity, the newest wins."

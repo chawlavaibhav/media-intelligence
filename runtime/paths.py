@@ -32,3 +32,8 @@ PLANNER_FIXTURES = FIXTURES / "planner"
 BRIEF_FIXTURES = FIXTURES / "briefs"
 
 DEFAULT_STORE = RUNTIME / "store"
+
+# lane H (Canon Injection v1 + template library, C-10). Runtime-owned; canon/** stays read-only.
+INJECTION_PREFIX_V1 = RUNTIME / "canon" / "INJECTION-PREFIX-v1.md"
+TEMPLATE_CONTRACT = CONTRACTS / "TEMPLATE-v0.yaml"
+TEMPLATE_STORE = DEFAULT_STORE / "templates"

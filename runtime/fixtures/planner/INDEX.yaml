@@ -1,5 +1,14 @@
 responses:
+  # Keys are sha256 over the exact planner payload {system, user}. The system half is the Canon
+  # prefix, so each brief has one key per injection version: the v0 rows (INJECTION-CONTRACT-v0 §2
+  # block) and the v1 rows (runtime/canon/INJECTION-PREFIX-v1.md, the default since lane H, C-10).
+  # The recorded plan is the same file under both keys: the recorded plans never carried receipts
+  # (RESPONSE_FIELDS has no room for them), so the retired receipt sentences changed nothing a plan
+  # contains. Recompute: runtime/tests/test_h_injection_v1.py + test_spec_compile.py hold both paths.
   5989f4f194a0382e83b3234c33010945b99aaffb23a65bf26e11f1d5a67c5f9d: lipstick-packshot.response.json
   6b040e63af25ca85e8d2bb79c1580f890a478eaa1c855b2578c994319b01b7fc: mustard-oil-tin.response.json
   b6c5addd7e99164d11f3b83b8267ea42fe3bcff95e0b3e9f68342b7bef413a9f: showroom-photo-edit.response.json
+  64f22e8fbd7dc3905a75bb8b05ecc214a734e6f2992fe2e1734c9a148a5d0a84: lipstick-packshot.response.json
+  ca08c952a9035a6193bebb300fca8fa2206284e33fd9348d08165fa486945667: mustard-oil-tin.response.json
+  a32f15bac9f824b788dc5ee3b82fd90a5e64626ad9c0e8f8361c1d163730f75e: showroom-photo-edit.response.json
 schema: PLANNER-FIXTURE-INDEX-v0

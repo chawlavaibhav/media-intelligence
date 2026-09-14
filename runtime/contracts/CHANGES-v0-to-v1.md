@@ -91,3 +91,85 @@ breaking the decision it believed it was obeying — so the profile field says s
 Across two rounds, thirteen defects. Not one was found by reading a contract; every one was found by
 building something that had to use it. Three of the four in this round were introduced by the same
 hand that wrote the rule they broke.
+
+---
+
+# Third round — lane H (Canon Injection v1 + template library, ruling C-10)
+
+Built at USD 0 against CANON-SHAPE-v1 §4–§6. Nothing under `canon/`, `eval/` or `coordination/`
+was edited; no pack was compiled; no model was called. Four things were found by building.
+
+**1. The v0 system block asked the model for receipts, and so do the packs.** The v0 block
+(`canon/compilation/INJECTION-CONTRACT-v0.md` §2) carries three receipt instructions: "record it in
+DOCTRINE_DEVIATIONS with that clause", "a DOCTRINE_DEVIATIONS entry on that decision id covers its
+conflict rules", and "Answer every CHECK by decision id in FAILURE_PREVENTION as pass or fix".
+CANON-SHAPE-v1 §5 retired all of them (the receipts cost about five times the rules they proved).
+The runtime now injects its own receipt-free block (`runtime/canon/INJECTION-PREFIX-v1.md`, 328 of
+the budgeted 340 tokens) and leaves the v0 file untouched. But the block is only the first 1.3K of
+the prefix. **The two compiled packs' `terse_injection_text` (about 20K chars) open with the same
+receipt sentence** — "override it in DOCTRINE_DEVIATIONS … Answer every CHECK in FAILURE_PREVENTION
+as pass or fix" — and PA-D10's DEFAULT and CHECK, CA-D9's CHECK and CF-06 name DOCTRINE_DEVIATIONS
+in their own text. Those bytes are canon-owned, byte-stable and validated as such, and the runtime
+must not paraphrase a pack ("render by id, never paraphrase"). So under Injection v1 the model still
+reads the retired instruction, from the packs. The lookup records this honestly as a notice naming the
+packs, and `receipts_required` is `False` — the gate never reads receipts and nothing downstream asks
+for them — but the words themselves can only go when the packs are recompiled, which is a Canon-stream
+decision, not a runtime one, and is not authorised by C-10. Where the words come from:
+`canon/compilation/compile_pilot_packs.py` (the terse header sentence, and the PA-D10 default at
+line 211). OBSERVED; the wasted tokens per request are the receipt sentence's length, not the
+receipts' — the model is not asked to write anything back.
+
+**2. The planner fixture key includes the system block.** `FixturePlanner` keys a recorded plan by
+the sha of the whole payload (system + user), so changing one word of the system block orphans every
+recorded plan. The v1 default would have refused all three fixture briefs with
+`PLANNER_FIXTURE_MISSING`. The index (`runtime/fixtures/planner/INDEX.yaml`) now carries the v1 keys
+beside the v0 keys, pointing at the same recorded plans — legitimate because the recorded plans never
+carried receipts (RESPONSE_FIELDS has no room for them), so the retired sentences change nothing a plan
+contains. Worth knowing for lane E and the lead: a fixture keyed on the prefix bytes is re-keyed every
+time the prefix changes, by design; that is the price of proving the prompt bytes are what we think.
+
+**3. The spec alone cannot say what job it is.** The template identity (what makes two jobs "the same
+shape") needs market, language and the supplied assets' roles. PRODUCTION-SPEC carries none of them —
+`identity_requirements.preserve` holds only identity roles (a `scene` photograph is invisible), and
+market/language survive only inside the brief prose. So `TemplateLibrary.promote(spec, event)` takes
+the Normalized Request (`nr=`) or the job (`job=`) as well, and refuses without one rather than
+guessing. The interface note said `promote(spec, outcome_event)`; the two extra keyword arguments are
+the smallest honest change. If a later spec version carries the NR (or its identity facts), the
+keyword becomes optional.
+
+**4. The NR does not carry `placement` yet.** `identity_version` 1 includes each exact string's
+placement (overlay vs in-scene), because those are different products. `runtime/canon/normalize.py`
+(v0, read-only for this lane) does not put placement on a text requirement, so today the identity
+records `placement: null` while a v1 spec's strings say `overlay`. When lane E's normaliser carries
+placement, every identity sha changes. No template exists yet (the store is empty; nothing has been
+accepted), so nothing is orphaned; but a template promoted under a v0 NR would not match a v1 NR, and
+that is correct behaviour, not a bug — the identity says what it saw.
+
+## Design choices the interfaces did not dictate
+
+- **Exact-text CONTENT is in the identity.** A template's objective and prompts describe one
+  customer's product ("Gupta Oil Mills' one-litre tin…"), so "the same job shape" for Alpha 1 means the
+  same copy for the same product — a genuine repeat — never any Devanagari overlay ad. The slot-fill
+  is still performed on every use, so the invariant "a template never carries another customer's
+  strings" holds in code as well as by construction. Widening this is a new `identity_version`.
+- **A dry-only template matches only under `dispatch_mode: dry`.** The dry twin profile can reuse it;
+  a live job cannot. `match(nr, dispatch_mode=...)` defaults to `live`.
+- **`prefix_sha256 == injected_context_sha256` in v1.** The whole payload is upstream of the cache
+  breakpoint (COMPILED-PACK-CONTRACT-v0.1 §4), so both names cover the same bytes. Both are kept:
+  one is PRODUCTION-SPEC's field, the other CANON-SHAPE's cache vocabulary. `cache_boundary_marker`
+  is metadata about where the volatile turn begins and is never injected.
+- **Refusal codes local to `templates.py`** (`TEMPLATE_PROMOTION_REFUSED`, `TEMPLATE_SLOT_MISMATCH`,
+  `TEMPLATE_IMMUTABLE`, `TEMPLATE_INVALID`) rather than on `runtime.errors.Refusal`, which every lane
+  edits this round. Moving them onto the class after the merge is a one-line change per code.
+- **`packs_injected` beside `packs_selected`** on the template's canon block, so a reader can tell the
+  doctrine that was actually in the prefix from the triggers that fired without a compiled answer.
+- **No index file for the store.** `match` is an exact comparison over a directory listing; an index
+  would be a second copy of the truth that can drift from the files.
+
+## Contract added
+
+`runtime/contracts/TEMPLATE-v0.yaml` (new, frozen). Invariants: promotion only from a human-accepted
+outcome event; a dry event yields a dry-only template; exact strings are slots and are always re-filled
+from the job; a template is a plan asset, never a route decision and never Registry evidence; templates
+live under `runtime/store/templates`, never under `eval/`; written once; no HOLD id and no receipt
+vocabulary; match is exact, newest wins.
