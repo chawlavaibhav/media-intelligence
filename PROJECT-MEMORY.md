@@ -5,7 +5,7 @@ itself.** Read this first, every session; then `coordination/CONTROL-STATE.md` f
 authorised.
 
 **Maintained by:** the Repository Governor (`governance/GOVERNOR-CONTRACT.md`).
-**Last refresh:** 14 Sep 2026 — the audit-closeout refresh ordered by Controller ruling C-6
+**Last refresh:** 14 Sep 2026 (second of the day, after PR #95 and PR #96 merged to `main` at `bf92c53`) — the audit-closeout refresh ordered by Controller ruling C-6
 (`coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md`), after the two-day
 Capability Lab run (8–10 Sep, EVAL-040…043), the two independent audits of 10 Sep, the Controller's
 fifteen rulings of 14 Sep (C-1…C-11, six records dated 2026-09-14 under `coordination/decisions/`),
@@ -36,17 +36,19 @@ evaluation → repair → accepted outcome → empirical memory.
 **What exists vs what does not (14 Sep 2026).** The Normalized Request grammar, Creative IR v0.1,
 accepted Canon knowledge (37 sources, 2 of 10 compiled packs), the compiled-doctrine gate as code,
 the frozen measurement contracts, the Stage-A execution harness with sealed evidence, **the Capability
-Registry (575 deterministic rows)** and the tiered routing map with its taint register **exist**. On the
-integration branch `work/audit-closeout-and-runtime-v0` a **production runtime exists as code**
-(`runtime/`): four frozen contracts (PRODUCTION-JOB, PRODUCTION-SPEC, ROUTE-DECISION,
-OUTCOME-EVENT), intake, a brief → Production Specification compiler with deterministic Canon lookup
-(PC-03A), an evidence-aware router with declared fallback and live price pins (PC-03B), and policy
-profiles carrying every operating limit as data. **PRODUCTION-SPEC-v1 is the Production IR; the router
-is the Production Planner's first half.** What does **not** exist on that branch: an execution bridge
-to a provider, post-draw checks on a real artifact, a repair loop, acceptance states, the
-empirical-memory event writer, a customer-facing API — the child branch
-`work/runtime-alpha-vertical-slice-v0` builds those at USD 0 in dry mode (see `runtime/ALPHA-1.md`).
-**The runtime has never called a provider; every run to date is dry.**
+Registry (575 deterministic rows)** and the tiered routing map with its taint register **exist**. On `main`
+(PR #95 and PR #96 merged 14 Sep 2026) a **production runtime exists as code** (`runtime/`): the frozen
+contracts (PRODUCTION-JOB-v1, PRODUCTION-SPEC-v1, ROUTE-DECISION-v0, EXECUTION-MANIFEST-v0,
+OUTCOME-EVENT-v1, TEMPLATE-v0), intake, a brief → Production Specification compiler with deterministic
+Canon lookup and a USD-0 reasoning pass, Canon Injection v1, an evidence-aware router with declared
+fallback and live price pins, an execution bridge that renders and prices every attempt through the
+harness and sends nothing, pre-dispatch and post-draw gates over the compiled-doctrine gate, bounded
+repair, human-acceptance states, an immutable empirical-memory event, a template library, and the
+one-command chain `python3 -m runtime.alpha.cli` (see `runtime/ALPHA-1.md`). **PRODUCTION-SPEC-v1 is
+the Production IR; the router plus the execution bridge are the Production Planner.** What does
+**not** exist: a live provider dispatch (deliberately unwired until a signed runtime spend record
+exists), a real post-draw artifact, a customer-facing API. **The runtime has never called a provider;
+every run to date is dry** — 14 committed dry-battery runs under `runtime/battery/`.
 
 ## 2. Where truth comes from — typed authority
 

@@ -5,10 +5,12 @@ deferred, cancelled; the current empirical floor; Registry state; spend authorit
 next Controller gate. It is a synthesis backed by the durable Controller decisions it links — where
 it and any older prose disagree, the latest durable Controller decision governs.
 
-**Updated:** 14 Sep 2026 — full Governor refresh ordered by ruling C-6
+**Updated:** 14 Sep 2026 (second refresh of the day) — **PR #95 and PR #96 merged to `main`** on the
+Controller's instruction ("Merge #95 then #96"): `main` = `bf92c53` (PR #96's merge commit; PR #95's is
+`191a224`). Earlier the same day: the full Governor refresh ordered by ruling C-6
 (`coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md`) after the 10-Sep audit's
 fifteen open items were ruled on and the derivative routing map and taint register were regenerated
-under those rulings. The text immediately before this refresh is preserved byte-for-byte at
+under those rulings. The text immediately before the first refresh is preserved byte-for-byte at
 `history/CONTROL-STATE-PRE-AUDIT-CLOSEOUT-REFRESH-2026-09-14.md` (earlier snapshots:
 `history/CONTROL-STATE-PRE-CAPABILITY-LAB-2026-09-08.md`, `…-PRE-GATE-001-REFRESH-2026-09-07.md`,
 `…-PRE-EVAL-038-REFRESH-2026-09-01.md`, `…-PRE-CONTEXT-MIGRATION-2026-08-28.md`).
@@ -33,21 +35,21 @@ force: `CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md` (as narrowed by C-9),
 
 **Read `PROJECT-MEMORY.md` first.**
 
-## 1. Where the work is (14 Sep 2026)
+## 1. Where the work is (14 Sep 2026, after the merges)
 
-- `main` = `dcfa6af` (PR #93's merge commit; EVAL-043).
-- Integration branch `work/audit-closeout-and-runtime-v0` carries, in order: the 10-Sep audit set
-  and nine zero-spend repairs (`850003f`), the runtime contracts v0→v1 and lanes PC-03A (brief →
-  Production Specification) and PC-03B (evidence-aware router), and the 14-Sep closeout: the six
-  Controller records, the recomputed routing map and taint register, cumulative budget lineage in
-  the ledger, the Alpha-1 policy as data, and this refresh. It is pushed and opened as a PR to
-  `main`; **the Controller merges**, nobody else.
-- A child branch `work/runtime-alpha-vertical-slice-v0` (stacked on the closeout branch) carries the
-  USD-0 runtime tranche that follows: the dry execution bridge, pre/post gates, bounded repair,
-  human-acceptance states, the empirical-memory event, Canon Injection v1, the template library and
-  the one-command dry battery (14 runs, all reaching an intended dry state or a precise refusal).
-  Its state, defects and the first-paid-tranche recommendation are in
-  `coordination/audits/HANDOFF-USD0-TRANCHE-2026-09-14.md` and `runtime/ALPHA-1.md`.
+- **`main` = `bf92c53`.** It carries everything from the 8–10 Sep Capability Lab run, the 10-Sep
+  audit, the 14-Sep closeout (PR #95, merge `191a224`) and the 14-Sep runtime vertical slice (PR #96,
+  merge `bf92c53`). Both integration branches are merged and finished; no branch of this tranche is
+  outstanding.
+- **The production runtime is on `main`** (`runtime/`): intake against PRODUCTION-JOB-v1; brief →
+  PRODUCTION-SPEC-v1 with deterministic Canon lookup and a USD-0 reasoning pass (frozen Stage-A
+  blueprint, recorded fixture, or promoted template); Canon Injection v1; the evidence-aware router;
+  the execution bridge (`EXECUTION-MANIFEST-v0`, harness `dry_run()`, nothing sent); pre-dispatch and
+  post-draw gates over `canon.gate`; bounded repair; human-acceptance states; the OUTCOME-EVENT-v1
+  store; the template library; and the one-command chain `python3 -m runtime.alpha.cli`. **Every run to
+  date is dry; the runtime has never called a provider.** Entry points for a new engineer:
+  `runtime/ALPHA-1.md`, then `coordination/audits/HANDOFF-USD0-TRANCHE-2026-09-14.md` (refs, defects,
+  the 14-run dry battery, blockers, the first-paid-tranche recommendation).
 - PR #94 (`work/audit-brief-2026-09-10`, the audit brief itself) is still open and untouched.
 
 ## 2. Active / authorised
@@ -58,7 +60,7 @@ force: `CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md` (as narrowed by C-9),
 | **Human release** (C-8) | Every Alpha-1 output needs human approval before external delivery; no autonomous external delivery; the automated judge is out of the release path (agreement 66 %, false-accept 22 %) | — |
 | **Public-release gate** (C-11) | Auditor A's twelve T8 conditions adopted as the bar for public delivery; held as data on the alpha profile. **None of the twelve is met today** | — |
 | **Canon Injection v1 + template / empirical-memory integration** (C-10) | USD-0 implementation only, following `canon/CANON-SHAPE-v1.md` §4: deterministic pack lookup, accepted Canon only, stable cached prefix, no compliance receipts, mechanical gates, accepted blueprint → reusable template. **The remaining eight packs are not compiled** unless a real runtime failure demands one | USD 0; no tokens, no model, no provider call to "prove" it |
-| **Runtime engineering at USD 0** | Everything on the two branches above: contracts, intake, spec compiler, router, dry execution, gates, repair/acceptance states, memory event, CLI, dry battery. The `dry` operating profile sends nothing | USD 0 |
+| **Runtime engineering at USD 0** | Everything now on `main` under `runtime/`: contracts, intake, spec compiler, router, dry execution, gates, repair/acceptance states, memory event, CLI, dry battery. The `dry` operating profile sends nothing | USD 0 |
 | **Capability Lab** (C-9) | **Stopped widening.** No generic model battery, no premium-model sweep, no expansion to make tables prettier. New evidence work only when the production runtime exposes a launch-critical hole. The 8-Sep direction stands only as narrowed here | **Not authorised** — every Group-3 item (C-12 cheapest-tier round, C-13 Gemini API smoke, C-14 judge v2, C-15 clean reruns, C-16 still round two, C-17 Stage B, C-18 Stage C) needs its own signed spend record; none exists |
 
 Merged and closed earlier (unchanged): CANON-012, CANON-013, EVAL-035, RES-007, PILOT-001 freeze
@@ -225,13 +227,15 @@ pooled. `CONTROLLER-RES-005-INTEGRATION-AND-TEMPORAL-MATERIAL-RESOLUTION-2026-08
 
 ## 9. Next gate
 
-**The next Controller gate is the merge of the two branches** (`work/audit-closeout-and-runtime-v0`,
-then `work/runtime-alpha-vertical-slice-v0`) after reading their PRs, and then **the first paid
-Alpha-1 run**, which needs a new signed runtime spend record naming: the profile, the job ceiling, the
-routes it may call (the recommendation is in the runtime PR's handoff), 0 retries, and the human
-approver. Until that record exists the runtime is dry-only by construction.
+**Both branches are merged (14 Sep 2026). The next Controller gate is the first paid Alpha-1 run**,
+which needs three things that do not exist today: (1) a decision on whether the Alpha-1 plan comes from
+a recorded fixture (as in battery run B01) or a paid reasoning pass; (2) the live transport wired behind
+`ExecutionBridge.run()` (deliberately unbuilt; `dispatch_mode: live` refuses); (3) a new signed runtime
+spend record naming the profile, the job ceiling, the routes it may call, 0 retries and the human
+approver — the object `spend_authority.record` would point at (shape proposed in
+`runtime/execute/authorisation.py`). Until that record exists the runtime is dry-only by construction.
 
-What follows the merge, in the Controller's order (nothing here is authorised by this file):
+In the Controller's order (nothing here is authorised by this file):
 
 1. **First paid Alpha-1 vertical-slice run** — one static overlay ad through the whole chain
    (intake → spec → route → dispatch → gates → human acceptance → outcome event); the smallest
