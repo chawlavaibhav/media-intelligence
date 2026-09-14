@@ -1,0 +1,69 @@
+{
+ "schema": "EXECUTION-MANIFEST (pilot shape after runtime/contracts/EXECUTION-MANIFEST-v0.yaml)",
+ "manifest_id": "em-8c4c0b654cd1",
+ "job_id": "pilot-upwork-intro-v4",
+ "spec_id": "plan/CREATIVE-BLUEPRINT-V4.md",
+ "decision_id": "plan/ROUTE-PLAN-V4.yaml",
+ "policy_profile": "pilot_human_release",
+ "dispatch_mode": "live (pilot recipes; the runtime's live transport is not used)",
+ "customer_ref": "adwisely-own-profile",
+ "built_utc": "2026-09-14T16:41:25.731376+00:00",
+ "ceiling": {
+  "cumulative_cap_usd": 20.96,
+  "cumulative_cap_inr": 2000,
+  "carried_consumed_usd": 3.2836,
+  "v4_max_incremental_usd": 3.2
+ },
+ "attempts": [
+  {
+   "attempt_id": "v4-speaker-still-r1",
+   "slot": "speaker_still",
+   "route": "gemini-3.1-flash-image@gemini_api",
+   "est_usd": 0.067,
+   "order": 1,
+   "gate_before": "pre-dispatch prompt check",
+   "gate_after": "still \u00a77 check"
+  },
+  {
+   "attempt_id": "v4-speaker-omni-r1",
+   "slot": "speaker_candidate_A",
+   "route": "gemini-omni-1.1-flash-preview@vertex i2v 10s 720p",
+   "est_usd": 1.014,
+   "order": 2,
+   "depends_on": "v4-speaker-still-r1 accepted",
+   "gate_after": "\u00a79 speaker gate"
+  },
+  {
+   "attempt_id": "v4-speaker-veo-r1",
+   "slot": "speaker_candidate_B",
+   "route": "veo-3.1-fast-generate-001@vertex i2v 8s 1080p audio",
+   "est_usd": 0.96,
+   "order": 3,
+   "depends_on": "v4-speaker-still-r1 accepted",
+   "gate_after": "\u00a79 speaker gate"
+  }
+ ],
+ "fallback_triggers": [
+  "both candidates fail \u00a79 AND fal balance >= 1.12 -> wan-3.0-prime (NOT callable today, balance 0.26)"
+ ],
+ "self_composed": [
+  {
+   "capability": "wrapper typography, craft ad, statement cards, bubble, speed/CTA cards",
+   "cell": "deterministic composition (hb-view + Pillow)",
+   "text_mechanism": "deterministic_text_composition"
+  }
+ ],
+ "reuse": [
+  "../v3/gen/stills/*-accepted.png",
+  "../v3/gen/video/a1-accepted.mp4",
+  "../v3/gen/video/a3-accepted.mp4",
+  "../v3/gen/video/b1-accepted.mp4",
+  "../v3/gen/deliverables/*",
+  "../v3/gen/audio/music-r4.wav"
+ ],
+ "provenance": {
+  "v3_commit": "70f687e",
+  "branch": "work/pilot-upwork-intro-video-v4",
+  "controller_package": "UPWORK INTRO VIDEO V4 (session 2026-09-14)"
+ }
+}

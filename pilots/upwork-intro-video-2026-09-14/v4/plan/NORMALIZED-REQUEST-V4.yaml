@@ -1,0 +1,81 @@
+# NORMALIZED-REQUEST-V4 — the commercial objective of the Upwork intro film, in the request grammar's shape (CANON-010 fields
+# as used by PRODUCTION-JOB-v1 briefs). Product-learning run; not a Registry or Stage artifact.
+schema: normalized-request (CANON-010 shape, pilot use)
+job_id: pilot-upwork-intro-v4
+customer_ref: adwisely-own-profile
+policy_profile: pilot_human_release            # human (Controller) acceptance before any external use; no autonomous delivery
+brief:
+  language: en
+  market: IN
+  text: >-
+    A 52-56 second 16:9 intro film for an Upwork profile that sells dependable ad-creative production at AI speed
+    (Meta/Instagram statics and 10-15 s video ads, exact offer/price/code/legal copy, English and Hindi, Standard 24 hours,
+    4-hour Express as a paid add-on). It must open on a fictional Indian creative professional speaking one frozen line to
+    camera, then show real accepted work at a pace a buyer can absorb: a great static ad, ad craft (hook -> offer -> CTA),
+    product fidelity into a new scene, a full-screen product video, scale (4 formats, 6 hooks, English + Hindi), speed
+    (Standard 24 hours, then 4-hour Express), and a CTA to send a product link + offer.
+deliverable_request:
+  kind: showcase_film
+  modality: video
+  operation: generate            # one new native-speech speaker clip; everything else composed from accepted V3 media by code
+  aspect: "16:9"
+  duration_s: {min: 52, max: 56}
+  count: 1
+  master: {width: 1920, height: 1080, fps: 30, codec: h264, audio: aac_48k, loudness_lufs: -14, true_peak_dbtp: -1}
+subjects:
+  - entity: person
+    entity_id: speaker_fictional
+    depicts_identifiable_person: false        # invented; not Vaibhav; never presented as Vaibhav
+    identity_invariants: [Indian creative professional, chest-up, direct eye contact, natural skin, no logos, no readable text in scene]
+  - entity: product
+    entity_id: aarohi_serum          # reused from V3 (accepted packshot + scenes + Kling motion)
+  - entity: product
+    entity_id: brewa_kettle          # reused from V3 (accepted packshot + scene B1 + Kling motion)
+language_topology: {spoken: en-IN, on_screen_copy: en + hi, subtitles: none, viewer_locale: global_buyer}
+speaker_topology:
+  visible_speakers: 1
+  offscreen_voices: 0
+  script_exactness: exact
+  script_full: "Everyone can make AI ads now. So the bar went up. You need more creative, faster — and it can't suck."
+  script_short_permitted: "Everyone can make AI ads now. So the bar went up. You need more creative, faster."
+  pause_after: "So the bar went up."
+  target_spoken_s: [8, 10]
+strings:                      # every on-screen wrapper string; composed by code; never rendered by a model
+  - {id: S1, text: "MORE CREATIVE.", placement: overlay}
+  - {id: S2, text: "FASTER.", placement: overlay}
+  - {id: S3, text: "WITHOUT LOWERING THE BAR.", placement: overlay}
+  - {id: S4, text: "GREAT IMAGES AREN'T ENOUGH.", placement: overlay}
+  - {id: S5, text: "THEY HAVE TO WORK AS ADS.", placement: overlay}
+  - {id: S6, text: "HOOK", placement: overlay}
+  - {id: S7, text: "OFFER", placement: overlay}
+  - {id: S8, text: "CTA", placement: overlay}
+  - {id: S9, text: "SAME PRODUCT.", placement: overlay}
+  - {id: S10, text: "NEW SCENE.", placement: overlay}
+  - {id: S11, text: "Shape. Colour. Details held.", placement: overlay}
+  - {id: S12, text: "AND THEN IT MOVES.", placement: overlay}
+  - {id: S13, text: "4 FORMATS", placement: overlay}
+  - {id: S14, text: "6 HOOKS", placement: overlay}
+  - {id: S15, text: "ENGLISH + HINDI", placement: overlay}
+  - {id: S16, text: "ONE DIRECTION.", placement: overlay}
+  - {id: S17, text: "MORE TO TEST.", placement: overlay}
+  - {id: S18, text: "STANDARD", placement: overlay}
+  - {id: S19, text: "24 HOURS", placement: overlay}
+  - {id: S20, text: "4-HOUR EXPRESS", placement: overlay}
+  - {id: S21, text: "eligible smaller packs · paid add-on", placement: overlay}
+  - {id: S22, text: "SEND YOUR PRODUCT LINK + OFFER.", placement: overlay}
+  - {id: S23, text: "GET A STRAIGHT PRICE FOR THE FIRST TEST PACK.", placement: overlay}
+  - {id: S24, text: "AI-GENERATED · HUMAN-DIRECTED · CUSTOM PER ORDER", placement: overlay}
+  - {id: S25, text: "Adwisely", placement: overlay, max_occurrences: 1}
+  - {id: S26, text: "DEMONSTRATION · INVENTED BRANDS", placement: overlay}
+  ad_copy_aarohi_craft: ["YOUR NIGHT ROUTINE, SIMPLIFIED.", "15% OFF FIRST ORDER", "CODE AAROHI15", "SHOP NOW", "T&Cs apply", "AAROHI SKIN"]
+constraints:
+  - no model renders price, code, CTA, brand line, legal copy or Hindi (deterministic composition only)
+  - no readable text in any generated scene; video frames sampled and scanned post-draw
+  - creative shown as portfolio evidence is contain-fit, never accidentally cropped
+  - all wrapper text inside the safe area (>= 120 px x, >= 90 px y); no clipping; contrast >= 4.5:1 body / >= 3:1 display
+  - one card radius (24-28 px) everywhere the wrapper uses cards; one Loom-bubble shape
+  - Standard 24 hours shown before 4-hour Express; Express marked as a paid add-on for eligible smaller packs
+  - no Canon / routing / model names / infrastructure visible to the buyer
+  - Adwisely at most once, at the end
+acceptance_intent: Controller human acceptance against plan/ACCEPTANCE-CONTRACT-V4.md; "acceptable" is a reject
+retention: {policy_ref: pilot-local, note: "durable evidence under v4/**; sealed experiment directories never touched"}

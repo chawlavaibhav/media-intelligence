@@ -1,0 +1,33 @@
+# ROUTE-PLAN-V4 — evidence-aware route choice per slot. Evidence = eval/capability-map/TAINT-REGISTER-v1.yaml (14 Sep) and
+# EVAL-040 DAY-2 summary; V2/V3 pilot outcomes are product learning, not Registry evidence. Prices = pins of 2026-09-04/09.
+slots:
+  speaker_still:
+    need: one 16:9 anchor still of the fictional speaker (§7) to feed both native-speech candidates with the same face
+    route: {model: nano-banana-2, id: gemini-3.1-flash-image, surface: gemini_api, pool: credits, price_usd: 0.067}
+    evidence: IMG-CORE/nano-banana-2 7/8 clean_observed (production_use_allowed: true); V2 pilot 5/5 usable presenter stills
+    draws: 1 (+1 redraw only if the still fails §7)
+    pre_dispatch: [no readable text clause present, finishes declared, one light source named, eye contact + framing stated]
+    post_draw: [no lettering, eye contact, chest-up framing, natural skin, no logos, tonal separation (grayscale)]
+  speaker_candidate_A:
+    route: {model: gemini-omni-1.1-flash, id: gemini-omni-1.1-flash-preview, surface: vertex_interactions, task: image_to_video, pool: credits,
+            duration_s: 10, resolution: 720p, price_usd_per_s: 0.10136, est_usd: 1.014}
+    evidence: VID-MS/gemini-omni 2/2 (10-s story, clean); VID-2SPK omni 2/2 native Hindi dialogue (DAY-2); i2v + speech UNTESTED in the Lab
+    line: full frozen line (fits the 10-s max)
+    note: 1080p token rate not pinned -> 720p, upscaled by code for full-screen use if selected
+  speaker_candidate_B:
+    route: {model: veo-3.1-fast, id: veo-3.1-fast-generate-001, surface: vertex_predictLongRunning, mode: i2v, generateAudio: true, pool: credits,
+            duration_s: 8, resolution: 1080p, price_usd_per_s: 0.12, est_usd: 0.96}
+    evidence: VID-2SPK veo-3.1-fast 2/2 native (DAY-2); V2 pilot i2v + native speech 3/3 verbatim (product learning); text-hygiene weakness noted (DAY-2 §3)
+    line: the permitted SHORT form (22 words at a natural 140 wpm = 9.4 s > the 8-s hard limit; §6 permits the short form)
+  speaker_fallback_C:
+    route: {model: wan-3.0-prime, surface: fal, price_usd_per_s: 0.14, est_usd_8s: 1.12}
+    status: NOT_CALLABLE (fal balance USD 0.26) — recorded; not run
+  proof_static_master:      {source: ../v3/gen/deliverables/aarohi-master-4x5.png (+1x1, 9x16, wa), route: reuse_v3_accepted, spend: 0}
+  proof_craft_ad:           {source: ../v3/gen/stills/a2-accepted.png plate + code (Ledge + CTA button), route: self_composed, spend: 0}
+  proof_fidelity:           {source: ../v3/gen/stills/brewa0-accepted.png -> ../v3/gen/stills/b1-accepted.png, route: reuse_v3_accepted, spend: 0}
+  proof_video:              {source: ../v3/gen/video/a1-accepted.mp4 (5.04 s) + a3-accepted.mp4 (first 3.0 s), route: reuse_v3_accepted, spend: 0,
+                             post_draw: frames at 0.5 s scanned for lettering / drift (V4 re-check)}
+  proof_scale:              {source: ../v3/gen/deliverables/aarohi-hook-{1..6}-4x5.png, aarohi-hindi-4x5.png, masters, route: reuse_v3_accepted, spend: 0}
+  music:                    {source: ../v3/gen/audio/music-r4.wav (Lyria 2, accepted), route: reuse_v3_accepted, spend: 0}
+  wrapper_typography:       {route: self_composed (hb-view Helvetica Neue; Kohinoor only inside the Hindi creative), spend: 0}
+new_media_policy: new paid showcase media only if a slot cannot meet plan/ACCEPTANCE-CONTRACT-V4.md with the sources above; reason written to gen/ASSETS.jsonl first
