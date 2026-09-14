@@ -66,6 +66,8 @@ SCOPE_WHOLE_ROUTE = "whole_route"
 # The strategy the rule returns when the job names no exact string; no profile list bites on it
 # (POLICY-PROFILES invariant: "the list governs a spec that carries exact-text strings").
 NO_EXACT_TEXT = "no_exact_text"
+# FACET-CAPABILITIES marker: a facet row whose level is this word takes the chosen strategy as its level.
+LEVEL_IS_STRATEGY = "exact_text_strategy"
 
 
 @dataclass(frozen=True)
@@ -168,7 +170,7 @@ class SpecCompiler:
                 # v1: a LIST of the doctrines no compiled pack answers (v0's single string lost which)
                 "missing_domains": sorted(canon.gap_pack_ids),
             },
-            "capability_requirements": self._capabilities(kind_row, nr),
+            "capability_requirements": self._capabilities(kind_row, nr, strategy),
             "route_exclusions": self._route_exclusions(strategy, drawn_by, nr),
             "gate_requirements": self._gate_requirements(canon, strategy, nr),
             "acceptance_contract": build_acceptance(job, nr, plan.get("acceptance_statements"), self.guard),
@@ -312,7 +314,7 @@ class SpecCompiler:
             out.append(item)
         return out
 
-    def _capabilities(self, kind_row, nr) -> list:
+    def _capabilities(self, kind_row, nr, strategy) -> list:
         rows = []
         for capability in kind_row.capability_requirements:
             rows.append({"capability": capability, "mandatory": True})
@@ -322,7 +324,8 @@ class SpecCompiler:
             for capability in row["capabilities"]:
                 entry = {"capability": capability, "mandatory": bool(row.get("mandatory", True))}
                 if row.get("level"):
-                    entry["level"] = row["level"]
+                    # the marker row: the level IS the strategy the rule chose (see the YAML note)
+                    entry["level"] = strategy.strategy if row["level"] == LEVEL_IS_STRATEGY else row["level"]
                 rows.append(entry)
         if nr.temporal_structure:
             source = nr.temporal_structure.get("from") or "accepted_still"

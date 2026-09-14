@@ -1,0 +1,76 @@
+{
+  "_provenance": {
+    "binding_agrees_with_case_nr": true,
+    "blueprint_ref": "BLUEPRINTS/IMG-EDIT-01.blueprint.md",
+    "blueprint_sha256": "f2d9536595fddb8ee5529c0f31bda16cfbf85fa6844367949375332d9917381b",
+    "case_family": "IMG-EDIT",
+    "case_id": "IMG-EDIT-01",
+    "case_nr_modality": "static_image",
+    "case_nr_operation": "edit",
+    "consent_ref_added": false,
+    "depends_on_added": false,
+    "depicts_basis": {
+      "showroom_sofa_01": "subject_of_operation and the NR names person entities: staff_member"
+    },
+    "freeze_base": "cb92f1e",
+    "freeze_package": "STAGE-A-FREEZE-2026-09",
+    "kind_basis": "STAGE-A-CASE-KIND-MAP-v0.yaml: family IMG-EDIT -> static_ad_from_supplied_photo; operation/modality from KIND-NR-BINDING row",
+    "kind_map_sha256": "7ff5935b6d7c2b8dbed85f78fec9ea3b21e5b57f9a7252ea909365dd63a00227",
+    "motion_from_basis": null,
+    "placement_default": false,
+    "source_pool": "stage_a_case",
+    "test_cases_sha256": "8c2430e760279bb60a0ce429b933c64bb85340e2089be9ebad3f28d49e7cdb9c",
+    "tool": "runtime/tools/brief_from_stage_a_case.py",
+    "tool_choices": {
+      "asset_content_type": "image/jpeg",
+      "asset_provenance": "generated_stand_in",
+      "customer_ref_prefix": "acct-stage-a-",
+      "job_id_prefix": "alpha-dry-",
+      "market": "IN",
+      "placement_default": "overlay",
+      "policy_profile": "dry",
+      "retention_policy_ref": "alpha-1-default",
+      "submitted_by": "brief_from_stage_a_case"
+    },
+    "tool_sha256": "dcc24ffe94c80ca2f663aa6a2feec81a8b72e02349533675fb54c916fcb511c5"
+  },
+  "brief": {
+    "language": "en",
+    "market": "IN",
+    "text": "Hi, we shot this sofa in our showroom (attached: showroom_sofa_01.jpg) but one of our staff is standing in the background on the left. Can you take him out? Everything else should stay exactly as it is, same sofa, same room, same light. It goes on the product page tomorrow morning so we need it back today. Thanks, Meera"
+  },
+  "customer_ref": "acct-stage-a-img",
+  "deliverable_request": {
+    "aspect": "as_supplied",
+    "count": 1,
+    "kind": "static_ad_from_supplied_photo",
+    "modality": "static_image",
+    "operation": "edit",
+    "subject": {
+      "entity": "product",
+      "entity_id": "sofa",
+      "identity_invariants": [
+        "shape",
+        "colour",
+        "position",
+        "lighting"
+      ]
+    }
+  },
+  "job_id": "alpha-dry-img-edit-01",
+  "policy_profile": "dry",
+  "reference_assets": [
+    {
+      "asset_id": "showroom_sofa_01",
+      "content_type": "image/jpeg",
+      "depicts_identifiable_person": true,
+      "provenance": "generated_stand_in",
+      "role": "scene",
+      "sha256": "0b6892f8cddd3a1b1d187f498a174073695f109750f9ed0a682269b478c0656c"
+    }
+  ],
+  "retention": {
+    "policy_ref": "alpha-1-default"
+  },
+  "submitted_by": "brief_from_stage_a_case"
+}

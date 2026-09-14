@@ -91,3 +91,69 @@ breaking the decision it believed it was obeying — so the profile field says s
 Across two rounds, thirteen defects. Not one was found by reading a contract; every one was found by
 building something that had to use it. Three of the four in this round were introduced by the same
 hand that wrote the rule they broke.
+
+---
+
+# Third round — lane E (14 Sep 2026)
+
+The first lane wrote v1 and the router lane built against it. Neither ran a brief through both. When
+the lead and lane D connected them, intake was still validating against the **v0** file
+(`runtime/paths.py` bound both contracts to v0), so the consent gate still keyed on `role == person`
+— the hole this document's first section says v1 closed — and the compiler emitted a spec with no
+`schema` key, which `runtime/route/spec.py` refuses on its first line. Lane E bound both to v1 and
+found the following while making the two ends meet. None was found by reading.
+
+**1. v1 does not declare the keys the router requires.** `PRODUCTION-SPEC-v1.yaml` has no `schema`
+field, yet `runtime/route/spec.py` refuses a spec whose `schema` is not `PRODUCTION-SPEC-v1`; the
+router's own fixture specs carry it. WAVE2-INTERFACES §1 further requires `blueprint` and
+`exact_text.text_mechanism` (C-6c), and v1 declares neither. A contract is never edited in place,
+and a v2 file would carry a schema name the router does not accept — so the compiler validates the
+contract-declared part against v1 and attaches those three keys as interface extensions
+(`runtime/spec/compile.py` `INTERFACE_KEYS`, `contract_view()`). The next contract version should
+declare all three. Recorded, not hidden.
+
+**2. `character_exact` was a level nobody answered.** The compiler's facet table gave
+`exact_text_composition` the level `character_exact`; the router's binding answers that capability at
+`code_set_on_textless_plate` or `generated_in_scene` and refuses to choose a level on the spec's
+behalf. So every exact-text spec went to a person, silently. The level is now the chosen strategy
+(`FACET-CAPABILITIES-v0.yaml`, marker `exact_text_strategy`).
+
+**3. A provenance block outside the contract.** A brief derived from a frozen Stage-A case must say
+which case and which blueprint bytes it came from, so the reasoning pass can be served from that
+blueprint instead of a model. v1 has no such field. Rather than a v2 for one optional key, the brief
+JSON may carry a top-level `_provenance` block that intake strips before validation and stores beside
+the job (`<store>/jobs/<job_id>.provenance.json`, returned as `IntakeResult.provenance`). It is never
+part of the job's fingerprint. If a later contract wants it inside, it is one field.
+
+**4. The derived acceptance line held approximate strings exact.** `exact_strings_read_exactly` fired
+on every string; the first Stage-A case with an approximate string (IMG-TEXT-02, "Offer ends 15
+January", may_reflow) would have been held character-exact by the runtime while the case's own line
+says "readable in some wording". Now contractual strings only.
+
+**5. Two frozen acceptance lines fail the runtime's own guard.** IMG-REF-02 and VID-TOPO3-01 open a
+line `ACCEPT only if, …` (comma). `ACCEPTANCE-STYLE-v0` requires the opening `ACCEPT only if ` (space);
+the Stage-A build guard (`tools/build.py` LEAK) never checked openings. Per the lane brief the line is
+refused, not edited (`ACCEPTANCE_STYLE_VIOLATION` naming it). Whether the runtime's opening rule
+should admit a comma clause is a question for whoever owns the style file next; the Lab file is
+read-only and untouched.
+
+**6. The router ignores `route_exclusions[].scope`** — the very field the second round added.
+`runtime/route/spec.py:40-44` has no scope on `Exclusion`, `:115-120` never reads it, and
+`runtime/route/decision.py:243-249` drops the whole candidate at `hard_requirements`. For a
+Devanagari overlay job (IMG-TEXT-01) the compiler writes RR-3's three routes with scope
+`generated_text_only` and `text_mechanism: deterministic_text_composition`, and the router still
+drops `IMG-CORE/flux-2-pro` and `IMG-CORE/seedream-5-pro` as plate routes although nothing is drawn.
+Lane F owns the router; the defect is pinned as an expected-failure test in
+`runtime/tests/test_e_alpha_briefs.py::RouterScopeDefectTracker`.
+
+**7. A supplied product photograph makes a from-scratch static ad unroutable.** The mustard-oil brief
+(static_ad + a product photo whose label must match) compiles to `image_generation` (IMG-CORE) plus
+`reference_fidelity` (IMG-REF), both mandatory and dispatching; the router requires ONE route with a
+cell in both questions and no route has one, so it goes manual under every profile — including dry.
+Either the binding should let an IMG-REF route answer `image_generation` when a reference is
+supplied, or the compiler should express "generate with reference" as one capability. Reported for
+lanes F and E to settle together; nothing changed in this round.
+
+What was NOT changed: no `*-v0.yaml` or `*-v1.yaml` file, no file under `eval/`, `canon/` or
+`coordination/`, `POLICY-PROFILES.yaml` (both limits the compiler needed were already on every row),
+`runtime/canon/packs.py` (lane H), `runtime/route/**` (lane F).

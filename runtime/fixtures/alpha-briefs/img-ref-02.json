@@ -1,0 +1,93 @@
+{
+  "_provenance": {
+    "binding_agrees_with_case_nr": false,
+    "blueprint_ref": "BLUEPRINTS/IMG-REF-02.blueprint.md",
+    "blueprint_sha256": "aef93422cdef6fa6fa079de77a857c69341894555bc0efbaa78afa58c2bb525d",
+    "case_family": "IMG-REF",
+    "case_id": "IMG-REF-02",
+    "case_nr_modality": "static_image",
+    "case_nr_operation": "generate",
+    "consent_ref_added": false,
+    "depends_on_added": false,
+    "depicts_basis": {
+      "host_ref_1": "applies_to 'host' is a person entity",
+      "host_ref_2": "applies_to 'host' is a person entity",
+      "host_ref_3": "applies_to 'host' is a person entity"
+    },
+    "freeze_base": "cb92f1e",
+    "freeze_package": "STAGE-A-FREEZE-2026-09",
+    "kind_basis": "STAGE-A-CASE-KIND-MAP-v0.yaml: family IMG-REF -> static_ad_from_supplied_photo; operation/modality from KIND-NR-BINDING row",
+    "kind_map_sha256": "7ff5935b6d7c2b8dbed85f78fec9ea3b21e5b57f9a7252ea909365dd63a00227",
+    "motion_from_basis": null,
+    "placement_default": false,
+    "source_pool": "stage_a_case",
+    "test_cases_sha256": "8c2430e760279bb60a0ce429b933c64bb85340e2089be9ebad3f28d49e7cdb9c",
+    "tool": "runtime/tools/brief_from_stage_a_case.py",
+    "tool_choices": {
+      "asset_content_type": "image/jpeg",
+      "asset_provenance": "generated_stand_in",
+      "customer_ref_prefix": "acct-stage-a-",
+      "job_id_prefix": "alpha-dry-",
+      "market": "IN",
+      "placement_default": "overlay",
+      "policy_profile": "dry",
+      "retention_policy_ref": "alpha-1-default",
+      "submitted_by": "brief_from_stage_a_case"
+    },
+    "tool_sha256": "dcc24ffe94c80ca2f663aa6a2feec81a8b72e02349533675fb54c916fcb511c5"
+  },
+  "brief": {
+    "language": "en",
+    "market": "IN",
+    "text": "Hi, we run a social channel with a recurring host, she is a real person and has to look the same in every creative. Sharing 3 photos of her (host_ref_1.jpg, host_ref_2.jpg, host_ref_3.jpg). Need one new still: her at a cafe table, laptop open, smiling at the camera, morning light. Same face, same hair, same build, that is non-negotiable. A casual outfit is fine, it does not have to match the photos. No text on the image. 4:5 for Instagram. Thanks, Nikhil"
+  },
+  "customer_ref": "acct-stage-a-img",
+  "deliverable_request": {
+    "aspect": "4:5",
+    "count": 1,
+    "kind": "static_ad_from_supplied_photo",
+    "modality": "static_image",
+    "operation": "edit",
+    "subject": {
+      "entity": "person",
+      "entity_id": "host",
+      "identity_invariants": [
+        "face",
+        "hair",
+        "build"
+      ]
+    }
+  },
+  "job_id": "alpha-dry-img-ref-02",
+  "policy_profile": "dry",
+  "reference_assets": [
+    {
+      "asset_id": "host_ref_1",
+      "content_type": "image/jpeg",
+      "depicts_identifiable_person": true,
+      "provenance": "generated_stand_in",
+      "role": "person",
+      "sha256": "3344aa689bafe6659e1c6c77a4400f27bf7bd818e8769b44a2a492191c36a469"
+    },
+    {
+      "asset_id": "host_ref_2",
+      "content_type": "image/jpeg",
+      "depicts_identifiable_person": true,
+      "provenance": "generated_stand_in",
+      "role": "person",
+      "sha256": "2f150544080ca29c7477eafc48b6885f2773bd16fe43cdfe437b125169789949"
+    },
+    {
+      "asset_id": "host_ref_3",
+      "content_type": "image/jpeg",
+      "depicts_identifiable_person": true,
+      "provenance": "generated_stand_in",
+      "role": "person",
+      "sha256": "f0afba991bb8a1b4eb51662df2b5e019140e58cffff73c17371ecf466ae5c23d"
+    }
+  ],
+  "retention": {
+    "policy_ref": "alpha-1-default"
+  },
+  "submitted_by": "brief_from_stage_a_case"
+}

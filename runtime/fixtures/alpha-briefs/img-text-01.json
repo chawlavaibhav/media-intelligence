@@ -1,0 +1,82 @@
+{
+  "_provenance": {
+    "binding_agrees_with_case_nr": true,
+    "blueprint_ref": "BLUEPRINTS/IMG-TEXT-01.blueprint.md",
+    "blueprint_sha256": "72de774d6dcaed7e358837632d1d6feee1b0329689628561214cfcad2b7781ba",
+    "case_family": "IMG-TEXT",
+    "case_id": "IMG-TEXT-01",
+    "case_nr_modality": "static_image",
+    "case_nr_operation": "generate",
+    "consent_ref_added": false,
+    "depends_on_added": false,
+    "depicts_basis": {},
+    "freeze_base": "cb92f1e",
+    "freeze_package": "STAGE-A-FREEZE-2026-09",
+    "kind_basis": "STAGE-A-CASE-KIND-MAP-v0.yaml: family IMG-TEXT -> static_ad; operation/modality from KIND-NR-BINDING row",
+    "kind_map_sha256": "7ff5935b6d7c2b8dbed85f78fec9ea3b21e5b57f9a7252ea909365dd63a00227",
+    "motion_from_basis": null,
+    "placement_default": true,
+    "source_pool": "stage_a_case",
+    "test_cases_sha256": "8c2430e760279bb60a0ce429b933c64bb85340e2089be9ebad3f28d49e7cdb9c",
+    "tool": "runtime/tools/brief_from_stage_a_case.py",
+    "tool_choices": {
+      "asset_content_type": "image/jpeg",
+      "asset_provenance": "generated_stand_in",
+      "customer_ref_prefix": "acct-stage-a-",
+      "job_id_prefix": "alpha-dry-",
+      "market": "IN",
+      "placement_default": "overlay",
+      "policy_profile": "dry",
+      "retention_policy_ref": "alpha-1-default",
+      "submitted_by": "brief_from_stage_a_case"
+    },
+    "tool_sha256": "dcc24ffe94c80ca2f663aa6a2feec81a8b72e02349533675fb54c916fcb511c5"
+  },
+  "brief": {
+    "language": "hi",
+    "market": "IN",
+    "text": "दीपावली के लिए एक poster चाहिए, दुकान के बाहर print और Instagram दोनों के लिए, square बनाइए। ऊपर लिखा हो \"दीपावली की शुभकामनाएं\", offer लिखा हो \"सभी मिठाइयों पर 20% छूट\", और दुकान का नाम \"श्री गणेश मिष्ठान भंडार\" सबसे बड़ा दिखे। Traditional feel हो लेकिन modern भी लगे। सबसे ज़रूरी चीज़ offer है, लेकिन नाम सबसे बड़ा होना चाहिए। मिठाई का डिब्बा या दीये वगैरह रख सकते हैं। Spelling एकदम सही हो, मात्रा गलत नहीं होनी चाहिए।"
+  },
+  "customer_ref": "acct-stage-a-img",
+  "deliverable_request": {
+    "aspect": "1:1",
+    "count": 1,
+    "kind": "static_ad",
+    "modality": "static_image",
+    "operation": "generate",
+    "subject": {
+      "entity": "product",
+      "entity_id": "sweet_box_and_diyas",
+      "identity_invariants": [
+        "box of Indian sweets",
+        "lit diyas"
+      ]
+    }
+  },
+  "exact_text_strings": [
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "devanagari",
+      "value": "दीपावली की शुभकामनाएं"
+    },
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "devanagari",
+      "value": "सभी मिठाइयों पर 20% छूट"
+    },
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "devanagari",
+      "value": "श्री गणेश मिष्ठान भंडार"
+    }
+  ],
+  "job_id": "alpha-dry-img-text-01",
+  "policy_profile": "dry",
+  "retention": {
+    "policy_ref": "alpha-1-default"
+  },
+  "submitted_by": "brief_from_stage_a_case"
+}

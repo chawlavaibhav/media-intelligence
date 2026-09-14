@@ -6,13 +6,19 @@
 # the requirements a job's shape implies on top of it, as rows keyed to facts, never to kinds.
 schema: FACET-CAPABILITIES-v0
 
+# `level: exact_text_strategy` is a MARKER, not a level name: the compiler writes the chosen
+# exact-text strategy (code_set_on_textless_plate | generated_in_scene) as the level. The router's
+# binding (runtime/route/CAPABILITY-EVIDENCE-BINDING-v0.yaml) answers exact_text_composition at
+# exactly those levels and refuses to choose one on the spec's behalf. Until 14 Sep 2026 (lane E)
+# this row said `character_exact`, a level the binding has never declared, so every exact-text spec
+# went to a person — the two lanes had never been connected end to end.
 facets:
 - facet: exact_text_present
   capabilities: [exact_text_composition]
-  level: character_exact
+  level: exact_text_strategy
 - facet: exactness_contractual
   capabilities: [exact_text_composition]
-  level: character_exact
+  level: exact_text_strategy
 - facet: supplied_asset_present
   capabilities: [reference_fidelity]
 - facet: product_entity_present
