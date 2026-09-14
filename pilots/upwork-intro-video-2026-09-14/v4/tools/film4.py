@@ -114,12 +114,7 @@ def craft_ad(plate: Image.Image):
     D.REPORT["crop"].append({"id": "craft-plate", "beat": "proof2", "source": "a2-accepted.png", "fit": "cover(declared)", "reason": "ad-internal plate crop (Ledge layout), not portfolio evidence", "fraction_shown": round((Wc * seam) / (pw * ph), 3)})
     canvas.alpha_composite(pl.crop((x0, y0, x0 + Wc, y0 + seam)), (0, 0))
     boxes = {}
-    pill = A.pill("15% OFF FIRST ORDER", "hn_medium", 36, B["accent"], B["primary"])
-    py = seam - pill.height // 2; canvas.alpha_composite(pill, (m, py))
-    code = A.text("CODE AAROHI15", "hn_medium", 40, B["accent"])
-    cx = m + pill.width + 28; canvas.alpha_composite(code, (cx, py + (pill.height - code.height) // 2))
-    boxes["offer"] = (m - 20, py - 16, cx + code.width + 20, py + pill.height + 16)
-    y = py + pill.height + 44
+    y = seam + 44
     lines = ["YOUR NIGHT", "ROUTINE, SIMPLIFIED."]; hl = 80
     while max(A.text_width(l, "didot", hl) for l in lines) > Wc - 2 * m:
         hl -= 2
@@ -127,12 +122,29 @@ def craft_ad(plate: Image.Image):
     for l in lines:
         g = A.text(l, "didot", hl, B["cream"]); canvas.alpha_composite(g, (m, y)); y += int(hl * 1.05)
     boxes["hook"] = (m - 20, hy0 - 16, Wc - m + 20, y + 4)
-    y += 40
+    y += 30
+    pill = A.pill("15% OFF FIRST ORDER", "hn_medium", 36, "#2C5E4F", B["accent"])   # offer: quiet tint, gold type; the gold button stays the only action
+    canvas.alpha_composite(pill, (m, y)); boxes["offer"] = (m - 20, y - 14, m + pill.width + 20, y + pill.height + 14)
+    y += pill.height + 30
     btn = A.button("SHOP NOW", "hn_medium", 36, B["accent"], B["primary"], min_w=340); canvas.alpha_composite(btn, (m, y))
     boxes["cta"] = (m - 20, y - 16, m + btn.width + 20, y + btn.height + 16)
+    y += btn.height + 30
+    code = A.text("CODE AAROHI15", "hn_medium", 30, B["cream"], alpha=230); canvas.alpha_composite(code, (m, y))
+    boxes["code"] = (m, y, m + code.width, y + code.height)
+    y += code.height
     leg = A.text("T&Cs apply", "hn", 26, B["cream"], alpha=170); mark = A.text("AAROHI SKIN", "didot", 44, B["cream"])
     ly = Hc - 64; canvas.alpha_composite(leg, (m, ly - leg.height)); canvas.alpha_composite(mark, (Wc - m - mark.width, ly - mark.height))
-    assert boxes["cta"][3] < ly - leg.height - 24, "craft ad: button collides with the legal line"
+    boxes["legal"] = (m, ly - leg.height, m + leg.width, ly); boxes["mark"] = (Wc - m - mark.width, ly - mark.height, Wc - m, ly)
+    # nothing may touch or overlap: every pair of element boxes must be disjoint (with the spotlight padding removed)
+    inner = {k: (b[0] + (20 if k in ("hook", "offer", "cta") else 0), b[1] + (16 if k in ("hook", "offer", "cta") else 0),
+                 b[2] - (20 if k in ("hook", "offer", "cta") else 0), b[3] - (16 if k in ("hook", "offer", "cta") else 0)) for k, b in boxes.items()}
+    ks = list(inner)
+    for i in range(len(ks)):
+        for j in range(i + 1, len(ks)):
+            a, b = inner[ks[i]], inner[ks[j]]
+            assert a[2] <= b[0] or b[2] <= a[0] or a[3] <= b[1] or b[3] <= a[1], f"craft ad: {ks[i]} overlaps {ks[j]}"
+    assert boxes["code"][3] + 24 <= boxes["legal"][1], "craft ad: code touches the legal line"
+    D.REPORT["cards"].append({"id": "craft-ad-elements", "beat": "proof2", "kind": "ad-internal", "boxes": inner, "disjoint": True})
     return canvas, boxes
 
 
@@ -150,13 +162,15 @@ def beat_speaker(w: Writer, dur=8.5):
     c.close(); return last
 
 
-def beat_handoff(w: Writer, dur=3.3):
-    """00:08.5 speaker reduces into the bubble (0.65 s); statement MORE CREATIVE. / FASTER. / WITHOUT LOWERING THE BAR."""
-    n = int(dur * FPS); red = 0.65
+def beat_handoff(w: Writer, dur=4.55):
+    """00:08.5 speaker reduces into the bubble (0.65 s); AND IT CAN'T SUCK. held 1.3 s with weight; then the statement."""
+    n = int(dur * FPS); red = 0.65; punch_end = red + 1.3
     lines = ["MORE CREATIVE.", "FASTER.", "WITHOUT LOWERING THE BAR."]
     size = D.fit_size(lines, FH, [T["h1_size"], 104, 96, 88, 80, 72], W - 2 * SX - T["bubble_size"] - LG, 64)
     gl = [A.text(l, FH, size, FG) for l in lines]; gap = int(size * 0.28)
     total = sum(g.height for g in gl) + gap * 2; y0 = (H - total) // 2 - 20
+    psize = D.fit_size(["AND IT CAN'T SUCK."], FH, [T["giant_size"], 152, 136, 120, 112], W - 2 * SX - T["bubble_size"] - LG, 96)
+    pw, ph = D.measure("AND IT CAN'T SUCK.", FH, psize)
     bx, by = BUBBLE_POS_L; bs = T["bubble_size"]
     for i in range(n):
         t = i / FPS; f = ground()
@@ -168,16 +182,22 @@ def beat_handoff(w: Writer, dur=3.3):
             im = D.mask_rounded(im, int(T["bubble_radius"] * k)); f.alpha_composite(im, (dst[0], dst[1]))
         else:
             draw_bubble(f)
-        y = y0
-        for j, (l, g) in enumerate(zip(lines, gl)):
-            a = ease((t - red - 0.1 - j * 0.28) / 0.35)
+        if t < punch_end:
+            a = ease((t - red + 0.05) / 0.22)
             if a > 0:
-                place_text(f, f"statement-{j}", l, FH, size, FG, SX, y + int((1 - a) * 18), "handoff", alpha=a, check=a >= 1, role="display")
-            y += g.height + gap
-        w.add(f, key="02-handoff" if abs(t - 2.6) < 0.02 else None)
+                place_text(f, "punch", "AND IT CAN'T SUCK.", FH, psize, FG, SX, (H - ph) // 2 - 20 + int((1 - a) * 12), "handoff", alpha=a, check=a >= 1, role="display")
+                rule = Image.new("RGBA", (int(pw * 0.18), 10), A._hex_to_rgba(ACC, int(255 * a))); f.alpha_composite(rule, (SX, (H - ph) // 2 - 20 + ph + SM))
+        else:
+            y = y0
+            for j, (l, g) in enumerate(zip(lines, gl)):
+                a = ease((t - punch_end - j * 0.22) / 0.3)
+                if a > 0:
+                    place_text(f, f"statement-{j}", l, FH, size, FG, SX, y + int((1 - a) * 18), "handoff", alpha=a, check=a >= 1, role="display")
+                y += g.height + gap
+        w.add(f, key="02a-punch" if abs(t - 1.5) < 0.02 else ("02b-handoff" if abs(t - 3.8) < 0.02 else None))
 
 
-def beat_proof1(w: Writer, dur=6.0):
+def beat_proof1(w: Writer, dur=5.5):
     """00:12 the strongest finished static, contain-fit, most of the frame; wrapper copy small at left."""
     n = int(dur * FPS); beat = "proof1"
     ad = contain(MASTER["4x5"], W, H - 2 * SY, "master-4x5", beat, "aarohi-master-4x5.png")
@@ -224,13 +244,13 @@ def beat_proof2(w: Writer, dur=6.5):
             f.alpha_composite(ring)
             place_text(f, f"p2-{key}", lab, FH, T["h2_size"], FG, SX, int(H * 0.40), beat, alpha=k, check=k >= 1, role="display")
             rule = Image.new("RGBA", (int(LG * 0.8), 6), A._hex_to_rgba(ACC, int(255 * k))); f.alpha_composite(rule, (SX, int(H * 0.40) + T["h2_size"] + SM))
-        draw_bubble(f)
+        draw_bubble(f, 1 - ease((t - (dur - 0.6)) / 0.5))
         w.add(f, key="04-proof2" if abs(t - 3.6) < 0.02 else None)
 
 
-def beat_proof3(w: Writer, dur=6.0):
+def beat_proof3(w: Writer, dur=5.5):
     """00:24 SAME PRODUCT (packshot, contain, 2.5 s) → NEW SCENE (B1 native 16:9, no crop)."""
-    n = int(dur * FPS); beat = "proof3"; cut = 2.5
+    n = int(dur * FPS); beat = "proof3"; cut = 2.2
     ps = contain(B0, int(W * 0.42), H - 2 * SY, "brewa-packshot", beat, "brewa0-accepted.png"); pcard, pad = card(ps, "packshot-card", beat)
     px = SX; py = SY + (H - 2 * SY - ps.height) // 2
     scene = native(B1, "brewa-scene", beat, "b1-accepted.png")
@@ -250,7 +270,6 @@ def beat_proof3(w: Writer, dur=6.0):
             aa = ease((t - cut - 0.3) / 0.35)
             if aa > 0:
                 tab(f, "p3-tab", [("NEW SCENE.", FH, T["h2_size"], FG), ("Shape. Colour. Details held.", FM, T["body_size"], MUTED)], SX, SY, beat, alpha=aa)
-        draw_bubble(f)
         w.add(f, key="05-proof3a" if abs(t - 1.5) < 0.02 else ("05-proof3b" if abs(t - 4.5) < 0.02 else None))
 
 
@@ -267,12 +286,24 @@ def beat_proof4(w: Writer, dur=8.0):
         a = min(ease(t / 0.3), 1 - ease((t - 2.2) / 0.3))
         if a > 0:
             tab(f, "p4-tab", [("AND THEN IT MOVES.", FH, T["h2_size"], FG)], SX, SY, beat, alpha=a)
-        draw_bubble(f)
         w.add(f, key="06-proof4" if abs(t - 3.0) < 0.02 else None)
     c1.close(); c2.close()
 
 
-def beat_proof5(w: Writer, dur=6.5):
+KORA = load(V3G / "deliverables/kora-hook-1-16x9.png")
+
+
+def beat_kora(w: Writer, dur=2.8):
+    """Creative range: the accepted Kora Threads finished creative, full screen, native 1920x1080, no wrapper copy."""
+    n = int(dur * FPS); im = native(KORA, "kora-16x9", "kora", "kora-hook-1-16x9.png (deterministic on kora-accepted.png)")
+    for i in range(n):
+        t = i / FPS; f = im.copy()
+        if i < 8:
+            f = Image.blend(ground(), im, ease(i / 8))
+        w.add(f, key="06b-kora" if abs(t - 1.5) < 0.02 else None)
+
+
+def beat_proof5(w: Writer, dur=5.5):
     """00:38 ONE DIRECTION. MORE TO TEST. — approved layout, then 4 FORMATS, 6 HOOKS, ENGLISH + HINDI revealed in turn."""
     n = int(dur * FPS); beat = "proof5"
     colw = max(376, D.measure("ONE DIRECTION.", FH, T["h2_size"])[0], D.measure("MORE TO TEST.", FH, T["h2_size"])[0])
@@ -294,7 +325,7 @@ def beat_proof5(w: Writer, dur=6.5):
     assert grid_w + MD + hindi.width <= rw, "proof5 hooks/hindi row does not fit"
     lab_h = T["small_size"] + XS
     y_fmt = SY + lab_h + XS; y_hooks = y_fmt + fh + MD + lab_h + XS
-    t_fmt, t_hooks, t_hindi = 1.2, 2.9, 4.4
+    t_fmt, t_hooks, t_hindi = 0.9, 2.1, 3.3
     for i in range(n):
         t = i / FPS; f = ground()
         place_text(f, "p5-l1", "ONE DIRECTION.", FH, T["h2_size"], FG, SX, SY, beat, role="display")
@@ -318,11 +349,10 @@ def beat_proof5(w: Writer, dur=6.5):
             hx = rx + grid_w + MD
             place_text(f, "p5-hindi-label", "ENGLISH + HINDI", FM, T["small_size"], MUTED, hx, y_fmt + fh + MD, beat, alpha=a, check=a >= 1)
             f.alpha_composite(alpha_mul(hcard, a), (hx - hpad, y_hooks - hpad))
-        draw_bubble(f, 1 - ease((t - 5.3) / 0.6))
-        w.add(f, key="07-proof5" if abs(t - 5.2) < 0.02 else None)
+        w.add(f, key="07-proof5" if abs(t - 4.6) < 0.02 else None)
 
 
-def beat_speed(w: Writer, dur=5.0):
+def beat_speed(w: Writer, dur=4.8):
     """00:44.8 STANDARD / 24 HOURS (2.6 s) → 4-HOUR EXPRESS + small line (2.4 s). Standard first, always."""
     n = int(dur * FPS); beat = "speed"; cut = 2.6
     for i in range(n):
@@ -332,9 +362,11 @@ def beat_speed(w: Writer, dur=5.0):
             place_text(f, "std", "STANDARD", FM, T["body_size"], MUTED, SX, y, beat, alpha=a, check=a >= 1)
             place_text(f, "24h", "24 HOURS", FH, T["giant_size"], FG, SX, y + T["body_size"] + SM, beat, alpha=a, check=a >= 1, role="display")
         else:
-            a = ease((t - cut) / 0.35); y = int(H * 0.36)
-            place_text(f, "4h", "4-HOUR EXPRESS", FH, T["h1_size"], FG, SX, y, beat, alpha=a, check=a >= 1, role="display")
-            place_text(f, "4h-sub", "eligible smaller packs · paid add-on", FR, T["body_size"], MUTED, SX, y + T["h1_size"] + SM, beat, alpha=a, check=a >= 1)
+            a = ease((t - cut) / 0.35); y = int(H * 0.33)
+            xs = D.fit_size(["4-HOUR EXPRESS"], FH, [144, 136, 128, 120, 112], W - 2 * SX, 96); xw, xh = D.measure("4-HOUR EXPRESS", FH, xs)
+            place_text(f, "4h", "4-HOUR EXPRESS", FH, xs, FG, SX, y, beat, alpha=a, check=a >= 1, role="display")
+            rule = Image.new("RGBA", (int(xw * 0.22), 10), A._hex_to_rgba(ACC, int(255 * a))); f.alpha_composite(rule, (SX, y + xh + SM))
+            place_text(f, "4h-sub", "eligible smaller packs · paid add-on", FR, T["body_size"], MUTED, SX, y + xh + SM + 10 + MD, beat, alpha=a, check=a >= 1)
         w.add(f, key="08-speed-a" if abs(t - 1.5) < 0.02 else ("08-speed-b" if abs(t - 4.0) < 0.02 else None))
 
 
@@ -374,7 +406,7 @@ def main(out_dir: str):
         w = Writer(seg / f"{name}.mp4"); fn(w, **kw); d = w.close(); order.append((name, seg / f"{name}.mp4", d)); keys.update(w.keyframes); print(f"{name:12s} {d:5.2f} s")
 
     run("b1-speaker", beat_speaker); run("b2-handoff", beat_handoff); run("b3-proof1", beat_proof1); run("b4-proof2", beat_proof2)
-    run("b5-proof3", beat_proof3); run("b6-proof4", beat_proof4); run("b7-proof5", beat_proof5); run("b8-speed", beat_speed); run("b9-cta", beat_cta)
+    run("b5-proof3", beat_proof3); run("b6-proof4", beat_proof4); run("b6b-kora", beat_kora); run("b7-proof5", beat_proof5); run("b8-speed", beat_speed); run("b9-cta", beat_cta)
     lst = out / "concat.txt"; lst.write_text("".join(f"file '{p.resolve()}'\n" for _, p, _ in order))
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-an", "-c:v", "libx264", "-crf", "15", "-preset", "medium", "-pix_fmt", "yuv420p", "-r", str(FPS), str(out / "video.mp4")], check=True)
     starts = {}; t = 0.0

@@ -40,3 +40,7 @@ If the accounting above cannot be reconciled at dispatch time, stop before the c
 Controller's order is to run the Veo candidate; the route worked at 17:00 IST today (V2). One further attempt after a wait
 is authorised by this addendum: maximum incremental V4 spend raised from USD 3.20 to **USD 4.20**. If it fails again the
 run stops before any further paid call.
+
+## V4.1 (assembly repair, Controller verdict SPECIFIC REPAIR) — USD 0
+No paid call. `gen/LEDGER.jsonl` unchanged (cumulative reserved USD 7.3112 = INR 697.6). All changes are compositor/edit changes over
+existing accepted assets (`v4/tools/film4.py`, `mix4.py`); the Kora full-screen beat uses V3's deterministic `kora-hook-1-16x9.png`.

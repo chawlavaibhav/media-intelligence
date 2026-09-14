@@ -40,3 +40,12 @@
 
 ## G. Spend
 Cumulative reserved USD 7.3112 = INR 697.6 of INR 2,000 (V3 3.2836 + V4 4.0276). V4 media actually returned: 2 stills (Gemini API credits), 1 Omni clip, 1 Veo clip (Vertex credits); two Veo operations failed at the provider and are counted conservatively. No fal spend in V4.
+
+## H. V4.1 assembly repair (USD 0) — what the Controller caught that the gates did not
+- Offer pill and code line placed side by side passed every mechanical gate (disjoint boxes) yet read as a collision to the eye; V4.1
+  adds an explicit disjointness assertion over every ad element AND re-orders the hierarchy (hook → offer → CTA; code/legal supporting).
+  Lesson: adjacency at equal visual weight is a hierarchy defect no bounding-box test sees; the layout rule should be "one read per row".
+- The speaker bubble over hero footage read as a watermark; V4.1 removes it from every full-screen creative beat.
+- "4-HOUR EXPRESS" at h1 in ink read as faint next to the giant "24 HOURS" — relative scale, not colour, was the cause; V4.1 sizes it by
+  measurement (136 px) with an accent rule, still subordinate to Standard.
+- The film needed one radically different creative world; the existing Kora deliverable (2.8 s, full screen, no copy) supplies it at USD 0.

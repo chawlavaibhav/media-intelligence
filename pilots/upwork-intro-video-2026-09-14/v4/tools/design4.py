@@ -223,7 +223,7 @@ def write_reports(qa_dir: Path):
             seen.add(k); layout.append(e)
     (qa_dir / "layout-report.json").write_text(json.dumps({"safe_area": SAFE, "tokens": {k: v for k, v in T.items() if k != "card_border"}, "text_boxes": layout,
                                                            "cards": REPORT["cards"], "all_inside_safe": all(e["inside_safe"] for e in layout),
-                                                           "radii_used": sorted({c["radius"] for c in REPORT["cards"]})}, indent=1))
+                                                           "radii_used": sorted({c["radius"] for c in REPORT["cards"] if "radius" in c})}, indent=1))
     seen = set(); con = []
     for e in REPORT["contrast"]:
         k = (e["id"], e["beat"])

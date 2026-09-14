@@ -23,7 +23,7 @@ def main(out_dir):
     out = Path(out_dir); tl = json.loads((out / "timeline.json").read_text()); S = tl["starts"]; total = tl["total_s"]
     spk = V4 / "gen/speaker/speaker-accepted.mp4"; music = V3G / "audio/music-r4.wav"
     sfx = out / "sfx"; sfx.mkdir(exist_ok=True); tick(sfx / "tick.wav", "tick"); tick(sfx / "air.wav", "air")
-    ev = [(S["b2-handoff"], "air", 0.35), (S["b4-proof2"] + 1.5, "tick", 0.4), (S["b4-proof2"] + 3.1, "tick", 0.4), (S["b4-proof2"] + 4.7, "tick", 0.4),
+    ev = [(S["b2-handoff"], "air", 0.35), (S["b2-handoff"] + 0.7, "tick", 0.45), (S["b4-proof2"] + 1.5, "tick", 0.4), (S["b4-proof2"] + 3.1, "tick", 0.4), (S["b4-proof2"] + 4.7, "tick", 0.4),
           (S["b8-speed"], "tick", 0.3), (S["b8-speed"] + 2.6, "tick", 0.3)]
     m_in = 7.0
     inputs = ["-i", str(out / "video.mp4"), "-i", str(spk), "-i", str(music)] + sum([["-i", str(sfx / f"{k}.wav")] for _, k, _ in ev], [])
@@ -42,7 +42,7 @@ def main(out_dir):
     mix = mix2
     meas = subprocess.run(["ffmpeg", "-i", str(mix), "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True).stderr
     cur = float([l for l in meas.splitlines() if l.strip().startswith("I:")][-1].split()[1]); gain = -14.0 - cur
-    final = out / "upwork-intro-v4.mp4"
+    final = out / "upwork-intro-v4.1.mp4"
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(out / "video.mp4"), "-i", str(mix), "-af", f"volume={gain:.2f}dB,alimiter=limit=0.76:attack=4:release=120:level=false",
                     "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-ar", str(SR), "-movflags", "+faststart", "-t", f"{total:.3f}", str(final)], check=True)
     meas = subprocess.run(["ffmpeg", "-i", str(final), "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True).stderr
