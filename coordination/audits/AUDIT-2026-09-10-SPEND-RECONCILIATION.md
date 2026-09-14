@@ -120,3 +120,53 @@ TOTALS BY BILLING POOL (usd-equivalent, native):
    historical authorisations either way; record the ruling as a new decision.
 3. **Decide whether ledger semantics or vendor billing governs a cap in future.** They are different
    numbers and the difference here was about USD 10.
+
+---
+
+## Addendum — 14 September 2026
+
+The Controller ruled on the three open items above (rulings C-1, C-2, C-5b, C-6a; durable records
+`coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md` and
+`coordination/decisions/CONTROLLER-AUTHORISATION-LINEAGE-CUMULATIVE-BUDGET-2026-09-14.md`). This addendum records
+what changed in code as a result. **No figure in the table above changed.** Everything in this section cost USD 0;
+no provider was called and no sealed ledger was modified.
+
+**C-1 / C-5b — the two cap crossings and the 19-vs-16 call breach are accepted as recorded.** Video piece 1
+(USD 10.364 against 9.96), the Wan 2 round (USD 11.840 against its final 11.53) and the stand-in picture run's
+19 paid calls against "≤ 16" stand in the record exactly as this document reports them. Nothing is annulled and no
+historical authorisation is rewritten. The mechanisms that let them happen are repaired (10 September: pooling across
+runs and `max_paid_calls`; 14 September: cumulative budgets across amendments, below).
+
+**C-2 — the ledger governs caps; the bill is reconciliation.** A cap is enforced against the ledger's conservative
+consumption at the moment of dispatch (a reservation settled at the estimate once a request may have left the
+machine). Nobody waits for a vendor statement before refusing a call. What the vendors actually charged is a
+*separate* reconciliation field, used for the real cost per accepted outcome. `tools/reconcile_spend.py` now reads an
+optional statements file, `coordination/audits/vendor-statements/VENDOR-BILLED-2026-09.yaml` (schema in the tool's
+docstring: provider, statement period, a reference with no account numbers, billed native amount and currency, the
+USD equivalent, the run ids covered, who reconciled it and when). When the file is absent the vendor-billed column
+prints `not reconciled (no statement filed)` and the tool exits 0 — lack of statements blocks nothing. A malformed
+statement is refused (exit 2) rather than guessed.
+
+**C-6a — an amendment does not create a fresh budget (implemented).** The signed authorisation file is edited in
+place when a cap is raised, so its byte fingerprint changes; the 10 September repair pooled spend by fingerprint, which
+is why the Wan 2 overrun was only half-caught (8.480 against 8.39 refused; the 3.36 spent under the amended file sat in
+a fresh pool). Two optional fields now give a budget a stable identity: `budget_id` (a name that survives edits) and
+`amends` (the sha256 of every earlier version of the file). Every run charged to any version in that lineage is one
+cumulative pool, checked against the *current* file's cap and call limit; an in-place edit that does not declare the
+version it amends is refused before any run folder exists. Legacy files with neither field keep the 10 September
+behaviour, so no historical pool is silently rewritten.
+
+*What the replay test shows* (`eval/harness-v2/tests/test_authorisation_lineage.py`, reading the sealed
+`vid-wan2*` ledgers and proving them byte-identical afterwards). The four sealed `run.json` files record two
+fingerprints — `e54512d2…` (cap 8.39; `vid-wan2-smoke`, `vid-wan2`) and `062ab2f0…` (cap 11.53;
+`vid-wan2-i2v-smoke`, `vid-wan2-i2v`) — which is enough to name the lineage without the file bytes. Replaying the
+24 recorded spend rows through the new arithmetic under a synthetic file declaring both fingerprints in `amends`:
+the 17th call (0.64, `vid-wan2`) is refused at 7.84 + 0.64 = 8.480 against 8.39, as before; and the 24th call
+(0.48, `vid-wan2-i2v`) is refused at 11.36 + 0.48 = 11.840 against 11.53 — the crossing that the fingerprint-only
+pool could not see. The 23rd call (10.88 → 11.36) stays permitted. Under a file naming only the second fingerprint
+the 24th call is allowed with the pool reading 3.36 — the gap C-6a described, kept as a documented contrast.
+
+**Still unreconciled.** The four provider statements (fal, Google Cloud, Sarvam, ElevenLabs) for 8–10 September
+have not been read; no statements file exists and this addendum does not create one. Until it is filed, the project
+has an upper bound on its costs (USD 122.241262 counted against caps, of which USD 10.114500 produced nothing), not a
+cost. This does not block the USD-0 engineering work and does not affect any cap.
