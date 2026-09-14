@@ -43,3 +43,15 @@ deterministic_checks:
   check: "the plate prompt carries an explicit no-lettering instruction; lettering on a plate is a reject"
 - when: lettering_drawn_by_maker
   check: "every required string appears in the generation prompt byte-identical to the customer's string"
+
+# C-6c (Controller, 14 Sep 2026): exact-text mechanisms A (the model draws the text) and B (a
+# textless plate plus deterministic code composition) are DIFFERENT route identities, and nothing
+# may imply the model rendered code-composed copy. The spec carries the mechanism by name in
+# exact_text.text_mechanism, mapped from the chosen strategy's `lettering_drawn_by` (the lexicon row
+# in runtime/evidence/RULE-INTERPRETATION-v0.yaml). The router's binding reads the same three words
+# (runtime/route/CAPABILITY-EVIDENCE-BINDING-v0.yaml text_mechanism). Rows, so a fourth mechanism is
+# a row; a lettering_drawn_by value with no row here is a refusal, never a guess.
+text_mechanism_by_lettering_drawn_by:
+  code: deterministic_text_composition
+  maker: model_draws_text
+  none: not_applicable

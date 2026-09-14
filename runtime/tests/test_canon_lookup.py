@@ -57,7 +57,7 @@ class PackLookupTest(unittest.TestCase):
         # and the job still compiles all the way to a spec
         spec = support.compiler().compile(support.submit("mustard-oil-tin"), compiled_utc="2026-09-10T12:00:00Z").spec
         self.assertTrue(spec["canon"]["canon_gap"])
-        self.assertIn("typography_and_copy", spec["canon"]["missing_domain"])
+        self.assertIn("typography_and_copy", spec["canon"]["missing_domains"])   # v1: a list
 
     def test_a_gap_never_names_a_compilation_programme(self):
         result = self.lookup("mustard-oil-tin")

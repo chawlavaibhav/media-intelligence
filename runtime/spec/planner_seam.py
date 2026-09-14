@@ -14,6 +14,17 @@ Everything in this module is offline.
     prompt with no recorded answer is a refusal that writes the payload out and names the key, so
     the call can be made later, deliberately, by someone who meant to spend money.
   * `NoCallPlanner` refuses everything. It exists so a test can prove the lane never dispatches.
+  * `BlueprintPlanner` (runtime/spec/blueprint_planner.py) answers a Stage-A-derived brief from its
+    frozen blueprint, parsed deterministically. Same protocol.
+
+THE PROTOCOL (14 Sep 2026): `plan(prompt: PlannerPrompt, *, job: dict, nr) -> dict`. The compiler
+chooses the planner by the job's provenance (stage_a_case -> BlueprintPlanner; otherwise the
+FixturePlanner it was built with), after first offering the job to an injected `template_planner`
+callable (lane H's TemplateLibrary.fill) which returns None when it has no template for the job.
+
+A response carries RESPONSE_FIELDS. The five BLUEPRINT_FIELDS are optional: they let a plan say
+which planner produced it, from which source bytes, with which generation prompts, so the spec's
+`blueprint` block (WAVE2-INTERFACES §1) is filled from the plan rather than guessed.
 
 There is no live client here on purpose. This lane spends nothing.
 """
@@ -35,7 +46,16 @@ RESPONSE_FIELDS = {
     "composition": dict,
     "materials_and_light": dict,
     "resolution_class": (str, type(None)),
+    # optional, blueprint-shaped (WAVE2-INTERFACES §1 spec["blueprint"])
+    "planner": (str, type(None)),
+    "source_ref": (str, type(None)),
+    "generation_prompts": (dict, type(None)),
+    "case_values": (dict, type(None)),
+    "production_parameters": (dict, type(None)),
 }
+BLUEPRINT_FIELDS = ("planner", "source_ref", "generation_prompts", "case_values", "production_parameters")
+PLANNER_RECORDED_FIXTURE = "recorded_fixture"
+PLANNER_STAGE_A_BLUEPRINT = "stage_a_blueprint_fixture"
 
 
 @dataclass(frozen=True)
@@ -85,7 +105,7 @@ def build_prompt(job: dict, nr, canon, text_strategy) -> PlannerPrompt:
 class NoCallPlanner:
     """Refuses. The lane's proof that nothing here reaches a provider."""
 
-    def plan(self, prompt: PlannerPrompt) -> dict:
+    def plan(self, prompt: PlannerPrompt, *, job: dict | None = None, nr=None) -> dict:
         raise Refusal(
             Refusal.NO_DISPATCH_ALLOWED,
             "this lane makes no model call; run the seam from a fixture",
@@ -101,7 +121,7 @@ class FixturePlanner:
         self.spill_dir = Path(spill_dir) if spill_dir else self.dir / "unanswered"
         self.index = (load_yaml(self.dir / "INDEX.yaml") if (self.dir / "INDEX.yaml").exists() else {}) or {}
 
-    def plan(self, prompt: PlannerPrompt) -> dict:
+    def plan(self, prompt: PlannerPrompt, *, job: dict | None = None, nr=None) -> dict:
         key = prompt.sha256
         name = (self.index.get("responses") or {}).get(key)
         if not name:
@@ -116,7 +136,11 @@ class FixturePlanner:
         path = self.dir / name
         with open(path, "r", encoding="utf-8") as fh:
             response = json.load(fh)
-        return validate_response(response, source=str(path))
+        plan = validate_response(response, source=str(path))
+        # a recorded pass says so; the spec's blueprint block reads these two
+        plan["planner"] = plan.get("planner") or PLANNER_RECORDED_FIXTURE
+        plan["source_ref"] = plan.get("source_ref") or f"{_rel(path)} sha256:{sha256_text(_read(path))}"
+        return plan
 
     def _spill(self, prompt: PlannerPrompt) -> str:
         os.makedirs(self.spill_dir, exist_ok=True)
@@ -124,6 +148,18 @@ class FixturePlanner:
         with open(path, "w", encoding="utf-8") as fh:
             json.dump(prompt.payload, fh, ensure_ascii=False, indent=2)
         return str(path)
+
+
+def _rel(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(paths.ROOT))
+    except ValueError:
+        return str(path)
+
+
+def _read(path: Path) -> str:
+    with open(path, "r", encoding="utf-8") as fh:
+        return fh.read()
 
 
 def validate_response(response, source: str = "") -> dict:

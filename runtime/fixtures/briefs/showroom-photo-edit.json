@@ -13,22 +13,30 @@
       "role": "scene",
       "sha256": "4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c",
       "content_type": "image/jpeg",
-      "provenance": "customer_supplied"
+      "provenance": "customer_supplied",
+      "depicts_identifiable_person": true,
+      "consent_ref": "CONSENT-2026-09-10-SHREEJI-STAFF-01"
     },
     {
       "asset_id": "ast_sofa_catalogue",
       "role": "product",
       "sha256": "7a8b9c0d1e2f30415263748596a7b8c9d0e1f2031425364758697a8b9c0d1e2f",
       "content_type": "image/jpeg",
-      "provenance": "customer_supplied"
+      "provenance": "customer_supplied",
+      "depicts_identifiable_person": false
     }
   ],
   "deliverable_request": {
     "kind": "static_ad_from_supplied_photo",
+    "operation": "edit",
+    "modality": "static_image",
     "aspect": "as_supplied",
     "count": 1
   },
   "policy_profile": "alpha_human_release",
   "cost_ceiling_usd": "5.00",
-  "retention": {"policy_ref": "RET-STD-30", "delete_after_days": 30}
+  "retention": {
+    "policy_ref": "RET-STD-30",
+    "delete_after_days": 30
+  }
 }
