@@ -10,7 +10,7 @@ a provider, or merged anything. Two PRs are open for the Controller; the Control
 | `main` (unchanged) | `dcfa6af1064b55761b89be29ef5ae22710fdd4cf` |
 | Closeout branch start | `work/audit-closeout-and-runtime-v0` @ `e57bb36ef66edb5e918231afaf03c9c23f17b188` |
 | Closeout branch final | `work/audit-closeout-and-runtime-v0` @ `c771fef` — **PR #95** → `main`, https://github.com/chawlavaibhav/media-intelligence/pull/95 |
-| Runtime child branch | `work/runtime-alpha-vertical-slice-v0` (from `c771fef`) — stacked PR → the closeout branch (link in the PR list) |
+| Runtime child branch | `work/runtime-alpha-vertical-slice-v0` (from `c771fef`) — **PR #96** → the closeout branch, https://github.com/chawlavaibhav/media-intelligence/pull/96 |
 | PR #94 (the audit brief) | untouched, still open |
 
 ## B. What happened, in one paragraph each
