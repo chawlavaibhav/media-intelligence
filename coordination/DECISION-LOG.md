@@ -1,6 +1,6 @@
 # Decision Log
 
-**Updated:** 26 Aug 2026 — curated Controller decision index through that date.
+**Updated:** 26 Aug 2026 — curated Controller decision index through that date; **14 Sep 2026** — audit-closeout rulings C-1…C-11 appended as a dated section at the end of this file (the index table above is unchanged).
 **Role clarified:** 28 Aug 2026 (see the note below).
 
 > **Scope notice.** The two narrative entries below are the project's **23 Aug 2026 architectural
@@ -202,3 +202,27 @@ schema, evaluation corpus research.
 Production IR, no schema expansion, no A/B/C run.
 
 **Next review trigger:** approval of the Coverage Map and Curriculum before any source ingestion.
+
+---
+
+## 2026-09-14 — Audit closeout rulings C-1…C-11
+
+**Decision:** the Controller answered every Group 1 and Group 2 item of
+`coordination/audits/AUDIT-2026-09-10-CONTROLLER-DECISIONS.md` in the assignment brief of 14 September
+2026 ("These are now APPROVED Controller decisions. Materialise them durably under
+coordination/decisions/ with provenance. Do not reinterpret them."). Six dedicated decision records
+carry the rulings verbatim. None authorises paid dispatch; Group 3 (C-12…C-18) stays unauthorised
+with no order stated. C-5 was withdrawn by the audit itself (no judge breach).
+
+| Record | Scope |
+|---|---|
+| `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md` | C-1, C-5b, C-2 — the two cap crossings (USD 10.364 vs 9.96; 11.840 vs 11.53) and the 19-vs-16 call overrun accepted as recorded, history preserved; caps enforced against conservative ledger consumption at dispatch; vendor-billed cost a separate reconciliation field. |
+| `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md` | C-3, C-4, C-6b, C-6c, C-6d — frozen elimination rule applied literally; quarantine policy adopted verbatim; strict reading of re-sent draws (RR-16 withdrawn as clean Stage-A i2v routing truth); exact-text mechanisms A (model draws) and B (plate + code) re-keyed as different routes and RR-1 rewritten; elimination per (route, question). Mechanical consequences listed from the audit recompute; sealed files never edited. |
+| `coordination/decisions/CONTROLLER-AUTHORISATION-LINEAGE-CUMULATIVE-BUDGET-2026-09-14.md` | C-6a — an amendment never creates a fresh budget; all amendments are one cumulative budget; immutable authorisation lineage / stable budget identity to be implemented. |
+| `coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md` | C-6 — full state-of-record / Governor refresh of `PROJECT-MEMORY.md` and `coordination/CONTROL-STATE.md` ordered, after the rulings and derivative maps are materialised, with byte-for-byte snapshots under `history/`. |
+| `coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md` | C-7, C-8, C-11 — Alpha 1 frozen to one static commercial ad with exact overlay copy, optionally one short motion version derived only from the accepted still; supplied-photo work behind the identifiable-person / consent gate; talking heads, lip-sync, native speech, multi-shot stories, generated in-scene exact text excluded; human approval before every external delivery; Auditor A's twelve-condition T8 gate adopted verbatim. |
+| `coordination/decisions/CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md` | C-9, C-10 — stop widening the Capability Lab (no generic battery, no premium sweep, no prettier-table expansion; new evidence only for a launch-critical runtime hole); USD-0 implementation of Canon Injection v1 and template / empirical-memory integration authorised; the remaining eight packs not compiled unless a real runtime failure demands one. |
+
+**Record type:** dedicated decision records (six). **Not decided here:** any paid item; who reconciles
+the four provider statements; the definition of the identifiable-person / consent gate; whether the
+four IMG-TEXT composite draws were the same bytes (OPEN-3 stays a factual question).

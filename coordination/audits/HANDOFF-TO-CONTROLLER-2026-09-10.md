@@ -8,9 +8,29 @@ which is kept here whole and reconciled against this one.
 
 **Nothing in any of this decided anything.** Fifteen rulings are waiting, all of them free.
 
+*(14 Sep 2026: the rulings have since been given — see the correction at the top of §1 and the **Ruling (14 Sep 2026)** lines on `AUDIT-2026-09-10-CONTROLLER-DECISIONS.md`.)*
+
 ---
 
 ## 1. Where the work is
+
+> **Correction (14 Sep 2026).** The paragraph and table below describe the state on 10 September and are
+> **superseded**; they are kept as history. OBSERVED on 14 Sep 2026 from local git refs (`git log --oneline
+> e57bb36 -8`; `git branch -r`): the four branches were integrated into **one** branch,
+> `work/audit-closeout-and-runtime-v0`, as eight commits in this order — `850003f` (audit closeout: nine
+> zero-spend repairs, taint register, four audit tools), `1d09a57` (this handoff), `743a5d7` (runtime v0: the
+> four production contracts, deliverable registry, policy profiles), `20aaefb` (contracts v1: nine defects),
+> `13b4afb` (contracts: four corrections from the router lane), `be92f46` (lane PC-03A: brief to Production
+> Specification with deterministic Canon lookup), `d658610` (lane PC-03B: evidence-aware router), `e57bb36`
+> (router tests corrected). That branch **is pushed** to `origin/work/audit-closeout-and-runtime-v0` at
+> `e57bb36`. The four branch names in the table are not present as refs in the checkout this correction was
+> written from. The merge order the table recommends is the order the commits were actually integrated in.
+> Whether the integrated branch has been merged to `main` is **not verified** by this correction. The
+> Controller's rulings on the decision sheet are recorded in the six `coordination/decisions/CONTROLLER-*-2026-09-14.md`
+> records; closeout work on top of `e57bb36` proceeds on lane branches `work/closeout-a-governance`,
+> `work/closeout-b-evidence`, `work/closeout-c-spend` and `work/closeout-d-alpha` (OBSERVED as local branches).
+
+*Superseded text (10 Sep 2026) follows unchanged:*
 
 Four branches. None is merged. None was pushed by the auditor.
 
@@ -96,6 +116,11 @@ fallback refuses to proceed without one.
 That is the single most useful sentence in this handoff: **the first alpha needs a second usable route
 far more than it needs a better first one.** C-4 and C-6b supply most of them for free.
 
+*(14 Sep 2026: this sentence assumed the lenient readings. C-6b was ruled STRICT and C-4 adopted as quarantine, so
+those rulings remove or hold cells rather than supply them; how many cells become automatically routable after
+regeneration is for the evidence lane's rebuilt taint register to state, not this handoff. See
+`coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md`.)*
+
 Still missing, unchanged by any of this work: no intake for a customer, no repair loop, no measured
 cost per accepted outcome, and nothing commercial — no terms, no output-rights position, no provider
 resale review, no refund policy.
@@ -112,6 +137,17 @@ python3 coordination/audits/tools/recompute_elimination.py                   # t
 python3 coordination/audits/tools/verify_price_pins.py                       # 81 pins
 python3 coordination/audits/tools/build_taint_register.py --check            # register vs map fingerprint
 ```
+
+*Added 14 Sep 2026 — the production runtime's own suite, from the repository root of the integrated branch:*
+
+```
+python3 -m unittest discover -s runtime/tests -p 'test_*.py'                 # 127 OK at e57bb36 (~45 s)
+```
+
+The 127 was re-run and confirmed on 14 Sep 2026 at `e57bb36`. The evidence, spend and alpha closeout lanes
+on this branch add tests as they land, so counts above `127` (and above the harness's `362`) are expected
+after those lanes merge; a count *below* the baseline is a regression. The figures quoted in the block above
+this one (362, 575, 81 pins) were not re-run for this note and stand as the auditor's 10 Sep figures.
 
 ## 8. What I would not do next
 

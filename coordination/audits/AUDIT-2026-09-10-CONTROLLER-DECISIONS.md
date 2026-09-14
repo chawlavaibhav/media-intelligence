@@ -6,6 +6,8 @@ worker will turn each answered item into a proper record under `coordination/dec
 
 Free decisions first. Nothing on this page costs money to *decide*.
 
+> **Answered (14 Sep 2026).** The Controller ruled on every Group 1 and Group 2 item in the assignment brief of 14 September 2026. Each ruling is materialised verbatim in a record under `coordination/decisions/` dated 2026-09-14, and a one-line **Ruling (14 Sep 2026)** summary sits under each item below. Group 3 remains unauthorised with no order stated. The original text of this sheet is unchanged; only these lines were added.
+
 ---
 
 ## Group 1 — close the audit (all USD 0)
@@ -18,6 +20,7 @@ four runs. That mechanism is now repaired.
 *Option B:* annul them and re-issue the authorisations at the true amounts.
 Consequence either way: no evidence changes; only the governance record changes.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Both cap crossings (USD 10.364 vs 9.96; USD 11.840 vs 11.53) accepted as recorded; history preserved; mechanism fixed; nothing annulled or rewritten. — record: `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md`
 
 **C-2. Ledger versus vendor billing.** The ledger counts money the moment a request may have left the
 machine. USD 10.11 of it produced nothing at all, and at least USD 2.88 of that your own Wan 2 record
@@ -25,6 +28,7 @@ says was never charged. So the project has an upper bound on its costs, not its 
 *Decide:* who reads the four statements (fal, Google Cloud, Sarvam, ElevenLabs) for 8–10 September,
 and whether a cap in future is measured against the ledger or against the bill.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Caps are enforced against conservative ledger consumption at dispatch time; vendor-billed cost is a separate reconciliation field for actual CpAO; the four statements still need reconciling but their absence does not block the USD-0 tranche. — record: `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md`
 
 **C-3. The elimination rule.** Three runs counted provider balance locks and request-shape faults
 *outside* the denominator, which the frozen rules do not allow ("nothing is changed mid-run"). One
@@ -35,6 +39,7 @@ then regenerate the affected numbers.
 *Option B:* apply the frozen rule literally and let the recomputed numbers stand.
 See `AUDIT-2026-09-10-EVIDENCE-RECOMPUTE.md` for exactly what changes under each.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Apply the frozen elimination rule literally — infrastructure/request failures count wherever the preregistered rule says; any different treatment is prospective only. — record: `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md`
 
 **C-4. The tainted human-acceptance cells.** Auditor A proposes this exact wording, and Auditor B
 agrees with it: *any Stage-A human-routing cell affected by duplicated dispatched trial identities,
@@ -43,6 +48,7 @@ evidence only, until recomputed or cleanly replaced. Deterministic Registry evid
 *Decide:* adopt that sentence as a ruling, yes or no. It costs nothing and it stops contaminated
 numbers becoming production truth without throwing away useful work.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** The quoted policy is adopted word for word — affected Stage-A human-routing cells are descriptive product-learning evidence only until recomputed or cleanly replaced; deterministic Registry evidence untouched. — record: `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md`
 
 **C-5. WITHDRAWN — there was no judge breach.** Both auditors reported the judge as having made 206
 calls against a 200-call authority. Both were wrong: `calls: 206` is a *row* count written by an
@@ -51,17 +57,20 @@ are audio trials, decided without sending anything). At most 190 calls were sent
 to rule. The "not qualified" verdict stands on its own merits — agreement kappa 0.33, false-accept
 22 %. *The real defect was that a live screening run kept no authoritative counter, so a rebuild could
 substitute a different number unnoticed; that is fixed on the repair branch.*
+**Disposition (14 Sep 2026):** stays withdrawn — no ruling was sought or given; the six 14-Sep records mention it as context only.
 
 **C-5b. The one call limit that WAS exceeded.** The stand-in picture run made 19 paid calls where the
 record authorised "≤ 16". Money stayed inside the cap. Same ruling shape as C-1: accept as recorded,
 or annul.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** The 19-vs-16 call-limit breach accepted as recorded; authority not retroactively enlarged. — record: `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md`
 
 **C-6. State of record.** `PROJECT-MEMORY.md` — the file every new session is told to read first —
 said the Registry was empty. Three factual corrections are applied on this branch, but the file still
 predates the whole two-day run. *Decide:* order a full Governor refresh now, or after C-1…C-5 are
 ruled.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** A full state-of-record / Governor refresh is ordered, to run after the rulings and the affected derivative maps are materialised. — record: `coordination/decisions/CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md`
 
 **C-6a. What an amendment does to a cap — found while repairing the ledger.** The signed
 authorisation files are **edited in place** when you raise a cap, so the file's fingerprint changes.
@@ -76,6 +85,7 @@ cap raised in place forgets what was already spent.
 change is one line, already located and documented in the code; it was deliberately not made, because
 "a raised cap re-uses the old spend" is your policy call, not an executor's.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** An amendment does not create a fresh budget — all amendments are one cumulative budget; immutable authorisation lineage / stable budget identity is to be implemented so a changed file fingerprint cannot reset consumed spend. — record: `coordination/decisions/CONTROLLER-AUTHORISATION-LINEAGE-CUMULATIVE-BUDGET-2026-09-14.md`
 
 **C-6b. How a re-sent draw counts — the one ruling that moves a routing rule.** Six Wan 2
 image-to-video draws failed with HTTP 422 in one run and the same trial identities were sent again in
@@ -88,6 +98,7 @@ Nothing else in either audit swings a routing rule's substance this way. Note th
 runs three different denominators at once — 8 for one question, 14 for this one, 2 for another — so
 this ruling also has to say which convention the map uses everywhere.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** STRICT — a failed Wan 2 draw stays a failure; the six HTTP-422 failures are not erased by undeclared re-sends; RR-16 cannot remain clean Stage-A image-to-video routing truth; successful re-sends stay as clearly-labelled descriptive product evidence, not deleted. — record: `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md`
 
 **C-6c. The exact-text cell collision — this one touches the production wedge directly.** The four
 composite trials carry two different Controller verdicts (3 rejects + 1 accept when the bare textless
@@ -101,6 +112,7 @@ model produced correct text. It did not; code did.
 *Decide:* re-key these two cells distinctly before any router reads the map, and re-word RR-1's
 evidence line so it says what was actually accepted.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Re-key the two exact-text mechanisms as different route identities (A: model draws the text; B: textless plate + code composes it); rewrite RR-1's evidence to say precisely what was accepted; never imply the model rendered copy that code set. — record: `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md`
 
 **C-6d. Is a route thrown out per question, or per case? (found by the taint register; no earlier
 item covered it.)** The frozen rules say elimination is per (route, question) — rule E4. Two runs
@@ -111,6 +123,7 @@ several cases. C-3 settles the denominator; it does not settle the scope. Two ce
 *Option B:* per case where a question mixes clearly different jobs — but then E4 must be amended by a
 new task, not by a run file.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Elimination is per (route, question), exactly as frozen E4; affected derivative cells recomputed accordingly. — record: `coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md`
 
 ---
 
@@ -120,24 +133,29 @@ new task, not by a run file.
 "more testing" has no stopping rule. Both audits name this as the decision that unblocks everything
 downstream.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Alpha 1 frozen to one static commercial ad with exact overlay copy, optionally followed by one short motion version derived only from the accepted still; supplied-photo work conditional behind the identifiable-person / consent gate; talking heads, lip-sync, native speech, multi-shot stories and generated in-scene exact text excluded. — record: `coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md`
 
 **C-8. Human release policy for the first alpha.** Every output gets your approval before it leaves,
 yes or no. Auditor A recommends yes; Auditor B agrees, because the automatic judge agrees with you
 only two-thirds of the time and wrongly accepts 22 % of what you reject.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Every Alpha-1 output requires human approval before external delivery; no autonomous external delivery. — record: `coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md`
 
 **C-9. Stop widening the Lab.** Both audits recommend: do not benchmark more premium models, do not
 compile the remaining eight Canon packs, do not chase a perfect judge, do not expand every two-draw
 cell for neatness. Build the smallest complete production path instead.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Stop widening the Capability Lab — no generic battery, no premium sweep, no expansion for prettier tables; new evidence work only when the production runtime exposes a launch-critical hole. — record: `coordination/decisions/CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md`
 
 **C-10. Canon.** Authorise Injection v1 and the template/empirical-memory work only; defer the other
 eight packs until a real runtime failure demands one. Build cost USD 0.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** USD-0 implementation of Canon Injection v1 and template / empirical-memory integration authorised; the remaining eight packs are not compiled unless a real runtime failure later demands one. — record: `coordination/decisions/CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md`
 
 **C-11. The public-release bar.** Adopt Auditor A's T8 condition list (twelve conditions) as the
 formal gate for public delivery.
 **Your ruling: ______________________**
+**Ruling (14 Sep 2026):** Auditor A's twelve-condition T8 public-release gate adopted verbatim as the formal bar for public delivery. — record: `coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md`
 
 ---
 
@@ -157,3 +175,4 @@ writing — not in chat.
 | C-18 | **Stage C — accepted outcomes and cost per accepted outcome** | size after C-17 | The one experiment worth spending on. It answers whether the whole system beats a simpler workflow. Settle HED-1 first. |
 
 **Order you want: ______________________**
+**Disposition (14 Sep 2026):** not authorised by any 14-Sep ruling; order not yet stated. (C-12 … C-18 each still need their own written spend record before any dispatch; see `coordination/decisions/CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md`.)

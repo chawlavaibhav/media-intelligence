@@ -86,3 +86,30 @@ once by the executor and once independently.
 place**, so raising a cap changes the file's fingerprint and starts a fresh budget under the repaired
 ledger. That is why the Wan 2 overrun is only half-caught. Whether an amendment should keep one budget
 is decision **C-6a**; the one-line change is located and documented but deliberately not made.
+
+## What happened after (14 Sep 2026)
+
+**The Controller ruled.** Every Group 1 and Group 2 item on `AUDIT-2026-09-10-CONTROLLER-DECISIONS.md`
+was answered in the Controller's assignment brief of 14 September 2026 ("These are now APPROVED
+Controller decisions. Materialise them durably under coordination/decisions/ with provenance. Do not
+reinterpret them."). The rulings are recorded verbatim in six records:
+
+| Record (`coordination/decisions/`) | Items | In one line |
+|---|---|---|
+| `CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md` | C-1, C-5b, C-2 | Both cap crossings and the 19-vs-16 call overrun accepted as recorded; caps enforced against the ledger at dispatch time; vendor-billed cost is a separate reconciliation field. |
+| `CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md` | C-3, C-4, C-6b, C-6c, C-6d | Frozen elimination rule applied literally; quarantine policy adopted; strict reading of re-sent draws (RR-16 withdrawn as clean routing truth); the two exact-text mechanisms re-keyed as different routes; elimination per (route, question). |
+| `CONTROLLER-AUTHORISATION-LINEAGE-CUMULATIVE-BUDGET-2026-09-14.md` | C-6a | An amendment never starts a fresh budget; stable budget identity to be implemented. |
+| `CONTROLLER-GOVERNOR-REFRESH-ORDER-2026-09-14.md` | C-6 | Full refresh of `PROJECT-MEMORY.md` and `CONTROL-STATE.md` ordered, after the derivative maps regenerate. |
+| `CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md` | C-7, C-8, C-11 | Alpha 1 frozen (static ad with exact overlay copy, optional motion version from the accepted still); human approval before every external delivery; the twelve-condition T8 gate adopted. |
+| `CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md` | C-9, C-10 | Lab stops widening; Canon Injection v1 and template / empirical-memory integration authorised at USD 0; the eight remaining packs not compiled. |
+
+C-5 stays withdrawn (no judge breach). **Group 3 (C-12 … C-18, the paid items) is not authorised by
+any 14 September ruling and no order has been stated.** No ruling authorises any paid dispatch.
+
+**Where the work went.** The four branches named in `HANDOFF-TO-CONTROLLER-2026-09-10.md` §1 were
+integrated into one branch, `work/audit-closeout-and-runtime-v0` (head `e57bb36`, pushed); the handoff
+carries a marked correction. Closeout work on top of it runs on four lane branches: governance (these
+records, the sheet dispositions, this section), evidence (regenerating the routing map and taint register
+under C-3/C-4/C-6b/C-6c/C-6d — sealed files are never edited), spend (C-6a lineage) and alpha (the Alpha 1
+runtime under C-7/C-8). This section records that those lanes exist; it does not claim any of them is
+finished — their own commits are the proof.
