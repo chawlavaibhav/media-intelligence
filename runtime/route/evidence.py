@@ -69,6 +69,13 @@ class Cell:
     trials: int | None
     n_items: int | None
     blinding_commitment_verified: object
+    # C-6c (14 Sep 2026): which exact-text mechanism produced the judged object. Read from the
+    # register, never inferred here. deterministic_text_composition = a textless plate onto which
+    # code composed the strings; model_draws_text = the provider's own output judged for the text;
+    # not_applicable = the question is not about text.
+    text_mechanism: str | None = None
+    eliminated: bool = False
+    rulings_applied: tuple = ()
 
     def evidence_n(self, settled_draw_floor: int) -> dict:
         """Draws and items behind the cell, carried forward honestly. Two draws is two draws."""
@@ -115,12 +122,12 @@ class Binding:
             if "levels" not in row:
                 return {"found": True, "question": row["question"], "arms": row.get("arms"),
                         "dispatches": bool(row.get("dispatches")), "basis": row.get("basis"),
-                        "level": None}
+                        "level": None, "text_mechanism": row.get("text_mechanism")}
             for lv in row["levels"]:
                 if lv.get("level") == level:
                     return {"found": True, "question": lv["question"], "arms": lv.get("arms"),
                             "dispatches": bool(lv.get("dispatches")), "basis": lv.get("basis"),
-                            "level": level}
+                            "level": level, "text_mechanism": lv.get("text_mechanism")}
             declared = [lv.get("level") for lv in row["levels"]]
             return {"found": False, "reason":
                     f"capability {capability!r} is answered at a named level; the spec gave "
@@ -188,6 +195,9 @@ class EvidenceBase:
                 trials=human.get("trials", entry.get("map_reported_trials")),
                 n_items=human.get("n_items"),
                 blinding_commitment_verified=entry.get("blinding_commitment_verified"),
+                text_mechanism=entry.get("text_mechanism"),
+                eliminated=bool(entry.get("eliminated", False)),
+                rulings_applied=tuple(entry.get("rulings_applied") or ()),
             )
             self.cells[cell.cell_key] = cell
         declared = self.register.get("cell_count")
@@ -195,10 +205,19 @@ class EvidenceBase:
             raise EvidenceError(f"register declares {declared} cells, read {len(self.cells)}")
 
     # -- queries ---------------------------------------------------------------
-    def cells_for(self, question: str, arms: list | None) -> list[Cell]:
+    def cells_for(self, question: str, arms: list | None, text_mechanism: str | None = None) -> list[Cell]:
+        """The cells of a question, narrowed by arm and - since C-6c - by text mechanism.
+
+        Two IMG-TEXT cells share the arm `C_composite_textless_base` and differ only in mechanism (the
+        bare plate judged for text versus the plate with code-composed text). Selecting by arm alone
+        could not tell them apart; the binding therefore names the mechanism and the register supplies
+        it per cell. A cell with no recorded mechanism never matches a mechanism-narrowed query.
+        """
         out = [c for c in self.cells.values() if c.question == question]
         if arms:
             out = [c for c in out if c.arm in arms]
+        if text_mechanism:
+            out = [c for c in out if c.text_mechanism == text_mechanism]
         return sorted(out, key=lambda c: c.cell_key)
 
     def notes_touching(self, cells: list[Cell]) -> list[dict]:
@@ -227,6 +246,11 @@ class EvidenceBase:
                 f"Register reason: {cell.register_reason}",
                 blocking_ruling=cell.blocking_ruling,
                 blocking_open_question=cell.blocking_open_question)
+        if cell.eliminated:
+            return GateResult(
+                False, "evidence_envelope",
+                f"{cell.cell_key} is eliminated on its question under the frozen rule (rulings "
+                f"{list(cell.rulings_applied) or 'as recorded'}): {cell.register_reason}")
         if cell.production_use_allowed is not True:
             return GateResult(
                 False, "evidence_envelope",

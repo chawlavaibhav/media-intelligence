@@ -126,13 +126,16 @@ def cells_audit(router: Router, ev: EvidenceBase, profile_name: str) -> str:
         cell = ev.cells[key]
         g = ev.gate(cell, auto)
         priced = router.prices.quote(cell.route_key, {"params": {"duration_s": 6}})
-        ok = g.allowed and priced.priced
+        composed = cell.text_mechanism == "deterministic_text_composition"   # runtime code, no provider call
+        ok = g.allowed and (priced.priced or composed)
         bucket = ("auto_routable" if ok else
                   ("blocked_on_price" if g.allowed else f"blocked_on_evidence:{cell.evidence_status}"))
+        if not g.allowed and cell.eliminated:
+            bucket = "blocked_on_evidence:eliminated"
         counters[bucket] = counters.get(bucket, 0) + 1
         rows.append(f"  {'AUTO' if ok else '----'}  {key:<58} {cell.evidence_status:<26} "
                     f"use={str(cell.production_use_allowed):<11} "
-                    f"{'pin ok' if priced.priced else 'no live price'}"
+                    f"{'composed by runtime (no price pin applies)' if composed else ('pin ok' if priced.priced else 'no live price')}"
                     f"{('  blocking ' + str(cell.blocking_ruling or cell.blocking_open_question)) if not g.allowed and cell.evidence_status == 'awaiting_controller_ruling' else ''}")
     head = [f"CELL AUDIT under profile {profile_name!r} (auto_routable_evidence_status={auto})",
             f"register vocabulary: {ev.status_vocabulary}",

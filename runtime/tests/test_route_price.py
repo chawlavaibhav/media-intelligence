@@ -29,11 +29,16 @@ class PriceComesFromTheRoster(unittest.TestCase):
         """nano-banana-pro: the map still says Vertex; the roster says the Gemini Developer API."""
         ev = B.evidence_base()
         map_cell = ev.map["questions"]["IMG-CORE"]["cells"]["nano-banana-pro"]
-        d = B.plan(B.SPEC_STATIC_IN_SCENE, "alpha_wider_example")
-        self.assertEqual(d["primary"]["route_key"], "nano-banana-pro")
         self.assertEqual(map_cell["surface"], ["vertex"])
-        self.assertEqual(d["primary"]["surface"], "gemini_api")
-        self.assertNotIn(d["primary"]["price_pin_ref"], map_cell["price_pin_ref"])
+        # Since the 14 Sep 2026 rulings freed the cheaper clean routes, nano-banana-pro is no longer
+        # the primary here; the point of this test is the PRICE SOURCE, so read its quote directly.
+        q = B.price_book(ev).quote("nano-banana-pro", {"params": {}})
+        self.assertTrue(q.priced, q.reason)
+        self.assertEqual(q.surface, "gemini_api")
+        self.assertNotIn(q.price_pin_ref, map_cell["price_pin_ref"])
+        d = B.plan(B.SPEC_STATIC_IN_SCENE, "alpha_wider_example")
+        kept = {c["route_key"]: c for c in d["selection_basis"]["candidates_considered"] if c["kept"]}
+        self.assertIn("nano-banana-pro", kept)
         self.assertFalse(d["provenance"]["map_prices_used"])
 
     def test_a_pin_only_in_a_sub_index_is_still_a_live_pin(self):

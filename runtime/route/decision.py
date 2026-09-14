@@ -171,7 +171,7 @@ class Router:
         # -- requirements the runtime satisfies itself (no provider call, evidence still gated) -----
         strategy_evidence = []
         for req, res in self_composed:
-            cells = self.ev.cells_for(res["question"], res["arms"])
+            cells = self.ev.cells_for(res["question"], res["arms"], res.get("text_mechanism"))
             notes_applied.extend(self.ev.notes_touching(cells))
             chosen, why = None, []
             for cell in cells:
@@ -187,6 +187,7 @@ class Router:
                     chosen = cell
             row = {"capability": req.capability, "level": res.get("level"),
                    "question": res["question"], "arms": res.get("arms"),
+                   "text_mechanism": res.get("text_mechanism"),
                    "dispatches": False, "basis": res.get("basis"),
                    "cells_considered": [c.cell_key for c in cells], "why": why,
                    "cell_selected": chosen.cell_key if chosen else None,
@@ -218,10 +219,11 @@ class Router:
         if mandatory_dispatch:
             found: dict[str, dict] = {}
             for req, res in mandatory_dispatch:
-                cells = self.ev.cells_for(res["question"], res["arms"])
+                cells = self.ev.cells_for(res["question"], res["arms"], res.get("text_mechanism"))
                 notes_applied.extend(self.ev.notes_touching(cells))
                 per_requirement.append({"capability": req.capability, "level": res.get("level"),
                                         "question": res["question"], "arms": res.get("arms"),
+                                        "text_mechanism": res.get("text_mechanism"),
                                         "dispatches": True, "basis": res.get("basis"),
                                         "cells_considered": [c.cell_key for c in cells]})
                 for c in cells:
@@ -290,7 +292,7 @@ class Router:
 
         # -- optional requirements are reported, never used to drop a route -------------------------
         for req, res in optional_dispatch:
-            cells = self.ev.cells_for(res["question"], res["arms"])
+            cells = self.ev.cells_for(res["question"], res["arms"], res.get("text_mechanism"))
             per_requirement.append({"capability": req.capability, "level": res.get("level"),
                                     "question": res["question"], "mandatory": False,
                                     "dispatches": True, "basis": res.get("basis"),
@@ -326,7 +328,7 @@ class Router:
                                           for c in sorted(candidates.values(), key=lambda x: x.route_key)],
                 "preflight": preflight,
                 "register_notes_applied": self._dedupe_notes(notes_applied),
-                "keyed_on": "cell_key, never (route_key, arm) — see NOTE-ROUTE-KEY-COLLISION",
+                "keyed_on": "cell_key, never (route_key, arm); exact-text cells are further narrowed by text_mechanism (C-6c, 14 Sep 2026)",
             },
             "primary": self._slot(primary, spec, profile, did, customer_ref) if primary else None,
             "fallback": self._fallback_slot(fallback, binding) if fallback else None,

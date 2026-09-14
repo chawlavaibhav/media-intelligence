@@ -43,7 +43,7 @@ ONE AUTHORISATION = ONE CAP, ACROSS EVERY RUN THAT USED IT (Auditor AF-4)
 CALLS ARE CAPPED TOO, WHEN THE RECORD SAYS SO (Auditor AF-5)
 
     A signed record that says "no more than N paid calls" was enforced nowhere: a fixtures run made 19 paid
-    calls under a "<= 16 calls" record and a vision-judge run made 206 against 200. `max_paid_calls` is an
+    calls under a "<= 16 calls" record and the vision-judge "206 against 200" was a row count (at most 190 calls; no breach, C-5 withdrawn) - the real gap was an unenforceable "no more than 16" (19 sent). `max_paid_calls` is an
     OPTIONAL field of the same `machine_authorisation` block, read like every other limit - there is no call
     constant in code. Absent means the record sets NO call limit (`authorisation_status` says so in words).
     Present, it is enforced over the same pooled set of runs, and the call that would exceed it is refused

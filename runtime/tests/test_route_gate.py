@@ -36,42 +36,84 @@ class CleanCellAutoRoutes(unittest.TestCase):
                             for c in dropped))
 
 
-class AwaitingControllerRuling(unittest.TestCase):
-    def test_a_blocked_cell_names_its_ruling_and_produces_manual_route_required(self):
-        d = B.plan(B.SPEC_STATIC_OVERLAY, "alpha_wider_example")
-        self.assertTrue(d["manual_route_required"])
-        self.assertIn("C-6c", d["manual_route_reason"])
-        blocked = [u for u in d["unsupported_requirements"]
-                   if u["capability"] == "exact_text_composition"]
-        self.assertEqual(len(blocked), 1)
-        self.assertEqual(blocked[0]["blocking"], ["C-6c"])
+class RulingsAppliedToTheRegister(unittest.TestCase):
+    """14 Sep 2026: the Controller ruled C-3, C-4, C-6b, C-6c and C-6d, and the register was regenerated
+    under them. No cell awaits a ruling any more; the cells that were held are either clean, directional,
+    or eliminated on their question. These tests replace the ones that asserted the pre-ruling state."""
 
-    def test_dropped_candidates_name_the_ruling_that_blocks_them(self):
+    def test_no_cell_awaits_a_controller_ruling_after_regeneration(self):
+        ev = B.evidence_base()
+        waiting = [k for k, c in ev.cells.items() if c.evidence_status == "awaiting_controller_ruling"]
+        self.assertEqual(waiting, [])
+
+    def test_the_static_overlay_ad_now_routes_with_code_composed_text(self):
+        """C-6c: the code-overlay cell has its own route identity and is clean; the plate route is an
+        IMG-CORE route chosen on evidence then cost; the exact strings are composed by the runtime."""
         d = B.plan(B.SPEC_STATIC_OVERLAY, "alpha_wider_example")
-        by_route = {c["route_key"]: c for c in d["selection_basis"]["candidates_considered"]}
-        self.assertEqual(by_route["nano-banana-2"]["dropped_at"], "evidence_envelope")
-        self.assertIn("C-4", " ".join(by_route["nano-banana-2"]["why"]))
-        self.assertIn("C-6b", " ".join(by_route["qwen-image-3"]["why"]))
+        self.assertFalse(d["manual_route_required"], d["manual_route_reason"])
+        self.assertIsNotNone(d["primary"])
+        self.assertIsNotNone(d["fallback"])
+        composed = [r for r in d["selection_basis"]["self_composed_requirements"]
+                    if r["capability"] == "exact_text_composition"]
+        self.assertEqual(len(composed), 1)
+        self.assertEqual(composed[0]["cell_selected"], "IMG-TEXT/flux-2-pro+code_overlay")
+        self.assertEqual(composed[0]["text_mechanism"], "deterministic_text_composition")
+        self.assertEqual(composed[0]["evidence_status"], "clean_observed")
+
+    def test_the_bare_plate_cell_is_never_selected_for_code_composed_text(self):
+        """The two IMG-TEXT cells share an arm name; only the mechanism tells them apart (C-6c)."""
+        ev = B.evidence_base()
+        cells = ev.cells_for("IMG-TEXT", None, "deterministic_text_composition")
+        self.assertEqual([c.cell_key for c in cells], ["IMG-TEXT/flux-2-pro+code_overlay"])
+        bare = ev.cells["IMG-TEXT/flux-2-pro+C_composite_textless_base"]
+        self.assertEqual(bare.text_mechanism, "model_draws_text")
+        self.assertTrue(bare.eliminated)
+        self.assertNotEqual(bare.route_key, ev.cells["IMG-TEXT/flux-2-pro+code_overlay"].route_key)
+
+    def test_an_eliminated_route_is_never_auto_routed_whatever_the_profile_lists(self):
+        """C-6b strict: wan-2.2-a14b-i2v is 2/8 with six failures, eliminated E1+E2. Its register status
+        is clean (the arithmetic reproduces) but production use is false, and the gate says why."""
+        ev = B.evidence_base()
+        cell = ev.cells["VID-I2V/wan-2.2-a14b-i2v"]
+        self.assertTrue(cell.eliminated)
+        self.assertIn("C-6b", cell.rulings_applied)
+        gate = ev.gate(cell, ev.status_vocabulary)          # every status the register knows
+        self.assertFalse(gate.allowed)
+        self.assertIn("eliminated", gate.reason)
 
     def test_a_profile_cannot_loosen_the_register(self):
-        """A profile that DID list awaiting_controller_ruling still would not auto-route such a cell.
-
-        No shipped profile lists it today; the point is that the invariant does not depend on that.
-        """
+        """The invariant does not depend on any real cell being held today: a synthetic cell that is
+        awaiting a ruling is refused even by a profile that lists that status as auto-routable."""
+        from runtime.route.evidence import Cell
         ev = B.evidence_base()
-        blocked = ev.cells["VID-I2V/wan-2.2-a14b-i2v"]
-        permissive = ev.status_vocabulary                      # every status the register knows
+        held = Cell(cell_key="X/held", question="X", route_key="held", arm=None,
+                    evidence_status="awaiting_controller_ruling", production_use_allowed="manual_only",
+                    blocking_ruling="C-99", blocking_open_question=None, replacement_needed=False,
+                    register_reason="synthetic", accepts=1, trials=2, n_items=1,
+                    blinding_commitment_verified=None)
+        permissive = ev.status_vocabulary
         self.assertIn("awaiting_controller_ruling", permissive)
-        gate = ev.gate(blocked, permissive)
+        gate = ev.gate(held, permissive)
         self.assertFalse(gate.allowed)
-        self.assertIn("C-6b", gate.reason)
+        self.assertIn("C-99", gate.reason)
         self.assertIn("never auto-routed", gate.reason)
 
     def test_production_use_allowed_false_blocks_even_a_clean_cell(self):
+        """After the rulings every production_use_allowed=false cell in the real register is an eliminated
+        route (which the gate refuses first, by name). The register's reading still has to be honoured on
+        its own, so this uses a synthetic clean, non-eliminated cell the register marks unusable."""
+        from runtime.route.evidence import Cell
         ev = B.evidence_base()
-        cell = ev.cells["IMG-REF/flux-2-pro-edit"]
-        self.assertEqual(cell.evidence_status, "clean_observed")
-        gate = ev.gate(cell, ["clean_observed"])
+        real = ev.cells["IMG-REF/flux-2-pro-edit"]
+        self.assertEqual(real.evidence_status, "clean_observed")
+        self.assertTrue(real.eliminated)
+        self.assertFalse(ev.gate(real, ["clean_observed"]).allowed)
+        unusable = Cell(cell_key="X/clean-but-unusable", question="X", route_key="x", arm=None,
+                        evidence_status="clean_observed", production_use_allowed=False,
+                        blocking_ruling=None, blocking_open_question=None, replacement_needed=False,
+                        register_reason="synthetic", accepts=4, trials=4, n_items=2,
+                        blinding_commitment_verified=None)
+        gate = ev.gate(unusable, ["clean_observed"])
         self.assertFalse(gate.allowed)
         self.assertIn("production_use_allowed=False", gate.reason)
 
@@ -104,7 +146,7 @@ class NoInventedStatus(unittest.TestCase):
         gate = ev.gate(ev.cells["VID-I2V/wan-2.2-a14b-i2v"],
                        B.profile("alpha_human_release").auto_routable_evidence_status)
         self.assertFalse(gate.allowed)
-        self.assertIn("C-6b", gate.reason)
+        self.assertIn("eliminated", gate.reason)          # C-6b strict, applied 14 Sep 2026
 
 
 class RouterNeverScores(unittest.TestCase):
@@ -153,23 +195,27 @@ class HowMuchOfTheMapIsRoutableToday(unittest.TestCase):
                 auto.append(key)
         return ev, auto, unpriced
 
-    def test_sixteen_of_the_sixty_one_cells_are_routable_where_clean_observed_is_allowed(self):
+    def test_twenty_six_of_the_sixty_one_cells_are_routable_where_clean_observed_is_allowed(self):
+        """Was 16 before the 14 Sep 2026 rulings; the recomputed register (C-3/C-4/C-6b/C-6c/C-6d) frees
+        the cells that were held by paperwork and drops the ones eliminated under the frozen rule."""
         ev, auto, unpriced = self._counts("alpha_wider_example")
         self.assertEqual(len(ev.cells), 61)
-        self.assertEqual(len(auto), 16)
-        # The only cells this audit cannot price are the ones whose billing quantity is not a
-        # duration: lipsync bills rolled-up input seconds, TTS bills characters. Nothing is blocked
-        # on a MISSING pin — today the binding constraint on routing is evidence, not price.
+        self.assertEqual(len(auto), 26)
+        # The cells this audit cannot price: lipsync bills rolled-up input seconds, TTS bills
+        # characters, and the code-overlay cell is composed by the runtime (no provider call, so no
+        # price pin applies to it - the plate it sits on is priced as an IMG-CORE route). Nothing is
+        # blocked on a MISSING pin - the binding constraint on routing is evidence, not price.
         self.assertEqual(unpriced, ["AUD-LIP/kling-lipsync-a2v+chain",
                                     "AUD-TTS/elevenlabs-v3-direct+native",
-                                    "AUD-TTS/sarvam-bulbul-v3+native"])
+                                    "AUD-TTS/sarvam-bulbul-v3+native",
+                                    "IMG-TEXT/flux-2-pro+code_overlay"])
 
-    def test_the_shipped_alpha_profile_routes_the_same_sixteen(self):
+    def test_the_shipped_alpha_profile_routes_the_same_twenty_six(self):
         """Was: asserted zero, because the profile named a status that did not exist. The alpha
-        profile allows `clean_observed` only, so it reaches exactly the sixteen cells that are clean
-        AND marked usable - no more, and never a cell awaiting a ruling."""
+        profile allows `clean_observed` only, so it reaches exactly the cells that are clean AND
+        marked usable - no more, never a cell awaiting a ruling, never an eliminated route."""
         ev, auto, _ = self._counts("alpha_human_release")
-        self.assertEqual(len(auto), 16)
+        self.assertEqual(len(auto), 26)
         for key in auto:
             cell = ev.cells[key]
             self.assertEqual(cell.evidence_status, "clean_observed")

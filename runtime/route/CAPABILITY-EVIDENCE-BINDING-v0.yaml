@@ -45,18 +45,23 @@ capabilities:
   levels:
   - level: code_set_on_textless_plate
     question: IMG-TEXT
-    arms: [code_overlay, C_composite_textless_base]
+    arms: null
+    text_mechanism: deterministic_text_composition   # C-6c: mechanism B - a textless plate, strings composed by code
     dispatches: false
-    basis: "RR-1 — code-set text on a cheap textless plate; exact by construction, composed by the runtime, not by the provider"
+    basis: "RR-1 — code-set text on a cheap textless plate; exact by construction, composed by the runtime, not by the provider (cell IMG-TEXT/flux-2-pro+code_overlay; the image model did not render the accepted copy)"
   - level: generated_in_scene
     question: IMG-TEXT
     arms: [A_cheap_generated, B_premium_generated]
+    text_mechanism: model_draws_text                  # C-6c: mechanism A - the provider draws the text itself
     dispatches: true
     basis: "RR-2 — the type must sit inside the scene, so the maker draws it"
   note: >-
     The level is REQUIRED. A spec that asks for exact text without naming the strategy level is not
     routed on a guess; the requirement is reported unsupported and a person chooses. PRODUCTION-SPEC
-    carries the strategy in exact_text.strategy, so the compiler always has it.
+    carries the strategy in exact_text.strategy, so the compiler always has it. Since C-6c
+    (CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md) each level also names the
+    text_mechanism the register records per cell: two IMG-TEXT cells share one arm name and differ
+    only in mechanism, so arm alone can no longer select a cell.
 
 - capability: image_edit
   levels:
