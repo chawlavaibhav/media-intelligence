@@ -10,6 +10,7 @@ import unittest
 
 from runtime import paths
 from runtime.canon.normalize import normalize
+from runtime.policy import PolicyProfiles
 from runtime.tests import support
 from runtime.util import canonical_json
 
@@ -104,9 +105,14 @@ class LipstickPackshotTest(unittest.TestCase):
         self.assertIn("editing_pacing_and_short_form", triggers)
 
     def test_the_limits_come_from_the_profile_the_job_named(self):
+        # 14 Sep 2026 (lane F): `dry` became the dry twin of alpha_human_release, so its numbers are the
+        # alpha's (2 draws, 1 repair) rather than 0/0. The assertion reads the row rather than repeating
+        # a number, because the point is provenance - the value comes from the named profile, not code.
         self.assertEqual(self.job["policy_profile"], "dry")
-        self.assertEqual(self.spec["budget"]["max_provider_draws"], 0)
-        self.assertEqual(self.spec["budget"]["repair_allowance"], 0)
+        row = PolicyProfiles().profile("dry")
+        self.assertEqual(self.spec["budget"]["max_provider_draws"], row.limit("max_provider_draws_per_deliverable"))
+        self.assertEqual(self.spec["budget"]["repair_allowance"], row.limit("repair_allowance"))
+        self.assertEqual(self.spec["budget"]["max_provider_draws"], 2)
 
 
 class NoHandAuthoringTest(unittest.TestCase):

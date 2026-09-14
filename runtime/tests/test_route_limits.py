@@ -1,4 +1,7 @@
-"""Exclusions, the cost envelope, execute's refusals, identities, and fail-closed limits."""
+"""Exclusions, the cost envelope, execute's refusals, identities, and fail-closed limits.
+
+14 Sep 2026 (lane F): the two expected failures about execute() and spend_authority are closed; the
+`dry` profile is the alpha's dry twin, so execute() under it runs the bridge in dry mode."""
 from __future__ import annotations
 
 import shutil
@@ -86,32 +89,39 @@ class ExecuteRefuses(unittest.TestCase):
             r.execute(B.spec(B.SPEC_MOTION), B.profile("dry"), request_cost_ceiling_usd=None)
         self.assertIn("no request-level cost ceiling", " ".join(ctx.exception.reasons))
 
-    def test_execute_refuses_for_both_reasons_at_once_when_both_are_missing(self):
+    def test_execute_refuses_for_every_missing_thing_at_once(self):
+        """alpha_wider_example is live-mode, not adopted and has no spend authority; with no request
+        ceiling either, all three are reported together (was two before lane F added the spend check)."""
         r = B.router()
         with self.assertRaises(ExecuteRefused) as ctx:
             r.execute(B.spec(B.SPEC_MOTION), B.profile("alpha_wider_example"),
                       request_cost_ceiling_usd=None)
-        self.assertEqual(len(ctx.exception.reasons), 2)
+        self.assertEqual(len(ctx.exception.reasons), 3)
+        joined = " ".join(ctx.exception.reasons)
+        for phrase in ("no request-level cost ceiling", "adopted: false", "spend_authority"):
+            self.assertIn(phrase, joined)
 
-    def test_under_the_adopted_alpha_profile_only_the_missing_provider_client_refuses_today(self):
-        """CURRENT behaviour, recorded honestly. alpha_human_release is adopted (14 Sep 2026) and its
-        spend_authority.status is none. execute() checks only `profile.adopted`, so for a spec the
-        router can fully route (the 6 s silent motion spec) the ONLY refusal left is that no provider
-        client exists. That is one layer, not two. The test below records the missing layer."""
+    def test_under_the_adopted_alpha_profile_spend_authority_refuses_before_planning(self):
+        """CLOSED 14 Sep 2026 (lane F). alpha_human_release is adopted and its spend_authority.status is
+        none; its dispatch_mode is live. execute() now checks spend_authority before it plans, so the
+        refusal names the missing spend authorisation - two layers (adoption, money), not one - and no
+        decision is made first. The old single-layer "no provider client" refusal is gone."""
         r = B.router()
         prof = B.profile("alpha_human_release")
         self.assertTrue(prof.adopted)
         self.assertFalse(prof.may_spend()[0])
+        planned = []
+        real_plan = r.plan
+        r.plan = lambda *a, **k: (planned.append(1), real_plan(*a, **k))[1]
         with self.assertRaises(ExecuteRefused) as ctx:
             r.execute(B.spec(B.SPEC_MOTION), prof, request_cost_ceiling_usd=Decimal("5.00"))
         self.assertEqual(len(ctx.exception.reasons), 1)
-        self.assertIn("no provider client is wired", ctx.exception.reasons[0])
+        self.assertIn("spend_authority", ctx.exception.reasons[0])
+        self.assertEqual(planned, [], "execute() planned before refusing on spend authority")
 
-    @unittest.expectedFailure
     def test_execute_must_refuse_on_spend_authority_none_before_planning(self):
-        """execute() must also check spend_authority — Wave 2 (execution bridge) closes this.
-        Expected shape once closed: with no ceiling AND spend_authority none, two reasons, one of
-        them naming spend_authority, raised before any plan is made."""
+        """Was an expected failure; closed by lane F. With no ceiling AND spend_authority none, two
+        reasons, one of them naming spend_authority, raised before any plan is made."""
         r = B.router()
         with self.assertRaises(ExecuteRefused) as ctx:
             r.execute(B.spec(B.SPEC_MOTION), B.profile("alpha_human_release"),
@@ -119,12 +129,26 @@ class ExecuteRefuses(unittest.TestCase):
         self.assertEqual(len(ctx.exception.reasons), 2)
         self.assertIn("spend_authority", " ".join(ctx.exception.reasons))
 
-    def test_even_with_ceiling_and_adopted_profile_no_provider_client_exists(self):
+    def test_under_the_dry_twin_execute_runs_dry_and_sends_nothing(self):
+        """`dry` needs no spend authority: nothing is sent, reservations are 0. execute() plans, builds
+        the manifest through the bridge and returns a dry_complete result. The motion attempts would not
+        dispatch even live, because the accepted still is not supplied - the harness's own reason."""
+        r = B.router()
+        out = r.execute(B.spec(B.SPEC_MOTION), B.profile("dry"),
+                        request_cost_ceiling_usd=Decimal("5.00"),
+                        prompt_text="The accepted Diwali still, holding its frame, softly breathing light; no camera move.")
+        self.assertEqual(out["run"]["status"], "dry_complete")
+        self.assertEqual(out["manifest"]["dispatch_mode"], "dry")
+        self.assertFalse(out["run"]["dispatched"])
+        self.assertEqual(out["run"]["network"], "none")
+        self.assertEqual({a["status"] for a in out["run"]["attempts"]}, {"dry_not_sent"})
+        self.assertEqual({a["settled_usd"] for a in out["run"]["attempts"]}, {"0"})
+
+    def test_under_dry_a_missing_prompt_refuses_rather_than_inventing_one(self):
         r = B.router()
         with self.assertRaises(ExecuteRefused) as ctx:
-            r.execute(B.spec(B.SPEC_MOTION), B.profile("dry"),
-                      request_cost_ceiling_usd=Decimal("5.00"))
-        self.assertIn("no provider client is wired", " ".join(ctx.exception.reasons).lower())
+            r.execute(B.spec(B.SPEC_MOTION), B.profile("dry"), request_cost_ceiling_usd=Decimal("5.00"))
+        self.assertIn("never invents one", " ".join(ctx.exception.reasons))
 
 
 class Identities(unittest.TestCase):

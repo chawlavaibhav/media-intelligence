@@ -41,7 +41,7 @@ from . import attempt_id as identity
 from .evidence import EvidenceBase, GateResult
 from .price import PriceBook, Quote
 from .profile import PolicyProfile
-from .spec import Exclusion, Requirement, Spec
+from .spec import EXCLUSION_SCOPES, Exclusion, Requirement, Spec
 
 STAGES = ("hard_requirements", "evidence_envelope", "price", "cost", "fallback")
 
@@ -57,8 +57,8 @@ class CostEnvelopeExceeded(RouterRefusal):
 class ExecuteRefused(RuntimeError):
     """`--execute` was asked for and the preconditions for spending are not met."""
 
-    def __init__(self, reasons: list):
-        self.reasons = list(reasons)
+    def __init__(self, reasons):
+        self.reasons = [reasons] if isinstance(reasons, str) else list(reasons)
         super().__init__("; ".join(self.reasons))
 
 
@@ -178,10 +178,15 @@ class Router:
                 g = self.ev.gate(cell, auto_statuses)
                 if cell.route_key in excl:
                     e = excl[cell.route_key]
-                    exclusions_applied.append(self._exclusion_row(e, cell, "hard_requirements"))
-                    why.append(f"{cell.cell_key}: excluded by the spec ({e.basis}). Its evidence, had "
-                               f"the exclusion not applied: {g.reason}")
-                    continue
+                    # the cell's own recorded mechanism decides here: a self-composed cell draws nothing
+                    bites, scope_reason = self._exclusion_bites(e, spec, mechanism=cell.text_mechanism)
+                    exclusions_applied.append(self._exclusion_row(e, cell, "hard_requirements",
+                                                                  bites=bites, scope_reason=scope_reason))
+                    if bites:
+                        why.append(f"{cell.cell_key}: excluded by the spec ({e.basis}; scope {e.scope}). "
+                                   f"Its evidence, had the exclusion not applied: {g.reason}")
+                        continue
+                    why.append(f"{cell.cell_key}: spec exclusion scoped out ({scope_reason})")
                 why.append(f"{cell.cell_key}: {g.reason}")
                 if g.allowed and chosen is None:
                     chosen = cell
@@ -238,14 +243,26 @@ class Router:
                 candidates[rk] = cand
 
         # -- stage 1: hard requirements (exclusions) ------------------------------------------------
+        # An exclusion bites according to its SCOPE (PRODUCTION-SPEC-v1 route_exclusions.scope). A
+        # whole_route exclusion always bites. A generated_text_only exclusion bites only when this job
+        # would have the model draw the exact text - and, failing closed, when the spec cannot say.
+        # Defect found by the lead 14 Sep 2026: the router had no scope and dropped flux-2-pro as a
+        # textless PLATE route on the overlay job, where nothing is drawn.
         for rk, cand in candidates.items():
             if rk in excl and cand.kept:
                 e = excl[rk]
+                bites, scope_reason = self._exclusion_bites(e, spec, mechanism=spec.text_mechanism)
                 for cell in cand.cells.values():
-                    exclusions_applied.append(self._exclusion_row(e, cell, "hard_requirements"))
-                cand.drop("hard_requirements",
-                          f"the spec excludes this route: {e.reason} (basis {e.basis}). An excluded "
-                          f"route may be neither primary nor fallback, whatever it costs.")
+                    exclusions_applied.append(self._exclusion_row(e, cell, "hard_requirements",
+                                                                  bites=bites, scope_reason=scope_reason))
+                if bites:
+                    cand.drop("hard_requirements",
+                              f"the spec excludes this route: {e.reason} (basis {e.basis}; scope "
+                              f"{e.scope}). An excluded route may be neither primary nor fallback, "
+                              f"whatever it costs.")
+                else:
+                    cand.why.append(f"spec exclusion {e.route_key!r} (scope {e.scope}) does not bite "
+                                    f"here: {scope_reason}")
 
         # -- stage 2: the evidence gate -------------------------------------------------------------
         for cand in candidates.values():
@@ -366,11 +383,41 @@ class Router:
                                    and c.evidence_status != "awaiting_controller_ruling"
                                    for c in cells)
 
-    def _exclusion_row(self, e: Exclusion, cell, stage: str) -> dict:
+    def _exclusion_bites(self, e: Exclusion, spec: Spec, *, mechanism: str | None) -> tuple[bool, str]:
+        """Does this exclusion remove the route on this job? (bites, plain-English reason).
+
+        whole_route: always. generated_text_only: only when the model would draw the exact text -
+        i.e. `mechanism` is model_draws_text - or when the mechanism is unknown while a text
+        requirement exists (fail closed). An unknown scope word is treated as whole_route and named.
+        """
+        scope = e.scope
+        if scope not in EXCLUSION_SCOPES:
+            return True, (f"scope {scope!r} is not a scope the router knows ({list(EXCLUSION_SCOPES)}); "
+                          f"treated as whole_route, the stricter reading")
+        if scope == "whole_route":
+            return True, ("whole_route" + ("" if e.scope_declared else
+                                           " (the spec declared no scope; whole_route is the default)"))
+        # generated_text_only
+        if mechanism == "model_draws_text":
+            return True, "the model draws the exact text on this job (text_mechanism model_draws_text)"
+        if mechanism in ("deterministic_text_composition", "not_applicable"):
+            return False, (f"text_mechanism {mechanism}: the provider draws no exact text on this job, so a "
+                           f"prohibition on drawing it does not remove the route")
+        if mechanism is None and spec.has_text_requirement():
+            return True, ("the spec carries exact text but no exact_text.text_mechanism, so the router "
+                          "cannot show the model draws nothing; fail closed, whole route excluded")
+        if mechanism is None:
+            return False, "the job has no exact-text requirement; nothing is drawn as text"
+        return True, f"text_mechanism {mechanism!r} is not one the router knows; fail closed"
+
+    def _exclusion_row(self, e: Exclusion, cell, stage: str, *, bites: bool = True,
+                       scope_reason: str = "whole_route") -> dict:
         return {"route_key": e.route_key, "reason": e.reason, "basis": e.basis,
+                "scope": e.scope, "scope_declared": e.scope_declared,
                 "would_have_supplied": cell.cell_key, "question": cell.question,
                 "applied_at_stage": stage,
-                "effect": "neither primary nor fallback"}
+                "effect": "neither primary nor fallback" if bites else "scoped_out",
+                "scope_reason": scope_reason}
 
     def _dedupe_notes(self, notes: list) -> list:
         seen, out = set(), []
@@ -414,14 +461,26 @@ class Router:
 
     def _fallback_slot(self, cand: Candidate, binding) -> dict:
         q = cand.quote
+        cell_any = next(iter(cand.cells.values()))
         return {
             "route_key": cand.route_key,
             "surface": q.surface,
+            "surface_model_id": q.surface_model_id,
+            "arm": cell_any.arm,
             "evidence_cells": sorted(c.cell_key for c in cand.cells.values()),
             "evidence_status": "+".join(sorted({c.evidence_status for c in cand.cells.values()})),
             "expected_cost_usd": str(q.expected_cost_usd),
+            # added 14 Sep 2026 (lane F): the execution bridge prices a fallback attempt from the same
+            # fields the primary carries, so the slot now carries them too (added, never removed)
+            "unit_price": str(q.unit_price),
+            "unit": q.unit,
+            "quantity": str(q.quantity),
+            "quantity_unit": q.quantity_unit,
             "price_pin_ref": q.price_pin_ref,
+            "price_pin_indexes": q.pin_indexes,
             "billing_pool": q.billing_pool,
+            "credential_name": q.credential_name,
+            "adapter_family": q.adapter,
             "trigger": binding.fallback_triggers,
             "note": "a different route for the same requirement, declared before dispatch. Falling "
                     "through to it is a routing event, never a retry.",
@@ -477,12 +536,23 @@ class Router:
     def execute(self, spec: Spec, profile: PolicyProfile, *,
                 request_cost_ceiling_usd: Decimal | str | None = None,
                 already_committed_usd: Decimal | str | int = 0,
-                customer_ref: str = "unknown-customer") -> dict:
-        """Refuses unless a request-level ceiling AND an adopted profile are both present.
+                customer_ref: str = "unknown-customer",
+                prompt_text: str | None = None,
+                inputs: dict | None = None) -> dict:
+        """Plan, then hand the decision to the execution bridge. Refuses BEFORE planning when:
 
-        Nothing beyond those checks is wired: there is no provider client in this package. The
-        refusal is deliberately the first thing that happens, before a decision is even planned, so
-        that no code path exists in which a non-adopted profile reaches a dispatch.
+            * no request-level cost ceiling was supplied;
+            * the profile is not adopted (a non-adopted input may plan and price, never spend);
+            * the profile's dispatch_mode is live and may_spend() is False - i.e. spend_authority is
+              not signed or names no record (Controller rider, 14 Sep 2026: adoption is not spend
+              authorisation). A dry profile needs no spend authority: nothing is sent, reservations are 0;
+            * the profile carries a dispatch_mode the runtime does not know (or none: MissingLimit).
+
+        Then the decision must not require a person and must fit the cost envelope. What follows is the
+        bridge (runtime/execute/bridge.py): under dispatch_mode dry it renders and prices every attempt
+        through the harness and sends nothing; under live it refuses, because no signed runtime spend
+        authorisation exists and no transport is wired in this tranche. Returns
+        {"decision", "manifest", "run"} for a dry run; raises ExecuteRefused otherwise.
         """
         reasons = []
         if request_cost_ceiling_usd is None:
@@ -493,8 +563,17 @@ class Router:
         if not profile.adopted:
             reasons.append(
                 f"policy profile {profile.name!r} is {profile.status!r} with adopted: false. A "
-                f"non-adopted input may plan and price, never spend (POLICY-PROFILES invariant). "
-                f"alpha_human_release ships adopted: false, so execute refuses under it today.")
+                f"non-adopted input may plan and price, never spend (POLICY-PROFILES invariant).")
+        mode = str(profile.limit("dispatch_mode"))          # missing -> MissingLimit, a refusal by name
+        if mode == "live":
+            ok, why = profile.may_spend()
+            if not ok:
+                reasons.append(f"spend_authority is not signed: {why}. Adoption is not spend authorisation "
+                               f"(Controller rider, 14 Sep 2026); a live dispatch needs a signed runtime spend "
+                               f"authorisation record named in the profile row, and none exists.")
+        elif mode != "dry":
+            reasons.append(f"policy profile {profile.name!r} carries dispatch_mode {mode!r}; the runtime knows "
+                           f"dry and live and refuses to guess")
         if reasons:
             raise ExecuteRefused(reasons)
 
@@ -504,6 +583,10 @@ class Router:
             raise ExecuteRefused([f"the route decision requires a person: {decision['manual_route_reason']}"])
         if not decision["cost_envelope"]["within_ceiling"]:
             raise CostEnvelopeExceeded(decision["cost_envelope"])
-        raise ExecuteRefused([
-            "no provider client is wired in this lane. The decision is complete and dispatchable, and "
-            "dispatch itself is deliberately absent: this branch plans, prices and refuses."])
+
+        from runtime.execute.bridge import ExecutionBridge   # local import: the bridge imports this module
+        bridge = ExecutionBridge(evidence=self.ev, prices=self.prices, identities=self.identities)
+        manifest = bridge.build(spec, decision, profile, prompt_text=prompt_text, inputs=inputs,
+                                customer_ref=customer_ref, request_ceiling_usd=request_cost_ceiling_usd)
+        result = bridge.run(manifest, profile)                # dry -> dry_complete; live -> ExecuteRefused
+        return {"decision": decision, "manifest": manifest, "run": result}

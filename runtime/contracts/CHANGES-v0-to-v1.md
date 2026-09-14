@@ -227,3 +227,57 @@ edited; `OUTCOME-EVENT-v1.yaml` sits beside it. What changed and why, in plain t
 7. **Video text scan.** stdlib cannot decode frames from an MP4, so LIMIT-TEXT post-draw is NOT-RUN on
    every motion attempt and the verdict rests on geometry, duration and track rows. The synthetic MP4 is
    header-only (ftyp + moov), enough for the probe, and is labelled as such.
+
+---
+
+# Third round — lane F (execution bridge, 14 Sep 2026)
+
+Lane F built the bridge from a route decision to rendered provider attempts, under the lead's rule that
+`dry` is the dry twin of `alpha_human_release`. It found three things worth recording and changed one
+frozen-adjacent file by addition only.
+
+**1. The router ignored the scope the spec contract already required.** `PRODUCTION-SPEC-v1` made
+`route_exclusions.scope` a required field in round one, precisely so that RR-3's "do not let these
+routes *draw* Devanagari" would not also delete RR-1's textless plate. The router's `Exclusion` had no
+scope and stage 1 dropped the whole route. The effect on the most ordinary alpha job (a static ad with
+code-set overlay copy): flux-2-pro, the cheapest plate at USD 0.03, was gone and qwen-image-3 (0.04)
+became primary. Fixed in `runtime/route/spec.py` (`Exclusion.scope`, default `whole_route`) and
+`decision.py` stage 1: a `generated_text_only` exclusion bites only when the spec's
+`exact_text.text_mechanism` is `model_draws_text`, or — fail closed — when the spec carries exact text
+but no mechanism. Every exclusion row on the decision now says whether it bit or was `scoped_out`, and
+why. The router's own fixtures were the ones missing `scope` and `text_mechanism`; they carry both now.
+
+**2. `execute()` checked adoption, not money.** Recorded in round two as an expected-failure test; closed.
+For a live-mode profile `execute()` refuses before it plans when `may_spend()` is false, naming the
+missing spend authorisation. A dry-mode profile needs no spend authority, because nothing is sent and
+reservations are 0; that is the point of the twin.
+
+**3. A dry profile with zero draws is not evidence about the alpha.** The old `dry` row auto-routed every
+evidence status and allowed no draws, so a dry run under it took none of the alpha's decisions. It is
+now `dry_permissive` (kept for lane development and cell audits), and `dry` copies
+`alpha_human_release` verbatim with `dispatch_mode: dry`. A data test pins the twin to the alpha on every
+key outside `{profile, purpose, status, adoption_basis, dispatch_mode, spend_authority, note}`.
+
+**What changed in shared files, by addition only.** `POLICY-PROFILES.yaml`: `dispatch_mode` on every row
+(`live` on the two alpha rows, `dry` on the two dry rows). `REQUIRED-LIMITS-v0.yaml`: `dispatch_mode`
+required at intake and read by the bridge. `ROUTE-DECISION` (shape, not the frozen file): the `fallback`
+slot now also carries `unit_price`, `unit`, `quantity`, `quantity_unit`, `price_pin_indexes`,
+`surface_model_id`, `arm`, `adapter_family`, `credential_name`, so a fallback attempt is priced from the
+same fields as a primary one; `exclusions_applied` rows carry `scope`, `scope_declared`, `scope_reason`
+and `effect` may now read `scoped_out`. `EXECUTION-MANIFEST-v0.yaml` is new.
+
+**What the harness said when asked to render real attempts** (observed, not inferred): the fal text-to-
+image routes (flux-2-pro, qwen-image-3, gpt-image-2) and the Gemini API image route (nano-banana-2)
+render a verified body from the spec alone. Every image-to-video route (minimax-h3-max-i2v,
+kling-v3-pro-i2v) and every edit route (seedream-5-pro-edit) refuses with the harness's own
+`input_unresolved:<role>` until the accepted still / supplied photograph is handed over as a sealed
+input — which is correct, and is now visible on the manifest rather than discovered at dispatch. The
+harness also refuses any caller parameter that is not an input role (a `seed`, for instance), and the
+bridge keeps that refusal verbatim.
+
+**Not changed, reported.** The router still does not read `exact_text_strategies_allowed` or
+`motion_requires_accepted_still` (ALPHA-1.md already says so): under `dry`, the in-scene fixture still
+routes although the twin forbids `generated_in_scene`. That enforcement belongs to the compiler / gate
+lanes, not to the bridge. `surface_preference` is recorded on every manifest but applied nowhere,
+because the roster offers no model on both fal and a GCP surface today; the bridge says so rather than
+inventing a surface.

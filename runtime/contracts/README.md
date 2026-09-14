@@ -13,6 +13,7 @@ the objects they hand each other:
 | `PRODUCTION-SPEC-v0.yaml` | What exactly must be made, and what must be true of it? |
 | `ROUTE-DECISION-v0.yaml` | Which route will make it, why that one, at what price, and what happens if it fails? |
 | `OUTCOME-EVENT-v0.yaml` | What actually happened, once, immutably. |
+| `EXECUTION-MANIFEST-v0.yaml` | Which attempts the decision allows, rendered and priced before dispatch, and which of them would go. (Lane F, 14 Sep 2026.) |
 
 ## Two rules that shaped every field below
 

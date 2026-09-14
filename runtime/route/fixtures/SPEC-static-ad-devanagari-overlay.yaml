@@ -32,6 +32,9 @@ exact_text:
     may_reflow: false
     placement: overlay
   strategy: code_set_on_textless_plate
+  # C-6c mechanism B: the provider makes a textless plate; the runtime composes the strings. So an
+  # RR-3 exclusion scoped to generated text does not bite the plate route (see route_exclusions.scope).
+  text_mechanism: deterministic_text_composition
   strategy_basis: >-
     RR-1 (code-set text on a cheap textless plate is the DEFAULT where exactness is contractual),
     evidenced by map cell IMG-TEXT/flux-2-pro+code_overlay.
@@ -57,16 +60,22 @@ capability_requirements:
   level: code_set_on_textless_plate
   mandatory: true
 
+# scope generated_text_only (PRODUCTION-SPEC-v1 route_exclusions.scope): RR-3 forbids these routes from
+# DRAWING Devanagari; on this job nothing is drawn, so the exclusions are recorded as scoped_out and
+# flux-2-pro stays available as the cheapest textless plate (RR-1).
 route_exclusions:
 - route_key: seedream-5-pro
   reason: "Devanagari spelling failures on every draw"
   basis: "RR-3 / IMG-TEXT/seedream-5-pro+B_premium_generated (0/2, every rejection 'wrong spelling')"
+  scope: generated_text_only
 - route_key: recraft-v4
   reason: "Devanagari spelling failures on every draw"
   basis: "RR-3 / IMG-TEXT/recraft-v4+B_premium_generated (0/2, every rejection 'wrong spelling')"
+  scope: generated_text_only
 - route_key: flux-2-pro
   reason: "Devanagari spelling failures on every draw"
   basis: "RR-3 / IMG-TEXT/flux-2-pro+C_composite_textless_base (0/2, every rejection 'wrong spelling')"
+  scope: generated_text_only
 
 gate_requirements:
 - pre_dispatch_consent_check

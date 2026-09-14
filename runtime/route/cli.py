@@ -1,7 +1,14 @@
-"""`--plan` a route decision for a spec, offline. `--execute` exists only to refuse, today.
+"""`--plan` a route decision for a spec, offline. `--manifest` renders the attempts it allows. `--execute`
+runs dry under a dry profile and refuses under a live one.
 
-    python3 -m runtime.route.cli --plan runtime/route/fixtures/SPEC-static-ad-devanagari.yaml \
+    python3 -m runtime.route.cli --plan runtime/route/fixtures/SPEC-static-ad-devanagari-overlay.yaml \
         --profile alpha_human_release
+
+    python3 -m runtime.route.cli --manifest runtime/route/fixtures/SPEC-static-ad-devanagari-overlay.yaml \
+        --profile dry --prompt-file prompt.txt [--json]
+        the EXECUTION-MANIFEST (lane F): one rendered, priced attempt per draw the profile allows, through
+        the harness adapters' dry_run(); nothing is sent. A prompt is part of the request and is never
+        invented: give --prompt-file, or --prompt-from-spec to read spec.blueprint.generation_prompts.main.
 
     python3 -m runtime.route.cli --cells --profile alpha_human_release
         how many of the 61 evidence cells this router would auto-route under a given profile
@@ -144,17 +151,30 @@ def cells_audit(router: Router, ev: EvidenceBase, profile_name: str) -> str:
     return "\n".join(head + [""] + rows + tail)
 
 
+def prompt_from_args(args, spec) -> str | None:
+    """The prompt the request carries, or None. Never invented here or anywhere."""
+    if args.prompt_file:
+        return Path(args.prompt_file).read_text(encoding="utf-8")
+    if args.prompt_from_spec:
+        return ((spec.data.get("blueprint") or {}).get("generation_prompts") or {}).get("main")
+    return None
+
+
 def main(argv: list | None = None) -> int:
     ap = argparse.ArgumentParser(prog="runtime.route.cli", description=__doc__)
     ap.add_argument("--plan", metavar="SPEC", help="path to a PRODUCTION-SPEC-v1 yaml")
-    ap.add_argument("--execute", metavar="SPEC", help="attempt to execute (refuses without a "
-                                                      "request ceiling and an adopted profile)")
+    ap.add_argument("--manifest", metavar="SPEC", help="plan, then build the EXECUTION-MANIFEST (sends nothing)")
+    ap.add_argument("--execute", metavar="SPEC", help="plan, build and run: dry under a dry profile; refuses "
+                                                      "under a live profile (no spend authority is signed)")
     ap.add_argument("--cells", action="store_true", help="audit all evidence cells under a profile")
     ap.add_argument("--profile", required=True, help="the policy profile row the job names")
     ap.add_argument("--already-committed-usd", default="0")
     ap.add_argument("--request-ceiling-usd", default=None)
     ap.add_argument("--customer-ref", default="acct-fixture")
-    ap.add_argument("--json", action="store_true", help="print the decision object as JSON")
+    ap.add_argument("--prompt-file", metavar="F", help="the generation prompt, from a file")
+    ap.add_argument("--prompt-from-spec", action="store_true",
+                    help="read spec.blueprint.generation_prompts.main (lane E's field) if the spec carries it")
+    ap.add_argument("--json", action="store_true", help="print the decision / manifest object as JSON")
     args = ap.parse_args(argv)
 
     router, ev, root = build_router()
@@ -169,21 +189,51 @@ def main(argv: list | None = None) -> int:
                                customer_ref=args.customer_ref)
         print(json.dumps(decision, indent=2, default=str) if args.json else render(decision))
         return 0
+    if args.manifest:
+        from runtime.execute.bridge import ExecutionBridge
+        from runtime.execute.manifest import render as render_manifest
+        spec = load_spec(args.manifest)
+        prompt = prompt_from_args(args, spec)
+        if not prompt or not prompt.strip():
+            print("MANIFEST REFUSED")
+            print("  - a prompt is part of the request and none was given. Pass --prompt-file F, or "
+                  "--prompt-from-spec when the spec carries blueprint.generation_prompts.main. The runtime "
+                  "never invents a prompt.")
+            return 2
+        decision = router.plan(spec, prof, already_committed_usd=Decimal(args.already_committed_usd),
+                               customer_ref=args.customer_ref)
+        bridge = ExecutionBridge(evidence=ev, prices=router.prices, identities=router.identities)
+        try:
+            manifest = bridge.build(spec, decision, prof, prompt_text=prompt, customer_ref=args.customer_ref,
+                                    request_ceiling_usd=(Decimal(args.request_ceiling_usd)
+                                                         if args.request_ceiling_usd is not None else None))
+        except ExecuteRefused as exc:
+            print("MANIFEST REFUSED")
+            for r in exc.reasons:
+                print(f"  - {r}")
+            return 2
+        print(json.dumps(manifest, indent=2, default=str, ensure_ascii=False) if args.json
+              else render_manifest(manifest))
+        return 0
     if args.execute:
+        from runtime.execute.manifest import render as render_manifest
         spec = load_spec(args.execute)
         try:
-            router.execute(spec, prof,
-                           request_cost_ceiling_usd=(Decimal(args.request_ceiling_usd)
-                                                     if args.request_ceiling_usd is not None else None),
-                           already_committed_usd=Decimal(args.already_committed_usd),
-                           customer_ref=args.customer_ref)
+            out = router.execute(spec, prof,
+                                 request_cost_ceiling_usd=(Decimal(args.request_ceiling_usd)
+                                                           if args.request_ceiling_usd is not None else None),
+                                 already_committed_usd=Decimal(args.already_committed_usd),
+                                 customer_ref=args.customer_ref,
+                                 prompt_text=prompt_from_args(args, spec))
         except (ExecuteRefused, CostEnvelopeExceeded) as exc:
             print("EXECUTE REFUSED")
             for r in getattr(exc, "reasons", [str(exc)]):
                 print(f"  - {r}")
             return 2
+        print(json.dumps(out, indent=2, default=str, ensure_ascii=False) if args.json
+              else render_manifest(out["manifest"], out["run"]))
         return 0
-    ap.error("one of --plan, --execute or --cells is required")
+    ap.error("one of --plan, --manifest, --execute or --cells is required")
     return 1
 
 

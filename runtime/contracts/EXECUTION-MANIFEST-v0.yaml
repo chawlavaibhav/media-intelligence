@@ -1,0 +1,154 @@
+# EXECUTION-MANIFEST-v0 — every provider attempt a route decision allows, rendered and priced BEFORE
+# any dispatch, with the ceiling each one is checked against and the reason any of them would not go.
+# Frozen contract (lane F, 14 Sep 2026).
+#
+# The manifest sits between the ROUTE-DECISION and the pre-dispatch gate. It is the object a person
+# can read to see exactly what would be sent (method, URL, the body's fingerprint - and under dry mode
+# the body itself), what it would cost, which evidence cell it rests on, and whether it fits the
+# money. It is built by runtime/execute/bridge.py through the Lab harness's OWN adapter dry_run()
+# (eval/harness-v2/adapters), so the bytes described here are the bytes a live call would carry.
+#
+# dispatch_mode comes from the policy profile row: `dry` renders and prices and sends nothing
+# (reservations 0); `live` would send IF a signed runtime spend authorisation existed. None does, and
+# no transport is wired in this tranche, so a live manifest is always refused at run().
+schema: EXECUTION-MANIFEST-v0
+status: FROZEN_CONTRACT
+
+fields:
+
+  manifest_id: {type: string, required: true, note: "em-<sha256 prefix over job_id|decision_id|profile|built_utc>"}
+  job_id: {type: string, required: true}
+  spec_id: {type: string, required: true}
+  decision_id: {type: string, required: true, note: "the ROUTE-DECISION this manifest was built from; its sha256 is in provenance"}
+  policy_profile: {type: string, required: true}
+  dispatch_mode: {type: string, required: true, note: "dry | live, read from the profile row (POLICY-PROFILES dispatch_mode)"}
+  customer_ref: {type: string, required: true}
+  built_utc: {type: timestamp, required: true}
+
+  blocked:
+    type: object
+    required: true
+    note: >-
+      null when attempts were built. Otherwise {reason_code, reason} and attempts is empty: the bridge
+      refuses to build attempts when the decision requires a person (manual_route_required), has no
+      primary (no_primary), lacks the fallback the profile requires (fallback_required_missing), or does
+      not fit the job ceiling (cost_envelope_exceeded). Open vocabulary; today's words are those four.
+
+  attempts:
+    type: "list[object]"
+    required: true
+    note: >-
+      In reservation order: every primary draw the profile allows (max_provider_draws_per_deliverable),
+      then every fallback draw. One row per draw; a draw is never repeated under the same attempt_id.
+    fields:
+      attempt_id: {type: string, required: true, note: "minted by runtime.route.attempt_id in the customer namespace, collision-checked against Lab / smoke / liveness patterns"}
+      slot: {type: string, required: true, note: "primary | fallback"}
+      draw_index: {type: int, required: true}
+      route_key: {type: string, required: true}
+      surface: {type: string, required: true}
+      adapter_family: {type: string, required: true}
+      surface_model_id: {type: string, required: true}
+      arm: {type: string, required: false}
+      request:
+        type: object
+        required: true
+        fields:
+          method: {type: string, required: true}
+          url: {type: string, required: true}
+          body_sha256: {type: string, required: true, note: "sha256 over the canonical body bytes the harness rendered"}
+          body: {type: object, required: false, note: "present under dispatch_mode dry only; a live manifest carries the fingerprint"}
+          rendered_by: {type: string, required: true, note: "always 'harness adapter dry_run' - there is no second rendering path"}
+          shape_status: {type: string, required: true, note: "verified | unverified | not_built, as the harness surface registry says"}
+          credential_name: {type: string, required: true, note: "a NAME (e.g. FAL_KEY); no value is ever read or written by the bridge"}
+      price:
+        type: object
+        required: true
+        fields:
+          unit_price: {type: decimal, required: true}
+          unit: {type: string, required: true}
+          quantity: {type: decimal, required: true}
+          expected_cost_usd: {type: decimal, required: true}
+          billing_pool: {type: string, required: true}
+          price_pin_ref: {type: string, required: true, note: "the pinned vendor bytes; every attempt carries its pin"}
+          pin_indexes: {type: "list[string]", required: true}
+          harness_amount_usd_equiv: {type: decimal, required: false, note: "the harness's own price for the same row; must agree with expected_cost_usd or the attempt would not dispatch"}
+          price_agrees_with_harness: {type: bool, required: true}
+      evidence:
+        type: object
+        required: true
+        fields:
+          cells: {type: "list[string]", required: true, note: "the routing map cells the slot rests on"}
+          status: {type: string, required: true, note: "TAINT-REGISTER-v1 vocabulary"}
+          text_mechanism: {type: string, required: false, note: "C-6c: what the dispatched call does about exact text - deterministic_text_composition (textless plate) | model_draws_text | not_applicable; null when the spec carries text but does not say"}
+      would_dispatch: {type: bool, required: true, note: "primary: the harness's own verdict AND the price agrees AND the ceiling holds. fallback: always false - see conditional_on"}
+      refusal_reason: {type: string, required: false, note: "the harness's reason verbatim (prefixed 'harness:'), a price disagreement, or blocked_by_ceiling; never patched"}
+      ceiling:
+        type: object
+        required: true
+        fields:
+          job_ceiling_usd: {type: decimal, required: true, note: "the effective ceiling: the spec's budget, or the lower of that and a request ceiling"}
+          reserved_before_this_usd: {type: decimal, required: true}
+          this_attempt_usd: {type: decimal, required: true}
+          within: {type: bool, required: true}
+      blocked_by_ceiling: {type: bool, required: true}
+      conditional_on: {type: "list[string]", required: false, note: "fallback rows only: the named triggers (ROUTE-DECISION fallback.trigger) one of which must fire on the primary before this attempt may be dispatched"}
+      if_triggered_would_dispatch: {type: bool, required: false, note: "fallback rows only"}
+
+  fallback_triggers: {type: "list[string]", required: true, note: "copied from the decision; empty when no fallback"}
+  self_composed: {type: "list[object]", required: true, note: "requirements the runtime satisfies with its own code (dispatches: false in the binding): capability, cell, text_mechanism, note. No provider call, no price."}
+  surface_preference:
+    type: object
+    required: false
+    note: >-
+      The profile's surface_preference rule (same_model_prefers_gcp), what the roster actually offers
+      for the primary's model, and whether the rule was applied. Today the roster carries at most a
+      route surface plus a fal fallback per model and no fal+GCP pair, so `applied` is false with the
+      reason; the bridge never invents a surface the harness registry does not expose.
+  ceiling:
+    type: object
+    required: false
+    note: "absent on a blocked manifest"
+    fields:
+      job_ceiling_usd: {type: decimal, required: true}
+      request_ceiling_usd: {type: decimal, required: false}
+      effective_ceiling_usd: {type: decimal, required: true}
+      already_committed_usd: {type: decimal, required: true}
+      reserved_total_usd: {type: decimal, required: true, note: "what every unblocked attempt would reserve if all of them ran; under dry nothing is reserved"}
+      attempts_blocked_by_ceiling: {type: int, required: true}
+
+  provenance:
+    type: object
+    required: true
+    fields:
+      spec_sha256: {type: string, required: true}
+      decision_sha256: {type: string, required: true}
+      routing_evidence_map_sha256: {type: string, required: true}
+      taint_register_sha256: {type: string, required: true}
+      roster_sha256: {type: string, required: true}
+      policy_profile: {type: string, required: true}
+      policy_profile_adopted: {type: bool, required: true}
+      spend_authority_status: {type: string, required: true}
+      harness_modules: {type: "list[string]", required: true}
+      dispatched: {type: bool, required: true, note: "always false: a manifest is built before dispatch"}
+      network: {type: string, required: true, note: "always 'none'"}
+
+run_result:
+  note: >-
+    ExecutionBridge.run(manifest, profile) returns {status: dry_complete | refused, attempts: [{attempt_id,
+    status: dry_not_sent, would_dispatch, refusal_reason, artifact_sha256: null, settled_usd: "0",
+    reserved_usd: "0"}], dispatched: false, network: none} under dry, and {status: refused, refusal} for a
+    blocked manifest. Under live it raises ExecuteRefused naming the missing spend authorisation, or -
+    with a signed record parsed - "live dispatch is not wired in this tranche". It never constructs a
+    transport.
+
+invariants:
+  - "Built before dispatch. A dispatch with no manifest is impossible; the manifest records dispatched: false."
+  - "dry never sends: under dispatch_mode dry every attempt is rendered and priced through the harness adapter's dry_run() and nothing leaves the machine; reservations and settlements are 0."
+  - "Blocked manifests carry no attempts."
+  - "Every attempt carries its price pin and its evidence cell(s)."
+  - "No implicit retry: one attempt per draw the profile allows, each with its own attempt id; nothing here tries the same attempt twice."
+  - "A fallback attempt is conditional on a named trigger firing on the primary; it is never dispatched alongside the primary and never as a retry of it."
+  - "Job and profile ceilings propagate per attempt: attempts reserve in listed order, the running total never crosses the effective ceiling, and an attempt that would is blocked_by_ceiling and stays visible - nothing is trimmed silently."
+  - "A refusal from the harness is recorded verbatim, never patched; a body shape the harness will not verify is a body the runtime will not send."
+  - "Live dispatch requires adopted: true, spend_authority.status signed, a record that parses as a signed authorisation for this profile, ceiling and routes, AND a transport - and no transport exists in this tranche."
+  - "No key value appears anywhere in a manifest; credentials are names."
