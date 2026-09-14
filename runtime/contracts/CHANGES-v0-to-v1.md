@@ -347,3 +347,28 @@ lanes F and E to settle together; nothing changed in this round.
 What was NOT changed: no `*-v0.yaml` or `*-v1.yaml` file, no file under `eval/`, `canon/` or
 `coordination/`, `POLICY-PROFILES.yaml` (both limits the compiler needed were already on every row),
 `runtime/canon/packs.py` (lane H), `runtime/route/**` (lane F).
+
+
+---
+
+# Third round — lead integration (14 Sep 2026)
+
+Found by running the whole chain over the committed briefs (`python3 -m runtime.alpha.battery`), after
+the four lanes were merged. Each is recorded in `coordination/audits/HANDOFF-USD0-TRANCHE-2026-09-14.md`
+§H with its defect number.
+
+1. **A kind's unconditional capability blocks the job it exists for** (DEF-7). `DELIVERABLE-KINDS`
+   `static_ad` demands `exact_text_composition`; a static ad with no exact strings has no strategy
+   level, so the router refused to choose and sent a routable job to a person. Now a row in
+   `FACET-CAPABILITIES-v0.yaml` (`kind_capability_conditions`) waives the capability when its fact is
+   absent, and the spec records `waived_capabilities`.
+2. **`reference_fidelity` is an image question** (DEF-8). The `supplied_asset_present` facet demanded
+   it of a motion-from-still job, which no image-to-video route answers. The facet now applies to
+   `static_image` only.
+3. **A video blueprint's single generation prompt is its motion prompt** (DEF-9). The blueprint planner
+   now sets `generation_prompts.motion` from §6 when no `i2v_motion_prompt` block exists.
+4. **TEMPLATE-v0 required `generation_prompts.main`** (DEF-10), which code-composed text never
+   dispatches; corrected in the file the day it was written, before any template existed.
+5. **The frozen Stage-A plate prompts fail the gate** (DEF-1) — not a contract defect but the most
+   consequential finding: the gate's LIMIT-TEXT rule is sentence-local and the blueprints predate it.
+   Nothing frozen was edited; one labelled runtime-authored recorded plan proves the chain instead.

@@ -91,12 +91,11 @@ named in `spend_authority.record`. Both profile readers expose `may_spend()`, wh
 and says exactly which of the two is missing (`runtime/route/profile.py`,
 `runtime/policy/profiles.py`).
 
-**Known gap, recorded as an expected-failure test:** `Router.execute()` in
-`runtime/route/decision.py` checks only `adopted`. With the profile now adopted, the only thing
-between the alpha profile and a dispatch of a fully-routable spec is that no provider client exists
-on this branch. The execution bridge (Wave 2) must check `spend_authority` before planning. See
-`test_execute_must_refuse_on_spend_authority_none_before_planning` in
-`runtime/tests/test_route_limits.py`.
+**Closed on the vertical-slice branch (14 Sep 2026):** `Router.execute()` now refuses before planning
+unless the profile may spend (`may_spend()`), and live dispatch is not wired at all — the execution
+bridge (`runtime/execute/`) renders and prices every attempt through the harness adapter's `dry_run()`
+and sends nothing; under `dispatch_mode: live` it refuses even after a signed record parses
+("live dispatch is not wired in this tranche"). Both former expected-failure tests are real passes.
 
 ## The evidence the wedge rests on
 
@@ -104,10 +103,10 @@ on this branch. The execution bridge (Wave 2) must check `spend_authority` befor
   on a cheap textless plate, 4/4 accepted at about USD 0.03 per accepted picture. Read "4/4"
   correctly: **the image model did not draw the accepted copy; code did.** The plate is generated,
   the text is composited by the runtime, so it is exact by construction. The two map cells behind
-  this rule share one route key and one arm and are being re-keyed under Controller item C-6c
-  (`coordination/audits/AUDIT-2026-09-10-CONTROLLER-DECISIONS.md`); until that lands the taint
-  register marks them blocked, and the router hands a static-ad job to a person rather than
-  auto-routing it. The mechanism is sound; the bookkeeping is being fixed.
+  this rule were re-keyed under ruling C-6c on 14 Sep 2026: `IMG-TEXT/flux-2-pro+code_overlay`
+  (mechanism `deterministic_text_composition`, 4/4, clean) is now distinct from the bare plate cell
+  (`model_draws_text`, 1/4, eliminated), the register carries `text_mechanism` on every cell, and the
+  router selects the code-composed cell by mechanism. A static overlay ad auto-routes with a fallback.
 - **Short motion from the accepted still — RR-8**: image-to-video on Kling v3 Pro 8/8, Wan 3.0
   Prime 8/8, MiniMax H3 Max 7/8 (cheapest), Veo 3.1 fast 5/8. The input bias is real and is why
   `motion_requires_accepted_still: true`: the 8/8 was measured on stills a person had already
@@ -115,26 +114,46 @@ on this branch. The execution bridge (Wave 2) must check `spend_authority` befor
 - **Supplied photo — RR-4/RR-5**: Seedream 5 Pro edit 10/12, every draw on a constructed stand-in,
   never a real customer photograph. Conditional in Alpha 1 for that reason as well as consent.
 
-## What does not exist yet (do not claim it does)
+## What exists on `work/runtime-alpha-vertical-slice-v0`, and what still does not
 
-Verified against this branch and `coordination/audits/HANDOFF-TO-CONTROLLER-2026-09-10.md` §6:
+Run it: `python3 -m runtime.alpha.cli runtime/fixtures/alpha-briefs/img-text-02-conformant.json --accept`
+(one command, dry, USD 0); the committed 14-run battery and its results are under `runtime/battery/`.
 
-- **Execution bridge** — nothing dispatches. `Router.execute()` refuses by design
-  ("no provider client is wired"). Wave 2.
-- **Post-draw deterministic checks** — the spec names them (`deterministic_checks`); nothing runs them.
-- **Repair loop** — `repair_allowance: 1` is read into the spec; no code performs a repair.
-- **Acceptance states** — no accepted / rejected / released state exists on a job; human approval
-  (C-8) is policy in the row, not a workflow in code.
-- **Empirical memory event** — `OUTCOME-EVENT-v0.yaml` is a contract; nothing writes one.
-- **Customer-facing intake** — `runtime/cli.py` turns a fixture brief into a spec with the planner
-  answered from a recorded fixture; there is no command that accepts a live customer request.
-- **Enforcement of the two new C-7 limits** — `exact_text_strategies_allowed` and
-  `motion_requires_accepted_still` are data today; neither `runtime/spec/compile.py` nor
-  `runtime/route/decision.py` reads them yet.
-- **A second usable route for static ads and photo edits** — the handoff's most useful sentence:
-  the alpha profile requires a fallback, and today those two kinds have one usable route each, so
-  they go to manual routing.
+**Exists (dry, proven by `runtime/tests/test_alpha_cli.py` and the battery):**
 
-What does exist on this branch: intake against the frozen job contract, brief-to-spec compilation
-with deterministic Canon lookup (PC-03A), and an evidence-aware, offline router that plans, prices
-and refuses (PC-03B). All of it runs at USD 0 with no network.
+- **Intake against PRODUCTION-JOB-v1** — consent keyed on `depicts_identifiable_person`, the C-7
+  limits (`exact_text_strategies_allowed`, `motion_requires_accepted_still`) enforced from the profile
+  row, briefs derived mechanically from the frozen Stage-A cases and the marketplace bank
+  (`runtime/tools/brief_from_*.py`).
+- **Production Specification v1** with the reasoning pass served from the frozen Stage-A blueprint
+  (a recorded plan; no model call), a recorded fixture, or a promoted template.
+- **Canon Injection v1** — receipt-free cached prefix (`runtime/canon/INJECTION-PREFIX-v1.md`, 328
+  tokens), accepted packs only, missing domains named; **template library** (`TEMPLATE-v0`) promoted
+  from a human-accepted outcome and serving an identical repeat job with no reasoning pass.
+- **Route decision** with scoped exclusions and mechanism-keyed exact-text cells.
+- **Execution bridge (`EXECUTION-MANIFEST-v0`)** — every attempt rendered and priced through the
+  harness adapter's `dry_run()`, attempt ids in the customer namespace, job and profile ceilings
+  propagated per attempt, fallback attempts conditional on named triggers, provenance to the price
+  pin, the evidence cell and the policy profile; `dispatch_mode: dry` sends nothing.
+- **Pre-dispatch and post-draw gates** over `canon.gate` (the compiled-doctrine gate, unchanged),
+  fed by a package renderer; post-draw over a synthetic PNG/MP4 stub with a scripted detector.
+- **Bounded repair** (the profile's allowance; a repair is an explicit new attempt with provenance;
+  no hidden retry), **human acceptance states** (pending_human → accepted / rejected /
+  repair_requested; release only by a person; no path to autonomous delivery), and the
+  **OUTCOME-EVENT-v1** empirical-memory event (immutable, schema-validated, `dry_run: true`).
+
+**Does not exist (do not claim it does):**
+
+- **A live dispatch.** No transport is constructed anywhere; `dispatch_mode: live` refuses.
+  The first real Alpha-1 run needs a signed runtime spend record (none exists) and the live
+  path wired behind it.
+- **A real post-draw artifact and a paid text detector.** The synthetic artifact and scripted detector
+  prove the interface, measure nothing; Cloud Vision stays uninvoked.
+- **Gate-conformant plate prompts for the frozen Stage-A blueprints.** The frozen IMG-TEXT-01/-02
+  plate prompts fail the gate's LIMIT-TEXT rule (the text-surface word "poster" in sentence 1 with no
+  deferral term) — they predate the gate. The chain is proven with one labelled, runtime-authored
+  recorded plan; a production reasoning pass must write prompts to the gate's rule.
+- **A second usable route for photo edits and person references** — `IMG-EDIT`/`IMG-REF` cells are
+  directional (n = 2 per route), and a static ad with a supplied product photo demands
+  `image_generation` + `reference_fidelity` from one call, which no route answers; both go to a person.
+- **A customer-facing API.** The entry point is a CLI over a brief file.
