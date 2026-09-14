@@ -38,6 +38,27 @@ Three sections are printed:
              rest on a group where the readings differ.
 
 The script decides nothing.  It only reports.
+
+Rulings applied on 14 September 2026 (record:
+coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md):
+
+  C-3   the frozen rule is applied literally; infrastructure / request failures
+        count wherever the preregistered rule says they count.
+  C-6b  STRICT: a draw that failed once stays a failure; a later re-send is
+        descriptive product evidence and is never counted.  The STRICT column
+        is therefore the counting column; LENIENT is still printed so the
+        reader can see what the runs themselves did.
+  C-6c  exact-text mechanisms are DIFFERENT routes.  A trial judged in a run
+        whose RESULTS.yaml records `layout: composite-v2` (the provider made a
+        textless plate; deterministic code composed the exact strings) carries
+        the route identity `<route>+code_overlay`.  The four img-r1 /
+        img-r1-composite ids therefore no longer collide: the img-r1-composite
+        dispatch is `distinct_mechanism (C-6c)`, not a re-send.
+  C-6d  elimination is per (route, question), exactly as frozen E4.
+
+The map generator (eval/harness-v2/evidence_map.py) and the taint register
+builder (build_taint_register.py) import this file and call `cell_numbers`;
+this is the ONLY implementation of the elimination arithmetic.
 """
 
 from __future__ import annotations
@@ -63,6 +84,16 @@ RULES_PATH = os.path.join(
 )
 
 ERROR_STATUSES = {"error", "refusal", "refused"}
+
+# C-6c: a run whose RESULTS rows record this layout judged code-composed text
+# on a textless plate -- a different route mechanism from the model drawing
+# the text itself.  Its trials carry the route identity <route>+CODE_OVERLAY.
+COMPOSITE_LAYOUT = "composite-v2"
+CODE_OVERLAY_SUFFIX = "+code_overlay"
+DISTINCT_MECHANISM = "distinct_mechanism (C-6c)"
+RULINGS_RECORD = (
+    "coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md"
+)
 
 # case ids are <QUESTION>-<NN>; VID-T2V-01 -> VID-T2V, MUS-01 -> MUS
 CASE_SUFFIX = re.compile(r"-\d+$")
@@ -122,11 +153,24 @@ def has_token(text: str, token: str) -> bool:
     return re.search(pattern, text) is not None
 
 
-def load_runs(root: str) -> dict:
+def route_identity(route_key: str, composite_layout: bool) -> str:
+    """C-6c: the route identity of a trial.  A trial judged in a run that
+    records `layout: composite-v2` is the code-overlay mechanism."""
+    if composite_layout and route_key and not route_key.endswith(CODE_OVERLAY_SUFFIX):
+        return route_key + CODE_OVERLAY_SUFFIX
+    return route_key
+
+
+def load_runs(root: str, runs_dir: str | None = None) -> dict:
     """One record per run directory: plan header, planned trials, dispatches,
-    sealed artifacts, ledger entry types, and the committed RESULTS.yaml."""
+    sealed artifacts, ledger entry types, and the committed RESULTS.yaml.
+
+    `runs_dir` defaults to eval/experiments/EVAL-040/runs under `root`; a test
+    may point it at a synthetic tree.  Paths recorded on each run stay relative
+    to `root` when the default is used."""
     runs = {}
-    base = os.path.join(root, RUNS_DIR)
+    base_rel = runs_dir if runs_dir else RUNS_DIR
+    base = base_rel if os.path.isabs(base_rel) else os.path.join(root, base_rel)
     for run_dir in sorted(os.listdir(base)):
         run_path = os.path.join(base, run_dir)
         plan_path = os.path.join(run_path, "PLAN.yaml")
@@ -191,6 +235,9 @@ def load_runs(root: str) -> dict:
         results_path = os.path.join(run_path, "RESULTS.yaml")
         if os.path.isfile(results_path):
             results = read_yaml(results_path)
+        composite_layout = bool(results) and any(
+            row.get("layout") == COMPOSITE_LAYOUT for row in results.get("trials") or []
+        )
 
         runs[run_dir] = {
             "dir": run_dir,
@@ -204,11 +251,76 @@ def load_runs(root: str) -> dict:
             "ledger_types": {k: sorted(v) for k, v in ledger_types.items()},
             "ledger_spend_usd": dict(ledger_amounts),
             "results": results,
-            "results_path": os.path.join(RUNS_DIR, run_dir, "RESULTS.yaml")
+            "results_path": os.path.join(base_rel, run_dir, "RESULTS.yaml")
             if results is not None
             else None,
-            "plan_path": os.path.join(RUNS_DIR, run_dir, "PLAN.yaml"),
+            "plan_path": os.path.join(base_rel, run_dir, "PLAN.yaml"),
+            # C-6c: every judged row of this run records layout composite-v2
+            "composite_layout": composite_layout,
         }
+    return runs
+
+
+def runs_from_results_docs(docs: list) -> dict:
+    """Pseudo-runs built from RESULTS documents alone -- no PLAN.yaml, no
+    RUN-LOG.jsonl, no ledger.  Used where no run directory exists (synthetic
+    tests, or a generator run in results-only mode).  Every row is one
+    dispatch; a row's own `run_id` names its pseudo-run (so a file that merges
+    two runs' rows, like vid-wan2 + vid-wan2-i2v, splits into two).  The
+    "planned" denominator is then the distinct trial ids PRESENT IN THE ROWS,
+    not the plans -- a row deleted from a results file is invisible here, which
+    is exactly why the sealed run directories are the production input."""
+    runs: dict = {}
+    for doc_index, doc in enumerate(docs):
+        if not doc:
+            continue
+        file_run = doc.get("run_id")
+        rows = doc.get("trials") or []
+        composite_layout = any(row.get("layout") == COMPOSITE_LAYOUT for row in rows)
+        first_run = None
+        for row_index, row in enumerate(rows):
+            trial_id = row.get("trial_id")
+            if not trial_id:
+                continue
+            parts = trial_id.split("__")
+            rid = row.get("run_id") or file_run or "results"
+            first_run = first_run or rid
+            run = runs.setdefault(
+                rid,
+                {
+                    "dir": rid,
+                    "mode": "lane",
+                    "redo_of": None,
+                    "planned": {},
+                    "dispatched": {},
+                    "recovered": set(),
+                    "pre_dispatch_refusals": {},
+                    "sealed": set(),
+                    "ledger_types": {},
+                    "ledger_spend_usd": {},
+                    "results": None,
+                    "results_path": None,
+                    "plan_path": None,
+                    "composite_layout": composite_layout,
+                },
+            )
+            run["planned"][trial_id] = {
+                "case_id": row.get("case_id") or (parts[0] if parts else None),
+                "route_key": row.get("route_key") or (parts[1] if len(parts) > 1 else None),
+                "arm": row.get("arm") or (parts[2] if len(parts) > 2 else None),
+                "repeat_index": row.get("repeat_index"),
+            }
+            run["dispatched"][trial_id] = {
+                "at": "%03d-%04d" % (doc_index, row_index),
+                "status": row.get("status") or "ok",
+                "error_class": row.get("error_class"),
+                "artifact_sha256": row.get("sha256"),
+            }
+        if first_run is not None:
+            # the whole document is attached once, so judged_verdicts and
+            # recorded_entries see every row and every elimination entry once
+            owner = file_run if file_run in runs else first_run
+            runs[owner]["results"] = doc
     return runs
 
 
@@ -220,6 +332,9 @@ def load_runs(root: str) -> dict:
 def occurrence_class(run: dict, trial_id: str, earlier_core_runs: list) -> str:
     if run["mode"] == "smoke":
         return "smoke"
+    if run.get("composite_layout"):
+        # C-6c: not a re-send of the same object -- a different route mechanism
+        return DISTINCT_MECHANISM
     if run["redo_of"]:
         return "redo (declared)"
     if earlier_core_runs:
@@ -243,7 +358,7 @@ def build_occurrences(runs: dict) -> dict:
         for run_dir, disp in occs:
             run = runs[run_dir]
             kind = occurrence_class(run, trial_id, seen_core)
-            if kind != "smoke":
+            if kind not in ("smoke", DISTINCT_MECHANISM):
                 seen_core.append(run_dir)
             rows.append(
                 {
@@ -252,6 +367,7 @@ def build_occurrences(runs: dict) -> dict:
                     "kind": kind,
                     "status": disp["status"],
                     "error_class": disp["error_class"],
+                    "composite_layout": bool(run.get("composite_layout")),
                     "recovered": trial_id in run["recovered"],
                     "sealed": trial_id in run["sealed"],
                     "ledger_types": run["ledger_types"].get(trial_id, []),
@@ -281,6 +397,7 @@ def judged_verdicts(runs: dict) -> dict:
                 "verdict_basis": row.get("verdict_basis"),
                 "blind_id": row.get("blind_id"),
                 "redo_of": row.get("redo_of"),
+                "layout": row.get("layout"),
             }
     return out
 
@@ -295,6 +412,12 @@ def print_section_a(occurrences: dict, verdicts: dict) -> list:
           % sum(len(rows) for rows in occurrences.values()))
     print("logical trial ids dispatched twice+   : %d" % len(dups))
     print()
+    print("note (C-6c): a dispatch marked '%s' was judged in a run whose" % DISTINCT_MECHANISM)
+    print("      RESULTS.yaml records layout %s -- code composed the exact strings on a" % COMPOSITE_LAYOUT)
+    print("      textless plate.  That is a different route mechanism (route identity")
+    print("      <route>%s), not a re-send of the same object; it is grouped and" % CODE_OVERLAY_SUFFIX)
+    print("      counted on its own.  Ruling record: %s" % RULINGS_RECORD)
+    print()
     for trial_id in sorted(dups):
         print(trial_id)
         for row in dups[trial_id]:
@@ -306,7 +429,7 @@ def print_section_a(occurrences: dict, verdicts: dict) -> list:
                 else "judged=NOT IN ANY RESULTS.yaml"
             )
             print(
-                "    %-24s %-17s status=%-8s err=%-22s recovered=%-5s sealed=%-5s ledger=%-19s spend_usd=%.2f  %s"
+                "    %-24s %-26s status=%-8s err=%-22s recovered=%-5s sealed=%-5s ledger=%-19s spend_usd=%.2f  %s"
                 % (
                     row["run_id"],
                     row["kind"],
@@ -336,16 +459,33 @@ def e2_threshold(n: int) -> int:
     return math.floor(0.25 * n)
 
 
-def group_of(runs: dict, trial_id: str):
-    """(question, route_key, arm) for a logical trial id, from the plans."""
+def group_of(runs: dict, trial_id: str, run_dir: str | None = None):
+    """(question, route identity, arm) for a logical trial id, from the plans.
+
+    `run_dir` names the run the attempt belongs to: its plan supplies the
+    metadata and, under C-6c, its `composite_layout` flag decides whether the
+    route identity carries the +code_overlay suffix.  Without it the first run
+    (alphabetically) that plans the id is used, without the suffix."""
+    candidates = [run_dir] if run_dir and run_dir in runs else []
+    candidates += [d for d in sorted(runs) if d not in candidates]
+    for d in candidates:
+        meta = runs[d]["planned"].get(trial_id)
+        if meta:
+            composite = bool(runs[d].get("composite_layout")) if run_dir else False
+            return (
+                question_of(meta["case_id"]),
+                route_identity(meta["route_key"], composite),
+                meta["arm"],
+            )
+    return None
+
+
+def case_of(runs: dict, trial_id: str) -> str | None:
+    """The case id a logical trial id was planned under."""
     for run_dir in sorted(runs):
         meta = runs[run_dir]["planned"].get(trial_id)
         if meta:
-            return (
-                question_of(meta["case_id"]),
-                meta["route_key"],
-                meta["arm"],
-            )
+            return meta.get("case_id")
     return None
 
 
@@ -376,6 +516,34 @@ def recorded_entries(runs: dict, group_keys) -> dict:
         loose = by_qr.get((key[0], key[1]))
         if loose:
             out[key] = list(loose)
+    # C-6c: the code-overlay run records per_case totals and no elimination
+    # table; carry those totals as what the file recorded, verdict unrecorded
+    for run_dir in sorted(runs):
+        run = runs[run_dir]
+        results = run["results"]
+        if not results or not run.get("composite_layout") or not results.get("per_case"):
+            continue
+        for key in group_keys:
+            if key in out or not key[1] or not key[1].endswith(CODE_OVERLAY_SUFFIX):
+                continue
+            if any(group_of(runs, tid, run_dir) == key for tid in run["planned"]):
+                pc = results["per_case"]
+                out[key] = [
+                    (
+                        run_dir,
+                        {
+                            "question": key[0],
+                            "route_key": key[1],
+                            "arm": key[2],
+                            "n_planned": sum(int(v.get("trials") or 0) for v in pc.values()),
+                            "accepts": sum(int(v.get("accepted") or 0) for v in pc.values()),
+                            "eliminated": None,
+                            "eliminated_by": [],
+                            "refusals_or_errors": 0,
+                            "recorded_from": "per_case totals; the file holds no elimination table",
+                        },
+                    )
+                ]
     return out
 
 
@@ -383,82 +551,26 @@ def build_groups(runs: dict, occurrences: dict, verdicts: dict) -> dict:
     """(question, route, arm) -> per-logical-trial outcome under both readings."""
     groups = defaultdict(dict)
     for trial_id, rows in occurrences.items():
-        non_smoke = [r for r in rows if r["kind"] != "smoke"]
-        if not non_smoke:
+        all_non_smoke = [r for r in rows if r["kind"] != "smoke"]
+        if not all_non_smoke:
             continue
-        key = group_of(runs, trial_id)
-        if key is None:
-            continue
-
-        attempts = []
-        for row in non_smoke:
-            judged = verdicts.get((row["run_id"], trial_id))
-            # The sealed record wins where one exists: a RESULTS.yaml row is the
-            # settled status of that attempt.  Where the attempt never reached a
-            # RESULTS.yaml, the run log's status is used, and a `recovered`
-            # event (same provider request, no second call, no second charge)
-            # settles it as ok.
-            if judged is not None and judged["status"] is not None:
-                status = judged["status"]
-            elif row["recovered"]:
-                status = "ok"
-            else:
-                status = row["status"]
-            attempts.append(
-                {
-                    "run_id": row["run_id"],
-                    "at": row["at"],
-                    "kind": row["kind"],
-                    "status": status,
-                    "log_status": row["status"],
-                    "error_class": row["error_class"],
-                    "recovered": row["recovered"],
-                    "verdict": judged["verdict"] if judged else None,
-                    "in_results": judged is not None,
-                }
-            )
-        attempts.sort(key=lambda a: (a["at"] or "", a["run_id"]))
-
-        any_error = any(a["status"] in ERROR_STATUSES for a in attempts)
-        last = attempts[-1]
-        distinct = {a["verdict"] for a in attempts if a["verdict"]}
-
-        if any_error:
-            strict = "refusal_or_error"
-        elif len(distinct) > 1:
-            # two runs judged the same logical trial id and disagreed; the
-            # strict reading refuses to pick a winner and does not credit it as
-            # an accept
-            strict = "ambiguous"
-        else:
-            strict = "accept" if last["verdict"] == "accept" else "reject"
-
-        if last["status"] in ERROR_STATUSES:
-            lenient = "refusal_or_error"
-        else:
-            lenient = "accept" if last["verdict"] == "accept" else "reject"
-
-        pdr_runs = sorted(
-            run_dir
-            for run_dir in runs
-            if trial_id in runs[run_dir]["pre_dispatch_refusals"]
-        )
-
-        distinct_verdicts = {a["verdict"] for a in attempts if a["verdict"]}
-        groups[key][trial_id] = {
-            "attempts": attempts,
-            "strict": strict,
-            "lenient": lenient,
-            "pre_dispatch_refusal_runs": pdr_runs,
-            "conflict": len(distinct_verdicts) > 1,
-        }
+        # C-6c: attempts of one trial id are partitioned by route identity, so
+        # a code-overlay judging and a bare-plate judging are two logical
+        # trials in two groups, never one contested trial
+        by_identity = defaultdict(list)
+        for row in all_non_smoke:
+            key = group_of(runs, trial_id, row["run_id"])
+            if key is not None:
+                by_identity[key].append(row)
+        for key, non_smoke in by_identity.items():
+            _add_group_trial(runs, groups, key, trial_id, non_smoke, verdicts)
 
     # trial ids the harness refused before anything was sent and that were never
     # dispatched at all still belong to their group
     for run_dir in sorted(runs):
         run = runs[run_dir]
         for trial_id in sorted(run["pre_dispatch_refusals"]):
-            key = group_of(runs, trial_id)
+            key = group_of(runs, trial_id, run_dir)
             if key is None or trial_id in groups.get(key, {}):
                 continue
             groups[key][trial_id] = {
@@ -471,6 +583,74 @@ def build_groups(runs: dict, occurrences: dict, verdicts: dict) -> dict:
     return groups
 
 
+def _add_group_trial(runs, groups, key, trial_id, non_smoke, verdicts) -> None:
+    """One logical trial (one route identity) -> its ordered attempts and its
+    outcome under both readings.  Split out of build_groups so that C-6c can
+    call it once per route identity of a trial id."""
+    attempts = []
+    for row in non_smoke:
+        judged = verdicts.get((row["run_id"], trial_id))
+        # The sealed record wins where one exists: a RESULTS.yaml row is the
+        # settled status of that attempt.  Where the attempt never reached a
+        # RESULTS.yaml, the run log's status is used, and a `recovered`
+        # event (same provider request, no second call, no second charge)
+        # settles it as ok.
+        if judged is not None and judged["status"] is not None:
+            status = judged["status"]
+        elif row["recovered"]:
+            status = "ok"
+        else:
+            status = row["status"]
+        attempts.append(
+            {
+                "run_id": row["run_id"],
+                "at": row["at"],
+                "kind": row["kind"],
+                "status": status,
+                "log_status": row["status"],
+                "error_class": row["error_class"],
+                "recovered": row["recovered"],
+                "verdict": judged["verdict"] if judged else None,
+                "in_results": judged is not None,
+            }
+        )
+    attempts.sort(key=lambda a: (a["at"] or "", a["run_id"]))
+
+    any_error = any(a["status"] in ERROR_STATUSES for a in attempts)
+    last = attempts[-1]
+    distinct = {a["verdict"] for a in attempts if a["verdict"]}
+
+    if any_error:
+        strict = "refusal_or_error"
+    elif len(distinct) > 1:
+        # two runs judged the same logical trial id and disagreed; the
+        # strict reading refuses to pick a winner and does not credit it as
+        # an accept
+        strict = "ambiguous"
+    else:
+        strict = "accept" if last["verdict"] == "accept" else "reject"
+
+    if last["status"] in ERROR_STATUSES:
+        lenient = "refusal_or_error"
+    else:
+        lenient = "accept" if last["verdict"] == "accept" else "reject"
+
+    pdr_runs = sorted(
+        run_dir
+        for run_dir in runs
+        if trial_id in runs[run_dir]["pre_dispatch_refusals"]
+    )
+
+    distinct_verdicts = {a["verdict"] for a in attempts if a["verdict"]}
+    groups[key][trial_id] = {
+        "attempts": attempts,
+        "strict": strict,
+        "lenient": lenient,
+        "pre_dispatch_refusal_runs": pdr_runs,
+        "conflict": len(distinct_verdicts) > 1,
+    }
+
+
 def planned_denominator(runs: dict, key) -> int:
     """Distinct logical trial ids planned for the group in every non-smoke run."""
     ids = set()
@@ -478,14 +658,33 @@ def planned_denominator(runs: dict, key) -> int:
         run = runs[run_dir]
         if run["mode"] == "smoke":
             continue
+        composite = bool(run.get("composite_layout"))
         for trial_id, meta in run["planned"].items():
             if (
                 question_of(meta["case_id"]),
-                meta["route_key"],
+                route_identity(meta["route_key"], composite),
                 meta["arm"],
             ) == key:
                 ids.add(trial_id)
     return len(ids)
+
+
+def planned_ids(runs: dict, key) -> dict:
+    """Distinct logical trial ids planned for the group (non-smoke runs) -> case id."""
+    ids = {}
+    for run_dir in sorted(runs):
+        run = runs[run_dir]
+        if run["mode"] == "smoke":
+            continue
+        composite = bool(run.get("composite_layout"))
+        for trial_id, meta in run["planned"].items():
+            if (
+                question_of(meta["case_id"]),
+                route_identity(meta["route_key"], composite),
+                meta["arm"],
+            ) == key:
+                ids[trial_id] = meta.get("case_id")
+    return ids
 
 
 def verdict_for(n: int, refusals: int, accepts: int):
@@ -497,6 +696,129 @@ def verdict_for(n: int, refusals: int, accepts: int):
     return out_by
 
 
+def cell_numbers(runs: dict, groups: dict, occurrences: dict, key) -> dict:
+    """Every human-acceptance number for one (question, route identity, arm)
+    under the frozen rule applied literally -- C-3 (planned denominator,
+    failures counted), C-6b (STRICT: the first sending of a draw is the one
+    that counts; every later sending is descriptive), C-6d (per (route,
+    question), which is what the key is).  Smoke draws never enter.
+
+    The map generator and the taint register builder both call this; neither
+    adds arithmetic of its own."""
+    trials = groups.get(key) or {}
+    n = planned_denominator(runs, key)
+    cases = planned_ids(runs, key)
+
+    def count(reading, outcome):
+        return sum(1 for t in trials.values() if t[reading] == outcome)
+
+    strict_acc = count("strict", "accept")
+    strict_ref = count("strict", "refusal_or_error")
+    strict_rej = count("strict", "reject")
+    ambiguous = count("strict", "ambiguous")
+    lenient_acc = count("lenient", "accept")
+    lenient_ref = count("lenient", "refusal_or_error")
+    pdr = sum(1 for t in trials.values() if t["pre_dispatch_refusal_runs"])
+    strict_by = verdict_for(n, strict_ref, strict_acc)
+    lenient_by = verdict_for(n, lenient_ref, lenient_acc)
+
+    per_item: dict = {}
+    for trial_id, case in sorted(cases.items()):
+        item = per_item.setdefault(case, {"accepts": 0, "trials": 0, "refusals_or_errors": 0})
+        item["trials"] += 1
+        t = trials.get(trial_id)
+        if t and t["strict"] == "accept":
+            item["accepts"] += 1
+        if t and t["strict"] == "refusal_or_error":
+            item["refusals_or_errors"] += 1
+    for trial_id, t in trials.items():
+        if trial_id in cases:
+            continue
+        case = case_of(runs, trial_id) or trial_id.split("__")[0]
+        item = per_item.setdefault(case, {"accepts": 0, "trials": 0, "refusals_or_errors": 0})
+        item["trials"] += 1
+        if t["strict"] == "accept":
+            item["accepts"] += 1
+        if t["strict"] == "refusal_or_error":
+            item["refusals_or_errors"] += 1
+
+    resends = []
+    for trial_id in sorted(trials):
+        for attempt in trials[trial_id]["attempts"][1:]:
+            resends.append(
+                {
+                    "trial_id": trial_id,
+                    "run_id": attempt["run_id"],
+                    "kind": attempt["kind"],
+                    "status": attempt["status"],
+                    "error_class": attempt["error_class"],
+                    "verdict": attempt["verdict"],
+                    "first_sending": "%s:%s%s"
+                    % (
+                        trials[trial_id]["attempts"][0]["run_id"],
+                        trials[trial_id]["attempts"][0]["status"],
+                        "/" + str(trials[trial_id]["attempts"][0]["error_class"])
+                        if trials[trial_id]["attempts"][0]["error_class"]
+                        else "",
+                    ),
+                }
+            )
+    smoke = sorted(
+        trial_id
+        for trial_id in trials
+        if any(r["kind"] == "smoke" for r in occurrences.get(trial_id) or [])
+    )
+    return {
+        "n_planned": n,
+        "accepts": strict_acc,
+        "rejects": strict_rej,
+        "refusals_or_errors": strict_ref,
+        "ambiguous": ambiguous,
+        "pre_dispatch_refusals": pdr,
+        "e1_threshold": e1_threshold(n) if n else None,
+        "e2_threshold": e2_threshold(n) if n else None,
+        "eliminated": bool(strict_by),
+        "eliminated_by": strict_by,
+        "lenient": {
+            "accepts": lenient_acc,
+            "refusals_or_errors": lenient_ref,
+            "eliminated": bool(lenient_by),
+            "eliminated_by": lenient_by,
+        },
+        "per_item": per_item,
+        "resends": resends,
+        "smoke_draws_excluded": smoke,
+        "trial_ids": sorted(trials),
+    }
+
+
+def recorded_summary(runs: dict, rec_list: list) -> dict:
+    """What the sealed RESULTS.yaml elimination table(s) recorded for a group:
+    accepts, the denominator the file divided by (n_judged where it recorded
+    one, else n_planned), and the verdict.  Transparency only; never counted."""
+    if not rec_list:
+        return {"accepts": None, "trials": None, "eliminated": None, "eliminated_by": [], "per_case_scope": False, "files": []}
+    per_case = len(rec_list) > 1
+    accepts = sum((e.get("accepts") or 0) for _d, e in rec_list)
+    den = None
+    for _d, e in rec_list:
+        if e.get("n_judged"):
+            den = e.get("n_judged")
+            break
+    if den is None:
+        den = sum((e.get("n_planned") or 0) for _d, e in rec_list)
+    elims = [e.get("eliminated") for _d, e in rec_list]
+    eliminated = None if all(v is None for v in elims) else any(bool(v) for v in elims)
+    return {
+        "accepts": accepts,
+        "trials": den,
+        "eliminated": eliminated,
+        "eliminated_by": sorted({b for _d, e in rec_list for b in (e.get("eliminated_by") or [])}),
+        "per_case_scope": per_case,
+        "files": sorted({runs[d]["results_path"] for d, _e in rec_list if runs.get(d, {}).get("results_path")}),
+    }
+
+
 def print_section_b(runs: dict, groups: dict, recorded: dict) -> dict:
     print("=" * 100)
     print("SECTION B -- E1/E2 recomputed under the literal frozen rule")
@@ -506,6 +828,13 @@ def print_section_b(runs: dict, groups: dict, recorded: dict) -> dict:
     print("n = planned trials for the (question, route, arm) group")
     print("pdr = trials the harness refused before anything was sent (no provider behaviour")
     print("      observed, no money moved); folded into neither reading -- reported separately")
+    print()
+    print("rulings applied (14 Sep 2026, %s):" % RULINGS_RECORD)
+    print("  C-3  literal denominators; failures count where the frozen rule counts them")
+    print("  C-6b STRICT is the counting column; LENIENT is shown only so the reader can see what the runs did")
+    print("  C-6c '<route>%s' is a distinct route identity: rows judged under layout %s" % (CODE_OVERLAY_SUFFIX, COMPOSITE_LAYOUT))
+    print("       (code composed the exact strings on a textless plate) are grouped apart from the bare plate")
+    print("  C-6d per (route, question), as frozen E4; a per-case entry in a results file is a scope difference")
     print()
     header = (
         "%-10s %-26s %-34s | %-28s | %-30s | %-30s"
@@ -550,7 +879,7 @@ def print_section_b(runs: dict, groups: dict, recorded: dict) -> dict:
             )
             rec_elim = (
                 any(e.get("eliminated") for _d, e in rec_list) if per_case_scope
-                else bool(rec.get("eliminated"))
+                else (None if rec.get("eliminated") is None else bool(rec.get("eliminated")))
             )
             rec_by = sorted(
                 {b for _d, e in rec_list for b in (e.get("eliminated_by") or [])}
@@ -559,7 +888,7 @@ def print_section_b(runs: dict, groups: dict, recorded: dict) -> dict:
             rec_txt = "%s/%s %s%s" % (
                 rec_accepts,
                 rec_den,
-                "OUT" + str(rec_by) if rec_elim else "in",
+                ("OUT" + str(rec_by) if rec_elim else "in") if rec_elim is not None else "per_case, no table",
                 " (per case)" if per_case_scope else "",
             )
         else:
@@ -754,7 +1083,11 @@ def print_section_c(root: str, disagreements: dict) -> None:
                 continue
             hits += 1
             human = cell.get("human_blind_acceptance") or {}
-            elim = human.get("elimination") or {}
+            # since 14 Sep 2026 the map carries `eliminated` computed by this
+            # tool; an older map carried the results file's `elimination` block
+            eliminated = human.get("eliminated")
+            if eliminated is None:
+                eliminated = (human.get("elimination") or {}).get("eliminated")
             info = disagreements.get(key)
             print(
                 "  %s / %s   map shows accepts=%s trials=%s eliminated=%s fallback=%s"
@@ -763,7 +1096,7 @@ def print_section_c(root: str, disagreements: dict) -> None:
                     cell_name,
                     human.get("accepts"),
                     human.get("trials"),
-                    elim.get("eliminated"),
+                    eliminated,
                     (cell.get("fallback") or {}).get("route"),
                 )
             )

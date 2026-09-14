@@ -6,7 +6,15 @@
         --results eval/experiments/EVAL-040/runs/half2/RESULTS.yaml \\
         --results eval/experiments/EVAL-040/runs/topo3-video/RESULTS.yaml \\
         --composite-results eval/experiments/EVAL-040/runs/img-r1-composite/RESULTS.yaml \\
+        --runs-dir eval/experiments/EVAL-040/runs \\
         --out eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml
+
+`--runs-dir` (default: the sealed EVAL-040 run directories) is where the human-acceptance NUMBERS come from. Since the
+audit close-out of 14 September 2026 the map no longer reads accepts / denominators / eliminated flags from the tables
+recorded in RESULTS.yaml: it computes them under the frozen elimination rule, applied literally, by importing
+coordination/audits/tools/recompute_elimination.py (one implementation of the arithmetic, shared with the taint register)
+over the sealed plans, run logs and results of every run directory. `--runs-dir results-only` computes the same
+arithmetic over the RESULTS documents alone (synthetic tests); the map then says so in every cell's rule_basis.
 
 `--results` repeats: the runs' trials and elimination lists are concatenated and every trial remembers the run it came
 from. A cell is (question, route_key, arm); the arms None / "core" / "edit" name the cell by the route alone, the
@@ -15,8 +23,11 @@ composite plate (prompt_basis blueprint_textless_plate) is route + "+code_overla
 Four tiers per cell, never mixed:
     deterministic            facts read back from the Registry rows (registry: true): refusal / error rate, format
                              compliance, settled trial cost, latency, unseeded repeat variance
-    human_blind_acceptance   the Controller's blind accept / reject counts from RESULTS.yaml (registry: false -
-                             product evidence, never a Registry row), with n and the Controller's own notes
+    human_blind_acceptance   the Controller's blind accept / reject counts under the FROZEN rule (registry: false -
+                             product evidence, never a Registry row): accepts / trials (planned denominator) /
+                             refusals_or_errors / eliminated / eliminated_by, what the sealed file recorded, the
+                             descriptive re-sends that are NOT counted (C-6b), the smoke draws excluded, and the
+                             Controller's own notes
     screened_not_qualified   VLM screening (instruments/vlm_screen.py) read from a SCREEN-RESULTS.yaml that sits beside a
                              RESULTS.yaml: agreement with the Controller per cell, n, the instrument config hash, and a status
                              that is `qualified` only when a QUALIFICATION-REPORT.yaml (qualify_screen.py) says so for that
@@ -57,6 +68,30 @@ SCREEN_JUDGED = ("accept", "reject")
 TRIVIAL_ARMS = (None, "core", "edit")      # arms that do not distinguish a cell: the route name stands alone
 ROUND = "EVAL-040 Image Round 1 + image half two + video pieces 1-5 + speech, music, lipsync (img-r1, img-r1-redo, img-r1-composite, half2, topo3-video, topo3-nb-video, vid-knee, vid-ms, vid-i2v, vid-ref, aud-tts-sarvam, aud-tts-eleven, aud-music-lyria, aud-lip, vid-2spk, vid-2spk-kling, vid-t2v, vid-wan2, vid-wan2-i2v)"
 
+# Controller rulings of 14 September 2026 applied by this generator (verbatim text lives in the ruling record).
+RULINGS_RECORD = "coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-EVIDENCE-RULINGS-2026-09-14.md"
+RECOMPUTE_PATH = hv2_paths.REPO_ROOT / "coordination" / "audits" / "tools" / "recompute_elimination.py"
+DEFAULT_RUNS_DIR = hv2_paths.EVAL_ROOT / "experiments" / "EVAL-040" / "runs"
+RESULTS_ONLY = "results-only"
+RULE_BASIS = ("frozen ELIMINATION-RULES E1/E2/E4 applied literally; C-3 literal denominators; C-6b strict (a failed draw "
+              "stays a failure); C-6d per (route, question)")
+RULE_BASIS_RESULTS_ONLY = RULE_BASIS + ("; results-only mode: no run directory was read, so the denominator is the distinct "
+                                        "trial ids present in the RESULTS rows, not the plans")
+RESEND_LABEL = "descriptive product evidence only (C-4/C-6b); not counted"
+
+# C-6c: the two exact-text mechanisms are different routes and every cell says which one it is.
+TEXT_MODEL = "model_draws_text"
+TEXT_CODE = "deterministic_text_composition"
+TEXT_NA = "not_applicable"
+TEXT_MECHANISM_VALUES = (TEXT_MODEL, TEXT_CODE, TEXT_NA)
+# Arms outside IMG-TEXT whose own RESULTS notes say code set the strings: topo3-video/RESULTS.yaml:257 "Arm C (textless
+# plate -> cheap i2v -> exact strings by code on every frame)". Read from the arm's record, not guessed.
+CODE_COMPOSED_ARMS = {("VID-TOPO3", "C_textless_plate_i2v_composite")}
+COMPOSITE_ARM_NOTE = ("the provider produced a textless plate (USD 0.03 each); deterministic code composed the exact strings "
+                      "afterwards; the accepted objects are the composited outputs (sha256 in img-r1-composite/RESULTS.yaml). "
+                      "The model did NOT render the accepted exact copy.")
+BARE_PLATE_ARM_NOTE = "the provider's own plate output judged against the exact-text contract in img-r1: 1/4, eliminated E2"
+
 TIERS = {
     "deterministic": {"registry": True, "meaning": "re-evaluated by a frozen deterministic instrument over sealed bytes; the Registry rows named are the evidence"},
     "human_blind_acceptance": {"registry": False, "meaning": "the Controller's blind accept / reject against the case's acceptance contract; product evidence, never a Registry row"},
@@ -83,7 +118,8 @@ HISTORICAL_PRIORS = {
 
 ROUTING_RULES = [
     {"id": "RR-1", "scope": "text on stills", "rule": "Code-set text on a cheap textless plate is the DEFAULT where exactness is contractual (prices, legal lines, brand names) or where a re-render must be free.",
-     "evidence": "img-r1-composite: 4/4 accepted, exact by construction, ~USD 0.03 per accepted picture (plates USD 0.12 + overlay USD 0)",
+     "evidence": "img-r1-composite: 4/4 accepted. What was accepted: a FLUX.2 Pro textless plate (USD 0.03 each) onto which deterministic code composed the exact strings (layout composite-v2); exactness is by construction. The image model did not render the accepted copy - the same four plates judged bare in img-r1 were 1/4 (eliminated E2, cell IMG-TEXT/flux-2-pro+C_composite_textless_base). Route identity: IMG-TEXT/flux-2-pro+code_overlay (text_mechanism deterministic_text_composition).",
+     "mechanism": TEXT_CODE, "rulings_applied": ["C-6c"],
      "tier": "human_blind_acceptance", "registry": False, "caveat": "could not be blind as to arm", "source": SUMMARY_REF + " (addendum 2026-09-09)"},
     {"id": "RR-2", "scope": "in-scene text on stills", "rule": "Generated text where the type must sit inside the scene (on a pack, a sign, a surface): Nano Banana 2 or GPT Image 2.",
      "evidence": "img-r1 IMG-TEXT: nano-banana-2 4/4 and gpt-image-2 4/4 (Devanagari 2/2, English 2/2 each) at USD 0.053-0.067 a picture; nano-banana-pro 4/4 at 3x the price",
@@ -119,9 +155,11 @@ ROUTING_RULES = [
      "tier": "human_blind_acceptance", "registry": False, "caveat": "n = 2 per route on one brief; the boundary of the cheap-first rule, not a reversal", "source": SUMMARY_DAY2},
     {"id": "RR-11", "scope": "reference-to-video (a referenced product or person in motion)", "rule": "Veo 3.1 fast ref2v carries a referenced PRODUCT into motion (2/2) but invents lettering in people scenes (0/2); until a second route is screened, use it for products and keep people scenes lettering-free by post-check.",
      "evidence": "vid-ref: VID-REF-01 tin 2/2, VID-REF-02 person 0/2 'some different language' (stray script in the cafe) at USD 0.80 a clip (8 s minimum on Vertex)",
+     "rulings_applied": ["C-6d"], "note": "per-question elimination: the route is kept on its question; the per-case advice stands",
      "tier": "human_blind_acceptance", "registry": False, "caveat": "one route only (Seedance 2.5 ref2v left out; Kling elements unpinned)", "source": SUMMARY_DAY2},
     {"id": "RR-12", "scope": "Hindi / Hinglish / Indian-English speech", "rule": "Sarvam bulbul:v3 is the default voice route for all three; ElevenLabs v3 on a premade voice passes Hindi and short English but fails Hinglish on accent until an Indian voice is added to the account.",
      "evidence": "aud-tts-sarvam 6/6 (aditya, INR 0.13 a file); aud-tts-eleven Hindi 2/2, English 2/2, Hinglish 0/2 'rejected for accent' (298 plan credits for six files)",
+     "rulings_applied": ["C-6d"], "note": "per-question elimination: the route is kept on its question; the per-case advice stands",
      "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_DAY2},
     {"id": "RR-13", "scope": "instrumental music beds (30 s)", "rule": "Lyria 2 on Vertex credits is the default music route (USD 0.06 a track); tracks measure 32.8 s, trim by code to the brief. ElevenLabs music needs a paid plan (skipped by the Controller).",
      "evidence": "aud-music-lyria 4/4 accepted (home-kitchen and city-running briefs), judged raw and stacked under the accepted multi-shot clips; elevenlabs-music-direct refused HTTP 402 on the free plan",
@@ -130,10 +168,13 @@ ROUTING_RULES = [
      "evidence": "vid-2spk VID-2SPK-01: veo-3.1-fast 2/2 (USD 0.80), gemini-omni-1.1-flash 2/2 (USD 0.81), wan-3.0-prime 2/2 (USD 1.12) - 'all 6 approved'; kling-v3-pro-audio 0/2 ('characters cut off, language bad', 'language off'); lipsync chain 0/5 elsewhere",
      "tier": "human_blind_acceptance", "registry": False, "source": SUMMARY_DAY2},
     {"id": "RR-15", "scope": "plain text-to-video (an ordinary brief, no still, no reference)", "rule": "Gemini Omni 1.1 Flash on GCP credits is the default; MiniMax H3 Max the cash fallback for everyday briefs; do not rely on Veo 3.1 fast or Kling v3 Pro audio where the brief names physical detail (labels, rain, slow motion) or spoken audio.",
-     "evidence": "vid-t2v (4 briefs x 5 routes x 2, 36 judged): gemini-omni-1.1-flash 8/8 (USD 0.61); minimax-h3-max 5/7 (USD 0.48; 0/2 on the bottle brief); wan-3.0-prime 4/7 (USD 0.84); veo-3.1-fast 4/8 (USD 0.60; 0/2 umbrella brief 'rain doesn't appear, looks fake'); kling-v3-pro-audio 2/6 (USD 1.01; eliminated)",
-     "tier": "human_blind_acceptance", "registry": False, "caveat": "four fal draws refused on balance (not counted); Wan and Kling ran as their mid tiers, not their cheapest (roster gap recorded)", "source": SUMMARY_DAY2},
-    {"id": "RR-16", "scope": "the Wan tier (contender round)", "rule": "Wan 2.2 A14B (USD 0.08/s, silent) replaces Wan 3.0 Prime as the cheap Wan tier for image-to-video and plain silent briefs; keep Wan 3.0 Prime where the contract needs sound or weather physics.",
-     "evidence": "vid-wan2 + vid-wan2-i2v vs Wan 3.0 Prime on the same rows: i2v 7/8 vs 8/8; bike 2/2 vs 1/2; shoes 2/2 vs 1/1; umbrella 0/2 ('rain is missing') vs 2/2; two speakers 0/2 ('lettering on the screen', silent) vs 2/2",
+     "evidence": "vid-t2v (4 briefs x 5 routes x 2, 36 judged): gemini-omni-1.1-flash 8/8 (USD 0.61); minimax-h3-max 5/8 (one fal 403 refusal counted) (USD 0.48; 0/2 on the bottle brief); wan-3.0-prime 4/8 (one fal 403 refusal counted) (USD 0.84); veo-3.1-fast 4/8 (USD 0.60; 0/2 umbrella brief 'rain doesn't appear, looks fake'); kling-v3-pro-audio 2/8 (USD 1.01; eliminated E2 (literal denominator, C-3))",
+     "rulings_applied": ["C-3"],
+     "tier": "human_blind_acceptance", "registry": False, "caveat": "four fal draws refused on balance are COUNTED as failures under C-3 (literal rule); the advice does not change; Wan and Kling ran as their mid tiers, not their cheapest (roster gap recorded)", "source": SUMMARY_DAY2},
+    {"id": "RR-16", "scope": "the Wan tier (contender round)", "status": "withdrawn_as_stage_a_i2v_routing_truth (C-6b)",
+     "rule": "Wan 2.2 A14B is ELIMINATED from image-to-video under the frozen rule (2/8 accepts, six HTTP-422 failures counted as failures per C-3/C-6b: E1 and E2). Wan 3.0 Prime remains the Wan tier for image-to-video (RR-8). For plain silent text-to-video the Wan 2.2 A14B cells stand on their own recomputed numbers (see VID-T2V cells). Keep Wan 3.0 Prime where the contract needs sound or weather physics.",
+     "evidence": "vid-wan2 + vid-wan2-i2v vs Wan 3.0 Prime on the same rows: i2v 7/8 vs 8/8 - the 7/8 is descriptive product evidence only (six successful re-sends in vid-wan2-i2v after six HTTP-422 failures in vid-wan2; not counted; retained, not deleted); the counted i2v number is 2/8 with 6 failures (eliminated E1+E2); bike 2/2 vs 1/2; shoes 2/2 vs 1/1; umbrella 0/2 ('rain is missing') vs 2/2; two speakers 0/2 ('lettering on the screen', silent) vs 2/2",
+     "rulings_applied": ["C-3", "C-6b"],
      "tier": "human_blind_acceptance", "registry": False, "caveat": "Wan 2.2 A14B has no audio field; six i2v draws were first refused on a harness aspect fault and re-run", "source": SUMMARY_DAY2},
 ]
 
@@ -246,41 +287,165 @@ def deterministic_facts(records: list, question: str, route_key: str, prompt_bas
     }
 
 
-def human_facts(results: dict, question: str, route_key: str, arm=ANY_ARM) -> dict:
-    """`results` is one RESULTS.yaml document or the output of merge_results. An elimination entry that carries an `arm` key
-    (the video runs do) must match the cell's arm; entries without one (the image runs) match on question and route."""
+def load_recompute(path: Path | str = RECOMPUTE_PATH):
+    """Import coordination/audits/tools/recompute_elimination.py by path. It is the ONLY implementation of the frozen
+    elimination arithmetic (E1/E2 thresholds, planned denominators, the strict reading of a re-sent draw, the C-6c route
+    identity); this generator adds no arithmetic of its own."""
+    import importlib.util
+    sys.dont_write_bytecode = True
+    spec = importlib.util.spec_from_file_location("recompute_elimination", str(path))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class FrozenRule:
+    """The frozen rule computed once over the sealed evidence, then read per cell.
+
+    `from_runs_dir` reads every run directory (PLAN.yaml, RUN-LOG.jsonl, ledger, RESULTS.yaml) - the production input,
+    because a failed draw that a results file deleted is still in its plan and its run log. `from_results_docs` reads
+    RESULTS documents alone (results-only mode) and says so in `rule_basis`."""
+
+    def __init__(self, rc, runs: dict, mode: str, runs_dir: str | None = None):
+        self.rc, self.runs, self.mode, self.runs_dir = rc, runs, mode, runs_dir
+        self.occurrences = rc.build_occurrences(runs)
+        self.verdicts = rc.judged_verdicts(runs)
+        self.groups = rc.build_groups(runs, self.occurrences, self.verdicts)
+        self.recorded = rc.recorded_entries(runs, list(self.groups))
+        self.rule_basis = RULE_BASIS if mode == "sealed_run_directories" else RULE_BASIS_RESULTS_ONLY
+
+    @classmethod
+    def from_runs_dir(cls, runs_dir: Path | str = DEFAULT_RUNS_DIR, rc=None) -> "FrozenRule":
+        rc = rc or load_recompute()
+        p = Path(runs_dir).resolve()
+        root = hv2_paths.REPO_ROOT.resolve()
+        # a runs dir inside the checkout is recorded relative to it, so the map never carries a machine's absolute path
+        rel = str(p.relative_to(root)) if p.is_relative_to(root) else str(p)
+        return cls(rc, rc.load_runs(str(root), rel), "sealed_run_directories", rel)
+
+    @classmethod
+    def from_results_docs(cls, docs: list, rc=None) -> "FrozenRule":
+        rc = rc or load_recompute()
+        return cls(rc, rc.runs_from_results_docs([d for d in docs if d]), RESULTS_ONLY)
+
+    def keys_for(self, question: str, route_identity: str, arm) -> list:
+        """A trivial-arm cell (None / core / edit) merges every trivial-arm group of the route; a named arm is one group."""
+        if arm in TRIVIAL_ARMS:
+            return sorted((k for k in self.groups if k[0] == question and k[1] == route_identity and k[2] in TRIVIAL_ARMS),
+                          key=lambda k: tuple(str(x) for x in k))
+        return [(question, route_identity, arm)] if (question, route_identity, arm) in self.groups else []
+
+    def numbers(self, question: str, route_identity: str, arm) -> dict | None:
+        keys = self.keys_for(question, route_identity, arm)
+        if not keys:
+            return None
+        parts = [self.rc.cell_numbers(self.runs, self.groups, self.occurrences, k) for k in keys]
+        if len(parts) == 1:
+            return parts[0]
+        # several trivial arms under one route: add the counts, re-apply the thresholds on the summed denominator
+        n = sum(x["n_planned"] for x in parts)
+        acc = sum(x["accepts"] for x in parts)
+        ref = sum(x["refusals_or_errors"] for x in parts)
+        by = self.rc.verdict_for(n, ref, acc)
+        per_item: dict = {}
+        for x in parts:
+            for c, v in x["per_item"].items():
+                cur = per_item.setdefault(c, {"accepts": 0, "trials": 0, "refusals_or_errors": 0})
+                for f in cur:
+                    cur[f] += v[f]
+        return {"n_planned": n, "accepts": acc, "rejects": sum(x["rejects"] for x in parts), "refusals_or_errors": ref,
+                "ambiguous": sum(x["ambiguous"] for x in parts), "pre_dispatch_refusals": sum(x["pre_dispatch_refusals"] for x in parts),
+                "e1_threshold": self.rc.e1_threshold(n) if n else None, "e2_threshold": self.rc.e2_threshold(n) if n else None,
+                "eliminated": bool(by), "eliminated_by": by, "lenient": None, "per_item": per_item,
+                "resends": [r for x in parts for r in x["resends"]], "smoke_draws_excluded": sorted({t for x in parts for t in x["smoke_draws_excluded"]}),
+                "trial_ids": sorted({t for x in parts for t in x["trial_ids"]}), "merged_arms": [k[2] for k in keys]}
+
+    def recorded_for(self, question: str, route_identity: str, arm) -> dict:
+        rec_list = [e for k in self.keys_for(question, route_identity, arm) for e in (self.recorded.get(k) or [])]
+        return self.rc.recorded_summary(self.runs, rec_list)
+
+
+def _acceptance_block(numbers: dict | None, recorded: dict, frozen: FrozenRule) -> dict:
+    """The counted part of the human tier, every field from the recompute tool."""
+    if numbers is None:
+        return {"status": "no_frozen_rule_group", "rule_basis": frozen.rule_basis}
+    block = {
+        "accepts": numbers["accepts"], "trials": numbers["n_planned"], "rejects": numbers["rejects"],
+        "refusals_or_errors": numbers["refusals_or_errors"],
+        "eliminated": numbers["eliminated"], "eliminated_by": list(numbers["eliminated_by"]),
+        "e1_threshold": numbers["e1_threshold"], "e2_threshold": numbers["e2_threshold"],
+        "rule_basis": frozen.rule_basis, "rulings_record": RULINGS_RECORD,
+        "recorded_in_results_file": recorded,
+        "per_item": numbers["per_item"],
+        "smoke_draws_excluded": list(numbers["smoke_draws_excluded"]),
+    }
+    if numbers.get("ambiguous"):
+        block["ambiguous"] = numbers["ambiguous"]
+    if numbers.get("pre_dispatch_refusals"):
+        block["pre_dispatch_refusals"] = numbers["pre_dispatch_refusals"]
+    if numbers.get("merged_arms"):
+        block["merged_arms"] = numbers["merged_arms"]
+    if numbers["resends"]:
+        block["descriptive_resends"] = {
+            "label": RESEND_LABEL,
+            "attempts": [{"trial_id": r["trial_id"], "run_id": r["run_id"], "kind": r["kind"], "status": r["status"],
+                          "error_class": r["error_class"], "verdict": r["verdict"], "first_sending": r["first_sending"]} for r in numbers["resends"]],
+            "accepts": sum(1 for r in numbers["resends"] if r["verdict"] == "accept"),
+            "trials": len(numbers["resends"]),
+        }
+    return block
+
+
+def human_facts(results: dict, question: str, route_key: str, arm=ANY_ARM, frozen: FrozenRule | None = None, route_identity: str | None = None) -> dict:
+    """`results` is one RESULTS.yaml document or the output of merge_results; it supplies the Controller's NOTES, the
+    judge / blinding facts and the run names. Every NUMBER (accepts, planned denominator, failures, eliminated) comes from
+    `frozen` - the recompute tool over the sealed evidence - never from the elimination table a results file recorded;
+    that table is carried under `recorded_in_results_file` for transparency only."""
     trials = [t for t in results.get("trials", []) if t.get("question") == question and t.get("route_key") == route_key and _arm_matches(t, arm)]
     if not trials:
         return {"tier": "human_blind_acceptance", "registry": False, "status": "no_verdicts"}
-    accepts = sum(1 for t in trials if t.get("verdict") == "accept")
-    elim = next((e for e in results.get("elimination", []) if e.get("question") == question and e.get("route_key") == route_key
-                 and ("arm" not in e or _arm_matches(e, arm))), None)
+    if frozen is None:
+        raise EvidenceMapRefused("human_facts needs the frozen-rule context; the map no longer counts from RESULTS tables")
+    identity = route_identity or route_key
     runs = sorted({t.get("results_run_id") or results.get("run_id") for t in trials if t.get("results_run_id") or results.get("run_id")})
     by_run = results.get("commitment_verified_by_run") or {results.get("run_id"): bool(results.get("commitment_verified"))}
     verified = bool(runs) and all(by_run.get(r, False) for r in runs)
-    return {
+    numbers = frozen.numbers(question, identity, arm)
+    out = {
         "tier": "human_blind_acceptance", "registry": False, "judge": "Controller (blind, commitment verified)" if verified else "Controller",
-        "accepts": accepts, "trials": len(trials), "rejects": sum(1 for t in trials if t.get("verdict") == "reject"),
+        **_acceptance_block(numbers, frozen.recorded_for(question, identity, arm), frozen),
         "n_items": len({t.get("case_id") for t in trials}), "arms": sorted({t.get("arm") for t in trials if t.get("arm")}),
         "no_artifact_rejects": sum(1 for t in trials if str(t.get("verdict_basis", "")).startswith("no_artifact")),
-        "per_item": {c: {"accepts": sum(1 for t in trials if t.get("case_id") == c and t.get("verdict") == "accept"),
-                         "trials": sum(1 for t in trials if t.get("case_id") == c)} for c in sorted({t.get("case_id") for t in trials})},
-        "controller_notes": [{"trial_id": t["trial_id"], "verdict": t.get("verdict"), "note": t["note"]} for t in trials if t.get("note")],
-        "elimination": elim, "rules_ref": results.get("rules_ref"), "runs": runs,
+        "controller_notes": [{"trial_id": t["trial_id"], "run_id": t.get("run_id") or t.get("results_run_id"), "verdict": t.get("verdict"), "note": t["note"]} for t in trials if t.get("note")],
+        "rules_ref": results.get("rules_ref"), "runs": runs,
         "source": f"RESULTS.yaml of run{'s' if len(runs) > 1 else ''} {', '.join(runs) if runs else results.get('run_id')}",
-        "note": "acceptance is a per-artifact accept/reject against the case contract; never pooled with any deterministic number",
+        "note": "acceptance is a per-artifact accept/reject against the case contract under the frozen rule; never pooled with any deterministic number",
     }
+    return out
 
 
-def composite_human_facts(comp: dict) -> dict:
-    per_case = comp.get("per_case") or {}
-    accepts = sum(int(v.get("accepted", 0)) for v in per_case.values())
-    trials = sum(int(v.get("trials", 0)) for v in per_case.values())
+def composite_human_facts(comp: dict, frozen: FrozenRule, question: str, route_identity: str, arm: str) -> dict:
+    """The code-overlay cell (C-6c). Numbers from the recompute tool over the composite run; the per_case totals the
+    composite results file recorded are carried as `recorded_in_results_file` (it holds no elimination table)."""
+    numbers = frozen.numbers(question, route_identity, arm)
+    recorded = frozen.recorded_for(question, route_identity, arm)
     return {"tier": "human_blind_acceptance", "registry": False, "judge": "Controller", "blind_as_to_arm": bool(comp.get("blind_as_to_arm", False)),
-            "accepts": accepts, "trials": trials, "rejects": trials - accepts, "n_items": len(per_case), "arms": [str(comp.get("arm"))],
-            "per_item": {c: {"accepts": int(v.get("accepted", 0)), "trials": int(v.get("trials", 0))} for c, v in sorted(per_case.items())},
-            "controller_notes": [{"trial_id": t.get("trial_id"), "verdict": t.get("verdict"), "note": t.get("note")} for t in comp.get("trials", []) if t.get("note")],
-            "cost": comp.get("cost"), "note": comp.get("note"), "source": f"RESULTS.yaml of run {comp.get('run_id')}"}
+            **_acceptance_block(numbers, recorded, frozen),
+            "n_items": len(comp.get("per_case") or {}), "arms": [arm],
+            "controller_notes": [{"trial_id": t.get("trial_id"), "run_id": comp.get("run_id"), "verdict": t.get("verdict"), "note": t.get("note")} for t in comp.get("trials", []) if t.get("note")],
+            "accepted_object_sha256": {t.get("trial_id"): t.get("sha256") for t in comp.get("trials", []) if t.get("sha256")},
+            "cost": comp.get("cost"), "note": comp.get("note"), "runs": [comp.get("run_id")], "source": f"RESULTS.yaml of run {comp.get('run_id')}"}
+
+
+def text_mechanism(question: str, arm, is_composite_cell: bool) -> str:
+    """C-6c: which exact-text mechanism a cell is. The code-overlay cell and the arms whose own record says code set the
+    strings are deterministic_text_composition; every other IMG-TEXT cell is model_draws_text; everything else is
+    not_applicable (as instructed - VID-TOPO3 arms A / A2 / B are not classified beyond that instruction)."""
+    if is_composite_cell or (question, arm) in CODE_COMPOSED_ARMS:
+        return TEXT_CODE
+    if question == "IMG-TEXT":
+        return TEXT_MODEL
+    return TEXT_NA
 
 
 def merge_screens(screen_docs: list) -> list:
@@ -377,18 +542,29 @@ def _evidence_date(records: list, results: dict, question: str, route_key: str, 
 
 
 def assign_fallbacks(cells: dict) -> None:
-    """Within a question: rank by acceptance rate (desc), then settled cost per trial (asc); fallback = the next route down; the last falls back to the first."""
+    """Within a question: survivors first, ranked by acceptance rate (desc) then settled cost per trial (asc); an
+    eliminated route ranks after every survivor and is NEVER a fallback target (fallback: null). Among survivors the
+    fallback is the next route down; the last survivor falls back to the first."""
+    def eliminated(c):
+        return bool(c["human_blind_acceptance"].get("eliminated"))
+
     def key(c):
         h = c["human_blind_acceptance"]
         acc = _rate(h.get("accepts", 0), h.get("trials", 0)) if h.get("trials") else -1.0
         cost = (c["deterministic"].get("trial_cost_usd") or {}).get("per_trial_mean") if c["deterministic"].get("registry") else None
-        return (-(acc if acc is not None else -1.0), Decimal(cost) if cost else Decimal("999"))
+        return (1 if eliminated(c) else 0, -(acc if acc is not None else -1.0), Decimal(cost) if cost else Decimal("999"))
     ranked = sorted(cells.items(), key=lambda kv: key(kv[1]))
+    survivors = [name for name, c in ranked if not eliminated(c)]
+    basis = ("next-best surviving route by human acceptance within the question, ties by settled cost per trial; the last-ranked "
+             "survivor falls back to the first; an eliminated route (frozen rule E1/E2) is never a fallback target")
     for i, (name, c) in enumerate(ranked):
         c["rank_in_question"] = i + 1
-        nxt = ranked[i + 1][0] if i + 1 < len(ranked) else (ranked[0][0] if len(ranked) > 1 and ranked[0][0] != name else None)
-        c["fallback"] = {"route": nxt, "basis": "next-best route by human acceptance within the question, ties by settled cost per trial; the last-ranked falls back to the first",
-                         "registry": False}
+        if eliminated(c):
+            c["fallback"] = {"route": None, "basis": basis, "registry": False, "eliminated": True}
+            continue
+        j = survivors.index(name)
+        nxt = survivors[j + 1] if j + 1 < len(survivors) else (survivors[0] if len(survivors) > 1 else None)
+        c["fallback"] = {"route": nxt, "basis": basis, "registry": False}
 
 
 def cell_name(route_key: str, arm: str | None, prompt_basis: str | None = None) -> str:
@@ -400,11 +576,17 @@ def cell_name(route_key: str, arm: str | None, prompt_basis: str | None = None) 
 
 def build_map(records: list, results: dict | list, composite_results: dict | None = None, registry_path: str | None = None,
               results_paths: list | None = None, criteria_sha256: str | None = None, screen_results: list | None = None,
-              qualification_reports: list | None = None) -> dict:
+              qualification_reports: list | None = None, frozen: FrozenRule | None = None) -> dict:
     """`results` is one RESULTS.yaml document or a list of them (merged by merge_results). `screen_results` is a list of
     SCREEN-RESULTS-v0 documents (qualify_screen.py) and `qualification_reports` the QUALIFICATION-REPORT-v0 documents that
-    may promote a config hash to `qualified`; the screened tier stays registry: false whatever they say."""
-    results = merge_results(results if isinstance(results, list) else [results])
+    may promote a config hash to `qualified`; the screened tier stays registry: false whatever they say. `frozen` is the
+    frozen-rule context every human number is read from; without one it is built from the RESULTS documents alone
+    (results-only mode, stated in every cell's rule_basis)."""
+    docs = results if isinstance(results, list) else [results]
+    results = merge_results(docs)
+    if frozen is None:
+        frozen = FrozenRule.from_results_docs(list(docs) + ([composite_results] if composite_results else []))
+    rc = frozen.rc
     screens = merge_screens(screen_results or [])
     reports = list(qualification_reports or [])
     questions: dict = defaultdict(dict)
@@ -415,22 +597,34 @@ def build_map(records: list, results: dict | list, composite_results: dict | Non
         keys.add((t.get("question"), t.get("route_key"), key_arm(t.get("arm")), "blueprint_main"))
     for question, route, arm, basis in sorted(keys, key=lambda k: tuple(str(x) for x in k)):
         name = cell_name(route, arm, basis)
-        if basis == "blueprint_textless_plate":
+        is_composite = basis == "blueprint_textless_plate"
+        arms_seen = sorted({str(r.get("arm")) for r in records if r.get("question") == question and r.get("route_key") == route and _arm_matches(r, arm) and r.get("arm")}
+                           | {str(t.get("arm")) for t in results.get("trials", []) if t.get("question") == question and t.get("route_key") == route and _arm_matches(t, arm) and t.get("arm")})
+        cell_arm = arm if arm is not None else (arms_seen[0] if len(arms_seen) == 1 else None)
+        if is_composite:
+            # C-6c: a DIFFERENT route mechanism from the bare plate that shares its trial ids. Registry rows still carry
+            # the provider route (they describe the plate calls); the cell's own identity carries +code_overlay.
+            identity = rc.route_identity(route, True)
             det = deterministic_facts(records, question, route, basis)
-            hum = composite_human_facts(composite_results) if composite_results else {"tier": "human_blind_acceptance", "registry": False, "status": "no_verdicts"}
-            arm_note = "textless plate (FLUX.2 Pro) + exact strings set by code (composite-v2 layout); deterministic facts describe the PLATE calls"
+            comp_arms = sorted({t.get("arm") for t in (composite_results or {}).get("trials", []) if t.get("arm")})
+            cell_arm = cell_arm or (comp_arms[0] if len(comp_arms) == 1 else (composite_results or {}).get("arm"))
+            hum = composite_human_facts(composite_results, frozen, question, identity, cell_arm) if composite_results else \
+                {"tier": "human_blind_acceptance", "registry": False, "status": "no_verdicts"}
+            arm_note = COMPOSITE_ARM_NOTE
             scr = screened_facts(screens, question, route, ANY_ARM, reports, run_id=(composite_results or {}).get("run_id")) if composite_results else \
                 {"tier": "screened_not_qualified", "registry": False, "status": "none_yet"}
         else:
+            identity = route
             det = deterministic_facts(records, question, route, basis if basis in ("blueprint_main",) else None, arm)
-            hum = human_facts(results, question, route, arm)
-            arm_note = None
+            hum = human_facts(results, question, route, arm, frozen=frozen)
+            arm_note = BARE_PLATE_ARM_NOTE if (question, route, arm) == ("IMG-TEXT", "flux-2-pro", "C_composite_textless_base") and hum.get("accepts") is not None else None
             scr = screened_facts([s for s in screens if s.get("_screen_run_id") != (composite_results or {}).get("run_id")], question, route, arm, reports)
         prior_rows = HISTORICAL_PRIORS.get(name) or HISTORICAL_PRIORS.get(route)
-        arms_seen = sorted({str(r.get("arm")) for r in records if r.get("question") == question and r.get("route_key") == route and _arm_matches(r, arm) and r.get("arm")}
-                           | {str(t.get("arm")) for t in results.get("trials", []) if t.get("question") == question and t.get("route_key") == route and _arm_matches(t, arm) and t.get("arm")})
         cell = {
-            "route_key": route, "arm": arm if arm is not None else (arms_seen[0] if len(arms_seen) == 1 else None), "arm_note": arm_note, **_price_pins(records, question, route, arm),
+            "route_key": identity, "arm": cell_arm, "arm_note": arm_note,
+            "text_mechanism": text_mechanism(question, cell_arm, is_composite),
+            **({"registry_route_key": route} if identity != route else {}),
+            **_price_pins(records, question, route, arm),
             "evidence_date": _evidence_date(records, results, question, route, arm) or (str(composite_results.get("judged_utc"))[:10] if composite_results else None),
             "deterministic": det, "human_blind_acceptance": hum,
             "screened_not_qualified": scr,
@@ -450,11 +644,24 @@ def build_map(records: list, results: dict | list, composite_results: dict | Non
                     "screen_results": [d.get("_path") or d.get("results_ref") for d in (screen_results or []) if d],
                     "screen_config_hashes": sorted({(d.get("instrument") or {}).get("config_hash") for d in (screen_results or []) if d and (d.get("instrument") or {}).get("config_hash")}),
                     "qualification_reports": [r.get("_path") for r in reports if r], "qualified_config_hashes": sorted(_qualified_hashes(reports)),
-                    "summary": SUMMARY_REF, "summaries": [SUMMARY_REF, SUMMARY_HALF2, SUMMARY_VIDEO1, SUMMARY_DAY2], "historical_prior_index": f"{PRIOR_DIR}/PRIOR-INDEX.yaml"},
-        "tiers": TIERS, "routing_rules": ROUTING_RULES, "cell_count": n_cells,
+                    "summary": SUMMARY_REF, "summaries": [SUMMARY_REF, SUMMARY_HALF2, SUMMARY_VIDEO1, SUMMARY_DAY2], "historical_prior_index": f"{PRIOR_DIR}/PRIOR-INDEX.yaml",
+                    "human_acceptance_basis": {
+                        "mode": frozen.mode, "runs_dir": frozen.runs_dir,
+                        "recompute_tool": str(Path(RECOMPUTE_PATH).relative_to(hv2_paths.REPO_ROOT)),
+                        "recompute_tool_sha256": _sha256_file(RECOMPUTE_PATH) if Path(RECOMPUTE_PATH).exists() else None,
+                        "elimination_rules": str((hv2_paths.FREEZE / "ELIMINATION-RULES.md").relative_to(hv2_paths.REPO_ROOT)),
+                        "rule_basis": frozen.rule_basis, "rulings_record": RULINGS_RECORD, "rulings_applied": ["C-3", "C-4", "C-6b", "C-6c", "C-6d"],
+                        "note": "every accepts / trials / refusals_or_errors / eliminated value in the human tier is computed by the recompute tool "
+                                "under the frozen rule; the elimination tables recorded in RESULTS.yaml are carried as recorded_in_results_file only"}},
+        "tiers": TIERS, "text_mechanism_vocabulary": {
+            TEXT_MODEL: "the generative model itself draws the exact text (C-6c mechanism A)",
+            TEXT_CODE: "the generative model produces a textless visual plate and deterministic code composes the exact text afterwards (C-6c mechanism B)",
+            TEXT_NA: "the cell's question is not an exact-text question, or its arm record does not say which mechanism carried the text"},
+        "routing_rules": ROUTING_RULES, "cell_count": n_cells,
         "reading_guide": ["deterministic numbers come from Registry rows re-evaluated under the frozen PASS-CRITERIA-v0.yaml; every row's interval is a reference calculation (independence NOT ESTABLISHED)",
-                          "human acceptance is the Controller's blind verdict against the acceptance contract; n is small (2-8 trials over 1-4 items); never a Registry row",
-                          "fallback is a ranking by acceptance within the question, not a score; the Production Planner decides routing"],
+                          "human acceptance is the Controller's blind verdict against the acceptance contract, counted under the frozen elimination rule applied literally (C-3, C-6b strict, C-6d); n is small (2-8 planned draws over 1-4 items); never a Registry row",
+                          "a re-sent draw is descriptive product evidence (descriptive_resends) and is never counted; a smoke draw never enters (smoke_draws_excluded)",
+                          "fallback is a ranking by acceptance within the question among survivors, not a score; an eliminated route is never a fallback; the Production Planner decides routing"],
         "questions": {q: {"cells": cells} for q, cells in questions.items()},
     }
 
@@ -467,6 +674,8 @@ def main(argv=None) -> int:
     ap.add_argument("--criteria-sha256", default=None)
     ap.add_argument("--screen-results", action="append", default=[], help="SCREEN-RESULTS.yaml (qualify_screen.py); a file of that name beside any --results is read without being named")
     ap.add_argument("--qualification-report", action="append", default=[], help="QUALIFICATION-REPORT.yaml; one beside any --results is read without being named")
+    ap.add_argument("--runs-dir", default=str(DEFAULT_RUNS_DIR),
+                    help=f"sealed run directories the frozen-rule numbers are computed from; '{RESULTS_ONLY}' computes over the RESULTS documents alone")
     ap.add_argument("--out", default=str(MAP_PATH))
     a = ap.parse_args(argv)
     records = load_registry(a.registry)
@@ -481,15 +690,23 @@ def main(argv=None) -> int:
             report_paths.append(str(q))
     screens = [_load_yaml(p) for p in screen_paths]
     reports = [_load_yaml(p) for p in report_paths]
+    if a.runs_dir == RESULTS_ONLY:
+        frozen = FrozenRule.from_results_docs(results + ([comp] if comp else []))
+    else:
+        if not Path(a.runs_dir).is_dir():
+            raise EvidenceMapRefused(f"--runs-dir {a.runs_dir} is not a directory; pass '{RESULTS_ONLY}' to compute over the RESULTS documents alone")
+        frozen = FrozenRule.from_runs_dir(a.runs_dir)
     m = build_map(records, results, comp, registry_path=a.registry, results_paths=list(a.results) + ([a.composite_results] if a.composite_results else []),
-                  criteria_sha256=a.criteria_sha256, screen_results=screens, qualification_reports=reports)
+                  criteria_sha256=a.criteria_sha256, screen_results=screens, qualification_reports=reports, frozen=frozen)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     header = ("# ROUTING-EVIDENCE-MAP-v0 - generated by eval/harness-v2/evidence_map.py from the Registry rows and the Controller's verdicts.\n"
               "# Tiered product asset: deterministic (registry: true) | human_blind_acceptance | screened_not_qualified | historical_prior (all registry: false).\n"
-              "# No score, no weight, no ranking beyond the stated fallback rule. Regenerate rather than edit.\n")
+              "# Human-acceptance numbers are computed under the frozen elimination rule by coordination/audits/tools/recompute_elimination.py\n"
+              "# (Controller rulings C-3, C-4, C-6b, C-6c, C-6d of 14 Sep 2026; see sources.human_acceptance_basis). No score, no weight,\n"
+              "# no ranking beyond the stated fallback rule. Regenerate rather than edit.\n")
     out.write_text(header + yaml.safe_dump(m, allow_unicode=True, sort_keys=False, width=140), encoding="utf-8")
-    print(f"wrote {out} ({m['cell_count']} cells)")
+    print(f"wrote {out} ({m['cell_count']} cells; human numbers: {frozen.mode})")
     return 0
 
 
