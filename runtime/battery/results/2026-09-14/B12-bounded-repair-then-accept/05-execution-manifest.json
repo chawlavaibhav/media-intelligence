@@ -3,8 +3,9 @@
     {
       "adapter_family": "fal_queue",
       "arm": "core",
-      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-4b5b4641f93a3f0a:flux-2-pro:draw1",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-11159e33c41f1066:flux-2-pro:draw1",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.000000",
@@ -19,6 +20,12 @@
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
       },
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.030000",
@@ -63,8 +70,9 @@
     {
       "adapter_family": "fal_queue",
       "arm": "core",
-      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-4b5b4641f93a3f0a:flux-2-pro:draw2",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-11159e33c41f1066:flux-2-pro:draw2",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.030000",
@@ -79,6 +87,12 @@
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
       },
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.030000",
@@ -123,8 +137,9 @@
     {
       "adapter_family": "fal_queue",
       "arm": "core",
-      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-4b5b4641f93a3f0a:qwen-image-3:draw1",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-11159e33c41f1066:qwen-image-3:draw1",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.060000",
@@ -147,6 +162,12 @@
         "text_mechanism": "deterministic_text_composition"
       },
       "if_triggered_would_dispatch": true,
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.040000",
@@ -192,8 +213,9 @@
     {
       "adapter_family": "fal_queue",
       "arm": "core",
-      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-4b5b4641f93a3f0a:qwen-image-3:draw2",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-11159e33c41f1066:qwen-image-3:draw2",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.100000",
@@ -216,6 +238,12 @@
         "text_mechanism": "deterministic_text_composition"
       },
       "if_triggered_would_dispatch": true,
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.040000",
@@ -271,7 +299,7 @@
     "rule": "attempts reserve in listed order; the running total never crosses the effective ceiling; an attempt that would is blocked_by_ceiling and stays visible"
   },
   "customer_ref": "acct-stage-a-img",
-  "decision_id": "rd-4b5b4641f93a3f0a",
+  "decision_id": "rd-11159e33c41f1066",
   "dispatch_mode": "dry",
   "fallback_triggers": [
     "provider_refusal",
@@ -280,10 +308,20 @@
     "capability_unsupported"
   ],
   "job_id": "alpha-dry-img-text-02-repair",
-  "manifest_id": "em-6082953ceb9dc511",
+  "manifest_id": "em-3f1bf35a1a0ed7bf",
   "policy_profile": "dry",
+  "pool_liquidity": {
+    "attempts_blocked_by_pool": 0,
+    "note": "no PoolLiquidity was supplied to build(); every attempt's liquidity is not_read",
+    "pools_without_reading": [
+      "cash"
+    ],
+    "readings": {},
+    "rule": "spend authority is not provider liquidity: an attempt whose billing pool cannot fund it is blocked_by_pool and cannot dispatch; a pool with no reading is reported unknown, never assumed",
+    "status": "not_read"
+  },
   "provenance": {
-    "decision_sha256": "7ef02ec86f747e2b8346096631e7518265bb83d8766bdfc1cdf63e3fa4003da5",
+    "decision_sha256": "7194ff5dcd2627d56a2f90b054a2e91b19b0426a68ae7970d0361ddba6c223e6",
     "dispatched": false,
     "harness_modules": [
       "eval/harness-v2/pricing.py",
@@ -298,7 +336,7 @@
     "roster_sha256": "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c",
     "routing_evidence_map_sha256": "8df6ead0712d6b67070e7475ab56aa12be7f9480916a79a273bec5ff25c7f707",
     "spec_path": "runs/alpha-dry-img-text-02-repair/02-spec.json",
-    "spec_sha256": "e71b0bd47bffea3f1da971f442898bca1d9d7bbf0c836f2f5f50e8406daddb16",
+    "spec_sha256": "963de29f71a96904d24c9756371d555a7201819d7c6e1a26406e1f0a84cd5b81",
     "spend_authority_status": "none",
     "taint_register_sha256": "acd0cf87d7d0ee494c73f2c44159040f46f029eb436e5357cd9add5b41c62651"
   },
@@ -311,7 +349,7 @@
       "text_mechanism": "deterministic_text_composition"
     }
   ],
-  "spec_id": "spec-0c8027485790d449",
+  "spec_id": "spec-106ec2e0ae267c75",
   "surface_preference": {
     "applied": false,
     "basis": "coordination/decisions/CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09.md",

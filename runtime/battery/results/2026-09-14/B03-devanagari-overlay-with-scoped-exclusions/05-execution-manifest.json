@@ -5,6 +5,7 @@
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-01:rd-94bedc2b1ba8df7f:flux-2-pro:draw1",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.000000",
@@ -18,6 +19,12 @@
         ],
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
+      },
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
       },
       "price": {
         "billing_pool": "cash",
@@ -65,6 +72,7 @@
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-01:rd-94bedc2b1ba8df7f:flux-2-pro:draw2",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.030000",
@@ -78,6 +86,12 @@
         ],
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
+      },
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
       },
       "price": {
         "billing_pool": "cash",
@@ -125,6 +139,7 @@
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-01:rd-94bedc2b1ba8df7f:qwen-image-3:draw1",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.060000",
@@ -147,6 +162,12 @@
         "text_mechanism": "deterministic_text_composition"
       },
       "if_triggered_would_dispatch": true,
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.040000",
@@ -194,6 +215,7 @@
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-01:rd-94bedc2b1ba8df7f:qwen-image-3:draw2",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.100000",
@@ -216,6 +238,12 @@
         "text_mechanism": "deterministic_text_composition"
       },
       "if_triggered_would_dispatch": true,
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.040000",
@@ -282,6 +310,16 @@
   "job_id": "alpha-dry-img-text-01",
   "manifest_id": "em-6a355606d21d4f44",
   "policy_profile": "dry",
+  "pool_liquidity": {
+    "attempts_blocked_by_pool": 0,
+    "note": "no PoolLiquidity was supplied to build(); every attempt's liquidity is not_read",
+    "pools_without_reading": [
+      "cash"
+    ],
+    "readings": {},
+    "rule": "spend authority is not provider liquidity: an attempt whose billing pool cannot fund it is blocked_by_pool and cannot dispatch; a pool with no reading is reported unknown, never assumed",
+    "status": "not_read"
+  },
   "provenance": {
     "decision_sha256": "9c0e6a43b8fce63e9854554fb7043a25ae51d06e4076679babdd69695313b083",
     "dispatched": false,

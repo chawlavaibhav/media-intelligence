@@ -46,7 +46,7 @@ runs:
       summary: pre=FAIL attempts=0 repairs=0 acceptance=abandoned
     - stage: outcome_event
       status: ok
-      summary: oe-82eedbffd69c19e12d277d4cbd0d8918b668103abe77a7767a9602fc473bda7d decision=abandoned dry_run=True
+      summary: oe-8417fcf00006b89fd21871a254a6302943f146d45a4d2065d492210b2ba681cd decision=abandoned dry_run=True
     - stage: template
       status: skipped
       summary: outcome abandoned; nothing to promote
@@ -96,7 +96,7 @@ runs:
     attempts: 0
     repairs: 0
     acceptance: abandoned
-    event_id: oe-82eedbffd69c19e12d277d4cbd0d8918b668103abe77a7767a9602fc473bda7d
+    event_id: oe-8417fcf00006b89fd21871a254a6302943f146d45a4d2065d492210b2ba681cd
     template_id: null
 - id: B03-devanagari-overlay-with-scoped-exclusions
   brief: runtime/fixtures/alpha-briefs/img-text-01.json
@@ -143,7 +143,7 @@ runs:
       summary: pre=FAIL attempts=0 repairs=0 acceptance=abandoned
     - stage: outcome_event
       status: ok
-      summary: oe-cbc6bea48d06e870d84016620294efa7abb82d0db1512139469a8c210ddfe13f decision=abandoned dry_run=True
+      summary: oe-4a3dec68b3c2f3f3bac19c0b4d02ee1313b856d1e1e86b54ae4513851758fe9b decision=abandoned dry_run=True
     - stage: template
       status: skipped
       summary: outcome abandoned; nothing to promote
@@ -198,7 +198,7 @@ runs:
     attempts: 0
     repairs: 0
     acceptance: abandoned
-    event_id: oe-cbc6bea48d06e870d84016620294efa7abb82d0db1512139469a8c210ddfe13f
+    event_id: oe-4a3dec68b3c2f3f3bac19c0b4d02ee1313b856d1e1e86b54ae4513851758fe9b
     template_id: null
 - id: B01-static-ad-exact-overlay-copy-happy-path
   brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
@@ -243,10 +243,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-e8707925f49f5fc544053e3f343cc9f7fe232e5f23b51f87944cec935771e2f6 decision=accepted dry_run=True
+      summary: oe-35d3a037fc93ed905753f6b26164c5cd7939859c2719a2d67432743ce9b1af0b decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-a799a6e76b70c105 status=reusable_dry_only
+      summary: tpl-7d9a42aaf36aafcd status=reusable_dry_only
     route:
       primary: flux-2-pro
       primary_surface: fal
@@ -292,8 +292,8 @@ runs:
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-e8707925f49f5fc544053e3f343cc9f7fe232e5f23b51f87944cec935771e2f6
-    template_id: tpl-a799a6e76b70c105
+    event_id: oe-35d3a037fc93ed905753f6b26164c5cd7939859c2719a2d67432743ce9b1af0b
+    template_id: tpl-7d9a42aaf36aafcd
 - id: B04-static-ad-no-text-product-hero
   brief: runtime/fixtures/alpha-briefs/img-core-01.json
   job_id: alpha-dry-img-core-01
@@ -333,10 +333,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-5f4d15571d0ab5113b3328077fa06ba2ff7b4b7facb92a331c35cb0330268c80 decision=accepted dry_run=True
+      summary: oe-cb4df1c8b20bc413dcaaad522d62d21baef51872259e5ece7b91fd7718d17111 decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-55f3d90b61bbcc27 status=reusable_dry_only
+      summary: tpl-2958abcb684c16d2 status=reusable_dry_only
     route:
       primary: flux-2-pro
       primary_surface: fal
@@ -382,8 +382,8 @@ runs:
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-5f4d15571d0ab5113b3328077fa06ba2ff7b4b7facb92a331c35cb0330268c80
-    template_id: tpl-55f3d90b61bbcc27
+    event_id: oe-cb4df1c8b20bc413dcaaad522d62d21baef51872259e5ece7b91fd7718d17111
+    template_id: tpl-2958abcb684c16d2
 - id: B05-short-motion-from-the-accepted-still
   brief: runtime/fixtures/alpha-briefs/vid-i2v-01.json
   job_id: alpha-dry-vid-i2v-01
@@ -424,10 +424,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-7a7ba272ee24d7e65b4616324346e551b231458e9641ed21f3a44d7a94a6e20d decision=accepted dry_run=True
+      summary: oe-c64b4d49af4b9e7317de1bf5606a14157d3d439e1643cba16bd0952fba5c2f9e decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-85b9387ff076de6f status=reusable_dry_only
+      summary: tpl-610d0c1f7b95fa3a status=reusable_dry_only
     route:
       primary: minimax-h3-max-i2v
       primary_surface: fal
@@ -476,8 +476,8 @@ runs:
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-7a7ba272ee24d7e65b4616324346e551b231458e9641ed21f3a44d7a94a6e20d
-    template_id: tpl-85b9387ff076de6f
+    event_id: oe-c64b4d49af4b9e7317de1bf5606a14157d3d439e1643cba16bd0952fba5c2f9e
+    template_id: tpl-610d0c1f7b95fa3a
 - id: B06-supplied-photo-identifiable-person-no-consent
   brief: runtime/fixtures/alpha-briefs/img-edit-01.json
   job_id: alpha-dry-img-edit-01
@@ -714,7 +714,7 @@ runs:
       summary: job alpha-dry-img-text-02-ceiling accepted under profile dry
     - stage: spec
       status: ok
-      summary: spec-2d380a9d14d5ab97 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a799a6e76b70c105
+      summary: spec-159a9f78161999d0 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-7d9a42aaf36aafcd
     - stage: canon
       status: ok
       summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
@@ -740,11 +740,11 @@ runs:
         basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
         within_ceiling: false
     spec:
-      spec_id: spec-2d380a9d14d5ab97
+      spec_id: spec-159a9f78161999d0
       kind: static_ad
       text_strategy: code_set_on_textless_plate
       text_mechanism: deterministic_text_composition
-      planner: template:tpl-a799a6e76b70c105
+      planner: template:tpl-7d9a42aaf36aafcd
       packs_injected:
       - composition_and_attention
       missing_domains:
@@ -783,7 +783,7 @@ runs:
       summary: job alpha-dry-img-text-02-repair accepted under profile dry
     - stage: spec
       status: ok
-      summary: spec-0c8027485790d449 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a799a6e76b70c105
+      summary: spec-106ec2e0ae267c75 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-7d9a42aaf36aafcd
     - stage: canon
       status: ok
       summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
@@ -803,10 +803,10 @@ runs:
       summary: pre=PASS attempts=2 repairs=1 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-1531a979d823ce6e0917b8fca377085036c3c1c793cb01fcf918f16d995d30f7 decision=accepted dry_run=True
+      summary: oe-e293a134f7b625c0f4369738b9eaf7478ef348c96f346974be2302ede26ba8dd decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-980ab80908fb4edf status=reusable_dry_only
+      summary: tpl-a4ac0cd9558a751e status=reusable_dry_only
     route:
       primary: flux-2-pro
       primary_surface: fal
@@ -823,11 +823,11 @@ runs:
         basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
         within_ceiling: true
     spec:
-      spec_id: spec-0c8027485790d449
+      spec_id: spec-106ec2e0ae267c75
       kind: static_ad
       text_strategy: code_set_on_textless_plate
       text_mechanism: deterministic_text_composition
-      planner: template:tpl-a799a6e76b70c105
+      planner: template:tpl-7d9a42aaf36aafcd
       packs_injected:
       - composition_and_attention
       missing_domains:
@@ -852,8 +852,8 @@ runs:
     attempts: 2
     repairs: 1
     acceptance: accepted
-    event_id: oe-1531a979d823ce6e0917b8fca377085036c3c1c793cb01fcf918f16d995d30f7
-    template_id: tpl-980ab80908fb4edf
+    event_id: oe-e293a134f7b625c0f4369738b9eaf7478ef348c96f346974be2302ede26ba8dd
+    template_id: tpl-a4ac0cd9558a751e
 - id: B13-repair-allowance-exhausted
   brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
   job_id: alpha-dry-img-text-02-exhausted
@@ -872,7 +872,7 @@ runs:
       summary: job alpha-dry-img-text-02-exhausted accepted under profile dry
     - stage: spec
       status: ok
-      summary: spec-a6645f6f5cfb6e5a kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a799a6e76b70c105
+      summary: spec-91eeeb570d59ca5b kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a4ac0cd9558a751e
     - stage: canon
       status: ok
       summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
@@ -892,7 +892,7 @@ runs:
       summary: pre=PASS attempts=2 repairs=1 acceptance=abandoned refusal=REPAIR_ALLOWANCE_EXHAUSTED
     - stage: outcome_event
       status: ok
-      summary: oe-dfcd32326bbcab0006b483a7c896e476cc34ba1e794c1ffec047296ed2630a3b decision=abandoned dry_run=True
+      summary: oe-a8a3979e79b97666018530836a9e3334aca4710f1198dacda5ee33c41a4ca592 decision=abandoned dry_run=True
     - stage: template
       status: skipped
       summary: outcome abandoned; nothing to promote
@@ -912,11 +912,11 @@ runs:
         basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
         within_ceiling: true
     spec:
-      spec_id: spec-a6645f6f5cfb6e5a
+      spec_id: spec-91eeeb570d59ca5b
       kind: static_ad
       text_strategy: code_set_on_textless_plate
       text_mechanism: deterministic_text_composition
-      planner: template:tpl-a799a6e76b70c105
+      planner: template:tpl-a4ac0cd9558a751e
       packs_injected:
       - composition_and_attention
       missing_domains:
@@ -941,7 +941,7 @@ runs:
     attempts: 2
     repairs: 1
     acceptance: abandoned
-    event_id: oe-dfcd32326bbcab0006b483a7c896e476cc34ba1e794c1ffec047296ed2630a3b
+    event_id: oe-a8a3979e79b97666018530836a9e3334aca4710f1198dacda5ee33c41a4ca592
     template_id: null
 - id: B14-repeat-job-served-from-the-template
   brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
@@ -961,7 +961,7 @@ runs:
       summary: job alpha-dry-img-text-02-repeat accepted under profile dry
     - stage: spec
       status: ok
-      summary: spec-b86175606f1a4450 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a799a6e76b70c105
+      summary: spec-55efd6e7637434af kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a4ac0cd9558a751e
     - stage: canon
       status: ok
       summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
@@ -981,10 +981,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-7454f480515f196e43da7a262b4ba217703aab13d1ac174ef80dac6458d67bde decision=accepted dry_run=True
+      summary: oe-d85112553f4a4942533e731909ad18072960e8eeaaa33416d91141a09bfc75e6 decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-52719074c5144106 status=reusable_dry_only
+      summary: tpl-73fd4b5dc5114c63 status=reusable_dry_only
     route:
       primary: flux-2-pro
       primary_surface: fal
@@ -1001,11 +1001,11 @@ runs:
         basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
         within_ceiling: true
     spec:
-      spec_id: spec-b86175606f1a4450
+      spec_id: spec-55efd6e7637434af
       kind: static_ad
       text_strategy: code_set_on_textless_plate
       text_mechanism: deterministic_text_composition
-      planner: template:tpl-a799a6e76b70c105
+      planner: template:tpl-a4ac0cd9558a751e
       packs_injected:
       - composition_and_attention
       missing_domains:
@@ -1030,8 +1030,8 @@ runs:
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-7454f480515f196e43da7a262b4ba217703aab13d1ac174ef80dac6458d67bde
-    template_id: tpl-52719074c5144106
+    event_id: oe-d85112553f4a4942533e731909ad18072960e8eeaaa33416d91141a09bfc75e6
+    template_id: tpl-73fd4b5dc5114c63
 totals:
   runs: 14
   reached_intended_end_state_or_precise_refusal: 14

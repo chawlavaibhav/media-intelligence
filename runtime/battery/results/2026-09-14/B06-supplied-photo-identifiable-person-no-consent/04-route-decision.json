@@ -1,0 +1,217 @@
+{
+  "cost_envelope": {
+    "already_committed_usd": "0",
+    "basis": "worst-case unit cost 0.067500 x max_provider_draws_per_deliverable 2 from profile 'dry'",
+    "job_ceiling_usd": "5.0",
+    "this_decision_max_usd": "0.135000",
+    "within_ceiling": true
+  },
+  "decided_utc": "2026-09-14T12:00:00Z",
+  "decision_id": "rd-fdaf8601d2b0de10",
+  "exclusions_applied": [],
+  "fallback": null,
+  "manual_route_reason": "profile 'dry' sets fallback_required: true and no second eligible route exists for this requirement, so there is nothing to hand over to. A second attempt at 'seedream-5-pro-edit' is not a fallback.",
+  "manual_route_required": true,
+  "primary": {
+    "adapter_family": "fal_queue",
+    "arm": "edit",
+    "attempt_ids_if_dispatched": [
+      "cust:acct-stage-a-img:alpha-dry-img-edit-01:rd-fdaf8601d2b0de10:seedream-5-pro-edit:draw1",
+      "cust:acct-stage-a-img:alpha-dry-img-edit-01:rd-fdaf8601d2b0de10:seedream-5-pro-edit:draw2"
+    ],
+    "billing_pool": "cash",
+    "credential_name": "FAL_KEY",
+    "evidence_cells": [
+      "IMG-EDIT/seedream-5-pro-edit",
+      "IMG-REF/seedream-5-pro-edit"
+    ],
+    "evidence_n": {
+      "image_edit": {
+        "accepts": 2,
+        "items": 2,
+        "note": "human blind acceptance, one judge; never a Registry row and never a score",
+        "settled_draw_floor": 4,
+        "trials": 4
+      },
+      "reference_fidelity": {
+        "accepts": 4,
+        "items": 2,
+        "note": "human blind acceptance, one judge; never a Registry row and never a score",
+        "settled_draw_floor": 4,
+        "trials": 4
+      }
+    },
+    "evidence_status": "clean_observed",
+    "expected_cost_usd": "0.067500",
+    "price_pin_evidence_quote": "**$0.0675+ $(0.0045 x number of additional input images)**",
+    "price_pin_indexes": [
+      "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+    ],
+    "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json",
+    "quantity": "1",
+    "quantity_rule": "per_image",
+    "quantity_unit": "images",
+    "route_key": "seedream-5-pro-edit",
+    "surface": "fal",
+    "surface_model_id": "bytedance/seedream/v5/pro/edit",
+    "unit": "per_image",
+    "unit_price": "0.0675",
+    "unit_price_note": "route"
+  },
+  "provenance": {
+    "binding": "runtime/route/CAPABILITY-EVIDENCE-BINDING-v0.yaml",
+    "dispatched": false,
+    "evidence_status_vocabulary": [
+      "clean_observed",
+      "directional_only",
+      "awaiting_controller_ruling",
+      "method_tainted",
+      "insufficient"
+    ],
+    "harness_modules": [
+      "eval/harness-v2/pricing.py",
+      "eval/harness-v2/surfaces.py"
+    ],
+    "harness_providers_stubbed": false,
+    "map_prices_note": "the routing map's unit_price_usd_pinned and per-question cost figures are never read as prices; they were measured on surfaces the roster has since re-pointed",
+    "map_prices_used": false,
+    "network": "none — planning opens no socket",
+    "pin_indexes_read": 7,
+    "policy_profile": "dry",
+    "policy_profile_adopted": true,
+    "policy_profile_source": "supplied_alongside_spec (PRODUCTION-SPEC-v1 carries no profile name)",
+    "policy_profile_status": "active",
+    "roster": "eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml",
+    "roster_sha256": "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c",
+    "routing_evidence_map_sha256": "8df6ead0712d6b67070e7475ab56aa12be7f9480916a79a273bec5ff25c7f707",
+    "spec": "runs/alpha-dry-img-edit-01/02-spec.json",
+    "taint_register": "eval/capability-map/TAINT-REGISTER-v1.yaml",
+    "taint_register_sha256": "acd0cf87d7d0ee494c73f2c44159040f46f029eb436e5357cd9add5b41c62651"
+  },
+  "schema": "ROUTE-DECISION-v0",
+  "selection_basis": {
+    "candidates_considered": [
+      {
+        "dropped_at": "evidence_envelope",
+        "evidence_cells": [
+          "IMG-EDIT/flux-2-pro-edit",
+          "IMG-REF/flux-2-pro-edit"
+        ],
+        "kept": false,
+        "route_key": "flux-2-pro-edit",
+        "why": [
+          "image_edit: IMG-EDIT/flux-2-pro-edit is clean_observed and the register allows production use; the profile lists that status as auto-routable.",
+          "reference_fidelity: IMG-REF/flux-2-pro-edit is eliminated on its question under the frozen rule (rulings as recorded): eliminated on its question under the frozen rule (E2): 0/4 on 4 settled draw(s)."
+        ]
+      },
+      {
+        "dropped_at": "evidence_envelope",
+        "evidence_cells": [
+          "IMG-EDIT/nano-banana-pro-edit",
+          "IMG-REF/nano-banana-pro-edit"
+        ],
+        "kept": false,
+        "route_key": "nano-banana-pro-edit",
+        "why": [
+          "image_edit: IMG-EDIT/nano-banana-pro-edit is eliminated on its question under the frozen rule (rulings ['C-4']): eliminated on its question under the frozen rule (E2): 1/4 on 4 settled draw(s); C-4 (the cell was recomputed under the frozen rule, so its number stands).",
+          "reference_fidelity: IMG-REF/nano-banana-pro-edit is eliminated on its question under the frozen rule (rulings as recorded): eliminated on its question under the frozen rule (E2): 1/4 on 4 settled draw(s)."
+        ]
+      },
+      {
+        "dropped_at": null,
+        "evidence_cells": [
+          "IMG-EDIT/seedream-5-pro-edit",
+          "IMG-REF/seedream-5-pro-edit"
+        ],
+        "kept": true,
+        "price": {
+          "expected_cost_usd": "0.067500",
+          "priced": true,
+          "why": "roster seedream-5-pro-edit, 0.0675 USD per_image x 1 images"
+        },
+        "route_key": "seedream-5-pro-edit",
+        "why": [
+          "image_edit: IMG-EDIT/seedream-5-pro-edit is clean_observed and the register allows production use; the profile lists that status as auto-routable.",
+          "reference_fidelity: IMG-REF/seedream-5-pro-edit is clean_observed and the register allows production use; the profile lists that status as auto-routable."
+        ]
+      }
+    ],
+    "keyed_on": "cell_key, never (route_key, arm); exact-text cells are further narrowed by text_mechanism (C-6c, 14 Sep 2026)",
+    "preflight": [],
+    "register_notes_applied": [],
+    "required_capabilities": [
+      "image_edit",
+      "product_surface_fidelity",
+      "reference_fidelity"
+    ],
+    "requirements_resolved": [
+      {
+        "arms": null,
+        "basis": "RR-4 — edit on a supplied photo",
+        "capability": "image_edit",
+        "cells_considered": [
+          "IMG-EDIT/flux-2-pro-edit",
+          "IMG-EDIT/nano-banana-pro-edit",
+          "IMG-EDIT/seedream-5-pro-edit"
+        ],
+        "dispatches": true,
+        "level": null,
+        "question": "IMG-EDIT",
+        "text_mechanism": null
+      },
+      {
+        "arms": null,
+        "basis": "RR-4 — reproduce a referenced product or person faithfully",
+        "capability": "reference_fidelity",
+        "cells_considered": [
+          "IMG-REF/flux-2-pro-edit",
+          "IMG-REF/nano-banana-pro-edit",
+          "IMG-REF/seedream-5-pro-edit"
+        ],
+        "dispatches": true,
+        "level": null,
+        "question": "IMG-REF",
+        "text_mechanism": null
+      }
+    ],
+    "rule": "hard_requirements -> evidence_envelope -> cost -> fallback",
+    "self_composed_requirements": [],
+    "stages": [
+      {
+        "id": "hard_requirements",
+        "note": "a route dropped here is never reconsidered, whatever it costs",
+        "what": "capability coverage, the spec's route_exclusions, and the profile's deliverable_kinds_allowed"
+      },
+      {
+        "id": "evidence_envelope",
+        "note": "the register is read, never overridden; a cell awaiting a Controller ruling is never auto-routed",
+        "what": "the taint register's status and production_use_allowed, then the active profile's auto_routable_evidence_status"
+      },
+      {
+        "id": "price",
+        "note": "the routing map's cost figures are NEVER read as prices — they were measured on surfaces the roster has since re-pointed",
+        "what": "a live price pin resolved through the roster; a route with no live pin cannot be auto-selected"
+      },
+      {
+        "id": "cost",
+        "note": "cost only orders survivors; it can never rescue a route or overrule a hard requirement",
+        "what": "cheapest expected cost first, among the routes that survived every stage above"
+      },
+      {
+        "id": "fallback",
+        "note": "a fallback is a different route for the same requirement, never a second attempt at the same one",
+        "what": "the next survivor with a different route_key, declared before dispatch with named triggers"
+      }
+    ]
+  },
+  "spec_id": "spec-f2602e3090898406",
+  "unsupported_requirements": [
+    {
+      "capability": "product_surface_fidelity",
+      "level": null,
+      "mandatory": false,
+      "reason": "capability 'product_surface_fidelity' has no row in CAPABILITY-EVIDENCE-BINDING-v0.yaml; it is not routed by guesswork. Adding it is a row there, not a code change."
+    }
+  ],
+  "why_selected": "Spec spec-f2602e3090898406 asks for static_ad_from_supplied_photo. Among the routes that satisfy every mandatory requirement, are not excluded by the spec, pass the taint register and carry a live price pin, seedream-5-pro-edit is the cheapest at 0.067500 USD (0.0675 per_image x 1 images, pool cash, priced from eval/empirical-planning/price-pins-2026-09/seedream-5-pro-edit/fal-api-models-seedream-v5-pro-edit.json). Cost decided the order, never the eligibility: every route dropped above was dropped before any price was compared. No fallback is declared. Acceptance authority under dry is human. This decision requires a person: profile 'dry' sets fallback_required: true and no second eligible route exists for this requirement, so there is nothing to hand over to. A second attempt at 'seedream-5-pro-edit' is not a fallback."
+}
