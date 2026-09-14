@@ -14,8 +14,9 @@ runtime/fixtures/synthetic/ are keyed on those digests.
 MP4: header-only. canon.gate.artifact.probe_mp4 reads ftyp, moov/mvhd (duration), trak/mdia/hdlr
 ('vide'), and the stsd VisualSampleEntry (width, height). This stub carries exactly those boxes and
 no mdat, so the gate's geometry/duration/track rows run over it; it is NOT a playable file and is
-never presented as one. Frames cannot be decoded from it (nor from a real MP4, in stdlib), so the
-video text scan stays NOT-RUN — the gate's own honest limitation.
+never presented as one. Frames cannot be decoded from it (nor from a real MP4, in stdlib); the dry
+chain therefore hands the gate synthetic "sampled frames" (`frames_for_spec`) so the frame-level text
+scan runs — a video with no sampled frames is NOT-RUN at the gate, never PASS (frame_hygiene).
 """
 from __future__ import annotations
 
@@ -110,6 +111,18 @@ def make_mp4_stub(width: int, height: int, *, duration_s: float, timescale: int 
     trak = _box(b"trak", tkhd + mdia)
     moov = _box(b"moov", mvhd + trak)
     return ftyp + moov
+
+
+SYNTHETIC_FRAMES_PER_VIDEO = 3
+
+
+def frames_for_spec(spec: dict, *, seed: int = 1, count: int = SYNTHETIC_FRAMES_PER_VIDEO) -> list:
+    """Synthetic 'sampled frames' for a dry video attempt: `count` flat PNGs of the declared aspect with
+    distinct digests per (seed, k). They stand in for frames a live run would sample from the returned
+    clip (runtime/loop/frame_hygiene), so the dry chain exercises the frame-level text scan instead of
+    passing a video nobody looked at. They prove plumbing and measure nothing — same status as the stub."""
+    aspect = spec["deliverable"]["aspect"]
+    return [png_for_aspect(aspect, seed=1000 * int(seed) + k) for k in range(1, int(count) + 1)]
 
 
 def mp4_for_spec(spec: dict, *, seed: int = 1) -> bytes:

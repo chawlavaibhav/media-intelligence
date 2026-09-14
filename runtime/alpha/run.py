@@ -266,13 +266,13 @@ class AlphaRunner:
         # 6. the loop: pre-dispatch gate, synthetic post-draw, bounded repair, human acceptance ---
         dispatchable = [a for a in attempts if a["would_dispatch"] or a.get("slot") == "primary"]
         loop_manifest = dict(manifest, attempts=dispatchable)
-        detector, provider = self._post_draw_fixture(spec, dispatchable, post_draw)
+        detector, provider, sampler = self._post_draw_fixture(spec, dispatchable, post_draw)
         verdicts = self._verdicts(human_verdict, at)
         try:
             loop = driver.run_loop(spec, spec["blueprint"], loop_manifest, profile,
                                    artifact_provider=provider, detector=detector, human_verdicts=verdicts,
                                    product_entity=bool(nr.facets.get("product_entity_present")),
-                                   write=False, now_utc=at,
+                                   write=False, now_utc=at, frame_sampler=sampler,
                                    canon_lookup={"corpus_digest": compiler.corpus.accepted_digest,
                                                  "injection_prefix_sha256": canon["injected_context_sha256"]})
         except Refusal as exc:
@@ -373,7 +373,11 @@ class AlphaRunner:
     def _post_draw_fixture(spec: dict, attempts: list, scenario: str):
         """A synthetic PNG per attempt (declared aspect, seed = draw index) and a scripted detector
         keyed on those exact bytes. `no_artifact` yields None for every attempt (a dry attempt
-        with nothing to inspect), which the post-draw gate reports as NOT_RUN, never PASS."""
+        with nothing to inspect), which the post-draw gate reports as NOT_RUN, never PASS.
+
+        Motion specs get an MP4 stub AND a frame sampler yielding synthetic 'sampled frames'
+        (synthetic.frames_for_spec) scripted the same way, so the frame-level text scan runs: the
+        scenario's lettering lands on the frames, and a video with no frames would be NOT_RUN."""
         aspect = spec["deliverable"]["aspect"]
         motion = bool(spec["deliverable"].get("motion"))
         script: dict = {}
@@ -385,17 +389,24 @@ class AlphaRunner:
                 return synthetic.mp4_for_spec(spec, seed=int(attempt.get("draw_index") or 1))
             return synthetic.png_for_aspect(aspect, seed=int(attempt.get("draw_index") or 1))
 
+        def frames_for(attempt: dict, artifact_bytes):
+            if not motion or artifact_bytes is None:
+                return None
+            return synthetic.frames_for_spec(spec, seed=int(attempt.get("draw_index") or 1))
+
         for i, attempt in enumerate(attempts, start=1):
             data = artifact_for(attempt)
             if data is None:
                 continue
-            digest = hashlib.sha256(data).hexdigest()
             lettering = (scenario == "lettering_always") or (scenario == "lettering_then_clean" and i == 1)
-            script[digest] = {"status": "text" if lettering else "no_text",
-                              "transcript": "40% 40%" if lettering else "",
-                              "note": f"scripted synthetic detector; scenario {scenario}; attempt {i}"}
+            entry = {"status": "text" if lettering else "no_text",
+                     "transcript": "40% 40%" if lettering else "",
+                     "note": f"scripted synthetic detector; scenario {scenario}; attempt {i}"}
+            script[hashlib.sha256(data).hexdigest()] = dict(entry)
+            for k, frame in enumerate(frames_for(attempt, data) or [], start=1):
+                script[hashlib.sha256(frame).hexdigest()] = dict(entry, note=entry["note"] + f"; synthetic frame {k}")
         detector = textscan.ScriptedDetector.from_json(script) if script else None
-        return detector, artifact_for
+        return detector, artifact_for, (frames_for if motion else None)
 
     @staticmethod
     def _verdicts(human_verdict: str | None, at: str) -> list:
