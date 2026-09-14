@@ -1,6 +1,6 @@
 """Choosing the exact-text strategy BY RULE, from the evidence map.
 
-PRODUCTION-SPEC-v0 requires `exact_text.strategy` and `exact_text.strategy_basis`, and says the
+PRODUCTION-SPEC-v1 (as v0 did) requires `exact_text.strategy` and `exact_text.strategy_basis`, and says the
 strategy "is chosen by rule from the evidence, and the rule is named in strategy_basis so it can
 be audited later". This module is that rule, and it holds no evidence of its own:
 
@@ -40,6 +40,12 @@ class TextStrategy:
     prohibitions: tuple
     considered: tuple
     facets_active: tuple
+    # Every in-scope prohibition that names routes, with the clause it came from and whether it is
+    # a LETTERING prohibition (all of its facets are lettering facets). The compiler writes these to
+    # PRODUCTION-SPEC-v1.route_exclusions with a scope: a lettering prohibition under a strategy in
+    # which code draws the lettering is carried as `generated_text_only`, not as a whole-route ban
+    # (CHANGES-v0-to-v1.md, second round, defect 4). Rows: {rule_id, routes, because, lettering_prohibition}.
+    prohibition_rows: tuple = ()
 
 
 def choose(nr, evidence: EvidenceMap | None = None) -> TextStrategy:
@@ -148,6 +154,11 @@ def choose(nr, evidence: EvidenceMap | None = None) -> TextStrategy:
         ),
         considered=tuple(sorted({(c[0], c[1].id) for c in candidates})),
         facets_active=tuple(sorted(f for f, on in active.items() if on)),
+        prohibition_rows=tuple(
+            {"rule_id": p["rule_id"], "routes": tuple(p["routes"]), "because": p["because"],
+             "lettering_prohibition": p["lettering_prohibition"]}
+            for p in prohibitions
+        ),
     )
 
 

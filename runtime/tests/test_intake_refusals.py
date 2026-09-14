@@ -1,4 +1,8 @@
-"""Intake refuses, by name, before anything else happens."""
+"""Intake refuses, by name, before anything else happens.
+
+14 Sep 2026 (lane E): the fixtures carry PRODUCTION-JOB-v1's `depicts_identifiable_person`, the
+answer the consent gate keys on (whatever the role). The role-keyed v0 gate is gone.
+"""
 from __future__ import annotations
 
 import copy
@@ -19,6 +23,7 @@ class ConsentTest(unittest.TestCase):
                 "sha256": "aa" * 32,
                 "content_type": "image/jpeg",
                 "provenance": "customer_supplied",
+                "depicts_identifiable_person": True,
             }
         )
         with self.assertRaises(Refusal) as caught:
@@ -35,6 +40,7 @@ class ConsentTest(unittest.TestCase):
                 "sha256": "aa" * 32,
                 "content_type": "image/jpeg",
                 "provenance": "customer_supplied",
+                "depicts_identifiable_person": True,
                 "consent_ref": "CONSENT-2026-09-01-RANGEEN-04",
             }
         )
@@ -52,6 +58,7 @@ class ConsentTest(unittest.TestCase):
                 "sha256": "bb" * 32,
                 "content_type": "image/jpeg",
                 "provenance": "customer_supplied",
+                "depicts_identifiable_person": True,
             }
         )
         with self.assertRaises(Refusal) as caught:

@@ -1,4 +1,4 @@
-"""Job -> Normalized Request (CANON-010 grammar), with no model in the loop.
+"""Job (PRODUCTION-JOB-v1) -> Normalized Request (CANON-010 grammar), with no model in the loop.
 
 CANON-SHAPE-v1 §4 puts the pack lookup between the Normalized Request and the reasoning pass.
 So the NR has to be computable from the job alone: if a model produced it, the "deterministic
@@ -64,6 +64,7 @@ class KindBinding:
         self.product_entity_roles = list(doc.get("product_entity_roles", []))
         self.identity_roles = list(doc.get("identity_roles", []))
         self.supplied_asset_roles = list(doc.get("supplied_asset_roles", []))
+        self.subject_product_entities = list(doc.get("subject_product_entities", []))
         self.ambiguity_rules = list(doc.get("ambiguity_markers", []))
 
     def row(self, kind: str) -> dict:
@@ -114,7 +115,12 @@ def normalize(job: dict, binding: KindBinding | None = None) -> NormalizedReques
         for a in assets
         if a.get("role") in binding.product_entity_roles
     ]
-    product_entity_present = bool(entities) or bool(row.get("product_entity_implied"))
+    # PRODUCTION-JOB-v1 `subject`: what the picture is OF when the customer says so. v0 could only
+    # infer a product from a supplied photograph, so a product advertisement with no customer photo
+    # never fired the product-appearance doctrine (CHANGES-v0-to-v1.md, defect 2).
+    subject = request.get("subject") or {}
+    subject_is_product = str(subject.get("entity") or "") in binding.subject_product_entities
+    product_entity_present = bool(entities) or bool(row.get("product_entity_implied")) or subject_is_product
 
     strings = list(job.get("exact_text_strings") or [])
     text_requirements = []
@@ -128,6 +134,9 @@ def normalize(job: dict, binding: KindBinding | None = None) -> NormalizedReques
                 "script_detected": script_of(item["value"]),
                 "may_reflow": bool(item.get("may_reflow", False)),
                 "exactness": "contractual" if not item.get("may_reflow", False) else "reflowable",
+                # PRODUCTION-JOB-v1 exact_text_strings[].placement (default overlay): the contract's
+                # validator fills the default, so a job that reached here always carries it.
+                "placement": item.get("placement") or "overlay",
             }
         )
 
@@ -155,7 +164,7 @@ def normalize(job: dict, binding: KindBinding | None = None) -> NormalizedReques
         "exactness_contractual": any(t["exactness"] == "contractual" for t in text_requirements),
         "script_beyond_latin": any(t["script_detected"] not in (LATIN, "UNSPECIFIED") for t in text_requirements),
         "scripts": sorted({t["script_detected"].lower() for t in text_requirements if t["script_detected"] != "UNSPECIFIED"}),
-        "text_in_scene": _text_in_scene(),
+        "text_in_scene": _text_in_scene(text_requirements),
         "motion_requested": bool(motion),
         "text_must_move": bool(motion) and bool(text_requirements),
         "product_entity_present": product_entity_present,
@@ -188,7 +197,7 @@ def normalize(job: dict, binding: KindBinding | None = None) -> NormalizedReques
         specification_provenance={
             "requested_operation": row["operation_provenance"],
             "modality": provenance_modality,
-            "source": "PRODUCTION-JOB-v0 + runtime/canon/KIND-NR-BINDING-v0.yaml",
+            "source": "PRODUCTION-JOB-v1 + runtime/canon/KIND-NR-BINDING-v0.yaml",
         },
         ambiguity_markers=markers,
         acceptance_intent={"advertising": True} if row.get("advertising_acceptance_intent") else None,
@@ -197,17 +206,18 @@ def normalize(job: dict, binding: KindBinding | None = None) -> NormalizedReques
     )
 
 
-def _text_in_scene() -> bool:
+def _text_in_scene(text_requirements: list) -> bool:
     """Does the type have to sit INSIDE the scene — printed on a pack, a sign, a surface —
     rather than sit over it?
 
-    PRODUCTION-JOB-v0 carries no field that says so (see the report on this lane). Absent a
-    customer statement the runtime never assumes it: an unstated in-scene requirement would
-    push a contractual price line onto generated text, which is the expensive way to be wrong.
-    A v1 `exact_text_strings[].placement: overlay | in_scene` closes this with a row, and this
-    function reads it; nothing else in the lane changes.
+    Read from PRODUCTION-JOB-v1 `exact_text_strings[].placement` (`overlay` | `in_scene`), the
+    field v1 added for exactly this. Under v0 this function hard-returned False, because there
+    was nothing to read and the runtime never assumes an in-scene requirement the customer did
+    not state (an unstated one would push a contractual price line onto generated text, the
+    expensive way to be wrong). It is true as soon as ONE string is placed in the scene: that
+    string must be drawn by the maker, and the strategy rule is chosen for the whole job.
     """
-    return False
+    return any(t.get("placement") == "in_scene" for t in text_requirements)
 
 
 def _marker_fires(marker: str, facets: dict, brief: dict, modality: str) -> bool:

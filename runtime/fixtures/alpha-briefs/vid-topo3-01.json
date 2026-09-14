@@ -1,0 +1,88 @@
+{
+  "_provenance": {
+    "binding_agrees_with_case_nr": false,
+    "blueprint_ref": "BLUEPRINTS/VID-TOPO3-01.blueprint.md",
+    "blueprint_sha256": "3a97d8f39498f254da7e6edfd780ef39586ebd4f4ee41d5ac2523cce0b656b19",
+    "case_family": "VID-TOPO3",
+    "case_id": "VID-TOPO3-01",
+    "case_nr_modality": "video",
+    "case_nr_operation": "generate",
+    "consent_ref_added": false,
+    "depends_on_added": true,
+    "depicts_basis": {},
+    "freeze_base": "cb92f1e",
+    "freeze_package": "STAGE-A-FREEZE-2026-09",
+    "kind_basis": "STAGE-A-CASE-KIND-MAP-v0.yaml: family VID-TOPO3 -> text_in_motion; operation/modality from KIND-NR-BINDING row",
+    "kind_map_sha256": "7ff5935b6d7c2b8dbed85f78fec9ea3b21e5b57f9a7252ea909365dd63a00227",
+    "motion_from_basis": "accepted_still is the PRODUCTION-JOB-v1 default; the customer's request names the still it follows",
+    "placement_default": true,
+    "source_pool": "stage_a_case",
+    "test_cases_sha256": "8c2430e760279bb60a0ce429b933c64bb85340e2089be9ebad3f28d49e7cdb9c",
+    "tool": "runtime/tools/brief_from_stage_a_case.py",
+    "tool_choices": {
+      "asset_content_type": "image/jpeg",
+      "asset_provenance": "generated_stand_in",
+      "customer_ref_prefix": "acct-stage-a-",
+      "job_id_prefix": "alpha-dry-",
+      "market": "IN",
+      "placement_default": "overlay",
+      "policy_profile": "dry",
+      "retention_policy_ref": "alpha-1-default",
+      "submitted_by": "brief_from_stage_a_case"
+    },
+    "tool_sha256": "dcc24ffe94c80ca2f663aa6a2feec81a8b72e02349533675fb54c916fcb511c5"
+  },
+  "brief": {
+    "language": "hi",
+    "market": "IN",
+    "text": "जो दीपावली वाला poster बन रहा है, उसी का एक 6 सेकंड का vertical video भी चाहिए WhatsApp status के लिए। वही तीनों लाइनें — \"दीपावली की शुभकामनाएं\", \"सभी मिठाइयों पर 20% छूट\", और \"श्री गणेश मिष्ठान भंडार\" सबसे बड़ा — video में साफ़ पढ़ने लायक रहें, spelling वही रहे। पीछे दीये जलते हुए, हल्की सी movement, मिठाई का डिब्बा वहीं रहे। कोई आवाज़ ज़रूरी नहीं।"
+  },
+  "customer_ref": "acct-stage-a-vid",
+  "deliverable_request": {
+    "aspect": "9:16",
+    "count": 1,
+    "kind": "text_in_motion",
+    "modality": "video",
+    "motion": {
+      "audio": false,
+      "depends_on": "alpha-dry-img-text-01",
+      "from": "accepted_still",
+      "seconds": 6
+    },
+    "operation": "animate",
+    "subject": {
+      "entity": "product",
+      "entity_id": "sweet_box_and_diyas",
+      "identity_invariants": [
+        "sweet box",
+        "lit diyas"
+      ]
+    }
+  },
+  "exact_text_strings": [
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "devanagari",
+      "value": "दीपावली की शुभकामनाएं"
+    },
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "devanagari",
+      "value": "सभी मिठाइयों पर 20% छूट"
+    },
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "devanagari",
+      "value": "श्री गणेश मिष्ठान भंडार"
+    }
+  ],
+  "job_id": "alpha-dry-vid-topo3-01",
+  "policy_profile": "dry",
+  "retention": {
+    "policy_ref": "alpha-1-default"
+  },
+  "submitted_by": "brief_from_stage_a_case"
+}

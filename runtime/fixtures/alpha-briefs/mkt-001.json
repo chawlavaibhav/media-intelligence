@@ -1,0 +1,74 @@
+{
+  "_provenance": {
+    "bank": "canon/research/marketplace-demand-v1/derived/marketplace-brief-bank-v1.yaml",
+    "bank_sha256": "4ca85ce4e1bb18e6cbf2e5cd5419196e57f6e1cc1fd76f54107a9bc5be736e27",
+    "case_id": "MKT-001",
+    "expected_intake_outcome": {
+      "alpha_human_release": "KIND_NOT_IN_PROFILE (kind not in deliverable_kinds_allowed; C-7 'talking heads')",
+      "dry": "KIND_NOT_IN_REGISTRY (deliverable_kinds_allowed is __all__; the registry has no such kind)"
+    },
+    "field_provenance_from_bank": {
+      "R01_requested_operation": "customer_implied",
+      "R02_supplied_assets": "experiment_supplied_fixture",
+      "R05_modality": "customer_stated",
+      "R06_entities": "customer_stated",
+      "R10_language_topology": "experiment_supplied_fixture",
+      "R11_speaker_topology": "customer_stated",
+      "R12_temporal_structure": "customer_stated",
+      "R15_delivery": "customer_stated"
+    },
+    "kind_basis": "buyer: 'Talking-head AI avatar plus AI-generated product B-roll' (UW-008). No registry kind of this shape; C-7 excludes 'talking heads' (POLICY-PROFILES alpha_human_release.excluded_by_ruling)",
+    "motion_from_basis": "tool reading: identity reference supplied + avatar presents -> from: reference; not a buyer statement",
+    "omitted_as_fixtures": [
+      "brief.language (R10 is experiment_supplied_fixture)",
+      "brief.market (no market recorded; buyer is Ukraine-based)",
+      "exact_text_strings (R08 absent)"
+    ],
+    "source_marketplace": "upwork",
+    "source_pool": "marketplace_case",
+    "source_record_id": "UW-008",
+    "tool": "runtime/tools/brief_from_marketplace_case.py",
+    "tool_choices": {
+      "asset_content_type": "image/jpeg",
+      "asset_provenance": "generated_stand_in",
+      "customer_ref_prefix": "acct-marketplace-",
+      "job_id_prefix": "alpha-dry-",
+      "policy_profile": "dry",
+      "retention_policy_ref": "alpha-1-default",
+      "submitted_by": "brief_from_marketplace_case"
+    },
+    "tool_sha256": "e63411fec3f28b20d7139f4d8afd9605064b6c89f730f5443dfc18b8f59eadbf"
+  },
+  "brief": {
+    "text": "One Meta ad, 40 seconds, for a men's dog-care supplement. Talking-head AI avatar plus AI-generated product B-roll. Fixed budget $50. Nothing else is recorded. The research says the complete specification sat in the posting, but the posting body itself was not captured, so anything beyond the four facts above is unknown rather than absent-by-choice."
+  },
+  "customer_ref": "acct-marketplace-upwork",
+  "deliverable_request": {
+    "aspect": "9:16",
+    "count": 1,
+    "kind": "talking_head_ad",
+    "modality": "video",
+    "motion": {
+      "audio": true,
+      "from": "reference",
+      "seconds": 40
+    },
+    "operation": "generate"
+  },
+  "job_id": "alpha-dry-mkt-001",
+  "policy_profile": "dry",
+  "reference_assets": [
+    {
+      "asset_id": "mkt001_product_ref",
+      "content_type": "image/jpeg",
+      "depicts_identifiable_person": false,
+      "provenance": "generated_stand_in",
+      "role": "product",
+      "sha256": "aa7c11105b827d633343aa02590a8f356b691cc72dcc00353c03eea0367990ec"
+    }
+  ],
+  "retention": {
+    "policy_ref": "alpha-1-default"
+  },
+  "submitted_by": "brief_from_marketplace_case"
+}

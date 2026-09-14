@@ -48,8 +48,11 @@ derive_model_name_tokens_from_evidence_map: true
 # Statements the compiler derives from the job itself, before the reasoning pass adds any. Each
 # is emitted only when its condition is true of the job; none of them names a deliverable kind.
 derived_statements:
+# `{strings}` are the CONTRACTUAL strings only (may_reflow false). A string the customer allowed to
+# re-flow ("readable in some wording", Stage-A IMG-TEXT-02 t4) is not held character-exact here;
+# corrected 14 Sep 2026 (lane E) when the first Stage-A case with an approximate string compiled.
 - id: exact_strings_read_exactly
-  when: exact_text_present
+  when: exactness_contractual
   template: >-
     ACCEPT only if the lettering reads exactly {strings} — every character as given; REJECT on any
     wrong, missing, doubled or invented character.

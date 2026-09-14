@@ -1,0 +1,54 @@
+# STAGE-A-CASE-KIND-MAP-v0 — how a frozen Stage-A case family becomes a PRODUCTION-JOB-v1 request.
+#
+# Read by runtime/tools/brief_from_stage_a_case.py. The Lab's cases are keyed by evidence question
+# (IMG-TEXT, VID-I2V, ...); a customer job is keyed by deliverable kind (DELIVERABLE-KINDS.yaml).
+# This file is the join, as rows, so that a new family or a re-mapping is an edit here. A family
+# with no row is refused by the tool, never guessed. Marketplace (MKT-*) cases are out of this tool's
+# scope; runtime/tools/brief_from_marketplace_case.py handles the one it covers.
+schema: STAGE-A-CASE-KIND-MAP-v0
+
+# case family (case_id with its trailing -NN removed) -> deliverable kind
+family_kind:
+  IMG-CORE: static_ad
+  IMG-TEXT: static_ad
+  IMG-EDIT: static_ad_from_supplied_photo
+  IMG-EXT: static_ad_from_supplied_photo
+  IMG-COMP: static_ad_from_supplied_photo
+  IMG-REF: static_ad_from_supplied_photo
+  VID-I2V: short_motion_from_accepted_still
+  VID-TOPO3: text_in_motion
+  VID-T2V: multi_shot_story
+  VID-MS: multi_shot_story
+  VID-2SPK: two_speaker_dialogue
+  AUD-TTS: spoken_voiceover
+  MUS: music_bed
+  AUD-LIP: lipsync_to_supplied_audio
+  # VID-REF and VID-KNEE have no registry kind of their shape today; deliberately unmapped.
+
+# Stage-A supplied-asset role (TEST-CASES nr.supplied_assets[].role) -> PRODUCTION-JOB-v1 role.
+# identity_reference resolves through the entity it applies_to: person -> person, product -> product,
+# anything else -> other.
+asset_role:
+  subject_of_operation: scene
+  identity_reference: by_entity_type
+
+# Stage-A entity_type -> PRODUCTION-JOB-v1 reference_assets[].role for identity references
+entity_type_role:
+  person: person
+  product: product
+
+# Stage-A nr.delivery.aspect_ratios[0] spellings that are not a ratio
+aspect_aliases:
+  "as supplied": as_supplied
+
+# Values the tool fixes for every derived brief (recorded in _provenance as tool choices)
+fixed:
+  customer_ref_prefix: acct-stage-a-
+  job_id_prefix: alpha-dry-
+  market: IN
+  policy_profile: dry
+  retention_policy_ref: alpha-1-default
+  submitted_by: brief_from_stage_a_case
+  asset_content_type: image/jpeg
+  asset_provenance: generated_stand_in
+  placement_default: overlay
