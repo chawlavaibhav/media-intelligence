@@ -32,3 +32,15 @@ score, and never a cost figure it treats as a price without a live price pin.
 
 `v0`, frozen at this commit as the base every runtime lane branches from. Changing a `v0` field is a
 new version, never an edit in place — the same rule the Lab uses for its frozen packages.
+
+## Alpha 1 profile status (14 Sep 2026)
+
+`POLICY-PROFILES.yaml` row `alpha_human_release` is **adopted by the Controller** (C-7 product
+family, C-8 human release, C-11 twelve-condition public-release gate; record
+`coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md`). The
+family is: one static ad with exact overlay copy, optionally one short motion version derived only
+from the accepted still, supplied-photo work behind the consent gate. Talking heads, lip-sync,
+native speech, multi-shot stories and generated in-scene exact text are out by ruling. **Adoption is
+not spend authority**: every profile carries `spend_authority: {status: none, record: null}`, and a
+dispatch needs a signed record named there in addition to `adopted: true`. None exists; nothing on
+this branch dispatches. Plain-English guide for a new engineer: `runtime/ALPHA-1.md`.

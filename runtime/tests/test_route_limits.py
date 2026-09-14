@@ -68,14 +68,17 @@ class CostEnvelope(unittest.TestCase):
 
 
 class ExecuteRefuses(unittest.TestCase):
+    # Until 14 Sep 2026 these two tests used alpha_human_release, which shipped adopted: false. The
+    # Controller adopted it that day (C-7, C-8), so the non-adopted invariant is now exercised on
+    # alpha_wider_example (adopted: false) and the adopted alpha profile has its own tests below.
     def test_execute_refuses_under_a_non_adopted_profile(self):
         r = B.router()
         with self.assertRaises(ExecuteRefused) as ctx:
-            r.execute(B.spec(B.SPEC_MOTION), B.profile("alpha_human_release"),
+            r.execute(B.spec(B.SPEC_MOTION), B.profile("alpha_wider_example"),
                       request_cost_ceiling_usd=Decimal("5.00"))
         joined = " ".join(ctx.exception.reasons)
         self.assertIn("adopted: false", joined)
-        self.assertIn("alpha_human_release", joined)
+        self.assertIn("alpha_wider_example", joined)
 
     def test_execute_refuses_without_a_request_level_ceiling(self):
         r = B.router()
@@ -86,9 +89,35 @@ class ExecuteRefuses(unittest.TestCase):
     def test_execute_refuses_for_both_reasons_at_once_when_both_are_missing(self):
         r = B.router()
         with self.assertRaises(ExecuteRefused) as ctx:
+            r.execute(B.spec(B.SPEC_MOTION), B.profile("alpha_wider_example"),
+                      request_cost_ceiling_usd=None)
+        self.assertEqual(len(ctx.exception.reasons), 2)
+
+    def test_under_the_adopted_alpha_profile_only_the_missing_provider_client_refuses_today(self):
+        """CURRENT behaviour, recorded honestly. alpha_human_release is adopted (14 Sep 2026) and its
+        spend_authority.status is none. execute() checks only `profile.adopted`, so for a spec the
+        router can fully route (the 6 s silent motion spec) the ONLY refusal left is that no provider
+        client exists. That is one layer, not two. The test below records the missing layer."""
+        r = B.router()
+        prof = B.profile("alpha_human_release")
+        self.assertTrue(prof.adopted)
+        self.assertFalse(prof.may_spend()[0])
+        with self.assertRaises(ExecuteRefused) as ctx:
+            r.execute(B.spec(B.SPEC_MOTION), prof, request_cost_ceiling_usd=Decimal("5.00"))
+        self.assertEqual(len(ctx.exception.reasons), 1)
+        self.assertIn("no provider client is wired", ctx.exception.reasons[0])
+
+    @unittest.expectedFailure
+    def test_execute_must_refuse_on_spend_authority_none_before_planning(self):
+        """execute() must also check spend_authority — Wave 2 (execution bridge) closes this.
+        Expected shape once closed: with no ceiling AND spend_authority none, two reasons, one of
+        them naming spend_authority, raised before any plan is made."""
+        r = B.router()
+        with self.assertRaises(ExecuteRefused) as ctx:
             r.execute(B.spec(B.SPEC_MOTION), B.profile("alpha_human_release"),
                       request_cost_ceiling_usd=None)
         self.assertEqual(len(ctx.exception.reasons), 2)
+        self.assertIn("spend_authority", " ".join(ctx.exception.reasons))
 
     def test_even_with_ceiling_and_adopted_profile_no_provider_client_exists(self):
         r = B.router()
