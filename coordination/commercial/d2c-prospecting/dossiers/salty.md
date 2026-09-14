@@ -177,3 +177,76 @@ All `INFERRED (search-summary)`, gathered **2026-09-14**; none fetched directly.
 ## 17. Research date
 
 **2026-09-14** — run file `runs/2026-09-14.md`. Re-verify before spend; see §0 caveat and §13.
+
+---
+
+# UPDATE — 2026-09-14 (run 02): evidence upgraded from INFERRED to OBSERVED
+
+**Score 88 → 89. Still Top 3, now ranked #2** (behind Cumin Co. on conversion probability, not on
+score). Run file: `runs/2026-09-14-02.md` §3.1. Everything above was written when **no page could be
+fetched**. This section is what was actually seen.
+
+## What is now OBSERVED (fetched 2026-09-14)
+
+**Ad-spend footprint — `salty.co.in` homepage source:**
+Meta Pixel **yes** — `361781499194146`, `facebookCapiEnabled: true` · Google Ads **yes** —
+`AW-10892904816` · GTM **yes** · GA4 `G-KHH8DKF6J6` · platform **Shopify** · other: Gokwik/Shiprocket
+checkout, Judge.me reviews. **Meta Pixel + Google Ads tag together, with Conversions API on — active
+paid acquisition is now evidenced, not assumed.**
+
+**The Series A expansion is live on site.** Nav carries `/collections/bags`, `/collections/bag-charms`,
+`/collections/bags-and-bag-accessories`, `/collections/belts-for-women`, `/collections/couple-watches`,
+`/collections/designer-watches`, `/collections/everyday-watches`, `/collections/black-sunglasses`,
+`/collections/iconic-aviators`, `/collections/hats-and-caps`. The original dossier could only infer
+these from funding press.
+
+**`/collections/bags` — 19 products, ₹799–₹2,099:** Camilla Mini Crossbody ₹2,099 (4 colourways) ·
+Marble Finish Acrylic Mini Clutch ₹1,749 · Molten Gold Party Mini Clutch ₹1,749 · The Bento Jewelry
+Organizer ₹1,499 (3 colourways) · Gentle Reader Journal Sleeve ₹1,299 (3 colourways) · Golden Acrylic
+Mini Bag ₹999 · Glam Mini Travel Pouch ₹999 · Macramé bottle/mug/coffee holders ₹799 · Rustic Make-up
+Holder ₹799. **Several carry "Price Drop" tags.**
+
+**The catalogue is far larger than assumed.** `sitemap.xml` lists **9 product sitemap files**; file 1
+alone holds **994 product URLs**. Salty runs a catalogue in the **thousands of SKUs** against the
+Controller-observed **~25 active Meta ads**.
+
+**No meaningful YouTube presence.** `@salty.co.in` → HTTP 404; `@salty` → no channel data. Two handles
+checked 2026-09-14.
+
+## What this changes about the pitch
+
+**§2 of this dossier selected "the Salty Bags launch range" on inference. That selection is now
+confirmed correct, and the reason is sharper than the original argument.** Three OBSERVED facts
+compose into one pitch:
+
+> Salty has launched a **premium bags vertical at 2–10× its usual unit price** (₹2,099 against the
+> "Pick any 5 @ ₹999" jewellery mechanic), it is **already discounting that vertical** ("Price Drop"),
+> and per the Controller's hand-check it appears in **zero active Meta ads**.
+
+This is the strongest single insight in the pipeline, and it is commercially legible without
+criticising their existing creative — which is working. The pitch is not *your ads are repetitive*; it
+is *you launched a premium vertical, you are cutting price on it, and you are not advertising it.*
+
+**Recommended pitch SKU, revised to a specific unit:** the **Camilla Mini Crossbody Bag, ₹2,099** —
+their highest-priced bag, four colourways (so one plate yields four executions immediately, which is
+the recurring-work demonstration), and a hard-surface non-skin object with none of the fine-chain
+fidelity risk that jewellery carries. Fallback per the Controller's hand-check remains the **₹999
+combo mechanic** itself, which is pure code-composed overlay work.
+
+## Asset-source correction to §8
+
+`salty.co.in` is marked "**not fetched**" in §8 above. It **has now been fetched** — homepage, nav,
+`/collections/bags`, `sitemap.xml` and `sitemap_products_1.xml`, all 2026-09-14. Individual PDP
+packshot URLs were **still not collected**: Shopify throttles deep `curl` on this host (HTTP 429
+after ~2–3 requests) and `/products.json` is bot-challenged. Open the Camilla PDP by hand and capture
+its image URLs before production. **Do not assume any image URL not listed here.**
+
+## Score movement
+
+CURRENT CREATIVE OPPORTUNITY **12 → 13** — the gap is now observed and specific rather than inferred.
+All other lines held: recurring need 19 · AI 17 · repeat 14 · pay 9 · reach 9 · asset 4 · category 4.
+**Total 89/100.** Confidence **HIGH** on footprint, catalogue and product; **MEDIUM** on the creative
+gap, which rests on the Controller's Ad Library read rather than this agent's.
+
+**Still outstanding:** Instagram content itself has never been reviewed (login wall); the Controller's
+hand-check captured follower count only (276,616 @salty.co.in).

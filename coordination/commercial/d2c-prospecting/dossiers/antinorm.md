@@ -195,3 +195,87 @@ All `INFERRED (search-summary)`, gathered **2026-09-14**; none fetched directly.
 
 **2026-09-14** — run file `runs/2026-09-14.md`. Re-verify before spend; see §0 caveat and §13.
 This is the least production-ready of the three dossiers by evidence weight.
+
+---
+
+# UPDATE — 2026-09-14 (run 02): the product read above was stale. Score 79 → 84
+
+**Still Top 3, ranked #3.** Run file: `runs/2026-09-14-02.md` §3.2. Everything above was written when
+**no page could be fetched**. The catalogue section in particular is now known to be wrong.
+
+## The correction that matters: 18 SKUs, not 3
+
+The dossier and pipeline row above both rest on "founded 2024 with only 3 SKUs". **The live catalogue
+at `antinorm.co/collections/all` holds 18 products** (OBSERVED 2026-09-14):
+
+| Product | Price | Badge |
+|---|---|---|
+| The Festive Gift Box | **₹3,499** (from ₹4,999, 30% off) | — |
+| Don't Sweat It | ₹2,499 | New |
+| Less Is More Duo | ₹1,999 (from ₹2,398) | — |
+| Hair & Everywhere | ₹1,899 | — |
+| The Fresh Start Duo | ₹1,799 (from ₹2,148) | — |
+| **Facial in a Flash** | **₹1,199** | **Highly Reordered** |
+| One Step Wonder | ₹1,199 | New · Highly Reordered |
+| Intense Double Cleanse | ₹949 | New |
+| Shower in Seconds (Green Juice) | ₹949 | New |
+| Fresh with Benefits | ₹899 | New · Highly Reordered |
+| Shower in Seconds | ₹899 | New Launch |
+| Detox on Demand | ₹849 | New |
+| Smooth Operator | ₹849 | New |
+| Chill The Flakes Out | ₹799 | — |
+| Bye Bye Blow Dry | from ₹799 (from ₹1,199) | Best Seller |
+| Facial in a Flash — Refill Pack | ₹699 | Best Seller |
+| Fuller Without Filler | ₹649 | Best Seller |
+| Against the Norm Cap | ₹499 | — |
+
+**Eight SKUs carry a "New" or "New Launch" badge.** This is a brand in continuous launch mode, which
+corroborates the Controller's observation of new ads going live daily between 3 and 14 September.
+
+## Ad-spend footprint — OBSERVED 2026-09-14
+
+Meta Pixel **yes** — `1239591777687494`, `facebookCapiEnabled: true` · Google Ads **yes** —
+`AW-17055092464` · GTM **no** · GA4 `G-ZK2Y0S2EM6` · platform **Shopify** · other: **Wigzo**
+(marketing automation), Gokwik/Shiprocket. **Meta Ad Library: HTTP 403, not renderable from cloud** —
+the ~170-active-ads figure comes from the Controller's hand-check, not from this agent.
+
+YouTube `@antinorm` exists; subscriber and video counts did not parse from this client.
+
+## Pitch SKU changed: Facial in a Flash, ₹1,199
+
+The dossier above pitches **the all-in-one hair cream**. Switch to **Facial in a Flash (₹1,199)**, as
+the Controller's hand-check recommended:
+
+- It is badged **"Highly Reordered"** — their own site says it repeats.
+- **A refill pack exists at ₹699**, which is a repeat-purchase story told in their own pricing and is
+  pure code-composed overlay material (₹1,199 → ₹699 on refill).
+- It was one of the ≥5 SKUs the Controller observed in active ads, so it is already a product they put
+  money behind.
+
+## Why now — a live festive trigger
+
+**The Festive Gift Box is live at ₹3,499 from ₹4,999 (30% off)** — their highest-priced item, already
+discounted, in mid-September ahead of Diwali. This is a dated, verifiable trigger, not a general
+"festive season" hand-wave.
+
+## Claims hazard — confirmed, and stricter than §10 above assumed
+
+On-page copy across the range includes **pigmentation, bacne, "strawberry skin", tan, "hair growth",
+scalp exfoliation, itch relief, oil control, breakouts** and **SPF 30** territory, plus an
+"India's Best Deodorant 2026" award claim. **Any spec ad must stay entirely off efficacy claims** —
+product, mechanic and price only. This is now the single largest non-technical risk on this brand, and
+it is a harder constraint than the original §10 implies.
+
+## Score movement
+
+RECURRING CREATIVE NEED **14 → 17** (18 SKUs with 8 live "New" badges is a far higher creative cadence
+than 3 SKUs implied) · CURRENT CREATIVE OPPORTUNITY **12 → 13** (the Controller observed ~170 active
+ads that are **mostly static plus long benefit copy** — the clearest static-to-motion whitespace in the
+pipeline). Held: AI 16 · repeat 12 · pay 8 · reach 10 · asset 4 · category 4. **Total 84/100.**
+Confidence **HIGH** on footprint, catalogue and pricing; the creative read rests on the Controller's
+hand-check.
+
+**Ranked #3 of the Top 3 on reply odds, not ceiling:** a 2024-founded brand with one identifiable
+founder, no incumbent creative partner, daily ad launches and the clearest format gap we have is about
+as likely as this pipeline gets to actually answer good unsolicited work. Its ceiling is lower than
+Cumin Co.'s or Salty's.

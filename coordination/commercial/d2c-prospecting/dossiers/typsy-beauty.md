@@ -1,7 +1,20 @@
 # Dossier — Typsy Beauty
 
-**Research date:** 2026-09-14. **Score:** 84/100. **Confidence:** MEDIUM.
-**Top-3 rank:** #2 — freshest commercial trigger in the run.
+> # ⚠️ SUPERSEDED — DO NOT PRODUCE FOR THIS BRAND
+>
+> **Re-scored 2026-09-14 (run 02): 84 → 73. Removed from the Top 3.** The recommendation below is
+> **withdrawn**. See the UPDATE section at the foot of this file and `runs/2026-09-14-02.md` §3.3.
+>
+> Short version: their creative engine is **creator-whitelisted reels** — faces, speech and
+> application-on-skin — which is **precisely what Controller ruling C-7 excludes from Alpha 1**. Their
+> YouTube runs **544 videos against 2,880 subscribers**, the signature of an ad-asset repository
+> rather than an audience. They are **saturated, not starved**. The `Spritz` fragrance SKU this
+> dossier selects appears in **none** of the ads the Controller sampled.
+>
+> Retained for reference only. Revisit only if the brand opens a non-creator-led category.
+
+**Research date:** 2026-09-14. **Score:** ~~84/100~~ → **73/100**. **Confidence:** HIGH (post-update).
+**Top-3 rank:** ~~#2 — freshest commercial trigger in the run.~~ **Withdrawn.**
 
 > **Evidence status for this whole dossier: `INFERRED (search-summary)`, 2026-09-14.**
 > This session's egress policy blocked every external host, so **no page here was fetched and seen** —
@@ -195,3 +208,51 @@ All `INFERRED (search-summary)`, gathered **2026-09-14**; none fetched directly.
 ## 17. Research date
 
 **2026-09-14** — run file `runs/2026-09-14.md`. Re-verify before spend; see §0 caveat and §13.
+
+---
+
+# UPDATE — 2026-09-14 (run 02): downgraded 84 → 73, removed from the Top 3
+
+Run file: `runs/2026-09-14-02.md` §3.3. This reverses a run-01 recommendation on observed evidence.
+
+## What is now OBSERVED (2026-09-14)
+
+**Ad-spend footprint — `typsybeauty.com` homepage source:** Meta Pixel **yes** — `547920049532820`,
+`facebookCapiEnabled: true` · Google Ads **yes** — `AW-10854431086` · GTM no · GA4 `G-NQWNQQ7VPL` ·
+platform **Shopify** · other: Gokwik/Shiprocket, Judge.me. They spend, and they spend heavily.
+
+**YouTube `@typsybeauty`: 544 videos against 2,880 subscribers.** Roughly **five subscribers per
+video**. That ratio is the signature of a channel used as an **ad-asset repository**, not an audience.
+(For contrast, Cumin Co. runs 29,600 subscribers across 95 videos.)
+
+**Meta Ad Library: HTTP 403 from cloud.** The ~990-active-ads reading is the Controller's hand-check
+(`runs/2026-09-14.md` §9), not this agent's.
+
+## Why heavy spend is a *negative* signal here
+
+Run 01 read "~990 active ads" as enormous creative appetite. Read against `runtime/ALPHA-1.md`, it is
+the opposite:
+
+1. **Their creative engine is exactly what Alpha 1 cannot make.** Creator-whitelisted reels are faces,
+   speech and on-skin application. Ruling **C-7 excludes talking heads, lip-sync and native speech
+   outright.** We would not be improving their creative — we would be offering a different product
+   they have not asked for.
+2. **Lip colour on skin is our weakest fidelity case.** Shade accuracy on skin is where generation
+   risk is highest, and 100% of their sampled ads are lip SKUs.
+3. **They are saturated, not starved.** ~990 active ads implies established creative vendors. There is
+   no volume gap to fill and reply probability is correspondingly low.
+4. **The pitch SKU in §2 above is wrong.** `Spritz` fragrance appears in **none** of the sampled ads.
+   Run 01 offered two readings — (a) fragrance is whitespace we could own, or (b) lips are the
+   business and fragrance is a side bet nobody will fund creative for. **Run 02 adopts (b) as the base
+   case**, as the Controller instructed. Fragrance bottles remain a good *physical* fit for us; that
+   does not make them a funded brief at this company.
+
+## Score movement
+
+AI CREATIVE POTENTIAL **16 → 11** · REPEAT-WORK/RETAINER **13 → 11** · CURRENT CREATIVE OPPORTUNITY
+**11 → 8** · DECISION-MAKER REACHABILITY **9 → 7**. Held: recurring need 19 · pay 9 · asset 4 ·
+category 4. **Total 73/100** — "worth retaining", not shortlist-for-spend.
+
+**Not discarded.** A brand advertising at this level is worth revisiting if it ever opens a
+non-creator-led category (a hard-surface fragrance or packaging-led line advertised on its own).
+Until then it should not receive spec production.
