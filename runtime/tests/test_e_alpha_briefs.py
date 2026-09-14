@@ -145,10 +145,16 @@ class MarketplaceRefusalTest(unittest.TestCase):
         self.assertEqual(raw["deliverable_request"]["motion"]["seconds"], 40)
         with self.assertRaises(Refusal) as caught:
             fresh_intake().submit(raw)
-        self.assertEqual(caught.exception.code, Refusal.KIND_NOT_IN_REGISTRY)
+        # Under `dry` (the Alpha-1 twin) the profile's own kind list refuses first - precise and
+        # policy-supported (C-7 excludes talking heads). Under the permissive row the registry refuses.
+        self.assertEqual(caught.exception.code, Refusal.KIND_NOT_IN_PROFILE)
         self.assertEqual(caught.exception.context["kind"], "talking_head_ad")
-        self.assertIn("DELIVERABLE-KINDS.yaml", caught.exception.context["registry"])
-        self.assertNotIn("talking_head_ad", caught.exception.context["known"])
+        permissive = dict(raw, policy_profile="dry_permissive")
+        with self.assertRaises(Refusal) as caught2:
+            fresh_intake().submit(permissive)
+        self.assertEqual(caught2.exception.code, Refusal.KIND_NOT_IN_REGISTRY)
+        self.assertIn("DELIVERABLE-KINDS.yaml", caught2.exception.context["registry"])
+        self.assertNotIn("talking_head_ad", caught2.exception.context["known"])
 
     def test_under_the_alpha_profile_the_refusal_is_the_profile_list(self):
         raw = brief_from_marketplace_case.derive("MKT-001", profile="alpha_human_release")
@@ -210,7 +216,8 @@ class OneCommandToARoutedPlanTest(unittest.TestCase):
         self.assertEqual(data["exact_text"]["text_mechanism"], "deterministic_text_composition")
         self.assertTrue(all("placement" in s for s in data["exact_text"]["strings"]))
         self.assertEqual(set(data["blueprint"]), {"generation_prompts", "planner", "source_ref", "case_values", "production_parameters"})
-        self.assertEqual(data["budget"]["max_provider_draws"], 0)
+        self.assertEqual(data["budget"]["max_provider_draws"],
+                         B.profile("dry").max_provider_draws)   # the twin's row value (2), never a constant
 
 
 class RouterScopeDefectTracker(unittest.TestCase):
@@ -227,8 +234,10 @@ class RouterScopeDefectTracker(unittest.TestCase):
     IMG-CORE/seedream-5-pro are dropped at hard_requirements as plate routes although nothing is drawn.
     """
 
-    @unittest.expectedFailure
     def test_a_generated_text_only_exclusion_leaves_the_plate_route_usable_under_code_composed_text(self):
+        """Was an expectedFailure tracker; lane F closed the defect (Exclusion.scope, decision.py stage 1):
+        a generated_text_only exclusion is recorded as scoped_out under code-composed text and the
+        plate route stays a candidate."""
         raw = committed("img-text-01")
         result = fresh_intake().submit(raw)
         compiled = SpecCompiler().compile(result.job, compiled_utc=FIXED, provenance=result.provenance)
@@ -238,8 +247,11 @@ class RouterScopeDefectTracker(unittest.TestCase):
         cli.write_spec(compiled.spec, path)
         ev = B.evidence_base()
         decision = B.router(ev).plan(load_spec(path), B.profile("dry", ev), already_committed_usd=Decimal("0"), customer_ref="acct-test")
-        dropped_plates = [e["would_have_supplied"] for e in decision["exclusions_applied"]]
-        self.assertEqual(dropped_plates, [])   # fails today: ['IMG-CORE/flux-2-pro', 'IMG-CORE/seedream-5-pro']
+        effects = {e["route_key"]: e.get("effect") for e in decision["exclusions_applied"]}
+        self.assertEqual(effects, {"flux-2-pro": "scoped_out", "seedream-5-pro": "scoped_out"})
+        kept = {c["route_key"] for c in decision["selection_basis"]["candidates_considered"] if c["kept"]}
+        self.assertIn("flux-2-pro", kept)          # the cheapest plate route is usable again
+        self.assertFalse(decision["manual_route_required"])
 
 
 class ZeroSpendOnTheAlphaFlowTest(unittest.TestCase):

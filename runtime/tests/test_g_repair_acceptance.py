@@ -167,7 +167,7 @@ class HumanAcceptance(unittest.TestCase):
         self.assertNotIn("delivered", {t for targets in acceptance.TRANSITIONS.values() for t in targets})
 
     def test_profile_with_non_human_authority_cannot_record(self):
-        dry = G.profile("dry")   # acceptance_authority: none at this commit
+        dry = G.profile("dry_permissive")   # acceptance_authority: none (the lane-development row)
         acc = acceptance.Acceptance(dry)
         with self.assertRaises(Refusal) as cm:
             acc.record("accepted", "controller", "n", "2026-09-14T12:00:00Z")

@@ -193,7 +193,7 @@ class D4ProfileLimitsAreEnforced(unittest.TestCase):
 
     def test_the_same_job_compiles_under_a_profile_that_allows_the_strategy(self):
         raw = copy.deepcopy(support.brief("mustard-oil-tin"))
-        raw["policy_profile"] = "dry"
+        raw["policy_profile"] = "dry_permissive"     # allows generated_in_scene; `dry` is the Alpha twin
         raw["exact_text_strings"][1]["placement"] = "in_scene"
         for item in raw["exact_text_strings"]:
             item["may_reflow"] = True
@@ -231,6 +231,7 @@ class D4ProfileLimitsAreEnforced(unittest.TestCase):
     def test_motion_without_depends_on_is_refused_where_the_profile_requires_the_accepted_still(self):
         raw = copy.deepcopy(support.brief("lipstick-packshot"))
         raw["policy_profile"] = "alpha_human_release"        # motion_requires_accepted_still: true
+        raw["deliverable_request"]["motion"].pop("depends_on", None)
         self.assertNotIn("depends_on", raw["deliverable_request"]["motion"])
         with self.assertRaises(Refusal) as caught:
             support.intake().submit(raw)
@@ -261,12 +262,22 @@ class D4ProfileLimitsAreEnforced(unittest.TestCase):
         job = support.intake().submit(raw).job
         self.assertNotIn("motion", job["deliverable_request"])
 
-    def test_the_dry_profile_does_not_require_the_dependency(self):
-        profile = PolicyProfiles().profile("dry")
-        self.assertFalse(profile.motion_requires_accepted_still)
+    def test_the_dry_twin_requires_the_dependency_and_the_permissive_row_does_not(self):
+        """`dry` is the twin of alpha_human_release (lane F): it requires the accepted-still dependency.
+        The committed lipstick brief names its own accepted still (a static ad whose motion version
+        derives from it). The lane-development row `dry_permissive` does not require it."""
+        twin = PolicyProfiles().profile("dry")
+        self.assertTrue(twin.motion_requires_accepted_still)
         job = support.submit("lipstick-packshot")
         self.assertEqual(job["policy_profile"], "dry")
-        self.assertNotIn("depends_on", job["deliverable_request"]["motion"])
+        self.assertEqual(job["deliverable_request"]["motion"]["depends_on"], job["job_id"])
+        permissive = PolicyProfiles().profile("dry_permissive")
+        self.assertFalse(permissive.motion_requires_accepted_still)
+        raw = copy.deepcopy(support.brief("lipstick-packshot"))
+        raw["policy_profile"] = "dry_permissive"
+        raw["deliverable_request"]["motion"].pop("depends_on", None)
+        job2 = support.intake().submit(raw).job
+        self.assertNotIn("depends_on", job2["deliverable_request"]["motion"])
 
 
 class D5MissingDomainsIsAList(unittest.TestCase):

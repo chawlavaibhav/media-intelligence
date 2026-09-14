@@ -29,8 +29,16 @@ FIXED = "2026-09-14T12:00:00Z"
 CASES_IN_USE = ("img-text-02", "img-text-01", "img-core-01", "vid-i2v-01", "img-edit-01", "img-ref-02", "vid-topo3-01")
 
 
-def alpha_brief(name: str, *, consent: bool = False) -> dict:
+def alpha_brief(name: str, *, consent: bool = False, profile: str | None = None) -> dict:
     raw = json.loads((paths.ALPHA_BRIEFS / f"{name}.json").read_text(encoding="utf-8"))
+    # Since lane F made `dry` the twin of alpha_human_release, a kind outside Alpha 1 (text_in_motion,
+    # VID-TOPO3-01) refuses at intake under `dry` - correctly, by ruling C-7. The parse-only checks in
+    # this module run those cases under `dry_permissive` (the lane-development row) instead.
+    if profile is None and raw["deliverable_request"]["kind"] not in (
+            "static_ad", "static_ad_from_supplied_photo", "short_motion_from_accepted_still"):
+        profile = "dry_permissive"
+    if profile:
+        raw["policy_profile"] = profile
     if consent:
         for asset in raw.get("reference_assets") or []:
             if asset["depicts_identifiable_person"]:
