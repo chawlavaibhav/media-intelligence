@@ -29,6 +29,10 @@ SPEC_MOTION = FIXTURES / "SPEC-motion-6s-silent.yaml"
 def load_spec_dict(path: Path, **overrides) -> dict:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     data.setdefault("policy_profile", "alpha_human_release")
+    # the fixtures write job_sha256 as an unquoted run of zeros, which YAML reads as the integer 0;
+    # the intent is a 64-character placeholder digest, restored here (reported upward as a fixture quirk)
+    if isinstance(data.get("job_sha256"), int):
+        data["job_sha256"] = f"{data['job_sha256']:064x}"
     # lane E's v1 keys (WAVE2-INTERFACES §1); the committed fixtures predate them
     strategy = (data.get("exact_text") or {}).get("strategy")
     data["exact_text"].setdefault("text_mechanism", {
