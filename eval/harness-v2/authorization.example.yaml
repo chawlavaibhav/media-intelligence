@@ -21,6 +21,15 @@ machine_authorisation:
   #   max_paid_calls: 16                 # the record's "no more than N paid calls" limit, enforced over every run that shares this
   #                                      # authorisation (matched by its sha256); the call that would exceed it is refused BEFORE dispatch.
   #                                      # ABSENT = no call limit at all - only the USD caps apply. There is no call constant in code.
+  #   budget_id: "EVAL-040-TRANCHE-1/wan2"   # C-6a (Controller, 2026-09-14): the budget's STABLE name. This file is edited in place
+  #                                      # when a cap is raised, which changes its fingerprint; the budget_id is what stays the same, so
+  #                                      # every run charged to any version of the file is ONE cumulative pool. New runs write it into run.json.
+  #   amends:                            # C-6a: the sha256 of EVERY earlier version of this file (newest first). To raise a cap: note the
+  #     - "<sha256 of the previous version's bytes>"   # current file's sha256, edit the cap, keep budget_id, append that sha here.
+  #                                      # Spend under those versions counts against THIS file's cap; the raise buys only the difference.
+  #                                      # Editing the file without declaring the amendment is refused once a run has been charged to the
+  #                                      # budget. A file with neither field pools by its own fingerprint only (the 2026-09-10 behaviour).
+  #                                      # Ruling: coordination/decisions/CONTROLLER-AUTHORISATION-LINEAGE-CUMULATIVE-BUDGET-2026-09-14.md
   retries_authorised: 0                # one call = one trial; 0 is the only accepted value
   execution_time_route_price_verification: required_before_every_paid_call
   images_before_video: true

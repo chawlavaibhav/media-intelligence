@@ -53,6 +53,19 @@ CALLS ARE CAPPED TOO, WHEN THE RECORD SAYS SO (Auditor AF-5)
     always 0 USD and its NATIVE amount is credits, capped by `elevenlabs_cap_credits`. That field is OPTIONAL in
     the authorisation file (the signed 13-field record predates it): missing = 0 = every credit call refused.
 
+AN AMENDMENT NEVER RESETS WHAT WAS SPENT (Controller ruling C-6a, 14 September 2026)
+
+    The signed file is edited IN PLACE when a cap is raised, so its byte fingerprint changes. Pooling by fingerprint
+    alone therefore handed an amended file a fresh, empty budget: the Wan 2 round spent 8.48 under its first file and
+    3.36 more under the amended one, 11.84 against a final cap of 11.53, and only the first half could be caught.
+    Two OPTIONAL fields give a budget an identity that survives amendments: `budget_id` (a stable name, e.g.
+    "EVAL-040-TRANCHE-1/wan2") and `amends` (the sha256 of every earlier version of the file this one replaces).
+    Every run charged to any version in that lineage is ONE cumulative pool; the cap checked is the CURRENT file's,
+    so an amendment may raise the cap but never forgets what was spent. A silent edit - the same budget_id, new
+    bytes, no `amends` - is refused, not trusted. See `SiblingLedgers` for the exact rule.
+    Ruling: coordination/decisions/CONTROLLER-AUTHORISATION-LINEAGE-CUMULATIVE-BUDGET-2026-09-14.md; the historical
+    crossings stay as recorded (coordination/decisions/CONTROLLER-AUDIT-CLOSEOUT-CAP-CROSSINGS-AND-CALL-LIMIT-2026-09-14.md).
+
 NO LIVE LEDGER FROM THE COMMITTED STATE
 
     `authorization.local.yaml` is gitignored and does not exist; the committed `authorization.example.yaml`
@@ -84,7 +97,10 @@ AUTH_FIELDS = ("tranche_id", "authorised", "item_basis_commit", "price_basis_ros
                "cap_1a_usd", "cap_1b_usd", "sarvam_cap_inr", "retries_authorised", "execution_time_route_price_verification",
                "images_before_video", "approved_by", "approved_at")
 OPTIONAL_AUTH_FIELDS = ("elevenlabs_cap_credits",       # absent from older signed records: absent means 0 (forbidden)
-                        "max_paid_calls")              # absent means the record sets NO limit on the number of paid calls
+                        "max_paid_calls",              # absent means the record sets NO limit on the number of paid calls
+                        "budget_id",                   # C-6a: the budget's stable name; survives an in-place amendment of the file
+                        "amends")                      # C-6a: sha256 of every earlier version of this file (one string or a list)
+BUDGET_ID_RE = r"[A-Za-z0-9][A-Za-z0-9._/:-]{0,127}"    # a short stable name; no whitespace, nothing that looks like a secret
 AUTH_EXAMPLE_PATH = HERE / "authorization.example.yaml"
 AUTH_LOCAL_PATH = HERE / "authorization.local.yaml"
 DEFAULT_RUN_ROOT = hv2_paths.RUN_ROOT
@@ -115,10 +131,17 @@ class BatteryAuthorisation:
     refusals: tuple = field(default_factory=tuple)
     elevenlabs_cap_credits: Decimal = Decimal("0")
     max_paid_calls: int | None = None          # None = the record names no call limit; it is never a constant in code
+    budget_id: str | None = None               # C-6a: None = a legacy file; its pool is its own fingerprint (today's behaviour)
+    amends: tuple = ()                         # C-6a: sha256s of the earlier file versions this one replaces, newest first
 
     @property
     def permitted(self) -> bool:
         return not self.refusals
+
+    @property
+    def lineage_sha256s(self) -> tuple:
+        """Every file fingerprint this budget has been signed under: this file's own, then the ones it amends."""
+        return ((self.sha256,) if self.sha256 else ()) + tuple(self.amends)
 
 
 def _dec(v):
@@ -199,6 +222,27 @@ def load_battery_authorisation(path: Path | str = AUTH_LOCAL_PATH, roster_path: 
             refusals.append(f"max_paid_calls {g('max_paid_calls')!r} is not a non-negative whole number of calls")
         else:
             calls = int(raw_calls)
+    # C-6a: the budget's stable identity and the lineage of file versions it has been signed under. Both optional;
+    # present, each must be well-formed, because a malformed lineage would silently pool nothing.
+    budget_id = None
+    if "budget_id" in block:
+        bid = g("budget_id")
+        if not isinstance(bid, str) or not re.fullmatch(BUDGET_ID_RE, bid):
+            refusals.append(f"budget_id {bid!r} is not a short stable name (letters, digits, . _ / : -; no spaces)")
+        else:
+            budget_id = bid
+    amends: tuple = ()
+    if "amends" in block:
+        raw_amends = g("amends")
+        items = [raw_amends] if isinstance(raw_amends, str) else raw_amends
+        if not isinstance(items, list) or not items:
+            refusals.append(f"amends {raw_amends!r} is not a sha256 or a non-empty list of sha256s of the earlier file versions")
+        elif any(not isinstance(s, str) or not re.fullmatch(r"[0-9a-f]{64}", s) for s in items):
+            refusals.append(f"amends {raw_amends!r} contains something that is not a lower-case sha256")
+        elif len(set(items)) != len(items):
+            refusals.append("amends lists the same sha256 twice; every entry must be a distinct earlier version of the file")
+        else:
+            amends = tuple(items)
     if g("retries_authorised") != RETRIES_AUTHORISED:
         refusals.append(f"retries_authorised is {g('retries_authorised')!r}; exactly 0 is authorised")
     if g("execution_time_route_price_verification") != PRICE_VERIFICATION_REQUIRED:
@@ -217,7 +261,7 @@ def load_battery_authorisation(path: Path | str = AUTH_LOCAL_PATH, roster_path: 
         images_before_video=g("images_before_video") if isinstance(g("images_before_video"), bool) else None,
         approved_by=g("approved_by"), approved_at=str(g("approved_at")) if g("approved_at") else None,
         source_path=str(path), sha256=hashlib.sha256(raw).hexdigest(), refusals=tuple(refusals),
-        elevenlabs_cap_credits=credits, max_paid_calls=calls)
+        elevenlabs_cap_credits=credits, max_paid_calls=calls, budget_id=budget_id, amends=amends)
 
 
 def _require_permitted(auth: BatteryAuthorisation, what: str) -> None:
@@ -313,13 +357,32 @@ def _rows_totals(rows: list[dict]) -> dict:
 
 
 class SiblingLedgers:
-    """Every OTHER run in the pooling scope that was authorised by the SAME authorisation.
+    """Every OTHER run in the pooling scope that was charged to the SAME budget.
 
-    "The same" is the `authorisation_sha256` each run recorded in its `run.json` - the bytes of the signed
-    record, not its filename. Editing the file in place therefore starts a NEW pool (that is what the wan2
-    record did when its cap was raised mid-flight): the runs under the old bytes are still capped together,
-    and the runs under the new bytes are capped together, but the two are not one pool. A cap raised in
-    place is a new authorisation, and only the Controller can decide whether it re-authorises what is spent.
+    THE POOLING RULE (Controller ruling C-6a, 14 September 2026: "an amendment does not create a fresh economic
+    budget; all amendments remain one cumulative budget"). A sibling run belongs to this budget when ANY of these holds:
+
+      (a) its `run.json` records the same `budget_id` as this file (new runs write it when the file carries one);
+      (b) its `authorisation_sha256` equals this file's own fingerprint (the bytes of the signed record); or
+      (c) its `authorisation_sha256` is one of the earlier versions this file declares in `amends`.
+
+    Consumed spend - and the paid-call count - is therefore CUMULATIVE across every version of the file in the
+    lineage, and the cap it is checked against is the CURRENT file's. A cap raised in place buys only the difference;
+    it never resets what was spent. Amending the file means: edit it, keep `budget_id`, and append the previous
+    version's sha256 to `amends` (the current file is the only one on disk, so it must carry the whole chain).
+
+    WHAT IS REFUSED (fail closed, `NotAuthorised`, before any run folder exists):
+      - an UNDECLARED amendment: a sibling carries this `budget_id` but ran under bytes that are neither this
+        file nor anything in `amends`. Someone edited the file silently; declare the edit rather than trusting it;
+      - a budget RENAMED or DROPPED: `amends` names bytes a sibling ran under, but that sibling recorded a
+        different `budget_id`, or one where this file has none; and a file with no `budget_id` at the same path a
+        `budget_id` sibling used (stripping the id is not an escape hatch).
+
+    WHAT IS NOT POOLED (preserved history, ruling C-1): a sibling that names a DIFFERENT `budget_id`; and a
+    sibling with no `budget_id` whose sha is neither ours nor in `amends`. The second is exactly the 10 September
+    behaviour for legacy files with neither field, kept so historical pools are not silently rewritten - the Wan 2
+    runs, for example, are joined into one pool only by a file that declares both their fingerprints in `amends`.
+    An unreadable sibling `run.json` or ledger still raises `LedgerCorrupt` rather than counting zero.
     """
 
     def __init__(self, root: Path | str, run_id: str, authorisation: BatteryAuthorisation, own_dir: Path | None = None):
@@ -331,8 +394,30 @@ class SiblingLedgers:
         self._cached = PooledSpend()
 
     def _matches(self, record: dict) -> bool:
+        """True when the sibling run `record` is charged to this budget; raises NotAuthorised on an undeclared amendment."""
+        auth = self.authorisation
         sha = record.get("authorisation_sha256")
-        return bool(sha) and sha == self.authorisation.sha256
+        their_budget = record.get("budget_id")
+        in_lineage = bool(sha) and sha in auth.lineage_sha256s
+        same_budget = their_budget is not None and their_budget == auth.budget_id
+        who = f"run {record.get('run_id')!r} (authorisation bytes {str(sha)[:12]}...)"
+        mine = Path(auth.source_path).name
+        if in_lineage and their_budget is not None and their_budget != auth.budget_id:
+            raise NotAuthorised(
+                f"{mine} declares (via `amends` or its own bytes) the authorisation {who} ran under, but that run was charged to "
+                f"budget {their_budget!r} and this file names budget {auth.budget_id!r}. An amendment may not rename or drop a budget; "
+                f"keep the same budget_id.")
+        if same_budget and not in_lineage:
+            raise NotAuthorised(
+                f"undeclared amendment: this file's bytes ({str(auth.sha256)[:12]}...) are not in the declared lineage of the runs already "
+                f"charged to budget {auth.budget_id!r} - {who} ran under bytes this file neither is nor lists in `amends` "
+                f"{[s[:12] + '...' for s in auth.lineage_sha256s]}; declare the amendment (`amends: [{sha}]`) rather than editing silently.")
+        if auth.budget_id is None and their_budget is not None and not in_lineage \
+                and Path(str(record.get("authorisation_path") or "")).name == mine:
+            raise NotAuthorised(
+                f"{mine} carries no budget_id, but {who} at this same path was charged to budget {their_budget!r}. Dropping the "
+                f"budget_id does not start a fresh budget; restore it and declare the amendment (`amends`).")
+        return same_budget or in_lineage
 
     def runs(self) -> list[tuple[str, Path]]:
         """(run_id, run_dir) for every pooled sibling. Refuses rather than skipping what it cannot read."""
@@ -419,6 +504,10 @@ class BatteryRun(SL.TrancheRun):
             "sarvam_cap_inr": str(authorisation.sarvam_cap_inr),
             "elevenlabs_cap_credits": str(authorisation.elevenlabs_cap_credits),
             "max_paid_calls": (str(authorisation.max_paid_calls) if authorisation.max_paid_calls is not None else None),
+            # C-6a: the budget this run is charged to, and the file versions that budget had been signed under when the
+            # run opened. A later amendment of the file must list this run's authorisation_sha256 in its `amends`.
+            "budget_id": authorisation.budget_id,
+            "authorisation_amends": list(authorisation.amends),
             "billing_pools": list(POOLS), "retries_authorised": RETRIES_AUTHORISED,
             "cap_basis": "amount_usd_equiv across every pool; INR at the COST-TABLE display rate 95.4211; sarvam_cap_inr over native INR; "
                          "elevenlabs_cap_credits over native plan credits (cash 0)",
@@ -453,10 +542,31 @@ class BatteryRun(SL.TrancheRun):
             rc = _dec((record.get("tranche_caps_usd") or {}).get(name))
             if rc is not None and rc > cap:
                 raise NotAuthorised(f"{run_json} records cap {name}={rc} above the authorisation file's {cap}")
+        cls._require_same_budget(run_json, record, authorisation)
         (run_dir / "spend-ledger.jsonl").touch()
         run = cls(run_dir, record, authorisation)
         run.siblings.totals()   # AF-4: read the pooled runs now; an unreadable sibling refuses here, not at dispatch
         return run
+
+    @staticmethod
+    def _require_same_budget(run_json: Path, record: dict, authorisation: BatteryAuthorisation) -> None:
+        """C-6a, this run's OWN record: it may be re-opened only under the budget it was charged to.
+
+        A legacy run (no budget_id) under a legacy file keeps today's behaviour: any permitted file opens it. Once
+        either side names a budget, the run's recorded authorisation bytes must be in the file's declared lineage and
+        the budget names must agree - a run charged to budget X is never re-opened under budget Y, nor under an
+        undeclared edit of X's file.
+        """
+        recorded_budget, sha = record.get("budget_id"), record.get("authorisation_sha256")
+        if recorded_budget is None and authorisation.budget_id is None:
+            return
+        if recorded_budget is not None and recorded_budget != authorisation.budget_id:
+            raise NotAuthorised(f"{run_json} was charged to budget {recorded_budget!r}; {Path(authorisation.source_path).name} names budget "
+                                f"{authorisation.budget_id!r}. A run is re-opened only under its own budget.")
+        if sha not in authorisation.lineage_sha256s:
+            raise NotAuthorised(f"undeclared amendment: {run_json} was created under authorisation bytes {str(sha)[:12]}..., which "
+                                f"{Path(authorisation.source_path).name} neither is nor lists in `amends`; declare the amendment "
+                                f"(`amends: [{sha}]`) rather than editing silently.")
 
     @property
     def ceiling_usd(self) -> Decimal:
@@ -523,8 +633,9 @@ class BatteryBudget(SL.TrancheBudget):
     def _pooled_note(self, pooled: PooledSpend) -> str:
         if not pooled.run_ids:
             return ""
-        return (f" Pooled with {len(pooled.run_ids)} other run(s) under {Path(self.run.authorisation.source_path).name} "
-                f"[{pooled.named}] which already consumed USD {pooled.usd_equiv}.")
+        auth = self.run.authorisation
+        under = Path(auth.source_path).name + (f" (budget {auth.budget_id!r}, cumulative across every version of the file)" if auth.budget_id else "")
+        return f" Pooled with {len(pooled.run_ids)} other run(s) under {under} [{pooled.named}] which already consumed USD {pooled.usd_equiv}."
 
     # -- the caps -------------------------------------------------------------------------
     def _check(self, stage: str, amount: Decimal) -> None:
@@ -682,9 +793,36 @@ def open_battery_ledger(root: Path | str = DEFAULT_RUN_ROOT, run_id: str = "eval
     return BatteryBudget(run)
 
 
-def authorisation_status(path: Path | str = AUTH_LOCAL_PATH) -> dict:
+def budget_summary(auth: BatteryAuthorisation, root: Path | str | None = None) -> dict:
+    """C-6a in words: which budget this file belongs to, every file version in its lineage, and - when a run root
+    is given - the runs already charged to it and what they consumed. Reads ledgers only; refuses nothing itself
+    (an undeclared amendment is reported as text here and refused at BatteryRun.create / open)."""
+    short = [s[:12] for s in auth.lineage_sha256s]
+    out = {"budget_id": auth.budget_id, "amends": list(auth.amends), "lineage_sha256s_short": short,
+           "pooled_run_ids": None, "pooled_consumed_usd_equiv": None, "pooled_paid_calls": None}
+    name = Path(auth.source_path).name
+    ident = (f"budget {auth.budget_id!r}" if auth.budget_id else
+             f"no budget_id: a legacy file, pooled by its own fingerprint {short[0] if short else '?'} only")
+    lineage = (f"lineage of {len(short)} file version(s) {short}" if len(short) > 1 else "no earlier versions declared (`amends` absent)")
+    if root is None:
+        words = f"{name}: {ident}; {lineage}; no run root given, so the runs already charged to it were not read."
+    else:
+        try:
+            pooled = SiblingLedgers(Path(root), "", auth, own_dir=Path(root) / ".none").totals()
+            out.update(pooled_run_ids=list(pooled.run_ids), pooled_consumed_usd_equiv=str(pooled.usd_equiv), pooled_paid_calls=pooled.paid_calls)
+            words = (f"{name}: {ident}; {lineage}; {len(pooled.run_ids)} run(s) already charged to it [{pooled.named}] consumed "
+                     f"USD {pooled.usd_equiv} in {pooled.paid_calls} paid call(s) across every version of the file, against the CURRENT "
+                     f"cap of USD {auth.max_consumed_usd_equivalent} - USD {auth.max_consumed_usd_equivalent - pooled.usd_equiv} remains.")
+        except (NotAuthorised, LedgerCorrupt) as exc:
+            words = f"{name}: {ident}; {lineage}; the runs under {root} could not be pooled: {exc}"
+    out["budget_summary"] = words
+    return out
+
+
+def authorisation_status(path: Path | str = AUTH_LOCAL_PATH, root: Path | str | None = None) -> dict:
     auth = load_battery_authorisation(path)
     return {"path": auth.source_path, "file_exists": Path(auth.source_path).exists(), "authorised": auth.authorised,
+            **budget_summary(auth, root),
             "tranche_id": auth.tranche_id, "max_consumed_usd_equivalent": str(auth.max_consumed_usd_equivalent),
             "caps_usd": {k: str(v) for k, v in auth.caps_usd.items()}, "sarvam_cap_inr": str(auth.sarvam_cap_inr),
             "elevenlabs_cap_credits": str(auth.elevenlabs_cap_credits),
