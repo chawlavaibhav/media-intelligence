@@ -1,0 +1,22 @@
+{
+  "generation_prompts": {
+    "main": null,
+    "textless_plate": "Square Diwali festive background image. On a deep maroon matte ground, lower area: an open box of Indian sweets (matte card box with one glossy gold foil band) beside three lit clay diyas whose flames light the scene from below with warm light; one small flame reflection on each diya's oil. Traditional motifs, clean modern layout with the upper two-thirds and the lower third band left as empty maroon space. No text, no lettering, no numerals, no symbols anywhere in the image.",
+    "motion": null
+  },
+  "planner": "recorded_fixture",
+  "source_ref": "runtime/fixtures/synthetic/blueprint-plate-clean.json",
+  "case_values": {
+    "CA-D1-check": "1st read: the open sweet box; 2nd read: the three lit diyas; 3rd read: the empty maroon bands reserved for the composited copy.",
+    "CA-D2-check": "Subject placed in the lower zone, centred, because the upper two-thirds and the lower third band are reserved as empty ground for the code-set text.",
+    "PA-D1-check": "Sweet box: matte card with one glossy gold foil band; diyas: matte clay; maroon ground: matte.",
+    "PA-D4-check": "One fictional source: the three diya flames, lit from below and slightly camera-left; every shadow falls upward and away from the flames."
+  },
+  "production_parameters": {
+    "aspect": "1:1",
+    "resolution": "~1 MP",
+    "audio": "not_applicable",
+    "reference_slots": 0
+  },
+  "_note": "Runtime-authored test fixture (lane G, 2026-09-14). The frozen IMG-TEXT-01 plate prompt earns a LIMIT-TEXT FAIL at the gate (T3: 'poster' is a text-bearing-surface term with no deferral term in its first sentence), so it cannot carry the passing paths. This prompt is the same scene with 'poster' replaced by 'background image'; it is NOT a Stage-A blueprint and is never presented as one."
+}

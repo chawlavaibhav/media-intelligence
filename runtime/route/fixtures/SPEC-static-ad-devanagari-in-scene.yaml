@@ -32,6 +32,8 @@ exact_text:
     may_reflow: false
     placement: in_scene
   strategy: generated_in_scene
+  # C-6c mechanism A: the provider draws the price line itself, so every RR-3 exclusion bites.
+  text_mechanism: model_draws_text
   strategy_basis: >-
     RR-2 (generated text where the type must sit inside the scene), evidenced by map cells
     IMG-TEXT/nano-banana-2+A_cheap_generated and IMG-TEXT/gpt-image-2+A_cheap_generated, both 4/4
@@ -62,12 +64,15 @@ route_exclusions:
 - route_key: seedream-5-pro
   reason: "Devanagari spelling failures on every draw"
   basis: "RR-3 / IMG-TEXT/seedream-5-pro+B_premium_generated (0/2, every rejection 'wrong spelling')"
+  scope: generated_text_only
 - route_key: recraft-v4
   reason: "Devanagari spelling failures on every draw"
   basis: "RR-3 / IMG-TEXT/recraft-v4+B_premium_generated (0/2, every rejection 'wrong spelling')"
+  scope: generated_text_only
 - route_key: flux-2-pro
   reason: "Devanagari spelling failures on every draw"
   basis: "RR-3 / IMG-TEXT/flux-2-pro+C_composite_textless_base (0/2, every rejection 'wrong spelling')"
+  scope: generated_text_only
 
 gate_requirements:
 - pre_dispatch_consent_check

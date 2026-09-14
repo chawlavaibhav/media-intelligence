@@ -94,10 +94,11 @@ class StyleGuard:
 def derived_statements(job: dict, nr, style: dict) -> list:
     """The statements the JOB forces. No deliverable kind is named anywhere in here; each row
     fires on a fact about the job, so a new kind inherits them without a code change."""
-    strings = [t["content"] for t in nr.text_requirements]
+    strings = [t["content"] for t in nr.text_requirements if t.get("exactness") == "contractual"]
     identity_roles = list(nr.facets.get("identity_bound_roles") or [])
     conditions = {
-        "exact_text_present": bool(strings),
+        "exact_text_present": bool(nr.text_requirements),
+        "exactness_contractual": bool(strings),
         "identity_reference_present": bool(identity_roles),
         "supplied_asset_edit": bool(nr.facets.get("supplied_asset_present")) and nr.requested_operation != "generate",
     }

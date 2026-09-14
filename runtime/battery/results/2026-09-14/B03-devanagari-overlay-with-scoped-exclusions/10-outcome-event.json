@@ -1,0 +1,278 @@
+{
+  "acceptance": {
+    "authority": "human",
+    "decided_utc": "2026-09-14T12:00:00Z",
+    "decision": "abandoned",
+    "note": "pre-dispatch gate FAIL: LIMIT-TEXT — nothing dispatched",
+    "state": "abandoned",
+    "transcript_sha256": "26411a7a0ae068fd5ac72ae221f3f719172d87f46aa0b8e2ff95deaf830d1f6a"
+  },
+  "attempts": [],
+  "blueprint": {
+    "planner": "stage_a_blueprint_fixture",
+    "source_ref": "eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/IMG-TEXT-01.blueprint.md sha256:72de774d6dcaed7e358837632d1d6feee1b0329689628561214cfcad2b7781ba"
+  },
+  "canon": {
+    "canon_gap": true,
+    "corpus_digest": "3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc",
+    "injection_prefix_sha256": "4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe",
+    "missing_domains": [
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "indian_indic_context",
+      "typography_and_copy"
+    ],
+    "packs_selected": [
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "composition_and_attention",
+      "colour_and_visual_register",
+      "typography_and_copy",
+      "product_appearance",
+      "indian_indic_context",
+      "commercial_communication"
+    ]
+  },
+  "cost": {
+    "by_pool": {},
+    "draws": 0,
+    "provider_usd_total": "0.000000"
+  },
+  "deterministic_checks": [
+    {
+      "check": "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "refusal / error / empty artifact -> reject",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "required string absent (text scan over the artifact) -> reject before a person sees it",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "the plate prompt carries an explicit no-lettering instruction; lettering on a plate is a reject",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    }
+  ],
+  "dry_run": true,
+  "event_id": "oe-cbc6bea48d06e870d84016620294efa7abb82d0db1512139469a8c210ddfe13f",
+  "fingerprints": {
+    "acceptance_contract_sha256": "546283b96549aa6129c3d069395412998da3851c4fe31feb9cfa6fb791ee6c2e",
+    "canon_injected_context_sha256": "4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe",
+    "decision_sha256": "9c0e6a43b8fce63e9854554fb7043a25ae51d06e4076679babdd69695313b083",
+    "job_sha256": "1bc527a8540f4f4c24796bae7bd2e51285305538f4bfcd3088c4319cd1943bca",
+    "manifest_sha256": "1e4da1304b7a639edb74ff2cb6a951c1f8847577b67ba3e6019860bde199c014",
+    "package_sha256": "0fd2fd6c0c196158efa5180e533cc83478761b2bbc857550969ecef62890f7c1",
+    "spec_sha256": "7d184030847a95312a7f1447aa779eb2da40aa71e39264616b43f31f9ac20e50"
+  },
+  "gate": {
+    "blocking_failures": [
+      "LIMIT-TEXT"
+    ],
+    "post_draw": [],
+    "post_draw_by_attempt": [],
+    "pre_dispatch": [
+      {
+        "blocking": true,
+        "check_id": "LIMIT-TEXT",
+        "detail": "prompt 1, sentence 1 requests text-bearing surfaces ('poster') with no illegibility/deferral term — source: pack_limits \"… composite text deterministically.\"",
+        "family": "limit",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D1-check",
+        "detail": "finish term(s) (matte, diffuse, glossy, direct, brushed, glare) in VISUAL_SYSTEM.surface_finish_per_key_object, GENERATION_PROMPTS, FAILURE_PREVENTION",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D2-check",
+        "detail": "highlight geometry needs decoded pixels and scene understanding; 'single implied source' is not one light instrument (PA-D4 default allows added lights) — counting light words would false-fail accepted packages",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D3-check",
+        "detail": "needs shadow/specular measurement in pixels; a prompt-vocabulary contradiction test false-fails legitimate kicker/rim requests",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D4-check",
+        "detail": "no sentence in VISUAL_SYSTEM.implied_light_source, PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION names a light source together with a direction",
+        "family": "doctrine",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D5-check",
+        "detail": "grayscale check needs decoded pixels and product/ground segmentation; no literal pre-dispatch clause exists",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D6-check",
+        "detail": "'key level declared' has no stable vocabulary in real packages — a strict test false-fails; cross-shot consistency needs pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D7-check",
+        "detail": "the decisive check is a semantic judgment ('needs the body copy'); presence of a hierarchy line is not the check — remains a human / blueprint-model check",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D8-check",
+        "detail": "glossy-surface term(s) (glossy, black) with a specular declaration ('small flame reflection') in PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D9-check",
+        "detail": "face counting needs object understanding in pixels; candidate comparison needs alternatives that do not exist at gate time",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D10-check",
+        "detail": "no DOCTRINE_DEVIATIONS section (schema v1 / receipts retired, CANON-SHAPE-v1 §5)",
+        "family": "doctrine",
+        "status": "NOT-RUN"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D1-check",
+        "detail": "no ordered enumeration of three reads in VISUAL_SYSTEM.attention_order, MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION, GENERATION_PROMPTS",
+        "family": "doctrine",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D2-check",
+        "detail": "placement term(s) (off-centre, centre, upper, zone) in VISUAL_SYSTEM.placement_zone, GENERATION_PROMPTS, FAILURE_PREVENTION; no named ratio or grid line",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D3-check",
+        "detail": "accepted packages describe edges in free prose that no closed vocabulary of the three treatments matches without false failures; tangency needs pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D4-check",
+        "detail": "conditional on a frame-within-frame being used, then a tonal/width comparison in pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D5-check",
+        "detail": "no balance/restless declaration in VISUAL_SYSTEM, GENERATION_PROMPTS, FAILURE_PREVENTION",
+        "family": "doctrine",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D6-check",
+        "detail": "aspect stated: 1:1 (DELIVERABLE)",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D7-check",
+        "detail": "CA-D7 is a video/image_sequence decision ('How does attention travel across cuts (video)?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D8-check",
+        "detail": "CA-D8 is a video/image_sequence decision ('When cut criteria conflict, what is sacrificed first?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D9-check",
+        "detail": "CA-D9 is a video/image_sequence decision ('Screen direction and the line?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D10-check",
+        "detail": "CA-D10 is a video decision ('How long may a shot hold?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D11-check",
+        "detail": "CA-D11 is a video decision ('Does the camera move, and why?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": true,
+        "check_id": "DISPATCH-ASPECT",
+        "detail": "package declares 1:1 = dispatched 1:1",
+        "family": "dispatch",
+        "status": "PASS"
+      },
+      {
+        "blocking": true,
+        "check_id": "RUNTIME-PLATE-NO-LETTERING-INSTRUCTION",
+        "detail": "the plate prompt carries an explicit no-lettering instruction ('No text') — gate vocabulary NO_TEXT_CLAUSE",
+        "family": "runtime",
+        "status": "PASS"
+      }
+    ]
+  },
+  "job_id": "alpha-dry-img-text-01",
+  "policy_profile": "dry",
+  "repairs": [],
+  "route": {
+    "cell_key": "IMG-CORE/flux-2-pro",
+    "cells": [
+      "IMG-CORE/flux-2-pro"
+    ],
+    "evidence_status": "clean_observed",
+    "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json",
+    "route_key": "flux-2-pro",
+    "surface": "fal",
+    "surface_model_id": "fal-ai/flux-2-pro",
+    "text_mechanism": "deterministic_text_composition"
+  },
+  "spec_id": "spec-4baacd1259afc622",
+  "template_candidate": {
+    "eligible": false,
+    "reason": "acceptance decision 'abandoned'; only an accepted outcome is eligible"
+  },
+  "written_utc": "2026-09-14T12:00:00Z"
+}

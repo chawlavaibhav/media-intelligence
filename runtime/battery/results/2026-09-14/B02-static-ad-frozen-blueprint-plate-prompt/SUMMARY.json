@@ -1,0 +1,80 @@
+{
+  "brief": "/var/folders/1h/9tpkt7s175x90vf_38376zbr0000gn/T/alpha-battery-briefs-nteyi0db/B02-static-ad-frozen-blueprint-plate-prompt.json",
+  "final_state": "abandoned",
+  "job_id": "alpha-dry-img-text-02",
+  "profile": "dry",
+  "refusal": {
+    "code": "PRE_DISPATCH_GATE_FAIL",
+    "context": {},
+    "message": "LIMIT-TEXT"
+  },
+  "stages": [
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-img-text-02/01-job.json",
+      "refusal": null,
+      "stage": "intake",
+      "status": "ok",
+      "summary": "job alpha-dry-img-text-02 accepted under profile dry"
+    },
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-img-text-02/02-spec.json",
+      "refusal": null,
+      "stage": "spec",
+      "status": "ok",
+      "summary": "spec-2f4559ba9dd8f09f kind=static_ad text=code_set_on_textless_plate planner=stage_a_blueprint_fixture"
+    },
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-img-text-02/03-canon.json",
+      "refusal": null,
+      "stage": "canon",
+      "status": "ok",
+      "summary": "injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication', 'concept_and_distinctiveness', 'critique_and_effectiveness', 'indian_indic_context', 'typography_and_copy']; prefix sha c81644f61d9d"
+    },
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-img-text-02/04-route-decision.json",
+      "refusal": null,
+      "stage": "route",
+      "status": "ok",
+      "summary": "primary=flux-2-pro fallback=qwen-image-3 manual=False"
+    },
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-img-text-02/05-execution-manifest.json",
+      "refusal": null,
+      "stage": "manifest",
+      "status": "ok",
+      "summary": "4 attempts rendered; would_dispatch=2; reasons=[]"
+    },
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-img-text-02/06-dry-execution.json",
+      "refusal": null,
+      "stage": "dry_execution",
+      "status": "ok",
+      "summary": "dry_complete; network=none"
+    },
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-img-text-02/09-loop.json",
+      "refusal": {
+        "code": "PRE_DISPATCH_GATE_FAIL",
+        "context": {},
+        "message": "LIMIT-TEXT"
+      },
+      "stage": "loop",
+      "status": "refused",
+      "summary": "pre=FAIL attempts=0 repairs=0 acceptance=abandoned"
+    },
+    {
+      "artifact": "/tmp/bat-store-final2/outcomes/oe-82eedbffd69c19e12d277d4cbd0d8918b668103abe77a7767a9602fc473bda7d.json",
+      "refusal": null,
+      "stage": "outcome_event",
+      "status": "ok",
+      "summary": "oe-82eedbffd69c19e12d277d4cbd0d8918b668103abe77a7767a9602fc473bda7d decision=abandoned dry_run=True"
+    },
+    {
+      "artifact": null,
+      "refusal": null,
+      "stage": "template",
+      "status": "skipped",
+      "summary": "outcome abandoned; nothing to promote"
+    }
+  ]
+}

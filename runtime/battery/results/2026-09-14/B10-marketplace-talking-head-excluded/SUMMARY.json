@@ -1,0 +1,42 @@
+{
+  "brief": "/var/folders/1h/9tpkt7s175x90vf_38376zbr0000gn/T/alpha-battery-briefs-nteyi0db/B10-marketplace-talking-head-excluded.json",
+  "final_state": "refused_at_intake",
+  "job_id": "alpha-dry-mkt-001",
+  "profile": "dry",
+  "refusal": {
+    "code": "KIND_NOT_IN_PROFILE",
+    "context": {
+      "allowed": [
+        "static_ad",
+        "short_motion_from_accepted_still",
+        "static_ad_from_supplied_photo"
+      ],
+      "job_id": "alpha-dry-mkt-001",
+      "kind": "talking_head_ad",
+      "profile": "dry"
+    },
+    "message": "deliverable kind 'talking_head_ad' is not in the allowed list of policy profile 'dry'; widening the profile is a row edit, never a code change"
+  },
+  "stages": [
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-mkt-001/refusal-intake.json",
+      "refusal": {
+        "code": "KIND_NOT_IN_PROFILE",
+        "context": {
+          "allowed": [
+            "static_ad",
+            "short_motion_from_accepted_still",
+            "static_ad_from_supplied_photo"
+          ],
+          "job_id": "alpha-dry-mkt-001",
+          "kind": "talking_head_ad",
+          "profile": "dry"
+        },
+        "message": "deliverable kind 'talking_head_ad' is not in the allowed list of policy profile 'dry'; widening the profile is a row edit, never a code change"
+      },
+      "stage": "intake",
+      "status": "refused",
+      "summary": "KIND_NOT_IN_PROFILE"
+    }
+  ]
+}

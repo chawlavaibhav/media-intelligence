@@ -1,0 +1,286 @@
+{
+  "acceptance_contract": [
+    "ACCEPT only if the lettering reads exactly \"दीपावली की शुभकामनाएं\", \"सभी मिठाइयों पर 20% छूट\" and \"श्री गणेश मिष्ठान भंडार\" — every character as given; REJECT on any wrong, missing, doubled or invented character.",
+    "REJECT if any other lettering or pseudo-lettering appears anywhere, or if any of the required lettering is cut by the frame edge or overlaps other lettering.",
+    "ACCEPT only if the lettering reads exactly \"दीपावली की शुभकामनाएं\", \"सभी मिठाइयों पर 20% छूट\" and \"श्री गणेश मिष्ठान भंडार\" — every matra and the conjunct ष्ठ in मिष्ठान correct, the figure 20 present as either 20 or २०; REJECT on any wrong, missing, doubled or invented character.",
+    "ACCEPT only if \"श्री गणेश मिष्ठान भंडार\" is the largest lettering on the poster.",
+    "REJECT if any other lettering or pseudo-lettering (scribbled or half-formed letters) appears anywhere.",
+    "ACCEPT only if at least one of a sweet box or lit diyas is recognisable."
+  ],
+  "blueprint": {
+    "case_values": {
+      "CA-D1": "1st read: the offer line by contrast (bright gold on maroon); 2nd: the shop name by size (largest, cream, calmer contrast); 3rd: the greeting line. This resolves the stated contradiction: dominance by contrast (vig_0009), not by size.",
+      "CA-D2": "Text block off-centre upper zone; props lower zone; the shop name spans the lower third.",
+      "CA-D3": "Sparse frame: tight fit with a deliberate margin around every string (fre_0006); no string touches the edge.",
+      "CA-D4": "None used (no border ornament that competes).",
+      "CA-D5": "Balanced: the large pale name block below against the dense warm props and gold offer above.",
+      "CA-D6": "1:1 justified by the centred, inward-pointing arrangement of box and diyas (fre_0010).",
+      "PA-D1": "sweet box: matte card (diffuse) with a glossy foil band (direct); diyas: matte clay with a small direct flame reflection on the oil; ground: matte deep maroon.",
+      "PA-D10": "No deviation.",
+      "PA-D2": "One highlight per diya flame on its oil surface, from the flame itself; no other speculars.",
+      "PA-D3": "Soft ambient with small hard flame points only where flames are — declared, so the soft/hard mix is not a contradiction (each surface lit by its own declared source).",
+      "PA-D4": "Fictional source: the diya flames, low and warm, lighting upward; key agrees.",
+      "PA-D5": "Warm props against a cool-dark maroon ground; tonal contrast survives grayscale.",
+      "PA-D6": "Low key, festive warmth from the character of flame light.",
+      "PA-D7": "Sells at a glance: '20% off all sweets this Diwali at this shop' — the offer line is the first read.",
+      "PA-D8": "Foil band on the box: one wanted specular; flame reflections wanted; nothing accidental.",
+      "PA-D9": "Box at three-quarter showing lid top and front; diyas from slightly above."
+    },
+    "generation_prompts": {
+      "main": "Diwali festive poster, square. On a deep maroon matte ground, lower area: an open box of Indian sweets (matte card box with one glossy gold foil band) beside three lit clay diyas whose flames light the scene from below with warm light; one small flame reflection on each diya's oil. Traditional motifs, clean modern layout with generous empty space. Text in Devanagari, all spellings exact: a top line reading \"दीपावली की शुभकामनाएं\"; below it, larger and in bright gold, the offer line \"सभी मिठाइयों पर 20% छूट\"; across the lower third, the largest lettering of all, in cream, the shop name \"श्री गणेश मिष्ठान भंडार\". No other words, letters or numerals anywhere.",
+      "motion": null,
+      "textless_plate": "Diwali festive poster background, square. On a deep maroon matte ground, lower area: an open box of Indian sweets (matte card box with one glossy gold foil band) beside three lit clay diyas whose flames light the scene from below with warm light; one small flame reflection on each diya's oil. Traditional motifs, clean modern layout with the upper two-thirds and the lower third band left as empty maroon space. No text, no lettering, no numerals, no symbols anywhere in the image."
+    },
+    "planner": "stage_a_blueprint_fixture",
+    "production_parameters": {
+      "blueprint_header": {
+        "author": "executor_agent",
+        "blueprint_author": "executor_agent",
+        "case_id": "IMG-TEXT-01",
+        "frozen": "2026-09-05",
+        "gate_pre": "not_available_on_base — canon/gate/run_gate.py is absent from base cb92f1e (CANON-GATE-001 unmerged); run `pre` on this file when it lands",
+        "held_constant_across_routes": "True",
+        "packs_source": "canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers canon/packs/pack-triggers-v0.yaml; DEFAULT/CHECK text rendered by id, never paraphrased; no HOLD material"
+      },
+      "brief_only_parameters": {},
+      "decision_questions": {
+        "CA-D1": "What reads first, second, third?",
+        "CA-D2": "Where does the subject sit in frame?",
+        "CA-D3": "How does the frame hold the subject at its edges?",
+        "CA-D4": "Use a frame within the frame?",
+        "CA-D5": "Balance the frame, or refuse the eye rest?",
+        "CA-D6": "Which orientation and aspect?",
+        "PA-D1": "What reflection type dominates each key product surface — diffuse (matte), direct (glossy), or glare?",
+        "PA-D10": "When may any of the above be overridden?",
+        "PA-D2": "Where may the highlight sit on each glossy surface?",
+        "PA-D3": "Hard or soft source?",
+        "PA-D4": "What is the fictional light source, and does everything agree with it?",
+        "PA-D5": "How does the product separate from its ground?",
+        "PA-D6": "What key level does the mood require?",
+        "PA-D7": "Does the imagery earn its space commercially?",
+        "PA-D8": "Glass, dark or mirror-glossy object in frame — special handling?",
+        "PA-D9": "Which angle is the hero angle?"
+      },
+      "dispatch_parameters": {
+        "aspect": "1:1",
+        "audio": "not_applicable",
+        "reference_slots": "0",
+        "resolution": "~1 MP"
+      },
+      "text_handling": [
+        "mode: generated (arms A/B) and composite (arm C)",
+        "string `t1` (devanagari, headline, exact): **दीपावली की शुभकामनाएं**",
+        "string `t2` (devanagari, body, exact): **सभी मिठाइयों पर 20% छूट**",
+        "string `t3` (devanagari, brand_name, exact): **श्री गणेश मिष्ठान भंडार**",
+        "composite arm: font Noto Serif Devanagari (bundled, deterministic); positions: t1 top band centred; t2 upper-middle band centred, gold #D4A017 on maroon; t3 lower third centred at 1.6× the height of t2, cream #F5E9D3; colour: gold for t2, cream for t1/t3; rule: overlay by code at USD 0 on the textless plate; identical overlay on both base draws"
+      ]
+    },
+    "source_ref": "eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/IMG-TEXT-01.blueprint.md sha256:72de774d6dcaed7e358837632d1d6feee1b0329689628561214cfcad2b7781ba"
+  },
+  "budget": {
+    "cost_ceiling_usd": "5.0",
+    "max_provider_draws": 2,
+    "repair_allowance": 1
+  },
+  "canon": {
+    "canon_gap": true,
+    "injected_context_sha256": "4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe",
+    "missing_domains": [
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "indian_indic_context",
+      "typography_and_copy"
+    ],
+    "packs_selected": [
+      {
+        "compiled": false,
+        "pack_id": "concept_and_distinctiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": false,
+        "pack_id": "critique_and_effectiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": true,
+        "pack_id": "composition_and_attention",
+        "status": "compiled_accepted",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "colour_and_visual_register",
+        "status": "selected_uncompiled",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "typography_and_copy",
+        "status": "selected_uncompiled",
+        "trigger": "text_requirements_nonempty (text_requirements)"
+      },
+      {
+        "compiled": true,
+        "pack_id": "product_appearance",
+        "status": "compiled_accepted",
+        "trigger": "product_or_packshot_entity_present (entities)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "indian_indic_context",
+        "status": "selected_uncompiled",
+        "trigger": "language_topology_present_or_market_IN (language_topology | market)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "commercial_communication",
+        "status": "selected_uncompiled",
+        "trigger": "advertising_acceptance_intent (acceptance_intent)"
+      }
+    ]
+  },
+  "capability_requirements": [
+    {
+      "capability": "exact_text_composition",
+      "level": "code_set_on_textless_plate",
+      "mandatory": true
+    },
+    {
+      "capability": "image_generation",
+      "mandatory": true
+    },
+    {
+      "capability": "product_surface_fidelity",
+      "mandatory": false
+    }
+  ],
+  "compiled_utc": "2026-09-14T12:00:00Z",
+  "composition": {
+    "aspect_justification": "1:1 justified by the centred, inward-pointing arrangement of box and diyas (fre_0010).",
+    "attention_order": "1st read: the offer line by contrast (bright gold on maroon); 2nd: the shop name by size (largest, cream, calmer contrast); 3rd: the greeting line. This resolves the stated contradiction: dominance by contrast (vig_0009), not by size.",
+    "balance": "Balanced: the large pale name block below against the dense warm props and gold offer above.",
+    "edge_treatment": "Sparse frame: tight fit with a deliberate margin around every string (fre_0006); no string touches the edge.",
+    "placement_zone": "Text block off-centre upper zone; props lower zone; the shop name spans the lower third."
+  },
+  "deliverable": {
+    "aspect": "1:1",
+    "kind": "static_ad",
+    "resolution_class": "~1 MP"
+  },
+  "deterministic_checks": [
+    "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+    "refusal / error / empty artifact -> reject",
+    "required string absent (text scan over the artifact) -> reject before a person sees it",
+    "the plate prompt carries an explicit no-lettering instruction; lettering on a plate is a reject"
+  ],
+  "exact_text": {
+    "strategy": "code_set_on_textless_plate",
+    "strategy_basis": "RR-1 [default] — text on stills; map cells: IMG-TEXT/flux-2-pro+C_composite_textless_base, IMG-TEXT/flux-2-pro+code_overlay",
+    "strings": [
+      {
+        "content": "दीपावली की शुभकामनाएं",
+        "exactness": "contractual",
+        "id": "t1",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "devanagari",
+        "script_detected": "DEVANAGARI"
+      },
+      {
+        "content": "सभी मिठाइयों पर 20% छूट",
+        "exactness": "contractual",
+        "id": "t2",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "devanagari",
+        "script_detected": "DEVANAGARI"
+      },
+      {
+        "content": "श्री गणेश मिष्ठान भंडार",
+        "exactness": "contractual",
+        "id": "t3",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "devanagari",
+        "script_detected": "DEVANAGARI"
+      }
+    ],
+    "text_mechanism": "deterministic_text_composition"
+  },
+  "gate_requirements": [
+    "CA-D1-check",
+    "CA-D2-check",
+    "CA-D3-check",
+    "CA-D4-check",
+    "CA-D5-check",
+    "CA-D6-check",
+    "CA-D7-check",
+    "CA-D8-check",
+    "CA-D9-check",
+    "CA-D10-check",
+    "CA-D11-check",
+    "PA-D1-check",
+    "PA-D2-check",
+    "PA-D3-check",
+    "PA-D4-check",
+    "PA-D5-check",
+    "PA-D6-check",
+    "PA-D7-check",
+    "PA-D8-check",
+    "PA-D9-check",
+    "PA-D10-check",
+    "pack limit: Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar, samara-making-breaking-grid-ch1 (term t_sam_c003_0018 only, CF-16) and alton-painting-with-light-ch2 for this pack's domains; no claim of theirs is compiled — their doctrine (frontality/darshan attention order, symmetry-as-authority, grid structure) is absent, not arbitrated.",
+    "pack limit: Coverage note (GAP-16 resolved by the DN-06 admission): the source's later chapters are accepted as light-science-magic-beyond-ch3, a scoped extension of ch3. Its three self-qualification claims are compiled where they bite (PA-D8: sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost grounds; glossy-box remedy ladder ordered cheapest-first; black-on-black lit as if metal). The remainder of the extension awaits the full live-37 pack compile.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide as contributors to this pack's domains; none is compiled here — their doctrine (frontality/darshan staging, iconographic correctness, props-as-vocabulary) is absent, not arbitrated.",
+    "pack limit: Category-surface gap: no accepted claim covers watch conventions (hand positions) or anisotropic brushed/sunburst surfaces — the diffuse/direct/glare contrast set (PA-D1) does not model radial anisotropic glow; state the gap rather than force one of the three types.",
+    "canon gap: no compiled pack answers colour_and_visual_register, commercial_communication, concept_and_distinctiveness, critique_and_effectiveness, indian_indic_context, typography_and_copy; the plan states this and attributes nothing to doctrine there"
+  ],
+  "hard_constraints": [
+    "the string 'दीपावली की शुभकामनाएं' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the string 'सभी मिठाइयों पर 20% छूट' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the string 'श्री गणेश मिष्ठान भंडार' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the deliverable is 1:1",
+    "three exact Devanagari strings",
+    "shop name largest lettering",
+    "square"
+  ],
+  "job_id": "alpha-dry-img-text-01",
+  "job_sha256": "1bc527a8540f4f4c24796bae7bd2e51285305538f4bfcd3088c4319cd1943bca",
+  "materials_and_light": {
+    "highlight_placement": "One highlight per diya flame on its oil surface, from the flame itself; no other speculars.",
+    "implied_light_source": "Fictional source: the diya flames, low and warm, lighting upward; key agrees.",
+    "key_level": "Low key, festive warmth from the character of flame light.",
+    "separation": "Warm props against a cool-dark maroon ground; tonal contrast survives grayscale.",
+    "surface_finish_per_key_object": "sweet box: matte card (diffuse) with a glossy foil band (direct); diyas: matte clay with a small direct flame reflection on the oil; ground: matte deep maroon."
+  },
+  "objective": "Produce one static_ad at 1:1 that answers the customer's request: \"दीपावली के लिए एक poster चाहिए, दुकान के बाहर print और Instagram दोनों के लिए, square बनाइए।\"",
+  "policy_profile": "dry",
+  "route_exclusions": [
+    {
+      "basis": "RR-3; map cells: IMG-CORE/flux-2-pro, IMG-TEXT/flux-2-pro+C_composite_textless_base",
+      "reason": "Avoid Seedream 5 Pro, Recraft V4 and FLUX.2 Pro for Devanagari text.",
+      "route_key": "flux-2-pro",
+      "scope": "generated_text_only"
+    },
+    {
+      "basis": "RR-3; map cells: IMG-TEXT/recraft-v4+B_premium_generated",
+      "reason": "Avoid Seedream 5 Pro, Recraft V4 and FLUX.2 Pro for Devanagari text.",
+      "route_key": "recraft-v4",
+      "scope": "generated_text_only"
+    },
+    {
+      "basis": "RR-3; map cells: IMG-CORE/seedream-5-pro, IMG-TEXT/seedream-5-pro+B_premium_generated",
+      "reason": "Avoid Seedream 5 Pro, Recraft V4 and FLUX.2 Pro for Devanagari text.",
+      "route_key": "seedream-5-pro",
+      "scope": "generated_text_only"
+    }
+  ],
+  "schema": "PRODUCTION-SPEC-v1",
+  "spec_id": "spec-4baacd1259afc622"
+}

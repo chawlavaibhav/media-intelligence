@@ -59,9 +59,15 @@ class ContractCoverageTest(unittest.TestCase):
                 self.assertNotIn(spec[field], (None, "", [], {}), f"{name}: {field} is empty")
 
     def test_the_spec_validates_against_the_frozen_contract(self):
+        """The contract-declared part validates against v1. The three keys WAVE2-INTERFACES §1 adds
+        beyond the frozen contract (schema, blueprint, exact_text.text_mechanism) are stripped by
+        contract_view(); see runtime/spec/compile.py's docstring for why they are not in v1."""
+        from runtime.spec.compile import contract_view
+
         for name in BRIEFS:
             spec = SpecCompiler().compile(support.submit(name), compiled_utc=FIXED).spec
-            self.contract.validate(spec)
+            self.contract.validate(contract_view(spec))
+            self.assertEqual(set(spec) - set(contract_view(spec)), {"schema", "blueprint"})
 
     def test_capability_requirements_never_name_a_model_a_provider_or_a_route(self):
         from runtime.evidence import EvidenceMap
@@ -228,7 +234,7 @@ class CliTest(unittest.TestCase):
             code = cli.main([str(paths.BRIEF_FIXTURES / "mustard-oil-tin.json"), "--at", FIXED, "--canon"])
         text = out.getvalue()
         self.assertEqual(code, 0)
-        self.assertIn("PRODUCTION-SPEC-v0", text)
+        self.assertIn("PRODUCTION-SPEC-v1", text)
         self.assertIn("ACCEPTANCE CONTRACT", text)
         self.assertIn("EXACT CANON PAYLOAD", text)
         self.assertIn("CANON_DOCTRINE packs are compiled production decisions", text)

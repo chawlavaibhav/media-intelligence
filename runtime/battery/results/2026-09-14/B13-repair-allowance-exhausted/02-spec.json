@@ -1,0 +1,190 @@
+{
+  "acceptance_contract": [
+    "ACCEPT only if the lettering reads exactly \"FLAT 40% OFF\", \"First 100 members only\" and \"AlphaFit\" — every character as given; REJECT on any wrong, missing, doubled or invented character.",
+    "REJECT if any other lettering or pseudo-lettering appears anywhere, or if any of the required lettering is cut by the frame edge or overlaps other lettering.",
+    "ACCEPT only if the lower-right corner is empty ground with nothing on it.",
+    "REJECT if any person, photograph or product appears.",
+    "REJECT if any colour other than black, white and neon yellow carries the design."
+  ],
+  "blueprint": {
+    "case_values": {},
+    "generation_prompts": {
+      "main": "",
+      "motion": null,
+      "textless_plate": "Square social-media background image. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. The upper-left two-thirds and the lower-left are plain black space; the lower-right corner stays completely empty. High contrast, energetic. No text, no letters, no numerals, no symbols anywhere in the image."
+    },
+    "planner": "template:tpl-a799a6e76b70c105",
+    "production_parameters": {},
+    "source_ref": ""
+  },
+  "budget": {
+    "cost_ceiling_usd": "5.0",
+    "max_provider_draws": 2,
+    "repair_allowance": 1
+  },
+  "canon": {
+    "canon_gap": true,
+    "injected_context_sha256": "c81644f61d9d39a5b25f18058ff5c29c30256c287a3b4f037be40cb0d52e3945",
+    "missing_domains": [
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "indian_indic_context",
+      "typography_and_copy"
+    ],
+    "packs_selected": [
+      {
+        "compiled": false,
+        "pack_id": "concept_and_distinctiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": false,
+        "pack_id": "critique_and_effectiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": true,
+        "pack_id": "composition_and_attention",
+        "status": "compiled_accepted",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "colour_and_visual_register",
+        "status": "selected_uncompiled",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "typography_and_copy",
+        "status": "selected_uncompiled",
+        "trigger": "text_requirements_nonempty (text_requirements)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "indian_indic_context",
+        "status": "selected_uncompiled",
+        "trigger": "language_topology_present_or_market_IN (language_topology | market)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "commercial_communication",
+        "status": "selected_uncompiled",
+        "trigger": "advertising_acceptance_intent (acceptance_intent)"
+      }
+    ]
+  },
+  "capability_requirements": [
+    {
+      "capability": "exact_text_composition",
+      "level": "code_set_on_textless_plate",
+      "mandatory": true
+    },
+    {
+      "capability": "image_generation",
+      "mandatory": true
+    }
+  ],
+  "compiled_utc": "2026-09-14T12:00:00Z",
+  "composition": {
+    "attention_order": "1st read: \"FLAT 40% OFF\" by scale and neon-on-black contrast; 2nd read: \"First 100 members only\"; 3rd read: \"AlphaFit\" and the date line.",
+    "edge_treatment": "tight fit with a deliberate margin around the headline; no letter touches the frame edge",
+    "placement_zone": "headline block off-centre in the upper-left zone; the lower-right corner is left clean for the customer's logo, a visible reason for the asymmetry"
+  },
+  "deliverable": {
+    "aspect": "1:1",
+    "kind": "static_ad",
+    "resolution_class": "1024-class"
+  },
+  "deterministic_checks": [
+    "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+    "refusal / error / empty artifact -> reject",
+    "required string absent (text scan over the artifact) -> reject before a person sees it",
+    "the plate prompt carries an explicit no-lettering instruction; lettering on a plate is a reject"
+  ],
+  "exact_text": {
+    "strategy": "code_set_on_textless_plate",
+    "strategy_basis": "RR-1 [default] — text on stills; map cells: IMG-TEXT/flux-2-pro+C_composite_textless_base, IMG-TEXT/flux-2-pro+code_overlay",
+    "strings": [
+      {
+        "content": "FLAT 40% OFF",
+        "exactness": "contractual",
+        "id": "t1",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "latin",
+        "script_detected": "LATIN"
+      },
+      {
+        "content": "First 100 members only",
+        "exactness": "contractual",
+        "id": "t2",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "latin",
+        "script_detected": "LATIN"
+      },
+      {
+        "content": "AlphaFit",
+        "exactness": "contractual",
+        "id": "t3",
+        "may_reflow": false,
+        "placement": "overlay",
+        "script": "latin",
+        "script_detected": "LATIN"
+      },
+      {
+        "content": "Offer ends 15 January",
+        "exactness": "reflowable",
+        "id": "t4",
+        "may_reflow": true,
+        "placement": "overlay",
+        "script": "latin",
+        "script_detected": "LATIN"
+      }
+    ],
+    "text_mechanism": "deterministic_text_composition"
+  },
+  "gate_requirements": [
+    "CA-D1-check",
+    "CA-D2-check",
+    "CA-D3-check",
+    "CA-D4-check",
+    "CA-D5-check",
+    "CA-D6-check",
+    "CA-D7-check",
+    "CA-D8-check",
+    "CA-D9-check",
+    "CA-D10-check",
+    "CA-D11-check",
+    "pack limit: Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar, samara-making-breaking-grid-ch1 (term t_sam_c003_0018 only, CF-16) and alton-painting-with-light-ch2 for this pack's domains; no claim of theirs is compiled — their doctrine (frontality/darshan attention order, symmetry-as-authority, grid structure) is absent, not arbitrated.",
+    "canon gap: no compiled pack answers colour_and_visual_register, commercial_communication, concept_and_distinctiveness, critique_and_effectiveness, indian_indic_context, typography_and_copy; the plan states this and attributes nothing to doctrine there"
+  ],
+  "hard_constraints": [
+    "the string 'FLAT 40% OFF' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the string 'First 100 members only' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the string 'AlphaFit' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+    "the deliverable is 1:1",
+    "the copy reads exactly \"FLAT 40% OFF\", \"First 100 members only\" and \"AlphaFit\" — 'It has to say ...'",
+    "no pictures of people — 'No pictures of people'",
+    "black and neon yellow only — 'Use our brand colours, black and neon yellow'",
+    "one corner stays empty for the logo — 'just leave a clean corner for it'",
+    "square — 'Square post'"
+  ],
+  "job_id": "alpha-dry-img-text-02-exhausted",
+  "job_sha256": "ce246fb0dc4fe8f85b171f6298a23365160f11e9541fa8a241364afac063e6ee",
+  "materials_and_light": {
+    "implied_light_source": "none — a flat graphic plate with no scene lighting; contrast comes from colour, not from light",
+    "surface_finish_per_key_object": "solid matte black ground; matte neon-yellow stripe; no gloss anywhere"
+  },
+  "objective": "Produce a square Instagram post for AlphaFit's New Year offer whose four lines of copy are set exactly, bold and energetic in black and neon yellow, with a clean corner left for the customer's logo.",
+  "policy_profile": "dry",
+  "route_exclusions": [],
+  "schema": "PRODUCTION-SPEC-v1",
+  "spec_id": "spec-a6645f6f5cfb6e5a"
+}

@@ -37,11 +37,22 @@ class Requirement:
     mandatory: bool
 
 
+EXCLUSION_SCOPES = ("whole_route", "generated_text_only")
+EXCLUSION_SCOPE_DEFAULT = "whole_route"
+TEXT_MECHANISMS = ("deterministic_text_composition", "model_draws_text", "not_applicable")
+
+
 @dataclass(frozen=True)
 class Exclusion:
+    """One route_exclusions row. `scope` (PRODUCTION-SPEC-v1) says what the prohibition covers:
+    whole_route (the route may do nothing on this job) or generated_text_only (the route may not DRAW
+    the exact text; a textless plate onto which code composes the text is not drawing). An absent scope
+    is whole_route - the stricter reading - and the router says so on the decision."""
     route_key: str
     reason: str
     basis: str
+    scope: str = EXCLUSION_SCOPE_DEFAULT
+    scope_declared: bool = True
 
 
 @dataclass
@@ -115,9 +126,26 @@ class Spec:
     def exclusions(self) -> list[Exclusion]:
         out = []
         for e in self.data.get("route_exclusions") or []:
+            declared = e.get("scope") is not None
             out.append(Exclusion(route_key=str(e["route_key"]), reason=str(e.get("reason") or ""),
-                                 basis=str(e.get("basis") or "")))
+                                 basis=str(e.get("basis") or ""),
+                                 scope=(str(e["scope"]) if declared else EXCLUSION_SCOPE_DEFAULT),
+                                 scope_declared=declared))
         return out
+
+    @property
+    def text_mechanism(self) -> str | None:
+        """exact_text.text_mechanism (C-6c): deterministic_text_composition | model_draws_text |
+        not_applicable, or None when the spec does not say. Never inferred from the strategy name here -
+        a caller that needs to know and finds None must fail closed."""
+        value = self.exact_text.get("text_mechanism")
+        return str(value) if value is not None else None
+
+    def has_text_requirement(self) -> bool:
+        """True when the job carries exact strings or asks for exact_text_composition."""
+        if self.exact_text.get("strings"):
+            return True
+        return any(r.capability == "exact_text_composition" for r in self.requirements())
 
     def billing_facts(self) -> dict:
         """The quantity facts one provider call is billed on, taken only from the spec.

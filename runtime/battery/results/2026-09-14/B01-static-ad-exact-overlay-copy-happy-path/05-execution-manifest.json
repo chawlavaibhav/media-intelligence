@@ -1,0 +1,334 @@
+{
+  "attempts": [
+    {
+      "adapter_family": "fal_queue",
+      "arm": "core",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-conformant:rd-64e0ccd5f95319ca:flux-2-pro:draw1",
+      "blocked_by_ceiling": false,
+      "ceiling": {
+        "job_ceiling_usd": "5.0",
+        "reserved_before_this_usd": "0.000000",
+        "this_attempt_usd": "0.030000",
+        "within": true
+      },
+      "draw_index": 1,
+      "evidence": {
+        "cells": [
+          "IMG-CORE/flux-2-pro"
+        ],
+        "status": "clean_observed",
+        "text_mechanism": "deterministic_text_composition"
+      },
+      "price": {
+        "billing_pool": "cash",
+        "expected_cost_usd": "0.030000",
+        "harness_amount_usd_equiv": "0.030000",
+        "pin_indexes": [
+          "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+        ],
+        "price_agrees_with_harness": true,
+        "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json",
+        "quantity": "1",
+        "quantity_unit": "images",
+        "unit": "per_image_first_megapixel",
+        "unit_price": "0.03"
+      },
+      "refusal_reason": null,
+      "request": {
+        "api_calls_per_trial": 1,
+        "body": {
+          "image_size": {
+            "height": 1024,
+            "width": 1024
+          },
+          "prompt": "Square social-media background image. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. The upper-left two-thirds and the lower-left are plain black space; the lower-right corner stays completely empty. High contrast, energetic. No text, no letters, no numerals, no symbols anywhere in the image."
+        },
+        "body_sha256": "aed41787f527203f869966e697d436268f16070b2331d156ea24a9cc000a8c81",
+        "credential_name": "FAL_KEY",
+        "followups": [],
+        "method": "POST",
+        "rendered_by": "harness adapter dry_run",
+        "request_notes": [
+          "size_policy=size_a: 1:1 -> 1024x1024"
+        ],
+        "shape_status": "verified",
+        "url": "https://queue.fal.run/fal-ai/flux-2-pro"
+      },
+      "route_key": "flux-2-pro",
+      "slot": "primary",
+      "surface": "fal",
+      "surface_model_id": "fal-ai/flux-2-pro",
+      "would_dispatch": true
+    },
+    {
+      "adapter_family": "fal_queue",
+      "arm": "core",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-conformant:rd-64e0ccd5f95319ca:flux-2-pro:draw2",
+      "blocked_by_ceiling": false,
+      "ceiling": {
+        "job_ceiling_usd": "5.0",
+        "reserved_before_this_usd": "0.030000",
+        "this_attempt_usd": "0.030000",
+        "within": true
+      },
+      "draw_index": 2,
+      "evidence": {
+        "cells": [
+          "IMG-CORE/flux-2-pro"
+        ],
+        "status": "clean_observed",
+        "text_mechanism": "deterministic_text_composition"
+      },
+      "price": {
+        "billing_pool": "cash",
+        "expected_cost_usd": "0.030000",
+        "harness_amount_usd_equiv": "0.030000",
+        "pin_indexes": [
+          "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+        ],
+        "price_agrees_with_harness": true,
+        "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json",
+        "quantity": "1",
+        "quantity_unit": "images",
+        "unit": "per_image_first_megapixel",
+        "unit_price": "0.03"
+      },
+      "refusal_reason": null,
+      "request": {
+        "api_calls_per_trial": 1,
+        "body": {
+          "image_size": {
+            "height": 1024,
+            "width": 1024
+          },
+          "prompt": "Square social-media background image. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. The upper-left two-thirds and the lower-left are plain black space; the lower-right corner stays completely empty. High contrast, energetic. No text, no letters, no numerals, no symbols anywhere in the image."
+        },
+        "body_sha256": "aed41787f527203f869966e697d436268f16070b2331d156ea24a9cc000a8c81",
+        "credential_name": "FAL_KEY",
+        "followups": [],
+        "method": "POST",
+        "rendered_by": "harness adapter dry_run",
+        "request_notes": [
+          "size_policy=size_a: 1:1 -> 1024x1024"
+        ],
+        "shape_status": "verified",
+        "url": "https://queue.fal.run/fal-ai/flux-2-pro"
+      },
+      "route_key": "flux-2-pro",
+      "slot": "primary",
+      "surface": "fal",
+      "surface_model_id": "fal-ai/flux-2-pro",
+      "would_dispatch": true
+    },
+    {
+      "adapter_family": "fal_queue",
+      "arm": "core",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-conformant:rd-64e0ccd5f95319ca:qwen-image-3:draw1",
+      "blocked_by_ceiling": false,
+      "ceiling": {
+        "job_ceiling_usd": "5.0",
+        "reserved_before_this_usd": "0.060000",
+        "this_attempt_usd": "0.040000",
+        "within": true
+      },
+      "conditional_note": "a fallback attempt is dispatched only if a named trigger fires on the primary; never alongside it and never as a retry of it",
+      "conditional_on": [
+        "provider_refusal",
+        "timeout",
+        "gate_fail",
+        "capability_unsupported"
+      ],
+      "draw_index": 1,
+      "evidence": {
+        "cells": [
+          "IMG-CORE/qwen-image-3"
+        ],
+        "status": "clean_observed",
+        "text_mechanism": "deterministic_text_composition"
+      },
+      "if_triggered_would_dispatch": true,
+      "price": {
+        "billing_pool": "cash",
+        "expected_cost_usd": "0.040000",
+        "harness_amount_usd_equiv": "0.040000",
+        "pin_indexes": [
+          "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+        ],
+        "price_agrees_with_harness": true,
+        "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json",
+        "quantity": "1",
+        "quantity_unit": "images",
+        "unit": "per_image",
+        "unit_price": "0.04"
+      },
+      "refusal_reason": null,
+      "request": {
+        "api_calls_per_trial": 1,
+        "body": {
+          "image_size": {
+            "height": 1024,
+            "width": 1024
+          },
+          "num_images": 1,
+          "prompt": "Square social-media background image. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. The upper-left two-thirds and the lower-left are plain black space; the lower-right corner stays completely empty. High contrast, energetic. No text, no letters, no numerals, no symbols anywhere in the image."
+        },
+        "body_sha256": "b20aacea883f76d489cf79b665e84abe0cbd51e6dbed0ace28860bc81b983004",
+        "credential_name": "FAL_KEY",
+        "followups": [],
+        "method": "POST",
+        "rendered_by": "harness adapter dry_run",
+        "request_notes": [
+          "size_policy=size_a: 1:1 -> 1024x1024"
+        ],
+        "shape_status": "verified",
+        "url": "https://queue.fal.run/alibaba/qwen-image-3/text-to-image"
+      },
+      "route_key": "qwen-image-3",
+      "slot": "fallback",
+      "surface": "fal",
+      "surface_model_id": "alibaba/qwen-image-3/text-to-image",
+      "would_dispatch": false
+    },
+    {
+      "adapter_family": "fal_queue",
+      "arm": "core",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-conformant:rd-64e0ccd5f95319ca:qwen-image-3:draw2",
+      "blocked_by_ceiling": false,
+      "ceiling": {
+        "job_ceiling_usd": "5.0",
+        "reserved_before_this_usd": "0.100000",
+        "this_attempt_usd": "0.040000",
+        "within": true
+      },
+      "conditional_note": "a fallback attempt is dispatched only if a named trigger fires on the primary; never alongside it and never as a retry of it",
+      "conditional_on": [
+        "provider_refusal",
+        "timeout",
+        "gate_fail",
+        "capability_unsupported"
+      ],
+      "draw_index": 2,
+      "evidence": {
+        "cells": [
+          "IMG-CORE/qwen-image-3"
+        ],
+        "status": "clean_observed",
+        "text_mechanism": "deterministic_text_composition"
+      },
+      "if_triggered_would_dispatch": true,
+      "price": {
+        "billing_pool": "cash",
+        "expected_cost_usd": "0.040000",
+        "harness_amount_usd_equiv": "0.040000",
+        "pin_indexes": [
+          "eval/empirical-planning/price-pins-2026-09/PIN-INDEX.yaml"
+        ],
+        "price_agrees_with_harness": true,
+        "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/qwen-image-3/fal-api-models-qwen-image-3-t2i.json",
+        "quantity": "1",
+        "quantity_unit": "images",
+        "unit": "per_image",
+        "unit_price": "0.04"
+      },
+      "refusal_reason": null,
+      "request": {
+        "api_calls_per_trial": 1,
+        "body": {
+          "image_size": {
+            "height": 1024,
+            "width": 1024
+          },
+          "num_images": 1,
+          "prompt": "Square social-media background image. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. The upper-left two-thirds and the lower-left are plain black space; the lower-right corner stays completely empty. High contrast, energetic. No text, no letters, no numerals, no symbols anywhere in the image."
+        },
+        "body_sha256": "b20aacea883f76d489cf79b665e84abe0cbd51e6dbed0ace28860bc81b983004",
+        "credential_name": "FAL_KEY",
+        "followups": [],
+        "method": "POST",
+        "rendered_by": "harness adapter dry_run",
+        "request_notes": [
+          "size_policy=size_a: 1:1 -> 1024x1024"
+        ],
+        "shape_status": "verified",
+        "url": "https://queue.fal.run/alibaba/qwen-image-3/text-to-image"
+      },
+      "route_key": "qwen-image-3",
+      "slot": "fallback",
+      "surface": "fal",
+      "surface_model_id": "alibaba/qwen-image-3/text-to-image",
+      "would_dispatch": false
+    }
+  ],
+  "blocked": null,
+  "built_utc": "2026-09-14T12:00:00Z",
+  "ceiling": {
+    "already_committed_usd": "0",
+    "attempts_blocked_by_ceiling": 0,
+    "effective_ceiling_usd": "5.0",
+    "job_ceiling_usd": "5.0",
+    "request_ceiling_usd": null,
+    "reserved_total_usd": "0.140000",
+    "rule": "attempts reserve in listed order; the running total never crosses the effective ceiling; an attempt that would is blocked_by_ceiling and stays visible"
+  },
+  "customer_ref": "acct-stage-a-img",
+  "decision_id": "rd-64e0ccd5f95319ca",
+  "dispatch_mode": "dry",
+  "fallback_triggers": [
+    "provider_refusal",
+    "timeout",
+    "gate_fail",
+    "capability_unsupported"
+  ],
+  "job_id": "alpha-dry-img-text-02-conformant",
+  "manifest_id": "em-c53209e3463216d4",
+  "policy_profile": "dry",
+  "provenance": {
+    "decision_sha256": "9ae9bdaebb3221f25f54c0dbb7d6324a3f089f0339d34ee2072a75cf28f17c4f",
+    "dispatched": false,
+    "harness_modules": [
+      "eval/harness-v2/pricing.py",
+      "eval/harness-v2/surfaces.py"
+    ],
+    "harness_providers_stubbed": false,
+    "may_spend": false,
+    "may_spend_reason": "profile 'dry' may plan, price and dry-run only: spend_authority.status is 'none', not 'signed' (adoption is not spend authorisation); spend_authority.record names no signed spend authorisation record",
+    "network": "none",
+    "policy_profile": "dry",
+    "policy_profile_adopted": true,
+    "roster_sha256": "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c",
+    "routing_evidence_map_sha256": "8df6ead0712d6b67070e7475ab56aa12be7f9480916a79a273bec5ff25c7f707",
+    "spec_path": "runs/alpha-dry-img-text-02-conformant/02-spec.json",
+    "spec_sha256": "f82e629114b0dd4ccd5abf3bf65177b4aff770bb80851cf18787f398947dd301",
+    "spend_authority_status": "none",
+    "taint_register_sha256": "acd0cf87d7d0ee494c73f2c44159040f46f029eb436e5357cd9add5b41c62651"
+  },
+  "schema": "EXECUTION-MANIFEST-v0",
+  "self_composed": [
+    {
+      "capability": "exact_text_composition",
+      "cell": "IMG-TEXT/flux-2-pro+code_overlay",
+      "note": "composed by the runtime; no provider call, so no price pin applies",
+      "text_mechanism": "deterministic_text_composition"
+    }
+  ],
+  "spec_id": "spec-4fb81b146a89312b",
+  "surface_preference": {
+    "applied": false,
+    "basis": "coordination/decisions/CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09.md",
+    "primary_surface": "fal",
+    "reason": "the roster offers this model on ['azure_foundry', 'fal']; neither pair is fal + GCP, so the rule does not bite",
+    "roster_surfaces_for_model": [
+      {
+        "record": "route",
+        "route_status": "needs_controller_enablement",
+        "surface": "azure_foundry"
+      },
+      {
+        "record": "fallback",
+        "route_status": "pinned",
+        "surface": "fal"
+      }
+    ],
+    "rule": "same_model_prefers_gcp"
+  }
+}

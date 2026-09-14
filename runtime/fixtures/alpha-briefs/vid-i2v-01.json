@@ -1,0 +1,79 @@
+{
+  "_provenance": {
+    "binding_agrees_with_case_nr": true,
+    "blueprint_ref": "BLUEPRINTS/VID-I2V-01.blueprint.md",
+    "blueprint_sha256": "0ab9692b55eb6c3c6909b3452aee121aaa61372c6f8ff0258bcc33648cf9a325",
+    "case_family": "VID-I2V",
+    "case_id": "VID-I2V-01",
+    "case_nr_modality": "video",
+    "case_nr_operation": "animate",
+    "consent_ref_added": false,
+    "depends_on_added": true,
+    "depicts_basis": {
+      "juice_hero_final": "no person entity applies to this asset"
+    },
+    "freeze_base": "cb92f1e",
+    "freeze_package": "STAGE-A-FREEZE-2026-09",
+    "kind_basis": "STAGE-A-CASE-KIND-MAP-v0.yaml: family VID-I2V -> short_motion_from_accepted_still; operation/modality from KIND-NR-BINDING row",
+    "kind_map_sha256": "7ff5935b6d7c2b8dbed85f78fec9ea3b21e5b57f9a7252ea909365dd63a00227",
+    "motion_from_basis": "accepted_still is the PRODUCTION-JOB-v1 default; the customer's request names the still it follows",
+    "placement_default": false,
+    "source_pool": "stage_a_case",
+    "test_cases_sha256": "8c2430e760279bb60a0ce429b933c64bb85340e2089be9ebad3f28d49e7cdb9c",
+    "tool": "runtime/tools/brief_from_stage_a_case.py",
+    "tool_choices": {
+      "asset_content_type": "image/jpeg",
+      "asset_provenance": "generated_stand_in",
+      "customer_ref_prefix": "acct-stage-a-",
+      "job_id_prefix": "alpha-dry-",
+      "market": "IN",
+      "placement_default": "overlay",
+      "policy_profile": "dry",
+      "retention_policy_ref": "alpha-1-default",
+      "submitted_by": "brief_from_stage_a_case"
+    },
+    "tool_sha256": "dcc24ffe94c80ca2f663aa6a2feec81a8b72e02349533675fb54c916fcb511c5"
+  },
+  "brief": {
+    "language": "en",
+    "market": "IN",
+    "text": "Take the bottle still you made (juice_hero_final.png) and give me a 6 second clip for the website hero. Camera moves slowly around the bottle, nothing else. The bottle shouldn't move or change - same bottle, same blank label, reflections behaving properly. No text, no music, no sound needed."
+  },
+  "customer_ref": "acct-stage-a-vid",
+  "deliverable_request": {
+    "aspect": "4:5",
+    "count": 1,
+    "kind": "short_motion_from_accepted_still",
+    "modality": "video",
+    "motion": {
+      "audio": false,
+      "depends_on": "alpha-dry-img-core-01",
+      "from": "accepted_still",
+      "seconds": 6
+    },
+    "operation": "animate",
+    "subject": {
+      "entity": "product",
+      "entity_id": "juice_bottle",
+      "identity_invariants": [
+        "as in the still"
+      ]
+    }
+  },
+  "job_id": "alpha-dry-vid-i2v-01",
+  "policy_profile": "dry",
+  "reference_assets": [
+    {
+      "asset_id": "juice_hero_final",
+      "content_type": "image/jpeg",
+      "depicts_identifiable_person": false,
+      "provenance": "generated_stand_in",
+      "role": "scene",
+      "sha256": "9f07130d54913f7ec8208864c3d190c058109b4093fc18b585ba32c50ca82bfe"
+    }
+  ],
+  "retention": {
+    "policy_ref": "alpha-1-default"
+  },
+  "submitted_by": "brief_from_stage_a_case"
+}

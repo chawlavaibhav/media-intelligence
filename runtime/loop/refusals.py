@@ -1,0 +1,44 @@
+"""Refusal codes owned by the loop package.
+
+`runtime.errors.Refusal` is shared by every lane, so this lane adds its codes here rather than
+editing that file (the lead's instruction). Every refusal names what was missing or wrong; none
+returns a degraded result.
+"""
+from __future__ import annotations
+
+from runtime.errors import Refusal
+
+# package renderer
+PACKAGE_PROMPT_MISSING = "PACKAGE_PROMPT_MISSING"
+PACKAGE_PROMPT_BELOW_FLOOR = "PACKAGE_PROMPT_BELOW_FLOOR"
+PACKAGE_CURLY_QUOTE = "PACKAGE_CURLY_QUOTE"
+PACKAGE_PROMPT_UNEXTRACTABLE = "PACKAGE_PROMPT_UNEXTRACTABLE"
+PACKAGE_STRAY_HEADING = "PACKAGE_STRAY_HEADING"
+PACKAGE_TEXT_MECHANISM_UNKNOWN = "PACKAGE_TEXT_MECHANISM_UNKNOWN"
+# gate wrappers
+MODALITY_BINDING_MISSING = "MODALITY_BINDING_MISSING"
+# repair
+REPAIR_ALLOWANCE_EXHAUSTED = "REPAIR_ALLOWANCE_EXHAUSTED"
+REPAIR_NOT_A_REPAIR = "REPAIR_NOT_A_REPAIR"
+REPAIR_FAILURE_UNRECOGNISED = "REPAIR_FAILURE_UNRECOGNISED"
+# acceptance
+ACCEPTANCE_AUTHORITY_MISMATCH = "ACCEPTANCE_AUTHORITY_MISMATCH"
+ACCEPTANCE_AUTOMATED_JUDGE = "ACCEPTANCE_AUTOMATED_JUDGE"
+ACCEPTANCE_INVALID_TRANSITION = "ACCEPTANCE_INVALID_TRANSITION"
+ACCEPTANCE_DECISION_UNKNOWN = "ACCEPTANCE_DECISION_UNKNOWN"
+ACCEPTANCE_NO_AUTONOMOUS_DELIVERY = "ACCEPTANCE_NO_AUTONOMOUS_DELIVERY"
+# memory
+OUTCOME_IMMUTABLE = "OUTCOME_IMMUTABLE"
+OUTCOME_AUTHORITY_MISMATCH = "OUTCOME_AUTHORITY_MISMATCH"
+OUTCOME_ACCEPTED_WITHOUT_HUMAN = "OUTCOME_ACCEPTED_WITHOUT_HUMAN"
+OUTCOME_EVENT_ID_MISMATCH = "OUTCOME_EVENT_ID_MISMATCH"
+MANIFEST_FIELD_MISSING = "MANIFEST_FIELD_MISSING"
+FINGERPRINT_INVALID = "FINGERPRINT_INVALID"
+
+
+class RepairAllowanceExhausted(Refusal):
+    """The profile's repair_allowance is spent. Carries `repairs_proposed` and `repair_allowance`
+    in its context so the caller can record the count, and never retries on its own."""
+
+    def __init__(self, message: str, **context):
+        super().__init__(REPAIR_ALLOWANCE_EXHAUSTED, message, **context)

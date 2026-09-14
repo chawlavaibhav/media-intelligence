@@ -45,7 +45,9 @@ force: `CONTROLLER-CAPABILITY-LAB-DIRECTION-2026-09-05.md` (as narrowed by C-9),
 - A child branch `work/runtime-alpha-vertical-slice-v0` (stacked on the closeout branch) carries the
   USD-0 runtime tranche that follows: the dry execution bridge, pre/post gates, bounded repair,
   human-acceptance states, the empirical-memory event, Canon Injection v1, the template library and
-  the one-command dry battery. Its own state is described in `runtime/ALPHA-1.md` and its PR.
+  the one-command dry battery (14 runs, all reaching an intended dry state or a precise refusal).
+  Its state, defects and the first-paid-tranche recommendation are in
+  `coordination/audits/HANDOFF-USD0-TRANCHE-2026-09-14.md` and `runtime/ALPHA-1.md`.
 - PR #94 (`work/audit-brief-2026-09-10`, the audit brief itself) is still open and untouched.
 
 ## 2. Active / authorised

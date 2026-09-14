@@ -1,0 +1,277 @@
+{
+  "acceptance": {
+    "authority": "human",
+    "decided_utc": "2026-09-14T12:00:00Z",
+    "decision": "abandoned",
+    "note": "pre-dispatch gate FAIL: LIMIT-TEXT — nothing dispatched",
+    "state": "abandoned",
+    "transcript_sha256": "26411a7a0ae068fd5ac72ae221f3f719172d87f46aa0b8e2ff95deaf830d1f6a"
+  },
+  "attempts": [],
+  "blueprint": {
+    "planner": "stage_a_blueprint_fixture",
+    "source_ref": "eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/IMG-TEXT-02.blueprint.md sha256:335be8f8dd06c9511cb82056e25a1045bb1820af6e6ce1bfb896d4cdf375608e"
+  },
+  "canon": {
+    "canon_gap": true,
+    "corpus_digest": "3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc",
+    "injection_prefix_sha256": "c81644f61d9d39a5b25f18058ff5c29c30256c287a3b4f037be40cb0d52e3945",
+    "missing_domains": [
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "indian_indic_context",
+      "typography_and_copy"
+    ],
+    "packs_selected": [
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "composition_and_attention",
+      "colour_and_visual_register",
+      "typography_and_copy",
+      "indian_indic_context",
+      "commercial_communication"
+    ]
+  },
+  "cost": {
+    "by_pool": {},
+    "draws": 0,
+    "provider_usd_total": "0.000000"
+  },
+  "deterministic_checks": [
+    {
+      "check": "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "refusal / error / empty artifact -> reject",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "required string absent (text scan over the artifact) -> reject before a person sees it",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    },
+    {
+      "check": "the plate prompt carries an explicit no-lettering instruction; lettering on a plate is a reject",
+      "detail": "no gate row maps to this check",
+      "gate_row": null,
+      "status": "not_mechanised_in_this_tranche"
+    }
+  ],
+  "dry_run": true,
+  "event_id": "oe-82eedbffd69c19e12d277d4cbd0d8918b668103abe77a7767a9602fc473bda7d",
+  "fingerprints": {
+    "acceptance_contract_sha256": "d1406a52b86839b5d7d89e0bc5611ee57137db23ec8ec9d7e52f57f882ed1e5a",
+    "canon_injected_context_sha256": "c81644f61d9d39a5b25f18058ff5c29c30256c287a3b4f037be40cb0d52e3945",
+    "decision_sha256": "eb7bf811b96388e034ef810f72cbbc68bc8327bed935c149d2ff89b91893da06",
+    "job_sha256": "9871b194af156ee98ab3a36b703057d3a9d32571091825d81175c66629cfc28e",
+    "manifest_sha256": "4b342c501908b157c00b5fad5c24a4aa80097083e867c962ac8b6b97381a5859",
+    "package_sha256": "fbaddc53e00c151b79dc676332210f9e1584f74a9ac61a0e32180f7a6eb4c187",
+    "spec_sha256": "ad09ae235730552e04c5da0fb65b3c06136a17a623fb671c5fa541be68de6015"
+  },
+  "gate": {
+    "blocking_failures": [
+      "LIMIT-TEXT"
+    ],
+    "post_draw": [],
+    "post_draw_by_attempt": [],
+    "pre_dispatch": [
+      {
+        "blocking": true,
+        "check_id": "LIMIT-TEXT",
+        "detail": "prompt 1, sentence 1 requests text-bearing surfaces ('poster') with no illegibility/deferral term — source: pack_limits \"… composite text deterministically.\"",
+        "family": "limit",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D1-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D2-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D3-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D4-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D5-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D6-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D7-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D8-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D9-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "PA-D10-check",
+        "detail": "product_appearance not selected (--packs override)",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D1-check",
+        "detail": "no ordered enumeration of three reads in VISUAL_SYSTEM.attention_order, MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION, GENERATION_PROMPTS",
+        "family": "doctrine",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D2-check",
+        "detail": "placement term(s) (off-centre, centre, upper, zone) in VISUAL_SYSTEM.placement_zone, GENERATION_PROMPTS, FAILURE_PREVENTION; no named ratio or grid line",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D3-check",
+        "detail": "accepted packages describe edges in free prose that no closed vocabulary of the three treatments matches without false failures; tangency needs pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D4-check",
+        "detail": "conditional on a frame-within-frame being used, then a tonal/width comparison in pixels",
+        "family": "doctrine",
+        "status": "NOT-MECHANISED"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D5-check",
+        "detail": "no balance/restless declaration in VISUAL_SYSTEM, GENERATION_PROMPTS, FAILURE_PREVENTION",
+        "family": "doctrine",
+        "status": "FAIL"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D6-check",
+        "detail": "aspect stated: 1:1 (DELIVERABLE)",
+        "family": "doctrine",
+        "status": "PASS"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D7-check",
+        "detail": "CA-D7 is a video/image_sequence decision ('How does attention travel across cuts (video)?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D8-check",
+        "detail": "CA-D8 is a video/image_sequence decision ('When cut criteria conflict, what is sacrificed first?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D9-check",
+        "detail": "CA-D9 is a video/image_sequence decision ('Screen direction and the line?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D10-check",
+        "detail": "CA-D10 is a video decision ('How long may a shot hold?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": false,
+        "check_id": "CA-D11-check",
+        "detail": "CA-D11 is a video decision ('Does the camera move, and why?') — not applicable to static_image",
+        "family": "doctrine",
+        "status": "NOT-APPLICABLE"
+      },
+      {
+        "blocking": true,
+        "check_id": "DISPATCH-ASPECT",
+        "detail": "package declares 1:1 = dispatched 1:1",
+        "family": "dispatch",
+        "status": "PASS"
+      },
+      {
+        "blocking": true,
+        "check_id": "RUNTIME-PLATE-NO-LETTERING-INSTRUCTION",
+        "detail": "the plate prompt carries an explicit no-lettering instruction ('No text') — gate vocabulary NO_TEXT_CLAUSE",
+        "family": "runtime",
+        "status": "PASS"
+      }
+    ]
+  },
+  "job_id": "alpha-dry-img-text-02",
+  "policy_profile": "dry",
+  "repairs": [],
+  "route": {
+    "cell_key": "IMG-CORE/flux-2-pro",
+    "cells": [
+      "IMG-CORE/flux-2-pro"
+    ],
+    "evidence_status": "clean_observed",
+    "price_pin_ref": "eval/empirical-planning/price-pins-2026-09/flux-2-pro/fal-api-models-flux-2-pro.json",
+    "route_key": "flux-2-pro",
+    "surface": "fal",
+    "surface_model_id": "fal-ai/flux-2-pro",
+    "text_mechanism": "deterministic_text_composition"
+  },
+  "spec_id": "spec-2f4559ba9dd8f09f",
+  "template_candidate": {
+    "eligible": false,
+    "reason": "acceptance decision 'abandoned'; only an accepted outcome is eligible"
+  },
+  "written_utc": "2026-09-14T12:00:00Z"
+}

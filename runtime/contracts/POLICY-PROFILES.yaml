@@ -17,6 +17,11 @@ profiles:
   status: adopted_by_controller
   adopted: true
   adoption_basis: "coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md (C-7, C-8)"
+  # dispatch_mode (added 14 Sep 2026, lane F): live = a dispatch under this row would send bytes to a
+  # provider IF spend authority existed; dry = every attempt is rendered and priced through the harness
+  # adapter's dry_run() and nothing is ever sent. The execution bridge reads this before anything else
+  # after spend_authority. live + spend_authority.status none = refuse, which is today's state.
+  dispatch_mode: live
   # ADOPTED 14 Sep 2026. Adoption means the Controller agreed these LIMITS. It is not money: see
   # spend_authority below and the invariant that separates the two. Nothing in this row authorises
   # a paid dispatch (Controller rider, same brief: "Adopting the Alpha policy is NOT spend
@@ -145,6 +150,7 @@ profiles:
   purpose: "illustrative only — shows that widening is a data change, nothing more"
   status: illustrative_not_active
   adopted: false
+  dispatch_mode: live
   spend_authority:
     status: none
     record: null
@@ -169,13 +175,143 @@ profiles:
   retention_days_default: 30
 
 - profile: dry
-  purpose: "plan and price a job end to end without sending anything to a provider"
+  purpose: "the DRY TWIN of alpha_human_release: the same limits, and nothing is ever sent to a provider"
   status: active
   adopted: true
+  adoption_basis: "dry twin of alpha_human_release — same limits, sends nothing; lead's implementation choice 14 Sep 2026"
+  # WHY A TWIN AND NOT A PERMISSIVE ROW. Until 14 Sep 2026 `dry` auto-routed every evidence status and
+  # allowed zero draws, so a dry run under it exercised none of the alpha's real limits. A dry run is
+  # only worth anything if it takes the SAME decisions a paid run would take; so this row copies every
+  # limit of alpha_human_release verbatim and differs only in dispatch_mode (dry) and in the rows that
+  # name the profile itself. A test (runtime/tests/test_f_dry_twin.py) asserts the two rows agree on every
+  # key outside {profile, purpose, status, adoption_basis, dispatch_mode, spend_authority, note}, so the
+  # twin cannot drift. The old permissive row survives as `dry_permissive` for lane development and cell
+  # audits; it is never a battery profile.
+  dispatch_mode: dry
   spend_authority:
     status: none
     record: null
-    note: "the dry profile never dispatches; max_provider_draws_per_deliverable is 0"
+    note: "dry mode never dispatches; every attempt is rendered and priced, nothing is sent, reservations are 0"
+  deliverable_kinds_allowed: [static_ad, short_motion_from_accepted_still, static_ad_from_supplied_photo]
+  exact_text_strategies_allowed: [code_set_on_textless_plate]
+  exact_text_strategies_note: >-
+    "EXACT OVERLAY COPY" (C-7) is the code-set strategy: the strings are composed onto a textless
+    plate by the runtime, exact by construction. generated_in_scene is excluded by C-7's words
+    "generated in-scene exact text". The RR-2 evidence for in-scene text (Nano Banana 2 and GPT
+    Image 2, 4/4) exists in the map; it is out of Alpha 1 by ruling, not by capability. A spec whose
+    strategy is outside this list is a refusal or manual_route_required, never a silent downgrade.
+  motion_requires_accepted_still: true
+  motion_requires_accepted_still_note: >-
+    The short motion version "DERIVED ONLY FROM THE ACCEPTED STILL" (C-7): motion.from must be
+    accepted_still and motion.depends_on must name the accepted still deliverable in the same job
+    (PRODUCTION-JOB-v1 motion.depends_on). A motion request from text or from a reference is outside
+    Alpha 1.
+  supplied_photo_conditions:
+    identifiable_person_requires_consent_ref: true
+    basis: "PRODUCTION-JOB-v1 depicts_identifiable_person invariant"
+    note: >-
+      static_ad_from_supplied_photo stays in the family but is CONDITIONAL (C-7: "conditional behind
+      the identifiable-person / consent gate"). Any reference asset with depicts_identifiable_person
+      true and no consent_ref is refused at intake, whatever its declared role.
+  # The kinds C-7's words exclude, each with the phrase it comes from. A kind listed here may never
+  # appear in deliverable_kinds_allowed while this basis stands.
+  excluded_by_ruling:
+  - kind: null
+    c7_phrase: "talking heads"
+    note: >-
+      No registry kind is named talking_head today (runtime/contracts/DELIVERABLE-KINDS.yaml). The
+      exclusion is recorded against the phrase so that a future kind of that shape is excluded on
+      arrival, not admitted by omission.
+  - kind: lipsync_to_supplied_audio
+    c7_phrase: "lip-sync"
+  - kind: two_speaker_dialogue
+    c7_phrase: "native speech"
+  - kind: spoken_voiceover
+    c7_phrase: "native speech"
+    note: >-
+      Most restrictive reading, chosen by the encoder not the Controller: narration is generated
+      speech, so it is treated as covered by "native speech" until the Controller says otherwise.
+  - kind: multi_shot_story
+    c7_phrase: "multi-shot stories"
+  - kind: null
+    c7_phrase: "generated in-scene exact text"
+    note: >-
+      Not a deliverable kind but an exact-text STRATEGY (generated_in_scene); encoded as
+      exact_text_strategies_allowed above.
+  # Kinds C-7 does not name but which are outside Alpha 1 because the ruling FREEZES the family to
+  # the kinds listed ("Freeze Alpha 1 to: ..."). Not excluded by name; simply not admitted.
+  outside_alpha_1_by_omission: [text_in_motion, music_bed]
+  native_speech_allowed: false
+  lipsync_allowed: false
+  max_provider_draws_per_deliverable: 2
+  repair_allowance: 1
+  auto_routable_evidence_status: [clean_observed]
+  # CORRECTED. This row previously said `launch_eligible`, a status that does not exist and never
+  # will: eval/capability-map/TAINT-REGISTER-v1.yaml states in writing that whether a cell may carry
+  # customer traffic is a Controller ruling plus this profile, not an auditor's label. The effect of
+  # the mistake was total - the alpha profile could auto-route 0 of 61 cells - and it was found by
+  # building the router, not by reading the file. The real vocabulary is:
+  #   clean_observed | directional_only | awaiting_controller_ruling | method_tainted | insufficient
+  on_non_auto_routable: manual_route_required
+  # C-8: "Every Alpha-1 output requires human approval before external delivery. No autonomous
+  # external delivery."
+  acceptance_authority: human
+  automated_judge_in_release_path: false
+  autonomous_external_delivery: false
+  human_approval_required_before_external_delivery: true
+  human_approval_basis: "coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md (C-8)"
+  # C-11: "Adopt Auditor A's twelve-condition T8 public-release gate." The twelve are held here once,
+  # verbatim from coordination/audits/AUDIT-2026-09-10-REPORT-A.md §7 T8, so a later check can read
+  # them as data. This is the gate for PUBLIC release; this profile is not a public-release profile.
+  public_release_gate:
+    adopted: true
+    basis: "coordination/decisions/CONTROLLER-ALPHA-1-PRODUCT-FAMILY-AND-RELEASE-POLICY-2026-09-14.md (C-11); text from coordination/audits/AUDIT-2026-09-10-REPORT-A.md §7 T8"
+    conditions:
+    - audit closed
+    - HEAD reproducible
+    - route evidence clean
+    - Stage-B envelopes exist for public routes
+    - Stage-C accepted-outcome evidence exists
+    - CpAO measured
+    - fallback/repair bounded
+    - spend ceilings and kill switch live
+    - customer privacy/retention policy live
+    - provider commercial/terms review complete
+    - observability/incident handling live
+    - human override remains available
+    status_note: >-
+      none of the twelve is met today by this repository; this profile is a PRIVATE human-supervised
+      alpha profile, not a public-release profile
+  surface_preference:
+    rule: same_model_prefers_gcp
+    basis: coordination/decisions/CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09.md
+    note: >-
+      When ONE model is offered on both fal and a GCP surface, call it on GCP - the Controller's
+      words: "fal is the last choice since it costs me money ... if the model exists on fal and
+      gemini key, we use it from gemini key". This is a rule about WHERE a given model is called.
+      It is NOT a preference for credit-funded models over cash-funded ones: that same decision says
+      preference between different models stays what the blind verdicts say, with cost as a tie-break
+      only. A router that quietly preferred cheap credit routes over better cash routes would be
+      breaking the decision it thought it was obeying.
+  default_job_cost_ceiling_usd: 5.00
+  fallback_required: true
+  retention_days_default: 30
+  note: >-
+    Every value above is a verbatim copy of alpha_human_release (the limits the Controller adopted under
+    C-7 / C-8 / C-11). Two provider draws and one repair are the alpha's numbers; under dispatch_mode dry
+    they bound how many attempts are RENDERED, and every rendered attempt reserves and settles 0.
+
+- profile: dry_permissive
+  purpose: "lane development and cell audits only; auto-routes every status; never a battery profile"
+  status: active
+  adopted: true
+  # RENAMED 14 Sep 2026 (lane F): this was `dry`. Every field is kept. It is not the dry twin of the
+  # alpha profile and takes none of the alpha's real decisions; use `dry` for that.
+  dispatch_mode: dry
+  spend_authority:
+    status: none
+    record: null
+    note: "dry_permissive never dispatches; max_provider_draws_per_deliverable is 0"
   deliverable_kinds_allowed: [__all__]
   exact_text_strategies_allowed: [code_set_on_textless_plate, generated_in_scene]
   motion_requires_accepted_still: false
@@ -194,7 +330,7 @@ profiles:
   default_job_cost_ceiling_usd: 0.00
   fallback_required: false
   retention_days_default: 0
-  note: "the profile every runtime lane develops against. Zero draws means zero spend, enforced by the ledger, not by good intentions."
+  note: "a permissive row for lane development and cell audits. Zero draws means zero spend, enforced by the ledger, not by good intentions. Not the alpha's dry twin: see `dry`."
 
 invariants:
   - >-

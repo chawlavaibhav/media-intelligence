@@ -1,0 +1,42 @@
+{
+  "brief": "/var/folders/1h/9tpkt7s175x90vf_38376zbr0000gn/T/alpha-battery-briefs-nteyi0db/B09-text-in-motion-outside-alpha-1.json",
+  "final_state": "refused_at_intake",
+  "job_id": "alpha-dry-vid-topo3-01",
+  "profile": "dry",
+  "refusal": {
+    "code": "KIND_NOT_IN_PROFILE",
+    "context": {
+      "allowed": [
+        "static_ad",
+        "short_motion_from_accepted_still",
+        "static_ad_from_supplied_photo"
+      ],
+      "job_id": "alpha-dry-vid-topo3-01",
+      "kind": "text_in_motion",
+      "profile": "dry"
+    },
+    "message": "deliverable kind 'text_in_motion' is not in the allowed list of policy profile 'dry'; widening the profile is a row edit, never a code change"
+  },
+  "stages": [
+    {
+      "artifact": "/tmp/bat-store-final2/runs/alpha-dry-vid-topo3-01/refusal-intake.json",
+      "refusal": {
+        "code": "KIND_NOT_IN_PROFILE",
+        "context": {
+          "allowed": [
+            "static_ad",
+            "short_motion_from_accepted_still",
+            "static_ad_from_supplied_photo"
+          ],
+          "job_id": "alpha-dry-vid-topo3-01",
+          "kind": "text_in_motion",
+          "profile": "dry"
+        },
+        "message": "deliverable kind 'text_in_motion' is not in the allowed list of policy profile 'dry'; widening the profile is a row edit, never a code change"
+      },
+      "stage": "intake",
+      "status": "refused",
+      "summary": "KIND_NOT_IN_PROFILE"
+    }
+  ]
+}

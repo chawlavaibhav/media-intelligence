@@ -7,8 +7,14 @@
     "market": "IN"
   },
   "exact_text_strings": [
-    {"value": "नया शेड, वही भरोसा", "may_reflow": false},
-    {"value": "रंगीन कॉस्मेटिक्स", "may_reflow": false}
+    {
+      "value": "नया शेड, वही भरोसा",
+      "may_reflow": false
+    },
+    {
+      "value": "रंगीन कॉस्मेटिक्स",
+      "may_reflow": false
+    }
   ],
   "reference_assets": [
     {
@@ -16,22 +22,38 @@
       "role": "product",
       "sha256": "1122334455667788990011223344556677889900aabbccddeeff001122334455",
       "content_type": "image/png",
-      "provenance": "customer_supplied"
+      "provenance": "customer_supplied",
+      "depicts_identifiable_person": false
     },
     {
       "asset_id": "ast_brand_mark",
       "role": "logo",
       "sha256": "ffeeddccbbaa99887766554433221100ffeeddccbbaa998877665544332211ff",
       "content_type": "image/svg+xml",
-      "provenance": "customer_supplied"
+      "provenance": "customer_supplied",
+      "depicts_identifiable_person": false
     }
   ],
   "deliverable_request": {
     "kind": "static_ad",
+    "operation": "generate",
+    "modality": "static_image",
+    "subject": {
+      "entity": "product",
+      "category": "cosmetics",
+      "brand": "Rangeen Cosmetics"
+    },
     "aspect": "9:16",
     "count": 1,
-    "motion": {"seconds": 6, "from": "accepted_still", "audio": false}
+    "motion": {
+      "seconds": 6,
+      "from": "accepted_still",
+      "audio": false,
+      "depends_on": "JOB-2026-09-10-LIPSTICK-01"
+    }
   },
   "policy_profile": "dry",
-  "retention": {"policy_ref": "RET-STD-30"}
+  "retention": {
+    "policy_ref": "RET-STD-30"
+  }
 }

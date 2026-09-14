@@ -1,0 +1,188 @@
+{
+  "blocking_failures": [],
+  "gate": "pre_dispatch",
+  "packs_selected": [
+    "product_appearance",
+    "composition_and_attention"
+  ],
+  "report_sha256": "b5e50d40bfd3578faba40a7310117fb9f2bd6913f605e8eaec3dc539405a5efa",
+  "report_text": "CANON GATE v0 — pre-dispatch — package spec-6915eaeebb020a82 (sha256 5d7bb3c124fa) — packs: product_appearance, composition_and_attention\nPASS            LIMIT-TEXT      no Devanagari, requested text or text-bearing surface in 1 prompt(s); explicit no-text clause present (prompt 1) — source: pack_limits \"… composite text deterministically.\"\nPASS            PA-D1-check     [partial: \"Every key object has exactly one declared finish\"] finish term(s) (direct, polished, matte, glossy, brushed, diffuse) in VISUAL_SYSTEM.surface_finish_per_key_object, GENERATION_PROMPTS, FAILURE_PREVENTION\nNOT-MECHANISED  PA-D2-check     highlight geometry needs decoded pixels and scene understanding; 'single implied source' is not one light instrument (PA-D4 default allows added lights) — counting light words would false-fail accepted packages — not counted as satisfied\nNOT-MECHANISED  PA-D3-check     needs shadow/specular measurement in pixels; a prompt-vocabulary contradiction test false-fails legitimate kicker/rim requests — not counted as satisfied\nFAIL (non-blocking) PA-D4-check     [partial: \"One nameable fictional source\"] no sentence in VISUAL_SYSTEM.implied_light_source, PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION names a light source together with a direction\nNOT-MECHANISED  PA-D5-check     grayscale check needs decoded pixels and product/ground segmentation; no literal pre-dispatch clause exists — not counted as satisfied\nNOT-MECHANISED  PA-D6-check     'key level declared' has no stable vocabulary in real packages — a strict test false-fails; cross-shot consistency needs pixels — not counted as satisfied\nNOT-MECHANISED  PA-D7-check     the decisive check is a semantic judgment ('needs the body copy'); presence of a hierarchy line is not the check — remains a human / blueprint-model check — not counted as satisfied\nPASS            PA-D8-check     [partial: \"Every specular on glass, dark or glossy surfaces is declared wanted or removed\"] glossy-surface term(s) (glass, bottle, glossy, black) with a specular declaration ('(a direct reflection') in PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION\nNOT-MECHANISED  PA-D9-check     face counting needs object understanding in pixels; candidate comparison needs alternatives that do not exist at gate time — not counted as satisfied\nNOT-RUN         PA-D10-check    no DOCTRINE_DEVIATIONS section (schema v1 / receipts retired, CANON-SHAPE-v1 §5)\nFAIL (non-blocking) CA-D1-check     [partial: \"Name the 1st/2nd/3rd read\"] no ordered enumeration of three reads in VISUAL_SYSTEM.attention_order, MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION, GENERATION_PROMPTS\nFAIL (non-blocking) CA-D2-check     [partial: \"Placement is stated as a zone\" … \"no placement is justified by a named ratio or grid line\"] no placement term in VISUAL_SYSTEM.placement_zone, GENERATION_PROMPTS, FAILURE_PREVENTION; no named ratio or grid line\nNOT-MECHANISED  CA-D3-check     accepted packages describe edges in free prose that no closed vocabulary of the three treatments matches without false failures; tangency needs pixels — not counted as satisfied\nNOT-MECHANISED  CA-D4-check     conditional on a frame-within-frame being used, then a tonal/width comparison in pixels — not counted as satisfied\nFAIL (non-blocking) CA-D5-check     [partial: \"Declared balanced or deliberately restless\"] no balance/restless declaration in VISUAL_SYSTEM, GENERATION_PROMPTS, FAILURE_PREVENTION\nPASS            CA-D6-check     [partial: \"The stated aspect is justified by a named shape in the scene\"] aspect stated: 4:5 (DELIVERABLE)\nFAIL (non-blocking) CA-D7-check     [partial: \"Per cut, name the new information and motivation\"] 1 shot entry in PRODUCTION_RECIPE / GENERATION_PROMPTS — no per-shot structure to name a cut against\nNOT-MECHANISED  CA-D8-check     edit-room judgment; no detectable trigger for 'imperfect cut' — not counted as satisfied\nNOT-MECHANISED  CA-D9-check     needs per-shot spatial understanding (pre) or frame analysis (post) — not counted as satisfied\nPASS            CA-D10-check    [partial: \"the stated pace names the prevailing norm it assumes\"] shot durations stated in PRODUCTION_RECIPE ('6 seconds')\nNOT-MECHANISED  CA-D11-check    motivation is stated at plan level, not sentence-locally; any sentence-local test false-fails — not counted as satisfied\ndispatch\nPASS            DISPATCH-ASPECT package declares 4:5 = dispatched 4:5\nPASS            DISPATCH-SHOT-SUM 1 shot durations sum to 6 s (max of ranges) against declared 6 s (tolerance ±20 %)\nGATE PASS: 7 mechanised checks hold over the submitted bytes (4 doctrine partials + 3 limit/dispatch/infra rows; 5 non-blocking FAILs on record); 11 doctrine check lines NOT mechanised, 0 not applicable, 1 not run — none counted as satisfied. This establishes structure over the prompt/artifact bytes — not doctrine satisfaction, quality, outcomes, or adoption.\nruntime\nNOT-APPLICABLE  RUNTIME-PLATE-NO-LETTERING-INSTRUCTIONthe exact-text mechanism is not deterministic code composition; there is no textless plate to check",
+  "rows": [
+    {
+      "blocking": true,
+      "check_id": "LIMIT-TEXT",
+      "detail": "no Devanagari, requested text or text-bearing surface in 1 prompt(s); explicit no-text clause present (prompt 1) — source: pack_limits \"… composite text deterministically.\"",
+      "family": "limit",
+      "status": "PASS"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D1-check",
+      "detail": "finish term(s) (direct, polished, matte, glossy, brushed, diffuse) in VISUAL_SYSTEM.surface_finish_per_key_object, GENERATION_PROMPTS, FAILURE_PREVENTION",
+      "family": "doctrine",
+      "status": "PASS"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D2-check",
+      "detail": "highlight geometry needs decoded pixels and scene understanding; 'single implied source' is not one light instrument (PA-D4 default allows added lights) — counting light words would false-fail accepted packages",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D3-check",
+      "detail": "needs shadow/specular measurement in pixels; a prompt-vocabulary contradiction test false-fails legitimate kicker/rim requests",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D4-check",
+      "detail": "no sentence in VISUAL_SYSTEM.implied_light_source, PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION names a light source together with a direction",
+      "family": "doctrine",
+      "status": "FAIL"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D5-check",
+      "detail": "grayscale check needs decoded pixels and product/ground segmentation; no literal pre-dispatch clause exists",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D6-check",
+      "detail": "'key level declared' has no stable vocabulary in real packages — a strict test false-fails; cross-shot consistency needs pixels",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D7-check",
+      "detail": "the decisive check is a semantic judgment ('needs the body copy'); presence of a hierarchy line is not the check — remains a human / blueprint-model check",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D8-check",
+      "detail": "glossy-surface term(s) (glass, bottle, glossy, black) with a specular declaration ('(a direct reflection') in PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION",
+      "family": "doctrine",
+      "status": "PASS"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D9-check",
+      "detail": "face counting needs object understanding in pixels; candidate comparison needs alternatives that do not exist at gate time",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "PA-D10-check",
+      "detail": "no DOCTRINE_DEVIATIONS section (schema v1 / receipts retired, CANON-SHAPE-v1 §5)",
+      "family": "doctrine",
+      "status": "NOT-RUN"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D1-check",
+      "detail": "no ordered enumeration of three reads in VISUAL_SYSTEM.attention_order, MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION, GENERATION_PROMPTS",
+      "family": "doctrine",
+      "status": "FAIL"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D2-check",
+      "detail": "no placement term in VISUAL_SYSTEM.placement_zone, GENERATION_PROMPTS, FAILURE_PREVENTION; no named ratio or grid line",
+      "family": "doctrine",
+      "status": "FAIL"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D3-check",
+      "detail": "accepted packages describe edges in free prose that no closed vocabulary of the three treatments matches without false failures; tangency needs pixels",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D4-check",
+      "detail": "conditional on a frame-within-frame being used, then a tonal/width comparison in pixels",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D5-check",
+      "detail": "no balance/restless declaration in VISUAL_SYSTEM, GENERATION_PROMPTS, FAILURE_PREVENTION",
+      "family": "doctrine",
+      "status": "FAIL"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D6-check",
+      "detail": "aspect stated: 4:5 (DELIVERABLE)",
+      "family": "doctrine",
+      "status": "PASS"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D7-check",
+      "detail": "1 shot entry in PRODUCTION_RECIPE / GENERATION_PROMPTS — no per-shot structure to name a cut against",
+      "family": "doctrine",
+      "status": "FAIL"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D8-check",
+      "detail": "edit-room judgment; no detectable trigger for 'imperfect cut'",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D9-check",
+      "detail": "needs per-shot spatial understanding (pre) or frame analysis (post)",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D10-check",
+      "detail": "shot durations stated in PRODUCTION_RECIPE ('6 seconds')",
+      "family": "doctrine",
+      "status": "PASS"
+    },
+    {
+      "blocking": false,
+      "check_id": "CA-D11-check",
+      "detail": "motivation is stated at plan level, not sentence-locally; any sentence-local test false-fails",
+      "family": "doctrine",
+      "status": "NOT-MECHANISED"
+    },
+    {
+      "blocking": true,
+      "check_id": "DISPATCH-ASPECT",
+      "detail": "package declares 4:5 = dispatched 4:5",
+      "family": "dispatch",
+      "status": "PASS"
+    },
+    {
+      "blocking": true,
+      "check_id": "DISPATCH-SHOT-SUM",
+      "detail": "1 shot durations sum to 6 s (max of ranges) against declared 6 s (tolerance ±20 %)",
+      "family": "dispatch",
+      "status": "PASS"
+    },
+    {
+      "blocking": true,
+      "check_id": "RUNTIME-PLATE-NO-LETTERING-INSTRUCTION",
+      "detail": "the exact-text mechanism is not deterministic code composition; there is no textless plate to check",
+      "family": "runtime",
+      "status": "NOT-APPLICABLE"
+    }
+  ],
+  "verdict": "PASS"
+}

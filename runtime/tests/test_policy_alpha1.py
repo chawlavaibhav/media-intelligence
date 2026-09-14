@@ -140,12 +140,10 @@ class SpendAuthorityIsSeparateFromAdoption(unittest.TestCase):
         with self.assertRaises(Exception):
             _ = IntakeProfile(name="in_memory", row=row, source=str(PROFILES_PATH)).spend_authority
 
-    @unittest.expectedFailure
     def test_execute_refuses_because_spend_authority_is_none(self):
-        """DEFECT, recorded mechanically: Router.execute() checks only `profile.adopted`. Now that
-        alpha_human_release is adopted, the only thing between it and a dispatch is the absence of a
-        provider client. execute() must also check spend_authority — Wave 2 (execution bridge)
-        closes this. When it does, this test starts passing and the decorator comes off."""
+        """CLOSED 14 Sep 2026 by lane F (execution bridge): Router.execute() checks spend_authority
+        for a live-mode profile before it plans. alpha_human_release is adopted, dispatch_mode live,
+        spend_authority none, so execute refuses and names the missing spend authorisation."""
         r = B.router()
         with self.assertRaises(ExecuteRefused) as ctx:
             r.execute(B.spec(B.SPEC_MOTION), B.profile("alpha_human_release"),
@@ -309,14 +307,21 @@ class NoLimitIsALiteralInTheAccessors(unittest.TestCase):
 
 
 class DryProfileStillDry(unittest.TestCase):
-    def test_dry_has_zero_draws_is_adopted_and_has_no_spend_authority(self):
+    def test_dry_is_the_alpha_twin_is_adopted_and_has_no_spend_authority(self):
+        """14 Sep 2026 (lane F): `dry` is the dry twin of alpha_human_release - the alpha's two draws,
+        dispatch_mode dry, no spend authority. The zero-draw permissive row lives on as dry_permissive.
+        The twin-equality test itself is runtime/tests/test_f_dry_twin.py."""
         row = _rows()["dry"]
-        self.assertEqual(row["max_provider_draws_per_deliverable"], 0)
+        self.assertEqual(row["max_provider_draws_per_deliverable"], _alpha()["max_provider_draws_per_deliverable"])
+        self.assertEqual(row["dispatch_mode"], "dry")
         self.assertIs(row["adopted"], True)
         self.assertEqual(row["spend_authority"]["status"], "none")
         prof = load_profile("dry", PROFILES_PATH)
-        self.assertEqual(prof.max_provider_draws, 0)
+        self.assertEqual(prof.max_provider_draws, 2)
         self.assertFalse(prof.may_spend()[0])
+        permissive = _rows()["dry_permissive"]
+        self.assertEqual(permissive["max_provider_draws_per_deliverable"], 0)
+        self.assertEqual(permissive["dispatch_mode"], "dry")
 
 
 class InvariantsSayWhatTheRulingsSay(unittest.TestCase):

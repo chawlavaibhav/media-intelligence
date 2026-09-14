@@ -1,0 +1,32 @@
+{
+  "objective": "Produce a square Instagram post for AlphaFit's New Year offer whose four lines of copy are set exactly, bold and energetic in black and neon yellow, with a clean corner left for the customer's logo.",
+  "hard_constraints": [
+    "the copy reads exactly \"FLAT 40% OFF\", \"First 100 members only\" and \"AlphaFit\" — 'It has to say ...'",
+    "no pictures of people — 'No pictures of people'",
+    "black and neon yellow only — 'Use our brand colours, black and neon yellow'",
+    "one corner stays empty for the logo — 'just leave a clean corner for it'",
+    "square — 'Square post'"
+  ],
+  "acceptance_statements": [
+    "ACCEPT only if the lower-right corner is empty ground with nothing on it.",
+    "REJECT if any person, photograph or product appears.",
+    "REJECT if any colour other than black, white and neon yellow carries the design."
+  ],
+  "composition": {
+    "attention_order": "1st read: \"FLAT 40% OFF\" by scale and neon-on-black contrast; 2nd read: \"First 100 members only\"; 3rd read: \"AlphaFit\" and the date line.",
+    "placement_zone": "headline block off-centre in the upper-left zone; the lower-right corner is left clean for the customer's logo, a visible reason for the asymmetry",
+    "edge_treatment": "tight fit with a deliberate margin around the headline; no letter touches the frame edge"
+  },
+  "materials_and_light": {
+    "surface_finish_per_key_object": "solid matte black ground; matte neon-yellow stripe; no gloss anywhere",
+    "implied_light_source": "none — a flat graphic plate with no scene lighting; contrast comes from colour, not from light"
+  },
+  "resolution_class": "1024-class",
+  "planner": "recorded_fixture",
+  "source_ref": "runtime/fixtures/planner/alpha-img-text-02-conformant.response.json  # RUNTIME-AUTHORED RECORDED PLAN (lead, 14 Sep 2026), not a model output. The frozen Stage-A IMG-TEXT-02 textless plate prompt fails the gate's LIMIT-TEXT rule ('poster' in sentence 1 with no deferral term); this plan carries a gate-conformant plate prompt so the dry chain can reach acceptance. Every other value mirrors the frozen blueprint's CASE VALUES for IMG-TEXT-02.",
+  "generation_prompts": {
+    "main": null,
+    "textless_plate": "Square social-media background image. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. The upper-left two-thirds and the lower-left are plain black space; the lower-right corner stays completely empty. High contrast, energetic. No text, no letters, no numerals, no symbols anywhere in the image.",
+    "motion": null
+  }
+}

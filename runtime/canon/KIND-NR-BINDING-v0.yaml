@@ -19,6 +19,12 @@ schema: KIND-NR-BINDING-v0
 # which is what fires the product_appearance conditional pack.
 product_entity_roles: [product, logo, prior_creative]
 
+# PRODUCTION-JOB-v1 deliverable_request.subject.entity values that stand for a product/packshot
+# entity (R06) when the customer names the subject without supplying a photograph of it. Added
+# 14 Sep 2026 (lane E) so a product advertisement with no customer photo fires product_appearance,
+# which is why v1 added `subject` (CHANGES-v0-to-v1.md, defect 2).
+subject_product_entities: [product, packshot]
+
 # Roles whose identity must survive into the deliverable. Drives identity_requirements and the
 # line-up acceptance statements.
 identity_roles: [product, person, logo]

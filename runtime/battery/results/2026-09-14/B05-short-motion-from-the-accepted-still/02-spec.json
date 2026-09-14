@@ -1,0 +1,226 @@
+{
+  "acceptance_contract": [
+    "REJECT if anything that was not in the supplied picture appears in it, or if a smudge, a repeated texture patch or a colour seam is visible where something was changed.",
+    "ACCEPT only if the viewpoint visibly travels around the bottle (a different side of the bottle is seen at the end than at the start).",
+    "ACCEPT only if the bottle keeps the shape, size, cap and blank label of the first frame throughout; REJECT if it warps, drifts on the surface, or grows lettering.",
+    "REJECT if the highlight on the glass flickers, or sits at the same spot on the bottle in the first and last frame while the viewpoint has changed.",
+    "REJECT if speech or music is present, or any lettering."
+  ],
+  "blueprint": {
+    "case_values": {
+      "CA-D1": "1st read stays the bottle; no new cue is introduced by the move.",
+      "CA-D10": "6 s: 'the camera slowly circles a cold glass bottle' (gote_0053).",
+      "CA-D11": "Motivated move: the customer asked for the orbit; slow, a quarter-turn at most, so the technique goes unnoticed (ms_0018).",
+      "CA-D3": "The orbit must keep the deliberate gap above the cap in every frame (fre_0006).",
+      "CA-D6": "4:5 as the still.",
+      "CA-D7": "One continuous shot; device: camera move.",
+      "PA-D1": "As the still: glass direct, liquid translucent, cap polished, ground matte — finishes must persist through the orbit.",
+      "PA-D10": "No deviation; the accepted still is the creative decision.",
+      "PA-D2": "The single highlight must travel across the glass as the viewpoint changes (a direct reflection moves with the family of angles, scs_lsm_c003_002); it must not stay painted on.",
+      "PA-D4": "The still's window source camera-left is preserved; the orbit is small enough that the source stays on one side."
+    },
+    "generation_prompts": {
+      "main": "Animate this product still, 6 seconds, silent. The camera moves slowly in a small arc around the bottle, about a quarter turn, keeping the bottle the same size in frame with a small gap above the cap. The bottle, its blank label, the cap and the surface stay exactly as in the image; only the viewpoint changes, and the highlight on the glass and the reflection on the surface move naturally with it. Nothing else moves. No text or lettering.",
+      "motion": "Animate this product still, 6 seconds, silent. The camera moves slowly in a small arc around the bottle, about a quarter turn, keeping the bottle the same size in frame with a small gap above the cap. The bottle, its blank label, the cap and the surface stay exactly as in the image; only the viewpoint changes, and the highlight on the glass and the reflection on the surface move naturally with it. Nothing else moves. No text or lettering.",
+      "textless_plate": null
+    },
+    "planner": "stage_a_blueprint_fixture",
+    "production_parameters": {
+      "blueprint_header": {
+        "author": "executor_agent",
+        "blueprint_author": "executor_agent",
+        "case_id": "VID-I2V-01",
+        "frozen": "2026-09-05",
+        "gate_pre": "not_available_on_base — canon/gate/run_gate.py is absent from base cb92f1e (CANON-GATE-001 unmerged); run `pre` on this file when it lands",
+        "held_constant_across_routes": "True",
+        "packs_source": "canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers canon/packs/pack-triggers-v0.yaml; DEFAULT/CHECK text rendered by id, never paraphrased; no HOLD material"
+      },
+      "brief_only_parameters": {},
+      "decision_questions": {
+        "CA-D1": "What reads first, second, third?",
+        "CA-D10": "How long may a shot hold?",
+        "CA-D11": "Does the camera move, and why?",
+        "CA-D3": "How does the frame hold the subject at its edges?",
+        "CA-D6": "Which orientation and aspect?",
+        "CA-D7": "How does attention travel across cuts (video)?",
+        "PA-D1": "What reflection type dominates each key product surface — diffuse (matte), direct (glossy), or glare?",
+        "PA-D10": "When may any of the above be overridden?",
+        "PA-D2": "Where may the highlight sit on each glossy surface?",
+        "PA-D4": "What is the fictional light source, and does everything agree with it?"
+      },
+      "dispatch_parameters": {
+        "aspect": "4:5",
+        "audio": "off",
+        "duration_s": "6",
+        "reference_slots": "1",
+        "resolution": "720p-class"
+      },
+      "text_handling": [
+        "mode: `none`"
+      ]
+    },
+    "source_ref": "eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/VID-I2V-01.blueprint.md sha256:0ab9692b55eb6c3c6909b3452aee121aaa61372c6f8ff0258bcc33648cf9a325"
+  },
+  "budget": {
+    "cost_ceiling_usd": "5.0",
+    "max_provider_draws": 2,
+    "repair_allowance": 1
+  },
+  "canon": {
+    "canon_gap": true,
+    "injected_context_sha256": "4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe",
+    "missing_domains": [
+      "camera_and_spatial_grammar",
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "editing_pacing_and_short_form",
+      "indian_indic_context"
+    ],
+    "packs_selected": [
+      {
+        "compiled": false,
+        "pack_id": "concept_and_distinctiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": false,
+        "pack_id": "critique_and_effectiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": true,
+        "pack_id": "composition_and_attention",
+        "status": "compiled_accepted",
+        "trigger": "base:video (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "colour_and_visual_register",
+        "status": "selected_uncompiled",
+        "trigger": "base:video (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "camera_and_spatial_grammar",
+        "status": "selected_uncompiled",
+        "trigger": "base:video (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "editing_pacing_and_short_form",
+        "status": "selected_uncompiled",
+        "trigger": "base:video (R05)"
+      },
+      {
+        "compiled": true,
+        "pack_id": "product_appearance",
+        "status": "compiled_accepted",
+        "trigger": "product_or_packshot_entity_present (entities)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "indian_indic_context",
+        "status": "selected_uncompiled",
+        "trigger": "language_topology_present_or_market_IN (language_topology | market)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "commercial_communication",
+        "status": "selected_uncompiled",
+        "trigger": "advertising_acceptance_intent (acceptance_intent)"
+      }
+    ]
+  },
+  "capability_requirements": [
+    {
+      "capability": "image_to_video",
+      "mandatory": true
+    },
+    {
+      "capability": "product_surface_fidelity",
+      "mandatory": false
+    }
+  ],
+  "compiled_utc": "2026-09-14T12:00:00Z",
+  "composition": {
+    "aspect_justification": "4:5 as the still.",
+    "attention_order": "1st read stays the bottle; no new cue is introduced by the move.",
+    "edge_treatment": "The orbit must keep the deliberate gap above the cap in every frame (fre_0006)."
+  },
+  "deliverable": {
+    "aspect": "4:5",
+    "kind": "short_motion_from_accepted_still",
+    "motion": {
+      "audio": false,
+      "depends_on": "alpha-dry-img-core-01",
+      "from": "accepted_still",
+      "seconds": 6
+    },
+    "resolution_class": "720p-class"
+  },
+  "deterministic_checks": [
+    "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+    "refusal / error / empty artifact -> reject",
+    "baked-text scan (text scan over the artifact): any lettering -> reject",
+    "duration or aspect mismatch vs the deliverable -> reject"
+  ],
+  "exact_text": {
+    "strategy": "no_exact_text",
+    "strategy_basis": "no rule consulted: the job names no character-exact string, so nothing about lettering is contractual (PRODUCTION-JOB-v0.exact_text_strings empty)",
+    "strings": [],
+    "text_mechanism": "not_applicable"
+  },
+  "gate_requirements": [
+    "CA-D1-check",
+    "CA-D2-check",
+    "CA-D3-check",
+    "CA-D4-check",
+    "CA-D5-check",
+    "CA-D6-check",
+    "CA-D7-check",
+    "CA-D8-check",
+    "CA-D9-check",
+    "CA-D10-check",
+    "CA-D11-check",
+    "PA-D1-check",
+    "PA-D2-check",
+    "PA-D3-check",
+    "PA-D4-check",
+    "PA-D5-check",
+    "PA-D6-check",
+    "PA-D7-check",
+    "PA-D8-check",
+    "PA-D9-check",
+    "PA-D10-check",
+    "pack limit: Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar, samara-making-breaking-grid-ch1 (term t_sam_c003_0018 only, CF-16) and alton-painting-with-light-ch2 for this pack's domains; no claim of theirs is compiled — their doctrine (frontality/darshan attention order, symmetry-as-authority, grid structure) is absent, not arbitrated.",
+    "pack limit: Coverage note (GAP-16 resolved by the DN-06 admission): the source's later chapters are accepted as light-science-magic-beyond-ch3, a scoped extension of ch3. Its three self-qualification claims are compiled where they bite (PA-D8: sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost grounds; glossy-box remedy ladder ordered cheapest-first; black-on-black lit as if metal). The remainder of the extension awaits the full live-37 pack compile.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide as contributors to this pack's domains; none is compiled here — their doctrine (frontality/darshan staging, iconographic correctness, props-as-vocabulary) is absent, not arbitrated.",
+    "pack limit: Category-surface gap: no accepted claim covers watch conventions (hand positions) or anisotropic brushed/sunburst surfaces — the diffuse/direct/glare contrast set (PA-D1) does not model radial anisotropic glow; state the gap rather than force one of the three types.",
+    "canon gap: no compiled pack answers camera_and_spatial_grammar, colour_and_visual_register, commercial_communication, concept_and_distinctiveness, critique_and_effectiveness, editing_pacing_and_short_form, indian_indic_context; the plan states this and attributes nothing to doctrine there"
+  ],
+  "hard_constraints": [
+    "the deliverable is 4:5",
+    "the moving version runs 6 seconds",
+    "the moving version carries no audio track",
+    "bottle does not move or deform",
+    "label stays blank",
+    "no text, no audio"
+  ],
+  "job_id": "alpha-dry-vid-i2v-01",
+  "job_sha256": "3f968022dcb02010de3172a15b6ad6290c9623f1796a4f71cc2023511a3894ae",
+  "materials_and_light": {
+    "highlight_placement": "The single highlight must travel across the glass as the viewpoint changes (a direct reflection moves with the family of angles, scs_lsm_c003_002); it must not stay painted on.",
+    "implied_light_source": "The still's window source camera-left is preserved; the orbit is small enough that the source stays on one side.",
+    "surface_finish_per_key_object": "As the still: glass direct, liquid translucent, cap polished, ground matte — finishes must persist through the orbit."
+  },
+  "objective": "Produce one short_motion_from_accepted_still at 4:5 that answers the customer's request: \"Take the bottle still you made (juice_hero_final.png) and give me a 6 second clip for the website hero.\"",
+  "policy_profile": "dry",
+  "route_exclusions": [],
+  "schema": "PRODUCTION-SPEC-v1",
+  "spec_id": "spec-6915eaeebb020a82"
+}
