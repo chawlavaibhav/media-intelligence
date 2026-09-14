@@ -14,6 +14,20 @@ What this is deliberately not:
 "Accepted" is mechanical, not a label: a compiled pack is injectable only if its corpus_digest
 equals fingerprints.accepted_canon.combined_digest in canon/knowledge/CANON-CORPUS-INDEX.yaml.
 HOLD candidates are not in that fingerprint, so they cannot reach a prompt through this path.
+
+Injection v1 (Controller ruling C-10, 14 Sep 2026: "Authorise USD-0 implementation of: Canon
+Injection v1; template / empirical-memory integration."): the system block is the receipt-free
+runtime/canon/INJECTION-PREFIX-v1.md, read by default. CANON-SHAPE-v1 §5 retired the forced-
+consumption receipts ("The gate verifies mechanically; the model writes the plan only"), so the
+block no longer asks for DOCTRINE_DEVIATIONS or per-check pass/fix lines. The v0 block in
+canon/compilation/INJECTION-CONTRACT-v0.md §2 is not edited and stays selectable
+(injection_version="v0") so a test can prove that path is byte-for-byte unchanged.
+
+The prefix — system block, then (audio only) the coverage-gap notice, then the accepted packs'
+terse text in canonical order — is the cache-served part of the prompt. Nothing request-specific
+is in it: two jobs that select the same packs get byte-identical prefixes and one prefix_sha256.
+The volatile Normalized Request begins after CACHE_BOUNDARY_MARKER, which is metadata about the
+boundary and is never itself injected. Cache-read pricing is not pinned (CANON-SHAPE-v1 §6).
 """
 from __future__ import annotations
 
@@ -27,6 +41,22 @@ from ..util import load_yaml, read_text, sha256_text, token_estimate
 
 UNIVERSAL = "universal"
 _FENCE = re.compile(r"^```\n(.*?)^```", re.S | re.M)
+
+INJECTION_VERSIONS = ("v0", "v1")
+DEFAULT_INJECTION_VERSION = "v1"
+# Documents where the stable prefix ends and the volatile Normalized Request begins
+# (COMPILED-PACK-CONTRACT-v0.1 §4). Recorded on the lookup as metadata; NEVER placed in the payload.
+CACHE_BOUNDARY_MARKER = (
+    "<<CANON_CACHE_BREAKPOINT: everything upstream is the byte-stable Canon prefix "
+    "(system block + accepted packs); the Normalized Request begins downstream>>"
+)
+CACHE_PRICING_NOT_PINNED = "not pinned"
+CACHE_PRICING_NOTE = (
+    "cache-read pricing is not pinned (canon/CANON-SHAPE-v1.md §6: 'cache-read pricing, to be "
+    "pinned'); no cost figure in this runtime rests on a cache-read rate"
+)
+# The v0 receipt vocabulary CANON-SHAPE-v1 §5 retired. Scanned for, never injected by the runtime.
+RECEIPT_VOCABULARY = ("FAILURE_PREVENTION", "DOCTRINE_DEVIATIONS")
 
 
 @dataclass(frozen=True)
@@ -71,6 +101,13 @@ class CanonLookup:
     pack_limits: tuple
     tokens: int
     notices: tuple
+    # Injection v1 metadata (CANON-SHAPE-v1 §4-§6). Defaults keep older positional callers working.
+    injection_version: str = DEFAULT_INJECTION_VERSION
+    prefix_sha256: str = ""                 # sha over exactly the bytes upstream of the breakpoint
+    cache_boundary_marker: str = CACHE_BOUNDARY_MARKER
+    cache_pricing: str = CACHE_PRICING_NOT_PINNED
+    cache_pricing_note: str = CACHE_PRICING_NOTE
+    receipts_required: bool = False
 
     def packs_selected(self) -> list:
         return [s.as_contract_row() for s in self.selections]
@@ -85,15 +122,31 @@ class CanonCorpus:
         triggers_path: str | Path | None = None,
         injection_contract_path: str | Path | None = None,
         corpus_index_path: str | Path | None = None,
+        injection_version: str = DEFAULT_INJECTION_VERSION,
+        injection_prefix_v1_path: str | Path | None = None,
     ):
+        if injection_version not in INJECTION_VERSIONS:
+            raise Refusal(
+                Refusal.CANON_TRIGGER_TABLE_HOLE,
+                f"no injection block exists for version {injection_version!r}",
+                known=list(INJECTION_VERSIONS),
+            )
         self.compilation_dir = Path(compilation_dir or paths.CANON_COMPILATION)
         self.triggers_path = str(triggers_path or paths.CANON_TRIGGERS)
         self.injection_contract_path = str(injection_contract_path or paths.CANON_INJECTION_CONTRACT)
+        self.injection_prefix_v1_path = str(injection_prefix_v1_path or paths.INJECTION_PREFIX_V1)
         self.corpus_index_path = str(corpus_index_path or paths.CANON_CORPUS_INDEX)
+        self.injection_version = injection_version
         self.triggers = load_yaml(self.triggers_path) or {}
         self.accepted_digest = self._accepted_digest()
         self.packs = self._load_packs()
-        self.system_prompt_block = self._system_prompt_block()
+        # v0: the receipt-bearing block of INJECTION-CONTRACT-v0 §2 (canon-owned, read verbatim).
+        # v1: the receipt-free block of runtime/canon/INJECTION-PREFIX-v1.md (runtime-owned).
+        self.system_prompt_block_v0 = self._fenced_block(self.injection_contract_path, "INJECTION-CONTRACT-v0 §2")
+        self.system_prompt_block_v1 = self._fenced_block(self.injection_prefix_v1_path, "INJECTION-PREFIX-v1")
+        self.system_prompt_block = (
+            self.system_prompt_block_v1 if injection_version == "v1" else self.system_prompt_block_v0
+        )
 
     # ---------------------------------------------------------------- loading
     def _accepted_digest(self) -> str:
@@ -125,15 +178,15 @@ class CanonCorpus:
             )
         return out
 
-    def _system_prompt_block(self) -> str:
-        """The ~340-token invariant prefix, read verbatim from INJECTION-CONTRACT-v0 §2."""
-        text = read_text(self.injection_contract_path)
-        match = _FENCE.search(text)
+    @staticmethod
+    def _fenced_block(path: str, label: str) -> str:
+        """The invariant system block: the FIRST fenced block of the named file, read verbatim."""
+        match = _FENCE.search(read_text(path))
         if not match:
             raise Refusal(
                 Refusal.CANON_TRIGGER_TABLE_HOLE,
-                "INJECTION-CONTRACT-v0 §2 has no fenced system-prompt block to inject",
-                source=self.injection_contract_path,
+                f"{label} has no fenced system-prompt block to inject",
+                source=path,
             )
         return match.group(1)
 
@@ -203,6 +256,21 @@ class CanonCorpus:
             else:
                 gaps.append(selection.pack_id)
 
+        # OBSERVED 14 Sep 2026: the compiled packs' own terse text still opens with the v0 receipt
+        # sentence. The runtime never rewrites pack bytes (render by id, never paraphrase), so under
+        # v1 it records which packs carry the retired vocabulary instead of pretending it is gone.
+        if self.injection_version == "v1":
+            carrying = [
+                p for p in injected
+                if any(word in self.packs[p].terse_injection_text for word in RECEIPT_VOCABULARY)
+            ]
+            if carrying:
+                notices.append(
+                    "receipt vocabulary retired by CANON-SHAPE-v1 §5 is still carried by the "
+                    f"canon-owned pack text of {', '.join(carrying)}; the runtime does not require "
+                    "receipts and the gate does not read them"
+                )
+
         payload = "\n\n".join(parts)
         tokens = token_estimate(payload)
         ceiling = self.triggers.get("per_request_max_tokens")
@@ -228,6 +296,14 @@ class CanonCorpus:
             pack_limits=tuple(_stable(limits)),
             tokens=tokens,
             notices=tuple(notices),
+            injection_version=self.injection_version,
+            # In v1 the whole payload is the prefix: identical bytes to injected_context_sha256,
+            # named again under CANON-SHAPE-v1's cache vocabulary so a consumer can find it.
+            prefix_sha256=sha256_text(payload),
+            cache_boundary_marker=CACHE_BOUNDARY_MARKER,
+            cache_pricing=CACHE_PRICING_NOT_PINNED,
+            cache_pricing_note=CACHE_PRICING_NOTE,
+            receipts_required=self.injection_version == "v0",
         )
 
 
