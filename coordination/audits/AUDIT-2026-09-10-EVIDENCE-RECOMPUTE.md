@@ -571,8 +571,8 @@ other cell's accepts and trials are identical to before (asserted by
 Two further changes touch many cells but no number:
 
 * **An eliminated route is never a fallback.** Fallback pointers now chain among survivors only;
-  every eliminated cell has `fallback: null` and ranks after the survivors. Sixteen cells' fallback
-  pointers moved for this reason (for example IMG-EDIT / `seedream-5-pro-edit` now falls back to
+  every eliminated cell has `fallback: null` and ranks after the survivors. Twenty-eight cells' fallback
+  pointers moved (twenty-five of them with no change to the cell's own number) (for example IMG-EDIT / `seedream-5-pro-edit` now falls back to
   `flux-2-pro-edit`, not to the eliminated `nano-banana-pro-edit`).
 * **Every cell has `text_mechanism`**: `deterministic_text_composition` for the code-overlay cell
   and for VID-TOPO3 arm C (its own results note says "exact strings by code on every frame");
@@ -616,7 +616,7 @@ itself had classified as infrastructure or request-shape faults and that are now
 VID-I2V / `wan-2.2-a14b-i2v` (six HTTP-422), VID-2SPK / `kling-v3-pro-audio+A_native` (two
 HTTP-403) and VID-T2V / `kling-v3-pro-audio` (two HTTP-403; without them 2/6 would survive). No
 ruling can re-test those routes; only a clean rerun (Controller item C-15) can. Twenty-one cells
-left `awaiting_controller_ruling`: nineteen became `clean_observed`, two `directional_only`
+left `awaiting_controller_ruling`: eighteen became `clean_observed`, three `directional_only`
 (fewer than four settled draws). Forty cells kept the status and production reading they had.
 
 New register fields: a `rulings` block quoting the five rulings verbatim; per cell
