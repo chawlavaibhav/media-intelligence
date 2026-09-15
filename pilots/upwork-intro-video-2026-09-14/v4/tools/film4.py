@@ -116,7 +116,7 @@ def craft_ad(plate: Image.Image):
     boxes = {}
     y = seam + 44
     lines = ["YOUR NIGHT", "ROUTINE, SIMPLIFIED."]; hl = 80
-    while max(A.text_width(l, "didot", hl) for l in lines) > Wc - 2 * m:
+    while max(A.text_width(l, "didot", hl) for l in lines) > Wc - 2 * m - int(Wc * 0.05):
         hl -= 2
     hy0 = y
     for l in lines:
