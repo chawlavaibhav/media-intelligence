@@ -264,13 +264,13 @@ spend:
     - {pool: sarvam_credits, balance_usd: null, read_utc: "2026-09-15T13:28:37Z", source: "user attestation in chat (same)"}
     - {pool: elevenlabs_credits, balance_usd: null, read_utc: "2026-09-15T13:28:37Z", source: "user attestation in chat (same)"}
     - {pool: elevenlabs_credits, balance_usd: "54 plan credits (≈ 54 characters) — provider reply on att-038, quota_exceeded", read_utc: "2026-09-15T14:12:50Z", source: "api.elevenlabs.io error body: 'You have 54 credits remaining, while 159 credits are required' — SUPERSEDES the attestation: ElevenLabs cannot fund a full ~160-char read; no further ElevenLabs dispatch"}
-  attempts: []                    # one line per paid call, appended before the request leaves, settled after:
+  attempts: "see gen/ATTEMPTS.jsonl (one record per attempt, this vocabulary) and gen/LEDGER.jsonl (reserve/settle lines); att-001 local_fault unsent; att-019 id collision → alias att-028; att-038 ElevenLabs quota_exceeded; att-045 Gemini TTS PROHIBITED_CONTENT false-positive refusal on the frozen b3 line, regenerated as att-048"
   #  - {attempt_id, asset_id, route_cell, surface, pool, unit_price_usd, quantity, reserved_usd, settled_usd,
   #     start_utc, end_utc, latency_s, status: ok|provider_refusal|infrastructure_transient|unclassified,
   #     failure_basis, artifact_path, artifact_sha256, verdict: accepted|rejected|not_selected|failed, is_repair: bool}
-  total_reserved_usd: 0           # Σ reserved, failed calls included = CpAO numerator
+  total_reserved_usd: 3.8811      # Σ reserved, failed calls included = CpAO numerator (47 attempts: 44 ok, 3 failed/unsent; by route: nano-banana-2 ×8 USD 0.536; veo-3.1-fast-i2v ×5 USD 3.000; sarvam-bulbul-v3 ×8 USD 0.023; elevenlabs-v3-direct ×8 USD 0.099; gemini-tts ×17 USD 0.164; lyria ×1 USD 0.060)
   total_settled_usd: null         # if the provider reports it; vendor statements are a separate reconciliation
-  cap_remaining_usd: null
+  cap_remaining_usd: 4.1189
 
 # ── 10–11. QA ────────────────────────────────────────────────────────────────
 qa:
@@ -307,17 +307,25 @@ qa:
       D11: "N/A — silent"
       D12: "PASS — 720x1280 h264 24 fps 6.000 s = the dispatched cell configuration; delivery at 1080x1920 will be a declared upscale"
       D13: "qa/clip-2-r1-contact.png"
-  final_geometry: []              # FORMAT_SPECIFIC_REVALIDATION (case 002): one row per delivered file, run on THAT file:
+    - {"asset_id": "clip-1-r1 (att-019\u2192028)", "file": "gen/clips/clip-1-r1.mp4", "sha256": "09cbbf70770ff217978234edb3357629a27d5b0c8d74843d5b7fe9f7388c22ed", "sampled_timestamps": [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5], "D1": "PASS \u2014 no lettering in any sampled frame (human eye; Cloud Vision not invoked)", "D2": "PASS \u2014 bowl shape/hue/notch held", "D3": "PASS \u2014 identity, clothes, room held", "D4": "PASS \u2014 five fingers; see note", "D5": "PASS (two-shots) / N/A (macros)", "D6": "PASS \u2014 static (clip-5: declared slow push)", "D7": "N/A single shot", "D8": "PASS", "D9": "PASS \u2014 no morphing seen", "D10": "N/A silent", "D11": "N/A", "D12": "PASS \u2014 720x1280 24 fps 6.000 s as dispatched", "D13": "qa/clip-1-r1-contact.png", "note": "two-shot: 1.5\u20132.5 s he lands noodles in his mouth (contradicts 'he fails'); 3.0\u20136.0 s he fumbles, she reaches for her chopsticks \u2014 the film uses 2.5\u20136.0"}
+    - {"asset_id": "clip-3-r1 (att-023)", "file": "gen/clips/clip-3-r1.mp4", "sha256": "a8b72333766cf56a5708a544ab4ece78a077c1cf011e89d7437cad259e9cecfc", "sampled_timestamps": [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5], "D1": "PASS \u2014 no lettering in any sampled frame (human eye; Cloud Vision not invoked)", "D2": "PASS \u2014 bowl shape/hue/notch held", "D3": "PASS \u2014 identity, clothes, room held", "D4": "PASS \u2014 five fingers; see note", "D5": "PASS (two-shots) / N/A (macros)", "D6": "PASS \u2014 static (clip-5: declared slow push)", "D7": "N/A single shot", "D8": "PASS", "D9": "PASS \u2014 no morphing seen", "D10": "N/A silent", "D11": "N/A", "D12": "PASS \u2014 720x1280 24 fps 6.000 s as dispatched", "D13": "qa/clip-3-r1-contact.png", "note": "0\u20131 s drops the plate's lifted noodles, 1.5\u20135 s dips, pinches and lifts a bundle; hand exits frame at 5.5 s \u2014 film uses 0.5\u20135.5"}
+    - {"asset_id": "clip-4-r1 (att-029)", "file": "gen/clips/clip-4-r1.mp4", "sha256": "371f26d58edaecd7642b68e75ccf678585abc5c265e52d8580937f27354d0d06", "sampled_timestamps": [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5], "D1": "PASS \u2014 no lettering in any sampled frame (human eye; Cloud Vision not invoked)", "D2": "PASS \u2014 bowl shape/hue/notch held", "D3": "PASS \u2014 identity, clothes, room held", "D4": "PASS \u2014 five fingers; see note", "D5": "PASS (two-shots) / N/A (macros)", "D6": "PASS \u2014 static (clip-5: declared slow push)", "D7": "N/A single shot", "D8": "PASS", "D9": "PASS \u2014 no morphing seen", "D10": "N/A silent", "D11": "N/A", "D12": "PASS \u2014 720x1280 24 fps 6.000 s as dispatched", "D13": "qa/clip-4-r1-contact.png", "note": "0.5\u20132.5 s the noodle slips off the crossed tips; 3\u20135.5 s he dips again \u2014 film uses 0\u20134.0"}
+    - {"asset_id": "clip-5-r1 (att-042)", "file": "gen/clips/clip-5-r1.mp4", "sha256": "cc11d9f63b28a7e73ad37d5dca9a3312e5a79d7f0b9be0f2e6c5fa90618e6007", "sampled_timestamps": [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5], "D1": "PASS \u2014 no lettering in any sampled frame (human eye; Cloud Vision not invoked)", "D2": "PASS \u2014 bowl shape/hue/notch held", "D3": "PASS \u2014 identity, clothes, room held", "D4": "PASS \u2014 five fingers; see note", "D5": "PASS (two-shots) / N/A (macros)", "D6": "PASS \u2014 static (clip-5: declared slow push)", "D7": "N/A single shot", "D8": "PASS", "D9": "PASS \u2014 no morphing seen", "D10": "N/A silent", "D11": "N/A", "D12": "PASS \u2014 720x1280 24 fps 6.000 s as dispatched", "D13": "qa/clip-5-r1-contact.png", "note": "both laugh, he eats with the spoon; her chopsticks rest on her rim in 0\u20131.5 s then are not visible; slow push as declared \u2014 film uses 0\u20135.5"}
+    - {"asset_id": "ASSEMBLY 9:16 master", "file": "gen/final/cuminco-chopsticks-9x16.mp4", "sha256": "097e428e5929f1bd10d71bc68479dcbe6e011803629b198b616858e17b205d9d", "sampled_timestamps": "every 1 s, 0\u201323 s (qa/final-9x16-contact.png)", "D1": "PASS \u2014 only the code-set deck strings appear", "D6": "PASS", "D7": "PASS \u2014 her hand frame-left / his frame-right held across cuts; screen direction kept", "D10": "transcript: five lines verbatim by the operator's ear; naturalness = the user's ear (D14)", "D11": "music ducked under VO (sidechain), loudnorm \u221214 LUFS", "D12": "PASS 1080x1920 24 fps 23.50 s (deviation: plan said 18 s; VO pacing)", "D13": "qa/final-9x16-contact.png"}
+  final_geometry:                 # FORMAT_SPECIFIC_REVALIDATION (case 002): one row per delivered file, run on THAT file (2026-09-15T14:37:21Z)
+    - {"deliverable_id": "D-916", "file": "gen/final/cuminco-chopsticks-9x16.mp4", "geometry": "9:16", "pixels": "1080x1920", "sha256": "097e428e5929f1bd10d71bc68479dcbe6e011803629b198b616858e17b205d9d", "duration_s": 23.5, "CF1": "PASS \u2014 C1 bounds (token safe area) / C2 contrast on real pixels behind every box, opaque token-radius backing where pixels failed (0 boxes) / C3 fit: contain, declared lanczos upscale 720p\u21921080p / C4 one DesignTokens instance / C5 disjoint per beat / C6 five strings byte-equal to the deck / C7 n/a (spec, no brand hex) / C8 1080x1920 24 fps h264+aac \u2014 report gen/final/cuminco-chopsticks-9x16.qa.json", "CF2": "PASS on 9:16 (copy on empty wall, nothing over bowl/hands/faces)", "CF3": "PASS \u2014 no lettering or edge artefacts introduced by the scale/crop (human eye on sampled frames t=5, 11.5, 15.5, 21)", "CF4": "PASS \u2014 copy inside the 170-px top safe margin and 72-px side margins (token safe area); nothing in the bottom 170 px", "CF5": "PASS \u2014 numeral \u2192 step line hierarchy kept at every size; wrapped blocks keep the same px sizes (no headline-only shrink); tagline over brand line on beat 5", "status": "PASS"}
+    - {"deliverable_id": "D-45", "file": "gen/final/cuminco-chopsticks-4x5.mp4", "geometry": "4:5", "pixels": "1080x1350", "sha256": "02a121d9cbc396e158507f8c5b6ccea7aa63cdbd07191c09bdfab0a76804e996", "duration_s": 23.5, "CF1": "PASS \u2014 C1 bounds (token safe area) / C2 contrast on real pixels behind every box, opaque token-radius backing where pixels failed (8 boxes) / C3 fit: cover with declared subject-anchored crop per beat / C4 one DesignTokens instance / C5 disjoint per beat / C6 five strings byte-equal to the deck / C7 n/a (spec, no brand hex) / C8 1080x1350 24 fps h264+aac \u2014 report gen/final/cuminco-chopsticks-4x5.qa.json", "CF2": "REVIEW \u2014 the backing card sits in the upper-left wall; at beat 3 its edge meets the lifted noodle / chopstick tips for ~0.5 s; the bowl base is cut by the declared crop (~55 px at 4:5, ~115 px at 1:1); flagged for the human", "CF3": "PASS \u2014 no lettering or edge artefacts introduced by the scale/crop (human eye on sampled frames t=5, 11.5, 15.5, 21)", "CF4": "PASS \u2014 copy inside the 170-px top safe margin and 72-px side margins (token safe area); nothing in the bottom 170 px", "CF5": "PASS \u2014 numeral \u2192 step line hierarchy kept at every size; wrapped blocks keep the same px sizes (no headline-only shrink); tagline over brand line on beat 5", "status": "PASS (CF2 flagged for human review at 4:5 and 1:1)"}
+    - {"deliverable_id": "D-11", "file": "gen/final/cuminco-chopsticks-1x1.mp4", "geometry": "1:1", "pixels": "1080x1080", "sha256": "d2b0673698827a760c58e1183dab28192c2054ad4a2f54a342b5ba15e67a9f47", "duration_s": 23.5, "CF1": "PASS \u2014 C1 bounds (token safe area) / C2 contrast on real pixels behind every box, opaque token-radius backing where pixels failed (8 boxes) / C3 fit: cover with declared subject-anchored crop per beat / C4 one DesignTokens instance / C5 disjoint per beat / C6 five strings byte-equal to the deck / C7 n/a (spec, no brand hex) / C8 1080x1080 24 fps h264+aac \u2014 report gen/final/cuminco-chopsticks-1x1.qa.json", "CF2": "REVIEW \u2014 the backing card sits in the upper-left wall; at beat 3 its edge meets the lifted noodle / chopstick tips for ~0.5 s; the bowl base is cut by the declared crop (~55 px at 4:5, ~115 px at 1:1); flagged for the human", "CF3": "PASS \u2014 no lettering or edge artefacts introduced by the scale/crop (human eye on sampled frames t=5, 11.5, 15.5, 21)", "CF4": "PASS \u2014 copy inside the 170-px top safe margin and 72-px side margins (token safe area); nothing in the bottom 170 px", "CF5": "PASS \u2014 numeral \u2192 step line hierarchy kept at every size; wrapped blocks keep the same px sizes (no headline-only shrink); tagline over brand line on beat 5", "status": "PASS (CF2 flagged for human review at 4:5 and 1:1)"}
   #  - {deliverable_id, file, geometry, sha256, C1..C8, CF1..CF5, status}   — a master's PASS transfers to nothing
   voice_continuity:               # CROSS_CLIP_VOICE_CONTINUITY (case 002): REQUIRED when 2+ clips represent one narrator/speaker
-    applies: null                 # true | false (single clip / no narration)
-    assembly: null                # the assembled file + sha256 the human listened to
-    clips: []                     # clip ids in order
-    narrator_identity_same: null  # PASS | FAIL  (human ear)
-    accent_timbre_compatible: null
-    cadence_continuous: null
-    boundary_holes_or_restarts: null   # PASS = none
-    per_clip_transcripts_match: null   # D10 — presence only; never substitutes for the rows above
+    applies: true                 # five VO lines from one TTS voice (Gemini Leda, 'bubbly' direction) over five silent clips
+    assembly: "gen/final/cuminco-chopsticks-9x16.mp4 sha256 097e428e5929f1bd10d71bc68479dcbe6e011803629b198b616858e17b205d9d"
+    clips: [clip-1, clip-2, clip-3, clip-4, clip-5]
+    narrator_identity_same: "PASS by construction (one voice, five separate generations of the same voice) — human ear to confirm"
+    accent_timbre_compatible: "pending human ear"
+    cadence_continuous: "pending human ear — lines are separate generations placed at 0.3 / 4.0 / 9.3 / 14.3 / 19.0 s"
+    boundary_holes_or_restarts: "pending human ear (no clip boundary carries speech; gaps between lines are deliberate)"
+    per_clip_transcripts_match: "PASS — operator ear, five lines verbatim (b3 regenerated once after a provider refusal)"
     human_ear_verdict: null       # verbatim; release authority
   delivery: {}                    # E1..E4
   defects: []                     # [{id, asset_id, observed, class: creative_direction|generation|audio|route|compositor|crop|text|product_fidelity|pacing|infrastructure, repair_layer, repaired_by_attempt}]
@@ -337,11 +345,11 @@ outcome:
 ttao:
   job_start_utc: 2026-09-15T13:17:42Z   # first production input in THIS session. A prior cloud session (Downloads/HANDOFF.md, never pushed) opened the same brief at 2026-09-15T12:06:40Z; recorded in intake.assumptions, not blended
   planning_complete_utc: 2026-09-15T13:28:37Z
-  dispatch_start_utc: null
-  dispatch_end_utc: null
-  artifact_received_utc: null
-  qa_complete_utc: null
-  human_review_requested_utc: null
+  dispatch_start_utc: 2026-09-15T13:39:56Z
+  dispatch_end_utc: 2026-09-15T14:37:21Z
+  artifact_received_utc: 2026-09-15T14:33Z (clip-5) / last VO att-048
+  qa_complete_utc: 2026-09-15T14:37:21Z
+  human_review_requested_utc: 2026-09-15T14:37:21Z
   human_decision_utc: null
   accepted_utc: null
 kpis:
