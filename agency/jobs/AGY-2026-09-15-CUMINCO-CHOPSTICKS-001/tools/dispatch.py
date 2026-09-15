@@ -51,7 +51,11 @@ ROUTES = {
     "sarvam-bulbul-v3":    ("https://api.sarvam.ai/text-to-speech", "sarvam_direct", "sarvam_credits"),
     "elevenlabs-v3-direct": ("https://api.elevenlabs.io/v1/text-to-speech", "elevenlabs_direct", "elevenlabs_credits"),
     "lyria":               ("lyria-002", "vertex", "credits"),
+    "nano-banana-2":       ("gemini-3.1-flash-image", "gemini_api", "credits"),
+    "veo-3.1-fast-i2v":    ("veo-3.1-fast-generate-001", "vertex", "credits"),
 }
+PROJECT = "vertexaiproject-507518"; REGION = "us-central1"
+REGIONAL = f"https://{REGION}-aiplatform.googleapis.com/v1/projects/{PROJECT}/locations/{REGION}/publishers/google/models"
 _PB = None
 
 
@@ -225,6 +229,90 @@ def h3_i2v(asset_id, prompt, still: Path, out: Path, duration: int = 6, is_repai
     body = {"prompt": prompt, "prompt_expansion_mode": "balanced", "image_url": C.data_uri(still), "resolution": "768P",
             "duration": int(duration)}
     return fal(asset_id, "minimax-h3-max-i2v", body, {"params": {"duration_s": duration}}, out, prompt, is_repair)
+
+
+# ── Google credits surfaces (pilot recipes nano_banana_still.py / google_video.py, cases 001 + 002) ──
+def nb2(asset_id: str, prompt: str, out: Path, aspect: str, refs: list[Path] | None = None, is_repair=False) -> dict:
+    """Nano Banana 2 on the Gemini API with optional inline reference images (the pilot's nb2; RO-04 case 001, RO-04 case 002).
+    NOTE: with reference images this is NOT a registered IMG-REF cell — used only under a micro-qualification with a human gate."""
+    route_key = "nano-banana-2"; ep, surface, pool = ROUTES[route_key]
+    q = quote(route_key, {"params": {}})
+    aid = next_attempt_id(); reserve(aid, asset_id, route_key, q, is_repair)
+    parts = [{"text": prompt}]
+    for rp in refs or []:
+        b, mime = C.b64file(rp); parts.append({"inlineData": {"mimeType": mime, "data": b}})
+    body = {"contents": [{"role": "user", "parts": parts}],
+            "generationConfig": {"responseModalities": ["IMAGE"], "candidateCount": 1, "imageConfig": {"aspectRatio": aspect}}}
+    rec = base_rec(aid, asset_id, route_key, q, prompt, out, is_repair, {"aspect": aspect, "reference_images": [str(r.name) for r in refs or []]})
+    t0 = time.time()
+    st, reply = C.http_json("POST", f"https://generativelanguage.googleapis.com/v1beta/models/{ep}:generateContent",
+                            {"x-goog-api-key": C.key("GOOGLE_API_KEY")}, body, timeout=300)
+    rec["request_id"] = reply.get("responseId") if isinstance(reply, dict) else None
+    if st != 200:
+        return failure(rec, http_status=st, message=str(reply), status=f"http_{st}")
+    data = None
+    for cand in reply.get("candidates") or []:
+        for part in (cand.get("content") or {}).get("parts") or []:
+            if part.get("inlineData", {}).get("data"):
+                data = base64.b64decode(part["inlineData"]["data"]); break
+        if data: break
+    if not data:
+        fr = [c.get("finishReason") for c in reply.get("candidates") or []]
+        return failure(rec, http_status=st, message=f"no image; finishReason={fr}; promptFeedback={reply.get('promptFeedback')}", status="refusal_or_empty")
+    out.parent.mkdir(parents=True, exist_ok=True); out.write_bytes(data)
+    rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="ok", artifact_sha256=sha256(out), bytes=len(data),
+               provider_meta={"usage": reply.get("usageMetadata")}); record(rec)
+    settle(aid, "ok", f"{len(data)} bytes -> {out.name}", rec["request_id"]); print(f"saved {out} ({len(data)} bytes) in {rec['latency_s']} s")
+    return rec
+
+
+def veo_i2v(asset_id: str, prompt: str, still: Path, out: Path, duration: int = 6, aspect: str = "9:16",
+            resolution: str = "720p", negative: str | None = None, is_repair=False) -> dict:
+    """Veo 3.1 Fast image-to-video on Vertex, silent — the exact configuration of the clean VID-I2V cell (720p, 9:16, generateAudio false)."""
+    route_key = "veo-3.1-fast-i2v"; ep, surface, pool = ROUTES[route_key]
+    if duration not in (4, 6, 8):
+        sys.exit("Veo durations are 4, 6 or 8 s")
+    q = quote(route_key, {"params": {"duration_s": duration}})
+    aid = next_attempt_id(); reserve(aid, asset_id, route_key, q, is_repair)
+    b, mime = C.b64file(still)
+    inst = {"prompt": prompt, "image": {"bytesBase64Encoded": b, "mimeType": mime}}
+    params = {"sampleCount": 1, "aspectRatio": aspect, "resolution": resolution, "durationSeconds": duration, "generateAudio": False}
+    if negative:
+        params["negativePrompt"] = negative
+    body = {"instances": [inst], "parameters": params}
+    rec = base_rec(aid, asset_id, route_key, q, prompt, out, is_repair, params)
+    t0 = time.time()
+    hdr = {"Authorization": f"Bearer {C.gcloud_sa_token()}"}
+    url_base = f"{REGIONAL}/{ep}"
+    st, reply = C.http_json("POST", f"{url_base}:predictLongRunning", hdr, body)
+    if st != 200:
+        return failure(rec, http_status=st, message=str(reply), status=f"submit_http_{st}")
+    name = reply.get("name"); rec["request_id"] = name; print("operation:", name)
+
+    def check():
+        code, op = C.http_json("POST", f"{url_base}:fetchPredictOperation", hdr, {"operationName": name})
+        if code != 200:
+            return True, {"$error": code, "reply": op}
+        return bool(op.get("done")), op
+
+    op = C.poll(check, 5.0, 120)
+    if op.get("$timeout"):
+        return failure(rec, timed_out=True, message="poll timeout 600 s", status="timeout")
+    if op.get("$error") or op.get("error"):
+        err = op.get("error") or op.get("reply")
+        code = (err or {}).get("code") if isinstance(err, dict) else op.get("$error")
+        return failure(rec, http_status=op.get("$error"), message=str(err), status="provider_error") if not isinstance(code, int) or code > 100 \
+            else failure(rec, message=str(err), status="provider_error")
+    resp = op.get("response") or {}
+    vids = resp.get("videos") or []
+    if not vids or not vids[0].get("bytesBase64Encoded"):
+        return failure(rec, message=f"no video; raiMediaFilteredCount={resp.get('raiMediaFilteredCount')} reasons={resp.get('raiMediaFilteredReasons')}", status="refusal_or_empty")
+    data = base64.b64decode(vids[0]["bytesBase64Encoded"])
+    out.parent.mkdir(parents=True, exist_ok=True); out.write_bytes(data)
+    rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="ok", artifact_sha256=sha256(out), bytes=len(data)); record(rec)
+    settle(aid, "ok", f"{vids[0].get('mimeType')} {len(data)} bytes -> {out.name}", name)
+    print(f"saved {out} ({len(data)} bytes) in {rec['latency_s']} s")
+    return rec
 
 
 # ── voices ───────────────────────────────────────────────────────────────────

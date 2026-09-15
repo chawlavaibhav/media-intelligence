@@ -1,0 +1,119 @@
+# PROMPTS — every generation prompt of the job, byte-exact as sent. Frozen copy never appears here (A3).
+# Plates: Nano Banana 2 (Gemini API) with the brand's own photographs attached inline as references.
+# Clips: Veo 3.1 Fast image-to-video on Vertex, 720p 9:16 6 s silent (the clean VID-I2V cell configuration).
+# Shared world (PA-D4 one source; PA-D1 finishes; CA-D2 zones): one soft window light from camera-left, late afternoon;
+# warm oat linen on a light wood table; plain warm off-white wall, softly out of focus, nothing on it.
+
+references:
+  bowl_shape: source/images/Slide_01.jpg          # Kairi (Mint) packshot, text-free — the bowl's geometry, glaze, rim notch
+  bowl_rose_chopsticks: source/images/blog_Setof2withchopstickslifestyle.jpg   # Rosé + Kairi bowls, noodles, acacia chopsticks, hand
+  never_as_reference: [source/images/Slide_03.jpg, source/images/Slide_05.jpg, source/images/Slide_06.jpg, source/images/Slide_07.jpg, source/images/Slide_09.jpg]   # baked marketing text
+
+plates:
+  plate-H1:
+    aspect: "9:16"
+    refs: [bowl_shape, bowl_rose_chopsticks]
+    prompt: >-
+      Vertical photograph, close on a young Indian woman's right hand holding a pair of pale acacia wood chopsticks
+      above a bowl of ramen. The bowl is the ceramic bowl from the first reference photograph, exactly the same shape
+      and size, but in the soft rosé pink glaze of the second reference photograph: gently flared wall, thick rounded
+      rim, a small moulded notch cut into the rim on the near side, glossy glaze over matte-looking ceramic. The bowl
+      sits on warm oat-coloured linen on a light wood table, filled with amber broth, wheat noodles, a halved egg and
+      spring onion, faint steam. The grip is shown precisely and calmly: the lower chopstick rests in the web between
+      the thumb and index finger and lies along the base of the ring finger, which curls gently under it to support
+      it; the upper chopstick is held like a pencil between the tips of the thumb, index and middle finger; the two
+      tips are level and hover just above the noodles without touching. One hand only, five fingers, natural
+      proportions, short clean nails, a plain oatmeal knit sleeve at the wrist. One soft window light from camera-left,
+      late afternoon, soft shadow edges, one large soft window reflection on the glaze. The bowl and hand sit in the
+      lower two-thirds of the frame; the upper third is plain soft-focus warm off-white wall, empty. Warm, calm,
+      domestic, photographic, shallow depth of field. No text, no lettering, no logos, no printed matter anywhere in
+      the image.
+  plate-H2:
+    aspect: "9:16"
+    refs: [bowl_shape, bowl_rose_chopsticks, plate-H1-accepted]
+    prompt: >-
+      Vertical photograph, the same young Indian woman's right hand, the same pale acacia chopsticks, the same rosé
+      pink ceramic bowl of ramen, the same oat linen, wood table, window light from camera-left and empty soft-focus
+      wall as the third reference photograph, framed identically. Only the action has changed: the upper chopstick has
+      closed down against the lower one in a clean pencil-grip pinch and holds a small neat bundle of wheat noodles
+      lifted a few centimetres above the broth, a drop of broth falling; the lower chopstick has not moved from the web
+      of the thumb and the base of the ring finger. Five fingers, natural proportions, short clean nails, oatmeal knit
+      sleeve. Bowl and hand in the lower two-thirds; the upper third is empty soft-focus wall. No text, no lettering,
+      no logos, no printed matter anywhere in the image.
+  plate-H3:
+    aspect: "9:16"
+    refs: [bowl_shape, bowl_rose_chopsticks, plate-H1-accepted]
+    prompt: >-
+      Vertical photograph, close on a young Indian man's right hand holding a pair of pale acacia wood chopsticks
+      above a bowl of ramen, framed like the third reference photograph but with the bowl in the soft mint-green glaze
+      of the first reference photograph, exactly that bowl: gently flared wall, thick rounded rim, a small moulded
+      notch in the rim, glossy glaze with one large soft window reflection. Same oat linen, light wood table, one soft window light from camera-left, empty
+      soft-focus warm off-white wall in the upper third. The grip is wrong in an endearing, ordinary way: both
+      chopsticks are gathered into the fingers together, their tips crossed over each other, and a single wheat
+      noodle is sliding off the crossed tips back down toward the broth mid-fall. Five fingers, natural proportions,
+      short clean nails, a plain slate-blue cotton shirt cuff at the wrist. Warm, calm, domestic, photographic,
+      shallow depth of field. No text, no lettering, no logos, no printed matter anywhere in the image.
+  plate-A:
+    aspect: "9:16"
+    refs: [bowl_shape, bowl_rose_chopsticks]
+    prompt: >-
+      Vertical photograph at table height in a warm, simple Indian home kitchen. A young Indian man in his early
+      twenties sits on the right side of the frame and a young Indian woman of the same age sits on the left, across
+      a small light wood table from each other, both turned three-quarters toward the camera. In front of him a
+      mint-green ceramic bowl of steaming ramen, the bowl from the first reference photograph exactly, with its small
+      moulded rim notch; in front of her the same bowl in the rosé pink glaze of the second reference photograph. He
+      holds a pair of pale acacia chopsticks in a clumsy full-fist grip and a noodle is slipping back into his bowl;
+      she watches him, amused, her own acacia chopsticks resting in the notch of her bowl's rim. He wears a plain
+      slate-blue cotton shirt, she a plain oatmeal knit; no patterns. Oat-coloured linen on the table, faint steam.
+      One soft window light from camera-left, late afternoon, soft shadow edges, one large soft window reflection on
+      each glaze. Behind them a plain warm off-white wall, softly out of focus, with nothing on it, filling the upper
+      third of the frame. Warm, calm, domestic, photographic. No text, no lettering, no logos, no printed matter
+      anywhere in the image.
+  plate-B:
+    aspect: "9:16"
+    refs: [plate-A-accepted, bowl_shape]
+    prompt: >-
+      Vertical photograph, the same two young people, the same kitchen table, bowls, clothes, window light from
+      camera-left and empty soft-focus wall as the first reference photograph, framed slightly closer. Both are
+      laughing warmly at each other. He is eating from his mint-green ceramic bowl with a small pale wooden spoon,
+      chopsticks set aside on the linen; her pale acacia chopsticks rest neatly in the small moulded notch on the rim
+      of her rosé pink bowl, the bowl from the second reference photograph. Faint steam, oat linen, light wood table.
+      No text, no lettering, no logos, no printed matter anywhere in the image.
+
+clips:                      # Veo 3.1 Fast i2v, silent, 6 s, 720p, 9:16; the accepted plate is the first frame
+  clip-2:
+    from: plate-H1-accepted
+    prompt: >-
+      Static camera, no camera movement. The lower chopstick is already resting in the web of the thumb and along
+      the ring finger and does not move at all for the whole clip; the ring finger curls very slightly to settle under
+      it, then the hand holds perfectly still. The upper chopstick stays lifted in its pencil grip. Steam rises slowly
+      from the broth. Natural soft daylight, nothing else changes. No text, no lettering, no logos.
+    negative: "camera movement, zoom, pan, extra fingers, extra chopsticks, text, lettering, logos, watermark"
+  clip-3:
+    from: plate-H2-accepted
+    prompt: >-
+      Static camera, no camera movement. The upper chopstick, held like a pencil, lowers once and pinches a small
+      bundle of noodles against the motionless lower chopstick, lifts them a few centimetres with a drop of broth
+      falling, and holds. The lower chopstick never moves. Steam rises slowly. No text, no lettering, no logos.
+    negative: "camera movement, zoom, pan, extra fingers, extra chopsticks, text, lettering, logos, watermark"
+  clip-4:
+    from: plate-H3-accepted
+    prompt: >-
+      Static camera, no camera movement. The crossed chopsticks wobble in the clumsy grip, the tips slide across
+      each other, and the single noodle slips off and drops back into the broth with a small splash; the hand
+      hesitates, then tries once more and the tips cross again. Steam rises slowly. No text, no lettering, no logos.
+    negative: "camera movement, zoom, pan, extra fingers, extra chopsticks, text, lettering, logos, watermark"
+  clip-1:
+    from: plate-A-accepted
+    prompt: >-
+      Static camera, no camera movement. He tries to lift noodles with the chopsticks held in his fist; a noodle
+      slides back into the mint-green bowl; he sighs and looks at her; she smiles and reaches for her own chopsticks.
+      Steam rises gently from both bowls. Natural soft daylight. No text, no lettering, no logos.
+    negative: "camera movement, zoom, pan, extra people, extra hands, text, lettering, logos, watermark"
+  clip-5:
+    from: plate-B-accepted
+    prompt: >-
+      Very slow, gentle push in toward the table, motivated by the meal; no other camera movement. Both laugh
+      warmly; he takes a spoonful from his mint-green bowl and eats; her chopsticks stay resting in the notch on the
+      rim of her rosé bowl. Steam rises gently. Natural soft daylight. No text, no lettering, no logos.
+    negative: "fast camera movement, zoom, pan, extra people, extra hands, text, lettering, logos, watermark"
