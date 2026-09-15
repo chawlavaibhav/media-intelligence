@@ -93,7 +93,11 @@ def _attempt_record(attempt: dict, manifest: dict, *, now_utc: str, artifact, pr
 
 def run_loop(spec: dict, blueprint: dict, manifest: dict, profile, *, artifact_provider, detector,
              human_verdicts: list, product_entity: bool = False, write: bool = False, store=None,
-             now_utc: str = "2026-09-14T00:00:00Z", canon_lookup: dict | None = None) -> LoopResult:
+             now_utc: str = "2026-09-14T00:00:00Z", canon_lookup: dict | None = None,
+             frame_sampler=None, source_still_clean=None) -> LoopResult:
+    """`frame_sampler(attempt, artifact_bytes) -> list[bytes] | None` samples frames from a returned video
+    for the post-draw text scan (runtime/loop/frame_hygiene). Without one, a video attempt's post-draw
+    verdict is NOT_RUN and nothing can be accepted — the rule promoted from UPWORK-INTRO-001."""
     verdicts = list(human_verdicts or [])
     dry = manifest.get("dispatch_mode", "dry") == "dry"
     acceptance = Acceptance(profile)
@@ -114,8 +118,10 @@ def run_loop(spec: dict, blueprint: dict, manifest: dict, profile, *, artifact_p
     reached_human = False
     for i, attempt in enumerate(attempts_in):
         artifact = artifact_provider(attempt)
+        frames = frame_sampler(attempt, artifact) if (frame_sampler is not None and artifact is not None) else None
         post = postdraw.run(spec, artifact, descriptor_for(spec, attempt), package_text,
-                            product_entity=product_entity, detector=detector)
+                            product_entity=product_entity, detector=detector, frames=frames,
+                            source_still_clean=source_still_clean)
         rec = _attempt_record(attempt, manifest, now_utc=now_utc, artifact=artifact,
                               pre_sha=pre["report_sha256"], post=post,
                               is_repair_of=pending_repair[1] if pending_repair else None,

@@ -1,0 +1,115 @@
+# SYSTEM DEFECTS — the big lesson: which failures were MEDIA-MODEL failures and which were
+# PIPELINE / ORCHESTRATION failures. The distinction must survive in durable learning.
+case_id: UPWORK-INTRO-001
+classes:
+  media_model_failure: "the generation model produced something that does not meet the brief (content, fidelity, voice)"
+  pipeline_failure: "the system around the model — compositor, QA timing, route/voice selection, pool awareness, error handling — let a defect through or created one"
+  infrastructure_transient: "provider unavailable / 5xx / timeout; not a statement about model quality"
+
+defects:
+  - id: SD-01
+    version: V3
+    observed: "text clipped at canvas / card edges"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "no measured text bounds gate; draw calls clipped silently"
+    not_a_model_failure: true
+    promoted_as: TEXT_BOUNDS_GATE
+  - id: SD-02
+    version: V3
+    observed: "text colour lost against photographic backgrounds"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "no contrast measurement over the pixels behind the box; no backing-surface rule"
+    not_a_model_failure: true
+    promoted_as: CONTRAST_GATE
+  - id: SD-03
+    version: V3
+    observed: "creatives cropped in wrappers and full-screen slots"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "cover-fit by default; no declaration or QA for destructive crops"
+    not_a_model_failure: true
+    promoted_as: CROP_FIT_DECLARATION
+  - id: SD-04
+    version: V3
+    observed: "square and rounded card geometry in the same film"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "radius/border/shadow written per call; no single design-token source"
+    not_a_model_failure: true
+    promoted_as: GEOMETRY_TOKENS
+  - id: SD-05
+    version: V3
+    observed: "narration judged horribly robotic"
+    class: pipeline_failure
+    subsystem: routing_voice_selection
+    root_cause: "Sarvam bulbul:v3 chosen for ~48 s of continuous narration on the strength of Lab evidence gathered on ≤ 70-character lines; no long-read qualification before dependent assembly"
+    model_note: "a model observation exists (see ROUTE-OBSERVATIONS RO-05) but the failure that reached the Controller was the route choice and the missing qualification step"
+    promoted_as: SPEAKER_MICROQUALIFICATION (candidate pattern)
+  - id: SD-06
+    version: V3
+    observed: "Kling i2v clip showed letter-shaped signage although the source still was text-clean"
+    class: pipeline_failure
+    subsystem: deterministic_qa
+    root_cause: "post-draw text scan ran over the still, never over sampled video frames; the executor caught it by eye and excluded the clip"
+    model_note: "the model did sharpen blurred signage into letters (RO-06) — but the system let a clean-still result stand in for the video"
+    promoted_as: VIDEO_FRAME_TEXT_HYGIENE
+  - id: SD-07
+    version: V4
+    observed: "offer pill and code line collided to the eye"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "no disjointness assertion over critical ad regions; adjacency at equal visual weight is a hierarchy defect the eye reads as overlap"
+    not_a_model_failure: true
+    promoted_as: ELEMENT_DISJOINTNESS
+  - id: SD-08
+    version: V4 / V4.1
+    observed: "speaker route unresolved at plan time (no Registry cell for single-speaker English native speech from an anchored still)"
+    class: pipeline_failure
+    subsystem: orchestration
+    root_cause: "an unresolved capability needed micro-qualification before full assembly; V3 built the whole film without a presenter and V1/V2 built it around one that was never qualified"
+    promoted_as: SPEAKER_MICROQUALIFICATION (candidate pattern)
+  - id: SD-09
+    version: V4
+    observed: "Vertex Veo returned gRPC 14 UNAVAILABLE twice, then succeeded 100 s later"
+    class: infrastructure_transient
+    subsystem: provider
+    root_cause: "provider outage; the route worked at 17:00 IST the same day"
+    not_a_model_failure: true
+    recorded_in_ledger_as: failed_or_filtered      # ambiguous label — the reason TRANSIENT_ERROR_CLASSIFICATION is promoted
+    promoted_as: TRANSIENT_ERROR_CLASSIFICATION
+  - id: SD-10
+    version: V3
+    observed: "Lyria HTTP 503 / 500 / 500 on the frozen prompt; neutral rewrite succeeded first time"
+    class: infrastructure_transient
+    subsystem: provider
+    root_cause: "provider-side refusal/outage, wording-sensitive (suspected, unproven)"
+    not_a_model_failure: true
+    promoted_as: TRANSIENT_ERROR_CLASSIFICATION
+  - id: SD-11
+    version: V3 / V4
+    observed: "video slots dropped (B3, Kora motion) and the Wan fallback structurally dead because fal cash was USD 3.23 then 0.26 while the cap was INR 2,000"
+    class: pipeline_failure
+    subsystem: orchestration
+    root_cause: "route planning knew the spend authority, not the provider pool liquidity; spend authority != provider liquidity"
+    not_a_model_failure: true
+    promoted_as: PROVIDER_POOL_AVAILABILITY
+  - id: SD-12
+    version: V1 / V2
+    observed: "two versions built around presenter footage before the presenter was judged; V2 chain quality degraded"
+    class: pipeline_failure
+    subsystem: orchestration
+    root_cause: "no human quality gate on the presenter before dependent spend"
+    model_note: "Veo extend chaining did degrade (RO-02) — a model observation that a micro-qualification would have surfaced at USD 1 instead of USD 8"
+    promoted_as: SPEAKER_MICROQUALIFICATION (candidate pattern)
+  - id: SD-13
+    version: V1 → V4.1
+    observed: "≈7–8 h end to end for one 57-s asset; five human review cycles"
+    class: pipeline_failure
+    subsystem: orchestration
+    root_cause: "creative architecture was re-litigated across V1/V2/V3 (phone framing, proof size, presenter yes/no); the compositor had no gates until V4; QA ran after assembly, not during"
+    promoted_as: TTAO metric (candidate KPI)
+
+media_model_failures_that_reached_the_controller: 0
+note: "every defect the Controller named in a verdict was a pipeline/orchestration/creative-direction failure or a route choice; no model produced an unusable draw that the pipeline then shipped. Model-level observations are kept separately in ROUTE-OBSERVATIONS.yaml with no routing authority."

@@ -1,0 +1,133 @@
+{
+  "accepted_event_id": "oe-fc7d0442932e54024f6251f96ed1b5263a1b14b92d6a94714d0fa06e0f275c32",
+  "blueprint": {
+    "acceptance_statements": [
+      "ACCEPT only if the lettering reads exactly \"FLAT 40% OFF\", \"First 100 members only\" and \"AlphaFit\" — every character as given; REJECT on any wrong, missing, doubled or invented character.",
+      "REJECT if any other lettering or pseudo-lettering appears anywhere, or if any of the required lettering is cut by the frame edge or overlaps other lettering.",
+      "ACCEPT only if the lower-right corner is empty ground with nothing on it.",
+      "REJECT if any person, photograph or product appears.",
+      "REJECT if any colour other than black, white and neon yellow carries the design."
+    ],
+    "composition": {
+      "attention_order": "1st read: \"FLAT 40% OFF\" by scale and neon-on-black contrast; 2nd read: \"First 100 members only\"; 3rd read: \"AlphaFit\" and the date line.",
+      "edge_treatment": "tight fit with a deliberate margin around the headline; no letter touches the frame edge",
+      "placement_zone": "headline block off-centre in the upper-left zone; the lower-right corner is left clean for the customer's logo, a visible reason for the asymmetry"
+    },
+    "generation_prompts": {
+      "textless_plate": "Square social-media background image. Solid black background with a single wide diagonal neon-yellow stripe running from lower-left to upper-right; no people, no photographs, no objects. The upper-left two-thirds and the lower-left are plain black space; the lower-right corner stays completely empty. High contrast, energetic. No text, no letters, no numerals, no symbols anywhere in the image."
+    },
+    "hard_constraints": [
+      "the string 'FLAT 40% OFF' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+      "the string 'First 100 members only' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+      "the string 'AlphaFit' appears character-exact and is not re-flowed, re-spelled or re-typeset",
+      "the deliverable is 1:1",
+      "the copy reads exactly \"FLAT 40% OFF\", \"First 100 members only\" and \"AlphaFit\" — 'It has to say ...'",
+      "no pictures of people — 'No pictures of people'",
+      "black and neon yellow only — 'Use our brand colours, black and neon yellow'",
+      "one corner stays empty for the logo — 'just leave a clean corner for it'",
+      "square — 'Square post'"
+    ],
+    "materials_and_light": {
+      "implied_light_source": "none — a flat graphic plate with no scene lighting; contrast comes from colour, not from light",
+      "surface_finish_per_key_object": "solid matte black ground; matte neon-yellow stripe; no gloss anywhere"
+    },
+    "objective": "Produce a square Instagram post for AlphaFit's New Year offer whose four lines of copy are set exactly, bold and energetic in black and neon yellow, with a clean corner left for the customer's logo.",
+    "resolution_class": "1024-class"
+  },
+  "canon": {
+    "corpus_digest": "3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc",
+    "packs_injected": [
+      "composition_and_attention"
+    ],
+    "packs_selected": [
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "composition_and_attention",
+      "colour_and_visual_register",
+      "typography_and_copy",
+      "indian_indic_context",
+      "commercial_communication"
+    ],
+    "prefix_sha256": "c81644f61d9d39a5b25f18058ff5c29c30256c287a3b4f037be40cb0d52e3945"
+  },
+  "created_utc": "2026-09-14T12:00:00Z",
+  "identity_fields": {
+    "aspect": "1:1",
+    "entity_roles": [],
+    "exact_text": [
+      {
+        "content": "AlphaFit",
+        "placement": "overlay",
+        "script": "latin"
+      },
+      {
+        "content": "FLAT 40% OFF",
+        "placement": "overlay",
+        "script": "latin"
+      },
+      {
+        "content": "First 100 members only",
+        "placement": "overlay",
+        "script": "latin"
+      },
+      {
+        "content": "Offer ends 15 January",
+        "placement": "overlay",
+        "script": "latin"
+      }
+    ],
+    "identity_version": 1,
+    "kind": "static_ad",
+    "language": "en",
+    "market": "IN",
+    "modality": "static_image",
+    "motion": null,
+    "requested_operation": "generate",
+    "supplied_asset_roles": []
+  },
+  "identity_version": 1,
+  "normalized_identity": "4415e08710010a9f58ec16f37a54cca87aa94b7e37ad9e4356954a33f917c3ec",
+  "provenance": {
+    "acceptance_authority": "human",
+    "dry_run": true,
+    "promoted_by": "runtime"
+  },
+  "route_hint": {
+    "cell_key": "IMG-CORE/flux-2-pro",
+    "route_key": "flux-2-pro",
+    "text_mechanism": "deterministic_text_composition"
+  },
+  "schema": "TEMPLATE-v0",
+  "slots": [
+    {
+      "content": "FLAT 40% OFF",
+      "id": "t1",
+      "placement": "overlay",
+      "script": "latin"
+    },
+    {
+      "content": "First 100 members only",
+      "id": "t2",
+      "placement": "overlay",
+      "script": "latin"
+    },
+    {
+      "content": "AlphaFit",
+      "id": "t3",
+      "placement": "overlay",
+      "script": "latin"
+    },
+    {
+      "content": "Offer ends 15 January",
+      "id": "t4",
+      "placement": "overlay",
+      "script": "latin"
+    }
+  ],
+  "source": {
+    "job_id": "alpha-dry-img-text-02",
+    "spec_id": "spec-5bf7e0a1831e3859"
+  },
+  "status": "reusable_dry_only",
+  "template_id": "tpl-673f5eec6eb3bf44"
+}

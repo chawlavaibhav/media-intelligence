@@ -68,7 +68,10 @@ def render(manifest: dict, run_result: dict | None = None) -> str:
             flag = "WOULD SEND " if a["would_dispatch"] else "WOULD NOT  "
             if a["slot"] == "fallback":
                 flag = "CONDITIONAL"
-            out.append(f"  [{flag}] {a['attempt_id']}")
+            liq = a.get("pool_liquidity") or {}
+            out.append(f"  [{flag}] {a['attempt_id']}"
+                       + (f"   (if funded: {'yes' if a.get('would_dispatch_if_funded') else 'no'}; pool {liq.get('status', 'not_read')})"
+                          if a["slot"] == "primary" else ""))
             out.append(f"        {a['slot']:<8} draw {a['draw_index']}  {a['route_key']} on {a['surface']} "
                        f"({a['adapter_family']}, {a['surface_model_id']})")
             p = a["price"]

@@ -19,6 +19,17 @@ WHAT run() DOES
     no transport exists in this tranche, "live dispatch is not wired". Every refusal names what is
     missing. No code path here constructs a transport.
 
+POOLS (UPWORK-INTRO-001, SD-11; Controller audit on PR #98, blocker 3)
+
+    Spend authority is not provider liquidity. build() accepts a PoolLiquidity of explicit balance READINGS
+    (runtime/execute/pools.py); every attempt is marked funded / not_funded / unknown / not_read against its
+    billing pool, drawn down in reservation order. Two answers are kept apart on every attempt:
+      would_dispatch_if_funded  the pool-agnostic answer — harness shape verified, price agrees, within ceiling;
+      would_dispatch            the real answer — the above AND liquidity positively known and funded.
+    An attempt its pool cannot fund is `blocked_by_pool`; an attempt whose pool is unknown or unread is not
+    dispatchable either (`pool_liquidity_unknown` in refusal_reason) — fail closed. Nothing is assumed
+    funded. The bridge reads no balance itself.
+
 MONEY
 
     The job ceiling comes from the spec's budget (and, when a request ceiling is also given, the lower of
@@ -44,6 +55,7 @@ from runtime.route.spec import Spec
 
 from . import manifest as M
 from .authorisation import AuthorisationRefused, check_live_authorisation
+from .pools import PoolLiquidity
 
 GCP_SURFACES = ("vertex", "gemini_api")
 ZERO = "0"
@@ -83,7 +95,8 @@ class ExecutionBridge:
     # ------------------------------------------------------------------ build
     def build(self, spec: Spec, decision: dict, profile: PolicyProfile, *, prompt_text: str,
               inputs: dict | None = None, customer_ref: str,
-              request_ceiling_usd: Decimal | str | None = None, built_utc: str | None = None) -> dict:
+              request_ceiling_usd: Decimal | str | None = None, built_utc: str | None = None,
+              pools: PoolLiquidity | None = None) -> dict:
         mode = str(profile.limit("dispatch_mode"))
         if mode not in M.DISPATCH_MODES:
             raise ExecuteRefused([f"policy profile {profile.name!r} carries dispatch_mode {mode!r}; the bridge "
@@ -114,6 +127,7 @@ class ExecutionBridge:
         if block is not None:
             return {**base, "blocked": block, "attempts": [], "fallback_triggers": [], "self_composed": [],
                     "surface_preference": None, "ceiling": None,
+                    "pool_liquidity": self._pool_block(pools, [], set()),
                     "provenance": self._provenance(spec, decision, profile)}
 
         # -- the ceiling every attempt is checked against ---------------------------------------------
@@ -128,6 +142,7 @@ class ExecutionBridge:
         attempts: list[dict] = []
         running = already
         blocked_by_ceiling = 0
+        pools_seen: set = set()
         for slot_name in ("primary", "fallback"):
             slot = decision.get(slot_name)
             if not slot:
@@ -135,8 +150,9 @@ class ExecutionBridge:
             for draw in range(1, draws + 1):
                 att, running, hit = self._attempt(spec, decision, profile, slot_name, slot, draw, prompt_text,
                                                   inputs or {}, customer_ref, mode, text_mechanism,
-                                                  effective, running)
+                                                  effective, running, pools)
                 blocked_by_ceiling += int(hit)
+                pools_seen.add(str(slot.get("billing_pool")))
                 attempts.append(att)
 
         self_composed = [
@@ -159,11 +175,37 @@ class ExecutionBridge:
                         "attempts_blocked_by_ceiling": blocked_by_ceiling,
                         "rule": "attempts reserve in listed order; the running total never crosses the effective "
                                 "ceiling; an attempt that would is blocked_by_ceiling and stays visible"},
+            "pool_liquidity": self._pool_block(pools, attempts, pools_seen),
             "provenance": self._provenance(spec, decision, profile),
         }
 
+    # ------------------------------------------------------------------ pool liquidity
+    @staticmethod
+    def _pool_block(pools: PoolLiquidity | None, attempts: list, pools_seen: set) -> dict:
+        rule = ("spend authority is not provider liquidity: an attempt whose billing pool cannot fund it is "
+                "blocked_by_pool; an attempt whose pool is unknown or unread is not dispatchable either "
+                "(would_dispatch false, pool_liquidity_unknown); would_dispatch_if_funded keeps the pool-agnostic answer")
+        unknown = sum(1 for a in attempts
+                      if a.get("pool_liquidity", {}).get("funded") is None
+                      and (a.get("would_dispatch_if_funded") or a.get("if_triggered_would_dispatch_if_funded")))
+        if pools is None:
+            return {"status": "not_read", "readings": {}, "pools_without_reading": sorted(pools_seen),
+                    "attempts_blocked_by_pool": 0, "attempts_not_dispatchable_unknown_liquidity": unknown, "rule": rule,
+                    "note": "no PoolLiquidity was supplied to build(); no attempt is dispatchable until a reading funds it"}
+        readings = {p: pools.reading(p) for p in pools.pools}
+        missing = sorted(p for p in pools_seen if p not in readings or readings[p]["balance_usd"] is None)
+        if not missing:
+            status = "read"
+        elif len(missing) < len(pools_seen):
+            status = "partial"
+        else:
+            status = "unknown"
+        return {"status": status, "readings": readings, "pools_without_reading": missing,
+                "attempts_blocked_by_pool": sum(1 for a in attempts if a.get("blocked_by_pool")),
+                "attempts_not_dispatchable_unknown_liquidity": unknown, "rule": rule}
+
     def _attempt(self, spec, decision, profile, slot_name, slot, draw, prompt_text, inputs, customer_ref,
-                 mode, text_mechanism, ceiling, running) -> tuple[dict, Decimal, bool]:
+                 mode, text_mechanism, ceiling, running, pools: PoolLiquidity | None = None) -> tuple[dict, Decimal, bool]:
         route_key = slot["route_key"]
         aid = self.identities.mint(customer_ref=customer_ref, job_id=spec.job_id,
                                    decision_id=decision["decision_id"], route_key=route_key, draw_index=draw)
@@ -189,7 +231,22 @@ class ExecutionBridge:
             reasons.append(f"blocked_by_ceiling: reserved so far {running} + this attempt {expected} exceeds the "
                            f"effective ceiling {ceiling}; nothing is trimmed to fit")
 
-        harness_would = bool(dry.get("would_dispatch")) and price_agrees and within
+        pool = str(slot.get("billing_pool"))
+        if pools is None:
+            liquidity = {"pool": pool, "status": "not_read", "funded": None, "reason": "no pool readings supplied"}
+        else:
+            funded, why = pools.reserve(pool, expected) if within else pools.can_fund(pool, expected)
+            liquidity = {"pool": pool, "status": ("funded" if funded else "not_funded" if funded is False else "unknown"),
+                         "funded": funded, "reason": why}
+        blocked_by_pool = liquidity["funded"] is False
+        if blocked_by_pool:
+            reasons.append(f"blocked_by_pool: {liquidity['reason']}; spend authority is not provider liquidity")
+        elif liquidity["funded"] is None:
+            reasons.append(f"pool_liquidity_unknown: {liquidity['reason']}; an attempt is dispatchable only when its "
+                           "pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)")
+
+        if_funded = bool(dry.get("would_dispatch")) and price_agrees and within
+        harness_would = if_funded and liquidity["funded"] is True
         att = {
             "attempt_id": aid,
             "slot": slot_name,
@@ -222,15 +279,19 @@ class ExecutionBridge:
             "evidence": {"cells": list(slot.get("evidence_cells") or []), "status": slot.get("evidence_status"),
                          "text_mechanism": text_mechanism},
             "would_dispatch": harness_would if slot_name == "primary" else False,
+            "would_dispatch_if_funded": if_funded if slot_name == "primary" else False,
             "refusal_reason": ("; ".join(reasons) if reasons else None),
             "ceiling": {"job_ceiling_usd": str(ceiling),
                         "reserved_before_this_usd": str(running - expected if within else running),
                         "this_attempt_usd": str(expected), "within": within},
             "blocked_by_ceiling": hit,
+            "pool_liquidity": liquidity,
+            "blocked_by_pool": blocked_by_pool,
         }
         if slot_name == "fallback":
             att["conditional_on"] = list(slot.get("trigger") or [])
             att["if_triggered_would_dispatch"] = harness_would
+            att["if_triggered_would_dispatch_if_funded"] = if_funded
             att["conditional_note"] = ("a fallback attempt is dispatched only if a named trigger fires on the "
                                        "primary; never alongside it and never as a retry of it")
         return att, running, hit

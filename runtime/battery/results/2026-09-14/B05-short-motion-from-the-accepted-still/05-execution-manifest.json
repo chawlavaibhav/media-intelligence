@@ -5,6 +5,7 @@
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-vid:alpha-dry-vid-i2v-01:rd-efae6299ed6cca4d:minimax-h3-max-i2v:draw1",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.000000",
@@ -19,6 +20,12 @@
         "status": "clean_observed",
         "text_mechanism": "not_applicable"
       },
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.480000",
@@ -33,7 +40,7 @@
         "unit": "per_second",
         "unit_price": "0.08"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -56,13 +63,15 @@
       "slot": "primary",
       "surface": "fal",
       "surface_model_id": "minimax/h3-max/image-to-video",
-      "would_dispatch": true
+      "would_dispatch": false,
+      "would_dispatch_if_funded": true
     },
     {
       "adapter_family": "fal_queue",
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-vid:alpha-dry-vid-i2v-01:rd-efae6299ed6cca4d:minimax-h3-max-i2v:draw2",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.480000",
@@ -77,6 +86,12 @@
         "status": "clean_observed",
         "text_mechanism": "not_applicable"
       },
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.480000",
@@ -91,7 +106,7 @@
         "unit": "per_second",
         "unit_price": "0.08"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -114,13 +129,15 @@
       "slot": "primary",
       "surface": "fal",
       "surface_model_id": "minimax/h3-max/image-to-video",
-      "would_dispatch": true
+      "would_dispatch": false,
+      "would_dispatch_if_funded": true
     },
     {
       "adapter_family": "vertex_veo",
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-vid:alpha-dry-vid-i2v-01:rd-efae6299ed6cca4d:veo-3.1-fast-i2v:draw1",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.960000",
@@ -143,6 +160,13 @@
         "text_mechanism": "not_applicable"
       },
       "if_triggered_would_dispatch": false,
+      "if_triggered_would_dispatch_if_funded": false,
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "credits",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "credits",
         "expected_cost_usd": "0.600000",
@@ -163,7 +187,7 @@
         "unit": "per_second",
         "unit_price": "0.1"
       },
-      "refusal_reason": "harness: PreDispatchRefusal: aspect '4:5' is not in the pinned Veo enum ('16:9', '9:16')",
+      "refusal_reason": "harness: PreDispatchRefusal: aspect '4:5' is not in the pinned Veo enum ('16:9', '9:16'); pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": null,
@@ -180,13 +204,15 @@
       "slot": "fallback",
       "surface": "vertex",
       "surface_model_id": "veo-3.1-fast-generate-001",
-      "would_dispatch": false
+      "would_dispatch": false,
+      "would_dispatch_if_funded": false
     },
     {
       "adapter_family": "vertex_veo",
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-vid:alpha-dry-vid-i2v-01:rd-efae6299ed6cca4d:veo-3.1-fast-i2v:draw2",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "1.560000",
@@ -209,6 +235,13 @@
         "text_mechanism": "not_applicable"
       },
       "if_triggered_would_dispatch": false,
+      "if_triggered_would_dispatch_if_funded": false,
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "credits",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "credits",
         "expected_cost_usd": "0.600000",
@@ -229,7 +262,7 @@
         "unit": "per_second",
         "unit_price": "0.1"
       },
-      "refusal_reason": "harness: PreDispatchRefusal: aspect '4:5' is not in the pinned Veo enum ('16:9', '9:16')",
+      "refusal_reason": "harness: PreDispatchRefusal: aspect '4:5' is not in the pinned Veo enum ('16:9', '9:16'); pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": null,
@@ -246,7 +279,8 @@
       "slot": "fallback",
       "surface": "vertex",
       "surface_model_id": "veo-3.1-fast-generate-001",
-      "would_dispatch": false
+      "would_dispatch": false,
+      "would_dispatch_if_funded": false
     }
   ],
   "blocked": null,
@@ -272,6 +306,18 @@
   "job_id": "alpha-dry-vid-i2v-01",
   "manifest_id": "em-7c0539a7eb1b340e",
   "policy_profile": "dry",
+  "pool_liquidity": {
+    "attempts_blocked_by_pool": 0,
+    "attempts_not_dispatchable_unknown_liquidity": 2,
+    "note": "no PoolLiquidity was supplied to build(); no attempt is dispatchable until a reading funds it",
+    "pools_without_reading": [
+      "cash",
+      "credits"
+    ],
+    "readings": {},
+    "rule": "spend authority is not provider liquidity: an attempt whose billing pool cannot fund it is blocked_by_pool; an attempt whose pool is unknown or unread is not dispatchable either (would_dispatch false, pool_liquidity_unknown); would_dispatch_if_funded keeps the pool-agnostic answer",
+    "status": "not_read"
+  },
   "provenance": {
     "decision_sha256": "b66511d90db0d7cb27f7b2f5ecbe0494362ccd73bf1bf860919098d4139164f7",
     "dispatched": false,

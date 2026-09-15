@@ -91,7 +91,10 @@ def run_battery(manifest_path: Path, out_dir: Path, store_root: Path) -> dict:
                 "manifest": {
                     "attempts_rendered": len((result.objects.get("manifest") or {}).get("attempts") or []),
                     "primary_would_dispatch": [a["would_dispatch"] for a in (result.objects.get("manifest") or {}).get("attempts") or [] if a.get("slot") == "primary"],
+                    "primary_would_dispatch_if_funded": [a.get("would_dispatch_if_funded") for a in (result.objects.get("manifest") or {}).get("attempts") or [] if a.get("slot") == "primary"],
                     "fallback_executable_if_triggered": [a.get("if_triggered_would_dispatch") for a in (result.objects.get("manifest") or {}).get("attempts") or [] if a.get("slot") == "fallback"],
+                    "fallback_executable_if_triggered_if_funded": [a.get("if_triggered_would_dispatch_if_funded") for a in (result.objects.get("manifest") or {}).get("attempts") or [] if a.get("slot") == "fallback"],
+                    "pool_liquidity_status": ((result.objects.get("manifest") or {}).get("pool_liquidity") or {}).get("status"),
                     "harness_refusals": sorted({a["refusal_reason"] for a in (result.objects.get("manifest") or {}).get("attempts") or [] if a.get("refusal_reason")}),
                 } if result.objects.get("manifest") else None,
                 "attempts": len(loop.attempts) if loop else None,

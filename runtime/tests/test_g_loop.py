@@ -203,20 +203,38 @@ class LoopPaths(unittest.TestCase):
         self.assertIsNone(res.event)
         self.assertEqual(res.acceptance_state, "pending_human")
 
-    def test_motion_path_with_mp4_stub(self):
+    def test_motion_path_without_sampled_frames_cannot_be_accepted(self):
+        # Promoted from UPWORK-INTRO-001 (SD-06): a video nobody sampled frames from is NOT_RUN at the
+        # post-draw gate — never PASS-by-omission — so no person is asked to accept it.
         spec = G.load_spec_dict(G.SPEC_MOTION)
         man = manifest_for(spec, 1)
         man["attempts"][0]["request"]["body"] = {"parameters": {"aspectRatio": "9:16", "durationSeconds": 6}}
         provider = lambda a: synthetic.mp4_for_spec(spec, seed=a["draw_index"])
         res = driver.run_loop(spec, G.blueprint_motion(), man, self.profile, artifact_provider=provider,
                               detector=None, human_verdicts=[G.load_json("human-accept.json")], now_utc=NOW)
-        # LIMIT-TEXT is NOT-RUN for video (no frames), which does not fail the gate: the post-draw
-        # verdict is PASS on geometry/duration/track rows and the person decides
+        self.assertEqual(res.event["attempts"][0]["gate_post_verdict"], "NOT_RUN")
+        self.assertEqual(res.acceptance_state, "abandoned")
+
+    def test_motion_path_with_mp4_stub_and_sampled_frames(self):
+        spec = G.load_spec_dict(G.SPEC_MOTION)
+        man = manifest_for(spec, 1)
+        man["attempts"][0]["request"]["body"] = {"parameters": {"aspectRatio": "9:16", "durationSeconds": 6}}
+        provider = lambda a: synthetic.mp4_for_spec(spec, seed=a["draw_index"])
+        sampler = lambda a, b: synthetic.frames_for_spec(spec, seed=a["draw_index"])
+        script = {hashlib.sha256(f).hexdigest(): {"status": "no_text", "transcript": ""}
+                  for f in synthetic.frames_for_spec(spec, seed=1)}
+        res = driver.run_loop(spec, G.blueprint_motion(), man, self.profile, artifact_provider=provider,
+                              detector=textscan.ScriptedDetector.from_json(script), frame_sampler=sampler,
+                              human_verdicts=[G.load_json("human-accept.json")], now_utc=NOW)
+        # LIMIT-TEXT ran over the three sampled frames; geometry/duration/track rows pass; the person decides
         self.assertEqual(res.event["attempts"][0]["gate_post_verdict"], "PASS")
         self.assertEqual(res.acceptance_state, "accepted")
         checks = {d["check"]: d["status"] for d in res.event["deterministic_checks"]}
         self.assertEqual(checks["duration_probe"], "PASS")
         self.assertEqual(checks["aspect_check"], "PASS")
+        rows = {r["check_id"]: r["status"] for r in res.event["gate"]["post_draw"]}
+        self.assertEqual(rows["LIMIT-TEXT"], "PASS")
+        self.assertEqual(rows["RUNTIME-VIDEO-FRAME-TEXT"], "PASS")
 
 
 class StoreInvariants(unittest.TestCase):

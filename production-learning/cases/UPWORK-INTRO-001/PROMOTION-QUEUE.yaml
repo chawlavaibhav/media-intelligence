@@ -1,0 +1,88 @@
+# PROMOTION QUEUE — what this case promotes now, what it makes a candidate, what stays directional, what it does NOT promote.
+case_id: UPWORK-INTRO-001
+
+promoted_now:
+  - id: TEXT_BOUNDS_GATE
+    kind: deterministic_engineering_requirement
+    where: runtime/compositor/gates.py  check_text_bounds
+    rule: "rendered text bounding box must remain inside its container and the canvas; overflow fails closed"
+    evidence: [SD-01]
+  - id: CONTRAST_GATE
+    kind: deterministic_engineering_requirement
+    where: runtime/compositor/gates.py  check_contrast
+    rule: "wrapper/UI text keeps the defined readable contrast against the pixels behind it or receives a solid opaque backing surface"
+    evidence: [SD-02]
+  - id: CROP_FIT_DECLARATION
+    kind: deterministic_engineering_requirement
+    where: runtime/compositor/gates.py  check_fit
+    rule: "portfolio/creative proof defaults to CONTAIN; COVER requires an explicit declared crop with a reason and is reported for QA"
+    evidence: [SD-03]
+  - id: GEOMETRY_TOKENS
+    kind: deterministic_engineering_requirement
+    where: runtime/compositor/tokens.py  DesignTokens; gates.py check_geometry
+    rule: "shared compositor primitives read radius, border, shadow, spacing and safe area from one token source; an off-token card is refused"
+    evidence: [SD-04]
+  - id: ELEMENT_DISJOINTNESS
+    kind: deterministic_engineering_requirement
+    where: runtime/compositor/gates.py  check_disjoint
+    rule: "critical regions (offer, code, CTA, legal, headline) may not overlap"
+    evidence: [SD-07]
+  - id: VIDEO_FRAME_TEXT_HYGIENE
+    kind: deterministic_engineering_requirement
+    where: runtime/loop/frame_hygiene.py; runtime/loop/postdraw.py; runtime/loop/driver.py (frame_sampler)
+    rule: "a text-clean source still is insufficient; generated video is sampled post-generation and its text verdict comes only from the sampled frames; no frames → NOT_RUN, never PASS"
+    evidence: [SD-06]
+  - id: PROVIDER_POOL_AVAILABILITY
+    kind: deterministic_engineering_requirement
+    where: runtime/execute/pools.py; runtime/execute/bridge.py
+    rule: "route planning knows whether the selected billing pool can fund the planned dispatches; spend authority != provider liquidity; an attempt is dispatchable only when its pool is positively known to fund it (unknown / unread → not dispatchable; the pool-agnostic answer lives in would_dispatch_if_funded)"
+    evidence: [SD-11]
+  - id: TRANSIENT_ERROR_CLASSIFICATION
+    kind: deterministic_engineering_requirement
+    where: runtime/execute/provider_errors.py
+    rule: "a provider outage / transient 5xx / UNAVAILABLE / timeout is classified infrastructure_transient and never recorded as a content or model-quality failure"
+    evidence: [SD-09, SD-10]
+
+candidate_patterns:
+  - id: SPEAKER_MICROQUALIFICATION
+    status: candidate_pattern
+    kind: candidate_workflow_pattern
+    pattern: "test the high-risk unresolved speaker route FIRST → human quality gate → freeze the speaker → build the rest of the film"
+    observed: "worked once (V4): USD 4.03 to one accepted 8-s speaker before any dependent spend; V1/V2 (USD 8.08) and V3 (no presenter) show the cost of not doing it"
+    promotion_condition: "repeated success on additional real productions (≥ 2 more) before it becomes standard workflow"
+    controller_decision: "KEEP AS CANDIDATE for now — PR #98 audit comment, 2026-09-14T19:19Z"
+    not: universal routing doctrine
+  - id: SERVICE_INTRO_TEMPLATE
+    status: candidate_pattern
+    kind: accepted_structural_template
+    where: ACCEPTED-TEMPLATE.yaml (service_intro_with_portfolio_proof)
+    promotion_condition: "a second accepted instance for a different service/brand; pacing values stay evidence_scope: this_accepted_template until then"
+  - id: TTAO_PRIMARY_KPI
+    status: adopted_by_controller
+    question: "adopt TTAO as a formal primary production KPI alongside CpAO?"
+    recommendation: YES
+    controller_decision: "ADOPTED — PR #98 audit comment, 2026-09-14T19:19Z: 'adopt TTAO as a primary production KPI alongside CpAO'"
+    promotion_condition: "met (Controller decision); every real production now records TTAO from the first production input"
+  - id: COMPLEX_PRODUCTION_EVENT
+    status: design_candidate
+    kind: contract_design_candidate
+    question: "OUTCOME-EVENT-v2 / COMPLEX-PRODUCTION-EVENT for multi-asset, multi-version, multi-route, assembly-repair, externally executed productions"
+    gap: "OUTCOME-EVENT-v1 models one job → one route (+fallback) → one acceptance; this pilot is 5 versions × ~25 assets × 9 routes × 3 pools with USD-0 assembly repairs and a speaker qualification that is itself an acceptance. See README.md §OUTCOME-EVENT-v1 mapping gap"
+    promotion_condition: "a second complex real production; v1 is NOT mutated meanwhile and stays valid for the narrow Alpha chain"
+    controller_decision: "DEFERRED until after the second complex real production — PR #98 audit comment, 2026-09-14T19:19Z"
+
+directional_only_rule: "each stays in ROUTE-OBSERVATIONS.yaml with routing_authority: none; none creates or modifies a Capability Registry row"
+directional_only:
+  - "Veo 3.1 Fast presenter preference (RO-01, n=1)"
+  - "Gemini Omni 1.1 Flash presenter weakness (RO-03, n=1)"
+  - "Nano Banana 2 environmental-text redraw (RO-04, n=2)"
+  - "Sarvam bulbul:v3 long-narration cadence (RO-05)"
+  - "Kling i2v signage sharpening on legible-world backgrounds (RO-06, n=5)"
+  - "Seedream 5 Pro Edit fidelity (RO-07, n=6), GPT Image 2 / FLUX.2 Pro (RO-08), Lyria prompt sensitivity (RO-09), H3 Max plate animation (RO-10)"
+
+not_promoted:
+  - "any new Canon doctrine, source, domain or pack (no new Canon need was proven by this pilot: the failures were creative architecture, orchestration, compositor correctness, audio route choice and QA timing)"
+  - "any Capability Registry change (575 rows unchanged)"
+  - "any claim that Media Intelligence beats a direct human + LLM workflow (this pilot does not show commercial advantage)"
+  - "any widening of the Alpha-1 product family (the pilot's speaking-presenter, multi-shot family stays excluded by C-7)"
+  - "any mutation of OUTCOME-EVENT-v1"

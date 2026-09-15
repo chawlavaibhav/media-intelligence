@@ -5,6 +5,7 @@
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02:rd-498ab1c93f8ca1df:flux-2-pro:draw1",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.000000",
@@ -19,6 +20,12 @@
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
       },
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.030000",
@@ -33,7 +40,7 @@
         "unit": "per_image_first_megapixel",
         "unit_price": "0.03"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -58,13 +65,15 @@
       "slot": "primary",
       "surface": "fal",
       "surface_model_id": "fal-ai/flux-2-pro",
-      "would_dispatch": true
+      "would_dispatch": false,
+      "would_dispatch_if_funded": true
     },
     {
       "adapter_family": "fal_queue",
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02:rd-498ab1c93f8ca1df:flux-2-pro:draw2",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.030000",
@@ -79,6 +88,12 @@
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
       },
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.030000",
@@ -93,7 +108,7 @@
         "unit": "per_image_first_megapixel",
         "unit_price": "0.03"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -118,13 +133,15 @@
       "slot": "primary",
       "surface": "fal",
       "surface_model_id": "fal-ai/flux-2-pro",
-      "would_dispatch": true
+      "would_dispatch": false,
+      "would_dispatch_if_funded": true
     },
     {
       "adapter_family": "fal_queue",
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02:rd-498ab1c93f8ca1df:qwen-image-3:draw1",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.060000",
@@ -146,7 +163,14 @@
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
       },
-      "if_triggered_would_dispatch": true,
+      "if_triggered_would_dispatch": false,
+      "if_triggered_would_dispatch_if_funded": true,
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.040000",
@@ -161,7 +185,7 @@
         "unit": "per_image",
         "unit_price": "0.04"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -187,13 +211,15 @@
       "slot": "fallback",
       "surface": "fal",
       "surface_model_id": "alibaba/qwen-image-3/text-to-image",
-      "would_dispatch": false
+      "would_dispatch": false,
+      "would_dispatch_if_funded": false
     },
     {
       "adapter_family": "fal_queue",
       "arm": "core",
       "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02:rd-498ab1c93f8ca1df:qwen-image-3:draw2",
       "blocked_by_ceiling": false,
+      "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
         "reserved_before_this_usd": "0.100000",
@@ -215,7 +241,14 @@
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
       },
-      "if_triggered_would_dispatch": true,
+      "if_triggered_would_dispatch": false,
+      "if_triggered_would_dispatch_if_funded": true,
+      "pool_liquidity": {
+        "funded": null,
+        "pool": "cash",
+        "reason": "no pool readings supplied",
+        "status": "not_read"
+      },
       "price": {
         "billing_pool": "cash",
         "expected_cost_usd": "0.040000",
@@ -230,7 +263,7 @@
         "unit": "per_image",
         "unit_price": "0.04"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -256,7 +289,8 @@
       "slot": "fallback",
       "surface": "fal",
       "surface_model_id": "alibaba/qwen-image-3/text-to-image",
-      "would_dispatch": false
+      "would_dispatch": false,
+      "would_dispatch_if_funded": false
     }
   ],
   "blocked": null,
@@ -282,6 +316,17 @@
   "job_id": "alpha-dry-img-text-02",
   "manifest_id": "em-a5e8176fee1efdd1",
   "policy_profile": "dry",
+  "pool_liquidity": {
+    "attempts_blocked_by_pool": 0,
+    "attempts_not_dispatchable_unknown_liquidity": 4,
+    "note": "no PoolLiquidity was supplied to build(); no attempt is dispatchable until a reading funds it",
+    "pools_without_reading": [
+      "cash"
+    ],
+    "readings": {},
+    "rule": "spend authority is not provider liquidity: an attempt whose billing pool cannot fund it is blocked_by_pool; an attempt whose pool is unknown or unread is not dispatchable either (would_dispatch false, pool_liquidity_unknown); would_dispatch_if_funded keeps the pool-agnostic answer",
+    "status": "not_read"
+  },
   "provenance": {
     "decision_sha256": "eb7bf811b96388e034ef810f72cbbc68bc8327bed935c149d2ff89b91893da06",
     "dispatched": false,

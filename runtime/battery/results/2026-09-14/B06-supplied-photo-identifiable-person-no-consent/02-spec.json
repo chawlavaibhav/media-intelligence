@@ -1,0 +1,191 @@
+{
+  "acceptance_contract": [
+    "REJECT if anything that was not in the supplied picture appears in it, or if a smudge, a repeated texture patch or a colour seam is visible where something was changed.",
+    "REJECT if any person, or part of a person, remains anywhere in the image.",
+    "ACCEPT only if the sofa is the same object — same outline, same colour, same position in frame — when the result is flicked against the supplied photo.",
+    "REJECT if the vacated area shows a smudge, a repeated texture patch, a colour seam or an object that was not in the original.",
+    "REJECT if the lighting direction or overall brightness of the room has changed."
+  ],
+  "blueprint": {
+    "case_values": {
+      "CA-D1": "1st read stays the sofa; the filled background must not introduce a new attention cue (ms_0019).",
+      "CA-D3": "Edge treatment preserved as supplied; no re-crop.",
+      "PA-D10": "The supplied photograph is the creative decision (sk_lsm_c003_0020): PA-D1–PA-D9 are not re-decided on an edit; the only production decision is the removal. Recorded deviation: no lighting, finish or angle choice is made because the customer's clause 'same sofa, same room, same light' forces preservation.",
+      "PA-D4": "Preserved as supplied: the existing single light direction must survive in the filled area (no shadow in the vacated region may contradict the room's direction)."
+    },
+    "generation_prompts": {
+      "main": "Remove the person standing in the left background of this showroom photograph. Fill the vacated area with the same wall, floor and lighting that surround it, matching the existing light direction and shadows. Change nothing else: the sofa, its colour, its position, the room and the lighting stay exactly as they are. No text, no lettering, no logos added.",
+      "motion": null,
+      "textless_plate": null
+    },
+    "planner": "stage_a_blueprint_fixture",
+    "production_parameters": {
+      "blueprint_header": {
+        "author": "executor_agent",
+        "blueprint_author": "executor_agent",
+        "case_id": "IMG-EDIT-01",
+        "frozen": "2026-09-05",
+        "gate_pre": "not_available_on_base — canon/gate/run_gate.py is absent from base cb92f1e (CANON-GATE-001 unmerged); run `pre` on this file when it lands",
+        "held_constant_across_routes": "True",
+        "packs_source": "canon/compilation/PACK-*-v0.yaml (corpus 3f7e3fadb3fb); triggers canon/packs/pack-triggers-v0.yaml; DEFAULT/CHECK text rendered by id, never paraphrased; no HOLD material"
+      },
+      "brief_only_parameters": {},
+      "decision_questions": {
+        "CA-D1": "What reads first, second, third?",
+        "CA-D3": "How does the frame hold the subject at its edges?",
+        "PA-D10": "When may any of the above be overridden?",
+        "PA-D4": "What is the fictional light source, and does everything agree with it?"
+      },
+      "dispatch_parameters": {
+        "aspect": "as supplied",
+        "audio": "not_applicable",
+        "reference_slots": "1",
+        "resolution": "as supplied"
+      },
+      "text_handling": [
+        "mode: `none`"
+      ]
+    },
+    "source_ref": "eval/empirical-planning/STAGE-A-FREEZE-2026-09/BLUEPRINTS/IMG-EDIT-01.blueprint.md sha256:f2d9536595fddb8ee5529c0f31bda16cfbf85fa6844367949375332d9917381b"
+  },
+  "budget": {
+    "cost_ceiling_usd": "5.0",
+    "max_provider_draws": 2,
+    "repair_allowance": 1
+  },
+  "canon": {
+    "canon_gap": true,
+    "injected_context_sha256": "4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe",
+    "missing_domains": [
+      "colour_and_visual_register",
+      "commercial_communication",
+      "concept_and_distinctiveness",
+      "critique_and_effectiveness",
+      "indian_indic_context"
+    ],
+    "packs_selected": [
+      {
+        "compiled": false,
+        "pack_id": "concept_and_distinctiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": false,
+        "pack_id": "critique_and_effectiveness",
+        "status": "selected_uncompiled",
+        "trigger": "universal"
+      },
+      {
+        "compiled": true,
+        "pack_id": "composition_and_attention",
+        "status": "compiled_accepted",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "colour_and_visual_register",
+        "status": "selected_uncompiled",
+        "trigger": "base:static_image (R05)"
+      },
+      {
+        "compiled": true,
+        "pack_id": "product_appearance",
+        "status": "compiled_accepted",
+        "trigger": "product_or_packshot_entity_present (entities)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "indian_indic_context",
+        "status": "selected_uncompiled",
+        "trigger": "language_topology_present_or_market_IN (language_topology | market)"
+      },
+      {
+        "compiled": false,
+        "pack_id": "commercial_communication",
+        "status": "selected_uncompiled",
+        "trigger": "advertising_acceptance_intent (acceptance_intent)"
+      }
+    ]
+  },
+  "capability_requirements": [
+    {
+      "capability": "image_edit",
+      "mandatory": true
+    },
+    {
+      "capability": "product_surface_fidelity",
+      "mandatory": false
+    },
+    {
+      "capability": "reference_fidelity",
+      "mandatory": true
+    }
+  ],
+  "compiled_utc": "2026-09-14T12:00:00Z",
+  "composition": {
+    "attention_order": "1st read stays the sofa; the filled background must not introduce a new attention cue (ms_0019).",
+    "edge_treatment": "Edge treatment preserved as supplied; no re-crop."
+  },
+  "deliverable": {
+    "aspect": "as_supplied",
+    "kind": "static_ad_from_supplied_photo",
+    "resolution_class": "as supplied"
+  },
+  "deterministic_checks": [
+    "format probe vs the deliverable (container, aspect, resolution, duration, audio track)",
+    "refusal / error / empty artifact -> reject",
+    "baked-text scan (text scan over the artifact): any lettering -> reject"
+  ],
+  "exact_text": {
+    "strategy": "no_exact_text",
+    "strategy_basis": "no rule consulted: the job names no character-exact string, so nothing about lettering is contractual (PRODUCTION-JOB-v0.exact_text_strings empty)",
+    "strings": [],
+    "text_mechanism": "not_applicable"
+  },
+  "gate_requirements": [
+    "CA-D1-check",
+    "CA-D2-check",
+    "CA-D3-check",
+    "CA-D4-check",
+    "CA-D5-check",
+    "CA-D6-check",
+    "CA-D7-check",
+    "CA-D8-check",
+    "CA-D9-check",
+    "CA-D10-check",
+    "CA-D11-check",
+    "PA-D1-check",
+    "PA-D2-check",
+    "PA-D3-check",
+    "PA-D4-check",
+    "PA-D5-check",
+    "PA-D6-check",
+    "PA-D7-check",
+    "PA-D8-check",
+    "PA-D9-check",
+    "PA-D10-check",
+    "pack limit: Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite text deterministically.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar, samara-making-breaking-grid-ch1 (term t_sam_c003_0018 only, CF-16) and alton-painting-with-light-ch2 for this pack's domains; no claim of theirs is compiled — their doctrine (frontality/darshan attention order, symmetry-as-authority, grid structure) is absent, not arbitrated.",
+    "pack limit: Coverage note (GAP-16 resolved by the DN-06 admission): the source's later chapters are accepted as light-science-magic-beyond-ch3, a scoped extension of ch3. Its three self-qualification claims are compiled where they bite (PA-D8: sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost grounds; glossy-box remedy ladder ordered cheapest-first; black-on-black lit as if metal). The remainder of the extension awaits the full live-37 pack compile.",
+    "pack limit: Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india, jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide as contributors to this pack's domains; none is compiled here — their doctrine (frontality/darshan staging, iconographic correctness, props-as-vocabulary) is absent, not arbitrated.",
+    "pack limit: Category-surface gap: no accepted claim covers watch conventions (hand positions) or anisotropic brushed/sunburst surfaces — the diffuse/direct/glare contrast set (PA-D1) does not model radial anisotropic glow; state the gap rather than force one of the three types.",
+    "canon gap: no compiled pack answers colour_and_visual_register, commercial_communication, concept_and_distinctiveness, critique_and_effectiveness, indian_indic_context; the plan states this and attributes nothing to doctrine there"
+  ],
+  "hard_constraints": [
+    "the deliverable is as_supplied",
+    "no person in the result",
+    "sofa unchanged in shape, colour, position",
+    "room and light unchanged"
+  ],
+  "job_id": "alpha-dry-img-edit-01",
+  "job_sha256": "7f4452ed4fcae0c3a7b3779ad9ee33a6edce3a19712dd6525592c8c8dd25a1b9",
+  "materials_and_light": {
+    "implied_light_source": "Preserved as supplied: the existing single light direction must survive in the filled area (no shadow in the vacated region may contradict the room's direction)."
+  },
+  "objective": "Produce one static_ad_from_supplied_photo at as_supplied that answers the customer's request: \"Hi, we shot this sofa in our showroom (attached: showroom_sofa_01.jpg) but one of our staff is standing in the background on the left.\"",
+  "policy_profile": "dry",
+  "route_exclusions": [],
+  "schema": "PRODUCTION-SPEC-v1",
+  "spec_id": "spec-f2602e3090898406"
+}

@@ -1,0 +1,76 @@
+# HUMAN VERDICTS — the Controller's judgments on each assembled version.
+# evidence_class: chat_only_human_evidence — no verdict file exists on disk in the pilot tree (every pilot
+# learning report ends "awaiting Controller judgment"). Transcribed from the Controller conversation on
+# 2026-09-14 as authoritative product-learning input. Nothing below is a mechanical measurement.
+case_id: UPWORK-INTRO-001
+authority: human_controller
+evidence_class: chat_only_human_evidence
+verdict_vocabulary: [accept, specific_repair, rebuild_direction, reject]
+
+verdicts:
+  - version: V1
+    verdict: specific_repair
+    summary: "acceptable-but-not-great direction; commercially clear, strong sales logic"
+    feedback:
+      - commercially clear
+      - strong sales logic
+      - actual video proof too small
+      - too much phone/mockup framing
+      - opening not visually exceptional enough
+      - presenter blocks too long
+      - creative range insufficient
+      - 24h / 4h differentiation undersold
+
+  - version: V2
+    verdict: rebuild_direction
+    summary: "not great enough — competent, not extraordinary"
+    feedback:
+      - stronger proof than V1
+      - presenter quality degraded later in the film
+      - still too much cautious phone/mockup presentation
+      - opening still not strong enough
+      - overall competent, not extraordinary
+    strategic_correction_after:
+      - images AND videos are co-equal products
+      - the film should demonstrate one product becoming a campaign
+      - the work should own the majority of screen time
+
+  - version: V3
+    verdict: reject
+    summary: "assembly/compositor failure set; presenter missing became a hard requirement"
+    feedback:
+      - text getting cut off
+      - text colour disappearing against backgrounds
+      - creatives/images being cropped
+      - inconsistent card geometry (square + rounded)
+      - voice horribly robotic
+      - pacing too rushed to focus on an individual creative
+      - direct-to-camera speaker missing → HARD REQUIREMENT from here on
+    note: "the most important assembly/compositor failure set of the pilot"
+
+  - version: V4
+    verdict: specific_repair
+    summary: "architecture finally worked"
+    worked:
+      - architecture finally worked
+      - direct-to-camera speaker established trust
+      - pacing materially improved
+      - full-screen proof worked
+      - compositor consistency improved
+    feedback:
+      - ad-craft beat had an offer/code collision
+      - strongest positioning phrase "and it can't suck" was lost
+      - speaker bubble persisted too long
+      - not enough creative-range proof
+      - 4-Hour Express visual treatment too weak
+
+  - version: V4.1
+    verdict: accept
+    summary: "accepted for release"
+    accepted_after:
+      - '"AND IT CAN''T SUCK" restored visually'
+      - ad-craft layout repaired
+      - bubble reduced to intentional use
+      - Kora range beat added
+      - Express presentation strengthened
+      - QA re-run cleanly
