@@ -139,7 +139,7 @@ def base_rec(attempt_id, asset_id, route_key, q, prompt, out, is_repair, params)
             "pool": pool, "unit_price_usd": str(q.unit_price), "quantity": str(q.quantity), "quantity_unit": q.unit,
             "reserved_usd": round(float(q.expected_cost_usd), 6), "settled_usd": None, "prompt": prompt,
             "params": params, "start_utc": now(), "end": None, "latency_s": None, "status": None, "failure_basis": None,
-            "artifact_path": str(out.relative_to(JOB)), "artifact_sha256": None, "verdict": "pending", "is_repair": is_repair}
+            "artifact_path": str(out.resolve().relative_to(JOB)), "artifact_sha256": None, "verdict": "pending", "is_repair": is_repair}
 
 
 # ── fal queue ────────────────────────────────────────────────────────────────

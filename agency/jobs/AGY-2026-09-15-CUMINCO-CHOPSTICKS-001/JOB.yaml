@@ -284,9 +284,28 @@ qa:
     A8: {status: N/A, evidence: "no supplied person; the two characters are generated; no identifiable person anywhere in the references"}
     A9: {status: NOT_RUN, evidence: "micro-qualification 1 (bowl-from-reference + grip: plate-H1 → clip-2) and 2 (voice) run next; no dependent asset is dispatched before their human gate"}
     A10: {status: PASS, evidence: "ttao.job_start_utc 13:17:42Z, planning_complete_utc 13:28:37Z"}
-  post_draw: []                   # per still: {asset_id, B1..B6}
+  post_draw:                      # per still: {asset_id, B1..B6}
+    - {asset_id: plate-H1-r1 (att-002), B1: "PASS — no lettering (human eye, full frame)", B2: "PASS on the bowl (shape, ridges, flare, rim notch, Rosé hue vs blog hero; embossed mark turned away, no invented marks) / FAIL on the chopsticks (pale round wood; the brand's are dark acacia — operator prompt error)", B3: "PASS — one window source camera-left, glaze glossy / rest matte, bowl separates on grayscale, 1st read hand", B4: "PASS — five fingers, natural; anchor hidden by the back of the hand", B5: "PASS — 768x1376 (9:16 class) delivered as declared", B6: "PASS — upper third clear"}
+    - {asset_id: plate-H1-r2 (att-003), B1: "PASS — no lettering", B2: "PASS — bowl as r1; dark acacia chopsticks match the blog hero", B3: "PASS", B4: "PASS — five fingers; anchor stick in the thumb web, ring finger curled under, tips level", B5: "PASS — 768x1376", B6: "PASS — upper third clear, steam"}
   composition: []                 # per rendered file: {file, C1..C8}
-  video_frames: []                # per clip: {asset_id, sampled_timestamps: [], D1..D13}
+  video_frames:                   # per clip: {asset_id, sampled_timestamps: [], D1..D13}
+    - asset_id: clip-2-r1 (att-004)
+      file: gen/clips/clip-2-r1.mp4
+      sha256: 706aa3cf445ac44c005da79673a4347fe4027567a7eba33e2a6e6cbe22a90ff5
+      sampled_timestamps: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5]
+      D1: "PASS (human eye on 12 sampled frames; Cloud Vision not invoked) — no lettering in any frame"
+      D2: "PASS — bowl shape, hue, ridges and notch constant across frames; plate-vs-first-frame mean |diff| 5.35/255"
+      D3: "PASS — hand, sleeve, skin tone held"
+      D4: "PASS — five fingers throughout; anchor stick held; upper stick lifted; small settle then still (hand band |diff| 12.5, wall 1.1)"
+      D5: "N/A — no face"
+      D6: "PASS — static camera as declared (wall region first-vs-last mean |diff| 1.12/255)"
+      D7: "N/A — single shot"
+      D8: "PASS — bowl and hand contained; 9:16"
+      D9: "PASS — steam drifts naturally; no morphing"
+      D10: "N/A — silent"
+      D11: "N/A — silent"
+      D12: "PASS — 720x1280 h264 24 fps 6.000 s = the dispatched cell configuration; delivery at 1080x1920 will be a declared upscale"
+      D13: "qa/clip-2-r1-contact.png"
   final_geometry: []              # FORMAT_SPECIFIC_REVALIDATION (case 002): one row per delivered file, run on THAT file:
   #  - {deliverable_id, file, geometry, sha256, C1..C8, CF1..CF5, status}   — a master's PASS transfers to nothing
   voice_continuity:               # CROSS_CLIP_VOICE_CONTINUITY (case 002): REQUIRED when 2+ clips represent one narrator/speaker
@@ -303,7 +322,8 @@ qa:
   defects: []                     # [{id, asset_id, observed, class: creative_direction|generation|audio|route|compositor|crop|text|product_fidelity|pacing|infrastructure, repair_layer, repaired_by_attempt}]
 
 # ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
-versions: []                      # [{version, presented_utc, assets: [], verdict: ACCEPT|SPECIFIC REPAIR|REJECT, verdict_verbatim, decided_utc}]
+versions:                         # [{version, presented_utc, assets: [], verdict: ACCEPT|SPECIFIC REPAIR|REJECT, verdict_verbatim, decided_utc}]
+  - {version: "MQ1-plate", presented_utc: "2026-09-15T13:42Z", assets: [plate-H1-r1, plate-H1-r2], verdict: "ACCEPT (r2)", verdict_verbatim: "r2", decided_utc: "2026-09-15T13:46:31Z"}
 outcome:
   status: null                    # accepted | rejected | abandoned  — accepted ONLY from a human ACCEPT
   accepted_version: null
