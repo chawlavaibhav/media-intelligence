@@ -62,10 +62,10 @@ intake:
     - "The prior cloud session's job branch was never pushed and is not on origin; its concept ('The Still One', no characters) is superseded by the user's re-brief today. Its source findings (blog has 5 steps; image paths; register) were verified again here, not trusted."
     - "Prior-session TTAO clock start 2026-09-15T12:06:40Z is recorded here for honesty; this job's TTAO runs from 13:17:42Z (this session's first production input). Both are reported at close; never blended."
   questions_asked:
-    - {question: "Job-specific spend cap (amount, currency, what it covers, retries)?", why_material: "no paid draw without it (SKILL non-negotiable)", answer: null}
-    - {question: "Approve the frozen copy deck and VO lines before generation?", why_material: "PROFILE.md rule: words approved before anything is generated; exact strings are code-set", answer: null}
-    - {question: "fal cash pool balance (dashboard reading) or attestation? Sarvam / ElevenLabs / Vertex credits?", why_material: "A7: unknown liquidity is not executable", answer: null}
-    - {question: "Ending: he eats with a spoon from the bowl (blog: the rim notch holds 'chopsticks or a spoon') or with a fist-grip on the chopsticks?", why_material: "changes plate B and clip 5; both honour 'they still happily eat'", answer: null}
+    - {question: "Job-specific spend cap (amount, currency, what it covers, retries)?", why_material: "no paid draw without it (SKILL non-negotiable)", answer: "USD 8 (Recommended) — whole job incl. repairs, 0 retries, hard stop"}
+    - {question: "Approve the frozen copy deck and VO lines before generation?", why_material: "PROFILE.md rule: words approved before anything is generated; exact strings are code-set", answer: "Approve, freeze the deck — five on-screen strings and five VO lines as written"}
+    - {question: "fal cash pool balance (dashboard reading) or attestation? Sarvam / ElevenLabs / Vertex credits?", why_material: "A7: unknown liquidity is not executable", answer: "I attest all pools cover the cap"}
+    - {question: "Ending: he eats with a spoon from the bowl (blog: the rim notch holds 'chopsticks or a spoon') or with a fist-grip on the chopsticks?", why_material: "changes plate B and clip 5; both honour 'they still happily eat'", answer: "Spoon from the bowl"}
 
 # ── 2b. NORMALIZED REQUEST (CANON-010 vocabulary; conservative; never edited later) ────────
 nr:
@@ -137,13 +137,13 @@ blueprint:
       - {beat: 4, text: "Pinch… and… nearly.", t: "10.4–12.6"}
       - {beat: 5, text: "It takes a few tries. Dinner doesn't wait.", t: "13.6–16.6"}
     chars_total: 158
-    status: "DRAFT — words need the user's approval before any TTS call"
+    status: "FROZEN — approved by the user 2026-09-15T13:28:37Z"
   beats:
     - {n: 1, t: "0.0–3.0", shot: "two-shot, table height, wide", action: "he holds the sticks in a fist over the steaming Kairi bowl; a noodle slides back; she watches, amused", text: none, asset: clip-1 from plate-A}
     - {n: 2, t: "3.0–6.5", shot: "macro, her right hand over the Rosé bowl", action: "the bottom stick settles into the thumb web, ring finger curls under it; the hand then holds perfectly still", text: "1  The bottom stick stays still.", asset: clip-2 from plate-H1}
     - {n: 3, t: "6.5–10.0", shot: "macro, same hand, same framing", action: "the top stick is picked up like a pencil and pinches down once on noodles; the bottom stick does not move", text: "2  The top stick does all the work.", asset: clip-3 from plate-H2}
     - {n: 4, t: "10.0–13.0", shot: "macro, his right hand over the Kairi bowl", action: "he tries the pinch; the tips cross; the noodle escapes back into the broth", text: "3  Pinch and release.", asset: clip-4 from plate-H3}
-    - {n: 5, t: "13.0–18.0", shot: "two-shot, slightly closer than beat 1", action: "both laugh; he eats anyway (spoon or fist-grip — user's call); her chopsticks rest in the rim notch of the Rosé bowl", text: "Ramen night at home. / Cumin Co.", asset: clip-5 from plate-B}
+    - {n: 5, t: "13.0–18.0", shot: "two-shot, slightly closer than beat 1", action: "both laugh; he eats with a spoon from the Kairi bowl (user's call); her chopsticks rest in the rim notch of the Rosé bowl", text: "Ramen night at home. / Cumin Co.", asset: clip-5 from plate-B}
   check_lines:
     PA-D1: "pass — glaze declared direct/glossy (soft window reflection), noodles and wood matte, linen matte; declared per plate prompt"
     PA-D2: "pass — one large soft window reflection on each glaze, camera-left, consistent across plates"
@@ -251,13 +251,17 @@ plan:
     with_evidence_based_redraws: 4.79   # +5 plate redraws 0.34 + 2 clip redraws 1.12 + music 0.06
     with_one_repair_round: 6.03         # +2 clips + 1 plate
     proposed_cap: "USD 8, 0 retries, whole job including repairs — to be stated by the user this session"
-  start_of_job_summary_shown_utc: null
+  start_of_job_summary_shown_utc: 2026-09-15T13:28:37Z
 
 # ── 8–9. SPEND (money moves only here) ───────────────────────────────────────
 spend:
-  cap: null                       # REQUIRED before any paid call: {amount, currency, stated_by, stated_utc, covers, retries_allowed: 0}
+  cap: {amount: 8, currency: USD, stated_by: "Vaibhav Chawla (user, this session)", stated_utc: "2026-09-15T13:28:37Z", covers: "the entire job — plates, clips, VO, music, micro-qualifications, redraws and repairs; hard stop at USD 8 consumed, accepted or not", retries_allowed: 0}
   cap_lineage: []                 # earlier caps this one amends; consumed spend carries forward (C-6a)
-  pool_readings: []               # [{pool, balance_usd, read_utc, source}] — no reading, no dispatch
+  pool_readings:                  # human attestation = authority to dispatch, NOT evidence of liquidity (case 001 SD-11)
+    - {pool: fal_cash, balance_usd: 0.1470175, read_utc: "2026-09-15T13:33:14Z", source: "GET https://rest.alpha.fal.ai/billing/user_balance (free read, tools/dispatch.py balance) — SUPERSEDES the attestation for this pool: USD 0.147 cannot fund the fal-cash plan (~USD 3.2); dispatch on fal_cash is BLOCKED (A7) until a top-up is read back"}
+    - {pool: vertex_credits, balance_usd: null, read_utc: "2026-09-15T13:28:37Z", source: "user attestation in chat (same)"}
+    - {pool: sarvam_credits, balance_usd: null, read_utc: "2026-09-15T13:28:37Z", source: "user attestation in chat (same)"}
+    - {pool: elevenlabs_credits, balance_usd: null, read_utc: "2026-09-15T13:28:37Z", source: "user attestation in chat (same)"}
   attempts: []                    # one line per paid call, appended before the request leaves, settled after:
   #  - {attempt_id, asset_id, route_cell, surface, pool, unit_price_usd, quantity, reserved_usd, settled_usd,
   #     start_utc, end_utc, latency_s, status: ok|provider_refusal|infrastructure_transient|unclassified,
@@ -300,7 +304,7 @@ outcome:
 # ── 17. TIME (all UTC, from `date -u`; never reconstructed) ──────────────────
 ttao:
   job_start_utc: 2026-09-15T13:17:42Z   # first production input in THIS session. A prior cloud session (Downloads/HANDOFF.md, never pushed) opened the same brief at 2026-09-15T12:06:40Z; recorded in intake.assumptions, not blended
-  planning_complete_utc: null
+  planning_complete_utc: 2026-09-15T13:28:37Z
   dispatch_start_utc: null
   dispatch_end_utc: null
   artifact_received_utc: null
