@@ -1,0 +1,71 @@
+# HUMAN VERDICTS — the Controller's words on each version of the portfolio batch.
+# All verdicts were given in the Claude desktop chat (text + screenshots) on 15 Sep 2026 between ~07:55 and ~09:05 IST.
+# No verdict file exists on disk; the screenshots are not on disk. The 13 defects below are transcribed from the
+# Controller's messages and are authoritative human-review evidence for this case.
+case_id: UPWORK-PORTFOLIO-002
+evidence_class: chat_only_human_evidence
+reviewer: human_controller
+
+verdicts:
+  - version: B1
+    verdict: specific_repair
+    when_ist_approx: "07:59–08:18"
+    words_transcribed:
+      - "9X 16 motion is getting text cutoff."                                        # HD-01
+      - "aarohi night skin cta 4x5. getting cutoff too"                                # HD-02
+      - "kora hook 1 -1x1 png text is on the image. for all hook -1 of kora. that's an issue"   # HD-03
+      - "on all kora files, the background image and text colour and placements are not exactly great. hard to read, not looking polished or finished."   # HD-04
+      - "dhaba 47 1x1. text on image. bg and text colour combo not looking good."     # HD-05
+      - "9X7 - image cutting off"   # HD-06 (the Dhaba 9:16 file)
+      - "dhabba 47 -wa same text on photo both dawat and dhabba 46."                  # HD-07
+      - "banner cutting plant."   # HD-08 (GyaanBox 1:1)
+      - "the dhabba sheet 2, has banner overlapping photos."                           # HD-09
+      - "all gyanbox have same issues- banner overlappoing the photos"                 # HD-10
+    defects_seen: [HD-01, HD-02, HD-03, HD-04, HD-05, HD-06, HD-07, HD-08, HD-09, HD-10]
+    note: "the operator also caught HD-11 (IronLeaf packshot lid cut, then a visible backdrop rectangle) and HD-12 (Dhaba Hindi headline shrunk to nothing after the first fix) while repairing; those two are operator-observed, not Controller-observed"
+  - version: B2
+    verdict: accept
+    when_ist_approx: "08:25"
+    words_transcribed: []
+    basis: "implicit — no further tile defects were raised after the re-export; the Controller moved on to tile 7 ('go') and later asked for the handover message; no explicit 'accept' sentence exists"
+  - version: N1
+    verdict: reject
+    when_ist_approx: "08:43"
+    words_transcribed:
+      - "all nivas homes are pathetic. voice not continous, images that are scarppy."   # HD-13a
+    defects_seen: [HD-13a]
+  - version: N2
+    verdict: reject
+    when_ist_approx: "08:58–09:02"
+    words_transcribed:
+      - "voice is shit. changing again, skip it altogrther."   # HD-13b (the voice differs between the two clips)
+      - "we are skipping tile 7. give the messsage for nadia for the files and access"
+    defects_seen: [HD-13b]
+    note: "the operator rebuilt the clip without narration (music bed) before the skip instruction landed; that rebuild was never reviewed and is parked as _rejected/tile-07-nivaas-homes-v2-HELD-2026-09-15"
+  - version: B3
+    verdict: accept
+    when_ist_approx: "09:05"
+    words_transcribed:
+      - "we are skipping tile 7. give the messsage for nadia for the files and access"
+    basis: "handover of the nine tiles requested and written; implicit acceptance"
+
+controller_meta_verdict_after_the_batch:
+  words:
+    - "i suspect you didnt use the pipeline either properly"
+    - "no there were more things- the text vs bg colour, overlaps of banner on images and all the issues i highlighted"
+  meaning: "the Controller judged the PROCESS non-conformant and required every flagged defect to enter the learning record individually"
+
+defect_register:                # the 13 human-flagged defects, preserved individually; systemic conclusions in SYSTEM-DEFECTS.yaml
+  - {id: HD-01, file: "tile-01 aarohi-offer-in-motion-9x16-11s.mp4", observed: "'15% OFF' runs off the right edge of the panel", fixed_in: "662fba4 (ad_9x16.py rebuilt with the V4 composer + 5 % edge margin)"}
+  - {id: HD-02, file: "tile-01 aarohi-hook-night-routine-cta-4x5.png", observed: "'ROUTINE, SIMPLIFIED.' touches the panel edge — reads as clipped", fixed_in: "662fba4 (headline budget = panel width minus 5 %)"}
+  - {id: HD-03, file: "tile-03 kora-hook-1-{1x1,4x5,9x16,wa}.png", observed: "headline placed over the figure/garment once the 16:9 poster is cropped", fixed_in: "662fba4 (square/vertical formats: picture over a solid oxblood panel)"}
+  - {id: HD-04, file: "tile-03 all kora files", observed: "cream type over the beige wall: hard to read, unfinished", fixed_in: "662fba4 (16:9: editorial split — picture left, solid type panel right)"}
+  - {id: HD-05, file: "tile-05 dhaba47-hindi-1x1.png", observed: "Hindi copy over the food; colour combination poor", fixed_in: "c3995c6 (Dhaba on the panel system, Hindi CTA button)"}
+  - {id: HD-06, file: "tile-05 dhaba47-hindi-9x16.png", observed: "dal bowl cut at the right edge", fixed_in: "c3995c6 (crop centred on the dish cluster; taller plate region)"}
+  - {id: HD-07, file: "tile-05 dhaba47-hindi-wa.png", observed: "same copy-over-photo defect as HD-05", fixed_in: "c3995c6"}
+  - {id: HD-08, file: "tile-06 gyaanbox-offer-1x1.png", observed: "the offer pill (straddling the seam) cuts the plant", fixed_in: "c3995c6 (pill moved fully inside the panel on every brand; crops centred on the desk)"}
+  - {id: HD-09, file: "tile-05 (contact sheet 2)", observed: "banner overlapping the photos", fixed_in: "c3995c6"}
+  - {id: HD-10, file: "tile-06 all gyaanbox files", observed: "banner overlapping the photos", fixed_in: "c3995c6"}
+  - {id: HD-11, file: "tile-04 ironleaf-offer-*.png (operator-observed)", observed: "packshot lid cut by the cover crop; then a visible rectangle behind the contained packshot; then a dark halo from a blurred backdrop", fixed_in: "662fba4 (contain on a flat top-band colour with a 22 % feather)"}
+  - {id: HD-12, file: "tile-05 dhaba47-hindi-4x5.png after the first fix (operator-observed)", observed: "the fit loop shrank only the Hindi headline until it was smaller than the pill", fixed_in: "c3995c6 (whole stack scaled proportionally)"}
+  - {id: HD-13, file: "tile-07 nivaas (N1, N2)", observed: "N1: narration line 2 split by a 2.9-s hole across the Veo extend, images soft at 720p; N2: the two clips' narrators are two different voices", fixed_in: "not fixed — tile skipped (11c6eb7, c969204)"}

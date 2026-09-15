@@ -1,0 +1,79 @@
+# OUTCOME record — production-learning case UPWORK-PORTFOLIO-002
+# Everything here is either mechanically verified (git, ledger, sha256, file birth/mtime) or labelled as a human judgment.
+case_id: UPWORK-PORTFOLIO-002
+class: commercial_portfolio_batch
+schema: PRODUCTION-LEARNING-CASE-v0
+written_utc: "2026-09-15T07:30:00Z"
+
+final_outcome: accepted
+outcome_shape: partial_acceptance_of_a_batch     # 9 of 10 planned tiles accepted and handed over; tile 7 skipped after two rejected attempts
+accepted_version: B3
+accepted_by: human_controller
+acceptance_evidence: chat_only_human_evidence      # no verdict file on disk; see HUMAN-VERDICTS.yaml
+accepted_utc_approx: "2026-09-15T03:35:00Z"        # 09:05 IST: "we are skipping tile 7. give the message for nadia" — implicit acceptance of the nine; exact minute unrecorded
+
+evidence_source:
+  ref: work/upwork-portfolio-samples-2026-09-15
+  commit: b4b77fa
+  dir: pilots/upwork-intro-video-2026-09-14
+  note: "a NEW archival branch; the UPWORK-INTRO-001 ref work/pilot-upwork-intro-video-v4 stays frozen at f6ca66f and carries none of this"
+
+final_asset:
+  # a batch has no single film; the delivered object is the export folder. Its index file is the identity anchor; every tile file is listed with its own sha256 in EVIDENCE-MAP.md
+  path: v4/portfolio-export/README.md
+  git_ref: work/upwork-portfolio-samples-2026-09-15
+  commit: b4b77fa
+  sha256: 844fe01bf632b2e20589464d4d26f542efcd6310bbe7092b6a742c57072b3e6f
+  describes: "the export folder handed to the Upwork profile session (~/Vaibhav_Personal_Projects/upwork-portfolio-media/), byte-copied into v4/portfolio-export/ minus one duplicate film file"
+  tiles_accepted: 9
+  tiles_skipped: 1
+  files_in_accepted_tiles: 72
+
+deliverables:
+  accepted:
+    - {tile: 1, brand: Aarohi Skin, files: "offer static 4x5/1x1/9x16/WA (plain + SHOP NOW), hook ad 4x5, 11-s offer-in-motion 9:16, 5-s hero 16:9, packshot"}
+    - {tile: 2, brand: Aarohi six hooks, files: "hooks 1-6 in 4x5 (plain + SHOP NOW), Hindi offer 4x5/1x1/9x16/WA"}
+    - {tile: 3, brand: Kora Threads, files: "six hooks 16:9 (editorial split), hook 1 in 4x5/1x1/9x16/WA (picture over panel), base still"}
+    - {tile: 3b, brand: Brewa Kettle, files: "packshot, three scenes 16:9, 4-s kitchen clip"}
+    - {tile: 4, brand: IronLeaf Nutrition, files: "offer static 4x5/1x1/9x16/WA, packshot"}
+    - {tile: 5, brand: Dhaba 47, files: "Hindi offer 4x5/1x1/9x16/WA (picture over panel, Hindi CTA), flat-lay"}
+    - {tile: 6, brand: GyaanBox, files: "offer static 4x5/1x1/9x16/WA, 12-s text-in-motion 9:16"}
+    - {tile: 9, brand: presenter, files: "V4 accepted take, anchor still, frame at 7.7 s, V2 takes, the intro film (V4.2 copy not duplicated on the archival branch; V4.1 is the accepted film of case 001)"}
+    - {tile: 10, brand: two-speaker Hindi, files: "six accepted VID-2SPK-01 clips copied from sealed EVAL-040 media (copies, not the sealed originals)"}
+  skipped:
+    - {tile: 7, brand: Nivaas Homes, reason: "two attempts rejected by the Controller (N1: narration hole + soft 720p; N2: two generated voices did not match); Controller: skip", files_kept: "_rejected/"}
+
+commercial_purpose: "portfolio tile media for the Upwork profile (nine tiles) plus the film with the owner's headshot; invented brands; nothing generated fresh for a tile except IronLeaf, GyaanBox and Nivaas"
+job_family_note: "static ads with exact overlay copy, format adaptations, text-in-motion clips, a narrated story clip — produced by pilot scripts, NOT by runtime/alpha and NOT through the media-agency workflow"
+
+not_evidence_for:
+  - Capability Registry
+  - Alpha-1
+  - Canon effectiveness
+  - Stage A/B/C benchmark
+  - "any routing rule (all model observations are directional, n<=2)"
+  - "CpAO completeness (see TIME-AND-COST.yaml: triage calls and vendor bills unreconciled)"
+
+versions_produced:
+  - {version: B1, commit: "(none — overwritten in place)", what: "first export of the existing tiles + composed sizes, 07:52 IST", human_verdict: specific_repair}
+  - {version: B2, commit: "c3995c6", what: "re-exports after the 13 defects + IronLeaf and GyaanBox production, 08:05–08:24 IST", human_verdict: accept}
+  - {version: N1, commit: "7a1b22c", what: "Nivaas Homes tile v1 (Veo t2v + extend), 08:28–08:39 IST", human_verdict: reject}
+  - {version: N2, commit: "3f99236", what: "Nivaas Homes tile v2 (stills-first, two Veo i2v clips with one narration line each), 08:46–08:57 IST", human_verdict: reject}
+  - {version: B3, commit: "b4b77fa", what: "final export: nine tiles, tile 7 skipped, both Nivaas attempts parked under _rejected/, 08:59 IST", human_verdict: accept}
+
+major_human_review_cycles: 5
+versions_to_accept: 5
+template_status: job_specific
+
+spend:
+  incremental_known_media_spend_usd: 4.6596
+  basis: "the eight `reserved` lines with asset ids pf-* in v4/gen/LEDGER.jsonl at pinned prices; every call returned media (0 failed)"
+  operator_reported_in_chat_usd: 3.9
+  operator_report_status: "WRONG — a chat figure quoted before the second Nivaas attempt and never recomputed; the ledger governs"
+  lineage_note: "these lines were appended to the V4 film ledger (cumulative 7.3112 → 11.9708) instead of a distinct job ledger — recorded as process defect PD-09"
+
+two_conclusions:
+  final_quality: SUCCESS_WITH_ONE_SKIPPED_DELIVERABLE
+  pipeline_efficiency_time_to_accepted_outcome: NOT_MEASURABLE_AS_TTAO  # the batch's acceptance is chat-only; a lower bound is recorded
+  process_conformance: NON_CONFORMANT           # the finding that matters — see SYSTEM-DEFECTS.yaml PD-01..PD-09 and README
+  rule: "these are reported side by side and never blended into one score"

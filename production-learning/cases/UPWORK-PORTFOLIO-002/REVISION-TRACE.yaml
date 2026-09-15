@@ -1,0 +1,83 @@
+# REVISION TRACE — B1 → B2 → N1 → N2 → B3. Root-cause classes are the eleven fixed classes.
+case_id: UPWORK-PORTFOLIO-002
+root_cause_classes_used: [compositor, deterministic_qa, model_generation, model_audio, orchestration, creative_direction]
+
+versions:
+  - version: B1
+    input_source: "Controller request in chat (~07:45 IST): export the tile media for five existing tiles, produce four small new ones, verdicts against Jonah's five questions, the film with the owner's headshot"
+    generation_status: "no paid generation; existing accepted V3/V4 media re-exported; missing sizes composed by code (compose_v4.py: Kora 4 sizes, Dhaba 1x1/9x16, Aarohi SHOP NOW variants, Hindi 4 sizes)"
+    assembly_status: "export folder born 07:52:24 IST (folder birth time); README index written"
+    human_verdict: specific_repair
+    defects:
+      - {id: HD-01, root_cause_class: compositor, detail: "9:16 clip built by the V3 composer: headline budget = exact panel width, no inset"}
+      - {id: HD-02, root_cause_class: compositor, detail: "same budget rule; mathematically fits, visually clipped"}
+      - {id: HD-03, root_cause_class: compositor, detail: "poster register assumed negative space that the square/vertical crops removed"}
+      - {id: HD-04, root_cause_class: compositor, detail: "cream type over a light wall; no contrast gate ran on the tile path"}
+      - {id: HD-05, root_cause_class: creative_direction, detail: "V3's overlay-on-photo Dhaba design reused unchanged (rejected-version lineage)"}
+      - {id: HD-06, root_cause_class: compositor, detail: "cover crop by fractional anchor, not subject-aware"}
+      - {id: HD-07, root_cause_class: creative_direction, detail: "as HD-05"}
+      - {id: HD-08, root_cause_class: creative_direction, detail: "the film's seam-straddling pill reused on lifestyle plates without re-judging"}
+      - {id: HD-09, root_cause_class: creative_direction, detail: "as HD-08"}
+      - {id: HD-10, root_cause_class: creative_direction, detail: "as HD-08"}
+    repair_requested: "fix every flagged file"
+    repair_made: "edge-margin rule; Kora editorial split / picture-over-panel; Dhaba and GyaanBox panel systems; pill inside the panel on every brand; subject-centred crops; contain for packshots; proportional stack fit"
+    repair_succeeded: true
+    cost_usd: 0.0
+    elapsed: {from: "07:52:24 IST export birth", to: "08:24:07 IST commit c3995c6", value_hms: "0:31:43", source: [file_birth_time, git_commit]}
+
+  - version: B2
+    input_source: "the B1 defects (chat) + the two new tiles (IronLeaf, GyaanBox) with copy invented by the operator in COPY-PF.yaml"
+    generation_status: "4 paid calls, 4 ok: GPT Image 2 packshot (IronLeaf), Nano Banana 2 plate + Gemini Omni 10-s i2v (GyaanBox) — USD 1.1336"
+    assembly_status: "compose_pf.py ledge for both brands in 4 sizes; 12-s text-in-motion (10 s motion + 2-s hold); export re-run"
+    human_verdict: accept
+    defects:
+      - {id: HD-11, root_cause_class: compositor, detail: "packshot cover-cropped; two backdrop attempts before the flat top-band + feather worked (operator-caught, three renders)"}
+      - {id: HD-12, root_cause_class: compositor, detail: "headline-only shrink collapsed the Hindi hierarchy (operator-caught)"}
+    repair_requested: null
+    repair_made: "in-flight (HD-11, HD-12 fixed before the Controller saw them)"
+    repair_succeeded: true
+    cost_usd: 1.1336
+    elapsed: {from: "08:05:49 IST first paid call", to: "08:24:07 IST commit c3995c6", value_hms: "0:18:18", source: [ledger_utc, git_commit]}
+
+  - version: N1
+    input_source: "Controller 'go' for a real-estate story tile after the profile session's answer; copy invented by the operator (Nivaas Homes: two narration lines + offer card)"
+    generation_status: "1 paid call ok: Veo 3.1 Fast text-to-video 8 s + 7-s extend, 9:16 720p, native narration — USD 1.50; operator ACCEPTED it at 08:39 on a transcript check, then the Controller rejected it at 08:43"
+    assembly_status: "extend-morph frames cut (8.0–9.1 s); offer card by code; statics cut from 720p video frames"
+    human_verdict: reject
+    defects:
+      - {id: HD-13a-audio, root_cause_class: model_audio, detail: "the extension split narration line 2: 'Prices from one point two crore' at 8.15 s, 2.9-s hole, 'Book a site visit this weekend' at 12.05 s"}
+      - {id: HD-13a-image, root_cause_class: model_generation, detail: "720p t2v + re-imagined extension: soft, generic; statics cut from these frames inherited the softness"}
+      - {id: HD-13a-qa, root_cause_class: deterministic_qa, detail: "operator's acceptance check verified words present + accent; it did not measure speech continuity — a 2.9-s hole passed"}
+    repair_requested: "redo (Controller chose stills-first after the diagnosis)"
+    repair_made: "N2"
+    repair_succeeded: false
+    cost_usd: 1.5
+    elapsed: {from: "08:28:10 IST paid call", to: "08:44:25 IST rejection commit 11c6eb7", value_hms: "0:16:15", source: [ledger_utc, git_commit]}
+
+  - version: N2
+    input_source: "N1 rejection; Controller 'go' on two stills, then 'go' on motion"
+    generation_status: "4 paid calls, 4 ok: two GPT Image 2 stills 9:16 (USD 0.106), two Veo 3.1 Fast i2v 8-s 1080p clips with native narration, one line each (USD 1.92); operator accepted each clip on transcript + per-clip continuity checks"
+    assembly_status: "exterior 0–8 s | cut | interior 8–15 s, offer card slides up at 11.5 s; statics from the full-res stills"
+    human_verdict: reject
+    defects:
+      - {id: HD-13b-audio, root_cause_class: model_audio, detail: "two independent generations produced two different narrator voices; each clip passed alone, the assembly failed"}
+      - {id: HD-13b-qa, root_cause_class: deterministic_qa, detail: "no cross-clip voice-identity check existed; per-clip checks were treated as sufficient"}
+    repair_requested: "Controller: skip the tile"
+    repair_made: "operator rebuilt without narration (music bed) before the skip landed; not reviewed; parked"
+    repair_succeeded: false
+    cost_usd: 2.026
+    elapsed: {from: "08:46:09 IST first N2 paid call", to: "08:59:40 IST commit c969204", value_hms: "0:13:31", source: [ledger_utc, git_commit]}
+
+  - version: B3
+    input_source: "Controller: 'we are skipping tile 7. give the message for nadia'"
+    generation_status: "no paid generation"
+    assembly_status: "tile 7 folders moved under _rejected/; README final 08:59:57 IST; handover message written in chat"
+    human_verdict: accept
+    defects: []
+    repair_requested: null
+    repair_made: null
+    repair_succeeded: true
+    cost_usd: 0.0
+    elapsed: {from: "08:59:40 IST", to: "08:59:57 IST README final", value_hms: "0:00:17", source: [git_commit, file_mtime]}
+
+process_defects_that_span_all_versions: "see SYSTEM-DEFECTS.yaml PD-01..PD-09 — none belongs to one version"

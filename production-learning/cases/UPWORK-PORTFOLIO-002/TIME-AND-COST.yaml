@@ -1,0 +1,88 @@
+# TIME AND COST — case UPWORK-PORTFOLIO-002. Two clocks, never mixed: mechanical (ledger UTC, ASSETS.jsonl start/end,
+# git commit times, APFS folder birth times, file mtimes) versus human words. Nothing here is estimated to look tidy.
+case_id: UPWORK-PORTFOLIO-002
+timezone_note: "IST = UTC+05:30; ledgers are UTC; commits and file times shown in IST"
+
+metric_definitions:
+  TTAO: "Time To Accepted Outcome — wall clock from the first production input to the human ACCEPT of the delivered set"
+  CpAO: "Cost per Accepted Outcome — provider spend fully loaded (rejected attempts included) per accepted deliverable set"
+
+anchors_mechanical:
+  controller_request_in_chat_ist: null
+  controller_request_reason: "the request was a chat message; the desktop session metadata for this session was not read; the export folder's birth time is the first mechanical anchor"
+  export_folder_birth_ist: "07:52:24"          # stat -f %B of ~/Vaibhav_Personal_Projects/upwork-portfolio-media (B1 export)
+  first_paid_call_utc: "2026-09-15T02:35:49Z"  # 08:05:49 IST, pf-ironleaf-packshot-r1
+  b2_commit_ist: "08:24:07"                    # c3995c6
+  n1_paid_call_utc: "2026-09-15T02:58:10Z"     # 08:28:10 IST
+  n1_operator_accept_utc: "2026-09-15T03:09:13Z"
+  n1_controller_reject_recorded_utc: "2026-09-15T03:14:25Z"   # 08:44:25 IST (verdict line; the chat message came ~1 min earlier)
+  n2_first_paid_call_utc: "2026-09-15T03:16:09Z"
+  last_paid_call_settled_utc: "2026-09-15T03:24:11Z"          # 08:54:11 IST
+  final_commit_ist: "08:59:40"                 # c969204
+  final_export_readme_ist: "08:59:57"
+  controller_accept_utc: null
+  controller_accept_reason: "the acceptance of the nine tiles is implicit in the 'give the message for nadia' instruction (~09:05 IST, chat); no mechanical stamp"
+
+time:
+  time_to_outcome_mechanical:
+    value_hms: "1:07:33"
+    from: export_folder_birth
+    to: final_export_readme
+    lower_bound: true
+    reason_lower_bound: "starts at the first export, not at the Controller's request (~7 min earlier, chat only); ends at the last file, not at the Controller's implicit accept (~5 min later, chat only)"
+    source: [file_birth_time, file_mtime]
+    cross_checks:
+      first_paid_call_to_final_commit_hms: "0:53:51"
+      paid_generation_window_hms: "0:48:22"     # 08:05:49 → 08:54:11 IST, all eight calls
+  time_to_accepted_outcome_human_estimate: null
+  generation_wait_time:
+    mechanical:
+      sum_of_per_call_latency_s: 771           # ASSETS.jsonl latency_s over the eight pf-* calls: 40.5+11.1+37.7+167.8+40.3+39.8+150.1+161.3
+      sum_of_per_call_latency_hms: "0:12:51"
+    share_of_outcome_time: "≈ 19 % of 1 h 07 m — generation wait was not the dominant cost; human review rounds and compositor repairs were"
+  human_review_rounds:
+    b1_defect_messages: 8              # 10 defects in 8 messages, 07:59–08:18 IST
+    n1_reject: 1
+    n2_reject_and_skip: 1
+    operator_self_caught_repairs: 2    # HD-11, HD-12
+  note_on_ttao: "TTAO for a BATCH is not defined by case 001's schema (one job, one accept); the figure above is a lower bound on the set, not a per-tile TTAO. Per-tile clocks were not recorded because no per-tile job object existed (PD-09)."
+
+cost:
+  total_known_provider_cost_usd: 4.6596
+  basis: "eight `reserved` lines, asset ids pf-*, v4/gen/LEDGER.jsonl @ b4b77fa, pinned prices; all eight calls returned media"
+  by_route:
+    - {route: "openai/gpt-image-2 (fal, quality medium)", calls: 3, usd: 0.159, pool: fal_cash}
+    - {route: "gemini-3.1-flash-image (Gemini API)", calls: 1, usd: 0.067, pool: gemini_credits}
+    - {route: "gemini-omni-1.1-flash-preview i2v 10 s 720p (Vertex)", calls: 1, usd: 1.0136, pool: vertex_credits}
+    - {route: "veo-3.1-fast t2v 8 s + extend 7 s 720p (Vertex)", calls: 1, usd: 1.5, pool: vertex_credits}
+    - {route: "veo-3.1-fast i2v 8 s 1080p (Vertex)", calls: 2, usd: 1.92, pool: vertex_credits}
+  by_version: {B1: 0.0, B2: 1.1336, N1: 1.5, N2: 2.026, B3: 0.0}
+  spent_on_rejected_or_skipped_usd: 3.526      # N1 + N2 = 75.7 % of the batch spend produced nothing delivered
+  operator_chat_figure_usd: 3.9
+  operator_chat_figure_status: "wrong (stated before N2 was recomputed; superseded by the ledger)"
+  known_uncertainty:
+    - "≈ 6 triage transcript/delivery calls on gemini-3.6-flash credits (speaker_check.py) are not in any ledger (< USD 0.05)"
+    - "fal balance was read before the batch (USD 0.2589) but not after; fal-billed amount for the three GPT images not reconciled"
+    - "Vertex / Gemini credit balances not readable by API; no vendor statement reconciled"
+    - "the eight lines were appended to the V4 film's ledger (cumulative 7.3112 → 11.9708) rather than a distinct job ledger"
+  cost_per_accepted_outcome:
+    value_usd: 4.6596
+    unit: "the accepted nine-tile set (one outcome), fully loaded with the two rejected tile-7 attempts"
+    numerator_complete: false
+    missing_components: ["triage transcript calls (gemini-3.6-flash credits, unledgered)", "vendor-billed reconciliation (fal, Vertex, Gemini)", "human production and review time (not priced)"]
+    per_accepted_tile_note: "4.6596 / 9 = 0.518 USD per accepted tile only if the tile-7 spend is loaded onto the nine; per newly-produced accepted tile (IronLeaf, GyaanBox) the direct cost was 1.1336"
+
+counts:
+  paid_generation_attempts: 8
+  paid_generation_failed: 0
+  human_review_cycles: 5
+  human_flagged_defects: 13
+  operator_caught_defects: 2
+  accepted_tiles: 9
+  skipped_tiles: 1
+  rejected_attempts: 2
+
+product_conclusion:
+  final_quality: "SUCCESS for nine tiles (useful portfolio material after one repair round); FAIL for the story tile (skipped after two rejected attempts)"
+  pipeline_efficiency: "UNMEASURED as TTAO; qualitatively poor — 10 known-class defects reached the Controller in one export because no gate ran on the tile path, and 76 % of the spend went to rejected attempts"
+  process_conformance: "NON_CONFORMANT — see SYSTEM-DEFECTS.yaml PD-01..PD-09"
