@@ -9,7 +9,7 @@ class: spec_work                  # unsolicited spec for Cumin Co. (d2c-prospect
 production_base_sha: 3bb9a3c3da484e43d4d54ae20543d1d246769ac6
 branch: work/agency-job-cuminco-chopsticks-001
 skill_version: 7e324b0f75658498b62802332504519b9d542996
-opened_by: Vaibhav Chawla (operator: Claude, local desktop session)
+opened_by: "Vaibhav Chawla (operator: Claude, local desktop session)"
 production_status: open           # open | accepted | rejected | abandoned
 learning_status: not_started      # not_started | pending_sync | synced | no_promotion
 sync:                             # filled by /media-agency-sync — the only fields it may change on the job branch
@@ -27,104 +27,231 @@ brief:
 
 # ── 2. INTAKE ─────────────────────────────────────────────────────────────────
 intake:
-  commercial_objective: null      # REQUIRED  one sentence: what this asset must make happen
-  audience: null                  # REQUIRED
-  channel: null                   # REQUIRED  e.g. Meta feed + Reels, WhatsApp, Upwork portfolio
-  deliverable_type: null          # REQUIRED  kind from runtime/contracts/DELIVERABLE-KINDS.yaml or a named agency class
-  package: null                   # for customer_work: the PROFILE.md package + tier this maps to
-  dimensions_aspects: []          # REQUIRED  e.g. ["1080x1350 4:5", "1080x1080 1:1", "1080x1920 9:16", "800x800 WA"]
-  count: null
-  product_reference_assets: []    # refs into brief.attachments
-  mandatory_text: []              # REQUIRED  [{role: headline|offer|code|validity|tagline|cta|legal|brand_line, value, script: latin|devanagari|..., may_reflow: bool, placement: overlay|in_scene}]
-  offer: null
-  cta: null
-  language: []                    # REQUIRED  e.g. [en, hi]
-  brand_constraints: {colours: [], fonts: [], tone: null, forbidden: []}
-  duration_s: null                # video only
-  deadline: null                  # REQUIRED  absolute time with zone
-  spend_ceiling_stated: null      # what the customer / user said about money, verbatim
-  assumptions: []                 # every production judgment made for a missing non-critical value
-  questions_asked: []             # [{question, why_material, answer}] — only what could invalidate the output
+  commercial_objective: "A spec film that makes Cumin Co.'s founders (ex-Meta / ex-Zomato growth) see that their own blog content converts into a warm, product-led launch film for the new Ramen Bowl in days — a launch-cadence capacity demonstration, never a quality critique (Controller hand-check 14 Sep: ~270 active premium ads)."
+  audience: "Primary reader: Niharika Joshi / Udit Lekhi (Cumin Co. co-founders). Depicted consumer: urban Indian young adults setting up a noodle night at home (the blog's own reader: 'someone who wants to eat comfortably at their own table')."
+  channel: "Instagram Reels / Meta feed (spec); Upwork portfolio tile 10-class material afterwards (quoted-per-project tier, no time claim)"
+  deliverable_type: multi_shot_story           # runtime/contracts/DELIVERABLE-KINDS.yaml; outside Alpha-1 (C-7) — produced under the user's job-specific authorisation, not the runtime's auto-route
+  package: "n/a (spec_work). Nearest PROFILE.md class: 'quoted per project' — 30-60 s films / product-story clips; no express, no 24-h claim"
+  dimensions_aspects: ["1080x1920 9:16 (master)", "1080x1350 4:5", "1080x1080 1:1"]
+  count: 1 film, 3 delivered geometries
+  product_reference_assets: [ref_bowl_packshot, ref_bowl_chopsticks_lifestyle]
+  mandatory_text:
+    - {role: headline, value: "The bottom stick stays still.", script: latin, may_reflow: false, placement: overlay, source: "blog thesis, verbatim fragment"}
+    - {role: headline, value: "The top stick does all the work.", script: latin, may_reflow: false, placement: overlay, source: "blog thesis, verbatim fragment"}
+    - {role: headline, value: "Pinch and release.", script: latin, may_reflow: false, placement: overlay, source: "blog Step 5 title, verbatim fragment"}
+    - {role: tagline, value: "Ramen night at home.", script: latin, may_reflow: false, placement: overlay, source: "blog para 1, verbatim fragment"}
+    - {role: brand_line, value: "Cumin Co.", script: latin, may_reflow: false, placement: overlay}
+    - {role: legal, value: "Unsolicited spec work. Not affiliated with or commissioned by Cumin Co.", script: latin, may_reflow: true, placement: "delivery note + portfolio caption only, never in-frame"}
+  offer: none                                  # spec film carries no price and no offer code; the bowl's price (₹1,499 read off the PDP JSON 15 Sep) is not verified by hand and is not shown
+  cta: none in-frame (brand line closes the film)
+  language: [en]                               # Indian-English voice-over; Latin script only
+  brand_constraints:
+    colours: ["Kairi (Mint) glaze", "Rosé glaze", "warm off-white / oat ground", "acacia wood"]
+    fonts: {latin: "a warm serif for the brand-like lines + a clean sans for step text — chosen at composition, one token source", devanagari: n/a}
+    tone: "warmth / design register ('cookware that understands you', 'inspired by the warmth of Indian kitchens'); calm, empathetic, never instructional-stern"
+    forbidden: ["any health / toxin / PTFE / lead-free / cadmium-free claim of ours", "patent or Enviromax", "performance claims not read verbatim off the PDP", "revenue / funding / household / repeat-rate figures", "implied endorsement or client relationship", "tool or model names in any customer- or portfolio-visible text", "the film actress from their partnership ad", "standing chopsticks upright in rice (blog etiquette)"]
+  duration_s: 18
+  deadline: "none stated; TTAO is the clock (2026-09-15T13:17:42Z start)"
+  spend_ceiling_stated: "none in this session — asked at start-of-job summary. A prior cloud session (Downloads/HANDOFF.md) recorded USD 8 / 0 retries / ≤ USD 1 fal cash; that is prior authority and is NOT reusable money"
+  assumptions:
+    - "Product: the 15 cm Ceramic Ramen Bowl (Kairi Mint for him, Rosé for her — the blog's 'Meal for Two' pairing) with the brand's acacia chopsticks. The user said 'a bowl of sorts'; the blog post is the Ramen Bowl launch content, so this is the bowl."
+    - "Three steps: the brand's guide has FIVE steps (Rest / Anchor / Pencil / Align / Pinch-and-release). The film compresses them to three beats whose text companions are verbatim fragments of the guide — the film never claims 'Step 1 of 3'; the numerals 1·2·3 are beat markers. Flagged to the user at the summary."
+    - "Voice: one generated narrator (single VO source over silent clips) rather than the girl speaking on camera — native per-clip speech is not identity-stable across generations (case 002 RO-02) and lip-sync is out of every clean cell. She explains with her hands; the VO carries the words."
+    - "Characters: two generated young Indian adults, no real person; no supplied person → consent gate n/a. Faces are secondary; hands and the bowl carry the film."
+    - "Duration 18 s (five beats); 9:16 master; 4:5 and 1:1 as compositor renditions, each QA'd as its own file."
+    - "The prior cloud session's job branch was never pushed and is not on origin; its concept ('The Still One', no characters) is superseded by the user's re-brief today. Its source findings (blog has 5 steps; image paths; register) were verified again here, not trusted."
+    - "Prior-session TTAO clock start 2026-09-15T12:06:40Z is recorded here for honesty; this job's TTAO runs from 13:17:42Z (this session's first production input). Both are reported at close; never blended."
+  questions_asked:
+    - {question: "Job-specific spend cap (amount, currency, what it covers, retries)?", why_material: "no paid draw without it (SKILL non-negotiable)", answer: null}
+    - {question: "Approve the frozen copy deck and VO lines before generation?", why_material: "PROFILE.md rule: words approved before anything is generated; exact strings are code-set", answer: null}
+    - {question: "fal cash pool balance (dashboard reading) or attestation? Sarvam / ElevenLabs / Vertex credits?", why_material: "A7: unknown liquidity is not executable", answer: null}
+    - {question: "Ending: he eats with a spoon from the bowl (blog: the rim notch holds 'chopsticks or a spoon') or with a fist-grip on the chopsticks?", why_material: "changes plate B and clip 5; both honour 'they still happily eat'", answer: null}
 
 # ── 2b. NORMALIZED REQUEST (CANON-010 vocabulary; conservative; never edited later) ────────
 nr:
-  modality: null                  # REQUIRED  static_image | video | image_sequence | audio  (R05)
-  modality_provenance: customer_stated   # customer_stated | customer_implied
-  requested_operation: null       # REQUIRED  generate | edit | animate | restore | extend | compose | variants  (R01)
-  entities: []                    # product | packshot | person | logo | scene | prior_creative
-  text_requirements: []           # mirrors intake.mandatory_text
-  language_topology: []
-  market: null                    # e.g. IN
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: generate
+  entities: [product, product, person, person, scene]
+  text_requirements:
+    - {id: t1, content: "The bottom stick stays still.", script: latin, exactness: contractual, placement: overlay, may_reflow: false}
+    - {id: t2, content: "The top stick does all the work.", script: latin, exactness: contractual, placement: overlay, may_reflow: false}
+    - {id: t3, content: "Pinch and release.", script: latin, exactness: contractual, placement: overlay, may_reflow: false}
+    - {id: t4, content: "Ramen night at home.", script: latin, exactness: contractual, placement: overlay, may_reflow: false}
+    - {id: t5, content: "Cumin Co.", script: latin, exactness: contractual, placement: overlay, may_reflow: false}
+  language_topology: [en-IN voice, LATIN text]
+  market: IN
   advertising_acceptance_intent: true
-  ambiguity_markers: []           # from runtime/canon/KIND-NR-BINDING-v0.yaml
+  ambiguity_markers: ["'a bowl of sorts' — product resolved by the blog post, not by the brief", "'step 1, step 2, step 3' vs the guide's five steps", "'the girl trying to explain' — on-camera speech vs voice-over unresolved by the brief; resolved to VO"]
+  runtime_nr_source: brief.job.json             # runtime.canon.normalize over the PRODUCTION-JOB-v1 brief (t3 there reads 'Pinch. Lift. Eat.' — superseded by this deck before any dispatch; the prefix/pack lookup is unaffected)
 
 # ── 3. TEMPLATE / LEARNING FIRST ─────────────────────────────────────────────
 template:
-  reused: null                    # REQUIRED  <template_id> | none
-  reason: null
-  numbers_carried: []             # [{rule, value, evidence_scope: this_accepted_template}] — starting points, not norms
-  learning_applied: []            # [{case, id (SD-xx / RO-xx / pattern), how}]
+  reused: none
+  reason: "The only accepted template is service_intro_with_portfolio_proof (a 57-s service intro); this is a 18-s two-character product story. Case 002 tiles are job_specific compositions. Structure is new; the production logic, QA and workflow of both cases are reused."
+  numbers_carried:
+    - {rule: important_still_min_hold_s, value: 3.3, evidence_scope: this_accepted_template, use: "each step insert holds ≥ 3.3 s (beats 2–4 are 3.5 / 3.5 / 3 s)"}
+  learning_applied:
+    - {case: UPWORK-INTRO-001, id: SPEAKER_MICROQUALIFICATION, how: "the highest-risk unresolved element (a correct chopstick grip in generated hands) is micro-qualified first — one plate + one clip, human gate, freeze — before any dependent spend"}
+    - {case: UPWORK-INTRO-001, id: RO-05, how: "Sarvam passed 16/16 transcripts and was rejected by ear as robotic in long narration; VO here is ≤ 5 short lines and both TTS routes are micro-qualified by ear on one line"}
+    - {case: UPWORK-INTRO-001, id: RO-06, how: "Kling sharpened blurred signage into letters once — every clip is frame-sampled (D1), and plates keep the background free of legible-world surfaces (no packaging, books, labels)"}
+    - {case: UPWORK-INTRO-001, id: RO-07, how: "Seedream 5 Pro edit held bottle/kettle geometry 6/6 from packshots — chosen for every product-bearing plate with Slide_01 as the reference"}
+    - {case: UPWORK-INTRO-001, id: RO-10, how: "code-set text per frame over an animated plate worked — the step companions are composed per frame by code, never generated"}
+    - {case: UPWORK-INTRO-001, id: VIDEO_FRAME_TEXT_HYGIENE, how: "clean still ≠ clean clip; qa.video_frames per clip"}
+    - {case: UPWORK-PORTFOLIO-002, id: STILLS_FIRST_STORY_PRODUCTION, how: "keyframe stills are generated and human-gated before any clip; clips are i2v from accepted stills only (RR-8)"}
+    - {case: UPWORK-PORTFOLIO-002, id: RO-02, how: "native generated narration is not identity-stable across independent generations → one VO source over silent clips (SINGLE_VOICE_SOURCE chosen as a candidate pattern, not a rule)"}
+    - {case: UPWORK-PORTFOLIO-002, id: CROSS_CLIP_VOICE_CONTINUITY, how: "D14 on the assembly by ear even with one VO source — boundaries, holes, restarts"}
+    - {case: UPWORK-PORTFOLIO-002, id: FORMAT_SPECIFIC_REVALIDATION, how: "9:16 master, 4:5 and 1:1 each get qa.final_geometry rows on the actual file"}
+    - {case: UPWORK-PORTFOLIO-002, id: PAID_PRODUCTION_PREFLIGHT, how: "this record (brief, frozen copy, deliverables, plan, QA, cap) exists before any paid call"}
+    - {case: UPWORK-PORTFOLIO-002, id: DESIGN_REUSE_PROVENANCE, how: "nothing is carried in from earlier jobs; every plan.assets[].reuse is null — the brand's own photographs are references, not reused treatments"}
+    - {case: UPWORK-PORTFOLIO-002, id: RO-01, how: "Veo extend restructured narration and re-imagined scenes at 720p once — no extend chains; every clip is a single i2v generation"}
 
 # ── 4. CANON ─────────────────────────────────────────────────────────────────
 canon:
-  packs_selected: []              # REQUIRED  every pack id the trigger table fired
-  packs_injected: []              # REQUIRED  the compiled+accepted subset actually used
-  missing_domains: []             # fired but not compiled — recorded, never invented
-  prefix_sha256: null             # from runtime lookup when used
+  packs_selected: [concept_and_distinctiveness, critique_and_effectiveness, composition_and_attention, colour_and_visual_register, camera_and_spatial_grammar, editing_pacing_and_short_form, typography_and_copy, product_appearance, indian_indic_context, commercial_communication]
+  packs_injected: [composition_and_attention, product_appearance]
+  missing_domains: [concept_and_distinctiveness, critique_and_effectiveness, colour_and_visual_register, camera_and_spatial_grammar, editing_pacing_and_short_form, typography_and_copy, indian_indic_context, commercial_communication]
+  prefix_sha256: 4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe   # runtime.canon.lookup, 5298 tokens, 21 check ids, 2026-09-15T13:23Z
+  lookup_source: brief.job.json
 
 # ── 5. CREATIVE BLUEPRINT ────────────────────────────────────────────────────
 blueprint:
-  concept: null                   # REQUIRED  the idea in two sentences
-  first_read: [null, null, null]  # REQUIRED  1st / 2nd / 3rd read, one cue each (CA-D1)
-  hook: null                      # REQUIRED
-  offer_placement: null
-  product_placement: null
-  proof: null
-  cta_placement: null
-  attention_order: null           # REQUIRED
-  brand_world: null               # REQUIRED  one light source, palette, register
-  remember: null                  # REQUIRED  the one thing kept
-  muted_test: null                # video: yes | no | n-a
-  hindi_copy_origination: null    # originated | translated — must be originated when Hindi is exact
-  check_lines: {}                 # REQUIRED  {PA-D1: pass|n-a|deviation:<clause>, ... CA-D11: ...}
-  deviations: []                  # [{decision_id, brief_clause}]
-  reviews: []                     # [{reviewer: karl|ezra|human, verdict, note}] — input, not acceptance
+  concept: "'Bottom stick, still.' Noodle night at a warm kitchen table: he fumbles a pair of chopsticks over a steaming Kairi bowl, she shows him with her hands over her Rosé bowl — three quiet macro beats that are the brand's own guide, verbatim — he fails anyway, and they eat happily regardless, her chopsticks resting in the bowl's rim notch. The lesson is the brand's blog; the warmth is the brand's register; the bowl demonstrates its own feature without a line of copy."
+  first_read: ["steam and the mint bowl in front of him (colour + light)", "his crossed chopsticks / the escaping noodle (motion)", "her hand entering to show (blocking)"]
+  hook: "A noodle slips back into the bowl in the first second — everyone who has held chopsticks wrong feels it before a word is read."
+  offer_placement: none (spec; no price, no code)
+  product_placement: "the two bowls are in every beat: hero-sized in the macro inserts (rim, glaze, embossed mark soft), table-scale in the two-shots; never obstructed by text (text sits in the upper third clear zone or the lower third above the Reels UI band)"
+  proof: "the grip itself, shown not told, in three ≥ 3.3-s holds; and the closing image — chopsticks resting in the rim notch — which is the blog's own product argument"
+  cta_placement: "brand line 'Cumin Co.' bottom-centre of the end beat; 'Ramen night at home.' above it; no other CTA"
+  attention_order: "beat 1 wide two-shot (his hands → bowl → her face) → beat 2 macro her hand, bottom stick settles (one cue: stillness) → beat 3 macro her hand, top stick pinches (one cue: the pinch closing) → beat 4 macro his hand, sticks cross, noodle escapes (one cue: the miss) → beat 5 two-shot, both laughing, he eats, her sticks rest in the notch → text lands last"
+  brand_world: "one soft window source camera-left, late afternoon; warm oat linen and light wood; the Kairi mint and Rosé glazes are the only saturated notes plus the noodles' amber; matte surfaces everywhere except the glaze (PA-D1); no printed matter, no packaging, no signage anywhere in frame"
+  remember: "The bottom one doesn't move — and Cumin Co. is the bowl on a noodle night."
+  muted_test: "yes — the three step texts and the actions carry the film without sound; VO adds warmth, not information"
+  hindi_copy_origination: n/a
+  voice_over:
+    route_decision: "single generated narrator over silent clips (candidate pattern); calm, empathetic, Indian English, female"
+    lines:
+      - {beat: 1, text: "First noodle night with chopsticks.", t: "0.4–2.6"}
+      - {beat: 2, text: "The bottom one just rests. It never moves.", t: "3.4–6.2"}
+      - {beat: 3, text: "The top one does all the work. Hold it like a pencil.", t: "6.9–9.8"}
+      - {beat: 4, text: "Pinch… and… nearly.", t: "10.4–12.6"}
+      - {beat: 5, text: "It takes a few tries. Dinner doesn't wait.", t: "13.6–16.6"}
+    chars_total: 158
+    status: "DRAFT — words need the user's approval before any TTS call"
+  beats:
+    - {n: 1, t: "0.0–3.0", shot: "two-shot, table height, wide", action: "he holds the sticks in a fist over the steaming Kairi bowl; a noodle slides back; she watches, amused", text: none, asset: clip-1 from plate-A}
+    - {n: 2, t: "3.0–6.5", shot: "macro, her right hand over the Rosé bowl", action: "the bottom stick settles into the thumb web, ring finger curls under it; the hand then holds perfectly still", text: "1  The bottom stick stays still.", asset: clip-2 from plate-H1}
+    - {n: 3, t: "6.5–10.0", shot: "macro, same hand, same framing", action: "the top stick is picked up like a pencil and pinches down once on noodles; the bottom stick does not move", text: "2  The top stick does all the work.", asset: clip-3 from plate-H2}
+    - {n: 4, t: "10.0–13.0", shot: "macro, his right hand over the Kairi bowl", action: "he tries the pinch; the tips cross; the noodle escapes back into the broth", text: "3  Pinch and release.", asset: clip-4 from plate-H3}
+    - {n: 5, t: "13.0–18.0", shot: "two-shot, slightly closer than beat 1", action: "both laugh; he eats anyway (spoon or fist-grip — user's call); her chopsticks rest in the rim notch of the Rosé bowl", text: "Ramen night at home. / Cumin Co.", asset: clip-5 from plate-B}
+  check_lines:
+    PA-D1: "pass — glaze declared direct/glossy (soft window reflection), noodles and wood matte, linen matte; declared per plate prompt"
+    PA-D2: "pass — one large soft window reflection on each glaze, camera-left, consistent across plates"
+    PA-D3: "pass — soft source: soft shadow edges + large soft highlight; no pinpoint speculars"
+    PA-D4: "pass — one nameable source: window, camera-left, late afternoon; every plate prompt names it"
+    PA-D5: "pass — mint / rosé glaze against warm oat linen survives grayscale (mid vs light); checked on each plate (B3)"
+    PA-D6: "pass — low-contrast, soft-key, warm mood attributed to the window light, declared in every prompt"
+    PA-D7: "pass — 'the bowl on a noodle night' sells at a glance; the hero image needs no copy"
+    PA-D8: "pass — glaze speculars declared wanted (large, soft); no accidental hard speculars; no glass in frame"
+    PA-D9: "pass — three-quarter-high angle on the bowls shows rim, notch, wall and glaze; macro inserts frame rim + hand"
+    PA-D10: "pass — no deviation"
+    CA-D1: "pass — per beat exactly one dominant cue (see attention_order); text lands after the action settles"
+    CA-D2: "pass — bowls sit in the lower-centre zone (the hands work above them; the upper third stays clear for text); reason stated, no ratio"
+    CA-D3: "pass — edge treatment: bowls contained with margin in macros; two-shots crop at the shoulders deliberately (named); no near-tangency of rim to frame edge"
+    CA-D4: "n-a — no frame within the frame"
+    CA-D5: "pass — balanced: bowl mass low, hand mass centre, text upper; tonal weight agrees on grayscale"
+    CA-D6: "pass — 9:16 justified by the vertical stack hand-over-bowl and the Reels slot; 4:5 / 1:1 are declared re-crops with subject anchoring"
+    CA-D7: "pass — per cut: new information named (beat 2 the anchor; 3 the pinch; 4 the miss; 5 the outcome); device per beat: cut (no camera moves in macros; slow push only in beat 5)"
+    CA-D8: "pass — the cut from beat 4 (miss) to beat 5 (laughing) sacrifices strict eye-trace for emotion, declared"
+    CA-D9: "pass — her hand enters from frame-left, his from frame-right in every beat; the two-shots keep her camera-left and him camera-right"
+    CA-D10: "pass — no macro holds past its content (≥ 3.3 s, ≤ 3.5 s); the two-shots hold 3 and 5 s; pace named as the Reels norm"
+    CA-D11: "pass — macros static (motion is the hands); beat 5 has one slow push motivated by the outcome (moving in on the meal)"
+  deviations: []
+  reviews: []
 
 # ── 6–7. PRODUCTION PLAN + ROUTES ────────────────────────────────────────────
 plan:
-  assets:                         # REQUIRED  one entry per asset, dependencies explicit
-    - id: null                    # e.g. plate-A
-      purpose: null
+  assets:
+    - id: plate-A
+      purpose: "master two-shot still (beat 1): him camera-right with the Kairi bowl, her camera-left with the Rosé bowl, chopsticks, steam, window light — fixes both characters and the room"
       depends_on: []
-      reuse_of: null              # path @ sha256 of an already-accepted asset, or null
-      reuse:                      # DESIGN_REUSE_PROVENANCE (case 002) — REQUIRED whenever reuse_of is set or a treatment/component is carried in
-        source_asset: null        # path @ sha256, or <case>/<version>/<component>
-        source_verdict: null      # the human verdict that source actually received (accept | specific_repair | rebuild_direction | reject)
-        reuse_status: null        # rejected | accepted_in_context | reusable_candidate
-        context_changed: null     # true if aspect, plate, subject or context differs from the source
-        fresh_qa_required: null   # true whenever context_changed or reuse_status != reusable_candidate
-        human_reapproval: null    # verbatim, REQUIRED when reuse_status == rejected; else null
-      exact_text_mechanism: code_set_on_textless_plate   # | generated_in_scene (only with RR-2 evidence + job need) | none
-      route:
-        cell: null                # e.g. IMG-CORE/flux-2-pro
-        evidence_status: null     # clean_observed | directional_only
-        production_use_allowed: null   # true | manual_only (+ user OK recorded) — never false
-        surface: null             # fal | vertex | gemini_api | sarvam_direct | elevenlabs_direct | code
-        pool: null                # cash | credits | sarvam_credits | elevenlabs_credits | none
-        unit_price_usd: null      # live roster/pin price at plan time
-        quantity: null
-        planned_draws: null
-        fallback_cell: null       # declared, or none with reason
-        why: null                 # evidence + requirement + price, one line
-        directional_notes_used: []   # RO-xx ids used as tie-breakers only
-  deliverables: []                # REQUIRED  every final delivered geometry: [{id, geometry: 1:1|4:5|9:16|WA|16:9|..., pixels, from_asset}] — each gets its own qa.final_geometry row
-  micro_qualifications: []        # [{capability, route, cost_usd, human_gate_verdict, frozen_asset}]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: none
+      route: {cell: IMG-REF/seedream-5-pro-edit, evidence_status: clean_observed, production_use_allowed: true, surface: fal, pool: cash, unit_price_usd: 0.0675, quantity: 1, planned_draws: 2, fallback_cell: "none clean on IMG-REF (nano-banana-pro-edit and flux-2-pro-edit are use=false); fallback is a redraw on the same route with a revised prompt", why: "supplied product must hold geometry, glaze colour and the rim notch — IMG-REF 4/4 clean; RR-4 default for supplied-photo work; USD 0.0675", directional_notes_used: [RO-07]}
+    - id: plate-H1
+      purpose: "macro still, her hand over the Rosé bowl, bottom stick resting in the thumb web, ring finger under it (beat 2) — THE micro-qualification plate"
+      depends_on: [plate-A]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: code_set_on_textless_plate
+      route: {cell: IMG-REF/seedream-5-pro-edit, evidence_status: clean_observed, production_use_allowed: true, surface: fal, pool: cash, unit_price_usd: 0.0675, quantity: 1, planned_draws: 2, fallback_cell: "redraw same route", why: "product in frame → IMG-REF; the hand is the hardest element and is human-gated before anything depends on it", directional_notes_used: [RO-07]}
+    - id: plate-H2
+      purpose: "macro still, same hand and framing, top stick held like a pencil, tips on noodles (beat 3)"
+      depends_on: [plate-H1]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: code_set_on_textless_plate
+      route: {cell: IMG-REF/seedream-5-pro-edit, evidence_status: clean_observed, production_use_allowed: true, surface: fal, pool: cash, unit_price_usd: 0.0675, quantity: 1, planned_draws: 2, fallback_cell: "redraw same route", why: "as H1; H1 accepted still is added as a second reference for hand/sleeve continuity", directional_notes_used: [RO-07]}
+    - id: plate-H3
+      purpose: "macro still, his hand over the Kairi bowl, tips crossed, a noodle escaping (beat 4)"
+      depends_on: [plate-H1]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: code_set_on_textless_plate
+      route: {cell: IMG-REF/seedream-5-pro-edit, evidence_status: clean_observed, production_use_allowed: true, surface: fal, pool: cash, unit_price_usd: 0.0675, quantity: 1, planned_draws: 2, fallback_cell: "redraw same route", why: "as H1", directional_notes_used: [RO-07]}
+    - id: plate-B
+      purpose: "end two-shot still (beat 5): both laughing, he eating, her chopsticks resting in the Rosé bowl's rim notch — derived from plate-A for identity/room continuity"
+      depends_on: [plate-A]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: code_set_on_textless_plate
+      route: {cell: IMG-REF/seedream-5-pro-edit, evidence_status: clean_observed, production_use_allowed: true, surface: fal, pool: cash, unit_price_usd: 0.0675, quantity: 1, planned_draws: 2, fallback_cell: "IMG-EDIT/flux-2-pro-edit (3/4 clean, use=true, USD 0.045) if Seedream will not hold the two identities from plate-A", why: "same people + same bowls → reference edit of the accepted plate-A", directional_notes_used: [RO-07]}
+    - id: clip-1 … clip-5
+      purpose: "5-s image-to-video from each accepted plate (A, H1, H2, H3, B); trimmed by code to the beat length; silent"
+      depends_on: [plate-A, plate-H1, plate-H2, plate-H3, plate-B]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: code_set_on_textless_plate
+      route: {cell: VID-I2V/kling-v3-pro-i2v, evidence_status: clean_observed, production_use_allowed: true, surface: fal, pool: cash, unit_price_usd: 0.112, quantity: "5 s", planned_draws: "5 (+2 redraw allowance)", fallback_cell: "VID-I2V/wan-3.0-prime-i2v (8/8, USD 0.14/s, cash); cheapest: VID-I2V/minimax-h3-max-i2v (7/8, USD 0.08/s); credits alternative VID-I2V/veo-3.1-fast-i2v (5/8, USD 0.10/s, 8-s minimum) only if the user prefers credits over cash", why: "RR-8: animate an accepted still on Kling v3 Pro or Wan 3.0 Prime first; Kling 8/8 and cheaper than Wan; static macros need no camera move (RR-8 avoid Veo fast i2v where camera moves are forbidden)", directional_notes_used: [RO-06]}
+    - id: vo
+      purpose: "five short lines, one narrator, Indian English, calm/empathetic; micro-qualified on one line across both routes"
+      depends_on: []
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: none
+      route: {cell: "AUD-TTS/sarvam-bulbul-v3 (6/6) or AUD-TTS/elevenlabs-v3-direct (4/6) — human ear decides at micro-qualification", evidence_status: clean_observed, production_use_allowed: true, surface: "sarvam_direct | elevenlabs_direct", pool: "sarvam credits | elevenlabs credits", unit_price_usd: "3.0 INR-equiv per 1000 chars → USD 0.005 for 160 chars (runtime PriceBook, PR #102) | 0.1 per 1000 chars → USD 0.016", quantity: "≈ 160 chars", planned_draws: "2 qualification lines + 1 full read on the chosen route (+1 redraw)", fallback_cell: "the other TTS route", why: "RR-12 default Sarvam; case 001 RO-05 robotic-by-ear risk → qualify by ear first", directional_notes_used: [RO-05]}
+    - id: music
+      purpose: "warm, sparse instrumental bed ≈ 20 s, ducked under VO; trimmed by code"
+      depends_on: []
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: none
+      route: {cell: MUS/lyria+native, evidence_status: clean_observed, production_use_allowed: true, surface: vertex, pool: credits, unit_price_usd: 0.06, quantity: 1, planned_draws: "1 (+1)", fallback_cell: "none (ElevenLabs music needs a paid plan, RR-13); fallback is no music", why: "RR-13 default; neutral prompt wording (RO-09)", directional_notes_used: [RO-09]}
+    - id: assembly
+      purpose: "cut, trim, per-frame code-set text (HarfBuzz + Pillow), VO + music mix, 9:16 master, 4:5 and 1:1 renditions"
+      depends_on: [clip-1 … clip-5, vo, music]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: code_set_on_textless_plate
+      route: {cell: code, evidence_status: n/a, production_use_allowed: true, surface: code, pool: none, unit_price_usd: 0, quantity: 1, planned_draws: n/a, fallback_cell: none, why: "deterministic composition; runtime/compositor gates", directional_notes_used: [RO-10]}
+  deliverables:
+    - {id: D-916, geometry: "9:16", pixels: "1080x1920", from_asset: assembly, duration_s: 18}
+    - {id: D-45, geometry: "4:5", pixels: "1080x1350", from_asset: assembly, note: "subject-anchored declared crop of the 9:16 master; text re-laid at this geometry"}
+    - {id: D-11, geometry: "1:1", pixels: "1080x1080", from_asset: assembly, note: "subject-anchored declared crop; text re-laid"}
+  micro_qualifications:
+    - {capability: "correct chopstick grip in a generated hand, held still and then animated without finger errors", route: "IMG-REF/seedream-5-pro-edit (plate-H1) → VID-I2V/kling-v3-pro-i2v (5 s)", cost_usd: 0.6275, human_gate_verdict: null, frozen_asset: null, note: "no routing cell covers finger-level manipulation; this is the brief's hardest requirement and everything inherits its style"}
+    - {capability: "calm, empathetic Indian-English narrator by ear", route: "sarvam-bulbul-v3 vs elevenlabs-v3-direct, one line each", cost_usd: 0.02, human_gate_verdict: null, frozen_asset: null}
   composition:
-    token_source: null            # the one DesignTokens source
-    fonts: {latin: null, devanagari: null}
+    token_source: "runtime/compositor/tokens.DesignTokens (one instance in the job's compose script)"
+    fonts: {latin: "to be fixed at composition from fonts available on this machine; one serif + one sans; recorded with sha", devanagari: n/a}
     shaping: hb-view+Pillow
-  expected_spend_usd: null        # REQUIRED  Σ planned draws × price, with fallbacks
-  start_of_job_summary_shown_utc: null   # when concept + route + expected spend were shown to the user
+  expected_spend_usd:
+    clean_pass: 3.23      # plates 5×0.0675=0.34 + clips 5×0.56=2.80 + VO 0.03 + music 0.06
+    with_evidence_based_redraws: 4.79   # +5 plate redraws 0.34 + 2 clip redraws 1.12 + music 0.06
+    with_one_repair_round: 6.03         # +2 clips + 1 plate
+    proposed_cap: "USD 8, 0 retries, whole job including repairs — to be stated by the user this session"
+  start_of_job_summary_shown_utc: null
 
 # ── 8–9. SPEND (money moves only here) ───────────────────────────────────────
 spend:
