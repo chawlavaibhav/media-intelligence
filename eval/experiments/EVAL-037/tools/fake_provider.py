@@ -16,7 +16,12 @@ Scenarios:
   malformed           a named trial returns a malformed answer once, then a valid one
   always_malformed    never well-formed (one repair, then failed_format)
   repair_flaky        the FORMAT REPAIR call fails transiently once, then succeeds
-  canon_user          the model calls the Canon tools before answering
+  canon_user          the model calls canon_catalog + canon_search (NO canon_read),
+                      i.e. the shape that must FAIL the mandatory-research minimum
+  controlled_user     search -> read 2 -> search -> read 2, i.e. a compliantresearch pattern
+                      inside the CONTROLLED_CANON allowance
+  greedy_user         asks for limit=500 and tries 5 searches and 8 reads, i.e. the
+                      gemma-required-canon behaviour; the governor must contain it
   website_user        the model calls website_read before answering
   tool_user           the model calls both Canon and website tools
 
@@ -130,6 +135,26 @@ class FakeAdapter:
 
         want_canon = self.scenario in ("canon_user", "tool_user")
         want_web = self.scenario in ("website_user", "tool_user")
+
+        # Test-only scenarios for the CONTROLLED_CANON governor. No network.
+        if self.scenario in ("controlled_user", "greedy_user") and dispatch is not None \
+                and "canon_search" in names:
+            greedy = self.scenario == "greedy_user"
+            nsearch, nread = (5, 4) if greedy else (2, 2)
+            for si in range(nsearch):
+                args = {"query": f"production decision {si} lighting hierarchy"}
+                if greedy:
+                    args["limit"] = 500
+                turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
+                out, meta = self._tool(dispatch, "canon_search", args, t)
+                tool_log.append(meta)
+                hits = out.get("results") or []
+                for ri in range(nread):
+                    tgt = {"item_id": str(hits[ri]["item_id"])} if ri < len(hits) \
+                        else {"item_id": "nonexistent"}
+                    turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
+                    _, meta = self._tool(dispatch, "canon_read", tgt, t)
+                    tool_log.append(meta)
 
         if want_canon and dispatch is not None and "canon_search" in names:
             for name, args in (("canon_catalog", {}),

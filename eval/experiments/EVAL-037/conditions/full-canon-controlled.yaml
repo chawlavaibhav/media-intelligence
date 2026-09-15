@@ -1,0 +1,154 @@
+# EVAL-037 — FULL_CANON condition, CONTROLLED_CANON supplemental treatment.
+#
+# Supplemental to the frozen `conditions/full-canon.yaml`, which is UNCHANGED and
+# remains the definition the original lanes ran under. Every field below is copied
+# from that file verbatim except the treatment block and the addendum.
+#
+# Canon research is MANDATORY, OBJECTIVE-DRIVEN and MECHANICALLY BOUNDED. The corpus,
+# its fingerprints, the three tools, the BM25 ranking and the ACCEPTED/HOLD/Q&A status
+# semantics are identical. What changes is how much evidence the harness exposes.
+#
+# This file is read ONLY by the CONTROLLED_CANON lane.
+
+condition_id: FULL_CANON
+treatment_id: CONTROLLED_CANON
+experiment: EVAL-037
+
+corpus:
+  description: >-
+    The merged status-aware full corpus produced by CANON-014: accepted Canon,
+    HOLD candidate knowledge, and the grounded Q&A banks, in one retrievable
+    surface with epistemic status preserved on every returned object.
+  base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
+  roots:
+    accepted: canon/knowledge/current
+    hold: canon/candidates/canon-014
+    qa: canon/qa/canon-014
+  index: canon/knowledge/CANON-CORPUS-INDEX.yaml
+  artifact_filenames:
+    - source-knowledge.yaml
+    - source-concept-systems.yaml
+    - operational-bindings.yaml
+    - ontology-mappings.yaml
+    - visual-evidence-ledger.yaml
+
+fingerprints:
+  algorithm: sha256-of-sorted-path-and-content
+  full_knowledge:
+    file_count: 193
+    combined_digest: cbd321aa3be7464e785a0d42de1764cdccc8bdd33bc023a376740f8f196bde60
+  qa:
+    file_count: 23
+    combined_digest: 1313c0babe2194a7bc71c1628f9fbec5fa4f35ca5ff5edc7f594662101dc62bd
+  verification: >-
+    Recomputed from the working tree at the frozen base commit and matched
+    exactly. An execution worker MUST re-verify both digests during preflight
+    and MUST stop rather than run if either differs.
+
+tools_exposed:
+  - name: canon_catalog
+    access: read-only
+    purpose: List every source the corpus represents with its source_status and counts.
+  - name: canon_search
+    access: read-only
+    purpose: Search knowledge items, concept systems, bindings, ontology terms and Q&A items.
+  - name: canon_read
+    access: read-only
+    purpose: Read a specific source's artifact, or a specific item by id.
+
+status_invariants:
+  - Every returned object MUST carry source_status.
+  - source_status is one of ACCEPTED or HOLD, verbatim from the corpus. It is never inferred.
+  - HOLD MUST NEVER be represented, relabelled, summarised or defaulted as accepted.
+  - An object whose status cannot be established is not returned.
+  - Q&A items carry the source_status of their source and are additionally marked
+    not_benchmark_ground_truth. Q&A is accessible knowledge, not independent
+    corroboration and not benchmark truth.
+
+model_discretion:
+  # THE TREATMENT. Retrieval is compelled and bounded; every judgement inside it stays
+  # the tested model's own. The harness curates no query, names no source or object,
+  # ranks nothing, supplies no preselected packet, and never reads on the model's behalf.
+  decides:
+    - what production question to research
+    - the search wording
+    - which returned objects are worth reading
+    - whether to consume Q&A
+    - whether to stop early, before the allowance is spent
+    - what retrieved knowledge to actually apply
+  no_longer_decides:
+    - whether to use Canon at all
+    - how much evidence is returned
+  mandatory_canon_use: true
+  mandatory_minimum:
+    canon_search: 1
+    canon_read: 1
+  harness_enforced_maxima:
+    canon_search_per_trial: 3
+    results_per_search: 6
+    canon_read_per_research_question: 2
+    canon_read_per_trial: 4
+    max_items_exposable_per_trial: 18
+  enforcement: >-
+    Enforced by the harness in tools/controlled_canon.py, not by asking the model to
+    remember. `limit` is forced to at most 6 BEFORE the search runs, so an oversized
+    payload is never built: a model that omits `limit` gets 6, and one that asks for
+    more is clamped to 6. A model that asks for fewer than 6 is honoured. A call beyond
+    an allowance is refused with a structured, Canon-free response carrying no
+    source_status, so a refusal can never be mistaken for retrieved knowledge.
+  canon_catalog_counted: false
+  canon_catalog_note: a table of contents, not retrieved evidence; unchanged and uncounted
+  stop_rule: >-
+    Research stops when the model decides it has enough, or when the mechanical
+    allowance is exhausted. It may not request more research merely because an answer
+    feels weak. Creative weakness is never a reason for another attempt.
+  compliance_gate:
+    id: CONTROLLED_CANON
+    satisfied_when: at least one effective canon_search AND one effective canon_read
+    on_violation:
+      retain_output: true
+      status: failed_required_canon_use
+      quality_retry: forbidden
+      resample: forbidden
+
+# ---------------------------------------------------------------------------
+# The FULL_CANON addendum, plus the CONTROLLED_CANON treatment instruction.
+# The first block is the frozen FULL_CANON addendum text, byte-for-byte. The
+# second block is the treatment, and is the only prompt change in this run.
+# ---------------------------------------------------------------------------
+addendum: |
+  You have access to a media-production knowledge library through the available Canon tools.
+
+  It contains ACCEPTED knowledge, HOLD knowledge and grounded Q&A representations.
+
+  Use any amount of it if useful, or none.
+
+  ACCEPTED means the source passed the project's Audit Gate.
+  HOLD means the extracted knowledge has an unresolved evidence or representation blocker and must be treated cautiously.
+
+  Q&A items are alternate grounded representations, not independent corroboration or benchmark truth.
+
+  Canon is creative/production knowledge, not evidence about current model capability, provider pricing or reliability.
+
+  Decide for yourself what is relevant.
+
+  Canon research is required for this task.
+
+  Before creating the final production package, identify the specific production
+  decision where Canon knowledge can help.
+
+  Search Canon for that specific need, inspect the small returned result set, and
+  read the most useful object or objects.
+
+  You must use at least one canon_search and one canon_read.
+
+  You choose:
+  - what production question to research;
+  - the search wording;
+  - which retrieved objects are useful;
+  - what retrieved knowledge to apply.
+
+  Do not research broadly.
+  Do not try to consume the entire Canon.
+  Stop researching once you have enough information to make the production
+  decision.
