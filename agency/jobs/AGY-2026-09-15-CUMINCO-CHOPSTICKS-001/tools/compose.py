@@ -56,6 +56,8 @@ DECK = {
     "t3": "Pinch and release.",
     "t4": "Ramen night at home.",
     "t5": "Cumin Co.",
+    "t6": "15 cm Ceramic Ramen Bowl",     # PDP title, verbatim fragment (approved by the user, V3)
+    "t7": "cuminco.com",                  # Direction line — the brand's domain (approved by the user, V3)
 }
 
 # ── timeline (seconds on the master) — VO-paced; recorded as a deviation from the 18-s plan ──
@@ -64,26 +66,33 @@ BEATS = [  # (beat, clip file, in, out)  -> master start is cumulative   (v2: cl
     (2, "clip-2-accepted.mp4", 0.0, 5.5),   # 3.0–8.5
     (3, "clip-3-r1.mp4", 0.5, 5.5),     # 8.5–13.5
     (4, "clip-4-r1.mp4", 0.0, 4.0),     # 13.5–17.5
-    (5, "clip-5-r2.mp4", 1.0, 6.0),     # 17.5–22.5  her mouth closes at ~1.2 s; closed-lip laughter, spoon
+    (5, "clip-5-r2.mp4", 1.0, 4.5),     # 17.5–21.0  her mouth closes at ~1.2 s; closed-lip laughter, spoon
+    (6, "ENDCARD", 0.0, 4.6),           # 21.0–25.6  product hero: the brand's own photograph (blog hero), slow code push, captions + Direction
 ]
-TAIL_HOLD_S = 0.4                       # freeze the last frame briefly so the b5 line can finish under the brand line
-VO = {2: ("final-b2.wav", 3.4), 3: ("final-b3.wav", 8.75), 4: ("final-b4.wav", 13.85), 5: ("final-b5.wav", 18.3)}
+TAIL_HOLD_S = 0.0
+VO = {1: ("final-b1.wav", 0.3), 2: ("final-b2.wav", 4.7), 3: ("final-b3.wav", 9.1), 4: ("final-b4.wav", 13.6), 5: ("final-b5.wav", 17.7), 6: ("final-b6.wav", 22.0)}
+ENDCARD_IMAGE = JOB / "source/images/blog_Setof2withchopstickslifestyle.jpg"   # 1080x1080, text-free, the brand's photograph
+ENDCARD_GROUND = "F1E9DD"
 # v2 deviation: the beat-1 VO line ("First noodle night with chopsticks.") is DROPPED — the four remaining lines run
 # 4.4–4.9 s each in the chosen slow, bubbly read and cannot all fit without pushing the film past 26 s; beat 1 is
 # carried by the picture and the music (muted test: yes). Flagged for the human; restorable at USD 0.
-VO_TEMPO = 1.06
+VO_TEMPO = 1.10
 TEXT = {  # beat -> [(region, string_id | literal, font, size_at_1080w, colour, role, y_centre_px)]  — a top band just inside the token safe area, every geometry
+    1: [],
     2: [("numeral", "1", "avenir-demi", 44, ACCENT, "display", 205), ("headline", "t1", "charter", 60, INK, "body", 282)],
     3: [("numeral", "2", "avenir-demi", 44, ACCENT, "display", 205), ("headline", "t2", "charter", 60, INK, "body", 282)],
     4: [("numeral", "3", "avenir-demi", 44, ACCENT, "display", 205), ("headline", "t3", "charter", 60, INK, "body", 282)],
-    5: [("tagline", "t4", "charter", 64, INK, "body", 232), ("brand_line", "t5", "avenir-demi", 48, ACCENT, "display", 330)],
+    5: [],                                                                                   # the two-shot carries no copy in V3; the end card does
+    6: [("tagline", "t4", "charter", 66, INK, "body", 250), ("product_name", "t6", "avenir-demi", 40, INK, "display", 330),
+        ("brand_line", "t5", "avenir-demi", 54, ACCENT, "display", 404), ("cta", "t7", "avenir-demi", 38, ACCENT, "display", 470)],
 }
+BRAND_MARK = ("brand_mark", "t5", "avenir-demi", 34, INK, "display", 192)     # persistent, top-left, beats 1–5 ("early and throughout")
 # per geometry: output size, and the declared crop (y offset in the 1080x1920 upscaled frame) per beat with its reason
 GEOM = {
-    "9:16": {"size": (1080, 1920), "crop_y": None, "layout": {"macro": [("left", 520), ("centre", 940)], "twoshot": [("centre", 940), ("centre", 620)]}},
-    "4:5": {"size": (1080, 1350), "crop_y": {1: 250, 2: 400, 3: 400, 4: 400, 5: 250}, "layout": {"macro": [("left", 460), ("centre", 700)], "twoshot": [("centre", 440), ("left", 440)]},
+    "9:16": {"size": (1080, 1920), "crop_y": None, "layout": {"macro": [("left", 520), ("centre", 940)], "twoshot": [("centre", 940), ("centre", 620)], "endcard": [("centre", 940)]}, "endcard_top": 590},
+    "4:5": {"size": (1080, 1350), "crop_y": {1: 250, 2: 400, 3: 400, 4: 400, 5: 250}, "layout": {"macro": [("left", 460), ("centre", 700)], "twoshot": [("centre", 440), ("left", 440)], "endcard": [("centre", 940)]}, "endcard_top": 590,
              "reason": "subject-anchored: two-shots keep both faces and both bowls (y 250-1600 of 1920); macros keep chopstick tips to bowl base (y 400-1750); the copy takes an opaque backing where it must sit over the chopsticks"},
-    "1:1": {"size": (1080, 1080), "crop_y": {1: 330, 2: 500, 3: 500, 4: 500, 5: 330}, "layout": {"macro": [("left", 440), ("centre", 700)], "twoshot": [("centre", 400), ("left", 420)]},
+    "1:1": {"size": (1080, 1080), "crop_y": {1: 330, 2: 500, 3: 500, 4: 500, 5: 330}, "layout": {"macro": [("left", 440), ("centre", 700)], "twoshot": [("centre", 400), ("left", 420)], "endcard": [("centre", 940)]}, "endcard_top": 580,
              "reason": "subject-anchored: two-shots keep faces and bowls (y 330-1410); macros keep the hand, chopsticks and the bowl's rim and wall, cutting ~100 px of the bowl base/shadow (y 500-1580); the copy takes an opaque backing"},
 }
 
@@ -156,9 +165,23 @@ def main():
     starts, t = [], 0.0
     seg_files = []
     for beat, clip, tin, tout in BEATS:
-        src = JOB / "gen/clips" / clip
         dur = round(tout - tin, 3)
         seg = work / f"seg-{beat}.mp4"
+        if clip == "ENDCARD":
+            top = g["endcard_top"]; avail = H - top - 40
+            side = min(W - 2 * TOKENS.safe_x, avail)             # contain: the whole photograph, never cropped
+            x0 = (W - side) // 2
+            fr = gates.check_fit({"id": "endcard-photo", "fit": "contain", "source_size": (1080, 1080), "box": (x0, top, x0 + side, top + side)})
+            nfr = int(dur * FPS)
+            run(["ffmpeg", "-v", "error", "-y", "-loop", "1", "-t", f"{dur}", "-i", str(ENDCARD_IMAGE), "-f", "lavfi", "-t", f"{dur}", "-i", f"color=c=0x{ENDCARD_GROUND}:s={W}x{H}:r={FPS}",
+                 "-filter_complex", f"[0:v]scale=2160:2160:flags=lanczos,zoompan=z='1+0.04*on/{nfr}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d=1:s={side}x{side}:fps={FPS}[ph];[1:v][ph]overlay=x={x0}:y={top}:shortest=1,format=yuv420p[v]",
+                 "-map", "[v]", "-t", f"{dur}", "-r", str(FPS), "-c:v", "libx264", "-preset", "medium", "-crf", "16", str(seg)])
+            seg_files.append(seg); starts.append(t)
+            report["beats"].append({"beat": beat, "clip": "ENDCARD (code): " + str(ENDCARD_IMAGE.relative_to(JOB)), "clip_sha256": sha(ENDCARD_IMAGE), "in": 0, "out": dur, "master_start": round(t, 3),
+                                    "fit": fr, "push": "zoompan 1.00→1.04 over the beat (declared, no crop of the photograph beyond the push)"})
+            t = round(t + dur, 3)
+            continue
+        src = JOB / "gen/clips" / clip
         vf = "scale=1080:1920:flags=lanczos"
         fit = {"id": f"beat-{beat}", "fit": "contain", "source_size": (1080, 1920), "box": (0, 0, W, H)}
         if g["crop_y"] is not None:
@@ -185,17 +208,50 @@ def main():
 
     # 2. text layers + gates on real pixels
     layers = []   # (png, x, y, t_in, t_out, backing or None)
+    mark_layers = []
     for beat, items in TEXT.items():
         b_start = starts[beat - 1]; b_end = b_start + (BEATS[beat - 1][3] - BEATS[beat - 1][2])
         t_in, t_out = b_start + 0.35, b_end - 0.15
-        # frames behind the boxes, sampled across the beat
+        if beat == 6:
+            t_in, t_out = b_start + 0.25, b_end + 0.5
+        if beat == 1:
+            t_in = 0.0
         pdir = work / f"probe-{beat}"; pdir.mkdir(exist_ok=True)
         for old in pdir.glob("*.png"): old.unlink()
         run(["ffmpeg", "-v", "error", "-y", "-ss", f"{t_in:.3f}", "-t", f"{t_out - t_in:.3f}", "-i", str(base), "-vf", "fps=4", str(pdir / "p_%03d.png")])
         frames = sorted(pdir.glob("*.png"))
+        mark_box = None
+        if beat <= 5:
+            region, sid, font, size_1080, colour, role, _ = BRAND_MARK
+            text = DECK[sid]; px = int(size_1080 * W / 1080)
+            png = work / f"mark-{beat}.png"; OTV.render(text, font, px, colour, png, margin=6)
+            ib = ink_box(png); tw, th = ib[2] - ib[0], ib[3] - ib[1]
+            x = W - TOKENS.safe_x - TOKENS.spacing[1] - tw - ib[0]
+            for yc in (192, H - TOKENS.safe_y - TOKENS.spacing[1] - th // 2):
+                y = int(yc) - th // 2 - ib[1]; box = (x + ib[0], y + ib[1], x + ib[2], y + ib[3])
+                obs = wall_obstruction(frames, box)
+                try:
+                    gates.check_text_bounds(box, canvas=(0, 0, W, H), tokens=TOKENS, id_=f"{beat}-brand_mark")
+                    c2 = gates.check_contrast(colour, luminance_samples(frames, box), role=role, tokens=TOKENS, id_=f"{beat}-brand_mark")
+                except Refusal:
+                    continue
+                if obs < 0.02:
+                    mark_box = box
+                    report["text"].append({"beat": beat, "region": "brand_mark", "string": text, "font": font, "px": px, "box": box, "C1_bounds": {"status": "PASS"}, "C2_contrast": c2, "backing": None, "C6_exact": {"status": "PASS", "expected": text}, "obstruction": round(obs, 4)})
+                    mark_layers.append((png, x, y, b_start if beat > 1 else 0.0, b_end + 0.02, None))
+                    break
+            if mark_box is None:
+                report["deviations"].append(f"beat {beat}: the brand mark has no clean corner at {a.geometry} (subject under both corners); omitted for this beat — 'early and throughout' lapses here")
+        # frames behind the boxes, sampled across the beat
         regions = {}
         group = []   # (region, text, png, x, y, box, colour, role, samples)
-        candidates = g["layout"]["twoshot" if beat in (1, 5) else "macro"]
+        candidates = g["layout"]["endcard" if beat == 6 else ("twoshot" if beat in (1, 5) else "macro")]
+        if not items:
+            regions = {}
+            if mark_box is not None:
+                regions["brand_mark"] = mark_box
+            report["gates"][f"C5_disjoint_beat{beat}"] = gates.check_disjoint(regions, critical=("brand_mark",), min_gap_px=TOKENS.min_gap_px)
+            continue
         chosen = None; tried = []
         for ci, (align, max_w) in enumerate(candidates):
           group = []; y_cursor = None
@@ -225,7 +281,7 @@ def main():
               png = work / f"text-{beat}-{region}-c{ci}.png"; layer.save(png)     # per candidate: the chosen layer must not be overwritten by a later candidate
               ib = ink_box(png); tw, th = ib[2] - ib[0], ib[3] - ib[1]
               if y_cursor is not None:
-                  yc = y_cursor + th // 2 + int(px * 0.55)          # stack the next region under the previous one
+                  yc = y_cursor + th // 2 + max(int(px * 0.55), TOKENS.min_gap_px + 10)      # stack the next region under the previous one (≥ the disjointness gap)
               x = (TOKENS.safe_x + TOKENS.spacing[2] - ib[0]) if align == "left" else ((W - tw) // 2 - ib[0]); y = int(yc) - th // 2 - ib[1]   # left: inset by one token step so a backing card still fits inside the safe area
               top_min = TOKENS.safe_y + TOKENS.spacing[0] + TOKENS.spacing[1]      # room for a backing card (pad = spacing[1]) inside the safe area
               if y + ib[1] < top_min:            # a wrapped block grows upward from its centre; keep it inside the safe area (+ room for a card)
@@ -286,10 +342,13 @@ def main():
             row["C6_exact"] = {"status": "PASS" if text == DECK.get(sid, sid) else "FAIL", "expected": DECK.get(sid, sid)}
             report["text"].append(row)
             layers.append((png, x, y, t_in, t_out, backing if region == group[0][0] else None))
+        if mark_box is not None:
+            regions["brand_mark"] = mark_box
         try:
-            report["gates"][f"C5_disjoint_beat{beat}"] = gates.check_disjoint(regions, critical=("numeral", "headline", "tagline", "brand_line"), min_gap_px=TOKENS.min_gap_px)
+            report["gates"][f"C5_disjoint_beat{beat}"] = gates.check_disjoint(regions, critical=("brand_mark", "numeral", "headline", "tagline", "product_name", "brand_line", "cta"), min_gap_px=TOKENS.min_gap_px)
         except Refusal as e:
             sys.exit(f"C5 refused: {e}")
+    layers = mark_layers + layers
     report["gates"]["C4_geometry"] = gates.check_geometry([l[5] for l in layers if l[5]], TOKENS)
 
     # 3. video with overlays: backing cards (drawbox, opaque) then glyph layers with alpha fades
