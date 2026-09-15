@@ -42,7 +42,7 @@ def main(out_dir):
     mix = mix2
     meas = subprocess.run(["ffmpeg", "-i", str(mix), "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True).stderr
     cur = float([l for l in meas.splitlines() if l.strip().startswith("I:")][-1].split()[1]); gain = -14.0 - cur
-    final = out / "upwork-intro-v4.1.mp4"
+    final = out / "upwork-intro-v4.2.mp4"
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(out / "video.mp4"), "-i", str(mix), "-af", f"volume={gain:.2f}dB,alimiter=limit=0.76:attack=4:release=120:level=false",
                     "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-ar", str(SR), "-movflags", "+faststart", "-t", f"{total:.3f}", str(final)], check=True)
     meas = subprocess.run(["ffmpeg", "-i", str(final), "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True).stderr

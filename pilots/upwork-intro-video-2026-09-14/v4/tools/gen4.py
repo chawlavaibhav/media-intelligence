@@ -321,3 +321,41 @@ if __name__ == "__main__":
         summary()
     else:
         verdict(a.asset, a.verdict, a.reason, a.repair)
+
+
+def veo_t2v_extend(asset_id: str, prompt1: str, prompt2: str, out: Path, resolution: str = "720p", aspect: str = "9:16", audio: bool = True) -> dict:
+    """Veo 3.1 Fast text-to-video 8 s + one 7-s extension (= 15 s). PROVENANCE: preprod/recipes/google_video.py extend mode; Lab VID-MS-01 chain 2/2."""
+    route = f"veo-3.1-fast-generate-001/i2v/{resolution}"; unit, price = PRICES[route]   # same per-second pin as i2v (t2v/extend billed per second)
+    est = reserve(asset_id, route, 15, price)
+    params = {"sampleCount": 1, "aspectRatio": aspect, "resolution": resolution, "durationSeconds": 8, "generateAudio": audio}
+    rec = {"asset_id": asset_id, "prompt": prompt1 + " || EXTEND: " + prompt2, "source": "text-to-video + extend", "provider": "google", "model": "veo-3.1-fast-generate-001",
+           "surface": "vertex predictLongRunning (t2v + extend)", "unit_price_usd": price, "unit": unit, "quantity": 15, "est_usd": round(est, 6), "start": now(), "params": params}
+    t0 = time.time(); hdr = {"Authorization": f"Bearer {C.gcloud_sa_token()}"}; url = f"{REGIONAL}/veo-3.1-fast-generate-001"
+
+    def op(body):
+        st, reply = C.http_json("POST", f"{url}:predictLongRunning", hdr, body)
+        if st != 200:
+            return None, f"submit_http_{st}: {C.scrub(str(reply))[:200]}"
+        name = reply.get("name")
+        def check():
+            code, o = C.http_json("POST", f"{url}:fetchPredictOperation", hdr, {"operationName": name})
+            if code != 200:
+                return True, {"$error": code, "reply": o}
+            return bool(o.get("done")), o
+        o = C.poll(check, 5.0, 120); resp = (o.get("response") or {}) if isinstance(o, dict) else {}; vids = resp.get("videos") or []
+        if o.get("$error") or o.get("$timeout") or o.get("error") or not vids or not vids[0].get("bytesBase64Encoded"):
+            return None, C.scrub(str(o))[:300]
+        return base64.b64decode(vids[0]["bytesBase64Encoded"]), name
+
+    data, name1 = op({"instances": [{"prompt": prompt1}], "parameters": params})
+    if data is None:
+        rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="failed_call1", error=name1); record(rec); settle(asset_id, "failed_call1", name1); print("VEO T2V FAILED", name1); return rec
+    out.parent.mkdir(parents=True, exist_ok=True); (out.with_suffix(".call1.mp4")).write_bytes(data)
+    ext = {"instances": [{"prompt": prompt2, "video": {"bytesBase64Encoded": base64.b64encode(data).decode(), "mimeType": "video/mp4"}}],
+           "parameters": {k: v for k, v in params.items() if k != "durationSeconds"}}
+    data2, name2 = op(ext)
+    if data2 is None:
+        rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="failed_extend", error=name2, file=str(out.with_suffix(".call1.mp4").relative_to(V3))); record(rec); settle(asset_id, "failed_extend", name2, name1); print("VEO EXTEND FAILED", name2); return rec
+    out.write_bytes(data2)
+    rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="ok", file=str(out.relative_to(V3)), request_id=f"{name1} + {name2}"); record(rec); settle(asset_id, "ok", f"-> {out.name}", name2)
+    print(f"saved {out} in {rec['latency_s']} s"); return rec

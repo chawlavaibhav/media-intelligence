@@ -76,19 +76,31 @@ class Clip:
 
 # ------------------------------------------------------------------ assets (all accepted V3 media; nothing regenerated)
 def load(p): return Image.open(p).convert("RGBA")
-MASTER = {f: load(V3G / f"deliverables/aarohi-master-{f}.png") for f in ("4x5", "1x1", "9x16", "wa")}
-HOOKS = [load(V3G / f"deliverables/aarohi-hook-{i}-4x5.png") for i in range(1, 7)]
-HINDI = load(V3G / "deliverables/aarohi-hindi-4x5.png")
+DL = V4 / "gen/deliverables"
+MASTER = {f: load(DL / f"aarohi-master-{f}.png") for f in ("4x5", "1x1", "9x16", "wa")}
+HOOKS = [load(DL / f"aarohi-hook-{i}-4x5.png") for i in range(1, 7)]
+HINDI = load(DL / "aarohi-hindi-4x5.png")
 A2 = load(V3G / "stills/a2-accepted.png"); B0 = load(V3G / "stills/brewa0-accepted.png"); B1 = load(V3G / "stills/b1-accepted.png")
 SPEAKER = V4 / "gen/speaker/speaker-accepted.mp4"; BUBBLE_SRC = load(V4 / "gen/speaker/speaker-bubble-frame.png")
 FACE_BOX = (692, 152, 1252, 712)   # 560-px square around the speaker's face in the 1920x1080 frame (declared cover for the bubble)
 
 
 # ------------------------------------------------------------------ Loom bubble
+VAIBHAV = load(V4 / "gen/speaker/vaibhav-cutout.png")   # background removed (rembg isnet), 398 px source
+BUBBLE_TONE = "#E9E3D8"
+
+
+def portrait_tile(size: int) -> Image.Image:
+    """Vaibhav's cutout on a quiet tone, head sized to the tile, shoulders bleeding off the bottom edge."""
+    tile = Image.new("RGBA", (size, size), A._hex_to_rgba(BUBBLE_TONE))
+    s = size / VAIBHAV.width * 1.06; im = VAIBHAV.resize((int(VAIBHAV.width * s), int(VAIBHAV.height * s)), Image.LANCZOS)
+    tile.alpha_composite(im, ((size - im.width) // 2, size - im.height + int(size * 0.02))); return tile
+
+
 def bubble_image():
-    face = declared_cover(BUBBLE_SRC, FACE_BOX, "bubble-face", "all", "speaker-bubble-frame.png", "Loom-style bubble: the face only, by design (§11)")
-    face = face.resize((T["bubble_size"], T["bubble_size"]), Image.LANCZOS)
-    im, pad = card(face, "bubble", "all", radius=T["bubble_radius"]); return im, pad
+    face = declared_cover(BUBBLE_SRC, FACE_BOX, "bubble-face", "all", "speaker-bubble-frame.png", "the AI speaker's face during the 0.65-s reduction only")
+    D.REPORT["crop"].append({"id": "bubble-vaibhav", "beat": "all", "source": "vaibhav-cutout.png", "fit": "contain(cutout)", "fraction_shown": 1.0})
+    im, pad = card(portrait_tile(T["bubble_size"]), "bubble", "all", radius=T["bubble_radius"]); return im, pad
 
 
 BUBBLE, BPAD = bubble_image()
@@ -162,7 +174,7 @@ def beat_speaker(w: Writer, dur=8.5):
     c.close(); return last
 
 
-def beat_handoff(w: Writer, dur=4.55):
+def beat_handoff(w: Writer, dur=4.3):
     """00:08.5 speaker reduces into the bubble (0.65 s); AND IT CAN'T SUCK. held 1.3 s with weight; then the statement."""
     n = int(dur * FPS); red = 0.65; punch_end = red + 1.3
     lines = ["MORE CREATIVE.", "FASTER.", "WITHOUT LOWERING THE BAR."]
@@ -180,8 +192,11 @@ def beat_handoff(w: Writer, dur=4.55):
             dst = tuple(int(a + (b - a) * k) for a, b in zip((0, 0, W, H), (bx, by, bx + bs, by + bs)))
             im = BUBBLE_SRC.crop(src).resize((dst[2] - dst[0], dst[3] - dst[1]), Image.LANCZOS)
             im = D.mask_rounded(im, int(T["bubble_radius"] * k)); f.alpha_composite(im, (dst[0], dst[1]))
-        else:
-            draw_bubble(f)
+        else:   # the AI speaker hands over to the person who directs the work
+            sw = ease((t - red) / 0.35)
+            if sw < 1:
+                spk = D.mask_rounded(BUBBLE_SRC.crop(FACE_BOX).resize((bs, bs), Image.LANCZOS), T["bubble_radius"]); f.alpha_composite(alpha_mul(spk, 1 - sw), (bx, by))
+            draw_bubble(f, sw)
         if t < punch_end:
             a = ease((t - red + 0.05) / 0.22)
             if a > 0:
@@ -197,7 +212,7 @@ def beat_handoff(w: Writer, dur=4.55):
         w.add(f, key="02a-punch" if abs(t - 1.5) < 0.02 else ("02b-handoff" if abs(t - 3.8) < 0.02 else None))
 
 
-def beat_proof1(w: Writer, dur=5.5):
+def beat_proof1(w: Writer, dur=5.0):
     """00:12 the strongest finished static, contain-fit, most of the frame; wrapper copy small at left."""
     n = int(dur * FPS); beat = "proof1"
     ad = contain(MASTER["4x5"], W, H - 2 * SY, "master-4x5", beat, "aarohi-master-4x5.png")
@@ -290,7 +305,7 @@ def beat_proof4(w: Writer, dur=8.0):
     c1.close(); c2.close()
 
 
-KORA = load(V3G / "deliverables/kora-hook-1-16x9.png")
+KORA = load(V4 / "gen/deliverables/kora-hook-1-16x9.png")
 
 
 def beat_kora(w: Writer, dur=2.8):
@@ -303,7 +318,7 @@ def beat_kora(w: Writer, dur=2.8):
         w.add(f, key="06b-kora" if abs(t - 1.5) < 0.02 else None)
 
 
-def beat_proof5(w: Writer, dur=5.5):
+def beat_proof5(w: Writer, dur=5.0):
     """00:38 ONE DIRECTION. MORE TO TEST. — approved layout, then 4 FORMATS, 6 HOOKS, ENGLISH + HINDI revealed in turn."""
     n = int(dur * FPS); beat = "proof5"
     colw = max(376, D.measure("ONE DIRECTION.", FH, T["h2_size"])[0], D.measure("MORE TO TEST.", FH, T["h2_size"])[0])
@@ -352,7 +367,7 @@ def beat_proof5(w: Writer, dur=5.5):
         w.add(f, key="07-proof5" if abs(t - 4.6) < 0.02 else None)
 
 
-def beat_speed(w: Writer, dur=4.8):
+def beat_speed(w: Writer, dur=4.5):
     """00:44.8 STANDARD / 24 HOURS (2.6 s) → 4-HOUR EXPRESS + small line (2.4 s). Standard first, always."""
     n = int(dur * FPS); beat = "speed"; cut = 2.6
     for i in range(n):
@@ -370,7 +385,25 @@ def beat_speed(w: Writer, dur=4.8):
         w.add(f, key="08-speed-a" if abs(t - 1.5) < 0.02 else ("08-speed-b" if abs(t - 4.0) < 0.02 else None))
 
 
-def beat_cta(w: Writer, dur=5.5):
+def beat_human(w: Writer, dur=2.6):
+    """The person behind the work: Vaibhav's photo, HUMAN-DIRECTED., one line. Between speed and the CTA."""
+    n = int(dur * FPS); beat = "human"; size = 400
+    tile, tpad = card(portrait_tile(size), "human-portrait", beat)
+    D.REPORT["crop"].append({"id": "human-portrait", "beat": beat, "source": "vaibhav-cutout.png", "fit": "contain(cutout)", "fraction_shown": 1.0})
+    px, py = SX, (H - size) // 2; tx = px + size + LG
+    for i in range(n):
+        t = i / FPS; f = ground(); a = ease(t / 0.35)
+        f.alpha_composite(alpha_mul(tile, a), (px - tpad, py - tpad))
+        aa = ease((t - 0.25) / 0.35); y = int(H * 0.36)
+        place_text(f, "human-h", "HUMAN-DIRECTED.", FH, T["h2_size"], FG, tx, y, beat, alpha=aa, check=aa >= 1, role="display"); y += T["h2_size"] + SM
+        for j, l in enumerate(D.wrap("Vaibhav checks every file before it reaches you.", FM, T["body_size"], W - SX - tx, 2)):
+            place_text(f, f"human-l{j}", l, FM, T["body_size"], FG, tx, y, beat, alpha=aa, check=aa >= 1); y += T["body_size"] + XS
+        y += SM
+        place_text(f, "human-name", "Vaibhav Chawla", FR, T["small_size"], MUTED, tx, y, beat, alpha=aa, check=aa >= 1)
+        w.add(f, key="08b-human" if abs(t - 1.5) < 0.02 else None)
+
+
+def beat_cta(w: Writer, dur=5.0):
     """00:49.8 CTA with the master static as a restrained anchor and the speaker bubble; Adwisely once."""
     n = int(dur * FPS); beat = "cta"
     anchor = contain(MASTER["4x5"], 500, 560, "cta-anchor", beat, "aarohi-master-4x5.png"); acard, apad = card(anchor, "cta-anchor-card", beat)
@@ -406,7 +439,7 @@ def main(out_dir: str):
         w = Writer(seg / f"{name}.mp4"); fn(w, **kw); d = w.close(); order.append((name, seg / f"{name}.mp4", d)); keys.update(w.keyframes); print(f"{name:12s} {d:5.2f} s")
 
     run("b1-speaker", beat_speaker); run("b2-handoff", beat_handoff); run("b3-proof1", beat_proof1); run("b4-proof2", beat_proof2)
-    run("b5-proof3", beat_proof3); run("b6-proof4", beat_proof4); run("b6b-kora", beat_kora); run("b7-proof5", beat_proof5); run("b8-speed", beat_speed); run("b9-cta", beat_cta)
+    run("b5-proof3", beat_proof3); run("b6-proof4", beat_proof4); run("b6b-kora", beat_kora); run("b7-proof5", beat_proof5); run("b8-speed", beat_speed); run("b8b-human", beat_human); run("b9-cta", beat_cta)
     lst = out / "concat.txt"; lst.write_text("".join(f"file '{p.resolve()}'\n" for _, p, _ in order))
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-an", "-c:v", "libx264", "-crf", "15", "-preset", "medium", "-pix_fmt", "yuv420p", "-r", str(FPS), str(out / "video.mp4")], check=True)
     starts = {}; t = 0.0
