@@ -42,7 +42,7 @@ def _ledge(plate, fmt, B, C, build, anchor, shrink, fit="cover"):
     seam = {"4x5": 0.58, "1x1": 0.52, "9x16": 0.58, "wa": 0.52}[fmt]; ui_bot = int(H * 0.10) if fmt == "9x16" else 0
     plate_h = int(H * seam); m = int(W * 0.07)
     canvas = Image.new("RGBA", (W, H), A._hex_to_rgba(B["primary"]))
-    A.paste(canvas, plate_contain(plate, W, plate_h) if fit == "contain" else cover(plate, W, plate_h, *anchor), 0, 0)
+    A.paste(canvas, plate_contain(plate, W, plate_h) if fit == "contain" else Cp.cover_at(plate, W, plate_h, anchor[0], anchor[1]), 0, 0)
     sh = Image.new("RGBA", (W, 40), (0, 0, 0, 0)); ImageDraw.Draw(sh).rectangle([0, 0, W, 12], fill=(0, 0, 0, 60))
     A.paste(canvas, sh.filter(ImageFilter.GaussianBlur(10)), 0, plate_h - 24)
     if build < 0.15:
@@ -51,9 +51,10 @@ def _ledge(plate, fmt, B, C, build, anchor, shrink, fit="cover"):
     disp, txt, bold = B.get("display", "didot"), "hn", "hn_medium"
     hl = int(W * (0.078 if not is_wa else 0.088) * (1.35 if fmt == "9x16" else 1.0) * shrink)
     pill = A.pill(C["pill"], bold, int(W * 0.033), B["accent"], B["primary"])
+    py = plate_h + int(W * 0.045 * shrink)
     if build >= 0.30:
-        A.paste(canvas, pill, m, plate_h - pill.height // 2)
-    y = plate_h + pill.height // 2 + int(W * 0.045 * shrink)
+        A.paste(canvas, pill, m, py)
+    y = py + pill.height + int(W * 0.035 * shrink)
     maxw = W - 2 * m - int(W * 0.05)
     lines = wrap2(C["headline"], disp, hl, maxw)
     while any(A.text_width(l, disp, hl) > maxw for l in lines) and hl > 30:
@@ -83,7 +84,8 @@ def _ledge(plate, fmt, B, C, build, anchor, shrink, fit="cover"):
 def text_in_motion(clip: Path, out: Path, brand, copy, total_s=12.0, anchor=(0.5, 0.35), fps=30):
     """9:16 Ledge whose plate is the moving clip; elements build on in hierarchy order over 3 s; last frame held to total_s."""
     Wv, Hv = 1080, 1920; plate_h = int(Hv * 0.58)
-    vf = f"fps={fps},scale={Wv}:{plate_h}:force_original_aspect_ratio=increase,crop={Wv}:{plate_h}:(iw-{Wv})*{anchor[0]}:(ih-{plate_h})*{anchor[1]}"
+    ax, ay = anchor
+    vf = f"fps={fps},scale={Wv}:{plate_h}:force_original_aspect_ratio=increase,crop={Wv}:{plate_h}:min(max(iw*{ax}-{Wv}/2\,0)\,iw-{Wv}):min(max(ih*{ay}-{plate_h}/2\,0)\,ih-{plate_h})"
     dec = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-i", str(clip), "-vf", vf, "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
     out.parent.mkdir(parents=True, exist_ok=True)
     enc = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{Wv}x{Hv}", "-r", str(fps), "-i", "-", "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p", str(out)], stdin=subprocess.PIPE)
@@ -101,12 +103,13 @@ def text_in_motion(clip: Path, out: Path, brand, copy, total_s=12.0, anchor=(0.5
 
 if __name__ == "__main__":
     out = Path(sys.argv[1])
-    for key, plate_path, anchor, fit in (("ironleaf", V4 / "gen/portfolio/ironleaf-packshot-accepted.png", (0.5, 0.5), "contain"), ("gyaanbox", V4 / "gen/portfolio/gyaan-plate-accepted.png", (0.5, 0.35), "cover")):
+    for key, plate_path, anchor, fit in (("ironleaf", V4 / "gen/portfolio/ironleaf-packshot-accepted.png", (0.5, 0.5), "contain"), ("gyaanbox", V4 / "gen/portfolio/gyaan-plate-accepted.png", {"4x5": (0.5, 0.62), "1x1": (0.5, 0.64), "9x16": (0.5, 0.60), "wa": (0.5, 0.64)}, "cover")):
         spec = PF[key]; plate = Image.open(plate_path).convert("RGBA"); d = out / spec["tile"]; d.mkdir(parents=True, exist_ok=True)
         for f in ("4x5", "1x1", "9x16", "wa"):
-            ledge(plate, f, spec["brand"], spec["copy"], anchor=anchor, fit=fit).convert("RGB").save(d / f"{key}-offer-{f}.png", quality=95)
+            anc = anchor[f] if isinstance(anchor, dict) else anchor
+            ledge(plate, f, spec["brand"], spec["copy"], anchor=anc, fit=fit).convert("RGB").save(d / f"{key}-offer-{f}.png", quality=95)
         if key == "ironleaf":
             (d / "ironleaf-source-packshot.png").write_bytes(plate_path.read_bytes())
     spec = PF["gyaanbox"]
-    text_in_motion(V4 / "gen/portfolio/gyaan-motion-accepted.mp4", out / spec["tile"] / "gyaanbox-offer-in-motion-9x16-12s.mp4", spec["brand"], spec["copy"])
+    text_in_motion(V4 / "gen/portfolio/gyaan-motion-accepted.mp4", out / spec["tile"] / "gyaanbox-offer-in-motion-9x16-12s.mp4", spec["brand"], spec["copy"], anchor=(0.5, 0.60))
     print("ok")

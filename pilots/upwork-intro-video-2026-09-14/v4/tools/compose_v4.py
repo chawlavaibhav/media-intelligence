@@ -91,7 +91,7 @@ def _aarohi(plate, fmt, variant, hindi, build, anchor, cta, shrink):
     build in [0,1] reveals elements in hierarchy order (plate, panel, pill, headline, code, legal+mark)."""
     W, H = FORMATS[fmt]; D = DECK["aarohi"]; B = AAROHI
     is_wa = fmt == "wa"
-    seam = {"4x5": 0.60, "1x1": 0.54, "9x16": 0.58, "wa": 0.54}[fmt]
+    seam = {"4x5": 0.57, "1x1": 0.52, "9x16": 0.58, "wa": 0.52}[fmt] if cta else {"4x5": 0.60, "1x1": 0.54, "9x16": 0.58, "wa": 0.54}[fmt]
     ui_bot = int(H * 0.10) if fmt == "9x16" else 0
     plate_h = int(H * seam); m = int(W * 0.07)
     canvas = Image.new("RGBA", (W, H), A._hex_to_rgba(B["primary"]))
@@ -112,10 +112,11 @@ def _aarohi(plate, fmt, variant, hindi, build, anchor, cta, shrink):
         eyebrow = D["eyebrow"] if variant is None else D["hook_pill"]
         headline = D["headline"] if variant is None else variant
         code, legal = D["code"], D["legal"]
-    pill = A.pill(eyebrow, bold if not hindi else "dev_semibold", int(W * 0.033), B["accent"], B["primary"])
+    pill = A.pill(eyebrow, bold if not hindi else "dev_semibold", int(W * 0.030 * max(shrink, 0.75)), B["accent"], B["primary"])
+    py = plate_h + int(W * 0.04 * shrink)
     if build >= 0.30:
-        A.paste(canvas, pill, m, plate_h - pill.height // 2)
-    y = plate_h + pill.height // 2 + int(W * 0.045 * shrink)
+        A.paste(canvas, pill, m, py)
+    y = py + pill.height + int(W * 0.026 * shrink)
     maxw = W - 2 * m - int(W * 0.05)          # never let a headline kiss the panel edge
     lines = [headline] if variant is None else wrap2(headline, disp, hl, maxw)
     while variant is not None and any(A.text_width(l, disp, hl) > maxw for l in lines) and hl > 30:
@@ -131,14 +132,14 @@ def _aarohi(plate, fmt, variant, hindi, build, anchor, cta, shrink):
         y += int(hl * 1.08) * len(lines)
     y += int(W * 0.03 * shrink)
     if build >= 0.60:
-        g = T(code, bold, int(W * 0.040), B["accent"]); A.paste(canvas, g, m, y); y += g.height + int(W * 0.035 * shrink)
+        g = T(code, bold, int(W * 0.038 * max(shrink, 0.75)), B["accent"]); A.paste(canvas, g, m, y); y += g.height + int(W * 0.028 * shrink)
     if cta and build >= 0.75:
-        btn = A.button(cta, bold if not hindi else "dev_semibold", int(W * 0.034), B["accent"], B["primary"], min_w=int(W * 0.30))
+        btn = A.button(cta, bold if not hindi else "dev_semibold", int(W * 0.032 * max(shrink, 0.75)), B["accent"], B["primary"], min_w=int(W * 0.28))
         A.paste(canvas, btn, m, y); y += btn.height
     leg = T(legal, txt, max(18, int(W * 0.022)), B["cream"], alpha=165)
     mark = T(D["brand"], "didot", int(W * 0.040), B["cream"])
-    ly = H - ui_bot - int(W * 0.06)
-    ok = y + int(W * 0.03) <= ly - leg.height
+    ly = H - ui_bot - int(W * 0.05)
+    ok = y + int(W * 0.025) <= ly - leg.height
     if build >= 0.85:
         A.paste(canvas, leg, m, ly - leg.height)
         A.paste(canvas, mark, W - m - mark.width, ly - mark.height)
@@ -239,3 +240,46 @@ if __name__ == "__main__":
         aarohi(plate, "4x5", variant=h, anchor=(0.62, 0.5)).convert("RGB").save(out / f"aarohi-hook-{i}.png")
     aarohi(plate, "4x5", hindi=True, anchor=(0.62, 0.5)).convert("RGB").save(out / "aarohi-hindi-4x5.png")
     print("off-deck:", deck_check())
+
+
+# --------------------------------------------------------------------------- DHABA 47 v2: picture over a solid panel (no type on food)
+DHABA2 = dict(primary="#221510", accent="#E9B44C", cream="#F7EFE2")
+
+
+def cover_at(base: Image.Image, W: int, H: int, cx: float, cy: float, zoom: float = 1.0) -> Image.Image:
+    """Cover-crop centred on a point of interest (fractions of the source), with an optional zoom (>1 = tighter)."""
+    bw, bh = base.size; s = max(W / bw, H / bh) * zoom
+    nw, nh = int(bw * s + .5), int(bh * s + .5); im = base.resize((nw, nh), Image.LANCZOS)
+    x0 = min(max(int(cx * nw - W / 2), 0), nw - W); y0 = min(max(int(cy * nh - H / 2), 0), nh - H)
+    return im.crop((x0, y0, x0 + W, y0 + H))
+
+
+def dhaba_panel(base: Image.Image, fmt: str = "4x5", anchor=(0.62, 0.60), cta: str | None = "ऑर्डर करें", zoom: float = 1.0) -> Image.Image:
+    """Ledge for the restaurant: the flat-lay fills the top, the Hindi offer sits on a warm dark panel below. Devanagari via Kohinoor."""
+    W, H = FORMATS[fmt]; Dd = DECK["dhaba"]; B = DHABA2
+    for k in range(12):
+        shrink = 1.0 - 0.07 * k
+        seam = {"4x5": 0.60, "1x1": 0.54, "9x16": 0.60, "wa": 0.54}[fmt]; ui_bot = int(H * 0.10) if fmt == "9x16" else 0
+        ph = int(H * seam); m = int(W * 0.07)
+        canvas = Image.new("RGBA", (W, H), A._hex_to_rgba(B["primary"]))
+        A.paste(canvas, cover_at(base, W, ph, anchor[0], anchor[1], zoom), 0, 0)
+        sh = Image.new("RGBA", (W, 40), (0, 0, 0, 0)); ImageDraw.Draw(sh).rectangle([0, 0, W, 12], fill=(0, 0, 0, 70))
+        A.paste(canvas, sh.filter(ImageFilter.GaussianBlur(10)), 0, ph - 24)
+        pill = A.pill(Dd["l2"], "dev_semibold", int(W * 0.030 * shrink), B["accent"], B["primary"])
+        py = ph + int(W * 0.04 * shrink); A.paste(canvas, pill, m, py)
+        y = py + pill.height + int(W * 0.028 * shrink)
+        hl = int(W * (0.10 if fmt != "wa" else 0.11) * (1.2 if fmt == "9x16" else 1.0) * shrink)
+        maxw = W - 2 * m - int(W * 0.05)
+        while A.text_width(Dd["l1"], "dev_bold", hl) > maxw:
+            hl -= 4
+        USED.add(Dd["l1"]); g = A.text(Dd["l1"], "dev_bold", hl, B["cream"]); A.paste(canvas, g, m, y); y += g.height + int(W * 0.022 * shrink)
+        USED.add(Dd["l3"]); g = A.text(Dd["l3"], "dev_medium", int(W * 0.038 * shrink), B["accent"]); A.paste(canvas, g, m, y); y += g.height + int(W * 0.028 * shrink)
+        if cta:
+            USED.add(cta); btn = A.button(cta, "dev_semibold", int(W * 0.032 * shrink), B["accent"], B["primary"], min_w=int(W * 0.28)); A.paste(canvas, btn, m, y); y += btn.height
+        USED.add(Dd["l4"]); leg = A.text(Dd["l4"], "dev_regular", max(18, int(W * 0.024)), B["cream"], alpha=170)
+        USED.add(Dd["brand"]); mark = tracked(Dd["brand"], "hn_medium", int(W * 0.026), B["cream"], 0.25)
+        ly = H - ui_bot - int(W * 0.05)
+        if y + int(W * 0.025) <= ly - leg.height:
+            A.paste(canvas, leg, m, ly - leg.height); A.paste(canvas, mark, W - m - mark.width, ly - mark.height)
+            return canvas
+    raise RuntimeError(f"dhaba_panel {fmt}: stack does not fit")

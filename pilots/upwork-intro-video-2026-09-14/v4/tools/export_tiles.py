@@ -42,10 +42,10 @@ for j in range(1, 7):
 for f, anc in (("4x5", (0.30, 0.35)), ("1x1", (0.30, 0.35)), ("9x16", (0.30, 0.35)), ("wa", (0.30, 0.35))):
     save(Cp.kora(KORA, f, KH[0], anchor=anc), t / f"kora-hook-1-{f}.png")
 cp(G3 / "stills/kora-accepted.png", t / "kora-base-still-16x9.png")
-# tile 05 — Dhaba 47 Hindi: 4x5 + wa (V3) + 1x1, 9x16 (composed now)
+# tile 05 — Dhaba 47 Hindi: picture over a warm dark panel, Hindi offer + CTA on the panel (v2, 15 Sep), four sizes
 t = out / "tile-05-dhaba-47-hindi"
-cp(D3 / "dhaba47-hindi-4x5.png", t / "dhaba47-hindi-4x5.png"); cp(D3 / "dhaba47-hindi-wa-800.png", t / "dhaba47-hindi-wa.png")
-save(Cp.dhaba(DH, "1x1", anchor=(0.5, 0.42)), t / "dhaba47-hindi-1x1.png"); save(Cp.dhaba(DH, "9x16", anchor=(0.5, 0.5)), t / "dhaba47-hindi-9x16.png")
+for f, anc, z in (("4x5", (0.60, 0.50), 1.0), ("1x1", (0.60, 0.46), 1.0), ("9x16", (0.66, 0.55), 1.0), ("wa", (0.60, 0.46), 1.0)):
+    save(Cp.dhaba_panel(DH, f, anchor=anc, zoom=z), t / f"dhaba47-hindi-{f}.png")
 cp(G3 / "stills/dhaba-accepted.png", t / "dhaba47-source-flatlay.png")
 # tile 03b — Brewa Kettle: packshot + three accepted scenes + the kitchen motion clip
 t = out / "tile-03-brewa-kettle"
