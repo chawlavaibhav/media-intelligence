@@ -164,6 +164,17 @@ class Quote:
         return d
 
 
+# Character-metered units are priced per block of characters, exactly as the harness does
+# (eval/harness-v2/pricing.py, Pricing.evaluate): per_1000_characters = unit_price x chars / 1000;
+# per_1M_characters = unit_price x chars / 1_000_000. Every other unit is unit_price x quantity.
+CHARACTER_UNIT_DIVISORS = {"per_1000_characters": Decimal(1000), "per_1M_characters": Decimal(1_000_000)}
+
+
+def native_amount(unit_price: Decimal, quantity: Decimal, quantity_rule: str | None) -> Decimal:
+    """The native-currency amount of one call: the harness's rule, never a second opinion about it."""
+    return unit_price * quantity / CHARACTER_UNIT_DIVISORS.get(str(quantity_rule), Decimal(1))
+
+
 class PriceBook:
     """Roster + pins + the harness's own price rules. Re-reads the roster at every decision."""
 
@@ -239,7 +250,7 @@ class PriceBook:
             return q
         q.quantity, q.quantity_unit, q.quantity_rule = qty
 
-        native = (unit_price * q.quantity)
+        native = native_amount(unit_price, q.quantity, q.quantity_rule)
         if currency == "USD":
             q.expected_cost_usd = self.pricing._round6(native)
         elif currency == "INR":
