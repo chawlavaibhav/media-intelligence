@@ -1,0 +1,212 @@
+# JOB-TEMPLATE.yaml — the record every Media Agency job fills, at agency/jobs/<JOB-ID>/JOB.yaml.
+# Fields marked REQUIRED are filled before the stage that follows them may run. `null` means
+# "not yet"; write `unknown` only when a value was sought and not found. Never delete a stamped
+# timestamp or a ledger line; supersede. Schema label: AGENCY-JOB-v1 (skill-owned; not a runtime contract).
+schema: AGENCY-JOB-v1
+
+job_id: null                      # REQUIRED  e.g. AGY-2026-09-15-KESARI-001
+class: null                       # REQUIRED  customer_work | upwork_portfolio | spec_work | internal_experiment
+production_base_sha: null         # REQUIRED  full sha of origin/main the job branch was cut from; never changes mid-job
+branch: null                      # REQUIRED  work/agency-job-<job-id>
+skill_version: null               # sha of .claude/skills/media-agency/SKILL.md at job start
+opened_by: null                   # person
+production_status: open           # open | accepted | rejected | abandoned
+learning_status: not_started      # not_started | pending_sync | synced | no_promotion
+sync:                             # filled by /media-agency-sync — the only fields it may change on the job branch
+  case_id: null                   # production-learning/cases/<CASE-ID>
+  integration_branch: null
+  integration_pr: null
+  merge_commit: null
+
+brief:
+  received_utc: null              # REQUIRED  when the first production input arrived
+  source: null                    # upwork_message | email | chat | internal | spec
+  verbatim: |                     # REQUIRED  the customer's words, unedited
+    null
+  attachments: []                 # [{role: product|logo|person|scene|prior_creative|other, path, sha256, depicts_identifiable_person: bool, consent_ref: null}]
+
+# ── 2. INTAKE ─────────────────────────────────────────────────────────────────
+intake:
+  commercial_objective: null      # REQUIRED  one sentence: what this asset must make happen
+  audience: null                  # REQUIRED
+  channel: null                   # REQUIRED  e.g. Meta feed + Reels, WhatsApp, Upwork portfolio
+  deliverable_type: null          # REQUIRED  kind from runtime/contracts/DELIVERABLE-KINDS.yaml or a named agency class
+  package: null                   # for customer_work: the PROFILE.md package + tier this maps to
+  dimensions_aspects: []          # REQUIRED  e.g. ["1080x1350 4:5", "1080x1080 1:1", "1080x1920 9:16", "800x800 WA"]
+  count: null
+  product_reference_assets: []    # refs into brief.attachments
+  mandatory_text: []              # REQUIRED  [{role: headline|offer|code|validity|tagline|cta|legal|brand_line, value, script: latin|devanagari|..., may_reflow: bool, placement: overlay|in_scene}]
+  offer: null
+  cta: null
+  language: []                    # REQUIRED  e.g. [en, hi]
+  brand_constraints: {colours: [], fonts: [], tone: null, forbidden: []}
+  duration_s: null                # video only
+  deadline: null                  # REQUIRED  absolute time with zone
+  spend_ceiling_stated: null      # what the customer / user said about money, verbatim
+  assumptions: []                 # every production judgment made for a missing non-critical value
+  questions_asked: []             # [{question, why_material, answer}] — only what could invalidate the output
+
+# ── 2b. NORMALIZED REQUEST (CANON-010 vocabulary; conservative; never edited later) ────────
+nr:
+  modality: null                  # REQUIRED  static_image | video | image_sequence | audio  (R05)
+  modality_provenance: customer_stated   # customer_stated | customer_implied
+  requested_operation: null       # REQUIRED  generate | edit | animate | restore | extend | compose | variants  (R01)
+  entities: []                    # product | packshot | person | logo | scene | prior_creative
+  text_requirements: []           # mirrors intake.mandatory_text
+  language_topology: []
+  market: null                    # e.g. IN
+  advertising_acceptance_intent: true
+  ambiguity_markers: []           # from runtime/canon/KIND-NR-BINDING-v0.yaml
+
+# ── 3. TEMPLATE / LEARNING FIRST ─────────────────────────────────────────────
+template:
+  reused: null                    # REQUIRED  <template_id> | none
+  reason: null
+  numbers_carried: []             # [{rule, value, evidence_scope: this_accepted_template}] — starting points, not norms
+  learning_applied: []            # [{case, id (SD-xx / RO-xx / pattern), how}]
+
+# ── 4. CANON ─────────────────────────────────────────────────────────────────
+canon:
+  packs_selected: []              # REQUIRED  every pack id the trigger table fired
+  packs_injected: []              # REQUIRED  the compiled+accepted subset actually used
+  missing_domains: []             # fired but not compiled — recorded, never invented
+  prefix_sha256: null             # from runtime lookup when used
+
+# ── 5. CREATIVE BLUEPRINT ────────────────────────────────────────────────────
+blueprint:
+  concept: null                   # REQUIRED  the idea in two sentences
+  first_read: [null, null, null]  # REQUIRED  1st / 2nd / 3rd read, one cue each (CA-D1)
+  hook: null                      # REQUIRED
+  offer_placement: null
+  product_placement: null
+  proof: null
+  cta_placement: null
+  attention_order: null           # REQUIRED
+  brand_world: null               # REQUIRED  one light source, palette, register
+  remember: null                  # REQUIRED  the one thing kept
+  muted_test: null                # video: yes | no | n-a
+  hindi_copy_origination: null    # originated | translated — must be originated when Hindi is exact
+  check_lines: {}                 # REQUIRED  {PA-D1: pass|n-a|deviation:<clause>, ... CA-D11: ...}
+  deviations: []                  # [{decision_id, brief_clause}]
+  reviews: []                     # [{reviewer: karl|ezra|human, verdict, note}] — input, not acceptance
+
+# ── 6–7. PRODUCTION PLAN + ROUTES ────────────────────────────────────────────
+plan:
+  assets:                         # REQUIRED  one entry per asset, dependencies explicit
+    - id: null                    # e.g. plate-A
+      purpose: null
+      depends_on: []
+      reuse_of: null              # path @ sha256 of an already-accepted asset, or null
+      reuse:                      # DESIGN_REUSE_PROVENANCE (case 002) — REQUIRED whenever reuse_of is set or a treatment/component is carried in
+        source_asset: null        # path @ sha256, or <case>/<version>/<component>
+        source_verdict: null      # the human verdict that source actually received (accept | specific_repair | rebuild_direction | reject)
+        reuse_status: null        # rejected | accepted_in_context | reusable_candidate
+        context_changed: null     # true if aspect, plate, subject or context differs from the source
+        fresh_qa_required: null   # true whenever context_changed or reuse_status != reusable_candidate
+        human_reapproval: null    # verbatim, REQUIRED when reuse_status == rejected; else null
+      exact_text_mechanism: code_set_on_textless_plate   # | generated_in_scene (only with RR-2 evidence + job need) | none
+      route:
+        cell: null                # e.g. IMG-CORE/flux-2-pro
+        evidence_status: null     # clean_observed | directional_only
+        production_use_allowed: null   # true | manual_only (+ user OK recorded) — never false
+        surface: null             # fal | vertex | gemini_api | sarvam_direct | elevenlabs_direct | code
+        pool: null                # cash | credits | sarvam_credits | elevenlabs_credits | none
+        unit_price_usd: null      # live roster/pin price at plan time
+        quantity: null
+        planned_draws: null
+        fallback_cell: null       # declared, or none with reason
+        why: null                 # evidence + requirement + price, one line
+        directional_notes_used: []   # RO-xx ids used as tie-breakers only
+  deliverables: []                # REQUIRED  every final delivered geometry: [{id, geometry: 1:1|4:5|9:16|WA|16:9|..., pixels, from_asset}] — each gets its own qa.final_geometry row
+  micro_qualifications: []        # [{capability, route, cost_usd, human_gate_verdict, frozen_asset}]
+  composition:
+    token_source: null            # the one DesignTokens source
+    fonts: {latin: null, devanagari: null}
+    shaping: hb-view+Pillow
+  expected_spend_usd: null        # REQUIRED  Σ planned draws × price, with fallbacks
+  start_of_job_summary_shown_utc: null   # when concept + route + expected spend were shown to the user
+
+# ── 8–9. SPEND (money moves only here) ───────────────────────────────────────
+spend:
+  cap: null                       # REQUIRED before any paid call: {amount, currency, stated_by, stated_utc, covers, retries_allowed: 0}
+  cap_lineage: []                 # earlier caps this one amends; consumed spend carries forward (C-6a)
+  pool_readings: []               # [{pool, balance_usd, read_utc, source}] — no reading, no dispatch
+  attempts: []                    # one line per paid call, appended before the request leaves, settled after:
+  #  - {attempt_id, asset_id, route_cell, surface, pool, unit_price_usd, quantity, reserved_usd, settled_usd,
+  #     start_utc, end_utc, latency_s, status: ok|provider_refusal|infrastructure_transient|unclassified,
+  #     failure_basis, artifact_path, artifact_sha256, verdict: accepted|rejected|not_selected|failed, is_repair: bool}
+  total_reserved_usd: 0           # Σ reserved, failed calls included = CpAO numerator
+  total_settled_usd: null         # if the provider reports it; vendor statements are a separate reconciliation
+  cap_remaining_usd: null
+
+# ── 10–11. QA ────────────────────────────────────────────────────────────────
+qa:
+  pre_dispatch: {}                # A1..A10 → {status, evidence}
+  post_draw: []                   # per still: {asset_id, B1..B6}
+  composition: []                 # per rendered file: {file, C1..C8}
+  video_frames: []                # per clip: {asset_id, sampled_timestamps: [], D1..D13}
+  final_geometry: []              # FORMAT_SPECIFIC_REVALIDATION (case 002): one row per delivered file, run on THAT file:
+  #  - {deliverable_id, file, geometry, sha256, C1..C8, CF1..CF5, status}   — a master's PASS transfers to nothing
+  voice_continuity:               # CROSS_CLIP_VOICE_CONTINUITY (case 002): REQUIRED when 2+ clips represent one narrator/speaker
+    applies: null                 # true | false (single clip / no narration)
+    assembly: null                # the assembled file + sha256 the human listened to
+    clips: []                     # clip ids in order
+    narrator_identity_same: null  # PASS | FAIL  (human ear)
+    accent_timbre_compatible: null
+    cadence_continuous: null
+    boundary_holes_or_restarts: null   # PASS = none
+    per_clip_transcripts_match: null   # D10 — presence only; never substitutes for the rows above
+    human_ear_verdict: null       # verbatim; release authority
+  delivery: {}                    # E1..E4
+  defects: []                     # [{id, asset_id, observed, class: creative_direction|generation|audio|route|compositor|crop|text|product_fidelity|pacing|infrastructure, repair_layer, repaired_by_attempt}]
+
+# ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
+versions: []                      # [{version, presented_utc, assets: [], verdict: ACCEPT|SPECIFIC REPAIR|REJECT, verdict_verbatim, decided_utc}]
+outcome:
+  status: null                    # accepted | rejected | abandoned  — accepted ONLY from a human ACCEPT
+  accepted_version: null
+  accepted_by: null               # person
+  assets: []                      # [{path, sha256, bytes, dims_or_duration, produced_by_attempt, composition_inputs: [], formats: [], reuse_potential: [portfolio|showreel|spec|case_study|variant|demo|template_evidence]}]
+  delivery_note_path: null
+  delivered_utc: null
+
+# ── 17. TIME (all UTC, from `date -u`; never reconstructed) ──────────────────
+ttao:
+  job_start_utc: null             # REQUIRED  first production input
+  planning_complete_utc: null
+  dispatch_start_utc: null
+  dispatch_end_utc: null
+  artifact_received_utc: null
+  qa_complete_utc: null
+  human_review_requested_utc: null
+  human_decision_utc: null
+  accepted_utc: null
+kpis:
+  cpao_usd: null                  # = spend.total_reserved_usd on accept
+  ttao_hms: null                  # accepted_utc − job_start_utc
+  human_review_cycles: null       # = len(versions)
+  versions_to_acceptance: null
+  baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml   # read its current values; never fake the comparison
+  baseline_values_read: {ttao: null, cpao_usd: null, cycles: null, versions: null}
+
+# ── 14. LEARNING PACKET (job not closed on ACCEPT until this is filled) ──────
+learning_packet:
+  source_main_sha: null           # = production_base_sha
+  classification: null            # = class
+  brief_ref: brief.verbatim
+  accepted_assets: []             # refs into outcome.assets with sha256
+  routes_attempted: []            # every cell touched, with counts
+  paid_attempts: null             # count + USD
+  rejected_attempts: []           # attempt ids + why
+  human_verdicts: []              # from versions[]
+  repairs: []                     # from qa.defects[] with repaired_by_attempt
+  known_cost_usd: null
+  ttao_hms: null
+  versions_and_cycles: {versions: null, cycles: null}
+  observed_failures: []           # facts only
+  root_cause_classes: []          # [{failure_ref, class}]
+  directional_model_observations: []   # [{route, n, accepted, observation}] — routing_authority: none
+  candidate_patterns: []          # workflow / template behaviour worth more evidence
+  candidate_engineering_changes: []    # deterministic gate / test / orchestration fixes, with the defect they close
+  canon_gaps: []                  # only if a REAL production failure exposed missing knowledge; report, never compile
+  no_promotion_items: []          # job-specific only
