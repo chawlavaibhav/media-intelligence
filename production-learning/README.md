@@ -11,7 +11,9 @@ engineering requirement versus kept as a candidate or directional observation.
 production-learning/
   README.md
   cases/<CASE-ID>/            one directory per production (schema PRODUCTION-LEARNING-CASE-v0, see check_case.py)
-  tools/check_case.py         validator (structure, vocabularies, evidence resolution against a git ref)
+  tools/check_case.py         validator: structure and honesty of ANY case (accepted | rejected | abandoned; template optional;
+                              evidence at --source-ref/--source-dir; --pilot-ref/--pilot-dir kept as aliases; an accepted asset is
+                              byte-verified against its sha256; a supplied ref that cannot be inspected FAILS) — never a job's outcome
   tools/reconcile_pilot_ledgers.py   append-only JSONL ledger totals per lineage
 ```
 
