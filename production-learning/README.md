@@ -17,4 +17,4 @@ production-learning/
   tools/reconcile_pilot_ledgers.py   append-only JSONL ledger totals per lineage
 ```
 
-Cases: `UPWORK-INTRO-001` (14 Sep 2026, accepted V4.1 — the baseline for TTAO and full CpAO).
+Cases: `UPWORK-INTRO-001` (14 Sep 2026, accepted V4.1 — the baseline for TTAO and full CpAO); `UPWORK-PORTFOLIO-002` (15 Sep 2026, commercial portfolio batch — 9 tiles accepted, 1 skipped after 2 rejected attempts; process non-conformant; complex-production-event trigger MET; evidence on `work/upwork-portfolio-samples-2026-09-15` @ `b4b77fa`).
