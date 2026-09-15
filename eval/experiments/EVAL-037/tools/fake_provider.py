@@ -19,6 +19,13 @@ Scenarios:
   canon_user          the model calls the Canon tools before answering
   website_user        the model calls website_read before answering
   tool_user           the model calls both Canon and website tools
+  controlled_ok       CONTROLLED_CANON: declares RESEARCH_NEEDS, then 3 bounded
+                      searches (limit=8) and 3 item reads — inside the allowance
+  controlled_violation
+                      CONTROLLED_CANON: 4 searches, one of them UNBOUNDED — must be
+                      recorded failed_controlled_retrieval, never clamped or re-run
+  controlled_overflow CONTROLLED_CANON: retrieves, then dies of context overflow, to
+                      exercise EVIDENCE-002 (turns and transcripts survive a failure)
 
 Determinism: every response is a pure function of (trial_id, attempt_index, phase,
 scenario). No clock, no randomness.
@@ -36,9 +43,11 @@ MALFORMED_TEXT = "Here are three concepts you could consider. No headings.\n"
 
 
 class FakeProviderError(RuntimeError):
-    def __init__(self, message, failure_class):
+    def __init__(self, message, failure_class, detail=None):
         super().__init__(message)
         self.failure_class = failure_class
+        # EVIDENCE-002: a failing call still knows its completed turns and tool calls.
+        self.detail = detail or {}
 
 
 def _package(trial_id, attempt):
@@ -127,6 +136,39 @@ class FakeAdapter:
             raise FakeProviderError("simulated timeout during format repair", "timeout")
 
         turns, tool_log, t = [], [], 0
+        notes = []
+
+        if self.scenario.startswith("controlled") and dispatch is not None \
+                and "canon_search" in names:
+            notes.append({"turn_index": 0, "text":
+                          "RESEARCH_NEEDS:\n- how to light reflective surfaces\n"
+                          "- how to keep spatial clarity in a tight interior\n"
+                          "- how to structure information hierarchy in a poster"})
+            plan = [("canon_search", {"query": "lighting reflective surfaces", "limit": 8}),
+                    ("canon_search", {"query": "spatial clarity interior scene", "limit": 8}),
+                    ("canon_search", {"query": "information hierarchy poster", "limit": 8})]
+            if self.scenario == "controlled_violation":
+                # a 4th search, and this one deliberately UNBOUNDED
+                plan.append(("canon_search", {"query": "colour"}))
+            for name, args in plan:
+                turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
+                _, meta = self._tool(dispatch, name, args, t)
+                tool_log.append(meta)
+            for iid in ("sk_lsmx_0046", "bnd_lsmx_002", "bnd_lsmx_007"):
+                turns.append(self._turn(trial_id, t, stop="tool_use")); t += 1
+                _, meta = self._tool(dispatch, "canon_read", {"item_id": iid}, t)
+                tool_log.append(meta)
+            if self.scenario == "controlled_overflow" and hit:
+                raise FakeProviderError("prompt is too long for the context window",
+                                        "context_overflow",
+                                        {"turns": turns, "tool_calls": tool_log,
+                                         "intermediate_text": notes})
+            turns.append(self._turn(trial_id, t))
+            return {"text": _package(trial_id, attempt), "tool_calls": tool_log,
+                    "turns": turns, "intermediate_text": notes,
+                    "raw": {"fake": True, "scenario": self.scenario, "phase": phase,
+                            "trial_id": trial_id, "attempt": attempt,
+                            "model": self.model_id}}
 
         want_canon = self.scenario in ("canon_user", "tool_user")
         want_web = self.scenario in ("website_user", "tool_user")
@@ -155,6 +197,7 @@ class FakeAdapter:
             text = _package(trial_id, attempt)
 
         return {"text": text, "tool_calls": tool_log, "turns": turns,
+                "intermediate_text": notes,
                 "raw": {"fake": True, "scenario": self.scenario, "phase": phase,
                         "trial_id": trial_id, "attempt": attempt,
                         "model": self.model_id}}

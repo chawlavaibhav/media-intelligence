@@ -8,7 +8,12 @@
   canon_read      read a whole artifact, a whole source, or one item by id
 
 NO_CANON lanes never import this module. The runner refuses to load it unless the
-lane's condition is FULL_CANON.
+lane's condition is one of the Canon conditions: FULL_CANON, or CONTROLLED_CANON (the
+supplemental objective-driven-retrieval treatment). Those two conditions get BYTE-
+IDENTICAL tools, corpus, ranking and status semantics from this module — nothing here
+is aware of which one is running. In particular CONTROLLED_CANON's retrieval allowance
+is NOT implemented here: it is a behaviour asked of the model in the prompt, measured
+after the fact, and never a cap inside the tool.
 
 Hard invariants, enforced here and tested by validators/test_canon_tools.py:
 
@@ -40,6 +45,10 @@ try:
     from yaml import CSafeLoader as _Loader
 except ImportError:  # pragma: no cover
     from yaml import SafeLoader as _Loader
+
+# Conditions permitted to construct the Canon tools. Same corpus, same tools, same
+# ranking, same status semantics for every one of them.
+CANON_CONDITIONS = ("FULL_CANON", "CONTROLLED_CANON")
 
 ACCEPTED = "ACCEPTED"
 HOLD = "HOLD"
@@ -114,9 +123,10 @@ def _load(p):
 
 class Canon:
     def __init__(self, repo_root, condition="FULL_CANON", cache_dir=None):
-        if condition != "FULL_CANON":
+        if condition not in CANON_CONDITIONS:
             raise PermissionError(
-                f"Canon tools are exposed only in FULL_CANON; got condition={condition!r}")
+                f"Canon tools are exposed only in {'/'.join(CANON_CONDITIONS)}; "
+                f"got condition={condition!r}")
         self.root = pathlib.Path(repo_root).resolve()
         self.index_path = self.root / "canon/knowledge/CANON-CORPUS-INDEX.yaml"
         self.qa_dir = self.root / "canon/qa/canon-014"

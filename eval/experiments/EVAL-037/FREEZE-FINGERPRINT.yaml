@@ -21,13 +21,15 @@ algorithm: sha256-of-sorted-path-and-content
 canon_base_commit: c6f8d910f7a3cdaaeafa2280313abfb9b898cddd
 canon_base_commit_role: the CANON-014 merge the corpus fingerprints were computed against
 
-file_count: 45
-freeze_fingerprint: 0dcd4edbc786c0e6f9dc3c06f2209cb8e73c8fc084ebb2c2b4ad1d35f5ca8d24
-common_substrate_file_count: 37
-common_substrate_digest: aa1d2f99259ead8279d9909319ba731aeac2ae8115b432aacd72632a9d19d25a
+file_count: 50
+freeze_fingerprint: 5a81f59a35cc06d612c3c20d0a6f79bf00fc755c486a864726ec449b343a2d27
+common_substrate_file_count: 41
+common_substrate_digest: 012b9e6799cd89acc6badf7cbdde1e6bdb50e4d14bc2279728fbbeefb0764036
 files:
   - path: EXECUTION-CONTRACT.md
     sha256: b4af51a3e9b891110b347233d5b3f959400fa7a8d0431ec3318608888b4d92ad
+  - path: SUPPLEMENTAL-CONTROLLED-CANON.md
+    sha256: 48158d200c0e1cb42138bad089fe7d18c177dba91a10628da0e7a3c32eceafeb
   - path: common/briefs/B01.txt
     sha256: 944a0a7edd62bcc3f8dcab670a0aed3fffc06bb29e8df1beb6b103e014023cff
   - path: common/briefs/B02.txt
@@ -66,6 +68,8 @@ files:
     sha256: 4c64d4b3d7487a5ca21a00cb51a43744e149ef61c1ce0e7a1dcbe45e700245f6
   - path: common/websites/rentok.com/page.txt
     sha256: ac81559216cc180e1df3dacb3e3db8fb59006c273e13d84f095eededbf1e0e79
+  - path: conditions/controlled-canon.yaml
+    sha256: 07507141b54b6583e4d3f75ab06298219cc24eb0f0e0d4229fd5b5adcd5fcbc5
   - path: conditions/full-canon.yaml
     sha256: ff03c79829c1d9bb6db6c10bbd5ea38e9b2782647db19209a58eeec0e695f91b
   - path: experiment.yaml
@@ -82,20 +86,24 @@ files:
     sha256: 645196a8c76738e4d22a36dac68993b6e72615d747c5846b5b276e754e701c0f
   - path: lanes/sol-no-canon.yaml
     sha256: 1209a55971cfea5c769bd64051adb723fedede072c0970acde6f2e17bd6aec5d
+  - path: lanes/sonnet-controlled-canon.yaml
+    sha256: 99dc6cc602daf118e354ac29430154c5476cd12d46b9473bdb9461a79ff708a0
   - path: lanes/sonnet-full-canon.yaml
     sha256: 2e8a515b20665e63a75bd3a0d77e7c2d2265a3b62f84928f0967d4e6a83dd7e1
   - path: lanes/sonnet-no-canon.yaml
     sha256: b857d149a5aa80df47bd4df2f8444a7bcfa434145b0c85d7e1f9b0183cccbec9
   - path: schemas/attempt-ledger.schema.json
-    sha256: 5fbc3a17fa2167a35ef723298428ff1fff2537692edf910640356f9da2b624cb
+    sha256: 6e45367d161b6fc1903642bcbf94839252571bc42fe055cc290ac86d0a2eee7c
   - path: schemas/result.schema.json
-    sha256: f45f2fa05b631ea418222a91a92a4adb2bdb8fa159799778c461235ce3dd7cd3
+    sha256: 7817a5919fa7c45067994d578384797cbb84088fa0a14cd08091b569f1df1bbf
   - path: tools/build_lanes.py
     sha256: 575d2aa29b0fb3c77fcbd155bf465ae1770dc269499bc5e07a3bfe3435c70bed
   - path: tools/canon_tools.py
-    sha256: c2f476a7c7885cbe15af636f015b3e8280a76e03ce3208b1fb891111d9920ad3
+    sha256: 6e83b822382bb170c08eb6f20b54d067e6e6313b4f46c7f92089c24c20bf94b1
+  - path: tools/controlled_retrieval.py
+    sha256: fc3f604cff6b5b28a525be764f01e4a01a265cc042c2046bad81cf453231164c
   - path: tools/fake_provider.py
-    sha256: a21825bf9fe94ed694570fa82b44f5d235f327ac0455a7b731cdcb8a20b5c98e
+    sha256: c7a1fbd93318e37098c44ed1ea5406893ebe500650661c16980b88cbc8256f3b
   - path: tools/freeze_fingerprint.py
     sha256: aa4d5787a9a88cfbd183c4ac841c8edc64a2a3ce7de091d7b04e8185a712b25f
   - path: tools/jsonschema_mini.py
@@ -103,15 +111,17 @@ files:
   - path: tools/preflight.py
     sha256: 203a731c63d665a473cab0675c113e8d892876313c762451bc3e551d76189c3b
   - path: tools/providers.py
-    sha256: 216b971cff363a14e3fd9242cc5e316786b428a58b26b32f215567b4d26c0638
+    sha256: 21823d1d23fd3138c4160c467b1d1e6c88b04270d5cded70c88342daae2e6a2b
   - path: tools/runner.py
-    sha256: 11afdd3087a4b892d0b72ef8a53dfc82f46af3b558ec7d7828080d69453231ac
+    sha256: f27782889528a9842c0c2809f712f5ae25b2b2c832d3f7a461f140ff6b26c54e
   - path: tools/snapshot_websites.py
     sha256: d2906418a6fadb1d26bef68dc914537e7090620401f6b711572dea338dac880a
   - path: tools/website_tools.py
     sha256: e263b7636d547d1566926c797cab929af3da5de6a8b5e6df0f11934d09e6416a
   - path: validators/test_substrate.py
     sha256: c6f9e12e46dd4b018116aaf527cae56c32dfe18c239cda7e5cdbff49fb4308b7
+  - path: validators/validate_controlled_retrieval.py
+    sha256: 6430e2b847cdc59060ceb8d57e471d6c132a2689288461dba3ea975b12278706
   - path: validators/validate_freeze.py
     sha256: c0375195298c1c2f87b07aeb0ab82ac2845852708b7de681293a9ce5043698e5
   - path: validators/validate_lane_run.py

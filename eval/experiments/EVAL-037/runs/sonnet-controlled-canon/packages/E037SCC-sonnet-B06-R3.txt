@@ -1,0 +1,82 @@
+FINAL_PRODUCTION_PACKAGE
+
+DELIVERABLE
+One static hero image, 4:5 vertical (portrait), for premium e-commerce product-detail page use. Single final frame, no variants.
+
+OBJECTIVE_INTERPRETATION
+The customer needs a commercially deployable hero shot that functions as the primary purchase-decision image on a watch product page. It must (a) prove the specified geometry and materials are exactly as stated — nothing invented or substituted, (b) let a shopper read dial layout, hand shapes, marker finish and case brushing at a glance, and (c) feel expensive: controlled reflections, disciplined tonal range, no plasticky CGI sheen. "Desirability" here is delivered through optical credibility (it looks like a real, well-made object photographed well) rather than through mood, story or lifestyle staging — the product itself is the entire creative content.
+
+CORE_CREATIVE_IDEA
+A single studio "product-portrait" of the Aster Meridian 38, three-quarter angle, isolated against a quiet dark-to-charcoal gradient so the brushed steel, the sunburst dial and the domed crystal each get their own controlled highlight while the leather strap grounds the bottom of the frame. No hands, no wrist, no lifestyle set — the watch is deliberately made the hero, photographed with the discipline of real macro product photography rather than rendered as a floating generic CGI object. Craftsmanship is communicated by three deliberately engineered light events: a directional sweep across the sunburst dial, a controlled arc highlight on the domed sapphire, and a grazing highlight that reveals the brushed grain of the case — each one is optical evidence, not a texture filter.
+
+MESSAGE_AND_INFORMATION_HIERARCHY
+1. Primary read (first 0.5s): the watch as a complete, desirable object — silhouette, proportion, blue dial glow against dark ground.
+2. Secondary read: dial detail — sunburst brushing catching light, silver baton markers and dauphine hands crisply legible, clean dial with no date window (confirms product fact by omission).
+3. Tertiary read: material cues — brushed case highlight, domed crystal's refractive edge, leather strap grain and stitching.
+4. Supporting: overall commercial cleanliness — enough negative space at top/bottom for platform UI overlays (price, CTA) without crowding the product.
+
+VISUAL_SYSTEM
+- Framing: 4:5 vertical, watch angled at roughly 30–35° horizontal rotation (crown-side visible, three-quarter dial view), slight downward camera pitch (~15°) so the dial sunburst and crystal dome both catch light without the lens reflecting square into the crystal.
+- Background: seamless gradient from deep charcoal-grey (top) to near-black (bottom edge), warm-neutral, no props, no logos, no text.
+- Surface: watch resting on a matte dark riser/pedestal edge just entering bottom of frame, strap coiling gently forward toward camera to fill the lower third and lead the eye up to the dial — this is what fills the 4:5 vertical format instead of empty CGI void.
+- Palette: near-black/charcoal background, brushed cool-grey steel, deep blue dial, warm dark-brown leather — one warm accent (leather) against a cool-dominant frame so the product visually separates from its own background.
+- Lens/optics logic: long-ish "macro" focal length equivalent (~100mm) with minimal perspective distortion so case roundness and lug geometry are not bent; depth of field moderate — full case, dial and crystal in acceptably sharp focus, with only the trailing strap and far background edge softening off, enough to direct the eye without hiding the fine dial detail an e-commerce buyer needs to see.
+- Reflection control: crystal and case must show one clean, shaped highlight sweep each (not multiple chaotic hotspots, not a mirrored studio reflection of equipment). No visible camera or rig reflection in the crystal or case.
+- Tonal discipline: steel highlight kept a controlled light-grey, not blown to pure white; darkest shadow on case kept a dark grey, not crushed to black — so brushing texture, bezel edge and lug facets stay legible throughout (a full-page e-commerce hero must keep detail on every visible surface, not just at one extreme).
+
+PRODUCTION_RECIPE
+Type: still image, single frame, generated then lightly art-directed/graded.
+Construction logic (translatable to real studio physics for reference/QC even though this is generative):
+1. Key light: one large soft source positioned so only the portion of it that falls inside the case's/crystal's reflective "family of angles" (relative to camera) lights those surfaces brightly; the same source's broader spread lights the background and strap by soft diffuse falloff. This is what produces a case/dial that reads bright and dimensional while the background stays a controlled, separately-toned gradient — one light logic, two independent tonal outcomes.
+2. Fill: soft, large, low-contrast fill opposite key to hold shadow-side case detail open (avoid black clipping on the far lugs/bezel).
+3. Dial accent: a narrow secondary highlight or the key's grazing edge is aimed to sweep across the sunburst brushing at an angle that makes the radial brushing visible as a light-to-dark gradient across the dial face — this is the primary "craftsmanship" cue for a sunburst dial and must not be flat, shadowless fill.
+4. Crystal: domed sapphire shows one soft, elongated highlight arc near its upper edge (proof of dome curvature) without obscuring hour markers or hands.
+5. Case: brushed steel shows a directional highlight running along the brushing grain on the bezel/lug tops, distinguishing "brushed" from "polished" — critical since the product fact specifies brushed, not polished, steel.
+6. Strap: soft, closer, slightly warmer fill to bring out grain and stitching texture without competing with the dial as the brightest point in the frame.
+7. Camera angle chosen specifically off-square to the flattest crystal/case planes so no direct specular return of light source or rig appears center-frame — angle plus long focal length keeps geometry true while avoiding a dead mirror hotspot.
+
+GENERATION_PROMPTS
+Single final image prompt (execute as one generation, 4:5 aspect ratio):
+
+"Premium studio product photograph of a men's mechanical wristwatch, three-quarter angle beauty shot, shot on a macro-capable ~100mm lens with natural, undistorted proportions. The watch: 38mm brushed stainless-steel round case with visible directional brushing catching a controlled grazing highlight along its grain on the bezel and lug tops; deep blue sunburst dial with a visible radial brushed-light sweep across its face going from a brighter arc to a darker arc; silver baton hour markers and silver dauphine hands, crisp and fully legible, no date window anywhere on the dial; domed sapphire crystal with one soft elongated highlight arc near the upper rim proving its curvature, no reflection of camera or studio equipment visible in the crystal or case; dark brown leather strap with visible grain and stitching, coiling gently toward camera and filling the lower third of the frame, resting on a dark matte riser edge. Background is a smooth seamless gradient from deep charcoal grey at top to near-black at the bottom edge, no props, no text, no logos, no hands or wrist. Lighting: large soft key producing a bright but non-clipped highlight on the steel and dial, gentle fill preventing shadow-side detail loss on the case, warm soft accent light on the strap. Full case and dial in sharp focus with a slight, natural falloff toward the trailing strap and far background only. Color palette: cool brushed steel, deep saturated blue dial, warm dark brown leather, neutral charcoal background. Mood: precise, expensive, quiet, commercial hero product photography, catalog-grade sharpness and clarity, no CGI floating look, no glossy toy-like plastic sheen, photorealistic material rendering. Vertical 4:5 composition with clean negative space above and below the watch for e-commerce page overlays."
+
+CONSTRUCTION_PLAN (for the single image)
+- Step 1: Establish composition — three-quarter dial-forward angle, ~15° downward camera pitch, watch occupying central-upper two-thirds of frame, strap flowing into lower third.
+- Step 2: Lock product-fact invariants into the prompt explicitly (size cue via proportion, brushed steel, blue sunburst dial, silver baton markers, silver dauphine hands, no date window, domed sapphire, dark brown leather) so no attribute drifts.
+- Step 3: Encode the three highlight events (dial sweep, crystal arc, brushed-grain highlight) as the craftsmanship payload.
+- Step 4: Encode background/negative-space requirement for page-overlay usability.
+- Step 5: Post-generation QC pass (see FAILURE_PREVENTION) before delivery.
+
+DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
+- Final crop/safe-margin check for 4:5 and for e-commerce UI overlay zones is a deterministic post-process step (not part of generation): confirm ~8–10% clear margin top and bottom.
+- Optional deterministic color-grade pass (fixed LUT/curve) to standardize dial blue and leather brown against the brand's existing product-page palette, applied uniformly, not generative.
+- No compositing of separately generated elements is required; this is a single-shot construction.
+
+AUDIO_AND_EDIT
+Not applicable — static still image deliverable.
+
+FAILURE_PREVENTION
+- Geometry drift: verify case is round (not ovalized by lens distortion), lugs symmetrical, crown present and correctly placed at 3 o'clock — reject/regenerate if case proportions or dial layout skew.
+- Attribute drift checklist before approval: brushed (not polished/mirror) steel finish visible as directional grain, not mirror gloss; dial is sunburst blue, not flat/navy/black; markers and hands are silver baton/dauphine, not gold, not applied-logo, not numeral; confirm no date window is rendered; crystal is visibly domed (has curvature highlight), not flat; strap is dark brown leather with visible grain, not black, not metal bracelet.
+- Reflection failure: reject if camera rig, studio softbox shape, or any recognizable equipment silhouette appears mirrored in crystal or case — this is the most common "generic CGI" tell.
+- Clipping failure: reject if dial or steel highlights blow to pure white with no texture, or shadows crush to pure black losing bezel/lug definition — detail must survive on every visible surface, per product-page legibility requirement.
+- Genericness failure: reject renders that look like a floating, shadowless, materially ambiguous CGI product with no grounding surface/shadow contact — the watch must show a real contact shadow and surface interaction with its riser.
+- Focus failure: reject if the dial's hour markers or hand shapes are not crisply legible at typical product-page zoom; this is a specification detail, not a mood detail, and cannot be softened away by shallow depth of field.
+
+HARD_CONSTRAINT_CHECK
+- 4:5 aspect ratio: specified in prompt and crop plan. ✔
+- 38mm brushed stainless-steel case: explicit in prompt with brushing-highlight construction. ✔
+- Deep blue sunburst dial: explicit, with radial-highlight mechanism to prove sunburst finish. ✔
+- Silver baton hour markers, silver dauphine hands: explicit and required legible. ✔
+- No date window: explicit negative constraint stated in prompt. ✔
+- Domed sapphire crystal: explicit, with curvature-proving highlight arc. ✔
+- Dark brown leather strap: explicit, with grain/stitching requirement. ✔
+- No casual alteration of product geometry/details: addressed via lens choice (minimal distortion), explicit attribute lock, and QC checklist. ✔
+- Avoid generic floating CGI unless idea requires it: idea explicitly rejects floating CGI in favor of grounded studio product photography with real contact shadow. ✔
+- No external website: none consulted, none referenced. ✔
+- Single concept only: one image, one construction plan, no alternates presented. ✔
+
+KNOWLEDGE_AND_WEBSITE_USE
+- ogilvy_on_advertising_ch2 (ACCEPTED), sk_ogl_c003_0014 "make the product itself the hero" — used to justify the product-only, no-lifestyle, no-prop compositional strategy as the core creative idea.
+- light-science-magic-beyond-ch3 (HOLD — treated cautiously, not as settled fact but as a plausible lighting-construction rationale): sk_lsmx_0026 (decide bright-vs-dark tonal target for metal before lighting), sk_lsmx_0031 (single large soft source can independently control metal tone vs. background tone — "elegant compromise" logic used for the key-light description), and the related tonal-legibility point (qa_lsmx_0027, HOLD) that a product needing to sell detail should avoid extreme highlight/shadow clipping — used to set the tonal-discipline and highlight-arc/brushed-grain lighting logic and the no-clipping QC rule.
+- No external website was consulted or used, per constraint.

@@ -1,0 +1,111 @@
+{
+  "model": "claude-sonnet-5",
+  "system": "You are the creative-production reasoning layer for a media-production system.\n\nTurn the customer's request into exactly ONE production-ready creative package that can later be executed to produce the requested image or video.\n\nOptimize for the probability that the customer accepts the eventual media outcome and for production economy. Do not optimize for impressive prose.\n\nThink carefully before finalizing.\nRespect every explicit customer constraint.\nDo not generate multiple concepts or alternatives. Choose one solution.\n\nDo not select or recommend a current image/video model or provider.\n\nUse tools only when you judge them useful.\n\nReturn only:\n\nFINAL_PRODUCTION_PACKAGE\n\nDELIVERABLE\nOBJECTIVE_INTERPRETATION\nCORE_CREATIVE_IDEA\nMESSAGE_AND_INFORMATION_HIERARCHY\nVISUAL_SYSTEM\nPRODUCTION_RECIPE\nGENERATION_PROMPTS\nDETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS\nAUDIO_AND_EDIT\nFAILURE_PREVENTION\nHARD_CONSTRAINT_CHECK\nKNOWLEDGE_AND_WEBSITE_USE\n\nFor video, provide executable shot-level prompts, shot order, purpose and\napproximate duration.\n\nFor an image, provide one executable final generation prompt and construction\nplan.\n\nList only knowledge/website sources actually used.\n\nYou have access to a media-production knowledge library through the available Canon tools.\n\nIt contains ACCEPTED knowledge, HOLD knowledge and grounded Q&A representations.\n\nACCEPTED means the source passed the project's Audit Gate.\nHOLD means the extracted knowledge has an unresolved evidence or representation blocker and must be treated cautiously.\n\nQ&A items are alternate grounded representations, not independent corroboration or benchmark truth.\n\nCanon is creative/production knowledge, not evidence about current model capability, provider pricing or reliability.\n\nCANON RESEARCH PROCEDURE\n\nBefore producing the final package, conduct a short, objective-driven Canon research phase.\n\nThe objective of research is NOT \"find everything relevant\".\n\nThe objective is: retrieve only knowledge that can materially improve execution of this specific customer's requested media outcome.\n\nSTEP 1 \u2014 IDENTIFY KNOWLEDGE NEEDS\n\nFrom the customer brief, identify at most THREE concrete production questions where external creative/production knowledge could materially improve the final media.\n\nExamples of the kind of question this means:\n- how to preserve spatial clarity in this scene;\n- how to make this product photograph communicate material quality;\n- how to structure information hierarchy in this poster;\n- how to make direct-to-camera creator footage credible;\n- how to light reflective surfaces.\n\nDo not retrieve for facts the customer already supplied.\nDo not retrieve current provider/model recommendations.\nDo not conduct broad exploratory research.\n\nBefore your first Canon call, write your knowledge needs as a short list, in a message that begins with the line:\n\nRESEARCH_NEEDS:\n\none need per line, at most three lines. This declaration is part of your working message, not part of the final package. Do not repeat it in the final package.\n\nSTEP 2 \u2014 TARGETED SEARCH\n\nFor each knowledge need:\n- issue at most ONE canon_search;\n- query only for that specific need;\n- pass the `limit` argument, set to at most 8.\n\n`limit` is not optional here. canon_search returns every matching item in the whole library when `limit` is omitted, which is thousands of items. Always pass it.\n\nYour total allowance for the whole task is at most 3 canon_search calls and at most 24 search-result items.\n\nSTEP 3 \u2014 SELECTIVE READING\n\nFrom the returned search results, decide which items are actually worth reading.\n\nRead at most 3 Canon objects per knowledge need, and at most 6 Canon objects in total.\n\nUse canon_read only for the items you selected. Prefer reading a specific item by its item_id. Do not read the entire result set. Do not read entire sources indiscriminately.\n\nDo not call canon_catalog unless a targeted search genuinely cannot formulate a useful query.\n\nSTEP 4 \u2014 STOP WHEN SUFFICIENT\n\nStop researching as soon as you have enough to make the production decision. Do not use remaining retrieval allowance merely because it exists.\n\nSTEP 5 \u2014 PRODUCE\n\nProduce the final package using the customer brief, the official website snapshot where permitted, and only the Canon knowledge you actually retrieved and judged useful.\n\nKNOWLEDGE_AND_WEBSITE_USE must faithfully list what you actually used. Do not list knowledge you did not retrieve, and do not list retrieved knowledge you did not use.\n",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Create one premium 4:5 advertising image for a new Indian sparkling drink made from mosambi and sparkling water. It is aimed at urban consumers aged roughly 22\u201335. The product should feel refreshing, sophisticated and culturally contemporary while still retaining the familiarity of mosambi. Avoid clich\u00e9d \"Indian\" visual shorthand and avoid making it look like a cheap soft drink. The product must be the unmistakable hero. No celebrity and no external website.\n"
+    }
+  ],
+  "max_tokens": 32000,
+  "thinking": {
+    "type": "adaptive"
+  },
+  "output_config": {
+    "effort": "high"
+  },
+  "tools": [
+    {
+      "name": "canon_catalog",
+      "description": "List every source in the media-production knowledge library, with its epistemic status (ACCEPTED or HOLD), counts and available artifacts.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "source_status": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED",
+              "HOLD"
+            ],
+            "description": "Optional filter."
+          },
+          "has_qa": {
+            "type": "boolean",
+            "description": "Optional: only sources with a Q&A bank."
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "canon_search",
+      "description": "Ranked lexical (BM25) search across the whole knowledge library: source knowledge, concept systems, operational bindings, ontology terms and concepts, visual-evidence items and Q&A. Returns every scoring item by default, best first; there is no imposed result cap. Each result states its own source_status.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Free-text query. Ranked by BM25."
+          },
+          "kinds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "knowledge",
+                "concept_system",
+                "binding",
+                "ontology_term",
+                "ontology_concept",
+                "qa",
+                "visual_evidence"
+              ]
+            }
+          },
+          "source_status": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED",
+              "HOLD"
+            ]
+          },
+          "include_qa": {
+            "type": "boolean",
+            "default": true
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Optional cap you choose. Omit for all matches."
+          },
+          "min_score": {
+            "type": "number",
+            "description": "Optional BM25 score floor. Default 0."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "canon_read",
+      "description": "Read one source's artifact, one source's overview, or one item by id. Artifacts: source-knowledge.yaml, source-concept-systems.yaml, operational-bindings.yaml, ontology-mappings.yaml, visual-evidence-ledger.yaml, qa-bank.yaml.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "source_dir": {
+            "type": "string"
+          },
+          "artifact": {
+            "type": "string"
+          },
+          "item_id": {
+            "type": "string"
+          }
+        },
+        "required": []
+      }
+    }
+  ]
+}
