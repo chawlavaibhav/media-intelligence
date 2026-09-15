@@ -38,6 +38,8 @@ for i in range(int(TOTAL * FPS)):
 enc.stdin.close(); enc.wait()
 for r in (ra, rb):
     r.stdout.close(); r.kill()
-fc = f"[0:a]atrim=0:{CUT},asetpts=PTS-STARTPTS[a0];[1:a]atrim=0:{TOTAL - CUT},asetpts=PTS-STARTPTS,afade=t=out:st={TOTAL - CUT - 1.0:.2f}:d=1.0[a1];[a0][a1]concat=n=2:v=0:a=1,loudnorm=I=-16:TP=-1.5:LRA=8[a]"
-subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(EXT), "-i", str(INT), "-i", str(silent), "-filter_complex", fc, "-map", "2:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-t", f"{TOTAL:.3f}", "-movflags", "+faststart", str(OUT)], check=True)
+# No narration (Controller, 15 Sep: the two native voices did not match; voice dropped). Audio = the accepted Lyria bed, low, faded.
+MUSIC = V4.parent / "v3" / "gen/audio/music-r4.wav"
+fc = f"[0:a]atrim=0:{TOTAL},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=1.0,afade=t=out:st={TOTAL - 2.0:.2f}:d=2.0,loudnorm=I=-18:TP=-2:LRA=8[a]"
+subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(MUSIC), "-i", str(silent), "-filter_complex", fc, "-map", "1:v", "-map", "[a]", "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-t", f"{TOTAL:.3f}", "-movflags", "+faststart", str(OUT)], check=True)
 silent.unlink(); print("wrote", OUT)

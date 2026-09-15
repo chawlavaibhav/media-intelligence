@@ -49,3 +49,10 @@ Cumulative reserved USD 7.3112 = INR 697.6 of INR 2,000 (V3 3.2836 + V4 4.0276).
 - "4-HOUR EXPRESS" at h1 in ink read as faint next to the giant "24 HOURS" — relative scale, not colour, was the cause; V4.1 sizes it by
   measurement (136 px) with an accent rule, still subordinate to Standard.
 - The film needed one radically different creative world; the existing Kora deliverable (2.8 s, full screen, no copy) supplies it at USD 0.
+
+## I. Nivaas Homes tile (15 Sep) — two rejections, one lesson each
+- Veo t2v + extend (720p): narration line split across the extension with a 2.9-s hole; images soft. Extend is not a story tool for narrated pieces.
+- Stills-first + two Veo i2v clips, one narration line each (1080p): images good, each line clean, but the **two clips have two different voices**
+  — native narration is not identity-stable across generations. Controller dropped the voice; the tile ships with a music bed and on-screen copy.
+- Rule going forward: a narrated multi-shot piece needs ONE voice source across shots (a single generation, or a real VO track the Controller
+  has accepted by ear); no proven route for that exists today (Sarvam rejected, ElevenLabs premade voice not Indian, native speech per-clip).
