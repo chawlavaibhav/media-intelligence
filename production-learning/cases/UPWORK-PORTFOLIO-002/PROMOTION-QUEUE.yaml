@@ -1,0 +1,102 @@
+# PROMOTION QUEUE — case UPWORK-PORTFOLIO-002. Encodes the Controller's addendum (15 Sep 2026) on top of the 13 defects.
+# Rule kept: the gates promoted by case 001 / PR #98 are NOT re-promoted as new discoveries here.
+case_id: UPWORK-PORTFOLIO-002
+
+promoted_now:
+  - id: QA_COVERAGE_ENFORCEMENT
+    kind: production_system_requirement
+    where: "media-agency workflow (PR #99, /media-agency) — the deliverable path; runtime/compositor and runtime/loop already hold the gates"
+    rule: "every production path that emits a candidate deliverable — film, tile, format variant, WhatsApp creative, portfolio export — runs the applicable shared QA bundle (bounds, contrast, fit/crop declaration, disjointness/obstruction, video-frame hygiene) before human review. A bypassed gate is a production-system defect even if the gate exists elsewhere."
+    evidence: [PD-04, PD-06, SD-HD-01, SD-HD-04, SD-HD-11]
+    controller_addendum: "§1 — do not re-promote existing gates as new discoveries; the new finding is coverage enforcement"
+  - id: FORMAT_SPECIFIC_REVALIDATION
+    kind: process_requirement
+    where: "media-agency workflow — per-deliverable QA; compositor report keyed by delivered geometry"
+    rule: "acceptance of a layout at one aspect ratio / crop does not transfer to another; every final 1:1 / 4:5 / 9:16 / WA / other adaptation is QA'd in its actual delivered geometry"
+    evidence: [SD-HD-03, SD-HD-06, SD-HD-07, SD-HD-08]
+    controller_addendum: "§2"
+  - id: PAID_PRODUCTION_PREFLIGHT
+    kind: process_requirement
+    where: "media-agency workflow (PR #99) — one validated job object / packet; NOT six separate files"
+    rule: "no paid media dispatch before a frozen minimum pre-spend packet exists: customer/commercial brief; frozen mandatory copy / offer / CTA; intended deliverables; production/route plan; acceptance/QA requirements; explicit job spend cap"
+    evidence: [PD-01, PD-02, PD-03, PD-07, PD-08, PD-09]
+    controller_addendum: "§9 / task §5A — point at the /media-agency workflow rather than a parallel mechanism"
+  - id: CROSS_CLIP_VOICE_CONTINUITY
+    kind: qa_requirement
+    where: "media-agency workflow — assembly-level QA step for narrated multi-clip deliverables; human review remains release authority"
+    rule: "if two or more clips are intended to represent one narrator/speaker, the ASSEMBLED result requires cross-clip voice-continuity + delivery-continuity review; checking each clip independently is insufficient; 'required words present' is insufficient; human-perceived continuity is the release authority until a qualified checker exists"
+    evidence: [SD-HD-13a, SD-HD-13b, PD-05]
+    controller_addendum: "§8 / task §5B"
+  - id: REJECTED_DESIGN_REUSE
+    kind: process_requirement
+    where: "media-agency workflow — source-material provenance on every deliverable"
+    rule: "a component or treatment from a human-rejected version must not silently become approved source material for later deliverables; reuse requires explicit re-evaluation. Distinguish accepted_in_context (e.g. the seam pill on the Aarohi bottle plate in the accepted film) from universally_reusable; neither the seam pill nor 'type in negative space' was the latter"
+    evidence: [SD-HD-05, SD-HD-07, SD-HD-08, SD-HD-09, SD-HD-10, SD-HD-03, SD-HD-04]
+    controller_addendum: "§3"
+
+candidate_patterns:
+  - id: READABILITY_MARGIN
+    kind: deterministic_engineering_rule (candidate)
+    rule: "text fitting inside its bounding box is necessary but insufficient; require an explicit visual inset / safety margin from panel and canvas edges, tokenised and configurable — do not fix a universal pixel value from this one case"
+    evidence: [SD-HD-01, SD-HD-02]
+    implemented_in_pilot_as: "5 % of panel width (compose_v4.py maxw, film4.py craft_ad) — a working value, not the rule"
+    promotion_condition: "adopted into runtime/compositor tokens + check_text_bounds after one more production confirms the margin value class"
+    controller_addendum: "§4"
+  - id: STACK_LEVEL_FIT
+    kind: deterministic_engineering_rule (candidate)
+    rule: "when a text stack does not fit, scale/reflow the whole stack coherently, preserving declared relative hierarchy and minimum readable sizes; never shrink only the headline until hierarchy collapses"
+    evidence: [SD-HD-12]
+    implemented_in_pilot_as: "proportional shrink of pill, headline, code, button and spacings with a hierarchy assertion (compose_v4.dhaba_panel, _aarohi)"
+    promotion_condition: "a compositor fit routine in runtime with a test that fails on headline-only shrink"
+    controller_addendum: "§5"
+  - id: SUBJECT_AWARE_CROP_ANCHORING
+    kind: compositor mechanism (candidate)
+    rule: "cover crops anchor on the subject / critical objects (a declared point or box), not on a fractional offset; contain-by-default for product proof stays the deterministic safe rule already learned"
+    evidence: [SD-HD-06, SD-HD-08, SD-HD-11]
+    implemented_in_pilot_as: "compose_v4.cover_at(cx, cy, zoom) with hand-chosen centres"
+    promotion_condition: "a subject box supplied by the job packet or a detector, with a test on a known plate"
+    controller_addendum: "§7 — candidate, not a universal requirement"
+  - id: SINGLE_VOICE_SOURCE_FOR_NARRATED_MULTI_CLIP
+    kind: production pattern (candidate)
+    rule: "generate one narration/voice source and build the clips around it, rather than asking independent video generations to recreate the same voice"
+    evidence: [SD-HD-13b, RO-02]
+    promotion_condition: "repeat evidence on at least one more narrated multi-clip production; no proven single-voice route exists today (Sarvam narration rejected in case 001 V3; ElevenLabs premade voice not Indian; native per-clip narration not identity-stable)"
+    controller_addendum: "§8 — not a universal route rule"
+  - id: STILLS_FIRST_STORY_PRODUCTION
+    kind: production pattern (candidate)
+    rule: "for multi-beat portfolio/story work, establish accepted still/keyframe visual direction first, then animate — rather than asking video generations to invent the entire visual world"
+    evidence: [RO-01, RO-02, RO-03, "N2 stills accepted by the Controller on sight; N1 t2v rejected"]
+    promotion_condition: "repeat evidence; N2's images were accepted but its voice failed, so the pattern is supported for pictures only"
+    controller_addendum: "§5D"
+  - id: TEXT_OVER_IMAGERY_CONDITIONAL
+    kind: compositor policy (candidate)
+    rule: "text over imagery is acceptable only if the actual final composition passes contrast, safe-area, subject/critical-object obstruction and readability checks; a solid panel/tab is a fallback, not doctrine. Do NOT promote 'text may never sit over imagery'"
+    evidence: [SD-HD-03, SD-HD-04, SD-HD-05]
+    promotion_condition: "an obstruction check (subject box vs text box) exists in the compositor"
+    controller_addendum: "§6"
+
+directional_only:
+  - id: RO-01
+    statement: "Veo extend can split/restructure narration and re-imagine visual content at 720p (n=1)"
+  - id: RO-02
+    statement: "native generated narration voice varies between independent generations (n=2)"
+  - id: RO-03
+    statement: "GPT Image 2 medium produced 3/3 accepted textless plates/packshots first draw (n=3)"
+  - id: RO-04_05
+    statement: "Nano Banana 2 plate 1/1; Gemini Omni i2v 10 s silent 1/1 (n=1 each)"
+  - id: COMPLEX_PRODUCTION_EVENT_TRIGGER
+    statement: "MET — this is the second complex real production after UPWORK-INTRO-001 (multi-asset batch, per-asset routes, shared brief, accepted + rejected assets, partial acceptance, shared spend authority, cross-asset QA). OUTCOME-EVENT-v1 is NOT modified in this PR. Recommendation: a separate USD-0 schema-design task after this case is audited, using cases 001 + 002 together (see README §Complex-production event)"
+
+not_promoted:
+  - id: NO_CANON_CHANGE
+    reason: "the failures here are workflow / orchestration / acceptance problems, not missing Canon knowledge; Canon is not expanded because the workflow skipped it"
+  - id: NO_REGISTRY_OR_ROUTING_CHANGE
+    reason: "every model observation is n<=3, one job, one judge; routing_authority none"
+  - id: NO_RE_PROMOTION_OF_EXISTING_GATES
+    reason: "TEXT_BOUNDS_GATE, CONTRAST_GATE, CROP_FIT_DECLARATION, ELEMENT_DISJOINTNESS, VIDEO_FRAME_TEXT_HYGIENE already promoted by case 001; this case shows they were bypassed, not that they are new"
+  - id: NO_UNIVERSAL_SUBJECTIVE_JUDGE
+    reason: "the acceptance defect (words present ≠ communicates correctly) is recorded as a process defect; no automated subjective judge is proposed"
+  - id: NO_TEXT_NEVER_OVER_IMAGERY_RULE
+    reason: "Controller addendum §6"
+  - id: NO_UNIVERSAL_MARGIN_PIXEL_VALUE
+    reason: "Controller addendum §4"

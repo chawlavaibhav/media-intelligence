@@ -1,0 +1,57 @@
+# ROUTE OBSERVATIONS — per-model observations from this one batch. Directional only. routing_authority: none.
+# Nothing here modifies the Registry, the routing map or any rule. Exact n per observation.
+case_id: UPWORK-PORTFOLIO-002
+
+observations:
+  - id: RO-01
+    route: veo-3.1-fast-generate-001 text-to-video 8 s + extend 7 s, 9:16 720p, generateAudio (Vertex)
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    context: "Nivaas Homes N1: exterior → interior story with two narration lines, one per call"
+    observed: "the extension restructured the narration: line 2 was split with a 2.9-s silence inside it (8.15–9.2 s, then 12.05–13.15 s); the extension re-imagined the scene (a sofa morphs into the exterior over 8.2–9.0 s); 720p output was soft when delivered at 1080"
+    human_verdict: reject
+    what_it_does_not_say: "nothing about Veo extend at 1080p, nothing about extend without narration; n=1"
+  - id: RO-02
+    route: veo-3.1-fast-generate-001 image-to-video 8 s, 9:16 1080p, generateAudio (Vertex)
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 2
+    context: "Nivaas Homes N2: two accepted stills, one narration line each, same prompt structure, same 'calm female Indian English narrator' wording"
+    observed: "each clip alone: narration verbatim, continuous (max intra-line pause 1.0 s at a sentence break), Indian English, no lettering, scene stable; across the two clips: two different narrator voices — native generated narration is not identity-stable across independent generations"
+    human_verdict: reject (assembly)
+    what_it_does_not_say: "whether a shared reference/voice id would hold identity (not tried); n=2"
+  - id: RO-03
+    route: openai/gpt-image-2 (fal, quality medium, 864x1536 / 1024x1280)
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 3
+    context: "IronLeaf packshot 4:5; Nivaas exterior and interior 9:16"
+    observed: "3/3 accepted on the first draw: no lettering, sharp, brief followed (tub with embossed leaf; dusk tower with landscaping; model-apartment living room)"
+    human_verdict: accept (operator; the Controller accepted the two Nivaas stills explicitly, 'go')
+  - id: RO-04
+    route: gemini-3.1-flash-image (Gemini API), 9:16 textless plate
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    context: "GyaanBox study-desk plate"
+    observed: "1/1 accepted: notebook blank, no titles on the shelf books, upper half clear as asked"
+    human_verdict: accept (operator; the Controller raised no defect on the GyaanBox plate itself)
+  - id: RO-05
+    route: gemini-omni-1.1-flash-preview image-to-video 10 s, 9:16 720p (Vertex)
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    context: "GyaanBox text-in-motion plate (silent; copy composed by code afterwards)"
+    observed: "1/1 accepted: slow push, steam, plant; notebook stayed blank; steam wisps grew strong in the last 3 s (noted, not rejected)"
+    human_verdict: accept (operator; no Controller defect on the clip)
+  - id: RO-06
+    route: none (deterministic composition, compose_v4.py / compose_pf.py)
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    context: "the whole batch"
+    observed: "every defect the Controller flagged on statics (HD-01..HD-10) was a composition/process defect on accepted plates; no model re-draw was needed to fix any of them"
+    human_verdict: n/a
+
+not_observed: "no route was compared against another; no draw was repeated; no infrastructure error occurred"

@@ -1,0 +1,193 @@
+# SYSTEM DEFECTS — case UPWORK-PORTFOLIO-002.
+# The core conclusion (Controller addendum §10): GOOD FINAL MEDIA CAN COEXIST WITH A NON-CONFORMANT PRODUCTION PROCESS.
+# The evidence that matters: bypassing the just-built Media Intelligence workflow (PR #98 gates) caused already-known defect
+# classes to recur immediately. That is evidence for ENFORCING the workflow, not evidence that the media models regressed.
+case_id: UPWORK-PORTFOLIO-002
+classes:
+  media_model_failure: "the generation model produced something that does not meet the brief (content, fidelity, voice)"
+  pipeline_failure: "the system around the model — process, compositor, QA timing, orchestration — let a defect through or created one"
+  infrastructure_transient: "provider unavailable / 5xx / timeout; none occurred in this batch"
+
+# ── A. PROCESS DEFECTS (span every version; the Controller's central finding) ──────────────────────────────
+defects:
+  - id: PD-01
+    class: pipeline_failure
+    subsystem: orchestration
+    observed: "no normalized request, blueprint, acceptance contract or route plan existed before the first paid call of the batch"
+    root_cause: "the operator went from the Controller's chat 'go' straight to API calls; the six pre-spend artifacts that governed the V4 film were treated as film-only"
+    not_a_model_failure: true
+    promoted_as: PAID_PRODUCTION_PREFLIGHT
+  - id: PD-02
+    class: pipeline_failure
+    subsystem: orchestration
+    observed: "commercial copy for IronLeaf, GyaanBox and Nivaas was invented by the operator during execution (COPY-PF.yaml written minutes before each dispatch), not frozen and approved before spend"
+    root_cause: "no frozen-copy step on the tile path; the copy is still marked 'draft for approval' in the delivered README"
+    not_a_model_failure: true
+    promoted_as: PAID_PRODUCTION_PREFLIGHT
+  - id: PD-03
+    class: pipeline_failure
+    subsystem: orchestration
+    observed: "paid calls began immediately after each human 'go' (N1: 'go' → dispatch in the same turn; N2 motion likewise)"
+    root_cause: "no preflight gate between authorisation and dispatch"
+    not_a_model_failure: true
+    promoted_as: PAID_PRODUCTION_PREFLIGHT
+  - id: PD-04
+    class: pipeline_failure
+    subsystem: deterministic_qa
+    observed: "acceptance checks were ad hoc per asset: 'words present + accent' for narration; 'boxes disjoint' for layouts; contact-sheet glances for crops. Ten known-class defects reached the Controller in one export; a 2.9-s narration hole was accepted"
+    root_cause: "mechanical proxies were treated as acceptance; the QA bundle that PR #98 promoted (bounds, contrast, fit, disjointness, frame hygiene) never ran on the tile path"
+    not_a_model_failure: true
+    promoted_as: [QA_COVERAGE_ENFORCEMENT, CROSS_CLIP_VOICE_CONTINUITY]
+  - id: PD-05
+    class: pipeline_failure
+    subsystem: deterministic_qa
+    observed: "cross-clip voice consistency was not checked (N2): each narrated clip passed alone; the assembled pair had two different narrators"
+    root_cause: "no cross-asset QA step existed; per-asset acceptance was assumed to compose"
+    not_a_model_failure: true
+    promoted_as: CROSS_CLIP_VOICE_CONTINUITY
+  - id: PD-06
+    class: pipeline_failure
+    subsystem: orchestration
+    observed: "the merged PR #98 learnings (runtime/compositor gates, frame_hygiene, pools, provider_errors) were bypassed; the batch used the pilot's own design4/compose_v4/compose_pf scripts, and even the pilot's design4 gates only ran on the film, never on a tile"
+    root_cause: "gates existed in two places (runtime and pilot) and the deliverable path used neither; a bypassed gate is a production-system defect even when the gate exists elsewhere"
+    not_a_model_failure: true
+    promoted_as: QA_COVERAGE_ENFORCEMENT
+  - id: PD-07
+    class: pipeline_failure
+    subsystem: orchestration
+    observed: "pilot scripts were used instead of the current runtime / the media-agency workflow being built in PR #99"
+    root_cause: "expedience; the operator did not re-read main after PR #98 merged"
+    not_a_model_failure: true
+    promoted_as: PAID_PRODUCTION_PREFLIGHT
+  - id: PD-08
+    class: pipeline_failure
+    subsystem: orchestration
+    observed: "the spend record (v4/plan/SPEND-AMENDMENT-V4.md) was not amended before the portfolio calls; the Controller's 'go' in chat was the only authority, and no per-job cap was written"
+    root_cause: "no preflight; the cumulative INR 2,000 cap was silently assumed to cover unplanned work"
+    not_a_model_failure: true
+    promoted_as: PAID_PRODUCTION_PREFLIGHT
+  - id: PD-09
+    class: pipeline_failure
+    subsystem: orchestration
+    observed: "the eight paid lines were appended to the V4 film's ledger lineage (cumulative 7.3112 → 11.9708) instead of a distinct job; per-tile clocks and per-tile CpAO therefore do not exist"
+    root_cause: "one ledger tool bound to one pilot; no job object per deliverable set"
+    not_a_model_failure: true
+    promoted_as: PAID_PRODUCTION_PREFLIGHT
+
+# ── B. THE 13 HUMAN-FLAGGED DEFECTS, classified (HD ids from HUMAN-VERDICTS.yaml) ─────────────────────────
+  - id: SD-HD-01
+    version: B1
+    observed: "9:16 offer-in-motion clip — '15% OFF' runs off the panel"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "V3 composer: headline budget equal to the panel width, no inset; the clip was exported without re-rendering under the fixed composer"
+    known_class_from_case_001: TEXT_BOUNDS_GATE
+    gate_status: "gate existed (runtime/compositor, pilot design4); NOT RUN on this path"
+    promoted_as: [QA_COVERAGE_ENFORCEMENT, READABILITY_MARGIN]
+  - id: SD-HD-02
+    version: B1
+    observed: "hook ad — 'SIMPLIFIED.' touches the panel edge; reads as clipped although the box fits"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "'fits' was the only rule; no visual inset from the panel edge"
+    known_class_from_case_001: TEXT_BOUNDS_GATE (insufficient alone)
+    promoted_as: READABILITY_MARGIN
+  - id: SD-HD-03
+    version: B1
+    observed: "Kora hook 1 in 1:1 / 4:5 / 9:16 / WA — headline over the figure and garment"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "the 16:9 poster placement ('type in the wall's negative space') was carried to crops that removed the wall; layout acceptance at one aspect was assumed to transfer"
+    promoted_as: [FORMAT_SPECIFIC_REVALIDATION, REJECTED_DESIGN_REUSE]
+  - id: SD-HD-04
+    version: B1
+    observed: "all Kora files — cream type on a light beige wall, hard to read, unfinished"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "no contrast measurement on the tile path; the V3 Kora poster (never reviewed by the Controller) was exported as-is"
+    known_class_from_case_001: CONTRAST_GATE
+    gate_status: "gate existed; NOT RUN on this path"
+    promoted_as: [QA_COVERAGE_ENFORCEMENT, REJECTED_DESIGN_REUSE]
+  - id: SD-HD-05
+    version: B1
+    observed: "Dhaba 47 1:1 — Hindi copy over the food; colour combination poor"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "the V3 overlay-on-photo Dhaba treatment (from the REJECTED V3 film lineage) was reused as approved source material"
+    promoted_as: REJECTED_DESIGN_REUSE
+  - id: SD-HD-06
+    version: B1
+    observed: "Dhaba 47 9:16 — the dal bowl cut at the right edge"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "cover crop by a fractional anchor, not by the subject; format not re-validated"
+    known_class_from_case_001: CROP_FIT_DECLARATION
+    promoted_as: [FORMAT_SPECIFIC_REVALIDATION, SUBJECT_AWARE_CROP_ANCHORING]
+  - id: SD-HD-07
+    version: B1
+    observed: "Dhaba 47 WA — same copy-over-photo defect"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "as SD-HD-05; each format inherited the defect because none was re-validated in its geometry"
+    promoted_as: FORMAT_SPECIFIC_REVALIDATION
+  - id: SD-HD-08
+    version: B1
+    observed: "GyaanBox 1:1 — the offer pill on the seam cuts the plant"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "the film's seam-straddling pill (accepted IN CONTEXT on the Aarohi bottle plate) was reused as if universally reusable; on a lifestyle plate it obstructs the subject"
+    promoted_as: [REJECTED_DESIGN_REUSE, FORMAT_SPECIFIC_REVALIDATION]
+  - id: SD-HD-09
+    version: B1
+    observed: "Dhaba contact sheet 2 — banner overlapping the photos"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "as SD-HD-08"
+    promoted_as: REJECTED_DESIGN_REUSE
+  - id: SD-HD-10
+    version: B1
+    observed: "all GyaanBox files — banner overlapping the photos"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "as SD-HD-08"
+    promoted_as: REJECTED_DESIGN_REUSE
+  - id: SD-HD-11
+    version: B2
+    observed: "IronLeaf — packshot lid cut by the cover crop; then a visible rectangle behind the contained packshot; then a dark halo (operator-caught over three renders)"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "cover applied to product proof (against case 001's contain-by-default); the contain backdrop was improvised twice"
+    known_class_from_case_001: CROP_FIT_DECLARATION
+    gate_status: "the rule existed (contain by default for product proof); NOT APPLIED on this path"
+    promoted_as: QA_COVERAGE_ENFORCEMENT
+  - id: SD-HD-12
+    version: B2
+    observed: "Dhaba 4:5 after the first fix — the Hindi headline shrank until it was smaller than the pill (operator-caught)"
+    class: pipeline_failure
+    subsystem: compositor
+    root_cause: "the fit loop shrank only the headline; hierarchy was not a constraint of the fit"
+    promoted_as: STACK_LEVEL_FIT
+  - id: SD-HD-13a
+    version: N1
+    observed: "Nivaas v1 — narration line 2 split by a 2.9-s hole across the extend; 720p images soft/generic; statics cut from video frames"
+    class: media_model_failure
+    subsystem: model_audio_and_generation
+    root_cause: "Veo 3.1 Fast t2v + extend at 720p restructured the narration and re-imagined the scene (n=1)"
+    also: {class: pipeline_failure, subsystem: deterministic_qa, root_cause: "operator acceptance = 'required words present' — textual presence treated as sufficient despite poor delivery/flow (acceptance-process defect)"}
+    promoted_as: [CROSS_CLIP_VOICE_CONTINUITY, STILLS_FIRST_STORY_PRODUCTION]
+  - id: SD-HD-13b
+    version: N2
+    observed: "Nivaas v2 — two clips, two different narrator voices"
+    class: media_model_failure
+    subsystem: model_audio
+    root_cause: "native narration voice varied between two independent Veo i2v generations from the same prompt style (n=2)"
+    also: {class: pipeline_failure, subsystem: deterministic_qa, root_cause: "no cross-clip voice-identity check; per-clip acceptance assumed to compose"}
+    promoted_as: [CROSS_CLIP_VOICE_CONTINUITY, SINGLE_VOICE_SOURCE_FOR_NARRATED_MULTI_CLIP]
+
+tally:
+  media_model_failures_reaching_the_controller: 2      # HD-13a, HD-13b (both also carry a QA-process component)
+  pipeline_failures_reaching_the_controller: 10        # HD-01..HD-10
+  pipeline_failures_caught_by_the_operator: 2          # HD-11, HD-12
+  infrastructure_transient: 0
+  known_defect_classes_that_recurred: [TEXT_BOUNDS_GATE, CONTRAST_GATE, CROP_FIT_DECLARATION, ELEMENT_DISJOINTNESS-adjacent (obstruction)]
+  conclusion: "all four V3 failure classes from case 001 came straight back on the first tile export, because no gate ran on that path"
