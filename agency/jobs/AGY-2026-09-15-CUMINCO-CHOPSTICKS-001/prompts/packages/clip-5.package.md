@@ -36,7 +36,7 @@ attention_order: 1st read the hand and chopsticks (motion / the only action), 2n
 ## GENERATION_PROMPTS
 
 Dispatched prompt (motion, from the accepted still):
-"Very slow, gentle push in toward the table, motivated by the meal; no other camera movement. Both laugh warmly; he takes a spoonful from his mint-green bowl and eats; her chopsticks stay resting in the notch on the rim of her rosé bowl. Steam rises gently. Natural soft daylight. No text, no lettering, no logos."
+"Very slow, gentle push in toward the table, motivated by the meal; no other camera movement. Nobody speaks and nobody's lips move: both mouths stay closed, they laugh silently with closed-lip smiles and crinkled eyes, shoulders shaking a little. He takes a spoonful from his mint-green bowl; her chopsticks stay resting in the notch on the rim of her rosé bowl the whole time. Steam rises gently. Natural soft daylight. No text, no lettering, no logos."
 
 ## DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS
 

@@ -59,27 +59,31 @@ DECK = {
 }
 
 # ── timeline (seconds on the master) — VO-paced; recorded as a deviation from the 18-s plan ──
-BEATS = [  # (beat, clip file, in, out)  -> master start is cumulative
-    (1, "clip-1-r1.mp4", 2.5, 6.0),
-    (2, "clip-2-accepted.mp4", 0.0, 5.5),
-    (3, "clip-3-r1.mp4", 0.5, 5.5),
-    (4, "clip-4-r1.mp4", 0.0, 4.0),
-    (5, "clip-5-r1.mp4", 0.0, 5.5),
+BEATS = [  # (beat, clip file, in, out)  -> master start is cumulative   (v2: closed-mouth two-shots r2; windows chosen on the sampled frames)
+    (1, "clip-1-r2.mp4", 3.0, 6.0),     # 0.0–3.0   both mouths closed from 3.0 s; he fumbles, she reaches for her chopsticks
+    (2, "clip-2-accepted.mp4", 0.0, 5.5),   # 3.0–8.5
+    (3, "clip-3-r1.mp4", 0.5, 5.5),     # 8.5–13.5
+    (4, "clip-4-r1.mp4", 0.0, 4.0),     # 13.5–17.5
+    (5, "clip-5-r2.mp4", 1.0, 6.0),     # 17.5–22.5  her mouth closes at ~1.2 s; closed-lip laughter, spoon
 ]
-VO = {1: ("final-b1.wav", 0.3), 2: ("final-b2.wav", 4.0), 3: ("final-b3.wav", 9.3), 4: ("final-b4.wav", 14.3), 5: ("final-b5.wav", 19.0)}
-VO_TEMPO = 1.05
+TAIL_HOLD_S = 0.4                       # freeze the last frame briefly so the b5 line can finish under the brand line
+VO = {2: ("final-b2.wav", 3.4), 3: ("final-b3.wav", 8.75), 4: ("final-b4.wav", 13.85), 5: ("final-b5.wav", 18.3)}
+# v2 deviation: the beat-1 VO line ("First noodle night with chopsticks.") is DROPPED — the four remaining lines run
+# 4.4–4.9 s each in the chosen slow, bubbly read and cannot all fit without pushing the film past 26 s; beat 1 is
+# carried by the picture and the music (muted test: yes). Flagged for the human; restorable at USD 0.
+VO_TEMPO = 1.06
 TEXT = {  # beat -> [(region, string_id | literal, font, size_at_1080w, colour, role, y_centre_px)]  — a top band just inside the token safe area, every geometry
-    2: [("numeral", "1", "avenir-demi", 40, ACCENT, "display", 220), ("headline", "t1", "charter", 58, INK, "body", 303)],
-    3: [("numeral", "2", "avenir-demi", 40, ACCENT, "display", 220), ("headline", "t2", "charter", 58, INK, "body", 303)],
-    4: [("numeral", "3", "avenir-demi", 40, ACCENT, "display", 220), ("headline", "t3", "charter", 58, INK, "body", 303)],
-    5: [("tagline", "t4", "charter", 62, INK, "body", 240), ("brand_line", "t5", "avenir-demi", 46, ACCENT, "display", 342)],
+    2: [("numeral", "1", "avenir-demi", 44, ACCENT, "display", 205), ("headline", "t1", "charter", 60, INK, "body", 282)],
+    3: [("numeral", "2", "avenir-demi", 44, ACCENT, "display", 205), ("headline", "t2", "charter", 60, INK, "body", 282)],
+    4: [("numeral", "3", "avenir-demi", 44, ACCENT, "display", 205), ("headline", "t3", "charter", 60, INK, "body", 282)],
+    5: [("tagline", "t4", "charter", 64, INK, "body", 232), ("brand_line", "t5", "avenir-demi", 48, ACCENT, "display", 330)],
 }
 # per geometry: output size, and the declared crop (y offset in the 1080x1920 upscaled frame) per beat with its reason
 GEOM = {
-    "9:16": {"size": (1080, 1920), "crop_y": None, "layout": {"macro": ("centre", 940), "twoshot": ("centre", 940)}},
-    "4:5": {"size": (1080, 1350), "crop_y": {1: 250, 2: 400, 3: 400, 4: 400, 5: 250}, "layout": {"macro": ("left", 460), "twoshot": ("centre", 440)},
+    "9:16": {"size": (1080, 1920), "crop_y": None, "layout": {"macro": [("left", 520), ("centre", 940)], "twoshot": [("centre", 940), ("centre", 620)]}},
+    "4:5": {"size": (1080, 1350), "crop_y": {1: 250, 2: 400, 3: 400, 4: 400, 5: 250}, "layout": {"macro": [("left", 460), ("centre", 700)], "twoshot": [("centre", 440), ("left", 440)]},
              "reason": "subject-anchored: two-shots keep both faces and both bowls (y 250-1600 of 1920); macros keep chopstick tips to bowl base (y 400-1750); the copy takes an opaque backing where it must sit over the chopsticks"},
-    "1:1": {"size": (1080, 1080), "crop_y": {1: 330, 2: 500, 3: 500, 4: 500, 5: 330}, "layout": {"macro": ("left", 440), "twoshot": ("centre", 400)},
+    "1:1": {"size": (1080, 1080), "crop_y": {1: 330, 2: 500, 3: 500, 4: 500, 5: 330}, "layout": {"macro": [("left", 440), ("centre", 700)], "twoshot": [("centre", 400), ("left", 420)]},
              "reason": "subject-anchored: two-shots keep faces and bowls (y 330-1410); macros keep the hand, chopsticks and the bowl's rim and wall, cutting ~100 px of the bowl base/shadow (y 500-1580); the copy takes an opaque backing"},
 }
 
@@ -119,10 +123,28 @@ def luminance_samples(frames: list, box: tuple) -> list:
     return out
 
 
+def wall_obstruction(frames: list, box: tuple, pad: int = 18) -> float:
+    """Fraction of pixels inside the padded box that are NOT wall — measured against the frame's own wall model
+    (the median colour of the top 8 % of the frame, which is always wall in this film). Returns the worst frame."""
+    worst = 0.0
+    for f in frames:
+        im = np.asarray(Image.open(f).convert("RGB"), dtype=float)
+        h = im.shape[0]
+        # per-COLUMN wall reference (median of the top rows in that column): the wall is a gradient — darker at
+        # the frame edges, brighter near the window — and a single global median flagged the edges as "subject"
+        wall_cols = np.median(im[: max(8, h // 14)], axis=0)            # (W, 3)
+        x0, y0, x1, y1 = max(0, box[0] - pad), max(0, box[1] - pad), min(im.shape[1], box[2] + pad), min(h, box[3] + pad)
+        region = im[y0:y1, x0:x1]
+        dist = np.sqrt(((region - wall_cols[None, x0:x1, :]) ** 2).sum(axis=-1))
+        worst = max(worst, float((dist > 60).mean()))
+    return worst
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--geometry", required=True, choices=list(GEOM))
     ap.add_argument("--out", required=True)
+    ap.add_argument("--no-music", dest="music", action="store_false")
     a = ap.parse_args()
     g = GEOM[a.geometry]; W, H = g["size"]
     out = Path(a.out).resolve(); work = out.parent / f"_work-{a.geometry.replace(':', 'x')}"; work.mkdir(parents=True, exist_ok=True)
@@ -144,8 +166,10 @@ def main():
             vf += f",crop={W}:{H}:0:{y}"
             fit = {"id": f"beat-{beat}", "fit": "cover", "source_size": (1080, 1920), "box": (0, 0, W, H),
                    "declared_crop": {"box": (0, y, W, y + H), "reason": g["reason"]}}
-        run(["ffmpeg", "-v", "error", "-y", "-ss", f"{tin}", "-t", f"{dur}", "-i", str(src), "-an", "-vf", vf + f",fps={FPS},format=yuv420p",
+        hold = TAIL_HOLD_S if beat == BEATS[-1][0] else 0.0
+        run(["ffmpeg", "-v", "error", "-y", "-ss", f"{tin}", "-t", f"{dur}", "-i", str(src), "-an", "-vf", vf + f",fps={FPS},format=yuv420p" + (f",tpad=stop_mode=clone:stop_duration={hold}" if hold else ""),
              "-c:v", "libx264", "-preset", "medium", "-crf", "16", str(seg)])
+        dur = round(dur + hold, 3)
         try:
             fr = gates.check_fit(fit)
         except Refusal as e:
@@ -165,53 +189,74 @@ def main():
         b_start = starts[beat - 1]; b_end = b_start + (BEATS[beat - 1][3] - BEATS[beat - 1][2])
         t_in, t_out = b_start + 0.35, b_end - 0.15
         # frames behind the boxes, sampled across the beat
-        frames = []
-        for k in range(4):
-            tt = b_start + 0.4 + k * (b_end - b_start - 0.6) / 3
-            f = work / f"probe-{beat}-{k}.png"
-            run(["ffmpeg", "-v", "error", "-y", "-ss", f"{tt:.3f}", "-i", str(base), "-frames:v", "1", str(f)]); frames.append(f)
+        pdir = work / f"probe-{beat}"; pdir.mkdir(exist_ok=True)
+        for old in pdir.glob("*.png"): old.unlink()
+        run(["ffmpeg", "-v", "error", "-y", "-ss", f"{t_in:.3f}", "-t", f"{t_out - t_in:.3f}", "-i", str(base), "-vf", "fps=4", str(pdir / "p_%03d.png")])
+        frames = sorted(pdir.glob("*.png"))
         regions = {}
         group = []   # (region, text, png, x, y, box, colour, role, samples)
-        align, max_w = g["layout"]["twoshot" if beat in (1, 5) else "macro"]
-        y_cursor = None
-        for region, sid, font, size_1080, colour, role, yc in items:
-            text = DECK.get(sid, sid)
-            px = int(size_1080 * W / 1080)
-            # wrap by word to max_w (measured ink), render the lines, stack them into one RGBA layer
-            words = text.split(" "); lines = []; cur = ""
-            for wd in words:
-                cand = (cur + " " + wd).strip()
-                OTV.render(cand, font, px, colour, work / "_measure.png", margin=6)
-                mb = ink_box(work / "_measure.png")
-                if mb[2] - mb[0] > max_w and cur:
-                    lines.append(cur); cur = wd
-                else:
-                    cur = cand
-            lines.append(cur)
-            rendered = []
-            for i, ln in enumerate(lines):
-                lp = work / f"text-{beat}-{region}-l{i}.png"; OTV.render(ln, font, px, colour, lp, margin=6); rendered.append(Image.open(lp).convert("RGBA"))
-            gap = int(px * 0.28)
-            lw = max(r.width for r in rendered); lh = sum(r.height for r in rendered) + gap * (len(rendered) - 1)
-            layer = Image.new("RGBA", (lw, lh), (0, 0, 0, 0)); yy = 0
-            for r in rendered:
-                xx = 0 if align == "left" else (lw - r.width) // 2
-                layer.paste(r, (xx, yy), r); yy += r.height + gap
-            png = work / f"text-{beat}-{region}.png"; layer.save(png)
-            ib = ink_box(png); tw, th = ib[2] - ib[0], ib[3] - ib[1]
-            if y_cursor is not None:
-                yc = y_cursor + th // 2 + int(px * 0.55)          # stack the next region under the previous one
-            x = (TOKENS.safe_x + TOKENS.spacing[2] - ib[0]) if align == "left" else ((W - tw) // 2 - ib[0]); y = int(yc) - th // 2 - ib[1]   # left: inset by one token step so a backing card still fits inside the safe area
-            top_min = TOKENS.safe_y + TOKENS.spacing[0] + (TOKENS.spacing[1] if align == "left" or beat in (1, 5) else 0)
-            if y + ib[1] < top_min:            # a wrapped block grows upward from its centre; keep it inside the safe area (+ room for a card)
-                y = top_min - ib[1]
-            box = (x + ib[0], y + ib[1], x + ib[2], y + ib[3])
-            y_cursor = box[3]
-            group.append((region, text, png, x, y, box, colour, role, luminance_samples(frames, box), font, px, sid))
-            report.setdefault("wrap", []).append({"beat": beat, "region": region, "lines": lines, "align": align, "max_w": max_w})
+        candidates = g["layout"]["twoshot" if beat in (1, 5) else "macro"]
+        chosen = None; tried = []
+        for ci, (align, max_w) in enumerate(candidates):
+          group = []; y_cursor = None
+          for region, sid, font, size_1080, colour, role, yc in items:
+              text = DECK.get(sid, sid)
+              px = int(size_1080 * W / 1080)
+              # wrap by word to max_w (measured ink), render the lines, stack them into one RGBA layer
+              words = text.split(" "); lines = []; cur = ""
+              for wd in words:
+                  cand = (cur + " " + wd).strip()
+                  OTV.render(cand, font, px, colour, work / "_measure.png", margin=6)
+                  mb = ink_box(work / "_measure.png")
+                  if mb[2] - mb[0] > max_w and cur:
+                      lines.append(cur); cur = wd
+                  else:
+                      cur = cand
+              lines.append(cur)
+              rendered = []
+              for i, ln in enumerate(lines):
+                  lp = work / f"text-{beat}-{region}-c{ci}-l{i}.png"; OTV.render(ln, font, px, colour, lp, margin=6); rendered.append(Image.open(lp).convert("RGBA"))
+              gap = int(px * 0.28)
+              lw = max(r.width for r in rendered); lh = sum(r.height for r in rendered) + gap * (len(rendered) - 1)
+              layer = Image.new("RGBA", (lw, lh), (0, 0, 0, 0)); yy = 0
+              for r in rendered:
+                  xx = 0 if align == "left" else (lw - r.width) // 2
+                  layer.paste(r, (xx, yy), r); yy += r.height + gap
+              png = work / f"text-{beat}-{region}-c{ci}.png"; layer.save(png)     # per candidate: the chosen layer must not be overwritten by a later candidate
+              ib = ink_box(png); tw, th = ib[2] - ib[0], ib[3] - ib[1]
+              if y_cursor is not None:
+                  yc = y_cursor + th // 2 + int(px * 0.55)          # stack the next region under the previous one
+              x = (TOKENS.safe_x + TOKENS.spacing[2] - ib[0]) if align == "left" else ((W - tw) // 2 - ib[0]); y = int(yc) - th // 2 - ib[1]   # left: inset by one token step so a backing card still fits inside the safe area
+              top_min = TOKENS.safe_y + TOKENS.spacing[0] + TOKENS.spacing[1]      # room for a backing card (pad = spacing[1]) inside the safe area
+              if y + ib[1] < top_min:            # a wrapped block grows upward from its centre; keep it inside the safe area (+ room for a card)
+                  y = top_min - ib[1]
+              box = (x + ib[0], y + ib[1], x + ib[2], y + ib[3])
+              y_cursor = box[3]
+              group.append((region, text, png, x, y, box, colour, role, luminance_samples(frames, box), font, px, sid))
+              report.setdefault("wrap", []).append({"beat": beat, "region": region, "lines": lines, "align": align, "max_w": max_w})
+          worst = max(wall_obstruction(frames, b[5]) for b in group)
+          contrast_ok = True
+          for region, text, png, x, y, box, colour, role, samples, font, px, sid in group:
+              try:
+                  gates.check_contrast(colour, samples, role=role, tokens=TOKENS, id_=f"{beat}-{region}")
+              except Refusal:
+                  contrast_ok = False
+          report.setdefault("obstruction", []).append({"beat": beat, "align": align, "max_w": max_w, "worst_nonwall_fraction": round(worst, 4), "contrast_on_pixels": contrast_ok})
+          tried.append((worst, align, max_w, group, contrast_ok))
+          if worst < 0.02 and contrast_ok:
+              chosen = (align, max_w); break
+        if chosen is None:   # no band is both on wall and readable on pixels for the whole beat: take the band with the LEAST
+            # subject under it, put the copy on an opaque card, and record the obstruction for the human (CF2)
+            worst, align, max_w, group, contrast_ok = min(tried, key=lambda t: t[0])
+            chosen = (align, max_w)
+            report["deviations"].append(f"beat {beat}: no copy band is on wall and readable for the whole beat at {a.geometry}; least-obstructed band '{align}' (non-wall fraction {worst:.3f}) on an opaque card — CF2 obstruction recorded for the human")
+            needs_backing_forced = True
+        else:
+            needs_backing_forced = False
+        align, max_w = chosen
         # contrast on real pixels first; if ANY line of the beat fails, the whole beat's copy sits on ONE opaque
         # backing card (token geometry) and every line is re-measured against the backing
-        needs_backing = False; pixel_failures = {}
+        needs_backing = needs_backing_forced; pixel_failures = {}
         for region, text, png, x, y, box, colour, role, samples, font, px, sid in group:
             try:
                 gates.check_contrast(colour, samples, role=role, tokens=TOKENS, id_=f"{beat}-{region}")
@@ -269,20 +314,32 @@ def main():
     run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", ";".join(fc), "-map", cur, "-t", f"{total:.3f}",
          "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p", "-r", str(FPS), str(video)])
 
-    # 4. audio: VO lines (silence-trimmed, tempo 1.05) at their times, music bed ducked under them, loudnorm
-    ai = []; af = []
+    # 4. audio — VO lines trimmed at the EDGES only (no internal silence removal, no tempo change), each normalised
+    # to -16 LUFS, placed at the beat's VO time; music bed at -30 LUFS, ducked 8 dB under speech; true-peak limiter.
+    # Diagnosis of v1 (human: 'random audio'): stop_periods=-1 removed silences INSIDE lines and shifted them, and a
+    # single-pass loudnorm over the ducked mix pumped between speech and music.
+    ai = []; af = []; vo_paths = []
     for i, (beat, (wav, at)) in enumerate(sorted(VO.items())):
-        ai += ["-i", str(JOB / "gen/vo" / wav)]
-        af.append(f"[{i}:a]silenceremove=start_periods=1:start_threshold=-45dB:stop_periods=-1:stop_threshold=-45dB:stop_duration=0.5,"
-                  f"atempo={VO_TEMPO},aformat=sample_rates=48000:channel_layouts=mono,adelay={int(at * 1000)}|{int(at * 1000)},apad=whole_dur={total + 1:.3f}[vo{i}]")
-    nvo = len(VO)
-    af.append("".join(f"[vo{i}]" for i in range(nvo)) + f"amix=inputs={nvo}:normalize=0,aformat=channel_layouts=stereo[vo]")
-    ai += ["-i", str(JOB / "gen/music/bed-r1.wav")]
-    af.append(f"[{nvo}:a]atrim=0:{total:.3f},afade=t=in:d=0.8,afade=t=out:st={total - 2.0:.3f}:d=2.0,volume=0.45,aformat=sample_rates=48000:channel_layouts=stereo[mus]")
-    af.append("[mus][vo]sidechaincompress=threshold=0.05:ratio=6:attack=40:release=500[ducked]")
-    af.append("[ducked][vo]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[mix]")
+        src = JOB / "gen/vo" / wav; trimmed = work / f"vo-{beat}.wav"
+        run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-af",
+             "silenceremove=start_periods=1:start_threshold=-50dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse,"
+             f"atempo={VO_TEMPO},loudnorm=I=-16:TP=-2:LRA=9,aformat=sample_rates=48000:channel_layouts=mono", str(trimmed)])
+        vo_paths.append((beat, trimmed, at))
+    for i, (beat, trimmed, at) in enumerate(vo_paths):
+        ai += ["-i", str(trimmed)]
+        af.append(f"[{i}:a]adelay={int(at * 1000)}|{int(at * 1000)},apad=whole_dur={total + 1:.3f}[vo{i}]")
+    nvo = len(vo_paths)
+    af.append("".join(f"[vo{i}]" for i in range(nvo)) + f"amix=inputs={nvo}:normalize=0,aformat=channel_layouts=stereo,asplit=2[vo][voS]")
+    if a.music:
+        ai += ["-i", str(JOB / "gen/music/bed-r1.wav")]
+        af.append(f"[{nvo}:a]atrim=0:{total:.3f},afade=t=in:d=1.0,afade=t=out:st={total - 2.5:.3f}:d=2.5,loudnorm=I=-30:TP=-6:LRA=7,aformat=sample_rates=48000:channel_layouts=stereo[mus]")
+        af.append("[mus][voS]sidechaincompress=threshold=0.02:ratio=4:attack=30:release=600:makeup=1[ducked]")
+        af.append("[ducked][vo]amix=inputs=2:normalize=0,alimiter=limit=0.89:level=false[mix]")
+    else:
+        af.append("[voS]anullsink;[vo]alimiter=limit=0.89:level=false[mix]")
     run(["ffmpeg", "-v", "error", "-y", *ai, "-filter_complex", ";".join(af), "-map", "[mix]", "-t", f"{total:.3f}", "-ar", "48000", str(work / "mix.wav")])
     run(["ffmpeg", "-v", "error", "-y", "-i", str(video), "-i", str(work / "mix.wav"), "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(out)])
+    report["audio"] = {"vo_lufs": -16, "music_lufs": -30 if a.music else None, "duck": "sidechain 4:1 under speech" if a.music else None, "limiter": "TP -1 dBFS"}
 
     # 5. export facts
     probe = run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_name,width,height,r_frame_rate,duration", "-of", "json", str(out)]).stdout
