@@ -69,26 +69,58 @@ class BridgeWithPools(unittest.TestCase):
         self.assertTrue(a2["blocked_by_pool"])
         self.assertIn("blocked_by_pool", a2["refusal_reason"])
         self.assertIn("cash", a2["refusal_reason"])
+        self.assertTrue(a1["would_dispatch_if_funded"])
         self.assertEqual(m["pool_liquidity"]["status"], "read")
         self.assertEqual(m["pool_liquidity"]["attempts_blocked_by_pool"], 3)   # primary 2 + both fallbacks
+        self.assertEqual(m["pool_liquidity"]["attempts_not_dispatchable_unknown_liquidity"], 0)
         self.assertIn("spend authority", m["pool_liquidity"]["rule"])
 
-    def test_unknown_pool_is_recorded_not_silently_passed(self):
+    def test_unknown_pool_cannot_dispatch_but_the_hypothetical_is_kept(self):
+        # Controller audit on PR #98, blocker 3: spend authority must not imply a route is usable. A pool
+        # whose balance is not readable leaves would_dispatch False; the pool-agnostic answer (harness
+        # shape + price + ceiling) lives in would_dispatch_if_funded so dry planning still shows it.
         pools = PoolLiquidity.from_readings([
-            {"pool": "gcp_credits", "balance_usd": None, "read_utc": "2026-09-14T13:35:00Z", "source": "console only"}])
+            {"pool": "cash", "balance_usd": None, "read_utc": "2026-09-14T13:35:00Z", "source": "console only"}])
         m = _build(B.SPEC_STATIC_OVERLAY, pools=pools)
         a1 = m["attempts"][0]
-        self.assertTrue(a1["would_dispatch"])
+        self.assertTrue(a1["would_dispatch_if_funded"])
+        self.assertFalse(a1["would_dispatch"])
         self.assertIsNone(a1["pool_liquidity"]["funded"])
         self.assertEqual(a1["pool_liquidity"]["status"], "unknown")
-        self.assertEqual(m["pool_liquidity"]["status"], "partial")
-        self.assertIn("cash", m["pool_liquidity"]["pools_without_reading"])
+        self.assertIn("pool_liquidity_unknown", a1["refusal_reason"])
+        self.assertEqual(m["pool_liquidity"]["status"], "unknown")
+        self.assertEqual(m["pool_liquidity"]["attempts_blocked_by_pool"], 0)
+        self.assertEqual(m["pool_liquidity"]["attempts_not_dispatchable_unknown_liquidity"], 4)
 
-    def test_no_pools_supplied_is_declared_on_the_manifest(self):
+    def test_no_pool_reading_at_all_cannot_dispatch(self):
         m = _build(B.SPEC_STATIC_OVERLAY)
         self.assertEqual(m["pool_liquidity"]["status"], "not_read")
-        self.assertTrue(m["attempts"][0]["would_dispatch"])
-        self.assertEqual(m["attempts"][0]["pool_liquidity"]["status"], "not_read")
+        for a in m["attempts"]:
+            self.assertFalse(a["would_dispatch"], a["attempt_id"])
+            self.assertEqual(a["pool_liquidity"]["status"], "not_read")
+        self.assertTrue(m["attempts"][0]["would_dispatch_if_funded"])
+        self.assertIn("pool_liquidity_unknown", m["attempts"][0]["refusal_reason"])
+        self.assertEqual(m["pool_liquidity"]["attempts_not_dispatchable_unknown_liquidity"], 4)
+
+    def test_a_reading_for_another_pool_does_not_fund_this_one(self):
+        pools = PoolLiquidity.from_readings([
+            {"pool": "gcp_credits", "balance_usd": "50", "read_utc": "2026-09-14T13:35:00Z", "source": "test"}])
+        m = _build(B.SPEC_STATIC_OVERLAY, pools=pools)
+        self.assertFalse(m["attempts"][0]["would_dispatch"])
+        self.assertEqual(m["attempts"][0]["pool_liquidity"]["status"], "unknown")
+        self.assertIn("cash", m["pool_liquidity"]["pools_without_reading"])
+
+    def test_funded_fallback_is_executable_if_triggered_only_when_funded(self):
+        pools = PoolLiquidity.from_readings([
+            {"pool": "cash", "balance_usd": "10", "read_utc": "2026-09-14T13:35:00Z", "source": "test"}])
+        m = _build(B.SPEC_STATIC_OVERLAY, pools=pools)
+        fb = [a for a in m["attempts"] if a["slot"] == "fallback"]
+        self.assertTrue(all(a["if_triggered_would_dispatch"] for a in fb))
+        self.assertTrue(all(a["if_triggered_would_dispatch_if_funded"] for a in fb))
+        m2 = _build(B.SPEC_STATIC_OVERLAY)
+        fb2 = [a for a in m2["attempts"] if a["slot"] == "fallback"]
+        self.assertFalse(any(a["if_triggered_would_dispatch"] for a in fb2))
+        self.assertTrue(all(a["if_triggered_would_dispatch_if_funded"] for a in fb2))
 
 
 class Classification(unittest.TestCase):

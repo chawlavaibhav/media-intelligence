@@ -3,7 +3,7 @@
     {
       "adapter_family": "fal_queue",
       "arm": "core",
-      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-11159e33c41f1066:flux-2-pro:draw1",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-a086b185a9cbed9f:flux-2-pro:draw1",
       "blocked_by_ceiling": false,
       "blocked_by_pool": false,
       "ceiling": {
@@ -40,7 +40,7 @@
         "unit": "per_image_first_megapixel",
         "unit_price": "0.03"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -65,12 +65,13 @@
       "slot": "primary",
       "surface": "fal",
       "surface_model_id": "fal-ai/flux-2-pro",
-      "would_dispatch": true
+      "would_dispatch": false,
+      "would_dispatch_if_funded": true
     },
     {
       "adapter_family": "fal_queue",
       "arm": "core",
-      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-11159e33c41f1066:flux-2-pro:draw2",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-a086b185a9cbed9f:flux-2-pro:draw2",
       "blocked_by_ceiling": false,
       "blocked_by_pool": false,
       "ceiling": {
@@ -107,7 +108,7 @@
         "unit": "per_image_first_megapixel",
         "unit_price": "0.03"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -132,12 +133,13 @@
       "slot": "primary",
       "surface": "fal",
       "surface_model_id": "fal-ai/flux-2-pro",
-      "would_dispatch": true
+      "would_dispatch": false,
+      "would_dispatch_if_funded": true
     },
     {
       "adapter_family": "fal_queue",
       "arm": "core",
-      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-11159e33c41f1066:qwen-image-3:draw1",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-a086b185a9cbed9f:qwen-image-3:draw1",
       "blocked_by_ceiling": false,
       "blocked_by_pool": false,
       "ceiling": {
@@ -161,7 +163,8 @@
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
       },
-      "if_triggered_would_dispatch": true,
+      "if_triggered_would_dispatch": false,
+      "if_triggered_would_dispatch_if_funded": true,
       "pool_liquidity": {
         "funded": null,
         "pool": "cash",
@@ -182,7 +185,7 @@
         "unit": "per_image",
         "unit_price": "0.04"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -208,12 +211,13 @@
       "slot": "fallback",
       "surface": "fal",
       "surface_model_id": "alibaba/qwen-image-3/text-to-image",
-      "would_dispatch": false
+      "would_dispatch": false,
+      "would_dispatch_if_funded": false
     },
     {
       "adapter_family": "fal_queue",
       "arm": "core",
-      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-11159e33c41f1066:qwen-image-3:draw2",
+      "attempt_id": "cust:acct-stage-a-img:alpha-dry-img-text-02-repair:rd-a086b185a9cbed9f:qwen-image-3:draw2",
       "blocked_by_ceiling": false,
       "blocked_by_pool": false,
       "ceiling": {
@@ -237,7 +241,8 @@
         "status": "clean_observed",
         "text_mechanism": "deterministic_text_composition"
       },
-      "if_triggered_would_dispatch": true,
+      "if_triggered_would_dispatch": false,
+      "if_triggered_would_dispatch_if_funded": true,
       "pool_liquidity": {
         "funded": null,
         "pool": "cash",
@@ -258,7 +263,7 @@
         "unit": "per_image",
         "unit_price": "0.04"
       },
-      "refusal_reason": null,
+      "refusal_reason": "pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": {
@@ -284,7 +289,8 @@
       "slot": "fallback",
       "surface": "fal",
       "surface_model_id": "alibaba/qwen-image-3/text-to-image",
-      "would_dispatch": false
+      "would_dispatch": false,
+      "would_dispatch_if_funded": false
     }
   ],
   "blocked": null,
@@ -299,7 +305,7 @@
     "rule": "attempts reserve in listed order; the running total never crosses the effective ceiling; an attempt that would is blocked_by_ceiling and stays visible"
   },
   "customer_ref": "acct-stage-a-img",
-  "decision_id": "rd-11159e33c41f1066",
+  "decision_id": "rd-a086b185a9cbed9f",
   "dispatch_mode": "dry",
   "fallback_triggers": [
     "provider_refusal",
@@ -308,20 +314,21 @@
     "capability_unsupported"
   ],
   "job_id": "alpha-dry-img-text-02-repair",
-  "manifest_id": "em-3f1bf35a1a0ed7bf",
+  "manifest_id": "em-7a4505bcfd47c20a",
   "policy_profile": "dry",
   "pool_liquidity": {
     "attempts_blocked_by_pool": 0,
-    "note": "no PoolLiquidity was supplied to build(); every attempt's liquidity is not_read",
+    "attempts_not_dispatchable_unknown_liquidity": 4,
+    "note": "no PoolLiquidity was supplied to build(); no attempt is dispatchable until a reading funds it",
     "pools_without_reading": [
       "cash"
     ],
     "readings": {},
-    "rule": "spend authority is not provider liquidity: an attempt whose billing pool cannot fund it is blocked_by_pool and cannot dispatch; a pool with no reading is reported unknown, never assumed",
+    "rule": "spend authority is not provider liquidity: an attempt whose billing pool cannot fund it is blocked_by_pool; an attempt whose pool is unknown or unread is not dispatchable either (would_dispatch false, pool_liquidity_unknown); would_dispatch_if_funded keeps the pool-agnostic answer",
     "status": "not_read"
   },
   "provenance": {
-    "decision_sha256": "7194ff5dcd2627d56a2f90b054a2e91b19b0426a68ae7970d0361ddba6c223e6",
+    "decision_sha256": "1e6c94986b061ee501afec4d7864854d93f89e3c3600010145671a4aa96d167b",
     "dispatched": false,
     "harness_modules": [
       "eval/harness-v2/pricing.py",
@@ -336,7 +343,7 @@
     "roster_sha256": "311f663159a01bc587f1b0c65c65e721d6f46937a5b7d8188ccdb3090a9ccd4c",
     "routing_evidence_map_sha256": "8df6ead0712d6b67070e7475ab56aa12be7f9480916a79a273bec5ff25c7f707",
     "spec_path": "runs/alpha-dry-img-text-02-repair/02-spec.json",
-    "spec_sha256": "963de29f71a96904d24c9756371d555a7201819d7c6e1a26406e1f0a84cd5b81",
+    "spec_sha256": "f0e493c93ac526049cad34b771306fc94e5138f1441823e31ec0dba447147e31",
     "spend_authority_status": "none",
     "taint_register_sha256": "acd0cf87d7d0ee494c73f2c44159040f46f029eb436e5357cd9add5b41c62651"
   },
@@ -349,7 +356,7 @@
       "text_mechanism": "deterministic_text_composition"
     }
   ],
-  "spec_id": "spec-106ec2e0ae267c75",
+  "spec_id": "spec-de9e00992367094e",
   "surface_preference": {
     "applied": false,
     "basis": "coordination/decisions/CONTROLLER-FAL-LAST-CHOICE-CREDITS-FIRST-2026-09-09.md",

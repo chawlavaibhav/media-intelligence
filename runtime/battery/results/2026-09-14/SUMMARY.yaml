@@ -37,7 +37,9 @@ runs:
       summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
     - stage: manifest
       status: ok
-      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+      summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=[''pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -46,7 +48,7 @@ runs:
       summary: pre=FAIL attempts=0 repairs=0 acceptance=abandoned
     - stage: outcome_event
       status: ok
-      summary: oe-8417fcf00006b89fd21871a254a6302943f146d45a4d2065d492210b2ba681cd decision=abandoned dry_run=True
+      summary: oe-2e28038c14593e5fe918e9db47b814a88b60bb778f759781cab1d39799eec9a4 decision=abandoned dry_run=True
     - stage: template
       status: skipped
       summary: outcome abandoned; nothing to promote
@@ -87,16 +89,25 @@ runs:
     manifest:
       attempts_rendered: 4
       primary_would_dispatch:
+      - false
+      - false
+      primary_would_dispatch_if_funded:
       - true
       - true
       fallback_executable_if_triggered:
+      - false
+      - false
+      fallback_executable_if_triggered_if_funded:
       - true
       - true
-      harness_refusals: []
+      pool_liquidity_status: not_read
+      harness_refusals:
+      - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
+        to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 0
     repairs: 0
     acceptance: abandoned
-    event_id: oe-8417fcf00006b89fd21871a254a6302943f146d45a4d2065d492210b2ba681cd
+    event_id: oe-2e28038c14593e5fe918e9db47b814a88b60bb778f759781cab1d39799eec9a4
     template_id: null
 - id: B03-devanagari-overlay-with-scoped-exclusions
   brief: runtime/fixtures/alpha-briefs/img-text-01.json
@@ -134,7 +145,9 @@ runs:
       summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
     - stage: manifest
       status: ok
-      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+      summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=[''pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -143,7 +156,7 @@ runs:
       summary: pre=FAIL attempts=0 repairs=0 acceptance=abandoned
     - stage: outcome_event
       status: ok
-      summary: oe-4a3dec68b3c2f3f3bac19c0b4d02ee1313b856d1e1e86b54ae4513851758fe9b decision=abandoned dry_run=True
+      summary: oe-69a51fb4c62c5e949de40f789b6116f645a2b5f95f5e36d282e55e6f75d180bb decision=abandoned dry_run=True
     - stage: template
       status: skipped
       summary: outcome abandoned; nothing to promote
@@ -189,16 +202,25 @@ runs:
     manifest:
       attempts_rendered: 4
       primary_would_dispatch:
+      - false
+      - false
+      primary_would_dispatch_if_funded:
       - true
       - true
       fallback_executable_if_triggered:
+      - false
+      - false
+      fallback_executable_if_triggered_if_funded:
       - true
       - true
-      harness_refusals: []
+      pool_liquidity_status: not_read
+      harness_refusals:
+      - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
+        to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 0
     repairs: 0
     acceptance: abandoned
-    event_id: oe-4a3dec68b3c2f3f3bac19c0b4d02ee1313b856d1e1e86b54ae4513851758fe9b
+    event_id: oe-69a51fb4c62c5e949de40f789b6116f645a2b5f95f5e36d282e55e6f75d180bb
     template_id: null
 - id: B01-static-ad-exact-overlay-copy-happy-path
   brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
@@ -234,7 +256,9 @@ runs:
       summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
     - stage: manifest
       status: ok
-      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+      summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=[''pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -243,10 +267,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-35d3a037fc93ed905753f6b26164c5cd7939859c2719a2d67432743ce9b1af0b decision=accepted dry_run=True
+      summary: oe-4acd608e4344a1eb1b4d8173ee113d5dc3e7eb2fd9dae8e844e43357db8bd811 decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-7d9a42aaf36aafcd status=reusable_dry_only
+      summary: tpl-5b025e5274084897 status=reusable_dry_only
     route:
       primary: flux-2-pro
       primary_surface: fal
@@ -283,17 +307,26 @@ runs:
     manifest:
       attempts_rendered: 4
       primary_would_dispatch:
+      - false
+      - false
+      primary_would_dispatch_if_funded:
       - true
       - true
       fallback_executable_if_triggered:
+      - false
+      - false
+      fallback_executable_if_triggered_if_funded:
       - true
       - true
-      harness_refusals: []
+      pool_liquidity_status: not_read
+      harness_refusals:
+      - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
+        to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-35d3a037fc93ed905753f6b26164c5cd7939859c2719a2d67432743ce9b1af0b
-    template_id: tpl-7d9a42aaf36aafcd
+    event_id: oe-4acd608e4344a1eb1b4d8173ee113d5dc3e7eb2fd9dae8e844e43357db8bd811
+    template_id: tpl-5b025e5274084897
 - id: B04-static-ad-no-text-product-hero
   brief: runtime/fixtures/alpha-briefs/img-core-01.json
   job_id: alpha-dry-img-core-01
@@ -324,7 +357,9 @@ runs:
       summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
     - stage: manifest
       status: ok
-      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+      summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=[''pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -333,10 +368,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-cb4df1c8b20bc413dcaaad522d62d21baef51872259e5ece7b91fd7718d17111 decision=accepted dry_run=True
+      summary: oe-f5a0d09532998d254139ee51be8ec3929e5c85bb59a2aa48e91cd5be3672574b decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-2958abcb684c16d2 status=reusable_dry_only
+      summary: tpl-c791835878c500cf status=reusable_dry_only
     route:
       primary: flux-2-pro
       primary_surface: fal
@@ -373,17 +408,26 @@ runs:
     manifest:
       attempts_rendered: 4
       primary_would_dispatch:
+      - false
+      - false
+      primary_would_dispatch_if_funded:
       - true
       - true
       fallback_executable_if_triggered:
+      - false
+      - false
+      fallback_executable_if_triggered_if_funded:
       - true
       - true
-      harness_refusals: []
+      pool_liquidity_status: not_read
+      harness_refusals:
+      - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
+        to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-cb4df1c8b20bc413dcaaad522d62d21baef51872259e5ece7b91fd7718d17111
-    template_id: tpl-2958abcb684c16d2
+    event_id: oe-f5a0d09532998d254139ee51be8ec3929e5c85bb59a2aa48e91cd5be3672574b
+    template_id: tpl-c791835878c500cf
 - id: B05-short-motion-from-the-accepted-still
   brief: runtime/fixtures/alpha-briefs/vid-i2v-01.json
   job_id: alpha-dry-vid-i2v-01
@@ -414,8 +458,11 @@ runs:
       summary: primary=minimax-h3-max-i2v fallback=veo-3.1-fast-i2v manual=False
     - stage: manifest
       status: ok
-      summary: '4 attempts rendered; would_dispatch=2; reasons=["harness: PreDispatchRefusal: aspect ''4:5'' is not in the
-        pinned Veo enum (''16:9'', ''9:16'')"]'
+      summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=["harness: PreDispatchRefusal:
+        aspect ''4:5'' is not in the pinned Veo enum (''16:9'', ''9:16''); pool_liquidity_unknown: no pool readings supplied;
+        an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the
+        pool-agnostic answer)", ''pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when
+        its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -424,10 +471,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-c64b4d49af4b9e7317de1bf5606a14157d3d439e1643cba16bd0952fba5c2f9e decision=accepted dry_run=True
+      summary: oe-c48b48bc3dbee1d6111b50d3bbc4b0910eec601596b959d55f6ea1646ee9f68d decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-610d0c1f7b95fa3a status=reusable_dry_only
+      summary: tpl-cb02125dc9a34f91 status=reusable_dry_only
     route:
       primary: minimax-h3-max-i2v
       primary_surface: fal
@@ -466,18 +513,29 @@ runs:
     manifest:
       attempts_rendered: 4
       primary_would_dispatch:
+      - false
+      - false
+      primary_would_dispatch_if_funded:
       - true
       - true
       fallback_executable_if_triggered:
       - false
       - false
+      fallback_executable_if_triggered_if_funded:
+      - false
+      - false
+      pool_liquidity_status: not_read
       harness_refusals:
-      - 'harness: PreDispatchRefusal: aspect ''4:5'' is not in the pinned Veo enum (''16:9'', ''9:16'')'
+      - 'harness: PreDispatchRefusal: aspect ''4:5'' is not in the pinned Veo enum (''16:9'', ''9:16''); pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'
+      - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
+        to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-c64b4d49af4b9e7317de1bf5606a14157d3d439e1643cba16bd0952fba5c2f9e
-    template_id: tpl-610d0c1f7b95fa3a
+    event_id: oe-c48b48bc3dbee1d6111b50d3bbc4b0910eec601596b959d55f6ea1646ee9f68d
+    template_id: tpl-cb02125dc9a34f91
 - id: B06-supplied-photo-identifiable-person-no-consent
   brief: runtime/fixtures/alpha-briefs/img-edit-01.json
   job_id: alpha-dry-img-edit-01
@@ -714,7 +772,7 @@ runs:
       summary: job alpha-dry-img-text-02-ceiling accepted under profile dry
     - stage: spec
       status: ok
-      summary: spec-159a9f78161999d0 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-7d9a42aaf36aafcd
+      summary: spec-e347eb0de81de790 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-5b025e5274084897
     - stage: canon
       status: ok
       summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
@@ -740,11 +798,11 @@ runs:
         basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
         within_ceiling: false
     spec:
-      spec_id: spec-159a9f78161999d0
+      spec_id: spec-e347eb0de81de790
       kind: static_ad
       text_strategy: code_set_on_textless_plate
       text_mechanism: deterministic_text_composition
-      planner: template:tpl-7d9a42aaf36aafcd
+      planner: template:tpl-5b025e5274084897
       packs_injected:
       - composition_and_attention
       missing_domains:
@@ -783,7 +841,7 @@ runs:
       summary: job alpha-dry-img-text-02-repair accepted under profile dry
     - stage: spec
       status: ok
-      summary: spec-106ec2e0ae267c75 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-7d9a42aaf36aafcd
+      summary: spec-de9e00992367094e kind=static_ad text=code_set_on_textless_plate planner=template:tpl-5b025e5274084897
     - stage: canon
       status: ok
       summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
@@ -794,7 +852,9 @@ runs:
       summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
     - stage: manifest
       status: ok
-      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+      summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=[''pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -803,10 +863,10 @@ runs:
       summary: pre=PASS attempts=2 repairs=1 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-e293a134f7b625c0f4369738b9eaf7478ef348c96f346974be2302ede26ba8dd decision=accepted dry_run=True
+      summary: oe-99294304b8802bd723d62d5f7b5e39b883985e074e0c929d5d96b2ea38bc38f1 decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-a4ac0cd9558a751e status=reusable_dry_only
+      summary: tpl-22041063108e8522 status=reusable_dry_only
     route:
       primary: flux-2-pro
       primary_surface: fal
@@ -823,11 +883,11 @@ runs:
         basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
         within_ceiling: true
     spec:
-      spec_id: spec-106ec2e0ae267c75
+      spec_id: spec-de9e00992367094e
       kind: static_ad
       text_strategy: code_set_on_textless_plate
       text_mechanism: deterministic_text_composition
-      planner: template:tpl-7d9a42aaf36aafcd
+      planner: template:tpl-5b025e5274084897
       packs_injected:
       - composition_and_attention
       missing_domains:
@@ -843,17 +903,26 @@ runs:
     manifest:
       attempts_rendered: 4
       primary_would_dispatch:
+      - false
+      - false
+      primary_would_dispatch_if_funded:
       - true
       - true
       fallback_executable_if_triggered:
+      - false
+      - false
+      fallback_executable_if_triggered_if_funded:
       - true
       - true
-      harness_refusals: []
+      pool_liquidity_status: not_read
+      harness_refusals:
+      - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
+        to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 2
     repairs: 1
     acceptance: accepted
-    event_id: oe-e293a134f7b625c0f4369738b9eaf7478ef348c96f346974be2302ede26ba8dd
-    template_id: tpl-a4ac0cd9558a751e
+    event_id: oe-99294304b8802bd723d62d5f7b5e39b883985e074e0c929d5d96b2ea38bc38f1
+    template_id: tpl-22041063108e8522
 - id: B13-repair-allowance-exhausted
   brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
   job_id: alpha-dry-img-text-02-exhausted
@@ -872,7 +941,7 @@ runs:
       summary: job alpha-dry-img-text-02-exhausted accepted under profile dry
     - stage: spec
       status: ok
-      summary: spec-91eeeb570d59ca5b kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a4ac0cd9558a751e
+      summary: spec-f04657938ea32e10 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-5b025e5274084897
     - stage: canon
       status: ok
       summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
@@ -883,7 +952,9 @@ runs:
       summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
     - stage: manifest
       status: ok
-      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+      summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=[''pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -892,7 +963,7 @@ runs:
       summary: pre=PASS attempts=2 repairs=1 acceptance=abandoned refusal=REPAIR_ALLOWANCE_EXHAUSTED
     - stage: outcome_event
       status: ok
-      summary: oe-a8a3979e79b97666018530836a9e3334aca4710f1198dacda5ee33c41a4ca592 decision=abandoned dry_run=True
+      summary: oe-b263cbf304c5c14cc883974c08425ab117ed0fa9b7bc3ee76936679ebbac3ca4 decision=abandoned dry_run=True
     - stage: template
       status: skipped
       summary: outcome abandoned; nothing to promote
@@ -912,11 +983,11 @@ runs:
         basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
         within_ceiling: true
     spec:
-      spec_id: spec-91eeeb570d59ca5b
+      spec_id: spec-f04657938ea32e10
       kind: static_ad
       text_strategy: code_set_on_textless_plate
       text_mechanism: deterministic_text_composition
-      planner: template:tpl-a4ac0cd9558a751e
+      planner: template:tpl-5b025e5274084897
       packs_injected:
       - composition_and_attention
       missing_domains:
@@ -932,16 +1003,25 @@ runs:
     manifest:
       attempts_rendered: 4
       primary_would_dispatch:
+      - false
+      - false
+      primary_would_dispatch_if_funded:
       - true
       - true
       fallback_executable_if_triggered:
+      - false
+      - false
+      fallback_executable_if_triggered_if_funded:
       - true
       - true
-      harness_refusals: []
+      pool_liquidity_status: not_read
+      harness_refusals:
+      - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
+        to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 2
     repairs: 1
     acceptance: abandoned
-    event_id: oe-a8a3979e79b97666018530836a9e3334aca4710f1198dacda5ee33c41a4ca592
+    event_id: oe-b263cbf304c5c14cc883974c08425ab117ed0fa9b7bc3ee76936679ebbac3ca4
     template_id: null
 - id: B14-repeat-job-served-from-the-template
   brief: runtime/fixtures/alpha-briefs/img-text-02-conformant.json
@@ -961,7 +1041,7 @@ runs:
       summary: job alpha-dry-img-text-02-repeat accepted under profile dry
     - stage: spec
       status: ok
-      summary: spec-55efd6e7637434af kind=static_ad text=code_set_on_textless_plate planner=template:tpl-a4ac0cd9558a751e
+      summary: spec-b58e880edf900ef3 kind=static_ad text=code_set_on_textless_plate planner=template:tpl-5b025e5274084897
     - stage: canon
       status: ok
       summary: injected ['composition_and_attention']; missing_domains=['colour_and_visual_register', 'commercial_communication',
@@ -972,7 +1052,9 @@ runs:
       summary: primary=flux-2-pro fallback=qwen-image-3 manual=False
     - stage: manifest
       status: ok
-      summary: 4 attempts rendered; would_dispatch=2; reasons=[]
+      summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=[''pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -981,10 +1063,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-d85112553f4a4942533e731909ad18072960e8eeaaa33416d91141a09bfc75e6 decision=accepted dry_run=True
+      summary: oe-25f54fc7975db650f670a5798df4a1469128904d231719f85443234e37a6ac8a decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-73fd4b5dc5114c63 status=reusable_dry_only
+      summary: tpl-51917fb8e8d0098a status=reusable_dry_only
     route:
       primary: flux-2-pro
       primary_surface: fal
@@ -1001,11 +1083,11 @@ runs:
         basis: worst-case unit cost 0.040000 x max_provider_draws_per_deliverable 2 from profile 'dry'
         within_ceiling: true
     spec:
-      spec_id: spec-55efd6e7637434af
+      spec_id: spec-b58e880edf900ef3
       kind: static_ad
       text_strategy: code_set_on_textless_plate
       text_mechanism: deterministic_text_composition
-      planner: template:tpl-a4ac0cd9558a751e
+      planner: template:tpl-5b025e5274084897
       packs_injected:
       - composition_and_attention
       missing_domains:
@@ -1021,17 +1103,26 @@ runs:
     manifest:
       attempts_rendered: 4
       primary_would_dispatch:
+      - false
+      - false
+      primary_would_dispatch_if_funded:
       - true
       - true
       fallback_executable_if_triggered:
+      - false
+      - false
+      fallback_executable_if_triggered_if_funded:
       - true
       - true
-      harness_refusals: []
+      pool_liquidity_status: not_read
+      harness_refusals:
+      - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
+        to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-d85112553f4a4942533e731909ad18072960e8eeaaa33416d91141a09bfc75e6
-    template_id: tpl-73fd4b5dc5114c63
+    event_id: oe-25f54fc7975db650f670a5798df4a1469128904d231719f85443234e37a6ac8a
+    template_id: tpl-51917fb8e8d0098a
 totals:
   runs: 14
   reached_intended_end_state_or_precise_refusal: 14

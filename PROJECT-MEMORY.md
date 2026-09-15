@@ -126,8 +126,8 @@ compositor / orchestration / creative direction / QA timing / a route choice. Fr
 runtime gained deterministic gates (compositor bounds · contrast · fit · tokens · disjointness;
 video-frame text hygiene; provider-pool liquidity; transient-error classification); the model
 observations stay directional (no Registry change, 575 rows); no Canon was expanded; the accepted
-`service_intro_with_portfolio_proof` template and speaker micro-qualification are **candidates**; TTAO as
-a primary KPI is **recommended, undecided**. It does **not** prove commercial advantage over a direct
+`service_intro_with_portfolio_proof` template and speaker micro-qualification are **candidates**; TTAO is
+**adopted by the Controller as a primary production KPI alongside CpAO** (PR #98 audit comment). It does **not** prove commercial advantage over a direct
 human + LLM workflow. Record: `production-learning/cases/UPWORK-INTRO-001/`.
 
 **Still zero (mechanically verified where possible):** qualified models/workflows · qualified
@@ -269,8 +269,9 @@ was rewritten (`coordination/decisions/CONTROLLER-EXACT-TEXT-NONBLOCKING-BENCHMA
 - **Next real productions measure TTAO from the first production input** (session start or package
   receipt) and record the ACCEPT timestamp mechanically; one ledger per production so the CpAO numerator
   is complete. The Upwork intro case is the baseline (7 h 54 m / USD 15.39 / 5 versions / 5 review
-  cycles for one 57-s asset). Open Controller decisions: TTAO as primary KPI;
-  when to promote speaker micro-qualification; when to design COMPLEX-PRODUCTION-EVENT.
+  cycles for one 57-s asset). Controller decisions (PR #98 audit comment): TTAO adopted as a primary KPI; speaker
+  micro-qualification stays a candidate; COMPLEX-PRODUCTION-EVENT deferred until after the second
+  complex real production. Remaining: merge #98.
 - **Nothing paid is authorised.** Every runtime profile carries `spend_authority.status: none`; every
   Group-3 Lab item (C-12…C-18) needs its own signed record. The first paid act the runtime justifies is
   one Alpha-1 vertical-slice run (single-digit USD) — a recommendation, not an authorisation.

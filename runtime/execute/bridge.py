@@ -19,13 +19,16 @@ WHAT run() DOES
     no transport exists in this tranche, "live dispatch is not wired". Every refusal names what is
     missing. No code path here constructs a transport.
 
-POOLS (UPWORK-INTRO-001, SD-11)
+POOLS (UPWORK-INTRO-001, SD-11; Controller audit on PR #98, blocker 3)
 
     Spend authority is not provider liquidity. build() accepts a PoolLiquidity of explicit balance READINGS
-    (runtime/execute/pools.py); every attempt is marked funded / not funded / unknown against its billing
-    pool, drawn down in reservation order, and an attempt its pool cannot fund is `blocked_by_pool` with
-    `would_dispatch: false`. No readings means `pool_liquidity.status: not_read` on the manifest — declared,
-    never assumed. The bridge reads no balance itself.
+    (runtime/execute/pools.py); every attempt is marked funded / not_funded / unknown / not_read against its
+    billing pool, drawn down in reservation order. Two answers are kept apart on every attempt:
+      would_dispatch_if_funded  the pool-agnostic answer — harness shape verified, price agrees, within ceiling;
+      would_dispatch            the real answer — the above AND liquidity positively known and funded.
+    An attempt its pool cannot fund is `blocked_by_pool`; an attempt whose pool is unknown or unread is not
+    dispatchable either (`pool_liquidity_unknown` in refusal_reason) — fail closed. Nothing is assumed
+    funded. The bridge reads no balance itself.
 
 MONEY
 
@@ -180,16 +183,26 @@ class ExecutionBridge:
     @staticmethod
     def _pool_block(pools: PoolLiquidity | None, attempts: list, pools_seen: set) -> dict:
         rule = ("spend authority is not provider liquidity: an attempt whose billing pool cannot fund it is "
-                "blocked_by_pool and cannot dispatch; a pool with no reading is reported unknown, never assumed")
+                "blocked_by_pool; an attempt whose pool is unknown or unread is not dispatchable either "
+                "(would_dispatch false, pool_liquidity_unknown); would_dispatch_if_funded keeps the pool-agnostic answer")
+        unknown = sum(1 for a in attempts
+                      if a.get("pool_liquidity", {}).get("funded") is None
+                      and (a.get("would_dispatch_if_funded") or a.get("if_triggered_would_dispatch_if_funded")))
         if pools is None:
             return {"status": "not_read", "readings": {}, "pools_without_reading": sorted(pools_seen),
-                    "attempts_blocked_by_pool": 0, "rule": rule,
-                    "note": "no PoolLiquidity was supplied to build(); every attempt's liquidity is not_read"}
+                    "attempts_blocked_by_pool": 0, "attempts_not_dispatchable_unknown_liquidity": unknown, "rule": rule,
+                    "note": "no PoolLiquidity was supplied to build(); no attempt is dispatchable until a reading funds it"}
         readings = {p: pools.reading(p) for p in pools.pools}
         missing = sorted(p for p in pools_seen if p not in readings or readings[p]["balance_usd"] is None)
-        status = "read" if not missing else ("partial" if len(missing) < len(pools_seen) or readings else "unknown")
+        if not missing:
+            status = "read"
+        elif len(missing) < len(pools_seen):
+            status = "partial"
+        else:
+            status = "unknown"
         return {"status": status, "readings": readings, "pools_without_reading": missing,
-                "attempts_blocked_by_pool": sum(1 for a in attempts if a.get("blocked_by_pool")), "rule": rule}
+                "attempts_blocked_by_pool": sum(1 for a in attempts if a.get("blocked_by_pool")),
+                "attempts_not_dispatchable_unknown_liquidity": unknown, "rule": rule}
 
     def _attempt(self, spec, decision, profile, slot_name, slot, draw, prompt_text, inputs, customer_ref,
                  mode, text_mechanism, ceiling, running, pools: PoolLiquidity | None = None) -> tuple[dict, Decimal, bool]:
@@ -228,8 +241,12 @@ class ExecutionBridge:
         blocked_by_pool = liquidity["funded"] is False
         if blocked_by_pool:
             reasons.append(f"blocked_by_pool: {liquidity['reason']}; spend authority is not provider liquidity")
+        elif liquidity["funded"] is None:
+            reasons.append(f"pool_liquidity_unknown: {liquidity['reason']}; an attempt is dispatchable only when its "
+                           "pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)")
 
-        harness_would = bool(dry.get("would_dispatch")) and price_agrees and within and not blocked_by_pool
+        if_funded = bool(dry.get("would_dispatch")) and price_agrees and within
+        harness_would = if_funded and liquidity["funded"] is True
         att = {
             "attempt_id": aid,
             "slot": slot_name,
@@ -262,6 +279,7 @@ class ExecutionBridge:
             "evidence": {"cells": list(slot.get("evidence_cells") or []), "status": slot.get("evidence_status"),
                          "text_mechanism": text_mechanism},
             "would_dispatch": harness_would if slot_name == "primary" else False,
+            "would_dispatch_if_funded": if_funded if slot_name == "primary" else False,
             "refusal_reason": ("; ".join(reasons) if reasons else None),
             "ceiling": {"job_ceiling_usd": str(ceiling),
                         "reserved_before_this_usd": str(running - expected if within else running),
@@ -273,6 +291,7 @@ class ExecutionBridge:
         if slot_name == "fallback":
             att["conditional_on"] = list(slot.get("trigger") or [])
             att["if_triggered_would_dispatch"] = harness_would
+            att["if_triggered_would_dispatch_if_funded"] = if_funded
             att["conditional_note"] = ("a fallback attempt is dispatched only if a named trigger fires on the "
                                        "primary; never alongside it and never as a retry of it")
         return att, running, hit

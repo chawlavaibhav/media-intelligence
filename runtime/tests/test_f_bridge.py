@@ -84,8 +84,13 @@ class OverlayManifestUnderDry(unittest.TestCase):
         for a in primary:
             self.assertEqual(a["route_key"], "flux-2-pro")
             self.assertEqual(a["price"]["expected_cost_usd"], "0.030000")
-            self.assertTrue(a["would_dispatch"], a["refusal_reason"])
-            self.assertIsNone(a["refusal_reason"])
+            # pool-agnostic answer (harness shape, price, ceiling) is yes; the real answer is no until a
+            # pool reading positively funds it (Controller audit on PR #98, blocker 3: fail closed)
+            self.assertTrue(a["would_dispatch_if_funded"], a["refusal_reason"])
+            self.assertFalse(a["would_dispatch"])
+            self.assertEqual(a["pool_liquidity"]["status"], "not_read")
+            self.assertIn("pool_liquidity_unknown", a["refusal_reason"])
+            self.assertNotIn("harness:", a["refusal_reason"])
             self.assertEqual(a["request"]["method"], "POST")
             self.assertTrue(a["request"]["url"].startswith("https://queue.fal.run/"))
             self.assertRegex(a["request"]["body_sha256"], r"^[0-9a-f]{64}$")
@@ -116,7 +121,8 @@ class OverlayManifestUnderDry(unittest.TestCase):
             self.assertEqual(a["conditional_on"], self.m["fallback_triggers"])
             self.assertEqual(set(a["conditional_on"]),
                              {"provider_refusal", "timeout", "gate_fail", "capability_unsupported"})
-            self.assertTrue(a["if_triggered_would_dispatch"], a["refusal_reason"])
+            self.assertTrue(a["if_triggered_would_dispatch_if_funded"], a["refusal_reason"])
+            self.assertFalse(a["if_triggered_would_dispatch"])          # no pool reading: fail closed
             self.assertIn("never as a retry", a["conditional_note"])
 
     def test_the_ceiling_propagates_per_attempt_in_reservation_order(self):
@@ -248,6 +254,7 @@ class CeilingPerAttempt(unittest.TestCase):
         for a in m["attempts"][2:]:
             self.assertFalse(a["would_dispatch"])
             self.assertFalse(a["if_triggered_would_dispatch"])
+            self.assertFalse(a["would_dispatch_if_funded"] or a["if_triggered_would_dispatch_if_funded"])  # the ceiling, not the pool
             self.assertIn("blocked_by_ceiling", a["refusal_reason"])
         self.assertEqual(c["reserved_total_usd"], "0.060000")
 
@@ -270,6 +277,7 @@ class HarnessRefusalsAreKeptVerbatim(unittest.TestCase):
         self.assertIsNone(m["blocked"])
         for a in m["attempts"]:
             self.assertFalse(a["would_dispatch"])
+            self.assertFalse(a["would_dispatch_if_funded"])            # the harness reason, not the pool
             self.assertIn("harness: input_unresolved:plate_accepted_draw", a["refusal_reason"])
             self.assertTrue(a["request"]["body_sha256"])            # the body is rendered with a placeholder, and refused
             self.assertEqual(a["evidence"]["text_mechanism"], "not_applicable")
@@ -279,7 +287,7 @@ class HarnessRefusalsAreKeptVerbatim(unittest.TestCase):
         bridge, spec, decision, prof, m = _build(B.SPEC_MOTION, inputs=still)
         primary = [a for a in m["attempts"] if a["slot"] == "primary"]
         for a in primary:
-            self.assertTrue(a["would_dispatch"], a["refusal_reason"])
+            self.assertTrue(a["would_dispatch_if_funded"], a["refusal_reason"])
             self.assertEqual(a["request"]["body"]["image_url"], still["image_url"])
             self.assertEqual(a["request"]["body"]["duration"], 6)
             self.assertEqual(a["price"]["expected_cost_usd"], "0.480000")
@@ -288,6 +296,7 @@ class HarnessRefusalsAreKeptVerbatim(unittest.TestCase):
         bridge, spec, decision, prof, m = _build(B.SPEC_STATIC_OVERLAY, inputs={"seed": 7})
         for a in m["attempts"]:
             self.assertFalse(a["would_dispatch"])
+            self.assertFalse(a["would_dispatch_if_funded"])
             self.assertIn("PreDispatchRefusal", a["refusal_reason"])
 
 

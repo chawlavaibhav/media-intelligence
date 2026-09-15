@@ -250,7 +250,9 @@ class AlphaRunner:
         would = [a["attempt_id"].split(":")[-2] + ":" + a["attempt_id"].split(":")[-1] for a in attempts if a["would_dispatch"]]
         result.stages.append(StageRecord(
             "manifest", "ok",
-            f"{len(attempts)} attempts rendered; would_dispatch={len(would)}; "
+            f"{len(attempts)} attempts rendered; would_dispatch={len(would)} "
+            f"(if funded: {sum(1 for a in attempts if a.get('would_dispatch_if_funded'))}; pool liquidity "
+            f"{(manifest.get('pool_liquidity') or {}).get('status')}); "
             f"reasons={sorted({a['refusal_reason'] for a in attempts if a.get('refusal_reason')})}",
             artifact_path=str(run_dir / "05-execution-manifest.json")))
 

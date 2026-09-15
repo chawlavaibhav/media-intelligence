@@ -32,11 +32,11 @@ universal target set. Discrepancy recorded: `SPEND-AMENDMENT-V4.md`'s "19:40 / 1
 
 | Change | Files | Tests |
 |---|---|---|
-| Compositor gates A–E (bounds, contrast + opaque-backing rule, contain/native/declared-cover fit, one token source, critical-region disjointness) | `runtime/compositor/{__init__,tokens,gates}.py` | `runtime/tests/test_i_compositor_gates.py` (23) |
-| Video-frame text hygiene F: `RUNTIME-VIDEO-FRAME-TEXT` row; video post-draw verdict NOT_RUN without sampled frames, FAIL on any tainted frame regardless of the source still; `run_loop(frame_sampler=, source_still_clean=)`; dry alpha chain samples synthetic frames | `runtime/loop/frame_hygiene.py`, `runtime/loop/postdraw.py`, `runtime/loop/driver.py`, `runtime/loop/synthetic.py` (`frames_for_spec`), `runtime/alpha/run.py` | `runtime/tests/test_i_frame_hygiene.py` (11); `test_g_loop.py` motion test rewritten to the promoted rule (+1) |
-| Provider-pool liquidity G: `PoolLiquidity` readings; `ExecutionBridge.build(pools=)`; per-attempt `pool_liquidity` / `blocked_by_pool`; manifest `pool_liquidity` block (additive to frozen v0, documented) | `runtime/execute/pools.py`, `runtime/execute/bridge.py`, `runtime/contracts/EXECUTION-MANIFEST-v0-ADDITIVE-FIELDS-2026-09-14.md` | `runtime/tests/test_i_pools_and_errors.py` (11 incl. H) |
+| Compositor gates A–E (bounds, contrast + opaque-backing rule, contain/native/declared-cover fit, one token source, critical-region disjointness). **Audit blocker 1 fixed:** contrast is the minimum ratio over EVERY luminance sample (an interior sample nearest the text luminance is the worst case), not the two endpoints | `runtime/compositor/{__init__,tokens,gates}.py` | `runtime/tests/test_i_compositor_gates.py` (24; regression: `[0.0, 0.21, 1.0]` behind `#808080` refused at ≈1.0:1 where the endpoints alone pass) |
+| Video-frame text hygiene F: `RUNTIME-VIDEO-FRAME-TEXT` row; video post-draw verdict NOT_RUN without sampled frames, FAIL on any tainted frame regardless of the source still; `run_loop(frame_sampler=, source_still_clean=)`; dry alpha chain samples synthetic frames. **Audit blocker 2 fixed:** `postdraw.run` wraps the detector in a sha256-memoising `_DetectOnce`, so canon's LIMIT-TEXT scan and the runtime row read the same detection — exactly one detector call per sampled frame | `runtime/loop/frame_hygiene.py`, `runtime/loop/postdraw.py`, `runtime/loop/driver.py`, `runtime/loop/synthetic.py` (`frames_for_spec`), `runtime/alpha/run.py` | `runtime/tests/test_i_frame_hygiene.py` (14; call-count regression: `calls == len(frames)`, same digests, LIMIT-TEXT and the runtime row agree); `test_g_loop.py` motion test rewritten to the promoted rule (+1) |
+| Provider-pool liquidity G: `PoolLiquidity` readings; `ExecutionBridge.build(pools=)`; per-attempt `pool_liquidity` / `blocked_by_pool`; manifest `pool_liquidity` block (additive to frozen v0, documented). **Fail closed (audit blocker 3):** `would_dispatch` is true only when the pool is positively known to fund the attempt; unknown / unread → false with `pool_liquidity_unknown`; the pool-agnostic answer is kept in the new `would_dispatch_if_funded` (fallbacks: `if_triggered_would_dispatch_if_funded`) | `runtime/execute/pools.py`, `runtime/execute/bridge.py`, `runtime/execute/manifest.py` (render), `runtime/alpha/{run,battery}.py` (summaries), `runtime/contracts/EXECUTION-MANIFEST-v0-ADDITIVE-FIELDS-2026-09-14.md` | `runtime/tests/test_i_pools_and_errors.py` (14 incl. H: no reading / unreadable balance / other-pool reading / funded fallback); `test_f_bridge.py` repointed to `would_dispatch_if_funded` where it tested harness/price/ceiling |
 | Transient-error classification H: `classify()` → `infrastructure_transient` / `provider_refusal` / `unclassified`, never `model_quality_failure`; `failure_record()` keeps OUTCOME-EVENT-v1's status vocabulary | `runtime/execute/provider_errors.py` | same |
-| Dry battery results regenerated (ids only: manifests now carry the liquidity fields; B05 now scans 3 synthetic frames) | `runtime/battery/results/2026-09-14/` | `test_alpha_cli` committed-vs-fresh comparison; 14 final states identical to before (verified with all ids scrubbed) |
+| Dry battery results regenerated: manifests carry the liquidity fields; B05 scans 3 synthetic frames; after blocker 3 every dry attempt shows `would_dispatch: false` (no pool is read at USD 0) with `would_dispatch_if_funded: true` where it used to show true, and `pool_liquidity_status: not_read` | `runtime/battery/results/2026-09-14/`, `runtime/alpha/battery.py` (observes both answers) | `test_alpha_cli` committed-vs-fresh comparison; **14 final states identical to before** (verified with all ids scrubbed; the only observed-field changes are the dispatch flags and the `pool_liquidity_unknown` reason) |
 | Production-learning store + validator + ledger reconciliation | `production-learning/` | `runtime/tests/test_i_production_learning_case.py` (8) |
 | Governor | `coordination/CONTROL-STATE.md`, `PROJECT-MEMORY.md` | — |
 
@@ -48,17 +48,17 @@ Kling/Seedream/GPT Image/FLUX/Lyria/Sarvam/H3 observations are `directional_prod
 `routing_authority: none`. OUTCOME-EVENT-v1: **not mutated** (mapping gap documented in the case README).
 Alpha-1 scope: unchanged. TTAO: candidate KPI, not policy. Speaker micro-qualification: candidate pattern.
 
-## E. Verification (run on `d11a394`)
+## E. Verification (re-run in full after the Controller audit fixes; earlier run on `d11a394` gave the same results at 457 tests)
 
 ```
-python3 -m unittest discover -s runtime/tests -p 'test_*.py'          # Ran 457 tests — OK (baseline 403 on main)
+python3 -m unittest discover -s runtime/tests -p 'test_*.py'          # Ran 467 tests — OK (baseline 403 on main; 457 before the audit fixes)
 python3 -m unittest tests.test_gate_artifact … tests.test_gate_regression_battery   # Ran 274 — OK (expected failures=1, pre-existing)
 python3 -m tests.test_gate_regression_battery --table                 # 172 rows, 0 mismatch(es)
 python3 -m runtime.alpha.battery                                      # 14 runs, 14 intended states, 0 crashes, USD 0
 python3 eval/registry/validate_registry.py                            # PASS — declared 575 / actual 575
 python3 coordination/audits/tools/verify_sealed_evidence.py --against origin/main   # sealed trees UNCHANGED — RESULT: PASS
 python3 coordination/audits/tools/build_taint_register.py --check     # UNCHANGED
-python3 coordination/audits/tools/verify_price_pins.py                # pins verified; 1 pre-existing WARN (ellipsis quote)
+python3 coordination/audits/tools/verify_price_pins.py                # 81/81 verified, 0 failed, 2 pre-existing WARN (ellipsis quote)
 python3 production-learning/tools/check_case.py --case production-learning/cases/UPWORK-INTRO-001 --pilot-ref work/pilot-upwork-intro-video-v4
                                                                       # PASS: 0 problems, 0 notes (every path@commit resolves; film sha256s match)
 git cat-file blob work/pilot-upwork-intro-video-v4:…/upwork-intro-v4.1.mp4 | shasum -a 256
@@ -74,9 +74,16 @@ under the existing no-socket discipline (`test_f_no_socket`, `test_alpha_cli.NoS
 `e9cd6ca` spec + plan · `186dfc2` evidence inventory · `3f96d0c` case package + validator · `344f517`
 compositor gates · `c6c39b8` frame hygiene · `dcddedb` pools + provider errors · `d11a394` Governor.
 
-## G. Open Controller decisions
+## G. Controller audit on PR #98 (2026-09-14T19:19Z) — three blockers, all fixed
 
-1. ~~Push the raw pilot branch~~ (done, §A). 2. Adopt TTAO as a primary production KPI (recommended
-YES). 3. When to promote speaker micro-qualification (proposed: after two more real productions).
-4. When to design COMPLEX-PRODUCTION-EVENT / OUTCOME-EVENT-v2 (proposed: after the second complex run).
-5. Merge PR #98 (https://github.com/chawlavaibhav/media-intelligence/pull/98).
+1. `check_contrast` compared text luminance only to the min/max sample → now the minimum ratio over every sample (regression test with an interior sample near the text luminance).
+2. `postdraw.run` scanned every frame twice (canon LIMIT-TEXT + runtime row) → detector memoised by sha256, one call per frame (call-count regression test).
+3. Pool liquidity was not fail-closed on unknown → `would_dispatch` now requires positively funded liquidity; unknown / unread → false with `pool_liquidity_unknown`; the pool-agnostic answer split into `would_dispatch_if_funded` (regression tests: no reading, unreadable balance, other-pool reading, funded fallback).
+
+**Decisions the Controller made in the same comment (recorded, not re-opened):** TTAO **adopted** as a
+primary production KPI alongside CpAO; speaker micro-qualification **stays a candidate pattern**;
+COMPLEX-PRODUCTION-EVENT / OUTCOME-EVENT-v2 **deferred** until after the second complex real production.
+
+## H. Remaining Controller action
+
+Merge PR #98 (https://github.com/chawlavaibhav/media-intelligence/pull/98) — or not.

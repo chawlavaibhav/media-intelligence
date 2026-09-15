@@ -199,11 +199,14 @@ contain/native/declared-cover fit, one design-token source, critical-region disj
 (`runtime/compositor/`); video-frame text hygiene — a video's text verdict comes only from sampled frames,
 no frames → NOT_RUN never PASS (`runtime/loop/frame_hygiene.py`, wired into the loop and the dry battery);
 provider-pool liquidity on the execution manifest (`runtime/execute/pools.py`, additive fields on
-EXECUTION-MANIFEST-v0); transient-error classification that can never yield `model_quality_failure`
+EXECUTION-MANIFEST-v0; **fail closed** — an attempt is dispatchable only when its pool is positively known
+to fund it, the pool-agnostic answer is `would_dispatch_if_funded`); transient-error classification that can never yield `model_quality_failure`
 (`runtime/execute/provider_errors.py`). **Candidate patterns, not policy:** speaker micro-qualification
 (test the unresolved speaker route first → human gate → freeze → build), the accepted
 `service_intro_with_portfolio_proof` template (pacing values scoped to that one accepted instance), and
-**TTAO as a primary production KPI alongside CpAO (recommended YES; awaiting the Controller)**.
+**TTAO as a primary production KPI alongside CpAO — ADOPTED by the Controller (PR #98 audit comment,
+14 Sep 19:19Z)**; speaker micro-qualification stays a candidate; COMPLEX-PRODUCTION-EVENT deferred until
+after the second complex real production.
 OUTCOME-EVENT-v1 is **not** mutated — it cannot represent a five-version, nine-route, assembly-repaired
 production honestly; a COMPLEX-PRODUCTION-EVENT is a design candidate after a second complex run.
 **Next real productions measure TTAO from the first production input and record the ACCEPT timestamp.**

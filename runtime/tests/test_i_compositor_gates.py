@@ -70,6 +70,17 @@ class Contrast(unittest.TestCase):                          # SD-02: text colour
         r = gates.check_contrast("#111111", samples, role="display")
         self.assertEqual(r["status"], "PASS")
 
+    def test_an_interior_sample_near_the_text_luminance_is_the_worst_case(self):
+        # Controller audit on PR #98, blocker 1: contrast is minimised where the background is CLOSEST to
+        # the text luminance, which can be an interior sample. #808080 has L≈0.216; the endpoints 0.0 and
+        # 1.0 give 5.3:1 and 3.95:1 (display passes at 3.0), but the 0.21 pixel is ≈1.0:1 — unreadable.
+        samples = [0.0, 0.21, 1.0]
+        with self.assertRaises(LayoutRefused) as cm:
+            gates.check_contrast("#808080", samples, role="display")
+        self.assertLess(cm.exception.context["worst_ratio"], 1.2)
+        r = gates.check_contrast("#808080", [0.0, 1.0], role="display")   # the same endpoints alone pass
+        self.assertEqual(r["status"], "PASS")
+
     def test_worst_case_is_the_ratio_reported(self):
         r = gates.check_contrast("#111111", [0.05, 0.9], role="body", backing_hex="#FFFFFF")
         self.assertEqual(r["measured_against"], "backing")

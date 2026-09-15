@@ -101,6 +101,47 @@ class PostDrawVideo(unittest.TestCase):
         self.assertNotIn(ROW, {r["check_id"] for r in out["rows"]})
 
 
+class CountingDetector:
+    """Wraps a detector and counts detect() calls — one per sampled frame is the budget."""
+    detector_id = "scripted"
+
+    def __init__(self, inner):
+        self.inner, self.calls, self.seen = inner, 0, []
+
+    def detect(self, image_bytes):
+        self.calls += 1
+        self.seen.append(hashlib.sha256(image_bytes).hexdigest())
+        return self.inner.detect(image_bytes)
+
+
+class DetectOncePerFrame(PostDrawVideo):
+    # Controller audit on PR #98, blocker 2: canon's LIMIT-TEXT already scans every supplied frame; the
+    # runtime row must reuse those detections, not call a (paid, stochastic) detector a second time.
+    def test_each_sampled_frame_is_detected_exactly_once(self):
+        counting = CountingDetector(self.scripted(tainted_index=2))
+        out = postdraw.run(self.spec, self.mp4, self.dispatch, self.text, product_entity=False,
+                           detector=counting, frames=self.frames)
+        self.assertEqual(out["verdict"], "FAIL")
+        self.assertEqual(counting.calls, len(self.frames))
+        self.assertEqual(sorted(counting.seen), sorted(hashlib.sha256(f).hexdigest() for f in self.frames))
+
+    def test_clean_frames_are_also_detected_once(self):
+        counting = CountingDetector(self.scripted())
+        out = postdraw.run(self.spec, self.mp4, self.dispatch, self.text, product_entity=False,
+                           detector=counting, frames=self.frames)
+        self.assertEqual(out["verdict"], "PASS")
+        self.assertEqual(counting.calls, len(self.frames))
+
+    def test_the_runtime_row_and_limit_text_agree_on_the_same_detections(self):
+        counting = CountingDetector(self.scripted(tainted_index=0))
+        out = postdraw.run(self.spec, self.mp4, self.dispatch, self.text, product_entity=False,
+                           detector=counting, frames=self.frames)
+        rows = {r["check_id"]: r for r in out["rows"]}
+        self.assertEqual(rows["LIMIT-TEXT"]["status"], "FAIL")
+        self.assertEqual(rows[ROW]["status"], "FAIL")
+        self.assertIn("frame 1", rows[ROW]["detail"])
+
+
 class LoopWithFrameSampler(unittest.TestCase):
     def setUp(self):
         self.spec = G.load_spec_dict(G.SPEC_MOTION)

@@ -86,8 +86,9 @@ def contrast_ratio(l1: float, l2: float) -> float:
 def check_contrast(text_hex: str, luminance_samples, *, role: str = "body", backing_hex: str | None = None,
                    backing_alpha: float = 1.0, tokens: DesignTokens | None = None, id_: str = "text") -> dict:
     """Wrapper/UI text keeps the readable ratio (WCAG: 4.5 body, 3.0 display) against the WORST pixel
-    behind it, or it sits on a solid opaque backing whose colour is then what the ratio is measured
-    against. A translucent backing is not a backing."""
+    behind it — the sample whose luminance is nearest the text's, wherever it sits in the range — or it
+    sits on a solid opaque backing whose colour is then what the ratio is measured against. A
+    translucent backing is not a backing."""
     t = tokens or DesignTokens(card_radius=0, card_border_px=0, card_shadow=(0, 0, 0), safe_x=0, safe_y=0)
     need = t.contrast_display if role == "display" else t.contrast_body
     tl = relative_luminance(text_hex)
@@ -101,7 +102,9 @@ def check_contrast(text_hex: str, luminance_samples, *, role: str = "body", back
             raise LayoutRefused(LayoutRefused.CONTRAST_BELOW_THRESHOLD,
                                 f"{id_}: no luminance samples behind the box and no opaque backing — unreadable by default",
                                 id=id_, worst_ratio=0.0, required=need)
-        worst = min(contrast_ratio(tl, max(samples)), contrast_ratio(tl, min(samples)))
+        # The ratio is minimised where the background is CLOSEST to the text luminance — an interior
+        # sample, not an endpoint (Controller audit on PR #98, blocker 1) — so every sample is checked.
+        worst = min(contrast_ratio(tl, sample) for sample in samples)
         against = "pixels" if backing_hex is None else f"pixels (backing alpha {backing_alpha} is not opaque)"
     if worst < need:
         raise LayoutRefused(LayoutRefused.CONTRAST_BELOW_THRESHOLD,

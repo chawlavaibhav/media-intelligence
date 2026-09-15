@@ -11,6 +11,8 @@ constructed here.
 """
 from __future__ import annotations
 
+import hashlib
+
 from canon.gate import postdraw as gate_post
 from canon.gate import textscan
 from runtime.loop import frame_hygiene, outcome
@@ -24,6 +26,24 @@ DRY_ROWS = ("LIMIT-TEXT", "DISPATCH-ASPECT", "INFRA-CONTAINER")
 VIDEO_MODALITIES = ("video", "image_sequence")
 
 
+class _DetectOnce:
+    """Memoises detect() by the bytes' sha256 so canon's LIMIT-TEXT scan and the runtime frame-hygiene
+    row read the SAME detection of each frame: one detector call per sampled frame, never two (a paid
+    or stochastic detector would otherwise be billed twice and could answer twice). Controller audit on
+    PR #98, blocker 2."""
+
+    def __init__(self, inner):
+        self.inner = inner
+        self.detector_id = getattr(inner, "detector_id", "unknown")
+        self.detections: dict = {}
+
+    def detect(self, image_bytes):
+        key = hashlib.sha256(bytes(image_bytes)).hexdigest()
+        if key not in self.detections:
+            self.detections[key] = self.inner.detect(image_bytes)
+        return self.detections[key]
+
+
 def run(spec: dict, artifact_bytes, dispatch_descriptor: dict, package_text: str, *,
         product_entity: bool, detector=None, frames=None, record=None, registry_=None,
         source_still_clean=None) -> dict:
@@ -34,7 +54,7 @@ def run(spec: dict, artifact_bytes, dispatch_descriptor: dict, package_text: str
     if artifact_bytes is None:
         return outcome.not_run(gate_post.GATE, DRY_ROWS, DRY_DETAIL)
     reg = registry_ or registry()
-    det = detector if detector is not None else textscan.NoDetector()
+    det = _DetectOnce(detector if detector is not None else textscan.NoDetector())
     modality = modality_of(spec)
     frames = list(frames or [])
     report = gate_post.run_postdraw(
@@ -43,7 +63,7 @@ def run(spec: dict, artifact_bytes, dispatch_descriptor: dict, package_text: str
         packs=compiled_packs(spec))
     if modality not in VIDEO_MODALITIES:
         return outcome.from_report(report)
-    detections = [det.detect(f) for f in frames]
+    detections = [det.detect(f) for f in frames]      # served from the memo: the detections LIMIT-TEXT saw
     row = frame_hygiene.assess(detections, source_still_clean=source_still_clean)
     out = outcome.from_report(report, extra_rows=[row])
     if row["status"] == "NOT-RUN" and out["verdict"] == outcome.PASS:
