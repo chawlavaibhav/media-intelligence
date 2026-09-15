@@ -263,6 +263,7 @@ spend:
     - {pool: vertex_credits, balance_usd: null, read_utc: "2026-09-15T13:28:37Z", source: "user attestation in chat (same)"}
     - {pool: sarvam_credits, balance_usd: null, read_utc: "2026-09-15T13:28:37Z", source: "user attestation in chat (same)"}
     - {pool: elevenlabs_credits, balance_usd: null, read_utc: "2026-09-15T13:28:37Z", source: "user attestation in chat (same)"}
+    - {pool: elevenlabs_credits, balance_usd: "54 plan credits (≈ 54 characters) — provider reply on att-038, quota_exceeded", read_utc: "2026-09-15T14:12:50Z", source: "api.elevenlabs.io error body: 'You have 54 credits remaining, while 159 credits are required' — SUPERSEDES the attestation: ElevenLabs cannot fund a full ~160-char read; no further ElevenLabs dispatch"}
   attempts: []                    # one line per paid call, appended before the request leaves, settled after:
   #  - {attempt_id, asset_id, route_cell, surface, pool, unit_price_usd, quantity, reserved_usd, settled_usd,
   #     start_utc, end_utc, latency_s, status: ok|provider_refusal|infrastructure_transient|unclassified,

@@ -336,15 +336,17 @@ def sarvam(asset_id: str, text: str, out: Path, speaker: str, lang: str = "en-IN
     return rec
 
 
-def elevenlabs(asset_id: str, text: str, out: Path, voice_id: str, is_repair=False) -> dict:
+def elevenlabs(asset_id: str, text: str, out: Path, voice_id: str, is_repair=False, model_id: str = "eleven_v3", voice_settings: dict | None = None) -> dict:
     import re
     route_key = "elevenlabs-v3-direct"; ep, surface, pool = ROUTES[route_key]
     if not re.fullmatch(r"[A-Za-z0-9]+", voice_id):
         sys.exit("voice_id must be a plain identifier (it goes in a URL path)")
     q = quote(route_key, {"params": {"chars": len(text)}})
     aid = next_attempt_id(); reserve(aid, asset_id, route_key, q, is_repair)
-    body = {"text": text, "model_id": "eleven_v3"}
-    rec = base_rec(aid, asset_id, route_key, q, text, out, is_repair, {"voice_id": voice_id, "model_id": "eleven_v3"})
+    body = {"text": text, "model_id": model_id}
+    if voice_settings:
+        body["voice_settings"] = voice_settings
+    rec = base_rec(aid, asset_id, route_key, q, text, out, is_repair, {"voice_id": voice_id, "model_id": model_id, "voice_settings": voice_settings})
     t0 = time.time()
     st, data, ct = C.http("POST", f"{ep}/{voice_id}?output_format=mp3_44100_128",
                           {"xi-api-key": C.key("ELEVENLABS_API_KEY"), "Content-Type": "application/json"},
@@ -354,6 +356,53 @@ def elevenlabs(asset_id: str, text: str, out: Path, voice_id: str, is_repair=Fal
     out.parent.mkdir(parents=True, exist_ok=True); out.write_bytes(data)
     rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="ok", artifact_sha256=sha256(out)); record(rec)
     settle(aid, "ok", f"-> {out.name}"); print(f"saved {out} in {rec['latency_s']} s")
+    return rec
+
+
+# ── Gemini TTS (NO Registry cell; job-local price pin; micro-qualification only) ──
+class _LocalQuote:
+    """A job-local price pin for a route the roster does not carry. source/pins/gemini-api-pricing.html
+    (sha256 18679848c2…, fetched 2026-09-15T14:06Z): gemini-3.1-flash-tts-preview USD 1.00 / 1M text tokens in,
+    USD 20.00 / 1M audio tokens out. Audio tokens are not known before the call, so the reservation is an upper
+    bound: 32 audio tokens per second of speech assumed at 15 s = 480 tokens -> USD 0.0096 + input; settled from usageMetadata."""
+    def __init__(self, chars):
+        self.priced = True; self.unit = "per_1M_audio_tokens_out (+ text in)"; self.unit_price = "20.00 out / 1.00 in"
+        self.quantity = f"≤ 480 audio tokens + {chars} chars"; self.billing_pool = "credits"
+        self.expected_cost_usd = round(480 / 1e6 * 20.0 + (chars / 4) / 1e6 * 1.0, 6)
+
+
+def gemini_tts(asset_id: str, text: str, out: Path, voice: str, style: str, model: str = "gemini-3.1-flash-tts-preview", is_repair=False) -> dict:
+    import struct, wave
+    route_key = "gemini-tts"; ROUTES[route_key] = (model, "gemini_api", "credits")
+    q = _LocalQuote(len(text))
+    aid = next_attempt_id(); reserve(aid, asset_id, route_key, q, is_repair)
+    body = {"contents": [{"parts": [{"text": f"{style}\n\n{text}"}]}],
+            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}
+    rec = base_rec(aid, asset_id, route_key, q, text, out, is_repair, {"voice": voice, "style": style, "model": model})
+    t0 = time.time()
+    st, reply = C.http_json("POST", f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+                            {"x-goog-api-key": C.key("GOOGLE_API_KEY")}, body, timeout=180)
+    if st != 200:
+        return failure(rec, http_status=st, message=str(reply), status=f"http_{st}")
+    data = None; mime = ""
+    for cand in reply.get("candidates") or []:
+        for part in (cand.get("content") or {}).get("parts") or []:
+            if part.get("inlineData", {}).get("data"):
+                data = base64.b64decode(part["inlineData"]["data"]); mime = part["inlineData"].get("mimeType", ""); break
+        if data: break
+    if not data:
+        return failure(rec, message=f"no audio; {reply.get('promptFeedback')}", status="refusal_or_empty")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    if "pcm" in mime.lower() or "l16" in mime.lower():
+        rate = int(next((kv.split("=")[1] for kv in mime.split(";") if kv.strip().startswith("rate=")), "24000"))
+        with wave.open(str(out), "wb") as w:
+            w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate); w.writeframes(data)
+    else:
+        out.write_bytes(data)
+    usage = reply.get("usageMetadata") or {}
+    rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="ok", artifact_sha256=sha256(out), mime=mime,
+               provider_meta={"usage": usage}, settled_usd=round((usage.get("candidatesTokenCount", 0) / 1e6) * 20.0 + (usage.get("promptTokenCount", 0) / 1e6) * 1.0, 6))
+    record(rec); settle(aid, "ok", f"{mime} {len(data)} bytes -> {out.name}; usage {usage}"); print(f"saved {out} in {rec['latency_s']} s; usage {usage}")
     return rec
 
 
