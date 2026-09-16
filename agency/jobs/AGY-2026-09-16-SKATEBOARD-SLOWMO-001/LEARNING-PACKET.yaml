@@ -1,0 +1,112 @@
+# LEARNING PACKET — raw material for /media-agency-sync. Five kinds kept apart.
+schema: AGENCY-LEARNING-PACKET-v1
+job_id: AGY-2026-09-16-SKATEBOARD-SLOWMO-001
+source_main_sha: 3bb9a3c3da484e43d4d54ae20543d1d246769ac6
+classification: customer_work
+production_status: accepted
+brief_ref: JOB.yaml brief.verbatim
+closed_utc: '2026-09-16T18:19:08Z'
+accepted_assets:
+- path: gen/final/v2/skateboard-slowmo-9x16.mp4
+  sha256: d214ab64a84b95bdc79b7e7fe2b0d8ff99a7eaa0f00d92e8480d035584132b09
+  version: V2
+human_verdicts:
+- gate: plate-A
+  verdict: accept
+  verbatim: accept
+- version: V1
+  verdict: SPECIFIC REPAIR
+  verbatim: could it be a more zoom in version. the video sample is more zoomed in and during slomo the focus is there.
+- version: V2
+  verdict: ACCEPT
+  verbatim: accept. not good
+  note: accepted with an unnamed reservation
+routes_attempted:
+  nano-banana-2:
+    attempts: 2
+    ok: 2
+    usd: 0.134
+  gemini-omni-1.1-flash (i2v 10 s 720p 9:16, Vertex):
+    attempts: 2
+    ok: 2
+    usd: 2.0272
+  lyria:
+    attempts: 1
+    ok: 1
+    usd: 0.06
+paid_attempts:
+  count: 5
+  ok: 5
+  failed: 0
+  reserved_usd: 2.2212
+  cap_usd: 8.0
+  pools: gemini/vertex credits (attested); fal excluded
+rejected_attempts:
+- attempt: att-002 take-1
+  why: not rejected on quality — superseded by the reframed take-2 after the user's zoom repair; it also carried a second phone, keys that never left her hand and
+    a cup-returns-to-hand at 7 s
+repairs:
+- defect: DF-02 creative_direction (framing)
+  repair: medium plate with plate-A as identity reference + new take with in-prompt push-in; assembly 3× then 1.5×
+  attempts: att-004, att-005
+  cost_usd: 1.08
+  succeeded: true
+- defect: DF-01 generation (objects in hands)
+  repair: prompt + negative around open, empty hands
+  attempt: att-005
+  succeeded: true
+known_cost_usd: 2.2212
+ttao_hms: 0h 24m 5s
+versions_and_cycles:
+  versions: 2
+  cycles: 3
+observed_failures:
+- 'take-1: a second phone-like object stayed in the left hand while ''the'' phone floated; keys never left the hand; the cup returned to her hand at ~7.0 s'
+- V1 framing read flat against the sample (wide full body vs medium)
+root_cause_classes:
+- failure_ref: take-1 objects
+  class: generation
+- failure_ref: V1 framing
+  class: creative_direction
+directional_model_observations:
+- route: gemini-omni-1.1-flash i2v 10 s 720p 9:16 (Vertex)
+  n: 2
+  accepted: 2
+  observation: both takes delivered the whole action structure in one generation (walk 4 s → skater enters → collision → objects fly → slow-motion tail); the in-prompt
+    'time slows' produced a visibly slower tail; take-1 broke physics at 7 s (cup back in hand) and duplicated the phone; take-2 with 'both hands open and empty'
+    + a 'second phone' negative was clean; latency 97 s / 49 s; no lettering in 40 sampled frames
+  routing_authority: none
+- route: nano-banana-2 with the accepted plate as an inline identity reference
+  n: 1
+  accepted: 1
+  observation: reframed the same character (face, hair, clothes, tote) from full body to medium on the first draw
+  routing_authority: none
+- route: lyria-002
+  n: 1
+  accepted: 1
+  observation: neutral 'break at 4 s' prompt; the break was not relied on — the slow-down effect was applied by code at the measured bump
+  routing_authority: none
+candidate_patterns:
+- id: ONE_TAKE_STUNT
+  pattern: for a single-moment stunt reel, one 10-s Omni i2v generation from a gated plate, cut and speed-ramped by code (normal → interpolated slow motion), beats
+    a multi-shot build
+  evidence: 2/2 takes usable; accepted at V2; USD 2.22; TTAO 0h 24m 5s
+- id: HANDS_EMPTY_CLAUSE
+  pattern: when objects must leave a character's hands, state 'both hands open and empty' and negate 'objects still in her hands' / 'a second <object>'
+  evidence: take-1 vs take-2
+- id: REFRAME_AT_SOURCE
+  pattern: a 'zoom in' request on 720p footage is answered by a reframed plate + new take (identity via the accepted plate as reference), not by a code crop
+  evidence: V2 accepted
+- id: SPEED_RAMP_FROM_MEASURED_TIMES
+  pattern: 'cut points and the music slow-down are read off sampled frames of the accepted take, never off the plan (case 003 lesson applied: no VO/audio placed by
+    plan)'
+  evidence: V1/V2 audio had no scheduling defect
+candidate_engineering_changes:
+- id: ATTEMPT_ID_LOCK
+  status: implemented in tools/dispatch.py this job (fcntl lock)
+  closes: case 003 DF-06
+canon_gaps: []
+no_promotion_items:
+- the character look, the London street, the music style
+- the specific slow factors (3× / 1.5×)
+open_question_for_the_case: the user accepted with 'not good' — what was not good is unrecorded; ask before the case is written

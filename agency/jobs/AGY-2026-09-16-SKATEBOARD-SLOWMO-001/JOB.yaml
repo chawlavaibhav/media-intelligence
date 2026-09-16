@@ -10,8 +10,8 @@ production_base_sha: 3bb9a3c3da484e43d4d54ae20543d1d246769ac6   # unchanged sinc
 branch: work/agency-job-skateboard-slowmo-001
 skill_version: 7e324b0f75658498b62802332504519b9d542996
 opened_by: "Vaibhav Chawla (operator: Claude, local desktop session)"
-production_status: open           # open | accepted | rejected | abandoned
-learning_status: not_started      # not_started | pending_sync | synced | no_promotion
+production_status: accepted       # V2 accepted by the user 2026-09-16T18:19:08Z ('accept. not good')
+learning_status: pending_sync     # LEARNING-PACKET.yaml written 2026-09-16T18:19:08Z
 sync:                             # filled by /media-agency-sync — the only fields it may change on the job branch
   case_id: null                   # production-learning/cases/<CASE-ID>
   integration_branch: null
@@ -263,15 +263,16 @@ qa:
 # ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
 versions:
   - {version: "plate gate", presented_utc: "2026-09-16T18:02Z", assets: [plate-A-r1], verdict: ACCEPT, verdict_verbatim: "accept", decided_utc: "2026-09-16T18:03Z"}
-  - {version: V2, presented_utc: "2026-09-16T18:16:59Z", assets: ["gen/final/v2/skateboard-slowmo-9x16.mp4"], verdict: null, verdict_verbatim: null, decided_utc: null, repair_of: "V1 — user: 'could it be a more zoom in version. the video sample is more zoomed in and during slomo the focus is there.' → class crop/creative_direction; medium plate (plate-A as identity reference) + new take; USD 1.08"}
-  - {version: V1, presented_utc: "2026-09-16T18:09:43Z", assets: ["gen/final/skateboard-slowmo-9x16.mp4"], verdict: null, verdict_verbatim: null, decided_utc: null}
+  - {version: V2, decided_utc: "2026-09-16T18:19:08Z", verdict: ACCEPT, verdict_verbatim: "accept. not good", note: "accepted with a stated reservation; the user did not name what was not good — recorded as-is", presented_utc: "2026-09-16T18:16:59Z", assets: ["gen/final/v2/skateboard-slowmo-9x16.mp4"], verdict: null, verdict_verbatim: null, decided_utc: null, repair_of: "V1 — user: 'could it be a more zoom in version. the video sample is more zoomed in and during slomo the focus is there.' → class crop/creative_direction; medium plate (plate-A as identity reference) + new take; USD 1.08"}
+  - {version: V1, verdict: "SPECIFIC REPAIR", verdict_verbatim: "could it be a more zoom in version. the video sample is more zoomed in and during slomo the focus is there.", presented_utc: "2026-09-16T18:09:43Z", assets: ["gen/final/skateboard-slowmo-9x16.mp4"], verdict: null, verdict_verbatim: null, decided_utc: null}
 outcome:
-  status: null                    # accepted | rejected | abandoned  — accepted ONLY from a human ACCEPT
-  accepted_version: null
-  accepted_by: null               # person
-  assets: []                      # [{path, sha256, bytes, dims_or_duration, produced_by_attempt, composition_inputs: [], formats: [], reuse_potential: [portfolio|showreel|spec|case_study|variant|demo|template_evidence]}]
-  delivery_note_path: null
-  delivered_utc: null
+  status: accepted
+  accepted_version: V2
+  accepted_by: Vaibhav Chawla (user)
+  assets:
+    - {"path": "gen/final/v2/skateboard-slowmo-9x16.mp4", "sha256": "d214ab64a84b95bdc79b7e7fe2b0d8ff99a7eaa0f00d92e8480d035584132b09", "bytes": 14398431, "dims_or_duration": "1080x1920, 14.46 s", "produced_by_attempt": "att-005 (take-2) + code assembly; music att-003; plate-B att-004 (identity from plate-A att-001)", "composition_inputs": ["gen/clips/take-2-accepted.mp4", "gen/music/bed-r1.wav", "tools/assemble.py"], "formats": ["9:16"], "reuse_potential": ["portfolio", "showreel", "case_study"]}
+  delivery_note_path: gen/final/v2/DELIVERY-NOTE.md
+  delivered_utc: 2026-09-16T18:19:08Z
 
 # ── 17. TIME (all UTC, from `date -u`; never reconstructed) ──────────────────
 ttao:
@@ -282,15 +283,15 @@ ttao:
   artifact_received_utc: 2026-09-16T18:04:55Z (take-1)
   qa_complete_utc: 2026-09-16T18:09:43Z
   human_review_requested_utc: 2026-09-16T18:09:43Z
-  human_decision_utc: null
-  accepted_utc: null
+  human_decision_utc: 2026-09-16T18:19:08Z
+  accepted_utc: 2026-09-16T18:19:08Z
 kpis:
-  cpao_usd: null                  # = spend.total_reserved_usd on accept
-  ttao_hms: null                  # accepted_utc − job_start_utc
-  human_review_cycles: null       # = len(versions)
-  versions_to_acceptance: null
+  cpao_usd: 2.2212
+  ttao_hms: "0h 24m 5s"   # 17:55:03Z → 2026-09-16T18:19:08Z
+  human_review_cycles: 3          # plate gate, V1, V2
+  versions_to_acceptance: 2
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml   # read its current values; never fake the comparison
-  baseline_values_read: {ttao: null, cpao_usd: null, cycles: null, versions: null}
+  baseline_values_read: {ttao: "7h 54m (case 001, mechanical lower bound)", cpao_usd: 15.39318, cycles: 5, versions: 5}
 
 # ── 14. LEARNING PACKET (job not closed on ACCEPT until this is filled) ──────
 learning_packet:
