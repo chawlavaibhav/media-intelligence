@@ -10,8 +10,8 @@ production_base_sha: 3bb9a3c3da484e43d4d54ae20543d1d246769ac6
 branch: work/agency-job-cuminco-chopsticks-001
 skill_version: 7e324b0f75658498b62802332504519b9d542996
 opened_by: "Vaibhav Chawla (operator: Claude, local desktop session)"
-production_status: open           # open | accepted | rejected | abandoned
-learning_status: not_started      # not_started | pending_sync | synced | no_promotion
+production_status: rejected       # V3 rejected by the user 2026-09-16T03:45:05Z
+learning_status: pending_sync     # LEARNING-PACKET.yaml written 2026-09-16T03:45:05Z
 sync:                             # filled by /media-agency-sync — the only fields it may change on the job branch
   case_id: null                   # production-learning/cases/<CASE-ID>
   integration_branch: null
@@ -345,15 +345,17 @@ qa:
     - {id: DF-04, asset_id: "V1 finals", observed: "human: 'the text is coming on figures' — copy/cards over chopsticks and noodles; the V1 contrast probe (4 frames) had no subject-obstruction test and the wall model flagged the wall's own gradient as subject", class: compositor, repair_layer: "dense (4 fps) per-frame wall-obstruction gate with a per-column wall model; ordered candidate bands (left / centre); a band is chosen only if on-wall AND readable on pixels for the whole beat; else least-obstructed band on a card and a CF2 flag; per-candidate layer files", repaired_by_attempt: "USD 0 (compose.py v2)"}
     - {id: DF-05, asset_id: "V1 timeline", observed: "23.5 s vs the 18-s plan; VO lines 4.4–4.9 s each in the chosen slow read", class: pacing, repair_layer: "V2: beat-1 VO line dropped (picture carries it), tempo 1.06, 22.9 s — flagged for the human", repaired_by_attempt: "USD 0"}
     - {id: DF-07, asset_id: "V1/V2 structure", observed: "human: 'the closing shot should have cumin product and final caption. it does not look like an ad at all. the opening is missing too.' — no product hero, no end card, no brand early/throughout, no Direction; PA-D7 rendered 'pass' on a thin line", class: creative_direction, repair_layer: "V3: persistent brand mark from frame 1 (ABCD 'early and throughout'); beat-1 VO restored; product end card built by code from the brand's own photograph with tagline / product name (PDP verbatim) / brand line / Direction 'cuminco.com'; spoken close 'Ramen night at home. Cumin Co.' ('see and say'); Canon gap recorded — commercial_communication fired but is uncompiled (C-10)", repaired_by_attempt: "att-051 (spoken close) + USD 0 composition"}
+    - {id: DF-08, asset_id: "V3 mix", observed: "human: 'the voices are overlapping' — measured: b1 trimmed 5.32 s from 0.30 overlaps b2 (4.70) by 0.92 s; b6 (4.54 s from 22.00) overruns the 25.6-s film by 0.94 s. VO starts were set by hand from an 18-s plan; no overlap/overrun gate", class: audio, repair_layer: "not repaired — job rejected; candidate VO_SCHEDULE_GATE", repaired_by_attempt: null}
     - {id: DF-06, asset_id: "dispatch tool", observed: "two concurrent dispatch processes computed the same attempt id (att-019)", class: infrastructure, repair_layer: "ledger alias line; candidate engineering change: lock or uuid attempt ids", repaired_by_attempt: "n/a"}
 
 # ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
 versions:                         # [{version, presented_utc, assets: [], verdict: ACCEPT|SPECIFIC REPAIR|REJECT, verdict_verbatim, decided_utc}]
   - {version: "V1", presented_utc: "2026-09-15T14:52Z", assets: ["gen/final/cuminco-chopsticks-9x16.mp4 0fa7df99…", "gen/final/cuminco-chopsticks-4x5.mp4", "gen/final/cuminco-chopsticks-1x1.mp4"], verdict: "REJECT", verdict_verbatim: "crapy. the video has got some random audio. her lips are omving. the text is coming on figures. all messed up", decided_utc: "2026-09-15T15:0xZ"}
+  - {version: "V3", presented_utc: "2026-09-15T16:0xZ", assets: ["gen/final/v3/cuminco-chopsticks-9x16.mp4", "…-nomusic", "…-4x5", "…-1x1"], verdict: "REJECT", verdict_verbatim: "this is still bad. the voices are overlapping. not at all happy with it. reject completely. we need to do the diagnosis now. tranfer the info to canon", decided_utc: "2026-09-16T03:45:05Z"}
   - {version: "V2", presented_utc: "2026-09-15T15:2xZ", assets: ["gen/final/v2/cuminco-chopsticks-9x16.mp4", "…-4x5", "…-1x1", "…-9x16-nomusic"], verdict: "REJECT (creative direction)", verdict_verbatim: "did cannon say nothing about product positioning? the closing shot should have cumin product and final caption. it does not look like ad at all. the opening is missing too. canon had this knowledge. how's that possible?", decided_utc: "2026-09-15T15:3xZ"}
   - {version: "MQ1-plate", presented_utc: "2026-09-15T13:42Z", assets: [plate-H1-r1, plate-H1-r2], verdict: "ACCEPT (r2)", verdict_verbatim: "r2", decided_utc: "2026-09-15T13:46:31Z"}
 outcome:
-  status: null                    # accepted | rejected | abandoned  — accepted ONLY from a human ACCEPT
+  status: rejected                # V3 rejected by the user; no accepted deliverable
   accepted_version: null
   accepted_by: null               # person
   assets: []                      # [{path, sha256, bytes, dims_or_duration, produced_by_attempt, composition_inputs: [], formats: [], reuse_potential: [portfolio|showreel|spec|case_study|variant|demo|template_evidence]}]
@@ -369,13 +371,13 @@ ttao:
   artifact_received_utc: 2026-09-15T14:33Z (clip-5) / last VO att-048
   qa_complete_utc: 2026-09-15T14:37:21Z
   human_review_requested_utc: 2026-09-15T17:47:49Z   # V3 (earlier: 2026-09-15T14:37:21Z
-  human_decision_utc: null
+  human_decision_utc: 2026-09-16T03:45:05Z   # final REJECT (V3)
   accepted_utc: null
 kpis:
-  cpao_usd: null                  # = spend.total_reserved_usd on accept
-  ttao_hms: null                  # accepted_utc − job_start_utc
-  human_review_cycles: null       # = len(versions)
-  versions_to_acceptance: null
+  cpao_usd: "n/a — no accepted outcome; USD 5.0907 reserved"
+  ttao_hms: "n/a — rejected; elapsed job_start → final reject 14h 27m"
+  human_review_cycles: 10         # MQ1 plate, MQ1 clip, plates, plate-B, voice ×3 rounds judged, V1, V2, V3
+  versions_to_acceptance: "none (3 versions, all rejected)"
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml   # read its current values; never fake the comparison
   baseline_values_read: {ttao: null, cpao_usd: null, cycles: null, versions: null}
 

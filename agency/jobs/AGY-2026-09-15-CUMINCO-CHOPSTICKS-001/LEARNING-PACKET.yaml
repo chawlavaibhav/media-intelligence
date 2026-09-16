@@ -1,0 +1,244 @@
+# LEARNING PACKET — raw material for /media-agency-sync. Five kinds kept apart: observed facts · human verdicts · directional model observations · deterministic system defects · candidate patterns.
+schema: AGENCY-LEARNING-PACKET-v1
+job_id: AGY-2026-09-15-CUMINCO-CHOPSTICKS-001
+source_main_sha: 3bb9a3c3da484e43d4d54ae20543d1d246769ac6
+classification: spec_work
+production_status: rejected
+brief_ref: JOB.yaml brief.verbatim
+closed_utc: '2026-09-16T03:45:05Z'
+human_final_verdict:
+  version: V3
+  verdict: REJECT
+  verbatim: this is still bad. the voices are overlapping. not at all happy with it. reject completely. we need to do the diagnosis now. tranfer the info to canon
+accepted_assets: []
+component_level_human_accepts:
+- asset: plate-H1-r2 (att-003)
+  sha256: dcd267915401d9e384051c1ad3a6fe6e108f08cdca76f26a049e94725427edf1
+  verdict: r2
+- asset: clip-2-r1 (att-004)
+  sha256: 706aa3cf445ac44c005da79673a4347fe4027567a7eba33e2a6e6cbe22a90ff5
+  verdict: accpet
+- asset: plate-A-r2 (att-008), plate-H2-r1 (att-006), plate-H3-r1 (att-007)
+  verdict: plates are good to go
+- asset: plate-B-r1 (att-018)
+  verdict: plate b is accepted
+- asset: 'voice: Gemini TTS Leda, ''bubbly'' direction (att-040 reference)'
+  verdict: leda is good. a little slower though. the shrillness and excitement is still miissing → bubbly
+routes_attempted:
+  nano-banana-2:
+    attempts: 8
+    ok: 7
+    usd: 0.536
+  veo-3.1-fast-i2v:
+    attempts: 7
+    ok: 7
+    usd: 4.2
+  sarvam-bulbul-v3:
+    attempts: 8
+    ok: 8
+    usd: 0.0228
+  elevenlabs-v3-direct:
+    attempts: 8
+    ok: 7
+    usd: 0.0987
+  gemini-tts:
+    attempts: 18
+    ok: 17
+    usd: 0.1729
+  lyria:
+    attempts: 1
+    ok: 1
+    usd: 0.06
+paid_attempts:
+  count: 50
+  ok: 47
+  failed_or_unsent: 3
+  reserved_usd: 5.0907
+  cap_usd: 8.0
+  pools: 'gemini/vertex credits, sarvam credits, elevenlabs credits (exhausted at att-038: 54 credits); fal cash excluded by the user (balance USD 0.147)'
+rejected_attempts:
+- attempt: att-001
+  why: local fault before send (Path.relative_to)
+- attempt: att-002 plate-H1-r1
+  why: not chosen (pale chopsticks — prompt error)
+- attempt: att-005 plate-A-r1
+  why: 'product_fidelity: garbled embossed mark, curry not ramen'
+- attempt: att-009..017, 019..022, 024..027, 032..037
+  why: voice micro-qualification takes rejected by ear ('all three are robotic', later rounds) — Sarvam ×8, ElevenLabs ×6, Gemini ×8 before Leda-bubbly was chosen
+- attempt: att-038
+  why: ElevenLabs quota_exceeded (54 credits left)
+- attempt: att-045
+  why: Gemini TTS PROHIBITED_CONTENT false-positive on the frozen b3 line; regenerated att-048
+- attempt: clip-1-r1 (att-019/028), clip-5-r1 (att-042)
+  why: 'mouths moving under a voice-over (human: ''her lips are moving'') → regenerated att-049/050'
+human_verdicts:
+- version: MQ1-plate
+  verdict: ACCEPT r2
+- version: MQ1-clip
+  verdict: ACCEPT
+- version: plates A/H2/H3/B
+  verdict: ACCEPT
+- version: voice rounds 1–5
+  verdict: rounds 1–4 rejected by ear; round 5 'bubbly' accepted
+- version: V1
+  verdict: REJECT — 'crapy. the video has got some random audio. her lips are omving. the text is coming on figures. all messed up'
+- version: V2
+  verdict: REJECT — 'did cannon say nothing about product positioning? the closing shot should have cumin product and final caption. it does not look like ad at all.
+    the opening is missing too.'
+- version: V3
+  verdict: REJECT — 'this is still bad. the voices are overlapping. not at all happy with it. reject completely.'
+repairs:
+- defect: DF-01 product_fidelity
+  repair: prompt (bowls unmarked side out)
+  attempt: att-008
+  succeeded: true
+- defect: DF-02 audio mix
+  repair: edge trim, per-line LUFS, ducking, limiter
+  cost_usd: 0
+  succeeded: partially — levels fixed, scheduling not (DF-08)
+- defect: DF-03 generation (mouths)
+  repair: closed-mouth prompts, new windows
+  attempt: att-049/050
+  cost_usd: 1.2
+  succeeded: mostly (clip-5 open mouth until 1.2 s, cut around)
+- defect: DF-04 compositor obstruction
+  repair: dense per-frame wall-obstruction gate, per-column wall model, candidate bands
+  cost_usd: 0
+  succeeded: 9:16 yes; 4:5/1:1 no (footage has no room)
+- defect: DF-07 creative_direction
+  repair: brand mark, end card from the brand photo, Direction line, spoken close
+  attempt: att-051
+  cost_usd: 0.01
+  succeeded: structure yes; the assembly was rejected on audio (DF-08)
+known_cost_usd: 5.0907
+ttao_hms: null
+elapsed_to_final_reject_hms: 14h 27m
+versions_and_cycles:
+  versions: 3
+  human_review_cycles: 10
+observed_failures:
+- 'DF-01 plate-A-r1: the model reproduced the bowl''s embossed brand mark from the reference and garbled it'
+- 'DF-02 V1 mix: internal-silence removal shifted VO lines; single-pass loudnorm over a ducked mix pumped'
+- 'DF-03 clip-1/5 r1: Veo animated open-mouth smiles/laughter under a voice-over; r2 closed-mouth prompts held from ~1.2 s'
+- 'DF-04 V1 finals: copy over chopsticks/noodles; contrast probe on 4 frames only; wall gradient misread as subject'
+- 'DF-05 pacing: 23.5–25.6 s vs the 18-s plan — slow VO read drove the length'
+- 'DF-06 dispatch: concurrent processes collided on an attempt id'
+- 'DF-07 structure: no product hero / end card / brand early-throughout / Direction in V1–V2'
+- 'DF-08 V3 audio scheduling: VO lines placed at hand-set start times; measured after the fact: b1 (5.32 s after a −50 dB edge trim) overlaps b2 by 0.92 s, b6 overruns
+  the film end by 0.94 s — the human heard ''voices overlapping''; no overlap/overrun gate existed'
+- '4:5 and 1:1: copy has no wall to sit on after the crop (cards on 3 beats; brand mark absent on most beats) — a 9:16 composition cannot be re-cropped into feed
+  formats'
+root_cause_classes:
+- failure_ref: DF-01
+  class: product_fidelity
+- failure_ref: DF-02
+  class: audio
+- failure_ref: DF-03
+  class: generation
+- failure_ref: DF-04
+  class: compositor
+- failure_ref: DF-05
+  class: pacing
+- failure_ref: DF-06
+  class: infrastructure
+- failure_ref: DF-07
+  class: creative_direction
+- failure_ref: DF-08
+  class: audio (compositor scheduling)
+- failure_ref: 4:5/1:1
+  class: crop
+model_vs_pipeline_tally:
+  media_model_failures_reaching_the_human: 1 (DF-03 mouths; DF-01 was caught before review)
+  pipeline_or_operator_failures_reaching_the_human: 5 (DF-02, DF-04, DF-05, DF-07, DF-08)
+  note: 'the pattern of cases 001 and 002 repeats: the models delivered; the assembly, the QA coverage and the creative structure lost the job'
+directional_model_observations:
+- route: nano-banana-2 + inline reference images (Gemini API) — no Registry cell
+  n: 6
+  accepted: 5
+  observation: bowl geometry, glaze, rim notch and ridges held from the packshot on 5/6 first draws; 1/6 reproduced and garbled the embossed mark; dark acacia chopsticks
+    matched the blog hero when named
+  routing_authority: none
+- route: veo-3.1-fast-i2v 720p 9:16 6 s silent (Vertex)
+  n: 7
+  accepted: 7
+  observation: all 7 technically clean (no lettering, static camera obeyed 6/6, declared push 1/1, product held); two-shots animate mouths unless told 'nobody speaks,
+    mouths closed' and even then open-mouth laughter persisted ~1.2 s from a plate that had it baked in
+  routing_authority: none
+- route: gemini-3.1-flash-tts-preview (Leda) — no Registry cell, job-pinned price
+  n: 12
+  accepted: chosen by the user's ear over Sarvam bulbul:v3 (8 takes) and ElevenLabs v3 (6 takes); style prompts steer pace/affect strongly; 1 PROHIBITED_CONTENT false-positive
+    on an innocuous line; raw output is L16 PCM 24 kHz with long silent tails
+  routing_authority: none
+- route: sarvam-bulbul-v3 (priya/shreya/kavya/roopa, en-IN and hi-IN, pace 0.85–0.9)
+  n: 8
+  accepted: 0
+  observation: all rejected by ear as robotic for a 'calm + cheerful' brief — consistent with case 001 RO-05
+  routing_authority: none
+- route: elevenlabs-v3-direct premade voices (+ audio tags, low stability)
+  n: 6
+  accepted: 0
+  observation: rejected by ear; no Indian-English premade voice on the account; quota exhausted at 54 credits
+  routing_authority: none
+- route: lyria-002
+  n: 1
+  accepted: not judged separately (the human rejected the mixes)
+  observation: 32.8 s bed on a neutral prompt, first try
+  routing_authority: none
+candidate_patterns:
+- id: VO_FIRST_TIMELINE
+  pattern: generate and measure the VO lines BEFORE fixing beat lengths and clip windows; derive the cut from measured speech, never the reverse
+  evidence: DF-05, DF-08
+- id: CLOSED_MOUTH_UNDER_VO
+  pattern: any generated shot with a visible face that will sit under a voice-over is prompted 'nobody speaks, mouths closed' AND its plate must not carry an open
+    mouth
+  evidence: DF-03
+- id: AD_STRUCTURE_MINIMUM
+  pattern: 'until commercial_communication is compiled, the operator blueprint must name: brand early and throughout, a product hero / end card, a Direction line,
+    and an audio brand mention — as blueprint fields the human sees before dispatch'
+  evidence: DF-07; ABCD knowledge in accepted Canon
+- id: GEOMETRY_NEEDS_ITS_OWN_PLATES
+  pattern: feed formats (4:5, 1:1) are planned as their own plates when the 9:16 composition leaves no copy zone after the crop; cropping a vertical macro is not
+    an adaptation
+  evidence: 4:5/1:1 rows across V1–V3
+- id: VOICE_BY_EAR_FIRST
+  pattern: the voice is micro-qualified by the human's ear BEFORE any dependent asset, with style-directed candidates from every credited provider — this job spent
+    5 rounds / 26 takes on it after plates were already drawn
+  evidence: voice rounds 1–5
+candidate_engineering_changes:
+- id: VO_SCHEDULE_GATE
+  closes: DF-08
+  change: schedule VO lines from measured trimmed durations with a token minimum gap; an overlap or an overrun past the film end fails closed (like check_text_bounds)
+- id: WALL_OBSTRUCTION_GATE
+  closes: DF-04
+  change: promote the dense per-frame subject-obstruction check (per-column background model, candidate bands, card only as recorded fallback) into runtime/compositor
+    next to check_contrast
+- id: BACKING_CARD_IN_SAFE_AREA
+  closes: V2 C1 refusals
+  change: a backing card's padded box is part of the bounds check; copy is inset so the card fits
+- id: PER_CANDIDATE_LAYER_FILES
+  closes: V2 4:5 bug
+  change: layout candidates never share output filenames
+- id: ATTEMPT_ID_LOCK
+  closes: DF-06
+  change: attempt ids from a lock or uuid, not a line count
+- id: AUDIO_EDGE_TRIM_ONLY
+  closes: DF-02
+  change: never remove internal silences from a VO line; per-line loudness; music LUFS + ducking; limiter instead of a global loudnorm
+- id: TTS_PCM_WRAP
+  closes: att-019..022 unreadable files
+  change: Gemini TTS returns audio/L16 PCM; wrap to WAV case-insensitively
+canon_gaps:
+- pack: commercial_communication
+  status: fired, uncompiled
+  knowledge_in_accepted_canon: google-abcd-video-ads (brand early/throughout; finish with the product; pack shots; see-and-say; Direction), ogilvy, hopkins
+  failure: DF-07 — the human rejected V1/V2 as 'does not look like an ad at all'
+  recommendation: Controller decision under C-10 on compiling commercial_communication; NOT compiled by this job
+no_promotion_items:
+- the 'Bottom stick, still.' concept and its five-beat structure (job-specific, rejected)
+- type choices (Charter / Avenir Next), colours, the oat end-card ground
+- the specific Leda style prompt wording
+what_this_job_is_not_evidence_for:
+- Capability Registry rows
+- any routing rule
+- Canon effectiveness (the relevant pack was never injected)
+- commercial advantage over a human workflow
