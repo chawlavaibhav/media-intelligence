@@ -1,0 +1,88 @@
+# PROMOTION QUEUE — case CUMINCO-CHOPSTICKS-003. Five classes, one each.
+case_id: CUMINCO-CHOPSTICKS-003
+promoted_now:
+- id: VO_SCHEDULE_GATE
+  kind: deterministic_engineering_requirement
+  where: runtime/compositor/gates.py check_vo_schedule; runtime/tests/test_i_compositor_gates.py VoSchedule
+  rule: voice-over lines are placed from measured trimmed durations; an overlap (or a gap below the token minimum) or an overrun past the film end fails
+    closed — audio overflow fails like text overflow
+  evidence:
+  - SD-08
+  - HD-07
+  test: the case-003 placement (b1 0.30+5.32 s vs b2 4.70) is refused with pair (b1, b2) and overlap 0.92 s; b6 overrun 0.94 s refused
+candidate_patterns:
+- id: WALL_OBSTRUCTION_GATE
+  kind: deterministic_engineering_rule (candidate)
+  rule: copy bands are checked per frame (≥ 4 fps) against a per-column background model for subject obstruction; candidates in order; a card only as a
+    recorded fallback
+  implemented_in_job_as: 'tools/compose.py wall_obstruction + candidate bands (V2/V3: 9:16 0 obstruction)'
+  promotion_condition: ported into runtime/compositor with a test on a known clip; one more production confirms the threshold class (2 %)
+  evidence:
+  - SD-04
+- id: VO_FIRST_TIMELINE
+  kind: production pattern (candidate)
+  rule: generate and measure VO lines before fixing beat lengths and clip windows
+  promotion_condition: one more narrated production built VO-first without a pacing repair
+  evidence:
+  - SD-05
+  - SD-08
+- id: CLOSED_MOUTH_UNDER_VO
+  kind: prompt rule (candidate)
+  rule: a generated shot with a visible face under a voice-over is prompted 'nobody speaks, mouths closed' AND its plate must not carry an open mouth
+  promotion_condition: repeat on one more production; note the ~1.2-s persistence of a baked-in open mouth
+  evidence:
+  - SD-03
+- id: AD_STRUCTURE_MINIMUM
+  kind: operator blueprint fields (candidate)
+  rule: until commercial_communication is compiled, the blueprint names brand early-and-throughout, a product hero / end card, a Direction line and an audio
+    brand mention — shown to the human before dispatch
+  promotion_condition: Controller view on the Canon gap; or two productions where the fields prevented a structure rejection
+  evidence:
+  - SD-07
+- id: GEOMETRY_NEEDS_ITS_OWN_PLATES
+  kind: production pattern (candidate)
+  rule: feed formats are planned as their own plates when the 9:16 composition leaves no copy zone after the crop
+  promotion_condition: one production delivers 4:5/1:1 from dedicated plates without cards
+  evidence:
+  - SD-09
+- id: VOICE_BY_EAR_FIRST
+  kind: workflow ordering (candidate)
+  rule: the voice is micro-qualified by the human's ear, style-directed, across every credited provider, BEFORE plates are drawn
+  promotion_condition: one production where the voice gate precedes plates and the voice is not re-litigated
+  evidence:
+  - 26 takes over 5 rounds after plates were already drawn
+- id: AUDIO_EDGE_TRIM_ONLY
+  kind: operator rule (candidate)
+  rule: never remove internal silences from a VO line; per-line loudness; music by LUFS + sidechain ducking; limiter, not a global loudnorm
+  promotion_condition: a runtime audio assembly module exists to carry it as code
+  evidence:
+  - SD-02
+- id: ATTEMPT_ID_LOCK
+  kind: tooling (candidate)
+  rule: attempt ids from a lock or uuid
+  promotion_condition: the job dispatch tool becomes shared code
+  evidence:
+  - SD-06
+canon_gap_candidates:
+- pack: commercial_communication
+  status: fired by advertising_acceptance_intent; uncompiled (1 of 8 gaps recorded on the job)
+  knowledge_in_accepted_canon: 'google-abcd-video-ads: brand_shows_up_early_and_throughout, full_funnel ''finish with the product'', draw_on_the_full_range_of_branding_assets,
+    see_and_say_audio_brand_mention, direction_ask_for_action; ogilvy-ch2; hopkins'
+  failure: SD-07 / HD-04..06 — the user rejected V1/V2 as 'does not look like an ad at all'
+  proposal: a Controller decision under C-10 on compiling commercial_communication. This case does not compile it, paraphrase it, or add a source.
+directional_only:
+- 'RO-01: nano-banana-2 + inline reference images (Gemini API) — no Registry cell (n=6)'
+- 'RO-02: veo-3.1-fast-i2v 720p 9:16 6 s silent (Vertex) (n=7)'
+- 'RO-03: gemini-3.1-flash-tts-preview (Leda) — no Registry cell, job-pinned price (n=12)'
+- 'RO-04: sarvam-bulbul-v3 (priya/shreya/kavya/roopa, en-IN and hi-IN, pace 0.85–0.9) (n=8)'
+- 'RO-05: elevenlabs-v3-direct premade voices (+ audio tags, low stability) (n=6)'
+- 'RO-06: lyria-002 (n=1)'
+not_promoted:
+- id: NO_CANON_CHANGE
+  reason: report only (above); nothing edited under canon/
+- id: NO_REGISTRY_OR_ROUTING_CHANGE
+  reason: every observation is n ≤ 12, one job, one judge
+- id: NO_TEMPLATE
+  reason: the concept and beat structure were rejected; template_status none
+- id: JOB_SPECIFIC
+  reason: type choices, colours, the Leda style prompt wording, the end-card ground
