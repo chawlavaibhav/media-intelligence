@@ -1,0 +1,48 @@
+# PROMPTS — every generation prompt as sent. No text, lettering or logos anywhere (A1/A3). No brand props.
+plates:
+  plate-A:                       # the anchor still: her, mid-stride, coffee + keys + phone — the character the human gates
+    aspect: "9:16"
+    refs: []
+    prompt: >-
+      Vertical photograph, cinematic, natural light. A young English woman in her mid-twenties, fair skin, light brown
+      hair in a loose ponytail, walking toward the camera at a relaxed pace along a sunlit London pavement — pale stone
+      and brick terraced buildings softly out of focus behind her, a plane tree, a few blurred passers-by far back. She
+      wears a plain white t-shirt, a light-blue denim jacket, straight cream trousers and white trainers, a plain tan
+      leather tote on her left shoulder. In her right hand a plain white paper coffee cup with a plain white lid; in her
+      left hand a plain black smartphone, screen dark, and a small bunch of keys on a plain steel ring hanging from two
+      fingers. Her expression is easy and unhurried, eyes ahead. Late-afternoon sun from camera-left, long soft
+      shadows, warm highlights; shallow depth of field. Full body framed head to trainers with air above her head and
+      pavement below her feet; nothing overlaps her. No text, no lettering, no logos, no printed matter, no signage
+      anywhere in the image; the phone screen is dark and blank.
+clips:
+  take-1:                        # the continuous take — Gemini Omni 1.1 Flash i2v, 10 s, 9:16, 720p; the accepted plate is the first frame
+    from: plate-A-accepted
+    prompt: >-
+      Continuous single take, handheld cinematic camera walking backwards slightly ahead of her, keeping her full body in
+      frame the whole time; no cuts. Seconds 0 to 4: she walks toward the camera at a relaxed pace, sipping from the
+      paper coffee cup once, phone and keys in her other hand, the street behind her drifting past. Seconds 4 to 5: a
+      young man on a skateboard rolls in fast from frame-right and clips her shoulder as he passes; she is knocked
+      half a step sideways, her arms fly up, and the coffee cup, the phone and the keys leave her hands. Seconds 5 to
+      10: time slows to extreme cinematic slow motion — the cup tumbling with an arc of coffee spilling out of it, the
+      phone turning end over end, the keys spinning and catching the sun, all hanging in the air around her at head
+      height while her hair and jacket lift; her face turns toward the flying cup, mouth open in surprise; the
+      skateboarder blurs out of frame. The camera holds steady and slowly pushes in during the slow motion. Everything
+      stays in the same sunlit street; same clothes, same face, same light. No text, no lettering, no logos.
+    negative: "text, lettering, logos, captions, subtitles, watermark, cuts, jump cuts, extra people close to her, second woman, distorted hands, extra fingers, warped face"
+  take-1-veo:                    # declared fallback: Veo 3.1 Fast i2v 8 s (clean VID-I2V cell, 5/8) if Omni refuses or fails the gate twice
+    from: plate-A-accepted
+    prompt: >-
+      Continuous single take, camera walking backwards slightly ahead of her, full body in frame, no cuts. She walks
+      toward the camera sipping from the paper coffee cup, phone and keys in her other hand. A young man on a
+      skateboard rolls in fast from frame-right and clips her shoulder; she is knocked half a step sideways, her arms
+      fly up, and the cup, the phone and the keys leave her hands. Then extreme cinematic slow motion: the cup tumbles
+      spilling an arc of coffee, the phone turns end over end, the keys spin and catch the sun, all hanging in the air
+      around her while her hair lifts and her face turns toward the cup in surprise. Same street, clothes, face and
+      light throughout. No text, no lettering, no logos.
+    negative: "text, lettering, logos, captions, watermark, cuts, extra people close to her, distorted hands, extra fingers, warped face"
+music:
+  prompt: >-
+    Bright, playful, modern instrumental for a short social video: upbeat plucked synth and light percussion at a
+    walking tempo, a clean break at the 4-second mark into a dreamy, slowed, reverb-washed half-time feel with a
+    soft rising pad, no vocals, no drums fills, about 20 seconds.
+  negative: "vocals, lyrics, heavy drums, brass, distorted guitar"

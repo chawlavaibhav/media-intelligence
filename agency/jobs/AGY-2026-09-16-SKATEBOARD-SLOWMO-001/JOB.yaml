@@ -29,110 +29,162 @@ brief:
 
 # ── 2. INTAKE ─────────────────────────────────────────────────────────────────
 intake:
-  commercial_objective: null      # REQUIRED  one sentence: what this asset must make happen
-  audience: null                  # REQUIRED
-  channel: null                   # REQUIRED  e.g. Meta feed + Reels, WhatsApp, Upwork portfolio
-  deliverable_type: null          # REQUIRED  kind from runtime/contracts/DELIVERABLE-KINDS.yaml or a named agency class
-  package: null                   # for customer_work: the PROFILE.md package + tier this maps to
-  dimensions_aspects: []          # REQUIRED  e.g. ["1080x1350 4:5", "1080x1080 1:1", "1080x1920 9:16", "800x800 WA"]
-  count: null
-  product_reference_assets: []    # refs into brief.attachments
-  mandatory_text: []              # REQUIRED  [{role: headline|offer|code|validity|tagline|cta|legal|brand_line, value, script: latin|devanagari|..., may_reflow: bool, placement: overlay|in_scene}]
-  offer: null
-  cta: null
-  language: []                    # REQUIRED  e.g. [en, hi]
-  brand_constraints: {colours: [], fonts: [], tone: null, forbidden: []}
-  duration_s: null                # video only
-  deadline: null                  # REQUIRED  absolute time with zone
-  spend_ceiling_stated: null      # what the customer / user said about money, verbatim
-  assumptions: []                 # every production judgment made for a missing non-critical value
-  questions_asked: []             # [{question, why_material, answer}] — only what could invalidate the output
+  commercial_objective: "A 10–15 s Instagram reel for the user's own account: the ordinary walk, the skateboard bump, and everything hanging in the air in slow motion — the sample's single-take structure with a skateboarder instead of a walker."
+  audience: "the user's Instagram followers"
+  channel: "Instagram Reels (9:16)"
+  deliverable_type: multi_shot_story           # one continuous generated take + a code slow-down; outside Alpha-1 (C-7) under the user's job authorisation
+  package: "n/a — the user's own reel"
+  dimensions_aspects: ["1080x1920 9:16"]
+  count: 1
+  product_reference_assets: []
+  mandatory_text: []                           # no copy — the user chose music only, no text
+  offer: none
+  cta: none
+  language: []
+  brand_constraints: {colours: [], fonts: {}, tone: "playful, cinematic, dramatic slow motion (the sample)", forbidden: ["any real person's likeness (the user chose a generated character)", "text, lettering, logos, brand props", "cuts (one continuous take)"]}
+  duration_s: "12–15 (10-s take + code slow-down of the tail)"
+  deadline: "none stated; TTAO is the clock (2026-09-16T18:01:53Z plan)"
+  spend_ceiling_stated: "USD 8 (Recommended) — whole job incl. repairs, 0 retries, hard stop (user, this session)"
+  assumptions:
+    - "Character: 'english woman' (user) — mid-twenties, light-brown ponytail, white tee, light denim jacket, cream trousers, white trainers, tan tote; London terraced street, late-afternoon sun. Plain, unbranded coffee cup, phone (dark screen) and keys."
+    - "The sample is a style/structure reference only (a screen recording of a generated-looking reel); its woman is not the user (user chose a generated character)."
+    - "Slow motion: asked for in-prompt from second 5 AND applied by code to the tail (minterpolate 2×) so the 10-s take lands at 12–15 s."
+    - "Pools: credits only (fal excluded, as the previous job); the user attested the credits cover USD 8 today."
+  questions_asked:
+    - {question: "own likeness or a generated character?", why_material: "a real person's likeness has no clean route on credits", answer: "A generated character (Recommended)"}
+    - {question: "spend cap?", why_material: "no paid draw without it", answer: "USD 8 (Recommended)"}
+    - {question: "one continuous take or three cut shots?", why_material: "changes routes and risk", answer: "One continuous take (like the sample)"}
+    - {question: "sound and text?", why_material: "text mechanism / audio routes", answer: "Music only, no text"}
+    - {question: "character and setting?", why_material: "the anchor plate", answer: "english woman"}
+    - {question: "pools still credits only; do they cover USD 8?", why_material: "A7", answer: "Yes — credits only, they cover it"}
 
-# ── 2b. NORMALIZED REQUEST (CANON-010 vocabulary; conservative; never edited later) ────────
+# ── 2b. NORMALIZED REQUEST ────────────────────────────────────────────────────
 nr:
-  modality: null                  # REQUIRED  static_image | video | image_sequence | audio  (R05)
-  modality_provenance: customer_stated   # customer_stated | customer_implied
-  requested_operation: null       # REQUIRED  generate | edit | animate | restore | extend | compose | variants  (R01)
-  entities: []                    # product | packshot | person | logo | scene | prior_creative
-  text_requirements: []           # mirrors intake.mandatory_text
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: generate
+  entities: [person, scene]
+  text_requirements: []
   language_topology: []
-  market: null                    # e.g. IN
-  advertising_acceptance_intent: true
-  ambiguity_markers: []           # from runtime/canon/KIND-NR-BINDING-v0.yaml
+  market: IN
+  advertising_acceptance_intent: false          # a personal reel, not an advertisement
+  ambiguity_markers: ["'I'm walking' vs a generated character — resolved by the user", "10–15 s vs a 10-s model cap — resolved by a code slow-down of the tail"]
+  runtime_nr_source: brief.job.json
 
 # ── 3. TEMPLATE / LEARNING FIRST ─────────────────────────────────────────────
 template:
-  reused: null                    # REQUIRED  <template_id> | none
-  reason: null
-  numbers_carried: []             # [{rule, value, evidence_scope: this_accepted_template}] — starting points, not norms
-  learning_applied: []            # [{case, id (SD-xx / RO-xx / pattern), how}]
+  reused: none
+  reason: "no accepted template for a single-take stunt reel; production logic and QA of cases 001–003 reused"
+  numbers_carried: []
+  learning_applied:
+    - {case: CUMINCO-CHOPSTICKS-003, id: STILLS_FIRST + human gate, how: "the character plate is gated before the take"}
+    - {case: CUMINCO-CHOPSTICKS-003, id: ATTEMPT_ID_LOCK, how: "attempt ids under an exclusive lock in tools/dispatch.py"}
+    - {case: CUMINCO-CHOPSTICKS-003, id: VO_SCHEDULE_GATE / VO_FIRST, how: "no VO in this job; the music break is placed from the measured bump time in the accepted take, never from the plan"}
+    - {case: CUMINCO-CHOPSTICKS-003, id: CLOSED_MOUTH_UNDER_VO, how: "n/a (no VO); mouth open in surprise is wanted"}
+    - {case: UPWORK-PORTFOLIO-002, id: RO-01, how: "no extend chains; one generation"}
+    - {case: UPWORK-INTRO-001, id: VIDEO_FRAME_TEXT_HYGIENE, how: "the take is frame-sampled; the plate's cleanliness transfers nothing"}
 
 # ── 4. CANON ─────────────────────────────────────────────────────────────────
 canon:
-  packs_selected: []              # REQUIRED  every pack id the trigger table fired
-  packs_injected: []              # REQUIRED  the compiled+accepted subset actually used
-  missing_domains: []             # fired but not compiled — recorded, never invented
-  prefix_sha256: null             # from runtime lookup when used
+  packs_selected: [concept_and_distinctiveness, critique_and_effectiveness, composition_and_attention, colour_and_visual_register, camera_and_spatial_grammar, editing_pacing_and_short_form, indian_indic_context, commercial_communication]
+  packs_injected: [composition_and_attention]
+  missing_domains: [concept_and_distinctiveness, critique_and_effectiveness, colour_and_visual_register, camera_and_spatial_grammar, editing_pacing_and_short_form, indian_indic_context, commercial_communication]
+  prefix_sha256: c81644f61d9d39a5   # runtime.canon.lookup (prefix 2825 tokens, 11 check ids)
+  lookup_source: brief.job.json
 
 # ── 5. CREATIVE BLUEPRINT ────────────────────────────────────────────────────
 blueprint:
-  concept: null                   # REQUIRED  the idea in two sentences
-  first_read: [null, null, null]  # REQUIRED  1st / 2nd / 3rd read, one cue each (CA-D1)
-  hook: null                      # REQUIRED
-  offer_placement: null
-  product_placement: null
-  proof: null
-  cta_placement: null
-  attention_order: null           # REQUIRED
-  brand_world: null               # REQUIRED  one light source, palette, register
-  remember: null                  # REQUIRED  the one thing kept
-  muted_test: null                # video: yes | no | n-a
-  hindi_copy_origination: null    # originated | translated — must be originated when Hindi is exact
-  check_lines: {}                 # REQUIRED  {PA-D1: pass|n-a|deviation:<clause>, ... CA-D11: ...}
-  deviations: []                  # [{decision_id, brief_clause}]
-  reviews: []                     # [{reviewer: karl|ezra|human, verdict, note}] — input, not acceptance
+  concept: "One continuous take. She walks toward us with her coffee, keys and phone; a skateboarder clips her shoulder; everything leaves her hands — and time slows so the cup, the phone and the keys hang in the air around her face. The slow motion is the joke and the beauty."
+  first_read: ["her face and stride (the only moving person)", "the skateboarder entering frame-right", "cup, phone and keys in the air"]
+  hook: "the bump at second 4 — the viewer sees it coming a beat before she does"
+  offer_placement: none
+  product_placement: "n/a — plain props"
+  proof: n/a
+  cta_placement: none
+  attention_order: "her → the skater → the objects; one device: a continuous handheld walk-back that steadies and pushes in for the slow motion"
+  brand_world: "one low late-afternoon sun camera-left; London stone and brick; denim, white, cream, tan; slow-motion tail"
+  remember: "the coffee arc hanging in the air"
+  muted_test: "yes — no words; the music break only underlines the bump"
+  hindi_copy_origination: n/a
+  check_lines:
+    PA-D1: "n-a — no product pack; props' finishes declared in the prompt (cup matte, phone glossy dark, keys glossy)"
+    PA-D2: n-a
+    PA-D3: n-a
+    PA-D4: "pass — one sun, camera-left, named in every prompt"
+    PA-D5: n-a
+    PA-D6: n-a
+    PA-D7: n-a
+    PA-D8: "pass — phone screen declared dark and blank; keys' glints declared wanted"
+    PA-D9: n-a
+    PA-D10: "pass — no deviation"
+    CA-D1: "pass — one cue per beat: her stride / the skater entering / the objects in the air"
+    CA-D2: "pass — centred full body because the objects fly around her and must stay in frame; no ratio"
+    CA-D3: "pass — head and feet inside the frame with air; no tangency"
+    CA-D4: n-a
+    CA-D5: "pass — declared balanced (her centred), then deliberately restless at the bump"
+    CA-D6: "pass — 9:16 justified by a standing full-body figure and the Reels slot"
+    CA-D7: "pass — single shot; the new information is the bump then the flight; device: continuous take + slow-motion change"
+    CA-D8: "pass — emotion (her surprise) is never sacrificed; the skater may blur"
+    CA-D9: "pass — the skater enters frame-right and exits frame-left; she stays centred"
+    CA-D10: "pass — 4 s walk / 1 s bump / 5 s slow motion (code-stretched to 8–10 s); Reels norm named"
+    CA-D11: "pass — handheld walk-back motivated by following her; the push-in motivated by the slow-motion beat"
+  deviations: []
+  reviews: []
 
 # ── 6–7. PRODUCTION PLAN + ROUTES ────────────────────────────────────────────
 plan:
-  assets:                         # REQUIRED  one entry per asset, dependencies explicit
-    - id: null                    # e.g. plate-A
-      purpose: null
+  assets:
+    - id: plate-A
+      purpose: "the character anchor still — full body, coffee + keys + phone, the street and the light"
       depends_on: []
-      reuse_of: null              # path @ sha256 of an already-accepted asset, or null
-      reuse:                      # DESIGN_REUSE_PROVENANCE (case 002) — REQUIRED whenever reuse_of is set or a treatment/component is carried in
-        source_asset: null        # path @ sha256, or <case>/<version>/<component>
-        source_verdict: null      # the human verdict that source actually received (accept | specific_repair | rebuild_direction | reject)
-        reuse_status: null        # rejected | accepted_in_context | reusable_candidate
-        context_changed: null     # true if aspect, plate, subject or context differs from the source
-        fresh_qa_required: null   # true whenever context_changed or reuse_status != reusable_candidate
-        human_reapproval: null    # verbatim, REQUIRED when reuse_status == rejected; else null
-      exact_text_mechanism: code_set_on_textless_plate   # | generated_in_scene (only with RR-2 evidence + job need) | none
-      route:
-        cell: null                # e.g. IMG-CORE/flux-2-pro
-        evidence_status: null     # clean_observed | directional_only
-        production_use_allowed: null   # true | manual_only (+ user OK recorded) — never false
-        surface: null             # fal | vertex | gemini_api | sarvam_direct | elevenlabs_direct | code
-        pool: null                # cash | credits | sarvam_credits | elevenlabs_credits | none
-        unit_price_usd: null      # live roster/pin price at plan time
-        quantity: null
-        planned_draws: null
-        fallback_cell: null       # declared, or none with reason
-        why: null                 # evidence + requirement + price, one line
-        directional_notes_used: []   # RO-xx ids used as tie-breakers only
-  deliverables: []                # REQUIRED  every final delivered geometry: [{id, geometry: 1:1|4:5|9:16|WA|16:9|..., pixels, from_asset}] — each gets its own qa.final_geometry row
-  micro_qualifications: []        # [{capability, route, cost_usd, human_gate_verdict, frozen_asset}]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: none
+      route: {cell: IMG-CORE/nano-banana-2, evidence_status: clean_observed, production_use_allowed: true, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, planned_draws: 2, fallback_cell: "IMG-CORE/nano-banana-pro (4/8, USD 0.134, credits)", why: "cheapest clean image cell on credits (7/8); no references needed", directional_notes_used: []}
+    - id: take-1
+      purpose: "the continuous 10-s take from the accepted plate: walk → bump → slow motion"
+      depends_on: [plate-A]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: none
+      route: {cell: "VID-T2V/gemini-omni-1.1-flash (8/8 clean) used as image-to-video — the i2v task is directional (case 002 RO-05, n=1 ok)", evidence_status: "clean_observed (t2v) / directional_only (i2v task)", production_use_allowed: "true (t2v cell); i2v under the human gate", surface: vertex, pool: credits, unit_price_usd: 0.10136, quantity: "10 s", planned_draws: "1 (+2 redraws — the collision is the risky beat)", fallback_cell: "VID-I2V/veo-3.1-fast-i2v (5/8 clean, USD 0.10/s, 8 s max) — declared; used if Omni refuses or fails the frame gate twice", why: "the only credits route that gives 10 s in one generation (the sample's structure); Omni t2v 8/8 is the strongest video evidence on credits", directional_notes_used: ["case 002 RO-05"]}
+    - id: music
+      purpose: "playful bed with a break at the bump; placed by code from the measured bump time; trimmed and faded"
+      depends_on: [take-1]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: none
+      route: {cell: MUS/lyria+native, evidence_status: clean_observed, production_use_allowed: true, surface: vertex, pool: credits, unit_price_usd: 0.06, quantity: 1, planned_draws: "1 (+1)", fallback_cell: none, why: "RR-13", directional_notes_used: []}
+    - id: assembly
+      purpose: "declared lanczos upscale 720p→1080p; code slow-down of the tail (minterpolate 2×) to reach 12–15 s; music break placed at the measured bump; loudness"
+      depends_on: [take-1, music]
+      reuse_of: null
+      reuse: {source_asset: null, source_verdict: null, reuse_status: null, context_changed: null, fresh_qa_required: null, human_reapproval: null}
+      exact_text_mechanism: none
+      route: {cell: code, evidence_status: n/a, production_use_allowed: true, surface: code, pool: none, unit_price_usd: 0, quantity: 1, planned_draws: n/a, fallback_cell: none, why: "deterministic", directional_notes_used: []}
+  deliverables:
+    - {id: D-916, geometry: "9:16", pixels: "1080x1920", from_asset: assembly, duration_s: "12–15"}
+  micro_qualifications:
+    - {capability: "a generated character (plate) the user accepts as the subject; then one continuous take with a collision and in-prompt slow motion on Omni i2v", route: "nano-banana-2 → gemini-omni-1.1-flash i2v 10 s", cost_usd: 1.08, human_gate_verdict: null, frozen_asset: null}
   composition:
-    token_source: null            # the one DesignTokens source
-    fonts: {latin: null, devanagari: null}
-    shaping: hb-view+Pillow
-  expected_spend_usd: null        # REQUIRED  Σ planned draws × price, with fallbacks
-  start_of_job_summary_shown_utc: null   # when concept + route + expected spend were shown to the user
+    token_source: n/a (no copy)
+    fonts: {latin: n/a, devanagari: n/a}
+    shaping: n/a
+  expected_spend_usd:
+    clean_pass: 1.14      # plate 0.067 + take 1.014 + music 0.06
+    with_evidence_based_redraws: 3.24   # +1 plate + 2 takes
+    with_fallback_and_repair: 4.10      # + Veo 8-s fallback 0.80
+    cap: "USD 8 (user, this session), 0 retries"
+  start_of_job_summary_shown_utc: 2026-09-16T18:01:53Z
 
 # ── 8–9. SPEND (money moves only here) ───────────────────────────────────────
 spend:
-  cap: null                       # REQUIRED before any paid call: {amount, currency, stated_by, stated_utc, covers, retries_allowed: 0}
+  cap: {amount: 8, currency: USD, stated_by: "Vaibhav Chawla (user, this session)", stated_utc: "2026-09-16T18:01:53Z", covers: "the entire job incl. repairs; hard stop at USD 8", retries_allowed: 0}
   cap_lineage: []                 # earlier caps this one amends; consumed spend carries forward (C-6a)
-  pool_readings: []               # [{pool, balance_usd, read_utc, source}] — no reading, no dispatch
+  pool_readings:
+    - {pool: vertex_credits, balance_usd: null, read_utc: "2026-09-16T18:01:53Z", source: "user attestation in chat this session: 'Yes — credits only, they cover it' (USD 8)"}
+    - {pool: gemini_credits, balance_usd: null, read_utc: "2026-09-16T18:01:53Z", source: "same attestation"}
+    - {pool: fal_cash, balance_usd: "excluded by the user", read_utc: "2026-09-16T18:01:53Z", source: "user: credits only"}
   attempts: []                    # one line per paid call, appended before the request leaves, settled after:
   #  - {attempt_id, asset_id, route_cell, surface, pool, unit_price_usd, quantity, reserved_usd, settled_usd,
   #     start_utc, end_utc, latency_s, status: ok|provider_refusal|infrastructure_transient|unclassified,
@@ -143,7 +195,17 @@ spend:
 
 # ── 10–11. QA ────────────────────────────────────────────────────────────────
 qa:
-  pre_dispatch: {}                # A1..A10 → {status, evidence}
+  pre_dispatch:
+    A1: {status: PASS, evidence: "run_gate.py pre: plate-A GATE PASS; take-1 / take-1-veo LIMIT-TEXT PASS (non-blocking CA-D7: single shot)"}
+    A2: {status: PASS, evidence: "check_lines rendered"}
+    A3: {status: PASS, evidence: "no exact text in this job; every prompt carries an explicit no-text clause; phone screen declared blank"}
+    A4: {status: PASS, evidence: "nano-banana-2 clean use=true; omni t2v clean use=true (i2v task directional, under the gate); veo-3.1-fast-i2v clean use=true; lyria clean"}
+    A5: {status: PASS, evidence: "PriceBook quotes 2026-09-16T18:01:53Z: 0.067 / 0.10136 per s / 0.10 per s / 0.06"}
+    A6: {status: PASS, evidence: "cap USD 8 stated this session; clean pass 1.14, with redraws 3.24"}
+    A7: {status: "PASS (attestation)", evidence: "user attested credits cover USD 8 today; fal excluded"}
+    A8: {status: N/A, evidence: "generated character; no supplied person (the sample is a style reference only, not used as a likeness)"}
+    A9: {status: NOT_RUN, evidence: "plate gate pending"}
+    A10: {status: PASS, evidence: "job_start 17:55:03Z; planning_complete 2026-09-16T18:01:53Z"}
   post_draw: []                   # per still: {asset_id, B1..B6}
   composition: []                 # per rendered file: {file, C1..C8}
   video_frames: []                # per clip: {asset_id, sampled_timestamps: [], D1..D13}
@@ -175,8 +237,8 @@ outcome:
 # ── 17. TIME (all UTC, from `date -u`; never reconstructed) ──────────────────
 ttao:
   job_start_utc: 2026-09-16T17:55:03Z
-  planning_complete_utc: null
-  dispatch_start_utc: null
+  planning_complete_utc: 2026-09-16T18:01:53Z
+  dispatch_start_utc: 2026-09-16T18:01:53Z   # att-001 plate-A
   dispatch_end_utc: null
   artifact_received_utc: null
   qa_complete_utc: null
