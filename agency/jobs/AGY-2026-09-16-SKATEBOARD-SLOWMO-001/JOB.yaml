@@ -189,9 +189,9 @@ spend:
   #  - {attempt_id, asset_id, route_cell, surface, pool, unit_price_usd, quantity, reserved_usd, settled_usd,
   #     start_utc, end_utc, latency_s, status: ok|provider_refusal|infrastructure_transient|unclassified,
   #     failure_basis, artifact_path, artifact_sha256, verdict: accepted|rejected|not_selected|failed, is_repair: bool}
-  total_reserved_usd: 1.1406      # 3 attempts, all ok
+  total_reserved_usd: 2.2212      # 5 attempts, all ok
   total_settled_usd: null         # if the provider reports it; vendor statements are a separate reconciliation
-  cap_remaining_usd: 6.8594
+  cap_remaining_usd: 5.7788
 
 # ── 10–11. QA ────────────────────────────────────────────────────────────────
 qa:
@@ -227,7 +227,22 @@ qa:
       D12: "PASS — 720x1280 24 fps 10.000 s as dispatched"
       D13: "qa/take-1-r1-contact.png; qa/take-1-r1-flight-dense.png"
       window_used: "0.00–6.90 s; 5.20–6.90 slowed 4× by motion interpolation; tail 6.90–10.0 unused"
+    - asset_id: take-2-r1 (att-005, repair)
+      file: gen/clips/take-2-r1.mp4
+      sha256: 129f2cca39c2c6809e438efcaa5473f5e67635785b0d0eec9f2878691b952bf0
+      sampled_timestamps: "every 0.5 s (20 frames)"
+      D1: "PASS — no lettering in any sampled frame (human eye)"
+      D3: "PASS — same woman as plate-A (identity carried through plate-B by reference); clothes, tote, street held"
+      D4: "PASS — at 4.5 s both hands open; cup, phone AND keys leave her hands; one phone; five fingers where visible"
+      D5: "PASS — the push-in on her face 7–9.5 s holds eyes, teeth, symmetry (larger face than V1: checked at 9.5 s)"
+      D6: "PASS — walk-back then push-in as declared"
+      D8: "PASS — waist-up framing as requested; head never cut"
+      D9: "PASS — coffee arc plausible; cup falls below frame ~6.5 s; no cup-returns-to-hand this time"
+      D12: "PASS — 720x1280 24 fps 10.000 s"
+      D13: "qa/take-2-r1-contact.png"
+      window_used: "0.00–9.20 s; 4.90–6.60 at 3×, 6.60–9.20 at 1.5× (the push-in); tail unused"
   final_geometry:
+    - {"version": "V2", "deliverable_id": "D-916", "file": "gen/final/v2/skateboard-slowmo-9x16.mp4", "geometry": "9:16", "pixels": "1080x1920", "sha256": "d214ab64a84b95bdc79b7e7fe2b0d8ff99a7eaa0f00d92e8480d035584132b09", "duration_s": 14.46, "CF1": "C8 PASS (1080x1920 24 fps h264+aac; declared lanczos upscale)", "CF2": "N/A \u2014 no copy", "CF3": "PASS \u2014 interpolated frames inspected at 1 fps (human eye)", "CF4": "PASS", "audio": "music normal to 4.90 s (measured), then slowed/low-passed; \u221216 dB", "status": "PASS"}
     - {"deliverable_id": "D-916", "file": "gen/final/skateboard-slowmo-9x16.mp4", "geometry": "9:16", "pixels": "1080x1920", "sha256": "93fc848822cab3bdd141e127f26cbe5dbd230f5a24fd9f4ec52d1456615b8186", "duration_s": 12.46, "CF1": "C8 PASS (1080x1920 24 fps h264+aac; declared lanczos upscale); C1\u2013C7 N/A (no copy)", "CF2": "N/A \u2014 no copy", "CF3": "PASS \u2014 interpolated frames inspected at 1 fps: no tearing, edges clean (human eye)", "CF4": "PASS \u2014 nothing in the Reels UI bands (no overlays)", "CF5": "N/A", "audio": "music \u221216 dB throughout; slow-down effect keyed at the measured 5.20 s", "status": "PASS with D4 flags for the human"}
   #  - {deliverable_id, file, geometry, sha256, C1..C8, CF1..CF5, status}   — a master's PASS transfers to nothing
   voice_continuity:               # CROSS_CLIP_VOICE_CONTINUITY (case 002): REQUIRED when 2+ clips represent one narrator/speaker
@@ -241,11 +256,14 @@ qa:
     per_clip_transcripts_match: null   # D10 — presence only; never substitutes for the rows above
     human_ear_verdict: null       # verbatim; release authority
   delivery: {}                    # E1..E4
-  defects: []                     # [{id, asset_id, observed, class: creative_direction|generation|audio|route|compositor|crop|text|product_fidelity|pacing|infrastructure, repair_layer, repaired_by_attempt}]
+  defects:
+    - {id: DF-01, asset_id: take-1-r1, observed: "second phone-like object stays in her left hand; keys never leave her hand; cup returns to her hand at 7.0 s", class: generation, repair_layer: "prompt: 'both hands open and empty… her left hand opens completely'; negative 'a second phone, objects still in her hands'", repaired_by_attempt: att-005}
+    - {id: DF-02, asset_id: V1, observed: "human: 'more zoomed in… during slomo the focus is there' — wide full-body framing reads flat next to the sample's medium framing", class: creative_direction, repair_layer: "medium-framed plate (plate-B, plate-A as identity reference) + new take with an in-prompt push-in; assembly slows the flight 3× then the push-in 1.5×", repaired_by_attempt: "att-004, att-005"}
 
 # ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
 versions:
   - {version: "plate gate", presented_utc: "2026-09-16T18:02Z", assets: [plate-A-r1], verdict: ACCEPT, verdict_verbatim: "accept", decided_utc: "2026-09-16T18:03Z"}
+  - {version: V2, presented_utc: "2026-09-16T18:16:59Z", assets: ["gen/final/v2/skateboard-slowmo-9x16.mp4"], verdict: null, verdict_verbatim: null, decided_utc: null, repair_of: "V1 — user: 'could it be a more zoom in version. the video sample is more zoomed in and during slomo the focus is there.' → class crop/creative_direction; medium plate (plate-A as identity reference) + new take; USD 1.08"}
   - {version: V1, presented_utc: "2026-09-16T18:09:43Z", assets: ["gen/final/skateboard-slowmo-9x16.mp4"], verdict: null, verdict_verbatim: null, decided_utc: null}
 outcome:
   status: null                    # accepted | rejected | abandoned  — accepted ONLY from a human ACCEPT

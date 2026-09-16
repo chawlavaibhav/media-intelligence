@@ -14,7 +14,37 @@ plates:
       shadows, warm highlights; shallow depth of field. Full body framed head to trainers with air above her head and
       pavement below her feet; nothing overlaps her. No text, no lettering, no logos, no printed matter, no signage
       anywhere in the image; the phone screen is dark and blank.
+  plate-B:                       # V2 repair (user: 'more zoomed in… during slomo the focus is there'): the same woman, medium framing, plate-A as the identity reference
+    aspect: "9:16"
+    refs: [plate-A-accepted]
+    prompt: >-
+      Vertical photograph, cinematic, natural light — the same young English woman as the reference photograph, same
+      face, same loose light-brown ponytail, same white t-shirt, light-blue denim jacket, tan leather tote, same sunlit
+      London street of pale stone and brick terraces with a plane tree, softly out of focus. Now framed CLOSER: a
+      medium shot from just below the waist to a little above her head, the camera at chest height about two metres
+      in front of her, walking toward the camera. In her right hand, raised near her chest, a plain white paper coffee
+      cup with a plain white lid; in her left hand, held up at waist height so both are clearly visible, a plain black
+      smartphone with a dark blank screen and a small bunch of keys on a plain steel ring hooked over her fingers. Easy,
+      unhurried expression, eyes ahead. Late-afternoon sun from camera-left, warm highlights, shallow depth of field.
+      Air above her head; nothing overlaps her. No text, no lettering, no logos, no printed matter, no signage anywhere;
+      the phone screen is dark and blank.
 clips:
+  take-2:                        # V2: the continuous take from the MEDIUM plate — the objects fill the frame in the slow motion
+    from: plate-B-accepted
+    prompt: >-
+      Continuous single take, handheld cinematic camera at chest height walking backwards just ahead of her, keeping
+      her from the waist up in frame the whole time, close enough that her face and both hands fill the frame; no
+      cuts. Seconds 0 to 4: she walks toward the camera at a relaxed pace, sipping once from the paper coffee cup,
+      the phone and the keys held up in her other hand. Seconds 4 to 5: a young man on a skateboard rolls in fast
+      from frame-right and clips her shoulder as he passes; she is knocked half a step sideways, both her hands fly
+      open, and the coffee cup, the phone and the keys all leave her hands — her left hand opens completely and is
+      empty. Seconds 5 to 10: time slows to extreme cinematic slow motion — the cup tumbling close to the camera with
+      an arc of coffee spilling out, the phone turning end over end, the keys spinning and catching the sun, all
+      hanging in the air around her face while her hair and jacket lift; her face turns toward the flying cup, mouth
+      open in surprise; both hands stay open and empty; the skateboarder blurs out of frame. The camera holds steady
+      and slowly pushes in on her face during the slow motion. Same street, same clothes, same face, same light.
+      No text, no lettering, no logos.
+    negative: "text, lettering, logos, captions, subtitles, watermark, cuts, jump cuts, extra people close to her, second woman, a second phone, objects still in her hands after the bump, distorted hands, extra fingers, warped face"
   take-1:                        # the continuous take — Gemini Omni 1.1 Flash i2v, 10 s, 9:16, 720p; the accepted plate is the first frame
     from: plate-A-accepted
     prompt: >-

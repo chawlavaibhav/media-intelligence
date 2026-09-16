@@ -20,13 +20,13 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 JOB = HERE.parent
-TAKE = JOB / "gen/clips/take-1-accepted.mp4"
+TAKE = JOB / "gen/clips/take-2-accepted.mp4"      # V2: the medium-framed take (user: 'more zoomed in')
 MUSIC = JOB / "gen/music/bed-r1.wav"
 FPS = 24
-CUT_S = 5.20          # measured on the sampled frames: the objects have left her hands; the skater is past
-END_S = 6.90          # measured: at ~7.0 s the cup returns to her hand — not used
-SLOW_X = 4            # 1.70 s of flight → 6.8 s of slow motion
-HOLD_S = 0.6          # freeze on the last flight frame, fade out
+CUT_S = 4.90          # measured on the sampled frames of take-2: both hands have opened; cup, phone and keys are in the air
+SEGMENTS = [(4.90, 6.60, 3), (6.60, 9.20, 1.5)]   # (from, to, slow factor): the flight at 3×, then the push-in on her face at 1.5×
+END_S = 9.20          # after 9.2 s the objects are below the frame; unused
+HOLD_S = 0.5
 W, H = 1080, 1920
 
 
@@ -48,12 +48,17 @@ def main():
     # A — normal speed
     run(["ffmpeg", "-v", "error", "-y", "-ss", "0", "-t", f"{CUT_S}", "-i", str(TAKE), "-an", "-vf", f"{up},fps={FPS},format=yuv420p",
          "-c:v", "libx264", "-preset", "medium", "-crf", "16", str(work / "A.mp4")])
-    # B — slow motion by interpolation: interpolate to FPS*SLOW_X, then stretch pts by SLOW_X → smooth SLOW_X× slower
-    flight = END_S - CUT_S
-    run(["ffmpeg", "-v", "error", "-y", "-ss", f"{CUT_S}", "-t", f"{flight}", "-i", str(TAKE), "-an",
-         "-vf", f"{up},minterpolate=fps={FPS * SLOW_X}:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1,setpts={SLOW_X}*PTS,fps={FPS},tpad=stop_mode=clone:stop_duration={HOLD_S},fade=t=out:st={flight * SLOW_X + HOLD_S - 0.5:.3f}:d=0.5,format=yuv420p",
-         "-c:v", "libx264", "-preset", "medium", "-crf", "16", str(work / "B.mp4")])
-    (work / "concat.txt").write_text(f"file '{work / 'A.mp4'}'\nfile '{work / 'B.mp4'}'\n")
+    # B… — slow motion by interpolation per segment: interpolate to FPS*factor, stretch pts by the factor
+    segs = [work / "A.mp4"]
+    for i, (f0, f1, x) in enumerate(SEGMENTS):
+        seg = work / f"B{i}.mp4"; last = i == len(SEGMENTS) - 1
+        vf = f"{up},minterpolate=fps={int(FPS * x)}:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1,setpts={x}*PTS,fps={FPS}"
+        if last:
+            vf += f",tpad=stop_mode=clone:stop_duration={HOLD_S},fade=t=out:st={(f1 - f0) * x + HOLD_S - 0.5:.3f}:d=0.5"
+        run(["ffmpeg", "-v", "error", "-y", "-ss", f"{f0}", "-t", f"{f1 - f0}", "-i", str(TAKE), "-an", "-vf", vf + ",format=yuv420p",
+             "-c:v", "libx264", "-preset", "medium", "-crf", "16", str(seg)])
+        segs.append(seg)
+    (work / "concat.txt").write_text("".join(f"file '{p}'\n" for p in segs))
     run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(work / "concat.txt"), "-c", "copy", str(work / "video.mp4")])
     total = float(run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(work / "video.mp4")]).stdout.strip())
 
@@ -66,8 +71,8 @@ def main():
     run(["ffmpeg", "-v", "error", "-y", "-i", str(MUSIC), "-filter_complex", af, "-map", "[mix]", "-t", f"{total:.3f}", "-ar", "48000", str(work / "mix.wav")])
     run(["ffmpeg", "-v", "error", "-y", "-i", str(work / "video.mp4"), "-i", str(work / "mix.wav"), "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(out)])
     probe = json.loads(run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_name,width,height,r_frame_rate,duration", "-of", "json", str(out)]).stdout)["streams"]
-    report = {"take": str(TAKE.relative_to(JOB)), "take_sha256": sha(TAKE), "cut_s": CUT_S, "end_s": END_S, "slow_x": SLOW_X, "hold_s": HOLD_S,
-              "unused_tail": f"{END_S}–10.0 s of the take (cup returns to her hand) — not used", "upscale": "720x1280 → 1080x1920 lanczos (DECLARED)",
+    report = {"take": str(TAKE.relative_to(JOB)), "take_sha256": sha(TAKE), "cut_s": CUT_S, "segments": SEGMENTS, "hold_s": HOLD_S,
+              "unused_tail": f"{END_S}–10.0 s of the take — not used", "upscale": "720x1280 → 1080x1920 lanczos (DECLARED)",
               "generated_audio": "dropped (user: music only)", "music": {"bed": str(MUSIC.relative_to(JOB)), "slow_down_at_s": CUT_S, "effect": "asetrate 0.55x + lowpass 900 Hz + level −3 LU, fade out"},
               "duration_s": round(total, 3), "probe": probe, "output": str(out.relative_to(JOB)), "sha256": sha(out)}
     out.with_suffix(".qa.json").write_text(json.dumps(report, indent=1))
