@@ -21,6 +21,8 @@ class LayoutRefused(Refusal):
     GEOMETRY_OFF_TOKEN = "GEOMETRY_OFF_TOKEN"
     CRITICAL_REGIONS_OVERLAP = "CRITICAL_REGIONS_OVERLAP"
     TOKEN_SOURCE_MISSING = "TOKEN_SOURCE_MISSING"
+    VO_LINES_OVERLAP = "VO_LINES_OVERLAP"
+    VO_OVERRUNS_END = "VO_OVERRUNS_END"
 
 
 # ── geometry helpers ─────────────────────────────────────────────────────────
@@ -197,3 +199,36 @@ def check_disjoint(regions: dict, *, critical=CRITICAL_REGIONS, min_gap_px: int 
                                     f"{a} {boxes[a]} overlaps {b} {boxes[b]}" + (f" (gap < {min_gap_px}px)" if min_gap_px else ""),
                                     pair=(a, b), min_gap_px=min_gap_px)
     return {"status": "PASS", "regions": names, "pairs_checked": pairs, "min_gap_px": min_gap_px}
+
+
+# ── F. voice-over schedule (CUMINCO-CHOPSTICKS-003, DF-08) ───────────────────
+
+def check_vo_schedule(lines, *, film_end_s: float, min_gap_s: float = 0.0) -> dict:
+    """Voice-over lines are placed from their MEASURED durations, never from a plan: two lines may not
+    overlap (nor sit closer than `min_gap_s`), and no line may run past the end of the film. Case 003:
+    six lines were placed at hand-set start times from an 18-s plan; measured afterwards, line 1 overlapped
+    line 2 by 0.92 s and the closing line overran the film by 0.94 s — the human heard "voices overlapping".
+    Text overflow already failed closed (check_text_bounds); audio overflow did not. Each line is
+    {"id", "start_s", "duration_s"}; durations are what the trimmed file actually measures."""
+    rows = []
+    for ln in lines:
+        start, dur = float(ln["start_s"]), float(ln["duration_s"])
+        if dur <= 0:
+            raise ValueError(f"vo line {ln.get('id')!r}: duration must be measured and positive")
+        rows.append((start, start + dur, str(ln.get("id"))))
+    rows.sort()
+    end = float(film_end_s)
+    for i in range(1, len(rows)):
+        prev, cur = rows[i - 1], rows[i]
+        if cur[0] < prev[1] + float(min_gap_s):
+            raise LayoutRefused(LayoutRefused.VO_LINES_OVERLAP,
+                                f"vo line {cur[2]} starts at {cur[0]:.2f}s but {prev[2]} ends at {prev[1]:.2f}s"
+                                + (f" (gap < {min_gap_s}s)" if min_gap_s else ""),
+                                pair=(prev[2], cur[2]), overlap_s=round(prev[1] + float(min_gap_s) - cur[0], 3))
+    for start, stop, lid in rows:
+        if stop > end + 1e-6:
+            raise LayoutRefused(LayoutRefused.VO_OVERRUNS_END,
+                                f"vo line {lid} ends at {stop:.2f}s, after the film ends at {end:.2f}s",
+                                id=lid, overrun_s=round(stop - end, 3))
+    return {"status": "PASS", "lines": [r[2] for r in rows], "film_end_s": end, "min_gap_s": float(min_gap_s),
+            "last_line_ends_s": round(rows[-1][1], 3) if rows else None}
