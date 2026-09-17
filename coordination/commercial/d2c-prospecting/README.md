@@ -39,6 +39,31 @@ Capability Registry, evidence, or any policy profile.
 - **Scoring is not inflated.** 85–100 exceptional · 75–84 strong · 70–74 worth retaining ·
   60–69 watchlist · <60 discard. Only 70+ enters the active shortlist.
 
+## Fetching from the cloud — method notes (learned the hard way)
+
+Recorded so no future run rediscovers these. Full detail in `runs/2026-09-17.md` §0.
+
+- **Many Indian D2C sites reject a bare `curl` user-agent** with `HTTP 429 "Verifying your
+  connection..."` or `403 "Just a moment..."`. This is site-level bot protection, **not** the agent
+  proxy, and it is why run 02 left five rows unverified. They serve normally to a **complete browser
+  header set** (`User-Agent`, `Accept`, `Accept-Language`, `Sec-Fetch-Dest/Mode/Site`,
+  `Upgrade-Insecure-Requests`, HTTP/1.1). This reads ordinary public page source — no login, no wall
+  bypassed. It unblocked 8 of 9 sites in run 03.
+- **On Shopify, the Meta pixel is usually not a `connect.facebook.net` script tag.** It sits in the
+  web-pixels manager config as `\"pixel_id\":\"…\",\"pixel_type\":\"facebook_pixel\"`, with
+  server-side state in `\"facebookCapiEnabled\":true|false`. **Grepping only for
+  `connect.facebook.net` under-reports pixels** and will wrongly suggest a brand runs no Meta ads.
+- **`/products/<handle>.json` is public** on Shopify stores and is the correct source for exact
+  prices, `compare_at_price`, colourway names and the full image list. Read exact-copy values from it
+  rather than retyping them. Note it carries **no `available` field**, so it cannot confirm stock.
+- **`sitemap_products_*.xml` / `sitemap_collections_*.xml`** give true catalogue scale and reveal
+  campaign structure (gifting, price-band and per-drop collections).
+- **YouTube:** read `ytInitialData` on `/@handle/videos`. `channelOwnerEmptyStateRenderer` means the
+  channel has **zero** uploads. **Verify the handle belongs to the brand** — run 03 caught three
+  impostor/unrelated handles and one wrong domain before they reached the pipeline.
+- **Meta Ad Library has returned HTTP 403 in every run to date.** Record it and move on; never attempt
+  to log in or scrape around it.
+
 ## What the product can actually make today — read before writing a spec-ad hypothesis
 
 Every spec-ad hypothesis in this folder is shaped to the frozen Alpha-1 family
