@@ -182,6 +182,7 @@ plan:
   expected_spend_usd: 0.529        # base; 0.857 with one repair round; 1.058 planned ceiling (stages/04-PRODUCTION-PLAN.md §4.9)
   spend_cuts_if_cap_lower: "≤1.00 drop customer-repair reserve; ≤0.60 plate by code; ≤0.30 three obstacles by code; 0 fully code-drawn"
   start_of_job_summary_shown_utc: null   # to be stamped when the Controller receives the Stage 4 report
+  frozen_at_sha: 1c3448b34d841cb4293c7574596fd552a40a9846   # 'lane A: FROZEN creative package + production plan (pre-spend)'; board, deck and route plan change only through a recorded repair
   qa_map: "stages/04-PRODUCTION-PLAN.md §4.12 (A1–A11 → named DET/LJ/HJ checks)"
   tools_to_write: [tools/prompts.py, tools/cutout.py, tools/render_game.py, tools/sfx.py, tools/assemble.py, tools/qa_checks.py]
   tools_written: [tools/pixfont.py, tools/dispatch.py, tools/_common.py]
