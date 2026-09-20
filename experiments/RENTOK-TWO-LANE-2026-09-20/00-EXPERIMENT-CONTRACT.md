@@ -45,7 +45,7 @@ Both lanes are told: the customer will not be asked further questions; the deliv
 
 ## 6. Spend authorisation of record
 
-PENDING — see `SPEND-AUTHORISATION.md` (written verbatim from the human Controller's message once received).
+RECORDED — `SPEND-AUTHORISATION.md`: USD 10.00 per lane, credits only, 0 hidden retries, Google credits pool attested funded by the human Controller (answers verbatim in that file).
 
 ## 7. Deliverables
 
