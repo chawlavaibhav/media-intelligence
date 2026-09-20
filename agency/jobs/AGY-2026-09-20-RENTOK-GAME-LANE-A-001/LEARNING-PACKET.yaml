@@ -14,8 +14,8 @@ learning_status: pending_sync
 accepted_assets: []               # none yet — the human verdict is pending (blind Video X/Y via the Controller)
 candidate_deliverable:
   path: gen/final/rentok-game-lane-a-9x16-30s.mp4
-  sha256: 5769ffa7232e6bb1427ce1f0db7396fedd12e9af58dc7feb5d61f140d20b0ab9
-  measured: "1080x1920, 30.021 s, h264 High 30 fps, aac 48 kHz stereo, −14.6 LUFS, −2.0 dBTP, 33.4 MB, 0 elst (repair round 1 incl. D-7)"
+  sha256: 9d50c4c5729f32d198fbaafc642fd78eccc0ee11dee2131cb637270584b5e24a
+  measured: "1080x1920, 30.021 s, h264 High 30 fps, aac 48 kHz stereo, −14.6 LUFS, −2.0 dBTP, 33.4 MB, 0 elst (repair round 1b)"
   previous: "gen/final/v1/… @ 6d418c10… (2 elst atoms; Stage-5 checker DELIVERABLE WITH DEFECTS)"
 routes_attempted:
   - {cell: IMG-CORE/nano-banana-2 (Gemini API surface), calls: 7, ok: 7, failed: 0, usd: 0.469}
@@ -46,6 +46,7 @@ observed_failures:
   - "F-07: the board said 'checklist stays visible' and 'the flag rises to the top' while both occupied y 540–666; the Gate-3 disjoint fix moved only the flash — a board-level occlusion the text gates cannot see (D-2)"
   - "F-08: the renderer simplified four board-specified clears into one generic routine; the record promised more than the film showed (D-6)"
   - "F-09: a pose-level asset limitation (book hidden in run-B) became a visible flicker at animation rate (D-5)"
+  - "F-10: a repair introduced a regression (D-11): the end-card colour was sampled from a transparent corner of the logo raster and rendered black; the repair statement said #0239FF without measuring the output frame — no DET check covers end-card colour, and the author's own frame review missed it"
 root_cause_classes:
   - {failure_ref: F-01, class: compositor}
   - {failure_ref: F-02, class: compositor}
@@ -56,6 +57,7 @@ root_cause_classes:
   - {failure_ref: F-07, class: creative_direction (board)}
   - {failure_ref: F-08, class: compositor}
   - {failure_ref: F-09, class: compositor (cut-out)}
+  - {failure_ref: F-10, class: compositor (repair regression; verification gap)}
 media_model_failures_that_reached_a_gate: 0
 
 # ── directional model observations (routing_authority: none; n as stated) ───────
@@ -78,6 +80,7 @@ candidate_engineering_changes:
   - {closes: F-04, change: "assemble step measures ebur128 on the encoded output and fails closed; pre-encode TP target as a token"}
   - {closes: "cut-out", change: "a keying helper with colour + connectivity + chroma-shadow rules and a keyability report (tools/cutout.py) into runtime/compositor"}
   - {closes: F-06, change: "a container check that walks the MP4 box tree for elst / moov position (tools/qa_checks.py count_atoms) in the shared QA bundle; mux with -use_editlist 0 by default"}
+  - {closes: F-10, change: "a brand-colour DET check (C7) that samples the rendered end-card/background pixels against the declared brand hexes, run on every repaired file; and a rule that a repair statement quotes a measured pixel, not the intended value"}
   - {closes: F-07, change: "an occlusion check between non-text hero objects (flag, phone, product) and text/logo boxes — the text gates only see text"}
 canon_gaps: []                    # no production failure was for want of Canon; the game/arcade/audio gaps were declared at Stage 3 and covered by explicit reasoning
 d7_note: "D-7 (empty lower band below y 1180): the safe box stayed frozen; the band was filled by code as non-critical nearer-parallax world art (Controller addendum, USD 0). Lesson: compose the non-critical world across the whole frame from the start; the safe box bounds critical elements, not art"

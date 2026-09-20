@@ -1,0 +1,117 @@
+[
+ {
+  "check": "DET-A7 duration 29.5–30.5",
+  "status": "PASS",
+  "evidence": "ffprobe duration 30.021 s"
+ },
+ {
+  "check": "DET-A8 geometry/codec",
+  "status": "PASS",
+  "evidence": "1080x1920 h264 High yuv420p 30/1 fps"
+ },
+ {
+  "check": "DET-A8 container/size",
+  "status": "PASS",
+  "evidence": "mov,mp4,m4a,3gp,3g2,mj2 33.4 MB"
+ },
+ {
+  "check": "DET-A8 moov first (faststart)",
+  "status": "PASS",
+  "evidence": "first 64 bytes contain moov: True"
+ },
+ {
+  "check": "DET-A8 no edit lists (elst)",
+  "status": "PASS",
+  "evidence": "0 elst atom(s) found by walking the moov/trak/edts boxes (D-1; Stage 2 §2.1)"
+ },
+ {
+  "check": "DET-A8 audio aac 48k stereo",
+  "status": "PASS",
+  "evidence": "aac 48000 ch=2 br=200964"
+ },
+ {
+  "check": "C1 text bounds in safe box",
+  "status": "PASS",
+  "evidence": "4028 boxes over 900 frames; failures 0 []"
+ },
+ {
+  "check": "C5 disjoint per frame",
+  "status": "PASS",
+  "evidence": "failures 0 []"
+ },
+ {
+  "check": "C2 contrast ≥ 4.5 (body)",
+  "status": "PASS",
+  "evidence": "min worst ratio 6.08; failures 0 []"
+ },
+ {
+  "check": "C6 exact copy byte-check",
+  "status": "PASS",
+  "evidence": "0 mismatches []"
+ },
+ {
+  "check": "DET-A11 forbidden-claim scan",
+  "status": "PASS",
+  "evidence": "40 distinct strings; hits []"
+ },
+ {
+  "check": "§D claims sourced",
+  "status": "PASS",
+  "evidence": "['✓ DIGITAL KYC', '✓ AUTOPAY', '✓ DUES TRACKED LIVE', '✓ ONE DASHBOARD', '✓ COMPLAINT TICKETS']"
+ },
+ {
+  "check": "DET-A4 install event 10–20 s",
+  "status": "PASS",
+  "evidence": "install at [17.4]"
+ },
+ {
+  "check": "DET-A6 five clears + flag",
+  "status": "PASS",
+  "evidence": "clears [1, 2, 3, 4, 5] chips 5 flag [26.6]"
+ },
+ {
+  "check": "DET-A3 five obstacle labels rendered",
+  "status": "PASS",
+  "evidence": "each OBST_k present on its board frames (first and second half)"
+ },
+ {
+  "check": "DET-A4 cheat strings at F7",
+  "status": "PASS",
+  "evidence": "CHEAT_1/CHEAT_2 full strings logged inside F7"
+ },
+ {
+  "check": "DET-A5 powered only after 17.4",
+  "status": "PASS",
+  "evidence": "layout-log powered flag vs 17.4 s"
+ },
+ {
+  "check": "DET-A2 HUD_NAME on gameplay frames",
+  "status": "PASS",
+  "evidence": "HUD name box on every non-end-card frame"
+ },
+ {
+  "check": "DET-A6 flag before end card",
+  "status": "PASS",
+  "evidence": "flag 26.6 < 27.6"
+ },
+ {
+  "check": "brand end card strings",
+  "status": "PASS",
+  "evidence": "CTA_1, CTA_2, URL, WORDMARK logged in F11"
+ },
+ {
+  "check": "5.5 loudness −14 LUFS ±1.5, TP ≤ −1",
+  "status": "PASS",
+  "evidence": "I=-14.6 LUFS, TP=-2.0 dBTP"
+ },
+ {
+  "check": "D13 contact sheet + keyframes",
+  "status": "PASS",
+  "evidence": "61 sampled frames at 2 fps under qa/final-v6-audio/frames"
+ },
+ {
+  "check": "D1 frame text hygiene",
+  "status": "NOT_RUN",
+  "evidence": "human-eye pass over the sampled frames (Cloud Vision not authorised); recorded in 05-EXECUTION"
+ }
+]

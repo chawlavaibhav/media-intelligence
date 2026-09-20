@@ -398,7 +398,8 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
     if n == "F11":
         # end card: freeze-dim to brand blue then the package
         k = min(1.0, tl / 0.3)
-        card = S.wordmark.getpixel((100, 100))[:3]   # D-8: the logo file's own card blue (measured #0239FF) so no seam shows
+        card = (2, 57, 255)   # D-8 / D-11: the logo file's card blue #0239FF (Stage 2 measurement, majority colour of the card). Round 1 sampled
+                              # pixel (100,100) of the raster, which is a fully TRANSPARENT rounded corner → (0,0,0): the end card went black. Hard-coded now.
         cv = Image.new("RGBA", (W, H), (*card, 255))
         wm = S.wordmark; ww = T.endcard_wordmark_w; wh = int(ww * wm.height / wm.width)
         wmi = wm.resize((ww, wh), Image.LANCZOS)
