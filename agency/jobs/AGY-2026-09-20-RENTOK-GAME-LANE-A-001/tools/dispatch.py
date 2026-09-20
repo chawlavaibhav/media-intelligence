@@ -13,7 +13,7 @@ attempt record to gen/ATTEMPTS.jsonl in the JOB.yaml `spend.attempts[]` vocabula
 runtime/execute/provider_errors.classify — an outage is infrastructure_transient, never a model failure. No hidden
 retry: a re-send is a new attempt with its own line.
 
-CAP_USD is 0.0 until the Controller's WRITTEN cap arrives; at 0.0 every reserve() refuses, so nothing can be sent.
+CAP_USD was 0.0 until the Controller's written cap arrived (2026-09-21); it is now 10.0 with CAP_STATED_BY recorded.
 
 PROVENANCE: transport (submit → bounded poll → download, key-by-name, scrubbing) is the reference kit
 tools/reference-kit/dispatch.py (Cumin Job B @ 5c33173, itself from the pilot recipes production-proven on cases
@@ -45,10 +45,9 @@ from runtime.route.cli import build_router  # noqa: E402
 GEN = JOB / "gen"
 LEDGER = GEN / "LEDGER.jsonl"
 ATTEMPTS = GEN / "ATTEMPTS.jsonl"
-CAP_USD = 0.0   # JOB.yaml spend.cap — NOT YET STATED. Set only from the Controller's written cap (amount, currency,
-                # covers, stated_utc), recorded in JOB.yaml spend.cap first. Provisional planning ceiling USD 10.00 is
-                # NOT a cap. 0 retries; credits only; hard stop.
-CAP_STATED_BY = None   # e.g. "Controller, chat, 2026-09-2xTHH:MMZ" — filled with CAP_USD
+CAP_USD = 10.0  # JOB.yaml spend.cap — USD 10.00 for this lane, credits only, no fal, 0 hidden retries, hard stop;
+                # stated by the human Controller via the Controller session message 2026-09-20 (2026-09-20T18:44Z).
+CAP_STATED_BY = "human Controller via Controller session message, 2026-09-20T18:44Z, 'USD 10 per lane (Recommended)'"
 
 # route_key (runtime PriceBook / taint register cell) -> (model id, provider surface, billing pool)
 ROUTES = {

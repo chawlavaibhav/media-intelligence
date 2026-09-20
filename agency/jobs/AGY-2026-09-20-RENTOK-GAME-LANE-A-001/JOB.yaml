@@ -174,7 +174,7 @@ plan:
   deliverables:
     - {id: A13, geometry: "9:16", pixels: "1080x1920", from_asset: A12, file: "deliver/RENTOK-GAME-LANE-A-001_9x16_1080x1920.mp4"}
   micro_qualifications:
-    - {capability: "multi-pose pixel sprite sheet of one character, keyable flat background, no lettering, PG-owner props readable at 220 px", route: IMG-CORE/nano-banana-2, cost_usd: 0.067, human_gate_verdict: null, frozen_asset: null, checker_inspected: true}
+    - {capability: "multi-pose pixel sprite sheet of one character, keyable flat background, no lettering, PG-owner props readable at 220 px", route: IMG-CORE/nano-banana-2, cost_usd: 0.067, human_gate_verdict: null, frozen_asset: null, checker_inspected: false}   # false until an inspection of the drawn sheet exists (checker NOTE 9)
   composition:
     token_source: "tools/render_game.py DesignTokens (one source: outline 2 px, backing radius 0, safe box (65,288)-(888,1248), scales HUD 6 / label 7 / flash 8 / cta 10)"
     fonts: {latin: "tools/pixfont.py (original code bitmap 5x7 capitals)", devanagari: "n-a (hb-view + Pillow if ever needed)"}
@@ -185,13 +185,18 @@ plan:
   qa_map: "stages/04-PRODUCTION-PLAN.md §4.12 (A1–A11 → named DET/LJ/HJ checks)"
   tools_to_write: [tools/prompts.py, tools/cutout.py, tools/render_game.py, tools/sfx.py, tools/assemble.py, tools/qa_checks.py]
   tools_written: [tools/pixfont.py, tools/dispatch.py, tools/_common.py]
-  unresolved: ["written spend cap (Controller)", "Google credits pool balance reading (value, read_utc, source) — no dispatch until read"]
+  unresolved: []                 # cap written and pool attested 2026-09-21 (spend.cap / spend.pool_readings); checker items 3-A, 3-B closed in stages/03-CREATIVE.md
+  checker_items_closed: ["3-A F9.3 tagged not stopped", "3-B LEVEL CLEAR! at y 720", "SHA256SUMS safe-area files added", "ground non-brick", "CA-D10 basis restated", "checker_inspected false", "16 calls", "end card centred on safe box", "NOTE 8 cell reasoning", "4-B attestation + credential assumption"]
 
 # ── 8–9. SPEND (money moves only here) ───────────────────────────────────────
 spend:
-  cap: null                       # REQUIRED before any paid call: {amount, currency, stated_by, stated_utc, covers, retries_allowed: 0} — provisional planning ceiling USD 10.00 (Controller, unconfirmed) is NOT a cap; tools/dispatch.py CAP_USD = 0.0
-  cap_lineage: []                 # earlier caps this one amends; consumed spend carries forward (C-6a)
-  pool_readings: []               # [{pool, balance_usd, read_utc, source}] — no reading, no dispatch
+  cap: {amount: 10.00, currency: USD, stated_by: "human Controller via the Controller session message, 2026-09-20 (human answer 'USD 10 per lane (Recommended)')", stated_utc: "2026-09-20T18:44Z", covers: "this lane (AGY-2026-09-20-RENTOK-GAME-LANE-A-001) — credits only: Google Vertex/Gemini credits, ElevenLabs plan credits, Sarvam credits; no fal; hard stop at the cap", retries_allowed: 0, note: "every re-send is a new counted attempt under the same cap; every reservation is an upper bound (balances not machine-readable)"}
+  cap_lineage:                    # earlier caps this one amends; consumed spend carries forward (C-6a)
+    - {budget_id: "rentok-lane-a-cap-1", amends: null, source: "Controller session message, 2026-09-20, human answer 'USD 10 per lane (Recommended)'", supersedes: "provisional planning ceiling USD 10.00 (never a cap; no spend under it)"}
+  pool_readings:                  # [{pool, balance_usd, read_utc, source}] — no reading, no dispatch
+    - {pool: credits (Google Vertex/Gemini), balance_usd: attested_by_human, read_utc: "2026-09-20T18:44Z", source: "Controller session AskUserQuestion — human: 'Yes, credits are funded — proceed'; machine reading impossible: Cloud Billing API disabled on vertexaiproject-507518 (verified by the Controller session)", assumption: "the Gemini API key (Nano Banana 2) and the Vertex service account (Lyria) draw on the same Google credits pool, as in the Cumin experiment ledgers; cost if wrong: a call bills another account or hits quota — any billing/quota error stops the job, no retry on another surface"}
+    - {pool: elevenlabs_credits, balance_usd: not_read, read_utc: null, source: "not touched by this plan (no voice); not read"}
+    - {pool: sarvam_credits, balance_usd: not_read, read_utc: null, source: "not touched by this plan (no voice); not read"}
   attempts: []                    # one line per paid call, appended before the request leaves, settled after:
   #  - {attempt_id, asset_id, route_cell, surface, pool, unit_price_usd, quantity, reserved_usd, settled_usd,
   #     start_utc, end_utc, latency_s, status: ok|provider_refusal|infrastructure_transient|unclassified,

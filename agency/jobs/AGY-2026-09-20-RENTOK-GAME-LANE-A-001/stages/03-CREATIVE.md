@@ -73,7 +73,7 @@ GAPs (honest): **no accepted Canon on** game/arcade grammar, pixel-art readabili
 | CA-D7 | pass | per beat the device is **blocking** (a sprite enters); the one cut is at the flag with new information (the brand card) |
 | CA-D8 | pass | with one cut nothing is sacrificed; if the flag beat runs long, planarity is given up first, never emotion |
 | CA-D9 | pass | screen direction left→right throughout; the end card is a new scene, not a continuation |
-| CA-D10 | pass | holds 1.2–3.0 s, each ending when its label has been readable ≥ 1.0 s and its action resolved; the prevailing norm assumed is arcade tempo (stated, not Canon) |
+| CA-D10 | pass | holds 1.2–3.0 s. Problem half: each hold ends when its obstacle label has been readable ≥ 1.2 s and the action resolved. Clearing run: the label is a 0.4-s recall flash (the viewer already read it in the first half); the element that must be readable ≥ 1.0 s is the **chip**, which persists from its landing to the end of F10 (≥ 2.0 s for the last chip, ≥ 6.8 s for the first). The prevailing norm assumed is arcade tempo (stated, not Canon). Restated after checker NOTE 5; the 1.2-s-per-clear tempo and the 0.4-s flash are tested in the USD-0 animatic (Stage 5) |
 | CA-D11 | pass | the only camera move is the side-scroll follow at the player's run speed; it stops when the game "pauses" (F7) — both motivated |
 
 ---
@@ -92,12 +92,12 @@ Cues, in order of strength at phone size: (1) the HUD name **PG OWNER** from fra
 
 ### World / level design (vertical-native, F4 from Stage 1)
 
-- Canvas 1080×1920; critical box (65,288)–(888,1248). Full-bleed background: sky gradient (top), a tall **PG building facade** with stacked floors and small windows filling the upper third (the named vertical shape, CA-D6), rooftops/water tanks in the middle distance, a lane in front. Ground line at y = 1130 (inside the box); ground tiles plain ochre brick.
+- Canvas 1080×1920; critical box (65,288)–(888,1248). Full-bleed background: sky gradient (top), a tall **PG building facade** with stacked floors and small windows filling the upper third (the named vertical shape, CA-D6), rooftops/water tanks in the middle distance, a lane in front. Ground line at y = 1130 (inside the box); ground = a plain packed-earth lane with a flat stone kerb line — **no brick bond** (checker IP note; the ochre-brick idea is withdrawn).
 - Parallax: background plate scrolls at 0.25× the ground speed; foreground props at 1×. Scroll speed 320 px/s (problem half), 480 px/s (clearing run).
 - HUD row at y ≈ 300–345: left `PG OWNER ▮▮▮▮▮` (scale 6); right: the wordmark chip 150 × 77 px (raster) at x 738–888.
 - Checklist column (F9 onward) at x = 90, y = 400 → 640: five rows of green chips on a dark backing.
-- Labels: obstacle labels centred at y ≈ 720 (yellow #FFF100, scale 7, dark backing band); state flashes (`GAME OVER?`, `POWER UP!`, `LEVEL CLEAR!`) centred at y ≈ 560.
-- Palette: sky #6FB7FF→#CFEBFF, facade cream #F1E3C6 with terracotta #C8683F, ground ochre #B98A3E/#8C6428, outline #1E1E28; brand blue #0038FF, cyan #03FFF1, yellow #FFF100, green #30B502 reserved for the app/power/labels/chips so the brand colours mean "the solution".
+- Labels: obstacle labels centred on the safe box at y = 720 (yellow #FFF100, scale 7, dark backing band); state flashes `GAME OVER?` and `POWER UP!` centred at y = 560 (no checklist exists yet at F6; at F8 the checklist is empty); `LEVEL CLEAR!` at y = 720 (F10, where no obstacle label exists) so it never meets the checklist (checker 3-B). `LEVEL 1` is a centre flash at y = 560 for 0.0–1.2 s only, never a third HUD element (the HUD row is `PG OWNER ▮▮▮▮▮` left + the 150-px wordmark chip right).
+- Palette: sky #6FB7FF→#CFEBFF, facade cream #F1E3C6 with terracotta #C8683F, lane ochre-grey #A8926A / kerb #6E6455, outline #1E1E28; brand blue #0038FF, cyan #03FFF1, yellow #FFF100, green #30B502 reserved for the app/power/labels/chips so the brand colours mean "the solution".
 
 ### The five obstacle representations (each mapped to a verified capability for its clearing chip)
 
@@ -133,7 +133,7 @@ A tall grey pole at the end of the level; the flag is RentOk blue with a cyan ti
 | 15.8–17.4 | `RENTOK APP` typed in the cheat panel (70 px caps) | in-story, the ask itself |
 | 17.4– | the phone item with the wordmark on its screen; from 18.0 a phone icon beside the health bar | in-situ product |
 | 19.6–25.6 | five green chips naming app capabilities | product proof |
-| 27.6–30.0 | end card: wordmark large (≈ 700 px wide) + CTA + URL on brand blue | the "package" close (`sk_ogx_0039`) |
+| 27.6–30.0 | end card: wordmark 700 px wide **centred on the safe box (x 126–826)**, CTA + URL below, on brand blue | the "package" close (`sk_ogx_0039`) |
 
 ### Closing CTA copy (3.5, 3.6)
 
@@ -188,11 +188,11 @@ Yes. Every beat carries its meaning in picture plus an on-screen label; the soun
 | **F8** | 18.00–19.60 | The owner stands, cyan aura pulses around him, he fires one test tick upward-right; a phone icon appears beside the health bar | `POWER UP!` centre flash 18.0–19.2 | aura hum, pew | **M5** |
 | **F9.1** | 19.60–20.80 | Clearing run begins at higher speed; obstacle 1 re-enters; a tick projectile bursts the document wall into pixels; a green chip flies to the checklist (row 1) | `TENANT VERIFICATION` (0.4 s) → `✓ DIGITAL KYC` (persists) | pew, burst, chip ding | M6, M10 |
 | **F9.2 — HERO** | 20.80–22.00 | Obstacle 2 re-enters; the padlocked sack bursts under a tick; the owner mid-run with aura, five cyan health segments, the phone icon in the HUD, first chip already on the checklist. **Hero frame = t 21.40 s**: without any copy it shows the app-powered owner blasting the rent problem | `COLLECTING RENT` → `✓ AUTOPAY` | pew, burst, ding | M6, M10, hero (3.2) |
-| **F9.3** | 22.00–23.20 | The fleeing tenant re-enters ahead; a tick tags him; he freezes and turns transparent with a ledger line drawn beside him; chip row 3 | `LEFT WITHOUT PAYING` → `✓ DUES TRACKED LIVE` | pew, ding | M6, M10 |
+| **F9.3** | 22.00–23.20 | The fleeing tenant re-enters ahead and **keeps running**; a tick tags him and a small ledger-line marker (a cyan dues tag with a pixel ledger icon, no lettering) attaches above his head and travels with him until he exits frame right — he is tracked, never stopped; chip row 3 lands. `reopened_by: checker (3-A) → resolved: choreography rewritten so the tenant is tagged, not frozen; the picture now shows tracking (autopay.txt:104–107, 136; home.txt:96, 104), which is what the site offers; health unchanged` | `LEFT WITHOUT PAYING` → `✓ DUES TRACKED LIVE` | pew, tag click, ding | M6, M10 |
 | **F9.4** | 23.20–24.40 | The ledger tower re-enters and is blasted into one neat stack/screen; chip row 4 | `NO RECONCILIATION` → `✓ ONE DASHBOARD` | pew, burst, ding | M6, M10 |
 | **F9.5** | 24.40–25.60 | The ticket swarm re-enters; ticks turn each red bubble green as they hit; chip row 5 — all five chips now visible | `COMPLAINTS` → `✓ COMPLAINT TICKETS` | pew ×3, ding | M6, M10 |
-| **F10** | 25.60–27.60 | The flagpole enters; the owner jumps (26.2), grabs the pole at 26.6 (flag reached), the RentOk-blue flag with a cyan tick rises to the top (26.6–27.4); pixel confetti; scroll stops | `LEVEL CLEAR!` centre flash 26.6–27.6 | flag fanfare (original) | **M6** (flag) |
-| **F11** | 27.60–30.00 | Cut: the game freezes, dims to brand blue (0.3 s); the wordmark (≈ 700 px wide) centred at y ≈ 700; CTA two lines below; URL below that; last 1.0 s held still | `INSTALL` · `RENTOK APP` · `RENTOK.COM` + WORDMARK raster | soft hit; bed resolves and ends at 29.8 | M10; last frame (3.6) |
+| **F10** | 25.60–27.60 | The flagpole (plain pole, no finial; rectangular RentOk-blue flag) enters; the owner jumps (26.2), grabs the pole at 26.6 (flag reached), the flag with a cyan tick rises to the top (26.6–27.4); pixel confetti; scroll stops. The checklist column stays visible (it is the proof). `reopened_by: checker (3-B) → resolved: the flash moves from y ≈ 560 to the label zone, y = 720 (no obstacle label exists at F10), so it is disjoint from the checklist (y 400–640) and from the HUD; the disjointness is asserted per frame by runtime.compositor.gates.check_disjoint in the animatic` | `LEVEL CLEAR!` flash at y 720, 26.6–27.6 | flag fanfare (original) | **M6** (flag) |
+| **F11** | 27.60–30.00 | Cut: the game freezes, dims to brand blue (0.3 s); the wordmark (700 px wide, centred on the safe box x 126–826) at y ≈ 700; CTA two lines below; URL below that; last 1.0 s held still | `INSTALL` · `RENTOK APP` · `RENTOK.COM` + WORDMARK raster | soft hit; bed resolves and ends at 29.8 | M10; last frame (3.6) |
 
 Timecode sum: 1.8 + 2.8 + 2.8 + 2.8 + 2.4 + 2.4 + 3.0 + 1.6 + 6.0 + 2.0 + 2.4 = **30.0 s** (`board.json` verified by code).
 
@@ -225,6 +225,7 @@ Timecode sum: 1.8 + 2.8 + 2.8 + 2.8 + 2.4 + 2.4 + 3.0 + 1.6 + 6.0 + 2.0 + 2.4 = 
 | A board exists with numbered frames and timecodes summing to 30.0 s | Met — Part D, `board.json` |
 | A numbered hero frame, not a sentence | Met — F9.2 at 21.40 s |
 | Every mandatory event sits on a numbered frame | Met — 3.7 |
+| Checker reopened items 3-A (F9.3 tag-not-stop) and 3-B (F10 flash position) | Closed 2026-09-21 in Part D and the layout constants above; verified in the Stage 5 animatic |
 | Copy deck exists with exact strings; on-screen = spoken | Met — `copy-deck.json`; no spoken lines |
 | Canon consulted by id with claim text; gaps named | Met — Part A; 8 uncompiled packs + audio named as gaps |
 | 21 check lines rendered by id | Met — A3 |

@@ -32,7 +32,7 @@ Why not generative video: the brief needs (a) one character identical across 30 
 | A1 | PG-owner sprite sheet (idle, run A, run B, jump; 1:1) | AI still → code cut-out | — | IMG-CORE / nano-banana-2 | clean_observed / True / 7/8 | 0.067 per_image | 1 (+1) | riskiest; identity over 30 s comes from reusing one bitmap |
 | A1p | Powered owner (cyan palette shift + aura) | code | A1 | code | — | 0 | — | identity guaranteed; the visible change is deterministic |
 | A2–A6 | Obstacle sprites ×5 (document wall; padlocked sack; fleeing tenant; ledger tower; ticket swarm), each 1:1 on flat green | AI still → code cut-out | A1 (style match by prompt, same palette words) | IMG-CORE / nano-banana-2 | clean_observed / True / 7/8 | 0.067 | 5 (+2) | five distinct pictures at 250 px; a wrong read is repaired singly |
-| A7 | Background plate 9:16 (sky, PG facade, rooftops, lane; no ground tiles; no signs) | AI still (code fallback) | — | IMG-CORE / nano-banana-2 (9:16) | clean_observed / True / 7/8 | 0.067 | 1 (+1) | parallax layer; fallback = code gradient + block facade |
+| A7 | Background plate 9:16 (sky, PG facade, rooftops, lane; no ground tiles; no signs) | AI still (code fallback) | — | IMG-CORE / nano-banana-2 (9:16) | clean_observed / True / 7/8 | 0.067 | 1 (+1) | parallax layer; fallback = code gradient + block facade. Cell choice (checker NOTE 8): the more specific VID-TOPO3/nano-banana-2+A2_nb_plate_9x16 is directional/manual_only and describes a still-to-video topology this plan does not use; the general clean IMG-CORE cell plus case 002 RO-04 (1/1 clean 9:16 plate, same surface) is the evidence used |
 | A8 | Ground tiles, flagpole + flag, phone item, tick projectile, hit flash, confetti, panel, chips, HUD | code (pixel primitives + pixfont) | — | code | — | 0 | — | exact geometry and brand colours; no lettering risk |
 | A9 | Wordmark placements (HUD chip, phone screen, end card) | code composite of the fetched raster | `source/rentok-brand/rentok-new-logo.webp` @ sha256 1ff7dcf5… | code | — | 0 | — | brand fidelity (Stage 2d); mechanism B |
 | A10 | Music bed 30 s | generative audio → code trim + loudness | — | MUS / lyria+native | clean_observed / True / 4/4 | 0.06 per_clip | 1 (+1) | original audio (Meta "no licensed music"); chiptune character by prompt |
@@ -64,7 +64,7 @@ A1 (sprite sheet): no reference image — text prompt only (an IMG-CORE draw, th
 
 ## 4.8 Pool balances — read, not attested
 
-**UNRESOLVED.** The Controller named the pools (Google Vertex/Gemini credits; ElevenLabs; Sarvam) as existing, but a reading (balance value, read_utc, source) does not exist in this job. The plan touches one pool: Google credits (nb2 + Lyria, ≈ USD 0.53–1.06). Under PROVIDER_POOL_AVAILABILITY (case 001 SD-11) no dispatch happens on an unread pool. Request to the Controller, to travel with the written cap: the current Google Cloud credits balance for `vertexaiproject-507518` (console reading with UTC), or authorisation for a `gcloud billing` read from this session. `spend.pool_readings` stays empty until then.
+**RESOLVED 2026-09-21 by human attestation (checker 4-B / Controller message).** A machine reading is not available: the project service account cannot call Cloud Billing (the API is disabled on vertexaiproject-507518 — verified by the Controller session). The human Controller attested "Yes, credits are funded — proceed" (Controller session AskUserQuestion, 2026-09-20T18:44Z); recorded in `JOB.yaml spend.pool_readings` as `attested_by_human`. Assumption recorded: both credentials the tool uses (the Gemini API key for Nano Banana 2; the Vertex service account for Lyria) draw on the same Google credits pool, as in the Cumin experiment ledgers — cost if wrong: a call could bill a different account or hit a quota; rule: any billing/quota error → stop and report, never retry on another surface. Every reservation is an upper bound. Original text follows for the record: The Controller named the pools (Google Vertex/Gemini credits; ElevenLabs; Sarvam) as existing, but a reading (balance value, read_utc, source) did not exist in this job at Stage 4. The plan touches one pool: Google credits (nb2 + Lyria, ≈ USD 0.53–1.06). Under PROVIDER_POOL_AVAILABILITY (case 001 SD-11) no dispatch happens on an unread pool. Request to the Controller, to travel with the written cap: the current Google Cloud credits balance for `vertexaiproject-507518` (console reading with UTC), or authorisation for a `gcloud billing` read from this session. `spend.pool_readings` stays empty until then.
 
 ## 4.9 Expected spend vs the provisional cap (USD 10.00, unconfirmed)
 
@@ -78,7 +78,7 @@ A1 (sprite sheet): no reference image — text prompt only (an IMG-CORE draw, th
 | Repair round: A1 ×1, obstacles ×2, plate ×1, music ×1 | 5 | — | 0.328 |
 | **Base + one repair round** | | | **0.857** |
 | Customer SPECIFIC-REPAIR reserve (3 stills) | 3 | 0.067 | 0.201 |
-| **Planned ceiling** | 17 calls | | **1.058** |
+| **Planned ceiling** | 16 calls | | **1.058** |
 
 10.6 % of the provisional USD 10.00; 0 hidden retries; every failed call counts. Infrastructure failures (5xx/UNAVAILABLE) reserve at full price and are re-sent only as new counted attempts inside the ceiling.
 
@@ -130,7 +130,7 @@ If the confirmed cap is lower: ≤ USD 1.00 → drop the customer-repair reserve
 | Every route has evidence status, `production_use_allowed`, live price, pool | Met — 4.2; only clean/True cells; fallback named with the condition for its use |
 | Known failures listed with ids | Met — 4.3 |
 | No generated text/logo/UI; voice count | Met — 4.4, 4.5 |
-| Pool balance read | **Not met — unresolved**; dispatch blocked until read (4.8) |
+| Pool balance read | Met by human attestation 2026-09-21 (4.8); machine reading impossible (Cloud Billing API disabled) |
 | Expected spend vs cap with a repair round; cuts if lower | Met — 4.9 |
 | Order of work | Met — 4.10 |
 | Tools adapted, fal removed, CAP_USD 0.0, refusals proven | Met — `tools/dispatch.py`, `tools/_common.py` (USD 0 tests above) |
