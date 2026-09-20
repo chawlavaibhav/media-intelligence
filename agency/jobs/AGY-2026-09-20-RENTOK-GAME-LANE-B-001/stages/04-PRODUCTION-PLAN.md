@@ -1,6 +1,6 @@
 # Stage 4 — Production selection · AGY-2026-09-20-RENTOK-GAME-LANE-B-001 (lane B)
 
-Author: lane-B producer session. Date: 2026-09-21 (UTC). Cost: USD 0 — no paid call has been made; `tools/dispatch.py` has `CAP_USD = 0.0` and refuses every reserve until the Controller's written cap is recorded.
+Author: lane-B producer session. Date: 2026-09-20 (machine clock, `date -u`). Cost: USD 0 — no paid call has been made; `tools/dispatch.py` has `CAP_USD = 0.0` and refuses every reserve until the Controller's written cap is recorded.
 Gate rule: riskiest element tested first; every route has evidence or a test; pool balances read before dispatch.
 
 Live PriceBook quotes (USD 0, `stages/evidence/pricebook-quotes.txt`, re-run by `tools/dispatch.py quotes`): nano-banana-2 **0.067/image** (credits) · nano-banana-pro 0.134/image (credits) · lyria **0.06/clip** (credits) · sarvam-bulbul-v3 **0.002264 per 72 chars** (₹3 per 1,000 characters converted; the PriceBook labels the pool `cash`, the routing table says `sarvam_credits`) · elevenlabs-v3-direct 0.0072 per 72 chars (PriceBook `cash`; routing table `elevenlabs_credits`, plan credits) · veo-3.1-fast-i2v 0.80 per 8 s · gemini-omni-1.1-flash 1.0136 per 10 s (the last two are quoted for the record; not used).
