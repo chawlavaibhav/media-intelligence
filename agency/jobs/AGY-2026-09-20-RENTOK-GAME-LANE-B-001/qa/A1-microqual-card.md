@@ -4,7 +4,7 @@ Producer inspection (OBSERVED on the image; the independent checker re-inspects 
 
 | # | check | result | note |
 |---|---|---|---|
-| 1 | one identity across all nine cells (face, hair, glasses on head, ochre checked shirt, grey trousers, chappals, key ring, red register) | PASS | every cell carries every identifier |
+| 1 | one identity across all nine cells (face, hair, glasses on head, ochre checked shirt, grey trousers, chappals, key ring, red register) | PASS on identity; **CORRECTED (Stage-5 checker, D-4): the red register is present in 6 of 9 cells and ABSENT in jump (cell 5), hurt (cell 6) and cornered (cell 7)** | my original wording "every cell carries every identifier" was wrong; repaired in repair round 1 by compositing a code-drawn register on those three cells (`tools/repair_sprites.py` → `gen/sprites/A1_{jump,hurt,cornered}_reg.png`) |
 | 2 | no cap, no moustache, no overalls, no gloves | PASS | clean-shaven, bare head with glasses pushed up |
 | 3 | no lettering, digits, labels, grid lines, watermark | PASS | none seen at 1024 px; phone screens plain blue |
 | 4 | flat solid magenta background, keyable | PASS | uniform #FF00FF-class background, no shadows |

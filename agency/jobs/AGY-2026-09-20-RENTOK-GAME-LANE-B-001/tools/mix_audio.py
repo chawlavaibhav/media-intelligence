@@ -54,8 +54,10 @@ def main():
     t = np.arange(N) / SR
     g = np.ones(N, np.float32) * 0.9
     f7, f9 = B["F7"][0], B["F9"][0] + 1.3
-    g[(t >= f7) & (t < f9)] = 0.12                       # drops out on CONTINUE? (a low bed stays so the freeze is not dead air)
-    g[t >= f9] = 1.0                                     # returns brighter after RENTOK MODE: ON
+    v1_end = TL["vo_start"]["V1"] + 2.645
+    g[(t >= f7) & (t < v1_end)] = 0.12                   # drops out on CONTINUE? (a low bed stays so the freeze is not dead air)
+    g[(t >= v1_end) & (t < f9)] = 0.55                   # repair round 1, D-7: the bed comes back under the phone rise (no 0.6-s hole)
+    g[t >= f9] = 1.0                                     # full and brighter at RENTOK MODE: ON
     # smooth the steps (50 ms)
     k = int(0.05 * SR); g = np.convolve(g, np.ones(k) / k, mode="same")
     # fade out over the last 0.6 s, silence in the last 0.2 s
@@ -94,6 +96,7 @@ def main():
     for tt in np.arange(B["F7"][0] + 0.1, B["F8"][0], 0.7): place(mix, sfx["heartbeat"], tt, 0.7)
     n = len("INSTALL RENTOK")
     for i in range(n): place(mix, sfx["keyblip"], B["F8"][0] + 0.15 + i * (1.1 / n), 0.5)
+    place(mix, sfx["beam"], B["F9"][0] + 0.2, 0.5)      # rising hum as the phone rises (fills the gap between V1 and V2)
     place(mix, sfx["chime"], B["F9"][0] + 0.9, 0.9)
     place(mix, sfx["chime"], B["F9"][0] + 1.3, 0.6)
     # ── write, normalise, mux ──

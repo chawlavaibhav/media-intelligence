@@ -40,7 +40,7 @@ TL = {}; t = 0.0
 for name, d in BEATS:
     TL[name] = (round(t, 3), round(t + d, 3)); t += d
 assert abs(t - 30.0) < 1e-6, t
-VO_START = {"V1": TL["F8"][0] + 0.1, "V2": TL["F9"][0] + 0.1, "V3": TL["F16"][0] + 0.1}
+VO_START = {"V1": TL["F8"][0] + 0.1, "V2": TL["F9"][0] + 1.3, "V3": TL["F16"][0] + 0.1}   # repair round 1, D-3: V2 starts when RENTOK MODE: ON appears (15.9 s)
 
 # ── copy deck (Stage 3), exact strings ──────────────────────────────────────
 DECK = {"C01": "PG OWNER", "C02": "LEVEL 1", "C03": "RENTOK MODE: OFF", "C04": "UNVERIFIED TENANT", "C05": "RENT NOT PAID",
@@ -65,6 +65,8 @@ def load_sprite(path, height=None, width=None):
 
 SL = json.load(open(JOB / "gen/sprites/SLICES.json"))
 CH = {k: load_sprite(v["file"], height=92) for k, v in SL["A1"].items()}           # ≈ 276 px on screen (1/7 frame)
+for _k in ("jump", "hurt", "cornered"):                                             # repair round 1, D-4: code-drawn register on the three cells that lacked it
+    CH[_k] = load_sprite(f"gen/sprites/A1_{_k}_reg.png", height=92)
 OB = {}
 for oid, _, _ in OBST:
     b, a = SL[oid]["before"], SL[oid]["after"]
@@ -72,6 +74,7 @@ for oid, _, _ in OBST:
         OB[oid] = {"before": load_sprite(b["file"], width=118), "after": load_sprite(a["file"], width=132)}
     else:
         OB[oid] = {"before": load_sprite(b["file"], height=98), "after": load_sprite(a["file"], height=98)}
+OB["O3"]["after"] = load_sprite("gen/sprites/O3_after_tracked.png", height=98)   # repair round 1, checker note: tick -> neutral tracked marker
 
 # world plate -> low-res strip; sky detection for recolour
 _plate = Image.open(JOB / "gen/stills/A3_world_plate_v1.png").convert("RGB")
@@ -98,6 +101,23 @@ def tinted_plate(after: bool) -> Image.Image:
 
 
 PLATE = {False: tinted_plate(False), True: tinted_plate(True)}
+# repair round 1, D-5: a near-parallax foreground pavement with objects cut from the same plate (scooter, tree) + code bollards/drains
+def _fg_objects():
+    objs = []
+    for box, h in (((895, 636, 1040, 728), 46),):          # the scooter only (the tree crop carried wall pixels behind it — dropped)
+        crop = _plate.crop(box).convert("RGBA")
+        arr = np.asarray(crop).astype(np.int16)
+        # key out the plate's flat pavement/road/sky colours around the object (distance from each of three refs)
+        keep = np.ones(arr.shape[:2], bool)
+        for ref in ((156, 136, 111), (107, 93, 80), (176, 209, 216), (191, 174, 144), (217, 193, 149), (220, 193, 150)):
+            keep &= np.abs(arr[..., :3] - np.array(ref, np.int16)).sum(axis=2) > 36
+        a = np.asarray(crop).copy(); a[..., 3] = np.where(keep, 255, 0).astype(np.uint8)
+        im = Image.fromarray(a).resize((int(crop.width * h / crop.height), h), Image.LANCZOS)
+        objs.append(im)
+    return objs
+FG_OBJS = _fg_objects()
+FG_TOP = int((GROUND + 90) / K)          # low-res y where the foreground pavement starts (just under the plate's road edge)
+FG_ROAD = int(1560 / K)
 PLATE_TOP = 240 // K                                     # low-res y of the plate top
 
 
@@ -107,14 +127,43 @@ def world_bg(t: float, after: bool, mix: float = 0.0) -> Image.Image:
     d = ImageDraw.Draw(bg)
     sky = (242, 217, 180) if not after else BRAND_BLUE
     d.rectangle([0, 0, LW, PLATE_TOP + 2], fill=sky)
-    # below the plate: kerb + road (the bottom 35 % band carries no critical content — Stage 2 §2.2)
+    # below the plate (repair round 1, D-5): a foreground pavement at 1.4x parallax with objects, then the road
     yb = PLATE_TOP + PLATE_H - 1
-    d.rectangle([0, yb, LW, yb + 6], fill=(200, 190, 170) if not after else (150, 170, 230))
-    d.rectangle([0, yb + 6, LW, LH], fill=(96, 92, 88) if not after else (44, 56, 110))
+    pav = (168, 150, 122) if not after else (74, 92, 160)
+    d.rectangle([0, yb, LW, FG_ROAD], fill=pav)
+    d.rectangle([0, yb, LW, yb + 5], fill=(214, 200, 176) if not after else (150, 170, 230))            # kerb top
+    d.rectangle([0, FG_ROAD - 6, LW, FG_ROAD], fill=(120, 106, 88) if not after else (40, 54, 120))     # kerb to the road
+    d.rectangle([0, FG_ROAD, LW, LH], fill=(96, 92, 88) if not after else (44, 56, 110))
     off = int((t * SCROLL / K) % 60)
     for x in range(-off, LW + 60, 60):
-        d.rectangle([x, yb + 110, x + 28, yb + 114], fill=(220, 210, 150) if not after else (150, 190, 255))
-    d.rectangle([0, LH - 8, LW, LH], fill=(70, 66, 62) if not after else (30, 38, 80))
+        d.rectangle([x, FG_ROAD + 40, x + 28, FG_ROAD + 44], fill=(220, 210, 150) if not after else (150, 190, 255))
+    # slab joints
+    off2 = int((t * SCROLL * 1.4 / K) % 44)
+    for x in range(-off2, LW + 44, 44):
+        d.line([(x, yb + 5), (x, FG_ROAD - 6)], fill=(150, 132, 106) if not after else (60, 76, 140), width=1)
+    # objects: scooter, tree, bollard, drain — repeating every 330 low-res px at 1.4x scroll
+    fgs = int(t * SCROLL * 1.4 / K)
+    period = 330
+    k0 = fgs // period
+    for i in range(k0 - 1, k0 + 3):
+        x = i * period - fgs + 40
+        kind = i % 4
+        if kind == 0:
+            ob = FG_OBJS[0]; bg.paste(ob, (x, FG_ROAD - ob.height - 4), ob)
+        elif kind == 1:
+            # code-drawn planter with a bush
+            bx = x + 60
+            d.rectangle([bx, FG_ROAD - 30, bx + 70, FG_ROAD - 6], fill=(150, 90, 60) if not after else (50, 60, 130), outline=(60, 40, 30) if not after else (24, 32, 70), width=2)
+            for j, (ox, oy, r) in enumerate(((14, -34, 16), (36, -42, 20), (58, -34, 16))):
+                d.ellipse([bx + ox - r, FG_ROAD + oy - r, bx + ox + r, FG_ROAD + oy + r], fill=(86, 140, 60) if not after else (60, 120, 110), outline=(40, 70, 30) if not after else (30, 60, 70), width=2)
+        elif kind == 2:
+            for j in range(3):
+                d.rectangle([x + j * 40, FG_ROAD - 34, x + j * 40 + 8, FG_ROAD - 6], fill=(60, 60, 66) if not after else (24, 32, 70))
+                d.rectangle([x + j * 40 - 2, FG_ROAD - 38, x + j * 40 + 10, FG_ROAD - 32], fill=(240, 220, 60) if not after else (3, 255, 241))
+        else:
+            d.rectangle([x, FG_ROAD - 22, x + 70, FG_ROAD - 8], fill=(70, 64, 58) if not after else (24, 32, 70))
+            for j in range(6):
+                d.line([(x + 6 + j * 11, FG_ROAD - 20), (x + 6 + j * 11, FG_ROAD - 10)], fill=pav, width=3)
     pl = PLATE[after]
     pw = pl.width
     scroll = int(t * SCROLL / K)
@@ -231,6 +280,7 @@ def char_pose(beat, lt, t):
     if beat == "F9": return "cornered" if lt < 0.9 else ("powerA" if int(t * 8) % 2 == 0 else "powerB")
     if beat in ("F10", "F11", "F12", "F13", "F14"): return "powerA" if int(t * 8) % 2 == 0 else "powerB"
     if beat == "F15": return "jump" if lt > 0.5 else "powerA"
+    if beat == "F16": return "jump"
     return "cornered"
 
 
@@ -270,8 +320,10 @@ def render_frame(t: float) -> Image.Image:
     knock = 0
     if pose == "hurt": knock = -60
     if beat == "F6" and lt >= 1.2: knock = -40
-    if beat == "F15" and lt > 0.5: cx = CHAR_X + int(220 * min(1, (lt - 0.5) / 1.1))
-    if beat == "F16": cx = CHAR_X + 220
+    if beat == "F15" and lt > 0.5: cx = CHAR_X + int(140 * min(1, (lt - 0.5) / 1.1))   # repair round 1, D-2: stops 160 px short of the pole
+    if beat == "F16":
+        cx = CHAR_X + 140
+        feet = GROUND - int(40 * abs(math.sin(lt * 9)))                                  # D-6 note: a celebration hop (jump cell), not the cornered pose
     # obstacle for this beat
     ob_box = None
     struggle = beat in ("F2", "F3", "F4", "F5", "F6")
@@ -286,7 +338,7 @@ def render_frame(t: float) -> Image.Image:
         if power and lt >= hit_t:
             state = "after"; ox = (1100 + 120 - rel * hit_t) - SCROLL * (lt - hit_t)
         spr = OB[oid][state]
-        oy_feet = GROUND if oid in ("O1", "O2", "O4") else (GROUND - 60 if oid == "O3" else GROUND - 130)
+        oy_feet = GROUND if oid in ("O1", "O2", "O4") else (GROUND - 60 if oid == "O3" else GROUND - 100)   # repair round 1: swarm 30 px lower so the beam clears the name tag
         if state == "after" and power:
             oy_feet -= int(120 * min(1, (lt - hit_t) / 0.6))
         if oid == "O3": oy_feet -= int(10 * math.sin(t * 6))
@@ -300,7 +352,7 @@ def render_frame(t: float) -> Image.Image:
     # flag (F15/F16)
     if beat in ("F15", "F16"):
         fx = 1100 - SCROLL * (lt if beat == "F15" else 1.6) if beat == "F15" else 1100 - SCROLL * 1.6
-        fx = max(fx, CHAR_X + 260)
+        fx = max(fx, CHAR_X + 300)   # repair round 1, D-2: the pole stops 300 px right of the player's start
         pole_x = lowres(fx)
         d = ImageDraw.Draw(bg)
         d.rectangle([pole_x - 2, lowres(GROUND - 520), pole_x + 2, lowres(GROUND)], fill=(230, 230, 230, 255))
@@ -308,6 +360,7 @@ def render_frame(t: float) -> Image.Image:
         fy = GROUND - 500 + (int(360 * min(1, max(0, (lt - 0.9) / 0.6))) if beat == "F15" else 360)
         fl = FLAG.resize((FLAG.width // K, FLAG.height // K), Image.LANCZOS)
         bg.alpha_composite(fl, (pole_x + 3, lowres(fy)))
+        _layout.append({"id": "G-flag", "box": [(pole_x + 3) * K, int(fy), (pole_x + 3 + fl.width) * K, int(fy) + fl.height * K], "t": round(t, 3)})
     # shield glow
     if after and beat != "F16":
         g = Image.new("RGBA", (LW, LH), (0, 0, 0, 0)); gd = ImageDraw.Draw(g)
@@ -320,7 +373,7 @@ def render_frame(t: float) -> Image.Image:
     # beam (power run)
     if power and 0.45 <= lt < 0.75 and ob_box:
         d = ImageDraw.Draw(bg)
-        px, py = lowres(cx + 60), lowres(feet - 250)
+        px, py = lowres(cx + 60), lowres(feet - 232)   # repair round 1: beam origin 18 px lower (gap to the tag)
         tx, ty = lowres(ob_box[0]), lowres(ob_box[1] + ob_box[3] / 2)
         u = min(1, (lt - 0.45) / 0.25)
         ex, ey = px + (tx - px) * u, py + (ty - py) * u
@@ -328,6 +381,7 @@ def render_frame(t: float) -> Image.Image:
         d.line([(px, py), (ex, ey)], fill=(255, 255, 255, 255), width=1)
         ok = T.glyphs("OK", "bold", 30, "03FFF1").resize((14, 10), Image.LANCZOS)
         bg.alpha_composite(ok, (int(ex) - 7, int(ey) - 5))
+        _layout.append({"id": "G-beam", "box": [min(px, ex) * K, (min(py, ey) - 3) * K, max(px, ex) * K, (max(py, ey) + 3) * K], "t": round(t, 3)})
     # hit flash / stamp
     if power and 0.7 <= lt < 0.85 and ob_box:
         d = ImageDraw.Draw(bg)
@@ -400,11 +454,11 @@ def render_frame(t: float) -> Image.Image:
         ph = PHONE_BIG[0.0 if lt < 0.9 else (0.5 if lt < 1.3 else 1.0)]
         py = int(feet - 120 - 180 * u)
         if lt < 0.9:
-            put(f, ph, cx + 90, py, "phone", t, record=False)
+            put(f, ph, cx + 200, py, "G-phone", t)          # repair round 1, D-1: 110 px further right (clear of the PG OWNER tag); box recorded for the disjoint check
         # icon burst on install
         if 0.9 <= lt:
             s = int(150 * min(1, (lt - 0.9) / 0.3))
-            if s > 2: put(f, ICON.resize((s, s)), 540, 560, "icon", t, record=False)
+            if s > 2: put(f, ICON.resize((s, s)), 540, 540, "G-icon", t)
         cid = "C11" if lt < 1.3 else "C12"
         pl = plate_for(cid, size=CAP(56) if cid == "C11" else CAP(64), backing="0239FF", alpha=255, border="03FFF1", face="bold")
         put(f, pl, 540, 700, cid, t)

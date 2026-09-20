@@ -245,8 +245,8 @@ qa:
   video_frames:
     - {asset_id: D1, sampled_timestamps: "66: 0.0, every 0.5 s, ±0.2 s around the cuts at 10.4 / 14.6 / 27.8 s, 29.9 (qa/QA-REPORT.json frames)", D1: "NOT_RUN by the detector (Cloud Vision not authorised); human-eye pass = inspector", D2: "n/a (no product photo)", D3: "one sprite sheet -> inspector confirms", D4: "inspector", D5: "n/a", D6: "side-scroll only; stillness on freeze/install/end card (as declared)", D7: "left->right throughout", D8: "safezone PASS by code; inspector visual", D9: "cel world; inspector", D10: "transcripts verbatim (7 files); human ear = inspector", D11: "ducking -6 dB under VO; I -14.4 LUFS TP -2.2", D12: "PASS container", D13: "gen/final/CONTACT-SHEET.png + KEYFRAMES.png"}
   final_geometry:
-    - {deliverable_id: D1, file: gen/final/rentok-game-lane-b-9x16-30s.mp4, geometry: "9:16", sha256: d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1, C1-C8: "as composition row", CF1: PASS, CF2: "code: cards/labels never over the character (disjoint PASS); inspector visual", CF3: "no adaptation (native geometry)", CF4: "safezone PASS", CF5: "hierarchy card > label > HUD by size (72/60/40-44 cap)", status: "DET PASS; LJ pending"}
-  voice_continuity: {applies: true, assembly: "gen/final/rentok-game-lane-b-9x16-30s.mp4 @ d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1", clips: [V1, V2, V3], narrator_identity_same: "one source by construction (Sarvam aditya); ear = inspector", accent_timbre_compatible: "inspector", cadence_continuous: "inspector", boundary_holes_or_restarts: "no joins inside a line (three separate lines at 11.9/14.7/26.7 s)", per_clip_transcripts_match: "PASS (att-007..009)", human_ear_verdict: null}
+    - {deliverable_id: D1, file: gen/final/rentok-game-lane-b-9x16-30s.mp4, geometry: "9:16", sha256: 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78, C1-C8: "as composition row", CF1: PASS, CF2: "code: cards/labels never over the character (disjoint PASS); inspector visual", CF3: "no adaptation (native geometry)", CF4: "safezone PASS", CF5: "hierarchy card > label > HUD by size (72/60/40-44 cap)", status: "DET PASS; LJ pending"}
+  voice_continuity: {applies: true, assembly: "gen/final/rentok-game-lane-b-9x16-30s.mp4 @ 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78", clips: [V1, V2, V3], narrator_identity_same: "one source by construction (Sarvam aditya); ear = inspector", accent_timbre_compatible: "inspector", cadence_continuous: "inspector", boundary_holes_or_restarts: "no joins inside a line (three separate lines at 11.9/14.7/26.7 s)", per_clip_transcripts_match: "PASS (att-007..009)", human_ear_verdict: null}
   delivery: {E1: "outcome.assets[] filled with path+sha256+attempts", E2: "delivery note not yet written (pending human review)", E3: "PASS: no tool/model name on screen or in VO (claims scan includes tool names)", E4: "pending human verdict"}
   defects:
     - {id: R1, asset_id: D1, observed: "TICKETS RESOLVED plate 1031 px wide; CTA plate bottom 1249; label 10 px from name tag; score 3 px into LEVEL 1", class: compositor, repair_layer: compositor, repaired_by_attempt: "code re-render (USD 0)"}
@@ -256,6 +256,16 @@ qa:
     - {id: R4, asset_id: D1, observed: "cheat bar 8 px above the name tag", class: compositor, repair_layer: compositor, repaired_by_attempt: "code (USD 0)"}
     - {id: R5, asset_id: D1, observed: "duplicate layout record (QA artefact)", class: infrastructure, repair_layer: tool, repaired_by_attempt: "code (USD 0)"}
     - {id: T1, asset_id: tools, observed: "att-016 reserved before checking the input existed", class: infrastructure, repair_layer: tool, repaired_by_attempt: "transcribe() checks the file first; att-016 settled as local_fault"}
+    # repair round 1 (Stage-5 checker defects D-1..D-8; CHECK-STAGE-5.md)
+    - {id: D-1, asset_id: D1, observed: "phone graphic over the PG OWNER tag 14.9-15.3 s", class: compositor, repair_layer: compositor, repaired_by_attempt: "code: phone 110 px right; graphics boxes now in the disjoint check (USD 0)"}
+    - {id: D-2, asset_id: D1, observed: "flag pole through the character 26.6-27.8 s", class: compositor, repair_layer: compositor, repaired_by_attempt: "code: pole 300 px right of start, player stops 160 px short; celebration hop (USD 0)"}
+    - {id: D-3, asset_id: D1, observed: "V2 spoken 1.2 s before RENTOK MODE: ON appeared", class: pacing, repair_layer: audio_timeline, repaired_by_attempt: "code: V2 starts at 15.9 s with the string; VO gate PASS (USD 0)"}
+    - {id: D-4, asset_id: A1-character-sheet, observed: "red register absent in 3 of 9 cells (card item 1 overstated)", class: generation, repair_layer: compositor, repaired_by_attempt: "code-drawn register composited on jump/hurt/cornered (tools/repair_sprites.py, USD 0); card corrected"}
+    - {id: D-5, asset_id: D1, observed: "lower third of the game frame read as empty road (16:9 plate)", class: creative_direction, repair_layer: compositor, repaired_by_attempt: "code: near-parallax foreground pavement with scooter (from the plate), planters, bollards, drains (USD 0) — chosen over a paid 9:16 re-draw (see stages/05 Repair round 1)"}
+    - {id: D-7, asset_id: D1, observed: "0.6 s near-silence between V1 and V2", class: audio, repair_layer: audio, repaired_by_attempt: "code: bed returns at V1 end (0.55) + phone-rise hum; full at 15.9 s (USD 0)"}
+    - {id: D-8, asset_id: record, observed: "ATTEMPTS.jsonl verdicts all pending", class: infrastructure, repair_layer: record, repaired_by_attempt: "verdict fields written (USD 0)"}
+    - {id: N-1, asset_id: A2-O3, observed: "green tick on the drifting ghost's tag could read as paid", class: creative_direction, repair_layer: compositor, repaired_by_attempt: "code: tick replaced by a cyan tracked ring marker (gen/sprites/O3_after_tracked.png, USD 0)"}
+    - {id: D-9, asset_id: D1, observed: "extended disjoint check caught the O5 beam 8 px under the name tag (23.9-24.1 s)", class: compositor, repair_layer: compositor, repaired_by_attempt: "code: swarm 30 px lower, beam origin 18 px lower (USD 0)"}
 
 versions: []
 outcome:
@@ -263,8 +273,9 @@ outcome:
   accepted_version: null
   accepted_by: null
   assets:
-    - {path: gen/final/rentok-game-lane-b-9x16-30s.mp4, sha256: d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1, bytes: 14200299, dims_or_duration: "1080x1920, 30.000 s, h264 High yuv420p 30 fps, AAC-LC 48 kHz stereo", produced_by_attempt: "code assembly over att-001..003 (voice), att-018 (character), att-019..023 (obstacles), att-024 (world), att-025 (music)", composition_inputs: [gen/sprites/SLICES.json, gen/render/TIMELINE.json, gen/render/LAYOUT.json, gen/render/PLATE_GATES.json, gen/render/CONTACT_EVENTS.json, gen/audio/MIX_REPORT.json, "stages/03-CREATIVE.md COPY DECK", source/brand/rentok-new-logo.webp], formats: ["9:16 1080x1920"], reuse_potential: [case_study, template_evidence]}
+    - {path: gen/final/rentok-game-lane-b-9x16-30s.mp4, sha256: 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78, bytes: 15284419, dims_or_duration: "1080x1920, 30.000 s, h264 High yuv420p 30 fps, AAC-LC 48 kHz stereo", produced_by_attempt: "code assembly over att-001..003 (voice), att-018 (character), att-019..023 (obstacles), att-024 (world), att-025 (music)", composition_inputs: [gen/sprites/SLICES.json, gen/render/TIMELINE.json, gen/render/LAYOUT.json, gen/render/PLATE_GATES.json, gen/render/CONTACT_EVENTS.json, gen/audio/MIX_REPORT.json, "stages/03-CREATIVE.md COPY DECK", source/brand/rentok-new-logo.webp], formats: ["9:16 1080x1920"], reuse_potential: [case_study, template_evidence]}
     - {path: gen/final/CONTACT-SHEET.png, role: qa}
+    - {path: gen/final/v1/rentok-game-lane-b-9x16-30s.mp4, sha256: d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1, role: superseded_v1, note: "the file the Stage-5 checker reviewed (CHECK-STAGE-5.md); replaced by repair round 1"}
     - {path: gen/final/KEYFRAMES.png, role: qa}
   delivery_note_path: null
   delivered_utc: null
@@ -274,9 +285,9 @@ ttao:
   planning_complete_utc: "2026-09-20T18:40:41Z"
   dispatch_start_utc: "2026-09-20T18:56:12Z"
   dispatch_end_utc: "2026-09-20T19:02:07Z"   # att-025 (Lyria) settled — the last paid call (gen/LEDGER.jsonl)
-  artifact_received_utc: "2026-09-20T19:18:28Z"   # final mp4 (deterministic re-render after R5)
-  qa_complete_utc: "2026-09-20T19:18:28Z"
-  human_review_requested_utc: "2026-09-20T19:20:00Z"   # this report to the Controller
+  artifact_received_utc: "2026-09-20T19:46:21Z"   # repair-round-1 final (v1 at 19:18:28Z)
+  qa_complete_utc: "2026-09-20T19:46:21Z"   # repair round 1 (v1 QA complete was 19:18:28Z)
+  human_review_requested_utc: "2026-09-20T19:47:00Z"   # repair-round-1 report to the Controller (v1 report 19:20Z)
   human_decision_utc: null
   accepted_utc: null
 kpis:

@@ -114,3 +114,37 @@ HJ (customer, blind): A1, A2, A4, A5, A6, A10 — via the Controller.
 7. The O4 tangle sprite carries scribble-like lines on the papers (asked for blank paper); they are not legible letters at 1024 px or on screen (producer reading) — the inspector decides whether that counts as stray lettering.
 
 TTAO so far (mechanical): job_start 18:12:53Z → qa_complete 19:18:28Z = **1 h 05 m 35 s**; human decision pending.
+
+---
+
+# Repair round 1 — Stage-5 checker defects D-1…D-8 (`stages/CHECK-STAGE-5.md` @ `ac794da`)
+
+Authority: Controller message (one bounded repair round; one paid draw permitted for item 5 only). Machine clock: 2026-09-20, QA complete **19:46:21Z**. **Spend after the round: unchanged, USD 0.58675 of 10.00 — no paid call was made in this round** (item 5 was solved in code). The previous final is kept at `gen/final/v1/` (sha256 `d9d437d3…9df1`, the file the checker reviewed).
+
+**New deliverable:** `gen/final/rentok-game-lane-b-9x16-30s.mp4` — sha256 **`40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78`**, 15,284,419 bytes, 30.000 s, 1080×1920 H.264 High / AAC-LC 48 kHz stereo (OBSERVED). `CONTACT-SHEET.png` and `KEYFRAMES.png` regenerated from it.
+
+| # | defect (checker) | layer | fix (all USD 0, code) | check result |
+|---|---|---|---|---|
+| 1 | phone graphic over the `PG OWNER` tag, 14.9–15.3 s | execution / compositor | phone rise moved 110 px right (`cx+200`), clear of the tag (x 172–427); the phone, app icon, flag and beam boxes are now recorded in `LAYOUT.json` as `G-*` graphics and `tools/qa_checks.py` tests every graphic against every text plate with the 12-px gap rule | disjoint PASS, 900 frames, graphics included. The extended check first caught one more real near-touch — the O5 beam 8 px under the tag at 23.9–24.1 s (D-9) — fixed by lowering the swarm 30 px and the beam origin 18 px |
+| 2 | flag pole through the character, 26.6–27.8 s | execution / layer order & position | pole placed 300 px right of the player's start; the player stops 160 px short of it (F15 run to `cx 440`, F16 at 440); pole and flag are drawn behind the player. Bonus (checker D-6 note): F16 now uses the jump cell with a small hop (celebration), not the cornered pose | KEYFRAMES F16 27.20 s: pole clear, right of the player |
+| 3 | V2 spoken at 14.7 s, shown at 15.9 s | execution / timeline | V2 now starts at **15.9 s**, exactly when `RENTOK MODE: ON` appears (HUD slot + banner); ends 18.119 s (overlaps the first beam hit by ~0.4 s, no other line); sum still 30.0 s | vo schedule PASS: V1 11.9–14.545, V2 15.9–18.119, V3 26.7–29.431; film end 29.8 |
+| 4 | red register absent in jump / hurt / cornered cells | execution / micro-qual judgement | a code-drawn register (`tools/repair_sprites.py`) composited behind the arm on those three cells → `A1_{jump,hurt,cornered}_reg.png`; originals kept; `qa/A1-microqual-card.md` item 1 corrected to say which cells lacked it | every pose now carries keys + register (OBSERVED on `qa/repair1_sprites.png` and F7/F8/F16 keyframes) |
+| 5 | lower third of every game frame empty road (16:9 plate) | **selection (Stage 4) — reopened** | **Chosen: USD-0 code fix**, not the paid 9:16 re-draw. Why: the ground line must stay inside the Meta safe box (feet at y 1150 ≤ 1248), so a taller plate cannot add facade *below* the player without moving him out of the box; what the frozen board promised was "the street at the foot of the facade", which is restored by a near-parallax **foreground pavement band** (y 1240–1560, 1.4× scroll) carrying the plate's own scooter (cut from the same plate — same style), code-drawn planters with bushes, bollards and storm drains, then the road with lane dashes. The bottom 35 % remains free of critical content by design (UI-occluded on Reels). A re-draw would also have re-opened text-hygiene risk on a new plate for no gain inside the safe box | frames no longer read letterboxed (KEYFRAMES row 1–3); safezone PASS unchanged |
+| 6 | 0.6 s near-silence between V1 and V2 | audio / mix | the bed now returns at V1's end (14.55 s) at 0.55 gain instead of 15.9 s, with a rising "power hum" during the phone rise (14.8 s) and the install chime at 15.5 s; full level at 15.9 s | loudness PASS I −14.3 LUFS, TP −1.8 dBTP, LRA 4.7 (the inspector's level profile should show no window below −40 dBFS between 14.5 and 15.9 s) |
+| 6b | `ATTEMPTS.jsonl` verdicts all `pending` | record hygiene | verdict fields written in place (accepted / not_selected / failed / qa_evidence); `LEDGER.jsonl` untouched | 25 rows, 0 pending |
+| note | green tick on the drifting ghost's tag could read as "paid" | creative note | **done, trivial:** the tick pixels on `O3_after` replaced by a cyan ring-with-dot "tracked" marker (`O3_after_tracked.png`); the card string `DUES VISIBLE` unchanged | F12 21.0 s |
+| note | keying fringe on the keys; wordmark panel edge; run-cycle weakness; smiling through the hits (checker 6) | recorded, not changed | no USD-0 fix that does not risk a new defect; a re-draw is not authorised in this round | — |
+
+Full DET suite after the round (`qa/QA-RUN-repair1.txt`):
+```
+container: PASS dur=30.000s 1080x1920 h264 High yuv420p 30/1 aac 48000 2 bitrate 4075845
+safezone: PASS 4974 placements; 0 failures
+disjoint: PASS 900 frames; 0 failures   (text + G-phone / G-icon / G-flag / G-beam)
+copy byte-exact: PASS 20 strings; worst contrast 6.927
+claims/forbidden: PASS [] []
+prompts: PASS []
+vo schedule: PASS V1 11.9–14.545 · V2 15.9–18.119 · V3 26.7–29.431
+loudness: PASS I=-14.3 LUFS TP=-1.8 dBTP LRA=4.7
+frames: 66 sampled; contact sheet + keyframes written
+```
+Not changed by this round and still the inspector's: the by-ear checks, A1–A6/A9–A11 LJ/HJ items (timecodes above remain valid; V2 is now at 15.9–18.1 s), the O4 scribble reading. `qa/checker/` (the checker's own frames) refers to v1.

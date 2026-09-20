@@ -57,7 +57,10 @@ def c_safezone_disjoint():
     fails = []; n = 0
     byframe = defaultdict(dict)
     crit = {"C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20", "C21", "C22", "C10-typing", "HUD-heart"}
+    graphics = {"G-phone", "G-icon", "G-flag", "G-beam"}          # repair round 1: non-text critical graphics join the disjoint set (they may not cross a text plate)
     for it in lay:
+        if it["id"] in graphics:
+            byframe[it["t"]][it["id"]] = tuple(int(v) for v in it["box"]); continue
         if it["id"] not in crit: continue
         n += 1
         try:
@@ -72,8 +75,12 @@ def c_safezone_disjoint():
         byframe[it["t"]][it["id"] + ("" if it["id"] not in byframe[it["t"]] else "_b")] = tuple(it["box"])
     dis_fails = []
     for t, regions in byframe.items():
+        texts = {k: v for k, v in regions.items() if not k.startswith("G-")}
         try:
-            check_disjoint(regions, critical=tuple(regions.keys()), min_gap_px=T.TOKENS.min_gap_px)
+            check_disjoint(texts, critical=tuple(texts.keys()), min_gap_px=T.TOKENS.min_gap_px)
+            for gk, gb in ((k, v) for k, v in regions.items() if k.startswith("G-")):
+                for tk, tb in texts.items():
+                    check_disjoint({gk: gb, tk: tb}, critical=(gk, tk), min_gap_px=T.TOKENS.min_gap_px)
         except LayoutRefused as e:
             dis_fails.append({"t": t, "err": str(e)[:160]})
     REPORT["safezone"] = {"status": "PASS" if not fails else "FAIL", "placements_checked": n, "failures": fails[:20], "safe_box": T.SAFE}
