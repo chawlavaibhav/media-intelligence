@@ -48,7 +48,7 @@ Answer → `spec.formats[]` (one master satisfies all three placements):
 | container / codecs | MP4, H.264 High profile, progressive, 4:2:0, moov atom first (faststart), no edit lists; AAC-LC stereo ≥ 128 kbps at 48 kHz | S-YTE + S-IGR ("H.264 … stereo AAC … 128kbps+"; "no edit lists") |
 | frame rate | 30 fps constant (fixed) | S-IGR "fixed frame rate"; S-YTE lists 30 among common rates; every generated clip is conformed to 30 fps by code |
 | duration | 30.0 s (A7: 29.5–30.5) | customer; inside Meta 0 s–15 min and YouTube ≤ 3 min |
-| bitrate | ≈ 8–10 Mbps video | S-YTE 1080p standard-rate recommendation 8 Mbps |
+| bitrate | 8 Mbps (S-YTE 1080p standard-rate recommendation) or above | S-YTE |
 | file size | ≪ 4 GB | S-IGR/S-FBR 4 GB cap |
 | DET check | `ffprobe -show_streams -show_format`: width 1080, height 1920, codec h264, profile High, pix_fmt yuv420p, r_frame_rate 30/1, audio aac 48000 Hz 2 ch, duration 29.5–30.5 s; `moov` before `mdat` (check with `ffprobe -v trace` or a byte scan) | Stage 4 QA plan item Q-A7/Q-A8 |
 
@@ -174,7 +174,7 @@ DO NOT (character): no red cap with a letter, no blue overalls with buttons, no 
 DO NOT (world): no question-mark blocks, no brick-block rows, no green warp pipes, no mushrooms of any kind, no turtle/koopa or brown mushroom-goomba shapes, no piranha plants, no coins with a "?" or the Mario coin sound, no castle-at-the-end, no Nintendo-style striped flagpole ball; no title in a Nintendo typeface.
 DO NOT (sound): no Nintendo melody, jingle, coin/jump/1-up sound; music is an original chiptune bed generated for this job; SFX are synthesised by code (Stage 4).
 DO NOT (words): the word "Mario", "Nintendo", "Super", "Luigi", "Bowser", "Peach", "Koopa", "Goomba", "Mushroom Kingdom" never appear in any generation prompt, on screen, in filenames or in the music brief. DET: grep over all prompts and the copy deck before dispatch.
-DO (originality anchors): the world is a PG street (Indian low-rise buildings, a "PG" nameplate, a scooter, a water tank), the obstacles are PG problems drawn as original creatures/objects, the flag carries the RentOk mark, the character's identifiers are keys + a rent register.
+DO (originality anchors): the world is a PG street (Indian low-rise buildings, a scooter, a water tank — `reopened_by: checker → resolved:` the "PG" nameplate is deleted: no model-drawn signage anywhere; the prompt says "no signs, no boards, no lettering"), the obstacles are PG problems drawn as original creatures/objects, the flag carries the RentOk mark, the character's identifiers are keys + a rent register.
 
 Cost of being wrong: a generated still that drifts towards Nintendo tropes is rejected at the micro-qualification (Stage 4) before dependents are built.
 

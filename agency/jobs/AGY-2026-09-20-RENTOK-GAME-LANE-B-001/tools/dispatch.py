@@ -3,9 +3,8 @@
 
 ADAPTED from tools/reference-kit/dispatch.py (the Cumin Job B tool, production-proven on cases 001/002):
   * job paths point at THIS job (gen/LEDGER.jsonl, gen/ATTEMPTS.jsonl under agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-B-001);
-  * CAP_USD = 0.0 — NO confirmed spend cap exists yet. Every reserve() refuses while the cap is 0.0. The Controller's written
-    cap is copied here (amount only) and into JOB.yaml spend.cap when it arrives; the provisional planning ceiling (USD 10.00)
-    is NOT a cap and is not entered here;
+  * CAP_USD = 10.0 — the Controller's written cap (JOB.yaml spend.cap; recorded 2026-09-20). Before that message it was 0.0 and
+    every reserve() refused;
   * every fal route (seedream / flux / kling / wan / minimax / fal balance) is REMOVED — this job uses no fal and no cash surface;
   * the remaining routes are the credit pools the Controller allowed: nano-banana-2 and nano-banana-pro (Gemini API, credits),
     Lyria (Vertex, credits), Sarvam bulbul:v3 (Sarvam credits), ElevenLabs v3 direct (plan credits). Veo/Omni video routes are
@@ -42,7 +41,7 @@ from runtime.route.cli import build_router  # noqa: E402
 GEN = JOB / "gen"
 LEDGER = GEN / "LEDGER.jsonl"
 ATTEMPTS = GEN / "ATTEMPTS.jsonl"
-CAP_USD = 0.0   # JOB.yaml spend.cap — UNSET. Stays 0.0 until the Controller's written confirmed cap arrives. 0 hidden retries; credits only; hard stop.
+CAP_USD = 10.0  # JOB.yaml spend.cap — Controller session message 2026-09-20, human answer "USD 10 per lane (Recommended)": USD 10.00, credits only (Google Vertex/Gemini, ElevenLabs plan, Sarvam), no fal, 0 hidden retries, hard stop.
 
 # route_key (runtime PriceBook / taint-register cell) -> (provider model id, surface, billing pool)
 ROUTES = {
@@ -142,7 +141,7 @@ def base_rec(attempt_id, asset_id, route_key, q, prompt, out, is_repair, params)
             "artifact_path": str(out.resolve().relative_to(JOB)), "artifact_sha256": None, "verdict": "pending", "is_repair": is_repair}
 
 
-FORBIDDEN_PROMPT_WORDS = ("mario", "nintendo", "luigi", "bowser", "koopa", "goomba", "mushroom kingdom", "super mario")
+FORBIDDEN_PROMPT_WORDS = ("mario", "nintendo", "luigi", "bowser", "koopa", "goomba", "mushroom kingdom", "super mario", "peach")   # checker NOTE 4: "peach" added; the standalone "Super" rule is NOT applied here (it would block the brand tagline "superapp"); "super mario" covers the IP case
 
 
 def guard_prompt(prompt: str) -> None:

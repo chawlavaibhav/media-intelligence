@@ -200,9 +200,24 @@ plan:
 
 # ── 8–9. SPEND ───────────────────────────────────────────────────────────────
 spend:
-  cap: null                # REQUIRED before any paid call. Provisional planning ceiling USD 10.00 (task brief), UNCONFIRMED; CAP_USD = 0.0 in tools/dispatch.py until the Controller's written cap arrives
-  cap_lineage: []
-  pool_readings: []
+  cap:
+    amount: 10.00
+    currency: USD
+    stated_by: "human Controller, via the Controller session"
+    stated_utc: "2026-09-20T18:44Z"
+    source: "Controller session message, 2026-09-20, human answer 'USD 10 per lane (Recommended)'"
+    covers: "this lane (Lane B) only; credits only (Google Vertex/Gemini credits, ElevenLabs plan credits, Sarvam credits); no fal; hard stop at the cap"
+    retries_allowed: 0
+    note: "0 hidden retries: every re-send is a new counted attempt under the same cap. Balances are not machine-readable for Google (the project service account cannot call Cloud Billing — API disabled on vertexaiproject-507518, verified by the Controller session), so every reservation is an upper bound."
+  cap_lineage:
+    - {budget_id: LANE-B-CAP-001, amends: null, amount_usd: 10.00, source: "Controller session message, 2026-09-20, human answer 'USD 10 per lane (Recommended)'", verbatim_constraint: "credits only — Google Vertex/Gemini, ElevenLabs, Sarvam; no fal"}
+  pool_label_discrepancy: "The runtime PriceBook labels sarvam-bulbul-v3 and elevenlabs-v3-direct as pool 'cash'; the routing table says sarvam_credits / elevenlabs_credits. Controller RULING 2026-09-20: 'ElevenLabs plan credits and Sarvam prepaid credits ARE permitted pools … the PriceBook roster's cash label on those two routes is a roster labelling issue, not a billing fact.'"
+  pool_assumptions:
+    - {assumption: "The Gemini API key (Nano Banana 2, generativelanguage.googleapis.com) and the Vertex service account (Lyria, vertexaiproject-507518) draw on the same Google credits pool, as in the Cumin experiment ledgers", cost_of_being_wrong: "a Nano Banana 2 draw could bill a different Google account (at most the 7-11 stills, ≈ USD 0.5-0.9); if any call returns a billing/quota error the lane STOPS and reports rather than retrying on another surface (Controller instruction)"}
+  pool_readings:
+    - {pool: google_credits (Vertex + Gemini API), balance_usd: attested_by_human, read_utc: "2026-09-20T18:44Z", source: "Controller session AskUserQuestion — human: 'Yes, credits are funded — proceed'"}
+    - {pool: sarvam_credits, balance_usd: attested_by_human, read_utc: "2026-09-20T18:44Z", source: "Controller ruling names Sarvam credits as a permitted pool; no balance endpoint known to this session (UNKNOWN balance)"}
+    - {pool: elevenlabs_plan_credits, balance_usd: null, read_utc: null, source: "to be read via GET /v1/user/subscription at Stage 5 (pending)"}
   attempts: []
   total_reserved_usd: 0
   total_settled_usd: null
