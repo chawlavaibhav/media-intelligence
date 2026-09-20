@@ -119,3 +119,28 @@ Animatic v1 (`gen/animatic-v1.mp4`) and its failing DET run (`qa/animatic-v1/DET
 `job_start_utc` 2026-09-20T18:11:42Z · `planning_complete_utc` 18:37:56Z · `dispatch_start_utc` 19:03:11Z · `dispatch_end_utc` / `artifact_received_utc` 19:07Z (att-008) · `qa_complete_utc` 2026-09-20T19:16:02Z → elapsed job_start → qa_complete = **1 h 04 m 20 s**. Human review not yet requested (the Controller presents to the customer blind).
 
 Written by the producer session (lane A). Not a verdict.
+
+---
+
+## 9. Repair round 1 (Controller-authorised after the independent Stage-5 checker's DELIVERABLE WITH DEFECTS, `stages/CHECK-STAGE-5.md` @ `e12613f`) — USD 0, no new generation
+
+New deliverable (OBSERVED): `gen/final/rentok-game-lane-a-9x16-30s.mp4` · sha256 `5769ffa7232e6bb1427ce1f0db7396fedd12e9af58dc7feb5d61f140d20b0ab9` · 33,341,051 bytes · 30.021 s (the AAC priming is no longer trimmed by an edit list; inside A7's 29.5–30.5) · 0 `elst` atoms · −14.6 LUFS, −2.0 dBTP. Previous file kept as `gen/final/v1/rentok-game-lane-a-9x16-30s.mp4` @ `6d418c10…`; the intermediate before the D-7 addendum is `gen/final-v4-audio.mp4` @ `bcf125ca…`. Spend unchanged: USD 0.529 (8 calls).
+
+| Defect | Layer | Fix | Check result |
+|---|---|---|---|
+| D-1 edit lists (mandatory) | assembly (mux) | `-use_editlist 0 -movflags +faststart+negative_cts_offsets` (stream copy); new DET check `DET-A8 no edit lists (elst)` walks the moov/trak/edts box tree (`tools/qa_checks.py count_atoms`) — it reports 2 on the v1 file and 0 on the new one | PASS (0 elst); duration 30.021 s PASS; loudness PASS |
+| D-2 flag hidden 27.2–27.6 s (mandatory) | board F10 + compositor | board decision reopened: the checklist fades out 26.6–27.0 s (`board.json` F10 `repair_of: D-2`; `03-CREATIVE.md` Part D); the pole is drawn behind the owner and he takes the idle pose at the pole | C1/C5 gates PASS over 900 frames; frame 27.40 s (`qa/repair-round-1/t27.40.png`): flag at the top, clear facade behind it |
+| D-3 projectile | compositor | pixfont `✓` glyph at scale 4 with a dark shadow (`draw_tick`) | frames 18.55 / 20.45 s show the tick |
+| D-4 phone not held | compositor | the phone stays composited in the owner's raised hand from 17.6 s through the power-up beat to 19.6 s (idle pose); the test tick fires from the phone; events note corrected | frames 17.80 / 18.55 s |
+| D-5 register flicker | cut-out | the run-A book patch composited **behind** the run-B pose (arm stays in front); original kept as `gen/assets/owner_runB_orig.png` | book visible in all run frames (contact sheet 21.0 vs 21.5 s) |
+| D-6 generic bursts | compositor | per-obstacle clears as the board says: tile debris with gravity (wall, sack), the ledger tower becomes one neat dashboard card that shrinks toward the checklist, the red tickets recolour to brand green then fade; obstacle 3 unchanged (tagged) | frames 20.45 / 21.65 / 24.05 / 25.25 s |
+| D-7 empty lower band (addendum) | compositor (world art; safe box frozen) | slab kerb with yellow dashes, two wheel tracks, drain grate, manhole, parked-scooter silhouette as a 1.3× nearer parallax layer, depth shading toward the bottom — non-critical, may be covered by platform UI | all gates PASS; frame 21.40 s (`qa/repair-round-1/t21.40-d7-lane.png`) |
+| D-8 end-card seam | compositor | end-card fill sampled from the logo file's own card colour (#0239FF) | frame 29.90 s: no rectangle |
+| D-9 full-frame flashes | compositor | hit flash on the character silhouette only (`flash_sprite`) | frame 03.35 s |
+| D-10 records | records | `gen/ATTEMPTS.jsonl` verdicts set to accepted with a dated note (ledger untouched); `plan.micro_qualifications[0]` frozen_asset sha + `checker_inspected: true` citing CHECK-STAGE-5.md §4 | `JOB.yaml` valid YAML |
+
+Not done: nothing in the round was infeasible at USD 0. The D-2 board change is the only reopened creative decision; everything else is execution.
+
+Full DET suite on the new file (`qa/final-v5-audio/DET-RESULTS.json`): **23 checks, 0 FAIL, 1 NOT_RUN** (the paid text detector; the author's human-eye pass was repeated on the new contact sheet and the nine repair frames under `qa/repair-round-1/` — no lettering beyond the code-set strings, the wordmark, `?` and `!`). `ttao.qa_complete_utc` re-stamped 2026-09-20T19:44:03Z (job_start → qa_complete = 1 h 32 m 21 s, including both checker turnarounds).
+
+For the inspector, the frames that changed: 03.35 (sprite flash) · 17.80 / 18.55 (phone in hand, tick) · 20.45 / 21.65 (debris) · 24.05 (dashboard card) · 25.25 (green tickets) · 27.40 (flag clear, checklist gone) · 29.90 (end card) · 21.40 (lower band). Duration is now 30.021 s, not 30.000 s, because no edit list trims the encoder priming — the customer-facing tolerance is 29.5–30.5.

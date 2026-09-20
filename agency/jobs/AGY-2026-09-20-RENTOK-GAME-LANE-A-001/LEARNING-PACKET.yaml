@@ -14,8 +14,9 @@ learning_status: pending_sync
 accepted_assets: []               # none yet — the human verdict is pending (blind Video X/Y via the Controller)
 candidate_deliverable:
   path: gen/final/rentok-game-lane-a-9x16-30s.mp4
-  sha256: 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168
-  measured: "1080x1920, 30.000 s, h264 High 30 fps, aac 48 kHz stereo, −14.6 LUFS, −2.0 dBTP, 33.3 MB"
+  sha256: 5769ffa7232e6bb1427ce1f0db7396fedd12e9af58dc7feb5d61f140d20b0ab9
+  measured: "1080x1920, 30.021 s, h264 High 30 fps, aac 48 kHz stereo, −14.6 LUFS, −2.0 dBTP, 33.4 MB, 0 elst (repair round 1 incl. D-7)"
+  previous: "gen/final/v1/… @ 6d418c10… (2 elst atoms; Stage-5 checker DELIVERABLE WITH DEFECTS)"
 routes_attempted:
   - {cell: IMG-CORE/nano-banana-2 (Gemini API surface), calls: 7, ok: 7, failed: 0, usd: 0.469}
   - {cell: MUS/lyria+native (Vertex), calls: 1, ok: 1, failed: 0, usd: 0.060}
@@ -30,6 +31,7 @@ repairs:                          # all USD 0, none at the generation layer
   - {id: R3, class: compositor (cut-out), found_by: "final-v1 look", change: "colour keying + chroma-green shadow removal + fringe erosion"}
   - {id: R4, class: creative_direction, found_by: "final-v2 look", change: "sprite scale +18 % / +15 %"}
   - {id: R5, class: audio, found_by: "ebur128 on the AAC output", change: "pre-encode true-peak target −4 dBTP"}
+  - {id: "D-1..D-6, D-8..D-10", class: "assembly / board / compositor / cut-out / records", found_by: "independent Stage-5 checker (stages/CHECK-STAGE-5.md)", change: "repair round 1, USD 0 — see JOB.yaml qa.defects and 05-EXECUTION §9"}
 known_cost_usd: 0.529             # reserved at pinned prices; upper bound
 ttao_hms: null                    # accepted_utc − job_start_utc, on ACCEPT only
 elapsed_to_qa_complete_hms: "1:04:20"   # 2026-09-20T18:11:42Z → 19:16:02Z (includes the checker's Gate 1–4 turnaround inside the window)
@@ -40,12 +42,20 @@ observed_failures:
   - "F-03: cut-out kept enclosed green pockets and the model's dark-green ground shadow (flood-fill keying only) — caught by eye on final-v1"
   - "F-04: AAC encoding overshot true peak by ≈ 2 dB on square-wave SFX (−2.6 dBTP wav → −0.3 dBTP AAC) — caught by ebur128 on the delivered file, not on the wav"
   - "F-05: the first ebur128 regex read the running 'I:' line (−70 LUFS at t=0) instead of the summary — a tooling defect fixed before any record was written"
+  - "F-06: the delivered MP4 carried two edit lists (ffmpeg default: B-frame delay + AAC priming) although the lane's own spec row said none; no DET check tested it — found by the independent checker (D-1)"
+  - "F-07: the board said 'checklist stays visible' and 'the flag rises to the top' while both occupied y 540–666; the Gate-3 disjoint fix moved only the flash — a board-level occlusion the text gates cannot see (D-2)"
+  - "F-08: the renderer simplified four board-specified clears into one generic routine; the record promised more than the film showed (D-6)"
+  - "F-09: a pose-level asset limitation (book hidden in run-B) became a visible flicker at animation rate (D-5)"
 root_cause_classes:
   - {failure_ref: F-01, class: compositor}
   - {failure_ref: F-02, class: compositor}
   - {failure_ref: F-03, class: compositor}
   - {failure_ref: F-04, class: audio}
   - {failure_ref: F-05, class: infrastructure (tooling)}
+  - {failure_ref: F-06, class: infrastructure (assembly defaults)}
+  - {failure_ref: F-07, class: creative_direction (board)}
+  - {failure_ref: F-08, class: compositor}
+  - {failure_ref: F-09, class: compositor (cut-out)}
 media_model_failures_that_reached_a_gate: 0
 
 # ── directional model observations (routing_authority: none; n as stated) ───────
@@ -67,7 +77,10 @@ candidate_engineering_changes:
   - {closes: F-01/F-02, change: "a `layout-log → gates` runner in runtime/compositor (bounds, disjoint, contrast from backing hex) so any renderer gets the gates for free"}
   - {closes: F-04, change: "assemble step measures ebur128 on the encoded output and fails closed; pre-encode TP target as a token"}
   - {closes: "cut-out", change: "a keying helper with colour + connectivity + chroma-shadow rules and a keyability report (tools/cutout.py) into runtime/compositor"}
+  - {closes: F-06, change: "a container check that walks the MP4 box tree for elst / moov position (tools/qa_checks.py count_atoms) in the shared QA bundle; mux with -use_editlist 0 by default"}
+  - {closes: F-07, change: "an occlusion check between non-text hero objects (flag, phone, product) and text/logo boxes — the text gates only see text"}
 canon_gaps: []                    # no production failure was for want of Canon; the game/arcade/audio gaps were declared at Stage 3 and covered by explicit reasoning
+d7_note: "D-7 (empty lower band below y 1180): the safe box stayed frozen; the band was filled by code as non-critical nearer-parallax world art (Controller addendum, USD 0). Lesson: compose the non-critical world across the whole frame from the start; the safe box bounds critical elements, not art"
 no_promotion_items:
   - "the specific obstacle metaphors, palette, level layout and copy (job-specific)"
   - "the 1.2 s-per-clear tempo (untested by a human yet)"

@@ -20,6 +20,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import numpy as np
 from PIL import Image, ImageDraw, ImageOps
 
 HERE = Path(__file__).resolve().parent
@@ -204,6 +205,60 @@ class Sprites:
         return two
 
 
+# ── repair-round-1 primitives ────────────────────────────────────────────────
+def draw_tick(cv: Image.Image, x: int, y: int, scale: int = 4):
+    """D-3: the projectile is the board's cyan tick mark (pixfont glyph), with a 1-scale dark shadow."""
+    cv.alpha_composite(PF.render("✓", scale, fg=rgb(T.ink)), (x + scale, y + scale))
+    cv.alpha_composite(PF.render("✓", scale, fg=rgb(T.cyan)), (x, y))
+
+
+def debris(cv: Image.Image, sprite: Image.Image, ox: int, oy: int, k: float, seed: int, tiles: int = 6):
+    """D-6: burst the sprite into tiles that fly outward with gravity and fade over k in [0,1]."""
+    tw, th = max(1, sprite.width // tiles), max(1, sprite.height // tiles)
+    rng = np.random.default_rng(seed)
+    for j in range(tiles):
+        for i in range(tiles):
+            tile = sprite.crop((i * tw, j * th, (i + 1) * tw, (j + 1) * th))
+            if tile.getbbox() is None:
+                continue
+            vx = (i - tiles / 2 + 0.5) * 90 + rng.uniform(-30, 30); vy = -260 + (j - tiles / 2) * 40 + rng.uniform(-40, 40)
+            dx = int(vx * k * 1.1); dy = int(vy * k + 900 * k * k)
+            a = tile.split()[3].point(lambda p: int(p * max(0.0, 1 - k)))
+            tile.putalpha(a)
+            cv.alpha_composite(tile, (ox + i * tw + dx, oy + j * th + dy))
+
+
+def recolour_red_to_green(sprite: Image.Image, k: float) -> Image.Image:
+    """D-6 (tickets): red bubbles turn brand green as k goes 0→1 (pixel test on the sprite, no model)."""
+    a = np.asarray(sprite).astype(int)
+    red = (a[:, :, 0] > 150) & (a[:, :, 1] < 110) & (a[:, :, 2] < 110) & (a[:, :, 3] > 0)
+    g = np.array(rgb(T.green))
+    out = a.copy()
+    out[red, :3] = (a[red, :3] * (1 - k) + g * k).astype(int)
+    return Image.fromarray(out.astype(np.uint8), "RGBA")
+
+
+def neat_dashboard(w: int, h: int) -> Image.Image:
+    """D-6 (ledger tower): after the hit the tower becomes one neat dashboard card — a brand-blue rounded panel with
+    cyan bars and a green tick; no lettering."""
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    d.rounded_rectangle((0, 0, w - 1, h - 1), radius=18, fill=hx(T.brand_blue), outline=hx(T.ink), width=4)
+    d.rounded_rectangle((14, 14, w - 15, 54), radius=8, fill=hx(T.white))
+    for j, frac in enumerate([0.7, 0.45, 0.85, 0.55]):
+        y0 = 74 + j * 40
+        d.rectangle((16, y0, w - 16, y0 + 24), fill=hx(T.ink))
+        d.rectangle((16, y0, 16 + int((w - 32) * frac), y0 + 24), fill=hx(T.cyan))
+    im.alpha_composite(PF.render("✓", 6, fg=rgb(T.green)), (w - 60, 16))
+    return im
+
+
+def flash_sprite(cv: Image.Image, sprite: Image.Image, xy, alpha: int = 200):
+    """D-9: hit flash on the character only (white silhouette from the alpha mask), never full-frame."""
+    m = sprite.split()[3]
+    white = Image.new("RGBA", sprite.size, (255, 255, 255, 0)); white.putalpha(m.point(lambda p: int(p * alpha / 255)))
+    cv.alpha_composite(white, xy)
+
+
 # ── world drawing ────────────────────────────────────────────────────────────
 def code_plate() -> Image.Image:
     """The USD-0 fallback background (also the animatic background): sky gradient, a tall PG facade with stacked
@@ -227,13 +282,66 @@ def code_plate() -> Image.Image:
 
 
 def draw_ground(cv: Image.Image, camx: float):
+    """The lane below the play line. D-7 (repair round 1, code only): the band is no longer a flat ochre field — a slab kerb
+    (long stone slabs, not a brick bond), two darker wheel tracks, a drain grate, a manhole and a scooter silhouette scroll
+    as a NEARER parallax layer (1.3x), and the bottom darkens with distance. Everything here is non-critical world art
+    that platform UI may cover; the safe box is untouched."""
     d = ImageDraw.Draw(cv)
-    d.rectangle((0, T.ground_y, W, H), fill=hx(T.lane))
-    d.rectangle((0, T.ground_y, W, T.ground_y + 12), fill=hx(T.kerb))
+    g = T.ground_y
+    d.rectangle((0, g, W, H), fill=hx(T.lane))
+    # depth: darken toward the bottom of the frame
+    for y in range(g + 240, H, 8):
+        f = (y - g - 240) / (H - g - 240)
+        d.rectangle((0, y, W, y + 8), fill=(int(0xA8 * (1 - 0.35 * f)), int(0x92 * (1 - 0.35 * f)), int(0x6A * (1 - 0.35 * f)), 255))
+    # kerb: one row of long stone slabs with joints (no brick bond)
+    d.rectangle((0, g, W, g + 26), fill=hx(T.kerb))
+    d.rectangle((0, g + 26, W, g + 34), fill=(90, 82, 70, 255))
+    off = int(camx) % 220
+    for x in range(-off, W + 220, 220):
+        d.rectangle((x, g + 2, x + 6, g + 26), fill=(78, 72, 62, 255))
+    # nearer parallax layer (1.3x)
+    fx = int(camx * 1.3)
+    # two wheel tracks
+    d.rectangle((0, g + 120, W, g + 150), fill=(150, 130, 92, 255))
+    d.rectangle((0, g + 330, W, g + 366), fill=(150, 130, 92, 255))
+    # painted kerb dashes (yellow, scrolling)
+    off = fx % 160
+    for x in range(-off, W + 160, 160):
+        d.rectangle((x, g + 8, x + 70, g + 20), fill=(220, 190, 60, 255))
+    # drain grate every 1400 px
+    off = fx % 1400
+    gx = 300 - off
+    while gx < W + 200:
+        d.rectangle((gx, g + 60, gx + 150, g + 96), fill=(70, 66, 60, 255), outline=hx(T.ink), width=3)
+        for j in range(6):
+            d.rectangle((gx + 12 + j * 22, g + 66, gx + 20 + j * 22, g + 90), fill=(120, 112, 100, 255))
+        gx += 1400
+    # manhole every 1400 px, offset
+    off = (fx + 700) % 1400
+    mx = 600 - off
+    while mx < W + 200:
+        d.ellipse((mx, g + 200, mx + 170, g + 260), fill=(120, 108, 84, 255), outline=hx(T.ink), width=3)
+        d.ellipse((mx + 20, g + 208, mx + 150, g + 252), fill=(100, 90, 70, 255))
+        mx += 1400
+    # parked scooter silhouette every 2100 px (pixel primitives, no lettering)
+    off = (fx + 300) % 2100
+    sx = 800 - off
+    while sx < W + 300:
+        sy = g + 380
+        d.rectangle((sx + 30, sy - 60, sx + 190, sy - 20), fill=(60, 64, 90, 255), outline=hx(T.ink), width=3)   # body
+        d.rectangle((sx + 150, sy - 120, sx + 175, sy - 60), fill=(60, 64, 90, 255), outline=hx(T.ink), width=3)  # steering column
+        d.rectangle((sx + 120, sy - 130, sx + 210, sy - 118), fill=hx(T.ink))                                       # handlebar
+        d.rectangle((sx + 20, sy - 80, sx + 110, sy - 62), fill=(40, 40, 50, 255), outline=hx(T.ink), width=2)     # seat
+        for wx in (sx + 10, sx + 170):
+            d.ellipse((wx, sy - 30, wx + 50, sy + 20), fill=(30, 30, 36, 255), outline=hx(T.ink), width=3)
+            d.ellipse((wx + 16, sy - 14, wx + 34, sy + 4), fill=(120, 120, 130, 255))
+        d.ellipse((sx - 10, sy + 10, sx + 240, sy + 40), fill=(140, 122, 90, 255))                                   # ground shadow
+        sx += 2100
+    # small stones
     off = int(camx) % 140
-    for x in range(-off, W, 140):                      # pebbles on the lane, scrolling with the world (no brick bond)
-        d.rectangle((x + 30, T.ground_y + 60, x + 42, T.ground_y + 68), fill=hx(T.kerb))
-        d.rectangle((x + 90, T.ground_y + 110, x + 98, T.ground_y + 116), fill=hx(T.kerb))
+    for x in range(-off, W, 140):
+        d.rectangle((x + 30, g + 170, x + 42, g + 178), fill=hx(T.kerb))
+        d.rectangle((x + 90, g + 290, x + 98, g + 296), fill=hx(T.kerb))
 
 
 def desaturate(cv: Image.Image, amount: float) -> Image.Image:
@@ -290,7 +398,8 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
     if n == "F11":
         # end card: freeze-dim to brand blue then the package
         k = min(1.0, tl / 0.3)
-        cv = Image.new("RGBA", (W, H), hx(T.brand_blue))
+        card = S.wordmark.getpixel((100, 100))[:3]   # D-8: the logo file's own card blue (measured #0239FF) so no seam shows
+        cv = Image.new("RGBA", (W, H), (*card, 255))
         wm = S.wordmark; ww = T.endcard_wordmark_w; wh = int(ww * wm.height / wm.width)
         wmi = wm.resize((ww, wh), Image.LANCZOS)
         cxs = (T.safe[0] + T.safe[2]) // 2
@@ -302,7 +411,7 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
         put_text(cv, log, "URL", deck["URL"], T.url_scale, T.white, cx=cxs, y=1170, backing=None)
         if k < 1.0:
             # blend from the last game frame's blue dim: approximate by darkening the card in
-            cv = Image.blend(Image.new("RGBA", (W, H), hx(T.brand_blue)), cv, k)
+            cv = Image.blend(Image.new("RGBA", (W, H), (*card, 255)), cv, k)
         log_all.append({"frame": i, "t": round(t, 3), "beat": n, "powered": True, "boxes": log}); return cv
 
     # background (parallax 0.25x)
@@ -330,17 +439,21 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
         oy = T.ground_y - im.height
         hit_t = 0.75 if clearing else 1.5
         alive = True
-        if clearing and tl >= hit_t:
-            if k == 3:
-                pass  # tagged, keeps running
-            else:
-                alive = tl < hit_t + 0.3
-                if alive:   # burst: scale up and fade over 0.3 s
-                    s = 1.0 + (tl - hit_t) * 1.5; a = max(0, 1 - (tl - hit_t) / 0.3)
-                    im = im.resize((int(im.width * s), int(im.height * s)), Image.NEAREST)
-                    im = Image.eval(im, lambda p: p)  # copy
-                    al = im.split()[3].point(lambda p: int(p * a)); im.putalpha(al)
-                    ox -= (im.width - S.obst(k).width) / 2; oy = T.ground_y - im.height
+        if clearing and tl >= hit_t and k != 3:
+            alive = False
+            kk = min(1.0, (tl - hit_t) / 0.35)
+            if k in (1, 2):                      # D-6: paper wall and money sack burst into flying debris
+                debris(cv, im, int(ox), int(oy), kk, seed=k)
+            elif k == 4:                         # D-6: the ledger tower becomes one neat dashboard card that shrinks toward the checklist
+                card = neat_dashboard(220, 260)
+                sc = max(0.25, 1 - kk * 0.75); cw, ch = int(220 * sc), int(260 * sc)
+                cx0 = int(ox + im.width / 2 - cw / 2 + (T.checklist_x - ox) * kk * 0.5); cy0 = int(oy + im.height - ch - (oy + im.height - 700) * kk * 0.6)
+                cv.alpha_composite(card.resize((cw, ch), Image.NEAREST), (cx0, cy0))
+            elif k == 5:                         # D-6: the red ticket bubbles turn green, then fade
+                green = recolour_red_to_green(im, min(1.0, kk * 2))
+                if kk > 0.5:
+                    al = green.split()[3].point(lambda p: int(p * (1 - (kk - 0.5) * 2))); green.putalpha(al)
+                cv.alpha_composite(green, (int(ox), int(oy)))
         if alive:
             cv.alpha_composite(im, (int(ox), int(oy)))
         if clearing and k == 3 and tl >= hit_t:   # dues tag travels with him (3-A: tracked, not stopped)
@@ -358,16 +471,16 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
         show_label = (0.4 <= tl <= f["t1"] - f["t0"]) if not clearing else (tl < 0.4)
         if show_label:
             put_text(cv, log, lab_key, deck[lab_key], T.label_scale, T.yellow, cx=(T.safe[0] + T.safe[2]) // 2, y=T.label_y)
-        # projectile in the clearing run
+        # projectile in the clearing run (D-3: the board's tick mark)
         if clearing and 0.3 <= tl < hit_t:
-            pxr = T.owner_x + 150 + (tl - 0.3) * 900
-            d.rectangle((pxr, T.ground_y - 150, pxr + 26, T.ground_y - 124), fill=hx(T.cyan), outline=hx(T.ink), width=2)
-        # hit flash in the problem half
-        if not clearing and hit_t <= tl < hit_t + 0.12 and k != 3:
-            d.rectangle((0, 0, W, H), fill=(255, 255, 255, 120))
-    if n == "F8" and 0.4 <= tl < 0.9:  # test tick
-        pxr = T.owner_x + 150 + (tl - 0.4) * 900
-        d.rectangle((pxr, T.ground_y - 200 - (tl - 0.4) * 300, pxr + 26, T.ground_y - 174 - (tl - 0.4) * 300), fill=hx(T.cyan), outline=hx(T.ink), width=2)
+            pxr = int(T.owner_x + 150 + (tl - 0.3) * 900)
+            draw_tick(cv, pxr, T.ground_y - 160)
+        hit_now = (not clearing) and hit_t <= tl < hit_t + 0.12 and k != 3   # D-9: flash the sprite, drawn after the owner below
+    else:
+        hit_now = False
+    if n == "F8" and 0.4 <= tl < 0.9:  # test tick fired from the phone in his hand (D-4)
+        pxr = int(T.owner_x + 150 + (tl - 0.4) * 900)
+        draw_tick(cv, pxr, int(T.ground_y - 230 - (tl - 0.4) * 300))
 
     # owner
     jump = 0.0
@@ -396,14 +509,30 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
         knock = int(40 * (1 - (tl - 1.2) / 0.5)); pose = "idle"
     if n == "F6" and tl >= 1.5:
         knock = 40
+    if n == "F10" and tl >= 1.0:
+        pose = "idle"                           # D-2 (cosmetic): he holds the pole instead of running on the spot
+    if n == "F7" or (n == "F8" and tl < 1.6):
+        pose = "idle"
     sp = S.owner(pose, powered)
     oy_owner = T.ground_y - sp.height + (12 if powered else 0) - int(jump)
-    cv.alpha_composite(sp, (ox_owner - knock - (12 if powered else 0), oy_owner))
+    owner_xy = (ox_owner - knock - (12 if powered else 0), oy_owner)
 
-    # flag (F10)
+    # flag pole is drawn BEFORE the owner so he stands in front of it (D-2 cosmetic)
     if n == "F10":
         polex = int(1080 - tl * T.scroll_clear) if tl < 1.0 else 600
         d.rectangle((polex, 520, polex + 14, T.ground_y), fill=(120, 120, 130, 255), outline=hx(T.ink), width=2)
+    cv.alpha_composite(sp, owner_xy)
+    if hit_now:
+        flash_sprite(cv, sp, owner_xy)         # D-9
+    # D-4: the phone stays in his raised hand from the drop (17.2) through the power-up beat (to 19.6): the install is him using the app
+    if (n == "F7" and tl >= 2.6) or n == "F8":
+        phx, phy = owner_xy[0] + sp.width - 30, owner_xy[1] + 60
+        d.rectangle((phx, phy, phx + 60, phy + 104), fill=hx(T.brand_blue), outline=hx(T.ink), width=4)
+        d.rectangle((phx + 6, phy + 8, phx + 54, phy + 96), fill=hx(T.cyan))
+        sm = S.wordmark.resize((44, 23), Image.LANCZOS); cv.alpha_composite(sm, (phx + 8, phy + 40))
+
+    # flag (F10) — the flag itself, in front
+    if n == "F10":
         fy = T.ground_y - 120 - (min(1.0, max(0.0, (tl - 1.0) / 0.8))) * (T.ground_y - 120 - 540)
         d.rectangle((polex + 14, fy, polex + 150, fy + 90), fill=hx(T.brand_blue), outline=hx(T.ink), width=2)
         cv.alpha_composite(PF.render("✓", 8, fg=rgb(T.cyan)), (polex + 60, int(fy) + 15))
@@ -422,7 +551,10 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
     d = ImageDraw.Draw(cv)
 
     # checklist (from F9.1; persists through F10)
-    if n.startswith("F9") or n == "F10":
+    fade_chk = 1.0
+    if n == "F10" and tl >= 1.0:
+        fade_chk = max(0.0, 1 - (tl - 1.0) / 0.4)   # D-2: the checklist's proof is done; it fades so the raised flag is clearly seen
+    if (n.startswith("F9") or n == "F10") and fade_chk > 0:
         done = {"F9.1": 0, "F9.2": 1, "F9.3": 2, "F9.4": 3, "F9.5": 4, "F10": 5}[n]
         rows = list(range(done))
         if n.startswith("F9") and tl >= 0.75:
@@ -437,7 +569,12 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
                 cw = text_img(deck[key], T.checklist_scale, T.green).width
                 x_start = max(T.safe[0] + T.chip_pad, min(T.safe[2] - cw - T.chip_pad, 700 - cw // 2))   # R2c: flight start clamped inside the safe box
                 x = int(x_start + (T.checklist_x - x_start) * k2); y = int(880 + (y - 880) * k2)
-            put_text(cv, log, key, deck[key], T.checklist_scale, T.green, x=x, y=y, pad=T.chip_pad)
+            if fade_chk >= 1.0:
+                put_text(cv, log, key, deck[key], T.checklist_scale, T.green, x=x, y=y, pad=T.chip_pad)
+            else:   # fading: draw through an alpha layer, still logged as a box while any of it is visible
+                layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+                put_text(layer, log, key, deck[key], T.checklist_scale, T.green, x=x, y=y, pad=T.chip_pad)
+                al = layer.split()[3].point(lambda p: int(p * fade_chk)); layer.putalpha(al); cv.alpha_composite(layer)
             if n.startswith("F9") and r == done and abs(tl - 1.1) < 0.02:
                 events.append({"t": round(t, 3), "event": "chip", "chip": key})
 
@@ -494,7 +631,7 @@ def render_frame(i: int, board, deck, frames, S: Sprites, plate_img, log_all: li
             d.rectangle((phx, phy, phx + 70, phy + 120), fill=hx(T.brand_blue), outline=hx(T.ink), width=4)
             sm = S.wordmark.resize((56, 29), Image.LANCZOS); cv.alpha_composite(sm, (phx + 7, phy + 45))
             if abs(tl - 2.4) < 0.02:
-                events.append({"t": round(t, 3), "event": "install", "note": "phone in hand; powered from 17.4"})
+                events.append({"t": round(t, 3), "event": "install", "note": "phone dropped into his raised hand at 17.4 and held through 19.6 (D-4); powered from 17.4"})
         if 2.6 <= tl < 2.7:
             d.rectangle((0, 0, W, H), fill=(255, 255, 255, 160))
 

@@ -46,7 +46,8 @@ def main():
     # 4. mux
     out.parent.mkdir(parents=True, exist_ok=True)
     r = run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-i", str(norm), "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy",
-             "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", "-movflags", "+faststart", str(out)])
+             "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest",
+             "-movflags", "+faststart+negative_cts_offsets", "-use_editlist", "0", str(out)])   # D-1: no edit lists (Stage 2 §2.1; YouTube/Meta)
     if r.returncode:
         sys.exit(r.stderr)
     # 5. measure the delivered file

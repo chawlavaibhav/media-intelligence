@@ -39,6 +39,28 @@ def ffprobe(path: Path) -> dict:
     return json.loads(out)
 
 
+def count_atoms(data: bytes, fourcc: bytes) -> int:
+    """Walk the MP4 box tree (moov → trak → edts) and count boxes of the given type; a byte grep would also match media payload."""
+    containers = {b"moov", b"trak", b"edts", b"mdia", b"minf", b"stbl"}
+    def walk(start: int, end: int) -> int:
+        n = 0; pos = start
+        while pos + 8 <= end:
+            size = int.from_bytes(data[pos:pos + 4], "big"); typ = data[pos + 4:pos + 8]; hdr = 8
+            if size == 1:
+                size = int.from_bytes(data[pos + 8:pos + 16], "big"); hdr = 16
+            elif size == 0:
+                size = end - pos
+            if size < hdr:
+                break
+            if typ == fourcc:
+                n += 1
+            if typ in containers:
+                n += walk(pos + hdr, min(pos + size, end))
+            pos += size
+        return n
+    return walk(0, len(data))
+
+
 def lum(rgbv) -> float:
     def ch(c):
         c = c / 255.0
@@ -61,7 +83,9 @@ def main():
     geom_ok = v["width"] == 1080 and v["height"] == 1920 and v["codec_name"] == "h264" and v.get("profile") == "High" and v["pix_fmt"] == "yuv420p" and v["r_frame_rate"] == "30/1"
     rec("DET-A8 geometry/codec", "PASS" if geom_ok else "FAIL", f"{v['width']}x{v['height']} {v['codec_name']} {v.get('profile')} {v['pix_fmt']} {v['r_frame_rate']} fps")
     size = int(p["format"]["size"]); rec("DET-A8 container/size", "PASS" if p["format"]["format_name"].startswith("mov,mp4") and size < 4e9 else "FAIL", f"{p['format']['format_name']} {size / 1e6:.1f} MB")
-    head = mp4.read_bytes()[:64]; rec("DET-A8 moov first (faststart)", "PASS" if b"moov" in head else "FAIL", f"first 64 bytes contain moov: {b'moov' in head}")
+    data = mp4.read_bytes(); head = data[:64]; rec("DET-A8 moov first (faststart)", "PASS" if b"moov" in head else "FAIL", f"first 64 bytes contain moov: {b'moov' in head}")
+    n_elst = count_atoms(data, b"elst")
+    rec("DET-A8 no edit lists (elst)", "PASS" if n_elst == 0 else "FAIL", f"{n_elst} elst atom(s) found by walking the moov/trak/edts boxes (D-1; Stage 2 §2.1)")
     if final:
         a_ok = a is not None and a["codec_name"] == "aac" and a["sample_rate"] == "48000" and int(a["channels"]) == 2
         rec("DET-A8 audio aac 48k stereo", "PASS" if a_ok else "FAIL", f"{(a or {}).get('codec_name')} {(a or {}).get('sample_rate')} ch={(a or {}).get('channels')} br={(a or {}).get('bit_rate')}")

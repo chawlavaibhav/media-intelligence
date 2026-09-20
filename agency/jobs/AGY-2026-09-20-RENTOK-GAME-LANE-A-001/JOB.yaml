@@ -174,7 +174,7 @@ plan:
   deliverables:
     - {id: A13, geometry: "9:16", pixels: "1080x1920", from_asset: A12, file: "deliver/RENTOK-GAME-LANE-A-001_9x16_1080x1920.mp4"}
   micro_qualifications:
-    - {capability: "multi-pose pixel sprite sheet of one character, keyable flat background, no lettering, PG-owner props readable at 220 px", route: IMG-CORE/nano-banana-2, cost_usd: 0.067, human_gate_verdict: null, frozen_asset: null, checker_inspected: false}   # false until an inspection of the drawn sheet exists (checker NOTE 9)
+    - {capability: "multi-pose pixel sprite sheet of one character, keyable flat background, no lettering, PG-owner props readable at 220 px", route: IMG-CORE/nano-banana-2, cost_usd: 0.067, human_gate_verdict: "PASS on all five criteria — independent Stage-5 checker, stages/CHECK-STAGE-5.md §4 (2026-09-21); known limitation: the book is hidden in run-B (repaired by code, D-5)", frozen_asset: "gen/raw/A1_owner_sheet_att001.png @ f17060521a91db5699f957864c8b68bf831529ae698c7f4e5c00a2c9d4b4dcf9 (att-001); cut-outs gen/assets/owner_{idle,runA,runB,jump}.png", checker_inspected: true}
   composition:
     token_source: "tools/render_game.py DesignTokens (one source: outline 2 px, backing radius 0, safe box (65,288)-(888,1248), scales HUD 6 / label 7 / flash 8 / cta 10)"
     fonts: {latin: "tools/pixfont.py (original code bitmap 5x7 capitals)", devanagari: "n-a (hb-view + Pillow if ever needed)"}
@@ -224,9 +224,9 @@ qa:
   composition:
     - {file: gen/final-v3.mp4 (900 frames), C1: "PASS 4113 boxes inside safe box", C2: "PASS min 6.08", C3: "PASS — sprites contain-fit (NEAREST), plate cover-fit declared (parallax background, may be covered)", C4: "PASS — one DesignTokens source", C5: "PASS 0 overlaps", C6: "PASS 0 mismatches", C7: "PASS — #0038FF/#03FFF1/#FFF100 from source/rentok-brand", C8: "PASS — 1080x1920 only geometry requested"}
   video_frames:
-    - {asset_id: final deliverable, sampled_timestamps: "0.0, 0.5, … 29.5, 29.97 (61) + 15 keyframes", D1: "human-eye PASS (author) — detector NOT_RUN; inspector to repeat", D2: n-a, D3: "PASS by construction (one bitmap per pose)", D4: "PASS on keyframes", D5: n-a, D6: "PASS — side-scroll follow, paused at F7, stopped at 26.6", D7: "PASS — left→right throughout", D8: "PASS — DET C1", D9: "PASS — code physics", D10: n-a (no speech), D11: "PASS — I −14.6 LUFS, TP −2.0", D12: "PASS — 30.000 s 30 fps 1080x1920 h264/aac", D13: "PASS — gen/final/CONTACT-SHEET.png, KEYFRAMES.png"}
+    - {asset_id: final deliverable (repair round 1, final-v5-audio), sampled_timestamps: "0.0, 0.5, … 29.5, 29.97 (61) + 15 keyframes + 9 repair frames (qa/repair-round-1)", D1: "human-eye PASS (author) — detector NOT_RUN; inspector to repeat", D2: n-a, D3: "PASS by construction (one bitmap per pose)", D4: "PASS on keyframes", D5: n-a, D6: "PASS — side-scroll follow, paused at F7, stopped at 26.6", D7: "PASS — left→right throughout", D8: "PASS — DET C1", D9: "PASS — code physics", D10: n-a (no speech), D11: "PASS — I −14.6 LUFS, TP −2.0", D12: "PASS — 30.000 s 30 fps 1080x1920 h264/aac", D13: "PASS — gen/final/CONTACT-SHEET.png, KEYFRAMES.png"}
   final_geometry:
-    - {deliverable_id: A13, file: gen/final/rentok-game-lane-a-9x16-30s.mp4, geometry: "9:16", sha256: 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168, C1-C8: "PASS (qa/final-v3-audio/DET-RESULTS.json)", CF1: PASS, CF2: "PASS — labels above the play band, chips left of the lane, nothing over the owner/obstacles/phone (design + C5)", CF3: "PASS — no adaptation (native render)", CF4: "PASS — DET C1 against (65,288)-(888,1248)", CF5: "PASS — HUD > label > chip hierarchy by scale 6/7/6, flash 8, CTA 10", status: DET_PASS_pending_LJ_HJ}
+    - {deliverable_id: A13, file: gen/final/rentok-game-lane-a-9x16-30s.mp4, geometry: "9:16", sha256: 5769ffa7232e6bb1427ce1f0db7396fedd12e9af58dc7feb5d61f140d20b0ab9, C1-C8: "PASS (qa/final-v5-audio/DET-RESULTS.json, 23 checks 0 FAIL incl. no-elst)", CF1: PASS, CF2: "PASS — labels above the play band, chips left of the lane, nothing over the owner/obstacles/phone (design + C5)", CF3: "PASS — no adaptation (native render)", CF4: "PASS — DET C1 against (65,288)-(888,1248)", CF5: "PASS — HUD > label > chip hierarchy by scale 6/7/6, flash 8, CTA 10", status: DET_PASS_pending_LJ_HJ}
   voice_continuity: {applies: false, assembly: null, clips: [], narrator_identity_same: n-a, accent_timbre_compatible: n-a, cadence_continuous: n-a, boundary_holes_or_restarts: n-a, per_clip_transcripts_match: n-a, human_ear_verdict: null}
   delivery: {E1: "PASS — outcome.assets carries path, sha256, producing attempts", E2: "pending — delivery note written by the Controller at presentation (blind Video X/Y)", E3: "PASS — no tool or model name in any on-screen string", E4: "pending — human verdict not yet given"}
   defects:
@@ -237,6 +237,17 @@ qa:
     - {id: R3, asset_id: final-v1 cut-outs, observed: "enclosed green pockets and the model's dark-green ground shadows survived the cut-out", class: compositor, repair_layer: cut-out, repaired_by_attempt: "USD 0 tools/cutout.py R3"}
     - {id: R4, asset_id: final-v2, observed: "sprites read small at phone size", class: creative_direction, repair_layer: compositor, repaired_by_attempt: "USD 0 final-v3"}
     - {id: R5, asset_id: final-v2-audio, observed: "true peak −0.4 / −0.3 dBTP after AAC (target ≤ −1)", class: audio, repair_layer: assembly, repaired_by_attempt: "USD 0 pre-encode TP −4"}
+    # repair round 1 (independent Stage-5 checker, stages/CHECK-STAGE-5.md; Controller-authorised, USD 0)
+    - {id: D-1, asset_id: final-v3-audio, observed: "two elst atoms (video B-frame delay, AAC priming)", class: infrastructure (assembly), repair_layer: mux, repaired_by_attempt: "USD 0 re-mux -use_editlist 0 +negative_cts_offsets; new DET check 'no edit lists' walks the box tree"}
+    - {id: D-2, asset_id: final-v3-audio, observed: "raised flag hidden behind the checklist and LEVEL CLEAR! 27.2–27.6 s", class: creative_direction (board F10), repair_layer: board + compositor, repaired_by_attempt: "USD 0 checklist fades out 26.6–27.0 s; pole drawn behind the owner; idle pose at the pole"}
+    - {id: D-3, asset_id: final-v3-audio, observed: "projectile a plain cyan square", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 pixfont ✓ glyph at scale 4 with shadow"}
+    - {id: D-4, asset_id: final-v3-audio, observed: "phone item vanished in the flash; owner never held it", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 phone held in the raised hand 17.6–19.6 s; test tick fired from it; events note corrected"}
+    - {id: D-5, asset_id: owner_runB cut-out, observed: "red register present in run-A, absent in run-B → flicker at 8 pose changes/s", class: compositor (cut-out), repair_layer: cut-out, repaired_by_attempt: "USD 0 run-A book patch composited behind run-B (owner_runB_orig.png kept)"}
+    - {id: D-6, asset_id: final-v3-audio, observed: "all four bursts the same scale-and-fade", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 per-obstacle clears: tile debris (1, 2), neat dashboard card (4), red→green recolour (5)"}
+    - {id: D-7, asset_id: final-v3-audio, observed: "lower 40 % is a plain ochre lane", class: creative_direction (execution of the world art; safe box unchanged), repair_layer: compositor, repaired_by_attempt: "USD 0 (Controller addendum): slab kerb with yellow dashes, wheel tracks, drain grate, manhole, scooter silhouette as a 1.3x nearer parallax layer, depth shading — non-critical art the platform UI may cover; all gates PASS"}
+    - {id: D-8, asset_id: final-v3-audio, observed: "faint rectangle: logo card blue vs #0038FF", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 end-card fill sampled from the raster's own card colour"}
+    - {id: D-9, asset_id: final-v3-audio, observed: "full-frame white hit flashes", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 flash on the character silhouette only"}
+    - {id: D-10, asset_id: records, observed: "ATTEMPTS verdict pending vs JOB accepted; frozen_asset null; checker_inspected false", class: infrastructure (records), repair_layer: records, repaired_by_attempt: "USD 0 verdict fields set with note; frozen_asset sha; checker_inspected true citing CHECK-STAGE-5.md"}
 
 # ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
 versions: []                      # [{version, presented_utc, assets: [], verdict: ACCEPT|SPECIFIC REPAIR|REJECT, verdict_verbatim, decided_utc}]
@@ -245,9 +256,9 @@ outcome:
   accepted_version: null
   accepted_by: null               # person
   assets:                         # candidate deliverable (not accepted until a human ACCEPT)
-    - {path: gen/final/rentok-game-lane-a-9x16-30s.mp4, sha256: 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168, bytes: 33301406, dims_or_duration: "1080x1920 9:16, 30.000 s, h264 High 30 fps + aac 48 kHz stereo", produced_by_attempt: [att-001, att-002, att-003, att-004, att-005, att-006, att-007, att-008, "code renders final-v3 / audio-mix"], composition_inputs: [board.json, copy-deck.json, tools/render_game.py, tools/sfx.py, tools/assemble.py, gen/assets/owner_idle.png, gen/assets/owner_runA.png, gen/assets/owner_runB.png, gen/assets/owner_jump.png, gen/assets/obst_1.png, gen/assets/obst_2.png, gen/assets/obst_3.png, gen/assets/obst_4.png, gen/assets/obst_5.png, gen/assets/plate.png, gen/raw/A10_music_att-008.wav, gen/sfx-stem.wav, "source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf5…"], formats: ["9:16"], reuse_potential: [case_study, demo, template_evidence]}
-    - {path: gen/final/CONTACT-SHEET.png, sha256: 295835b53c4e304e73c8703b35e0702c80f933c2294bcd38add47854c92d012d, produced_by_attempt: "code"}
-    - {path: gen/final/KEYFRAMES.png, sha256: df526312bc550f493fe3d1d9134addde187a4bcf0bac8bd74eca5846ba37fdb1, produced_by_attempt: "code"}
+    - {path: gen/final/rentok-game-lane-a-9x16-30s.mp4, sha256: 5769ffa7232e6bb1427ce1f0db7396fedd12e9af58dc7feb5d61f140d20b0ab9, bytes: 33341051, dims_or_duration: "1080x1920 9:16, 30.021 s (no edit list; AAC priming kept), h264 High 30 fps + aac 48 kHz stereo; repair round 1 (D-1..D-9)", intermediate: "gen/final-v4-audio.mp4 @ bcf125ca… (D-1..D-6, D-8, D-9 before the D-7 addendum)", supersedes: "gen/final/v1/rentok-game-lane-a-9x16-30s.mp4 @ 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168 (had 2 elst atoms; kept for the record)", produced_by_attempt: [att-001, att-002, att-003, att-004, att-005, att-006, att-007, att-008, "code renders final-v3 / audio-mix"], composition_inputs: [board.json, copy-deck.json, tools/render_game.py, tools/sfx.py, tools/assemble.py, gen/assets/owner_idle.png, gen/assets/owner_runA.png, gen/assets/owner_runB.png, gen/assets/owner_jump.png, gen/assets/obst_1.png, gen/assets/obst_2.png, gen/assets/obst_3.png, gen/assets/obst_4.png, gen/assets/obst_5.png, gen/assets/plate.png, gen/raw/A10_music_att-008.wav, gen/sfx-stem.wav, "source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf5…"], formats: ["9:16"], reuse_potential: [case_study, demo, template_evidence]}
+    - {path: gen/final/CONTACT-SHEET.png, sha256: 25bdf1dec5178a6779ca84fa381d03b2c9bf19f9b06053902c717673fc544672, produced_by_attempt: "code"}
+    - {path: gen/final/KEYFRAMES.png, sha256: 5249c4122b6d62cfa04850419906409d692b173d0a0483ffe1e0b24c8fd60fbf, produced_by_attempt: "code"}
   delivery_note_path: null
   delivered_utc: null
 
@@ -258,13 +269,13 @@ ttao:
   dispatch_start_utc: 2026-09-20T19:03:11Z   # first paid call: A1 sprite sheet micro-qualification
   dispatch_end_utc: 2026-09-20T19:06:12Z   # att-008 settled
   artifact_received_utc: 2026-09-20T19:06:12Z
-  qa_complete_utc: 2026-09-20T19:16:02Z   # DET suite 0 FAIL on the deliverable
+  qa_complete_utc: 2026-09-20T19:44:03Z   # repair round 1 incl. D-7 addendum: DET suite 23 checks 0 FAIL on final-v5-audio (previous stamps 19:16:02Z, 19:40:25Z)
   human_review_requested_utc: null
   human_decision_utc: null
   accepted_utc: null
 kpis:
   cpao_usd: null                  # = spend.total_reserved_usd on accept (0.529 reserved so far)
-  ttao_hms: null                  # accepted_utc − job_start_utc; job_start → qa_complete = 1:04:20
+  ttao_hms: null                  # accepted_utc − job_start_utc; job_start → qa_complete (repair round 1) = 1:28:43
   human_review_cycles: null       # = len(versions)
   versions_to_acceptance: null
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml   # read its current values; never fake the comparison
