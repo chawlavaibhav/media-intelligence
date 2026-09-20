@@ -39,108 +39,157 @@ brief:
 
 # ── 2. INTAKE ─────────────────────────────────────────────────────────────────
 intake:
-  commercial_objective: null      # REQUIRED  one sentence: what this asset must make happen
-  audience: null                  # REQUIRED
-  channel: null                   # REQUIRED  e.g. Meta feed + Reels, WhatsApp, Upwork portfolio
-  deliverable_type: null          # REQUIRED  kind from runtime/contracts/DELIVERABLE-KINDS.yaml or a named agency class
-  package: null                   # for customer_work: the PROFILE.md package + tier this maps to
-  dimensions_aspects: []          # REQUIRED  e.g. ["1080x1350 4:5", "1080x1080 1:1", "1080x1920 9:16", "800x800 WA"]
-  count: null
-  product_reference_assets: []    # refs into brief.attachments
-  mandatory_text: []              # REQUIRED  [{role: headline|offer|code|validity|tagline|cta|legal|brand_line, value, script: latin|devanagari|..., may_reflow: bool, placement: overlay|in_scene}]
+  commercial_objective: "A PG owner watching on a phone recognises the five problems as their own and understands that installing RentOk is the move that changes them; the film feels like a game first, an ad second."
+  audience: "Indian PG / hostel / co-living owners (the site's own audience: 'PG, Flat & Co-Living Owners', home.txt:120)"
+  channel: "Instagram Reels, Facebook Reels, YouTube Shorts (organic assumed)"
+  deliverable_type: "game-style advertising film; nearest registered kind multi_shot_story (30 s, beyond the registered band; recorded ambiguity)"
+  package: null                    # customer_work outside the Upwork packages (Controller experiment)
+  dimensions_aspects: ["1080x1920 9:16"]
+  count: 1
+  product_reference_assets: ["source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf58689684d8ddae150d384f4aa30c246c314b0bf4e4a389a06e8f66f80"]
+  mandatory_text:                  # the full deck is copy-deck.json; these are the contract-critical strings
+    - {role: cta, value: "INSTALL", script: latin, may_reflow: false, placement: overlay}
+    - {role: cta, value: "RENTOK APP", script: latin, may_reflow: false, placement: overlay}
+    - {role: brand_line, value: "RentOk (raster wordmark)", script: latin, may_reflow: false, placement: overlay}
+    - {role: headline, value: "TENANT VERIFICATION", script: latin, may_reflow: false, placement: overlay}
+    - {role: headline, value: "COLLECTING RENT", script: latin, may_reflow: false, placement: overlay}
+    - {role: headline, value: "LEFT WITHOUT PAYING", script: latin, may_reflow: false, placement: overlay}
+    - {role: headline, value: "NO RECONCILIATION", script: latin, may_reflow: false, placement: overlay}
+    - {role: headline, value: "COMPLAINTS", script: latin, may_reflow: false, placement: overlay}
+    - {role: tagline, value: "RENTOK.COM", script: latin, may_reflow: false, placement: overlay}
   offer: null
-  cta: null
-  language: []                    # REQUIRED  e.g. [en, hi]
-  brand_constraints: {colours: [], fonts: [], tone: null, forbidden: []}
-  duration_s: null                # video only
-  deadline: null                  # REQUIRED  absolute time with zone
-  spend_ceiling_stated: null      # what the customer / user said about money, verbatim
-  assumptions: []                 # every production judgment made for a missing non-critical value
-  questions_asked: []             # [{question, why_material, answer}] — only what could invalidate the output
+  cta: "INSTALL / RENTOK APP (the customer's own 'cheat code — install RentOK app')"
+  language: [en]
+  brand_constraints: {colours: ["#0038FF", "#03FFF1", "#FFF100", "#FFFFFF"], fonts: ["tools/pixfont.py (original code bitmap)"], tone: "retro-arcade playful; the joke is on the problems, never on the owner; calm clear close", forbidden: ["guarantee/100%/never/prevent/recover/eliminate claims", "Nintendo characters, art, music, assets", "testimonial / generic SaaS / lifestyle formats", "live footage, stock, actors, prior RentOK material"]}
+  duration_s: 30.0
+  deadline: unknown                # not stated; this experiment session
+  spend_ceiling_stated: "Controller (chat, 2026-09-20): PROVISIONAL ceiling USD 10.00 for this lane, credits only, 0 hidden retries, hard stop — UNCONFIRMED; written cap pending"
+  assumptions:                     # Stage 1 §1.12
+    - {id: D1, decision: "viewer action = install/try the app", cost_if_wrong: "CTA re-render USD 0"}
+    - {id: D2, decision: "English on screen; no spoken narration", cost_if_wrong: "label re-render USD 0; VO later ≈ USD 0.02"}
+    - {id: D3, decision: "retro-arcade playful tone; original pixel-art look", cost_if_wrong: "creative-direction repair ≈ USD 0.07–0.20 + dependents — mitigated: character tested first"}
+    - {id: D4, decision: "non-firearm projectile + immunity power-up", cost_if_wrong: "sprite swap ≈ USD 0.07 or code"}
+    - {id: D5, decision: "vertical-native level inside the 823x960 safe box", cost_if_wrong: "re-layout by code USD 0"}
+    - {id: D6, decision: "one master file for all three placements", cost_if_wrong: "one extra encode USD 0"}
+    - {id: D7, decision: "organic placement assumed", cost_if_wrong: "none for the file"}
+    - {id: F5, decision: "on-screen spelling RentOk (raster) / RENTOK (caps)", cost_if_wrong: "string re-render USD 0"}
+  questions_asked: []              # the customer is not asked (Controller); the one open ask is the Controller's written cap
 
 # ── 2b. NORMALIZED REQUEST (CANON-010 vocabulary; conservative; never edited later) ────────
 nr:
-  modality: null                  # REQUIRED  static_image | video | image_sequence | audio  (R05)
-  modality_provenance: customer_stated   # customer_stated | customer_implied
-  requested_operation: null       # REQUIRED  generate | edit | animate | restore | extend | compose | variants  (R01)
-  entities: []                    # product | packshot | person | logo | scene | prior_creative
-  text_requirements: []           # mirrors intake.mandatory_text
-  language_topology: []
-  market: null                    # e.g. IN
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: generate
+  entities: [logo]
+  text_requirements: "see brief.job.json exact_text_strings (15) and copy-deck.json (26 strings)"
+  language_topology: [en]
+  market: IN
   advertising_acceptance_intent: true
-  ambiguity_markers: []           # from runtime/canon/KIND-NR-BINDING-v0.yaml
+  ambiguity_markers: ["kind_nearest_match: 30 s game-style film vs registered multi_shot_story 10–15 s", "customer says 'Mario game', confirmed 'original Mario-inspired'"]
 
 # ── 3. TEMPLATE / LEARNING FIRST ─────────────────────────────────────────────
 template:
-  reused: null                    # REQUIRED  <template_id> | none
-  reason: null
-  numbers_carried: []             # [{rule, value, evidence_scope: this_accepted_template}] — starting points, not norms
-  learning_applied: []            # [{case, id (SD-xx / RO-xx / pattern), how}]
+  reused: none
+  reason: "no accepted template for a game-style film; service_intro_with_portfolio_proof (case 001) is a different production class"
+  numbers_carried:
+    - {rule: important_still_min_hold_s, value: 3.3, evidence_scope: this_accepted_template, note: "starting point only; this film's turning point holds 3.0 s, labels ≥ 1.2 s readable — arcade tempo, recorded as the producer's norm"}
+  learning_applied:
+    - {case: UPWORK-INTRO-001, id: RO-04, how: "every nb2 prompt forbids signs/boards/posters/papers with writing/letters/numbers/logos; every still frame-scanned"}
+    - {case: UPWORK-INTRO-001, id: RO-09/SD-10, how: "Lyria prompt neutral wording; refusal = infrastructure_transient, counted"}
+    - {case: UPWORK-INTRO-001, id: SD-01..04/SD-07, how: "runtime compositor gates run on every rendered text box (bounds, contrast, fit, tokens, disjoint)"}
+    - {case: UPWORK-INTRO-001, id: SD-06, how: "post-draw text scan on sampled frames of the assembled film, never on stills alone"}
+    - {case: UPWORK-INTRO-001, id: SD-11, how: "no dispatch on an unread pool (4.8 unresolved)"}
+    - {case: UPWORK-INTRO-001, id: SPEAKER_MICROQUALIFICATION (candidate), how: "applied to the riskiest generative item, the sprite sheet: one draw, checker verdict, freeze, then dependents"}
+    - {case: UPWORK-PORTFOLIO-002, id: PAID_PRODUCTION_PREFLIGHT, how: "brief, frozen deck, deliverables, plan, QA map and cap in this record before any call; CAP_USD 0.0 until written"}
+    - {case: UPWORK-PORTFOLIO-002, id: FORMAT_SPECIFIC_REVALIDATION, how: "one delivered geometry, its own qa.final_geometry row on the final file"}
+    - {case: UPWORK-PORTFOLIO-002, id: STILLS_FIRST_STORY_PRODUCTION (candidate), how: "all visual direction is accepted as stills before anything moves; motion is code"}
+    - {case: UPWORK-PORTFOLIO-002, id: RO-02 (voice varies across generations), how: "no voice at all"}
 
 # ── 4. CANON ─────────────────────────────────────────────────────────────────
 canon:
-  packs_selected: []              # REQUIRED  every pack id the trigger table fired
-  packs_injected: []              # REQUIRED  the compiled+accepted subset actually used
-  missing_domains: []             # fired but not compiled — recorded, never invented
-  prefix_sha256: null             # from runtime lookup when used
+  packs_selected: [concept_and_distinctiveness, critique_and_effectiveness, composition_and_attention, colour_and_visual_register, camera_and_spatial_grammar, editing_pacing_and_short_form, typography_and_copy, product_appearance, indian_indic_context, commercial_communication]
+  packs_injected: [composition_and_attention, product_appearance]
+  missing_domains: [concept_and_distinctiveness, critique_and_effectiveness, colour_and_visual_register, camera_and_spatial_grammar, editing_pacing_and_short_form, typography_and_copy, indian_indic_context, commercial_communication, audio]
+  prefix_sha256: 4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe
+  claims_retrieved_by_id: "stages/03-CREATIVE.md Part A2 (23 ids with claim text)"
 
 # ── 5. CREATIVE BLUEPRINT ────────────────────────────────────────────────────
 blueprint:
-  concept: null                   # REQUIRED  the idea in two sentences
-  first_read: [null, null, null]  # REQUIRED  1st / 2nd / 3rd read, one cue each (CA-D1)
-  hook: null                      # REQUIRED
-  offer_placement: null
-  product_placement: null
-  proof: null
-  cta_placement: null
-  attention_order: null           # REQUIRED
-  brand_world: null               # REQUIRED  one light source, palette, register
-  remember: null                  # REQUIRED  the one thing kept
-  muted_test: null                # video: yes | no | n-a
-  hindi_copy_origination: null    # originated | translated — must be originated when Hindi is exact
-  check_lines: {}                 # REQUIRED  {PA-D1: pass|n-a|deviation:<clause>, ... CA-D11: ...}
-  deviations: []                  # [{decision_id, brief_clause}]
-  reviews: []                     # [{reviewer: karl|ezra|human, verdict, note}] — input, not acceptance
+  concept: "A vertical side-scrolling platform game in which a pixel-art PG owner is beaten down by five obstacles — tenant verification, collecting rent, tenants leaving without paying, no reconciliation, complaints — until a cheat code, INSTALL RENTOK APP, hands him a phone that makes him immune and lets him fire tick-marks that clear every obstacle and reach the flag. The film closes on the RentOk wordmark with the same ask."
+  first_read: ["the moving sprite entering from the right", "its label", "the HUD change"]
+  hook: "a game already in motion at frame 1 — the owner mid-jump with a live health bar, no title card"
+  offer_placement: none
+  product_placement: "the phone item at 17.4 s (F7), phone icon in the HUD from 18.0 s, five capability chips 19.6–25.6 s, wordmark end card 27.6–30.0 s"
+  proof: "five green chips naming permitted capabilities (copy-deck.json claims_source_map)"
+  cta_placement: "in-story cheat code at 15.8–17.2 s; direct end-card CTA 27.6–30.0 s"
+  attention_order: "HUD → obstacle → label → health, repeated five times; then panel → typed code → phone → refill; then owner → projectile → burst → chip, five times; then flag → end card"
+  brand_world: "one fictional source (daylight, upper-left); flat matte pixel art with 2-px outlines; palette sky/cream/terracotta/ochre for the world, brand blue/cyan/yellow/green reserved for the solution; register retro-arcade, affectionate"
+  remember: "install the app = the cheat code for running a PG"
+  muted_test: "yes"
+  hindi_copy_origination: n-a
+  check_lines: {PA-D1: pass, PA-D2: n-a, PA-D3: pass, PA-D4: pass, PA-D5: pass, PA-D6: pass, PA-D7: pass, PA-D8: n-a, PA-D9: n-a, PA-D10: pass, CA-D1: pass, CA-D2: pass, CA-D3: pass, CA-D4: pass, CA-D5: pass, CA-D6: pass, CA-D7: pass, CA-D8: pass, CA-D9: pass, CA-D10: pass, CA-D11: pass}   # bases in stages/03-CREATIVE.md A3
+  deviations:
+    - {decision_id: D-1, brief_clause: "no voice-over vs sk_abcd_0012/0021 — Stage 2.6 muted-first; no clean single-voice route (cases 001/002)"}
+    - {decision_id: D-2, brief_clause: "raster wordmark placed as-is (its tagline unreadable at chip size) — brand fidelity, sk_vig_c003_0013"}
+    - {decision_id: D-3, brief_clause: "customer-as-hero over product-as-hero — 'The player is basically a PG owner'"}
+    - {decision_id: D-4, brief_clause: "GAME OVER? with a question mark — the film must not say the business fails"}
+    - {decision_id: D-5, brief_clause: "no numbers in copy though the site prints them — A11"}
+  reviews: []                      # checker gate verdicts are recorded by the checker, never here by the author
 
 # ── 6–7. PRODUCTION PLAN + ROUTES ────────────────────────────────────────────
 plan:
-  assets:                         # REQUIRED  one entry per asset, dependencies explicit
-    - id: null                    # e.g. plate-A
-      purpose: null
+  approach: "code-rendered 2-D side-scroller; generative textless stills for sprites and plate; Lyria bed; code SFX; no voice; no generative video (stages/04-PRODUCTION-PLAN.md §4.0)"
+  risk_order: ["A1 sprite sheet (RO-04 + GAP)", "A7 plate lettering (RO-04/RO-06/EVAL-038)", "A2–A6 obstacle readability", "A10 Lyria refusal (RO-09)", "pacing (SD-13) — animatic at USD 0"]
+  assets:
+    - {id: A0, purpose: "USD-0 animatic, full 30 s, grey sprites, all strings", depends_on: [board.json, copy-deck.json], reuse_of: null, exact_text_mechanism: code_set_on_textless_plate, route: {cell: code, surface: code, pool: none, unit_price_usd: 0, quantity: 1, planned_draws: 0, why: "prove timing, safe zones, readability before spend"}}
+    - id: A1
+      purpose: "PG-owner sprite sheet: idle, run A, run B, jump on flat green; 1:1"
       depends_on: []
-      reuse_of: null              # path @ sha256 of an already-accepted asset, or null
-      reuse:                      # DESIGN_REUSE_PROVENANCE (case 002) — REQUIRED whenever reuse_of is set or a treatment/component is carried in
-        source_asset: null        # path @ sha256, or <case>/<version>/<component>
-        source_verdict: null      # the human verdict that source actually received (accept | specific_repair | rebuild_direction | reject)
-        reuse_status: null        # rejected | accepted_in_context | reusable_candidate
-        context_changed: null     # true if aspect, plate, subject or context differs from the source
-        fresh_qa_required: null   # true whenever context_changed or reuse_status != reusable_candidate
-        human_reapproval: null    # verbatim, REQUIRED when reuse_status == rejected; else null
-      exact_text_mechanism: code_set_on_textless_plate   # | generated_in_scene (only with RR-2 evidence + job need) | none
-      route:
-        cell: null                # e.g. IMG-CORE/flux-2-pro
-        evidence_status: null     # clean_observed | directional_only
-        production_use_allowed: null   # true | manual_only (+ user OK recorded) — never false
-        surface: null             # fal | vertex | gemini_api | sarvam_direct | elevenlabs_direct | code
-        pool: null                # cash | credits | sarvam_credits | elevenlabs_credits | none
-        unit_price_usd: null      # live roster/pin price at plan time
-        quantity: null
-        planned_draws: null
-        fallback_cell: null       # declared, or none with reason
-        why: null                 # evidence + requirement + price, one line
-        directional_notes_used: []   # RO-xx ids used as tie-breakers only
-  deliverables: []                # REQUIRED  every final delivered geometry: [{id, geometry: 1:1|4:5|9:16|WA|16:9|..., pixels, from_asset}] — each gets its own qa.final_geometry row
-  micro_qualifications: []        # [{capability, route, cost_usd, human_gate_verdict, frozen_asset}]
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: IMG-CORE/nano-banana-2, evidence_status: clean_observed, production_use_allowed: true, surface: "gemini_api (map lists vertex; same Google credits pool, as cases 001/002)", pool: credits, unit_price_usd: 0.067, quantity: 1, planned_draws: "1 (+1 repair)", fallback_cell: "IMG-CORE/nano-banana-pro (0.134, on Controller OK), else re-attempt as a new counted call", why: "cheapest clean credits still route; riskiest item, micro-qualified first", directional_notes_used: [RO-04]}
+    - {id: A1p, purpose: "powered owner = code palette shift + cyan aura of A1", depends_on: [A1], reuse_of: null, exact_text_mechanism: none, route: {cell: code, surface: code, pool: none, unit_price_usd: 0, why: "identity cannot drift"}}
+    - id: A2-A6
+      purpose: "five obstacle sprites (document wall; padlocked sack; fleeing tenant; ledger tower; ticket swarm), each 1:1 on flat green"
+      depends_on: [A1]
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: IMG-CORE/nano-banana-2, evidence_status: clean_observed, production_use_allowed: true, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 5, planned_draws: "5 (+2 repairs)", fallback_cell: "as A1", why: "five distinct pictures; single-asset repair", directional_notes_used: [RO-04]}
+    - id: A7
+      purpose: "background plate 9:16: sky, PG facade with stacked floors, rooftops, lane; no ground tiles; no signs"
+      depends_on: []
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: IMG-CORE/nano-banana-2, evidence_status: clean_observed, production_use_allowed: true, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, planned_draws: "1 (+1 repair)", fallback_cell: "code-drawn plate (USD 0)", why: "parallax layer; lettering risk mitigated by prompt + scan + code fallback", directional_notes_used: [RO-04, RO-06]}
+    - {id: A8, purpose: "ground tiles, flagpole/flag, phone item, tick projectile, hit flash, confetti, panel, chips, HUD — pixel primitives + pixfont", depends_on: [], reuse_of: null, exact_text_mechanism: code_set_on_textless_plate, route: {cell: code, surface: code, pool: none, unit_price_usd: 0}}
+    - {id: A9, purpose: "wordmark placements (HUD chip 150x77, phone screen, end card ≈ 700 px)", depends_on: ["source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf58689684d8ddae150d384f4aa30c246c314b0bf4e4a389a06e8f66f80"], reuse_of: null, exact_text_mechanism: code_set_on_textless_plate, route: {cell: code, surface: code, pool: none, unit_price_usd: 0}}
+    - id: A10
+      purpose: "music bed, chiptune character, trimmed to 30.0 s"
+      depends_on: []
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: MUS/lyria+native, evidence_status: clean_observed, production_use_allowed: true, surface: vertex, pool: credits, unit_price_usd: 0.06, quantity: 1, planned_draws: "1 (+1 repair)", fallback_cell: "none — a second counted attempt with neutral wording; if both fail, code-synthesised bed", why: "only clean original-music route on credits (RR-13)", directional_notes_used: [RO-09]}
+    - {id: A11, purpose: "SFX set synthesised by ffmpeg at board timestamps", depends_on: [board.json], reuse_of: null, exact_text_mechanism: none, route: {cell: code, surface: code, pool: none, unit_price_usd: 0}}
+    - {id: A12, purpose: "assembly: 900 frames → H.264/AAC MP4 per Stage 2.1", depends_on: [A0-A11], reuse_of: null, exact_text_mechanism: none, route: {cell: code, surface: code, pool: none, unit_price_usd: 0}}
+  deliverables:
+    - {id: A13, geometry: "9:16", pixels: "1080x1920", from_asset: A12, file: "deliver/RENTOK-GAME-LANE-A-001_9x16_1080x1920.mp4"}
+  micro_qualifications:
+    - {capability: "multi-pose pixel sprite sheet of one character, keyable flat background, no lettering, PG-owner props readable at 220 px", route: IMG-CORE/nano-banana-2, cost_usd: 0.067, human_gate_verdict: null, frozen_asset: null, checker_inspected: true}
   composition:
-    token_source: null            # the one DesignTokens source
-    fonts: {latin: null, devanagari: null}
-    shaping: hb-view+Pillow
-  expected_spend_usd: null        # REQUIRED  Σ planned draws × price, with fallbacks
-  start_of_job_summary_shown_utc: null   # when concept + route + expected spend were shown to the user
+    token_source: "tools/render_game.py DesignTokens (one source: outline 2 px, backing radius 0, safe box (65,288)-(888,1248), scales HUD 6 / label 7 / flash 8 / cta 10)"
+    fonts: {latin: "tools/pixfont.py (original code bitmap 5x7 capitals)", devanagari: "n-a (hb-view + Pillow if ever needed)"}
+    shaping: "code bitmap (byte-exact by construction); hb-view+Pillow not required for Latin capitals"
+  expected_spend_usd: 0.529        # base; 0.857 with one repair round; 1.058 planned ceiling (stages/04-PRODUCTION-PLAN.md §4.9)
+  spend_cuts_if_cap_lower: "≤1.00 drop customer-repair reserve; ≤0.60 plate by code; ≤0.30 three obstacles by code; 0 fully code-drawn"
+  start_of_job_summary_shown_utc: null   # to be stamped when the Controller receives the Stage 4 report
+  qa_map: "stages/04-PRODUCTION-PLAN.md §4.12 (A1–A11 → named DET/LJ/HJ checks)"
+  tools_to_write: [tools/prompts.py, tools/cutout.py, tools/render_game.py, tools/sfx.py, tools/assemble.py, tools/qa_checks.py]
+  tools_written: [tools/pixfont.py, tools/dispatch.py, tools/_common.py]
+  unresolved: ["written spend cap (Controller)", "Google credits pool balance reading (value, read_utc, source) — no dispatch until read"]
 
 # ── 8–9. SPEND (money moves only here) ───────────────────────────────────────
 spend:
-  cap: null                       # REQUIRED before any paid call: {amount, currency, stated_by, stated_utc, covers, retries_allowed: 0}
+  cap: null                       # REQUIRED before any paid call: {amount, currency, stated_by, stated_utc, covers, retries_allowed: 0} — provisional planning ceiling USD 10.00 (Controller, unconfirmed) is NOT a cap; tools/dispatch.py CAP_USD = 0.0
   cap_lineage: []                 # earlier caps this one amends; consumed spend carries forward (C-6a)
   pool_readings: []               # [{pool, balance_usd, read_utc, source}] — no reading, no dispatch
   attempts: []                    # one line per paid call, appended before the request leaves, settled after:
@@ -185,7 +234,7 @@ outcome:
 # ── 17. TIME (all UTC, from `date -u`; never reconstructed) ──────────────────
 ttao:
   job_start_utc: 2026-09-20T18:11:42Z   # date -u, first act after bootstrap             # REQUIRED  first production input
-  planning_complete_utc: null
+  planning_complete_utc: 2026-09-20T18:37:56Z   # Stages 1–4 written; Stage 5 waits for the checker's Gate 1–4 verdict and the written cap
   dispatch_start_utc: null
   dispatch_end_utc: null
   artifact_received_utc: null
