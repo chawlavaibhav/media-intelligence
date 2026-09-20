@@ -50,3 +50,7 @@ RECORDED — `SPEND-AUTHORISATION.md`: USD 10.00 per lane, credits only, 0 hidde
 ## 7. Deliverables
 
 A. two finished videos (one per lane, anonymised for the customer) · B. five-stage evidence per lane on its branch · C. production evidence (ledger, attempts, artifacts by sha256, tool versions, repairs, limitations) · D. blind packet · E. Controller comparison after verdicts (`06-CONTROLLER-COMPARISON.md`).
+
+## 8. Blindness limitation recorded before presentation (2026-09-20T20:00Z)
+
+During the run the Controller session reported per-lane facts to the human in chat (spend, attempt counts, the presence/absence of a voice, and that one lane's file measures 30.021 s). A human who remembers those messages could infer a video's lane from its duration, its file size or the presence of a voice-over. The packet therefore is blind as to labels and metadata, but not against the human's memory of this session's progress reports. Recorded here so the comparison does not overstate the blindness; the human is asked to judge on the acceptance contract, not on provenance.
