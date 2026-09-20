@@ -21,7 +21,7 @@ Recorded: 2026-09-20T18:14:39Z by the Media Intelligence Controller session, fro
 | A | AGY-2026-09-20-RENTOK-GAME-LANE-A-001 | 10.00 | Google Vertex/Gemini credits · ElevenLabs plan credits · Sarvam credits | 0 hidden; every re-send is a new counted attempt under the same cap | generation, micro-qualification, references, music, TTS, repairs |
 | B | AGY-2026-09-20-RENTOK-GAME-LANE-B-001 | 10.00 | same | same | same |
 
-- Caps are enforced against each lane's own append-only ledger () before every request leaves; nothing transfers between lanes; an amendment never resets consumed spend (C-6a).
+- Caps are enforced against each lane's own append-only ledger (`gen/LEDGER.jsonl`) before every request leaves; nothing transfers between lanes; an amendment never resets consumed spend (C-6a).
 - fal is excluded. No personal payment method; no new paid service.
 - Pool balances: Google credits attested by the human above (not machine-readable); ElevenLabs/Sarvam balances are read from their APIs where the lane's tooling can, else attested by the same answer.
 - Vendor-billed cost is a separate reconciliation field; the ledger figure is an upper bound (C-2).
