@@ -1,0 +1,79 @@
+RR-1  | Code-set text on a cheap textless plate is the DEFAULT where exactness is contractual (prices, legal lines, brand names) or where a re-render must be free.
+RR-2  | Generated text where the type must sit inside the scene (on a pack, a sign, a surface): Nano Banana 2 or GPT Image 2.
+RR-3  | Avoid Seedream 5 Pro, Recraft V4 and FLUX.2 Pro for Devanagari text.
+RR-4  | Seedream 5 Pro edit is the DEFAULT for work on a supplied photo (remove an object, extend a banner, compose a supplied face and pack, reproduce a referenced product or person).
+RR-5  | Only Seedream 5 Pro edit extended the banner without resizing or cutting it; avoid FLUX.2 Pro edit and Nano Banana Pro edit for extension.
+RR-6  | Never ask the premium video model to write the text. Set the type by code on an animated textless plate (cheap image-to-video), or carry a CORRECT still into a cheap animator.
+RR-7 tested_in_motion_2026-09-09 | A text plate that goes into image-to-video must come from a text-capable still route (RR-2: Nano Banana 2 or GPT Image 2), never from the cheapest still model.
+RR-8  | Animate an accepted still on Kling v3 Pro or Wan 3.0 Prime first; MiniMax H3 Max as the cheapest fallback; avoid Veo 3.1 fast i2v where the brief forbids camera moves.
+RR-9  | Kling v3 Pro for 15 s three-shot stories; Gemini Omni 1.1 Flash for 10 s three-shot stories; Veo 3.1 fast extend chain works but reads visually weaker; Seedance 2.5 not needed on this evidence.
+RR-10  | The cheap tier is NOT enough: Veo 3.1 lite and H3 Max 480p failed every draw; even Veo 3.1 full passed 1/2. Route such briefs to the premium tier and plan for re-draws, or set the label by code.
+RR-11  | Veo 3.1 fast ref2v carries a referenced PRODUCT into motion (2/2) but invents lettering in people scenes (0/2); until a second route is screened, use it for products and keep people scenes lettering-f
+RR-12  | Sarvam bulbul:v3 is the default voice route for all three; ElevenLabs v3 on a premade voice passes Hindi and short English but fails Hinglish on accent until an Indian voice is added to the account.
+RR-13  | Lyria 2 on Vertex credits is the default music route (USD 0.06 a track); tracks measure 32.8 s, trim by code to the brief. ElevenLabs music needs a paid plan (skipped by the Controller).
+RR-14  | Generate two-speaker Hindi dialogue natively on Veo 3.1 fast, Gemini Omni 1.1 Flash or Wan 3.0 Prime; avoid Kling v3 Pro audio for Hindi dialogue; no plate-plus-lipsync chain is needed.
+RR-15  | Gemini Omni 1.1 Flash on GCP credits is the default; MiniMax H3 Max the cash fallback for everyday briefs; do not rely on Veo 3.1 fast or Kling v3 Pro audio where the brief names physical detail (labe
+RR-16 withdrawn_as_stage_a_i2v_routing_truth (C-6b) | Wan 2.2 A14B is ELIMINATED from image-to-video under the frozen rule (2/8 accepts, six HTTP-422 failures counted as failures per C-3/C-6b: E1 and E2). Wan 3.0 Prime remains the Wan tier for image-to-v
+
+AUD-LIP   kling-lipsync-a2v+chain                      clean_observed    use=False        acc=0/6  price ['0.014'] per_input_video_second surf ['fal'] pool ['cash'] txt not_applicable
+AUD-TTS   elevenlabs-v3-direct+native                  clean_observed    use=True         acc=4/6  price ['0'] per_1000_characters surf ['elevenlabs_direct'] pool ['elevenlabs_credits'] txt not_applicable
+AUD-TTS   sarvam-bulbul-v3+native                      clean_observed    use=True         acc=6/6  price ['3.0'] per_1000_characters surf ['sarvam_direct'] pool ['sarvam_credits'] txt not_applicable
+IMG-COMP  flux-2-pro-edit                              directional_only  use=manual_only  acc=1/2  price ['0.060'] per_image_first_megapixel surf ['fal'] pool ['cash'] txt not_applicable
+IMG-COMP  nano-banana-pro-edit                         directional_only  use=manual_only  acc=1/2  price ['0.15'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-COMP  seedream-5-pro-edit                          directional_only  use=manual_only  acc=2/2  price ['0.0675'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-CORE  flux-2-pro                                   clean_observed    use=True         acc=4/8  price ['0.03'] per_image_first_megapixel surf ['fal'] pool ['cash'] txt not_applicable
+IMG-CORE  gpt-image-2                                  clean_observed    use=True         acc=6/8  price ['0.053'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-CORE  nano-banana-2                                clean_observed    use=True         acc=7/8  price ['0.067'] per_image surf ['vertex'] pool ['credits'] txt not_applicable
+IMG-CORE  nano-banana-pro                              clean_observed    use=True         acc=4/8  price ['0.134'] per_image surf ['vertex'] pool ['credits'] txt not_applicable
+IMG-CORE  qwen-image-3                                 clean_observed    use=True         acc=6/8  price ['0.04'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-CORE  seedream-5-pro                               clean_observed    use=True         acc=6/8  price ['0.0675'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-EDIT  flux-2-pro-edit                              clean_observed    use=True         acc=3/4  price ['0.045'] per_image_first_megapixel surf ['fal'] pool ['cash'] txt not_applicable
+IMG-EDIT  nano-banana-pro-edit                         clean_observed    use=False        acc=1/4  price ['0.15'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-EDIT  seedream-5-pro-edit                          clean_observed    use=True         acc=2/4  price ['0.0675'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-EXT   flux-2-pro-edit                              directional_only  use=False        acc=0/2  price ['0.045'] per_image_first_megapixel surf ['fal'] pool ['cash'] txt not_applicable
+IMG-EXT   nano-banana-pro-edit                         directional_only  use=False        acc=0/2  price ['0.15'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-EXT   seedream-5-pro-edit                          directional_only  use=manual_only  acc=2/2  price ['0.0675'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-REF   flux-2-pro-edit                              clean_observed    use=False        acc=0/4  price ['0.075'] per_image_first_megapixel surf ['fal'] pool ['cash'] txt not_applicable
+IMG-REF   nano-banana-pro-edit                         clean_observed    use=False        acc=1/4  price ['0.15'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-REF   seedream-5-pro-edit                          clean_observed    use=True         acc=4/4  price ['0.0675'] per_image surf ['fal'] pool ['cash'] txt not_applicable
+IMG-TEXT  flux-2-pro+C_composite_textless_base         clean_observed    use=False        acc=1/4  price ['0.03'] per_image_first_megapixel surf ['fal'] pool ['cash'] txt model_draws_text
+IMG-TEXT  flux-2-pro+code_overlay                      clean_observed    use=True         acc=4/4  price ['0.03'] ? surf ['fal'] pool ['cash'] txt deterministic_text_composition
+IMG-TEXT  gpt-image-2+A_cheap_generated                clean_observed    use=True         acc=4/4  price ['0.053'] per_image surf ['fal'] pool ['cash'] txt model_draws_text
+IMG-TEXT  nano-banana-2+A_cheap_generated              clean_observed    use=True         acc=4/4  price ['0.067'] per_image surf ['vertex'] pool ['credits'] txt model_draws_text
+IMG-TEXT  nano-banana-pro+B_premium_generated          clean_observed    use=True         acc=4/4  price ['0.134'] per_image surf ['vertex'] pool ['credits'] txt model_draws_text
+IMG-TEXT  qwen-image-3+A_cheap_generated               clean_observed    use=True         acc=2/4  price ['0.04'] per_image surf ['fal'] pool ['cash'] txt model_draws_text
+IMG-TEXT  recraft-v4+B_premium_generated               clean_observed    use=True         acc=2/4  price ['0.04'] per_image surf ['fal'] pool ['cash'] txt model_draws_text
+IMG-TEXT  seedream-5-pro+B_premium_generated           clean_observed    use=True         acc=2/4  price ['0.0675'] per_image surf ['fal'] pool ['cash'] txt model_draws_text
+MUS       lyria+native                                 clean_observed    use=True         acc=4/4  price ['0.06'] per_clip surf ['vertex'] pool ['credits'] txt not_applicable
+VID-2SPK  gemini-omni-1.1-flash+A_native               directional_only  use=manual_only  acc=2/2  price ['0.10136'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-2SPK  kling-v3-pro-audio+A_native                  directional_only  use=False        acc=0/2  price ['0.168'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-2SPK  veo-3.1-fast+A_native                        directional_only  use=manual_only  acc=2/2  price ['0.1'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-2SPK  wan-2.2-a14b+A_native                        directional_only  use=False        acc=0/2  price ['0.08'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-2SPK  wan-3.0-prime+A_native                       directional_only  use=manual_only  acc=2/2  price ['0.14'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-I2V   kling-v3-pro-i2v                             clean_observed    use=True         acc=8/8  price ['0.112'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-I2V   minimax-h3-max-i2v                           clean_observed    use=True         acc=7/8  price ['0.08'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-I2V   veo-3.1-fast-i2v                             clean_observed    use=True         acc=5/8  price ['0.1'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-I2V   wan-2.2-a14b-i2v                             clean_observed    use=False        acc=2/8  price ['0.08'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-I2V   wan-3.0-prime-i2v                            clean_observed    use=True         acc=8/8  price ['0.14'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-KNEE  minimax-h3-max-480p+knee_cheap               directional_only  use=False        acc=0/2  price ['0.05'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-KNEE  veo-3.1-full+knee_premium                    directional_only  use=manual_only  acc=1/2  price ['0.4'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-KNEE  veo-3.1-lite+knee_cheap                      directional_only  use=False        acc=0/2  price ['0.05'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-MS    gemini-omni-1.1-flash-10s                    directional_only  use=manual_only  acc=2/2  price ['0.10136'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-MS    kling-v3-pro-10s                             directional_only  use=manual_only  acc=2/2  price ['0.112'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-MS    kling-v3-pro-15s                             directional_only  use=manual_only  acc=2/2  price ['0.112'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-MS    veo-3.1-fast-extend+chain                    directional_only  use=manual_only  acc=2/2  price ['0.1'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-REF   veo-3.1-fast-ref2v+native                    clean_observed    use=True         acc=2/4  price ['0.1'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-T2V   gemini-omni-1.1-flash                        clean_observed    use=True         acc=8/8  price ['0.10136'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-T2V   kling-v3-pro-audio                           clean_observed    use=False        acc=2/8  price ['0.168'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-T2V   minimax-h3-max                               clean_observed    use=True         acc=5/8  price ['0.08'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-T2V   veo-3.1-fast                                 clean_observed    use=True         acc=4/8  price ['0.1'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-T2V   wan-2.2-a14b                                 clean_observed    use=True         acc=4/6  price ['0.08'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-T2V   wan-3.0-prime                                clean_observed    use=True         acc=4/8  price ['0.14'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-TOPO3 kling-v3-pro+B_premium_native_t2v            directional_only  use=False        acc=0/2  price ['0.112'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-TOPO3 minimax-h3-max-i2v+A2_nb_still_to_cheap_i2v  directional_only  use=manual_only  acc=2/2  price ['0.08'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-TOPO3 minimax-h3-max-i2v+A_cheap_still_to_cheap_i2v directional_only  use=False        acc=0/2  price ['0.08'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+VID-TOPO3 minimax-h3-max-i2v+C_textless_plate_i2v_composite directional_only  use=manual_only  acc=2/2  price ['0.08'] per_second surf ['fal'] pool ['cash'] txt deterministic_text_composition
+VID-TOPO3 nano-banana-2+A2_nb_plate_9x16               directional_only  use=manual_only  acc=1/2  price ['0.067'] per_image surf ['vertex'] pool ['credits'] txt not_applicable
+VID-TOPO3 veo-3.1-full+B_premium_native_t2v            directional_only  use=False        acc=0/2  price ['0.4'] per_second surf ['vertex'] pool ['credits'] txt not_applicable
+VID-TOPO3 wan-3.0-prime-i2v+A_cheap_still_to_cheap_i2v directional_only  use=False        acc=0/2  price ['0.14'] per_second surf ['fal'] pool ['cash'] txt not_applicable
+summary: {'clean_observed': 36, 'directional_only': 25, 'awaiting_controller_ruling': 0, 'method_tainted': 0, 'insufficient': 0} {'True': 29, 'manual_only': 15, 'False': 17}
