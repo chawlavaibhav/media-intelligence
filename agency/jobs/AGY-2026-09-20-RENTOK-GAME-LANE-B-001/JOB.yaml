@@ -125,7 +125,78 @@ blueprint:
   reviews: []
 
 # ── 6–7. PRODUCTION PLAN + ROUTES (filled at Stage 4) ────────────────────────
-plan: {}
+plan:
+  method: "original AI stills (Nano Banana 2: character sheet, five obstacle pairs, world plate) -> everything else by code (Pillow/numpy/hb-view/ffmpeg); no generative video (stages/04-PRODUCTION-PLAN.md)"
+  assets:
+    - id: A1-character-sheet
+      purpose: "PG-owner sprite sheet, 9 poses in one draw (identity fixed by construction); the micro-qualification"
+      depends_on: []
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: IMG-CORE/nano-banana-2, evidence_status: clean_observed, production_use_allowed: true, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, planned_draws: 1, repair_allowance: 1, fallback_cell: "IMG-CORE/nano-banana-pro after two failures", why: "cheapest clean still route on credits; 7/8; identity held inside one draw", directional_notes_used: [RO-04 (case 001), RO-04 (case 002)]}
+      known_failures: ["RO-04: nb2 drew paper-like text once despite no-text", "IMG-CORE nb2 1/8 rejected in the Lab"]
+    - id: A2-obstacle-pairs
+      purpose: "five 2-panel images: creature | cleared state (O1..O5)"
+      depends_on: [A1-character-sheet]
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: IMG-CORE/nano-banana-2, evidence_status: clean_observed, production_use_allowed: true, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 5, planned_draws: 5, repair_allowance: 2, fallback_cell: "IMG-CORE/nano-banana-pro", why: "as A1", directional_notes_used: [RO-04]}
+      known_failures: ["lettering/digits on calendars, receipts (RO-04 class)"]
+    - id: A3-world-plate
+      purpose: "16:9 PG street facade, sky, pavement; textless; recoloured by code for the after-state"
+      depends_on: [A1-character-sheet]
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: IMG-CORE/nano-banana-2, evidence_status: clean_observed, production_use_allowed: true, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, planned_draws: 1, repair_allowance: 1, fallback_cell: "IMG-CORE/nano-banana-pro", why: "as A1", directional_notes_used: [RO-04, RO-06]}
+      known_failures: ["shop signage lettering (RO-06 class); paint-out by code if small"]
+    - id: A4-hud-labels-cards-endcard
+      purpose: "all exact text and UI by code"
+      depends_on: [copy-deck]
+      reuse_of: null
+      exact_text_mechanism: code_set_on_textless_plate
+      route: {cell: code, evidence_status: n-a, production_use_allowed: true, surface: code, pool: none, unit_price_usd: 0, quantity: 22, planned_draws: 0, fallback_cell: none, why: "RR-1 default; exact by construction"}
+    - id: A5-phone-beam-flag-icon
+      purpose: "product/power-up/flag graphics by code; wordmark composited"
+      depends_on: [S-LOGO]
+      reuse_of: null
+      reuse: {source_asset: "source/brand/rentok-new-logo.webp @ 1ff7dcf58689684d8ddae150d384f4aa30c246c314b0bf4e4a389a06e8f66f80", source_verdict: "customer brand asset (not prior creative)", reuse_status: n-a, context_changed: n-a, fresh_qa_required: true, human_reapproval: null}
+      exact_text_mechanism: none
+      route: {cell: code, surface: code, pool: none, unit_price_usd: 0, planned_draws: 0, why: "no generation needed"}
+    - id: A6-music
+      purpose: "30-s original chiptune bed"
+      depends_on: []
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: MUS/lyria+native, evidence_status: clean_observed, production_use_allowed: true, surface: vertex, pool: credits, unit_price_usd: 0.06, quantity: 1, planned_draws: 1, repair_allowance: 1, fallback_cell: "code chiptune (USD 0)", why: "RR-13 default music route; chiptune untested n=0 -> one draw with a free fallback", directional_notes_used: [RO-09]}
+      known_failures: ["RO-09: Lyria 503/500 on advertising-flavoured wording; neutral prompt used"]
+    - id: A7-sfx
+      purpose: "ten synthesised effects"
+      route: {cell: code, surface: code, pool: none, unit_price_usd: 0, planned_draws: 0}
+    - id: A8-voice-announcer
+      purpose: "three announcer lines V1-V3 (= on-screen strings); audition A vs B; one source"
+      depends_on: []
+      exact_text_mechanism: n-a
+      route: {cell: AUD-TTS/sarvam-bulbul-v3+native, evidence_status: clean_observed, production_use_allowed: true, surface: sarvam_direct, pool: sarvam_credits, unit_price_usd: "INR 3 per 1000 chars (~USD 0.0023 per 72 chars, PriceBook)", quantity: "61 chars in 3 calls", planned_draws: 3, fallback_cell: "AUD-TTS/elevenlabs-v3-direct+native (candidate B, plan credits)", why: "RR-12 default voice; short lines inside the Lab's evidence range", directional_notes_used: [RO-05 (case 001), RO-02 (case 002)]}
+      known_failures: ["RO-05: robotic cadence on ~1,000-char narration (not this regime)", "case 002 HD-13b: two generations, two voices -> single source"]
+    - id: A9-assembly
+      purpose: "render_film.py -> ffmpeg H.264/AAC 1080x1920 30 fps 30.0 s"
+      depends_on: [A1-character-sheet, A2-obstacle-pairs, A3-world-plate, A4-hud-labels-cards-endcard, A5-phone-beam-flag-icon, A6-music, A7-sfx, A8-voice-announcer]
+      route: {cell: code, surface: code, pool: none, unit_price_usd: 0}
+  deliverables:
+    - {id: D1, geometry: "9:16", pixels: "1080x1920", from_asset: A9-assembly, file: deliverables/rentok-lane-b-30s-9x16.mp4}
+  micro_qualifications:
+    - {capability: "one character identity across 9 poses, no lettering, no Nintendo drift, clean magenta key", route: IMG-CORE/nano-banana-2, cost_usd: 0.067, human_gate_verdict: null, frozen_asset: null, order: first}
+  risk_order: [A1-character-sheet, A2-obstacle-pairs, A3-world-plate, A6-music, A8-voice-announcer, keying-pixelation]
+  voice: {source_count: 1, audition: "V3 'Level complete. Get the app.' on candidates A (Sarvam) and B (ElevenLabs); winner supplies all three lines", timeline_derived_from: measured_vo}
+  order: [pool-balances+cap, voice-audition, A1-sheet-microqual-freeze, A2-obstacles, A3-world, A6-music, code-assembly, qa-bundle, human-release]
+  composition:
+    token_source: "tools/text_render.py DesignTokens (one source: plate inset 24 px, radius, border, safe box 65-1015 x 269-1248)"
+    fonts: {latin: "HelveticaNeue.ttc faces 1 (Bold) / 4 (Condensed Bold)", devanagari: n-a}
+    shaping: hb-view+Pillow
+  pools: []                      # A7: no reading yet; read before the first dispatch (Stage 5)
+  expected_spend_usd: 0.54       # no repairs; 0.86 with one repair round; 1.27 worst case; provisional ceiling 10.00 (UNCONFIRMED)
+  spend_cuts_if_cap_lower: "drop audition B (-0.006) -> code chiptune (-0.06/-0.12) -> no obstacle repair (-0.134) -> obstacles as 2 sheets (-0.20); minimum viable ~0.47"
+  start_of_job_summary_shown_utc: null
 
 # ── 8–9. SPEND ───────────────────────────────────────────────────────────────
 spend:
@@ -158,7 +229,7 @@ outcome:
 
 ttao:
   job_start_utc: "2026-09-20T18:12:53Z"
-  planning_complete_utc: null
+  planning_complete_utc: "2026-09-20T18:40:41Z"
   dispatch_start_utc: null
   dispatch_end_utc: null
   artifact_received_utc: null
