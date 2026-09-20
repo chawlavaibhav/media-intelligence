@@ -1,0 +1,73 @@
+# LEARNING-PACKET — AGY-2026-09-20-RENTOK-GAME-LANE-A-001 (lane A of the two-lane RentOK experiment)
+# PRODUCTION-WORKFLOW.md §14. Raw material for /media-agency-sync; it proposes nothing to Canon, the Registry or routing.
+# Five kinds kept apart: observed facts · human verdict · directional model observations · deterministic system defects · candidate patterns.
+schema: LEARNING-PACKET-v1 (job-local; JOB-TEMPLATE.yaml section learning_packet)
+job_id: AGY-2026-09-20-RENTOK-GAME-LANE-A-001
+source_main_sha: 4d919c9df6c9725a2f14c411771565bb09089876
+classification: customer_work
+brief_ref: JOB.yaml brief.verbatim (input/01-CUSTOMER-BRIEF-FROZEN.md)
+frozen_plan_sha: 1c3448b34d841cb4293c7574596fd552a40a9846
+production_status: pending_human_review
+learning_status: pending_sync
+
+# ── observed facts ─────────────────────────────────────────────────────────────
+accepted_assets: []               # none yet — the human verdict is pending (blind Video X/Y via the Controller)
+candidate_deliverable:
+  path: gen/final/rentok-game-lane-a-9x16-30s.mp4
+  sha256: 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168
+  measured: "1080x1920, 30.000 s, h264 High 30 fps, aac 48 kHz stereo, −14.6 LUFS, −2.0 dBTP, 33.3 MB"
+routes_attempted:
+  - {cell: IMG-CORE/nano-banana-2 (Gemini API surface), calls: 7, ok: 7, failed: 0, usd: 0.469}
+  - {cell: MUS/lyria+native (Vertex), calls: 1, ok: 1, failed: 0, usd: 0.060}
+paid_attempts: {count: 8, usd_reserved: 0.529, usd_settled: "not reconciled (vendor statements)", cap_usd: 10.00, repairs_paid: 0}
+rejected_attempts: []             # every first draw was used
+human_verdicts: []                # pending
+repairs:                          # all USD 0, none at the generation layer
+  - {id: R1, class: compositor, found_by: "animatic v1 look", change: "ground 1130 → 1180"}
+  - {id: R2a, class: compositor, found_by: "runtime check_disjoint on the animatic layout log (171 frames)", change: "chip backing pad / row pitch"}
+  - {id: R2b, class: compositor, found_by: "runtime check_text_bounds on the animatic layout log (33 frames)", change: "panel fades in place; text hidden while leaving"}
+  - {id: R2c, class: compositor, found_by: "check_text_bounds (29 frames)", change: "chip flight start clamped to the safe box"}
+  - {id: R3, class: compositor (cut-out), found_by: "final-v1 look", change: "colour keying + chroma-green shadow removal + fringe erosion"}
+  - {id: R4, class: creative_direction, found_by: "final-v2 look", change: "sprite scale +18 % / +15 %"}
+  - {id: R5, class: audio, found_by: "ebur128 on the AAC output", change: "pre-encode true-peak target −4 dBTP"}
+known_cost_usd: 0.529             # reserved at pinned prices; upper bound
+ttao_hms: null                    # accepted_utc − job_start_utc, on ACCEPT only
+elapsed_to_qa_complete_hms: "1:04:20"   # 2026-09-20T18:11:42Z → 19:16:02Z (includes the checker's Gate 1–4 turnaround inside the window)
+versions_and_cycles: {versions: 1 candidate presented, cycles: 0 human review cycles so far, internal_renders: "animatic v1, v2; final v1, v2, v3"}
+observed_failures:
+  - "F-01: chip backings overlapped each other on the animatic (row pitch 48 < backing 62 px) — caught by the runtime disjoint gate, not by eye"
+  - "F-02: cheat-panel text left the safe box during the panel's slide-out — caught by the runtime bounds gate"
+  - "F-03: cut-out kept enclosed green pockets and the model's dark-green ground shadow (flood-fill keying only) — caught by eye on final-v1"
+  - "F-04: AAC encoding overshot true peak by ≈ 2 dB on square-wave SFX (−2.6 dBTP wav → −0.3 dBTP AAC) — caught by ebur128 on the delivered file, not on the wav"
+  - "F-05: the first ebur128 regex read the running 'I:' line (−70 LUFS at t=0) instead of the summary — a tooling defect fixed before any record was written"
+root_cause_classes:
+  - {failure_ref: F-01, class: compositor}
+  - {failure_ref: F-02, class: compositor}
+  - {failure_ref: F-03, class: compositor}
+  - {failure_ref: F-04, class: audio}
+  - {failure_ref: F-05, class: infrastructure (tooling)}
+media_model_failures_that_reached_a_gate: 0
+
+# ── directional model observations (routing_authority: none; n as stated) ───────
+directional_model_observations:
+  - {route: "nano-banana-2 (Gemini API), 21:9 sprite sheet prompt", n: 1, accepted: 1, observation: "four poses of one character on a flat #00FF00 background, consistent identity, no lettering; the model added a dark-green ground shadow under each pose (chroma green darkened), which must be keyed by colour"}
+  - {route: "nano-banana-2, single obstacle sprites 1:1 on flat green", n: 5, accepted: 5, observation: "all five first draws usable; requested symbols (? and !) drawn, no letters/digits; calculator keys and display left blank as asked; edges are anti-aliased against the green (a fringe erosion pass needed)"}
+  - {route: "nano-banana-2, 9:16 textless street plate", n: 1, accepted: 1, observation: "no boards/signs/lettering with the explicit 'no shop fronts, no boards, no hoardings' clause; lane edge at 82 % of height"}
+  - {route: "lyria-002, neutral chiptune prompt", n: 1, accepted: 1, observation: "first call succeeded (no 5xx); 32.77 s output as RR-13 says; true peak −6.9 dBTP raw"}
+  - {route: "AAC 192 kbps on square-wave SFX", n: 3, observation: "codec true-peak overshoot ≈ 2 dB; a −4 dBTP pre-encode target landed at −2.0 dBTP"}
+
+# ── candidate patterns (need more evidence; not rules) ───────────────────────────
+candidate_patterns:
+  - {id: CODE_RENDERED_GAME_FILM, pattern: "for a game-style or motion-graphics film, render the film by code and use generative models only for textless sprites/plates; identity, exact text and timing become deterministic", observed: "one job; 8 paid stills, 0 generative video, 0 paid repairs; every text/timing check deterministic", promotion_condition: "a second accepted job of this class"}
+  - {id: ANIMATIC_BEFORE_SPEND, pattern: "render the whole film with placeholder assets and run the compositor gates on its layout log before any paid draw", observed: "found F-01/F-02 at USD 0 before any dispatch", promotion_condition: "repeat on another code-rendered job"}
+  - {id: LAYOUT_LOG_GATES, pattern: "the renderer writes every text/logo box per frame; bounds/disjoint/contrast/exact-copy gates run over the log, not over pixels alone", observed: "4,113 boxes × 900 frames checked in seconds; three defects found", promotion_condition: "a runtime helper that any compositor can emit into"}
+  - {id: CODEC_TRUE_PEAK_MARGIN, pattern: "measure loudness/true peak on the delivered encoded file, not the mix wav; leave ≥ 2 dB pre-encode headroom for square-wave content", observed: "F-04", promotion_condition: "one more job confirming the overshoot size"}
+  - {id: CODE_BITMAP_FONT_FOR_ARCADE, pattern: "an original code bitmap font makes exact copy byte-exact by construction and needs no shaping engine for Latin capitals", observed: "26 strings, 0 mismatches", promotion_condition: "job-specific unless another arcade/retro brief appears"}
+candidate_engineering_changes:
+  - {closes: F-01/F-02, change: "a `layout-log → gates` runner in runtime/compositor (bounds, disjoint, contrast from backing hex) so any renderer gets the gates for free"}
+  - {closes: F-04, change: "assemble step measures ebur128 on the encoded output and fails closed; pre-encode TP target as a token"}
+  - {closes: "cut-out", change: "a keying helper with colour + connectivity + chroma-shadow rules and a keyability report (tools/cutout.py) into runtime/compositor"}
+canon_gaps: []                    # no production failure was for want of Canon; the game/arcade/audio gaps were declared at Stage 3 and covered by explicit reasoning
+no_promotion_items:
+  - "the specific obstacle metaphors, palette, level layout and copy (job-specific)"
+  - "the 1.2 s-per-clear tempo (untested by a human yet)"

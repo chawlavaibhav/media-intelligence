@@ -54,7 +54,7 @@ class DesignTokens:
     backing_pad: int = 10
     outline_px: int = 2
     owner_x: int = 260                       # left third of the safe box: room to run
-    owner_h: int = 220
+    owner_h: int = 260                       # R4 (final-v2 look): 220 → 260, sprites read small at phone size; top at 920 stays clear of the label zone (≤ 779)
     scroll_problem: int = 400                # px/s
     scroll_clear: int = 480
     endcard_wordmark_w: int = 700
@@ -186,14 +186,22 @@ class Sprites:
         return self._c[k]
 
     def obst(self, n: int) -> Image.Image:
-        sizes = {1: (300, 320), 2: (240, 240), 3: (170, 260), 4: (260, 340), 5: (320, 260)}
+        sizes = {1: (345, 368), 2: (276, 276), 3: (200, 300), 4: (300, 390), 5: (368, 300)}   # R4: x1.15
         return self._load(f"obst_{n}", *sizes[n])
 
     def plate(self) -> Image.Image | None:
+        """The generated 9:16 plate, fitted to 1080x1920 and shifted up so its lane edge meets the engine's ground line
+        (measured: the plate's lane starts at y 1602 after the fit; ground_y is 1180 → shift 422 px; the exposed top
+        band is filled with the plate's own sky colour). Tiled 2x horizontally with a mirrored copy for the parallax."""
         p = self.assets / "plate.png"
-        if self.mode == "final" and p.exists():
-            return ImageOps.fit(Image.open(p).convert("RGB"), (W, H), Image.LANCZOS)
-        return None
+        if not (self.mode == "final" and p.exists()):
+            return None
+        fit = ImageOps.fit(Image.open(p).convert("RGB"), (W, H), Image.LANCZOS)
+        shift = 1602 - T.ground_y
+        one = Image.new("RGB", (W, H), fit.getpixel((W // 2, 2)))
+        one.paste(fit, (0, -shift))
+        two = Image.new("RGB", (W * 2, H)); two.paste(one, (0, 0)); two.paste(ImageOps.mirror(one), (W, 0))
+        return two
 
 
 # ── world drawing ────────────────────────────────────────────────────────────

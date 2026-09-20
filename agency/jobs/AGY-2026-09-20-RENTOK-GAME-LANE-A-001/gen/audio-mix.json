@@ -1,0 +1,30 @@
+{
+ "video": "gen/final-v3.mp4",
+ "music": "gen/raw/A10_music_att-008.wav",
+ "sfx": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-rentok-lane-a/agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-A-001/gen/sfx-stem.wav",
+ "out": "gen/final-v3-audio.mp4",
+ "pass1": {
+  "input_i": "-21.94",
+  "input_tp": "-6.92",
+  "input_lra": "6.60",
+  "input_thresh": "-32.27",
+  "output_i": "-14.55",
+  "output_tp": "-4.00",
+  "output_lra": "5.60",
+  "output_thresh": "-24.66",
+  "normalization_type": "dynamic",
+  "target_offset": "0.55"
+ },
+ "delivered": {
+  "integrated_lufs": "-14.6",
+  "true_peak_dbtp": "-2.0",
+  "lra": "5.1"
+ },
+ "levels": {
+  "bed_db": -7,
+  "sfx_db": -4,
+  "bed_fade_out_s": 0.7,
+  "loudnorm_tp_target": -4.0,
+  "why": "AAC encoding overshoots true peak by ~2.3 dB on square-wave SFX (measured -0.3 dBTP from a -2.6 dBTP wav); target -4 keeps the delivered file <= -1"
+ }
+}

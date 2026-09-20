@@ -10,8 +10,8 @@ production_base_sha: 4d919c9df6c9725a2f14c411771565bb09089876         # REQUIRED
 branch: work/agency-job-rentok-game-lane-a-001                      # REQUIRED  work/agency-job-<job-id>
 skill_version: 3488bdb3170005151bb57731fcf37d4b030f1abd   # last commit touching SKILL.md at job start               # sha of .claude/skills/media-agency/SKILL.md at job start
 opened_by: Producer session, lane A (Controller-directed experiment)                   # person
-production_status: open           # open | accepted | rejected | abandoned
-learning_status: not_started      # not_started | pending_sync | synced | no_promotion
+production_status: pending_human_review   # open | accepted | rejected | abandoned — Controller instruction: pending_human_review until the blind verdict
+learning_status: pending_sync     # not_started | pending_sync | synced | no_promotion — LEARNING-PACKET.yaml written 2026-09-21
 sync:                             # filled by /media-agency-sync — the only fields it may change on the job branch
   case_id: null                   # production-learning/cases/<CASE-ID>
   integration_branch: null
@@ -198,42 +198,56 @@ spend:
     - {pool: credits (Google Vertex/Gemini), balance_usd: attested_by_human, read_utc: "2026-09-20T18:44Z", source: "Controller session AskUserQuestion — human: 'Yes, credits are funded — proceed'; machine reading impossible: Cloud Billing API disabled on vertexaiproject-507518 (verified by the Controller session)", assumption: "the Gemini API key (Nano Banana 2) and the Vertex service account (Lyria) draw on the same Google credits pool, as in the Cumin experiment ledgers; cost if wrong: a call bills another account or hits quota — any billing/quota error stops the job, no retry on another surface"}
     - {pool: elevenlabs_credits, balance_usd: not_read, read_utc: null, source: "not touched by this plan (no voice); not read"}
     - {pool: sarvam_credits, balance_usd: not_read, read_utc: null, source: "not touched by this plan (no voice); not read"}
-  attempts: []                    # one line per paid call, appended before the request leaves, settled after:
+  attempts:                       # one line per paid call, appended before the request leaves, settled after (mirror of gen/ATTEMPTS.jsonl; verdict = producer's, pending the independent inspector):
+    - {attempt_id: att-001, asset_id: A1_owner_sheet, route_cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, reserved_usd: 0.067, settled_usd: null, start_utc: "2026-09-20T19:03:13.308956Z", end_utc: "2026-09-20T19:03:26.086749Z", latency_s: 12.8, status: ok, failure_basis: null, artifact_path: gen/raw/A1_owner_sheet_att001.png, artifact_sha256: f17060521a91db5699f957864c8b68bf831529ae698c7f4e5c00a2c9d4b4dcf9, verdict: accepted, is_repair: false}
+    - {attempt_id: att-002, asset_id: A2_obst_wall, route_cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, reserved_usd: 0.067, settled_usd: null, start_utc: "2026-09-20T19:03:59.261512Z", end_utc: "2026-09-20T19:04:08.421306Z", latency_s: 9.2, status: ok, failure_basis: null, artifact_path: gen/raw/A2_obst_wall_att-002.png, artifact_sha256: 1e52476b1b4a4d747a708a7709981b7ce6ec69c2abd0ddff7d0f27dafccc9a1e, verdict: accepted, is_repair: false}
+    - {attempt_id: att-003, asset_id: A3_obst_sack, route_cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, reserved_usd: 0.067, settled_usd: null, start_utc: "2026-09-20T19:04:08.424980Z", end_utc: "2026-09-20T19:04:19.032745Z", latency_s: 10.6, status: ok, failure_basis: null, artifact_path: gen/raw/A3_obst_sack_att-003.png, artifact_sha256: 7d56cfdc738f384e32237a47dfc499c564654127f27a7e6215c59908805d65e6, verdict: accepted, is_repair: false}
+    - {attempt_id: att-004, asset_id: A4_obst_tenant, route_cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, reserved_usd: 0.067, settled_usd: null, start_utc: "2026-09-20T19:04:19.036634Z", end_utc: "2026-09-20T19:04:30.141994Z", latency_s: 11.1, status: ok, failure_basis: null, artifact_path: gen/raw/A4_obst_tenant_att-004.png, artifact_sha256: 5165b2d6a75b8976606ed9650be987b08c82cc25e7f2c1f0e3db345e274712ac, verdict: accepted, is_repair: false}
+    - {attempt_id: att-005, asset_id: A5_obst_tower, route_cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, reserved_usd: 0.067, settled_usd: null, start_utc: "2026-09-20T19:04:30.145376Z", end_utc: "2026-09-20T19:04:41.000397Z", latency_s: 10.9, status: ok, failure_basis: null, artifact_path: gen/raw/A5_obst_tower_att-005.png, artifact_sha256: 19550e25c65feca2d16015f06e2e5f32780374d7046b2ef6ff765509ff2824b0, verdict: accepted, is_repair: false}
+    - {attempt_id: att-006, asset_id: A6_obst_swarm, route_cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, reserved_usd: 0.067, settled_usd: null, start_utc: "2026-09-20T19:04:41.003436Z", end_utc: "2026-09-20T19:04:50.831965Z", latency_s: 9.8, status: ok, failure_basis: null, artifact_path: gen/raw/A6_obst_swarm_att-006.png, artifact_sha256: e9c5ef00c66e941183dc991927da15460730246e3a85918639a5a843b581ba62, verdict: accepted, is_repair: false}
+    - {attempt_id: att-007, asset_id: A7_plate, route_cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, reserved_usd: 0.067, settled_usd: null, start_utc: "2026-09-20T19:05:33.528639Z", end_utc: "2026-09-20T19:05:43.141277Z", latency_s: 9.6, status: ok, failure_basis: null, artifact_path: gen/raw/A7_plate_att-007.png, artifact_sha256: 04b0615fe60d012d0cee87cf15c96d2aa94ef4c6ceed3efb12bebf00ca5e1543, verdict: accepted, is_repair: false}
+    - {attempt_id: att-008, asset_id: A10_music, route_cell: MUS/lyria+native, surface: vertex, pool: credits, unit_price_usd: 0.06, quantity: 1, reserved_usd: 0.06, settled_usd: null, start_utc: "2026-09-20T19:05:43.143994Z", end_utc: "2026-09-20T19:06:12.442282Z", latency_s: 29.3, status: ok, failure_basis: null, artifact_path: gen/raw/A10_music_att-008.wav, artifact_sha256: 8be3e70e5f368fd18f53eb965db48bcdd2514ef2311c5648f838b5be3a35ed4a, verdict: accepted, is_repair: false}
   #  - {attempt_id, asset_id, route_cell, surface, pool, unit_price_usd, quantity, reserved_usd, settled_usd,
   #     start_utc, end_utc, latency_s, status: ok|provider_refusal|infrastructure_transient|unclassified,
   #     failure_basis, artifact_path, artifact_sha256, verdict: accepted|rejected|not_selected|failed, is_repair: bool}
-  total_reserved_usd: 0           # Σ reserved, failed calls included = CpAO numerator
+  total_reserved_usd: 0.529       # Σ reserved, failed calls included = CpAO numerator (8 calls, 0 failed)
   total_settled_usd: null         # if the provider reports it; vendor statements are a separate reconciliation
-  cap_remaining_usd: null
+  cap_remaining_usd: 9.471
 
 # ── 10–11. QA ────────────────────────────────────────────────────────────────
 qa:
-  pre_dispatch: {}                # A1..A10 → {status, evidence}
-  post_draw: []                   # per still: {asset_id, B1..B6}
-  composition: []                 # per rendered file: {file, C1..C8}
-  video_frames: []                # per clip: {asset_id, sampled_timestamps: [], D1..D13}
-  final_geometry: []              # FORMAT_SPECIFIC_REVALIDATION (case 002): one row per delivered file, run on THAT file:
-  #  - {deliverable_id, file, geometry, sha256, C1..C8, CF1..CF5, status}   — a master's PASS transfers to nothing
-  voice_continuity:               # CROSS_CLIP_VOICE_CONTINUITY (case 002): REQUIRED when 2+ clips represent one narrator/speaker
-    applies: null                 # true | false (single clip / no narration)
-    assembly: null                # the assembled file + sha256 the human listened to
-    clips: []                     # clip ids in order
-    narrator_identity_same: null  # PASS | FAIL  (human ear)
-    accent_timbre_compatible: null
-    cadence_continuous: null
-    boundary_holes_or_restarts: null   # PASS = none
-    per_clip_transcripts_match: null   # D10 — presence only; never substitutes for the rows above
-    human_ear_verdict: null       # verbatim; release authority
-  delivery: {}                    # E1..E4
-  defects: []                     # [{id, asset_id, observed, class: creative_direction|generation|audio|route|compositor|crop|text|product_fidelity|pacing|infrastructure, repair_layer, repaired_by_attempt}]
+  pre_dispatch: {A1: {status: PASS, evidence: "canon/gate/run_gate.py pre x7 prompts — LIMIT-TEXT PASS, 0 non-blocking FAIL (gen/prompts/*.gate.json)"}, A2: {status: PASS, evidence: "21 check lines rendered by id, stages/03-CREATIVE.md A3"}, A3: {status: PASS, evidence: "tools/dispatch.py _prompt_guard: no deck string / no IP word / no-lettering clause on every prompt"}, A4: {status: PASS, evidence: "IMG-CORE/nano-banana-2 and MUS/lyria+native only — clean_observed, production_use_allowed true"}, A5: {status: PASS, evidence: "live PriceBook quotes 0.067 per_image / 0.06 per_clip"}, A6: {status: PASS, evidence: "cap USD 10.00 written; planned ceiling 1.058"}, A7: {status: PASS_BY_ATTESTATION, evidence: "Google credits attested by the human 2026-09-20T18:44Z; machine reading impossible (Cloud Billing API disabled)"}, A8: {status: N/A, evidence: "no supplied identifiable person"}, A9: {status: PASS, evidence: "att-001 micro-qualified before att-002..008 (producer verdict; inspector look owed)"}, A10: {status: PASS, evidence: "job_start 18:11:42Z, planning_complete 18:37:56Z"}}
+  post_draw:
+    - {asset_id: att-001 owner sheet, B1: "PASS — no lettering (eye)", B2: n-a, B3: "PA-D1 matte PASS / PA-D4 one source PASS / PA-D5 outline + luminance 0.29–0.31 vs lane 0.55 PASS", B4: "PASS — hands/feet counted; four poses one identity", B5: "PASS — 1584x672 21:9 as declared", B6: n-a}
+    - {asset_id: att-002..006 obstacles, B1: "PASS — one ? and one ! symbol by design; calculator blank (zoom)", B2: n-a, B3: "PA-D5: obst_1 (0.64) and obst_4 (0.46) weak vs lane by mean luminance, outline separates; others separate", B4: "PASS — tenant hands/suitcase/bag as briefed", B5: "PASS — 1024x1024 1:1", B6: n-a}
+    - {asset_id: att-007 plate, B1: "PASS — no boards/signs/lettering (eye)", B2: n-a, B3: "PA-D4 upper-left daylight PASS; CA-D6 stacked floors PASS", B4: n-a, B5: "PASS — 768x1376 9:16", B6: "PASS — sky band clear for the HUD"}
+  composition:
+    - {file: gen/final-v3.mp4 (900 frames), C1: "PASS 4113 boxes inside safe box", C2: "PASS min 6.08", C3: "PASS — sprites contain-fit (NEAREST), plate cover-fit declared (parallax background, may be covered)", C4: "PASS — one DesignTokens source", C5: "PASS 0 overlaps", C6: "PASS 0 mismatches", C7: "PASS — #0038FF/#03FFF1/#FFF100 from source/rentok-brand", C8: "PASS — 1080x1920 only geometry requested"}
+  video_frames:
+    - {asset_id: final deliverable, sampled_timestamps: "0.0, 0.5, … 29.5, 29.97 (61) + 15 keyframes", D1: "human-eye PASS (author) — detector NOT_RUN; inspector to repeat", D2: n-a, D3: "PASS by construction (one bitmap per pose)", D4: "PASS on keyframes", D5: n-a, D6: "PASS — side-scroll follow, paused at F7, stopped at 26.6", D7: "PASS — left→right throughout", D8: "PASS — DET C1", D9: "PASS — code physics", D10: n-a (no speech), D11: "PASS — I −14.6 LUFS, TP −2.0", D12: "PASS — 30.000 s 30 fps 1080x1920 h264/aac", D13: "PASS — gen/final/CONTACT-SHEET.png, KEYFRAMES.png"}
+  final_geometry:
+    - {deliverable_id: A13, file: gen/final/rentok-game-lane-a-9x16-30s.mp4, geometry: "9:16", sha256: 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168, C1-C8: "PASS (qa/final-v3-audio/DET-RESULTS.json)", CF1: PASS, CF2: "PASS — labels above the play band, chips left of the lane, nothing over the owner/obstacles/phone (design + C5)", CF3: "PASS — no adaptation (native render)", CF4: "PASS — DET C1 against (65,288)-(888,1248)", CF5: "PASS — HUD > label > chip hierarchy by scale 6/7/6, flash 8, CTA 10", status: DET_PASS_pending_LJ_HJ}
+  voice_continuity: {applies: false, assembly: null, clips: [], narrator_identity_same: n-a, accent_timbre_compatible: n-a, cadence_continuous: n-a, boundary_holes_or_restarts: n-a, per_clip_transcripts_match: n-a, human_ear_verdict: null}
+  delivery: {E1: "PASS — outcome.assets carries path, sha256, producing attempts", E2: "pending — delivery note written by the Controller at presentation (blind Video X/Y)", E3: "PASS — no tool or model name in any on-screen string", E4: "pending — human verdict not yet given"}
+  defects:
+    - {id: R1, asset_id: animatic-v1, observed: "play band cramped, ground at 1130", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 re-render animatic-v2"}
+    - {id: R2a, asset_id: animatic-v1, observed: "checklist chip backings overlap (C5, 171 frames)", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 animatic-v2"}
+    - {id: R2b, asset_id: animatic-v1, observed: "cheat panel text left the safe box while sliding out (C1, 33 frames)", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 animatic-v2"}
+    - {id: R2c, asset_id: animatic-v2, observed: "chip flight start outside the safe box (C1, 29 frames)", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 animatic-v2 re-render"}
+    - {id: R3, asset_id: final-v1 cut-outs, observed: "enclosed green pockets and the model's dark-green ground shadows survived the cut-out", class: compositor, repair_layer: cut-out, repaired_by_attempt: "USD 0 tools/cutout.py R3"}
+    - {id: R4, asset_id: final-v2, observed: "sprites read small at phone size", class: creative_direction, repair_layer: compositor, repaired_by_attempt: "USD 0 final-v3"}
+    - {id: R5, asset_id: final-v2-audio, observed: "true peak −0.4 / −0.3 dBTP after AAC (target ≤ −1)", class: audio, repair_layer: assembly, repaired_by_attempt: "USD 0 pre-encode TP −4"}
 
 # ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
 versions: []                      # [{version, presented_utc, assets: [], verdict: ACCEPT|SPECIFIC REPAIR|REJECT, verdict_verbatim, decided_utc}]
 outcome:
-  status: null                    # accepted | rejected | abandoned  — accepted ONLY from a human ACCEPT
+  status: null                    # accepted | rejected | abandoned  — accepted ONLY from a human ACCEPT (pending human review)
   accepted_version: null
   accepted_by: null               # person
-  assets: []                      # [{path, sha256, bytes, dims_or_duration, produced_by_attempt, composition_inputs: [], formats: [], reuse_potential: [portfolio|showreel|spec|case_study|variant|demo|template_evidence]}]
+  assets:                         # candidate deliverable (not accepted until a human ACCEPT)
+    - {path: gen/final/rentok-game-lane-a-9x16-30s.mp4, sha256: 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168, bytes: 33301406, dims_or_duration: "1080x1920 9:16, 30.000 s, h264 High 30 fps + aac 48 kHz stereo", produced_by_attempt: [att-001, att-002, att-003, att-004, att-005, att-006, att-007, att-008, "code renders final-v3 / audio-mix"], composition_inputs: [board.json, copy-deck.json, tools/render_game.py, tools/sfx.py, tools/assemble.py, gen/assets/owner_idle.png, gen/assets/owner_runA.png, gen/assets/owner_runB.png, gen/assets/owner_jump.png, gen/assets/obst_1.png, gen/assets/obst_2.png, gen/assets/obst_3.png, gen/assets/obst_4.png, gen/assets/obst_5.png, gen/assets/plate.png, gen/raw/A10_music_att-008.wav, gen/sfx-stem.wav, "source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf5…"], formats: ["9:16"], reuse_potential: [case_study, demo, template_evidence]}
+    - {path: gen/final/CONTACT-SHEET.png, sha256: 295835b53c4e304e73c8703b35e0702c80f933c2294bcd38add47854c92d012d, produced_by_attempt: "code"}
+    - {path: gen/final/KEYFRAMES.png, sha256: df526312bc550f493fe3d1d9134addde187a4bcf0bac8bd74eca5846ba37fdb1, produced_by_attempt: "code"}
   delivery_note_path: null
   delivered_utc: null
 
@@ -241,20 +255,20 @@ outcome:
 ttao:
   job_start_utc: 2026-09-20T18:11:42Z   # date -u, first act after bootstrap             # REQUIRED  first production input
   planning_complete_utc: 2026-09-20T18:37:56Z   # Stages 1–4 written; Stage 5 waits for the checker's Gate 1–4 verdict and the written cap
-  dispatch_start_utc: null
-  dispatch_end_utc: null
-  artifact_received_utc: null
-  qa_complete_utc: null
+  dispatch_start_utc: 2026-09-20T19:03:11Z   # first paid call: A1 sprite sheet micro-qualification
+  dispatch_end_utc: 2026-09-20T19:06:12Z   # att-008 settled
+  artifact_received_utc: 2026-09-20T19:06:12Z
+  qa_complete_utc: 2026-09-20T19:16:02Z   # DET suite 0 FAIL on the deliverable
   human_review_requested_utc: null
   human_decision_utc: null
   accepted_utc: null
 kpis:
-  cpao_usd: null                  # = spend.total_reserved_usd on accept
-  ttao_hms: null                  # accepted_utc − job_start_utc
+  cpao_usd: null                  # = spend.total_reserved_usd on accept (0.529 reserved so far)
+  ttao_hms: null                  # accepted_utc − job_start_utc; job_start → qa_complete = 1:04:20
   human_review_cycles: null       # = len(versions)
   versions_to_acceptance: null
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml   # read its current values; never fake the comparison
-  baseline_values_read: {ttao: null, cpao_usd: null, cycles: null, versions: null}
+  baseline_values_read: {ttao: "7 h 54 m mechanical lower bound (Controller estimate 7–8 h)", cpao_usd: 15.39318, cycles: 5, versions: 5}   # production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml, read 2026-09-21
 
 # ── 14. LEARNING PACKET (job not closed on ACCEPT until this is filled) ──────
 learning_packet:

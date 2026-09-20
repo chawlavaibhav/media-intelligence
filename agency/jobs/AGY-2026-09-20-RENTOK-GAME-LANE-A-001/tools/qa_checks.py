@@ -143,6 +143,7 @@ def main():
     # ── loudness (final only) ────────────────────────────────────────────────
     if final:
         out = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(mp4), "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True).stderr
+        out = out[out.rfind("Integrated loudness:"):]
         il = re.search(r"I:\s+(-?[\d.]+) LUFS", out); tp = re.search(r"Peak:\s+(-?[\d.]+) dBFS", out)
         okl = il and tp and -15.5 <= float(il.group(1)) <= -12.5 and float(tp.group(1)) <= -1.0
         rec("5.5 loudness −14 LUFS ±1.5, TP ≤ −1", "PASS" if okl else "FAIL", f"I={il.group(1) if il else '?'} LUFS, TP={tp.group(1) if tp else '?'} dBTP")

@@ -42,8 +42,17 @@ def key_out(im: Image.Image, tol: int = 60) -> tuple[np.ndarray, float]:
         for ny, nx in ((y - 1, x), (y + 1, x), (y, x - 1), (y, x + 1)):
             if 0 <= ny < h and 0 <= nx < w and near[ny, nx] and not bgmask[ny, nx]:
                 bgmask[ny, nx] = True; q.append((ny, nx))
+    # R3 (final-v1 look): (a) enclosed background pockets (between legs, behind objects) are keyed by colour too, not only by
+    # connectivity; (b) the model's dark-green ground shadow (a darkened chroma green: r < 40, b < 60, g >= 90) is background;
+    # (c) one erosion pass removes green-dominant fringe pixels touching transparency. Sprite content is never pure chroma green.
+    pure_green = (a[:, :, 0] < 40) & (a[:, :, 2] < 60) & (a[:, :, 1] >= 90)
+    bgmask = bgmask | near | pure_green
     alpha = np.where(bgmask, 0, 255).astype(np.uint8)
-    # soften green fringe: pixels adjacent to background that are greenish get their green channel pulled down
+    fringe = (a[:, :, 1] > a[:, :, 0] * 1.25) & (a[:, :, 1] > a[:, :, 2] * 1.25) & (alpha > 0)
+    trans = alpha == 0
+    touch = np.zeros_like(trans)
+    touch[1:, :] |= trans[:-1, :]; touch[:-1, :] |= trans[1:, :]; touch[:, 1:] |= trans[:, :-1]; touch[:, :-1] |= trans[:, 1:]
+    alpha[fringe & touch] = 0
     rgba = np.dstack([a.astype(np.uint8), alpha])
     return rgba, keyable
 
