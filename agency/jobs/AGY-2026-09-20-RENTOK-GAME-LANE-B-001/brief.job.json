@@ -1,0 +1,75 @@
+{
+  "job_id": "AGY-2026-09-20-RENTOK-GAME-LANE-B-001",
+  "received_utc": "2026-09-20T18:00:45Z",
+  "customer_ref": "acct-rentok-lane-b",
+  "brief": {
+    "language": "en",
+    "market": "IN",
+    "text": "I want to make a video for RentOK. The video has a Mario game. The player is basically a PG owner. The obstacles in the game are basically the problems that owner faces — tenant verification, collecting rent, tenants leaving without paying rent, no place to do reconciliation, solving complaints and so on.\nThe game also introduces a cheat code — install RentOK app.\nOnce it is done, Mario gets a gun sort of power/immunity. It runs and kills all the obstacles and gets the flag.\n\nConfirmed: Platforms: Instagram Reels / Facebook and YouTube Shorts. Duration: 30 seconds. Game identity: An original Mario-inspired game, rather than an exact reproduction of Nintendo's character, artwork, music or game assets. Visual treatment: Delegated to the creative system. Power-up design: Delegated to the creative system, while preserving the requested game-style power/immunity mechanic. Brand and product source: Official RentOK website, https://rentok.com. Additional non-negotiables: None specified."
+  },
+  "exact_text_strings": [
+    {
+      "value": "RentOk",
+      "script": "latin",
+      "may_reflow": false,
+      "placement": "overlay"
+    },
+    {
+      "value": "RENTOK",
+      "script": "latin",
+      "may_reflow": false,
+      "placement": "overlay"
+    },
+    {
+      "value": "CHEAT CODE: INSTALL RENTOK",
+      "script": "latin",
+      "may_reflow": false,
+      "placement": "overlay"
+    },
+    {
+      "value": "Get the app",
+      "script": "latin",
+      "may_reflow": false,
+      "placement": "overlay"
+    }
+  ],
+  "reference_assets": [
+    {
+      "asset_id": "rentok-wordmark",
+      "role": "logo",
+      "sha256": "1ff7dcf58689684d8ddae150d384f4aa30c246c314b0bf4e4a389a06e8f66f80",
+      "content_type": "image/webp",
+      "provenance": "customer_supplied",
+      "depicts_identifiable_person": false,
+      "note": "fetched by the lane from the brand's own CDN as referenced by the customer-named site (Stage 2 S-LOGO); the customer named the site as the brand source"
+    }
+  ],
+  "deliverable_request": {
+    "kind": "multi_shot_story",
+    "operation": "generate",
+    "modality": "video",
+    "subject": {
+      "entity": "scene",
+      "entity_id": "original_pg_owner_platform_game",
+      "brand": "RentOk",
+      "category": "pg_management_app"
+    },
+    "aspect": "9:16",
+    "count": 1,
+    "motion": {
+      "seconds": 30,
+      "from": "text_to_video",
+      "audio": true
+    }
+  },
+  "policy_profile": "dry",
+  "cost_ceiling_usd": 0.0,
+  "retention": {
+    "policy_ref": "alpha-1-default",
+    "delete_after_days": 90
+  },
+  "submitted_by": "lane-b-producer",
+  "_provenance": {
+    "note": "Hand-written PRODUCTION-JOB-v1 brief for the agency job (not tool-generated). cost_ceiling_usd 0.0 = no confirmed cap yet (provisional USD 10.00 unconfirmed). kind multi_shot_story is the nearest registry kind; motion.from text_to_video is a placeholder — the production method is decided at Stage 4, not by this field. The exact strings listed here are the Stage 3 candidates; the copy deck in 03-CREATIVE.md is authoritative."
+  }
+}
