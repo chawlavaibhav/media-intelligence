@@ -176,3 +176,57 @@ This is a 30-second vertical film that is itself a small, original, code-rendere
 - `ffmpeg -af ebur128=peak=true`, `astats`, `silencedetect`; per-second momentary loudness; `signalstats` YAVG per frame to locate white flashes; windowed RMS over `gen/sfx-stem.wav` at the board's event times.
 - Python over `gen/final-v3-audio-layout.jsonl` (all strings, first/last times, safe-box containment) and over `gen/LEDGER.jsonl` / `gen/ATTEMPTS.jsonl` (ordering, sums, reconciliation).
 - `grep` over `tools/render_game.py`, `tools/sfx.py`, `tools/assemble.py`, `gen/prompts/*`, `JOB.yaml`, `copy-deck.json`, `qa/final-v3-audio/DET-RESULTS.json`.
+
+---
+
+# Re-verification after repair round 1 (commit `f1174f8`)
+
+Checked 2026-09-21 by the same independent session, on the Controller's instruction, USD 0, no producer file edited. Scope: the repaired file and the ten defects D-1…D-10; frames re-extracted only at the repaired timecodes plus a fresh 2-fps contact sheet (`qa/checker/round1/`). The first-round findings above stand for everything the repair did not touch.
+
+## R1. Re-measured
+
+| Item | OBSERVED by this session | Producer §9 | Agrees? |
+|---|---|---|---|
+| sha256 | `5769ffa7232e6bb1427ce1f0db7396fedd12e9af58dc7feb5d61f140d20b0ab9` = `JOB.yaml outcome.assets[0]` and `plan.deliverables[0]` | same | yes |
+| Bytes | 33,341,051 | same | yes |
+| Duration | container 30.021 s; video 30.000 s (900 frames); audio 30.021 s — inside A7's 29.5–30.5 | 30.021 | yes |
+| Edit lists | **0 `elst` atoms** — this session walked the full box tree (`moov → trak → edts`), not just the first bytes | 0 | yes — **D-1 FIXED** |
+| Atom order | `ftyp` (0) → `moov` (36) → `free` → `mdat` (32,448): index first | same | yes |
+| Video / audio | H.264 High 1080×1920 yuv420p 30 fps; AAC-LC 48 kHz stereo | same | yes |
+| Loudness | −14.6 LUFS integrated, true peak −2.0 dBTP; 0 silence gaps at −50 dB / 0.5 s | −14.6 / −2.0 | yes |
+| Ledger | `LEDGER.jsonl` byte-identical to the first check (16 lines, 8 attempts, USD 0.529, no new line); `ATTEMPTS.jsonl` changed only in the `verdict` field (`pending` → `accepted`, 8 rows) | unchanged spend | yes |
+
+Plain-English consequence of the edit-list removal: the 21-ms AAC priming is now played instead of skipped, so the audio track is 0.021 s longer than the video and every sound lands ≈ 21 ms (two-thirds of a frame) later than before. Not perceptible; noted so the record is exact.
+
+## R2. Per-defect result (frames in `qa/checker/round1/`)
+
+| id | Defect (round 0) | Result | Frame relied on | What this session saw |
+|---|---|---|---|---|
+| D-1 | edit lists in the container | **FIXED** | box walk (R1) | 0 `elst`; duration 30.021 s inside tolerance; loudness unchanged |
+| D-2 | raised flag hidden behind checklist + `LEVEL CLEAR!` | **FIXED** | `t27.40.png`, `t27.55.png`, `grid-b.png` | the checklist is gone by 27.0 s; the flag sits at the top of the pole against clear facade at 27.4 s and stays visible with `LEVEL CLEAR!` below it at 27.55 s; the pole is now behind the owner, who stands idle at it |
+| D-3 | projectile a plain square | **FIXED** | `tick-zoom.png` (18.55 s and 20.15 s at 4×) | a cyan tick glyph with a dark shadow, ≈ 20 px — shape correct; still a small mark at phone size (expected) |
+| D-4 | phone falls and vanishes; owner never holds it | **FIXED** | `t17.80.png`, `t18.55.png` | a RentOk-blue phone with the wordmark is beside the owner's raised hand from 17.6 s through the `POWER UP!` beat (INFERRED: reads as "held out" rather than gripped — the sprite's hand is closed — but the app is now on screen for ≈ 2 s, not 0.3 s) |
+| D-5 | red register flickers between run poses | **FIXED** | `t21.00.png` (run-A), `grid-b.png` bottom-right (21.13 s, run-B) | the book is visible in both run poses; in run-B it sits behind the arm |
+| D-6 | all clears the same scale-and-fade | **FIXED** | `t20.45.png` (wall → tile debris), `t21.65.png` (sack → debris), `t24.05.png` (ledger tower → one blue dashboard card with a green tick), `t25.25.png` (tickets mid-blend) | the four clears now differ as the board describes. At 25.25 s the tickets are olive (the red→green mid-blend the Controller asked about) with the angry faces still on them for ≈ 0.15 s; INFERRED harmless, a transient |
+| D-7 | empty lower band | **FIXED** (per the Controller's addendum) | `t21.40.png`, `full-frames.png`, `contact.png` all gameplay frames | kerb slab with yellow dashes, two wheel tracks, drain grate, manhole, and a wheeled silhouette every few seconds as a nearer parallax layer; nothing critical placed there; the band is no longer blank. INFERRED: the "scooter" reads more as a small hand-cart at phone size; it does its job as texture |
+| D-8 | faint seam around the wordmark on the end card | **REGRESSED — new defect D-11** | `t29.90.png`, `t27.75.png`, `full-frames.png` | the seam is gone because the whole end card is now **black**, not brand blue. OBSERVED: background pixels (0,0,0) at four corners and centre of the 29.90-s frame; v1's were (0,54,254). Cause OBSERVED in `tools/render_game.py` line 401: the fill samples pixel (100,100) of the logo file, and that pixel is fully transparent — the card's rounded corner — so the sampled colour is black. The producer's §9 line "end-card fill sampled from the logo file's own card colour (#0239FF)" is therefore not what the file contains, and the 27.6–27.9 s freeze now dims to black instead of "to brand blue" (board F11). The brand card, CTA and URL remain legible (white on black) and inside the safe box, so no A-item fails; the close-on-brand-colour decision in the board is no longer honoured |
+| D-9 | full-frame hit flashes | **FIXED** | `t3.35.png` | the flash is on the character silhouette only; the world stays in colour |
+| D-10 | record mismatches | **FIXED** | `ATTEMPTS.jsonl`, `JOB.yaml` | verdicts `accepted` on all 8 rows with a dated note; `frozen_asset` carries the sheet's sha256; `checker_inspected: true` citing §4 above |
+
+**New defect introduced by the repair**
+
+| id | Defect | Stage | One repair | USD |
+|---|---|---|---|---|
+| **D-11** | End card and the 0.3-s freeze-dim are black instead of brand blue (regression of the D-8 fix; record §9 says the fill is #0239FF, the file says #000000) | 5 (renderer, one line) | sample an opaque pixel of the logo card (e.g. the card centre, alpha 255) or hard-code `#0239FF`; re-render F11 only, re-run gates, re-hash, re-check the 29.9-s frame's background pixel by code | 0 |
+
+Nothing else regressed: the first-half beats, the cheat panel, the tenant tag (22.6–23.2 s), the chips and the HUD are unchanged on the new contact sheet.
+
+## R3. Verdict after repair round 1
+
+**DELIVERABLE WITH DEFECTS** — one defect, D-11 (black end card). Nine of the ten round-0 defects are fixed and verified on the file; the tenth (D-8) was replaced by a worse version of itself. All eleven A-items still pass (A10 the customer's). The film can be presented as-is if the Controller accepts a black close instead of the brand-blue close the board specified; otherwise D-11 is a one-line renderer fix and a re-render.
+
+**Two most likely customer-rejection reasons, as now seen:** (1) the last 2.4 s close on black rather than the brand colour — the one frame a customer will freeze on looks unfinished next to the blue wordmark card, and the freeze-to-black before it reads as a fade-out rather than a brand hand-over; (2) the transformation is still small at phone size — the phone item, the tick projectiles and the fleeing tenant are 20–60 px marks on a 360-px-wide screen; the words carry the story more than the pictures do.
+
+## R4. USD-0 commands this round
+
+`shasum -a 256`; `ffprobe` (format + both streams); a Python box-tree walk counting `elst`; `ffmpeg -af ebur128=peak=true`, `silencedetect`; `ffmpeg -vf fps=2` contact sheet and single-frame extraction at 3.35 / 17.80 / 18.55 / 20.15 / 20.45 / 21.00 / 21.13 / 21.40 / 21.65 / 24.05 / 25.25 / 27.00 / 27.40 / 27.55 / 27.75 / 29.90 s; Pillow pixel reads of the end-card background in v1 and the new file and of the logo file at (100,100); `git diff --stat e12613f f1174f8` on the ledger, attempts and board; `grep`/`sed` over `tools/render_game.py` and `qa/final-v5-audio/DET-RESULTS.json`.
