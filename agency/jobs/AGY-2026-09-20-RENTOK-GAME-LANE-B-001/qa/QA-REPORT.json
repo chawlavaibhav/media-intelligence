@@ -1,0 +1,187 @@
+{
+ "container": {
+  "status": "PASS",
+  "duration_s": 30.0,
+  "bit_rate": "3786746",
+  "size_bytes": "14200299",
+  "checks": {
+   "width_1080": true,
+   "height_1920": true,
+   "h264": true,
+   "profile_high": true,
+   "yuv420p": true,
+   "fps_30": true,
+   "aac": true,
+   "aac_48k": true,
+   "stereo": true,
+   "duration_29.5_30.5": true,
+   "size_lt_4GB": true,
+   "moov_before_mdat": true
+  }
+ },
+ "safezone": {
+  "status": "PASS",
+  "placements_checked": 4974,
+  "failures": [],
+  "safe_box": [
+   65,
+   269,
+   1015,
+   1248
+  ]
+ },
+ "disjoint": {
+  "status": "PASS",
+  "frames_checked": 900,
+  "failures": [],
+  "min_gap_px": 12
+ },
+ "copy": {
+  "status": "PASS",
+  "deck_strings": 20,
+  "mismatches": [],
+  "contrast_min_ratio": 6.927,
+  "gate_failures": []
+ },
+ "claims": {
+  "status": "PASS",
+  "forbidden_hits": [],
+  "unpermitted_product_strings": [],
+  "permitted_used": {
+   "TENANT: VERIFIED": "PC1d",
+   "RENTOK MODE: ON": "brand",
+   "DUES VISIBLE": "PC3a",
+   "Get the app": "PC6a",
+   "REPORTS: DONE": "PC4a",
+   "AUTOPAY: ON": "PC2a",
+   "RENTOK MODE: OFF": "brand",
+   "CHEAT CODE: INSTALL RENTOK": "PC7",
+   "TICKETS RESOLVED": "PC5a+PC5c"
+  }
+ },
+ "prompts": {
+  "status": "PASS",
+  "hits": [],
+  "files": [
+   "A1-character-sheet.txt",
+   "A2-obstacles.txt",
+   "A3-world-plate.txt"
+  ]
+ },
+ "vo_schedule": {
+  "status": "PASS",
+  "lines": [
+   {
+    "id": "V1",
+    "start_s": 11.9,
+    "duration_s": 2.645,
+    "end_s": 14.545
+   },
+   {
+    "id": "V2",
+    "start_s": 14.7,
+    "duration_s": 2.219,
+    "end_s": 16.919
+   },
+   {
+    "id": "V3",
+    "start_s": 26.700000000000003,
+    "duration_s": 2.731,
+    "end_s": 29.431
+   }
+  ],
+  "gate": {
+   "status": "PASS",
+   "lines": [
+    "V1",
+    "V2",
+    "V3"
+   ],
+   "film_end_s": 29.8,
+   "min_gap_s": 0.1,
+   "last_line_ends_s": 29.431
+  }
+ },
+ "loudness": {
+  "status": "PASS",
+  "integrated_lufs": -14.4,
+  "true_peak_dbtp": -2.2,
+  "lra_lu": 4.4,
+  "target": "I -14 \u00b11, TP \u2264 -1 (our own target, Stage 2 \u00a72.6)"
+ },
+ "frames": {
+  "status": "SAMPLED",
+  "sampled_timestamps": [
+   0.0,
+   0.5,
+   1.0,
+   1.5,
+   2.0,
+   2.5,
+   3.0,
+   3.5,
+   4.0,
+   4.5,
+   5.0,
+   5.5,
+   6.0,
+   6.5,
+   7.0,
+   7.5,
+   8.0,
+   8.5,
+   9.0,
+   9.5,
+   10.0,
+   10.2,
+   10.5,
+   10.6,
+   11.0,
+   11.5,
+   12.0,
+   12.5,
+   13.0,
+   13.5,
+   14.0,
+   14.4,
+   14.5,
+   14.8,
+   15.0,
+   15.5,
+   16.0,
+   16.5,
+   17.0,
+   17.5,
+   18.0,
+   18.5,
+   19.0,
+   19.5,
+   20.0,
+   20.5,
+   21.0,
+   21.5,
+   22.0,
+   22.5,
+   23.0,
+   23.5,
+   24.0,
+   24.5,
+   25.0,
+   25.5,
+   26.0,
+   26.5,
+   27.0,
+   27.5,
+   27.6,
+   28.0,
+   28.5,
+   29.0,
+   29.5,
+   29.9
+  ],
+  "count": 66,
+  "contact_sheet": "gen/final/CONTACT-SHEET.png",
+  "keyframes": "gen/final/KEYFRAMES.png",
+  "text_hygiene_detector": "NOT_RUN (Cloud Vision not authorised); human-eye pass by the independent inspector over qa/frames/*"
+ }
+}

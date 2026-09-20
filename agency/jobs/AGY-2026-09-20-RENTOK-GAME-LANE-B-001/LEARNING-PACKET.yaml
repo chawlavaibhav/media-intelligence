@@ -1,0 +1,66 @@
+# LEARNING-PACKET — AGY-2026-09-20-RENTOK-GAME-LANE-B-001 (lane B). PRODUCTION-WORKFLOW.md §14. Raw material for /media-agency-sync;
+# nothing here edits Canon, the Registry, routing files or Controller state. Five kinds kept apart.
+schema: LEARNING-PACKET-v1 (job-local)
+source_main_sha: 4d919c9df6c9725a2f14c411771565bb09089876
+classification: customer_work
+brief_ref: brief.verbatim (JOB.yaml) / input/01-CUSTOMER-BRIEF-FROZEN.md
+production_status_at_packet: pending_human_review   # the packet is written before the verdict so the record exists whatever the verdict
+accepted_assets: []                                     # filled on ACCEPT; candidate: gen/final/rentok-game-lane-b-9x16-30s.mp4 sha256 d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1
+candidate_deliverable: {path: gen/final/rentok-game-lane-b-9x16-30s.mp4, sha256: d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1, duration_s: 30.000, geometry: 1080x1920}
+routes_attempted:
+  - {cell: AUD-TTS/sarvam-bulbul-v3+native, calls: 3, ok: 3, accepted: 3}
+  - {cell: AUD-TTS/elevenlabs-v3-direct+native, calls: 3, ok: 2, failed: 1 (per-key quota), accepted: 0}
+  - {cell: "gemini-tts (job-local pin, no Registry cell)", calls: 3, ok: 2, failed: 1 (PROHIBITED_CONTENT refusal), accepted: 0}
+  - {cell: "gemini-3.1-flash-lite transcription (job-local pin, QA only)", calls: 8, ok: 7, failed: 1 (local fault, never sent)}
+  - {cell: IMG-CORE/nano-banana-2, calls: 7, ok: 7, accepted: 7 (producer; inspector pending)}
+  - {cell: MUS/lyria+native, calls: 1, ok: 1, used: 1}
+paid_attempts: {count: 25, usd_reserved: 0.58675, usd_settled_known: "about 0.0045 (Gemini routes only)", failed: 3, hidden_retries: 0}
+rejected_attempts:
+  - {id: att-006, why: "ElevenLabs per-key quota exceeded on the longest line (11 credits left on the key; account showed 9,054 characters free)"}
+  - {id: att-013, why: "Gemini TTS refused the line RentOk mode on as PROHIBITED_CONTENT (no reason given)"}
+  - {id: att-016, why: "local fault: my tool reserved a transcription before checking the input existed; nothing sent"}
+  - {id: "att-004/005/012/014", why: "audition candidates not selected (B incomplete, C incomplete; A complete and verbatim)"}
+human_verdicts: []                                      # pending (the customer, blind, via the Controller; A1-A11 + B-E)
+repairs:
+  - {id: R1, class: compositor, cost_usd: 0, what: "card font Condensed Bold (width); CTA/label/score positions"}
+  - {id: "R2/R2b", class: audio, cost_usd: 0, what: "true-peak limiter after loudnorm; AAC overshoot headroom"}
+  - {id: "R3/R4", class: compositor, cost_usd: 0, what: "name tag fixed at ground; cheat bar raised"}
+  - {id: "R5/T1", class: infrastructure, cost_usd: 0, what: "QA duplicate-record artefact; dispatcher file-existence check"}
+known_cost_usd: "0.58675 (upper bound; vendor statements not reconciled)"
+ttao_hms: "1:05:35 to qa_complete (job_start 18:12:53Z -> qa_complete 19:18:28Z); human decision pending"
+versions_and_cycles: {versions: "1 (one candidate presented)", cycles: "0 (no human review yet)"}
+observed_failures:
+  - "ElevenLabs: a per-API-key quota (1,000 credits) is separate from the account character limit the subscription endpoint reports; the balance read was misleading"
+  - "Gemini TTS refused a 16-character brand line as PROHIBITED_CONTENT (n=1)"
+  - "Runtime compositor gates caught four real layout defects on the first render (a 1031-px card, a CTA 1 px outside the safe box, two 3-10 px overlaps) and one audio defect (TP +0.6 dBTP) before any human saw the film"
+  - "AAC encoding overshoots the WAV true peak by ~1.9 dB at 192 kbps; loudnorm alone did not deliver TP <= -1"
+  - "The model's four 'run cycle' cells differed only slightly in leg phase (identity perfect); motion had to come from code bob/tilt"
+root_cause_classes:
+  - {failure_ref: att-006, class: "infrastructure (pool reading incomplete: per-key quota not exposed)"}
+  - {failure_ref: att-013, class: "provider_refusal (model policy), n=1"}
+  - {failure_ref: att-016, class: "pipeline (tool ordering: reserve before input check)"}
+  - {failure_ref: R1-R4, class: "compositor (caught by gates; no human-visible defect shipped)"}
+  - {failure_ref: R2b, class: "audio (encoder overshoot; measure the final container, not the WAV)"}
+directional_model_observations:                          # routing_authority: none; n as stated
+  - {route: nano-banana-2 (Gemini API), n: 7, accepted: 7, observation: "a 3x3 nine-pose sprite sheet held one identity in one draw with no lettering on a flat magenta ground; five two-panel creature/cleared-state pairs and one textless 16:9 street plate were all clean on the first draw; explicit 'no text/digits/signs' clauses were honoured (contrast RO-04 case 001 r1). Run-cycle leg-phase variation was weak."}
+  - {route: lyria-002, n: 1, ok: 1, observation: "a neutral 'upbeat 8-bit chiptune' prompt returned 32.77 s without error (RO-09's wording sensitivity not triggered); musical content not yet judged by ear"}
+  - {route: sarvam bulbul:v3 aditya en-IN, n: 3, observation: "three short announcer lines, verbatim on transcript, 2.2-2.7 s each; register by ear pending"}
+  - {route: elevenlabs eleven_v3 Daniel, n: 3, observation: "two lines verbatim; the third refused by a per-key quota"}
+  - {route: gemini-3.1-flash-tts-preview Puck, n: 3, observation: "two lines verbatim (3.2 s each, slower than Sarvam); one refused as PROHIBITED_CONTENT"}
+  - {route: gemini-3.1-flash-lite audio transcription, n: 7, observation: "all seven short clips transcribed consistently; brand name rendered as 'rent okay' / 'Rent OK'"}
+candidate_patterns:
+  - {id: SPRITE_SHEET_SINGLE_DRAW, pattern: "for a character that must hold identity across many beats, draw all poses in ONE image on a keyable ground and animate by code; consistency by construction instead of reference-image routes", observed: "worked once (att-018); n=1"}
+  - {id: WORLD_AT_LOWRES_TEXT_AT_FULLRES, pattern: "compose the generated world at 1/k resolution and nearest-upscale (unified retro texture across assets from separate draws), draw exact text crisp at full resolution", observed: "worked once; n=1"}
+  - {id: MEASURED_VO_DRIVES_TIMELINE, pattern: "board slots are maxima; the code timeline reads measured VO durations and grows/shrinks holds under a minimum-hold rule (check_vo_schedule)", observed: "worked once; two slots grew by 1.0/0.8 s"}
+  - {id: PER_KEY_QUOTA_READ, pattern: "a pool reading must include per-key quotas, not only the account balance", observed: "att-006"}
+  - {id: "SPEAKER_MICROQUALIFICATION (existing candidate, case 001)", observed: "applied to a character sheet instead of a speaker: one gated draw, then dependents — second real production using it"}
+candidate_engineering_changes:
+  - {change: "dispatcher: check every input file before reserving", closes: "att-016 (T1)"}
+  - {change: "loudness gate must measure the FINAL container (AAC), and the mixer must leave encoder headroom or measure-and-iterate", closes: "R2/R2b"}
+  - {change: "pool reading for ElevenLabs: also read the key's quota (or dry-probe) before planning on it", closes: "att-006"}
+  - {change: "QA layout log: dedupe identical records per frame", closes: "R5"}
+  - {change: "PriceBook: pool labels for sarvam/elevenlabs read 'cash' while the Controller ruling and routing table say credits (roster labelling)", closes: "REOPEN 2 (recorded, not fixed here)"}
+canon_gaps: []                                          # no production failure was caused by missing Canon; the animation/game-craft gap was bridged by genre convention without incident
+no_promotion_items:
+  - "the specific palette, sizes and positions of this film (job-specific)"
+  - "the obstacle designs (job-specific creative)"

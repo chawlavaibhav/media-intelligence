@@ -1,0 +1,11 @@
+# Regenerable build products of this job (deterministic from the committed inputs; see stages/05-EXECUTION-AND-VERIFICATION.md).
+# The deliverable, every paid artifact, the ledger/attempts, sprites, render/mix reports and the QA report ARE committed.
+# gen/text = hb-view glyph cache (tools/text_render.py); gen/render/preview_* = preview frames;
+# gen/render/video_silent.mp4 = intermediate silent render (re-made byte-identical by tools/render_film.py);
+# gen/audio/mix_*.wav = intermediate mixes; qa/frames = the 66 sampled frames, re-extracted by tools/qa_checks.py from the final mp4.
+gen/text/
+gen/render/preview_*.png
+gen/render/video_silent.mp4
+gen/audio/mix_raw.wav
+gen/audio/mix_norm.wav
+qa/frames/
