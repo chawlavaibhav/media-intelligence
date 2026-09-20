@@ -254,6 +254,86 @@ def lyria(asset_id: str, prompt: str, out: Path, negative: str | None = None, is
     return rec
 
 
+# ── Job-local price pins (NO Registry cell): source/pins/gemini-api-pricing.html, sha256 a3c3588a…7a5b, fetched 2026-09-20 (see fetched_utc.txt) ──
+class _LocalQuote:
+    """A job-local price pin for a Gemini API route the roster does not carry. Reservation = an UPPER BOUND from the pinned
+    per-token prices; settled from usageMetadata after the call."""
+    def __init__(self, unit: str, unit_price: str, quantity: str, expected: float):
+        self.priced = True; self.unit = unit; self.unit_price = unit_price; self.quantity = quantity
+        self.quantity_unit = unit; self.billing_pool = "credits"; self.expected_cost_usd = round(expected, 6)
+
+
+def _gemini_generate(model: str, body: dict, timeout: int = 180):
+    return C.http_json("POST", f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+                       {"x-goog-api-key": C.key("GOOGLE_API_KEY")}, body, timeout=timeout)
+
+
+def transcribe(asset_id: str, audio: Path, out: Path, model: str = "gemini-3.1-flash-lite", is_repair=False) -> dict:
+    """QA transcription of a short audio file (D10 'triage transcript'). Pin: gemini-3.1-flash-lite USD 0.50 / 1M audio tokens in,
+    USD 1.50 / 1M tokens out (pricing page). Upper bound reserved: 4,000 audio tokens + 300 out = USD 0.00245."""
+    route_key = "gemini-3.1-flash-lite-transcribe"; ROUTES[route_key] = (model, "gemini_api", "credits")
+    if not Path(audio).exists():
+        sys.exit(f"REFUSED: {audio} does not exist; nothing reserved, nothing sent (tool fix after att-016)")
+    q = _LocalQuote("per_1M_tokens (audio in 0.50 / out 1.50)", "0.50 in / 1.50 out", "<= 4000 audio tokens + 300 out", 4000 / 1e6 * 0.5 + 300 / 1e6 * 1.5)
+    aid = next_attempt_id(); reserve(aid, asset_id, route_key, q, is_repair)
+    b, mime = C.b64file(audio)
+    prompt = "Transcribe this audio verbatim. Output only the spoken words with punctuation, nothing else."
+    body = {"contents": [{"parts": [{"text": prompt}, {"inlineData": {"mimeType": mime, "data": b}}]}],
+            "generationConfig": {"temperature": 0}}
+    rec = base_rec(aid, asset_id, route_key, q, prompt, out, is_repair, {"model": model, "audio": audio.name})
+    t0 = time.time()
+    st, reply = _gemini_generate(model, body)
+    if st != 200:
+        return failure(rec, http_status=st, message=str(reply), status=f"http_{st}")
+    text = ""
+    for cand in reply.get("candidates") or []:
+        for part in (cand.get("content") or {}).get("parts") or []:
+            text += part.get("text", "")
+    out.parent.mkdir(parents=True, exist_ok=True); out.write_text(text.strip() + "\n")
+    usage = reply.get("usageMetadata") or {}
+    rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="ok", artifact_sha256=sha256(out), transcript=text.strip(),
+               provider_meta={"usage": usage},
+               settled_usd=round((usage.get("promptTokenCount", 0) / 1e6) * 0.5 + (usage.get("candidatesTokenCount", 0) / 1e6) * 1.5, 6))
+    record(rec); settle(aid, "ok", f"transcript {len(text)} chars; usage {usage}"); print(f"[transcribe] {audio.name}: {text.strip()!r}")
+    return rec
+
+
+def gemini_tts(asset_id: str, text: str, out: Path, voice: str, style: str, model: str = "gemini-3.1-flash-tts-preview", is_repair=False) -> dict:
+    """Candidate C voice (allowed by the Controller ruling; NO Registry cell). Pin: USD 1.00 / 1M text tokens in, USD 20.00 / 1M audio
+    tokens out (pricing page). Upper bound reserved: 480 audio tokens (15 s at 32 tok/s) + input."""
+    import wave
+    route_key = "gemini-tts"; ROUTES[route_key] = (model, "gemini_api", "credits")
+    q = _LocalQuote("per_1M_audio_tokens_out (+ text in)", "20.00 out / 1.00 in", f"<= 480 audio tokens + {len(text)} chars", 480 / 1e6 * 20.0 + (len(text) / 4) / 1e6 * 1.0)
+    aid = next_attempt_id(); reserve(aid, asset_id, route_key, q, is_repair)
+    body = {"contents": [{"parts": [{"text": f"{style}\n\n{text}"}]}],
+            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}
+    rec = base_rec(aid, asset_id, route_key, q, text, out, is_repair, {"voice": voice, "style": style, "model": model})
+    t0 = time.time()
+    st, reply = _gemini_generate(model, body)
+    if st != 200:
+        return failure(rec, http_status=st, message=str(reply), status=f"http_{st}")
+    data = None; mime = ""
+    for cand in reply.get("candidates") or []:
+        for part in (cand.get("content") or {}).get("parts") or []:
+            if part.get("inlineData", {}).get("data"):
+                data = base64.b64decode(part["inlineData"]["data"]); mime = part["inlineData"].get("mimeType", ""); break
+        if data: break
+    if not data:
+        return failure(rec, message=f"no audio; {reply.get('promptFeedback')}", status="refusal_or_empty")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    if "pcm" in mime.lower() or "l16" in mime.lower():
+        rate = int(next((kv.split("=")[1] for kv in mime.split(";") if kv.strip().startswith("rate=")), "24000"))
+        with wave.open(str(out), "wb") as w:
+            w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate); w.writeframes(data)
+    else:
+        out.write_bytes(data)
+    usage = reply.get("usageMetadata") or {}
+    rec.update(end=now(), latency_s=round(time.time() - t0, 1), status="ok", artifact_sha256=sha256(out), mime=mime, provider_meta={"usage": usage},
+               settled_usd=round((usage.get("candidatesTokenCount", 0) / 1e6) * 20.0 + (usage.get("promptTokenCount", 0) / 1e6) * 1.0, 6))
+    record(rec); settle(aid, "ok", f"{mime} {len(data)} bytes -> {out.name}; usage {usage}"); print(f"saved {out} in {rec['latency_s']} s; usage {usage}")
+    return rec
+
+
 def summary():
     print(f"CAP_USD {CAP_USD:.2f}; reserved USD {ledger_reserved():.4f}; remaining USD {CAP_USD - ledger_reserved():.4f}")
     if ATTEMPTS.exists():
