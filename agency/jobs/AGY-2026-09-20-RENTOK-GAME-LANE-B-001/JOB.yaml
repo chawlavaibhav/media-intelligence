@@ -32,10 +32,51 @@ brief:
     - {role: prior_creative, path: source/rentok-snapshot/, sha256: "see SHA256SUMS.txt", depicts_identifiable_person: false, consent_ref: null, note: frozen rentok.com snapshot (4 pages), the product-fact source}
 
 # ── 2. INTAKE (filled at Stage 1) ─────────────────────────────────────────────
-intake: {}
+intake:
+  commercial_objective: "Make a PG/hostel owner recognise their own five daily problems inside a platform game and see installing the RentOK app as the turning point; viewer action = get/install the app (Stage 1 §1.2, decided)."
+  audience: "PG / hostel / co-living owners and managers in India (site: 'For Managers', 'PG, Flat & Co-Living Owners who trust RentOk', home.txt 39/120)"
+  channel: "Instagram Reels / Facebook (Reels) and YouTube Shorts — customer words; organic placement assumed (Stage 1 D10)"
+  deliverable_type: multi_shot_story              # nearest registry kind (runtime/contracts/DELIVERABLE-KINDS.yaml); a 30-s game film is longer than the kind's 10-15 s note — recorded, not a limit
+  package: null                                   # customer_work in an experiment; no Upwork package mapping
+  dimensions_aspects: ["9:16 (pixels from Stage 2 lookup; A8 expects 1080x1920)"]
+  count: 1
+  product_reference_assets: [source/rentok-snapshot/]
+  mandatory_text:                                 # values frozen at Stage 3 (copy deck); roles fixed here
+    - {role: brand_line, value: "RentOK|RentOk — spelling decided at Stage 2", script: latin, may_reflow: false, placement: overlay}
+    - {role: code, value: "cheat-code line containing INSTALL + the brand name — exact string at Stage 3", script: latin, may_reflow: false, placement: overlay}
+    - {role: headline, value: "five obstacle labels (<= 3 words each) — Stage 3", script: latin, may_reflow: false, placement: overlay}
+    - {role: cta, value: "install/get-the-app line — Stage 3", script: latin, may_reflow: false, placement: overlay}
+  offer: null
+  cta: "install / get the RentOK app (words at Stage 3)"
+  language: [en]
+  brand_constraints: {colours: ["from the site at Stage 2 (theme-color #0038FF observed in home.html)"], fonts: [], tone: "arcade, warm, quick (Stage 1 D4)", forbidden: ["testimonial / generic SaaS / lifestyle structure", "guaranteed rent recovery", "prevents tenants leaving", "eliminates all problems", "any Nintendo character/asset/melody", "any uncited product capability", "tool/model names on screen"]}
+  duration_s: 30
+  deadline: "none stated (experiment); Controller-run"
+  spend_ceiling_stated: "Provisional USD 10.00 for this lane (task brief), credits only, 0 hidden retries, hard stop — UNCONFIRMED; confirmed cap comes from the Controller in writing"
+  assumptions:
+    - "D1 brand spelling decided at Stage 2 from the snapshot"
+    - "D2 on-screen English; spoken en/hi-en or none (Stage 3)"
+    - "D3 ask = install/get the app"
+    - "D4 tone arcade/warm/quick"
+    - "D5 audio design at Stage 3"
+    - "D6 power-up is an arcade device, not a realistic firearm"
+    - "D7 exactly the five named obstacles"
+    - "D8 obstacle->capability mapping at Stage 2"
+    - "D9 one master file for all platforms unless Stage 2 proves otherwise"
+    - "D10 organic placement"
+  questions_asked: []                             # the customer is not asked anything further (Controller note)
 
 # ── 2b. NORMALIZED REQUEST (filled at Stage 1) ───────────────────────────────
-nr: {}
+nr:
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: generate
+  entities: [logo, scene]                         # brand mark + an original game world; no product photo, no person
+  text_requirements: "mirrors intake.mandatory_text (brand line, cheat-code line, five obstacle labels, CTA) — all latin, overlay, code-set"
+  language_topology: [en]
+  market: IN
+  advertising_acceptance_intent: true
+  ambiguity_markers: ["'and so on' after the five named problems (resolved: exactly five, D7)", "'gun sort of power/immunity' (resolved: arcade device, D6)"]
 
 # ── 3. TEMPLATE / LEARNING FIRST (filled at Stage 3/4) ───────────────────────
 template: {}
