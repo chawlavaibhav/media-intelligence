@@ -1,0 +1,99 @@
+# AGY-2026-09-20-RENTOK-GAME-LANE-B-001 — job record (AGENCY-JOB-v1, from JOB-TEMPLATE.yaml).
+# Lane B of the two-lane RentOK experiment. Filled stage by stage; timestamps from `date -u`, never reconstructed.
+schema: AGENCY-JOB-v1
+
+job_id: AGY-2026-09-20-RENTOK-GAME-LANE-B-001
+class: customer_work
+production_base_sha: 4d919c9df6c9725a2f14c411771565bb09089876
+branch: work/agency-job-rentok-game-lane-b-001
+skill_version: 7e324b0f75658498b62802332504519b9d542996
+opened_by: lane-B producer session (Controller-supervised experiment)
+production_status: open
+learning_status: not_started
+sync:
+  case_id: null
+  integration_branch: null
+  integration_pr: null
+  merge_commit: null
+
+brief:
+  received_utc: "2026-09-20T18:00:45Z"     # the Controller's frozen-brief / snapshot fetch time (fetched_utc.txt); the brief file is the input of record
+  source: chat                              # received by the Controller in chat; frozen into input/01-CUSTOMER-BRIEF-FROZEN.md
+  verbatim: |
+    "I want to make a video for RentOK. The video has a Mario game. The player is basically a PG owner. The obstacles in the game are basically the problems that owner faces — tenant verification, collecting rent, tenants leaving without paying rent, no place to do reconciliation, solving complaints and so on.
+    The game also introduces a cheat code — install RentOK app.
+    Once it is done, Mario gets a gun sort of power/immunity. It runs and kills all the obstacles and gets the flag."
+    (Customer-confirmed Stage 1 answers and the "intent that must be preserved" block: input/01-CUSTOMER-BRIEF-FROZEN.md, verbatim there.)
+  attachments:
+    - {role: other, path: input/01-CUSTOMER-BRIEF-FROZEN.md, sha256: null, depicts_identifiable_person: false, consent_ref: null, note: frozen customer brief}
+    - {role: other, path: input/02-CHATGPT-DIRECTION-LANE-B-ONLY.md, sha256: null, depicts_identifiable_person: false, consent_ref: null, note: PROPOSED creative direction from the customer side; not a requirement}
+    - {role: other, path: input/03-ACCEPTANCE-CONTRACT.md, sha256: null, depicts_identifiable_person: false, consent_ref: null, note: common acceptance contract A1-A11}
+    - {role: other, path: input/04-QUESTION-TEMPLATE-v0.1-FROZEN.md, sha256: null, depicts_identifiable_person: false, consent_ref: null, note: five-stage question template}
+    - {role: prior_creative, path: source/rentok-snapshot/, sha256: "see SHA256SUMS.txt", depicts_identifiable_person: false, consent_ref: null, note: frozen rentok.com snapshot (4 pages), the product-fact source}
+
+# ── 2. INTAKE (filled at Stage 1) ─────────────────────────────────────────────
+intake: {}
+
+# ── 2b. NORMALIZED REQUEST (filled at Stage 1) ───────────────────────────────
+nr: {}
+
+# ── 3. TEMPLATE / LEARNING FIRST (filled at Stage 3/4) ───────────────────────
+template: {}
+
+# ── 4. CANON (filled at Stage 3) ─────────────────────────────────────────────
+canon: {}
+
+# ── 5. CREATIVE BLUEPRINT (filled at Stage 3) ────────────────────────────────
+blueprint: {}
+
+# ── 6–7. PRODUCTION PLAN + ROUTES (filled at Stage 4) ────────────────────────
+plan: {}
+
+# ── 8–9. SPEND ───────────────────────────────────────────────────────────────
+spend:
+  cap: null                # REQUIRED before any paid call. Provisional planning ceiling USD 10.00 (task brief), UNCONFIRMED; CAP_USD = 0.0 in tools/dispatch.py until the Controller's written cap arrives
+  cap_lineage: []
+  pool_readings: []
+  attempts: []
+  total_reserved_usd: 0
+  total_settled_usd: null
+  cap_remaining_usd: null
+
+qa:
+  pre_dispatch: {}
+  post_draw: []
+  composition: []
+  video_frames: []
+  final_geometry: []
+  voice_continuity: {applies: null, assembly: null, clips: [], narrator_identity_same: null, accent_timbre_compatible: null, cadence_continuous: null, boundary_holes_or_restarts: null, per_clip_transcripts_match: null, human_ear_verdict: null}
+  delivery: {}
+  defects: []
+
+versions: []
+outcome:
+  status: null
+  accepted_version: null
+  accepted_by: null
+  assets: []
+  delivery_note_path: null
+  delivered_utc: null
+
+ttao:
+  job_start_utc: "2026-09-20T18:12:53Z"
+  planning_complete_utc: null
+  dispatch_start_utc: null
+  dispatch_end_utc: null
+  artifact_received_utc: null
+  qa_complete_utc: null
+  human_review_requested_utc: null
+  human_decision_utc: null
+  accepted_utc: null
+kpis:
+  cpao_usd: null
+  ttao_hms: null
+  human_review_cycles: null
+  versions_to_acceptance: null
+  baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml
+  baseline_values_read: {ttao: null, cpao_usd: null, cycles: null, versions: null}
+
+learning_packet: {}
