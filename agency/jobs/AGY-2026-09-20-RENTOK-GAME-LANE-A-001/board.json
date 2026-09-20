@@ -1,0 +1,246 @@
+{
+ "schema": "BOARD-v1 (job-local)",
+ "fps": 30,
+ "canvas": [
+  1080,
+  1920
+ ],
+ "safe_box": [
+  65,
+  288,
+  888,
+  1248
+ ],
+ "ground_y": 1130,
+ "frames": [
+  {
+   "n": "F1",
+   "t0": 0.0,
+   "t1": 1.8,
+   "beat": "cold_open_mid_action",
+   "strings": [
+    "HUD_NAME",
+    "HUD_HEALTH_5",
+    "LEVEL"
+   ],
+   "mandatory": [
+    "M1",
+    "M2"
+   ]
+  },
+  {
+   "n": "F2",
+   "t0": 1.8,
+   "t1": 4.6,
+   "beat": "obstacle_1_tenant_verification",
+   "strings": [
+    "OBST_1",
+    "HUD_HEALTH_4"
+   ],
+   "mandatory": [
+    "M3"
+   ]
+  },
+  {
+   "n": "F3",
+   "t0": 4.6,
+   "t1": 7.4,
+   "beat": "obstacle_2_collecting_rent",
+   "strings": [
+    "OBST_2",
+    "HUD_HEALTH_3"
+   ],
+   "mandatory": [
+    "M3"
+   ]
+  },
+  {
+   "n": "F4",
+   "t0": 7.4,
+   "t1": 10.2,
+   "beat": "obstacle_3_left_without_paying",
+   "strings": [
+    "OBST_3",
+    "HUD_HEALTH_2"
+   ],
+   "mandatory": [
+    "M3"
+   ]
+  },
+  {
+   "n": "F5",
+   "t0": 10.2,
+   "t1": 12.6,
+   "beat": "obstacle_4_no_reconciliation",
+   "strings": [
+    "OBST_4",
+    "HUD_HEALTH_1"
+   ],
+   "mandatory": [
+    "M3"
+   ]
+  },
+  {
+   "n": "F6",
+   "t0": 12.6,
+   "t1": 15.0,
+   "beat": "obstacle_5_complaints_game_over",
+   "strings": [
+    "OBST_5",
+    "HUD_HEALTH_0",
+    "GAMEOVER"
+   ],
+   "mandatory": [
+    "M3"
+   ]
+  },
+  {
+   "n": "F7",
+   "t0": 15.0,
+   "t1": 18.0,
+   "beat": "cheat_code_install_rentok_turning_point",
+   "strings": [
+    "CHEAT_HDR",
+    "CHEAT_1",
+    "CHEAT_2",
+    "HUD_HEALTH_5"
+   ],
+   "mandatory": [
+    "M4"
+   ]
+  },
+  {
+   "n": "F8",
+   "t0": 18.0,
+   "t1": 19.6,
+   "beat": "power_up",
+   "strings": [
+    "POWERUP"
+   ],
+   "mandatory": [
+    "M5"
+   ]
+  },
+  {
+   "n": "F9.1",
+   "t0": 19.6,
+   "t1": 20.8,
+   "beat": "clear_1_verification",
+   "strings": [
+    "OBST_1",
+    "CHIP_1"
+   ],
+   "mandatory": [
+    "M6",
+    "M10"
+   ]
+  },
+  {
+   "n": "F9.2",
+   "t0": 20.8,
+   "t1": 22.0,
+   "beat": "clear_2_rent (HERO FRAME at 21.4 s)",
+   "strings": [
+    "OBST_2",
+    "CHIP_2"
+   ],
+   "mandatory": [
+    "M6",
+    "M10"
+   ],
+   "hero": true
+  },
+  {
+   "n": "F9.3",
+   "t0": 22.0,
+   "t1": 23.2,
+   "beat": "clear_3_left_without_paying",
+   "strings": [
+    "OBST_3",
+    "CHIP_3"
+   ],
+   "mandatory": [
+    "M6",
+    "M10"
+   ]
+  },
+  {
+   "n": "F9.4",
+   "t0": 23.2,
+   "t1": 24.4,
+   "beat": "clear_4_reconciliation",
+   "strings": [
+    "OBST_4",
+    "CHIP_4"
+   ],
+   "mandatory": [
+    "M6",
+    "M10"
+   ]
+  },
+  {
+   "n": "F9.5",
+   "t0": 24.4,
+   "t1": 25.6,
+   "beat": "clear_5_complaints",
+   "strings": [
+    "OBST_5",
+    "CHIP_5"
+   ],
+   "mandatory": [
+    "M6",
+    "M10"
+   ]
+  },
+  {
+   "n": "F10",
+   "t0": 25.6,
+   "t1": 27.6,
+   "beat": "flag_level_clear",
+   "strings": [
+    "CLEAR"
+   ],
+   "mandatory": [
+    "M6"
+   ]
+  },
+  {
+   "n": "F11",
+   "t0": 27.6,
+   "t1": 30.0,
+   "beat": "end_card_brand_cta",
+   "strings": [
+    "CTA_1",
+    "CTA_2",
+    "URL"
+   ],
+   "raster": [
+    "WORDMARK"
+   ],
+   "mandatory": [
+    "M10"
+   ]
+  }
+ ],
+ "brand_timeline": [
+  {
+   "t": 0.0,
+   "what": "WORDMARK chip in HUD top-right, persistent to 27.6"
+  },
+  {
+   "t": 15.8,
+   "what": "RENTOK APP typed in the cheat panel"
+  },
+  {
+   "t": 17.4,
+   "what": "phone item with WORDMARK enters the owner's hand, then a phone icon in the HUD"
+  },
+  {
+   "t": 27.6,
+   "what": "end card: WORDMARK large + CTA + URL"
+  }
+ ],
+ "install_event_t": 17.4,
+ "flag_reached_t": 26.6,
+ "powered_from_t": 17.4
+}
