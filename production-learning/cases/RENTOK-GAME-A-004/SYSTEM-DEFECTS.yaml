@@ -1,0 +1,69 @@
+# SYSTEM DEFECTS — case RENTOK-GAME-A-004.
+# The central finding: ZERO media-model failures reached a gate; every defect was in the code around the models
+# (compositor, assembly defaults, board fidelity, verification hygiene) and every one was closed at USD 0. The ones
+# promoted (promoted_as) are the ones a deterministic check would have caught and did not exist for.
+case_id: RENTOK-GAME-A-004
+classes:
+  media_model_failure: "the generation model produced something that does not meet the brief"
+  pipeline_failure: "the system around the model — compositor, assembly, QA coverage, records, orchestration — let a defect through or created one"
+  infrastructure_transient: "provider unavailable / refusal / quota; none occurred on this job (8/8 ok)"
+
+defects:
+  # ── promoted to code on this branch (class 1) ────────────────────────────────────────────────
+  - id: D-1
+    class: pipeline_failure
+    subsystem: deterministic_qa (container)
+    observed: "the first deliverable carried two `elst` (edit list) atoms — ffmpeg's defaults for the B-frame delay and AAC priming — while the lane's own platform spec row (Stage 2 §2.1, from the fetched YouTube/Meta pages) said none; DET-A8 passed the container on geometry, codec, size and moov-first"
+    root_cause: "the DET suite tested what was easy to read from ffprobe, not what the spec said; no check walked the MP4 box tree. The producer's 'DET-A8 container PASS' was therefore incomplete (checker §1.1)"
+    found_by: independent checker (box walk)
+    repair: "USD 0 re-mux (-use_editlist 0 +negative_cts_offsets); the producer added a box-walk check to tools/qa_checks.py"
+    not_a_model_failure: true
+    promoted_as: CONTAINER_EDIT_LIST_CHECK
+    deterministic_check: "runtime/loop/container.py assess_edit_lists — walks moov/trak/edts and refuses any elst; NOT-RUN without bytes"
+  - id: D-2
+    class: pipeline_failure
+    subsystem: compositor (occlusion between a hero graphic and text)
+    observed: "the raised flag — the customer's 'gets the flag' payoff — was hidden behind the checklist and `LEVEL CLEAR!` for 27.2–27.6 s; the board itself put both at y 540–666"
+    root_cause: "check_disjoint was run over text regions only; a non-text hero object behind or under text is invisible to it. Root is the board (creative_direction), but a deterministic occlusion check between declared critical graphics and text boxes would have refused the render"
+    found_by: independent checker (frames 27.40 / 27.55 s)
+    repair: "USD 0 — checklist fades out 26.6–27.0 s; pole drawn behind the owner"
+    not_a_model_failure: true
+    promoted_as: GRAPHIC_TEXT_DISJOINT
+    deterministic_check: "runtime/compositor/gates.py check_graphic_text_disjoint (shared with case 005 D-1/D-9)"
+  - id: D-11
+    class: pipeline_failure
+    subsystem: compositor (repair regression) + deterministic_qa (no colour check)
+    observed: "the repair for D-8 sampled pixel (100,100) of the logo raster — a fully transparent rounded corner — so the end card and the 0.3-s freeze-dim rendered black (0,0,0) instead of brand blue; the producer's repair statement (05-EXECUTION §9) said the fill was '#0239FF'; the file said #000000. Found by the checker's re-verification at four corners + centre of the 29.90-s frame"
+    root_cause: "two gaps: (a) no DET check measured the rendered end-card colour against the declared brand hex (C7 was a claim, not a measurement); (b) the repair statement quoted the intended value, not a measured pixel of the output — the author's own frame review missed it"
+    found_by: independent checker (re-verification R2)
+    repair: "USD 0 round 1b — colour hard-coded to the Stage-2 measurement (2,57,255); measured on the encoded 29.9-s frame at (540,1500) as (1,55,253)"
+    not_a_model_failure: true
+    promoted_as: BRAND_COLOUR_ON_RENDERED_FRAME
+    deterministic_check: "runtime/compositor/gates.py check_brand_colour — pixels sampled from the ENCODED frame within a per-channel delta of the declared hex; no samples = refusal"
+    process_rule_candidate: REPAIR_STATEMENT_QUOTES_MEASURED_VALUE   # class 2 — see PROMOTION-QUEUE.yaml
+
+  # ── closed at USD 0, not promoted as code (job-level compositor/board fidelity; candidates where noted) ──
+  - {id: R1, class: pipeline_failure, subsystem: creative_direction, observed: "animatic v1 play band cramped (ground 1130)", root_cause: "first layout guess; the animatic exists to find this", found_by: producer eye, repair: "ground 1180 (USD 0)", not_a_model_failure: true, promoted_as: null, candidate: ANIMATIC_BEFORE_SPEND}
+  - {id: R2a, class: pipeline_failure, subsystem: compositor, observed: "checklist chip backings overlapped, 171 frames", root_cause: "row pitch 48 < backing 62 px", found_by: "runtime check_disjoint over the layout log (USD 0, before any spend)", repair: "pad / pitch", not_a_model_failure: true, promoted_as: null, note: "the existing gate did its job — evidence for LAYOUT_LOG_GATES (candidate), not a new gate"}
+  - {id: R2b, class: pipeline_failure, subsystem: compositor, observed: "cheat-panel text left the safe box during slide-out, 33 frames", root_cause: "animated position not clamped", found_by: "runtime check_text_bounds over the layout log", repair: "panel fades in place", not_a_model_failure: true, promoted_as: null}
+  - {id: R2c, class: pipeline_failure, subsystem: compositor, observed: "chip flight start outside the safe box, 29 frames", root_cause: "flight origin unclamped", found_by: "check_text_bounds", repair: "origin clamped", not_a_model_failure: true, promoted_as: null}
+  - {id: R3, class: pipeline_failure, subsystem: compositor (cut-out), observed: "enclosed green pockets and the model's dark-green ground shadow survived the flood-fill key", root_cause: "keying by flood fill only; the model darkened its chroma green under each pose (RO-01)", found_by: producer eye on final v1, repair: "colour keying + chroma-shadow removal + fringe erosion (tools/cutout.py)", not_a_model_failure: true, promoted_as: null, candidate: KEYING_HELPER}
+  - {id: R4, class: pipeline_failure, subsystem: creative_direction, observed: "sprites read small at phone size", root_cause: "scale chosen on a desktop view", found_by: producer eye on final v2, repair: "+18 % / +15 %", not_a_model_failure: true, promoted_as: null, note: "the checker still called the sprites small at 360 px (§7); the customer did not"}
+  - {id: R5, class: pipeline_failure, subsystem: audio assembly, observed: "AAC true peak -0.4 / -0.3 dBTP after encoding a -2.6 dBTP wav (target ≤ -1)", root_cause: "codec overshoot on square-wave SFX ≈ 2 dB; loudness was first measured on the wav", found_by: "ebur128 on the encoded file", repair: "pre-encode true-peak target -4 dBTP → -2.0 dBTP delivered", not_a_model_failure: true, promoted_as: null, candidate: CODEC_TRUE_PEAK_MARGIN, cross_case: "case 005 R2/R2b saw the same ≈ 1.9 dB overshoot (n = 2 jobs)"}
+  - {id: F-05, class: pipeline_failure, subsystem: tooling, observed: "the first ebur128 regex read the running 'I:' line (-70 LUFS at t=0) instead of the summary", root_cause: "parser matched the first occurrence", found_by: producer, repair: "fixed before any record was written", not_a_model_failure: true, promoted_as: null}
+  - {id: D-3, class: pipeline_failure, subsystem: compositor, observed: "projectile a plain cyan square (board: a tick mark)", root_cause: "renderer simplified the board", found_by: checker, repair: "pixfont ✓ glyph at scale 4", not_a_model_failure: true, promoted_as: null}
+  - {id: D-4, class: pipeline_failure, subsystem: compositor, observed: "phone item vanished in the flash; owner never held it; events note said otherwise", root_cause: "renderer vs record drift", found_by: checker, repair: "phone held 17.6–19.6 s; note corrected", not_a_model_failure: true, promoted_as: null}
+  - {id: D-5, class: pipeline_failure, subsystem: compositor (cut-out), observed: "red register present in run-A, absent in run-B → flicker at 8 pose changes/s", root_cause: "a pose-level asset limitation accepted at micro-qualification became a visible artefact at animation rate", found_by: checker, repair: "run-A book patched behind run-B by code", not_a_model_failure: "partly — the sheet hid the book in one pose (model), the flicker is the compositor's (pipeline)", promoted_as: null, cross_case: "case 005 D-4: the same identifier missing in 3 of 9 cells; both fixed by code"}
+  - {id: D-6, class: pipeline_failure, subsystem: compositor, observed: "four board-specified clears rendered as one generic routine; the record promised more than the film showed", root_cause: "renderer simplification not written back to the board", found_by: checker, repair: "per-obstacle clears", not_a_model_failure: true, promoted_as: null}
+  - {id: D-7, class: pipeline_failure, subsystem: creative_direction (composition), observed: "lower 40 % of every gameplay frame a plain ochre lane", root_cause: "the world was composed only inside the safe box; the safe box bounds critical elements, not art", found_by: "producer (recorded) + checker; Controller addendum ordered the fill", repair: "nearer-parallax kerb/tracks/drain/scooter layer (USD 0)", not_a_model_failure: true, promoted_as: null, candidate: COMPOSE_WORLD_ACROSS_THE_FULL_FRAME, cross_case: "case 005 D-5: the same empty lower band, from a 16:9 plate in a 9:16 frame (n = 2 jobs, both lanes independently)"}
+  - {id: D-8, class: pipeline_failure, subsystem: compositor, observed: "faint rectangle: the logo raster's card blue vs #0038FF", root_cause: "raster placed as-is on a slightly different blue", found_by: checker, repair: "fill sampled from the raster → regressed to D-11 → hard-coded measurement", not_a_model_failure: true, promoted_as: BRAND_COLOUR_ON_RENDERED_FRAME}
+  - {id: D-9, class: pipeline_failure, subsystem: compositor, observed: "full-frame white hit flashes (board: on the character)", root_cause: "renderer simplification", found_by: checker, repair: "silhouette-only flash", not_a_model_failure: true, promoted_as: null}
+  - {id: D-10, class: pipeline_failure, subsystem: records, observed: "ATTEMPTS.jsonl verdict pending vs JOB.yaml accepted; frozen_asset null; checker_inspected false", root_cause: "two mirrors of one field, updated once", found_by: checker, repair: "one pass over both files", not_a_model_failure: true, promoted_as: null, cross_case: "case 005 D-8: identical mismatch — the JOB template mirrors the attempts file by hand (n = 2)"}
+
+tally:
+  media_model_failures_that_reached_a_gate: 0
+  pipeline_defects_closed_before_presentation: 18
+  infrastructure_transients: 0
+  customer_flagged: 0
+  found_by: {producer_gates: 3, producer_eye: 4, producer_tooling: 1, independent_checker: 11}
+  reading: "the runtime gates caught the layout collisions; the independent checker caught the spec misses (container), the occlusion (flag), the board-fidelity drift and the repair regression. Both layers were needed; neither alone would have shipped a clean file."

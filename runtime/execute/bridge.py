@@ -223,10 +223,19 @@ class ExecutionBridge:
             reasons.append(f"price disagreement: the router quoted {expected} USD and the harness dry_run priced "
                            f"{harness_usd} USD from the same roster; refusing rather than picking one")
 
+        # Validate before reserving (production-learning RENTOK-GAME-B-005, att-016 / T1): an attempt the
+        # harness has already refused — an unresolved input, an unverified body shape, a failed
+        # precondition — can never leave the machine, so it reserves neither ceiling nor pool. Lane B's
+        # dispatcher wrote a ledger reservation and then found the input file missing; here the same
+        # ordering fault let a refused draw consume the pool and block a later, sendable one.
+        harness_refused = bool(dry.get("refusal_reason"))
         within = (running + expected) <= ceiling
-        hit = not within
-        if within:
+        reserved_here = within and not harness_refused
+        hit = (not within) and not harness_refused
+        if reserved_here:
             running = running + expected
+        elif harness_refused:
+            reasons.append("not_reserved: refused by the harness before any reservation; ceiling and pool untouched")
         else:
             reasons.append(f"blocked_by_ceiling: reserved so far {running} + this attempt {expected} exceeds the "
                            f"effective ceiling {ceiling}; nothing is trimmed to fit")
@@ -235,7 +244,7 @@ class ExecutionBridge:
         if pools is None:
             liquidity = {"pool": pool, "status": "not_read", "funded": None, "reason": "no pool readings supplied"}
         else:
-            funded, why = pools.reserve(pool, expected) if within else pools.can_fund(pool, expected)
+            funded, why = pools.reserve(pool, expected) if reserved_here else pools.can_fund(pool, expected)
             liquidity = {"pool": pool, "status": ("funded" if funded else "not_funded" if funded is False else "unknown"),
                          "funded": funded, "reason": why}
         blocked_by_pool = liquidity["funded"] is False
@@ -282,7 +291,7 @@ class ExecutionBridge:
             "would_dispatch_if_funded": if_funded if slot_name == "primary" else False,
             "refusal_reason": ("; ".join(reasons) if reasons else None),
             "ceiling": {"job_ceiling_usd": str(ceiling),
-                        "reserved_before_this_usd": str(running - expected if within else running),
+                        "reserved_before_this_usd": str(running - expected if reserved_here else running),
                         "this_attempt_usd": str(expected), "within": within},
             "blocked_by_ceiling": hit,
             "pool_liquidity": liquidity,

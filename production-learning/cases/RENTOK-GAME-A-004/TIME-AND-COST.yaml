@@ -1,0 +1,75 @@
+# TIME AND COST — case RENTOK-GAME-A-004. Two clocks, never mixed: mechanical (`date -u` stamps written into JOB.yaml
+# at the moment of each act; ledger UTC; git commit times) versus human words. Nothing is estimated to look tidy.
+case_id: RENTOK-GAME-A-004
+timezone_note: "all stamps UTC; IST = UTC+05:30 (the job ran 23:41–01:36 IST on 20/21 Sep 2026)"
+
+metric_definitions:
+  TTAO: "Time To Accepted Outcome — wall clock from the first production input (job_start_utc, stamped by `date -u` at bootstrap) to the human ACCEPT"
+  CpAO: "Cost per Accepted Outcome — provider spend fully loaded (failed and rejected attempts included) per accepted deliverable"
+
+anchors_mechanical:                        # JOB.yaml ttao.* (stamped with `date -u`, never reconstructed) and gen/LEDGER.jsonl
+  brief_received_utc: "2026-09-20T18:00:45Z"        # frozen brief + snapshot fetched by the Controller (fetched_utc.txt)
+  job_start_utc: "2026-09-20T18:11:42Z"             # first act after bootstrap
+  planning_complete_utc: "2026-09-20T18:37:56Z"     # Stages 1–4 written; checker gate + written cap waited for
+  cap_stated_utc: "2026-09-20T18:44Z"               # human answer 'USD 10 per lane (Recommended)' — SPEND-AUTHORISATION.md
+  dispatch_start_utc: "2026-09-20T19:03:11Z"        # att-001 sprite-sheet micro-qualification
+  dispatch_end_utc: "2026-09-20T19:06:12Z"          # att-008 settled (ledger)
+  qa_complete_v3_audio_utc: "2026-09-20T19:16:02Z"  # first DET suite 0 FAIL (the file the checker reviewed)
+  qa_complete_final_utc: "2026-09-20T19:55:22Z"     # round 1b, 23 checks 0 FAIL on final-v6-audio
+  blind_packet_sealed_utc: "2026-09-20T19:55:59Z"   # MAPPING.json sealed_utc (experiment branch)
+  human_review_requested_utc: "2026-09-20T19:58:00Z"
+  human_decision_utc: "2026-09-20T20:06:00Z"        # the chat message time as recorded by the Controller; no machine stamp of the message exists on disk
+  verdict_transcribed_utc: "2026-09-21T03:37:03Z"   # VERDICTS.md written (IST 09:07) — the record, not the decision
+
+time:
+  time_to_accepted_outcome_mechanical:
+    value_hms: "1:54:18"
+    from: job_start_utc
+    to: human_decision_utc
+    source: [job_yaml_date_u_stamps, controller_recorded_chat_time]
+    caveat: "the start is a machine stamp; the end is the customer's chat message time as the Controller recorded it (JOB.yaml ttao.human_decision_utc, kpis.ttao_hms). The 7.5 h between the decision and its transcription into VERDICTS.md is record-keeping, not production time."
+    cross_checks:
+      brief_to_decision_hms: "2:05:15"               # from brief_received_utc
+      job_start_to_deliverable_hms: "1:43:40"        # to qa_complete_final_utc — fully mechanical, no chat anchor
+      planning_hms: "0:26:14"                        # job_start → planning_complete (Stages 1–4)
+      paid_generation_window_hms: "0:03:01"          # all eight calls
+      checker_and_repair_window_hms: "0:39:20"       # qa_complete_v3_audio → qa_complete_final (two checker rounds + two repairs)
+  time_to_accepted_outcome_human_estimate: null
+  generation_wait_time:
+    mechanical: {sum_of_per_call_latency_s: 103.3, note: "12.8+9.2+10.6+11.1+10.9+9.8+9.6+29.3 (ATTEMPTS.jsonl latency_s)"}
+    share_of_outcome_time: "≈ 1.5 % of 1 h 54 m — generation wait was negligible; reading/writing the stage records (~26 min) and the checker → repair loop (~39 min) were the time"
+  session_tokens_not_a_clock: "producer ≈ 588 k, checkers ≈ 272 k + 202 k (Controller-side accounting in 06-CONTROLLER-COMPARISON.md §1; not a ledger figure, not priced)"
+
+cost:
+  total_known_provider_cost_usd: 0.529
+  basis: "eight `reserved` lines, gen/LEDGER.jsonl @ 7dab37a, pinned prices (PriceBook quotes 0.067 per_image nano-banana-2 via the Gemini API surface; 0.06 per_clip lyria on Vertex); all eight returned media; the ledger's running total ends at 0.529 and was byte-identical across both repair rounds (checker R1)"
+  by_route:
+    - {route: "IMG-CORE/nano-banana-2 (gemini_api surface)", calls: 7, ok: 7, usd: 0.469, pool: "credits (Google), attested by the human — not machine-readable"}
+    - {route: "MUS/lyria+native (Vertex)", calls: 1, ok: 1, usd: 0.060, pool: "credits (Google)"}
+  by_version: {1: 0.529}
+  spent_on_rejected_or_failed_usd: 0.0
+  cap: {amount_usd: 10.00, used_pct: 5.3, source: "SPEND-AUTHORISATION.md — human answer 'USD 10 per lane (Recommended)', credits only, no fal, 0 hidden retries"}
+  known_uncertainty:
+    - "Google credits balance not readable (Cloud Billing API disabled on vertexaiproject-507518); the pool was attested by the human; every reservation is an upper bound"
+    - "the assumption that the Gemini API key and the Vertex service account draw on the same credits pool is recorded (JOB.yaml spend.pool_readings) and not verified against a statement"
+    - "no vendor statement reconciled"
+  cost_per_accepted_outcome:
+    value_usd: 0.529
+    unit: "the accepted 30-s film (one outcome), fully loaded — there were no failed or rejected attempts to load"
+    numerator_complete: false
+    missing_components: ["vendor-billed reconciliation (Google credits)", "LLM session tokens for producer and two checker sessions (not priced)", "human Controller time (spend answers, repair authorisation, blind review; not priced)"]
+    baseline_read: {ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml, cpao_usd: 15.39318, ttao: "7 h 54 m mechanical lower bound", cycles: 5, note: "a 57-s presenter film with generative video — a different production class; read side by side, never blended"}
+
+counts:
+  paid_generation_attempts: 8
+  paid_generation_failed: 0
+  paid_repairs: 0
+  human_review_cycles: 1
+  internal_checker_rounds: 2
+  defects_closed_before_presentation: 18     # R1–R5 (7 items incl. R2a/b/c) + D-1..D-11
+  customer_flagged_defects: 0
+
+product_conclusion:
+  final_quality: "SUCCESS — accepted on first presentation and preferred of the two blind films; the customer named no defect on it"
+  pipeline_efficiency: "MET_BASELINE and better on every axis than case 001 (1 h 54 m vs 7 h 54 m; USD 0.53 vs 15.39; 1 cycle vs 5) — with the caveat that this is a code-rendered class with no generative video, so the comparison shows what the class costs, not that the pipeline improved"
+  process_conformance: "CONFORMANT — five stages with a non-author checker at gates 1–4 and stage 5, frozen plan before spend, written cap, pool attestation, animatic at USD 0, one ledger line per call reserved before dispatch (checker-verified)"

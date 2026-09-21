@@ -459,10 +459,11 @@ runs:
     - stage: manifest
       status: ok
       summary: '4 attempts rendered; would_dispatch=0 (if funded: 2; pool liquidity not_read); reasons=["harness: PreDispatchRefusal:
-        aspect ''4:5'' is not in the pinned Veo enum (''16:9'', ''9:16''); pool_liquidity_unknown: no pool readings supplied;
-        an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the
-        pool-agnostic answer)", ''pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when
-        its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)'']'
+        aspect ''4:5'' is not in the pinned Veo enum (''16:9'', ''9:16''); not_reserved: refused by the harness before any
+        reservation; ceiling and pool untouched; pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable
+        only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)", ''pool_liquidity_unknown:
+        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
+        records the pool-agnostic answer)'']'
     - stage: dry_execution
       status: ok
       summary: dry_complete; network=none
@@ -471,10 +472,10 @@ runs:
       summary: pre=PASS attempts=1 repairs=0 acceptance=accepted
     - stage: outcome_event
       status: ok
-      summary: oe-c48b48bc3dbee1d6111b50d3bbc4b0910eec601596b959d55f6ea1646ee9f68d decision=accepted dry_run=True
+      summary: oe-e965ff2e0ccf547a67b02e54d6954f3fc7b126150bfd91f14c49e07accdd5129 decision=accepted dry_run=True
     - stage: template
       status: ok
-      summary: tpl-cb02125dc9a34f91 status=reusable_dry_only
+      summary: tpl-c5ff7c61c6b6c7c5 status=reusable_dry_only
     route:
       primary: minimax-h3-max-i2v
       primary_surface: fal
@@ -526,16 +527,17 @@ runs:
       - false
       pool_liquidity_status: not_read
       harness_refusals:
-      - 'harness: PreDispatchRefusal: aspect ''4:5'' is not in the pinned Veo enum (''16:9'', ''9:16''); pool_liquidity_unknown:
-        no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded
-        records the pool-agnostic answer)'
+      - 'harness: PreDispatchRefusal: aspect ''4:5'' is not in the pinned Veo enum (''16:9'', ''9:16''); not_reserved: refused
+        by the harness before any reservation; ceiling and pool untouched; pool_liquidity_unknown: no pool readings supplied;
+        an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the
+        pool-agnostic answer)'
       - 'pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known
         to fund it (would_dispatch_if_funded records the pool-agnostic answer)'
     attempts: 1
     repairs: 0
     acceptance: accepted
-    event_id: oe-c48b48bc3dbee1d6111b50d3bbc4b0910eec601596b959d55f6ea1646ee9f68d
-    template_id: tpl-cb02125dc9a34f91
+    event_id: oe-e965ff2e0ccf547a67b02e54d6954f3fc7b126150bfd91f14c49e07accdd5129
+    template_id: tpl-c5ff7c61c6b6c7c5
 - id: B06-supplied-photo-identifiable-person-no-consent
   brief: runtime/fixtures/alpha-briefs/img-edit-01.json
   job_id: alpha-dry-img-edit-01

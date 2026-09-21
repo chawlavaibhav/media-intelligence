@@ -1,0 +1,43 @@
+# REVISION TRACE — one presented version, built through two internal checker rounds. Root-cause classes are the
+# eleven fixed classes. The customer never saw a defective file: every defect below was closed before presentation.
+case_id: RENTOK-GAME-A-004
+root_cause_classes_used: [compositor, deterministic_qa, creative_direction, infrastructure, orchestration]
+
+versions:
+  - version: 1
+    input_source: "frozen customer brief (input/01-CUSTOMER-BRIEF-FROZEN.md) + confirmed Stage-1 answers; no ChatGPT direction (lane A saw none); Stages 1–4 written and gate-checked by an independent checker before any paid call (stages/CHECK-GATES-1-4.md); plan frozen at 1c3448b"
+    generation_status: "8 paid calls, 8 ok, 0 repairs at the generation layer: A1 sprite sheet micro-qualified first (att-001), five obstacles (att-002..006), plate (att-007), Lyria bed (att-008); USD 0.529 reserved of 10.00"
+    assembly_status: "USD-0 animatic v1 → v2 (gates found chip overlap + panel slide-out before any spend); final v1–v3 by code; audio mix -14.6 LUFS; v3-audio to the checker; repair round 1 → v5-audio (gen/final/v2); round 1b → v6-audio = the delivered file"
+    human_verdict: accept
+    defects:
+      # producer-found, before the checker (USD 0)
+      - {id: R1, root_cause_class: creative_direction, detail: "animatic v1: play band cramped (ground at 1130) — producer's eye"}
+      - {id: R2a, root_cause_class: compositor, detail: "animatic v1: checklist chip backings overlapped (row pitch 48 < backing 62 px) — caught by runtime check_disjoint over the layout log, 171 frames"}
+      - {id: R2b, root_cause_class: compositor, detail: "animatic v1: cheat-panel text left the safe box while sliding out — caught by runtime check_text_bounds, 33 frames"}
+      - {id: R2c, root_cause_class: compositor, detail: "animatic v2: chip flight start outside the safe box — check_text_bounds, 29 frames"}
+      - {id: R3, root_cause_class: compositor, detail: "final v1 cut-outs kept enclosed green pockets and the model's dark-green ground shadow (flood-fill keying only) — producer's eye"}
+      - {id: R4, root_cause_class: creative_direction, detail: "final v2: sprites read small at phone size — scale +18 % / +15 %"}
+      - {id: R5, root_cause_class: infrastructure, detail: "final v2-audio: AAC true peak -0.4 / -0.3 dBTP against a -1 target — the codec overshot the wav by ~2 dB; measured on the encoded file"}
+      # independent checker, round 0 (stages/CHECK-STAGE-5.md §6) — all USD 0
+      - {id: D-1, root_cause_class: deterministic_qa, detail: "delivered MP4 carried two elst atoms (ffmpeg defaults) while the lane's own spec row said none; the DET suite tested geometry/codec/moov-first but never the box tree — found by the checker's box walk"}
+      - {id: D-2, root_cause_class: creative_direction, detail: "board F10 said the checklist 'stays visible' and the flag 'rises to the top' while both occupied y 540–666; the raised flag was hidden for 27.2–27.6 s; the text-only disjoint gate cannot see a graphic behind text"}
+      - {id: D-3, root_cause_class: compositor, detail: "projectile drawn as a plain cyan square; the board specified a tick mark"}
+      - {id: D-4, root_cause_class: compositor, detail: "phone item vanished in the flash; the owner never held it; the events note said 'phone in hand'"}
+      - {id: D-5, root_cause_class: compositor, detail: "red register present in run-A, absent in run-B (a sheet limitation accepted at micro-qualification) → flicker at 8 pose changes/s"}
+      - {id: D-6, root_cause_class: compositor, detail: "four board-specified clears rendered as one generic scale-and-fade; the record promised more than the film showed"}
+      - {id: D-7, root_cause_class: creative_direction, detail: "lower 40 % of every gameplay frame a plain ochre lane — composed only inside the safe box; filled by code per the Controller's addendum"}
+      - {id: D-8, root_cause_class: compositor, detail: "the logo raster's own slightly lighter blue card read as a faint rectangle on #0038FF"}
+      - {id: D-9, root_cause_class: compositor, detail: "full-frame white hit flashes where the board said a flash on the character"}
+      - {id: D-10, root_cause_class: orchestration, detail: "records: ATTEMPTS.jsonl verdict pending vs JOB.yaml accepted; frozen_asset null; checker_inspected false"}
+      # independent checker, re-verification (round 1b)
+      - {id: D-11, root_cause_class: compositor, detail: "REGRESSION from the D-8 fix: end card and freeze-dim rendered black (0,0,0) — render_game.py sampled pixel (100,100) of the logo raster, a fully transparent corner; the producer's repair statement said '#0239FF' without measuring the output frame; no DET check covered end-card colour"}
+    repair_requested: "checker: D-1 and D-2 before presentation; Controller: all ten + the D-7 lower-band fill (addendum), USD 0"
+    repair_made: "round 1 (f1174f8): re-mux -use_editlist 0 + a new DET 'no elst' box-walk check; checklist fades out 26.6–27.0 s, pole behind the owner; tick glyph projectile; phone held 17.6–19.6 s; run-A book patched onto run-B; per-obstacle clears; nearer-parallax kerb/tracks/drain/scooter layer; end-card fill sampled from the raster (→ D-11); silhouette-only flashes; records fixed. Round 1b (4bde2d9): card colour hard-coded to the Stage-2 measurement (2,57,255), measured on the 29.9-s frame as (1,55,253) after 4:2:0"
+    repair_succeeded: true
+    cost_usd: 0.0                      # both rounds; total job spend 0.529 was all pre-repair generation
+    elapsed: {from: "2026-09-20T18:11:42Z job_start (date -u)", to: "2026-09-20T20:06:00Z customer ACCEPT (chat time as recorded)", value_hms: "1:54:18", source: [job_yaml_date_u_stamps, controller_recorded_chat_time]}
+    elapsed_internal_anchors: {planning_complete: "18:37:56Z", first_paid_call: "19:03:11Z", last_paid_call_settled: "19:06:12Z", first_qa_complete_v3_audio: "19:16:02Z", repair_round_1_qa_complete: "19:44:03Z", round_1b_qa_complete: "19:55:22Z", blind_packet_sealed: "19:55:59Z", presented: "19:58:00Z"}
+
+media_model_failures_that_reached_a_gate: 0
+paid_repairs: 0
+note: "Every defect was closed by code at USD 0; the only paid draws were the first draws. The quality of this film was won in the checker → repair loop, not at the generation layer (06-CONTROLLER-COMPARISON.md §3, INFERRED there and OBSERVED here in the defect list)."

@@ -21,6 +21,10 @@ class LayoutRefused(Refusal):
     GEOMETRY_OFF_TOKEN = "GEOMETRY_OFF_TOKEN"
     CRITICAL_REGIONS_OVERLAP = "CRITICAL_REGIONS_OVERLAP"
     TOKEN_SOURCE_MISSING = "TOKEN_SOURCE_MISSING"
+    # production-learning RENTOK-GAME-A-004 / RENTOK-GAME-B-005 (2026-09-21)
+    GRAPHIC_OVER_TEXT = "GRAPHIC_OVER_TEXT"
+    VO_BEFORE_ITS_TEXT = "VO_BEFORE_ITS_TEXT"
+    BRAND_COLOUR_OFF = "BRAND_COLOUR_OFF"
 
 
 # ── geometry helpers ─────────────────────────────────────────────────────────
@@ -197,3 +201,97 @@ def check_disjoint(regions: dict, *, critical=CRITICAL_REGIONS, min_gap_px: int 
                                     f"{a} {boxes[a]} overlaps {b} {boxes[b]}" + (f" (gap < {min_gap_px}px)" if min_gap_px else ""),
                                     pair=(a, b), min_gap_px=min_gap_px)
     return {"status": "PASS", "regions": names, "pairs_checked": pairs, "min_gap_px": min_gap_px}
+
+
+# ── F. graphic ↔ text disjointness (RENTOK-GAME-B-005 D-1, D-9; RENTOK-GAME-A-004 D-2) ────────
+
+def check_graphic_text_disjoint(graphics: dict, texts: dict, *, min_gap_px: int = 0) -> dict:
+    """A declared critical graphic (the product, a phone, a flag, a projectile) may not cross a critical
+    text box, and a text box may not cover a critical graphic. `check_disjoint` sees only the regions it
+    is handed, and both RentOK lanes handed it text alone: Lane B shipped a phone rising over the
+    `PG OWNER` tag (D-1) and later a beam 8 px under it (D-9); Lane A shipped the raised flag — the
+    customer's "gets the flag" payoff — hidden behind the checklist and `LEVEL CLEAR!` (D-2). Every
+    graphic is checked against every text box; the first collision (sorted names) is the refusal."""
+    g_names, t_names = sorted(graphics), sorted(texts)
+    g_boxes = {n: _box(graphics[n]) for n in g_names}
+    t_boxes = {n: _box(texts[n]) for n in t_names}
+    pairs = 0
+    for g in g_names:
+        for t in t_names:
+            pairs += 1
+            if overlaps(g_boxes[g], t_boxes[t], min_gap_px):
+                raise LayoutRefused(LayoutRefused.GRAPHIC_OVER_TEXT,
+                                    f"graphic {g} {g_boxes[g]} crosses text {t} {t_boxes[t]}"
+                                    + (f" (gap < {min_gap_px}px)" if min_gap_px else ""),
+                                    pair=(g, t), min_gap_px=min_gap_px)
+    return {"status": "PASS", "graphics": g_names, "texts": t_names, "pairs_checked": pairs, "min_gap_px": min_gap_px}
+
+
+# ── G. a voice line may not run ahead of its own on-screen words (RENTOK-GAME-B-005 D-3) ───────
+
+def check_vo_text_alignment(lines, text_first_on_screen: dict, *, tolerance_s: float = 0.0) -> dict:
+    """When a spoken line and an on-screen string are meant to be the same words, the line may not
+    begin before the string first appears (a `tolerance_s` of lead is allowed when the caller states
+    one). Lane B's announcer said "RentOk mode: on" at 14.70 s while the screen still read
+    `INSTALLING...`; the words appeared at 15.90 s. The lane's VO gate checked overlap and film end,
+    not this. Each line is {"id", "start_s", "on_screen_id"}; `text_first_on_screen` maps a string id
+    to the first second it is on screen (from the layout log). A line without `on_screen_id` has
+    nothing to align to and is listed as unpaired; a paired string that never appears is refused."""
+    tol = float(tolerance_s)
+    if tol < 0:
+        raise ValueError("tolerance_s must be >= 0")
+    aligned, unpaired = [], []
+    for ln in lines:
+        lid, start = str(ln.get("id")), float(ln["start_s"])
+        sid = ln.get("on_screen_id")
+        if sid is None:
+            unpaired.append(lid)
+            continue
+        sid = str(sid)
+        if sid not in text_first_on_screen:
+            raise LayoutRefused(LayoutRefused.VO_BEFORE_ITS_TEXT,
+                                f"vo line {lid} is paired with {sid}, which never appears on screen",
+                                id=lid, on_screen_id=sid)
+        first = float(text_first_on_screen[sid])
+        if start + tol < first:
+            raise LayoutRefused(LayoutRefused.VO_BEFORE_ITS_TEXT,
+                                f"vo line {lid} starts at {start:.2f}s but its words {sid} first appear at {first:.2f}s "
+                                f"({first - start:.2f}s early; tolerance {tol:.2f}s)",
+                                id=lid, on_screen_id=sid, start_s=start, first_on_screen_s=first,
+                                lead_s=round(first - start, 3))
+        aligned.append({"id": lid, "on_screen_id": sid, "start_s": start, "first_on_screen_s": first})
+    return {"status": "PASS", "aligned": aligned, "unpaired": unpaired, "tolerance_s": tol}
+
+
+# ── H. a declared brand colour is measured on the rendered frame (RENTOK-GAME-A-004 D-11) ──────
+
+def check_brand_colour(samples_rgb, declared_hex: str, *, max_channel_delta: int = 8, id_: str = "brand_fill") -> dict:
+    """Pixels the caller reads from the RENDERED, ENCODED frame where a brand colour was declared must
+    each sit within `max_channel_delta` of the declared #RRGGBB on every channel. Lane A's repair
+    statement said the end card was filled "#0239FF"; the file was black — the renderer had sampled a
+    transparent corner of the logo raster, and no check measured the output. A colour claim is
+    verified against the output, never the intent. No samples → refused: an unmeasured colour is not
+    a matching colour. The default delta leaves room for H.264 4:2:0 chroma drift (Lane A measured
+    (2,57,255) → (1,55,253) on the accepted file); the caller may tighten or widen it with a reason."""
+    h = declared_hex.lstrip("#")
+    if len(h) != 6:
+        raise ValueError(f"colour must be #RRGGBB, got {declared_hex!r}")
+    want = tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+    limit = int(max_channel_delta)
+    samples = [tuple(int(c) for c in s[:3]) for s in samples_rgb]
+    if not samples:
+        raise LayoutRefused(LayoutRefused.BRAND_COLOUR_OFF,
+                            f"{id_}: no pixels sampled from the rendered frame; the declared {declared_hex} is unverified",
+                            id=id_, declared=declared_hex, samples=0)
+    worst, worst_sample = -1, None
+    for s in samples:
+        d = max(abs(s[i] - want[i]) for i in range(3))
+        if d > worst:
+            worst, worst_sample = d, s
+    if worst > limit:
+        raise LayoutRefused(LayoutRefused.BRAND_COLOUR_OFF,
+                            f"{id_}: rendered pixel {worst_sample} is {worst} per channel from the declared "
+                            f"{declared_hex} {want} (limit {limit}); the file does not carry the colour the record claims",
+                            id=id_, declared=declared_hex, worst_sample=worst_sample, worst_delta=worst, limit=limit)
+    return {"status": "PASS", "id": id_, "declared": declared_hex, "samples": len(samples),
+            "worst_channel_delta": worst, "worst_sample": worst_sample, "limit": limit}
