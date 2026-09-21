@@ -1,0 +1,68 @@
+{
+ "schema": "COPY-DECK-v1 (job-local)",
+ "job_id": "AGY-2026-09-20-RENTOK-GAME-LANE-A-001",
+ "status": "frozen at Stage 3, 2026-09-20 (edits only by a reopened Stage 3 question)",
+ "font": "tools/pixfont.py (code bitmap 5x7 capitals; byte-exact by construction)",
+ "strings": {
+  "HUD_NAME": "PG OWNER",
+  "HUD_HEALTH_5": "▮▮▮▮▮",
+  "HUD_HEALTH_4": "▮▮▮▮▯",
+  "HUD_HEALTH_3": "▮▮▮▯▯",
+  "HUD_HEALTH_2": "▮▮▯▯▯",
+  "HUD_HEALTH_1": "▮▯▯▯▯",
+  "HUD_HEALTH_0": "▯▯▯▯▯",
+  "LEVEL": "LEVEL 1",
+  "OBST_1": "TENANT VERIFICATION",
+  "OBST_2": "COLLECTING RENT",
+  "OBST_3": "LEFT WITHOUT PAYING",
+  "OBST_4": "NO RECONCILIATION",
+  "OBST_5": "COMPLAINTS",
+  "GAMEOVER": "GAME OVER?",
+  "CHEAT_HDR": "CHEAT CODE:",
+  "CHEAT_1": "INSTALL",
+  "CHEAT_2": "RENTOK APP",
+  "POWERUP": "POWER UP!",
+  "CHIP_1": "✓ DIGITAL KYC",
+  "CHIP_2": "✓ AUTOPAY",
+  "CHIP_3": "✓ DUES TRACKED LIVE",
+  "CHIP_4": "✓ ONE DASHBOARD",
+  "CHIP_5": "✓ COMPLAINT TICKETS",
+  "CLEAR": "LEVEL CLEAR!",
+  "CTA_1": "INSTALL",
+  "CTA_2": "RENTOK APP",
+  "URL": "RENTOK.COM"
+ },
+ "raster_marks": {
+  "WORDMARK": {
+   "file": "source/rentok-brand/rentok-new-logo.webp",
+   "sha256": "1ff7dcf58689684d8ddae150d384f4aa30c246c314b0bf4e4a389a06e8f66f80",
+   "contains_text": [
+    "RentOk",
+    "India's renting superapp"
+   ],
+   "note": "the brand's own logo asset placed by code; its baked-in tagline is part of the mark, not a claim authored by this job"
+  }
+ },
+ "claims_source_map": {
+  "CHIP_1": "Stage 2b permitted: DIGITAL KYC <- home.txt:99",
+  "CHIP_2": "Stage 2b permitted: AUTOPAY <- home.txt:19-20, autopay.txt:4-5",
+  "CHIP_3": "Stage 2b permitted: DUES TRACKED LIVE <- autopay.txt:104-107,136; home.txt:104",
+  "CHIP_4": "Stage 2b permitted: ONE DASHBOARD <- autopay.txt:95",
+  "CHIP_5": "Stage 2b permitted: COMPLAINT TICKETS <- complaint-management.txt:10"
+ },
+ "hud_whitelist_for_claim_scan": [
+  "HUD_NAME",
+  "HUD_HEALTH_5",
+  "HUD_HEALTH_4",
+  "HUD_HEALTH_3",
+  "HUD_HEALTH_2",
+  "HUD_HEALTH_1",
+  "HUD_HEALTH_0",
+  "LEVEL",
+  "GAMEOVER",
+  "POWERUP",
+  "CLEAR"
+ ],
+ "vo_lines": [],
+ "note_on_spelling": "Mixed-case brand name appears only inside the raster wordmark (RentOk, the site's spelling). All typed strings are capitals, so RENTOK is spelling-neutral (Stage 2 flag F5)."
+}
