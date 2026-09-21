@@ -57,5 +57,5 @@ canvas — A-4, R-1, N4), `check_world_fills_frame` (every camera scale ≥ 1.0;
 python3 production-learning/tools/check_case.py --case production-learning/cases/RENTOK-GAME-V2-006 \
   --source-ref b06deaf7907de9c64d574a5f042a014c2e519ce6 --source-dir agency/jobs/AGY-2026-09-21-RENTOK-GAME-V2-001
 ```
-The job branch `work/agency-job-rentok-game-v2-001` was local-only at sync time; the commit must be present for the
-validator to byte-verify the accepted film.
+The job branch `work/agency-job-rentok-game-v2-001` is on origin (`b06deaf` since 2026-09-21T16:42Z; `b129bdd` after the sync
+commit); fetch it so the commit is present for the validator to byte-verify the accepted film.

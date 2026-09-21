@@ -75,10 +75,10 @@ instead **appended to this open PR's branch** (`work/agency-sync-2026-09-21`, on
 RentOK line as cases 004/005 already on it and a branch cut from main would conflict with them (README case list,
 `gates.py`, and the shared template id). Nothing else about the skill was skipped.
 
-**The job branch is local-only.** `work/agency-job-rentok-game-v2-001` existed only in the local repository when the case was
-written; the case validates against the immutable commit `b06deaf7907de9c64d574a5f042a014c2e519ce6`. A push of the job branch
-is attempted in step 7 of the sync; if this PR's reviewer cannot resolve that commit, the branch has not been pushed yet and
-the validator will (correctly) FAIL until it is.
+**The job branch is on origin.** The sync brief described `work/agency-job-rentok-game-v2-001` as local-only; the remote-tracking
+reflog shows origin received `b06deaf` at 2026-09-21T16:42Z (before the case was written), and the step-7 sync commit `b129bdd`
+was pushed on top. The case validates against the immutable commit `b06deaf7907de9c64d574a5f042a014c2e519ce6`; fetch the
+branch before running the validator.
 
 ### Per job
 
@@ -124,7 +124,7 @@ and JOB.yaml say "six" were offered; which six is chat-only. The case records al
 
 ### Raw job branch (archival; never merged)
 
-- `work/agency-job-rentok-game-v2-001` @ `b06deaf7907de9c64d574a5f042a014c2e519ce6` — **local-only until pushed** (see above)
-- context: `work/experiment-rentok-creative-quality-001` @ `41d97c6` (CQ-001 diagnosis, Treatment C) — local-only
+- `work/agency-job-rentok-game-v2-001` @ `b06deaf7907de9c64d574a5f042a014c2e519ce6` (on origin; sync commit `b129bdd` on top)
+- context: `work/experiment-rentok-creative-quality-001` @ `41d97c6` (CQ-001 diagnosis, Treatment C; on origin)
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

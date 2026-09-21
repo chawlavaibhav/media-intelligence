@@ -6,7 +6,7 @@ schema: PRODUCTION-LEARNING-CASE-v0
 written_utc: "2026-09-21T16:49:19Z"
 job_id: AGY-2026-09-21-RENTOK-GAME-V2-001
 source_main_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f   # = JOB.yaml production_base_sha (origin/main at branch cut)
-job_branch: work/agency-job-rentok-game-v2-001               # provenance only; LOCAL to this machine's repo at sync time — not on origin
+job_branch: work/agency-job-rentok-game-v2-001               # provenance only; on origin at b06deaf since 2026-09-21T16:42Z (reflog), now b129bdd with the sync commit
 job_commit: b06deaf7907de9c64d574a5f042a014c2e519ce6          # the immutable HEAD this case was validated against
 
 final_outcome: accepted
@@ -26,7 +26,7 @@ why_this_job_exists: "experiment RENTOK-CREATIVE-QUALITY-001 (branch work/experi
 evidence_source:
   ref: b06deaf7907de9c64d574a5f042a014c2e519ce6
   dir: agency/jobs/AGY-2026-09-21-RENTOK-GAME-V2-001
-  note: "the job branch's HEAD on 2026-09-21; the branch existed only in the local repository when this case was written (a push is attempted in step 7 of the sync). Lane A's accepted assets were reused from work/agency-job-rentok-game-lane-a-001 @ 7dab37a and Treatment C's from the experiment branch @ 41d97c6 — every copied file is blob-verified in PROVENANCE.md."
+  note: "the job branch's HEAD on 2026-09-21; the sync brief described the branch as local-only; the remote reflog shows origin received b06deaf at 2026-09-21T16:42Z, before this case was written, and the step-7 sync commit b129bdd was pushed on top. Lane A's accepted assets were reused from work/agency-job-rentok-game-lane-a-001 @ 7dab37a and Treatment C's from the experiment branch @ 41d97c6 — every copied file is blob-verified in PROVENANCE.md."
 
 final_asset:
   path: gen/final/rentok-game-v2-9x16-30s.mp4

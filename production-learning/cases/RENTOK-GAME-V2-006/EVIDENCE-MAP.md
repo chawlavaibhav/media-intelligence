@@ -4,8 +4,8 @@ Raw media is **not** duplicated here. Every claim points at a file on the job br
 `work/agency-job-rentok-game-v2-001` at its immutable HEAD `b06deaf` (full sha
 `b06deaf7907de9c64d574a5f042a014c2e519ce6`), directory `agency/jobs/AGY-2026-09-21-RENTOK-GAME-V2-001/`,
 identified by path, commit and full sha256. Paths are relative to that directory. The branch name is provenance only; the
-commit is what the validator reads. **At sync time the job branch existed only in the local repository** (not on
-`origin`); a push is attempted in step 7 of the sync and the PR body says whether it succeeded.
+commit is what the validator reads. The sync brief described the job branch as local-only; **origin received `b06deaf` at 2026-09-21T16:42Z** (remote-tracking
+reflog), before this case was written, and the step-7 sync commit `b129bdd` was pushed on top of it.
 
 Validate: `python3 production-learning/tools/check_case.py --case production-learning/cases/RENTOK-GAME-V2-006
 --source-ref b06deaf7907de9c64d574a5f042a014c2e519ce6 --source-dir agency/jobs/AGY-2026-09-21-RENTOK-GAME-V2-001`
@@ -96,7 +96,7 @@ Validate: `python3 production-learning/tools/check_case.py --case production-lea
 | Claim | where |
 |---|---|
 | Lane A's accepted film and its ledger (USD 0.529; the assets reused here) | branch work/agency-job-rentok-game-lane-a-001 at commit 7dab37a — case RENTOK-GAME-A-004 |
-| CQ-001: blind rank D > C > B > A; prompt translation refuted; §6 the smallest consequential change; Treatment C's animatic and draw (USD 0.067) | branch work/experiment-rentok-creative-quality-001 at commit 41d97c694324b2cd22e119ad43b12fbbb4715efa — experiments/RENTOK-CREATIVE-QUALITY-001/07-DIAGNOSIS-AND-ROUTE.md and treatments/C-creative-direction/TREATMENT-C.md (local branch; worktree ../media-intelligence-rentok-cq) |
+| CQ-001: blind rank D > C > B > A; prompt translation refuted; §6 the smallest consequential change; Treatment C's animatic and draw (USD 0.067) | branch work/experiment-rentok-creative-quality-001 at commit 41d97c694324b2cd22e119ad43b12fbbb4715efa — experiments/RENTOK-CREATIVE-QUALITY-001/07-DIAGNOSIS-AND-ROUTE.md and treatments/C-creative-direction/TREATMENT-C.md (on origin; local worktree ../media-intelligence-rentok-cq) |
 | Cumin B's animatic catch (ANIMATIC_BEFORE_SPEND count) | branch work/agency-job-cumin-exp-b-fivestage at commit 5c33173 — agency/jobs/AGY-2026-09-20-CUMIN-EXP-B-FIVESTAGE-001/LEARNING-PACKET.yaml (a rejected job, local branch, pending its own sync) |
 
 ## Not on disk (chat only)
