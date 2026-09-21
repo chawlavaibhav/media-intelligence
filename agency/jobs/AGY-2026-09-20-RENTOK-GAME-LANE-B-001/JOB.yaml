@@ -8,7 +8,7 @@ production_base_sha: 4d919c9df6c9725a2f14c411771565bb09089876
 branch: work/agency-job-rentok-game-lane-b-001
 skill_version: 7e324b0f75658498b62802332504519b9d542996
 opened_by: lane-B producer session (Controller-supervised experiment)
-production_status: pending_human_review
+production_status: accepted   # human ACCEPT in the blind evaluation (Controller session, 2026-09-20T20:06Z); verdict verbatim under versions[]
 learning_status: pending_sync
 sync:
   case_id: null
@@ -267,11 +267,20 @@ qa:
     - {id: N-1, asset_id: A2-O3, observed: "green tick on the drifting ghost's tag could read as paid", class: creative_direction, repair_layer: compositor, repaired_by_attempt: "code: tick replaced by a cyan tracked ring marker (gen/sprites/O3_after_tracked.png, USD 0)"}
     - {id: D-9, asset_id: D1, observed: "extended disjoint check caught the O5 beam 8 px under the name tag (23.9-24.1 s)", class: compositor, repair_layer: compositor, repaired_by_attempt: "code: swarm 30 px lower, beam origin 18 px lower (USD 0)"}
 
-versions: []
+versions:
+- version: 1
+  presented_utc: '2026-09-20T19:58:00Z'
+  presented_as: 'Video X (blind packet, container metadata stripped; mapping sealed sha256 39365d6242e8f0a7…)'
+  assets: [40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78]
+  verdict: ACCEPT
+  verdict_verbatim: 'both accepted. vidoe one has robotic voice over althouh. video 2 is better'
+  verdict_note_for_this_video: 'vidoe one has robotic voice over althouh'
+  decided_utc: '2026-09-20T20:06:00Z'
+  decided_by: 'Vaibhav Chawla (customer / human Controller), chat'
 outcome:
-  status: null                    # pending_human_review — set only from a human ACCEPT
-  accepted_version: null
-  accepted_by: null
+  status: accepted
+  accepted_version: 1
+  accepted_by: 'Vaibhav Chawla'
   assets:
     - {path: gen/final/rentok-game-lane-b-9x16-30s.mp4, sha256: 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78, bytes: 15284419, dims_or_duration: "1080x1920, 30.000 s, h264 High yuv420p 30 fps, AAC-LC 48 kHz stereo", produced_by_attempt: "code assembly over att-001..003 (voice), att-018 (character), att-019..023 (obstacles), att-024 (world), att-025 (music)", composition_inputs: [gen/sprites/SLICES.json, gen/render/TIMELINE.json, gen/render/LAYOUT.json, gen/render/PLATE_GATES.json, gen/render/CONTACT_EVENTS.json, gen/audio/MIX_REPORT.json, "stages/03-CREATIVE.md COPY DECK", source/brand/rentok-new-logo.webp], formats: ["9:16 1080x1920"], reuse_potential: [case_study, template_evidence]}
     - {path: gen/final/CONTACT-SHEET.png, role: qa}
@@ -287,12 +296,12 @@ ttao:
   dispatch_end_utc: "2026-09-20T19:02:07Z"   # att-025 (Lyria) settled — the last paid call (gen/LEDGER.jsonl)
   artifact_received_utc: "2026-09-20T19:46:21Z"   # repair-round-1 final (v1 at 19:18:28Z)
   qa_complete_utc: "2026-09-20T19:46:21Z"   # repair round 1 (v1 QA complete was 19:18:28Z)
-  human_review_requested_utc: "2026-09-20T19:47:00Z"   # repair-round-1 report to the Controller (v1 report 19:20Z)
-  human_decision_utc: null
+  human_review_requested_utc: '2026-09-20T19:58:00Z'   # blind packet delivered to the customer
+  human_decision_utc: '2026-09-20T20:06:00Z'   # customer message 'both accepted…' (IST 01:36)
   accepted_utc: null
 kpis:
   cpao_usd: null
-  ttao_hms: null
+  ttao_hms: '1:53:07'   # human_decision_utc − job_start_utc
   human_review_cycles: null
   versions_to_acceptance: null
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml
