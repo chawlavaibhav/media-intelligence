@@ -1,0 +1,5 @@
+# Spend authorisation of record — AGY-2026-09-21-MOKOBARA-ODYSSEY-001
+Recorded 2026-09-21T17:21:17Z by the Controller session from the human Controller's answer (structured question in this session; option text by the Controller session, selection by the human).
+Question (verbatim): "Spend cap for the Mokobara ad (cinematic survival film; the route will almost certainly need generative video on credits — Veo 3.1 Fast at USD 0.10/s, so one full 30-s pass ≈ USD 3–4, plus a micro-qualification of the bag identity and one repair pass; credits only, no fal, 0 hidden retries, hard stop)?"
+**Answer (verbatim option):** "USD 12 (Recommended)" — "Micro-qualification + one full pass + one repair pass of the weakest shots + stills/music."
+Authorises: cap USD 12.00 on this job's ledger; Google Vertex/Gemini credits (human attestation of 2026-09-20 stands; not machine-readable; reservations are upper bounds), ElevenLabs plan credits, Sarvam credits; no fal; no new paid service; 0 hidden retries; every failed/refused call counted. Does not authorise: Controller-state, Canon, Registry or routing changes; external delivery (human release, C-8).
