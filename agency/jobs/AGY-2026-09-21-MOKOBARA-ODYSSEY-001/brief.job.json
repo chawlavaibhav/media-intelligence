@@ -1,0 +1,95 @@
+{
+  "_provenance": {
+    "note": "Hand-written PRODUCTION-JOB-v1 brief for the media-agency Canon lookup, modelled on Lane A's brief.job.json @ a6a41c9. kind = multi_shot_story is the nearest registered kind; this is a 30 s cinematic film of ~7 generated shots, recorded as an ambiguity marker.",
+    "customer_brief": "agency/jobs/AGY-2026-09-21-MOKOBARA-ODYSSEY-001/input/00-CUSTOMER-BRIEF-FROZEN.md",
+    "written_utc": "2026-09-21T17:40Z",
+    "source_pool": "hand_written_agency_brief",
+    "reference_asset_paths": {
+      "mokobara_wordmark": {
+        "path": "source/mokobara/wordmark-white.svg",
+        "fetched": "https://mokobara.com header img src, 2026-09-21"
+      },
+      "transit_backpack_private_island_1": {
+        "path": "source/mokobara/The_Transit_Backpack_30L_Private_Island_1.jpg",
+        "fetched": "https://cdn.shopify.com/s/files/1/0068/7341/5750/files/The_Transit_Backpack_30L_Private_Island_1.jpg, 2026-09-21"
+      }
+    },
+    "ambiguity_markers": [
+      "kind_nearest_match: 30 s cinematic advertising film of ~7 generated live-action-style shots, longer than the registered multi_shot_story band",
+      "customer says 'odysey movie angel' and asks to avoid copyright: myth shape only"
+    ],
+    "schema_note": "ambiguity_markers moved here: PRODUCTION-JOB-v1 on this base (c88c0d5) refuses the key inside deliverable_request (Lane A carried it there on an earlier base)."
+  },
+  "brief": {
+    "language": "en",
+    "market": "IN",
+    "text": "lets make an ad with mokobara. i would preferably give it the odysey movie angel. the proatagonist had mokbara bags. the protagonist found his mokobara bag, while he was on the island where he was kept for years. in that bag he founds her wives photo and a lot of stuff that he could use to go back. he packs food and stuff and goes back. would be funny that he could keep his arms in the bag and food and so much stuff. Avoid getting copyright violoations from odysssey."
+  },
+  "customer_ref": "acct-mokobara-spec",
+  "deliverable_request": {
+    "aspect": "9:16",
+    "count": 1,
+    "kind": "multi_shot_story",
+    "modality": "video",
+    "motion": {
+      "audio": true,
+      "from": "generated",
+      "seconds": 30
+    },
+    "operation": "generate",
+    "subject": {
+      "entity": "product",
+      "entity_id": "mokobara_transit_backpack_private_island",
+      "identity_invariants": [
+        "deep navy matte body",
+        "bright yellow lining",
+        "vertical front zip and front bucket pocket with two black zip pulls",
+        "black padded straps, small top grab handle"
+      ]
+    }
+  },
+  "exact_text_strings": [
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "latin",
+      "value": "Transit Backpack"
+    },
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "latin",
+      "value": "30L"
+    },
+    {
+      "may_reflow": false,
+      "placement": "overlay",
+      "script": "latin",
+      "value": "mokobara.com"
+    }
+  ],
+  "reference_assets": [
+    {
+      "asset_id": "mokobara_wordmark",
+      "content_type": "image/svg+xml",
+      "depicts_identifiable_person": false,
+      "provenance": "customer_site",
+      "role": "logo",
+      "sha256": "c443658f13bed93aa1adbb6bcbc5fcbb06fc4d9abdafd0f59f5da593c67356eb"
+    },
+    {
+      "asset_id": "transit_backpack_private_island_1",
+      "content_type": "image/jpeg",
+      "depicts_identifiable_person": false,
+      "provenance": "customer_site",
+      "role": "product",
+      "sha256": "689aca0e7a548b43cf509dd2966f9d134c3c85108ad15dfee88c98649adeda46"
+    }
+  ],
+  "job_id": "AGY-2026-09-21-MOKOBARA-ODYSSEY-001",
+  "policy_profile": "dry",
+  "retention": {
+    "policy_ref": "alpha-1-default"
+  },
+  "submitted_by": "producer-mokobara"
+}
