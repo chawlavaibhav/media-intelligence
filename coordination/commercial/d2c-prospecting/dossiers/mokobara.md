@@ -1,10 +1,29 @@
 # Dossier — Mokobara
 
-**Research date:** 2026-09-17
-**Run:** `runs/2026-09-17.md`
-**Pipeline score:** **91/100** — the highest recorded in this workstream
-**Top-3 rank:** **#1 — the brand to produce for first**
+**Research date:** 2026-09-17 · **re-verified 2026-09-21 (run 04)**
+**Run:** `runs/2026-09-17.md`, re-verified by `runs/2026-09-21.md`
+**Pipeline score:** **91/100** — the highest recorded in this workstream. **Held at 91 in run 04.**
+**Top-3 rank:** **#1 — the brand to produce for first.** Unchanged; nothing displaced it.
 **Stage:** `SHORTLISTED`
+
+> **Re-verification, 2026-09-21 (run 04).** Everything load-bearing in this dossier was re-read from
+> live page source today and **none of it moved**.
+>
+> - **Ad-spend footprint — byte-for-byte identical to run 03:** Meta Pixel `1284843575057243`,
+>   `facebookCapiEnabled: true`, Google Ads `AW-682701744`, GA4 `G-V228WWBZ6B`, `GTM-W4G9LV2`,
+>   platform Shopify, with GoKwik + Shopflo, Judge.me and Clarity.
+> - **Catalogue:** **107 product URLs** (unchanged) and **162 collections** (newly recorded).
+> - **YouTube `@mokobara`:** `channelOwnerEmptyStateRenderer` — **zero uploads.** Confirmed a second
+>   time, on a second date. The format gap that drives this dossier is real and persistent.
+> - **Meta Ad Library:** attempted again, **`HTTP 403`**. Still never rendered in any run. The
+>   hand-check below remains outstanding.
+> - **New but non-score-changing (INFERRED — Indian Retailer, Sept 2026):** FY25 revenue now reported
+>   as **₹240 Cr** (this dossier carries ₹230.15 Cr from run 03 — both are second-hand; the newer
+>   figure is not necessarily the better one, so **neither should be used as ad copy**). Retail
+>   expansion continues: a new travel store at Elante Mall, Chandigarh, and World St. at Worldmark,
+>   Aerocity.
+>
+> **No score change, no change to the selected product, no change to any creative territory.**
 
 > **What this document is.** The handoff to the eventual production agent. It assembles what is known,
 > separates what was seen from what was read, and marks what must not be assumed.

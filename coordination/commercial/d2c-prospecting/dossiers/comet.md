@@ -1,10 +1,17 @@
 # Dossier — Comet
 
-**Research date:** 2026-09-17
-**Run:** `runs/2026-09-17.md`
-**Pipeline score:** **84/100**
+**Research date:** 2026-09-17 · **updated 2026-09-21 (run 04)**
+**Run:** `runs/2026-09-17.md`, updated by `runs/2026-09-21.md`
+**Pipeline score:** **87/100** (was 84 — +3 on new primary evidence, run 04)
 **Top-3 rank:** **#2**
 **Stage:** `SHORTLISTED`
+
+> **⚠ UPDATED 2026-09-21 — the selected product has changed.** Comet published **`Astra`**, their
+> first women's-only silhouette, on **2026-09-09** — eight colourways, ₹4,899. It is twelve days old
+> and it is the freshest trigger in the pipeline. **§2 now selects Astra; the previous `X Lows`
+> selection is preserved below it as §2a for reference.** Two further additions this run: §5a records
+> the first real read we have of Comet's creative language (the `Maachis` campaign), and §1 records
+> the re-verified catalogue figures.
 
 > **What this document is.** The handoff to the eventual production agent. It assembles what is known,
 > separates what was seen from what was read, and marks what must not be assumed.
@@ -63,9 +70,70 @@ platform **Shopify** · Judge.me, Razorpay, Microsoft Clarity.
 what appears in source is the complete picture, and it shows Meta with server-side CAPI **and** Google
 Ads both active.
 
+### 1a. Re-verified 2026-09-21 (run 04)
+
+**Catalogue — OBSERVED 2026-09-21:** **169 product URLs** (run 03 recorded 194 — the count *fell*, as
+drop colourways sell through and are retired) and **389 collections**, the highest collection count
+of any brand in the pipeline. Sitemaps resolve on **`www.wearcomet.com`**.
+
+**YouTube — re-OBSERVED 2026-09-21:** `@wearcomet` still returns `channelOwnerEmptyStateRenderer`,
+i.e. **zero uploads**. Unchanged from run 03, now confirmed twice.
+
+**Meta Ad Library — attempted 2026-09-21: `HTTP 403`.** Still never rendered, in any run.
+
 ---
 
-## 2. Selected product
+## 2. Selected product — **UPDATED 2026-09-21**
+
+### **Astra — ₹4,899 — pitched as the eight-colourway launch system**
+
+`https://www.wearcomet.com/products/astra-pink-butter` and seven siblings.
+
+**OBSERVED 2026-09-21** from the public `/products/<handle>.json` endpoints:
+
+| Handle | Variant colour name | `price` | `compare_at_price` | Images |
+|---|---|---|---|---|
+| `astra-pink-butter` | Astra Multi Beige | **`4899.00`** | **empty — none** | 9 |
+| `astra-chrome-kiss` | Astra Silver White | `4899.00` | empty | 8 |
+| `astra-matcha-cream` | Astra Green Cream | `4899.00` | empty | 8 |
+| `astra-wild-bloom` | — | `4899.00` | empty | — |
+| `astra-vanilla-cloud` | — | `4899.00` | empty | — |
+| `astra-day-dream` | — | `4899.00` | empty | — |
+| `astra-burnt-toast` | — | `4899.00` | empty | — |
+| `astra-wild-poppy` | — | `4899.00` | empty | — |
+
+`vendor: wearcomet` · `product_type: Astra` · sizes 3/4/5+ ·
+**`created_at: 2026-09-02` · `published_at: 2026-09-09`**
+
+**Note the count.** Trade press (LocalSamosa, third week September 2026) reported **seven**
+colourways. The store shows **eight**. Primary evidence governs — but do not repeat the press number.
+
+**What it is (INFERRED — LocalSamosa, Sept 2026):** Comet's first sneaker silhouette designed
+exclusively for women. Ballet-inspired, low-profile, with transparent mesh detailing, double lacing
+and a mix of materials.
+
+**Why this product rather than X Lows.**
+
+1. **It is twelve days old.** A brand-new silhouette in a brand-new customer segment is the moment a
+   brand is most short of creative and most willing to look at someone else's.
+2. **It ships as a system, not a shoe.** Eight colourways published simultaneously is the
+   re-render-per-colourway argument made for us, by them, on day one.
+3. **It is a segment entry, not a restock.** Launching women's-only footwear means new audiences, new
+   placements and new creative — not a refresh of existing assets.
+4. **The colour names are already the creative brief.** *Pink Butter · Chrome Kiss · Matcha Cream ·
+   Wild Bloom · Vanilla Cloud · Day Dream · Burnt Toast · Wild Poppy* — food-and-flora naming that
+   hands a treatment its palette and its mood without us inventing a thing.
+
+**The same honest constraint as before, re-verified.** **No Astra SKU carries a
+`compare_at_price`.** There is no brand-supplied discount to overlay. Deterministic copy is limited
+to the product name, the colourway name and **₹4,899**. **We invent no offer and imply no discount.**
+
+**Asset availability:** 8–9 public images per colourway, i.e. **roughly 68 public reference images
+across the line** — ample for reference-led work.
+
+---
+
+## 2a. Previous selection (run 03) — retained for reference
 
 ### **X Lows — ₹4,299 — pitched as the colourway system, led by `X Lows LIGHT`**
 
@@ -169,6 +237,33 @@ Men's and women's ranges both exist (`/men-sneakers`, `/women-sneakers`).
 *Not legitimate:* "Comet has no video creative." Press describes UGC as a core part of their model,
 which implies substantial video activity on Instagram. **Do not design against, or write, a claim that
 they lack video.** Treat the YouTube absence as exactly what it is.
+
+---
+
+## 5a. Comet's creative language — the first real read we have (**NEW 2026-09-21**)
+
+Run 03 recorded that *"their Meta creative has never been seen"*. The Instagram hand-check is still
+outstanding, but a trade writeup now gives a genuine read of how this brand thinks about marketing.
+
+**INFERRED — medianews4u, published 2026-06-24, on the `Maachis` campaign:**
+
+- The campaign is built entirely on **a product detail as the story**: a functional match-striker
+  strip concealed beneath the sneaker's heel tab.
+- Design language: beige suede with bold red detailing, drawn from **vintage Indian matchbox
+  graphics**; shipped in a **life-sized matchbox** with butter paper and retro graphics.
+- Co-founder **Utkarsh Gupta**, quoted: *"Every detail, from the vintage-inspired graphics to the
+  life-sized matchbox packaging and the functional striker strip, was designed to create moments of
+  discovery."*
+
+**Why this matters more than it looks.** It de-risks the pitch substantially. It says Comet already
+builds marketing on **product-design discovery — no celebrity, no talking head, no borrowed fame**.
+That is precisely the shape of the frozen Alpha-1 family. We are not asking them to change what they
+believe about advertising; we are offering to execute the thing they already believe at a cadence and
+cost-per-asset they currently cannot reach with zero owned video.
+
+**Use it carefully.** This is a single trade article, not their ad account. It describes one campaign
+from June 2026. It is **not** evidence about what is running on Meta today — that remains unseen and
+is the reason the Instagram hand-check is still the first action on this brand.
 
 ---
 

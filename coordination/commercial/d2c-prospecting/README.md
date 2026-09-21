@@ -61,8 +61,27 @@ Recorded so no future run rediscovers these. Full detail in `runs/2026-09-17.md`
 - **YouTube:** read `ytInitialData` on `/@handle/videos`. `channelOwnerEmptyStateRenderer` means the
   channel has **zero** uploads. **Verify the handle belongs to the brand** — run 03 caught three
   impostor/unrelated handles and one wrong domain before they reached the pipeline.
-- **Meta Ad Library has returned HTTP 403 in every run to date.** Record it and move on; never attempt
-  to log in or scrape around it.
+- **Widen the pixel grep (learned run 04).** Grepping only `"pixel_id":"…"` misses stores that emit
+  the web-pixels config with **escaped** quotes (`\\"pixel_id\\":\\"…\\"`). Four stores in run 04 showed
+  `facebookCapiEnabled: true` with no pixel matched until the pattern was widened to
+  `pixel_id.{0,8}[0-9]{13,17}`. Use the wide form, or pixels will be under-reported again.
+- **Verify every domain and every social handle before trusting it.** Run 03 caught four traps, run 04
+  caught seven: `uppercase.shop` (dead — the real domain is `uppercase.co.in`), `uniqyou.in` (an
+  unrelated international school), `blueteaworld.com` (parked/expired), `spinbot.in` (114-byte empty
+  body — the same signature as Nothing But), `assembly.com` vs `assemblytravel.com`, `bagline.in` →
+  `bagline.com`, and `@uppercaseofficial` on YouTube (a phone-case seller, not the luggage brand).
+- **Meta Ad Library has returned HTTP 403 in every run to date** (run 04: five queries, 481-byte
+  bodies). Record it and move on; never attempt to log in or scrape around it.
+
+## Discovery sources that have earned a standing read
+
+| Source | What it gives | Caveat |
+|---|---|---|
+| **LocalSamosa, "Brand Announcements, Launches and Releases"** (weekly) | The best **current-trigger** source found to date — dated, brand-level, launch-level. It produced the Comet `Astra` and AntiNorm updates in run 04 | Mixes D2C with conglomerates, hospitality and spirits; screen hard |
+| **Inc42 FAST42 (D2C growth ranking)** | A legitimate pool of real operating consumer brands in the "large enough to pay, small enough to reach" band, with growth data. **Not** the same object as the "Top 20 Funded D2C Startups" index rejected in run 02 | Carries **no current trigger** — every name still needs one |
+| **Entrackr weekly funding report** | The funding window, reliably dated | Consumer yield is often thin |
+| `niharkhandelwal.substack.com` deal roundups | High-yield consumer deal flow (run 03) | Check the RSS date before mining — editions can lag |
+| **Entrackr `/tags/d2c` index** | **Do not use.** Returned 2025-dated items as its most recent content (run 03) | — |
 
 ## What the product can actually make today — read before writing a spec-ad hypothesis
 
