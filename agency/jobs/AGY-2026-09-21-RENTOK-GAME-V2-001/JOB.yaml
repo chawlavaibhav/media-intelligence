@@ -7,7 +7,7 @@ production_base_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f   # origin/main at
 branch: work/agency-job-rentok-game-v2-001
 skill_version: 3488bdb3170005151bb57731fcf37d4b030f1abd
 opened_by: Producer session (superseding production of the accepted Lane A film, Controller-directed)
-production_status: pending_human_review   # DET 28/28 PASS on the deliverable; LJ items listed (stages/05 §5.5); customer verdict not yet asked
+production_status: accepted   # human ACCEPT, chat 2026-09-21: 'its already good' (after 'not required' on the checker's repair round)
 learning_status: pending_sync             # LEARNING-PACKET.yaml written 2026-09-21
 sync: {case_id: null, integration_branch: null, integration_pr: null, merge_commit: null}
 supersedes: AGY-2026-09-20-RENTOK-GAME-LANE-A-001 @ 7dab37a (accepted 2026-09-20; this job re-makes the full 30 s "the Video-4 way")
@@ -175,11 +175,19 @@ qa:
     - {id: R-2, asset_id: final-v1, observed: "true peak −0.4 dBTP after AAC", class: audio, repair_layer: assembly, repaired_by_attempt: "USD 0 alimiter −6 dBFS + 1.5 dB make-up after loudnorm → −14.0 / −2.7"}
 
 # ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
-versions: []
+versions:
+- version: 1
+  presented_utc: '2026-09-21T12:33:00Z'
+  assets: [0e76b7b1872317728cfbb08dc948e4c678452ef7d84a0eafd6ece0f89013d122]
+  verdict: ACCEPT
+  verdict_verbatim: 'its already good'
+  context_verbatim: "customer declined the checker's USD-0 repair round: 'not required'; earlier: 'Also, this is finally one amazinh outcome'"
+  decided_utc: '2026-09-21T16:34:35Z'
+  decided_by: 'Vaibhav Chawla (customer / human Controller), chat'
 outcome:
-  status: pending_human_review
-  accepted_version: null
-  accepted_by: null
+  status: accepted
+  accepted_version: 1
+  accepted_by: 'Vaibhav Chawla'
   assets:
     - {path: gen/final/rentok-game-v2-9x16-30s.mp4, sha256: 0e76b7b1872317728cfbb08dc948e4c678452ef7d84a0eafd6ece0f89013d122, bytes: 33028692, dims_or_duration: "1080x1920 9:16, 30.016 s, h264 High 30 fps ≈ 8.6 Mbps + aac-LC 48 kHz stereo; no edit lists; I −14.0 LUFS TP −2.7 dBTP", supersedes: "gen/final/v1/rentok-game-v2-9x16-30s.mp4 @ 1cc8c13d79aa6dd92136ff58dd478cce19583706227eb1d498f6184457c51ca9 (before R-1/R-2)", produced_by_attempt: [att-001, "Lane A att-001..008 (reused)", "CQ-001 att-006 (reused)", "code render final-v3 / audio-v2-mix"], composition_inputs: [board.json, copy-deck.json, tools/render_v2.py, tools/render_game.py, tools/pixfont.py, tools/sfx_v2.py, tools/assemble_v2.py, "gen/assets/owner_*.png", "gen/assets/c_*.png", "gen/assets/v2_*.png", "gen/assets/obst_1..5.png", gen/assets/plate.png, gen/raw/A10_music_att-008.wav, gen/sfx-v2-stem.wav, "source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf5…"], formats: ["9:16"], reuse_potential: [case_study, demo, template_evidence]}
     - {path: gen/final/CONTACT-SHEET.png, sha256: de2887bb01a7b975dc96ba7d91016cb3cc910c5a935d29576762780eaafa5326, produced_by_attempt: code}
@@ -196,11 +204,11 @@ ttao:
   artifact_received_utc: 2026-09-21T12:02:15Z
   qa_complete_utc: 2026-09-21T12:16:20Z         # DET 28/28 on final-v3-audio at 12:15:45Z; container box walk 12:16:20Z
   human_review_requested_utc: null              # the Controller presents
-  human_decision_utc: null
+  human_decision_utc: '2026-09-21T16:34:35Z'
   accepted_utc: null
 kpis:
   cpao_usd: 0.067                 # provisional: = spend.total_reserved_usd; final on ACCEPT
-  ttao_hms: null                  # human_decision_utc − job_start_utc on ACCEPT; elapsed to qa_complete = 0:51:13
+  ttao_hms: '5:09:28'   # human_decision_utc − job_start_utc
   human_review_cycles: 0
   versions_to_acceptance: null
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml
