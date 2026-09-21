@@ -92,7 +92,7 @@ Score each criterion for each clip. Use the anchor text; half points are not all
 
 | # | Constraint | Check |
 |---|---|---|
-| T1 | 9:16, 1080×1920, H.264/AAC MP4, 30 fps, no edit lists, moov first | `ffprobe` + an MP4 box walk for `elst` atoms (on `origin/main` @ c88c0d5 no such helper exists — OBSERVED; PR #104, not merged, promotes `runtime/loop/container.py assess_edit_lists` from case A-004; until it merges, use the Lane A job's `tools/qa_checks.py count_atoms`, frozen in `treatments/A-baseline/frozen-inputs/` is not it — copy it from `A/tools/qa_checks.py` @ 7dab37a when needed) |
+| T1 | 9:16, 1080×1920, H.264/AAC MP4, 30 fps, no edit lists, moov first | `ffprobe` + an MP4 box walk for `elst` atoms (on `origin/main` @ c88c0d5 no such helper exists — OBSERVED; PR #104, not merged, promotes `runtime/loop/container.py assess_edit_lists` from case A-004; until it merges, use the Lane A job's `tools/qa_checks.py count_atoms` — `A/tools/qa_checks.py` @ 7dab37a, not among the frozen inputs; copy it when needed) |
 | T2 | critical text inside the platform safe box (65,288)–(888,1248) | `runtime.compositor.gates.check_text_bounds` over the clip's layout log (A, B, C) or over frame-measured boxes (D) |
 | T3 | no Nintendo character, artwork or asset | human-eye inspection of the 10-fps contact sheet by the checker (not the evaluator) against the Lane A Stage-2c do/don't list |
 | T4 | no forbidden claim; every on-screen string on the permitted list | string scan over the layout log; frame text-hygiene pass (D: every sampled frame, because the model could invent lettering) |
