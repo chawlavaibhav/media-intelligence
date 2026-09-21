@@ -1,0 +1,304 @@
+YouTube recommended upload encoding settings - YouTube Help
+Skip to main content
+YouTube Help
+Sign in
+Google Help
+Help Center
+Fix a problem
+Watch videos
+Manage your account & settings
+Supervised experiences on YouTube
+YouTube Premium
+Create & grow your channel
+Monetize your content
+Policy, safety, & copyright
+Community
+YouTube
+Privacy Policy
+YouTube Terms of Service
+Submit feedback
+Send feedback on...
+This help content & information
+General Help Center experience
+Close
+Next
+Creator Tips
+Troubleshoot problems playing videos
+Troubleshoot account issues
+Fix upload problems
+Get help with the YouTube Partner Program
+Learn about recent updates on YouTube
+Get help with YouTube
+Find videos to watch
+Change video settings
+Watch videos on different devices
+Comment, subscribe, & connect with creators
+Save or share videos & playlists
+Purchase & manage movies, TV shows & products on YouTube
+Sign up and manage your account
+Manage account settings
+Manage privacy settings
+Manage ad settings
+Manage accessibility settings
+YouTube updates
+Supervised accounts for kids
+Supervised accounts for teens
+Join YouTube Premium
+YouTube Premium benefits
+Manage your Premium membership
+Manage Premium billing & payments
+Fix YouTube Premium issues
+Upload videos
+Edit videos & video settings
+Create Shorts
+Edit videos with YouTube Create
+Customize & manage your channel
+Analyze performance with analytics
+Translate videos, subtitles, & captions
+Manage your posts & comments
+Live stream on YouTube
+YouTube Creator Community
+Become a podcast creator on YouTube
+Creator and Studio App updates
+YouTube Partner Program
+Make money on YouTube
+Get paid
+Understand ads and related policies
+YouTube for Content Managers
+YouTube policies
+Reporting and enforcement
+Privacy and safety center
+Copyright and rights management
+YouTube recommended upload encoding settings
+These features are only available to partners who use YouTube Studio Content Manager.
+Below are recommended upload encoding settings for your videos on YouTube.
+Container: MP4
+No Edit Lists (or the video might not get processed correctly)
+moov atom at the front of the file (Fast Start)
+Audio codec: AAC-LC or Opus or Eclipsa Audio
+Channels: Stereo or Stereo + 5.1 or Stereo + Eclipsa Audio
+Sample rate: 48kHz
+Video codec: H.264
+Progressive scan (no interlacing)
+High Profile
+2 consecutive B frames
+Closed GOP. GOP of half the frame rate.
+CABAC
+Variable bitrate. No bitrate limit is required, though we offer recommended bit rates below for reference
+Chroma subsampling: 4:2:0
+Frame rate
+Content should be encoded and uploaded in the same frame rate it was recorded.
+Common frame rates include: 24, 25, 30, 48, 50, 60 frames per second (other frame rates are also acceptable).
+Interlaced content should be deinterlaced before uploading. For example, 1080i60 content should be deinterlaced to 1080p30. 60 interlaced fields per second should be deinterlaced to 30 progressive frames per second.
+Bitrate
+The bitrates below are recommendations for uploads. Audio playback bitrate is not related to video resolution.
+Recommended video bitrates for SDR uploads
+To view new 4K uploads in 4K, use a browser or device that supports VP9.
+Type
+Video Bitrate, Standard Frame Rate
+(24, 25, 30)
+Video Bitrate, High Frame Rate
+(48, 50, 60)
+8K
+80 - 160 Mbps
+120 to 240 Mbps
+2160p (4K)
+35–45 Mbps
+53–68 Mbps
+1440p (2K)
+16 Mbps
+24 Mbps
+1080p
+8 Mbps
+12 Mbps
+720p
+5 Mbps
+7.5 Mbps
+480p
+2.5 Mbps
+4 Mbps
+360p
+1 Mbps
+1.5 Mbps
+Recommended video bitrates for HDR uploads
+100 - 200 Mbps
+150 to 300 Mbps
+44–56 Mbps
+66–85 Mbps
+20 Mbps
+30 Mbps
+10 Mbps
+15 Mbps
+6.5 Mbps
+9.5 Mbps
+Not supported
+Recommended audio bitrates for uploads
+Audio Bitrate
+Mono
+128 kbps
+Stereo
+384 kbps
+5.1
+512 kbps
+Note:
+For Eclipsa Audio (immersive audio), we recommend 128 kbps per channel.
+Video resolution and aspect ratio
+The standard aspect ratio for YouTube on a computer is 16:9. When uploading other aspect ratios such as vertical or square, the player automatically adapts itself to the size of the video. This setting gives the best viewing experience based on the aspect ratio and device.
+Learn how to
+use video resolution and aspect ratios
+correctly.
+Color Space
+Recommended color space for SDR uploads
+YouTube recommends BT.709 as the standard color space for SDR uploads:
+Color Transfer Characteristics (TRC)
+Color Primaries
+Color Matrix Coefficients
+BT.709
+BT.709 (H.273 value: 1)
+BT.709 (H.273 value 1)
+YouTube standardizes functionally similar color matrices and primaries before processing the video. For example, BT.601 and BT.709 TRC are identical, and YouTube unifies them to BT.709. Or, BT.601 NTSC and PAL have functionally similar color matrices and YouTube unifies them to BT.601 NTSC. In addition, YouTube may take the following actions to interpret the color space values:
+When
+YouTube Action
+The upload color space has unspecified TRC.
+Assumes BT.709 TRC.
+The upload color space has unknown or unspecified color matrix and primaries.
+Assumes BT.709 color matrix and primaries.
+The upload color space mixes BT.601 and BT.709 color primaries and matrix with specified values.
+Uses the color matrix to override the color primaries and make them consistent.
+The upload color space mixes BT.601 and BT.709 color primaries and matrix, and either primaries or matrix is unspecified.
+Uses the specified value of color primaries/matrix to set and override the unspecified one.
+After the Upload Color Space Standardization, YouTube will check if BT.709 or BT.601 matches and passes through the color space. Otherwise, YouTube converts the unsupported color spaces to BT.709 by mapping pixel values.
+YouTube converts the color primaries that require high bit depth without a supported HDR transfer function to avoid banding, such as BT.2020, to BT.709 (8-bit). YouTube converts full color range to limited color range.
+Warning:
+YouTube does not recommend the RGB color matrix on uploads. In this case, YouTube initially sets the color matrix to unspecified before the standardization. It will then infer the color matrix using the color primaries during standardization. Note that sRGB TRC will convert to BT.709 TRC. YouTube re-tags the color primaries/matrix/TRC to BT.709 when it is not supported by FFmpeg colorspace conversion filter.
+Recommended color space for HDR uploads
+Refer to the
+Upload HDR videos
+article.
+Learn how to use
+Spatial Audio
+,
+360 video
+, and
+virtual reality video
+so your viewers can experience your video's sound in all directions, just like real life.
+Was this helpful?
+How can we improve it?
+Yes
+No
+Submit
+Need more help?
+Try these next steps:
+Post to the help community
+Get answers from community members
+true
+1 of 8
+Set default upload settings
+2 of 8
+Skip sending upload notifications
+3 of 8
+Schedule video publish time
+4 of 8
+Add tags to your YouTube videos
+5 of 8
+Video resolution & aspect ratios
+6 of 8
+7 of 8
+Supported YouTube file formats
+8 of 8
+Find playlists & videos using hashtags
+©2026 Google
+Language
+Afrikaans‎
+azərbaycan‎
+bosanski‎
+català‎
+dansk‎
+Deutsch‎
+eesti‎
+English (United Kingdom)‎
+español‎
+español (Latinoamérica)‎
+euskara‎
+Filipino‎
+français‎
+français (Canada)‎
+Gaeilge‎
+galego‎
+hrvatski‎
+Indonesia‎
+isiZulu‎
+italiano‎
+Kiswahili‎
+latviešu‎
+lietuvių‎
+magyar‎
+Malti‎
+Melayu‎
+Nederlands‎
+norsk‎
+o‘zbek‎
+polski‎
+português‎
+português (Brasil)‎
+română‎
+shqip‎
+slovenčina‎
+slovenščina‎
+suomi‎
+svenska‎
+Tiếng Việt‎
+Türkçe‎
+íslenska‎
+čeština‎
+Ελληνικά‎
+беларуская‎
+български‎
+кыргызча‎
+македонски‎
+монгол‎
+русский‎
+српски‎
+українська‎
+қазақ тілі‎
+հայերեն‎
+‏
+עברית
+اردو
+العربية
+فارسی
+नेपाली‎
+मराठी‎
+हिन्दी‎
+অসমীয়া‎
+বাংলা‎
+ਪੰਜਾਬੀ‎
+ગુજરાતી‎
+ଓଡ଼ିଆ‎
+தமிழ்‎
+తెలుగు‎
+ಕನ್ನಡ‎
+മലയാളം‎
+සිංහල‎
+ไทย‎
+ລາວ‎
+မြန်မာ‎
+ქართული‎
+አማርኛ‎
+ខ្មែរ‎
+中文（简体）‎
+中文（繁體）‎
+中文（香港）‎
+日本語‎
+한국어‎
+English‎
+Enable Dark Mode
+Search
+Clear search
+Close search
+Google apps
+Main menu
+1522391841006197573
+Search Help Center
+false
+59
