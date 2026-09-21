@@ -10,7 +10,7 @@ production_base_sha: 4d919c9df6c9725a2f14c411771565bb09089876         # REQUIRED
 branch: work/agency-job-rentok-game-lane-a-001                      # REQUIRED  work/agency-job-<job-id>
 skill_version: 3488bdb3170005151bb57731fcf37d4b030f1abd   # last commit touching SKILL.md at job start               # sha of .claude/skills/media-agency/SKILL.md at job start
 opened_by: Producer session, lane A (Controller-directed experiment)                   # person
-production_status: pending_human_review   # open | accepted | rejected | abandoned — Controller instruction: pending_human_review until the blind verdict
+production_status: accepted   # human ACCEPT in the blind evaluation (Controller session, 2026-09-20T20:06Z); verdict verbatim under versions[]
 learning_status: pending_sync     # not_started | pending_sync | synced | no_promotion — LEARNING-PACKET.yaml written 2026-09-21
 sync:                             # filled by /media-agency-sync — the only fields it may change on the job branch
   case_id: null                   # production-learning/cases/<CASE-ID>
@@ -251,11 +251,20 @@ qa:
     - {id: D-10, asset_id: records, observed: "ATTEMPTS verdict pending vs JOB accepted; frozen_asset null; checker_inspected false", class: infrastructure (records), repair_layer: records, repaired_by_attempt: "USD 0 verdict fields set with note; frozen_asset sha; checker_inspected true citing CHECK-STAGE-5.md"}
 
 # ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
-versions: []                      # [{version, presented_utc, assets: [], verdict: ACCEPT|SPECIFIC REPAIR|REJECT, verdict_verbatim, decided_utc}]
+versions:
+- version: 1
+  presented_utc: '2026-09-20T19:58:00Z'
+  presented_as: 'Video Y (blind packet, container metadata stripped; mapping sealed sha256 39365d6242e8f0a7…)'
+  assets: [9d50c4c5729f32d198fbaafc642fd78eccc0ee11dee2131cb637270584b5e24a]
+  verdict: ACCEPT
+  verdict_verbatim: 'both accepted. vidoe one has robotic voice over althouh. video 2 is better'
+  verdict_note_for_this_video: 'video 2 is better'
+  decided_utc: '2026-09-20T20:06:00Z'
+  decided_by: 'Vaibhav Chawla (customer / human Controller), chat'
 outcome:
-  status: null                    # accepted | rejected | abandoned  — accepted ONLY from a human ACCEPT (pending human review)
-  accepted_version: null
-  accepted_by: null               # person
+  status: accepted
+  accepted_version: 1
+  accepted_by: 'Vaibhav Chawla'
   assets:                         # candidate deliverable (not accepted until a human ACCEPT)
     - {path: gen/final/rentok-game-lane-a-9x16-30s.mp4, sha256: 9d50c4c5729f32d198fbaafc642fd78eccc0ee11dee2131cb637270584b5e24a, bytes: 33410158, dims_or_duration: "1080x1920 9:16, 30.021 s (no edit list; AAC priming kept), h264 High 30 fps + aac 48 kHz stereo; repair round 1b (D-11 end-card brand blue)", previous_round1: "gen/final/v2/rentok-game-lane-a-9x16-30s.mp4 @ 5769ffa7232e6bb1427ce1f0db7396fedd12e9af58dc7feb5d61f140d20b0ab9 (D-8 regressed: black end card)", intermediate: "gen/final-v4-audio.mp4 @ bcf125ca… (D-1..D-6, D-8, D-9 before the D-7 addendum)", supersedes: "gen/final/v1/rentok-game-lane-a-9x16-30s.mp4 @ 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168 (had 2 elst atoms; kept for the record)", produced_by_attempt: [att-001, att-002, att-003, att-004, att-005, att-006, att-007, att-008, "code renders final-v3 / audio-mix"], composition_inputs: [board.json, copy-deck.json, tools/render_game.py, tools/sfx.py, tools/assemble.py, gen/assets/owner_idle.png, gen/assets/owner_runA.png, gen/assets/owner_runB.png, gen/assets/owner_jump.png, gen/assets/obst_1.png, gen/assets/obst_2.png, gen/assets/obst_3.png, gen/assets/obst_4.png, gen/assets/obst_5.png, gen/assets/plate.png, gen/raw/A10_music_att-008.wav, gen/sfx-stem.wav, "source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf5…"], formats: ["9:16"], reuse_potential: [case_study, demo, template_evidence]}
     - {path: gen/final/CONTACT-SHEET.png, sha256: f210e4b25b78ec85aa81d4dcdec3e5e6037c8d7748d15e1c750a4ed744f4481f, produced_by_attempt: "code"}
@@ -271,12 +280,12 @@ ttao:
   dispatch_end_utc: 2026-09-20T19:06:12Z   # att-008 settled
   artifact_received_utc: 2026-09-20T19:06:12Z
   qa_complete_utc: 2026-09-20T19:55:22Z   # repair round 1b (D-11): DET suite 23 checks 0 FAIL on final-v6-audio (previous stamps 19:16:02Z, 19:40:25Z, 19:44:03Z)
-  human_review_requested_utc: null
-  human_decision_utc: null
+  human_review_requested_utc: '2026-09-20T19:58:00Z'   # blind packet delivered to the customer
+  human_decision_utc: '2026-09-20T20:06:00Z'   # customer message 'both accepted…' (IST 01:36)
   accepted_utc: null
 kpis:
   cpao_usd: null                  # = spend.total_reserved_usd on accept (0.529 reserved so far)
-  ttao_hms: null                  # accepted_utc − job_start_utc; job_start → qa_complete (repair round 1) = 1:28:43
+  ttao_hms: '1:54:18'   # human_decision_utc − job_start_utc
   human_review_cycles: null       # = len(versions)
   versions_to_acceptance: null
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml   # read its current values; never fake the comparison
