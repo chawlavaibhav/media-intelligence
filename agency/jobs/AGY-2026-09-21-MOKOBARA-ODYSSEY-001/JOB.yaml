@@ -358,7 +358,7 @@ spend:
     failure_basis: null
     artifact_path: gen/clips/b4.mp4
     artifact_sha256: 3fc93d6619501033e1b874b75e4ac7c0126dba73da8c67f1d7e4ebcda7dd0cef
-    verdict: not_selected
+    verdict: accepted
     is_repair: false
   - attempt_id: att-004
     asset_id: b1-still
@@ -466,7 +466,7 @@ spend:
     failure_basis: null
     artifact_path: gen/clips/b1.mp4
     artifact_sha256: 8a376bc6242a376967770acf856ee45d2ba5afcfdafbefe84d63c2773c3ef4db
-    verdict: rejected
+    verdict: 'rejected: story break'
     is_repair: false
   - attempt_id: att-010
     asset_id: b2-clip
@@ -520,7 +520,7 @@ spend:
     failure_basis: null
     artifact_path: gen/clips/b5.mp4
     artifact_sha256: 7ec85877ddd3b99704a614fa641307ddf87876a640bb9ba1bb128c110b631256
-    verdict: rejected
+    verdict: 'rejected: items left out'
     is_repair: false
   - attempt_id: att-013
     asset_id: b6-clip
@@ -538,7 +538,7 @@ spend:
     failure_basis: null
     artifact_path: gen/clips/b6.mp4
     artifact_sha256: d245e57051a02bf93daf5dd08158ce533fe609f8af780c1dce7235e3136f84e8
-    verdict: accepted
+    verdict: 'superseded in v2: beat 6 take 1: no departure (checker D3), replaced in v2'
     is_repair: false
   - attempt_id: att-014
     asset_id: music-bed
@@ -611,7 +611,7 @@ spend:
     failure_basis: null
     artifact_path: gen/clips/b5-take2.mp4
     artifact_sha256: 69accbb493af9441b3f59222ce3ea6176079596384cd243d813fabfb3bd4b8ed
-    verdict: accepted
+    verdict: 'superseded in v2: beat 5 take 2: coconuts+gourd left out, replaced in v2'
     is_repair: true
   - attempt_id: att-018
     asset_id: b4-clip
@@ -629,11 +629,176 @@ spend:
     failure_basis: null
     artifact_path: gen/clips/b4-take2.mp4
     artifact_sha256: 60e20943fd18955c77032c1b34585964f323321a66fa7a8b6b30b627119edeb3
+    verdict: 'superseded in v2: beat 4 take 2: warped paddle (customer item 2), replaced by take 1 in v2'
+    is_repair: true
+  - attempt_id: att-019
+    asset_id: b3-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T18:21:18.162390Z'
+    end_utc: '2026-09-21T18:21:36.279429Z'
+    latency_s: 18.1
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b3-take2.png
+    artifact_sha256: 5d79b1a77a206cd5288be092a60164960ce7d88faca544a59f8246f47e536a35
     verdict: accepted
     is_repair: true
-  total_reserved_usd: 5.389
+  - attempt_id: att-020b
+    asset_id: b6-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T18:23:00.264238Z'
+    end_utc: '2026-09-21T18:23:11.792092Z'
+    latency_s: 11.5
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b6-take2.png
+    artifact_sha256: 78d1e8253571cfd5fa736dca16d181d15f560c694323d88d33927157aa72a344
+    verdict: accepted
+    is_repair: true
+  - attempt_id: att-021
+    asset_id: b5-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T18:23:13.212634Z'
+    end_utc: '2026-09-21T18:23:25.481347Z'
+    latency_s: 12.3
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b5-take3.png
+    artifact_sha256: 644f4997eec60960c97a9b891324054c6f0c41d5dc4421363c853ecc6c1a7af6
+    verdict: accepted
+    is_repair: true
+  - attempt_id: att-020
+    asset_id: b3-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '6'
+    reserved_usd: 0.6
+    settled_usd: null
+    start_utc: '2026-09-21T18:22:16.472386Z'
+    end_utc: '2026-09-21T18:23:28.461706Z'
+    latency_s: 72.0
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b3-take2.mp4
+    artifact_sha256: f02d2c3bd85a5cd3640a55bec24addcf599730d08440ef03403ce9625fb3190d
+    verdict: accepted
+    is_repair: true
+  - attempt_id: att-023
+    asset_id: b6-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T18:24:22.945196Z'
+    end_utc: '2026-09-21T18:25:36.403401Z'
+    latency_s: 73.5
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b6-take2.mp4
+    artifact_sha256: b1b26c997c466e686a19d76714b89616d2be2a2d5b5308c1b29672fb8cc7a8ae
+    verdict: accepted
+    is_repair: true
+  - attempt_id: att-024
+    asset_id: b5-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T18:25:37.799078Z'
+    end_utc: '2026-09-21T18:26:49.330718Z'
+    latency_s: 71.5
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b5-take3.mp4
+    artifact_sha256: b4dbd71e61fa2890a5894a9cce287d8e004e91d983ebb5d97ffbbc0ec2a7dcbc
+    verdict: 'rejected: bag re-opened after the close (1.9 s usable, superseded by att-025)'
+    is_repair: true
+  - attempt_id: att-025
+    asset_id: b5-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T18:27:45.573111Z'
+    end_utc: '2026-09-21T18:28:33.853397Z'
+    latency_s: 48.3
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b5-take4.mp4
+    artifact_sha256: 5bf97809bedf66162985db38ea382d6dba6d8e9bb31aaec7871da42456511af3
+    verdict: accepted
+    is_repair: true
+  - attempt_id: att-026
+    asset_id: b1-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T18:29:21.761749Z'
+    end_utc: '2026-09-21T18:29:33.507154Z'
+    latency_s: 11.7
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b1-take3.png
+    artifact_sha256: 4ad75af1f2cb20fadfb6887f7f50a2e9b60ad74c8b5dc59f4bf64e3ca4785684
+    verdict: accepted
+    is_repair: true
+  - attempt_id: att-027
+    asset_id: b1-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T18:29:46.819689Z'
+    end_utc: '2026-09-21T18:30:35.215162Z'
+    latency_s: 48.4
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b1-take3.mp4
+    artifact_sha256: 7c726e02c546a42a5617011491f349c629e993557fc093cf8a57b19a526a470b
+    verdict: accepted
+    is_repair: true
+  total_reserved_usd: 7.857
   total_settled_usd: null
-  cap_remaining_usd: 6.611
+  cap_remaining_usd: 4.143
+  notes:
+  - att-020 was issued twice by two concurrent dispatches (b3-clip, b6-still); the b6 still is relabelled att-020b in LEDGER/ATTEMPTS; money unchanged
+  - 'repair round 1: 9 attempts, USD 2.468 (plan <= 3.00)'
 qa:
   pre_dispatch:
     prompt_guard:
@@ -645,8 +810,8 @@ qa:
   - asset_id: b4-still
     note: same, b4-clean.png.edit.json
   composition:
-  - file: gen/overlays/endcard.png
-    C1..C8: strings byte-exact; boxes inside safe box (layout.json)
+  - file: gen/overlays/endcard.png + super.png
+    gates: 10 compositor gates PASS at render (bounds x5, contrast x4 incl. super on real pixels 6.58:1, disjoint); font Helvetica Neue (site face NeurialGrotesk unavailable); logos = site assets by hash
   video_frames:
   - asset_id: final
     sampled_timestamps: 0..29.5 s at 2 fps (60 frames)
@@ -656,8 +821,9 @@ qa:
   - deliverable_id: D1
     file: gen/final/mokobara-odyssey-9x16-30s.mp4
     geometry: 9:16 1080x1920
-    sha256: 75d1fc8b2d59368b7358017c342aaca183e1943e8cc27f6aec43e9bc572cf6a2
-    status: DET PASS; LJ pending
+    sha256: 71850d1cf7969ed1ecf8dc3252586e557c05093377e2e202326283ba93a8faff
+    status: DET 18 PASS / 1 FLAG (OCR texture) / 1 NOT_RUN (ear); LJ pending
+    v1_sha256: 75d1fc8b2d59368b7358017c342aaca183e1943e8cc27f6aec43e9bc572cf6a2
   voice_continuity:
     applies: false
     assembly: null
@@ -677,43 +843,104 @@ qa:
     class: generation
     repair_layer: re-take
     repaired_by_attempt: att-016
+    state: fixed v1
   - id: DF-2
-    asset_id: b5-clip (take 1)
-    observed: zip closed with items left out
+    asset_id: b5-clip (takes 1-2)
+    observed: zip closed with food left out
     class: generation
-    repair_layer: re-take
-    repaired_by_attempt: att-017 (partial)
+    repair_layer: still with empty pebbles + full bag, then i2v with an exit action
+    repaired_by_attempt: att-021/att-025
+    state: fixed v2
   - id: DF-3
-    asset_id: b4-clip (take 1)
-    observed: arm not to the shoulder; no second arm
+    asset_id: b4-clip
+    observed: arms not to the shoulder
     class: creative_direction
-    repair_layer: re-take
-    repaired_by_attempt: att-018
+    repair_layer: not repaired (paddle reveal ranked first; still-first route recorded)
+    repaired_by_attempt: null
+    state: open
   - id: DF-4
     asset_id: b1-take2
-    observed: costume drift (sleeved shirt)
+    observed: costume drift + static portrait + rock absent (checker D4)
     class: product_fidelity
-    repair_layer: not repaired (one re-take rule)
-    repaired_by_attempt: null
+    repair_layer: wide still + i2v; ECU kept from take 2
+    repaired_by_attempt: att-026/att-027
+    state: fixed v2
   - id: DF-5
     asset_id: music-bed
     observed: Lyria HTTP 500 on first wording
     class: infrastructure
     repair_layer: counted re-send
     repaired_by_attempt: att-015
+    state: fixed v1
+  - id: DF-6
+    asset_id: b3-still/clip
+    observed: lining flap reads as a tear (customer item 1, checker D6-iii)
+    class: product_fidelity
+    repair_layer: still with intact wording + i2v
+    repaired_by_attempt: att-019/att-020
+    state: fixed v2
+  - id: DF-7
+    asset_id: b4-take2
+    observed: paddle blade warps / shaft bends in the last 1.5 s (customer item 2)
+    class: generation
+    repair_layer: 'edit: take 1 used'
+    repaired_by_attempt: none (USD 0)
+    state: fixed v2
+  - id: DF-8
+    asset_id: b6-clip (take 1)
+    observed: no departure; paddle picked off the raft reads as a second appearance (customer item 3, checker D3/D5)
+    class: generation
+    repair_layer: still on the raft with paddle in hand + i2v
+    repaired_by_attempt: att-020b/att-023
+    state: fixed v2
+  - id: DF-9
+    asset_id: overlays
+    observed: logo small on a grey box; generic font (customer items 4-5)
+    class: composition
+    repair_layer: 'code: site logo assets larger, hierarchy, Helvetica Neue via hb-view, gates on real pixels'
+    repaired_by_attempt: none (USD 0)
+    state: fixed v2
+  - id: DF-10
+    asset_id: assembly
+    observed: 40-ms ambience dips at cuts (checker D9)
+    class: assembly
+    repair_layer: 60-ms acrossfade joins
+    repaired_by_attempt: none
+    state: fixed v2
 versions:
 - version: v1
+  presented_utc: '2026-09-21T18:10:00Z'
+  assets:
+  - gen/final/v1/mokobara-odyssey-9x16-30s.mp4
+  sha256: 75d1fc8b2d59368b7358017c342aaca183e1943e8cc27f6aec43e9bc572cf6a2
+  verdict: SPECIFIC REPAIR
+  verdict_verbatim: the bag was slightly torn when he saw her wife photo. the instrument to run boat(oar or something) looked weird coming out of bag, when he takes the boat the oar was already on the bat
+    but comes out magically again. overall excellent just few fixes. also we could use mokobara logo/name properly. the text font style could be better. excpetional work otherwise
+  decided_utc: '2026-09-21T18:14:41Z'
+  items:
+  - beat 3 bag torn
+  - beat 4 oar reveal weird
+  - beat 6 oar already on raft then again
+  - logo/name properly
+  - font style
+- version: v2
   presented_utc: null
   assets:
   - gen/final/mokobara-odyssey-9x16-30s.mp4
+  sha256: 71850d1cf7969ed1ecf8dc3252586e557c05093377e2e202326283ba93a8faff
   verdict: null
   verdict_verbatim: null
   decided_utc: null
+  repairs: stages/06-REPAIR-ROUND-1.md
 outcome:
   status: null
   accepted_version: null
   accepted_by: null
-  assets: []
+  assets:
+  - version: v2
+    file: gen/final/mokobara-odyssey-9x16-30s.mp4
+    sha256: 71850d1cf7969ed1ecf8dc3252586e557c05093377e2e202326283ba93a8faff
+    status: pending_human_review
   delivery_note_path: null
   delivered_utc: null
 ttao:
@@ -724,12 +951,15 @@ ttao:
   artifact_received_utc: '2026-09-21T18:01:00Z'
   qa_complete_utc: '2026-09-21T18:06:17Z'
   human_review_requested_utc: '2026-09-21T18:06:17Z'
-  human_decision_utc: null
+  human_decision_utc: '2026-09-21T18:14:41Z'
   accepted_utc: null
+  repair_round_1_start_utc: '2026-09-21T18:20:00Z'
+  repair_round_1_qa_complete_utc: '2026-09-21T18:38:34Z'
+  human_review_requested_v2_utc: '2026-09-21T18:38:34Z'
 kpis:
   cpao_usd: null
   ttao_hms: null
-  human_review_cycles: null
+  human_review_cycles: 1
   versions_to_acceptance: null
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml
   baseline_values_read:
@@ -744,12 +974,13 @@ learning_packet:
   accepted_assets: []
   routes_attempted:
   - cell: IMG-CORE/nano-banana-2
-    count: 7
+    count: 11
   - cell: VID-I2V/veo-3.1-fast-i2v
-    count: 9
+    count: 14
   - cell: MUS/lyria+native
     count: 2
-  paid_attempts: 18, USD 5.389
+  paid_attempts: 27, USD 7.857
   rejected_attempts:
   - att-009 story break
   - att-012 items left out
+  - att-024 bag re-opened after the close (1.9 s usable, superseded by att-025)

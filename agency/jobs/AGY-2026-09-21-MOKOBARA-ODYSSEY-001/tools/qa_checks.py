@@ -50,6 +50,11 @@ rec("DET-B1 copy deck byte-exact", "PASS" if exact else "FAIL", f"composed {lay[
 import hashlib
 wm_ok = lay["wordmark_sha256"] == hashlib.sha256(open(JOB / deck["wordmark_asset"], "rb").read()).hexdigest()
 rec("DET-B2 wordmark = the site's asset", "PASS" if wm_ok else "FAIL", f"sha256 {lay['wordmark_sha256'][:12]}… of {deck['wordmark_asset']}")
+if "logo_black_sha256" in lay:
+    lb_ok = lay["logo_black_sha256"] == hashlib.sha256(open(JOB / "source/mokobara/logo-png.png", "rb").read()).hexdigest()
+    rec("DET-B2b super logo = the site's black PNG", "PASS" if lb_ok else "FAIL", f"sha256 {lay['logo_black_sha256'][:12]}… of source/mokobara/logo-png.png")
+    g = lay.get("gates", []); bad = [x for x in g if x.get("status") != "PASS"]
+    rec("DET-B5 compositor gates (bounds/contrast/disjoint)", "PASS" if g and not bad else "FAIL", f"{len(g)} gates at render time; failing: {bad or 'none'}; super worst contrast on real pixels " + str([x.get("worst_ratio") for x in g if "super" in str(x.get("id")) and x.get("worst_ratio")]))
 bad = []
 for it in lay["items"]:
     try: gates.check_text_bounds(tuple(it["box"]), canvas=(0, 0, 1080, 1920), container=SAFE, id_=it["id"])
@@ -64,6 +69,13 @@ subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(mp4), "-vf", "fp
 frames = sorted(fr.glob("*.jpg")); rec("DET-C1 frames sampled at 2 fps", "PASS" if 58 <= len(frames) <= 62 else "FAIL", f"{len(frames)} frames -> {fr}")
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(mp4), "-vf", "fps=2,scale=180:-1,tile=10x6", "-frames:v", "1", str(qd / "contact.jpg")], check=True)
 board = json.load(open(JOB / "board.json")); kf = []
+edl = JOB / "gen/edl-v2.json"
+if edl.exists():   # repair-round timings: beat spans from the edit list, then the end card
+    spans = {}; t = 0.0
+    for s_ in json.load(open(edl))["segments"]:
+        spans.setdefault(s_["beat"], [t, t])[1] = t + s_["use"]; t += s_["use"]
+    spans[7] = [t, 30.0]
+    for b in board["beats"]: b["t_in"], b["t_out"] = spans[b["n"]]
 for b in board["beats"]:
     t = (b["t_in"] + b["t_out"]) / 2; out = qd / f"keyframe-beat{b['n']}-{t:.1f}s.jpg"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{t}", "-i", str(mp4), "-frames:v", "1", str(out)], check=True); kf.append(out.name)

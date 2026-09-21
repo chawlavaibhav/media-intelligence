@@ -12,7 +12,7 @@
  {
   "check": "DET-A8 container/size",
   "status": "PASS",
-  "evidence": "mov,mp4,m4a,3gp,3g2,mj2 33.9 MB"
+  "evidence": "mov,mp4,m4a,3gp,3g2,mj2 33.2 MB"
  },
  {
   "check": "DET-A8 moov first (faststart)",
@@ -27,12 +27,12 @@
  {
   "check": "DET-A8 audio aac 48k stereo >=128k",
   "status": "PASS",
-  "evidence": "aac 48000 ch=2 br=195622"
+  "evidence": "aac 48000 ch=2 br=194742"
  },
  {
   "check": "DET-A9 loudness -14 LUFS +/-1, TP <= -1",
   "status": "PASS",
-  "evidence": "I=-13.3 LUFS TP=-4.1 dBTP"
+  "evidence": "I=-13.4 LUFS TP=-4.0 dBTP"
  },
  {
   "check": "DET-B1 copy deck byte-exact",
@@ -45,9 +45,19 @@
   "evidence": "sha256 c443658f13be\u2026 of source/mokobara/wordmark-white.svg"
  },
  {
+  "check": "DET-B2b super logo = the site's black PNG",
+  "status": "PASS",
+  "evidence": "sha256 b3aefbd50a7e\u2026 of source/mokobara/logo-png.png"
+ },
+ {
+  "check": "DET-B5 compositor gates (bounds/contrast/disjoint)",
+  "status": "PASS",
+  "evidence": "10 gates at render time; failing: none; super worst contrast on real pixels [6.583]"
+ },
+ {
   "check": "DET-B3 all text/logo boxes inside safe box",
   "status": "PASS",
-  "evidence": "6 boxes vs (65, 288, 888, 1248); none outside"
+  "evidence": "5 boxes vs (65, 288, 888, 1248); none outside"
  },
  {
   "check": "DET-B4 claim scan on composed strings",
@@ -62,22 +72,22 @@
  {
   "check": "DET-C2 one keyframe per beat",
   "status": "PASS",
-  "evidence": "keyframe-beat1-1.8s.jpg, keyframe-beat2-5.5s.jpg, keyframe-beat3-10.0s.jpg, keyframe-beat4-16.5s.jpg, keyframe-beat5-22.5s.jpg, keyframe-beat6-26.2s.jpg, keyframe-beat7-29.0s.jpg"
+  "evidence": "keyframe-beat1-1.8s.jpg, keyframe-beat2-5.5s.jpg, keyframe-beat3-10.2s.jpg, keyframe-beat4-17.0s.jpg, keyframe-beat5-22.6s.jpg, keyframe-beat6-26.1s.jpg, keyframe-beat7-29.0s.jpg"
  },
  {
   "check": "DET-D1 frame text hygiene (tesseract)",
   "status": "FLAG",
-  "evidence": "40 frames with OCR tokens (LJ to confirm by eye): [(0.0, ['hits', 'fiat']), (0.5, ['Wars']), (1.0, ['fiat', 'PULA', 'vids', 'Mice']), (1.5, ['peer', 'WORSE', 'noes', 'Fens']), (2.0, ['CAPITE', 'Sate', 'Sere', 'Cees', 'Svat']), (2.5, ['FAPITS', 'Scied', 'Stee', 'SSeS', 'Sees', 'Conus']), (3.0, ['SAPITE', 'Prox', 'Race', 'Sate', 'Bony']), (3.5, ['baie', 'Binge', 'lied'])]"
+  "evidence": "39 frames with OCR tokens (LJ to confirm by eye): [(0.0, ['City', 'uiiat', 'Heth']), (0.5, ['Pili', 'ORAS', 'Miecdl']), (1.5, ['HANK']), (2.0, ['atte', 'Desai', 'vafts', 'mene']), (2.5, ['RCTS', 'Orns']), (3.0, ['anes', 'rots']), (3.5, ['baie', 'Binge', 'lied']), (4.0, ['Sage'])]"
  },
  {
   "check": "DET-E1 every attempt reserved then settled",
   "status": "PASS",
-  "evidence": "18 attempts, 18 settled, USD 5.389 reserved of 12.00"
+  "evidence": "27 attempts, 27 settled, USD 7.857 reserved of 12.00"
  },
  {
   "check": "DET-E2 cap not exceeded",
   "status": "PASS",
-  "evidence": "USD 5.389 <= 12.00; failed calls counted: 1"
+  "evidence": "USD 7.857 <= 12.00; failed calls counted: 1"
  },
  {
   "check": "LJ generated speech in native audio",

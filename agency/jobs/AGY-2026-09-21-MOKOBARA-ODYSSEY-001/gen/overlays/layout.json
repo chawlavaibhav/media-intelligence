@@ -5,66 +5,228 @@
   888,
   1248
  ],
- "items": [
-  {
-   "id": "super_backing",
-   "kind": "backing",
-   "box": [
-    296,
-    310,
-    656,
-    413
-   ]
+ "font": {
+  "family": "Helvetica Neue (system)",
+  "file": "/System/Library/Fonts/HelveticaNeue.ttc",
+  "faces": {
+   "medium": 10,
+   "light": 7
   },
+  "site_faces_seen": [
+   "NeurialGrotesk (commercial, @font-face in home.html)",
+   "Karla (Shopify font picker)",
+   "Montserrat",
+   "HammersmithOne"
+  ],
+  "why": "closest neo-grotesque available on this machine; no font downloaded"
+ },
+ "logo_black_sha256": "b3aefbd50a7edfa9b3a251373a7ed4a039e1540609a4d8c65c323581d776da07",
+ "wordmark_sha256": "c443658f13bed93aa1adbb6bcbc5fcbb06fc4d9abdafd0f59f5da593c67356eb",
+ "items": [
   {
    "id": "wordmark_super",
    "kind": "logo",
    "box": [
+    65,
     326,
-    328,
-    626,
-    395
+    485,
+    388
    ]
   },
   {
    "id": "wordmark_end",
    "kind": "logo",
    "box": [
-    176,
-    700,
-    776,
-    834
+    160,
+    513,
+    792,
+    606
    ]
   },
   {
    "id": "product_line",
    "kind": "text",
    "box": [
-    270,
-    882,
-    683,
-    927
+    228,
+    662,
+    725,
+    688
    ]
   },
   {
    "id": "tagline",
    "kind": "text",
    "box": [
-    111,
-    997,
-    842,
-    1056
+    100,
+    776,
+    852,
+    834
    ]
   },
   {
    "id": "cta",
    "kind": "text",
    "box": [
-    327,
-    1146,
-    626,
-    1182
+    339,
+    954,
+    614,
+    984
    ]
+  }
+ ],
+ "gates": [
+  {
+   "status": "PASS",
+   "id": "wordmark_super",
+   "box": [
+    65,
+    326,
+    485,
+    388
+   ],
+   "canvas": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "container": [
+    65,
+    288,
+    888,
+    1248
+   ]
+  },
+  {
+   "status": "PASS",
+   "id": "wordmark_super (black logo on sky, 10 frames)",
+   "role": "display",
+   "required": 3.0,
+   "worst_ratio": 6.583,
+   "measured_against": "pixels"
+  },
+  {
+   "status": "PASS",
+   "id": "wordmark_end",
+   "box": [
+    160,
+    513,
+    792,
+    606
+   ],
+   "canvas": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "container": [
+    65,
+    288,
+    888,
+    1248
+   ]
+  },
+  {
+   "status": "PASS",
+   "id": "headline",
+   "box": [
+    228,
+    662,
+    725,
+    688
+   ],
+   "canvas": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "container": [
+    65,
+    288,
+    888,
+    1248
+   ]
+  },
+  {
+   "status": "PASS",
+   "id": "tagline",
+   "box": [
+    100,
+    776,
+    852,
+    834
+   ],
+   "canvas": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "container": [
+    65,
+    288,
+    888,
+    1248
+   ]
+  },
+  {
+   "status": "PASS",
+   "id": "cta",
+   "box": [
+    339,
+    954,
+    614,
+    984
+   ],
+   "canvas": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "container": [
+    65,
+    288,
+    888,
+    1248
+   ]
+  },
+  {
+   "status": "PASS",
+   "id": "headline on navy",
+   "role": "body",
+   "required": 4.5,
+   "worst_ratio": 14.457,
+   "measured_against": "backing"
+  },
+  {
+   "status": "PASS",
+   "id": "tagline on navy",
+   "role": "display",
+   "required": 3.0,
+   "worst_ratio": 14.457,
+   "measured_against": "backing"
+  },
+  {
+   "status": "PASS",
+   "id": "cta on navy",
+   "role": "body",
+   "required": 4.5,
+   "worst_ratio": 14.457,
+   "measured_against": "backing"
+  },
+  {
+   "status": "PASS",
+   "regions": [
+    "cta",
+    "headline",
+    "tagline",
+    "wordmark_end"
+   ],
+   "pairs_checked": 6,
+   "min_gap_px": 24
   }
  ],
  "strings_composed": {
@@ -72,5 +234,9 @@
   "tagline": "Room for the long way home.",
   "cta": "mokobara.com"
  },
- "wordmark_sha256": "c443658f13bed93aa1adbb6bcbc5fcbb06fc4d9abdafd0f59f5da593c67356eb"
+ "strings_rendered": {
+  "product_line": "TRANSIT BACKPACK \u00b7 30L  (uppercase, .08em, as the site's labels)",
+  "tagline": "Room for the long way home.",
+  "cta": "mokobara.com"
+ }
 }

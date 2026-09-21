@@ -2,16 +2,22 @@
 """assemble.py — the film from the board: trim each beat clip to use_s, upscale 720x1280 -> 1080x1920, hard cuts between beats,
 0.6-s crossfade into the code end card, the wordmark super 5.0-7.5 s, native Veo ambience + the Lyria bed (from 7.5 s),
 two-pass loudnorm I=-14 TP=-4 + alimiter (RentOK v2 assemble_v2.py @ ffefe44b; PROVENANCE.md), mux with no edit lists + faststart.
-usage: assemble.py [--music gen/music/bed.wav] [--out gen/final/mokobara-odyssey-9x16-30s.mp4] [--clip b4=gen/clips/b4-take2.mp4 ...]"""
+usage: assemble.py [--music gen/music/bed.wav] [--out ...] [--clip b4=gen/clips/b4-take2.mp4 ...] [--edl gen/edl-v2.json]
+v2 (repair round 1): --edl replaces the board clip list with ordered segments (clip, in, use); audio joins are 60-ms acrossfades
+instead of per-segment fades (checker D9: 40-ms dips at the cuts)."""
 import argparse, json, re, subprocess, sys
 from pathlib import Path
 JOB = Path(__file__).resolve().parent.parent
 ap = argparse.ArgumentParser(); ap.add_argument("--music", default=None); ap.add_argument("--out", default="gen/final/mokobara-odyssey-9x16-30s.mp4")
-ap.add_argument("--clip", action="append", default=[], help="beat=path override"); a = ap.parse_args()
+ap.add_argument("--clip", action="append", default=[], help="beat=path override"); ap.add_argument("--edl", default=None); a = ap.parse_args()
 board = json.load(open(JOB / "board.json")); beats = [b for b in board["beats"] if b["clip_s"] > 0]
 over = dict(c.split("=", 1) for c in a.clip)
-clips = [JOB / over.get(f"b{b['n']}", f"gen/clips/b{b['n']}.mp4") for b in beats]
-XF = 0.6; card_s = 2.0 + XF; total_v = sum(b["use_s"] for b in beats)      # 28.0
+if a.edl:
+    segs = json.load(open(JOB / a.edl))["segments"]
+else:
+    segs = [{"beat": b["n"], "clip": over.get(f"b{b['n']}", f"gen/clips/b{b['n']}.mp4"), "in": 0.0, "use": b["use_s"]} for b in beats]
+clips = [JOB / s_["clip"] for s_ in segs]
+XF = 0.6; card_s = 2.0 + XF; total_v = sum(s_["use"] for s_ in segs); AXF = 0.06      # 28.0; 60-ms audio joins
 def run(cmd):
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode: sys.exit(r.stderr[-2000:])
@@ -21,11 +27,16 @@ for c in clips: inputs += ["-i", str(c)]
 inputs += ["-loop", "1", "-t", f"{card_s}", "-i", str(JOB / "gen/overlays/endcard.png"), "-loop", "1", "-t", "3", "-i", str(JOB / "gen/overlays/super.png")]
 n = len(clips); iec, isup = n, n + 1
 f = []
-for i, b in enumerate(beats):
-    f.append(f"[{i}:v]trim=0:{b['use_s']},setpts=PTS-STARTPTS,scale=1080:1920:flags=lanczos,setsar=1,fps=24,format=yuv420p[v{i}]")
-    f.append(f"[{i}:a]atrim=0:{b['use_s']},asetpts=PTS-STARTPTS,aresample=48000,afade=t=in:d=0.04,afade=t=out:st={b['use_s'] - 0.06:.3f}:d=0.06[a{i}]")
+for i, s_ in enumerate(segs):
+    t0, use = s_["in"], s_["use"]
+    f.append(f"[{i}:v]trim={t0}:{t0 + use},setpts=PTS-STARTPTS,scale=1080:1920:flags=lanczos,setsar=1,fps=24,format=yuv420p[v{i}]")
+    # audio: each segment carries an extra AXF tail from its source (where the source has one) and the joins are acrossfades
+    f.append(f"[{i}:a]atrim={t0}:{t0 + use + (AXF if i < n - 1 else 0)},asetpts=PTS-STARTPTS,aresample=48000[a{i}]")
 f.append("".join(f"[v{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=0,settb=AVTB[vcat]")
-f.append("".join(f"[a{i}]" for i in range(n)) + f"concat=n={n}:v=0:a=1[acat]")
+prev = "a0"
+for i in range(1, n):
+    f.append(f"[{prev}][a{i}]acrossfade=d={AXF}:c1=tri:c2=tri[ax{i}]"); prev = f"ax{i}"
+f.append(f"[{prev}]anull[acat]")
 f.append(f"[{iec}:v]scale=1080:1920,setsar=1,fps=24,format=yuv420p,settb=AVTB[ec]")
 f.append(f"[vcat][ec]xfade=transition=fade:duration={XF}:offset={total_v - XF}[vx]")
 sup = json.load(open(JOB / "copy-deck.json"))["placements"]["wordmark_super"]; t0, t1 = sup["t_in"], sup["t_out"]
@@ -53,6 +64,6 @@ run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(vid), "-i", str(norm), "-ma
 r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(out), "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True)
 summ = r.stderr[r.stderr.rfind("Integrated loudness:"):]
 il = re.search(r"I:\s+(-?[\d.]+) LUFS", summ); tp = re.search(r"Peak:\s+(-?[\d.]+) dBFS", summ)
-rep = {"out": str(out), "clips": [str(c) for c in clips], "music": a.music, "beats": [(b["n"], b["use_s"]) for b in beats], "xfade_s": XF, "pass1": m,
+rep = {"out": str(out), "clips": [str(c) for c in clips], "segments": segs, "music": a.music, "xfade_s": XF, "audio_join_s": AXF, "pass1": m,
        "delivered": {"integrated_lufs": il.group(1) if il else None, "true_peak_dbtp": tp.group(1) if tp else None}}
 json.dump(rep, open(JOB / "gen/assemble-report.json", "w"), indent=1); print("delivered loudness:", rep["delivered"]); print("wrote", out)

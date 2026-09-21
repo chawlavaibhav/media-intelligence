@@ -9,18 +9,31 @@ what_worked:
 - Veo 3.1 fast i2v held the face, hair and bag across 6 beats from per-beat stills anchored on one hero still; costume drifted once (beat 1)
 - 'the deadpan gag was realised by Veo from a text description: arm in, both arms in, an impossibly long paddle out'
 - Lyria wording refusal (HTTP 500) reproduced the Lane A pattern; a neutral re-send worked
+- 'repair round: a still that already shows the END state (pebbles empty, bag full; man already on the raft with the paddle) + a short i2v of the last action beat the "do the whole action in 4 s" prompt
+  every time (beats 5 and 6, first draw each)'
+- giving the model an EXIT action after the goal state (lift the bag out of frame) stopped it undoing the goal (re-opening the bag)
+- a customer's "weird" on the paddle was a warped blade in take 2 — the take we had not used (take 1) was the fix at USD 0; keep every take
+- 'the super on a light sky: the site''s own black logo PNG measured 6.58:1 on real pixels where white measured 1.3:1 — brand assets come in two mono versions for this reason'
 what_did_not:
 - a 4-s clip cannot pack seven items; the pace asked exceeded the model (cf. Media Factory P5 "richer prompt != better when it exceeds model grammar")
 - Veo added the product to a beat where the prompt did not mention it (beat 1) — negative-prompt the product where it must be absent
 - tesseract over natural texture is noisy (40/56 frames) — useful only as a flag, not a gate
+- two concurrent dispatches both counted the ledger and issued the same attempt id (att-020); the dispatch tool needs a lock or an atomic counter — relabelled by hand this time
+- the brand face (NeurialGrotesk) is commercial and absent; the closest system face was used and said so — a licensed brand font is a customer-supplied asset in future intakes
 numbers:
   first_pass_usd: 3.529
   repairs_usd: 1.8
-  total_usd: 5.389
+  total_usd: 7.857
   clips_bought_s: 46
   clips_used_s: 28
   ttao_to_human_review: ~42 min from job start
+  repair_round_1_usd: 2.468
+  repair_round_1_attempts: 9
+  repair_round_1_minutes: ~50 (verdict 18:14Z to QA complete)
 candidate_promotions:
 - 'pattern: paint-out of copied reference marks on stills before i2v'
 - 'pattern: negative-prompt the hero product in beats before its reveal'
 - 'pattern: per-beat stills from one hero still + product photo as the identity mechanism for live-action-style films'
+- 'pattern: end-state still + last-action i2v for any beat whose verb the model keeps failing'
+- 'pattern: exit action after the goal state in i2v prompts'
+- 'tool: ledger lock / atomic attempt ids in dispatch'
