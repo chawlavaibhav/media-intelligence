@@ -1,0 +1,23 @@
+{
+ "video": "gen/C-sheet-v2.mp4",
+ "music": "../../shared/A10_music_att-008.wav",
+ "sfx": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-rentok-cq/experiments/RENTOK-CREATIVE-QUALITY-001/treatments/C-creative-direction/job/gen/sfx-c-stem.wav",
+ "out": "../C-14.0-20.8.mp4",
+ "pass1": {
+  "input_i": "-18.24",
+  "input_tp": "-1.91",
+  "input_lra": "1.50",
+  "input_thresh": "-29.29",
+  "output_i": "-16.01",
+  "output_tp": "-4.00",
+  "output_lra": "1.70",
+  "output_thresh": "-26.86",
+  "normalization_type": "dynamic",
+  "target_offset": "2.01"
+ },
+ "delivered": {
+  "integrated_lufs": "-15.1",
+  "true_peak_dbtp": "-2.5"
+ },
+ "bed_processing": "[0:a]atrim=14:20.8333,asetpts=PTS-STARTPTS,volume=-7dB,asplit[b1][b2];[b1]atrim=0:3.6,asetpts=PTS-STARTPTS,lowpass=f=800:enable='between(t,0.2,3.6)',volume=eval=frame:volume='if(lt(t,0.1),1,if(lt(t,0.2),0,if(lt(t,3.3),0.45,0.06)))'[p1];[b2]atrim=3.6,asetpts=PTS-STARTPTS,asetrate=48000*1.05946,aresample=48000,atempo=0.943874[p2];[p1][p2]concat=n=2:v=0:a=1[bed];[1:a]volume=-4dB[s];[bed][s]amix=inputs=2:duration=first:normalize=0[mix]"
+}
