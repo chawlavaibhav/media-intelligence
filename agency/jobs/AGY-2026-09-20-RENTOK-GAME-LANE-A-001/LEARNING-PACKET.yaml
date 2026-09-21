@@ -7,11 +7,12 @@ source_main_sha: 4d919c9df6c9725a2f14c411771565bb09089876
 classification: customer_work
 brief_ref: JOB.yaml brief.verbatim (input/01-CUSTOMER-BRIEF-FROZEN.md)
 frozen_plan_sha: 1c3448b34d841cb4293c7574596fd552a40a9846
-production_status: pending_human_review
+production_status: accepted        # human ACCEPT 2026-09-20T20:06Z (JOB.yaml versions[1], commit 2ec4bb7)
 learning_status: pending_sync
 
 # ── observed facts ─────────────────────────────────────────────────────────────
-accepted_assets: []               # none yet — the human verdict is pending (blind Video X/Y via the Controller)
+accepted_assets:
+  - {path: gen/final/rentok-game-lane-a-9x16-30s.mp4, sha256: 9d50c4c5729f32d198fbaafc642fd78eccc0ee11dee2131cb637270584b5e24a, presented_as: "Video Y (blind packet)", accepted_utc: "2026-09-20T20:06:00Z"}
 candidate_deliverable:
   path: gen/final/rentok-game-lane-a-9x16-30s.mp4
   sha256: 9d50c4c5729f32d198fbaafc642fd78eccc0ee11dee2131cb637270584b5e24a
@@ -22,7 +23,12 @@ routes_attempted:
   - {cell: MUS/lyria+native (Vertex), calls: 1, ok: 1, failed: 0, usd: 0.060}
 paid_attempts: {count: 8, usd_reserved: 0.529, usd_settled: "not reconciled (vendor statements)", cap_usd: 10.00, repairs_paid: 0}
 rejected_attempts: []             # every first draw was used
-human_verdicts: []                # pending
+human_verdicts:
+  - verbatim: "both accepted. vidoe one has robotic voice over althouh. video 2 is better"
+    source: "customer (Vaibhav Chawla), chat, 2026-09-20T20:06Z, covering both blind videos; recorded by the Controller in JOB.yaml versions[1] (commit 2ec4bb7)"
+    mapping: "this film = Video Y = 'video 2' → ACCEPT, preferred; the other lane's film = 'video one' (accepted; the customer called its generated voice-over robotic — this film has no voice, recorded deviation D-1)"
+    verdict_for_this_film: ACCEPT (preferred)
+    cycles: 1 presentation
 repairs:                          # all USD 0, none at the generation layer
   - {id: R1, class: compositor, found_by: "animatic v1 look", change: "ground 1130 → 1180"}
   - {id: R2a, class: compositor, found_by: "runtime check_disjoint on the animatic layout log (171 frames)", change: "chip backing pad / row pitch"}
@@ -32,10 +38,10 @@ repairs:                          # all USD 0, none at the generation layer
   - {id: R4, class: creative_direction, found_by: "final-v2 look", change: "sprite scale +18 % / +15 %"}
   - {id: R5, class: audio, found_by: "ebur128 on the AAC output", change: "pre-encode true-peak target −4 dBTP"}
   - {id: "D-1..D-6, D-8..D-10", class: "assembly / board / compositor / cut-out / records", found_by: "independent Stage-5 checker (stages/CHECK-STAGE-5.md)", change: "repair round 1, USD 0 — see JOB.yaml qa.defects and 05-EXECUTION §9"}
-known_cost_usd: 0.529             # reserved at pinned prices; upper bound
-ttao_hms: null                    # accepted_utc − job_start_utc, on ACCEPT only
+known_cost_usd: 0.529             # reserved at pinned prices; upper bound = CpAO (8 calls, 0 failed, 0 paid repairs)
+ttao_hms: "1:54:18"               # job_start 2026-09-20T18:11:42Z → human_decision 20:06:00Z (JOB.yaml kpis.ttao_hms, set by the Controller)
 elapsed_to_qa_complete_hms: "1:04:20"   # 2026-09-20T18:11:42Z → 19:16:02Z (includes the checker's Gate 1–4 turnaround inside the window)
-versions_and_cycles: {versions: 1 candidate presented, cycles: 0 human review cycles so far, internal_renders: "animatic v1, v2; final v1, v2, v3"}
+versions_and_cycles: {versions_to_acceptance: 1, human_review_cycles: 1, presentation: "one blind presentation after 1 checker-driven repair round (D-1..D-10) + 1 regression fix (D-11)", internal_renders: "animatic v1, v2; final v1–v6"}
 observed_failures:
   - "F-01: chip backings overlapped each other on the animatic (row pitch 48 < backing 62 px) — caught by the runtime disjoint gate, not by eye"
   - "F-02: cheat-panel text left the safe box during the panel's slide-out — caught by the runtime bounds gate"
@@ -62,6 +68,7 @@ media_model_failures_that_reached_a_gate: 0
 
 # ── directional model observations (routing_authority: none; n as stated) ───────
 directional_model_observations:
+  - {route: "no voice vs a generated voice-over (the other lane)", n: 1, observation: "on this single job the customer accepted both films and preferred the one without a voice, calling the other's generated voice-over robotic; this film's D-1 deviation (no VO; on-screen words only) coincided with the preference. Directional only: one customer, one pair, two films that differ in more than the voice — not evidence that voice-less is better, and consistent with case 001 RO-05 / case 002 RO-02 on generated-voice risk", routing_authority: none}
   - {route: "nano-banana-2 (Gemini API), 21:9 sprite sheet prompt", n: 1, accepted: 1, observation: "four poses of one character on a flat #00FF00 background, consistent identity, no lettering; the model added a dark-green ground shadow under each pose (chroma green darkened), which must be keyed by colour"}
   - {route: "nano-banana-2, single obstacle sprites 1:1 on flat green", n: 5, accepted: 5, observation: "all five first draws usable; requested symbols (? and !) drawn, no letters/digits; calculator keys and display left blank as asked; edges are anti-aliased against the green (a fringe erosion pass needed)"}
   - {route: "nano-banana-2, 9:16 textless street plate", n: 1, accepted: 1, observation: "no boards/signs/lettering with the explicit 'no shop fronts, no boards, no hoardings' clause; lane edge at 82 % of height"}
