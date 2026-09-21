@@ -4,9 +4,10 @@ schema: LEARNING-PACKET-v1 (job-local)
 source_main_sha: 4d919c9df6c9725a2f14c411771565bb09089876
 classification: customer_work
 brief_ref: brief.verbatim (JOB.yaml) / input/01-CUSTOMER-BRIEF-FROZEN.md
-production_status_at_packet: pending_human_review   # the packet is written before the verdict so the record exists whatever the verdict
-accepted_assets: []                                     # filled on ACCEPT; candidate: gen/final/rentok-game-lane-b-9x16-30s.mp4 sha256 d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1
-candidate_deliverable: {path: gen/final/rentok-game-lane-b-9x16-30s.mp4, sha256: d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1, duration_s: 30.000, geometry: 1080x1920}
+production_status_at_packet: accepted   # human ACCEPT 2026-09-20T20:06Z (blind evaluation); learning_status pending_sync. Earlier value: the packet is written before the verdict so the record exists whatever the verdict
+accepted_assets:
+  - {path: gen/final/rentok-game-lane-b-9x16-30s.mp4, sha256: 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78, bytes: 15284419, duration_s: 30.000, geometry: 1080x1920, note: "the repair-round-1 file presented blind as Video X; v1 (d9d437d3…9df1) is the superseded checker-reviewed file"}
+candidate_deliverable: {path: gen/final/rentok-game-lane-b-9x16-30s.mp4, sha256: 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78, duration_s: 30.000, geometry: 1080x1920, superseded_v1_sha256: d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1}
 routes_attempted:
   - {cell: AUD-TTS/sarvam-bulbul-v3+native, calls: 3, ok: 3, accepted: 3}
   - {cell: AUD-TTS/elevenlabs-v3-direct+native, calls: 3, ok: 2, failed: 1 (per-key quota), accepted: 0}
@@ -20,15 +21,24 @@ rejected_attempts:
   - {id: att-013, why: "Gemini TTS refused the line RentOk mode on as PROHIBITED_CONTENT (no reason given)"}
   - {id: att-016, why: "local fault: my tool reserved a transcription before checking the input existed; nothing sent"}
   - {id: "att-004/005/012/014", why: "audition candidates not selected (B incomplete, C incomplete; A complete and verbatim)"}
-human_verdicts: []                                      # pending (the customer, blind, via the Controller; A1-A11 + B-E)
+human_verdicts:
+  - verdict: ACCEPT
+    verdict_verbatim: "both accepted. vidoe one has robotic voice over althouh. video 2 is better"
+    decided_utc: "2026-09-20T20:06:00Z"
+    by: "the customer (Vaibhav Chawla), blind, via the Controller session (chat)"
+    mapping: "the blind packet presented this lane's film as Video X = 'video one' -> ACCEPT with the note 'robotic voice over'; the other lane's film ('video 2') was preferred"
+    note: "the customer did not reject the film for the voice; the note is a quality observation on the announcer, not a repair request"
+    presented_file_sha256: 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78
 repairs:
   - {id: R1, class: compositor, cost_usd: 0, what: "card font Condensed Bold (width); CTA/label/score positions"}
   - {id: "R2/R2b", class: audio, cost_usd: 0, what: "true-peak limiter after loudnorm; AAC overshoot headroom"}
   - {id: "R3/R4", class: compositor, cost_usd: 0, what: "name tag fixed at ground; cheat bar raised"}
   - {id: "R5/T1", class: infrastructure, cost_usd: 0, what: "QA duplicate-record artefact; dispatcher file-existence check"}
 known_cost_usd: "0.58675 (upper bound; vendor statements not reconciled)"
-ttao_hms: "1:05:35 to qa_complete (job_start 18:12:53Z -> qa_complete 19:18:28Z); human decision pending"
-versions_and_cycles: {versions: "1 (one candidate presented)", cycles: "0 (no human review yet)"}
+cpao_usd: 0.58675                                   # = spend.total_reserved_usd on ACCEPT (25 attempts, failed calls included; no paid call in the repair round)
+ttao_hms: "1:53:07"                                 # job_start 2026-09-20T18:12:53Z -> human_decision 20:06:00Z (JOB.yaml, Controller-recorded); qa_complete v1 19:18:28Z, repair round 19:46:21Z
+versions_and_cycles: {versions_to_acceptance: 1, human_review_cycles: 1, note: "one blind presentation; one checker-driven repair round (D-1..D-8) before it, no customer-driven revision"}
+baseline_comparison: {ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml, note: "case 001 (57-s presenter film): TTAO ~7-8 h, CpAO USD 15.39, 5 cycles / 5 versions — a different production class (speaking presenter, multi-shot); read side by side, never blended"}
 observed_failures:
   - "ElevenLabs: a per-API-key quota (1,000 credits) is separate from the account character limit the subscription endpoint reports; the balance read was misleading"
   - "Gemini TTS refused a 16-character brand line as PROHIBITED_CONTENT (n=1)"
@@ -44,7 +54,15 @@ root_cause_classes:
 directional_model_observations:                          # routing_authority: none; n as stated
   - {route: nano-banana-2 (Gemini API), n: 7, accepted: 7, observation: "a 3x3 nine-pose sprite sheet held one identity in one draw with no lettering on a flat magenta ground; five two-panel creature/cleared-state pairs and one textless 16:9 street plate were all clean on the first draw; explicit 'no text/digits/signs' clauses were honoured (contrast RO-04 case 001 r1). Run-cycle leg-phase variation was weak."}
   - {route: lyria-002, n: 1, ok: 1, observation: "a neutral 'upbeat 8-bit chiptune' prompt returned 32.77 s without error (RO-09's wording sensitivity not triggered); musical content not yet judged by ear"}
-  - {route: sarvam bulbul:v3 aditya en-IN, n: 3, observation: "three short announcer lines, verbatim on transcript, 2.2-2.7 s each; register by ear pending"}
+  - {route: sarvam bulbul:v3 aditya en-IN, n: 3, observation: "three short announcer lines, verbatim on transcript, 2.2-2.7 s each; register by ear pending at the time of production"}
+  - route: sarvam bulbul:v3 aditya en-IN (the selected voice, three lines in the accepted film)
+    n: 1
+    evidence_class: directional_production_observation
+    routing_authority: none
+    observer: "the customer, by ear, in the blind evaluation"
+    observation: "'vidoe one has robotic voice over' — the customer heard the announcer as robotic; the film was ACCEPTED regardless (not rejected for it). This is the second real-production ear observation on bulbul:v3 (case 001 RO-05: robotic on ~1,000-char narration); here the lines were 16-28 characters in an arcade-announcer register, so the robotic reading did not depend on line length."
+    audition_record: "Three candidates were generated on the longest line (V3): A Sarvam bulbul:v3 'aditya' (all three lines ok), B ElevenLabs v3 'Daniel' (V1, V2 ok; V3 failed on a per-key quota), C Gemini TTS 'Puck' (V1, V3 ok; V2 refused as PROHIBITED_CONTENT). All takes were verbatim on transcript. A was chosen because it was the only candidate that completed all three lines (single-voice-source rule) and was 0.5 s shorter than C on V3; NO candidate was judged by a human ear before the presentation — the producer session cannot listen, and the by-ear comparison was left to the inspector, who also could not listen. The customer's ear is therefore the first ear on the voice."
+    what_it_does_not_say: "nothing about whether C (Gemini TTS) or B (ElevenLabs) would have been heard as less robotic; n=1; no A/B by the customer"
   - {route: elevenlabs eleven_v3 Daniel, n: 3, observation: "two lines verbatim; the third refused by a per-key quota"}
   - {route: gemini-3.1-flash-tts-preview Puck, n: 3, observation: "two lines verbatim (3.2 s each, slower than Sarvam); one refused as PROHIBITED_CONTENT"}
   - {route: gemini-3.1-flash-lite audio transcription, n: 7, observation: "all seven short clips transcribed consistently; brand name rendered as 'rent okay' / 'Rent OK'"}
@@ -55,6 +73,7 @@ candidate_patterns:
   - {id: PER_KEY_QUOTA_READ, pattern: "a pool reading must include per-key quotas, not only the account balance", observed: "att-006"}
   - {id: "SPEAKER_MICROQUALIFICATION (existing candidate, case 001)", observed: "applied to a character sheet instead of a speaker: one gated draw, then dependents — second real production using it"}
 candidate_engineering_changes:
+  - {change: "voice audition needs a HUMAN ear before the plates are built (the template's 3.10 says 'cast by ear'); when neither producer nor checker session can listen, route the audition files to the Controller for a 30-second listen before freezing the voice", closes: "customer note 'robotic voice over' (this job); RO-05 (case 001)"}
   - {change: "dispatcher: check every input file before reserving", closes: "att-016 (T1)"}
   - {change: "loudness gate must measure the FINAL container (AAC), and the mixer must leave encoder headroom or measure-and-iterate", closes: "R2/R2b"}
   - {change: "pool reading for ElevenLabs: also read the key's quota (or dry-probe) before planning on it", closes: "att-006"}
