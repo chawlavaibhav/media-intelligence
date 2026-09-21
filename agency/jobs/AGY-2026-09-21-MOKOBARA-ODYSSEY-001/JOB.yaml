@@ -1,0 +1,755 @@
+schema: AGENCY-JOB-v1
+job_id: AGY-2026-09-21-MOKOBARA-ODYSSEY-001
+class: spec_work
+production_base_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f
+branch: work/agency-job-mokobara-odyssey-001
+skill_version: 7e324b0f75658498b62802332504519b9d542996
+opened_by: Vaibhav (Controller session)
+production_status: pending_human_review
+learning_status: pending_sync
+sync:
+  case_id: null
+  integration_branch: null
+  integration_pr: null
+  merge_commit: null
+brief:
+  received_utc: '2026-09-21T17:21:17Z'
+  source: chat
+  verbatim: lets make an ad with mokobara. i would preferably give it the odysey movie angel. the proatagonist had mokbara bags. the protagonist found his mokobara bag, while he was on the island where
+    he was kept for years. in that bag he founds her wives photo and a lot of stuff that he could use to go back. he packs food and stuff and goes back. would be funny that he could keep his arms in the
+    bag and food and so much stuff
+  attachments:
+  - role: product
+    path: source/mokobara/The_Transit_Backpack_30L_Private_Island_1.jpg
+    sha256: 689aca0e7a548b43cf509dd2966f9d134c3c85108ad15dfee88c98649adeda46
+    depicts_identifiable_person: false
+    consent_ref: null
+    note: fetched from the public site by the producer; reference only, never placed in the film
+  - role: logo
+    path: source/mokobara/wordmark-white.svg
+    sha256: c443658f13bed93aa1adbb6bcbc5fcbb06fc4d9abdafd0f59f5da593c67356eb
+    depicts_identifiable_person: false
+    consent_ref: null
+intake:
+  commercial_objective: A cinematic, funny spec ad that makes a viewer want a Mokobara Transit Backpack because it holds more than seems possible — and closes on the brand.
+  audience: urban Indian professionals and frequent travellers 25-40 (dossier estimate)
+  channel: Instagram Reels + Facebook + YouTube Shorts (9:16)
+  deliverable_type: multi_shot_story (nearest registered kind; 30 s, 7 beats)
+  package: null
+  dimensions_aspects:
+  - 1080x1920 9:16
+  count: 1
+  product_reference_assets:
+  - source/mokobara/The_Transit_Backpack_30L_Private_Island_1.jpg
+  - source/mokobara/The_Transit_Backpack_30L_Private_Island_6.jpg
+  mandatory_text:
+  - role: brand_line
+    value: mokobara (wordmark asset)
+    script: latin
+    may_reflow: false
+    placement: overlay
+  - role: headline
+    value: Transit Backpack · 30L
+    script: latin
+    may_reflow: false
+    placement: overlay
+  - role: tagline
+    value: Room for the long way home.
+    script: latin
+    may_reflow: false
+    placement: overlay
+  - role: cta
+    value: mokobara.com
+    script: latin
+    may_reflow: false
+    placement: overlay
+  offer: null
+  cta: mokobara.com
+  language:
+  - en
+  brand_constraints:
+    colours:
+    - navy (bag)
+    - sunshine yellow (lining)
+    fonts:
+    - not verified; Avenir Next used
+    tone: plain, confident, slightly dry
+    forbidden:
+    - any claim not on the product page
+    - Homer names / any film reference
+    - in-model text or logos
+  duration_s: 30
+  deadline: first-pass fast (customer instruction, no absolute time)
+  spend_ceiling_stated: USD 12 (Recommended)
+  assumptions:
+  - 9:16 first, no 16:9
+  - ~30 s
+  - no dialogue
+  - Transit Backpack 30L in Private Island
+  - no price on screen
+  questions_asked: []
+nr:
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: generate
+  entities:
+  - product
+  - logo
+  - person
+  - scene
+  text_requirements:
+  - brand_line
+  - headline
+  - tagline
+  - cta
+  language_topology:
+  - en
+  market: IN
+  advertising_acceptance_intent: true
+  ambiguity_markers:
+  - 'kind_nearest_match: 30 s cinematic film of ~7 shots'
+  - odysey movie angel = myth shape only
+template:
+  reused: none
+  reason: no accepted template for a live-action-style multi-beat film; the RentOK jobs were code-rendered animation
+  numbers_carried:
+  - rule: safe box (65,288)-(888,1248)
+    value: Lane A 02-STRUCTURE
+    evidence_scope: this_accepted_template
+  - rule: loudness -14 LUFS / TP <= -1
+    value: Lane A 2.4
+    evidence_scope: this_accepted_template
+  learning_applied:
+  - case: RENTOK-CREATIVE-QUALITY-001
+    id: feeling/framing/impact per beat
+    how: board.json
+  - case: media-factory prior
+    id: hero still before video; verbatim anchors; one change per re-take; contact sheets
+    how: Stage 4-5
+  - case: UPWORK-INTRO-001
+    id: RO-09/SD-10 Lyria wording refusal
+    how: neutral re-send after the counted HTTP 500
+canon:
+  packs_selected:
+  - concept_and_distinctiveness
+  - critique_and_effectiveness
+  - composition_and_attention
+  - colour_and_visual_register
+  - camera_and_spatial_grammar
+  - editing_pacing_and_short_form
+  - typography_and_copy
+  - product_appearance
+  - indian_indic_context
+  - commercial_communication
+  packs_injected:
+  - composition_and_attention
+  - product_appearance
+  missing_domains:
+  - concept_and_distinctiveness
+  - critique_and_effectiveness
+  - colour_and_visual_register
+  - camera_and_spatial_grammar
+  - editing_pacing_and_short_form
+  - typography_and_copy
+  - indian_indic_context
+  - commercial_communication
+  prefix_sha256: 4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe
+blueprint:
+  concept: After years alone on a grey island, a man finds his navy backpack at the tideline; inside, his wife's photo and, absurdly, everything he needs to go home — his arms vanish into it, a paddle comes
+    out. He packs and paddles toward dawn.
+  first_read:
+  - the tally marks (years)
+  - the navy bag against grey
+  - the yellow lining / her photo
+  hook: ECU of a hand scratching one more tally mark into rock covered in hundreds
+  offer_placement: none
+  product_placement: in-situ from 3.5 s to 28 s; end card
+  proof: the bag holds an absurd amount (comic hyperbole on the page's 30L / overnight-trip line)
+  cta_placement: end card 28-30 s
+  attention_order: marks -> man -> bag -> yellow/photo -> arms -> paddle -> raft -> wordmark
+  brand_world: overcast skylight upper-left; cold grey-teal; navy + yellow the only saturation until dawn
+  remember: his arms disappear into the bag
+  muted_test: 'yes'
+  hindi_copy_origination: null
+  check_lines:
+    CA-D1: pass
+    CA-D2: pass
+    CA-D3: pass
+    CA-D4: pass
+    CA-D5: pass
+    CA-D6: pass
+    CA-D7: pass
+    CA-D8: pass
+    CA-D9: pass
+    CA-D10: pass
+    CA-D11: pass
+    PA-D1: pass
+    PA-D2: pass
+    PA-D3: pass
+    PA-D4: pass
+    PA-D5: pass
+    PA-D6: pass
+    PA-D7: pass
+    PA-D9: pass
+    PA-D10: pass
+    PA-D8: n-a
+  deviations:
+  - decision_id: sk_alt_c003_0018 (comedy lit high-key)
+    brief_clause: survival story; drama key kept, comic turn played dry
+  - decision_id: sk_abcd_0012 (audio brand mention)
+    brief_clause: no dialogue decided at Stage 1; VO can be added later
+  reviews: []
+plan:
+  assets:
+  - id: hero-still
+    purpose: identity master (protagonist + bag)
+    depends_on: []
+    reuse_of: null
+    exact_text_mechanism: code_set_on_textless_plate
+    route:
+      cell: IMG-CORE/nano-banana-2
+      evidence_status: clean_observed
+      production_use_allowed: true
+      surface: gemini_api
+      pool: credits
+      unit_price_usd: 0.067
+      quantity: 1
+      planned_draws: 1
+      fallback_cell: none (re-draw)
+      why: 7/8 clean; reference images accepted (unregistered IMG-REF use, micro-qualified)
+      directional_notes_used: []
+  - id: beat-stills b1..b6
+    purpose: first frame per beat
+    depends_on:
+    - hero-still
+    reuse_of: null
+    exact_text_mechanism: code_set_on_textless_plate
+    route:
+      cell: IMG-CORE/nano-banana-2
+      evidence_status: clean_observed
+      production_use_allowed: true
+      surface: gemini_api
+      pool: credits
+      unit_price_usd: 0.067
+      quantity: 6
+      planned_draws: 6
+      fallback_cell: none
+      why: cheap inspectable first frames
+      directional_notes_used: []
+  - id: beat-clips b1..b6
+    purpose: the six generated beats
+    depends_on:
+    - beat-stills b1..b6
+    reuse_of: null
+    exact_text_mechanism: code_set_on_textless_plate
+    route:
+      cell: VID-I2V/veo-3.1-fast-i2v
+      evidence_status: clean_observed
+      production_use_allowed: true
+      surface: vertex
+      pool: credits
+      unit_price_usd: 0.1
+      quantity: 30 s planned
+      planned_draws: 6
+      fallback_cell: VID-REF/veo-3.1-fast-ref2v+native (not needed)
+      why: first frame fixed by an inspected still; 5/8 clean; native audio
+      directional_notes_used: []
+  - id: music-bed
+    purpose: score
+    depends_on: []
+    reuse_of: null
+    exact_text_mechanism: none
+    route:
+      cell: MUS/lyria+native
+      evidence_status: clean_observed
+      production_use_allowed: true
+      surface: vertex
+      pool: credits
+      unit_price_usd: 0.06
+      quantity: 1
+      planned_draws: 1
+      fallback_cell: none
+      why: 4/4 clean; original audio
+      directional_notes_used:
+      - RO-09/SD-10 wording refusals
+  deliverables:
+  - id: D1
+    geometry: '9:16'
+    pixels: 1080x1920
+    from_asset: assembly of beat-clips + code end card
+  micro_qualifications:
+  - capability: the arms-in-bag gag + bag likeness from reference photos
+    route: nano-banana-2 -> veo-3.1-fast-i2v
+    cost_usd: 0.934
+    human_gate_verdict: 'producer: PASS with note (human pending)'
+    frozen_asset: gen/clips/b4.mp4
+  composition:
+    token_source: none (safe box from Lane A Stage 2; end-card navy sampled from the product photo)
+    fonts:
+      latin: Avenir Next (system)
+      devanagari: null
+    shaping: Pillow basic layout (Latin only)
+  expected_spend_usd: 3.53
+  start_of_job_summary_shown_utc: null
+spend:
+  cap:
+    amount: 12.0
+    currency: USD
+    stated_by: human Controller
+    stated_utc: '2026-09-21T17:21:17Z'
+    covers: Google Vertex/Gemini credits (+ElevenLabs/Sarvam credits); no fal
+    retries_allowed: 0
+  cap_lineage: []
+  pool_readings:
+  - pool: credits
+    balance_usd: null
+    read_utc: '2026-09-20'
+    source: human attestation (SPEND-AUTHORISATION.md); not machine-readable
+  attempts:
+  - attempt_id: att-001
+    asset_id: hero-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T17:38:38.984753Z'
+    end_utc: '2026-09-21T17:38:58.040114Z'
+    latency_s: 19.1
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/hero.png
+    artifact_sha256: aca9da79b3f2b53c37f7ea52aa6ef153e0199305752ae8fcbaaaa854931e7fa4
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-002
+    asset_id: b4-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T17:40:48.374069Z'
+    end_utc: '2026-09-21T17:41:08.422205Z'
+    latency_s: 20.0
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b4.png
+    artifact_sha256: a1241dc7d126ed3cbb560e3e566d69a53a2011b330ce3efe4e9d88725ed56520
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-003
+    asset_id: b4-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '8'
+    reserved_usd: 0.8
+    settled_usd: null
+    start_utc: '2026-09-21T17:41:58.484691Z'
+    end_utc: '2026-09-21T17:43:03.599770Z'
+    latency_s: 65.1
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b4.mp4
+    artifact_sha256: 3fc93d6619501033e1b874b75e4ac7c0126dba73da8c67f1d7e4ebcda7dd0cef
+    verdict: not_selected
+    is_repair: false
+  - attempt_id: att-004
+    asset_id: b1-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T17:44:30.735227Z'
+    end_utc: '2026-09-21T17:44:43.293815Z'
+    latency_s: 12.6
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b1.png
+    artifact_sha256: 73d09b01bb0fd17aaf9fa38d12513ea449b3f2bd2d5be1d6011e19f949792a9e
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-005
+    asset_id: b2-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T17:44:44.704314Z'
+    end_utc: '2026-09-21T17:44:57.916343Z'
+    latency_s: 13.2
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b2.png
+    artifact_sha256: 44addd0ef896e2e4c0d71610ec917d893bd1489f424af20176a2100c3625b25e
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-006
+    asset_id: b3-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T17:44:59.329234Z'
+    end_utc: '2026-09-21T17:45:34.716459Z'
+    latency_s: 35.4
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b3.png
+    artifact_sha256: b2a2b0a8c8f9a5aa3d3dab561d4b4bbb8b8688bc1b20df8bb03a54fc9f2daf9b
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-007
+    asset_id: b5-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T17:45:36.158673Z'
+    end_utc: '2026-09-21T17:45:55.901398Z'
+    latency_s: 19.7
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b5.png
+    artifact_sha256: 41b439c803f06e59d63f850adf8b37124d1357b6a31a1dfb161d6316c28c8c25
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-008
+    asset_id: b6-still
+    route_cell: IMG-CORE/nano-banana-2
+    surface: gemini_api
+    pool: credits
+    unit_price_usd: '0.067'
+    quantity: '1'
+    reserved_usd: 0.067
+    settled_usd: null
+    start_utc: '2026-09-21T17:45:57.287487Z'
+    end_utc: '2026-09-21T17:46:09.807482Z'
+    latency_s: 12.5
+    status: ok
+    failure_basis: null
+    artifact_path: gen/stills/b6.png
+    artifact_sha256: 3ebaa3714fa30cc0defbb351ce00e616769824cf602aa90a78b6e621f4d3f8a7
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-009
+    asset_id: b1-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T17:47:21.258910Z'
+    end_utc: '2026-09-21T17:48:18.212907Z'
+    latency_s: 57.0
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b1.mp4
+    artifact_sha256: 8a376bc6242a376967770acf856ee45d2ba5afcfdafbefe84d63c2773c3ef4db
+    verdict: rejected
+    is_repair: false
+  - attempt_id: att-010
+    asset_id: b2-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T17:48:19.648119Z'
+    end_utc: '2026-09-21T17:49:08.262907Z'
+    latency_s: 48.6
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b2.mp4
+    artifact_sha256: 444315e21afe769a010e24c65935072c63bda52873273b5ee80c5af33c19b884
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-011
+    asset_id: b3-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '6'
+    reserved_usd: 0.6
+    settled_usd: null
+    start_utc: '2026-09-21T17:49:09.671289Z'
+    end_utc: '2026-09-21T17:50:06.301534Z'
+    latency_s: 56.6
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b3.mp4
+    artifact_sha256: 0ad943a5134f9090f0e7babd9b57fb7e624177ef33da9d746b3d46d0970cac62
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-012
+    asset_id: b5-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T17:50:07.726028Z'
+    end_utc: '2026-09-21T17:51:03.836596Z'
+    latency_s: 56.1
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b5.mp4
+    artifact_sha256: 7ec85877ddd3b99704a614fa641307ddf87876a640bb9ba1bb128c110b631256
+    verdict: rejected
+    is_repair: false
+  - attempt_id: att-013
+    asset_id: b6-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T17:51:05.264194Z'
+    end_utc: '2026-09-21T17:51:54.285174Z'
+    latency_s: 49.0
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b6.mp4
+    artifact_sha256: d245e57051a02bf93daf5dd08158ce533fe609f8af780c1dce7235e3136f84e8
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-014
+    asset_id: music-bed
+    route_cell: MUS/lyria+native
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.06'
+    quantity: '1'
+    reserved_usd: 0.06
+    settled_usd: null
+    start_utc: '2026-09-21T17:52:07.849606Z'
+    end_utc: '2026-09-21T17:53:41.100868Z'
+    latency_s: null
+    status: infrastructure_transient
+    failure_basis: '{''failure_class'': ''infrastructure_transient'', ''counts_against_route_quality'': False, ''retry_eligible'': True, ''basis'': ''HTTP 500'', ''note'': ''retry only under a pre-declared
+      allowance (UPWORK-INTRO-001 Addendum-1 pattern); never silently''}'
+    artifact_path: gen/music/bed.wav
+    artifact_sha256: null
+    verdict: failed
+    is_repair: false
+  - attempt_id: att-015
+    asset_id: music-bed
+    route_cell: MUS/lyria+native
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.06'
+    quantity: '1'
+    reserved_usd: 0.06
+    settled_usd: null
+    start_utc: '2026-09-21T17:53:53.497009Z'
+    end_utc: '2026-09-21T17:54:54.179179Z'
+    latency_s: 60.7
+    status: ok
+    failure_basis: null
+    artifact_path: gen/music/bed.wav
+    artifact_sha256: 92779a53ad9f8d6aa628d997456d5e8edb24929d8d04f359174d3421c90d7135
+    verdict: accepted
+    is_repair: false
+  - attempt_id: att-016
+    asset_id: b1-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '4'
+    reserved_usd: 0.4
+    settled_usd: null
+    start_utc: '2026-09-21T17:55:58.105982Z'
+    end_utc: '2026-09-21T17:56:47.026291Z'
+    latency_s: 48.9
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b1-take2.mp4
+    artifact_sha256: 55ebe43b50c53c89f21ccb28dc143a7a57ff53496676a5381a58034e348cbadd
+    verdict: accepted
+    is_repair: true
+  - attempt_id: att-017
+    asset_id: b5-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '6'
+    reserved_usd: 0.6
+    settled_usd: null
+    start_utc: '2026-09-21T17:56:48.481661Z'
+    end_utc: '2026-09-21T17:57:53.002870Z'
+    latency_s: 64.5
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b5-take2.mp4
+    artifact_sha256: 69accbb493af9441b3f59222ce3ea6176079596384cd243d813fabfb3bd4b8ed
+    verdict: accepted
+    is_repair: true
+  - attempt_id: att-018
+    asset_id: b4-clip
+    route_cell: VID-I2V/veo-3.1-fast-i2v
+    surface: vertex
+    pool: credits
+    unit_price_usd: '0.1'
+    quantity: '8'
+    reserved_usd: 0.8
+    settled_usd: null
+    start_utc: '2026-09-21T17:58:31.319986Z'
+    end_utc: '2026-09-21T17:59:36.193732Z'
+    latency_s: 64.9
+    status: ok
+    failure_basis: null
+    artifact_path: gen/clips/b4-take2.mp4
+    artifact_sha256: 60e20943fd18955c77032c1b34585964f323321a66fa7a8b6b30b627119edeb3
+    verdict: accepted
+    is_repair: true
+  total_reserved_usd: 5.389
+  total_settled_usd: null
+  cap_remaining_usd: 6.611
+qa:
+  pre_dispatch:
+    prompt_guard:
+      status: PASS
+      evidence: tools/dispatch.py _prompt_guard on every paid prompt (IP list, brand name, copy-deck strings, no-lettering clause)
+  post_draw:
+  - asset_id: hero-still
+    note: tiny copied wordmark mark painted out by code (hero-clean.edit.json)
+  - asset_id: b4-still
+    note: same, b4-clean.png.edit.json
+  composition:
+  - file: gen/overlays/endcard.png
+    C1..C8: strings byte-exact; boxes inside safe box (layout.json)
+  video_frames:
+  - asset_id: final
+    sampled_timestamps: 0..29.5 s at 2 fps (60 frames)
+    D1: FLAG (OCR on texture; human eye)
+    D2..D13: see qa/final/qa-results.json
+  final_geometry:
+  - deliverable_id: D1
+    file: gen/final/mokobara-odyssey-9x16-30s.mp4
+    geometry: 9:16 1080x1920
+    sha256: 75d1fc8b2d59368b7358017c342aaca183e1943e8cc27f6aec43e9bc572cf6a2
+    status: DET PASS; LJ pending
+  voice_continuity:
+    applies: false
+    assembly: null
+    clips: []
+    narrator_identity_same: null
+    accent_timbre_compatible: null
+    cadence_continuous: null
+    boundary_holes_or_restarts: null
+    per_clip_transcripts_match: null
+    human_ear_verdict: null
+  delivery:
+    E1: file at gen/final; not delivered externally (C-8)
+  defects:
+  - id: DF-1
+    asset_id: b1-clip (take 1)
+    observed: bag on the shore before it is found
+    class: generation
+    repair_layer: re-take
+    repaired_by_attempt: att-016
+  - id: DF-2
+    asset_id: b5-clip (take 1)
+    observed: zip closed with items left out
+    class: generation
+    repair_layer: re-take
+    repaired_by_attempt: att-017 (partial)
+  - id: DF-3
+    asset_id: b4-clip (take 1)
+    observed: arm not to the shoulder; no second arm
+    class: creative_direction
+    repair_layer: re-take
+    repaired_by_attempt: att-018
+  - id: DF-4
+    asset_id: b1-take2
+    observed: costume drift (sleeved shirt)
+    class: product_fidelity
+    repair_layer: not repaired (one re-take rule)
+    repaired_by_attempt: null
+  - id: DF-5
+    asset_id: music-bed
+    observed: Lyria HTTP 500 on first wording
+    class: infrastructure
+    repair_layer: counted re-send
+    repaired_by_attempt: att-015
+versions:
+- version: v1
+  presented_utc: null
+  assets:
+  - gen/final/mokobara-odyssey-9x16-30s.mp4
+  verdict: null
+  verdict_verbatim: null
+  decided_utc: null
+outcome:
+  status: null
+  accepted_version: null
+  accepted_by: null
+  assets: []
+  delivery_note_path: null
+  delivered_utc: null
+ttao:
+  job_start_utc: '2026-09-21T17:22:48Z'
+  planning_complete_utc: '2026-09-21T17:38:00Z'
+  dispatch_start_utc: '2026-09-21T17:38:37Z'
+  dispatch_end_utc: '2026-09-21T17:59:36Z'
+  artifact_received_utc: '2026-09-21T18:01:00Z'
+  qa_complete_utc: '2026-09-21T18:06:17Z'
+  human_review_requested_utc: '2026-09-21T18:06:17Z'
+  human_decision_utc: null
+  accepted_utc: null
+kpis:
+  cpao_usd: null
+  ttao_hms: null
+  human_review_cycles: null
+  versions_to_acceptance: null
+  baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml
+  baseline_values_read:
+    ttao: 7-8 h (memory of the case; file not re-read this session)
+    cpao_usd: null
+    cycles: null
+    versions: null
+learning_packet:
+  source_main_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f
+  classification: spec_work
+  brief_ref: brief.verbatim
+  accepted_assets: []
+  routes_attempted:
+  - cell: IMG-CORE/nano-banana-2
+    count: 7
+  - cell: VID-I2V/veo-3.1-fast-i2v
+    count: 9
+  - cell: MUS/lyria+native
+    count: 2
+  paid_attempts: 18, USD 5.389
+  rejected_attempts:
+  - att-009 story break
+  - att-012 items left out

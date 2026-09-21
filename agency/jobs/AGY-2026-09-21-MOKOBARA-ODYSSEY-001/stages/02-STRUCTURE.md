@@ -8,7 +8,7 @@ Source: `agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-A-001/stages/02-STRUCTURE.m
 
 | Item | Value | Where it came from |
 |---|---|---|
-| Geometry | 9:16, **1080×1920**, H.264 High, yuv420p, progressive, 30 fps, MP4 | YouTube "maximum resolution of 1080p"; Meta H.264/AAC; Lane A A8 |
+| Geometry | 9:16, **1080×1920**, H.264 High, yuv420p, progressive, 24 fps (the clips' native rate; resampling to 30 would duplicate frames — YouTube lists 24 among common rates), MP4 | YouTube "maximum resolution of 1080p"; Meta H.264/AAC; Lane A A8 |
 | Audio | AAC-LC 48 kHz stereo ≥128 kbps; **−14 LUFS integrated, true peak ≤ −1 dBTP** (recorded default) | YouTube encoding page; Lane A 2.4 |
 | Container | **no edit lists** (walk the `moov/trak/edts` boxes), `moov` first (faststart) | YouTube "No Edit Lists"; Meta "edit lists or special boxes" |
 | Duration | 29.5–30.5 s | Stage 1 decision |

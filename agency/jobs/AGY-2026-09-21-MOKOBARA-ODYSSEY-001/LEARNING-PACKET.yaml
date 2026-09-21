@@ -1,0 +1,26 @@
+schema: LEARNING-PACKET-v1
+status: pending_sync
+job_id: AGY-2026-09-21-MOKOBARA-ODYSSEY-001
+source_main_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f
+classification: spec_work
+what_worked:
+- nano-banana-2 with the product photos as reference images gave a faithful bag likeness first draw, 7/7; the model copies the tiny wordmark from the reference — a code paint-out before dispatch fixed it
+  every time
+- Veo 3.1 fast i2v held the face, hair and bag across 6 beats from per-beat stills anchored on one hero still; costume drifted once (beat 1)
+- 'the deadpan gag was realised by Veo from a text description: arm in, both arms in, an impossibly long paddle out'
+- Lyria wording refusal (HTTP 500) reproduced the Lane A pattern; a neutral re-send worked
+what_did_not:
+- a 4-s clip cannot pack seven items; the pace asked exceeded the model (cf. Media Factory P5 "richer prompt != better when it exceeds model grammar")
+- Veo added the product to a beat where the prompt did not mention it (beat 1) — negative-prompt the product where it must be absent
+- tesseract over natural texture is noisy (40/56 frames) — useful only as a flag, not a gate
+numbers:
+  first_pass_usd: 3.529
+  repairs_usd: 1.8
+  total_usd: 5.389
+  clips_bought_s: 46
+  clips_used_s: 28
+  ttao_to_human_review: ~42 min from job start
+candidate_promotions:
+- 'pattern: paint-out of copied reference marks on stills before i2v'
+- 'pattern: negative-prompt the hero product in beats before its reveal'
+- 'pattern: per-beat stills from one hero still + product photo as the identity mechanism for live-action-style films'
