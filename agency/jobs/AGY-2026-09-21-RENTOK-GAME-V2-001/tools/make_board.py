@@ -66,7 +66,7 @@ OB = [
    pose(8.2, 8.45, "lookback", "hears him coming"), pose(8.45, 8.6, "reach", "arm out — anticipation of the grab"), hit(8.6, 2), shake(8.6, 6, 0.2),
    prim(8.6, "particles", kind="dust", n=10), pose(8.6, 9.2, "trip", "sprawled, book skids 40 px", knock_px=-30, knock_s=0.3), pose(9.2, 9.6, "cornered", "on one knee, getting up", knock_px=-30, hold=True),
    prim(8.6, "hud_flash"), audio(7.6, "steps", note="rapid steps to 9.2"), audio(8.55, "whoosh"), audio(8.6, "trip"), audio(8.65, "coins"), audio(8.6, "bed_duck")],
-  [cam(8.4, 1.4, 600, 0.2), cam(9.1, 1.4, 600), cam(9.6, 1.0, 540, 0.5)], 8.55),
+  [cam(8.4, 1.5, 600, 0.2), cam(9.1, 1.5, 600), cam(9.6, 1.0, 540, 0.5)], 8.55),   # R-1: 1.4 -> 1.5 (drawn reach pose is 6 % shorter than its stand-in; 1.45 measured 0.209 by rounding)
  (5, 10.2, 12.6, 4, "obstacle_4_no_reconciliation", "OBST_4", "HUD_HEALTH_1", 11.7, "topple",
   "dread (it wobbles) then a crash — the ledger tower topples onto him and he is half-buried",
   "1st the wobbling tower, 2nd his cover pose (arms over the head), 3rd the crash: biggest shake, dust cloud, papers",
@@ -85,7 +85,7 @@ OB = [
    audio(12.8, "buzz", note="swarm buzz to 15.6"), audio(13.9, "riser"), audio(14.1, "thump+hit"), audio(14.2, "low"), audio(14.1, "bed_cold", note="bed cut 0.1 s, then low-pass 800 Hz at -7 dB until 17.6")],
   [cam(14.05, 1.6, 540, 0.25), cam(15.0, 1.6)], 14.35),
 ]
-TARGET = {2: (0.25, "hurt pose (standing height) at x1.6"), 3: (0.25, "hurt pose mid-air at x1.6"), 4: (0.21, "reach pose at x1.4 — the beat is about him AND the runner; both must be in frame"),
+TARGET = {2: (0.25, "hurt pose (standing height) at x1.6"), 3: (0.25, "hurt pose mid-air at x1.6"), 4: (0.21, "reach pose at x1.5 (R-1) — the beat is about him AND the runner; both must be in frame"),
           5: (0.16, "cover pose is crouched (~0.72 of standing) at x1.5 = the standing-equivalent 0.23; the tower on him is the picture"), 6: (0.25, "hurt pose at x1.6")}
 for (fn, t0, t1, k, beat, s, hs, ct, motion, feeling, eye, impact, cams, focus) in OB:
     frames.append({"n": f"F{fn}", "t0": t0, "t1": t1, "beat": beat, "strings": [s, hs] + (["GAMEOVER"] if fn == 6 else []), "mandatory": ["M3"],

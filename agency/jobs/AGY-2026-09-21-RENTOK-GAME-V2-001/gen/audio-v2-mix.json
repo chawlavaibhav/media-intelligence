@@ -1,0 +1,39 @@
+{
+ "video": "gen/final-v3.mp4",
+ "music": "gen/raw/A10_music_att-008.wav",
+ "sfx": "/Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-rentok-v2/agency/jobs/AGY-2026-09-21-RENTOK-GAME-V2-001/gen/sfx-v2-stem.wav",
+ "out": "gen/final-v3-audio.mp4",
+ "pass1": {
+  "input_i": "-20.02",
+  "input_tp": "-1.82",
+  "input_lra": "4.20",
+  "input_thresh": "-30.78",
+  "output_i": "-15.73",
+  "output_tp": "-4.00",
+  "output_lra": "4.60",
+  "output_thresh": "-25.93",
+  "normalization_type": "dynamic",
+  "target_offset": "1.73"
+ },
+ "bed_processing": "[0:a]atrim=0:30,asetpts=PTS-STARTPTS,afade=t=in:d=0.15,volume=-7dB,asplit[b1][b2];[b1]atrim=0:17.6,asetpts=PTS-STARTPTS,lowpass=f=800:enable='between(t,14.2,17.6)',volume=eval=frame:volume='if(between(t,14.1,14.2),0,if(between(t,14.2,17.3),0.45,if(between(t,17.3,17.6),0.06,if(between(t,11.7,11.799999999999999),0,if(between(t,11.799999999999999,12.2),0.5,if(between(t,8.6,8.7),0,if(between(t,8.7,9.1),0.5,if(between(t,6.1,6.199999999999999),0,if(between(t,6.199999999999999,6.6),0.5,if(between(t,3.3,3.4),0,if(between(t,3.4,3.8),0.5,1)))))))))))'[p1];[b2]atrim=17.6:30,asetpts=PTS-STARTPTS,asetrate=48000*1.05946,aresample=48000,atempo=0.943874,afade=t=out:st=11.700:d=0.7[p2];[p1][p2]concat=n=2:v=0:a=1[bed];[1:a]volume=-4dB[s];[bed][s]amix=inputs=2:duration=first:normalize=0[mix]",
+ "ducks": [
+  3.3,
+  6.1,
+  8.6,
+  11.7
+ ],
+ "cold": 14.1,
+ "flash": 17.6,
+ "delivered": {
+  "integrated_lufs": "-14.0",
+  "true_peak_dbtp": "-2.7",
+  "lra": "4.8"
+ },
+ "levels": {
+  "bed_db": -7,
+  "sfx_db": -4,
+  "loudnorm_tp_target": -4.0,
+  "limiter": "alimiter -6 dBFS",
+  "why": "Lane A: AAC overshoots true peak by ~2.3 dB on square-wave SFX; loudnorm TP -4 + a -6 dBFS limiter keeps the file <= -1 dBTP with I near -14"
+ }
+}

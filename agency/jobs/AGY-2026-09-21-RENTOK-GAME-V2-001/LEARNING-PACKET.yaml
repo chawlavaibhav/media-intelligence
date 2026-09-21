@@ -1,0 +1,80 @@
+# LEARNING-PACKET — AGY-2026-09-21-RENTOK-GAME-V2-001 (raw material for /media-agency-sync; never edits Canon/Registry/routing)
+# Five kinds kept apart: observed facts · human verdict · directional model observations · deterministic system defects · candidate patterns.
+schema: AGENCY-JOB-v1/learning_packet
+learning_status: pending_sync
+source_main_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f
+classification: customer_work
+brief_ref: JOB.yaml brief.verbatim (identical to Lane A's frozen brief + the instruction "make the full 30 second ad the video 4 way")
+supersedes_job: AGY-2026-09-20-RENTOK-GAME-LANE-A-001 @ 7dab37a (accepted)
+accepted_assets: []               # none yet — production_status pending_human_review
+candidate_assets:
+  - {path: gen/final/rentok-game-v2-9x16-30s.mp4, sha256: 0e76b7b1872317728cfbb08dc948e4c678452ef7d84a0eafd6ece0f89013d122, bytes: 33028692}
+routes_attempted:
+  - {cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, calls: 1, ok: 1, failed: 0, usd: 0.067}
+  - {cell: code, calls: "renders: animatic v1, v2; final v1, v2, v3 (+3 mixes)", usd: 0}
+paid_attempts: {count: 1, usd: 0.067, failed: 0, hidden_retries: 0}
+rejected_attempts: []
+human_verdicts: []                # none yet
+repairs: "JOB.yaml qa.defects (A-1..A-5 on the animatic, R-1..R-2 on final-v1; all USD 0)"
+known_cost_usd: 0.067             # of cap 3.00; Lane A spent 0.529 for the film this supersedes; CQ-001 Treatment C spent 0.067 for its 6.8-s clip
+ttao_hms: null                    # on ACCEPT; elapsed job_start → qa_complete = 0:51:13 (11:25:07Z → 12:16:20Z)
+versions_and_cycles: {versions: 0, cycles: 0}
+
+observed_failures:               # facts only
+  - "animatic v1: video-only H.264 with B-frames carried an edit list until -use_editlist 0 was added to the render encode (the mux already had it)"
+  - "animatic v1: the falling phone (world layer) passed behind the cheat panel (UI layer); the tower's far corner rose 46 px into the label zone while toppling about its base-left corner; the departing swarm crossed the HUD row"
+  - "animatic v1: with the world scrolling on after a knock-down, the fallen tower and the hovering swarm slid off the owner within 0.5 s"
+  - "final-v1: true peak −0.4 dBTP after AAC with Lane A's loudnorm settings (TP −4 pre-encode) — the denser SFX overshoot more"
+  - "final-v1: the drawn 'reach' cell is 320 px in a 342-px standing cell (6 % shorter than the stand-in), so the framing target set on the stand-in missed by 0.008"
+  - "att-001 sheet: cell 1 'looking back over his left shoulder' came out facing forward with a surprised face; 3 of 8 cells omit the red book where both arms are busy"
+  - "cutout: the reach cell's outstretched hand and the sprawled cell's sandal share columns — the column-gap split merged them; split by connected components"
+root_cause_classes:
+  - {failure_ref: "edit list on animatic", class: infrastructure}
+  - {failure_ref: "phone behind panel / tower corner / swarm under HUD", class: compositor}
+  - {failure_ref: "world scrolls while he is down", class: creative_direction}
+  - {failure_ref: "true peak", class: audio}
+  - {failure_ref: "framing miss by pose height", class: records}
+  - {failure_ref: "lookback pose", class: generation}
+  - {failure_ref: "merged cells", class: compositor (cut-out)}
+
+directional_model_observations:  # routing_authority: none
+  - {route: IMG-CORE/nano-banana-2 (gemini_api), n: 1, accepted: 1, observation: "third text-prompted 2x4 sheet of the same character with the C prompt's structure and style block: identity held on all 8 cells vs two earlier sheets; keyable 99.95 %; no lettering; standing cell 342 px (= the C sheet's density, ≈ 60 % of the 4-pose base sheet's); 7 of 8 poses as asked; the one miss was a head-turn ('looking back over his shoulder') — the model kept the face forward; props: keys 8/8, book 5/8 (dropped when both arms are busy)"}
+  - {route: IMG-CORE/nano-banana-2, n: 1, observation: "latency 53.6 s for a 1376x768 16:9 sheet (Lane A's 1:1 stills: 9–13 s; the C sheet: 11.8 s) — one observation, could be load"}
+
+deterministic_system_defects: []   # none new in runtime/**; job-local tools only
+
+candidate_patterns:              # PROPOSED, not doctrine
+  - id: BOARD_FEELING_FRAMING_IMPACT
+    what: "BOARD-v2: three fields per beat — feeling (what the viewer should feel), framing (owner height ÷ frame at the beat's focus, camera keyframes, where the eye goes), impact (named primitives with timings: anticipation, hit_stop, shake, impact_star, impact_frame, particles, grade, pose, audio, obstacle_motion) — and a renderer that READS camera/hit-stop/shake/pose/audio from those fields instead of hard-coding them"
+    evidence: "CQ-001 (n=1 clip): direction moved the customer from last to second at USD 0.067; this job (n=1 film): the same schema over 15 beats, one paid call, DET 28/28, human verdict pending"
+    cost: "USD 0 (code); ≈ 1 h of producer time for 30 s; framing targets must be set per POSE (crouched/lying poses are inherently short) or the check fails for the wrong reason"
+    scope: "code-rendered game/animation films; the fields are also a checklist for any per-beat direction"
+  - id: GRAPHIC_VS_TEXT_DISJOINT_GATE
+    what: "the renderer logs every sprite's screen-space box (owner, obstacles, phone, flag, projectile) with a state (alive / burst / leaving); the DET suite asserts no alive sprite intersects a text backing or logo box on any frame (C5b)"
+    evidence: "caught three real overlaps on animatic v1 that text-only disjointness (C5) cannot see"
+  - id: FRAMING_TARGET_GATE
+    what: "board.framing.owner_frac_target asserted from the layout log at focus_t (owner screen height ÷ frame height)"
+    evidence: "caught a mid-ease measurement and a stand-in size error; needs per-pose targets"
+  - id: CAMERA_CY_RULE
+    what: "with a fixed UI layer, choose the camera centre from the zoom so a chosen world row maps to a fixed screen row (here y 750 → 790): the play band stays under the label zone at every zoom and text never lands on the character"
+    evidence: "0 C5b overlaps across 900 frames with pushes to x1.6"
+  - id: WORLD_STOPS_WHEN_HE_IS_DOWN
+    what: "an auto-scroller pauses its scroll while the hero is buried/down, so the thing that beat him stays on him; obstacles persist into the next beat until they leave the screen"
+    evidence: "animatic v1 → v2 (producer judgement; LJ-3 for the checker)"
+  - id: ANIMATIC_GATED_BEFORE_SPEND (re-observed)
+    what: "USD-0 animatic with stand-ins, full DET, judged beat by beat, then ONE paid call"
+    evidence: "Lane A, CQ-001 C, this job: 1 paid call, 0 failed, 0 paid repairs"
+
+c_primitives_reused: [world/UI layer split, camera crop-and-scale (NEAREST), hit-stop with 1.25x catch-up, screen shake, easing, colour grade + vignette (cold / bright), aura pulse + palette shift, particles (dust / sparks / paper sheets / + new coins / confetti), impact star, shockwave ring, muzzle flash, tick with trail, phone glow + flash-from-source, obstacle motion curves (lean_in / dive→swoop / recoil / drift-off + new hop / sprint_past / sprint_ahead / topple / topple_wobble), chip landing pop, per-beat bed processing (duck / cut / low-pass / near-silence / semitone lift)]
+c_primitives_new_here: [scroll pauses + obstacle carry-over, rotate-about-pivot (topple), HUD segment blink on a hit, health refill ticks, dazed stars, speed lines, coin spill/fountain, red→green pop rings, tag ring + tick, phone drop in the UI layer (out of the panel), confetti fountain, true limiter stage]
+
+renderer_still_cannot: "stages/05 §5.6 — secondary motion on the body; true contact; continuous facial change; parallax depth on pushes; squash-and-stretch on the character; density mismatch between the sheets; two-frame run cycle; the look-back pose"
+
+canon_gaps_exposed:
+  - "animation principles / game feel: none in Canon (CQ-001 GAP re-confirmed); reasoning from Thomas & Johnston 1981, Swink 2008, Jonasson & Purho 2012 — recorded as reasoning, not proposed as Canon"
+
+spend_and_time_side_by_side:      # never blended
+  this_job: {usd: 0.067, calls: 1, failed: 0, elapsed_to_qa_complete: "0:51:13", ttao: "pending human verdict"}
+  lane_a_superseded_film: {usd: 0.529, calls: 8, failed: 0, ttao: "1:54:18"}
+  cq001_treatment_c_clip: {usd: 0.067, calls: 1}
+  baseline_upwork_intro_001: {usd: 15.39318, calls: 54, ttao: "7:53:35"}

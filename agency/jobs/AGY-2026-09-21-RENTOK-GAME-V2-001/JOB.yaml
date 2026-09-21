@@ -1,4 +1,4 @@
-# AGENCY-JOB-v1 record — AGY-2026-09-21-RENTOK-GAME-V2-001 (opened; filled stage by stage; never delete a stamp)
+# AGENCY-JOB-v1 record — AGY-2026-09-21-RENTOK-GAME-V2-001. Filled stage by stage; timestamps from `date -u`; never delete a stamp.
 schema: AGENCY-JOB-v1
 
 job_id: AGY-2026-09-21-RENTOK-GAME-V2-001
@@ -7,13 +7,13 @@ production_base_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f   # origin/main at
 branch: work/agency-job-rentok-game-v2-001
 skill_version: 3488bdb3170005151bb57731fcf37d4b030f1abd
 opened_by: Producer session (superseding production of the accepted Lane A film, Controller-directed)
-production_status: open
-learning_status: not_started
+production_status: pending_human_review   # DET 28/28 PASS on the deliverable; LJ items listed (stages/05 §5.5); customer verdict not yet asked
+learning_status: pending_sync             # LEARNING-PACKET.yaml written 2026-09-21
 sync: {case_id: null, integration_branch: null, integration_pr: null, merge_commit: null}
 supersedes: AGY-2026-09-20-RENTOK-GAME-LANE-A-001 @ 7dab37a (accepted 2026-09-20; this job re-makes the full 30 s "the Video-4 way")
 
 brief:
-  received_utc: 2026-09-21T11:21:39Z   # spend authorisation recorded; frozen brief and snapshot present at scaffold commit c62e38c
+  received_utc: 2026-09-21T11:21:39Z
   source: chat
   verbatim: |
     CUSTOMER INSTRUCTION FOR THIS JOB (verbatim, chat): "make the full 30 second ad the video 4 way"
@@ -24,13 +24,187 @@ brief:
     (Stage 1 confirmed answers and the "intent that must be preserved" block are in input/01-CUSTOMER-BRIEF-FROZEN.md and are binding.)
   attachments: []
 
+# ── 2. INTAKE (carried over from Lane A @ 7dab37a — stages/01-INTENT.md; re-verified) ──────────────
+intake:
+  commercial_objective: "A PG owner watching on a phone recognises the five problems as their own and understands that installing RentOk is the move that changes them; the film feels like a game first, an ad second — and now FEELS the beating, the gift and the use (CQ-001 objective)."
+  audience: "Indian PG / hostel / co-living owners (home.txt:120)"
+  channel: "Instagram Reels, Facebook Reels, YouTube Shorts (organic assumed)"
+  deliverable_type: "game-style advertising film; nearest registered kind multi_shot_story (30 s, beyond the band; recorded ambiguity)"
+  package: null
+  dimensions_aspects: ["1080x1920 9:16"]
+  count: 1
+  product_reference_assets: ["source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf58689684d8ddae150d384f4aa30c246c314b0bf4e4a389a06e8f66f80"]
+  mandatory_text: "as Lane A intake.mandatory_text (copy-deck.json, 27 strings, byte-identical)"
+  offer: null
+  cta: "INSTALL / RENTOK APP"
+  language: [en]
+  brand_constraints: {colours: ["#0038FF", "#03FFF1", "#FFF100", "#FFFFFF"], fonts: ["tools/pixfont.py"], tone: "retro-arcade playful with real weight on the hits; the joke is on the problems, never on the owner", forbidden: ["guarantee/100%/never/prevent/recover/eliminate claims", "Nintendo characters, art, music, assets", "testimonial / SaaS / lifestyle formats", "live footage, stock, actors, prior RentOK material"]}
+  duration_s: 30.0
+  deadline: unknown
+  spend_ceiling_stated: "USD 3 (Recommended) — input/SPEND-AUTHORISATION.md, 2026-09-21T11:21:39Z"
+  assumptions:
+    - {id: V2-D1, decision: "keep Lane A's spine, timings, copy and brand decisions; change the direction and the renderer", cost_if_wrong: "Stage 3 rewrite, USD 0 code, <= USD 0.2 stills"}
+    - {id: V2-D2, decision: "the customer's CQ-001 verdict read as: keep pixel art, add drama (INFERRED)", cost_if_wrong: "style change = new sheets"}
+    - {id: V2-D3, decision: "no video model on any beat", cost_if_wrong: "the two hero beats lack continuous motion; a later job can add them"}
+    - {id: V2-D4, decision: "no repair draw for the 'lookback' miss (stages/05 §5.3)", cost_if_wrong: "0.25 s reads as surprise, not hearing; USD 0.067 to redraw"}
+  questions_asked: []
+
+nr:
+  modality: video
+  modality_provenance: customer_stated
+  requested_operation: generate
+  entities: [logo]
+  text_requirements: "brief.job.json exact_text_strings (15) and copy-deck.json (27 strings)"
+  language_topology: [en]
+  market: IN
+  advertising_acceptance_intent: true
+  ambiguity_markers: ["30 s game film vs registered multi_shot_story 10–15 s", "'Mario game' confirmed 'original Mario-inspired'", "'the video 4 way' = CQ-001 Treatment C (Controller-resolved)"]
+
+# ── 3. TEMPLATE / LEARNING FIRST ─────────────────────────────────────────────
+template:
+  reused: "AGY-2026-09-20-RENTOK-GAME-LANE-A-001 (accepted) — structure, production logic, QA, workflow; plus CQ-001 Treatment C's method"
+  reason: "superseding production of the same brief; the accepted film is the structure, Treatment C is the direction"
+  numbers_carried:
+    - {rule: beat_timings_30s, value: "Lane A board t0/t1 (15 beats)", evidence_scope: this_accepted_template}
+    - {rule: hit_stop_frames, value: "3 f problem hits, 2 f clearing hits", evidence_scope: CQ-001 Treatment C (one clip, rank 2 of 4)}
+  learning_applied:
+    - {case: UPWORK-INTRO-001, id: RO-04, how: "the one new prompt forbids lettering; every still and frame scanned"}
+    - {case: UPWORK-INTRO-001, id: SD-01..04/SD-07, how: "runtime gates on every rendered text box; NEW C5b graphic-vs-text on the logged sprite boxes"}
+    - {case: UPWORK-PORTFOLIO-002, id: DESIGN_REUSE_PROVENANCE, how: "reuse records with accepted_in_context for the two sheets, five obstacles, plate, bed (stages/04 §4.2)"}
+    - {case: UPWORK-PORTFOLIO-002, id: STILLS_FIRST_STORY_PRODUCTION, how: "one new sheet, micro-qualified on a consistency card before the render"}
+    - {case: "RENTOK-GAME-A-004 (Lane A packet, PR #104)", id: "animatic-first", how: "USD-0 animatic v1->v2 judged and gated before the one paid call"}
+    - {case: "RENTOK-CREATIVE-QUALITY-001", id: "§6 smallest consequential change", how: "feeling / framing / impact per beat; C primitives on all beats"}
+
+# ── 4. CANON ─────────────────────────────────────────────────────────────────
+canon:
+  packs_selected: [concept_and_distinctiveness, critique_and_effectiveness, composition_and_attention, colour_and_visual_register, camera_and_spatial_grammar, editing_pacing_and_short_form, typography_and_copy, product_appearance, indian_indic_context, commercial_communication]
+  packs_injected: [composition_and_attention, product_appearance]
+  missing_domains: [concept_and_distinctiveness, critique_and_effectiveness, colour_and_visual_register, camera_and_spatial_grammar, editing_pacing_and_short_form, typography_and_copy, indian_indic_context, commercial_communication, audio, "animation principles / game feel (GAP — reasoning from named references, not Canon)"]
+  prefix_sha256: 4d7a5b27e17c5ff3b0561521b0b1b540b995562bb0dc94b6f188a5ebcec1c8fe   # Lane A lookup; brief.job.json unchanged
+  claims_retrieved_by_id: "stages/03-CREATIVE.md Part A (Lane A's 23 + Treatment C's 9 ids)"
+
+# ── 5. CREATIVE BLUEPRINT ────────────────────────────────────────────────────
+blueprint:
+  concept: "Lane A's concept, directed: a PG owner beaten down by five problems — each hit felt (anticipation, hit-stop, star, shake, knock-back, the world stopping when he is down, a cold low point) — handed the RentOk app out of the cheat panel, powered (aura, fire poses), clearing the five with distinct payoffs, and cheering at the flag."
+  first_read: ["the obstacle entering with its own motion", "his reaction pose", "the label / HUD change"]
+  hook: "a game already in motion at frame 1"
+  offer_placement: none
+  product_placement: "phone out of the panel at 17.4 s; HUD icon from 18.0; five chips 19.6–25.6; end card 27.6–30.0"
+  proof: "five green chips (copy-deck.json claims_source_map, unchanged)"
+  cta_placement: "in-story cheat code 15.8–17.2; end card 27.6–30.0"
+  attention_order: "per beat: obstacle motion → his reaction → label/HUD; then panel → typing → the phone → the flash; then obstacle → fire → payoff → chip, ×5; then pole → cheer → flag → end card"
+  brand_world: "Lane A's, plus a per-beat grade: cold + vignette at the low point, +10 % lift and cyan highlights after the flash"
+  remember: "install the app = the cheat code for running a PG"
+  muted_test: "yes"
+  hindi_copy_origination: n-a
+  check_lines: "Lane A A3 (21 lines) stand; CA-D11 amended: the camera now pushes on every hit, the install and the flag — each motivated by the beat (stages/03 Part A)"
+  deviations:
+    - {decision_id: D-1..D-5, brief_clause: "Lane A's five, unchanged"}
+    - {decision_id: V2-D5, brief_clause: "cheat panel fades from 17.4 (Lane A 17.6) so the gift owns the frame"}
+    - {decision_id: V2-D6, brief_clause: "ground 1180 -> 1220, owner 260 -> 300 px, obstacle sizes rebalanced — framing target sk_hop_sa_0026"}
+  reviews: []
+
+# ── 6–7. PRODUCTION PLAN + ROUTES ────────────────────────────────────────────
+plan:
+  approach: "the Video-4 way: all 30 s code-rendered from BOARD-v2 by tools/render_v2.py; one new textless still (8-pose sheet); everything else reused accepted assets; per-beat SFX and bed processing; no voice; no video model"
+  risk_order: ["V2-S1 sheet identity/lettering/density", "feel across 30 s (animatic)", "audio true peak"]
+  assets:
+    - {id: R1, purpose: "owner base sheet (idle, runA, runB, jump)", reuse: {source_asset: "Lane A att-001 gen/raw/A1_owner_sheet_att001.png @ f17060521a91db5699f957864c8b68bf831529ae698c7f4e5c00a2c9d4b4dcf9", source_verdict: "accepted (film ACCEPT 2026-09-20; checker PASS 5/5)", reuse_status: accepted_in_context, fresh_qa_required: true}, route: {cell: none, unit_price_usd: 0}}
+    - {id: R2, purpose: "obstacles 1–5", reuse: {source_asset: "Lane A att-002..006 (PROVENANCE.md)", source_verdict: accepted, reuse_status: accepted_in_context, fresh_qa_required: true}, route: {cell: none, unit_price_usd: 0}}
+    - {id: R3, purpose: "plate 9:16", reuse: {source_asset: "Lane A att-007 @ 04b0615fe60d012d0cee87cf15c96d2aa94ef4c6ceed3efb12bebf00ca5e1543", source_verdict: accepted, reuse_status: accepted_in_context, fresh_qa_required: true, note: "no new plate: the plate + code lane fill the frame at every zoom (OBSERVED on the animatic)"}, route: {cell: none, unit_price_usd: 0}}
+    - {id: R4, purpose: "C expression sheet (8 poses)", reuse: {source_asset: "CQ-001 Treatment C att-006 gen/raw/C-A1_pose_sheet_att-006.png @ 0abda641…", source_verdict: "clip 4 ranked 2 of 4 by the customer (blind), evaluator 25/40; sheet identity PASS", reuse_status: accepted_in_context, fresh_qa_required: true, density_note: "≈ 60 % of the base sheet's pixel density (LJ-11)"}, route: {cell: none, unit_price_usd: 0}}
+    - id: N1
+      purpose: "V2-S1 pose sheet: lookback, reach, trip, cover, runfire, cheer, dazed, land (2x4, 16:9)"
+      depends_on: [R1, R4]
+      reuse_of: null
+      exact_text_mechanism: none
+      route: {cell: IMG-CORE/nano-banana-2, evidence_status: clean_observed, production_use_allowed: true, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, planned_draws: "1 (+1 repair, +1 second sheet reserve)", fallback_cell: "IMG-CORE/nano-banana-pro (0.134) on Controller OK", why: "cheapest clean credits still route; the same route drew both accepted sheets", directional_notes_used: [RO-04]}
+    - {id: R5, purpose: "music bed", reuse: {source_asset: "Lane A att-008 gen/raw/A10_music_att-008.wav @ 8be3e70e5f368fd18f53eb965db48bcdd2514ef2311c5648f838b5be3a35ed4a", source_verdict: accepted, reuse_status: accepted_in_context, decision: "no new Lyria draw — the per-beat audio is processing of the bed, not a different tempo (stages/04 §4.2 R5)"}, route: {cell: none, unit_price_usd: 0}}
+    - {id: R6, purpose: "wordmark raster placements", depends_on: ["source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf5…"], route: {cell: code, unit_price_usd: 0}}
+    - {id: C1, purpose: "render (tools/render_v2.py), SFX (tools/sfx_v2.py from the board's 53 cues), assembly (tools/assemble_v2.py), DET (tools/qa_checks.py adapted)", route: {cell: code, unit_price_usd: 0}}
+  deliverables:
+    - {id: A13, geometry: "9:16", pixels: "1080x1920", from_asset: C1, file: "gen/final/rentok-game-v2-9x16-30s.mp4"}
+  micro_qualifications:
+    - {capability: "third text-prompted sheet of the same character: identity, keys+book, no lettering, keyable, 8 cells", route: IMG-CORE/nano-banana-2, cost_usd: 0.067, human_gate_verdict: "producer PASS with one recorded miss (lookback) — independent checker owed (LJ-12)", frozen_asset: "gen/raw/V2-S1_pose_sheet_att-001.png @ ad4dab13c768e69dee32ddcf2c1b7daf6888dbdb2bf053d025da5cb5a0b32e9f; cut-outs gen/assets/v2_*.png (v2_cutout.json)", checker_inspected: false}
+  composition:
+    token_source: "tools/render_game.py DesignTokens (Lane A) with two overrides from board.json: ground_y 1220, owner_h 300; obstacle sizes and camera rule in board.json layout"
+    fonts: {latin: "tools/pixfont.py", devanagari: n-a}
+    shaping: "code bitmap (byte-exact by construction)"
+  expected_spend_usd: 0.067        # planned ceiling 0.201 (stages/04 §4.3)
+  spend_cuts_if_cap_lower: n-a
+  start_of_job_summary_shown_utc: null   # Controller-directed job; report at completion
+  frozen_at_sha: 79b1aea   # 'v2: Stage 4' — board, deck and plan before the paid call; later changes are the recorded repairs
+  qa_map: "stages/04 §4.4 (consistency card) + Lane A §4.12 + the v2 checks (C5b, FRAMING, HERO)"
+  tools_to_write: []
+  tools_written: [tools/make_board.py, tools/render_v2.py, tools/preview.py, tools/inspect_sheet.py, tools/sfx_v2.py, tools/assemble_v2.py, "tools/qa_checks.py (adapted)", "tools/dispatch.py (adapted: cap)"]
+  unresolved: []
+
+# ── 8–9. SPEND ───────────────────────────────────────────────────────────────
+spend:
+  cap: {amount: 3.00, currency: USD, stated_by: "human Controller — input/SPEND-AUTHORISATION.md, answer 'USD 3 (Recommended)'", stated_utc: "2026-09-21T11:21:39Z", covers: "this job; Google Vertex/Gemini credits only; no fal; no new paid service; hard stop", retries_allowed: 0}
+  cap_lineage:
+    - {budget_id: "rentok-v2-cap-1", amends: null, source: "input/SPEND-AUTHORISATION.md", supersedes: null}
+  pool_readings:
+    - {pool: credits (Google Vertex/Gemini), balance_usd: attested_by_human, read_utc: "2026-09-20T18:44Z", source: "Lane A spend.pool_readings (human attestation; the authorisation says it stands); machine reading impossible (Cloud Billing API disabled)"}
+  attempts:
+    - {attempt_id: att-001, asset_id: V2-S1_pose_sheet, route_cell: IMG-CORE/nano-banana-2, surface: gemini_api, pool: credits, unit_price_usd: 0.067, quantity: 1, reserved_usd: 0.067, settled_usd: null, start_utc: "2026-09-21T12:01:22.360414Z", end_utc: "2026-09-21T12:02:15.973436Z", latency_s: 53.6, status: ok, failure_basis: null, artifact_path: gen/raw/V2-S1_pose_sheet_att-001.png, artifact_sha256: ad4dab13c768e69dee32ddcf2c1b7daf6888dbdb2bf053d025da5cb5a0b32e9f, request_id: khyxatDeN_i8mNMPu8a38A8, verdict: accepted, is_repair: false}
+  total_reserved_usd: 0.067
+  total_settled_usd: null
+  cap_remaining_usd: 2.933
+
+# ── 10–11. QA ────────────────────────────────────────────────────────────────
+qa:
+  pre_dispatch: {A1: {status: PASS, evidence: "canon/gate/run_gate.py pre — GATE PASS (gen/prompts/V2-S1_pose_sheet.gate.json)"}, A2: {status: PASS, evidence: "Lane A check lines carried; CA-D11 amended (stages/03)"}, A3: {status: PASS, evidence: "dispatch.py _prompt_guard PASS (no deck string, no IP word, no-lettering clause)"}, A4: {status: PASS, evidence: "IMG-CORE/nano-banana-2 clean_observed, production_use_allowed true"}, A5: {status: PASS, evidence: "live PriceBook 0.067 per_image (2026-09-21)"}, A6: {status: PASS, evidence: "cap USD 3.00 written; ceiling 0.201"}, A7: {status: PASS_BY_ATTESTATION, evidence: "Google credits attested 2026-09-20; stands per the authorisation"}, A8: {status: N/A, evidence: "no identifiable person"}, A9: {status: PASS, evidence: "animatic v2 gated (26 PASS) before the paid call"}, A10: {status: PASS, evidence: "job_start 11:25:07Z, planning_complete 12:01:11Z"}}
+  post_draw:
+    - {asset_id: att-001 V2-S1 sheet, B1: "PASS — no lettering (eye)", B2: n-a, B3: "PASS — matte, one source, 2-px outlines (same style block as the accepted sheets)", B4: "PASS with one miss — 8 poses, same identity; 'lookback' faces forward (recorded, V2-D4)", B5: "PASS — 1376x768 16:9 as declared", B6: n-a, card: "qa/V2-S1-consistency-card.png; keys 8/8, book 5/8, keyable 0.9995, standing cell 342 px"}
+  composition:
+    - {file: "gen/final-v3 (900 frames)", C1: "PASS 4019 boxes inside the safe box", C2: "PASS min 6.08", C3: "PASS — sprites contain-fit (NEAREST); plate cover-fit declared", C4: "PASS — one token source + board layout", C5: "PASS 0 text overlaps", C5b: "PASS 0 graphic-vs-text overlaps (owner / obstacles / phone / flag / tick vs every text backing and logo, screen space)", C6: "PASS 0 mismatches", C7: "PASS brand hexes", C8: "PASS 1080x1920 only", FRAMING: "PASS — owner_frac >= target at every beat's focus_t (targets per pose in board.json)"}
+  video_frames:
+    - {asset_id: deliverable (final-v3-audio), sampled_timestamps: "0.0, 0.5, … 29.5, 29.97 (61) + 16 keyframes incl. hero 651", D1: "human-eye PASS (author) — detector NOT_RUN; checker to repeat", D3: "PASS by construction", D4: "PASS on keyframes", D6: "PASS — scroll follow with pauses when he is down; stops at 26.6", D7: "PASS — left→right", D8: "PASS — C1", D9: "PASS — code physics", D10: n-a, D11: "PASS — I −14.0 LUFS, TP −2.7 dBTP", D12: "PASS — 30.016 s 30 fps 1080x1920 h264 High / aac 48k", D13: "PASS — gen/final/CONTACT-SHEET.png, KEYFRAMES.png"}
+  final_geometry:
+    - {deliverable_id: A13, file: gen/final/rentok-game-v2-9x16-30s.mp4, geometry: "9:16", sha256: 0e76b7b1872317728cfbb08dc948e4c678452ef7d84a0eafd6ece0f89013d122, "C1-C8": "PASS (qa/final-v3-audio/DET-RESULTS.json, 29 checks 0 FAIL 1 NOT_RUN incl. no-elst by box walk)", CF1: PASS, CF2: "PASS — C5b", CF3: "PASS — native render", CF4: "PASS — C1 against (65,288)-(888,1248)", CF5: "PASS — HUD/label/chip/flash/CTA scales unchanged", status: DET_PASS_pending_LJ_HJ}
+  voice_continuity: {applies: false}
+  delivery: {E1: "PASS — outcome.assets carries path, sha256, attempt", E2: "pending — Controller presents", E3: "PASS — no tool/model name on screen", E4: "pending — no human verdict yet"}
+  defects:   # stages/05 §5.4
+    - {id: A-1, asset_id: animatic-v1, observed: "video-only encode carried an edit list", class: infrastructure, repair_layer: encode, repaired_by_attempt: "USD 0 -use_editlist 0 on the render encode"}
+    - {id: A-2, asset_id: animatic-v1, observed: "phone drop under the INSTALL backing 2 frames", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 phone from the panel's bottom edge"}
+    - {id: A-3, asset_id: animatic-v1, observed: "toppling tower corner in the label zone; departing swarm under the HUD", class: compositor, repair_layer: compositor, repaired_by_attempt: "USD 0 base-centre pivot; swarm fade-out"}
+    - {id: A-4, asset_id: animatic-v1, observed: "framing measured mid-ease; cover stand-in double-shrunk", class: records/compositor, repair_layer: board+compositor, repaired_by_attempt: "USD 0 focus_t at the hold; per-pose targets; stand-in fixed"}
+    - {id: A-5, asset_id: animatic-v1, observed: "fallen tower and hovering swarm slid off him with the scroll", class: creative_direction, repair_layer: compositor (world logic), repaired_by_attempt: "USD 0 scroll pauses 11.7–12.35 and 14.1–18.0; obstacle carry-over"}
+    - {id: R-1, asset_id: final-v1, observed: "F4 owner_frac 0.202 < 0.21 (drawn reach pose shorter than its stand-in)", class: creative_direction, repair_layer: board (camera), repaired_by_attempt: "USD 0 F4 camera 1.4 -> 1.5 (final-v2 at 1.45 measured 0.209; final-v3 at 1.5 = 0.22)"}
+    - {id: R-2, asset_id: final-v1, observed: "true peak −0.4 dBTP after AAC", class: audio, repair_layer: assembly, repaired_by_attempt: "USD 0 alimiter −6 dBFS + 1.5 dB make-up after loudnorm → −14.0 / −2.7"}
+
+# ── 12–13. VERSIONS, HUMAN RELEASE ───────────────────────────────────────────
+versions: []
+outcome:
+  status: pending_human_review
+  accepted_version: null
+  accepted_by: null
+  assets:
+    - {path: gen/final/rentok-game-v2-9x16-30s.mp4, sha256: 0e76b7b1872317728cfbb08dc948e4c678452ef7d84a0eafd6ece0f89013d122, bytes: 33028692, dims_or_duration: "1080x1920 9:16, 30.016 s, h264 High 30 fps ≈ 8.6 Mbps + aac-LC 48 kHz stereo; no edit lists; I −14.0 LUFS TP −2.7 dBTP", supersedes: "gen/final/v1/rentok-game-v2-9x16-30s.mp4 @ 1cc8c13d79aa6dd92136ff58dd478cce19583706227eb1d498f6184457c51ca9 (before R-1/R-2)", produced_by_attempt: [att-001, "Lane A att-001..008 (reused)", "CQ-001 att-006 (reused)", "code render final-v3 / audio-v2-mix"], composition_inputs: [board.json, copy-deck.json, tools/render_v2.py, tools/render_game.py, tools/pixfont.py, tools/sfx_v2.py, tools/assemble_v2.py, "gen/assets/owner_*.png", "gen/assets/c_*.png", "gen/assets/v2_*.png", "gen/assets/obst_1..5.png", gen/assets/plate.png, gen/raw/A10_music_att-008.wav, gen/sfx-v2-stem.wav, "source/rentok-brand/rentok-new-logo.webp @ 1ff7dcf5…"], formats: ["9:16"], reuse_potential: [case_study, demo, template_evidence]}
+    - {path: gen/final/CONTACT-SHEET.png, sha256: de2887bb01a7b975dc96ba7d91016cb3cc910c5a935d29576762780eaafa5326, produced_by_attempt: code}
+    - {path: gen/final/KEYFRAMES.png, sha256: 54f48b50c7adfed0b67097f8de40e17346f25f4f93f702dc6b63af7ce86844b8, produced_by_attempt: code}
+  delivery_note_path: null
+  delivered_utc: null
+
+# ── 17. TIME (UTC from `date -u`) ────────────────────────────────────────────
 ttao:
-  job_start_utc: 2026-09-21T11:25:07Z   # date -u, first act after reading the standard and the source trees
-  planning_complete_utc: null
-  dispatch_start_utc: null
-  dispatch_end_utc: null
-  artifact_received_utc: null
-  qa_complete_utc: null
-  human_review_requested_utc: null
+  job_start_utc: 2026-09-21T11:25:07Z
+  planning_complete_utc: 2026-09-21T12:01:11Z   # Stages 1–4 written and committed (79b1aea)
+  dispatch_start_utc: 2026-09-21T12:01:22Z
+  dispatch_end_utc: 2026-09-21T12:02:15Z
+  artifact_received_utc: 2026-09-21T12:02:15Z
+  qa_complete_utc: 2026-09-21T12:16:20Z         # DET 28/28 on final-v3-audio at 12:15:45Z; container box walk 12:16:20Z
+  human_review_requested_utc: null              # the Controller presents
   human_decision_utc: null
   accepted_utc: null
+kpis:
+  cpao_usd: 0.067                 # provisional: = spend.total_reserved_usd; final on ACCEPT
+  ttao_hms: null                  # human_decision_utc − job_start_utc on ACCEPT; elapsed to qa_complete = 0:51:13
+  human_review_cycles: 0
+  versions_to_acceptance: null
+  baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml
+  baseline_values_read: {ttao: "7:53:35 (TIME-AND-COST.yaml line 48, read 2026-09-21 in this checkout)", cpao_usd: 15.39318, cycles: 5, versions: 5}
+  lane_a_values_read: {ttao: "1:54:18", cpao_usd: 0.529, cycles: 1, versions: 1}   # Lane A JOB.yaml @ 7dab37a
+
+learning_packet: "LEARNING-PACKET.yaml (same directory)"
