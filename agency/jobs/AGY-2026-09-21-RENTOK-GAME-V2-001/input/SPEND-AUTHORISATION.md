@@ -1,0 +1,6 @@
+# Spend authorisation of record — AGY-2026-09-21-RENTOK-GAME-V2-001
+Recorded 2026-09-21T11:21:39Z by the Controller session from the human Controller's answer (structured question in this session; option text by the Controller session, selection by the human).
+Question (verbatim): "Spend cap for the full 30-s RentOK ad made the Video-4 way (a new agency job: rewritten per-beat direction with feeling/framing/impact, the upgraded renderer, new expression/pose sheets and obstacle stills on Nano Banana 2, Lyria music; credits only; no fal; 0 hidden retries; hard stop)? Expected spend ≈ USD 1.0–1.5 (about 12–18 stills at USD 0.067 + music), one repair round included."
+**Answer (verbatim option):** "USD 3 (Recommended)" — "Covers all new stills, one repair round and a second music draw with headroom."
+Authorises: cap USD 3.00 on this job's ledger; Google Vertex/Gemini credits only (human attestation of 2026-09-20 stands; balance not machine-readable; reservations are upper bounds); no fal; no new paid service; 0 hidden retries; every failed/refused call counted. Does not authorise: Controller-state, Canon, Registry or routing changes; external delivery (human release, C-8).
+Customer instruction (verbatim, chat): "make the full 30 second ad the video 4 way"
