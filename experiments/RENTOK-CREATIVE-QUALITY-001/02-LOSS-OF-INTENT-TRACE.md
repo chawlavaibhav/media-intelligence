@@ -3,7 +3,7 @@
 Experiment `RENTOK-CREATIVE-QUALITY-001`, Phase 1 (USD 0). Written 2026-09-21.
 Every judgement in the classification column is **INFERRED** by this session from the OBSERVED sources named in `01-PRODUCTION-CHAIN-RECONSTRUCTION.md`. Quotes are verbatim from the named file. Frames are this session's extractions under `evidence/frames-A/`.
 
-**The question:** the customer's hypothesis is that creative intelligence is lost *between the plan and the model-facing prompt*. This trace follows each consequential creative decision through four hand-offs — plan → asset prompt → animation code → media — and names the hand-off where the intent stopped.
+**The question:** the customer's hypothesis (verbatim, `00-EXPERIMENT-CONTRACT.md` §1) is "that creative intelligence may be lost between planning and the final model-facing prompt". This trace follows each consequential creative decision through four hand-offs — plan → asset prompt → animation code → media — and names the hand-off where the intent stopped.
 
 **Classification key** (one per row; where two apply, the earliest loss wins and the other is noted):
 
@@ -217,7 +217,7 @@ Sixteen rows. Secondary notes add: anticipation, impact weight, environmental tr
 
 - **Contradicts "lost" as the right verb.** The customer's own words carried no creative-quality target beyond "feel like an actual platform game"; the acceptance contract graded presence (A1–A11) and left quality to one sentence (§B). Both lanes optimised what was graded. The intelligence was not *lost in transit*; most of it was *never loaded* — and the part that was loaded was under-served by a renderer with a small vocabulary.
 
-- **Customer acceptance.** Both films were ACCEPTED blind; the later "technically correct, not exceptional" verdict is consistent with this trace: every required event is present (PRESERVED 6 of 16 on the rows that carry compliance) and the rows that carry *feel* (1, 3, 4, 5, 6, 7b, 9, 10, 11) are SIMPLIFIED, LOST or NEVER-SPECIFIED.
+- **Customer acceptance.** Both films were ACCEPTED blind; the later verdict (`00-EXPERIMENT-CONTRACT.md` §1: Lane A "Better overall and accepted, but still below the desired creative standard"; "the question-answering process has improved the result. However, the final creative quality remains insufficient") is consistent with this trace: every required event is present (PRESERVED 6 of 16 on the rows that carry compliance) and the rows that carry *feel* (1, 3, 4, 5, 6, 7b, 9, 10, 11) are SIMPLIFIED, LOST or NEVER-SPECIFIED.
 
 ### Consequence for the three candidate causes
 

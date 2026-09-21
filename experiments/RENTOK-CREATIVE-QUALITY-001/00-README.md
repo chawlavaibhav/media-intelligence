@@ -1,6 +1,6 @@
 # RENTOK-CREATIVE-QUALITY-001 — Phase 1 (investigation, USD 0)
 
-Question: the two accepted RentOK game films are "technically correct, not exceptional". Where was creative intent lost — direction (A), translation into prompts/animation instructions (B), or the production method (C)? Phase 1 reconstructs the chain, traces every consequential decision, gathers the earlier pipeline's evidence, freezes a baseline unit and prices three treatments. **No paid call was made in Phase 1.**
+Question (contract §1, customer words): the two accepted RentOK game films are "still below the desired creative standard" / "not a great video". Contract: `00-EXPERIMENT-CONTRACT.md` (Controller, committed before this investigation). Where was creative intent lost — direction (A), translation into prompts/animation instructions (B), or the production method (C)? Phase 1 reconstructs the chain, traces every consequential decision, gathers the earlier pipeline's evidence, freezes a baseline unit and prices three treatments. **No paid call was made in Phase 1.**
 
 | File | What it is |
 |---|---|

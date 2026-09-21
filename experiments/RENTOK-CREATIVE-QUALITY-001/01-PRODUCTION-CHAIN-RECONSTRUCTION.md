@@ -29,7 +29,7 @@ Intent block (binding): "should feel like an actual platform game, not a convent
 
 Every creative-quality word the customer used: **"Mario game"**, **"cheat code"**, **"gun sort of power/immunity"**, **"runs and kills all the obstacles"**, **"gets the flag"**, **"feel like an actual platform game"**. INFERRED: the brief carries the *mechanics* of the fantasy (power, immunity, killing, flag) and one *feel* word ("actual platform game"); it carries no words about art quality, expression, drama or spectacle — those were delegated.
 
-The later judgement this experiment is testing — "technically correct, not exceptional" — comes from the Controller's brief to this experiment (customer words relayed in chat); it is not in any committed file. UNKNOWN: the customer's exact wording beyond that phrase.
+The later judgement this experiment is testing is recorded verbatim in `00-EXPERIMENT-CONTRACT.md` §1 (OBSERVED, committed by the Controller before this investigation began): Lane A — "Better overall and accepted, but still below the desired creative standard"; Lane B — "Technically and creatively acceptable, but not a great video"; "The customer believes that the question-answering process has improved the result. However, the final creative quality remains insufficient."; "earlier Media Factory experiments produced stronger videos"; and the hypothesis under test: "creative intelligence may be lost between planning and the final model-facing prompt." The shorthand "technically correct, not exceptional" used in this file is the investigator's paraphrase of those sentences, not a customer quotation.
 
 ---
 
@@ -294,4 +294,4 @@ Both lanes converged on the same method from the same evidence base (Controller 
 1. The customer's creative words are few and mechanical; the plan expanded them into a sound ad structure (Canon-backed) and a *described* set of game motions (not Canon-backed — Canon has nothing on animation).
 2. The asset prompts faithfully carry costume, props, style and the four locomotion poses — and nothing about the owner's inner state, powered form or attack. They carry motion words for the obstacles ("hopping", "toppling", "diving") that the renderer then ignores.
 3. The renderer has a small primitive set (§7a) and lacks the primitives (§7b) that would make a hit land or a power-up feel powerful. Several board motions were reduced to "slide and knock 60 px".
-4. The film shows exactly what the code says: correct events, small sprites, one face, straight-line motion, brief effects. The checkers saw it; the customer accepted it and later called it not exceptional.
+4. The film shows exactly what the code says: correct events, small sprites, one face, straight-line motion, brief effects. The checkers saw it; the customer accepted it and later judged it "still below the desired creative standard" (`00-EXPERIMENT-CONTRACT.md` §1).
