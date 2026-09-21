@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Paid dispatch for AGY-2026-09-20-RENTOK-GAME-LANE-A-001 — one job, one append-only ledger, one cap.
+"""Paid dispatch for AGY-2026-09-21-RENTOK-GAME-V2-001 — one job, one append-only ledger, one cap.
+ADAPTED from Lane A tools/dispatch.py @ 7dab37a (PROVENANCE.md): only CAP_USD / CAP_STATED_BY and this header changed.
 
 CREDITS ONLY. Two routes exist in this file and nothing else can be sent from it:
   nano-banana-2  (gemini-3.1-flash-image on the Gemini API; Google credits)  — every generated still (sprites, plate)
@@ -13,7 +14,7 @@ attempt record to gen/ATTEMPTS.jsonl in the JOB.yaml `spend.attempts[]` vocabula
 runtime/execute/provider_errors.classify — an outage is infrastructure_transient, never a model failure. No hidden
 retry: a re-send is a new attempt with its own line.
 
-CAP_USD was 0.0 until the Controller's written cap arrived (2026-09-21); it is now 10.0 with CAP_STATED_BY recorded.
+CAP_USD = 3.0 from input/SPEND-AUTHORISATION.md (human answer "USD 3 (Recommended)", recorded 2026-09-21T11:21:39Z).
 
 PROVENANCE: transport (submit → bounded poll → download, key-by-name, scrubbing) is the reference kit
 tools/reference-kit/dispatch.py (Cumin Job B @ 5c33173, itself from the pilot recipes production-proven on cases
@@ -45,9 +46,8 @@ from runtime.route.cli import build_router  # noqa: E402
 GEN = JOB / "gen"
 LEDGER = GEN / "LEDGER.jsonl"
 ATTEMPTS = GEN / "ATTEMPTS.jsonl"
-CAP_USD = 10.0  # JOB.yaml spend.cap — USD 10.00 for this lane, credits only, no fal, 0 hidden retries, hard stop;
-                # stated by the human Controller via the Controller session message 2026-09-20 (2026-09-20T18:44Z).
-CAP_STATED_BY = "human Controller via Controller session message, 2026-09-20T18:44Z, 'USD 10 per lane (Recommended)'"
+CAP_USD = 3.0   # input/SPEND-AUTHORISATION.md — USD 3.00 for this job, Google Vertex/Gemini credits only, no fal, 0 hidden retries, hard stop
+CAP_STATED_BY = "human Controller, input/SPEND-AUTHORISATION.md, recorded 2026-09-21T11:21:39Z, answer 'USD 3 (Recommended)'"
 
 # route_key (runtime PriceBook / taint register cell) -> (model id, provider surface, billing pool)
 ROUTES = {
