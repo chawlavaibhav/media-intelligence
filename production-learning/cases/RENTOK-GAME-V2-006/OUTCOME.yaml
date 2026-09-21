@@ -1,0 +1,78 @@
+# OUTCOME record — production-learning case RENTOK-GAME-V2-006 (the RentOK game film re-made "the Treatment C way").
+# Everything here is either mechanically verified (git, ledger, sha256, `date -u` stamps in JOB.yaml) or labelled as a human judgment.
+case_id: RENTOK-GAME-V2-006
+class: customer_work
+schema: PRODUCTION-LEARNING-CASE-v0
+written_utc: "2026-09-21T16:49:19Z"
+job_id: AGY-2026-09-21-RENTOK-GAME-V2-001
+source_main_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f   # = JOB.yaml production_base_sha (origin/main at branch cut)
+job_branch: work/agency-job-rentok-game-v2-001               # provenance only; LOCAL to this machine's repo at sync time — not on origin
+job_commit: b06deaf7907de9c64d574a5f042a014c2e519ce6          # the immutable HEAD this case was validated against
+
+final_outcome: accepted
+accepted_version: 1                                            # one presentation; JOB.yaml versions[0].version = 1
+accepted_by: "Vaibhav Chawla (the customer for this job; also the human Controller), in chat"
+acceptance_evidence: chat_only_human_evidence                   # see HUMAN-VERDICTS.yaml
+accepted_utc: "2026-09-21T16:34:35Z"                           # JOB.yaml ttao.human_decision_utc (the customer's message time as the Controller recorded it)
+verdict_verbatim: "its already good"
+verdict_context_verbatim:
+  - "Also, this is finally one amazinh outcome"
+  - "not required"                                             # on the offer of the checker's USD-0 repair round
+verdict_for_this_film: "ACCEPT as delivered; the checker's repair round declined, so the checker's recorded defects stay on the accepted file unrepaired"
+
+supersedes_job: "AGY-2026-09-20-RENTOK-GAME-LANE-A-001 @ 7dab37a (case RENTOK-GAME-A-004, accepted 2026-09-20) — same brief, same copy deck, same beat timings; new direction and renderer"
+why_this_job_exists: "experiment RENTOK-CREATIVE-QUALITY-001 (branch work/experiment-rentok-creative-quality-001 @ 41d97c6, 07-DIAGNOSIS-AND-ROUTE.md): on a 6.8-s beat the customer ranked D > C > B > A blind; prompt translation was refuted as the main cause of the quality gap; the smallest consequential change was feeling / framing / impact per beat plus the Treatment C renderer primitives. The customer then said 'make the full 30 second ad the video 4 way' (video 4 = Treatment C)."
+
+evidence_source:
+  ref: b06deaf7907de9c64d574a5f042a014c2e519ce6
+  dir: agency/jobs/AGY-2026-09-21-RENTOK-GAME-V2-001
+  note: "the job branch's HEAD on 2026-09-21; the branch existed only in the local repository when this case was written (a push is attempted in step 7 of the sync). Lane A's accepted assets were reused from work/agency-job-rentok-game-lane-a-001 @ 7dab37a and Treatment C's from the experiment branch @ 41d97c6 — every copied file is blob-verified in PROVENANCE.md."
+
+final_asset:
+  path: gen/final/rentok-game-v2-9x16-30s.mp4
+  commit: b06deaf7907de9c64d574a5f042a014c2e519ce6
+  sha256: 0e76b7b1872317728cfbb08dc948e4c678452ef7d84a0eafd6ece0f89013d122
+  bytes: 33028692
+  measured: "1080x1920 9:16, container 30.016 s (video 30.000 s / 900 frames), h264 High 30 fps ≈ 8.6 Mbps + aac-LC 48 kHz stereo, moov first, 0 edit lists by box walk, -14.0 LUFS / -2.7 dBTP (checker re-measured, CHECK-STAGE-5.md §1)"
+  presented_as: "the file itself, presented once by the Controller at 12:33Z (JOB.yaml versions[0].presented_utc)"
+  supersedes:
+    - {path: gen/final/v1/rentok-game-v2-9x16-30s.mp4, sha256: 1cc8c13d79aa6dd92136ff58dd478cce19583706227eb1d498f6184457c51ca9, note: "final-v1 before the producer's own repair round (R-1 framing 0.202 < 0.21; R-2 true peak -0.4 dBTP); never presented"}
+
+commercial_purpose: "a 30-s vertical game-style advertising film for RentOK (PG-management app): a pixel-art PG owner beaten by five named problems until the cheat code INSTALL RENTOK APP; Reels / Facebook / Shorts. This job re-makes the accepted Lane A film with per-beat direction (feeling, framing, impact) executed by a board-driven renderer."
+production_method: "code-rendered 2-D side-scroller (Pillow → ffmpeg) driven by BOARD-v2 (feeling / framing / impact on all 15 beats); ONE new textless Nano Banana 2 still (an 8-pose expression sheet, USD 0.067); every other asset reused with accepted_in_context provenance — Lane A's 4-pose base sheet, five obstacles, plate and Lyria bed (7dab37a) and Treatment C's 8-pose sheet (41d97c6); code SFX from the board's 53 cues; per-beat processing of the reused bed; no voice; no generative video; exact text by code bitmap font (27 strings byte-identical to Lane A)"
+experiment_context: "not a blind experiment — a superseding production the customer asked for after CQ-001; n = 1 customer, 1 brief (the third accepted film on this brief: Lane A, Lane B, this)"
+
+not_evidence_for:
+  - Capability Registry
+  - Alpha-1
+  - Canon effectiveness
+  - Stage A/B/C benchmark
+  - "any routing rule (one paid call on one route; every model observation is directional)"
+  - "that the feeling/framing/impact board schema improves films in general (one brief, one customer; the CQ-001 rank was on a 6.8-s beat, this acceptance is on a 30-s film of the same brief)"
+  - "CpAO completeness (vendor statements unreconciled; session tokens and human time unpriced; the reused assets' USD 0.596 sits outside this job's ledger)"
+  - "the checker's creative scores (2–4 of 5 per dimension) as a customer verdict — the customer accepted without a repair; the checker's two predicted objections were not raised"
+  - "the customer having seen the six-defect repair offer in detail: the offer and 'not required' are chat, not on disk"
+
+versions_produced:
+  - {version: 1, commit: "b06deaf", what: "the delivered film after the producer's own repair round 1 (R-1, R-2); internal renders animatic v1–v2 and final v1–v3 preceded it; presented once; the independent checker's report (DELIVERABLE WITH DEFECTS, N1–N9 + P1) was written BEFORE the verdict and its USD-0 repair round was offered and declined", human_verdict: accept}
+
+internal_review_rounds_before_presentation:
+  - {round: "producer DET + own eye on final-v1", file: "gen/final/v1 @ 1cc8c13d…", verdict: "2 FAIL (FRAMING F4 0.202 < 0.21; TP -0.4 dBTP)", by: "the producer's own gates", repair: "round 1 at USD 0 → final-v3-audio = the delivered file"}
+  - {round: "independent checker Stage 5 (commit 23ed0eb, 12:42Z IST 18:12)", file: "the delivered file @ 0e76b7b1…", verdict: "DELIVERABLE WITH DEFECTS — every A1–A11 requirement PASS, every DET number reproduced, nine new production-quality defects N1–N9 and one producer-recorded P1; nothing blocking presentation", by: "independent checker session (not a human)", authorised_repair: "OFFERED to the customer as a USD-0 round; DECLINED ('not required'). No repair was made."}
+internal_review_rounds_note: "these are not human review cycles; the customer saw one file once. The checker's findings are recorded in SYSTEM-DEFECTS.yaml as UNREPAIRED on the accepted file — the customer's choice, not an oversight."
+
+major_human_review_cycles: 1
+versions_to_accept: 1
+template_status: reusable_candidate                            # see ACCEPTED-TEMPLATE.yaml — n = 2 accepted jobs on this structure (Lane A + this), one customer, one brief, plus CQ-001's ranked evidence
+
+spend:
+  incremental_known_media_spend_usd: 0.067
+  basis: "one `reserved` line in gen/LEDGER.jsonl at the pinned price (1 x 0.067 nano-banana-2 per_image via the Gemini API); 1 ok, 0 failed, 0 paid repairs, 0 hidden retries; cap USD 3.00 (SPEND-AUTHORISATION.md); the checker re-added the ledger (reserve stamp precedes the ok stamp and the attempt's own start)"
+  reused_assets_spend_usd_not_in_this_ledger: 0.596
+  reused_basis: "Lane A's eight draws USD 0.529 (case 004 ledger) + Treatment C's one draw USD 0.067 (CQ-001 ATTEMPTS.jsonl); together with this job's 0.067 that is USD 0.663 for every drawing that appears in the film — the packet's 'USD 0.66'. Stated beside, never added to, this job's CpAO."
+  settled: "not reconciled — Google credits are not machine-readable (Cloud Billing API disabled on the project); the reservation is an upper bound; settled_usd is null in the ledger"
+
+two_conclusions:
+  final_quality: SUCCESS                                       # accepted on first presentation; the customer called it 'finally one amazing outcome' (sic 'amazinh') and declined the repair round; the checker's ten recorded defects remain on the file by the customer's choice
+  pipeline_efficiency_time_to_accepted_outcome: MET_BASELINE   # 5:09:28 job_start → ACCEPT of which 0:51:13 was production (job_start → DET-clean deliverable) and the rest waiting; USD 0.067 vs case 001's 15.39 and Lane A's 0.529; 1 cycle vs 5 — a different production class, read side by side, never blended
+  rule: "these are reported side by side and never blended into one score"

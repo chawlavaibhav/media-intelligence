@@ -25,6 +25,13 @@ class LayoutRefused(Refusal):
     GRAPHIC_OVER_TEXT = "GRAPHIC_OVER_TEXT"
     VO_BEFORE_ITS_TEXT = "VO_BEFORE_ITS_TEXT"
     BRAND_COLOUR_OFF = "BRAND_COLOUR_OFF"
+    # production-learning RENTOK-GAME-V2-006 (2026-09-21)
+    HERO_OCCLUDED = "HERO_OCCLUDED"
+    FRAMING_BELOW_TARGET = "FRAMING_BELOW_TARGET"
+    FRAMING_FRAME_MISSING = "FRAMING_FRAME_MISSING"
+    HERO_CLIPPED_BY_FRAME = "HERO_CLIPPED_BY_FRAME"
+    WORLD_SMALLER_THAN_FRAME = "WORLD_SMALLER_THAN_FRAME"
+    SPRITE_DENSITY_MISMATCH = "SPRITE_DENSITY_MISMATCH"
 
 
 # ── geometry helpers ─────────────────────────────────────────────────────────
@@ -295,3 +302,136 @@ def check_brand_colour(samples_rgb, declared_hex: str, *, max_channel_delta: int
                             id=id_, declared=declared_hex, worst_sample=worst_sample, worst_delta=worst, limit=limit)
     return {"status": "PASS", "id": id_, "declared": declared_hex, "samples": len(samples),
             "worst_channel_delta": worst, "worst_sample": worst_sample, "limit": limit}
+
+
+# ── I. a hero graphic may not be covered by another graphic (RENTOK-GAME-V2-006 N1, N2) ───────
+
+def _overlap_area(a: tuple, b: tuple) -> int:
+    w = min(a[2], b[2]) - max(a[0], b[0])
+    h = min(a[3], b[3]) - max(a[1], b[1])
+    return w * h if (w > 0 and h > 0) else 0
+
+
+def check_hero_visible(region, foreground: dict, *, max_covered_frac: float = 0.0, id_: str = "hero") -> dict:
+    """A declared region of the hero (his whole box at a triumph beat; his face while he holds the phone)
+    may not be covered by any graphic drawn IN FRONT of him beyond `max_covered_frac` of the region's
+    area. `check_graphic_text_disjoint` sees graphic-versus-text only: the V2 job's C5b gate reported 0
+    overlaps while the flag rose through the cheering owner for 26 frames (26.53–27.37 s, N1) and the
+    raised phone sat over his face for 6 frames at the wind-up (18.20–18.37 s, N2). The caller hands the
+    region to protect and the graphics layered over it (not the ones he holds behind or beside it — a
+    held phone is inside his box by design, which is why the region, not the whole box, is the unit).
+    Refuses on the first graphic (sorted names) whose overlap exceeds the fraction; an empty foreground
+    is a pass with nothing checked."""
+    frac = float(max_covered_frac)
+    if not (0.0 <= frac < 1.0):
+        raise ValueError("max_covered_frac must be in [0, 1)")
+    reg = _box(region)
+    area = (reg[2] - reg[0]) * (reg[3] - reg[1])
+    names = sorted(foreground)
+    covered = {}
+    for g in names:
+        gb = _box(foreground[g])
+        c = _overlap_area(reg, gb) / area
+        covered[g] = round(c, 4)
+        if c > frac:
+            raise LayoutRefused(LayoutRefused.HERO_OCCLUDED,
+                                f"{id_}: graphic {g} {gb} covers {c:.1%} of the protected region {reg} (limit {frac:.0%})",
+                                id=id_, graphic=g, graphic_box=gb, region=reg, covered_frac=round(c, 4), limit=frac)
+    return {"status": "PASS", "id": id_, "region": reg, "foreground": names, "covered_frac": covered, "limit": frac}
+
+
+# ── J. the framing target is measured at the beat's focus frame (RENTOK-GAME-V2-006 A-4, R-1, N4) ──
+
+def check_framing_target(owner_frac_by_frame: dict, *, focus_frame: int, target: float, beat: str,
+                         hero_box=None, canvas=None) -> dict:
+    """The hero's screen height ÷ frame height, read from the layout log at the beat's declared focus
+    frame, must reach the board's target for that beat. Two lessons are fixed here: the value is read at
+    ONE named frame (the hold — the V2 job first measured mid-ease and failed for the wrong reason, A-4),
+    and a focus frame missing from the log is a refusal, never a pass. The target is the caller's, set
+    per POSE — a crouched or lying pose is inherently short (F5 cover 0.16 vs F2 hurt 0.25 in the job).
+    When `hero_box` and `canvas` are given, the hero must also lie inside the frame at that focus: the
+    dazed owner was drawn 52 px off the left edge for 0.46 s (N4)."""
+    tgt = float(target)
+    if tgt < 0:
+        raise ValueError("target must be >= 0")
+    f = int(focus_frame)
+    if f not in owner_frac_by_frame or owner_frac_by_frame[f] is None:
+        raise LayoutRefused(LayoutRefused.FRAMING_FRAME_MISSING,
+                            f"{beat}: focus frame {f} has no hero measurement in the layout log; the framing target {tgt} is unverified",
+                            beat=beat, focus_frame=f, target=tgt)
+    got = float(owner_frac_by_frame[f])
+    if got + 1e-6 < tgt:
+        raise LayoutRefused(LayoutRefused.FRAMING_BELOW_TARGET,
+                            f"{beat}: hero is {got:.3f} of the frame at focus frame {f}; the board asks for {tgt:.3f}",
+                            beat=beat, focus_frame=f, measured=got, target=tgt)
+    out = {"status": "PASS", "beat": beat, "focus_frame": f, "measured": got, "target": tgt}
+    if hero_box is not None and canvas is not None:
+        hb, cv = _box(hero_box), _box(canvas)
+        if not inside(hb, cv):
+            raise LayoutRefused(LayoutRefused.HERO_CLIPPED_BY_FRAME,
+                                f"{beat}: hero box {hb} is clipped by the frame {cv} at focus frame {f}",
+                                beat=beat, focus_frame=f, hero_box=hb, canvas=cv)
+        out["hero_box"] = hb
+    return out
+
+
+# ── K. the world fills the frame at every zoom (RENTOK-GAME-V2-006, LJ-15 / DET 'world fills the frame') ──
+
+def check_world_fills_frame(camera_scales, *, min_scale: float = 1.0) -> dict:
+    """Every logged camera scale must be >= `min_scale` (1.0 = the world exactly fills the frame; a
+    pull-out below it shows the frame's own background beside the world — a black band or letterbox).
+    The V2 job's camera moved 1.0–1.6 across 900 frames and its checker confirmed no band on any of 61
+    frames (LJ-15); this gate makes that a refusal instead of an eye check. No scales logged → refused:
+    an unlogged camera is not a verified one. `camera_scales` is an iterable of (frame, scale) or of
+    bare scales."""
+    lo = float(min_scale)
+    rows = []
+    for i, item in enumerate(camera_scales):
+        if isinstance(item, (tuple, list)):
+            frame, scale = int(item[0]), float(item[1])
+        else:
+            frame, scale = i, float(item)
+        rows.append((frame, scale))
+    if not rows:
+        raise LayoutRefused(LayoutRefused.WORLD_SMALLER_THAN_FRAME,
+                            "no camera scales logged; whether the world fills the frame is unverified", frames=0)
+    for frame, scale in rows:
+        if scale + 1e-9 < lo:
+            raise LayoutRefused(LayoutRefused.WORLD_SMALLER_THAN_FRAME,
+                                f"frame {frame}: camera scale {scale:.3f} < {lo:.3f} — the world is smaller than the frame",
+                                frame=frame, scale=scale, min_scale=lo)
+    scales = [s for _, s in rows]
+    return {"status": "PASS", "frames": len(rows), "min_scale": min(scales), "max_scale": max(scales), "limit": lo}
+
+
+# ── L. one character, several sheets, one pixel density (RENTOK-GAME-V2-006 N5 / LJ-11) ──────────
+
+def check_sprite_density(standing_heights: dict, *, min_ratio: float = 0.8) -> dict:
+    """When one character is drawn from more than one sprite sheet, the sheets' standing-cell heights
+    (source pixels for the same standing figure) must agree within `min_ratio` (smallest ÷ largest).
+    Sheets that differ are scaled to the same screen height, so their pixel grain differs on screen:
+    the V2 job's base sheet stood 561 px, its two expression sheets 344 and 342 px (ratio 0.61), and every
+    swap between a base run pose and a sheet pose popped in grain and proportion — some 150 times in the
+    film (checker N5). The producer had recorded the 60 % figure and accepted it as 'not visible at phone
+    size' (INFERRED); the checker found the pop visible. The threshold is the caller's; the default 0.8
+    is a starting point, not a measured perceptual limit. One sheet is nothing to compare: PASS."""
+    ratio_min = float(min_ratio)
+    if not (0.0 < ratio_min <= 1.0):
+        raise ValueError("min_ratio must be in (0, 1]")
+    heights = {}
+    for name in sorted(standing_heights):
+        h = float(standing_heights[name])
+        if h <= 0:
+            raise ValueError(f"sheet {name}: standing height must be > 0, got {h}")
+        heights[name] = h
+    if len(heights) < 2:
+        return {"status": "PASS", "sheets": list(heights), "ratio": 1.0, "limit": ratio_min, "note": "one sheet; nothing to compare"}
+    lo_name = min(heights, key=heights.get)
+    hi_name = max(heights, key=heights.get)
+    ratio = heights[lo_name] / heights[hi_name]
+    if ratio < ratio_min:
+        raise LayoutRefused(LayoutRefused.SPRITE_DENSITY_MISMATCH,
+                            f"sheet {lo_name} stands {heights[lo_name]:.0f} px against {hi_name} at {heights[hi_name]:.0f} px "
+                            f"(ratio {ratio:.2f} < {ratio_min:.2f}); the character will change grain at every pose swap",
+                            smallest=lo_name, largest=hi_name, ratio=round(ratio, 4), limit=ratio_min, heights=heights)
+    return {"status": "PASS", "sheets": list(heights), "ratio": round(ratio, 4), "limit": ratio_min}

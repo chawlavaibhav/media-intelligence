@@ -1,0 +1,109 @@
+# PROMOTION QUEUE — case RENTOK-GAME-V2-006. Five classes, one per item. Class 1 = code on this branch with a test;
+# class 2 = candidate with a promotion condition; class 3 = directional (ROUTE-OBSERVATIONS.yaml); class 4 = Canon gap,
+# report only; class 5 = job-specific, not promoted. Items continued from cases 004/005 say so and carry the new count.
+case_id: RENTOK-GAME-V2-006
+
+promoted_now:                                                # class 1 — deterministic, in code, with regression tests
+  - id: HERO_VISIBLE
+    kind: deterministic_compositor_gate
+    where: "runtime/compositor/gates.py check_hero_visible — test runtime/tests/test_k_rentok_game_v2_006.py HeroVisible"
+    rule: "a declared region of the hero (his whole box at a payoff beat; his face while he holds a prop) may not be covered by a graphic drawn in front of it beyond a stated fraction; the graphic-vs-text gate cannot see a graphic over the hero"
+    closes: [N1, N2]
+    what_the_caller_must_declare: "the region (whole box or a sub-region such as the head band) and which graphics are layered in front — a held prop inside his box is not an occlusion, which is why the unit is a region, not the sprite"
+  - id: FRAMING_TARGET_AT_FOCUS
+    kind: deterministic_compositor_gate
+    where: "runtime/compositor/gates.py check_framing_target — test FramingTarget"
+    rule: "the hero's screen height ÷ frame height is read at ONE named focus frame (the hold, never mid-ease) and must reach the board's per-pose target; a focus frame absent from the log is a refusal; optionally the hero box must lie inside the canvas at that frame"
+    closes: [A-4, R-1, N4]
+    note: "the job wrote this gate in tools/qa_checks.py (FRAMING); the runtime version adds the missing-frame refusal and the hero-inside-canvas assertion the checker asked for"
+  - id: WORLD_FILLS_FRAME
+    kind: deterministic_compositor_gate
+    where: "runtime/compositor/gates.py check_world_fills_frame — test WorldFillsFrame"
+    rule: "every logged camera scale >= 1.0 (the world never smaller than the frame; no band, no letterbox); no logged scales is a refusal"
+    closes: [LJ-15]
+    note: "promoted from a passing job-local DET row, not from a shipped defect — it is the deterministic form of an eye check any camera-driven renderer needs"
+  - id: SPRITE_DENSITY_CONSISTENCY
+    kind: deterministic_reuse_gate
+    where: "runtime/compositor/gates.py check_sprite_density — test SpriteDensity"
+    rule: "the standing-cell heights of every sheet used for one character must agree within a stated ratio (default 0.8, the caller's), checked at the reuse decision before any draw; the job's 561 / 344 / 342 px (ratio 0.61) is refused"
+    closes: [N5]
+    threshold_status: "the 0.8 default is a starting point, not a measured perceptual limit; the only data are 0.61 (visible pop, checker) and 0.994 (the two expression sheets, no pop reported)"
+
+candidate_patterns:                                          # class 2 — worked here; needs more evidence before it is a rule
+  - id: BOARD_FEELING_FRAMING_IMPACT
+    kind: board schema (candidate) — the single change that moved the customer's rank
+    rule: "three fields per beat on the creative board — feeling (what the viewer should feel), framing (hero height ÷ frame at the beat's focus, camera keyframes, where the eye goes), impact (named primitives with timings) — and a renderer that READS camera / hit-stop / shake / pose / audio from those fields instead of hard-coding them"
+    evidence: ["CQ-001 (n = 1 clip): the schema on one 6.8-s beat moved the customer from last to second of four at USD 0.067 (07-DIAGNOSIS-AND-ROUTE.md §3 cause A CONFIRMED, §6)", "this job (n = 1 film): the same schema over 15 beats, one paid call, DET 28/28, ACCEPT without repair, 'finally one amazing outcome'", "Lane A (case 004) had no such fields and was accepted too — so acceptance alone does not isolate the schema; the CQ-001 rank does"]
+    cost: "USD 0 (code); ≈ 36 min of producer time for the board + renderer + two animatics on 30 s; framing targets must be set per POSE"
+    scope: "code-rendered game / animation films; the three fields also serve as a direction checklist for any per-beat film"
+    promotion_condition: "one more accepted job on a DIFFERENT brief using the schema (n = 2 briefs); then the fields become required in the /media-agency Stage 3 board for code-rendered classes"
+  - id: ANIMATIC_BEFORE_SPEND
+    kind: workflow (candidate, continued from case 004; n now 4 productions — 3 agency jobs + 1 experiment treatment)
+    rule: "render the whole film with placeholder assets, run every compositor gate over its layout log and judge the feel beat by beat before any paid draw"
+    evidence: ["case 004 Lane A (R1, R2a–c found at USD 0)", "Cumin B — AGY-2026-09-20-CUMIN-EXP-B-FIVESTAGE-001 (a REJECTED job, local branch work/agency-job-cumin-exp-b-fivestage @ 5c33173, pending_sync): its packet records 'end card first built on the wrong product image; caught on the animatic board at USD 0' (F5) — the step worked even though the film did not", "CQ-001 Treatment C: USD-0 animatic judged before the one draw (TREATMENT-C.md §6 @ 41d97c6)", "this job: A-1..A-5 found on animatic v1 at USD 0; then ONE paid call, 0 failed, 0 paid repairs"]
+    promotion_condition: "case 004 set 'repeat on one more code-rendered job' — MET by this job. PROPOSED: make it a required step in the /media-agency Stage 5 preamble for code-rendered classes — a skill edit, a Controller decision, not made here"
+  - id: TREATMENT_C_RENDERER_PRIMITIVES
+    kind: runtime helper set (candidate)
+    rule: "a named primitive vocabulary a board can call by name: world/UI layer split, camera crop-and-scale (NEAREST), hit-stop with catch-up, screen shake, easing, colour grade + vignette, aura pulse + palette shift, particles, impact star, shockwave ring, muzzle flash, projectile with trail, flash-from-source, obstacle motion curves (lean_in / hop / sprint_past / topple / dive), payoff pops, per-beat bed processing; new here: scroll pauses + obstacle carry-over, rotate-about-pivot, HUD segment blink, health refill ticks, dazed stars, speed lines, coin fountain, confetti, a true limiter stage (LEARNING-PACKET c_primitives_reused / c_primitives_new_here; board.json impact primitives: 25 names)"
+    evidence: ["CQ-001 Treatment C (one 6.8-s clip)", "this job (all 15 beats)"]
+    promotion_condition: "a third job on a different brief calls the same names; then the set is lifted from job-local render_v2.py into a runtime compositor module with the board schema above"
+  - id: CUSTOMER_MAY_DECLINE_A_REPAIR_ROUND
+    kind: process / records rule (candidate)
+    rule: "when the customer declines a repair round, every offered defect is recorded on the accepted file as UNREPAIRED with the customer's words, counted separately from closed defects, and the case never presents the file as clean; the list of defects actually offered is written to disk at the time of the offer (this job's 'six' is chat-only and unrecoverable)"
+    evidence: [this job — "not required" on ten checker defects]
+    promotion_condition: "one more job where a repair round is declined, written this way; then a line in the /media-agency delivery checklist ('write the offered list to JOB.yaml before asking')"
+  - id: SPRITE_STATE_SEMANTICS_IN_OCCLUSION_GATES
+    kind: gate refinement (candidate)
+    rule: "occlusion gates read a sprite state (alive / burst / fallen / leaving); debris and a fading exit are excluded, everything else is checked"
+    evidence: ["A-3: the departing swarm crossed the HUD; the exclusion let the fade-out pass while the checker's own C5b found the two remaining raw intersections (17.37 phone drop; 20.37 burst vs chip) and agreed they are not occlusions"]
+    promotion_condition: "a state field on the layout-log schema once LAYOUT_LOG_GATES (case 004) is promoted; until then check_graphic_text_disjoint / check_hero_visible take only the boxes the caller chooses to hand them"
+  - id: WORLD_STOPS_WHEN_HE_IS_DOWN
+    kind: direction rule for auto-scrollers (candidate)
+    rule: "an auto-scrolling world pauses its scroll while the hero is down or buried, so the thing that beat him stays on him; obstacles persist into the next beat until they leave the screen"
+    evidence: ["A-5 (animatic v1 → v2, producer judgement)", "the checker's LJ-3 'half-buried, the world stops' read as the strongest stretch (§7)"]
+    promotion_condition: "one more side-scroller job; it is a board-level rule (a scroll_pause primitive), not a gate"
+  - id: CODEC_TRUE_PEAK_MARGIN
+    kind: deterministic_qa rule (candidate, continued from cases 004/005; n now 3 jobs)
+    rule: "measure loudness and true peak on the delivered encoded file; on square-wave / dense SFX, headroom alone is not enough — a true limiter stage before the encode is"
+    evidence: [R-2, RO-03, "case 004 R5 / RO-05", "case 005 R2/R2b"]
+    promotion_condition: "unchanged from case 004 — a /media-agency QA-checklist line now; code when an assembly step exists in the runtime"
+  - id: POSE_HEIGHT_JUMP_CHECK
+    kind: deterministic check (candidate — nameable but not yet safe)
+    rule: "the hero's screen height may not change by more than a stated fraction between consecutive frames unless the board declares the swap a cut"
+    evidence: [N3 — "381 → 444 px in one frame at the gift moment"]
+    promotion_condition: "a board field that marks deliberate hard swaps (hit poses are cuts by design); without it the check fires on every impact frame"
+  - id: REUSED_ASSET_STYLE_CHECK
+    kind: reuse rule (candidate)
+    rule: "an asset reused under accepted_in_context is compared for drawing style (edge hardness, shading) against the character it will share the frame with, not only for identity and lettering"
+    evidence: [N7 — "the tenant is smooth-shaded among pixel-art sprites; accepted in Lane A, reused unexamined"]
+    promotion_condition: "a measurable style proxy (edge-gradient histogram or palette count) tried on one more job"
+  - id: KEYING_HELPER
+    kind: runtime helper (candidate, continued from case 004)
+    rule: "colour keying with connectivity + chroma-shadow rules, fringe erosion and despill, with a keyability report"
+    evidence: ["case 004 R3", "N6 — a third sheet with a key fringe"]
+    promotion_condition: "unchanged — one more sprite job; then tools/cutout.py → runtime/compositor"
+  - id: BRAND_COLOUR_SAMPLING_PLAN
+    kind: gate usage rule (candidate; the gate exists — case 004 BRAND_COLOUR_ON_RENDERED_FRAME)
+    rule: "brand-colour samples are placed on every seam a raster or card introduces (the raster's corners and edges), not only on the card's open area"
+    evidence: [N9 — "the raster's corner (0,40,231) is 22 per channel off the card; the job's samples did not include it"]
+    promotion_condition: "a sampling-plan line in the QA map of the next code-rendered job"
+
+directional_only:                                            # class 3 — see ROUTE-OBSERVATIONS.yaml
+  - {id: RO-01, note: "nano-banana-2 8-pose sheet from text, 1/1 first draw passed the consistency card with one pose miss (look-back drawn facing forward); four such sheets across the RentOK jobs, each with one limitation"}
+  - {id: RO-02, note: "53.6-s latency on one 16:9 sheet, n = 1"}
+  - {id: RO-03, note: "AAC overshoot held by a limiter stage, n = 2 encodes (three jobs cumulatively)"}
+  - {id: RO-04, note: "board-driven code render: what it still cannot do (seven recorded limits)"}
+
+canon_gap_candidates:                                        # class 4 — report only; no pack compiled, no source added
+  - id: CANON_GAP_ANIMATION_PRINCIPLES_AND_GAME_FEEL
+    triggered_by_a_production_failure: false
+    observed: "no accepted Canon on animation principles or game feel. Declared at Stage 3 on three records now — CQ-001 Treatment C, this job's stages/03 (GAP block) and JOB.yaml canon.missing_domains — and bridged each time by reasoning from named references (Thomas & Johnston 1981; Swink 2008; Jonasson & Purho 2012), recorded as reasoning, not as Canon. No failure followed; the customer accepted. The game/arcade/pixel/chiptune gap from case 004 is the same domain seen from the readability side."
+    proposal: "Controller decision on whether to seek sources for this domain now that three jobs have reasoned without it; nothing compiled here"
+
+not_promoted:                                                # class 5 — true of this job only
+  - "the fifteen beats' specific feelings, camera keyframes, hit-stop frame counts (3 f problem hits, 2 f clears), shake amplitudes, grade values and the 53 audio cues (board.json) — direction for this brief"
+  - "the five obstacles' motions and payoffs (lean_in / hop / sprint_past / topple / lunge; paper burst / coin fountain / tag / dashboard card / colour flip)"
+  - "the decision not to redraw the look-back pose (V2-D4) — a cost/risk call on a 0.25-s beat"
+  - "the decision to reuse Lane A's bed with per-beat processing instead of a new Lyria draw (R5)"
+  - "the customer's wording 'finally one amazing outcome' as a comparison with Lane A — same customer, same brief; a preference, not a measurement"
+  - "ground 1220 / owner 300 px and the obstacle size rebalance (V2-D6) — layout for this frame"
