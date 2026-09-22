@@ -1,0 +1,132 @@
+pack_id: typography_and_copy
+applicability: [static_image, video, image_sequence]
+decisions:
+  - decision_id: TC-D1
+    question: "What must the words do?"
+    default: "Grunt test: a stranger reads what you offer, how it helps, what to do — in five seconds (sb_0015); a clearer offer beats a better product (0018). Readers keep only what helps them thrive — company history and scale are filtered out (0002); effortful words lose them (0003); story pre-orders the message (0004). At any moment the copy says what the hero wants, what opposes them, life either way (0014)."
+    check: "Offer, benefit, action present as words; a stranger answers the three questions from the key frame."
+    ids: [sk_sb_c003_0015, sk_sb_c003_0018, sk_sb_c003_0002, sk_sb_c003_0003, sk_sb_c003_0004, sk_sb_c003_0014]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: TC-D2
+    question: "Whose story do the lines tell; how many things do they say?"
+    default: "Customer as hero, brand as guide (sb_0008) — the archetype that grants the power, never the hero (whip_0015). One point per execution; three things to say is three ads (0004): each element added lowers every other (0003). One adjective per brand; every line sits under it (0015)."
+    check: "Lines address the customer's want, not the brand's greatness; board names the one point and one adjective."
+    ids: [sk_sb_c003_0008, sk_whip_0015, sk_whip_0004, sk_whip_0003]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, CORE_CREATIVE_IDEA, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: TC-D3
+    question: "What conflict and stakes do the lines carry?"
+    default: "Give the copy an opposing force; 'Area Bank Not Robbed' goes unread — nothing changed (whip_0011). Prefer life without the product to life with it (0013). Name what the customer loses by not acting, dosed like salt (sb_0012)."
+    check: "Headline or opening line states a problem or absence, not the solved state; one stake named."
+    ids: [sk_whip_0011, sk_whip_0013, sk_sb_c003_0012]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, CORE_CREATIVE_IDEA, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: TC-D4
+    question: "How clever may the line be; how fast must it get?"
+    default: "Write the flat statement, then spin it (whip_0006); the line lives where clear and clever overlap — 'I don't get it' and 'I've seen that before' are the edges (0005). The quick get outranks creativity (0001); wit leaves the viewer 5–40% of the way to travel (0007). Dwell sets the fuse: a passing screen takes about seven words, logo extra; two-second test — show, remove, ask what it said (0060). Cut any element the idea survives without (0002)."
+    check: "Flat statement on the board beside the final line; a stranger states its meaning after two seconds; nothing unneeded survives."
+    ids: [sk_whip_0006, sk_whip_0005, sk_whip_0001, sk_whip_0007, sk_whip_0060, sk_whip_0002]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, GENERATION_PROMPTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: TC-D5
+    question: "What register; what is never written?"
+    default: "Interesting first; funny is an accent, set by product and audience — no slapstick on a hospital (whip_0058). No puns, no rhyming headline (0029). No exclamation mark — it reads as desperation (0033). Exaggeration only on a truth, knowingly (0031). No 'real', no asterisked price, no stock handshake — reassurance reads as the lie it covers (0035). No invented person or model number (0034)."
+    check: "Copy has zero '!', no pun or rhyme, no 'real/genuine', no asterisk, no fictional name or SKU; register named with its product-and-audience reason."
+    ids: [sk_whip_0058, sk_whip_0029, sk_whip_0033, sk_whip_0031, sk_whip_0035, sk_whip_0034]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: TC-D6
+    question: "Which element is the boss, how much copy, how is the rest ranked?"
+    default: "Postcard (one visual, little copy) or letter (copy-led, complex message) — decide first; something dominates either way (whip_0045). One entry point, with a reason (0053). One clever element only: clever visual, quiet headline, or the reverse (0043); never show what you say (0032) — word–image polarity sets the shift (0048). Rank the rest by scale and weight: bold against light is strength, mere impact is vulgarity (vig_0009); type beyond trend (0011). A headline that needs explaining has failed; lead with the strongest point (whip_0037). Tagline only if it finishes the argument and stands alone with the logo (0057)."
+    check: "Board states postcard/letter, entry element and reason; one clever element; visual does not restate the headline; at most three type sizes, each a rank; tagline stands with logo alone or goes."
+    ids: [sk_whip_0045, sk_whip_0053, sk_whip_0043, sk_whip_0032, sk_whip_0048, sk_vig_c003_0009, sk_vig_c003_0011, sk_whip_0037, sk_whip_0057]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, VISUAL_SYSTEM, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: TC-D7
+    question: "Where does the text sit; how small may a secondary line be?"
+    default: "Place by zone — centre, off-centre, edge — not coordinate (fre_0017). In a vertical frame, oppose line and product at the two ends of the long axis; the tall format alone conveys nothing (0008). Text over an image follows the structure underneath and plays off its values (sam_0021). A small element registers only above a size set by the delivered size (fre_0024); a line to be found second must stay findable or the viewer moves on (0025)."
+    check: "Every text block in a named zone with a reason; text aligned to the image's structure; secondary text checked on a phone at delivery size."
+    ids: [sk_fre_c003_0017, sk_fre_c003_0008, sk_sam_c003_0021, sk_fre_c003_0024, sk_fre_c003_0025]
+    feeds: [VISUAL_SYSTEM.placement_zone, DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, FAILURE_PREVENTION]
+    limits: ["fre_0008, 0024, 0025 are landscape-still claims on pictorial elements; transfer to composed copy is this pack's reading."]
+  - decision_id: TC-D8
+    question: "What contrast must composed text hold against its ground?"
+    default: "Measure, never eyeball: few can judge lightness across hues (alb_0018); no colour is seen alone (0006, 0011). Text ≥ 4.5:1 to its ground (wcag_0001) by luminance ratio (0014); large text — ≥ 18 pt or 14 pt bold (0021) — may drop to 3:1 (0002) since wider strokes read at lower contrast (0031), never with a thin or unusual face (0022). Unrounded: 4.499 fails; thin faces pass nominally, fail in practice — thicken or exceed (0033). Narrow outline is letter, wide halo is ground (0018). Exempt only decoration (words swappable) or text incidental in a picture (0003). Over an image, measure the pixels under the letters (sam_0021)."
+    check: "Each text block reports its ratio at the darkest and lightest point of its ground: ≥ 4.5:1, or ≥ 3:1 with size and weight stated; no exemption on a message word."
+    ids: [sk_alb_c003_0018, sk_alb_c003_0006, sk_alb_c003_0011, sk_wcag_0001, sk_wcag_0014, sk_wcag_0021, sk_wcag_0002, sk_wcag_0031, sk_wcag_0022, sk_wcag_0033, sk_wcag_0018, sk_wcag_0003, sk_sam_c003_0021]
+    feeds: [DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, VISUAL_SYSTEM, FAILURE_PREVENTION]
+    limits: ["wcag_* are Level AA web thresholds; the source does not claim they optimise readability on a phone feed."]
+  - decision_id: TC-D9
+    question: "Which letterforms and case; may colour alone carry a distinction?"
+    default: "Reading goes by word picture, not letter (alb_0004): mixed case for any running line; all-capitals is the hardest read (0005). No extraordinarily thin or unfamiliar letterforms, above all at low contrast (wcag_0022). Colour is never the only means of a distinction (0007); a ≥ 3:1 lightness difference is a second means unless the hue itself must be identified (0038)."
+    check: "No running line in all-caps; stroke not thin at delivered size; every colour-coded difference also differs in lightness, weight or shape."
+    ids: [sk_alb_c003_0004, sk_alb_c003_0005, sk_wcag_0022, sk_wcag_0007, sk_wcag_0038]
+    feeds: [DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, VISUAL_SYSTEM, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: TC-D10
+    question: "How is the brand mark handled?"
+    default: "Place the supplied mark; never redraw, restyle or regenerate it — an established logo is equity, identity is the system not the logo, change for its own sake is the wrong motive (vig_0013, 0011). Logotype text is exempt from the contrast threshold (wcag_0004) only under a brand mandate; author-chosen low contrast is not — use the brand's higher-contrast variant (0034)."
+    check: "Mark is the supplied file, untouched; on a ground under 3:1 the brand's own higher-contrast variant, never a recolour."
+    ids: [sk_vig_c003_0013, sk_vig_c003_0011, sk_wcag_0004, sk_wcag_0034]
+    feeds: [DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, HARD_CONSTRAINT_CHECK, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: TC-D11
+    question: "Which text is generated and which is composed?"
+    default: "None generated. Every word meant to be read is real composed text, not an image of text (wcag_0008); text rendered into pixels for a look is an image of text (0025). Letterforms inside a generated picture are allowed only as incidental — a sign that happens to be in a photo, no message (0035) — or pure decoration, words swappable without loss (0027). Prompts name no legible words."
+    check: "No message word exists only as generated pixels; prompts quote no text to render; every legible string traces to the text layer."
+    ids: [sk_wcag_0008, sk_wcag_0025, sk_wcag_0035, sk_wcag_0027]
+    feeds: [DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, GENERATION_PROMPTS, HARD_CONSTRAINT_CHECK, FAILURE_PREVENTION]
+    limits: []
+conflicts:
+  - conflict_id: CF-01
+    decision_ref: TC-D4
+    kind: trades_off_with
+    between: [sk_whip_0005, sk_whip_0001]
+    nature: "cleverness is bought with comprehension time; the source ranks the quick get above creativity"
+    resolution_rule: "Say it straight first; keep the spin only while a stranger gets the line in two seconds (0060)."
+  - conflict_id: CF-02
+    decision_ref: TC-D4
+    kind: trades_off_with
+    between: [sk_whip_0007, sk_whip_0001]
+    nature: "wit deliberately leaves distance for the viewer to travel; distance lengthens the fuse"
+    resolution_rule: "Leave 5–40% for the viewer, never more; if the two-second test fails, shorten the distance."
+  - conflict_id: CF-03
+    decision_ref: TC-D6
+    kind: trades_off_with
+    between: [sk_whip_0048, sk_whip_0001]
+    nature: "wider word–image polarity makes a bigger shift and a longer fuse"
+    resolution_rule: "Polarity above zero (no see-say, 0032), below where the idea fails to resolve in the medium's dwell (0060)."
+  - conflict_id: CF-04
+    decision_ref: TC-D3
+    kind: contradicts
+    between: [sk_sb_c003_0012, sk_sb_c003_0017]
+    nature: "rules that cannot be broken against the source's own statement that stakes are dosed and the elements are not applied evenly"
+    resolution_rule: "Stakes always named, never over-dosed — 0012 governs the dose; 0017's rules-cannot-be-broken framing is not compiled."
+  - conflict_id: CF-05
+    decision_ref: TC-D1
+    kind: trades_off_with
+    between: [sk_sb_c003_0002, sk_sb_c003_0003]
+    nature: "the source names two causes of failure — irrelevance and processing cost — as jointly necessary conditions, not alternatives"
+    resolution_rule: "Both cuts apply: drop what is not about the customer's thriving (0002), then what still costs effort (0003); one does not excuse the other."
+waivers:
+  - {ref: sk_whip_0004, relation: qualified_by, partner: sk_whip_0061, reason: "0061 qualifies the one-point rule in client revision (the full-line request is the change most often asked for); TC-D2 is decided at brief time; the revision-defence doctrine does not change the one-point default."}
+  - {ref: sk_whip_0005, relation: qualified_by, partner: sk_whip_0016, reason: "0016 qualifies the clear/clever overlap as the execution-level form of strategy precision (a brief can be too vague or too precise); TC-D4 operates on a brief already given and consumes only the overlap and its two failure marks."}
+  - {ref: sk_fre_c003_0017, relation: qualified_by, partner: sk_fre_c003_0016, reason: "0016 is the source's rejection of placement rules (a rule of thirds can only be approximate), the ground on which 0017 gives zones instead of positions; TC-D7 consumes the zones as approximate regions with a reason, states no ratio, and so already carries the qualification."}
+  - {ref: sk_wcag_0001, relation: qualified_by, partner: sk_wcag_0030, reason: "0030 supplies the derivation of 4.5:1 (a 3:1 baseline times a 1.5 contrast-sensitivity loss at 20/40 acuity); TC-D8 consumes the threshold as a number to be met; where the number came from does not change it."}
+  - {ref: sk_wcag_0014, relation: depends_on, partner: sk_wcag_0020, reason: "0020 is the sRGB relative-luminance arithmetic the ratio consumes; TC-D8 consumes the ratio as the number a contrast checker reports, and the checker implements 0020; the arithmetic changes nothing in the default."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0015, reason: "0015 permits evaluating with anti-aliasing off (the measured object is the specified colour pair); TC-D8 measures the composed colour pair directly and already carries 0033's nominal-pass warning, which is the consequence 0015 has for thin faces."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0016, reason: "0016 fixes the background as the specified one, white assumed when none is given; TC-D8 states its own background rule for composed text over an image (the pixels under the letters); a web-default assumption of white does not arise in a composited frame."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0017, reason: "0017 makes specifying one colour of the pair without the other a failure of web markup; a composited frame always has both colours present, so the half-specification failure cannot occur and does not change the default."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0019, reason: "0019 bounds evaluation to colour pairs the author expects adjacent; TC-D8 already names the pairs to measure (each text block against its actual ground at darkest and lightest point); the user-agent recolouring carve-out has no counterpart in a fixed frame."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0032, reason: "0032 explains why the ratio has no hue term (colour-vision deficiency does not damage light-dark perception); TC-D8 already directs measurement by luminance, not hue, on alb_0018's ground; the reasoning confirms the default and does not change it."}
+  - {ref: sk_wcag_0021, relation: qualified_by, partner: sk_wcag_0023, reason: "0023 fixes the measured size as the size delivered by the user agent, excluding user zoom; TC-D8 consumes the 18 pt / 14 pt bold test at the delivered frame size, which is the same rule for a fixed frame; no zoom case arises."}
+  - {ref: sk_wcag_0021, relation: qualified_by, partner: sk_wcag_0024, reason: "0024 records that 18 pt and 14 pt bold come from large-print conventions, not a contrast experiment; TC-D8 consumes the size-and-weight test as stated; its provenance does not change it and the marker carries the evidence character."}
+  - {ref: sk_wcag_0008, relation: qualified_by, partner: sk_wcag_0009, reason: "0009 is the AAA form of the same rule with the Customizable exception and the technology condition removed; TC-D11's default (no message-bearing word generated) already satisfies the stricter form, so the qualification does not change it."}
+  - {ref: sk_wcag_0008, relation: qualified_by, partner: sk_wcag_0028, reason: "0028 defines the Essential exception (removal would fundamentally change the content AND no conforming alternative exists); TC-D11 invokes no Essential exception — the compositor can always set the words as text, so the second half of the test fails by construction; the logotype case is handled as a supplied file in TC-D10."}
+  - {ref: sk_wcag_0008, relation: depends_on, partner: sk_wcag_0028, reason: "same as the qualified_by waiver above: the Essential term is defined but not claimed by any decision of this pack."}
+  - {ref: sk_wcag_0025, relation: qualified_by, partner: sk_wcag_0026, reason: "0026 defines text as a programmatically determinable character sequence expressing language; TC-D11 consumes 0025 only to classify pixels rendered for a look as an image of text; the programmatic-determinability half is a web-markup notion with no counterpart in a composited frame."}
+pack_limits:
+  - "Coverage delta: whip_* = 2016 US print, outdoor and TV craft (seven words is a roadside-poster figure); sb_* = US web copy; wcag_* = web conformance; sam_* = editorial print and web; alb_* = 1963 colour teaching; fre_* = landscape stills. None treats composed text in 9:16 feed video or animated type — placement, size and contrast defaults transfer untested; no source gives a type size, line count or hold for on-screen text."
+  - "A14 (Devanagari & Indic typography) has no contributor: no default for Devanagari letterforms, matra legibility, mixed Hindi–English lines or script pairing; Hindi copy origination (nnn_0052) is compiled in commercial_communication CC-D9."
+  - "Grids (A07): Samara's column, module and reflow doctrine is not compiled beyond sam_0021; no column, gutter or baseline default."
