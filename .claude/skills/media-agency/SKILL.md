@@ -29,7 +29,9 @@ Do not narrate project history. Refresh per `BOOTSTRAP.md` §Refresh if HEAD mov
 1. Open a job record from `JOB-TEMPLATE.yaml` — `ttao.job_start_utc` is stamped at the first
    production input, before anything else.
 2. Run `PRODUCTION-WORKFLOW.md` stage by stage. Each stage names its output; a stage with no
-   output is not done.
+   output is not done. Each stage has a form (`forms/`, §1b of the workflow); a stage is closed
+   only when `tools/check_stage.py <job_dir> --through <N>` prints `COMPLETE`, and nothing is
+   dispatched before stages 1–4 are complete.
 3. QA by `QA-CHECKLIST.md`; run the existing runtime gates, never a weaker one-off version.
 4. Return candidates for the human's **ACCEPT / SPECIFIC REPAIR / REJECT**. Only a person accepts.
 5. On ACCEPT the job is not closed until `LEARNING-PACKET.yaml` exists and `learning_status` is

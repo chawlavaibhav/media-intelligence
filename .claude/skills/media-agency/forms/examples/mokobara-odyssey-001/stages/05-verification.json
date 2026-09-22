@@ -1,0 +1,62 @@
+{
+ "job_id": "AGY-2026-09-21-MOKOBARA-ODYSSEY-001",
+ "producer_session": "producer-2026-09-21",
+ "checker_session": "checker-2026-09-21",
+ "deliverable": {"path": "gen/final/mokobara-odyssey-9x16-30s.mp4", "sha256": "71850d1c", "version": "v2"},
+ "det": [
+  {"id": "DET-1", "check": "duration 29.5–30.5 s", "result": "pass", "tool": "ffprobe", "value": "30.021 s"},
+  {"id": "DET-2", "check": "1080×1920 H.264 High yuv420p 24 fps", "result": "pass", "tool": "ffprobe"},
+  {"id": "DET-3", "check": "moov first; 0 edit lists", "result": "pass", "tool": "tools/qa_checks.py box walk"},
+  {"id": "DET-4", "check": "AAC 48 kHz stereo ≥128 kbps", "result": "pass", "tool": "ffprobe", "value": "196 kbps"},
+  {"id": "DET-5", "check": "loudness -14 LUFS ±1, TP ≤ -1", "result": "pass", "tool": "ffmpeg ebur128", "value": "I = -13.3 LUFS, TP = -4.1 dBTP"},
+  {"id": "DET-6", "check": "end-card and super strings byte-exact vs copy deck; wordmark pixel-identical to the SVG", "result": "pass", "tool": "tools/render_text.py + checker PSNR", "value": "PSNR ∞"},
+  {"id": "DET-7", "check": "text inside the safe box; contrast ≥ 4.5:1; disjoint", "result": "pass", "tool": "runtime.compositor.gates"},
+  {"id": "DET-8", "check": "no readable lettering in generated frames (2 fps scan)", "result": "flag", "tool": "tesseract", "value": "40/56 frames return tokens — texture on inspection", "covered_by_lj": "LJ-7"},
+  {"id": "DET-9", "check": "no speech or singing in native audio", "result": "not_run", "tool": "none (human ear)", "covered_by_lj": "LJ-6"},
+  {"id": "DET-10", "check": "prompt guard: no guard word in any prompt", "result": "pass", "tool": "tools/dispatch.py guard"},
+  {"id": "DET-11", "check": "every attempt reserved before settle; sum vs cap", "result": "pass", "tool": "gen/LEDGER.jsonl re-added", "value": "USD 7.857 of 12.00"}
+ ],
+ "lj": [
+  {"id": "LJ-1", "what": "identity continuity of the man across clips", "where": "1.5–3.5 s vs 3.5–28 s", "judge": "checker-2026-09-21", "result": "partial", "note": "shirt differs in beat 1; beard/hair shade drifts (D4, D7)"},
+  {"id": "LJ-2", "what": "bag likeness vs the product photo", "where": "5.5 / 16.5 / 22.5 / 26.2 s", "judge": "checker-2026-09-21", "result": "partial", "note": "navy body, yellow lining, pulls, straps present; lid-opening and pocket geometry bend (D6)"},
+  {"id": "LJ-3", "what": "does the gag read?", "where": "12.5–20.5 s", "judge": "checker-2026-09-21", "result": "partial", "note": "paddle reveal lands; arms only to the forearm (D1)"},
+  {"id": "LJ-4", "what": "packing reads as 'he packed'", "where": "20.5–24.5 s", "judge": "checker-2026-09-21", "result": "partial", "note": "coconuts and gourd left on the pebbles at the zip (D2)"},
+  {"id": "LJ-5", "what": "no resemblance to a specific film; nobody identifiable", "where": "whole film", "judge": "checker-2026-09-21", "result": "pass"},
+  {"id": "LJ-6", "what": "no speech or singing; ambience and bed as planned", "where": "whole file", "judge": "checker-2026-09-21", "result": "pass", "note": "ambience dips 40 ms at two cuts (D9)"},
+  {"id": "LJ-7", "what": "OCR-flagged frames are texture, not lettering", "where": "0–27.4 s", "judge": "checker-2026-09-21", "result": "pass"},
+  {"id": "LJ-8", "what": "the open: scratches read as years; the pull-back lands", "where": "0–3.5 s", "judge": "checker-2026-09-21", "result": "partial", "note": "in-model hard cut to a portrait; no pull-back (D4)"},
+  {"id": "LJ-9", "what": "the close: end card legible on a phone", "where": "27.4–30 s", "judge": "checker-2026-09-21", "result": "pass"}
+ ],
+ "attempts": {"count": 21, "usd_total": 7.857, "cap_usd": 12.0, "all_reserved_before_settle": true, "failed_counted": 1, "ledger_path": "gen/LEDGER.jsonl"},
+ "failures": [
+  {"id": "D1", "defect": "arms never go in past the forearm; the gag is carried by the paddle only", "producer_recorded": true, "earliest_stage": 4, "decision_ref": "form4.decision.topology — i2v from a still whose first frame shows ordinary rummaging cannot be pushed to 'arm to the shoulder'", "repair": "beat-4 still with the arm already in to the shoulder as the first frame, then i2v", "repair_cost_usd": 0.87, "repaired_in_version": null},
+  {"id": "D2", "defect": "zip closes with coconuts and gourd outside", "producer_recorded": true, "earliest_stage": 5, "decision_ref": "form3.board.beats[5].framing — the still was drawn with food still on the pebbles", "repair": "beat-5 still with the pebbles empty and the bag full; i2v only the zip closing", "repair_cost_usd": 0.47, "repaired_in_version": "v2"},
+  {"id": "D3", "defect": "no push-off: he stands by the raft", "producer_recorded": false, "earliest_stage": 3, "decision_ref": "form3.board.beats[6].framing — wade + board + two strokes asked of a 3.5-s clip", "repair": "beat-6 still with him already kneeling on the raft; i2v the push-off only", "repair_cost_usd": 0.47, "repaired_in_version": "v2"},
+  {"id": "D4", "defect": "beat 1 hard-cuts to a static portrait; no pull-back; long-sleeved shirt", "producer_recorded": false, "earliest_stage": 5, "decision_ref": "form3.board.beats[1].impact — the pull-back was in the prompt; the model did not perform it", "repair": "re-take with one change (costume anchor in the still)", "repair_cost_usd": 0.47, "repaired_in_version": "v2"},
+  {"id": "D5", "defect": "paddle continuity: out of the bag at 20 s, absent in beat 5, already on the raft in beat 6", "producer_recorded": false, "earliest_stage": 3, "decision_ref": "form3.board — no beat says where the paddle goes between beats 4 and 6", "repair": "board line 'paddle goes into the bag last, before the zip' + beat-5/6 stills accordingly", "repair_cost_usd": 0.0, "repaired_in_version": "v2 (partial)"},
+  {"id": "D6", "defect": "bag geometry bends: lid-opening at 16.5 s; pocket hanging open at 22.5 s; lining flap reads as a tear at 7.5–12.5 s", "producer_recorded": false, "earliest_stage": 5, "decision_ref": "form3.board.identity_anchors.bag — the anchor text does not forbid an open lid or a hanging pocket", "repair": "re-draw the beat-3 still with the bag closed except the main zip; add 'front pocket zipped' to the anchor", "repair_cost_usd": 0.6, "repaired_in_version": "v2"},
+  {"id": "D7", "defect": "beard/hair shade and bracelet-wrist drift between clips", "producer_recorded": false, "earliest_stage": 5, "decision_ref": "form3.board.identity_anchors.protagonist — 'grey at the chin' under-specified", "repair": "add 'beard salt-and-pepper' to the anchor on any re-draw", "repair_cost_usd": 0.0, "repaired_in_version": null},
+  {"id": "D8", "defect": "720p sources, soft at 1080p", "producer_recorded": false, "earliest_stage": 4, "decision_ref": "form4.routes[veo-3.1-fast-i2v] — 720p output chosen", "repair": "1080p output if price allows; else accept for phone feeds", "repair_cost_usd": 0.0, "repaired_in_version": null},
+  {"id": "D9", "defect": "40-ms ambience dips at two cuts", "producer_recorded": false, "earliest_stage": 5, "decision_ref": "assembly (tools/assemble.py) — no audio crossfade at hard cuts", "repair": "60-ms audio crossfade at each hard cut", "repair_cost_usd": 0.0, "repaired_in_version": "v2"}
+ ],
+ "checker_verdict": {"verdict": "deliverable_with_defects", "verbatim": "DELIVERABLE WITH DEFECTS — fit to present to the customer as a first pass, not fit to run as a paid ad without one more round.", "utc": "2026-09-21T18:40:00Z"},
+ "customer_verdict": {"outcome": "accepted", "by": "the customer (Vaibhav)", "utc": "2026-09-22T03:46:25Z",
+  "verbatim": "still some minor issues but excellent. pass/",
+  "reasons_mapped": [
+   {"customer_words": "v1: the bag was slightly torn when he saw her wife photo", "failure_id": "D6"},
+   {"customer_words": "v1: the instrument to run boat (oar or something) looked weird coming out of bag", "failure_id": "D1"},
+   {"customer_words": "v1: when he takes the boat the oar was already on the boat but comes out magically again", "failure_id": "D5"},
+   {"customer_words": "v1: we could use mokobara logo/name properly", "failure_id": "new — brand lockup (composition); repaired in v2"},
+   {"customer_words": "v1: the text font style could be better", "failure_id": "new — typography (composition); repaired in v2"},
+   {"customer_words": "v2: still some minor issues", "failure_id": "D1 / D7 (unrepaired, accepted)"}
+  ]},
+ "acceptance_scored": [
+  {"id": "A1", "held": true, "by": "checker-2026-09-21", "note": "recognisable in every beat; geometry bends noted (D6, repaired v2)"},
+  {"id": "A2", "held": false, "by": "checker-2026-09-21", "note": "arms only to the forearm; the paddle carries the gag (D1) — the customer accepted anyway"},
+  {"id": "A3", "held": true, "by": "checker-2026-09-21", "note": "after v2 (push-off repaired, D3)"},
+  {"id": "A4", "held": true, "by": "checker-2026-09-21"},
+  {"id": "A5", "held": true, "by": "checker-2026-09-21"}
+ ],
+ "release": {"status": "pending", "by": "", "utc": ""},
+ "ttao": {"job_start_utc": "2026-09-21T17:22:48Z", "first_deliverable_utc": "2026-09-21T18:10:00Z", "human_decision_utc": "2026-09-22T03:46:25Z"}
+}

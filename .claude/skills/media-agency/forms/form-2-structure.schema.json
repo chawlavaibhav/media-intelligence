@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "media-agency/forms/form-2-structure",
+  "title": "Stage 2 — Structure and facts (every fact has a source; nothing platform-specific from memory)",
+  "description": "Template lines 2.1–2.8.",
+  "type": "object",
+  "required": ["job_id", "author_session", "formats", "facts", "permitted_claims", "forbidden_claims", "assets", "audio", "per_format_composition", "sufficient_to_proceed"],
+  "properties": {
+    "job_id": {"type": "string", "minLength": 1},
+    "author_session": {"type": "string", "minLength": 1},
+    "formats": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "required": ["name", "width", "height", "source"], "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "fps": {"type": "number"},
+        "duration_max_s": {"type": ["number", "null"]},
+        "container": {"type": "string"},
+        "audio_target": {"type": "string"},
+        "safe_box": {"type": "object", "required": ["x0", "y0", "x1", "y1"], "properties": {
+          "x0": {"type": "integer"}, "y0": {"type": "integer"}, "x1": {"type": "integer"}, "y1": {"type": "integer"}
+        }, "description": "2.2 critical-element box after platform UI bands"},
+        "source": {"type": "object", "required": ["ref"], "properties": {
+          "ref": {"type": "string", "minLength": 1, "description": "2.1 platform page or a prior job's dated fetch"},
+          "fetched_utc": {"type": "string"}
+        }}
+      }}
+    },
+    "ad_structure": {
+      "type": "object", "required": ["sources"],
+      "properties": {
+        "hook_window_s": {"type": "number"},
+        "brand_first_by_s": {"type": "number"},
+        "ask_placement": {"type": "string"},
+        "close_on_product": {"type": "boolean"},
+        "sources": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "2.3 claim ids"}
+      }
+    },
+    "facts": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "required": ["id", "fact", "value", "source"], "properties": {
+        "id": {"type": "string", "pattern": "^F[0-9]+$"},
+        "fact": {"type": "string", "minLength": 1},
+        "value": {"type": "string", "minLength": 1, "description": "quote-exact"},
+        "source": {"type": "object", "required": ["kind", "ref"], "properties": {
+          "kind": {"type": "string", "enum": ["lookup-fact", "preserve", "lookup-canon", "evidence"]},
+          "ref": {"type": "string", "minLength": 1, "description": "file + field, page URL + fetch time, claim id, or case id"},
+          "quote": {"type": "string"}
+        }}
+      }}
+    },
+    "permitted_claims": {
+      "type": "array",
+      "items": {"type": "object", "required": ["text", "source_ref"], "properties": {
+        "text": {"type": "string", "minLength": 1, "description": "2.4 byte-exact; string-matched at Stage 5"},
+        "source_ref": {"type": "string", "minLength": 1}
+      }}
+    },
+    "forbidden_claims": {"type": "array", "items": {"type": "string"}},
+    "assets": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "required": ["name", "status", "use"], "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "enum": ["have", "originate"]},
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "description": "required when status = have"},
+        "use": {"type": "string", "minLength": 1, "description": "reference only / placed in the deliverable / composed by code"}
+      }}
+    },
+    "audio": {"type": "object", "required": ["muted_first"], "properties": {
+      "muted_first": {"type": "boolean"},
+      "captions": {"type": "string"},
+      "loudness_target": {"type": "string"}
+    }},
+    "per_format_composition": {"type": "boolean", "description": "2.7 true unless proven otherwise"},
+    "ip_rules": {"type": "object", "properties": {
+      "do": {"type": "array", "items": {"type": "string"}},
+      "dont": {"type": "array", "items": {"type": "string"}},
+      "guard_words": {"type": "array", "items": {"type": "string"}, "description": "tokens the dispatch guard refuses"}
+    }},
+    "sufficient_to_proceed": {"type": "object", "required": ["ok"], "properties": {
+      "ok": {"type": "boolean"},
+      "blocking_dependency": {"type": "string"}
+    }}
+  }
+}

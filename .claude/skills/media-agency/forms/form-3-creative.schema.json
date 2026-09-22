@@ -1,0 +1,406 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "media-agency/forms/form-3-creative",
+  "title": "Stage 3 — Creative (a numbered board; feeling / framing / impact per beat; every exact string sourced)",
+  "description": "Template lines 3.1–3.13. The board shape is the accepted Mokobara/V2 shape. Nothing here prescribes a style; the fields ask for the author's decisions and their reasons.",
+  "type": "object",
+  "required": [
+    "job_id",
+    "author_session",
+    "proposition",
+    "canon_lookup",
+    "canon_consulted",
+    "checks_applied",
+    "deviations",
+    "board",
+    "copy_deck",
+    "brand_timeline",
+    "ask",
+    "last_frame",
+    "muted_test",
+    "non_author_review"
+  ],
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "author_session": {
+      "type": "string",
+      "minLength": 1
+    },
+    "proposition": {
+      "type": "string",
+      "minLength": 1,
+      "description": "3.1 one sentence"
+    },
+    "canon_lookup": {
+      "type": "object",
+      "required": [
+        "injected_packs",
+        "gaps",
+        "prefix_sha256"
+      ],
+      "properties": {
+        "injected_packs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prefix_sha256": {
+          "type": "string",
+          "minLength": 8
+        },
+        "run": {
+          "type": "string"
+        }
+      },
+      "description": "the deterministic lookup record (runtime.canon.lookup) — what the model was given, not what it read by hand"
+    },
+    "canon_consulted": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "used_for"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "sk_… claim id or a pack check id"
+          },
+          "claim_short": {
+            "type": "string"
+          },
+          "used_for": {
+            "type": "string",
+            "minLength": 1,
+            "description": "which decision / beat"
+          },
+          "retrieved_by": {
+            "type": "string",
+            "enum": [
+              "pack",
+              "fetcher",
+              "hand"
+            ],
+            "description": "measurement: how it reached the author"
+          }
+        }
+      }
+    },
+    "checks_applied": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "result"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "n-a",
+              "deviation"
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "deviations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "brief_clause"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1,
+            "description": "pack default or claim id overridden"
+          },
+          "brief_clause": {
+            "type": "string",
+            "minLength": 1,
+            "description": "the customer clause that forces it"
+          }
+        }
+      }
+    },
+    "board": {
+      "type": "object",
+      "required": [
+        "kind",
+        "identity_anchors",
+        "hero_frame",
+        "beats"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "film",
+            "static"
+          ]
+        },
+        "duration_s": {
+          "type": "number",
+          "minimum": 0
+        },
+        "style_line": {
+          "type": "string",
+          "description": "the fixed opening line of every prompt (lens, medium, aspect)"
+        },
+        "negative_line": {
+          "type": "string",
+          "description": "the fixed closing line of every prompt (no text, no logos…)"
+        },
+        "identity_anchors": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "name → verbatim description restated in every prompt"
+        },
+        "hero_frame": {
+          "type": "object",
+          "required": [
+            "beat",
+            "description"
+          ],
+          "properties": {
+            "beat": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1,
+              "description": "3.2 the frame that sells without copy — a frame, never a claim"
+            }
+          }
+        },
+        "audio": {
+          "type": "object",
+          "properties": {
+            "native_audio": {
+              "type": "boolean"
+            },
+            "music_bed": {
+              "type": "string"
+            },
+            "voice_over": {
+              "type": "string"
+            },
+            "loudness": {
+              "type": "string"
+            }
+          }
+        },
+        "beats": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "n",
+              "title",
+              "feeling",
+              "framing",
+              "impact",
+              "canon",
+              "mandatory_ids"
+            ],
+            "properties": {
+              "n": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "t_in": {
+                "type": "number",
+                "minimum": 0
+              },
+              "t_out": {
+                "type": "number",
+                "minimum": 0
+              },
+              "clip_s": {
+                "type": "number",
+                "minimum": 0
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "feeling": {
+                "type": "string",
+                "minLength": 1,
+                "description": "what the viewer feels here"
+              },
+              "framing": {
+                "type": "string",
+                "minLength": 1,
+                "description": "what is in the frame, where, and what moves"
+              },
+              "impact": {
+                "type": "string",
+                "minLength": 1,
+                "description": "how the beat lands: camera, hold, sound, performance"
+              },
+              "anchors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "which identity anchors this beat restates (default: all)"
+              },
+              "canon": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "claim ids or check ids applied here; may be empty — never invent one"
+              },
+              "mandatory_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "3.7 which M-ids from Stage 1 this beat carries"
+              },
+              "first_frame": {
+                "type": "string",
+                "description": "film only: what the STILL shows — the state at t_in, before anything moves. Retro-fit finding (Mokobara D1): when the still is drawn from 'framing' (the whole action) the first frame shows the action not yet begun and i2v cannot be pushed to its end. Required for film boards."
+              }
+            }
+          }
+        }
+      }
+    },
+    "copy_deck": {
+      "type": "object",
+      "required": [
+        "strings",
+        "sources",
+        "placements"
+      ],
+      "properties": {
+        "strings": {
+          "type": "object",
+          "description": "id → exact text (or an asset path for a wordmark)"
+        },
+        "sources": {
+          "type": "object",
+          "description": "id → where the text comes from (3.8 / 2.4)"
+        },
+        "placements": {
+          "type": "object",
+          "description": "name → {t_in, t_out, beat, contents[] | string, why, box}"
+        }
+      }
+    },
+    "brand_timeline": {
+      "type": "object",
+      "required": [
+        "first_mark_s",
+        "in_context",
+        "spoken"
+      ],
+      "properties": {
+        "first_mark_s": {
+          "type": "number",
+          "minimum": 0
+        },
+        "in_context": {
+          "type": "string",
+          "minLength": 1
+        },
+        "spoken": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ask": {
+      "type": "object",
+      "required": [
+        "string_id",
+        "surface",
+        "at_s"
+      ],
+      "properties": {
+        "string_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "surface": {
+          "type": "string",
+          "enum": [
+            "card",
+            "super",
+            "spoken"
+          ]
+        },
+        "at_s": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "last_frame": {
+      "type": "string",
+      "minLength": 1,
+      "description": "3.6"
+    },
+    "muted_test": {
+      "type": "string",
+      "enum": [
+        "yes",
+        "no",
+        "n-a"
+      ]
+    },
+    "non_author_review": {
+      "type": "object",
+      "required": [
+        "by",
+        "claims_reopened"
+      ],
+      "properties": {
+        "by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "3.13 a session other than the author"
+        },
+        "claims_reopened": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "questions answered with a claim instead of a frame or a line"
+        },
+        "utc": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
