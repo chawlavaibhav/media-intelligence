@@ -1,0 +1,80 @@
+# SYSTEM DEFECTS — which failures were media-model failures and which were pipeline/operator failures. The tally is the lesson.
+case_id: CUMINCO-CHOPSTICKS-003
+tally:
+  media_model_failures_reaching_the_human: 1
+  pipeline_failures_reaching_the_human: 5
+  caught_before_review: 2
+  note: 'third case in a row with the same shape: models delivered, assembly/QA/direction lost the job'
+defects:
+- id: SD-01
+  job_ref: DF-01
+  class: media_model_failure
+  stage: plate-A r1
+  observed: the model reproduced the bowl's embossed brand mark from the reference and garbled it ('cumin ca.'); his bowl held a curry
+  root_cause: reference image carried the mark; prompt did not turn the bowl
+  reached_human: false
+  promoted_as: 'candidate: turn-the-mark-away prompt clause for supplied packshots with moulded lettering'
+- id: SD-02
+  job_ref: DF-02
+  class: pipeline_failure
+  stage: V1 mix
+  observed: '''random audio'' — VO lines shifted and mix pumping'
+  root_cause: silenceremove(stop_periods=-1) removed silences inside lines; single-pass loudnorm over a ducked mix
+  reached_human: true
+  promoted_as: candidate AUDIO_EDGE_TRIM_ONLY (edge trim, per-line LUFS, ducked bed, limiter) — operator rule until a runtime audio module exists
+- id: SD-03
+  job_ref: DF-03
+  class: media_model_failure
+  stage: clip-1/5 r1
+  observed: mouths moving under a voice-over
+  root_cause: i2v prompts did not forbid speech; the plate-B laugh was open-mouthed
+  reached_human: true
+  promoted_as: candidate CLOSED_MOUTH_UNDER_VO
+- id: SD-04
+  job_ref: DF-04
+  class: pipeline_failure
+  stage: V1 composition
+  observed: text and cards over chopsticks/noodles
+  root_cause: no subject-obstruction check; contrast probed on 4 frames; global wall median misread the wall gradient
+  reached_human: true
+  promoted_as: candidate WALL_OBSTRUCTION_GATE (implemented in the job tool compose.py; to be ported to runtime/compositor with a test)
+- id: SD-05
+  job_ref: DF-05
+  class: pipeline_failure
+  stage: timeline
+  observed: 23.5–25.6 s vs the 18-s plan
+  root_cause: beat lengths fixed before the VO was measured
+  reached_human: true
+  promoted_as: candidate VO_FIRST_TIMELINE
+- id: SD-06
+  job_ref: DF-06
+  class: infrastructure_transient
+  stage: dispatch
+  observed: two concurrent dispatch processes issued the same attempt id
+  root_cause: attempt ids from a line count, no lock
+  reached_human: false
+  promoted_as: candidate ATTEMPT_ID_LOCK (job tool)
+- id: SD-07
+  job_ref: DF-07
+  class: pipeline_failure
+  stage: blueprint
+  observed: no product hero, no end card, no brand early/throughout, no Direction — 'does not look like an ad'
+  root_cause: commercial_communication fired but is uncompiled (C-10); the operator rendered PA-D7 pass on a thin line
+  reached_human: true
+  promoted_as: Canon gap candidate + candidate AD_STRUCTURE_MINIMUM
+- id: SD-08
+  job_ref: DF-08
+  class: pipeline_failure
+  stage: V3 mix
+  observed: '''the voices are overlapping'': b1→b2 overlap 0.92 s, b6 overrun 0.94 s'
+  root_cause: VO placed at hand-set times, never checked against measured durations; no gate
+  reached_human: true
+  promoted_as: PROMOTED — runtime/compositor/gates.py check_vo_schedule + tests (this branch)
+- id: SD-09
+  job_ref: 4:5/1:1
+  class: pipeline_failure
+  stage: format adaptation
+  observed: 'feed formats had no copy zone after the crop: cards on 3 beats, brand mark absent on most beats'
+  root_cause: a 9:16 macro composition re-cropped rather than planned per geometry
+  reached_human: true
+  promoted_as: candidate GEOMETRY_NEEDS_ITS_OWN_PLATES

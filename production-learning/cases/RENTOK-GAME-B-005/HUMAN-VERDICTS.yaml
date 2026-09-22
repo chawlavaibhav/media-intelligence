@@ -1,0 +1,30 @@
+# HUMAN VERDICTS — the customer's words on the one presented version of lane B's film.
+# evidence_class: chat_only_human_evidence — one chat message at 2026-09-20T20:06Z covering both blind films, transcribed
+# verbatim before the mapping was opened (experiments/RENTOK-TWO-LANE-2026-09-20/05-BLIND-PACKET/VERDICTS.md @ f61efa4 on
+# the experiment branch; JOB.yaml versions[0]). The customer wrote no file.
+case_id: RENTOK-GAME-B-005
+evidence_class: chat_only_human_evidence
+reviewer: "Vaibhav Chawla — the customer for this job (his own brief) and the human Controller; judged blind on the acceptance contract"
+verdict_vocabulary: [accept, specific_repair, rebuild_direction, reject]
+
+verdicts:
+  - version: 1
+    verdict: accept
+    presented_as: "Video X in a two-film blind packet (Video Y = lane A)"
+    presented_utc: "2026-09-20T19:58:00Z"
+    decided_utc: "2026-09-20T20:06:00Z"
+    words_transcribed:
+      - "both accepted. vidoe one has robotic voice over althouh. video 2 is better"
+    reading: "INFERRED by the Controller and recorded as such: 'video one' = Video X = this film. ACCEPT, with one noted defect — the voice-over sounds robotic — and not preferred. The customer did not reject the film for the voice and asked for no repair."
+    defects_seen: [HD-01]
+    what_the_words_do_not_say: "which of the three announcer lines, or all; whether a different voice route (ElevenLabs 'Daniel', Gemini TTS 'Puck' — both auditioned, neither heard by a human) would have read as less robotic; whether the checker-named risks ('not Mario enough', smiling-through-trouble tone, empty lower third) played any part in the preference"
+
+defect_register:
+  - id: HD-01
+    element: "the three-line arcade announcer (Sarvam bulbul:v3 'aditya', en-IN): 'Cheat code accepted' / 'RentOk mode: on' / the closing line, 16–28 characters each"
+    observed: "'vidoe one has robotic voice over' — heard by the customer, the first human ear on the voice"
+    why_no_human_ear_earlier: "the producer session cannot listen; the by-ear audition was left to the Stage-5 checker, who also could not listen (CHECK-STAGE-5.md: 'Sound remains unheard by anyone — the one open check'). Sarvam was chosen because it was the only candidate that completed all three lines (single-voice-source rule from case 002) and was 0.5 s shorter on line 3"
+    prior_observation: "case 001 RO-05 — the same route heard as robotic on ~1,000 characters of narration; here the lines were 16–28 characters, so the reading did not depend on line length (n = 2 jobs, 2 hearings, same listener)"
+    fixed: "not fixed — the film was accepted; recorded as ROUTE-OBSERVATIONS RO-05 (class 3) and as the candidate VOICE_CAST_BY_A_HUMAN_EAR (class 2)"
+
+blindness_limitation: "Recorded before presentation (00-EXPERIMENT-CONTRACT.md §8): the human had been told in chat that one lane had a voice and that one file measured 30.021 s; the packet was blind as to labels and metadata, not against memory."

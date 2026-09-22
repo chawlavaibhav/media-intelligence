@@ -1,0 +1,55 @@
+# HUMAN VERDICTS — the user's words, chat-only, transcribed verbatim from the session (no verdict file on disk).
+case_id: CUMINCO-CHOPSTICKS-003
+evidence_class: chat_only_human_evidence
+judge: the user (Vaibhav Chawla) — brief author and release authority
+gate_verdicts_before_assembly:
+- gate: micro-qualification 1 plate-H1
+  verdict_verbatim: r2
+  result: accept r2
+- gate: micro-qualification 1 clip-2 (Veo i2v)
+  verdict_verbatim: accpet
+  result: accept
+- gate: plates A r2 / H2 / H3
+  verdict_verbatim: plates are good to go
+  result: accept
+- gate: plate-B
+  verdict_verbatim: plate b is accepted
+  result: accept
+- gate: voice round 1 (Sarvam priya/shreya, ElevenLabs Sarah)
+  verdict_verbatim: we could use hidi comfoting voice. all three are robotic
+  result: reject
+- gate: voice rounds 2–3 (Hindi; Gemini TTS ×4; ElevenLabs tagged; Sarvam slow)
+  verdict_verbatim: stick to english. but voices are not good. at all. why ae we not using veo models with voice? … i also dont agree on voice being an
+    issue. eleven labs speically have vocies that feel human and so does sarvam … clam + cheerful is what we want. like someone explainig it to their loved
+    ones- excitement, calmness, happiness
+  result: reject; direction given
+- gate: voice round 4
+  verdict_verbatim: leda is good. a little slower though. the shrillness and excitement is still miissing.
+  result: specific repair
+- gate: voice round 5
+  verdict_verbatim: bubbly
+  result: accept Leda 'bubbly'
+verdicts:
+- version: V1
+  verdict: reject
+  verbatim: crapy. the video has got some random audio. her lips are omving. the text is coming on figures. all messed up
+  defects_named:
+  - HD-01 random audio
+  - HD-02 her lips are moving
+  - HD-03 text on figures
+- version: V2
+  verdict: reject
+  verbatim: did cannon say nothing about product positioning? the closing shot should have cumin product and final caption. it does not look like ad at
+    all. the opening is missing too. canon had this knowledge. how's that possible?
+  defects_named:
+  - HD-04 no product close / final caption
+  - HD-05 no opening
+  - HD-06 does not look like an ad
+- version: V3
+  verdict: reject
+  verbatim: this is still bad. the voices are overlapping. not at all happy with it. reject completely. we need to do the diagnosis now. tranfer the info
+    to canon
+  defects_named:
+  - HD-07 voices overlapping
+acceptance_learning: every gate that existed passed on every version; the user rejected on what no gate measured. 'Gates passed' was never presented as
+  acceptance, and the user's ear and eye were the release authority throughout — as the workflow requires.

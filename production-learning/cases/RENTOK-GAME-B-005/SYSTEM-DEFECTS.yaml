@@ -1,0 +1,131 @@
+# SYSTEM DEFECTS — case RENTOK-GAME-B-005.
+# The central finding, shared with case 004: the runtime gates caught the layout collisions on the first render; the
+# independent checker caught what no gate covered (a graphic over text, a voice ahead of its words, a sheet cell missing an
+# identifier, an empty lower third). One model failure reached a gate (D-4). Three attempts failed at the provider or
+# locally and were honestly counted. One defect reached the customer: the voice, which no human had heard.
+case_id: RENTOK-GAME-B-005
+classes:
+  media_model_failure: "the generation model produced something that does not meet the brief"
+  pipeline_failure: "the system around the model let a defect through or created one"
+  infrastructure_transient: "provider refusal / quota / unavailable — counted, never retried on the same request"
+
+defects:
+  # ── promoted to code on this branch (class 1) ────────────────────────────────────────────────
+  - id: D-1
+    class: pipeline_failure
+    subsystem: deterministic_qa (disjointness scope)
+    observed: "the phone graphic rose over the PG OWNER name tag 14.9–15.3 s, hiding most of the final R on the brand-moment frame"
+    root_cause: "check_disjoint was handed text regions only; a non-text critical graphic crossing a text plate was outside its scope"
+    found_by: independent checker (frame 15.0 s + crop)
+    repair: "USD 0 — phone 110 px right; G-* graphic boxes added to the layout log and to the disjoint check, which then found D-9"
+    not_a_model_failure: true
+    promoted_as: GRAPHIC_TEXT_DISJOINT
+    deterministic_check: "runtime/compositor/gates.py check_graphic_text_disjoint (shared with case 004 D-2)"
+  - id: D-9
+    class: pipeline_failure
+    subsystem: compositor
+    observed: "the O5 beam ran 8 px under the name tag at 23.9–24.1 s"
+    root_cause: "same scope gap as D-1; found the moment graphics joined the check"
+    found_by: producer (extended check)
+    repair: "USD 0 — swarm 30 px lower, beam origin 18 px lower"
+    not_a_model_failure: true
+    promoted_as: GRAPHIC_TEXT_DISJOINT
+  - id: D-3
+    class: pipeline_failure
+    subsystem: deterministic_qa (VO timeline)
+    observed: "V2 'RentOk mode: on' began at 14.70 s; the screen read INSTALLING... until 15.87 s and RENTOK MODE: ON first appeared at 15.90 s — the announcer was 1.2 s ahead of its own words. The lane's rule (Stage 3 §3.8: on-screen = spoken) was met in words, not in time"
+    root_cause: "the VO gate (ported from PR #103's check_vo_schedule) checks line overlap and film end; nothing checked a line's start against the first on-screen time of its paired string"
+    found_by: independent checker (LAYOUT.json + spectral audio match)
+    repair: "USD 0 — V2 moved to 15.9 s with its string (ends 18.12 s, 0.4 s into the first card, declared)"
+    not_a_model_failure: true
+    promoted_as: VO_TEXT_ALIGNMENT
+    deterministic_check: "runtime/compositor/gates.py check_vo_text_alignment — a paired line may not start before its string's first on-screen time (minus a stated tolerance)"
+  - id: T1
+    class: pipeline_failure
+    subsystem: orchestration (dispatch ordering)
+    observed: "att-016: the dispatcher wrote a `reserved` ledger line for a QA transcription, then found the input file (the refused Gemini TTS take) did not exist; nothing left the machine; USD 0 billed; the reservation stays on the ledger by rule (settled local_fault)"
+    root_cause: "reserve-before-validate ordering in the job's tools/dispatch.py transcribe(); fixed there. The runtime bridge had the same fault in a different form: an attempt the harness had already refused (unresolved input / failed precondition) still added its cost to the running ceiling and drew the pool down, so a later sendable attempt could be blocked_by_pool by money set aside for a call that could never leave (OBSERVED on runtime/tests fixtures before the fix: four refused motion attempts reserved USD 2.304 and left USD 0.02 of a 0.50 pool)"
+    found_by: producer (job tool); this sync (runtime bridge)
+    repair: "job: transcribe() checks the file first. Runtime: runtime/execute/bridge.py — a harness-refused attempt reserves neither ceiling nor pool (refusal_reason gains 'not_reserved: …'); the committed dry battery B05 (two Veo-aspect-refused fallbacks) re-recorded from reserved_total 2.16 → 0.96"
+    not_a_model_failure: true
+    promoted_as: VALIDATE_BEFORE_RESERVE
+    deterministic_check: "runtime/execute/bridge.py _attempt — test runtime/tests/test_j_rentok_game_004_005.py HarnessRefusedAttemptsReserveNothing"
+
+  # ── the one model failure that reached a gate ───────────────────────────────────────────────
+  - id: D-4
+    class: media_model_failure
+    subsystem: generation (character sheet) + micro-qualification judgement
+    observed: "the nine-pose sheet (att-018) had no red register in cells 5 (jump), 6 (hurt) and 7 (hands-up); the micro-qualification card said 'every cell carries every identifier'; in the film the register vanished at every jump, through the freeze and at LEVEL COMPLETE"
+    root_cause: "the model dropped one identifier in three poses; the producer's card overstated the sheet; the checker read the sheet cell by cell"
+    found_by: independent checker
+    repair: "USD 0 — a code-drawn register composited on the three cells (tools/repair_sprites.py); the card corrected; a re-draw (USD 0.067) was not needed"
+    not_a_model_failure: false
+    promoted_as: null
+    cross_case: "case 004 D-5 — the same identifier hidden in one pose, fixed by code (n = 2 sheets, 2 jobs)"
+    candidate: "MICRO_QUALIFICATION_CARD_IS_READ_CELL_BY_CELL — a checker item, not code"
+
+  # ── infrastructure / provider (counted, not retried) ────────────────────────────────────────
+  - id: att-006
+    class: infrastructure_transient
+    subsystem: pool reading
+    observed: "ElevenLabs HTTP 401 quota_exceeded on the longest line: 'This request exceeds your API key (mediaa lab) quota of 1000. You have 11 credits remaining, while 28 credits are required'. The subscription endpoint read 18:55:57Z showed 9,054 characters free"
+    root_cause: "a per-API-key quota is separate from the account character limit the balance endpoint reports; the pool reading was incomplete, not wrong"
+    found_by: producer
+    repair: "none — counted as failed; the candidate B was dropped (2 of 3 lines); no retry"
+    not_a_model_failure: true
+    promoted_as: null
+    candidate: PER_KEY_QUOTA_IN_POOL_READINGS
+  - id: att-013
+    class: infrastructure_transient
+    subsystem: provider refusal
+    observed: "Gemini TTS refused the 16-character line 'RentOk mode: on.' as PROHIBITED_CONTENT (blockReason; no further reason); the other two lines on the same route succeeded"
+    root_cause: "model policy; not diagnosable from the response"
+    found_by: producer
+    repair: "none — counted; candidate C dropped (2 of 3 lines); no re-send"
+    not_a_model_failure: "a provider refusal, classed provider_refusal, counts_against_route_quality false"
+    promoted_as: null
+    directional: RO-07
+  - id: PD-02
+    class: pipeline_failure
+    subsystem: roster labelling
+    observed: "the PriceBook roster (eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml) labels sarvam-bulbul-v3 and elevenlabs-v3 billing_pool: cash, while the routing map (eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml) lists sarvam_credits / elevenlabs_credits; the Controller ruled on 2026-09-20 that both are permitted credits pools and that the cash label is a roster labelling issue, not a billing fact (JOB.yaml spend.pool_label_discrepancy; gate checker REOPEN 2) — VERIFIED in this checkout"
+    root_cause: "two files describe the same pool with different words"
+    found_by: gate checker
+    repair: "none here — proposal only (this branch does not edit eval/**)"
+    not_a_model_failure: true
+    promoted_as: null
+    proposal: "Controller / roster owner: reconcile the two labels (see PROMOTION-QUEUE.yaml proposals)"
+
+  # ── closed at USD 0, not promoted as code ────────────────────────────────────────────────────
+  - {id: R1, class: pipeline_failure, subsystem: compositor, observed: "first render: a 1031-px card, a CTA 1 px outside the safe box, two 3–10 px overlaps", root_cause: "first layout values", found_by: "runtime check_text_bounds / check_disjoint over the layout log (4,974 placements)", repair: "condensed card font; positions (USD 0)", not_a_model_failure: true, promoted_as: null, note: "the existing gates did their job — evidence for LAYOUT_LOG_GATES (candidate)"}
+  - {id: R2, class: pipeline_failure, subsystem: audio assembly, observed: "TP +0.6 dBTP after loudnorm; then +1.9 dB AAC overshoot", root_cause: "loudnorm alone did not deliver TP ≤ -1; the codec overshoots the wav", found_by: "ebur128 on the encoded file", repair: "limiter -3.6 dBTP + 256 kbps → -1.8 dBTP delivered", not_a_model_failure: true, promoted_as: null, candidate: CODEC_TRUE_PEAK_MARGIN, cross_case: "case 004 R5 (≈ 2 dB; n = 2 jobs)"}
+  - {id: R3, class: pipeline_failure, subsystem: compositor, observed: "name tag rode up with the jump into the label plate", root_cause: "tag anchored to the sprite, not the ground", found_by: producer, repair: "tag at ground", not_a_model_failure: true, promoted_as: null}
+  - {id: R4, class: pipeline_failure, subsystem: compositor, observed: "cheat bar 8 px above the name tag", root_cause: "layout", found_by: producer, repair: "raised", not_a_model_failure: true, promoted_as: null}
+  - {id: R5, class: pipeline_failure, subsystem: tooling, observed: "duplicate layout record per frame (QA artefact)", root_cause: "two writers of one placement", found_by: producer, repair: "dedupe", not_a_model_failure: true, promoted_as: null}
+  - {id: D-2, class: pipeline_failure, subsystem: compositor (layer order), observed: "flag pole drawn through the character 26.6–27.8 s", root_cause: "pole layered above the player", found_by: checker, repair: "pole 300 px right, player stops 160 px short, behind him; celebration hop", not_a_model_failure: true, promoted_as: null, residue: "N-1 the player no longer touches the pole"}
+  - {id: D-5, class: pipeline_failure, subsystem: creative_direction (Stage 4 plate spec), observed: "lower third of every game frame empty road — a 16:9 plate in a 9:16 frame; 640 near-uniform rows (33 %)", root_cause: "plate geometry chosen at Stage 4 against a Stage 3 promise of a height-filling facade", found_by: checker, repair: "USD 0 near-parallax pavement (rows 640 → ~344, 18 %) chosen over a USD 0.067 9:16 re-draw; PARTIAL by the checker — the feet stay inside the Meta safe box by design", not_a_model_failure: true, promoted_as: null, candidate: COMPOSE_WORLD_ACROSS_THE_FULL_FRAME, cross_case: "case 004 D-7 — both lanes independently (n = 2)"}
+  - {id: D-6, class: pipeline_failure, subsystem: creative_direction (pose list), observed: "the same hands-up pose for defeat and victory", root_cause: "pose set one short", found_by: checker, repair: "victory rendered as a hop in the jump cell (closed by the D-2 repair)", not_a_model_failure: true, promoted_as: null}
+  - {id: D-7, class: pipeline_failure, subsystem: audio mix / pacing, observed: "0.6 s near-silence between V1 and V2 (14.1–14.7 s)", root_cause: "the timeline stretched to measured VO durations; the bed re-entered late", found_by: checker (100-ms level profile), repair: "bed at V1 end + phone-rise hum; hole 0.6 → ~0.35 s (PARTIAL; the voice file's own silent tail)", not_a_model_failure: true, promoted_as: null}
+  - {id: D-8, class: pipeline_failure, subsystem: records, observed: "ATTEMPTS.jsonl verdicts all pending vs JOB.yaml", root_cause: "two mirrors of one field", found_by: checker, repair: "verdicts written", not_a_model_failure: true, promoted_as: null, cross_case: "case 004 D-10 (n = 2)"}
+  - {id: N-1, class: pipeline_failure, subsystem: creative_direction (claim implication), observed: "a green tick on the drifting ghost's tag could read as 'paid' — the film must not imply recovery", root_cause: "a generic success marker on a 'tracked, not recovered' beat", found_by: producer during the repair, repair: "cyan tracked-ring marker", not_a_model_failure: true, promoted_as: null}
+  - {id: A1-not-run, class: pipeline_failure, subsystem: pre-dispatch gate coverage, observed: "canon/gate/run_gate.py was not run over the three prompts (JOB.yaml qa.pre_dispatch A1 NOT_RUN); the no-lettering clause was honoured by construction and the stills were clean", root_cause: "the producer chose construction over the gate; recorded for the inspector", found_by: producer (self-recorded), repair: "none needed for the outcome; a coverage gap in the record", not_a_model_failure: true, promoted_as: null, note: "case 002 QA_COVERAGE_ENFORCEMENT applies; not re-promoted"}
+
+  # ── reached the customer ────────────────────────────────────────────────────────────────────
+  - id: HD-01
+    class: media_model_failure
+    subsystem: voice (route quality as heard)
+    observed: "'vidoe one has robotic voice over' — the customer, blind"
+    root_cause: "the audition (three routes, all verbatim on transcript) was judged by transcript and duration only; neither the producer nor the checker session can listen; the first human ear was the customer's. Case 001 RO-05 had already heard bulbul:v3 as robotic on long narration"
+    found_by: customer
+    repair: "none — accepted"
+    not_a_model_failure: false
+    promoted_as: null
+    candidate: VOICE_CAST_BY_A_HUMAN_EAR
+    directional: RO-05
+
+tally:
+  media_model_failures_that_reached_a_gate: 1     # D-4
+  media_model_failures_that_reached_the_customer: 1   # HD-01 (the voice)
+  pipeline_defects_closed_before_presentation: 16
+  infrastructure_transients: 2                      # att-006, att-013 (att-016 was local)
+  found_by: {producer_gates: 2, producer_eye_or_tooling: 6, independent_checker: 8, customer: 1}

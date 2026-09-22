@@ -1,0 +1,25 @@
+# HUMAN VERDICTS — the customer's words on the one presented version of lane A's film.
+# evidence_class: chat_only_human_evidence — the verdict was a chat message to the Controller session at
+# 2026-09-20T20:06Z (IST 01:36 on 21 Sep). It was transcribed verbatim, before the blind mapping was opened, into
+# experiments/RENTOK-TWO-LANE-2026-09-20/05-BLIND-PACKET/VERDICTS.md (branch work/experiment-rentok-two-lane-2026-09-20,
+# commit f61efa4) and into JOB.yaml versions[0]. The customer wrote no file; the files are the Controller's transcription.
+case_id: RENTOK-GAME-A-004
+evidence_class: chat_only_human_evidence
+reviewer: "Vaibhav Chawla — the customer for this job (his own brief) and the human Controller; judged blind on the acceptance contract"
+verdict_vocabulary: [accept, specific_repair, rebuild_direction, reject]
+
+verdicts:
+  - version: 1
+    verdict: accept
+    presented_as: "Video Y in a two-film blind packet (Video X = lane B)"
+    presented_utc: "2026-09-20T19:58:00Z"
+    decided_utc: "2026-09-20T20:06:00Z"
+    words_transcribed:
+      - "both accepted. vidoe one has robotic voice over althouh. video 2 is better"
+    reading: "INFERRED by the Controller and recorded as such: 'video one' = Video X (lane B), 'video 2' = Video Y (this film), the order the files were delivered. This film: ACCEPT and preferred. The customer gave one reason for the preference — the other film's voice — and no defect on this film."
+    defects_seen: []
+    what_the_words_do_not_say: "why this film is 'better' beyond the voice; whether the checker-named risks (transformation told by words more than pictures; sparse lower band; small sprites at phone size) were noticed; whether a voiced version of this film would have been preferred"
+
+blindness_limitation: "Recorded before presentation (00-EXPERIMENT-CONTRACT.md §8): the human had seen per-lane progress facts in chat (spend, attempt counts, that one lane had a voice, that one file measured 30.021 s). The packet was blind as to labels and metadata, not against the human's memory of those reports."
+
+no_customer_defects_register: "The customer flagged nothing on this film. Every defect in SYSTEM-DEFECTS.yaml was found by the producer's own gates, the producer's eye, or the independent checker before the customer saw the file."

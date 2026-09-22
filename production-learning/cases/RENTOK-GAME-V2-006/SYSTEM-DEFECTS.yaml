@@ -1,0 +1,117 @@
+# SYSTEM DEFECTS — case RENTOK-GAME-V2-006.
+# The central finding: the gates promoted from cases 004/005 did their job (the edit-list walk and the graphic-vs-text
+# check caught A-1..A-3 at USD 0 on the animatic), and the job's two NEW gates (framing target, world-fills-frame) caught
+# A-4 and R-1. What got through to the checker was what no gate covered: a graphic in front of the HERO (not text), and a
+# grain change between sheets. Those two, plus the job's two new gates, are promoted here. Ten checker defects stay on the
+# accepted file UNREPAIRED because the customer declined the repair round — recorded, not hidden.
+case_id: RENTOK-GAME-V2-006
+classes:
+  media_model_failure: "the generation model produced something that does not meet the brief"
+  pipeline_failure: "the system around the model — compositor, assembly, QA coverage, records, orchestration — let a defect through or created one"
+  infrastructure_transient: "provider unavailable / refusal / quota; none occurred on this job (1/1 ok)"
+
+defects:
+  # ── promoted to code on this branch (class 1) ────────────────────────────────────────────────
+  - id: N1
+    class: pipeline_failure
+    subsystem: compositor (occlusion of the hero by another graphic)
+    observed: "the flag rises THROUGH the cheering owner for 26 frames, 26.53–27.37 s — the pole is drawn behind him, the flag in front; the triumph beat shows the hero half-hidden by a blue rectangle (checker §4 N1, lj/14). The layout log confirms 26 frames (796–821) of FLAG ∩ OWNER."
+    root_cause: "the board put the pole where the owner cheers and the renderer's draw order puts the flag over him; the only occlusion gate (C5b) checks graphics against TEXT, so a graphic over the hero was invisible to every check. Root is the board (creative_direction); a deterministic hero-occlusion check would have refused the render"
+    found_by: independent checker
+    repair: "none — offered, declined by the customer; the checker's repair was 'draw the flag behind the owner, or place the pole 200 px ahead'"
+    repaired: false
+    not_a_model_failure: true
+    promoted_as: HERO_VISIBLE
+    deterministic_check: "runtime/compositor/gates.py check_hero_visible — a declared hero region may not be covered by a graphic drawn in front of it beyond a stated fraction; test runtime/tests/test_k_rentok_game_v2_006.py HeroVisible (frame-800 boxes from the layout log: 18 % of the owner covered)"
+  - id: N2
+    class: pipeline_failure
+    subsystem: compositor (phone anchor on the windup pose)
+    observed: "the raised phone sits exactly over the owner's head for 6 frames, 18.20–18.37 s, at 'rising confidence'; the face returns at 18.40 with the fire pose (checker N2, lj/09). Layout log frame 546: OWNER windup [72,1042,431,1561], PHONE [204,1094,316,1286]."
+    root_cause: "the phone item is anchored to a hand position that, on the windup cell, is at head height; no check protects the face. The phone is INSIDE the owner's box on 66 frames by design (he holds it), so the unit of the check must be a declared region (the face), not the whole body — which is why the promoted gate takes a region"
+    found_by: independent checker
+    repair: "none — offered ('anchor the phone at shoulder height / draw it behind the head for 18.2–18.4'), declined"
+    repaired: false
+    not_a_model_failure: true
+    promoted_as: HERO_VISIBLE
+    deterministic_check: "check_hero_visible with the head band (top fifth of the owner box, the prompt's own proportion) as the region: frame 546 refused, frame 552 (phone in hand, below the head) passes — test HeroVisible.test_n2"
+  - id: A-4
+    class: pipeline_failure
+    subsystem: deterministic_qa (the job's new FRAMING gate, first version)
+    observed: "on animatic v1 the framing check read owner_frac at a moment the camera was still easing (0.156 at 8.40 s against 0.21) and failed for the wrong reason; the 'cover' stand-in was also double-shrunk"
+    root_cause: "focus_t was placed at the camera keyframe start, not at the hold; targets were one number for all poses although a crouched or lying pose is inherently short (F5 cover 0.16 vs F2 hurt 0.25 in the final board)"
+    found_by: producer gate (USD 0, before spend)
+    repair: "focus_t moved to the hold; per-pose targets with notes in board.json framing.target_note"
+    repaired: true
+    not_a_model_failure: true
+    promoted_as: FRAMING_TARGET_AT_FOCUS
+    deterministic_check: "runtime/compositor/gates.py check_framing_target — reads ONE named focus frame; a frame missing from the log is a refusal, never a pass; target per beat/pose is the caller's; optional hero-inside-canvas — test FramingTarget"
+  - id: R-1
+    class: pipeline_failure
+    subsystem: creative_direction (camera) surfaced by deterministic_qa
+    observed: "final-v1: F4 owner_frac 0.202 < 0.21 — the drawn 'reach' cell is 320 px in a 342-px standing cell, 6 % shorter than the stand-in the target was tuned on"
+    root_cause: "a target set on a stand-in does not survive the real drawing; the gate did its job. Repaired by camera x1.4 → x1.5 (x1.45 measured 0.209 by rounding; x1.5 = 0.216 delivered)"
+    found_by: producer gate on final-v1
+    repair: "USD 0 camera push"
+    repaired: true
+    not_a_model_failure: true
+    promoted_as: FRAMING_TARGET_AT_FOCUS
+    deterministic_check: "check_framing_target: {256: 0.202} vs 0.21 refused; the delivered 0.216 passes — test FramingTarget.test_r1"
+  - id: N4
+    class: pipeline_failure
+    subsystem: compositor (camera centre during the F2 push)
+    observed: "the dazed owner is clipped by the left frame edge 3.77–4.23 s: his box reaches x = -52 px, the book and left arm cut; the document wall is drawn over his right side (checker N4, lj/02). Layout log frame 113: OWNER dazed [-52,1062,205,1542]."
+    root_cause: "the F2 push centre (cx) put him at the edge; no check asserted the hero box inside the canvas at the beat's focus — the checker named the fix: 'assert owner box x0 ≥ 0 in the FRAMING gate'"
+    found_by: independent checker
+    repair: "none — offered ('shift the push centre +60 px'), declined"
+    repaired: false
+    not_a_model_failure: true
+    promoted_as: FRAMING_TARGET_AT_FOCUS
+    deterministic_check: "check_framing_target(hero_box=…, canvas=…) refuses HERO_CLIPPED_BY_FRAME — test FramingTarget.test_n4"
+  - id: LJ-15
+    class: pipeline_failure
+    subsystem: deterministic_qa (coverage — a producer gate the checker confirmed by eye)
+    observed: "with a camera that pushes to x1.6 and pulls back to x1.0, a pull-out below x1.0 would show the frame's own background beside the world (a black band or letterbox). The job added a DET row 'world fills the frame (camera >= 1.0)' over the layout log (900 frames, min 1.0, max 1.6); the checker confirmed no band on any of 61 frames (§4 'passes')"
+    root_cause: "not a shipped defect — the gate existed in the job's tools/qa_checks.py and passed; it is promoted because it is a deterministic check any camera-driven renderer needs and it lived only in job-local code"
+    found_by: producer (designed in), checker (confirmed by eye)
+    repair: n-a
+    repaired: n-a
+    not_a_model_failure: true
+    promoted_as: WORLD_FILLS_FRAME
+    deterministic_check: "runtime/compositor/gates.py check_world_fills_frame — every logged scale >= min_scale; no scales logged is a refusal — test WorldFillsFrame"
+  - id: N5
+    class: pipeline_failure
+    subsystem: reuse decision (R4) + compositor
+    observed: "every swap between a base run pose (Lane A's sheet, standing 561 px) and a sheet pose (C sheet 344 px, V2 sheet 342 px) pops in grain and proportion — the run poses are finer and leaner, the sheet poses coarser and stockier; some 150 swaps in the film. At native 1080 clearly visible; at 360 px the grain difference mostly disappears but the proportion pop still reads at 3.13→3.20, 13.90→14.00, 17.3→17.4 (checker N5, lj/03)"
+    root_cause: "the producer measured the density (standing cell 342 px = 'the C sheet's, ≈ 60 % of the base sheet's' — inspect_sheet.py writes standing_cell_h) and accepted it as 'not visible at phone size' (INFERRED, LJ-11). The number existed; no gate compared it. A density-consistency check across the sheets of one character would have refused the reuse at Stage 4, before the draw"
+    found_by: independent checker (the producer had recorded the ratio, not the consequence)
+    repair: "none — offered ('quantise the base run poses to the sheets' pixel grid; a run pose drawn on the sheet style, USD 0.067'), declined"
+    repaired: false
+    not_a_model_failure: "partly — the model drew a smaller figure on a 16:9 sheet than on Lane A's 21:9 sheet (n = 2 sheets at ≈ 342–344 px vs 1 at 561 px); the decision to mix them is the pipeline's"
+    promoted_as: SPRITE_DENSITY_CONSISTENCY
+    deterministic_check: "runtime/compositor/gates.py check_sprite_density — standing-cell heights of every sheet used for one character within a stated ratio (default 0.8, the caller's; the job's 0.61 is refused, the two expression sheets at 0.994 pass) — test SpriteDensity"
+
+  # ── closed at USD 0 before presentation, not promoted as new code (existing gates did their job; candidates where noted) ──
+  - {id: A-1, class: pipeline_failure, subsystem: "infrastructure (encode)", observed: "animatic v1 (video-only H.264 with B-frames) carried an edit list; the mux step had -use_editlist 0, the render encode did not", root_cause: "encoder default on a second ffmpeg invocation", found_by: "the job's box-walk check (case 004 D-1 promoted as runtime/loop/container.py assess_edit_lists — the same walk, job-local copy)", repair: "-use_editlist 0 +negative_cts_offsets on the render encode too (USD 0)", repaired: true, not_a_model_failure: true, promoted_as: null, note: "evidence that CONTAINER_EDIT_LIST_CHECK works as a gate (second job, first catch at the animatic stage)"}
+  - {id: A-2, class: pipeline_failure, subsystem: compositor, observed: "the falling phone (world layer) passed behind the cheat panel and under the INSTALL backing for 2 frames", root_cause: "the phone was a world-layer object while the panel is UI", found_by: "C5 / C5b over the layout log (USD 0, before spend)", repair: "phone dropped from the panel's bottom edge, in the UI layer", repaired: true, not_a_model_failure: true, promoted_as: null, note: "GRAPHIC_TEXT_DISJOINT (case 004 D-2) caught it — second job it has fired on"}
+  - {id: A-3, class: pipeline_failure, subsystem: compositor, observed: "the toppling tower's far corner rose 46 px into the label zone (2 frames); the departing swarm crossed the HUD row", root_cause: "rotation about the base-left corner; a leaving obstacle still 'alive' to the gate", found_by: "C5b over the layout log", repair: "pivot at the base centre (max rise 28 px); swarm fades out with state 'leaving' — the gate excludes 'burst' and 'leaving' sprites, a semantic the checker examined and called sound (§1)", repaired: true, not_a_model_failure: true, promoted_as: null, candidate: SPRITE_STATE_SEMANTICS_IN_OCCLUSION_GATES}
+  - {id: A-5, class: pipeline_failure, subsystem: "creative_direction (world logic)", observed: "with the world scrolling on after a knock-down, the fallen tower and the hovering swarm slid off the owner within 0.5 s — the thing that beat him left him", root_cause: "an auto-scroller that never pauses", found_by: producer eye on animatic v1, repair: "scroll pauses 11.7–12.35 and 14.1–18.0; obstacles persist into the next beat until off-screen (USD 0)", repaired: true, not_a_model_failure: true, promoted_as: null, candidate: WORLD_STOPS_WHEN_HE_IS_DOWN}
+  - {id: R-2, class: pipeline_failure, subsystem: audio assembly, observed: "true peak -0.4 dBTP after AAC with Lane A's loudnorm settings (TP -4 pre-encode) — denser SFX overshoot more", root_cause: "codec overshoot on square-wave content, now seen on a fourth encode across three jobs (case 004 R5, case 005 R2/R2b)", found_by: "ebur128 on the encoded file", repair: "alimiter -6 dBFS after loudnorm + 1.5 dB make-up → -14.0 LUFS / -2.7 dBTP", repaired: true, not_a_model_failure: true, promoted_as: null, candidate: CODEC_TRUE_PEAK_MARGIN, cross_case: "n = 3 jobs, ≈ 2 dB; a true limiter stage (not just headroom) is the repair that held"}
+
+  # ── found by the checker, UNREPAIRED on the accepted file (customer: 'not required'); not promoted as code ──
+  - {id: N3, class: pipeline_failure, subsystem: "creative_direction (board: no transition pose)", observed: "kneel → stand in one frame at 17.37 → 17.40 (cornered_up 381 px → catch 444 px): a pop at the gift moment", root_cause: "the board's pose table has no intermediate between the kneel and the catch", found_by: independent checker, repair: "none (offered: 3–4 frames of rise using 'brace' as the mid pose)", repaired: false, not_a_model_failure: true, promoted_as: null, candidate: POSE_HEIGHT_JUMP_CHECK, note: "a per-frame hero-height-delta check is nameable but would fire on every deliberate hard swap (hit poses) unless the board declares which swaps are cuts — class 2 until a board field for that exists"}
+  - {id: N6, class: pipeline_failure, subsystem: "compositor (cut-out keying)", observed: "green key fringe on the new sheet's cut-outs: 194 tinted px around the trip pose, 153 around dazed, 36–52 around brace/lookback/cover; 0–2 on the C-sheet kneeling poses; a 1-px halo at native, invisible at 360 px", root_cause: "the reused cutout.py key threshold on a sheet whose green darkens under the figure", found_by: independent checker (4x zoom, lj/15), repair: "none (offered: 1-px alpha erosion + despill)", repaired: false, not_a_model_failure: true, promoted_as: null, candidate: KEYING_HELPER, cross_case: "case 004 R3 — the same class of keying artefact, third sheet"}
+  - {id: N7, class: media_model_failure, subsystem: "reuse (R2) — style consistency across accepted assets", observed: "the tenant sprite (Lane A att-004) is a smooth-shaded illustration with soft edges while the owner and the other four obstacles are pixel art", root_cause: "accepted in Lane A as one of five obstacles; reused under accepted_in_context without a style comparison against the character it now shares 18 drawn states with", found_by: independent checker, repair: "none (offered: leave, or redraw in the pixel style at USD 0.067)", repaired: false, not_a_model_failure: false, promoted_as: null, candidate: REUSED_ASSET_STYLE_CHECK}
+  - {id: N8, class: pipeline_failure, subsystem: "creative_direction (panel entry)", observed: "the cheat panel rises as an empty black box over the owner's head for ~3 frames before 'CHEAT CODE:' appears", root_cause: "panel animated in before its text", found_by: independent checker, repair: "none (offered: fade in place, or show the label during the rise)", repaired: false, not_a_model_failure: true, promoted_as: null}
+  - {id: N9, class: pipeline_failure, subsystem: "compositor (end card)", observed: "the wordmark raster's own gradient backing is faintly visible against the card blue: card (1,55,253); raster box (1,54,250) → (0,40,231)", root_cause: "the raster carries its own gradient; the brand-colour gate (case 004 D-11) samples the card, and the raster's darker corner is within/near its 8-per-channel delta only where sampled — the seam itself is not sampled", found_by: independent checker, repair: "none (offered: key the raster's backing)", repaired: false, not_a_model_failure: true, promoted_as: null, note: "a sample placed on the raster's corner ((0,40,231) vs #0137FD → delta 22 on blue) WOULD be refused by check_brand_colour; the job's samples were not placed there — a sampling-plan gap, not a gate gap"}
+  - {id: P1, class: media_model_failure, subsystem: "generation (one pose of eight)", observed: "cell 1 'standing and looking back over his left shoulder' came out facing forward with raised eyebrows and an open mouth; used 0.25 s (8.2–8.45) as 'he hears the runner'", root_cause: "the model kept the face forward on a head-turn instruction (n = 1 for this instruction); the producer chose no repair draw (V2-D4) because a redraw regenerates all eight cells", found_by: "producer at the consistency card; checker agreed it reads as 'startled'", repair: "none (offered: drop the pose, hold 'brace' facing the runner)", repaired: false, not_a_model_failure: false, promoted_as: null, route_observation: RO-01}
+
+tally:
+  media_model_failures_that_reached_a_gate: 1        # P1
+  pipeline_defects_closed_before_presentation: 7     # A-1..A-5, R-1, R-2
+  pipeline_defects_unrepaired_on_the_accepted_file: 8   # N1..N6, N8, N9 (N7 and P1 are model)
+  model_defects_unrepaired_on_the_accepted_file: 2   # N7, P1
+  infrastructure_transients: 0
+  customer_flagged: 0
+  found_by: {producer_gates: 5, producer_eye: 1, producer_card: 1, independent_checker: 9}
+  packet_discrepancy: "JOB.yaml and LEARNING-PACKET.yaml say the customer declined a round for 'six recorded defects'; the checker's table records N1–N9 + P1 (ten) plus P2 (a limitation) and three creative/records notes. Which six were put to the customer is chat-only and NOT on disk. This case records all ten as unrepaired."
+  reading: "the promoted gates from 004/005 and this job's own new gates caught everything at the layout-vs-text level before spend. What reached the checker was occlusion of the hero by a non-text graphic and a grain mismatch between sheets — both are now code. The customer's acceptance without repair is the outcome; the ten open items are the honest state of the file."

@@ -1,0 +1,40 @@
+# OUTCOME record — production-learning case CUMINCO-CHOPSTICKS-003. Mechanically verified where possible (git, ledger, sha256); human judgments labelled.
+case_id: CUMINCO-CHOPSTICKS-003
+class: spec_work_video_ad
+schema: PRODUCTION-LEARNING-CASE-v0
+written_utc: '2026-09-16T04:17:06Z'
+final_outcome: rejected
+final_outcome_reason: 'three assembled versions, each rejected by the user: V1 ''random audio / her lips are moving / text on figures''; V2 ''does not look
+  like an ad at all — no product close, no opening''; V3 ''the voices are overlapping … reject completely''. No deliverable was accepted; the user ordered
+  the diagnosis and the transfer of the learning.'
+outcome_shape: three_versions_all_rejected
+versions_produced:
+- version: V1
+- version: V2
+- version: V3
+component_level_human_accepts: five plates (H1 r2, A r2, H2, H3, B), one clip (clip-2) and one voice (Gemini TTS Leda, 'bubbly') were accepted at micro-qualification
+  gates before assembly — components, not an outcome
+source_main_sha: 3bb9a3c3da484e43d4d54ae20543d1d246769ac6
+job_branch: work/agency-job-cuminco-chopsticks-001
+job_commit: de1f9783046d19f1c6dc5b92532c39f0bc008399
+evidence_source:
+  ref: de1f9783046d19f1c6dc5b92532c39f0bc008399
+  branch: work/agency-job-cuminco-chopsticks-001
+  dir: agency/jobs/AGY-2026-09-15-CUMINCO-CHOPSTICKS-001
+  note: the raw job branch is archival and never merged; its HEAD at sync time is the commit above
+first_agency_job: 'this is the first job run through the /media-agency operator (PR #99) end to end — intake, NR, Canon lookup, blueprint, gated prompts,
+  ledgered dispatch, compositor gates, learning packet'
+two_conclusions:
+  final_quality: FAILED — no version accepted; the last rejection was on assembly audio (VO lines overlapping), the previous on ad structure, the first
+    on mix / mouths / text placement
+  pipeline_efficiency_time_to_accepted_outcome: NOT_APPLICABLE — no accepted outcome; 14 h 28 m job-open-to-final-reject wall clock includes an overnight
+    gap; the working span 13:17Z–16:15Z on 15 Sep (≈ 3 h) produced three versions
+  process_conformance: 'CONFORMANT in shape (packet before spend, frozen copy, gated prompts, per-attempt ledger, per-geometry QA, human gates) — and still
+    rejected: the gates that existed passed; the defects were in what no gate covered (VO scheduling, subject obstruction, ad structure)'
+template_status: none
+not_evidence_for:
+- Capability Registry
+- any routing rule (every observation is n ≤ 12, one job, one judge)
+- Canon effectiveness (the relevant pack was never injected)
+- commercial advantage over a human workflow
+- the /media-agency workflow's success rate (n = 1, rejected)

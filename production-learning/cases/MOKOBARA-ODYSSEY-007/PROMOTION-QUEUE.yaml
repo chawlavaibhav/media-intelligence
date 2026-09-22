@@ -1,0 +1,120 @@
+# PROMOTION QUEUE — case MOKOBARA-ODYSSEY-007. Five classes, one per item. Class 1 = code on this branch with a test;
+# class 2 = candidate with a promotion condition; class 3 = directional (ROUTE-OBSERVATIONS.yaml); class 4 = Canon gap,
+# report only; class 5 = job-specific, not promoted. Items continued from earlier cases say so and carry the new count.
+# Class 1 is EMPTY on this job: every candidate was tested against 'name the deterministic check AND the runtime file it
+# lives in' and each failed the second half (SYSTEM-DEFECTS.yaml LG-1, DF-8, DF-10, DF-9 say exactly why).
+case_id: MOKOBARA-ODYSSEY-007
+
+promoted_now: []                                             # class 1 — none; see promoted_gates_exercised below and SYSTEM-DEFECTS.yaml
+
+promoted_gates_exercised:                                    # not promotions — evidence that earlier promotions work on this production class
+  - {id: BRAND_TEXT_CONTRAST_ON_REAL_PIXELS, from_case: "UPWORK-INTRO-001 / PR #98 blocker 1 (runtime.compositor.gates.check_contrast — worst pixel behind the box)", used_here: "tools/render_text.py imports check_text_bounds, check_contrast, check_disjoint from runtime.compositor.gates; 10 gates at render time on v2's overlays, all PASS (gen/overlays/layout.json); the super's black logo measured 6.58:1 on the real pixels of 10 beat-2 frames where white measured 1.3:1 — the gate is what made customer item 4 a measured decision", note: "first production use of runtime.compositor.gates on a generated-footage job (cases 004–006 were code-rendered)"}
+  - {id: CONTAINER_EDIT_LIST_CHECK, from_case: "RENTOK-GAME-A-004 (runtime/loop/container.py assess_edit_lists)", used_here: "job-local copy of the same box walk in tools/qa_checks.py (DET-A8: 0 elst atoms, moov first) on v1 and v2; the checker walked the boxes independently and agreed", note: "third job on which the walk ran; no edit list was ever produced on this job (-use_editlist 0 carried from case 006's assembler)"}
+  - {id: TRANSIENT_ERROR_CLASSIFICATION, from_case: "UPWORK-INTRO-001 (SD-10 / RO-09)", used_here: "att-014's HTTP 500 classified infrastructure_transient, counts_against_route_quality false, retry_eligible true, charged and counted; one neutral re-send as a new attempt (RO-03)", note: "worked as designed"}
+  - {id: SAFE_BOX_AND_LOUDNESS_NUMBERS, from_case: "RENTOK-GAME-A-004 (ACCEPTED-TEMPLATE numbers carried with evidence_scope this_accepted_template)", used_here: "JOB.yaml template.numbers_carried: safe box (65,288)-(888,1248) and -14 LUFS / TP ≤ -1 reused, not re-derived (Stage 2 (a))", note: "the numbers travelled to a different production class without change"}
+
+candidate_patterns:                                          # class 2 — worked here; needs more evidence before it is a rule
+  - id: STILL_TO_I2V_PER_BEAT_WITH_PRODUCT_PHOTO_REFERENCES
+    kind: production topology (candidate; the template — ACCEPTED-TEMPLATE.yaml)
+    rule: "for a live-action-style multi-beat film with one human and one branded product: one hero still from the product's own photos as reference images (identity master) → one still per beat anchored on the hero still + a product photo (the first frame, inspected at USD 0.067 before any clip) → one i2v clip per beat with verbatim identity anchors and a negative prompt → code stitch by an edit list, wordmark/super/end card by code through the compositor gates, one music bed; with feeling / framing / impact per beat on the board"
+    evidence: ["this job (n = 1 accepted film, 1 brief, 1 product, 1 customer): 11/11 stills usable first draw, bag likeness held per the checker, 7 of 14 clips in the accepted file", "Stage 4 chose it over t2v (identity drift) and ref2v (weaker evidence) by reasoning, and named it as the general route for this class", "case 001 used the still → i2v mechanism for a different template (a presenter film with speech)"]
+    cost: "USD 7.857 for 30 s (70 s bought, 28 used); 1:15:46 to a DET-clean accepted file with one repair round inside it"
+    scope: "generated-footage story films with a consistent person and product; NOT code-rendered classes"
+    promotion_condition: "one more accepted job on a DIFFERENT brief and product using this topology (n = 2 briefs); then the topology becomes the named default route for the class in /media-agency Stage 4, with t2v/ref2v as recorded alternatives"
+  - id: MICRO_QUALIFY_THE_RISKIEST_ASSET_FIRST
+    kind: workflow (candidate, continued from cases 001 → 004 → 005 → 006; this is the first GENERATED-FOOTAGE instance since the pilot)
+    rule: "the riskiest generative item is produced once, judged against a written card, frozen by sha256, and only then are its dependents produced — here the comic beat (hero still → beat-4 still → beat-4 8-s clip, USD 0.934) before the other five beats were bought"
+    evidence: ["this job: qa/b4/MICRO-QUAL.md — PASS with note; the note ('arm not visibly to the shoulder') was the exact item still open on the accepted file, so the card saw the limit on the first USD 0.93 and the job proceeded on the paddle-only reading of the gag", "cases 004/005/006: character sheets; case 001: the speaker anchor"]
+    promotion_condition: "case 001 set '≥ 2 more successes'; cases 004 and 005 reached that count on one brief and PR #104 proposal 4 left it to the Controller. This job adds a success on a different brief AND a different production class (n = 4 jobs, 2 briefs, 2 classes). PROPOSED: promote to a required /media-agency Stage 4 line — a Controller decision, not made here"
+  - id: BOARD_FEELING_FRAMING_IMPACT
+    kind: board schema (candidate, continued from case 006 — the promotion-condition question)
+    rule: "three fields per beat on the creative board — feeling, framing, impact — that survive verbatim into the production instructions (here: board.json beats[].feeling/framing/impact → the five-part clip prompts; the customer's execution instruction 2 asked for exactly this)"
+    evidence: ["case 006 (n = 1 film, code-rendered, the RentOK brief; causal evidence from CQ-001's blind rank on one 6.8-s beat)", "this job (n = 1 film, generated footage, the Mokobara brief): the schema was used on all 7 beats, the film was accepted on v2; the checker's per-beat scores on v1 were 3–4 of 5 and its weakest beats (1, 4, 5, 6) failed on the MODEL's execution of the framing/impact, not on the direction's absence"]
+    promotion_condition_status: "case 006's condition was 'one more accepted job on a DIFFERENT brief using the schema (n = 2 briefs); then the fields become required in the /media-agency Stage 3 board for code-rendered classes'. MET IN LETTER: a different brief, the schema on every beat, accepted. NOT MET IN SPIRIT for the stated consequence: (a) this job is not code-rendered, so it is evidence for a WIDER scope than the condition named, not for the named one; (b) the same customer (the Controller) judged both; (c) acceptance came on v2 after a repair round whose fixes were re-takes and edits — nothing isolates the schema's contribution here (no A/B, no rank). What the two jobs together support: the fields are a usable direction checklist on both classes and cost nothing; what they do not support: that the fields cause acceptance"
+    promotion_condition: "PROPOSED for the Controller: require feeling / framing / impact per beat in /media-agency Stage 3 for EVERY per-beat film class (a skill edit), on the evidence of n = 2 briefs / 2 classes / 1 customer, while keeping the causal claim at CQ-001's n = 1 beat. Not promoted here"
+  - id: END_STATE_STILL_PLUS_LAST_ACTION_I2V
+    kind: generation pattern (candidate)
+    rule: "when a beat keeps failing on its VERB (pack everything, board and push off), generate a still that already shows the beat's END state and ask the clip for only the last action — instead of asking the model to perform the whole action in 4 s"
+    evidence: ["this job, beats 5 and 6 in the repair round: first still-first re-take fixed beat 6 (att-020b/023) and beat 5 needed one more change for a different reason (EXIT_ACTION); before it, beat 5 had failed 2/2 on 'do the whole action' prompts (att-012, att-017)", "beat 1's repair used the same idea for a camera move (a still that IS the wide instead of asking for a pull-back) — att-026/027, held"]
+    promotion_condition: "one more job where a verb-failing beat is repaired this way first draw; then a line in the /media-agency re-take guidance ('move the still to the end state before buying a longer clip')"
+  - id: EXIT_ACTION_AFTER_GOAL_STATE
+    kind: prompt pattern (candidate)
+    rule: "an i2v prompt that reaches its goal state before the clip ends gives the model an EXIT action after it (lift the bag out of frame; turn away), so the remaining seconds are not spent undoing the goal"
+    evidence: ["this job: b5 take 3 (att-024) closed the bag at 1.5 s and re-opened it for the remaining 2.5 s; take 4 (att-025) with 'lifts the closed, full bag straight up out of the top of the frame. The bag is never opened again' held — n = 1 pair"]
+    promotion_condition: "one more observed instance of a goal state undone in the tail of a clip, and one more held with an exit action"
+  - id: NEGATIVE_PROMPT_THE_PRODUCT_BEFORE_ITS_REVEAL
+    kind: prompt pattern (candidate)
+    rule: "in every beat before the hero product's reveal, name the product in the negative prompt and state the scene as empty of it — the model adds the product it has been told the film is about"
+    evidence: ["this job: b1 take 1 (att-009) put the open bag at his feet before he finds it with no mention of it in the prompt; take 2 with 'completely empty: no bag…' + negative 'backpack, bag, luggage, yellow object on the ground' held — n = 1 pair"]
+    promotion_condition: "one more job with a delayed product reveal on a generated-footage route"
+  - id: PAINT_OUT_COPIED_REFERENCE_MARKS_BEFORE_I2V
+    kind: pre-dispatch step (candidate)
+    rule: "a still generated with a product photo as reference is inspected for copied marks (the tiny wordmark) and painted out by code (recorded as an .edit.json) BEFORE it is used as an i2v first frame; nothing came back in the video on 2/2"
+    evidence: ["this job: hero.png → hero-clean.png, b4.png → b4-clean.png (edit records on the branch); the checker found the lower-front patch plain in every checked frame"]
+    promotion_condition: "one more job using product-photo references; then a required step wherever IMG-REF stills feed video — and a candidate deterministic check (a template match of the brand mark over the still) if a reference mark ever reaches a clip"
+  - id: TAKE_SELECTION_BEFORE_RETAKE
+    kind: repair rule (candidate)
+    rule: "keep every take; when a customer flags a beat, compare all existing takes side by side (contact sheets at 4 fps) BEFORE buying a re-take — the fix may already be on disk at USD 0"
+    evidence: ["this job: customer item 2 ('looked weird') was the warped blade in take 2; take 1, already bought and set aside, was the fix — USD 0 against a planned ≈ 0.80"]
+    promotion_condition: "one more job where a flagged beat is fixed from an existing take; then a line in the /media-agency repair-round preamble"
+  - id: MERGED_REPAIR_LIST_CUSTOMER_EVENTS_FIRST
+    kind: repair-round process (candidate)
+    rule: "the customer's repair items and the independent checker's findings are merged into one round with an explicit priority in which the customer's MANDATORY story events (the things his brief says must happen) rank first, then his other items, then the checker's; every item the round will not address is named with its reason before the round starts"
+    evidence: ["this job: stages/06 priority A (departure — checker D3, a mandatory event the customer had not noticed) B (food packed — checker D2) C (paddle — customer 2) D (tear — customer 1) E (beat-1 open — checker D4); D1 (arms) named as not addressed with the reason; v2 accepted", "case 006 declined the checker's round entirely — the other end of the same decision"]
+    promotion_condition: "one more job with both a customer list and a checker list; then a required 'merged priority table' in the /media-agency repair-round record"
+  - id: MANDATORY_EVENT_VISIBILITY_LJ_LINE
+    kind: presentation-gate records rule (candidate; the class-2 form of SYSTEM-DEFECTS DF-8)
+    rule: "before presentation, one LJ line per mandatory customer event (Stage 1's M-table) asks 'is the event visibly on screen, at what timecode, in which cited frame?' — a beat described as realised in Stage 5 without such a line is not presentable"
+    evidence: ["this job: 'he goes back' (M4) was described in Stage 5 §1 as realised; the checker found he never boards or pushes off (D3, NEW); LJ-8 asked whether 'the pull-back reveal lands' without recording that no pull-back exists (D4)"]
+    promotion_condition: "one more job where an M-table event is checked this way and the checker finds no missing event; then a required LJ block in /media-agency Stage 5"
+  - id: BRAND_FONT_FALLBACK_WITH_SITE_CSS_STYLING
+    kind: composition rule (candidate)
+    rule: "when the brand's typeface is commercial and absent (read the fetched CSS: @font-face names it), use the nearest system face of the same family AND the site's own label styling from its CSS (case, tracking, weight hierarchy), say which face was used and why, and treat a licensed brand font as a customer-supplied asset at intake"
+    evidence: ["this job: NeurialGrotesk (commercial) → Helvetica Neue Medium/Light with the site's uppercase + .08em label tracking and -0.02em heading tracking, shaped by hb-view; customer item 5 ('font style could be better') closed at USD 0; v2 accepted", "Stage 2 had read 'font not verified' from the dossier while the fetched home.html carried the @font-face — the CSS should be read at Stage 2"]
+    promotion_condition: "one more brand job where the font is read from fetched CSS at Stage 2; then an intake line ('brand font: licensed file supplied? else nearest system face + site CSS styling') in /media-agency"
+  - id: LEDGER_LOCK_ATOMIC_ATTEMPT_IDS
+    kind: tooling requirement (candidate; the class-2 form of SYSTEM-DEFECTS LG-1 — exact requirement stated)
+    rule: "the agency dispatch kit mints attempt ids from the RESERVE-time ledger (max attempt number over LEDGER.jsonl reserve lines + 1) under an exclusive file lock held across read → mint → append, or structurally from (asset, route, draw index) as runtime/route/attempt_id.py does; never from a count of the settle-time ATTEMPTS.jsonl; and a ledger integrity check refuses any file in which two reserve lines share an attempt_id"
+    evidence: ["this job: att-020 minted twice inside a 72-s in-flight window; hand-relabelled att-020b; the kit is copied job to job (tools/PROVENANCE.md) so the fault travels"]
+    promotion_condition: "the dispatch kit is fixed on its next copy (a /media-agency skill note pointing at this rule), and when a runtime module ever owns a job ledger the integrity check goes there with a test — class 1 at that point"
+  - id: AUDIO_JOIN_CROSSFADE
+    kind: assembly rule + nameable gate (candidate; the class-2 form of SYSTEM-DEFECTS DF-10)
+    rule: "every hard cut between generated clips with native audio gets a short (≈ 60 ms) audio crossfade; a stitch-time check measures RMS in the 50 ms after each cut against the 50 ms before and refuses a drop beyond a stated dB"
+    evidence: ["this job: v1 dips of ~15–20 dB for ~40 ms at 2 of 5 cuts (checker D9, measured); v2 60-ms acrossfades 'by construction', not re-measured"]
+    promotion_condition: "same as CODEC_TRUE_PEAK_MARGIN (cases 004–006): a /media-agency assembly-checklist line now; code with a test when an assembly step exists in the runtime"
+  - id: OCR_ON_TEXTURE_IS_A_FLAG_NOT_A_GATE
+    kind: QA rule (candidate)
+    rule: "frame text hygiene by OCR over generated natural footage is reported as FLAG with the frames attached and resolved by a human eye; it never fails a file on its own (40/56 frames of texture read as tokens here)"
+    evidence: ["this job DF-13; the checker resolved it by eye on 60 frames"]
+    promotion_condition: "one more generated-footage job; then the DET row is defined as FLAG-only in the /media-agency QA map"
+  - id: SOURCE_RESOLUTION_STATED_BESIDE_DELIVERED
+    kind: records rule (candidate)
+    rule: "Stage 5 states the source resolution of every generated clip beside the delivered container geometry (720x1280 upscaled → 1080x1920 here), so 'soft' is explained before the customer asks"
+    evidence: ["this job: the checker had to establish it (D8); the producer's Stage 5 did not say it"]
+    promotion_condition: "one more job; then a line in the Stage 5 template"
+  - id: CODEC_TRUE_PEAK_MARGIN
+    kind: deterministic_qa rule (candidate, continued from cases 004/005/006; n now 4 jobs)
+    rule: "measure loudness and true peak on the delivered encoded file; a true limiter stage after loudnorm before the encode"
+    evidence: ["RO-04: -4.1 / -4.0 dBTP on two encodes of natural ambience + bed with the limiter stage carried from case 006"]
+    promotion_condition: "unchanged — a /media-agency QA-checklist line now; code when an assembly step exists in the runtime"
+
+directional_only:                                            # class 3 — see ROUTE-OBSERVATIONS.yaml
+  - {id: RO-01, note: "Veo 3.1 Fast i2v from NB2 stills: 14/14 returned, 7 in the accepted file; identity and bag likeness held per the checker; could not do a pull-back, arm-to-shoulder, seven-item packing in 4–6 s, a rigid prop's geometry in 1/2, a goal state held with time left (until an exit action), a costume anchor on a re-take, or product absence unless negative-prompted; 720p soft"}
+  - {id: RO-02, note: "Nano Banana 2 with product-photo references: 11/11 usable; bag likeness held; copied the tiny wordmark 2/2 (painted out); a tear-like lining flap 1/1 then intact 1/1 with 'intact' wording; opening mechanism not fixed by the reference"}
+  - {id: RO-03, note: "Lyria HTTP 500 on a story-laden wording 1/1, neutral re-send ok 1/1; cross-job: 4 errors on descriptive wordings over 2 jobs, 4/4 neutral first-try successes over 4 jobs"}
+  - {id: RO-04, note: "AAC encode with a limiter stage: TP -4.1 / -4.0 on natural ambience, n = 2 encodes (fourth job the stage held)"}
+  - {id: RO-05, note: "the topology's economics on one job: 70 s bought for 28 used; USD 4.27 of 7.86 on re-takes; still-first end-state re-takes fixed 4 of 4 beats within two draws"}
+
+canon_gap_candidates: []                                     # class 4 — none NEW on this job (report only)
+canon_gap_note: "Eight of the ten selected packs were uncompiled (concept, critique, colour, camera, editing/pacing, typography, Indic context, commercial communication — stages/evidence/canon-lookup.txt), declared as gaps at Stage 3 and bridged by claims retrieved by id from canon/knowledge/current (sk_abcd_0007/0010/0011, sk_ogx_0039/0040, sk_whip_0058/0031, sk_fre_c003_0025, sk_hea_mts_0011, sk_gote_c003_0004/0006, sk_murch_c003_0020, sk_gos_c003_0007, sk_alt_c003_0018, sk_abcd_0012, sk_vig_c003_0013) — the CANON_GAP_DECLARATION_VERIFIED pattern from case 005 applied. The Ogilvy-vs-Hopkins humour tension (sk_ogx_0032 'humor can now sell' vs sk_mla_0064 'Frivolity has no place in advertising') was named at Stage 3 and RESOLVED from existing claims by the brief's own clause ('would be funny…') and Ogilvy's later reversal, with the risk carried as an LJ line — a tension inside accepted Canon, not a missing domain. No production failure on this job traces to missing Canon: the checker's creative defects (arms depth, food left out, non-departure, the static open) trace to the model's execution of the board and to a clip length the board over-asked, not to a direction the Canon lacked. Two recorded deviations from Canon (comedy key kept low; no audio brand mention) were the producer's decisions with the forcing clause stated. The uncompiled packs remain the known gap already on the Controller's list from cases 004/005; nothing new is added."
+
+not_promoted:                                                # class 5 — true of this job only
+  - "the seven beats' specific feelings, framings and impacts (the tally marks, the tideline, the photo on yellow, the locked reveal, the packing montage, the dawn raft, the navy card) — direction for this brief"
+  - "the tagline 'Room for the long way home.' and the product line 'Transit Backpack · 30L' — copy for this product"
+  - "the colourway choice (Private Island: navy + sunshine-yellow lining) and the reasons for it (the yellow flash in a grey world; the name's wink at the story) — a product decision for this brand"
+  - "the Stage 1 decisions taken without asking (9:16 only, ~30 s, no dialogue, no price, 24 fps) and their stated costs of being wrong"
+  - "the Controller's reading of 'arms' as the protagonist's own arms and of 'odysey movie angel' as the myth's shape — brief interpretation for this job"
+  - "the man's design (lean Indian man ~40, long hair, beard, cord bracelet, torn green sleeveless shirt) and the identity anchor blocks"
+  - "the repair-round priority letters A–E and which take was used per beat (gen/edl-v2.json)"
+  - "the customer's 'excpetional work otherwise' and 'excellent … pass/' as comparisons with his RentOK verdicts — one customer's wording across production classes, not a measurement"
+  - "the environmental note that the machine's disk hit 169 MB free during QA (intermediates deleted, frames switched to JPEG) — this machine, this week"
