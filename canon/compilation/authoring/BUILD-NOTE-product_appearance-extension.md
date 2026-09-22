@@ -126,3 +126,7 @@ No new conflicts entries; the eleven existing ones are kept (rules shortened, §
   typical buyer, which is an addition, not a change.
 - Session tokens used (estimate, both packs together): ~330k, of which roughly 40 per cent was the
   budget squeeze (measure → tighten → re-measure loops).
+
+## Post-check (Controller, from CHECK-pilot-extensions.md — PASS WITH EDITS)
+
+- PA-D11's alt_0014 line tied to the decision's own question (the camera on the product; a move that hides it covers up) instead of a general camera-movement rule. 2,500 tokens; 13/13 seeds.

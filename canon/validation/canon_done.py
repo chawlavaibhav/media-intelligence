@@ -103,10 +103,15 @@ def pack_report(pack_id: str) -> int:
     cov = yaml.safe_load((REPO / "canon/planning/CANON-V1-LIVE37-COVERAGE.yaml").read_text(encoding="utf-8"))
     contributors = set(cov["packs"][pack_id]["contributors"])
     seeds = [c for c, _ in seed_ids_for(contributors)]
-    cited = pack_cited_ids().get(pack_id, set())
+    all_cited = pack_cited_ids()
+    cited = all_cited.get(pack_id, set())
     status = pack_status(pack_id)
-    missing = [s for s in seeds if s not in cited]
-    print(f"pack {pack_id}: status '{status[:50]}' · seed {len(seeds)} · cited {len(seeds) - len(missing)} · missing {len(missing)}")
+    elsewhere = {s: sorted(p for p, ids in all_cited.items() if p != pack_id and s in ids) for s in seeds if s not in cited}
+    missing = [s for s in elsewhere if not elsewhere[s]]
+    covered_elsewhere = {s: p for s, p in elsewhere.items() if p}
+    print(f"pack {pack_id}: status '{status[:50]}' · seed {len(seeds)} · cited {len(seeds) - len(elsewhere)} · cited by another pack {len(covered_elsewhere)} · missing {len(missing)}")
+    for s, p in covered_elsewhere.items():
+        print(f"  ~ {s} (consumed in {', '.join(p)})")
     for m in missing:
         print(f"  - {m}")
     return 0 if not missing and "PROPOSED" not in status.upper() and status != "MISSING" else 2

@@ -66,14 +66,6 @@ closure_waivers:
     closure, not doctrine'); converted to a waiver for budget.
   ref: sk_murch_c003_0025
   relation: contradicts
-- partner: sk_alt_c003_0011
-  reason: '0011 requires the key to agree with an established fictional source; the stored contradiction
-    is 0018''s musical-comedy exemption from that requirement. CA-D12 decides key and level by category
-    only; source agreement is product_appearance PA-D4''s default and the exemption is arbitrated there
-    (PA CF-03: commercial imagery is not the exempt genre). Neither changes key-by-category, so 0011 is
-    not consumed here.'
-  ref: sk_alt_c003_0018
-  relation: contradicts
 conflicts:
 - between:
   - sk_fre_c003_0002
@@ -225,16 +217,6 @@ conflicts:
   resolution_rule: 'Each term binds in its origin frame (Hopkins: paid direct-response space; Samara:
     grid design); name the frame first; neither is a default.'
   tension_ref: T4
-- between:
-  - sk_alt_c003_0015
-  - sk_alt_c003_0017
-  conflict_id: CF-18
-  decision_ref: CA-D5
-  kind: contradicts
-  nature: symmetrical tonal separation against a preferred direction for distance; both stated in the
-    source
-  resolution_rule: '0015: subject-against-ground, either direction; 0017: three-plus staged depth planes,
-    near dark, far light; by the frame''s structure.'
 consumption:
   contract: canon/compilation/INJECTION-CONTRACT-v0.md
   target_schema: FINAL_PRODUCTION_PACKAGE v2 (12 EVAL-037 sections + DOCTRINE_DEVIATIONS)
@@ -243,13 +225,13 @@ corpus_digest: 3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc
 corpus_digest_source: canon/knowledge/CANON-CORPUS-INDEX.yaml fingerprints.accepted_canon (recomputed
   from per-file sha256 entries and cross-checked against disk)
 counts:
-  cited_claim_bytes: 38877
-  cited_sk_objects: 90
-  closure_waivers: 8
-  conflicts: 16
+  cited_claim_bytes: 35663
+  cited_sk_objects: 82
+  closure_waivers: 7
+  conflicts: 15
   decisions: 11
-  terse_chars: 9997
-  terse_tokens: 2500
+  terse_chars: 9144
+  terse_tokens: 2286
 decisions:
 - check: Three reads, one dominant cue each; second reads visible at delivered size; coded elements dated.
   check_id: CA-D1-check
@@ -391,9 +373,8 @@ decisions:
   default: 'Off-centre in one of three approximate zones (fre_001; fre_0017, 0018); centre only when the
     scene points inward (0019); extreme placement needs a visible reason (0021); no coordinate rules (0016
     vs 0028; CF-05) — zones, never grids or ratios. Text over the image: value contrast to read, playing
-    off the image, following the structure beneath (sam_0021); the supplied mark is placed, never redrawn:
-    an established logo is equity, identity the system, never change for its own sake (vig_0013; timeless,
-    0011).'
+    off the image, following the structure beneath (sam_0021); the supplied mark is kept: an established
+    logo is equity, identity the system, no redesign for its own sake (vig_0013; timeless, 0011).'
   feeds_sections:
   - VISUAL_SYSTEM.placement_zone
   - GENERATION_PROMPTS
@@ -476,8 +457,8 @@ decisions:
   - GENERATION_PROMPTS
   limits: []
   question: Use a frame within the frame?
-- check: Declared balanced or restless; in grayscale size and tonal weight agree, subject separates from
-    ground; key set for the whole, level on the dramatic line.
+- check: Declared balanced or deliberately restless; if balanced, a grayscale check shows tonal weight
+    agreeing with size weight.
   check_id: CA-D5-check
   compiled_from:
   - concept_label: classical_division_balances_size_and_tone_and_is_not_a_named_ratio
@@ -525,40 +506,18 @@ decisions:
     marker: null
     ref: scs_fre_c003_005
     source_dir: freeman-photographers-eye-graphic-guide
-  - concept_label: depth_comes_from_tonal_separation_between_foreground_and_background
-    kind: source_knowledge
-    marker: '[MEASURED-hedged|CONTESTED|QUALIFIED]'
-    ref: sk_alt_c003_0015
-    source_dir: alton-painting-with-light-ch2
-  - concept_label: distance_is_carried_by_a_progression_from_dark_to_light
-    kind: source_knowledge
-    marker: '[REASONED-hedged|CONTESTED]'
-    ref: sk_alt_c003_0017
-    source_dir: alton-painting-with-light-ch2
-  - concept_label: genre_sets_the_key_of_the_whole_picture_before_any_scene_is_lit
-    kind: source_knowledge
-    marker: '[REASONED-hedged|CONTESTED|DATED]'
-    ref: sk_alt_c003_0018
-    source_dir: alton-painting-with-light-ch2
-  - concept_label: lighting_level_should_follow_the_dramatic_line_across_a_whole_film
-    kind: source_knowledge
-    marker: '[ASSERTED-hedged]'
-    ref: sk_alt_c003_0022
-    source_dir: alton-painting-with-light-ch2
-  confidence_marker: '[ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|MULTI-ORIGIN(2)]'
+  confidence_marker: '[ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]'
   decision_id: CA-D5
-  default: 'Classical balance by default, weighing size AND tone (fre_0028, 0029; fre_005); refusing the
-    eye rest (0032) is the declared energetic exception; symmetry orders a subject that has none (0030);
-    diagonals divide against strict rectilinears (0033, 0034 per CF-07). Depth: foreground against background
-    in tone, either direction (alt_0015; 0017 per CF-18). Key: set for the whole piece by its category
-    before any scene (0018) — comedy high, low key spoils it; drama follows the dramatic line: bright
-    gaiety, lower sadness, deep blacks and glaring whites for tragedy (0022).'
+  default: Classical balance is the default; it weighs size AND tone together (fre_0028, 0029; fre_005);
+    refusing the eye a resting place (0032) is the declared energetic exception. Symmetry imposes order
+    on a subject that has none (0030); diagonals need strict horizontals and verticals to divide against
+    (0033, 0034 per CF-07).
   feeds_sections:
   - VISUAL_SYSTEM
   - GENERATION_PROMPTS
   - FAILURE_PREVENTION
   limits: []
-  question: Balance or restless; depth and key in tone?
+  question: Balance the frame, or refuse the eye rest?
 - check: Aspect justified by a named shape, not the platform alone.
   check_id: CA-D6-check
   compiled_from:
@@ -850,8 +809,7 @@ decisions:
   - FAILURE_PREVENTION
   limits: []
   question: Screen direction and the line?
-- check: No shot outlasts its describable content; dissolves name purpose and duration; fades bound, audio
-    first.
+- check: No shot outlasts its describable content; the stated pace names the prevailing norm it assumes.
   check_id: CA-D10-check
   compiled_from:
   - concept_label: shot_length_set_by_describing_the_shot_contents_aloud
@@ -864,39 +822,15 @@ decisions:
     marker: '[ASSERTED-hedged|DATED|CULTURE-BOUND]'
     ref: sk_gote_c003_0052
     source_dir: grammar-of-the-edit-ch3-5
-  - concept_label: dissolve_duration_governs_how_it_reads
-    kind: source_knowledge
-    marker: '[ASSERTED-hedged]'
-    ref: sk_gote_c003_0028
-    source_dir: grammar-of-the-edit-ch3-5
-  - concept_label: dissolves_carry_a_languid_somber_thoughtful_register
-    kind: source_knowledge
-    marker: '[REASONED-hedged|CULTURE-BOUND]'
-    ref: sk_gote_c003_0031
-    source_dir: grammar-of-the-edit-ch3-5
-  - concept_label: the_fade_marks_the_boundary_of_a_program_or_act
-    kind: source_knowledge
-    marker: '[ASSERTED-hedged|FIGURE-UNVERIFIED]'
-    ref: sk_gote_c003_0037
-    source_dir: grammar-of-the-edit-ch3-5
-  - concept_label: sound_creates_reality_faster_than_vision
-    kind: source_knowledge
-    marker: '[ASSERTED-hedged]'
-    ref: sk_gote_c003_0048
-    source_dir: grammar-of-the-edit-ch3-5
-  confidence_marker: '[ASSERTED-hedged|QUALIFIED|DATED|CULTURE-BOUND|FIGURE-UNVERIFIED|MEDIUM-UNTESTED|SINGLE-ORIGIN]'
+  confidence_marker: '[ASSERTED-hedged|QUALIFIED|DATED|CULTURE-BOUND|MEDIUM-UNTESTED|SINGLE-ORIGIN]'
   decision_id: CA-D10
-  default: Silently describe the shot's contents; that time is its length (gote_0053); the fast-cutting
-    norm (alarming, says the source) is the ambient pace (0052). A dissolve reads by duration — frames
-    a jump cut, seconds a superimposition — lasting as its purpose needs, never the software default (0028);
-    said to read languid, sombre (romantic or sad passages, 0031). A fade bounds an act, scene or programme
-    or a time/place change; audio first (0037). Sound creates reality faster than picture; stimulate the
-    ear to help the eye (0048).
+  default: Set length by silently describing the shot's contents; the description's time is the shot's
+    (gote_0053). The fast-cutting norm — which the source calls alarming — is the ambient pace (0052).
   feeds_sections:
   - AUDIO_AND_EDIT
   - GENERATION_PROMPTS
   limits: []
-  question: How long may a shot hold; what joins shots?
+  question: How long may a shot hold?
 - check: Each move names its motivation; else stillness or a cut.
   check_id: CA-D11-check
   compiled_from:
@@ -982,9 +916,8 @@ terse_injection_text: 'CANON DOCTRINE PACK composition_and_attention v0 (accepte
   DEFAULT: Off-centre in one of three approximate zones (fre_001; fre_0017, 0018); centre only when the
   scene points inward (0019); extreme placement needs a visible reason (0021); no coordinate rules (0016
   vs 0028; CF-05) — zones, never grids or ratios. Text over the image: value contrast to read, playing
-  off the image, following the structure beneath (sam_0021); the supplied mark is placed, never redrawn:
-  an established logo is equity, identity the system, never change for its own sake (vig_0013; timeless,
-  0011).
+  off the image, following the structure beneath (sam_0021); the supplied mark is kept: an established
+  logo is equity, identity the system, no redesign for its own sake (vig_0013; timeless, 0011).
 
   CHECK: Zone plus reason, no ratio or grid; text reads by value contrast on the structure; mark unaltered.
 
@@ -1010,19 +943,17 @@ terse_injection_text: 'CANON DOCTRINE PACK composition_and_attention v0 (accepte
   CHECK: A framing element is darker or thinner than what it frames.
 
 
-  CA-D5 [ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|MULTI-ORIGIN(2)]
+  CA-D5 [ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]
 
-  Q: Balance or restless; depth and key in tone?
+  Q: Balance the frame, or refuse the eye rest?
 
-  DEFAULT: Classical balance by default, weighing size AND tone (fre_0028, 0029; fre_005); refusing the
-  eye rest (0032) is the declared energetic exception; symmetry orders a subject that has none (0030);
-  diagonals divide against strict rectilinears (0033, 0034 per CF-07). Depth: foreground against background
-  in tone, either direction (alt_0015; 0017 per CF-18). Key: set for the whole piece by its category before
-  any scene (0018) — comedy high, low key spoils it; drama follows the dramatic line: bright gaiety, lower
-  sadness, deep blacks and glaring whites for tragedy (0022).
+  DEFAULT: Classical balance is the default; it weighs size AND tone together (fre_0028, 0029; fre_005);
+  refusing the eye a resting place (0032) is the declared energetic exception. Symmetry imposes order
+  on a subject that has none (0030); diagonals need strict horizontals and verticals to divide against
+  (0033, 0034 per CF-07).
 
-  CHECK: Declared balanced or restless; in grayscale size and tonal weight agree, subject separates from
-  ground; key set for the whole, level on the dramatic line.
+  CHECK: Declared balanced or deliberately restless; if balanced, a grayscale check shows tonal weight
+  agreeing with size weight.
 
 
   CA-D6 [ASSERTED-hedged|QUALIFIED|DATED|CULTURE-BOUND|FIGURE-UNVERIFIED|SINGLE-ORIGIN]
@@ -1076,19 +1007,14 @@ terse_injection_text: 'CANON DOCTRINE PACK composition_and_attention v0 (accepte
   CHECK: Direction and side persist, or the change is shown (gos_0007), or declared in DOCTRINE_DEVIATIONS.
 
 
-  CA-D10 [ASSERTED-hedged|QUALIFIED|DATED|CULTURE-BOUND|FIGURE-UNVERIFIED|MEDIUM-UNTESTED|SINGLE-ORIGIN]
+  CA-D10 [ASSERTED-hedged|QUALIFIED|DATED|CULTURE-BOUND|MEDIUM-UNTESTED|SINGLE-ORIGIN]
 
-  Q: How long may a shot hold; what joins shots?
+  Q: How long may a shot hold?
 
-  DEFAULT: Silently describe the shot''s contents; that time is its length (gote_0053); the fast-cutting
-  norm (alarming, says the source) is the ambient pace (0052). A dissolve reads by duration — frames a
-  jump cut, seconds a superimposition — lasting as its purpose needs, never the software default (0028);
-  said to read languid, sombre (romantic or sad passages, 0031). A fade bounds an act, scene or programme
-  or a time/place change; audio first (0037). Sound creates reality faster than picture; stimulate the
-  ear to help the eye (0048).
+  DEFAULT: Set length by silently describing the shot''s contents; the description''s time is the shot''s
+  (gote_0053). The fast-cutting norm — which the source calls alarming — is the ambient pace (0052).
 
-  CHECK: No shot outlasts its describable content; dissolves name purpose and duration; fades bound, audio
-  first.
+  CHECK: No shot outlasts its describable content; the stated pace names the prevailing norm it assumes.
 
 
   CA-D11 [ASSERTED-our_reading-hedged|QUALIFIED|DATED|MEDIUM-UNTESTED|MULTI-ORIGIN(3)]
@@ -1145,9 +1071,6 @@ terse_injection_text: 'CANON DOCTRINE PACK composition_and_attention v0 (accepte
 
   CF-16 t_hop_sa_0009 vs t_sam_0018: Each term binds in its origin frame (Hopkins: paid direct-response
   space; Samara: grid design); name the frame first; neither is a default.
-
-  CF-18 alt_0015 vs alt_0017: 0015: subject-against-ground, either direction; 0017: three-plus staged
-  depth planes, near dark, far light; by the frame''s structure.
 
 
   PACK LIMITS:
