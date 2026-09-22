@@ -488,27 +488,7 @@ CA_WAIVERS = [
      "reason": "philosophy dependency: 0011 is the source's timelessness commitment; the contrast rule stands without adopting the philosophy."},
 ]
 
-PACKS = [
-    {
-        "pack_id": "product_appearance",
-        "out": OUT_PA,
-        "applicability": ["static_image", "video", "image_sequence"],
-        "decisions": PA_DECISIONS,
-        "conflicts": PA_CONFLICTS,
-        "waivers": PA_WAIVERS,
-        "pack_limits": [DEVANAGARI_LIMIT, LSM_LATER_CHAPTERS_CAVEAT,
-                        PA_COVERAGE_DELTA_LIMIT, PA_CATEGORY_SURFACE_LIMIT],
-    },
-    {
-        "pack_id": "composition_and_attention",
-        "out": OUT_CA,
-        "applicability": ["static_image", "video", "image_sequence"],
-        "decisions": CA_DECISIONS,
-        "conflicts": CA_CONFLICTS,
-        "waivers": CA_WAIVERS,
-        "pack_limits": [DEVANAGARI_LIMIT, CA_COVERAGE_DELTA_LIMIT],
-    },
-]
+PACKS = []  # the two pilot packs moved to canon/compilation/authoring/ on 2026-09-22 (exported from the tables above, which are kept for provenance)
 
 
 AUTHORING_DIR = REPO_ROOT / "canon/compilation/authoring"
