@@ -36,7 +36,8 @@ class SimulatedReasoning:
     # Stage 1
     def strategist(self, context, media):
         brief = _ctx(context, "BRIEF") or {}
-        answers = _ctx(context, "ANSWERS") or {}
+        answers = _ctx(context, "ANSWERS")
+        answers = answers if isinstance(answers, dict) else {}
         text = (brief.get("text") or "")
         low = text.lower()
         media_kind = brief.get("media", "image")

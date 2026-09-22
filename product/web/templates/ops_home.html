@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block title %}Operator · Media Intelligence{% endblock %}
+{% block body %}
+<h1>Operator</h1>
+{% if invite %}<div class="card"><strong>Invitation link (send it privately; single use):</strong><pre>{{ invite }}</pre></div>{% endif %}
+<div class="card"><h2>Jobs</h2><table><tr><th>Job</th><th>Account</th><th>Type</th><th>State</th><th>Updated</th></tr>
+{% for j in jobs %}<tr><td><a href="/ops/jobs/{{ j.id }}">{{ j.id }}</a><br><span class="small">{{ j.title }}</span></td><td class="small">{{ j.account_id }}</td><td>{{ j.media }}</td>
+<td>{{ j.state }}{% if j.pause_reason %}<br><span class="small warn">{{ j.pause_reason }}</span>{% endif %}</td><td class="small muted">{{ j.updated[:19] }}</td></tr>{% endfor %}</table></div>
+<div class="row">
+<div class="card"><h2>Accounts</h2><table>{% for a in accounts %}<tr><td>{{ a.name }}</td><td class="small">{{ a.id }}</td><td>{{ a.ceiling_usd|usd }}</td><td>{{ 'auto-approve' if a.auto_approve else '' }}</td></tr>{% endfor %}</table>
+<form method="post" action="/ops/accounts"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="an">New account name</label><input id="an" type="text" name="name" required>
+<label for="ac">Per-job ceiling (USD)</label><input id="ac" type="number" name="ceiling_usd" value="25" step="1">
+<p class="small"><input type="checkbox" name="auto_approve" value="yes" id="aa"> <label for="aa" style="display:inline;font-weight:400">Auto-approve directions within the customer's stated budget</label></p>
+<p><button>Create account</button></p></form></div>
+<div class="card"><h2>Invite</h2><form method="post" action="/ops/invites"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="ie">Email</label><input id="ie" type="email" name="email" required>
+<label for="ir">Role</label><select id="ir" name="role"><option value="customer">Customer</option><option value="operator">Operator</option></select>
+<label for="ia">Account (customers)</label><select id="ia" name="account_id"><option value="">—</option>{% for a in accounts %}<option value="{{ a.id }}">{{ a.name }}</option>{% endfor %}</select>
+<p><button>Create invitation link</button></p></form></div>
+</div>
+{% endblock %}

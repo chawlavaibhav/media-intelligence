@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Your jobs · Media Intelligence{% endblock %}
+{% block body %}
+<div style="display:flex;justify-content:space-between;align-items:center"><h1>Your jobs</h1><a class="btn" href="/jobs/new">New request</a></div>
+<p class="muted small">{{ account.name }} · account limit per job {{ account.ceiling_usd|usd }}{% if account.auto_approve %} · creative directions within budget are approved automatically{% endif %}</p>
+<div class="card">
+{% if not jobs %}<p>No jobs yet. <a href="/jobs/new">Start your first request</a> — a sentence is enough.</p>{% else %}
+<table><tr><th>Job</th><th>Type</th><th>Status</th><th>Created</th></tr>
+{% for j in jobs %}<tr><td><a href="/jobs/{{ j.id }}">{{ j.title }}</a></td><td>{{ 'Film' if j.media == 'video' else 'Image' }}</td>
+<td>{{ label(j.state) }}</td><td class="muted small">{{ j.created[:16].replace('T',' ') }} UTC</td></tr>{% endfor %}
+</table>{% endif %}
+</div>
+{% endblock %}

@@ -30,6 +30,7 @@ from product.store import BudgetExhausted, StaleState, Store, dec, money, utc_no
 
 PREVIEW_ALLOWANCE_USD = Decimal("3.00")      # planning reasoning + preview stills, authorised at submission
 MAX_INTERNAL_REPAIRS = 1
+TRANSIENT_RETRIES = 3
 CLIP_LENGTHS = (4, 6, 8)
 
 
@@ -385,11 +386,13 @@ class Orchestrator:
         self.store.set_node(job_id, node_id, status="done", selected_asset_id=asset_id)
 
     def _draw(self, job_id, n, fn):
-        """One paid draw with the node's allowance: transient provider failures retry within the allowance, then pause."""
+        """One paid draw. `max_draws` bounds quality draws (takes); transient provider failures do not use it up —
+        they are retried up to TRANSIENT_RETRIES times in this run, then the job pauses as paused_provider."""
         node_id = n["node_id"]
+        transient = 0
         while True:
             cur = self.store.node(job_id, node_id)
-            if cur["draws"] >= cur["max_draws"] + 1:           # +1: one extra attempt reserved for transient failures only
+            if cur["draws"] >= cur["max_draws"]:
                 raise NodeFailed(f"{node_id}: draw allowance ({cur['max_draws']}) used")
             self.store.set_node(job_id, node_id, draws=cur["draws"] + 1)
             try:
@@ -401,9 +404,11 @@ class Orchestrator:
                 self.store.event(job_id, "system", "provider_failure", {"node": node_id, "class": e.failure_class, "error": str(e)[:300]})
                 if not e.retryable:
                     raise NodeFailed(f"{node_id}: {e}")
-                if self.store.node(job_id, node_id)["draws"] >= cur["max_draws"] + 1:
+                self.store.set_node(job_id, node_id, draws=cur["draws"])      # an outage is not a bad draw
+                transient += 1
+                if transient >= TRANSIENT_RETRIES:
                     raise ProviderUnavailable(f"{node_id}: {e}")
-                time.sleep(0 if self.s.provider_mode == "simulated" else 5)
+                time.sleep(0 if self.s.provider_mode == "simulated" else 5 * transient)
 
     def _inspect(self, job_id, instruction: dict, media_items: list) -> dict:
         with self.store.timed(job_id, "independent_review", "inspection"):
@@ -478,8 +483,15 @@ class Orchestrator:
                        "end_state": beat["end_state"], "exit_action": beat.get("exit_action"), "must_not": beat.get("must_not", []),
                        "product_present": beat.get("product_present")}
         takes = []
+        recovered = [x["id"] for x in self.store.assets(job_id, node_id=node_id, status="candidate")
+                     if json.loads(x["meta_json"]).get("recovered")]
         while True:
-            aid = self._draw(job_id, self.store.node(job_id, node_id),
+            if recovered:              # a clip paid for before a crash and recovered by a resumed poll: use it, don't redraw
+                aid = recovered.pop(0)
+                self.store.event(job_id, "system", "recovered_take_used", {"node": node_id, "asset": aid})
+            else:
+                aid = None
+            aid = aid or self._draw(job_id, self.store.node(job_id, node_id),
                              lambda: self.dispatch.video(job_id, node_id, prompt=prompt, image=(still["content_type"] or "image/png",
                                                                                                 Path(still["path"]).read_bytes()),
                                                          duration_s=dur, aspect=spec["aspect"], negative=negative, guard=guard,

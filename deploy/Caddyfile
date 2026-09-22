@@ -1,0 +1,8 @@
+# HTTPS (automatic certificates) in front of the web app. Replace the hostname.
+beta.example.com {
+	encode gzip
+	request_body {
+		max_size 300MB
+	}
+	reverse_proxy 127.0.0.1:8080
+}

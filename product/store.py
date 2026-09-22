@@ -128,6 +128,7 @@ class StaleState(Exception):
 class Store:
     def __init__(self, db_path: str | Path):
         self.db_path = str(db_path)
+        self.root = Path(db_path).resolve().parent
         self._local = threading.local()
         with self.connect() as c:
             c.executescript(SCHEMA)
@@ -408,21 +409,32 @@ class Store:
                   role=None, attempt_id=None, status="candidate", cut=None, meta=None) -> str:
         data = Path(path).read_bytes()
         aid = new_id("ast")
+        p = Path(path).resolve()
+        stored = str(p.relative_to(self.root)) if p.is_relative_to(self.root) else str(p)
         with self.tx() as c:
             c.execute("INSERT INTO assets VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                      (aid, job_id, node_id, kind, role, str(path), sha256_bytes(data), content_type, len(data), source,
+                      (aid, job_id, node_id, kind, role, stored, sha256_bytes(data), content_type, len(data), source,
                        attempt_id, status, cut, json.dumps(meta or {}, ensure_ascii=False, default=str), utc_now()))
         return aid
 
+    def _abs(self, row):
+        """Asset rows carry paths relative to the data directory; callers get an absolute path."""
+        if row is None:
+            return None
+        d = dict(row)
+        if not Path(d["path"]).is_absolute():
+            d["path"] = str(self.root / d["path"])
+        return d
+
     def asset(self, asset_id: str):
-        return self.q1("SELECT * FROM assets WHERE id=?", (asset_id,))
+        return self._abs(self.q1("SELECT * FROM assets WHERE id=?", (asset_id,)))
 
     def assets(self, job_id: str, **where):
         sql = "SELECT * FROM assets WHERE job_id=?"
         args: list = [job_id]
         for k, v in where.items():
             sql += f" AND {k}=?"; args.append(v)
-        return self.q(sql + " ORDER BY created", args)
+        return [self._abs(r) for r in self.q(sql + " ORDER BY created", args)]
 
     def set_asset(self, asset_id: str, **fields):
         with self.tx() as c:

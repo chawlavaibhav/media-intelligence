@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block head %}{% endblock %}
+<title>{% block title %}Media Intelligence{% endblock %}</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d1c1a;--muted:#6b675f;--line:#e4e0d6;--accent:#1f3a5f;--accent-ink:#fff;--ok:#1e6b3a;--warn:#8a5a00;--bad:#9b2226;--chip:#efece4}
+@media (prefers-color-scheme:dark){:root{--bg:#141412;--card:#1d1c1a;--ink:#ece9e2;--muted:#a39e93;--line:#34322d;--accent:#8fb3e0;--accent-ink:#111;--ok:#6fcf8f;--warn:#e7b85a;--bad:#f08a8d;--chip:#2a2926}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--accent)}header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--card)}
+header .brand{font-weight:650;letter-spacing:.01em;text-decoration:none;color:var(--ink)}main{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:0 0 16px}
+h1{font-size:1.5rem;margin:.2rem 0 1rem}h2{font-size:1.15rem;margin:0 0 .6rem}h3{font-size:1rem;margin:1rem 0 .4rem}
+.muted{color:var(--muted)}.small{font-size:.86rem}.row{display:flex;gap:16px;flex-wrap:wrap}.row>*{flex:1 1 280px}
+label{display:block;font-weight:600;margin:.8rem 0 .25rem}input[type=text],input[type=email],input[type=password],input[type=number],textarea,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:90px}button,.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);border:0;border-radius:7px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+button.secondary,.btn.secondary{background:var(--chip);color:var(--ink)}button.danger{background:var(--bad);color:#fff}
+.chip{display:inline-block;background:var(--chip);border-radius:99px;padding:2px 10px;font-size:.82rem}
+.PASS,.ok{color:var(--ok)}.FAIL,.bad{color:var(--bad)}.NOT_VERIFIED,.FLAG,.warn{color:var(--warn)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}td,th{border-bottom:1px solid var(--line);padding:6px 6px;text-align:left;vertical-align:top}th{color:var(--muted);font-weight:600}
+.rail{display:flex;gap:6px;flex-wrap:wrap;margin:.4rem 0 1rem}.rail span{padding:4px 10px;border-radius:99px;background:var(--chip);font-size:.82rem;color:var(--muted)}
+.rail span.done{color:var(--ok)}.rail span.now{background:var(--accent);color:var(--accent-ink)}
+.media img,.media video{max-width:100%;max-height:70vh;border-radius:8px;border:1px solid var(--line);background:#000}
+.beats{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.beat{border:1px solid var(--line);border-radius:8px;padding:10px;font-size:.88rem}
+.banner{background:#fff3cd;color:#5c4400;padding:8px 16px;text-align:center;font-size:.88rem}
+pre{white-space:pre-wrap;word-break:break-word;font-size:.8rem;background:var(--chip);padding:10px;border-radius:7px;max-height:420px;overflow:auto}
+details summary{cursor:pointer;font-weight:600}
+</style>
+</head>
+<body>
+{% if simulated %}<div class="banner">Test environment — media and reviews on this server are simulated; nothing here is a real production.</div>{% endif %}
+<header><a class="brand" href="/">Media Intelligence <span class="chip">beta</span></a>
+{% if user %}<form method="post" action="/logout" style="margin:0"><input type="hidden" name="csrf" value="{{ csrf }}"><span class="muted small">{{ user.email }}</span> <button class="secondary" type="submit">Sign out</button></form>{% endif %}
+</header>
+<main>{% block body %}{% endblock %}</main>
+</body>
+</html>

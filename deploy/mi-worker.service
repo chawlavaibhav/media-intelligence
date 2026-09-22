@@ -1,0 +1,25 @@
+[Unit]
+Description=Media Intelligence P1 — production worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=mi
+Group=mi
+WorkingDirectory=/srv/mi/app
+EnvironmentFile=/etc/mi/mi.env
+Environment=PYTHONPATH=/srv/mi/app
+ExecStart=/usr/bin/python3 -m product.worker
+# SIGTERM lets the worker finish its heartbeat loop; a hard kill is also safe (leases expire, in-flight calls are recovered)
+KillSignal=SIGTERM
+TimeoutStopSec=30
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/mi/data
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
