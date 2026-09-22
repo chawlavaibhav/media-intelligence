@@ -33,7 +33,7 @@ about model capability, never a Capability Registry input, never benchmark groun
 | Join layer | 60 cross-source candidate records incl. 13 adjudicated duplicate terms (2 genuine homonyms) — all `status: proposed` | `python3 canon/validation/validate_cross_source_candidates.py` |
 | Vocabulary | 583 domain labels mapped (96.0% of mentions), 53 queued | `python3 canon/validation/validate_domain_vocabulary.py` |
 | Confidence markers | deterministic marker for all 1,300 objects (MEASURED/REASONED/ASSERTED + flags) | `python3 canon/compilation/assign_markers.py --check` |
-| Compiled packs | **2 of 10**: `product_appearance` (10 decisions), `composition_and_attention` (11 decisions), guard-closure enforced | `python3 canon/validation/validate_compiled_pack.py` |
+| Compiled packs | **10 of 10**, all ADOPTED 2026-09-22 (98 decisions; guard-closure enforced; each <= 2500 terse tokens; every claim a producer retrieved by hand on a recorded job is cited) | `python3 canon/validation/validate_compiled_pack.py`; `python3 canon/validation/canon_done.py` |
 
 ## 3. What it is for — on the evidence, stated without verdict
 

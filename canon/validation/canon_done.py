@@ -80,13 +80,21 @@ def pack_status(pid: str) -> str:
 
 
 def adopted(pid: str) -> bool:
-    """A decision file in coordination/decisions/ that names the pack and the word ADOPT (not DRAFT)."""
-    for f in ADOPTIONS.glob("CONTROLLER-*.md"):
-        t = f.read_text(encoding="utf-8", errors="replace")
-        if pid in t and re.search(r"\bADOPT(?:ED|S)?\b", t) and "status: DRAFT" not in t.lower().replace("status: draft", "status: DRAFT"):
-            if re.search(rf"ADOPT\w*[^\n]*{re.escape(pid)}|{re.escape(pid)}[^\n]*ADOPT", t):
-                return True
-    return False
+    """True when canon/compilation/ADOPTIONS.yaml names the pack, the decision file it points to
+    exists, that file is an APPROVED decision, and it names the pack. Adoption is the decision;
+    ADOPTIONS.yaml is only the index the compiler reads."""
+    import yaml
+    f = REPO / "canon" / "compilation" / "ADOPTIONS.yaml"
+    if not f.is_file():
+        return False
+    row = ((yaml.safe_load(f.read_text(encoding="utf-8")) or {}).get("packs") or {}).get(pid)
+    if not row:
+        return False
+    dec = REPO / row["decision"]
+    if not dec.is_file():
+        return False
+    text = dec.read_text(encoding="utf-8", errors="replace")
+    return pid in text and "APPROVED CONTROLLER DECISION" in text
 
 
 def validator_green() -> tuple[bool, str]:
