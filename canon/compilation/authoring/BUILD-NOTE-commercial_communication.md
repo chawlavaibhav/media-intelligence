@@ -79,3 +79,8 @@ qualification; pack operates on a given brief); whip_0004 depends_on 0003 and qu
 About 240k tokens used, of which ~110k reading the seed packet in sections and claims by id.
 Note: the shared scratchpad file `seed.txt` was overwritten mid-session by the other builder's
 packet; this pack's packet was regenerated to a pack-specific path and the seed set re-verified (41).
+
+## Post-check edits (Controller, from CHECK-commercial_communication.md — PASS)
+
+- The checker's two uncovered questions (Indian price/offer display — MRP, EMI; platform-native CTA vehicles — WhatsApp order, swipe-up) added to the objective-mix limit line as declared gaps.
+- Coverage-delta and India limit lines tightened to fit; 2,500 terse tokens; 41/41 seeds unchanged.
