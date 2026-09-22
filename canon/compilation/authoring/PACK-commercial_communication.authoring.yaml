@@ -1,0 +1,134 @@
+pack_id: commercial_communication
+applicability: [static_image, video, image_sequence]
+decisions:
+  - decision_id: CC-D1
+    question: "What is the one thing this ad says?"
+    default: "One point per execution; three things to say = three ads (whip_0004). Find the core by exclusion; the standard is the proverb, not the sound bite (hea_mts_0009, 0008). Keep message and language focused (abcd_0017); engagement devices sit inside that point (0018). In five seconds a stranger grunts what you offer, how it helps, what to do (sb_0015); people buy what they grasp fastest (0018)."
+    check: "The single point is one sentence on the board; every scene and line serves it; the three grunt answers sit in the key frame."
+    ids: [sk_hea_mts_0009, sk_hea_mts_0008, sk_whip_0004, sk_abcd_0017, sk_abcd_0018, sk_sb_c003_0015, sk_sb_c003_0018]
+    feeds: [CORE_CREATIVE_IDEA, MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CC-D2
+    question: "What is the CTA, and against which objective?"
+    default: "Core principles, then weight them to the brief's one objective (abcd_0022). One CTA against that objective, saying plainly what to do (0020); direction clear, concise, easy — written CTA, graphic, audio or story scene (0019); voice the on-screen CTA in the same words (0021; premise 0014, audio heard). Full-funnel: CTAs throughout, more direct as the ad runs (0026)."
+    check: "CTA names one action and its objective; spoken and on-screen CTA words match; no generic unattached ask."
+    ids: [sk_abcd_0022, sk_abcd_0020, sk_abcd_0019, sk_abcd_0021, sk_abcd_0014, sk_abcd_0026]
+    feeds: [OBJECTIVE_INTERPRETATION, MESSAGE_AND_INFORMATION_HIERARCHY, AUDIO_AND_EDIT, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CC-D3
+    question: "When does the brand appear, how often, through which assets?"
+    default: "Brand or product from the start, never lapsing (abcd_0011). Early, often, richly — vary the asset (product shot, pack shot, in-situ branding, graphics, voice-over, music) to fit message and objective (0010, 0013, 0022); say the name as well as show it (0012, 0014). Attribution fails by default: name within ten seconds, end on the pack (ogx_0039). Full-funnel: open on mixed branding elements, end on the product (abcd_0026)."
+    check: "Brand or product seen or spoken from the opening, never lapsing; name shown and spoken; final frame is the pack."
+    ids: [sk_abcd_0011, sk_abcd_0010, sk_abcd_0013, sk_abcd_0012, sk_abcd_0014, sk_abcd_0022, sk_abcd_0026, sk_ogx_0039]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, AUDIO_AND_EDIT, PRODUCTION_RECIPE, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CC-D4
+    question: "Who is the hero — product or customer?"
+    default: "Both. Picture: the product is the hero — in use, with its end-result, in close-up, simply (ogl_0014, ogx_0041); a picture is a salesman earning its space, sized by importance to the sale (hop_sa_0026). Story: the customer is the hero, the brand the guide/archetype granting the power; a brand playing hero competes with the customer (sb_0008, whip_0015); one adjective per brand (0015). Judge by selling, not style (ogl_0021)."
+    check: "Board names the story's hero (customer) and the picture's hero (product); product shown in use; no shot merely decorates."
+    ids: [sk_ogl_c003_0014, sk_ogl_c003_0021, sk_ogx_0041, sk_hop_sa_0026, sk_sb_c003_0008, sk_whip_0015]
+    feeds: [CORE_CREATIVE_IDEA, MESSAGE_AND_INFORMATION_HIERARCHY, GENERATION_PROMPTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CC-D5
+    question: "What conflict does the story run on, and what is at stake?"
+    default: "Give the story an opposing force; a brief about life after purchase cuts to the end of the movie (whip_0011); life without the product usually beats life with it (0013). Name what the customer loses by not acting, dosed like salt (sb_0012). At any moment the viewer can say what the hero wants, what opposes them, and life either way (0014). Story pre-orders the message (0004) and rehearses the audience to act (hea_mts_0018)."
+    check: "Want, obstacle, stakes each one line on the board; the ad does not open after the problem is solved."
+    ids: [sk_whip_0011, sk_whip_0013, sk_sb_c003_0012, sk_sb_c003_0014, sk_sb_c003_0004, sk_hea_mts_0018]
+    feeds: [CORE_CREATIVE_IDEA, MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CC-D6
+    question: "What happens in the first frame and first seconds?"
+    default: "Open with the fire: a visual surprise in frame one (ogx_0040). Jump in — reach the heart of the story sooner, with pacing and tight framing (abcd_0006); start mid-action or on a close-up (0007); hook and sustain with audio and visuals (0005). Surprise decays: open a gap in what the viewer knows, then fill it (hea_mts_0011); curiosity activates most (mla_0010). One visual burr that sticks; a parade of short scenes is below average (ogx_0040)."
+    check: "Frame one holds a nameable surprise, not a logo or establishing shot; a gap opens early, closes before the CTA; one image is the burr."
+    ids: [sk_ogx_0040, sk_abcd_0006, sk_abcd_0007, sk_abcd_0005, sk_hea_mts_0011, sk_mla_0010]
+    feeds: [AUDIO_AND_EDIT, MESSAGE_AND_INFORMATION_HIERARCHY, GENERATION_PROMPTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CC-D7
+    question: "How are the claim and the lines made credible?"
+    default: "Specifics — percentage, time, money saved — never superlatives (ogx_0009); no boasting (hop_sa_0014); among good rivals say what is good about yours, not that it is better (ogl_0016). Human actions and sensory detail (hea_mts_0012); one individual, not an abstraction (0016). Testimonial: a real unpolished user defending under challenge (ogx_0034), not a celebrity — below average, remembered instead of the product (0038). Exaggeration rests on a truth (whip_0031). The line sits where clear and clever overlap: say it straight, then great (0005); wit leaves the viewer part of the way (0007). No puns, rhymes (0029) or exclamation marks (0033)."
+    check: "Every claim specific and traceable to a product fact; no 'best'; endorser a user unless a brief clause names a celebrity; no exclamation mark, pun or rhyme; stranger gets the line in one read."
+    ids: [sk_ogx_0009, sk_hop_sa_0014, sk_ogl_c003_0016, sk_hea_mts_0012, sk_hea_mts_0016, sk_hea_mts_0008, sk_ogx_0034, sk_ogx_0038, sk_whip_0031, sk_whip_0005, sk_whip_0007, sk_whip_0029, sk_whip_0033, sk_whip_0058]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, GENERATION_PROMPTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CC-D8
+    question: "Is humour allowed, and what register does the ad take?"
+    default: "Set out to be interesting, not funny; funny is an accent, and register follows product and audience — no slapstick on a hospital (whip_0058). Hopkins bans amusement — money is serious, amusement attracts the uninterested (mla_0064, hop_sa_0014). Ogilvy's dated reversal: humour can now sell, but only the very few write funny; otherwise do not try (ogx_0032). ABCD's humour, surprise, intrigue are braked by focus (abcd_0018, 0017). Cartoons sell to children, not adults; musical vignettes entertain, not sell (ogx_0038)."
+    check: "Register justified by product and audience; if humour, name the brief clause and the point it carries; no cartoon for adults, no vignette parade."
+    ids: [sk_whip_0058, sk_mla_0064, sk_hop_sa_0014, sk_ogx_0032, sk_abcd_0018, sk_abcd_0017, sk_ogx_0038]
+    feeds: [CORE_CREATIVE_IDEA, FAILURE_PREVENTION, DOCTRINE_DEVIATIONS]
+    limits: []
+  - decision_id: CC-D9
+    question: "Whom does the ad address, in which language?"
+    default: "Write to one typical buyer likely to want the thing, then do what a salesman would face to face (hop_sa_0014, 0008). The headline hails only the people you can interest (0031): put the word that flags them, or the city, in it (ogx_0007); an offer limited to a class beats a general one (hop_sa_0043). Originate copy in the audience's language — translating an English idea separates language from idea (nnn_0052); say it with respect, in a context the audience understands, to delight not intimidate (ppm_0001)."
+    check: "One buyer named; the headline or opening line carries the word that hails them; copy written in its delivered language, not translated; nothing condescends."
+    ids: [sk_hop_sa_0014, sk_hop_sa_0008, sk_hop_sa_0031, sk_hop_sa_0043, sk_ogx_0007, sk_nnn_0052, sk_ppm_0001]
+    feeds: [OBJECTIVE_INTERPRETATION, MESSAGE_AND_INFORMATION_HIERARCHY, DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CC-D10
+    question: "What does the audio layer carry?"
+    default: "Actors on camera hold better than voice-over; supers say exactly the spoken words (ogx_0042); the CTA super is voiced in the same words (abcd_0021); the brand name spoken as well as shown (0012). Background music: no measurable good or harm; effects can help; jingles are below average at changing brand preference (ogx_0042). Full-funnel: hook attention with audio (abcd_0026). Premise: audio is heard (0014)."
+    check: "Supers match voice-over word for word; brand name in audio; no jingle carries the message alone; on-camera speech over voice-over."
+    ids: [sk_ogx_0042, sk_abcd_0021, sk_abcd_0012, sk_abcd_0014, sk_abcd_0026]
+    feeds: [AUDIO_AND_EDIT, PRODUCTION_RECIPE, FAILURE_PREVENTION]
+    limits: []
+conflicts:
+  - conflict_id: CF-01
+    decision_ref: CC-D6
+    kind: trades_off_with
+    between: [sk_ogx_0040, sk_ogx_0039]
+    nature: "the first ten seconds must carry both the surprise that stops the screen-out and the brand name that prevents misattribution"
+    resolution_rule: "Frame one carries the surprise (0040); the name arrives within ten seconds, the ad ends on the pack (0039): surprise first, name never past ten seconds."
+  - conflict_id: CF-02
+    decision_ref: CC-D8
+    kind: trades_off_with
+    between: [sk_mla_0064, sk_mla_0010]
+    nature: "the same source refuses amusement and endorses curiosity, on the ground of who is attracted"
+    resolution_rule: "Attract by curiosity about the thing sold (0010), never by amusement drawing the uninterested (0064)."
+  - conflict_id: CF-03
+    decision_ref: CC-D8
+    kind: contradicts
+    between: [sk_mla_0064, sk_ogx_0032]
+    nature: "Ogilvy names Hopkins' 'people don't buy from clowns' and reverses it, dating the reversal to later measurement and bounding it to the few who can write funny"
+    resolution_rule: "Default no humour; only when a brief clause asks, register fits product and audience (whip_0058) and the joke carries the selling point — record the deviation on CC-D8."
+  - conflict_id: CF-04
+    decision_ref: CC-D1
+    kind: trades_off_with
+    between: [sk_abcd_0017, sk_abcd_0018]
+    nature: "the engagement levers are stated with focus as their brake"
+    resolution_rule: "An engagement device lives inside the one message (0017); one needing a second message is cut (0018 yields)."
+  - conflict_id: CF-05
+    decision_ref: CC-D4
+    kind: contradicts
+    between: [sk_ogl_c003_0014, sk_ogl_c003_0021]
+    nature: "stored as opposition: product-as-hero with simplicity against the pursuit of style and originality; one source's stance from two ends"
+    resolution_rule: "A style-admired treatment that displaces the product loses (0014); the criterion is selling (0021); style-led deviation needs a brief clause."
+  - conflict_id: CF-06
+    decision_ref: CC-D5
+    kind: contradicts
+    between: [sk_sb_c003_0012, sk_sb_c003_0017]
+    nature: "set-in-stone rules for every module against the source's own statement that stakes are dosed and elements are not applied evenly"
+    resolution_rule: "Stakes always named, never over-dosed (0012 governs the dose); 0017's rules-cannot-be-broken framing is not compiled."
+  - conflict_id: CF-07
+    decision_ref: CC-D7
+    kind: trades_off_with
+    between: [sk_ogx_0038, sk_ogx_0034]
+    nature: "the paid celebrity and the unpolished loyal user are the two ends of one perceived-interest axis"
+    resolution_rule: "A testimonial casts a real loyal user defending under challenge (0034); a celebrity is the below-average end (0038) and needs a brief clause."
+  - conflict_id: CF-08
+    decision_ref: CC-D7
+    kind: trades_off_with
+    between: [sk_whip_0005, sk_whip_0001]
+    nature: "cleverness and wit (0005, 0007) are bought with comprehension time; the speed of the get is named more important than creativity"
+    resolution_rule: "The quick get wins: say it straight first; keep cleverness only while a stranger gets it in one read (0001, uncompiled)."
+waivers:
+  - {ref: sk_hop_sa_0026, relation: depends_on, partner: sk_hop_sa_0021, reason: "evidential-basis dependency: 0021 states the mail-order school grounding Hopkins' authority; CC-D4 consumes only the picture-earns-its-space rule, reflected in its DATED and CULTURE-BOUND marker, not compiled as doctrine (same waiver as product_appearance)."}
+  - {ref: sk_ogl_c003_0014, relation: contradicts, partner: sk_ogl_c003_0020, reason: "the stored opposition is the source setting product-as-hero against the cult of creativity; 0020's content — copy direct-response advertisers on commercial length, daypart and copy length — is not consumed by CC-D4, which takes only the product-as-hero instruction; those format choices belong to no decision of this pack."}
+  - {ref: sk_whip_0005, relation: qualified_by, partner: sk_whip_0016, reason: "0016 qualifies the clear/clever overlap as the execution-level form of strategy precision (a brief can be too vague or too precise); CC-D7 operates on a brief already given and consumes only the overlap and its two failure marks; the brief-writing qualification does not change the default."}
+  - {ref: sk_whip_0004, relation: depends_on, partner: sk_whip_0003, reason: "0003 supplies the layout arithmetic (each element added dilutes the rest) that motivates the one-point rule; CC-D1 consumes the rule as stated — one execution, one point; the print reduction procedure is composition territory, not compiled here."}
+  - {ref: sk_whip_0004, relation: qualified_by, partner: sk_whip_0061, reason: "0061 qualifies 0004 in client review (the full-line request is the change most often asked for); CC-D1 is decided at brief time, not in revision; the revision-defence doctrine does not change the one-point default."}
+  - {ref: sk_ogx_0038, relation: depends_on, partner: sk_ogx_0031, reason: "0031 names the measure (change in brand preference, not recall) in which the format judgements are expressed; CC-D7 and CC-D8 repeat the judgements in the source's own brand-preference terms and consume nothing of the measure's derivation; the marker carries the evidence character."}
+  - {ref: sk_ogx_0042, relation: depends_on, partner: sk_ogx_0031, reason: "as above: the jingle judgement is stated in brand-preference terms in CC-D10; the measure itself is not compiled."}
+pack_limits:
+  - "Coverage delta: ogx_* = 1983 US 30 s broadcast TV on a brand-preference measure; hop_sa_*/mla_* = 1920s print and mail order; abcd_* = YouTube 2022 publisher guidance, sound on. Nothing treats 9:16 feed formats, sound-off viewing or ads under 10 s — assume neither way. CC-D3, D6, D10 are video-only; audio-only ads uncovered."
+  - "India: only Hindi origination (nnn_0052; metro agencies, 1970s–2000s) and Pandey's credo (ppm_0001) are compiled; other Indian languages, Hinglish, regional markets, Bijapurkar's consumer claims and Parameswaran's celebrity and ASCI claims are not — check ASCI outside Canon."
+  - "Objective mix: Binet & Field's brand/activation and consideration findings are not compiled; the pack sets no budget split or reach."
