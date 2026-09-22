@@ -65,3 +65,7 @@ No hedge was hardened: "seems", "almost invariably", "author's own likelihood", 
 ## 7. Session tokens
 
 Roughly 150k tokens for this build (seed packet once, four claim batches by id, five compile iterations).
+
+## Post-check (Controller, from CHECK-indian_indic_context.md — PASS)
+
+- The checker's two uncovered questions (national-symbol depiction rules; skin-tone / colourism casting guidance) added to the uncovered limit line. No decision content changed; 5/5 seeds.
