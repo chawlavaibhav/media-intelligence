@@ -2,8 +2,9 @@
 
 The `/media-agency-sync` integration of the accepted RentOK game-film jobs into `production-learning/`, cut from
 `origin/main @ 4d919c9`. Originally two cases (the two-lane live experiment of 20–21 Sep 2026); **case 006 was appended on
-21 Sep** (the same brief re-made "the Treatment C way" — see the section at the end). Three cases, nine deterministic
-engineering changes with regression tests, and a set of proposals for Controller decisions. Nothing in `canon/**`, `eval/registry/**`,
+21 Sep** (the same brief re-made "the Treatment C way") and **case 007 on 22 Sep** (the Mokobara castaway film — the first agency
+job on generated footage; no code change) — see the sections at the end. Four cases, nine deterministic engineering changes with
+regression tests (all from cases 004–006), and a set of proposals for Controller decisions. Nothing in `canon/**`, `eval/registry/**`,
 `eval/capability-map/**`, `coordination/**` or `PROJECT-MEMORY.md` is touched. **Do not merge the raw job branches.**
 
 ## Per job
@@ -126,5 +127,86 @@ and JOB.yaml say "six" were offered; which six is chat-only. The case records al
 
 - `work/agency-job-rentok-game-v2-001` @ `b06deaf7907de9c64d574a5f042a014c2e519ce6` (on origin; sync commit `b129bdd` on top)
 - context: `work/experiment-rentok-creative-quality-001` @ `41d97c6` (CQ-001 diagnosis, Treatment C; on origin)
+
+---
+
+## Case 007 (added 2026-09-22) — `MOKOBARA-ODYSSEY-007`, the Mokobara castaway film: the first agency job on generated footage
+
+**Branch-cut deviation, stated (third time).** The skill says to cut a fresh `work/agency-sync-<date>` from `origin/main`. This case is
+**appended to this open PR's branch** (`work/agency-sync-2026-09-21`, on top of `7201ce0`) for the same reason as case 006: a branch
+cut from main would conflict with cases 004–006 already here (README case list). No code file is touched by this case, so no new
+`gates.py` overlap is added. Nothing else about the skill was skipped.
+
+**Two things the sync brief and the record disagree on, resolved in the record's favour.** The brief called the job `customer_work`;
+`JOB.yaml` says `class: spec_work` (Mokobara is a prospecting target; the human Controller acted as the customer) — the case says
+`spec_work`. The brief said the collision fix should go in `runtime/execute/` if a runtime module owns attempt ids; none does (the runtime
+mints ids structurally in `runtime/route/attempt_id.py`, collision-free by construction), so the item is class 2 with the exact
+requirement, not class 1.
+
+### Per job
+
+| | `MOKOBARA-ODYSSEY-007` |
+|---|---|
+| Job | `AGY-2026-09-21-MOKOBARA-ODYSSEY-001` — a 30-s 9:16 spec film: a castaway finds his Transit Backpack, it holds more than seems possible, he goes home; the customer's own brief with five execution instructions (five stages, feeling/framing/impact per beat, an independent route decision, a fast first pass) |
+| Base sha (`production_base_sha`) | `c88c0d5` |
+| Job commit validated against | `130be42caae351a5bf8dc8d062b6fbf51e32b353` (on origin) |
+| Verdicts (verbatim) | v1 **SPECIFIC REPAIR**: "the bag was slightly torn when he saw her wife photo. the instrument to run boat(oar or something) looked weird coming out of bag, when he takes the boat the oar was already on the bat but comes out magically again. overall excellent just few fixes. also we could use mokobara logo/name properly. the text font style could be better. excpetional work otherwise" · v2 **ACCEPT**: "still some minor issues but excellent. pass/" |
+| CpAO (USD, ledger upper bound) | **7.857** — 27 paid calls (11 Nano Banana 2 stills 0.737; 14 Veo 3.1 Fast i2v clips, 70 s bought, 7.000; 2 Lyria 0.120), 26 ok, 1 HTTP 500 counted; v1 5.389 + repair round 2.468; USD 4.27 of it on re-takes; 28.0 s of the 70 bought are in the film |
+| TTAO clocks (never blended) | **0:43:29** job start → v1 DET-clean file · **0:51:53** → v1 verdict · **1:15:46** → v2 DET-clean (the pipeline's clock for the accepted file) · **10:23:37** → ACCEPT (the outcome's clock; 9:07:51 of it is the customer's overnight reply) |
+| Cycles / versions to accept | 2 / 2 (one independent checker round, on v1 only; v2 not re-checked) |
+| Baseline (case 001, generative video) / RentOK V2 (case 006, code) | 7 h 54 m / USD 15.39 / 5 cycles — MET · 0:51 / USD 0.067 / 1 — a different class: 25 min slower to a clean file, ~117x the spend, which is what generated footage costs |
+| Validator | PASS with `--source-ref 130be42…`, accepted film byte-verified (33,188,717 bytes) |
+| Template | `still_to_i2v_story_film_with_product_photo_references` — reusable_candidate, **n = 1** accepted job, 1 customer, 1 brief, 1 product; `evidence_scope: this_accepted_template`; why candidate rather than job-specific is stated in the file |
+
+The accepted file carries **five recorded, unrepaired items** (the arms never go in past the forearm — the customer's own named gag,
+left out by the round's priority; the paddle's whereabouts for three seconds; the lid-style bag opening and beard/bracelet drift; 720p
+sources; native audio never ear-checked) **plus the customer's unitemised "minor issues"**. The case does not present the file as clean.
+
+### The five classes
+
+| Class | Items |
+|---|---|
+| **1 Promoted — deterministic, in code, with tests** | **None.** Each candidate was tested against "name the check AND the runtime file": the ledger id collision (att-020 minted twice — the tool counts the settle-time `ATTEMPTS.jsonl`, so the window is the whole latency of any in-flight call, not "the same moment") has no runtime ledger to live in; the audio dips at two cuts (15–20 dB for 40 ms) have no runtime assembly step (the same reason `CODEC_TRUE_PEAK_MARGIN` is still class 2); "he never departs" is a human judgment. Evidence the earlier promotions work: `runtime.compositor.gates` (`check_text_bounds`, `check_contrast` on real pixels, `check_disjoint`) ran in production on this class for the first time — 10 gates PASS at render — and decided customer item 4 (black logo 6.58:1 vs white 1.3:1 on the sky). Suite: **520 OK**, unchanged by this case. |
+| **2 Candidate patterns** (each with a promotion condition) | **STILL_TO_I2V_PER_BEAT_WITH_PRODUCT_PHOTO_REFERENCES** (the template, n = 1) · **MICRO_QUALIFY_THE_RISKIEST_ASSET_FIRST** (the comic beat bought first; now n = 4 jobs, 2 briefs, 2 classes — case 001's "≥ 2 more successes" is reached across briefs, see proposal 11) · **BOARD_FEELING_FRAMING_IMPACT** (case 006's condition — see proposal 12) · END_STATE_STILL_PLUS_LAST_ACTION_I2V (beats 5 and 6 fixed first draw only after the still moved to the end state) · EXIT_ACTION_AFTER_GOAL_STATE (the model re-opened the bag with 2.5 s left until told to lift it out of frame) · NEGATIVE_PROMPT_THE_PRODUCT_BEFORE_ITS_REVEAL · PAINT_OUT_COPIED_REFERENCE_MARKS_BEFORE_I2V (NB2 copied the tiny wordmark 2/2) · TAKE_SELECTION_BEFORE_RETAKE (the "weird" paddle was a warped blade on take 2; take 1 was on disk, USD 0) · MERGED_REPAIR_LIST_CUSTOMER_EVENTS_FIRST · MANDATORY_EVENT_VISIBILITY_LJ_LINE (one LJ line per M-table event before presentation) · BRAND_FONT_FALLBACK_WITH_SITE_CSS_STYLING (NeurialGrotesk absent → Helvetica Neue + the site's uppercase/.08em label CSS; licensed font = customer-supplied asset) · **LEDGER_LOCK_ATOMIC_ATTEMPT_IDS** (exact requirement: mint from the reserve-time ledger under an exclusive file lock, or structurally as the runtime does; an integrity check refusing duplicate ids) · AUDIO_JOIN_CROSSFADE (60-ms joins + a nameable RMS-at-cut gate) · OCR_ON_TEXTURE_IS_A_FLAG_NOT_A_GATE · SOURCE_RESOLUTION_STATED_BESIDE_DELIVERED · CODEC_TRUE_PEAK_MARGIN (fourth job the limiter stage held) |
+| **3 Directional route observations** (`routing_authority: none`, exact n) | Veo 3.1 Fast i2v from NB2 stills: 14/14 returned, 7 in the film; identity and bag likeness held per the checker; seven named limits (a pull-back became a cut; arm-to-shoulder stayed at the forearm 2/2; seven items in 4–6 s 0/2; a rigid prop warped 1/2; a goal state undone 1/1 until an exit action; costume drift on a re-take 1/1; the product added unasked 1/1 until negative-prompted); 720p soft · NB2 with product-photo references: 11/11 usable first draw, copied the wordmark 2/2, a tear-like lining flap 1/1 then intact 1/1 · Lyria HTTP 500 on a story-laden wording, ok on neutral (cross-job: 4 errors on descriptive wordings over 2 jobs; 4/4 neutral first tries over 4 jobs) · AAC with a limiter: TP −4.1 / −4.0, n = 2 |
+| **4 Canon gap candidates** (report only) | **None new.** The Ogilvy-vs-Hopkins humour tension (`sk_ogx_0032` vs `sk_mla_0064`) was named at Stage 3 and resolved from existing claims by the brief's own "would be funny" clause — a tension inside accepted Canon, not a missing domain; no production failure traces to missing Canon (the creative defects trace to the model's execution and a clip length the board over-asked); the eight uncompiled packs are the known gap already on the Controller's list |
+| **5 Job-specific, not promoted** | the seven beats' feelings/framings/impacts, the tagline "Room for the long way home.", the Private Island colourway and its reasons, the Stage 1 decisions (9:16 only, ~30 s, no dialogue, no price, 24 fps), the reading of "arms" and "odysey", the man's design, the repair priority letters, the disk-space note |
+
+### Proposals awaiting a Controller decision (written in the case, not applied)
+
+11. **Micro-qualification as a required Stage 4 line** — case 001's "≥ 2 more successes" is now reached across two briefs and two
+    production classes (cases 004, 005, 006, 007); proposal 4 above asked whether one brief counts — it no longer has to.
+12. **Feeling / framing / impact per beat — case 006's promotion condition.** The condition ("one more accepted job on a DIFFERENT
+    brief") is **met in letter** by this job and **not in spirit** for its stated consequence ("required … for code-rendered classes"):
+    this job is generated footage, not code-rendered; the same customer judged both; acceptance came on v2 after re-takes; nothing
+    isolates the schema's contribution (no A/B, no rank). What n = 2 briefs / 2 classes / 1 customer supports: the three fields are a
+    usable, free direction checklist on both classes. What it does not support: that they cause acceptance (still CQ-001's n = 1 beat).
+    **Proposed:** require the fields in `/media-agency` Stage 3 for every per-beat film class (a skill edit), with the causal claim kept at
+    its real n. Not promoted here.
+13. **The dispatch kit's attempt-id minting** — `LEDGER_LOCK_ATOMIC_ATTEMPT_IDS` should be applied on the kit's next copy (the tool
+    travels job to job on job branches: `tools/PROVENANCE.md`); a `/media-agency` skill note pointing at the rule is the smallest change.
+14. **The still → i2v topology as the named default route** for live-action-style story films in `/media-agency` Stage 4 — after one
+    more accepted job on a different brief and product (the template's stated condition); not before.
+15. **Presentation-gate records** — one LJ line per mandatory customer event before presentation (this job presented a beat as
+    realised in which the mandatory "goes back" does not happen); a Stage 5 template edit.
+16. **Governor refresh** — `PROJECT-MEMORY.md` / `coordination/CONTROL-STATE.md` untouched; a refresh may be wanted for case 007
+    (the first generated-footage agency job) and for the class-2 backlog, which now has 15 items from this case alone.
+
+### Notes for the reviewer (case 007)
+
+- No code change in this case; the suite was run anyway (520 OK). The `gates.py` / README conflict note for PR #103 still applies
+  to cases 004–006's edits; this case adds one line to the README case list.
+- The job's own records carry three arithmetic/stamp discrepancies the case records rather than adopts: the packet's `first_pass_usd
+  3.529` omits the counted 0.06 failure (ledger 3.589), `clips_bought_s 46` ≠ the ledger's 70 s, `repair_round_1_minutes ~50` is not
+  derivable (18:14:41 → 18:38:34 = 23:53); `JOB.yaml` stamps v2 presented 94 s before its QA completed and holds a stale duplicate
+  v2 entry. The money total (7.857) and both verdicts are unaffected. Nothing on the job branch was edited.
+- Not on the branch, stated as such: no independent check of v2; no human ear check of the native audio on either version; no record
+  of which "minor issues" the customer meant.
+- Disk: no media was copied into the case; the validator reads the accepted film from the commit.
+- Still awaiting their own sync, unchanged from the notes above: `work/agency-job-skateboard-slowmo-001`, the two Cumin experiment jobs.
+
+### Raw job branch (archival; never merged)
+
+- `work/agency-job-mokobara-odyssey-001` @ `130be42caae351a5bf8dc8d062b6fbf51e32b353` (on origin; the step-7 sync commit follows on top)
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
