@@ -1,0 +1,44 @@
+{
+ "job_id": "AGY-2026-09-21-MOKOBARA-ODYSSEY-001",
+ "author_session": "producer-2026-09-21",
+ "formats": [
+  {"name": "9:16 vertical feed (Reels / Facebook / Shorts)", "width": 1080, "height": 1920, "fps": 24, "duration_max_s": 60, "container": "MP4 H.264 High yuv420p, moov first, no edit lists; AAC-LC 48 kHz stereo ≥128 kbps",
+   "audio_target": "-14 LUFS integrated, TP ≤ -1 dBTP", "safe_box": {"x0": 65, "y0": 288, "x1": 888, "y1": 1248},
+   "source": {"ref": "Lane A 02-STRUCTURE §2.1–2.2 (Meta Reels ads guide + YouTube Shorts/encoding/safe-zone pages, sha256 in source/platform/)", "fetched_utc": "2026-09-20"}}
+ ],
+ "ad_structure": {"hook_window_s": 3.0, "brand_first_by_s": 10.0, "ask_placement": "end card", "close_on_product": true, "sources": ["sk_abcd_0007", "sk_abcd_0010", "sk_abcd_0011", "sk_ogx_0039"]},
+ "facts": [
+  {"id": "F1", "fact": "brand name spelling", "value": "mokobara (lowercase wordmark; 'Mokobara' as vendor)", "source": {"kind": "lookup-fact", "ref": "wordmark-white.svg; home.html; transit-backpack.json vendor", "quote": "Every mokobara goes through…"}},
+  {"id": "F2", "fact": "product name", "value": "Transit Backpack", "source": {"kind": "lookup-fact", "ref": "transit-backpack.json title (sha256 df3e1fda…)"}},
+  {"id": "F3", "fact": "colourway", "value": "Private Island", "source": {"kind": "lookup-fact", "ref": "transit-backpack.json options[0].values"}},
+  {"id": "F4", "fact": "appearance", "value": "deep navy body, matte reverse-coated polyester, vegan leather trims, bright yellow lining, one vertical front zip, front bucket pocket with two black pulls, black padded straps, top grab handle", "source": {"kind": "lookup-fact", "ref": "body_html + …Private_Island_1.jpg / _6.jpg"}},
+  {"id": "F5", "fact": "capacity", "value": "Capacity: 30L; 48 x 31 x 16 cms", "source": {"kind": "lookup-fact", "ref": "transit-backpack.json body_html", "quote": "Capacity: 30L"}},
+  {"id": "F6", "fact": "use", "value": "Designed for everyday use and 1-2 day trips.", "source": {"kind": "lookup-fact", "ref": "body_html"}},
+  {"id": "F7", "fact": "price (not used on screen)", "value": "5999.00; compare_at 9999.00", "source": {"kind": "lookup-fact", "ref": "transit-backpack.json variants[]"}},
+  {"id": "F8", "fact": "tone", "value": "plain, confident, slightly dry", "source": {"kind": "evidence", "ref": "dossier §7 (site copy)"}}
+ ],
+ "permitted_claims": [
+  {"text": "mokobara", "source_ref": "F1 (wordmark asset)"},
+  {"text": "Transit Backpack", "source_ref": "F2"},
+  {"text": "30L", "source_ref": "F5"},
+  {"text": "mokobara.com", "source_ref": "home.html"}
+ ],
+ "forbidden_claims": ["indestructible", "waterproof", "lifetime", "survives years", "airline-approved", "TSA", "any warranty or material spec beyond the quoted line", "any scarcity or ranking claim", "any price framing"],
+ "assets": [
+  {"name": "product reference photos (7 × Private Island)", "status": "have", "path": "source/mokobara/", "sha256": "SHA256SUMS.txt (per file)", "use": "reference images for the generator and the checker's likeness comparison only; never placed in the film"},
+  {"name": "wordmark", "status": "have", "path": "source/mokobara/wordmark-white.svg", "sha256": "c443658f…", "use": "rasterised by code for the super and the end card"},
+  {"name": "protagonist", "status": "originate", "use": "one hero still, then the identity reference in every beat still"},
+  {"name": "wife's photo", "status": "originate", "use": "inside the beat-3 still/clip; a generated unnamed woman"},
+  {"name": "island, raft, props", "status": "originate", "use": "in the beat prompts"},
+  {"name": "music", "status": "originate", "use": "Lyria instrumental bed"},
+  {"name": "typeface for tagline/CTA", "status": "have", "path": "system Avenir Next", "sha256": "n/a (system font)", "use": "composed text; the brand's typeface is not verified from page source"}
+ ],
+ "audio": {"muted_first": true, "captions": "none (no speech)", "loudness_target": "-14 LUFS, TP ≤ -1 dBTP"},
+ "per_format_composition": true,
+ "ip_rules": {
+  "do": ["the myth's shape: a man kept on an island for years, a photograph of the wife, the journey home by sea", "nameless protagonist", "generic grey volcanic island", "improvised raft", "dawn"],
+  "dont": ["film title, actor, character, poster look, score, footage", "volleyball", "anyone identifiable"],
+  "guard_words": ["odyssey", "odysseus", "penelope", "telemachus", "ithaca", "calypso", "homer", "nolan", "universal", "cast away", "castaway", "wilson", "hanks", "fedex", "robinson crusoe", "tom hanks", "matt damon", "zendaya", "lupita", "holland"]
+ },
+ "sufficient_to_proceed": {"ok": true}
+}

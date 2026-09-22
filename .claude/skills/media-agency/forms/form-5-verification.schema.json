@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "media-agency/forms/form-5-verification",
+  "title": "Stage 5 — Verification and outcome (every DET check ran; every LJ item has a named judge; every failure has an earliest stage; every acceptance statement is scored)",
+  "description": "Template lines 5.1–5.11 plus the measurement block. Filled by the independent checker (det, lj, failures, checker_verdict) and closed by the producer with the customer's verdict verbatim.",
+  "type": "object",
+  "required": ["job_id", "producer_session", "checker_session", "deliverable", "det", "lj", "attempts", "failures", "checker_verdict", "customer_verdict", "acceptance_scored", "release"],
+  "properties": {
+    "job_id": {"type": "string", "minLength": 1},
+    "producer_session": {"type": "string", "minLength": 1},
+    "checker_session": {"type": "string", "minLength": 1, "description": "must differ from producer_session and from every author_session in forms 1–4"},
+    "deliverable": {"type": "object", "required": ["path", "sha256", "version"], "properties": {
+      "path": {"type": "string", "minLength": 1},
+      "sha256": {"type": "string", "minLength": 8},
+      "version": {"type": "string", "minLength": 1}
+    }},
+    "det": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "required": ["id", "check", "result", "tool"], "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "check": {"type": "string", "minLength": 1},
+        "result": {"type": "string", "enum": ["pass", "fail", "flag", "n-a", "not_run"]},
+        "tool": {"type": "string", "minLength": 1},
+        "value": {"type": "string"},
+        "covered_by_lj": {"type": "string", "description": "required when result is flag or not_run: the LJ id that judges it"}
+      }}
+    },
+    "lj": {
+      "type": "array",
+      "items": {"type": "object", "required": ["id", "what", "where", "judge", "result"], "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "what": {"type": "string", "minLength": 1},
+        "where": {"type": "string", "minLength": 1},
+        "judge": {"type": "string", "minLength": 1, "description": "5.8/5.9 named; not the producer"},
+        "result": {"type": "string", "enum": ["pass", "fail", "partial", "pending"]},
+        "note": {"type": "string"}
+      }}
+    },
+    "attempts": {"type": "object", "required": ["count", "usd_total", "cap_usd", "all_reserved_before_settle", "failed_counted"], "properties": {
+      "count": {"type": "integer", "minimum": 0},
+      "usd_total": {"type": "number", "minimum": 0},
+      "cap_usd": {"type": "number", "minimum": 0},
+      "all_reserved_before_settle": {"type": "boolean"},
+      "failed_counted": {"type": "integer", "minimum": 0},
+      "ledger_path": {"type": "string"}
+    }},
+    "failures": {
+      "type": "array",
+      "items": {"type": "object", "required": ["id", "defect", "earliest_stage", "decision_ref", "repair"], "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "defect": {"type": "string", "minLength": 1},
+        "producer_recorded": {"type": "boolean"},
+        "earliest_stage": {"type": "integer", "minimum": 1, "maximum": 5},
+        "decision_ref": {"type": "string", "minLength": 1, "description": "measurement: the form field that would have prevented it, e.g. form3.board.beats[4].impact, or 'none' with a note"},
+        "repair": {"type": "string", "minLength": 1},
+        "repair_cost_usd": {"type": "number"},
+        "repaired_in_version": {"type": ["string", "null"]}
+      }}
+    },
+    "checker_verdict": {"type": "object", "required": ["verdict", "verbatim", "utc"], "properties": {
+      "verdict": {"type": "string", "enum": ["deliverable", "deliverable_with_defects", "not_deliverable"]},
+      "verbatim": {"type": "string", "minLength": 1},
+      "utc": {"type": "string", "minLength": 1}
+    }},
+    "customer_verdict": {"type": "object", "required": ["outcome", "verbatim", "by", "utc"], "properties": {
+      "outcome": {"type": "string", "enum": ["accepted", "repair_requested", "rejected", "pending"]},
+      "verbatim": {"type": "string", "description": "the customer's words, unedited; empty only while pending"},
+      "by": {"type": "string"},
+      "utc": {"type": "string"},
+      "reasons_mapped": {"type": "array", "items": {"type": "object", "required": ["customer_words", "failure_id"], "properties": {
+        "customer_words": {"type": "string"},
+        "failure_id": {"type": "string", "description": "which failure (or 'new') the customer's sentence maps to"}
+      }}}
+    }},
+    "acceptance_scored": {
+      "type": "array",
+      "items": {"type": "object", "required": ["id", "held", "by"], "properties": {
+        "id": {"type": "string", "pattern": "^A[0-9]+$", "description": "from form 1 acceptance[]"},
+        "held": {"type": "boolean"},
+        "by": {"type": "string", "minLength": 1},
+        "note": {"type": "string"}
+      }},
+      "description": "measurement: every Stage 1 acceptance statement scored on the delivered file"
+    },
+    "release": {"type": "object", "required": ["status"], "properties": {
+      "status": {"type": "string", "enum": ["pending", "released", "rejected"]},
+      "by": {"type": "string"},
+      "utc": {"type": "string"}
+    }},
+    "ttao": {"type": "object", "properties": {
+      "job_start_utc": {"type": "string"},
+      "first_deliverable_utc": {"type": "string"},
+      "human_decision_utc": {"type": "string"}
+    }}
+  }
+}

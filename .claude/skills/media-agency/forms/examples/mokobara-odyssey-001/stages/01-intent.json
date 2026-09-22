@@ -1,0 +1,51 @@
+{
+ "job_id": "AGY-2026-09-21-MOKOBARA-ODYSSEY-001",
+ "author_session": "producer-2026-09-21",
+ "generative_only_acknowledged": true,
+ "brief_verbatim": "lets make an ad with mokobara. i would preferably give it the odysey movie angel. the proatagonist had mokbara bags. the protagonist found his mokobara bag, while he was on the island where he was kept for years. in that bag he founds her wives photo and a lot of stuff that he could use to go back. he packs food and stuff and goes back. would be funny that he could keep his arms in the bag and food and so much stuff. Avoid getting copyright violoations from odysssey.",
+ "deliverable": {"type": "film", "count": 1, "formats": ["9:16"], "duration_s_band": [29.5, 30.5]},
+ "objective": {"purpose": "ad (brand story, no offer)", "viewer_should": "smile at the reveal and remember that a Mokobara carries a lot and comes home", "source": "preserve"},
+ "distinctive_assets": [
+  {"name": "Transit Backpack 30L, colourway Private Island", "must_be_exact": ["deep navy body", "bright yellow lining", "black zip pulls and straps", "no lettering or logo on the generated bag"]},
+  {"name": "mokobara wordmark", "must_be_exact": ["the site's own SVG, lowercase, composed by code"]}
+ ],
+ "mandatory": [
+  {"id": "M1", "customer_words": "the proatagonist had mokbara bags", "realisation": "the bag is a generated likeness of one real product, anchored on the fetched product photos", "verification": {"class": "LJ", "method": "bag likeness vs source/mokobara/…Private_Island_1.jpg on keyframes; DET: reference sha256 on every attempt"}},
+  {"id": "M2", "customer_words": "found his mokobara bag, while he was on the island where he was kept for years", "realisation": "beat 2 discovery on the island; the man visibly bears years", "verification": {"class": "LJ", "method": "keyframes of beats 1–2"}},
+  {"id": "M3", "customer_words": "in that bag he founds her wives photo", "realisation": "beat 3: a photograph of a woman taken from the bag", "verification": {"class": "LJ", "method": "keyframe of beat 3; no identifiable real person"}},
+  {"id": "M4", "customer_words": "a lot of stuff that he could use to go back … he packs food and stuff and goes back", "realisation": "beats 4–6: useful things out of / into the bag; he leaves by sea with the bag", "verification": {"class": "LJ", "method": "keyframes of beats 4–6; DET: beat list covers find → pack → leave"}},
+  {"id": "M5", "customer_words": "would be funny that he could keep his arms in the bag and food and so much stuff", "realisation": "the comic reveal: arm to the shoulder, both arms, things keep coming out", "verification": {"class": "LJ", "method": "'does the gag read?' on the beat-4 clip — riskiest, micro-qualified first"}},
+  {"id": "M6", "customer_words": "the odysey movie angel + Avoid getting copyright violoations", "realisation": "Odyssey-shaped story only; no names, titles, actors, footage, score, artwork or a specific film's look", "verification": {"class": "DET", "method": "prompt guard word list (Stage 2 ip_rules); LJ: 'does any frame resemble a specific film?'"}},
+  {"id": "M7", "customer_words": "lets make an ad with mokobara", "realisation": "brand early (the bag) and a brand close composed by code", "verification": {"class": "DET", "method": "end-card strings byte-exact vs copy deck; wordmark = hashed SVG; frame text scan"}}
+ ],
+ "forbidden": [
+  {"item": "any claim not on the product page (indestructible, waterproof, lifetime, TSA, warranty, scarcity, ranking, price framing)", "source": "Stage 2 permitted/forbidden claims; dossier §10"},
+  {"item": "odyssey / odysseus / penelope / ithaca / calypso / homer / nolan / cast away / wilson / hanks and the rest of the guard list", "source": "customer: 'Avoid getting copyright violations'; Stage 2 ip_rules.guard_words"}
+ ],
+ "tone": {"register": "cinematic survival, dry comic turn at the reveal, ending on the brand", "example_accepted": "the brand's own line: 'Out doing what it does best.' (site copy, dry, not exclamatory)"},
+ "language": {"on_screen": "English", "spoken": "none"},
+ "channel": {"platforms": ["Instagram Reels", "Facebook", "YouTube Shorts"], "placement": "paid vertical feed"},
+ "cap": {"usd": 12.0, "stated_by": "customer (Vaibhav) in session", "stated_utc": "2026-09-21T17:22:00Z", "verbatim": "SPEND-AUTHORISATION USD 12"},
+ "deadline_utc": null,
+ "approver": "the customer (C-8)",
+ "acceptance": [
+  {"id": "A1", "statement": "the bag on screen is recognisably the Transit Backpack (navy, yellow lining) in every beat it appears", "decidable_by": "LJ"},
+  {"id": "A2", "statement": "the gag reads: arms disappear into the bag further than a bag allows and things keep coming out", "decidable_by": "LJ"},
+  {"id": "A3", "statement": "the story reads find → photo → pack → leave without narration", "decidable_by": "LJ"},
+  {"id": "A4", "statement": "no name, title, actor or artwork from any specific film; nothing on the guard list in prompts or frames", "decidable_by": "DET"},
+  {"id": "A5", "statement": "wordmark, product line, tagline and CTA are byte-exact and legible on a phone; 30 s; 1080×1920; loudness in target", "decidable_by": "DET"}
+ ],
+ "flags": [],
+ "decisions": [
+  {"id": "D1", "choice": "9:16, 1080×1920, one file for Reels/Facebook/Shorts; no 16:9 first pass", "why": "dossier: Meta Pixel + Google Ads tag = paid vertical; YouTube channel near-empty", "cost_if_wrong": "a 16:9 re-composition, ≈ USD 0 if the stills survive the crop; else re-draws", "source": "lookup-fact", "refs": ["coordination/commercial/d2c-prospecting/dossiers/mokobara.md §1"]},
+  {"id": "D2", "choice": "≈ 30 s", "why": "no duration in the brief; seven beats and a brand close; spec exists from RentOK", "cost_if_wrong": "trim to 15 s is an edit, ≈ USD 0", "source": "decide"},
+  {"id": "D3", "choice": "English on screen; no dialogue", "why": "brand copy is plain English; no speech keeps the job out of manual-only lip-sync cells and voice-by-ear review", "cost_if_wrong": "weaker brand recall (sk_abcd_0012); adding a spoken line later is a new asset", "source": "decide"},
+  {"id": "D4", "choice": "hero product = Transit Backpack 30L, Private Island", "why": "35 public photos; worn on the back it reads on a castaway walking, packing, pushing off", "cost_if_wrong": "every still re-drawn ≈ USD 0.5 + clips ≈ USD 2.2", "source": "lookup-fact"},
+  {"id": "D5", "choice": "tone: cinematic survival, dry comic turn, brand close", "why": "the brief's own arc; the brand's register is dry", "cost_if_wrong": "a re-take of one beat ≈ USD 0.4–0.8", "source": "preserve"},
+  {"id": "D6", "choice": "no price on the end card", "why": "brand story, not an offer; compare-at framing unknown", "cost_if_wrong": "adding a price line is a code change, USD 0", "source": "decide"}
+ ],
+ "asks": [
+  {"id": "Q1", "question": "Backpack or Cabin Luggage as the hero product?", "blocking": false, "default": "Transit Backpack (D4)", "answer": null, "would_change": "D4"},
+  {"id": "Q2", "question": "Is a spoken line wanted?", "blocking": false, "default": "none (D3)", "answer": null, "would_change": "D3"}
+ ]
+}
