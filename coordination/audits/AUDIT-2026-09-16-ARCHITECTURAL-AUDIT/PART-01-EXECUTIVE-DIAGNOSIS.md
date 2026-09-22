@@ -1,0 +1,48 @@
+# PART 1 — EXECUTIVE DIAGNOSIS
+
+## What has actually happened to the project
+
+**OBSERVED.** The programme is 23 days old on `media-intelligence` (first commit `2cf4988` 24 Aug 2026; 899 commits; 1.11 M words of markdown; 120 Controller decision records) plus a 17-day predecessor (`media-factory`, 6–23 Jul 2026). "Months of accumulated knowledge" in the commission is inaccurate; the correct frame is ten weeks, of which three produced the current architecture. In that time the programme spent ≈ USD 162 of provider money (76 % on the Capability Lab, 16 % on production), produced ten human-accepted deliverables (one 57-s film, nine portfolio tiles), all by scripts that bypassed the runtime, and one fully workflow-conformant job (Cumin) that was rejected three times.
+
+**OBSERVED.** Across the three real productions, 46 defects reached the human. Three were media-model failures. Forty-three were creative-direction, assembly, compositor, QA-coverage or process failures. The human found 46 of them; gates found 3. Every rejection in the Cumin job landed on a dimension no gate measured, and every gate that ran passed on every version.
+
+**The core hypothesis in the commission** ("knowledge is sufficient; the consumption mechanism fails") is **half right and misses the load-bearing half.** The evidence supports a sharper statement:
+
+> The programme has no mechanism that converts knowledge into a **challenged decision before money moves**. Whatever knowledge reaches the operator — Canon, prior cases, Media Factory priors, or the frontier model's own prior — is consumed by the same session that authors the plan, executes it, and grades its own checks. Approval is taken from the human at the level of strings, plates and voice takes, never at the level of proposition, structure or storyboard. The knowledge layer's consumption defects are real, but fixing them alone would have produced a 22nd self-marked "pass".
+
+Four structural facts carry this diagnosis (each is traced in Parts 5, 6 and 12):
+
+1. **Role collapse with self-attestation (K7).** One session played 15 roles in the Cumin job (`04-case-003-cumin.md` §D; `09-runtime-operator-context.md` §Q2). It rendered 21 Canon check lines "pass", including PA-D7 ("does the imagery earn its space commercially?") on a film with no product hero; the gate itself prints PA-D7 as NOT-MECHANISED. `blueprint.reviews: []`. The "Karl / Ezra" persona review the workflow tells it to consult does not exist anywhere in the repository (`grep -rl 'disconfirmer'` hits only the skill). No independent critique ran in any of the three cases.
+
+2. **Approval at the wrong altitude and time (K14).** In Cumin the human approved five strings and USD 8 at 13:28 Z, eleven minutes after the brief; plates and clips were bought while the voice was still being rejected; the timeline was fixed before any VO existed; the proposition was first challenged at V2 after USD 5.08 of USD 5.09. In case 001 the decisive corrections arrived after USD 8.08 (V2) and USD 3.28 (V3). In no case did a human touch a storyboard or animatic. The craft jury found that 8 of 12 Cumin defects were visible on an accepted plate, a contact sheet, a prompt string or timeline arithmetic before any clip was bought (`12-craft-jury.md` §1.5).
+
+3. **Knowledge routed by compile policy, not by need (K2/K3 by design).** 0.63 % of Canon's cited-claim bytes are reachable by any production code path; the two compiled packs are Canon's own two lowest-demand packs; `commercial_communication` (demand-ranked P2, fired on every advertising job) is uncompiled under ruling C-10, and `canon/gate/doctrine.py` hard-codes exactly two packs (`06-canon-retrieval.md` §2, §7). The Media Factory priors were imported byte-identical and are read by nothing on the production path (`02-media-factory-priors.md` §3b). The 1,028 Q&A pairs are contractually excluded by four documents (`07-qa-corpus.md` §4). The operator is told "proceed on the brief" for missing domains and to record a gap only after the production fails.
+
+4. **A learning loop that is bookkeeping, not control (K13).** `check_case.py` runs ~30 schema checks and zero substance checks. Case-001 learnings became code (nine gates) that nothing on a production path calls; case-002 learnings became prose read by the self-reviewing operator; case-003's promoted gate has zero callers on its PR. No promotion condition has ever been evaluated; candidates are re-derived under new names (SPEAKER_MICROQUALIFICATION → VOICE_BY_EAR_FIRST). Every failure class in the three cases had a documented Media Factory analogue (`02-media-factory-priors.md` §6). The project's own taxonomy has no slot for K7, K13 or K14, so it files them as "pipeline failure" (`10-learning-evaluation.md` §3).
+
+**Two further findings change what the Controller should believe:**
+
+- **The evaluation programme measured what is easy to measure.** The 575 Registry rows encode five deterministic properties (latency, cost, format, format-reliability, repeat-consistency); 31 of 36 frozen capabilities have zero rows; every dimension that rejected the three productions (voice naturalness, ad structure, product hero, obstruction, pacing) has zero Lab evidence of any tier (`08-capability-routing.md` §2.6). The Lab's Sarvam 6/6 was on ≤ 70-character lines; production used it for 48 s and the human said "horribly robotic", exactly as Media Factory had recorded in July. EVAL-037's "Canon helps" has no committed judging artefact on any of its twelve refs; only "retrieval is immature" is provable. EVAL-038 is the one clean number: weak model + two packs lost 0/6 to a strong model alone.
+
+- **The commercial promise is ahead of the architecture on exactly the dimensions that failed.** Upwork sells 24 h / 4 h turnaround (no runtime component knows a deadline; every clock on disk is 1–14 h and the owner deleted every time claim from the tiles), voice-over as standard (no accepted route; every VO heard in production was rejected at least once), and "your product photo in a new scene" (never done with a customer photo). Real buyers ask for method and fidelity, not exact text: 0 of 18 marketplace cases specify on-screen copy while 28 of 30 authored test briefs did (`03-commercial-council.md` §2–3).
+
+## What this is not
+
+- **Not a knowledge-absent problem** for structure: the ad-structure doctrine exists in accepted Canon (`google-abcd-video-ads`, `ogilvy`, `hopkins`, `storybrand`) and in any frontier model's prior; the strong-baseline reconstructions by three independent councils all put the bowl as hero, open on a close-up, and close on a packshot with a URL (`04` §F, `11` §4, `15`). It **is** knowledge-absent for two classes: text-over-subject obstruction and voice casting/register have zero Canon knowledge (regex over 1,300 claims and 1,191 terms: 0 hits) — correctly engineering problems.
+- **Not a model-capability problem**: models delivered in 43 of 46 cases; the reasoning model is a frontier model; Sonnet without Canon was competitive or leading in both Canon experiments.
+- **Not primarily a retrieval-algorithm problem**: the lookup that exists is deterministic and provably ran (prefix sha recomputed identical). What is missing is not ranking; it is that 92 % of the corpus has no compiled form to be looked up, and the form that exists is self-attested.
+
+## Economics in one paragraph
+
+**OBSERVED/INFERENCE.** Provider cost is 1–7 % of Upwork price; the unpriced cost is owner time — 1 to 8 hours per job, 39 decision points across three jobs, 46 defects found by the owner. At ten jobs a month and USD 35/h the pipeline nets ≈ −USD 440; break-even needs ≤ 1.7 owner-hours per job; the only job under that bypassed the workflow (`11-adversarial-economics.md` §7). Governance prose outweighs operator-facing creative guidance 12.9 : 1; expert craft is ≈ 5 % of the 8,000-word operator instruction set; the operator carries 60–80 k tokens of process and commercial context before the brief arrives.
+
+## What must change, in one sentence each (argued in Parts 10–17)
+
+1. Insert one human decision at the altitude that matters — the completed professional brief and a six-frame board — before any paid draw, and remove the component-level approvals that substitute for it.
+2. Separate authorship from challenge: the plan is checked by a reader with different context and a binary instance-level checklist, not by the author rendering "pass".
+3. Convert the deterministic defect classes (VO overlap, obstruction, bounds, contrast, crop, liquidity, duration) into gates that sit **on** the path, not beside it; the running code must be the tested code.
+4. Give existing knowledge a route to the decision: compile what advertising jobs fire (or replace the two-pack policy with job-time assembly of the ~2.5 k tokens that matter), port the seven Media Factory production priors and the case learnings into the same directional-note tier the operator already reads.
+5. Stop measuring what is easy; add the one instrument that predicts acceptance — a blinded human panel with a fixed rejection checklist — and use it to run the six experiments in Part 16 before any further Lab or Canon expansion.
+6. Cut process mass to what an operator reads: the 20 % of the repository that produced every accepted asset is under 3 % of its bytes (Part 10).
+
+Confidence in the diagnosis: **high** on facts 1–4 (each rests on committed bytes, recomputed); **medium** on the counterfactual that a challenged brief would have saved Cumin (three independent reconstructions agree, but n = 0 experiments); **low** on the economics beyond "owner time dominates" (LLM cost and vendor bills are unrecorded).
