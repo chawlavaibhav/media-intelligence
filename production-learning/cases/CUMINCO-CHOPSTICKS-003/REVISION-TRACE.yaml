@@ -1,0 +1,92 @@
+# REVISION TRACE — V1 → V2 → V3. Root-cause classes are the eleven fixed classes.
+case_id: CUMINCO-CHOPSTICKS-003
+root_cause_classes_used:
+- compositor
+- model_generation
+- pacing_edit
+- commercial_positioning
+- creative_direction
+- deterministic_qa
+- product_fidelity
+- infrastructure
+pre_assembly:
+  micro_qualifications: 'plate-H1 (2 draws, r2 accepted) → clip-2 (1 draw, accepted); voice: 26 takes over 5 rounds, Leda ''bubbly'' accepted'
+  plates: 'A (r1 product_fidelity fail: garbled embossed brand mark → r2), H2, H3, B — accepted'
+  clips: 1, 3, 4, 5 drawn on Veo 3.1 fast i2v; frame-sampled clean
+  spend_before_v1_usd: 3.88
+versions:
+- version: V1
+  input_source: the accepted plates/clips, six-line VO deck (five lines generated), Lyria bed; compose.py v1
+  generation_status: all media already drawn; USD 0 assembly
+  assembly_status: 9:16 master 23.5 s + 4:5 + 1:1, each through bounds/contrast/fit/tokens/disjoint/exact/export gates — all PASS
+  human_verdict: reject
+  defects:
+  - id: HD-01
+    root_cause_class: compositor
+    detail: 'audio chain: silenceremove(stop_periods=-1) cut silences INSIDE lines and shifted them; single-pass loudnorm over the ducked mix pumped (measured:
+      a VO window at −29 dB, a gap at −18 dB)'
+  - id: HD-02
+    root_cause_class: model_generation
+    detail: Veo animated open-mouth smiles/laughter in both two-shots; under a voice-over it reads as failed lip-sync
+  - id: HD-03
+    root_cause_class: deterministic_qa
+    detail: no subject-obstruction test; contrast probed on 4 frames; the wall gradient was misread as subject → copy and cards over chopsticks/noodles
+  repair_requested: (implicit — 'all messed up')
+  repair_made: edge-only trim + per-line LUFS + music −30 LUFS ducked + limiter; clip-1/5 regenerated with 'nobody speaks, mouths closed' (USD 1.20); dense
+    4-fps per-frame wall-obstruction gate with per-column wall model and candidate copy bands; beat-1 VO line dropped for pacing
+  repair_succeeded: partially (see V2)
+  cost_usd: 1.2
+  elapsed:
+    from: 2026-09-15T13:17:42Z job open
+    to: 2026-09-15T14:5xZ V1 presented
+    value_hms: ≈1:35
+    source:
+    - JOB.yaml ttao
+    - git commit 8a5927a
+- version: V2
+  input_source: V1 defects + regenerated two-shots
+  generation_status: 2 paid Veo clips (att-049/050), both ok
+  assembly_status: 9:16 22.9 s, 0 cards, 0 obstruction; 4:5/1:1 on cards (flagged CF2); no-music variant
+  human_verdict: reject
+  defects:
+  - id: HD-04
+    root_cause_class: commercial_positioning
+    detail: no product hero / end card / final caption
+  - id: HD-05
+    root_cause_class: creative_direction
+    detail: no opening; brand absent until the last beat
+  - id: HD-06
+    root_cause_class: commercial_positioning
+    detail: '''does not look like an ad at all'' — commercial_communication pack fired but uncompiled; PA-D7 rendered pass on a thin line'
+  repair_requested: product close with caption; opening
+  repair_made: persistent brand mark from frame 1; beat-1 VO restored; end card built by code from the brand's own photograph (tagline / PDP product name
+    / brand / cuminco.com); spoken close 'Ramen night at home. Cumin Co.' (att-051)
+  repair_succeeded: structure yes; rejected on audio
+  cost_usd: 0.0096
+  elapsed:
+    from: V1 reject (chat)
+    to: git commit b53d210
+    value_hms: ≈0:35
+    source:
+    - git commit
+- version: V3
+  input_source: V2 + ad-structure repairs
+  generation_status: 1 paid TTS line (att-051)
+  assembly_status: 9:16 25.6 s, 15 text boxes, 0 cards, 0 deviations; 4:5/1:1 flagged
+  human_verdict: reject
+  defects:
+  - id: HD-07
+    root_cause_class: compositor
+    detail: 'VO lines placed at hand-set start times from the 18-s plan; measured afterwards: b1 (5.32 s after a −50 dB edge trim) overlapped b2 by 0.92
+      s; b6 (4.54 s) overran the 25.6-s film by 0.94 s — no overlap/overrun gate existed'
+  repair_requested: none — 'reject completely'
+  repair_made: none on the job; the gate is promoted on this branch (check_vo_schedule)
+  repair_succeeded: false
+  cost_usd: 0.0
+  elapsed:
+    from: git commit c0f849c (V3 presented)
+    to: 2026-09-16T03:4xZ final reject
+    value_hms: overnight gap; not a working span
+    source:
+    - git commit
+    - JOB.yaml ttao.human_decision_utc
