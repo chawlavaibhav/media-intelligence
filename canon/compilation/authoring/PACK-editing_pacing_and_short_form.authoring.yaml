@@ -39,7 +39,7 @@ decisions:
   limits: []
 - decision_id: EP-D6
   question: "Move the camera, hold it, or cut — and how is attention moved?"
-  default: "Every move has a reason and so does every held camera — never move because you can, never sit still from laziness (sk_ms_c003_0002). Prefer moving attention inside one shot: hide the move behind an action (0010); hold a static wide, block so the dominant subject faces camera (0017); tie a colour to the subject in an earlier closer shot so it reads in a beat when small or blurred (0016). Never rack focus back and forth between planes — it confuses; after a shock, cut to a close-up (0019)."
+  default: "Every move has a reason and so does every held camera — never move just because you can, never sit still from laziness (sk_ms_c003_0002). Where it fits, move attention inside one shot (cutting is fine, less flowing): hide the move behind an action (0010); hold a static wide, block so the dominant subject faces camera (0017); tie a colour to the subject in an earlier closer shot so it reads in a beat when small or blurred (0016). Never rack focus back and forth between planes — it confuses; after a shock, cut to a close-up (0019)."
   check: "Each shot states move or static, with reason; none relies on repeated focus shifts; a figure that must register small or blurred had its colour set earlier and closer."
   ids: [sk_ms_c003_0002, sk_ms_c003_0010, sk_ms_c003_0017, sk_ms_c003_0016, sk_ms_c003_0019]
   feeds: [PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION]
@@ -53,7 +53,7 @@ decisions:
   limits: []
 - decision_id: EP-D8
   question: "What does sound do that picture cannot, and how does music enter?"
-  default: "Sound establishes reality faster than picture — stimulate the ear to help the eye (sk_gote_c003_0048); a sound begun under the outgoing shot and explained by the incoming one motivates a cut across place or subject (0007). Score channels an emotion the picture has already created, never supplies one (sk_conv_c003_0007); music with a visible origin in the scene takes a different route — the scene explains it, so it is not read as manipulation (0009). Where voice withdraws, the audience searches the remaining sound for meaning and hears it as speech (0019)."
+  default: "Sound establishes reality faster than picture (sk_gote_c003_0048); a sound begun under the outgoing shot and explained by the incoming one motivates a cut across place or subject (0007). Score channels an emotion the picture has already created, seldom supplies one, a tendency not a rule (sk_conv_c003_0007); music with a visible origin in the scene takes a different route — the scene explains it, so it is not read as manipulation (0009). Where voice withdraws, the audience searches the remaining sound for meaning and hears it as speech (0019)."
   check: "Each music cue names the emotion already built, or its visible source; each cut across place or subject has a sound bridge or a reason for none; passages without voice carry designed sound."
   ids: [sk_gote_c003_0048, sk_gote_c003_0007, sk_conv_c003_0007, sk_conv_c003_0009, sk_conv_c003_0019]
   feeds: [AUDIO_AND_EDIT, FAILURE_PREVENTION]
@@ -150,7 +150,8 @@ waivers:
   partner: sk_gote_c003_0008
   reason: "0008 says an object's apparent size sets its sound level. EP-D5 consumes 0018 only for side-of-frame continuity; sound level does not change which side a subject keeps. Left out for the terse budget."
 pack_limits:
-- "No accepted contributor treats fixed 9:16 feed frames or sound-off autoplay: Grammar of the Edit (2009), Murch, Ondaatje/Murch and Kenworthy predate feed video; ABCD guidance is YouTube-only at its page dates. Transfer of every hold, transition and audio-pairing default to vertical short-form feeds is untested."
-- "No source sets a target duration for hook, brand entry or hold — 'early', 'faster', 'the start', 'often' are unquantified; attach no seconds."
-- "B12 motion design / animated type has no contributor: no default for animated supers, kinetic type or motion-graphic transitions. B09 dialogue is thin: only sk_conv_c003_0019 and sk_ms_c003_0017; no shot/reverse-shot or reaction-cut default."
-- "image_sequence: EP-D7 durations and every sound decision (EP-D8, EP-D10 pairings) need a timeline and an audio track."
+- "No contributor treats 9:16 feed frames or sound-off autoplay (the film sources predate feed video; ABCD is YouTube-only): transfer of every hold, transition and audio-pairing default to vertical short-form is untested."
+- "No source sets a target duration for hook, brand entry or hold ('early', 'faster', 'often' are unquantified); attach no seconds."
+- "B12 motion design / animated type has no contributor (no default for animated supers or kinetic type). B09 dialogue is thin (sk_conv_c003_0019, sk_ms_c003_0017): no shot/reverse-shot or reaction-cut default."
+- "Uncovered: caption timing for sound-off autoplay, the loop point of a looping clip, cutdown versioning — no default; state the gap."
+- "image_sequence: EP-D7 durations and the sound decisions (EP-D8, EP-D10) need a timeline and an audio track."

@@ -98,3 +98,10 @@ None of the four named in the brief. No seed lacked an honest question; no waive
 ## 8. Session tokens
 
 Roughly 200k tokens for this build (seed packet read in sections, 32 non-seed claims fetched by id, six compile iterations).
+
+## Post-check edits (Controller, from CHECK-editing_pacing_and_short_form.md — PASS WITH EDITS)
+
+- EP-D6: "Prefer moving attention inside one shot" → "Where it fits, move attention inside one shot (cutting is fine, less flowing)" — sk_ms_c003_0010's own caveat: the source does not rank continuous shots over cutting.
+- EP-D8: "never supplies one" → "seldom supplies one, a tendency not a rule" — sk_conv_c003_0007 is hedged ("seems to function best").
+- New pack limit for the checker's three missing questions (caption timing for sound-off autoplay, loop point, cutdown versioning): no contributor; state the gap.
+- Limit lines tightened to stay at 2,500 terse tokens exactly; no seed dropped (29/29).
