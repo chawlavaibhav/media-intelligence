@@ -1,0 +1,342 @@
+# FAILURE-CONTROLS-v1 — the historical failure record made operational for P1.
+#
+# Source of the identifiers: production-learning/cases/*/SYSTEM-DEFECTS.yaml (120 defect rows across the seven
+# published cases, read 2026-09-22). Ids are `<CASE>:<defect id>` exactly as written there; control names are the
+# candidate/promoted names those rows already use. No new taxonomy.
+#
+# NOT RECONCILED: FAILURE-ANALYSIS.md / FAILURE-ATLAS-RAW.yaml / FAILURE-ATLAS-CLASSIFIED.yaml (2026-09-22, "225 defects,
+# 104 mechanisms") were not found on main, on any fetched branch, or on this machine. Their totals are NOT claimed here.
+# When recovered, map each atlas mechanism to a control below (or add one) — the loader refuses unknown fields only.
+#
+# status:
+#   enforced            code runs on every applicable job and writes a check row against the exact asset version
+#   by_construction     the product path cannot produce the defect (the reason is stated)
+#   reviewer_obligation an independent reviewer/inspector must answer it; unanswered = NOT_VERIFIED (blocks presentation)
+#   excluded_by_scope   the defect belongs to a feature P1 refuses at intake (refusal is the control)
+#   not_applicable_p1   the defect belongs to a production method P1 does not use (code-rendered animation)
+# stage: 1 intent · 2 structure · 3 creative · 4 selection · 5 execution/verification
+# applies: any | image | video | audio | text
+
+controls:
+  - id: ATTEMPT_ID_UNIQUE_AND_RESERVE_MINTED
+    sources: [MOKOBARA-ODYSSEY-007:LG-1, CUMINCO-CHOPSTICKS-003:SD-06]
+    stage: 4
+    applies: any
+    prevention: attempt ids are minted inside the BEGIN IMMEDIATE transaction that checks the cap and writes the reservation
+    detection: LEDGER_INTEGRITY check (unique ids, every reservation settled or explicitly uncertain, committed <= budget)
+    implementation: product/store.py Store.reserve; product/verify.py ledger_integrity
+    status: enforced
+    regression: product/tests/test_store.py::ConcurrentReservation
+
+  - id: VALIDATE_BEFORE_RESERVE
+    sources: [RENTOK-GAME-B-005:T1]
+    stage: 4
+    applies: any
+    prevention: price quote and prompt guard run before the reservation; a refused request costs USD 0
+    implementation: product/dispatch.py Dispatcher.image/video/music
+    status: by_construction
+    regression: product/tests/test_dispatch.py::GuardBeforeReserve
+
+  - id: PAID_PRODUCTION_PREFLIGHT
+    sources: [UPWORK-PORTFOLIO-002:PD-01, UPWORK-PORTFOLIO-002:PD-02, UPWORK-PORTFOLIO-002:PD-03, UPWORK-PORTFOLIO-002:PD-07,
+              UPWORK-PORTFOLIO-002:PD-08, UPWORK-PORTFOLIO-002:PD-09]
+    stage: 4
+    applies: any
+    prevention: no provider reservation without a customer budget authorisation recorded on the job; unpriced routes refused
+    implementation: product/store.py Store.reserve (PermissionError); product/dispatch.py quote()
+    status: enforced
+    regression: product/tests/test_store.py::NoSpendWithoutAuthorisation
+
+  - id: TRANSIENT_ERROR_CLASSIFICATION
+    sources: [UPWORK-INTRO-001:SD-09, UPWORK-INTRO-001:SD-10, MOKOBARA-ODYSSEY-007:DF-5, RENTOK-GAME-B-005:att-013]
+    stage: 5
+    applies: any
+    prevention: every failed call is classified (infrastructure_transient | provider_refusal | unclassified), charged per class,
+      counted as its own attempt, never scored as model quality; transient failures retry within the node's draw allowance
+      then pause the job as paused_provider
+    implementation: product/dispatch.py Dispatcher._fail; product/orchestrator.py
+    status: enforced
+    regression: product/tests/test_e2e.py::ProviderFailureInjection
+
+  - id: PROVIDER_POOL_AVAILABILITY
+    sources: [UPWORK-INTRO-001:SD-11, RENTOK-GAME-B-005:att-006]
+    stage: 5
+    applies: any
+    prevention: repeated transient failure pauses the job (paused_provider) with the reason visible to the operator; no pool
+      balance is machine-readable, so pool exhaustion is detected by failure, not predicted
+    implementation: product/orchestrator.py
+    status: enforced
+    note: per-key quota reading (PER_KEY_QUOTA_IN_POOL_READINGS) is not implemented — no provider exposes it to this code
+
+  - id: QA_COVERAGE_ENFORCEMENT
+    sources: [UPWORK-PORTFOLIO-002:PD-04, UPWORK-PORTFOLIO-002:PD-06, UPWORK-PORTFOLIO-002:SD-HD-01, UPWORK-PORTFOLIO-002:SD-HD-04,
+              UPWORK-PORTFOLIO-002:SD-HD-11, RENTOK-GAME-B-005:A1-not-run, MOKOBARA-ODYSSEY-007:REC-1]
+    stage: 5
+    applies: any
+    prevention: the presentation gateway lists every check applicable to the job and requires a PASS (or a named waiver) on the
+      exact asset version presented; a check never run is NOT_VERIFIED and blocks
+    implementation: product/verify.py Gateway
+    status: enforced
+    regression: product/tests/test_verify.py::UnrunCheckBlocks
+
+  - id: TEXT_BOUNDS_GATE
+    sources: [UPWORK-INTRO-001:SD-01, UPWORK-INTRO-001:SD-04]
+    stage: 5
+    applies: text
+    detection: runtime.compositor.gates.check_text_bounds on every measured text and logo box, per delivered format
+    implementation: product/compose.py
+    status: enforced
+
+  - id: CONTRAST_GATE
+    sources: [UPWORK-INTRO-001:SD-02, MOKOBARA-ODYSSEY-007:DF-9]
+    stage: 5
+    applies: text
+    detection: runtime.compositor.gates.check_contrast against luminance sampled from the real pixels behind each text box
+      (worst pixel rule); the compositor picks light/dark ink and adds a scrim only when neither passes
+    implementation: product/compose.py
+    status: enforced
+
+  - id: CROP_FIT_DECLARATION
+    sources: [UPWORK-INTRO-001:SD-03, UPWORK-PORTFOLIO-002:SD-HD-12, UPWORK-PORTFOLIO-002:SD-HD-02]
+    stage: 5
+    applies: text
+    detection: every string is fitted (size stepped down to a floor) and runtime.compositor.gates.check_fit is recorded
+    implementation: product/compose.py
+    status: enforced
+
+  - id: ELEMENT_DISJOINTNESS
+    sources: [UPWORK-INTRO-001:SD-07, RENTOK-GAME-A-004:D-2, RENTOK-GAME-B-005:D-1, RENTOK-GAME-B-005:D-9]
+    stage: 5
+    applies: text
+    detection: runtime.compositor.gates.check_disjoint over every text/logo box
+    implementation: product/compose.py
+    status: enforced
+
+  - id: HERO_VISIBLE
+    sources: [RENTOK-GAME-V2-006:N1, RENTOK-GAME-V2-006:N2]
+    stage: 5
+    applies: image
+    detection: runtime.compositor.gates.check_hero_visible — product box (from the independent still inspection) vs every
+      code-set text/logo box; NOT_VERIFIED when the inspection could not locate the product
+    implementation: product/compose.py
+    status: enforced
+
+  - id: BRAND_COLOUR_ON_RENDERED_FRAME
+    sources: [RENTOK-GAME-A-004:D-11, RENTOK-GAME-A-004:D-8]
+    stage: 5
+    applies: any
+    detection: runtime.compositor.gates.check_brand_colour on pixels sampled from the rendered end card / colour field
+    implementation: product/compose.py
+    status: enforced
+
+  - id: EXACT_COPY_MATCH
+    sources: [runtime/spec/text_strategy.py code_set_on_textless_plate (the customer's exact strings are never drawn by a model)]
+    stage: 5
+    applies: text
+    prevention: exact strings are rendered from the copy deck via textfile (no re-typing); prompts carrying an exact string are refused
+    detection: every customer_exact string in the intent record appears verbatim in the copy deck used for the render
+    implementation: product/verify.py exact_copy_match; product/dispatch.py prompt_guard
+    status: enforced
+
+  - id: VIDEO_FRAME_TEXT_HYGIENE
+    sources: [UPWORK-INTRO-001:SD-06, MOKOBARA-ODYSSEY-007:DF-13]
+    stage: 5
+    applies: any
+    prevention: every generation prompt carries the no-lettering clause (refused otherwise)
+    detection: the independent inspector reports lettering_present per still/clip; OCR is not used as a gate (DF-13)
+    implementation: product/dispatch.py prompt_guard; product/orchestrator.py inspection
+    status: reviewer_obligation
+
+  - id: FORMAT_SPECIFIC_REVALIDATION
+    sources: [UPWORK-PORTFOLIO-002:SD-HD-03, UPWORK-PORTFOLIO-002:SD-HD-06, UPWORK-PORTFOLIO-002:SD-HD-07, UPWORK-PORTFOLIO-002:SD-HD-08]
+    stage: 5
+    applies: image
+    prevention: each format is its own composition over its own plate (no crop of another format's master), and each is a
+      separate asset version with its own gate rows (SUBJECT_AWARE_CROP_ANCHORING is avoided rather than implemented)
+    implementation: product/orchestrator.py image graph; product/compose.py
+    status: enforced
+
+  - id: REJECTED_DESIGN_REUSE
+    sources: [UPWORK-PORTFOLIO-002:SD-HD-03, UPWORK-PORTFOLIO-002:SD-HD-04, UPWORK-PORTFOLIO-002:SD-HD-05, UPWORK-PORTFOLIO-002:SD-HD-08,
+              UPWORK-PORTFOLIO-002:SD-HD-09, UPWORK-PORTFOLIO-002:SD-HD-10]
+    stage: 5
+    applies: any
+    detection: an asset whose sha256 equals a version the customer already rejected or asked to change cannot be presented again
+    implementation: product/verify.py not_previously_rejected
+    status: enforced
+
+  - id: CONTAINER_EDIT_LIST_CHECK
+    sources: [RENTOK-GAME-A-004:D-1]
+    stage: 5
+    applies: video
+    detection: runtime.loop.container.assess_edit_lists on the delivered MP4 (assembly muxes with -use_editlist 0)
+    implementation: product/verify.py
+    status: enforced
+
+  - id: CODEC_TRUE_PEAK_MARGIN
+    sources: [RENTOK-GAME-A-004:R5, RENTOK-GAME-B-005:R2, RENTOK-GAME-V2-006:R-2]
+    stage: 5
+    applies: video
+    detection: ebur128 on the delivered AAC file — true peak <= -1.0 dBTP and integrated loudness -14 +/- 2 LUFS
+    implementation: product/verify.py
+    status: enforced
+
+  - id: AUDIO_LEVEL_CONTINUITY_AT_CUTS
+    sources: [MOKOBARA-ODYSSEY-007:DF-10]
+    stage: 5
+    applies: video
+    prevention: 60-ms acrossfade at every join (assembly default)
+    detection: RMS of the 50 ms after each cut vs the 50 ms before; a drop over 12 dB fails (provisional threshold — the only
+      datum is the checker's 15-20 dB measurement on v1)
+    implementation: product/media.py assemble_film; product/verify.py
+    status: enforced
+
+  - id: IN_MODEL_HARD_CUT
+    sources: [MOKOBARA-ODYSSEY-007:DF-4]
+    stage: 5
+    applies: video
+    detection: scene-change detection inside the used segment of every generated clip; a cut the board did not ask for fails
+      the take (another take is selected or drawn)
+    implementation: product/orchestrator.py clip acceptance; product/media.py scene_cuts
+    status: enforced
+
+  - id: NEGATIVE_PROMPT_THE_PRODUCT_BEFORE_ITS_REVEAL
+    sources: [MOKOBARA-ODYSSEY-007:DF-1]
+    stage: 4
+    applies: video
+    prevention: for beats with product_present=false the prompt builder states the absence and adds the product to the negative prompt
+    detection: inspector prohibited_present
+    implementation: product/prompts.py
+    status: by_construction
+
+  - id: END_STATE_STILL_PLUS_LAST_ACTION_I2V
+    sources: [MOKOBARA-ODYSSEY-007:DF-2, MOKOBARA-ODYSSEY-007:DF-8]
+    stage: 3
+    applies: video
+    prevention: the director contract requires the first frame to hold the beat's idea and a big state change to be put in the
+      still; the pre-spend direction review checks each beat's feasibility
+    detection: inspector end_state_reached / required_action_occurred
+    implementation: product/contracts.py DIRECTION_ROLE + DIRECTION_REVIEW_ROLE; product/orchestrator.py
+    status: reviewer_obligation
+
+  - id: EXIT_ACTION_AFTER_GOAL_STATE
+    sources: [MOKOBARA-ODYSSEY-007:DF-2b]
+    stage: 4
+    applies: video
+    prevention: beats carry exit_action; the prompt builder appends it after the goal state
+    implementation: product/prompts.py
+    status: by_construction
+
+  - id: TAKE_SELECTION_BEFORE_RETAKE
+    sources: [MOKOBARA-ODYSSEY-007:DF-7]
+    stage: 5
+    applies: video
+    prevention: every take is kept and inspected; a new draw is made only when no kept take is usable
+    implementation: product/orchestrator.py
+    status: enforced
+
+  - id: MANDATORY_EVENT_VISIBILITY_LJ_LINE
+    sources: [MOKOBARA-ODYSSEY-007:DF-8, MOKOBARA-ODYSSEY-007:DF-3]
+    stage: 5
+    applies: any
+    detection: the independent reviewer answers every mandatory id with visible yes/no/partial and evidence; anything but yes
+      blocks presentation unless waived by a named person
+    implementation: product/verify.py mandatory_visibility
+    status: reviewer_obligation
+
+  - id: PRODUCT_INTACT_AND_FAITHFUL
+    sources: [MOKOBARA-ODYSSEY-007:DF-6, MOKOBARA-ODYSSEY-007:DF-11, CUMINCO-CHOPSTICKS-003:SD-01]
+    stage: 5
+    applies: any
+    prevention: product anchor paragraph + customer reference photos in every still; 'intact, clean seams' clause wherever the product appears
+    detection: inspector product_identity_ok per asset; reviewer product_fidelity on the finished media
+    implementation: product/prompts.py; product/orchestrator.py
+    status: reviewer_obligation
+
+  - id: CHARACTER_CONTINUITY
+    sources: [MOKOBARA-ODYSSEY-007:DF-11, MOKOBARA-ODYSSEY-007:DF-4]
+    stage: 5
+    applies: video
+    prevention: a character reference still is generated first and passed as a reference to every beat still
+    detection: inspector character_consistent; reviewer continuity
+    implementation: product/orchestrator.py video graph
+    status: reviewer_obligation
+
+  - id: RISKIEST_ACTION_QUALIFIED_FIRST
+    sources: [MOKOBARA-ODYSSEY-007:DF-3, RENTOK-GAME-A-004:R1, RENTOK-GAME-B-005:D-4]
+    stage: 4
+    applies: video
+    prevention: the beat the director marks riskiest is produced and inspected before the other beats are dispatched; a failed
+      qualification stops dependent spend and asks for a changed method
+    implementation: product/orchestrator.py (qualification node)
+    status: enforced
+
+  - id: AUDIO_REVIEWED_BY_EAR
+    sources: [MOKOBARA-ODYSSEY-007:DF-14, RENTOK-GAME-B-005:HD-01]
+    stage: 5
+    applies: video
+    detection: the reviewer must evaluate the audio modality (the film is sent with its sound); speech_or_singing must be 'no';
+      if audio was not evaluated the check is NOT_VERIFIED and a human listen is required
+    implementation: product/verify.py audio_reviewed
+    status: reviewer_obligation
+
+  - id: SOURCE_RESOLUTION_STATED
+    sources: [MOKOBARA-ODYSSEY-007:DF-12]
+    stage: 5
+    applies: video
+    detection: the delivery record states generated source resolution beside delivered resolution
+    implementation: product/verify.py source_resolution
+    status: enforced
+
+  - id: AD_STRUCTURE_MINIMUM
+    sources: [CUMINCO-CHOPSTICKS-003:SD-07]
+    stage: 3
+    applies: any
+    detection: the brand mark is placed (end card / still) and the product appears in at least one beat; the direction reviewer
+      checks that the ad answers objective, product and call to action
+    implementation: product/verify.py ad_structure
+    status: enforced
+
+  - id: SUBJECT_OBSTRUCTION
+    sources: [CUMINCO-CHOPSTICKS-003:SD-04, CUMINCO-CHOPSTICKS-003:SD-09]
+    stage: 5
+    applies: any
+    detection: reviewer defects (subject/product obstructed or geometry wrong)
+    status: reviewer_obligation
+
+  # ── excluded by P1 scope: refused at intake (the refusal is the control) ──────────────────────────
+  - id: VOICE_AND_SPEECH_FEATURES
+    sources: [CUMINCO-CHOPSTICKS-003:SD-02, CUMINCO-CHOPSTICKS-003:SD-03, CUMINCO-CHOPSTICKS-003:SD-05, CUMINCO-CHOPSTICKS-003:SD-08,
+              RENTOK-GAME-B-005:D-3, RENTOK-GAME-B-005:HD-01, UPWORK-INTRO-001:SD-05, UPWORK-INTRO-001:SD-08, UPWORK-INTRO-001:SD-12,
+              UPWORK-PORTFOLIO-002:PD-04, UPWORK-PORTFOLIO-002:PD-05, UPWORK-PORTFOLIO-002:SD-HD-13a, UPWORK-PORTFOLIO-002:SD-HD-13b]
+    stage: 1
+    applies: audio
+    prevention: voice-over, dialogue and lip-sync are refused at intake with the reason and USD 0 spend; prompts forbid speech
+    detection: AUDIO_REVIEWED_BY_EAR (speech_or_singing must be 'no')
+    status: excluded_by_scope
+
+  # ── not applicable: code-rendered animation (the RentOK method) is not a P1 class ────────────────
+  - id: CODE_RENDERED_ANIMATION_CONTROLS
+    sources: [RENTOK-GAME-A-004:R2a, RENTOK-GAME-A-004:R2b, RENTOK-GAME-A-004:R2c, RENTOK-GAME-A-004:R3, RENTOK-GAME-A-004:R4,
+              RENTOK-GAME-A-004:D-3, RENTOK-GAME-A-004:D-4, RENTOK-GAME-A-004:D-5, RENTOK-GAME-A-004:D-6, RENTOK-GAME-A-004:D-7,
+              RENTOK-GAME-A-004:D-9, RENTOK-GAME-B-005:R1, RENTOK-GAME-B-005:R3, RENTOK-GAME-B-005:R4, RENTOK-GAME-B-005:D-2,
+              RENTOK-GAME-B-005:D-5, RENTOK-GAME-B-005:D-6, RENTOK-GAME-B-005:D-7, RENTOK-GAME-V2-006:A-4, RENTOK-GAME-V2-006:R-1,
+              RENTOK-GAME-V2-006:N4, RENTOK-GAME-V2-006:LJ-15, RENTOK-GAME-V2-006:N5, RENTOK-GAME-V2-006:A-2, RENTOK-GAME-V2-006:A-3,
+              RENTOK-GAME-V2-006:A-5, RENTOK-GAME-V2-006:N3, RENTOK-GAME-V2-006:N6, RENTOK-GAME-V2-006:N7, RENTOK-GAME-V2-006:N8,
+              RENTOK-GAME-V2-006:N9, RENTOK-GAME-V2-006:P1]
+    stage: 5
+    applies: none
+    status: not_applicable_p1
+    note: framing-target, world-fills-frame, sprite density, keying, pose height and occlusion-semantics gates stay in
+      runtime/compositor/gates.py with their tests; P1 has no sprite/game renderer to call them. They re-enter when that class does.
+
+  # ── records / tooling / metrics ─────────────────────────────────────────────────────────────────
+  - id: PRODUCTION_RECORDS_FROM_THE_STORE
+    sources: [RENTOK-GAME-A-004:D-10, RENTOK-GAME-A-004:F-05, RENTOK-GAME-B-005:D-8, RENTOK-GAME-B-005:R5, RENTOK-GAME-B-005:PD-02,
+              RENTOK-GAME-V2-006:A-1, UPWORK-INTRO-001:SD-13, RENTOK-GAME-B-005:N-1]
+    stage: 5
+    applies: any
+    prevention: attempts, costs, timings (TTAO and first-cut latency), verdicts and the case skeleton are generated from the store,
+      not written by hand; job-specific tooling does not exist in the product path
+    implementation: product/learning.py; product/store.py timings
+    status: by_construction
