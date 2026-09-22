@@ -117,3 +117,10 @@ two global commands once that pack is green.
 
 About 200k tokens, of which ~90k reading the seed packet in sections and ~55 partner/candidate
 claims by id.
+
+## Post-check edits (Controller, from CHECK-concept_and_distinctiveness.md — PASS WITH EDITS)
+
+- CF-04: the unsourced closing clause "the resolved state is still shown" deleted.
+- Waivers on sk_ctg_0052 / sk_ctg_0053: decision reference corrected from CD-D6 to CD-D1 (where the ids are cited).
+- Coverage-delta limit now says that for a static image nothing in the pack replaces the timeline decisions CD-D5, D9, D10 (the checker's missing question).
+- Trimmed to fit 2,500 tokens; 44/44 seeds unchanged.
