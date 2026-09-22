@@ -10,3 +10,11 @@ Verdict class: **SPECIFIC REPAIR** (customer's words: "overall excellent just fe
 3. Beat 6 (push-off): the oar is already on the raft, then appears again ("comes out magically again") — continuity between beats 5 and 6.
 4. Brand: "use mokobara logo/name properly" — brand presence/lockup (composition).
 5. Typography: "the text font style could be better" — composition.
+
+# Customer verdict on v2 — recorded verbatim, 2026-09-22T03:46:25Z
+
+File judged: gen/final/mokobara-odyssey-9x16-30s.mp4 (sha256 71850d1c…), delivered ~18:37Z.
+
+> still some minor issues but excellent. pass/
+
+Verdict class: **ACCEPT** ("pass"), with unspecified minor issues noted by the customer and not itemised. Open items recorded by the producer/checker remain on the record unrepaired: arms to forearm depth only (D1), paddle whereabouts 21–24 s (D5), 720p sources (D8), native audio not ear-checked.

@@ -5,7 +5,7 @@ production_base_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f
 branch: work/agency-job-mokobara-odyssey-001
 skill_version: 7e324b0f75658498b62802332504519b9d542996
 opened_by: Vaibhav (Controller session)
-production_status: pending_human_review
+production_status: accepted   # human ACCEPT on v2, chat 2026-09-21: 'still some minor issues but excellent. pass/'
 learning_status: pending_sync
 sync:
   case_id: null
@@ -908,6 +908,13 @@ qa:
     repaired_by_attempt: none
     state: fixed v2
 versions:
+- version: 2
+  presented_utc: '2026-09-21T18:37:00Z'
+  assets: [71850d1cf7969ed1ecf8dc3252586e557c05093377e2e202326283ba93a8faff]
+  verdict: ACCEPT
+  verdict_verbatim: 'still some minor issues but excellent. pass/'
+  decided_utc: '2026-09-22T03:46:25Z'
+  decided_by: 'Vaibhav Chawla (customer / human Controller), chat'
 - version: v1
   presented_utc: '2026-09-21T18:10:00Z'
   assets:
@@ -933,9 +940,9 @@ versions:
   decided_utc: null
   repairs: stages/06-REPAIR-ROUND-1.md
 outcome:
-  status: null
-  accepted_version: null
-  accepted_by: null
+  status: accepted
+  accepted_version: 2
+  accepted_by: 'Vaibhav Chawla'
   assets:
   - version: v2
     file: gen/final/mokobara-odyssey-9x16-30s.mp4
@@ -958,7 +965,7 @@ ttao:
   human_review_requested_v2_utc: '2026-09-21T18:38:34Z'
 kpis:
   cpao_usd: null
-  ttao_hms: null
+  ttao_hms: '10:23:37'
   human_review_cycles: 1
   versions_to_acceptance: null
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml
