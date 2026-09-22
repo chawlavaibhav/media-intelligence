@@ -67,10 +67,7 @@ GRAMMAR = ROOT / "canon/experiments/pre-execution-freeze/MEDIA-REQUEST-GRAMMAR-v
 AUDIT_GATE = ROOT / "canon/validation/validate_audit_gate_v02.py"
 CONTRACT = ROOT / "canon/compilation/INJECTION-CONTRACT-v0.md"
 
-PACK_PATHS = [
-    ROOT / "canon/compilation/PACK-product_appearance-v0.yaml",
-    ROOT / "canon/compilation/PACK-composition_and_attention-v0.yaml",
-]
+PACK_PATHS = sorted((ROOT / "canon/compilation").glob("PACK-*-v0.yaml"))
 TRIGGERS = ROOT / "canon/packs/pack-triggers-v0.yaml"
 DELIVERABLES = PACK_PATHS + [
     TRIGGERS,

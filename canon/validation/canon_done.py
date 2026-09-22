@@ -94,11 +94,32 @@ def validator_green() -> tuple[bool, str]:
     return r.returncode == 0, (r.stdout + r.stderr).strip().splitlines()[-1] if (r.stdout + r.stderr).strip() else ""
 
 
+def pack_report(pack_id: str) -> int:
+    """Seed coverage for one pack: every hand-retrieved claim from the pack's contributor sources
+    must be cited by the compiled pack. Exit 0 at 100 %, 2 otherwise."""
+    import yaml
+    sys.path.insert(0, str(REPO / "canon" / "compilation"))
+    from pack_seed import seed_ids_for  # noqa
+    cov = yaml.safe_load((REPO / "canon/planning/CANON-V1-LIVE37-COVERAGE.yaml").read_text(encoding="utf-8"))
+    contributors = set(cov["packs"][pack_id]["contributors"])
+    seeds = [c for c, _ in seed_ids_for(contributors)]
+    cited = pack_cited_ids().get(pack_id, set())
+    status = pack_status(pack_id)
+    missing = [s for s in seeds if s not in cited]
+    print(f"pack {pack_id}: status '{status[:50]}' · seed {len(seeds)} · cited {len(seeds) - len(missing)} · missing {len(missing)}")
+    for m in missing:
+        print(f"  - {m}")
+    return 0 if not missing and "PROPOSED" not in status.upper() and status != "MISSING" else 2
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--brief", action="append", default=[], help="path to a brief.job.json (repeatable); default: recorded job briefs")
     ap.add_argument("--fetcher", default=None, help="module:function(nr, brief) -> iterable of sk ids delivered for the brief")
+    ap.add_argument("--pack", default=None, help="report one pack's seed coverage (hand-retrieved claims from its contributor sources vs its citations) and exit")
     a = ap.parse_args(argv)
+    if a.pack:
+        return pack_report(a.pack)
 
     from runtime.canon import normalize as _normalize, lookup as _lookup
     briefs = {}

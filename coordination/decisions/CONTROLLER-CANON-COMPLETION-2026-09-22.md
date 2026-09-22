@@ -1,7 +1,6 @@
 # Controller — Amend C-10: complete Canon under a written definition of done — 2026-09-22
 
-**Status:** DRAFT — awaiting the founder's words. Nothing below is in force until the status line
-reads APPROVED and the founder's authorisation is quoted verbatim in "Authority".
+**Status:** APPROVED CONTROLLER DECISION (founder, 2026-09-22, in session; quoted verbatim below).
 **Role:** drafted by the Controller session on branch `work/canon-done-2026-09-22`; no pack is
 compiled, no Canon file is changed by this draft.
 **Amends:** C-10 in `CONTROLLER-CAPABILITY-LAB-STOP-WIDENING-AND-CANON-INJECTION-V1-2026-09-14.md`
@@ -21,13 +20,13 @@ trigger with a written definition of done and authorises the eight packs to be b
 
 ## Authority — the founder's words (to be quoted verbatim on approval)
 
-> [founder's authorisation — pending]
+> "approve as drafted. go build the sheets"
 
 Context of the instruction, from the session of 22 Sep 2026: "go for it. i dont mind the time it
 takes, i mind the tokens you spend to do it and quality of work" and "i would rather have complete
 canon once then spending time and money again and again to fix it".
 
-## Rulings (proposed)
+## Rulings
 
 1. **C-10's compile prohibition is lifted for all eight packs**, replaced by
    `canon/validation/CANON-DONE-v0.md`: a pack is done only when `canon_done.py` conditions A
