@@ -1,0 +1,169 @@
+pack_id: camera_and_spatial_grammar
+applicability: [static_image, video, image_sequence]
+decisions:
+- decision_id: CG-D1
+  question: "How is each beat planned — shot size, lens, key?"
+  default: "Plan outside-in: wider shots establish, tighter shots reach detail as the action develops (gos_0017). Cover every angle and framing the edit needs (0001) so the most revealing angle is chosen per beat (murch_0009; conv_0027). The director owns the lens — a random lens is a random shot (ms_0003); each face has the lens and distance that renders it most itself, found by test (conv_0025). Decide the key of the whole picture before scene work (alt_0018); in drama the level follows the dramatic line and the long shot's job is mood as well as geography (0022)."
+  check: "Each beat names size, lens and level with a reason; wider to tighter or a recorded deviation; key named once."
+  ids: [sk_gos_c003_0017, sk_gos_c003_0001, sk_murch_c003_0009, sk_conv_c003_0027, sk_ms_c003_0003, sk_conv_c003_0025, sk_alt_c003_0018, sk_alt_c003_0022]
+  feeds: [PRODUCTION_RECIPE, VISUAL_SYSTEM, GENERATION_PROMPTS, FAILURE_PREVENTION]
+  limits:
+  - "No product focal length or size ladder in Canon; lens claims are about faces; Alton's key categories are 1949 genres — the order transfers, not the table."
+- decision_id: CG-D2
+  question: "Where is the line of action, and how do direction and side of frame hold across cuts?"
+  default: "The film world keeps constant rules of direction; the frame edges are the viewer's reference (gos_0006; 0005). Trace the line along the sight line or the movement (0009; gote_0054); keep every setup inside one 180° arc on its one side (gos_0010). A far-side shot reverses left and right — fine alone, wrong in the cut (0012; gote_0055). Exit frame left, enter frame right (gos_0007); a continued movement keeps its direction (gote_0017); a subject keeps its side unless seen to move (0018); bridge a contradiction with an insert (0016). Cross the line only for a recorded creative reason (gos_0013)."
+  check: "Line on the board; every setup on one side; direction and side of frame hold across every cut, or a bridge or on-screen change exists."
+  ids: [sk_gos_c003_0006, sk_gos_c003_0005, sk_gos_c003_0009, sk_gos_c003_0010, sk_gos_c003_0012, sk_gos_c003_0007, sk_gos_c003_0013, sk_gote_c003_0054, sk_gote_c003_0055, sk_gote_c003_0017, sk_gote_c003_0018, sk_gote_c003_0016]
+  feeds: [PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION]
+  limits: []
+- decision_id: CG-D3
+  question: "Where do eye-lines go, and how is two-person coverage matched?"
+  default: "A look creates a sight line as movement does; the viewer builds the space from them (gos_0008). A look off-frame obliges a payoff from a direction, angle and height near the looker's (0016). A single from a two-shot keeps its side and direction of attention (0011); both singles from one side of the line, or both read as looking at an unseen third (gote_0056). Reciprocal coverage matches size, height, lens and angle from the mirrored arc position (gos_0015)."
+  check: "Every off-frame look paid off from a matching vantage; singles keep sides and looks; reciprocal singles match size, height, lens."
+  ids: [sk_gos_c003_0008, sk_gos_c003_0016, sk_gos_c003_0011, sk_gos_c003_0015, sk_gote_c003_0056]
+  feeds: [PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION]
+  limits: []
+- decision_id: CG-D4
+  question: "What angle and height on the product, and how is it staged in depth?"
+  default: "Default the camera to a neutral hat: the angle is simply the most revealing and the viewer thinks about the action (conv_0015); make it a presence only by decision. The most revealing angle on a solid shows the most surfaces — move to one side and raise until none is gained (alt_0010). Depth is tonal separation of foreground from background, either direction (0015); a complete picture: that angle, each surface a different brightness, a ground of another tone (0015; 0010). Across three or more staged planes the most distant is lightest (0017). A flat monotone wall is broken by cast shadow; a mirror adds the lit far side (0016)."
+  check: "Each angle names the surfaces it shows; subject-to-ground separation survives grayscale; staged planes lighten with distance; no flat monotone ground without shadow or reason."
+  ids: [sk_conv_c003_0015, sk_alt_c003_0010, sk_alt_c003_0015, sk_alt_c003_0017, sk_alt_c003_0016]
+  feeds: [VISUAL_SYSTEM.placement_zone, PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION]
+  limits: []
+- decision_id: CG-D5
+  question: "Does the camera move in this shot, and why?"
+  default: "Every move has a reason and so does every held camera — moving because you can, or sitting still from laziness, is one error (ms_0002). The camera is the audience's eye; too much movement is as bad as none — it covers up (alt_0014). To move attention without a cut, hide the move behind an action (ms_0010) or hold a static wide, dominant subject blocked to face camera (0017); colour set on the subject in an earlier closer shot directs attention like a move (0016). Never rack focus back and forth; cut to a close-up (0019). A long-to-close move carries two lightings — the slower setup (alt_0021)."
+  check: "Each shot states move or static with a reason; a push-in declares lighting at both ends; no repeated focus shifts."
+  ids: [sk_ms_c003_0002, sk_alt_c003_0014, sk_ms_c003_0010, sk_ms_c003_0017, sk_ms_c003_0016, sk_ms_c003_0019, sk_alt_c003_0021]
+  feeds: [PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION]
+  limits: []
+- decision_id: CG-D6
+  question: "What joins the shots, how far apart, how long does each hold?"
+  default: "The edit is the order and rate of release of information (murch_0013). Every shot cut TO gives information the viewer lacks (gote_0004); every departure is motivated by a movement or sound in the outgoing shot at that moment (0006). Cut by default — continuous action, change of impact, of information or locale (0027); consecutive shots of one subject sit at least 30° apart on the arc or change focal length, else they jump (gos_0014). A dissolve reads by its duration (gote_0028); its register is languid and sombre — romantic or sad passages only (0031). A fade bounds a programme or act, or a change of time or locale; audio up under black first (0037). A readable shot holds its describe-aloud duration, a busier frame longer (0053); fast cutting belongs to an action passage (0052)."
+  check: "Per cut: new information in and motivation out named; consecutive shots of one subject at least 30° apart; each dissolve or fade names its condition; readable shots hold their describe-aloud time."
+  ids: [sk_murch_c003_0013, sk_gote_c003_0004, sk_gote_c003_0006, sk_gote_c003_0027, sk_gos_c003_0014, sk_gote_c003_0028, sk_gote_c003_0031, sk_gote_c003_0037, sk_gote_c003_0053, sk_gote_c003_0052]
+  feeds: [AUDIO_AND_EDIT, PRODUCTION_RECIPE, FAILURE_PREVENTION]
+  limits: []
+- decision_id: CG-D7
+  question: "When a cut cannot keep everything, what gives first?"
+  default: "Aim for all six at once — emotion, story, rhythm, eye-trace, planarity, 3-D continuity; it usually can be done (murch_0019; 0031). Emotion outweighs the other five together (0020). Otherwise sacrifice from the bottom: space, then planarity, eye-trace, rhythm, story, never emotion (0027); a met higher criterion hides a failed lower one, not the reverse (0028). The Grammar's rules yield to a creative reason, crossing the line included (gos_0013); record the deviation with it."
+  check: "A cut breaking the line, side of frame or 30° names the higher criterion it keeps, in DOCTRINE_DEVIATIONS."
+  ids: [sk_murch_c003_0019, sk_murch_c003_0020, sk_murch_c003_0027, sk_murch_c003_0028, sk_murch_c003_0031, sk_gos_c003_0013]
+  feeds: [AUDIO_AND_EDIT, DOCTRINE_DEVIATIONS, FAILURE_PREVENTION]
+  limits:
+  - "Murch's six are scoped 'for me' and to narrative film; product-film transfer untested."
+- decision_id: CG-D8
+  question: "What does the soundtrack do for the space the camera shows?"
+  default: "Sound creates reality faster than picture; stimulate the ear to help the eye (gote_0048). Shots sharing time and place share sound across the cut, level following distance (0019). Music channels an emotion the film has already created, never supplies one (conv_0007); music with a visible origin in the scene takes a different route (0009). Opening music that sets an expectation the film does not meet is a fault however good (0023). Withdraw dialogue and the audience hears the rest of the track as speech (0019)."
+  check: "Sound continues across every same-place cut, level by shot size; the opening cue matches what follows; each cue names its emotion or visible source."
+  ids: [sk_gote_c003_0048, sk_gote_c003_0019, sk_conv_c003_0007, sk_conv_c003_0009, sk_conv_c003_0023, sk_conv_c003_0019]
+  feeds: [AUDIO_AND_EDIT, FAILURE_PREVENTION]
+  limits: []
+conflicts:
+- conflict_id: CF-01
+  decision_ref: CG-D2
+  kind: contradicts
+  between: [sk_gos_c003_0007, sk_gos_c003_0012]
+  nature: "maintained screen direction against the shot from the far side of the line that reverses it; the source states the rule and its failure"
+  resolution_rule: "0007 governs every cut continuing a movement or look; a far-side shot (0012) is cut in only under 0013's creative reason, recorded."
+- conflict_id: CF-02
+  decision_ref: CG-D2
+  kind: contradicts
+  between: [sk_gos_c003_0010, sk_gos_c003_0012]
+  nature: "all setups inside one 180° arc against jumping the line; the violation of the arc rule, invisible in any single shot"
+  resolution_rule: "Setups stay inside the arc (0010); a far-side setup (0012) needs 0013's reason on the board and a bridge (gote_0016) where the cut reverses direction."
+- conflict_id: CF-03
+  decision_ref: CG-D5
+  kind: contradicts
+  between: [sk_ms_c003_0017, sk_ms_c003_0010]
+  nature: "the chapter's answer hides a camera move behind an action; technique 8.7 solves the same problem with no move and accepts a cut as fallback"
+  resolution_rule: "Two people in continuous movement: 0017 (static wide, dominant subject faces camera); a shift between places: 0010 (move hidden behind an action); either with its reason (0002)."
+- conflict_id: CF-04
+  decision_ref: CG-D4
+  kind: contradicts
+  between: [sk_alt_c003_0015, sk_alt_c003_0017]
+  nature: "symmetrical tonal separation against a preferred direction for distance; both stated in the source"
+  resolution_rule: "0015 governs subject against ground, either direction; 0017 only a progression across three or more staged planes (near dark, far light)."
+- conflict_id: CF-05
+  decision_ref: CG-D6
+  kind: qualified_by
+  between: [sk_gote_c003_0053, sk_gote_c003_0052]
+  nature: "the describe-aloud hold for a shot that must be read against a prevailing fast-cut norm calling a shot over three seconds boringly long; the source states both"
+  resolution_rule: "0053 governs any shot that must be read; 0052 licenses faster cutting only in an action passage; a readable shot cut shorter is a deviation."
+- conflict_id: CF-06
+  decision_ref: CG-D8
+  kind: qualified_by
+  between: [sk_gote_c003_0019, sk_gote_c003_0021]
+  nature: "sound continues across a same-place cut, against the device of removing or contradicting the expected sound to create meaning"
+  resolution_rule: "0019 governs by default; removing or contradicting the expected sound (0021, not compiled here) is a device only when declared — a deviation on CG-D8."
+- conflict_id: CF-07
+  decision_ref: CG-D1
+  kind: contradicts
+  between: [sk_alt_c003_0018, sk_alt_c003_0011]
+  nature: "musical comedy is exempted from the requirement that lighting agree with an established source"
+  resolution_rule: "A product film is not the exempt genre: the key agrees with the fictional source (0011, not compiled here) unless the brief names a theatrical pastiche, recorded as a deviation on CG-D1."
+waivers:
+- ref: sk_ms_c003_0003
+  relation: qualifies
+  partner: sk_ms_c003_0014
+  reason: "0014 is the reflection technique whose lens trade-off 0003 motivates. CG-D1 consumes 0003 only for who owns the lens and that a random lens is a random shot; the reflection technique is not compiled and does not change that."
+- ref: sk_ms_c003_0016
+  relation: trades_off_with
+  partner: sk_ms_c003_0014
+  reason: "the trade-off is a lens choice deciding what the background does (blur for 0016, a legible reflection for 0014). CG-D5 consumes 0016 only for colour tied to the subject in an earlier closer shot directing attention; it does not decide lens, and the reflection technique is not compiled."
+- ref: sk_ms_c003_0019
+  relation: qualifies
+  partner: sk_ms_c003_0008
+  reason: "0008 encourages combining techniques within a scene; CG-D5 consumes 0019 only as the stated limit on one combination (repeated focus shifts between planes) and does not compile the combination advice it bounds."
+- ref: sk_ms_c003_0019
+  relation: qualifies
+  partner: sk_ms_c003_0014
+  reason: "0014 is the reflection technique inside which the limit is stated; CG-D5 consumes the limit as the source says it applies beyond that technique. The technique itself is not compiled."
+- ref: sk_ms_c003_0010
+  relation: qualified_by
+  partner: sk_ms_c003_0001
+  reason: "0001 says every recipe is stated as geometry and timing of a move, not as a rig. CG-D5 consumes 0010 only for hiding a move behind an action; how the move is executed does not change whether to move."
+- ref: sk_ms_c003_0010
+  relation: qualified_by
+  partner: sk_ms_c003_0004
+  reason: "0004 ranks the reader's own camera test above every recommendation, which conditions each recipe as a proposal to test. CG-D5 consumes 0010 as a default to be edited, which is the same status."
+- ref: sk_alt_c003_0021
+  relation: qualifies
+  partner: sk_alt_c003_0020
+  reason: "0020 is the rehearsal-and-take checklist that 0021 amends for a moving camera. CG-D5 consumes 0021 only for the fact that a size-changing move carries two lightings and is the slower setup; the checklist is not compiled and does not change that."
+- ref: sk_alt_c003_0016
+  relation: qualifies
+  partner: sk_alt_c003_0002
+  reason: "0002 asks for sets built with breaks rather than flat walls; 0016 solves the same problem with light when the wall cannot be rebuilt. CG-D4 consumes 0016 as the in-frame remedy; set construction is outside a generated frame and does not change the depth default."
+- ref: sk_gote_c003_0018
+  relation: qualified_by
+  partner: sk_gote_c003_0008
+  reason: "0008 says an object's apparent size sets its sound level, a special case of matching audio to picture. CG-D2 consumes 0018 only for side-of-frame continuity; sound level does not change which side a subject keeps. The level rule is carried by gote_0019 in CG-D8."
+- ref: sk_murch_c003_0019
+  relation: qualified_by
+  partner: sk_murch_c003_0011
+  reason: "0011 says what counts as a bad bit is specific to the film being made — a criterion for what to remove. CG-D7 consumes 0019 only as the ranked tie-break between candidate cuts; the film-relative criterion does not reorder the six, and the narrative-film scope is carried as the CG-D7 limit line."
+- ref: sk_murch_c003_0019
+  relation: qualified_by
+  partner: sk_murch_c003_0029
+  reason: "0029 hedges the percentages and says the intervals are the point. CG-D7 cites no percentage; the ordering and the emotion-outweighs-the-rest claim it consumes are stated in 0019/0020 without figures."
+- ref: sk_murch_c003_0019
+  relation: qualified_by
+  partner: sk_murch_c003_0032
+  reason: "0032 states the preoccupation underlying the six (occupy the audience's position). It grounds the ranking; it does not alter it. Left out for the terse budget."
+- ref: sk_murch_c003_0027
+  relation: qualified_by
+  partner: sk_murch_c003_0030
+  reason: "0030 says emotion, story and rhythm are tightly bound and seldom come apart, which limits how often the sacrifice rule bites among the top three, not what it says when it does; 0031 (cited) already bounds when it applies."
+- ref: sk_conv_c003_0009
+  relation: qualified_by
+  partner: sk_conv_c003_0011
+  reason: "0011 bounds source music (and every repeatable device) by overuse. CG-D8 consumes 0009 only as the scope boundary of 0007 — music with a visible origin takes a different route; whether that route is overused does not change which route a cue takes."
+- ref: sk_ms_c003_0002
+  relation: qualified_by
+  partner: sk_ms_c003_0018
+  reason: "0018 is the invisibility test (the audience registers the scene, not the method) — the other face of the motivation rule, as the source says. CG-D5 consumes the motivation rule; the test does not change what the default says. Left out for the terse budget."
+pack_limits:
+- "Coverage delta: every contributor (Alton 1949; Grammar of the Shot/Edit, Kenworthy 2009; Murch, feature film) assumes a cinema or TV frame; none treats a fixed 9:16 feed, a 15–30 s duration or sound-off autoplay — transfer of arc, 30°, hold and sound defaults to vertical short-form is untested."
+- "No contributor is Indian or treats frontality, darshan or an Indian viewer's reading of the camera; no packshot or frontal-product convention in Canon; assume neither way."
+- "Line, eye-line and reciprocal rules are stated for talent; none sets a camera default for a product alone. static_image: CG-D1 and D4 only; the rest need a cut or timeline, CG-D8 an audio track."
