@@ -145,7 +145,7 @@ def _alpha_bbox(raw: bytes, w: int, h: int):
 def _drawtext(text_file: str, fontfile: str, size: int, colour: str, x, y) -> str:
     esc = lambda p: p.replace("\\", "\\\\").replace(":", "\\:").replace("'", "\\'")
     return (f"drawtext=fontfile='{esc(fontfile)}':textfile='{esc(text_file)}':fontsize={size}:"
-            f"fontcolor={colour}:x={x}:y={y}:text_shaping=1")
+            f"fontcolor={colour}:x={x}:y={y}")
 
 
 def measure_text(text: str, *, size: int, kind: str = "regular") -> tuple:
