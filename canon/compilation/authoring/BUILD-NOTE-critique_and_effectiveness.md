@@ -162,3 +162,8 @@ this pack. Re-run the two global commands once that pack is green.
 
 About 230k tokens, of which ~95k reading the seed packet in sections and ~45 partner / candidate claims
 by id, and ~60k in the compile-trim loop (six budget passes).
+
+## Post-check (Controller, from CHECK-critique_and_effectiveness.md — PASS)
+
+- The checker's missing question added as a limit: CE-D4, D6, D8 are timeline craft and nothing in the pack replaces them for a still or carousel.
+- Prose trimmed (punctuation, no content) to fit 2,500 tokens; 63/63 seeds unchanged.
