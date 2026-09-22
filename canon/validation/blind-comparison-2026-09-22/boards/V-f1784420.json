@@ -1,0 +1,414 @@
+{
+ "proposition": "Running a PG is a game rigged against the owner until he installs RentOK, and then every obstacle that used to stop him just breaks.",
+ "board": {
+  "kind": "film",
+  "duration_s": 30,
+  "style_line": "Original pixel-art side-scrolling platformer, 16-bit era look, chunky 4-px pixels, flat saturated palette, hard black outlines, cream sky, parallax row of three-storey Indian PG buildings with rooftop water tanks, AC units and drying clothes, ground a row of blue #0038FF bricks, 9:16 vertical, razor-sharp, no blur.",
+  "negative_line": "No text, no letters, no numbers, no logos, no HUD, no score counters, no Nintendo characters or assets, no green warp pipes, no mushrooms, no real brand marks, no photoreal, no motion blur, no watermark.",
+  "identity_anchors": {
+   "owner": "The Owner: a stout pixel-art man, 48 px tall, checked half-sleeve shirt in mustard and brown, grey trousers, thick black moustache, small round glasses, a big brass key-ring on his belt; always faces right.",
+   "world": "PG World: cream sky, parallax backdrop of Indian PG buildings, blue #0038FF brick ground, small floating blue-brick platforms; the level scrolls left-to-right.",
+   "powerup": "RentOK Power-Up: a glowing smartphone block, blue #0038FF body with a cyan #03FFF1 screen, hovering with a slow bob; once taken the Owner has a cyan #03FFF1 outline glow and carries a blue #0038FF phone-shaped blaster that fires short cyan bolts.",
+   "flag": "The Flag: a tall grey flagpole on a stepped blue-brick block, flying a blue #0038FF flag with a cyan #03FFF1 tick-shaped emblem."
+  },
+  "hero_frame": {
+   "beat": 8,
+   "description": "The Owner mid-sprint in the air, cyan glow around his outline, blue phone-blaster raised and a cyan bolt leaving it; directly ahead the wallet enemy and the ledger tower are bursting into cyan tick-shaped confetti; further right, small in frame, the blue flag on its pole; behind him the crumpled gate and the swarm already dissolving. One frame says it: the same man, same level, now unstoppable, and the thing that changed is blue-and-cyan in his hand."
+  },
+  "audio": {
+   "native_audio": true,
+   "music_bed": "Continuous 8-bit chiptune loop laid under by code: bright and bouncy for beats 1-6 with a descending 'hit' sting each time the Owner is stopped, a two-second silence-then-rising arpeggio at the power-up (beat 7), then the same tune doubled in tempo and octave for beats 8-9, resolving on a held major chord under the brand close. Generated clip audio kept only for in-game SFX (footsteps, jump, coin, bump, collapse, zap).",
+   "voice_over": "none"
+  },
+  "beats": [
+   {
+    "n": 1,
+    "t_in": 0,
+    "t_out": 3,
+    "clip_s": 3,
+    "title": "Level start",
+    "feeling": "Instant recognition: 'oh, it is a platformer' and a smile; the Owner is small, hopeful and about to have a bad day.",
+    "framing": "Full vertical game view. Owner stands centre-left on the blue brick ground; a PG building with a hand-painted-style board (blank, no letters) fills the background; a coin bobs above a floating platform at top-right. The level begins to scroll right as the Owner starts running.",
+    "first_frame": "Owner standing still, feet together, facing right, key-ring glinting; cream sky, PG buildings, blue brick ground, one floating platform top-right with a single gold coin above it. Nothing moves yet.",
+    "impact": "Static camera for 1 s, then a run-cycle starts and the whole world scrolls; chiptune loop kicks in on the first step. A cheerful start we are about to punish.",
+    "mandatory_ids": [
+     "M2",
+     "M3",
+     "M12"
+    ]
+   },
+   {
+    "n": 2,
+    "t_in": 3,
+    "t_out": 6.5,
+    "clip_s": 3.5,
+    "title": "Obstacle: tenant verification",
+    "feeling": "The first blocked door of the day; mild, familiar frustration.",
+    "framing": "Owner runs in from the left and hits a turnstile gate built of blank grey faceless ID-card tiles with a fat red padlock in the middle; he bumps it, bounces back two steps, tries again, bounces again. Gate rattles but never opens.",
+    "first_frame": "Owner in run pose at left third; gate of blank ID-card tiles with red padlock occupying the centre, ground continues behind it; a faceless tenant silhouette waits on the far side of the gate.",
+    "impact": "Two bumps timed to two 'thud' SFX and a descending sting; the code overlay label lands on the first bump and holds. Camera locked.",
+    "mandatory_ids": [
+     "M4",
+     "M15"
+    ]
+   },
+   {
+    "n": 3,
+    "t_in": 6.5,
+    "t_out": 10,
+    "clip_s": 3.5,
+    "title": "Obstacle: collecting rent",
+    "feeling": "Chasing money that keeps stepping out of reach; comic, but the viewer who owns a PG winces.",
+    "framing": "A fat brown wallet enemy with tiny legs waddles left; a row of five gold coins floats above it. Owner jumps for the coins; the wallet snaps its mouth open and swallows them one by one, then waddles off right, faster than he can run.",
+    "first_frame": "Owner crouched to jump at left; wallet enemy centre with mouth closed; five gold coins in an arc above the wallet; blue bricks below.",
+    "impact": "Coin-vanish SFX in reverse (a 'gulp') for each swallowed coin; Owner lands empty-handed on the last gulp; label overlay lands on the first gulp. Camera pans slightly right following the wallet's escape.",
+    "mandatory_ids": [
+     "M5",
+     "M15"
+    ]
+   },
+   {
+    "n": 4,
+    "t_in": 10,
+    "t_out": 13,
+    "clip_s": 3,
+    "title": "Obstacle: left without paying",
+    "feeling": "Too late, again; a tenant is gone and so is the money.",
+    "framing": "A tenant sprite with a suitcase sprints right and leaps onto a passing yellow-and-black auto-rickshaw; the auto drives off frame right in a dust puff. Owner arrives sliding to a stop at the empty spot; behind him a doorway of a PG room stands open and dark.",
+    "first_frame": "Tenant sprite mid-leap toward an auto-rickshaw at right edge; Owner far left, still running; open dark doorway in the building behind.",
+    "impact": "Auto horn SFX, tyre squeal, then two silent beats on the Owner alone; label overlay lands as the dust settles. Camera holds; the emptiness is the joke.",
+    "mandatory_ids": [
+     "M6",
+     "M15"
+    ]
+   },
+   {
+    "n": 5,
+    "t_in": 13,
+    "t_out": 15.5,
+    "clip_s": 2.5,
+    "title": "Obstacle: no reconciliation",
+    "feeling": "Buried under paper; the month-end that never adds up.",
+    "framing": "A wobbling tower of paper registers, loose receipts and rubber-banded cash bundles, twice the Owner's height, tilts and collapses onto him. He is left with only his glasses and key-ring poking out of the pile.",
+    "first_frame": "Owner standing under the leaning tower of registers and receipts, arms raised as if to catch it; tower already tilting 15 degrees.",
+    "impact": "Collapse SFX like a bookshelf falling; label overlay slams in with the impact; camera shakes two frames.",
+    "mandatory_ids": [
+     "M7",
+     "M15"
+    ]
+   },
+   {
+    "n": 6,
+    "t_in": 15.5,
+    "t_out": 18,
+    "clip_s": 2.5,
+    "title": "Obstacle: complaints, and game over",
+    "feeling": "Swarmed from all sides; the Owner is out of lives.",
+    "framing": "Owner climbs out of the paper pile straight into a swarm of red angry-face speech-bubble sprites pouring out of a dripping tap and a sparking ceiling fan on the building behind. They circle him; he spins, gets hit, does the classic knocked-back tumble and the screen desaturates to grey with the Owner slumped.",
+    "first_frame": "Owner half-emerged from the paper pile; three red speech-bubble sprites already inbound from a dripping tap top-left and a sparking fan top-right; more bubbles queued behind.",
+    "impact": "Buzzing swarm SFX, hit sting, then the music cuts to silence as the frame goes grey; label overlay lands on the first hit. The silence is the cliffhanger.",
+    "mandatory_ids": [
+     "M8",
+     "M15"
+    ]
+   },
+   {
+    "n": 7,
+    "t_in": 18,
+    "t_out": 21,
+    "clip_s": 3,
+    "title": "Cheat code: install RentOK app",
+    "feeling": "The secret every gamer wanted: a code that changes the rules.",
+    "framing": "Grey freeze. A blue smartphone block with a cyan screen descends from the top of frame and hovers in front of the slumped Owner. He reaches up and touches it; a cyan flash washes the screen and colour returns, brighter than before. Owner rises with a cyan outline glow and the blue phone-blaster in hand.",
+    "first_frame": "Grey desaturated frame; slumped Owner at bottom centre; the blue #0038FF phone block with cyan #03FFF1 screen entering from top edge, small halo around it; the RentOK wordmark composited by code on the block's screen.",
+    "impact": "Silence, then a rising arpeggio as the block descends; the 'INSTALL / RENTOK APP' overlay types in above the block like a cheat entry; power-up chime on touch; cyan flash. Camera pushes in 10 percent on the touch.",
+    "mandatory_ids": [
+     "M9",
+     "M10",
+     "M14",
+     "M15"
+    ]
+   },
+   {
+    "n": 8,
+    "t_in": 21,
+    "t_out": 26.5,
+    "clip_s": 5.5,
+    "title": "Power run",
+    "feeling": "Pure release; everything that stopped him now breaks on contact.",
+    "framing": "The level rewinds behind him in a blur and the same five obstacles line up ahead in order: ID-card gate, wallet enemy, auto-rickshaw with tenant, ledger tower, bubble swarm. Owner sprints and jumps through at double speed, firing short cyan bolts; each obstacle bursts into cyan tick-shaped confetti as he passes. The flag pole grows from small to full height at frame right by the end.",
+    "first_frame": "Owner at left in full sprint with cyan glow and blue blaster raised; the ID-card gate directly ahead, the other four obstacles receding in a line behind it; flag pole tiny at far right.",
+    "impact": "Music doubled in tempo; a zap plus a coin-jingle for each burst; the five tick overlays fire in sequence, one per obstacle, each landing exactly on its burst and stacking down the left edge. Camera tracks right with him at his speed.",
+    "mandatory_ids": [
+     "M10",
+     "M11",
+     "M4",
+     "M5",
+     "M6",
+     "M7",
+     "M8",
+     "M15"
+    ]
+   },
+   {
+    "n": 9,
+    "t_in": 26.5,
+    "t_out": 28.5,
+    "clip_s": 2,
+    "title": "The flag",
+    "feeling": "Level complete; the small triumph a PG owner rarely gets to feel.",
+    "framing": "Owner leaps, grabs the top of the flagpole and slides down as the blue flag with its cyan tick rises to the top; blue and cyan pixel fireworks pop over the PG buildings behind.",
+    "first_frame": "Owner in mid-air with both hands on the pole near its top; flag at half-mast rising; first two fireworks just bursting in the sky.",
+    "impact": "Slide SFX plus level-clear fanfare; the Owner lands, turns to camera for the first time and gives a thumbs-up; hold 0.5 s. Camera locked on the pole.",
+    "mandatory_ids": [
+     "M11",
+     "M14"
+    ]
+   },
+   {
+    "n": 10,
+    "t_in": 28.5,
+    "t_out": 30,
+    "clip_s": 0,
+    "title": "Brand close (code-composed)",
+    "feeling": "Clear, calm, one thing to do.",
+    "framing": "Flat blue #0038FF ground. Centre: the RentOK wordmark asset (Rent in white, Ok in cyan). Above it the two-line ask INSTALL / RENTOK APP in white; below it RENTOK.COM in cyan. Nothing else.",
+    "first_frame": "Blue field, wordmark centred, ask above, URL below, all already on screen.",
+    "impact": "Cut from the thumbs-up on a single chiptune chord that holds to the end; no animation except a one-frame cyan flash on the cut. Card holds 1.5 s.",
+    "mandatory_ids": [
+     "M1",
+     "M14",
+     "M15"
+    ]
+   }
+  ]
+ },
+ "copy_deck": {
+  "strings": {
+   "s_install": "INSTALL",
+   "s_rentok_app": "RENTOK APP",
+   "s_ob_verification": "TENANT VERIFICATION",
+   "s_ob_rent": "COLLECTING RENT",
+   "s_ob_left": "LEFT WITHOUT PAYING",
+   "s_ob_recon": "NO RECONCILIATION",
+   "s_ob_complaints": "COMPLAINTS",
+   "s_tick_kyc": "✓ DIGITAL KYC",
+   "s_tick_autopay": "✓ AUTOPAY",
+   "s_tick_dues": "✓ DUES TRACKED LIVE",
+   "s_tick_dashboard": "✓ ONE DASHBOARD",
+   "s_tick_tickets": "✓ COMPLAINT TICKETS",
+   "s_url": "RENTOK.COM"
+  },
+  "sources": {
+   "s_install": "job record exact_text_strings (listed twice: cheat-code moment and closing card)",
+   "s_rentok_app": "job record exact_text_strings (listed twice: cheat-code moment and closing card)",
+   "s_ob_verification": "job record exact_text_strings; brief obstacle 'tenant verification'",
+   "s_ob_rent": "job record exact_text_strings; brief obstacle 'collecting rent'",
+   "s_ob_left": "job record exact_text_strings; brief obstacle 'tenants leaving without paying rent'",
+   "s_ob_recon": "job record exact_text_strings; brief obstacle 'no place to do reconciliation'",
+   "s_ob_complaints": "job record exact_text_strings; brief obstacle 'solving complaints'",
+   "s_tick_kyc": "job record exact_text_strings (customer-supplied feature label)",
+   "s_tick_autopay": "job record exact_text_strings (customer-supplied feature label)",
+   "s_tick_dues": "job record exact_text_strings (customer-supplied feature label)",
+   "s_tick_dashboard": "job record exact_text_strings (customer-supplied feature label)",
+   "s_tick_tickets": "job record exact_text_strings (customer-supplied feature label)",
+   "s_url": "job record exact_text_strings; brand source https://rentok.com"
+  },
+  "placements": {
+   "label_verification": {
+    "t_in": 3.6,
+    "t_out": 6.5,
+    "contents": [
+     "s_ob_verification"
+    ],
+    "why": "Names the gate on the Owner's first bump; pixel-font super, top third, white on a black pill."
+   },
+   "label_rent": {
+    "t_in": 7.2,
+    "t_out": 10,
+    "contents": [
+     "s_ob_rent"
+    ],
+    "why": "Lands on the first swallowed coin; same super style, top third."
+   },
+   "label_left": {
+    "t_in": 11.2,
+    "t_out": 13,
+    "contents": [
+     "s_ob_left"
+    ],
+    "why": "Lands as the auto's dust settles on the empty spot."
+   },
+   "label_recon": {
+    "t_in": 13.4,
+    "t_out": 15.5,
+    "contents": [
+     "s_ob_recon"
+    ],
+    "why": "Slams in with the ledger collapse."
+   },
+   "label_complaints": {
+    "t_in": 16.0,
+    "t_out": 18,
+    "contents": [
+     "s_ob_complaints"
+    ],
+    "why": "Lands on the first bubble hit, then greys out with the frame."
+   },
+   "cheat_code": {
+    "t_in": 18.6,
+    "t_out": 21,
+    "contents": [
+     "s_install",
+     "s_rentok_app"
+    ],
+    "why": "The cheat code itself, typed in letter by letter above the phone block, two stacked lines, white then cyan; this is the film's turn and the first time the product is named."
+   },
+   "tick_kyc": {
+    "t_in": 21.6,
+    "t_out": 26.5,
+    "contents": [
+     "s_tick_kyc"
+    ],
+    "why": "Fires when the ID-card gate bursts; stacks down the left edge in cyan on black pills."
+   },
+   "tick_autopay": {
+    "t_in": 22.5,
+    "t_out": 26.5,
+    "contents": [
+     "s_tick_autopay"
+    ],
+    "why": "Fires when the wallet enemy bursts."
+   },
+   "tick_dues": {
+    "t_in": 23.4,
+    "t_out": 26.5,
+    "contents": [
+     "s_tick_dues"
+    ],
+    "why": "Fires when the auto-rickshaw and tenant burst."
+   },
+   "tick_dashboard": {
+    "t_in": 24.3,
+    "t_out": 26.5,
+    "contents": [
+     "s_tick_dashboard"
+    ],
+    "why": "Fires when the ledger tower bursts."
+   },
+   "tick_tickets": {
+    "t_in": 25.2,
+    "t_out": 26.5,
+    "contents": [
+     "s_tick_tickets"
+    ],
+    "why": "Fires when the bubble swarm bursts; five ticks now stacked as the flag comes into view."
+   },
+   "close_card": {
+    "t_in": 28.5,
+    "t_out": 30,
+    "contents": [
+     "s_install",
+     "s_rentok_app",
+     "s_url"
+    ],
+    "why": "Closing card over the wordmark on blue: the ask repeated once more, plus the URL, nothing else."
+   }
+  }
+ },
+ "mandatory": [
+  {
+   "id": "M1",
+   "customer_words": "I want to make a video for RentOK.",
+   "realisation": "RentOK is the power-up (beat 7), the flag colours (beat 9) and the closing card (beat 10)."
+  },
+  {
+   "id": "M2",
+   "customer_words": "An original Mario-inspired game, rather than an exact reproduction of Nintendo's character, artwork, music or game assets.",
+   "realisation": "Original pixel platformer: moustached PG-owner sprite in a checked shirt, Indian PG buildings, blue-brick ground, auto-rickshaw, ledger towers; no pipes, mushrooms, named characters or Nintendo music; negative line forbids them in every prompt."
+  },
+  {
+   "id": "M3",
+   "customer_words": "The player is basically a PG owner.",
+   "realisation": "The Owner identity anchor (key-ring, glasses, checked shirt) in front of a PG building from frame one (beat 1)."
+  },
+  {
+   "id": "M4",
+   "customer_words": "tenant verification",
+   "realisation": "Beat 2: gate of blank ID-card tiles with a red padlock that will not open; burst by the blaster in beat 8 with the DIGITAL KYC tick."
+  },
+  {
+   "id": "M5",
+   "customer_words": "collecting rent",
+   "realisation": "Beat 3: wallet enemy that swallows the coins before the Owner can reach them; burst in beat 8 with the AUTOPAY tick."
+  },
+  {
+   "id": "M6",
+   "customer_words": "tenants leaving without paying rent",
+   "realisation": "Beat 4: tenant with suitcase escapes on an auto-rickshaw leaving a dark empty room; burst in beat 8 with the DUES TRACKED LIVE tick."
+  },
+  {
+   "id": "M7",
+   "customer_words": "no place to do reconciliation",
+   "realisation": "Beat 5: tower of paper registers and receipts collapses on the Owner; burst in beat 8 with the ONE DASHBOARD tick."
+  },
+  {
+   "id": "M8",
+   "customer_words": "solving complaints and so on",
+   "realisation": "Beat 6: swarm of red speech-bubble sprites from a dripping tap and sparking fan knocks him out; burst in beat 8 with the COMPLAINT TICKETS tick."
+  },
+  {
+   "id": "M9",
+   "customer_words": "The game also introduces a cheat code — install RentOK app.",
+   "realisation": "Beat 7: after the grey game-over, a blue phone block descends and the code-composed 'INSTALL / RENTOK APP' types in above it like a cheat entry."
+  },
+  {
+   "id": "M10",
+   "customer_words": "Mario gets a gun sort of power/immunity.",
+   "realisation": "On touching the block the Owner gains a cyan outline glow (immunity) and a blue phone-shaped blaster firing cyan bolts (the 'gun sort of' power), used through beat 8."
+  },
+  {
+   "id": "M11",
+   "customer_words": "It runs and kills all the obstacles and gets the flag.",
+   "realisation": "Beat 8: all five obstacles burst in order at double speed; beat 9: he grabs the pole and the RentOK-coloured flag rises."
+  },
+  {
+   "id": "M12",
+   "customer_words": "Platforms: Instagram Reels / Facebook and YouTube Shorts.",
+   "realisation": "9:16 vertical game view throughout; obstacle labels and ticks kept inside the safe zone away from platform UI."
+  },
+  {
+   "id": "M13",
+   "customer_words": "Duration: 30 seconds.",
+   "realisation": "Ten contiguous beats, 0 to 30 s."
+  },
+  {
+   "id": "M14",
+   "customer_words": "Brand and product source: Official RentOK website, https://rentok.com.",
+   "realisation": "Wordmark asset rentok_wordmark used as supplied (Rent white, Ok cyan, blue #0038FF ground) on the power-up screen (beat 7) and the closing card (beat 10); brand blue and cyan carry the flag and all power-up effects; URL RENTOK.COM on the card."
+  },
+  {
+   "id": "M15",
+   "customer_words": "exact_text_strings: INSTALL, RENTOK APP, TENANT VERIFICATION, COLLECTING RENT, LEFT WITHOUT PAYING, NO RECONCILIATION, COMPLAINTS, the five tick features, RENTOK.COM",
+   "realisation": "Every supplied string is placed exactly once per listing in the copy deck, composed by code, never generated in frame."
+  }
+ ],
+ "brand_timeline": {
+  "first_mark_s": 18.0,
+  "in_context": "RentOK enters as the game's power-up: the wordmark on the phone block's screen at 18 s, named by the cheat-code overlay at 18.6 s; brand blue and cyan then own every effect from 21 s to the flag at 26.5 s and the card at 28.5 s. Before 18 s the blue brick ground quietly carries brand blue without naming the brand.",
+  "spoken": "none"
+ },
+ "ask": {
+  "string_id": "s_install",
+  "surface": "card",
+  "at_s": 28.5
+ },
+ "last_frame": "Closing card: blue #0038FF field, RentOK wordmark centred (Rent white, Ok cyan), INSTALL / RENTOK APP above in white, RENTOK.COM below in cyan; held to 30 s.",
+ "muted_test": "yes",
+ "deviations": [
+  {
+   "from": "Registered multi_shot_story duration band (shorter than 30 s, per the job's own ambiguity marker)",
+   "brief_clause": "Duration: 30 seconds."
+  }
+ ]
+}

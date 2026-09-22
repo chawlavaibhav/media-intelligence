@@ -1,0 +1,164 @@
+pack_id: critique_and_effectiveness
+applicability: [static_image, video, image_sequence]
+decisions:
+  - decision_id: CE-D1
+    question: "One core; every element earning its place?"
+    default: "Grunt test: offer, benefit, action in five seconds, no context (sb_0015). Core by exclusion — proverb, not sound bite (hea_mts_0009, 0008). One adjective, one point (whip_0015, 0004); each added element weakens the rest — keep only the load-bearing (0003). A picture earns its space, sized by importance to the sale (hop_sa_0026)."
+    check: "Three grunt answers in 5 s; core in one sentence; nothing the sale would not miss."
+    ids: [sk_sb_c003_0015, sk_hea_mts_0009, sk_hea_mts_0008, sk_whip_0015, sk_whip_0004, sk_whip_0003, sk_hop_sa_0026]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D2
+    question: "Sell or merely entertain; product the hero?"
+    default: "Measure = brand-preference change; recall appears uncorrelated with purchase (ogx_0031). Liked and selling are seldom one ad (ogl_0021). Product the hero — no dull products, only dull writers (0014); in use, end result, food in motion, close-ups (ogx_0041). Amusement draws the uninterested; money is serious — no amusing, boasting, showing off; one typical buyer (mla_0064, hop_sa_0014). Celebrity, adult cartoons, vignette parades: below average (ogx_0038)."
+    check: "One line says what it sells; product performs; memorable thing = product, not celebrity or gag."
+    ids: [sk_ogx_0031, sk_ogl_c003_0021, sk_ogl_c003_0014, sk_ogx_0041, sk_mla_0064, sk_hop_sa_0014, sk_ogx_0038]
+    feeds: [OBJECTIVE_INTERPRETATION, CORE_CREATIVE_IDEA, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D3
+    question: "Claim credible and concrete?"
+    default: "Specifics — figure, time, sum — over generalities; superlatives convince nobody (ogx_0009). Actions and sensory detail, the only way an idea means the same to all (hea_mts_0012); feeling attaches to an individual, not a category (0016). Flag the buyer or name the place (ogx_0007). Exaggeration is the first reach — knowingly, only on a truth (whip_0031). Exclamation marks read as desperate (0033); puns and rhymes have no persuasive value (0029)."
+    check: "One specific fact; a named person or place; no superlative, exclamation, pun, rhyme; exaggeration on a truth."
+    ids: [sk_ogx_0009, sk_hea_mts_0012, sk_hea_mts_0016, sk_ogx_0007, sk_whip_0031, sk_whip_0033, sk_whip_0029]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D4
+    question: "Attention earned, held, credited to the brand?"
+    default: "First frame is the gate: open with the fire — a visual surprise, one burr; scene parades are below average (ogx_0040). Surprise decays — open a gap, then fill it (hea_mts_0011); the material is the release order (murch_0013). Still reveal: attention to one place, then a second findable element; too small or dim, the viewer leaves (fre_0025); a scale figure's size floor is set by print size (0024). Attribution fails by default: name by 10 s, end on the pack (ogx_0039); one visual device for years (0041); an established mark: retouch, never replace (vig_0013)."
+    check: "Frame one surprises; gap opened and closed; late elements visible at delivery size; name by 10 s; pack last; supplied mark."
+    ids: [sk_ogx_0040, sk_hea_mts_0011, sk_murch_c003_0013, sk_fre_c003_0025, sk_fre_c003_0024, sk_ogx_0039, sk_ogx_0041, sk_vig_c003_0013]
+    feeds: [MESSAGE_AND_INFORMATION_HIERARCHY, AUDIO_AND_EDIT, HARD_CONSTRAINT_CHECK, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D5
+    question: "Story: hero, conflict, stakes answerable at every moment?"
+    default: "Customer hero, brand guide — a brand playing hero competes with the customer (sb_0008, whip_0015). No conflict, no story; a brief opening after purchase cuts to the end of the movie (whip_0011). Stakes named, dosed like salt (sb_0012). Always answerable: what the hero wants, what opposes, life either way (0014). Story pre-orders the message (0004), rehearses action (hea_mts_0018)."
+    check: "Hero, guide, conflict, stakes one line each; no opening after the problem is solved; brand not hero."
+    ids: [sk_sb_c003_0008, sk_whip_0015, sk_whip_0011, sk_sb_c003_0012, sk_sb_c003_0014, sk_sb_c003_0004, sk_hea_mts_0018]
+    feeds: [CORE_CREATIVE_IDEA, MESSAGE_AND_INFORMATION_HIERARCHY, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D6
+    question: "What does audio add; do picture and sound agree?"
+    default: "Supers = spoken words verbatim; on-camera speech holds better than voice-over; background music no measurable good; effects can help; jingles below average, aired only when unscripted listeners decipher them (ogx_0042). Sound creates reality faster than picture; ear helps eye (gote_0048). Music seems to work best channelling an emotion already made (conv_0007); opening music promising a register the piece never keeps is a fault however good (0023); withdrawn dialogue makes sound heard as speech (0019)."
+    check: "Supers = speech; emotion before music; opening sound fits the register; ear gets what the eye lacks."
+    ids: [sk_ogx_0042, sk_gote_c003_0048, sk_conv_c003_0007, sk_conv_c003_0023, sk_conv_c003_0019]
+    feeds: [AUDIO_AND_EDIT, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D7
+    question: "Register: feeling, humour, clear/clever, respect, language?"
+    default: "Interesting first; funny is an accent, maybe the wrong one; register = product × audience, no slapstick on a hospital (whip_0058). Clear/clever overlap: 'don't get it' and 'seen it before' mark the edges (0005); a 1979 study found every commercial misread by 19–40 %: be crystal clear (ogx_0043). Humour can now sell, but very few write funny, else don't (0032; vs mla_0064, CF-03). What they remember is how they felt (murch_0020). Respect, an understood context, delight not intimidation (ppm_0001). Indian-language lines originated, not translated (nnn_0052)."
+    check: "One target feeling; a stranger gets it in one viewing; humour only on a brief clause; vernacular originated."
+    ids: [sk_whip_0058, sk_whip_0005, sk_ogx_0043, sk_ogx_0032, sk_murch_c003_0020, sk_ppm_0001, sk_nnn_0052]
+    feeds: [CORE_CREATIVE_IDEA, DOCTRINE_DEVIATIONS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D8
+    question: "Does every cut earn itself; does the space hold?"
+    default: "Each shot cut to carries new information (gote_0004); each departure motivated by movement or sound in the outgoing shot (0006). Length = time to describe the contents silently (0053), against a fast-cut norm calling three seconds long; action pace is not love-scene pace (0052). Dissolves are said to read languid (0031); fades bound an act, audio up first (0037). The camera is the audience's eye; too much movement covers up (alt_0014). The film world keeps constant direction and distance (gos_0006); screen direction holds until a change is shown: exit left, enter right (0007); a contradicting shot needs a break shot (gote_0017)."
+    check: "Per cut: new thing, reason to leave; shot no shorter than its contents read; transitions and moves motivated; no unshown reversal."
+    ids: [sk_gote_c003_0004, sk_gote_c003_0006, sk_gote_c003_0053, sk_gote_c003_0052, sk_gote_c003_0031, sk_gote_c003_0037, sk_alt_c003_0014, sk_gos_c003_0006, sk_gos_c003_0007, sk_gote_c003_0017]
+    feeds: [AUDIO_AND_EDIT, PRODUCTION_RECIPE, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D9
+    question: "Any colour, tone, text or frame judged alone?"
+    default: "A colour is almost never seen alone — judge each against its neighbours, the most relative medium (alb_0006, 0011). Few judge value across hues by eye (0018). Depth by tonal separation of subject and ground, either way (alt_0015); genre sets the key before a scene is lit (0018), level follows the dramatic line (0022). Text over image needs enough value contrast and follows the structure (sam_0021); differentiated letters read easier, all-caps hardest (alb_0005). Strength is contrast, scale or bold vs light, never impact (vig_0009). Placement: one of three zones, not a coordinate (fre_0017); a vertical frame alone gives no tallness; oppose elements at the long-axis ends (0008)."
+    check: "Grayscale: subject/ground, text/image separate; one key, level follows the emotional line; no all-caps; strength = contrast; zone not ratio."
+    ids: [sk_alb_c003_0006, sk_alb_c003_0011, sk_alb_c003_0018, sk_alt_c003_0015, sk_alt_c003_0018, sk_alt_c003_0022, sk_sam_c003_0021, sk_alb_c003_0005, sk_vig_c003_0009, sk_fre_c003_0017, sk_fre_c003_0008]
+    feeds: [VISUAL_SYSTEM, PRODUCTION_RECIPE, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CE-D10
+    question: "How is the verdict stated, and what gives first?"
+    default: "A verdict is analysis against the brief's objectives, not reaction or redesign (disc_0005); each finding names element, objective, and why it does or does not serve it (0006). A good note: what is wrong, missing or unclear; early, specific, no demand; a fix only illustrates (cat_0015). The visible fault is usually a symptom, target the cause (0011); a right alarm with a wrong diagnosis still helps (0017). When a cut cannot meet all six criteria, give up from the bottom, never emotion before story nor story before rhythm (murch_0019, 0027); emotion first (0020)."
+    check: "Finding = element + objective + why; no change list; fixes only illustrate; competing criteria take the sacrifice order."
+    ids: [sk_disc_0005, sk_disc_0006, sk_cat_c003_0015, sk_cat_c003_0011, sk_cat_c003_0017, sk_murch_c003_0019, sk_murch_c003_0027, sk_murch_c003_0020]
+    feeds: [FAILURE_PREVENTION, DOCTRINE_DEVIATIONS]
+    limits: []
+conflicts:
+  - conflict_id: CF-01
+    decision_ref: CE-D4
+    kind: trades_off_with
+    between: [sk_ogx_0040, sk_ogx_0039]
+    nature: "the first ten seconds must carry both the surprise that stops the screen-out and the brand name that prevents misattribution"
+    resolution_rule: "Surprise in frame one; name by ten seconds; end on the pack."
+  - conflict_id: CF-02
+    decision_ref: CE-D7
+    kind: trades_off_with
+    between: [sk_whip_0005, sk_whip_0001]
+    nature: "cleverness is bought with comprehension time; the quick get is named more important than creativity (0001, not compiled here)"
+    resolution_rule: "Spin only while a stranger gets it in one viewing."
+  - conflict_id: CF-03
+    decision_ref: CE-D7
+    kind: contradicts
+    between: [sk_mla_0064, sk_ogx_0032]
+    nature: "Hopkins bans amusement (people do not buy from clowns); Ogilvy quotes that line and reverses it on later measurement, bounded to the very few who can write funny"
+    resolution_rule: "No humour unless the brief asks and the writer is one of the few; record it."
+  - conflict_id: CF-04
+    decision_ref: CE-D9
+    kind: contradicts
+    between: [sk_alt_c003_0018, sk_alt_c003_0011]
+    nature: "musical comedy is exempted from the requirement that lighting agree with an established source (0011, not compiled here)"
+    resolution_rule: "Not the exempt genre: one nameable source unless the brief names a pastiche."
+  - conflict_id: CF-05
+    decision_ref: CE-D8
+    kind: contradicts
+    between: [sk_gos_c003_0007, sk_gos_c003_0012]
+    nature: "jumping the line is the failure of the screen-direction rule (0012, not compiled here)"
+    resolution_rule: "Crossed line = fault unless a shown change or a break shot restores direction."
+  - conflict_id: CF-06
+    decision_ref: CE-D9
+    kind: contradicts
+    between: [sk_alt_c003_0015, sk_alt_c003_0017]
+    nature: "symmetrical tonal separation against a preferred dark-to-light direction for distance (0017, not compiled here)"
+    resolution_rule: "0015: subject vs ground, either way; 0017: only three or more staged depth planes."
+  - conflict_id: CF-07
+    decision_ref: CE-D2
+    kind: contradicts
+    between: [sk_ogl_c003_0014, sk_ogl_c003_0021]
+    nature: "the source sets product-as-hero against the pursuit of style and originality; a hero shot can still be liked rather than sold"
+    resolution_rule: "Hero is the form, selling the criterion: a hero shot that does not sell fails."
+  - conflict_id: CF-08
+    decision_ref: CE-D2
+    kind: contradicts
+    between: [sk_ogx_0031, sk_ogx_0006]
+    nature: "the print chapter's news claim rests on recall (+22 %, 0006, not compiled here); the television chapter finds recall uncorrelated with purchase"
+    resolution_rule: "Film/video: brand-preference change; recall figures are print claims."
+waivers:
+  - {partner: sk_hop_sa_0008, reason: '0008 is the salesmanship analogy that grounds the working method; CE-D2 consumes the typical-buyer rule and the three prohibitions as stated, and the analogy does not change them.', ref: sk_hop_sa_0014, relation: depends_on}
+  - {partner: sk_hop_sa_0031, reason: 0031 says the headline hails only the readers the advertiser can interest; CE-D2 makes no headline decision (CC-D9 does) and the prohibitions consumed are unchanged by it., ref: sk_hop_sa_0014, relation: qualifies}
+  - {partner: sk_hop_sa_0021, reason: 0021 is the evidential ground (mail order as the severest test); CE-D1 consumes the earn-its-space rule as stated; the marker carries the evidence character., ref: sk_hop_sa_0026, relation: depends_on}
+  - {partner: sk_murch_c003_0011, reason: 0011 makes what counts as a bad bit film-relative; CE-D10 consumes only the ranked sacrifice order; which bit is bad in this piece stays the checker's judgement and the order is unchanged., ref: sk_murch_c003_0019, relation: qualified_by}
+  - {partner: sk_murch_c003_0028, reason: '0028 is the perceptual justification (higher criteria obscure lower failures, hedged ''seems to''); it supports the order CE-D10 consumes and adds no condition.', ref: sk_murch_c003_0019, relation: qualified_by}
+  - {partner: sk_murch_c003_0032, reason: 0032 states the standpoint (occupy the audience's position) underlying the six criteria; CE-D10's verdict already takes the audience's side and the order is unchanged., ref: sk_murch_c003_0019, relation: qualified_by}
+  - {partner: sk_murch_c003_0030, reason: '0030 says the top three are too tightly bound to trade easily; CE-D10 states the top-three order verbatim and trades only upward from the bottom, so the bound stands.', ref: sk_murch_c003_0027, relation: qualified_by}
+  - {partner: sk_ogl_c003_0020, reason: '0020 is direct-response format practice (two-minute spots, late night, long copy); CE-D2 consumes the product-as-hero instruction only; format is the brief''s parameter.', ref: sk_ogl_c003_0014, relation: contradicts}
+  - {partner: sk_whip_0006, reason: '0006 is the writing procedure (flat statement first, then spin); CE-D7 checks the finished piece against the overlap''s two failure marks and runs no writing procedure (TC-D4 does).', ref: sk_whip_0005, relation: qualifies}
+  - {partner: sk_whip_0007, reason: 0007 names the 5–40 % travel wit asks of the viewer; CE-D7 consumes only the two rejection marks and CF-02 already bounds the travel by the one-viewing get; the marks are unchanged., ref: sk_whip_0005, relation: qualified_by}
+  - {partner: sk_whip_0016, reason: '0016 is brief-writing precision (vague inhibits, too precise becomes the execution); CE-D7 judges an execution against a brief already written and makes no strategy decision.', ref: sk_whip_0005, relation: qualified_by}
+  - {partner: sk_whip_0013, reason: 0013 is the deprivation shape he 'usually' prefers; CE-D5 checks only that a conflict exists and the piece does not open after purchase; which conflict shape is CD-D4's decision., ref: sk_whip_0011, relation: depends_on}
+  - {partner: sk_whip_0053, reason: '0053 (one element must be the boss) is the hierarchy precondition compiled in TC-D6; CE-D1 consumes only the dilution arithmetic as a removal check, which 0053 does not alter.', ref: sk_whip_0003, relation: depends_on}
+  - {partner: sk_whip_0061, reason: 0061 is client-revision defence (the full-line request as the change most asked for); CE-D1 checks the finished piece for one point; the defence doctrine does not change the count., ref: sk_whip_0004, relation: qualified_by}
+  - {partner: sk_alb_c003_0014, reason: '0014 says influence runs on light and hue at once; CE-D9 consumes only that value across hues is unreliable by eye, which 0014 supports and does not narrow.', ref: sk_alb_c003_0018, relation: qualifies}
+  - {partner: sk_conv_c003_0009, reason: '0009 gives source music a different route (it reads as accident, not commentary); CE-D6 consumes the score tendency with its ''seems to'' hedge; score-versus-source is EP-D8 / CD-D10''s decision and does not change the check.', ref: sk_conv_c003_0007, relation: qualified_by}
+  - {partner: sk_gote_c003_0028, reason: 0028 makes duration govern how a dissolve reads; CE-D8 consumes the register as received opinion ('it is often said') and sets no duration — EP-D7's decision., ref: sk_gote_c003_0031, relation: depends_on}
+  - {partner: sk_gote_c003_0054, reason: 0054 defines the action line that establishes screen direction (CG-D2); CE-D8 checks maintained direction and the break-shot remedy only; the definition does not change the check., ref: sk_gote_c003_0017, relation: depends_on}
+  - {partner: sk_gos_c003_0005, reason: 0005 says the frame edges are the audience's directional reference; CE-D8's exit-left/enter-right check is already stated in edge terms; the definition adds no condition., ref: sk_gos_c003_0007, relation: depends_on}
+  - {partner: sk_mla_0010, reason: '0010 endorses curiosity (an undisclosed reward) as the strongest activating device while 0064 refuses amusement, both on who is attracted; CE-D2 consumes only the amusement verdict; curiosity as a hold device is CE-D4 via hea_mts_0011 and the verdict is unchanged.', ref: sk_mla_0064, relation: trades_off_with}
+  - {partner: sk_ogx_0034, reason: 0034 (unpolished user testimony under challenge) is the credible end of the same perceived-interest axis; CE-D2 consumes only the below-average verdicts; testimonial casting is CC-D7's decision., ref: sk_ogx_0038, relation: trades_off_with}
+  - {partner: sk_sb_c003_0003, reason: 0003 is the cause (processing cost disengages); CE-D5 consumes the stated remedy — story pre-orders the message — which the cause supports and does not narrow., ref: sk_sb_c003_0004, relation: qualifies}
+  - {partner: sk_sb_c003_0006, reason: 0006 is the seven-element framework; CE-D5 consumes stakes and their dosing only; the full framework is not compiled and the dose is unchanged., ref: sk_sb_c003_0012, relation: qualifies}
+  - {partner: sk_sb_c003_0017, reason: 0017 hardens the elements into rules that cannot be broken; 0012 is the source's own statement that they are not applied evenly. CE-D5 consumes 0012; the rules framing is not compiled and does not change the dose (same ruling as CD / CC)., ref: sk_sb_c003_0012, relation: contradicts}
+  - {partner: sk_vig_c003_0011, reason: '0011 is the timelessness credo (against fashion, for primary forms); CE-D9 consumes only the strength-is-contrast-not-impact distinction, which stands without the credo.', ref: sk_vig_c003_0009, relation: depends_on}
+  - {partner: sk_vig_c003_0011, reason: '0011 is timelessness applied generally; CE-D4 consumes the retouch-never-replace rule for an established mark, which 0011 supports and does not narrow.', ref: sk_vig_c003_0013, relation: qualified_by}
+  - {partner: sk_disc_0022, reason: 0022 says critique fails without a shared foundation of objectives; in this pack the brief supplies the objectives CE-D10 judges against; the foundation-building remedy is upstream of production and not compiled., ref: sk_disc_0005, relation: depends_on}
+  - {partner: sk_cat_c003_0018, reason: '0018 adds how a note should land (additive, not competitive); CE-D10 consumes what a note must contain; the manner requirement does not change the five properties.', ref: sk_cat_c003_0015, relation: qualified_by}
+  - {partner: sk_disc_0003, reason: 0003 is the reaction form of feedback the definition is drawn against; CE-D10's default already excludes reaction; the exclusion is consumed as stated., ref: sk_disc_0005, relation: contradicts}
+  - {partner: sk_disc_0032, reason: '0032 is the approval-gate review that cannot host critique; CE-D10 is the diagnostic check of a finished board, not the adoption gate (the Controller''s step, outside this pack).', ref: sk_disc_0005, relation: contradicts}
+  - {partner: sk_disc_0020, reason: '0020 bounds critique as not a consensus mechanism; CE-D10 yields findings per decision id, not agreement; the bound stands and adds no condition.', ref: sk_disc_0005, relation: qualified_by}
+  - {partner: sk_fre_c003_0016, reason: '0016 rejects placement rules outright, which is why the zones are approximate; CE-D9 consumes the three zones with the ''not a coordinate'' hedge and adds no rule.', ref: sk_fre_c003_0017, relation: qualified_by}
+  - {partner: sk_gos_c003_0008, reason: 0008 extends screen direction from movement to sight lines; CE-D8's check is stated for movement; eye-line matching is CG-D3's decision and the movement check is unchanged., ref: sk_gos_c003_0007, relation: qualified_by}
+  - {partner: sk_murch_c003_0029, reason: '0029 hedges the percentages and supplies the intervals; CE-D10 uses no percentage, only the order, which is unchanged.', ref: sk_murch_c003_0019, relation: qualified_by}
+  - {partner: sk_murch_c003_0031, reason: 0031 says all six are usually satisfiable and must be aimed at; CE-D10's default is already conditioned on the case where they cannot be — 0031 is that condition's complement., ref: sk_murch_c003_0027, relation: qualified_by}
+  - {partner: sk_ogx_0036, reason: 0036 admits characters and emotion although the measure cannot quantify them; CE-D2 consumes the measure and its rejection of recall; emotional appeal is CD-D7's decision and the corpus's silence on its measure is a limit line., ref: sk_ogx_0031, relation: qualified_by}
+  - {partner: sk_ogx_0021, reason: 0021 is the print/recall statement of the celebrity finding; CE-D2 consumes the television statement (0038) and the measure; the recall-versus-persuasion divergence is the source's own evidence for the measure and does not change it., ref: sk_ogx_0031, relation: trades_off_with}
+pack_limits:
+  - "Coverage: ogx = 1983 US 30 s TV on brand preference; hop/mla = 1920s print; gote/gos/murch/conv/alt = film/TV craft; disc/cat = design reviews. None treats 9:16 feeds, sound-off autoplay, sub-10 s ads or thumb-stop metrics, nor whether a piece must work with audio removed — CE-D6 governs the audio present."
+  - "India: only Pandey (2015) and Parameswaran; ASCI, category/festival codes, regional register uncovered — ASCI outside Canon."
+  - "Uncovered: liking, views, engagement as predictors (0031 rejects recall, TV only); emotion's effect unquantified (0036); pre-testing; checker independence; 'enough' contrast (sam_0021). Still/carousel: CE-D4, D6, D8 are timeline craft; nothing replaces them."

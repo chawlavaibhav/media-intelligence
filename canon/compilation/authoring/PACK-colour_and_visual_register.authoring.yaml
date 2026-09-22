@@ -1,0 +1,122 @@
+pack_id: colour_and_visual_register
+applicability: [static_image, video, image_sequence]
+decisions:
+  - decision_id: CV-D1
+    question: "What is the palette; which one element is saturated?"
+    default: "One saturated element on a graded-down ground, and it is the product — the hero wherever possible (ogl_0014). A contrasting colour finds the product even blurred and distant if one hue is nearly the only colour in frame and the link was made in an earlier, closer shot (ms_0016); two competing cues confuse (0019). Strength is contrast, never impact — usually vulgarity (vig_0009); primary shapes and colours, message over titillation (0011)."
+    check: "Board names the one saturated element and the graded-down ground; nothing else competes; in video the colour is tied to the product in a closer shot first."
+    ids: [sk_ogl_c003_0014, sk_ms_c003_0016, sk_ms_c003_0019, sk_vig_c003_0009, sk_vig_c003_0011]
+    feeds: [VISUAL_SYSTEM, GENERATION_PROMPTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D2
+    question: "Which one cue moves attention in a moving frame?"
+    default: "One cue per beat. Colour directs attention as well as any camera move (ms_0016); a static wide, dominant subject facing camera, needs no move (0017); a wanted move hides behind an action (0010). Never rack focus between planes — cut to a close-up (0019). Every move and every hold has a reason (0002); the camera is the audience's eye, too much movement covers up (alt_0014); the audience registers the product, not the method (ms_0018)."
+    check: "Each beat names its one cue; no focus racking; each move or hold has a reason."
+    ids: [sk_ms_c003_0016, sk_ms_c003_0017, sk_ms_c003_0010, sk_ms_c003_0019, sk_ms_c003_0002, sk_alt_c003_0014, sk_ms_c003_0018]
+    feeds: [VISUAL_SYSTEM, AUDIO_AND_EDIT, GENERATION_PROMPTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D3
+    question: "How is any colour judged — alone or against its neighbours?"
+    default: "Never alone: a colour is almost never seen unrelated to others (alb_0006); colour is the most relative medium (0011). One colour on two grounds reads as two (0012); influence runs on lightness and hue at once (0014), some colours influence, others accept (0013), strongest for a small piece on a large ground (0015); meaning is in the relations (0007). Very few judge lightness across hues by eye (0018): measure."
+    check: "Colour judged on a composite of the real frame, never a swatch; lightness differences measured as luminance."
+    ids: [sk_alb_c003_0006, sk_alb_c003_0011, sk_alb_c003_0012, sk_alb_c003_0014, sk_alb_c003_0013, sk_alb_c003_0015, sk_alb_c003_0007, sk_alb_c003_0018]
+    feeds: [VISUAL_SYSTEM, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D4
+    question: "How is the brand colour specified and verified?"
+    default: "By value, on pixels. A colour name yields as many colours as listeners (alb_0001); colour memory is poor (0002); names are inadequate (0003). Supply the exact value; verify it on delivered pixels against the real ground, which shifts it (0012, 0006); a miss is a fix. Supplied mark untouched — an established logo is equity, identity is the system (vig_0013, 0011); the same image year after year (ogl_0007). Logotype text escapes contrast only under a brand mandate (wcag_0004), never by choice — use the higher-contrast variant (0034)."
+    check: "No brand colour by name alone; delivered brand pixels in context match the value or are corrected; mark is the supplied file; logotype under 3:1 is the brand's own variant."
+    ids: [sk_alb_c003_0001, sk_alb_c003_0002, sk_alb_c003_0003, sk_alb_c003_0012, sk_alb_c003_0006, sk_vig_c003_0013, sk_vig_c003_0011, sk_ogl_c003_0007, sk_wcag_0004, sk_wcag_0034]
+    feeds: [VISUAL_SYSTEM, DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, HARD_CONSTRAINT_CHECK, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D5
+    question: "How does the product separate from its ground, hue aside?"
+    default: "By tone, either direction (alt_0015); the dark-to-light progression (0017) governs only staged depth planes. Cold grounds separate warm subjects; warm blends into warm (0003, monochrome film). Colour is never the only means of a distinction (wcag_0007); a ≥ 3:1 lightness difference is itself the second means unless the hue must be identified (0038). Few judge lightness across hues (alb_0018): measure the product edge."
+    check: "Separation survives grayscale; product edge ≥ 3:1 luminance, or a second non-colour cue (edge, shadow, finish) named; depth planes near-dark to far-light."
+    ids: [sk_alt_c003_0015, sk_alt_c003_0017, sk_alt_c003_0003, sk_wcag_0007, sk_wcag_0038, sk_alb_c003_0018]
+    feeds: [VISUAL_SYSTEM.placement_zone, GENERATION_PROMPTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D6
+    question: "What makes the mood — level, or light character and grade?"
+    default: "Character. Mood comes from the quality of light — direction, diffusion, shadows — never from exposure level (alt_0025); quantity is exposure, quality is orientation, mood, beauty, depth (0013). One consistent direction — audiences read light untaught (0026); aim at the viewer's mental image, not literal nature (0027). Level follows the dramatic line: bright for gaiety, lower for sadness, deep blacks and glaring whites for tragedy (0022)."
+    check: "Mood attributable to named light character and grade, not a brightness slider; one light direction per shot; a level change between beats has a reason."
+    ids: [sk_alt_c003_0025, sk_alt_c003_0013, sk_alt_c003_0026, sk_alt_c003_0027, sk_alt_c003_0022]
+    feeds: [VISUAL_SYSTEM, PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D7
+    question: "Which key does the genre set; when does the brief override it?"
+    default: "Decide the key of the whole piece from its category before any scene is lit (alt_0018): comedy high and bright — low key spoils it; drama for mood with its ups and downs (0022); mystery its own. The key still appears to come from one nameable fictional source, found first (0011). Override only on a brief clause."
+    check: "Board states the key (high / low / mixed) with its genre reason; key agrees with a named fictional source; any exemption cites the brief clause."
+    ids: [sk_alt_c003_0018, sk_alt_c003_0022, sk_alt_c003_0011]
+    feeds: [VISUAL_SYSTEM.implied_light_source, PRODUCTION_RECIPE, DOCTRINE_DEVIATIONS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D8
+    question: "What contrast must the palette leave for anything readable?"
+    default: "Grade so text measures. Text over an image needs value contrast and follows the structure beneath it (sam_0021). Text ≥ 4.5:1 (wcag_0001) by luminance ratio (0014); large text — ≥ 18 pt or 14 pt bold (0021) — ≥ 3:1 (0002), wider strokes reading at lower contrast (0031), never a thin or unfamiliar face (0022); unrounded; a thin face passes nominally yet fails — thicken or exceed (0033). Narrow outline is letter, wide halo is ground (0018). Exempt only decoration, swappable words (0027), or incidental text like a street sign in a photo (0003, 0035). All-caps is the hardest read (alb_0005); measure (0018)."
+    check: "Each text zone reports its ratio at darkest and lightest point: ≥ 4.5:1, or ≥ 3:1 with size and weight; no all-caps running line; no thin face."
+    ids: [sk_sam_c003_0021, sk_wcag_0001, sk_wcag_0014, sk_wcag_0021, sk_wcag_0002, sk_wcag_0031, sk_wcag_0022, sk_wcag_0033, sk_wcag_0018, sk_wcag_0027, sk_wcag_0003, sk_wcag_0035, sk_alb_c003_0005, sk_alb_c003_0018]
+    feeds: [VISUAL_SYSTEM, DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D9
+    question: "Indian audience — saturation, regional codes, vernacular register?"
+    default: "Saturation as a claim on attention is a documented convention, not a rule: Sivakasi presses retouched for maximum saturation on a practitioner theory of attention, a practice that outlived its cause, called gaudy by its own makers (jgb_0020). Never pick saturation by an imagined audience class — 'the masses' is producers' rhetoric, not a taste line (0090). Regional iconographic codes are the main ground of pre-press rejection (0040) and the condition on which a devotional image works (0130); in a fixed subject only colour, dress, ornament vary (0070). Bazaar imagery introduced unfamiliar products (nnn_0043); vernacular register by script plus an unstyled, unaspirational small-town setting (0019); one flat brand ground held across hundreds of pieces (0021); Hindi originated, not translated (0052)."
+    check: "Saturation named with its attention job, not an audience class; a regional or devotional subject lists its codes; Hindi originated; vernacular setting deliberate."
+    ids: [sk_jgb_0020, sk_jgb_0090, sk_jgb_0040, sk_jgb_0130, sk_jgb_0070, sk_nnn_0043, sk_nnn_0019, sk_nnn_0021, sk_nnn_0052]
+    feeds: [VISUAL_SYSTEM, CORE_CREATIVE_IDEA, DOCTRINE_DEVIATIONS, FAILURE_PREVENTION]
+    limits: []
+  - decision_id: CV-D10
+    question: "What overall register — quality or loud?"
+    default: "Quality. Most products get an image of quality, above all those 'worn' in public; cheap-looking advertising rubs off (ogl_0008); every execution projects the same brand image (0007). Strength is contrast and intellectual elegance, never impact for its own sake (vig_0009); against fashion: economy, message over titillation (0011). The product is the hero (ogl_0014); the ad admired for style and the ad that sells are seldom the same (0021)."
+    check: "Register named in one line with its product-and-audience reason; nothing loud without a job; palette matches prior work."
+    ids: [sk_ogl_c003_0008, sk_ogl_c003_0007, sk_vig_c003_0009, sk_vig_c003_0011, sk_ogl_c003_0014, sk_ogl_c003_0021]
+    feeds: [VISUAL_SYSTEM, CORE_CREATIVE_IDEA, FAILURE_PREVENTION]
+    limits: []
+conflicts:
+  - conflict_id: CF-01
+    decision_ref: CV-D5
+    kind: contradicts
+    between: [sk_alt_c003_0015, sk_alt_c003_0017]
+    nature: "symmetrical tonal separation against a preferred direction for distance; both stated in the source"
+    resolution_rule: "0015 governs subject against ground, either direction; 0017 only three or more staged depth planes (near dark, far light)."
+  - conflict_id: CF-02
+    decision_ref: CV-D7
+    kind: contradicts
+    between: [sk_alt_c003_0018, sk_alt_c003_0011]
+    nature: "musical comedy is exempted from the requirement that lighting agree with an established source"
+    resolution_rule: "A product ad is not the exempt genre: key agrees with the fictional source (0011) unless the brief names a theatrical pastiche — a deviation on CV-D7."
+  - conflict_id: CF-03
+    decision_ref: CV-D2
+    kind: contradicts
+    between: [sk_ms_c003_0017, sk_ms_c003_0010]
+    nature: "the static-master technique solves the attention problem without a camera move and accepts a cut as fallback, against the chapter's organising answer of hiding the move behind an action"
+    resolution_rule: "Two people in continuous movement: 0017 (static wide); a shift between places: 0010 (move hidden behind an action); either with its reason."
+  - conflict_id: CF-04
+    decision_ref: CV-D10
+    kind: contradicts
+    between: [sk_ogl_c003_0014, sk_ogl_c003_0021]
+    nature: "stored as opposition: product-as-hero with simplicity against the pursuit of style and originality; one source's stance from two ends"
+    resolution_rule: "A style-led register that displaces the product loses (0014); the criterion is selling (0021); style needs a brief clause."
+waivers:
+  - {ref: sk_ogl_c003_0014, relation: contradicts, partner: sk_ogl_c003_0020, reason: "the stored opposition is the source setting product-as-hero against the cult of creativity; 0020's content — copy direct-response advertisers on commercial length, daypart and copy length — is not consumed by CV-D1 or CV-D10, which take only the product-as-hero instruction (same waiver as commercial_communication)."}
+  - {ref: sk_ms_c003_0016, relation: trades_off_with, partner: sk_ms_c003_0014, reason: "the trade-off is a lens choice deciding what the background does (blur for 0016, a legible reflection for 0014). CV-D1/D2 consume 0016 only for a colour tied to the subject in an earlier closer shot directing attention; they decide no lens, and the reflection technique is not compiled."}
+  - {ref: sk_ms_c003_0010, relation: qualified_by, partner: sk_ms_c003_0001, reason: "0001 says every recipe is stated as geometry and timing of a move, not as a rig; CV-D2 consumes 0010 only for hiding a move behind an action; how the move is executed does not change whether to move."}
+  - {ref: sk_ms_c003_0010, relation: qualified_by, partner: sk_ms_c003_0004, reason: "0004 ranks the reader's own camera test above every recommendation, conditioning each recipe as a proposal to test; CV-D2 consumes 0010 as a default to be edited, which is the same status."}
+  - {ref: sk_alb_c003_0012, relation: depends_on, partner: sk_alb_c003_0009, reason: "0009 is the classroom method (colour paper for exact repeatability) by which the one-colour-looks-like-two effect is demonstrated; CV-D3/D4 consume the effect itself — the ground shifts the colour — and the demonstration medium does not change it."}
+  - {ref: sk_alb_c003_0012, relation: qualified_by, partner: sk_alb_c003_0017, reason: "0017 states that the classroom studies are not judged on pleasantness or harmony; CV-D3/D4 consume 0012 only for the fact of the shift and judge it by measurement, so the exercise's grading criterion does not change the default."}
+  - {ref: sk_alb_c003_0012, relation: qualified_by, partner: sk_alb_c003_0016, reason: "0016 is pedagogy — the class is shown the effect and left to find its conditions by trial and error; CV-D3/D4 consume 0012 only for the fact that a ground shifts a colour, and how a classroom is taught to discover it does not change the default."}
+  - {ref: sk_jgb_0090, relation: qualified_by, partner: sk_jgb_0180, reason: "0180 is the author's own evidential bound — interview accounts are narratives co-produced with the researcher, to be read for gaps between what informants say and do; CV-D9 consumes 0090 only as the caution against choosing saturation by an imagined audience class, which is itself built on that bound; the bound types the evidence (carried by the marker) and does not change the caution."}
+  - {ref: sk_alt_c003_0003, relation: trades_off_with, partner: sk_alt_c003_0004, reason: "0004 wants specular highlights on shiny props while 0003 wants cold, quiet grounds; CV-D5 consumes 0003 only for the ground's colour temperature against a warm subject. Surface finish and wanted speculars are product_appearance's job (PA-D1, PA-D5 CF-02) and do not change the ground rule."}
+  - {ref: sk_ogl_c003_0007, relation: qualified_by, partner: sk_ogl_c003_0013, reason: "0013 is the thirty-year durability test of a big idea, which the source says consistency serves; CV-D4/D10 consume only the rule to project the same image year after year, and the idea-durability test points the same way without changing it."}
+  - {ref: sk_ogl_c003_0007, relation: qualified_by, partner: sk_ogl_c003_0017, reason: "0017 is the operational form of consistency in media scheduling — repeat a winning advertisement until it stops selling; CV-D4/D10 consume only the rule that every execution projects the same image; how long a campaign runs is not a decision of this pack."}
+  - {ref: sk_wcag_0001, relation: qualified_by, partner: sk_wcag_0030, reason: "0030 supplies the derivation of 4.5:1 (a 3:1 baseline times a 1.5 contrast-sensitivity loss at 20/40 acuity); CV-D8 consumes the threshold as a number to be met; where the number came from does not change it."}
+  - {ref: sk_wcag_0014, relation: depends_on, partner: sk_wcag_0020, reason: "0020 is the sRGB relative-luminance arithmetic the ratio consumes; CV-D8 consumes the ratio as the number a contrast checker reports, and the checker implements 0020; the arithmetic changes nothing in the default."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0015, reason: "0015 permits evaluating with anti-aliasing off (the measured object is the specified colour pair); CV-D8 measures the composed colour pair directly and already carries 0033's nominal-pass warning, which is the consequence 0015 has for thin faces."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0016, reason: "0016 fixes the background as the specified one, white assumed when none is given; CV-D8 states its own background rule for text over a graded image (the pixels under the letters, at darkest and lightest point); a web-default assumption of white does not arise in a composited frame."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0017, reason: "0017 makes specifying one colour of the pair without the other a failure of web markup; a composited frame always has both colours present, so the half-specification failure cannot occur and does not change the default."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0019, reason: "0019 bounds evaluation to colour pairs the author expects adjacent; CV-D8 already names the pairs to measure (each text zone against its actual ground); the user-agent recolouring carve-out has no counterpart in a fixed frame."}
+  - {ref: sk_wcag_0014, relation: qualified_by, partner: sk_wcag_0032, reason: "0032 explains why the ratio has no hue term (colour-vision deficiency does not damage light-dark perception); CV-D8 already directs measurement by luminance, not hue, on alb_0018's ground; the reasoning confirms the default and does not change it."}
+  - {ref: sk_wcag_0021, relation: qualified_by, partner: sk_wcag_0023, reason: "0023 fixes the measured size as the size delivered by the user agent, excluding user zoom; CV-D8 consumes the 18 pt / 14 pt bold test at the delivered frame size, which is the same rule for a fixed frame; no zoom case arises."}
+  - {ref: sk_wcag_0021, relation: qualified_by, partner: sk_wcag_0024, reason: "0024 records that 18 pt and 14 pt bold come from large-print conventions, not a contrast experiment; CV-D8 consumes the size-and-weight test as stated; its provenance does not change it and the marker carries the evidence character."}
+pack_limits:
+  - "Coverage delta: alb_* = 1963 colour teaching; alt_* = 1949 monochrome film; ms_* = narrative directing (ms_0016 read onto a product); jgb_* = Sivakasi calendar trade 1994–2001, not ads; nnn_0019/0021 = one plate each; wcag_* = web thresholds (CV-D5's 3:1 is a UI colour-coding rule transferred here). None treats grading, 9:16 feeds, phones, platform recompression or 'vivid' display modes; CV-D8 thresholds are Latin-only: every default transfers untested."
+  - "No source names a palette size, hue, saturation or colour temperature for a product ad; CV-D1 is this pack's reading of ms_0016 and vig_0009. Harmony, warm/cool psychology, category codes, festival palettes, skin tones, Indian daylight: uncovered — assume neither way. Restraint vs saturation is unarbitrated: vig_0011/ogl_0008 prescribe quality; jgb_0020 documents, does not recommend."

@@ -1,0 +1,426 @@
+# Exported from the in-code tables of compile_pilot_packs.py (REP-05) on 2026-09-22; extended to the seed list under CONTROLLER-CANON-COMPLETION-2026-09-22; CA-D5 and CA-D10 restored to their pilot form after CHECK-pilot-extensions.md (the folded tone/joins content is consumed by CV/PA/CG/EP).
+pack_id: composition_and_attention
+applicability:
+- static_image
+- video
+- image_sequence
+decisions:
+- decision_id: CA-D1
+  question: What reads first, second, third?
+  default: 'One dominant element by contrast — power is contrast, not ''impact'' (vig_0009); eyes attract more than
+    probably anything (fre_0020); competing cues confuse (ms_0019); total control is self-defeating (murch_0018;
+    misdirection 0033 per CF-15). A late-found second element stays findable — too small or dim and the viewer leaves
+    (fre_0025); a scale figure registers only above a size the delivered size sets (0024). Coded figures, dress
+    and props read as the code the audience holds (dpci_0120, 0070, 0040; a style dated as ended, 0190): state the
+    meaning, period code only.'
+  check: Three reads, one dominant cue each; second reads visible at delivered size; coded elements dated.
+  ids:
+  - sk_fre_c003_0020
+  - sk_vig_c003_0009
+  - sk_murch_c003_0018
+  - sk_ms_c003_0019
+  - sk_murch_c003_0033
+  - sk_fre_c003_0025
+  - sk_fre_c003_0024
+  - sk_dpci_0120
+  - sk_dpci_0070
+  - sk_dpci_0040
+  - sk_dpci_0190
+  feeds:
+  - VISUAL_SYSTEM.attention_order
+  - MESSAGE_AND_INFORMATION_HIERARCHY
+  - FAILURE_PREVENTION
+  limits: []
+- decision_id: CA-D2
+  question: Where do subject, text and mark sit?
+  default: 'Off-centre in one of three approximate zones (fre_001; fre_0017, 0018); centre only when the scene points
+    inward (0019); extreme placement needs a visible reason (0021); no coordinate rules (0016 vs 0028; CF-05) —
+    zones, never grids or ratios. Text over the image: value contrast to read, playing off the image, following
+    the structure beneath (sam_0021); the supplied mark is kept: an established logo is equity, identity the system,
+    no redesign for its own sake (vig_0013; timeless, 0011).'
+  check: Zone plus reason, no ratio or grid; text reads by value contrast on the structure; mark unaltered.
+  ids:
+  - sk_fre_c003_0015
+  - sk_fre_c003_0016
+  - sk_fre_c003_0017
+  - sk_fre_c003_0018
+  - sk_fre_c003_0019
+  - sk_fre_c003_0021
+  - sk_fre_c003_0028
+  - sk_fre_c003_0029
+  - scs_fre_c003_001
+  - sk_sam_c003_0021
+  - sk_vig_c003_0013
+  - sk_vig_c003_0011
+  feeds:
+  - VISUAL_SYSTEM.placement_zone
+  - GENERATION_PROMPTS
+  - FAILURE_PREVENTION
+  limits: []
+- decision_id: CA-D3
+  question: How do the edges hold the subject?
+  default: 'One edge treatment per shot (fre_002): tight fit, slight deliberate gap (fre_0006); busy scene, edges
+    stop mattering (0005); deliberate halving of a symmetrical subject (0007); straight edges near the frame read
+    magnetic (0003); thin a bright framing element (0004).'
+  check: One named treatment; no accidental near-tangency at the frame edge.
+  ids:
+  - sk_fre_c003_0002
+  - sk_fre_c003_0005
+  - sk_fre_c003_0006
+  - sk_fre_c003_0007
+  - sk_fre_c003_0003
+  - sk_fre_c003_0004
+  - sk_fre_c003_0030
+  - scs_fre_c003_002
+  feeds:
+  - VISUAL_SYSTEM
+  - GENERATION_PROMPTS
+  - FAILURE_PREVENTION
+  limits: []
+- decision_id: CA-D4
+  question: Use a frame within the frame?
+  default: No compulsion (fre_0022); a subject passing behind an opening is shot as it sits cleanly inside, breaking
+    no edges; thin a bright framing element, else it takes over (0004).
+  check: A framing element is darker or thinner than what it frames.
+  ids:
+  - sk_fre_c003_0022
+  - sk_fre_c003_0004
+  feeds:
+  - VISUAL_SYSTEM
+  - GENERATION_PROMPTS
+  limits: []
+- decision_id: CA-D5
+  question: Balance the frame, or refuse the eye rest?
+  default: Classical balance is the default; it weighs size AND tone together (fre_0028, 0029; fre_005); refusing
+    the eye a resting place (0032) is the declared energetic exception. Symmetry imposes order on a subject that
+    has none (0030); diagonals need strict horizontals and verticals to divide against (0033, 0034 per CF-07).
+  check: Declared balanced or deliberately restless; if balanced, a grayscale check shows tonal weight agreeing
+    with size weight.
+  ids:
+  - sk_fre_c003_0028
+  - sk_fre_c003_0029
+  - sk_fre_c003_0030
+  - sk_fre_c003_0032
+  - sk_fre_c003_0033
+  - sk_fre_c003_0034
+  - sk_fre_c003_0007
+  - sk_fre_c003_0016
+  - scs_fre_c003_005
+  feeds:
+  - VISUAL_SYSTEM
+  - GENERATION_PROMPTS
+  - FAILURE_PREVENTION
+  limits: []
+- decision_id: CA-D6
+  question: Which orientation and aspect?
+  default: 'By the scene''s shapes (fre_003): a vertical frame is not itself tallness (fre_0008); a square reads
+    strict, eye inward (0009, 0010); a wide frame needs shapes calling for it (0011).'
+  check: Aspect justified by a named shape, not the platform alone.
+  ids:
+  - sk_fre_c003_0008
+  - sk_fre_c003_0009
+  - sk_fre_c003_0010
+  - sk_fre_c003_0011
+  - scs_fre_c003_003
+  feeds:
+  - VISUAL_SYSTEM
+  - DELIVERABLE
+  - FAILURE_PREVENTION
+  limits:
+  - 'No accepted source treats fixed 9:16 feed frames (A01/G2): every aspect and orientation claim here predates
+    vertical-feed formats; transfer is untested.'
+- decision_id: CA-D7
+  question: How does attention travel across cuts?
+  default: 'The edit is when and in what order information is released (murch_0013): every new shot carries new
+    information (gote_0004), every departure is motivated (0006); alternate placement to drive eye-trace (0010),
+    difficulty near optimum (0011); composition differs at the cut (0026), wipe excepted (0035). Or in one shot:
+    a hidden move (ms_0010; ms_002), a blocked static wide (0017), or a colour tied to the figure in an earlier
+    closer shot finds it blurred (0016); one device per beat.'
+  check: 'Per cut: new information and motivation; per beat: one device.'
+  ids:
+  - sk_gote_c003_0004
+  - sk_gote_c003_0006
+  - sk_gote_c003_0010
+  - sk_gote_c003_0011
+  - sk_gote_c003_0026
+  - sk_ms_c003_0010
+  - sk_ms_c003_0017
+  - sk_gote_c003_0035
+  - sk_ms_c003_0001
+  - sk_ms_c003_0004
+  - scs_ms_c003_002
+  - sk_murch_c003_0013
+  - sk_ms_c003_0016
+  feeds:
+  - AUDIO_AND_EDIT
+  - GENERATION_PROMPTS
+  - FAILURE_PREVENTION
+  limits: []
+- decision_id: CA-D8
+  question: Cut criteria conflict — what goes first?
+  default: 'Rule of Six (murch_001; 0019): emotion 51 (0020) > story 23 (0021) > rhythm 10 (0022) > eye-trace 7
+    (0023) > planarity 5 (0024) > 3D 4 (0025). Aim for all six (0031), else sacrifice upward from the bottom (0027)
+    — higher criteria hide lower failures, never the reverse (0028). Weights hedged, intervals the point (0029);
+    top three bind tightly (0030); ''bad'' is film-relative (0011); the list serves the audience''s position (0032).'
+  check: An imperfect cut names the bottom criteria sacrificed, never emotion.
+  ids:
+  - sk_murch_c003_0019
+  - sk_murch_c003_0020
+  - sk_murch_c003_0021
+  - sk_murch_c003_0022
+  - sk_murch_c003_0023
+  - sk_murch_c003_0024
+  - sk_murch_c003_0025
+  - sk_murch_c003_0027
+  - sk_murch_c003_0028
+  - sk_murch_c003_0011
+  - sk_murch_c003_0029
+  - sk_murch_c003_0030
+  - sk_murch_c003_0031
+  - sk_murch_c003_0032
+  - scs_murch_c003_001
+  feeds:
+  - AUDIO_AND_EDIT
+  - FAILURE_PREVENTION
+  limits: []
+- decision_id: CA-D9
+  question: Screen direction and the line?
+  default: 'The off-frame world keeps constant rules of direction and distance (gos_0006); frame edges are the audience''s
+    reference (0005); setups inside one 180° arc (0010; gos_001); movement and position persist across cuts (gote_0017,
+    0018; gos_0011); reciprocal coverage obeys the line (gote_0056); far side: CF-10/11 (gos_0012, 0013).'
+  check: Direction and side persist, or the change is shown (gos_0007), or declared in DOCTRINE_DEVIATIONS.
+  ids:
+  - sk_gos_c003_0006
+  - sk_gos_c003_0005
+  - sk_gos_c003_0008
+  - sk_gos_c003_0011
+  - sk_gos_c003_0012
+  - sk_gote_c003_0017
+  - sk_gote_c003_0018
+  - sk_gote_c003_0056
+  - sk_gos_c003_0007
+  - sk_gos_c003_0010
+  - sk_gos_c003_0013
+  - sk_gote_c003_0008
+  - scs_gos_c003_001
+  feeds:
+  - GENERATION_PROMPTS
+  - AUDIO_AND_EDIT
+  - FAILURE_PREVENTION
+  limits: []
+- decision_id: CA-D10
+  question: How long may a shot hold?
+  default: Set length by silently describing the shot's contents; the description's time is the shot's (gote_0053).
+    The fast-cutting norm — which the source calls alarming — is the ambient pace (0052).
+  check: No shot outlasts its describable content; the stated pace names the prevailing norm it assumes.
+  ids:
+  - sk_gote_c003_0053
+  - sk_gote_c003_0052
+  feeds:
+  - AUDIO_AND_EDIT
+  - GENERATION_PROMPTS
+  limits: []
+- decision_id: CA-D11
+  question: Does the camera move, and why?
+  default: 'Every move motivated, stillness chosen (ms_0002); an object in transit licenses a move across a location
+    (0011); the most with the least (murch_0015); the camera is the audience''s eye — too much movement covers up,
+    as bad as none (alt_0014); success: technique unnoticed (ms_0018; ms_003).'
+  check: Each move names its motivation; else stillness or a cut.
+  ids:
+  - sk_ms_c003_0002
+  - sk_ms_c003_0011
+  - sk_murch_c003_0015
+  - sk_alt_c003_0014
+  - sk_ms_c003_0018
+  - scs_ms_c003_003
+  feeds:
+  - GENERATION_PROMPTS
+  - AUDIO_AND_EDIT
+  - FAILURE_PREVENTION
+  limits: []
+conflicts:
+- conflict_id: CF-01
+  decision_ref: CA-D3
+  kind: contradicts
+  between:
+  - sk_fre_c003_0002
+  - sk_fre_c003_0005
+  nature: exact edge-proportioned framing against loose framing whose edges stop mattering
+  resolution_rule: Curve-proportioned cut in a sparse frame (0002); busy scene, edges stop mattering (0005); declare
+    the case.
+- conflict_id: CF-02
+  decision_ref: CA-D3
+  kind: contradicts
+  between:
+  - sk_fre_c003_0005
+  - sk_fre_c003_0006
+  nature: busy-scene edge indifference against fragile tight fit
+  resolution_rule: Tight fit (0006) is a sparse-frame device, unavailable in a busy scene (0005); one named treatment.
+- conflict_id: CF-03
+  decision_ref: CA-D3
+  kind: contradicts
+  between:
+  - sk_fre_c003_0006
+  - sk_fre_c003_0007
+  nature: the source presents deliberate frame break (halving) as the opposite of frame fit
+  resolution_rule: Halving (0007) needs a symmetrical subject and a stated reason; else fit-with-gap (0006).
+- conflict_id: CF-04
+  decision_ref: CA-D3
+  kind: contradicts
+  between:
+  - sk_fre_c003_0007
+  - sk_fre_c003_0030
+  nature: halving pulls the eye apart; centred symmetry draws it inward
+  resolution_rule: Centred symmetry (0030) orders a disordered subject; halving (0007) tenses an ordered one; state
+    the intent.
+- conflict_id: CF-05
+  decision_ref: CA-D2
+  kind: contradicts
+  between:
+  - sk_fre_c003_0016
+  - sk_fre_c003_0028
+  nature: the source rejects placement rules outright yet elsewhere endorses classical proportion as innately satisfying
+  resolution_rule: Balance judged by eye, tone weighed (0028, 0029), never a coordinate rule (0016); no ratio justifies
+    placement.
+- conflict_id: CF-06
+  decision_ref: CA-D5
+  kind: contradicts
+  between:
+  - sk_fre_c003_0028
+  - sk_fre_c003_0032
+  nature: satisfying the eye against deliberately refusing it rest
+  resolution_rule: Balance default; restless is a declared, brief-driven exception (DOCTRINE_DEVIATIONS).
+- conflict_id: CF-07
+  decision_ref: CA-D5
+  kind: contradicts
+  between:
+  - sk_fre_c003_0033
+  - sk_fre_c003_0034
+  nature: the source's two adjacent cases take opposite positions on rectilinear treatment
+  resolution_rule: Diagonals divide against strict rectilinears (0033); echo the subject's rectilinearity only when
+    it fits its spirit (0034).
+- conflict_id: CF-08
+  decision_ref: CA-D2
+  kind: trades_off_with
+  between:
+  - sk_fre_c003_0018
+  - sk_fre_c003_0019
+  nature: background as setting versus subject as sole statement
+  resolution_rule: 'Off-centre: subject and setting (0018); centre: scene points inward, subject the sole statement
+    (0019).'
+- conflict_id: CF-09
+  decision_ref: CA-D2
+  kind: trades_off_with
+  between:
+  - sk_fre_c003_0018
+  - sk_fre_c003_0021
+  nature: off-centre placement against background dominance at the extreme
+  resolution_rule: Extreme placement only with a visible reason (0021); else the three zones.
+- conflict_id: CF-10
+  decision_ref: CA-D9
+  kind: contradicts
+  between:
+  - sk_gos_c003_0007
+  - sk_gos_c003_0012
+  nature: jumping the line is the failure of the screen-direction rule — yet the far-side shot is good in itself,
+    the mistake appearing only once the shots are edited together
+  resolution_rule: The far-side setup is not the error (0012), the cut is (0007); cross only for a declared creative
+    reason (0013).
+- conflict_id: CF-11
+  decision_ref: CA-D9
+  kind: contradicts
+  between:
+  - sk_gos_c003_0010
+  - sk_gos_c003_0012
+  nature: the 180-degree arc rule against the far-side setup whose error appears only at the edit
+  resolution_rule: 'As CF-10: the arc rule (0010) binds setups cut together; exceptions per 0013.'
+- conflict_id: CF-12
+  decision_ref: CA-D7
+  kind: contradicts
+  between:
+  - sk_gote_c003_0035
+  - sk_gote_c003_0026
+  nature: the wipe suspends the composition-difference requirement at the cut
+  resolution_rule: 'Composition differs at every straight cut (0026); the wipe (0035) excepts: its wiping element
+    is the visual event.'
+- conflict_id: CF-14
+  decision_ref: CA-D7
+  kind: contradicts
+  between:
+  - sk_ms_c003_0017
+  - sk_ms_c003_0010
+  nature: blocking with a static wide solves the attention problem without a camera move, accepting a cut as fallback
+  resolution_rule: One attention device per beat — cut, move or blocking; unranked.
+- conflict_id: CF-15
+  decision_ref: CA-D1
+  kind: contradicts
+  between:
+  - sk_murch_c003_0033
+  - sk_murch_c003_0018
+  nature: the editor misdirects attention as a magician does, against the warning that complete control of attention
+    is self-defeating
+  resolution_rule: 0018 default; misdirection (0033) only for a declared reveal, never ambient control.
+- conflict_id: CF-16
+  decision_ref: CA-D1
+  kind: cross_source_tension
+  between:
+  - t_hop_sa_0009
+  - t_sam_c003_0018
+  tension_ref: T4
+  ledger_record: xj_0022
+  ledger_file: 'canon/candidates/ontology-join/cross-source-candidates-v0.yaml — candidate ledger cross-reference
+    — unadopted, informational only (status: proposed; no candidates-lane content is consumed)'
+  nature: Hopkins defines unoccupied_space as space paid for and not used to sell — borders, margins, enlarged type,
+    half-page copy (t_hop_sa_0009); Samara defines negative_space as white space seen as shapes of equal importance
+    to the positive elements (t_sam_c003_0018)
+  resolution_rule: 'Each term binds in its origin frame (Hopkins: paid direct-response space; Samara: grid design);
+    name the frame first; neither is a default.'
+waivers:
+- ref: sk_gote_c003_0017
+  relation: depends_on
+  partner: sk_gote_c003_0054
+  reason: 'definitional dependency: 0054 defines the action line; the same geometry is compiled in this decision
+    via scs_gos_c003_001 and sk_gos_c003_0010.'
+- ref: sk_gote_c003_0056
+  relation: depends_on
+  partner: sk_gote_c003_0055
+  reason: 'consequence explainer: 0055 states the left-right reversal that crossing the line produces; the decision''s
+    check tests that reversal outcome directly. Named so the mechanism''s location is visible.'
+- ref: sk_murch_c003_0011
+  relation: qualified_by
+  partner: sk_murch_c003_0012
+  reason: the qualification (removal constrained by the structure of what remains) governs physical footage removal
+    in an edit room; the decision consumes 0011 only for what-counts-as-bad being film-relative.
+- ref: sk_ms_c003_0016
+  relation: trades_off_with
+  partner: sk_ms_c003_0014
+  reason: the trade-off is a lens choice deciding what the background does (blur for 0016, a legible reflection
+    for 0014). CA-D7 consumes 0016 only for a colour tied to the figure in an earlier closer shot directing attention;
+    it decides no lens, and the reflection technique is not compiled (same waiver as camera_and_spatial_grammar,
+    colour_and_visual_register, editing_pacing_and_short_form).
+- ref: sk_dpci_0120
+  relation: depends_on
+  partner: sk_dpci_0100
+  reason: 0100 is the star-portrait carrier of the poster code (a persona's fixed facial features trigger recognition,
+    bounded to Bachchan in the 1970s–80s); CA-D1 consumes 0120 only for the character-type code being read through
+    familiarity, its dating and its clothing carrier (0070, cited). A product ad's figure is not a film-star portrait,
+    so the star-recognition mechanism does not change the default; the film-poster star doctrine is not compiled
+    in any pack (indian_indic_context limits).
+- ref: sk_gote_c003_0035
+  relation: contradicts
+  partner: sk_gote_c003_0012
+  reason: 0012 is the thirty-degree rule (consecutive shots of one subject change angle or focal length or they
+    jump), which the wipe also waives; CA-D7 consumes 0035 only as the exception to the composition-difference requirement
+    at the cut (CF-12). The thirty-degree rule is camera_and_spatial_grammar scope (CG-D6) and is not compiled here;
+    at a straight cut it stands unchanged. Was CF-13 in the pilot; converted to a waiver for budget — the waiver
+    carries the same visibility.
+- ref: sk_murch_c003_0025
+  relation: contradicts
+  partner: sk_murch_c003_0026
+  reason: 0026 is the film-school tradition (three-dimensional continuity first) that the source reports in order
+    to argue against it; CA-D8 consumes 0025's last rank, which IS the source's position against that tradition.
+    Naming the tradition does not change the default. Was CF-17 in the pilot ('named for closure, not doctrine');
+    converted to a waiver for budget.
+pack_limits:
+- 'Uncompiled contributors (absent, not arbitrated): jain-gods-in-the-bazaar (darshan order, symmetry-as-authority;
+  CV-D9, IN-D2), samara''s grid (t_sam_0018 only, CF-16), carroll-read-this-photographs.'
