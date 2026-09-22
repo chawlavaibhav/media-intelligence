@@ -90,3 +90,8 @@ Hedges kept as the sources have them: "almost never" (alb_0006), "very few" (alb
 ## 7. Session tokens
 
 Roughly 110–130k tokens (seed packet read in sections, ~45 extra claims fetched by id, ~10 compile iterations for the budget).
+
+## Post-check edits (Controller, from CHECK-colour_and_visual_register.md — PASS)
+
+- Coverage-delta limit now states that CV-D5's 3:1 is a UI colour-coding rule transferred to product/ground separation (the checker's one scope note), and declares the two uncovered questions: platform recompression / 'vivid' display modes, and non-Latin script legibility for CV-D8's thresholds.
+- Prose trimmed to fit 2,500 tokens; 23/23 seeds unchanged; no decision content changed.
