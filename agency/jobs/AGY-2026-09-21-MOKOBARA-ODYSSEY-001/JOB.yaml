@@ -958,14 +958,15 @@ ttao:
   artifact_received_utc: '2026-09-21T18:01:00Z'
   qa_complete_utc: '2026-09-21T18:06:17Z'
   human_review_requested_utc: '2026-09-21T18:06:17Z'
-  human_decision_utc: '2026-09-21T18:14:41Z'
+  human_decision_v1_utc: '2026-09-21T18:14:41Z'   # v1 verdict: SPECIFIC REPAIR
+  human_decision_utc: '2026-09-22T03:46:25Z'   # v2 verdict: ACCEPT ('still some minor issues but excellent. pass/'); customer replied the next morning IST
   accepted_utc: null
   repair_round_1_start_utc: '2026-09-21T18:20:00Z'
   repair_round_1_qa_complete_utc: '2026-09-21T18:38:34Z'
   human_review_requested_v2_utc: '2026-09-21T18:38:34Z'
 kpis:
   cpao_usd: null
-  ttao_hms: '10:23:37'
+  ttao_hms: '10:23:37'   # job_start 17:22:48Z -> v2 ACCEPT 03:46:25Z (includes overnight wait); job_start -> v2 DET-clean file ~1:15; v1 first pass 0:42
   human_review_cycles: 1
   versions_to_acceptance: null
   baseline_ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml
