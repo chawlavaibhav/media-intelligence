@@ -1,0 +1,43 @@
+# HUMAN VERDICTS — the customer's words on the two presented versions of the Mokobara film.
+# evidence_class: chat_only_human_evidence — both verdicts were chat messages to the Controller session, transcribed
+# verbatim into HUMAN-VERDICT-V1.md (commits 2e69cd7, 5e64662) and JOB.yaml versions[] at 130be42. The customer wrote
+# no file; the files are the Controller's transcription. Spelling is the customer's.
+case_id: MOKOBARA-ODYSSEY-007
+evidence_class: chat_only_human_evidence
+reviewer: "Vaibhav Chawla — the customer for this spec job (his own brief; Mokobara is a prospecting target, not a client) and the human Controller; NOT blind (he had asked for the film, set the cap, and saw the producer's progress in chat)"
+verdict_vocabulary: [accept, specific_repair, rebuild_direction, reject]
+
+verdicts:
+  - version: 1
+    verdict: specific_repair
+    presented_as: "the first-pass file, presented by the Controller in chat"
+    presented_utc: "2026-09-21T18:10:00Z"
+    decided_utc: "2026-09-21T18:14:41Z"
+    words_transcribed:
+      - "the bag was slightly torn when he saw her wife photo. the instrument to run boat(oar or something) looked weird coming out of bag, when he takes the boat the oar was already on the bat but comes out magically again. overall excellent just few fixes. also we could use mokobara logo/name properly. the text font style could be better. excpetional work otherwise"
+    reading: "SPECIFIC REPAIR with five items, in the customer's order: (1) the bag looks torn in the photo beat; (2) the oar/paddle coming out of the bag looks weird; (3) the oar is already on the raft and then appears again; (4) use the Mokobara logo/name properly; (5) the text font could be better. The frame is warm ('overall excellent', 'excpetional work otherwise') — a repair request, not a rebuild. The Controller's mapping of the five items to beats 3, 4, 6 and to the overlays is INFERRED (HUMAN-VERDICT-V1.md says so); the customer named no timecodes."
+    defects_seen: ["beat 3 bag torn", "beat 4 paddle reveal weird", "beat 6 paddle already on the raft then again", "logo/name not used properly", "font style"]
+    what_the_words_do_not_say: "whether 'looked weird' means the warped blade (what the producer found on the used take 2) or the reveal idea itself (the checker's reading — 'his reading governs'); whether he noticed the arms never go in past the forearm (he did not say); whether he noticed the food left on the beach or that the man never pushes off (he did not say — the checker did); what 'properly' means for the logo beyond bigger and cleaner"
+  - version: 2
+    verdict: accept
+    presented_as: "the repaired file, presented by the Controller in chat (JOB.yaml versions[0].presented_utc 18:37:00Z; the repair round's qa_complete stamp is 18:38:34Z — see OUTCOME.final_asset.presented_as)"
+    presented_utc: "2026-09-21T18:37:00Z"
+    decided_utc: "2026-09-22T03:46:25Z"
+    words_transcribed:
+      - "still some minor issues but excellent. pass/"
+    reading: "ACCEPT ('pass'), the next morning IST, with minor issues the customer did not name. The acceptance therefore covers a file that carries (a) his own unitemised minor issues and (b) the producer's and checker's recorded open items: arms at forearm depth (checker D1, addendum ranked the straight paddle first), the paddle's whereabouts between 21 and 24 s (D5, partly), the lid-style opening in beat 4 (D6-i), beard/bracelet drift (D7), 720p sources (D8), and the native audio never checked by ear."
+    defects_seen: ["unitemised minor issues"]
+    what_the_words_do_not_say: "which minor issues; whether any of the five v1 items is among them (the producer's frame evidence says all five were fixed); whether he would run it as a paid placement; whether he watched at phone size; whether the overnight gap was a reading of the file or just the hour (the presentation was 00:07 IST)"
+
+repair_offer:
+  what_was_offered: "not a separate offer — the Controller's addendum folded the customer's five items and the checker's D1–D9 into ONE repair round with an explicit priority A–E (stages/06-REPAIR-ROUND-1.md), the customer's mandatory story events ranked first (departure A, food packed B, paddle C, tear D, beat-1 open E) and the checker's D1 (arms to the shoulder) deliberately left out because the straight paddle outranked arm depth on the same beat"
+  answer_verbatim: "n-a (the round was run, not offered)"
+  consequence: "the v2 file the customer accepted is the repaired file; the items the round did not address are recorded in SYSTEM-DEFECTS.yaml as unrepaired on the accepted file, and the customer's 'still some minor issues' is recorded as an unitemised human note, not mapped onto them"
+
+blindness_limitation: "none claimed — an ordinary presentation. The customer is also the Controller; his verdicts are the verdicts of the person who commissioned the spec."
+
+customer_defects_register:
+  v1_items: 5
+  v1_items_repaired_in_v2: 5                                  # per stages/06 §1 frame evidence — the CHECKER has not re-verified v2 (no CHECK-STAGE-6.md on the branch); the customer's 'pass' is the only judgment on v2
+  v2_items: "unitemised ('still some minor issues')"
+  overlap_with_the_checker: "3 of 5 (tear = D6-iii; paddle reveal = D1's beat; paddle on the raft = D5); the checker's D1 arms, D2 food and D3 non-departure were not raised by the customer"

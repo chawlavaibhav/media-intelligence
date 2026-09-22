@@ -1,0 +1,105 @@
+# PROMOTION QUEUE — case RENTOK-GAME-B-005. Five classes, one per item. Items shared with case RENTOK-GAME-A-004 say so
+# and are not double-promoted.
+case_id: RENTOK-GAME-B-005
+
+promoted_now:                                                # class 1 — deterministic, in code, with regression tests
+  - id: GRAPHIC_TEXT_DISJOINT
+    kind: deterministic_compositor_gate
+    where: "runtime/compositor/gates.py check_graphic_text_disjoint — test runtime/tests/test_j_rentok_game_004_005.py GraphicTextDisjoint (shared with case 004 D-2)"
+    rule: "declared critical graphics and critical text boxes may not overlap, with an optional minimum gap"
+    closes: [D-1, D-9]
+  - id: VO_TEXT_ALIGNMENT
+    kind: deterministic_compositor_gate
+    where: "runtime/compositor/gates.py check_vo_text_alignment — test VoTextAlignment"
+    rule: "a spoken line paired with an on-screen string may not start before that string's first on-screen time (minus a stated tolerance); a paired string that never appears is refused"
+    closes: [D-3]
+    note: "sits beside PR #103's check_vo_schedule (overlap / overrun), which this branch does not carry; the two are complementary and will need a merge of gates.py"
+  - id: VALIDATE_BEFORE_RESERVE
+    kind: orchestration_fix
+    where: "runtime/execute/bridge.py _attempt — test HarnessRefusedAttemptsReserveNothing; committed dry battery B05 re-recorded (runtime/battery/results/2026-09-14)"
+    rule: "an attempt the harness refuses before dispatch (unresolved input, unverified body shape, failed precondition) reserves neither ceiling nor pool; the refusal is recorded with 'not_reserved'"
+    closes: [T1 (att-016)]
+
+candidate_patterns:                                          # class 2
+  - id: VOICE_CAST_BY_A_HUMAN_EAR
+    kind: process requirement (candidate)
+    rule: "when a film carries a generated voice, a human listens to the audition takes before the voice is frozen and the plates are built; transcript-verbatim and duration are not a casting judgment. When neither producer nor checker can listen, the takes go to the Controller for a 30-second listen"
+    evidence: [HD-01, RO-05, "case 001 RO-05 (same route, long narration, same reading)", "case 002 CROSS_CLIP_VOICE_CONTINUITY: human-perceived continuity is the release authority"]
+    promotion_condition: "a line in the /media-agency Stage 5 preamble (already implied by the question template's 'cast by ear'); one more voiced job produced this way"
+  - id: PER_KEY_QUOTA_IN_POOL_READINGS
+    kind: pool-reading requirement (candidate)
+    rule: "a pool reading for a keyed provider records the KEY's quota as well as the account balance, or dry-probes the key before planning on it; a balance read that cannot see the key's quota is recorded as partial"
+    evidence: [att-006, RO-06]
+    promotion_condition: "runtime/execute/pools.py PoolLiquidity could carry an optional key_quota reading — proposed, not built (no runtime path reads ElevenLabs today); adopt after one more keyed-provider job"
+  - id: MEASURED_VO_DRIVES_TIMELINE
+    kind: compositor mechanism (candidate)
+    rule: "board slots are maxima; the code timeline reads measured VO durations and grows/shrinks holds under a minimum-hold rule, and the alignment gate (VO_TEXT_ALIGNMENT) runs over the result"
+    evidence: ["two slots grew by 1.0 / 0.8 s to fit measured lines", D-3, D-7]
+    promotion_condition: "one more voiced code-rendered job; the stretch created the D-7 hole, so the mechanism needs a bed-continuity rule before it is a pattern"
+  - id: SPRITE_SHEET_SINGLE_DRAW
+    kind: production pattern (candidate; the sheet variant of MICRO_QUALIFY_THE_RISKIEST_ASSET_FIRST in case 004)
+    rule: "draw all poses of a character in ONE image on a keyable ground and animate by code — identity by construction instead of reference-image routes; read the card cell by cell"
+    evidence: [RO-01, D-4, "case 004 RO-01 / D-5"]
+    promotion_condition: "a third sheet with no missing identifier, or a rule that the card lists identifiers per cell"
+  - id: WORLD_AT_LOWRES_TEXT_AT_FULLRES
+    kind: compositor pattern (candidate)
+    rule: "compose the generated world at 1/k resolution and nearest-upscale for a unified retro texture across stills from separate draws; draw exact text crisp at full resolution"
+    evidence: ["worked once (render_film.py: 360x640 x3)"]
+    promotion_condition: "a second retro/pixel brief"
+  - id: CODE_RENDERED_GAME_WITH_AI_SPRITES
+    kind: production template (candidate; shared with case 004, recorded once in each ACCEPTED-TEMPLATE.yaml)
+    rule: "as case 004"
+    evidence: ["this lane converged on it independently"]
+    promotion_condition: "a second customer and brief"
+  - id: CODEC_TRUE_PEAK_MARGIN
+    kind: deterministic_qa rule (candidate; shared with case 004)
+    rule: "measure loudness and true peak on the delivered encoded file; leave ≈ 2 dB pre-encode headroom"
+    evidence: [R2, R2b, RO-09, "case 004 R5"]
+    promotion_condition: "as case 004"
+  - id: COMPOSE_WORLD_ACROSS_THE_FULL_FRAME
+    kind: composition rule (candidate; shared with case 004)
+    rule: "specify plates in the delivered geometry (a 9:16 film needs a 9:16 or two-row plate); the safe box bounds critical elements, not art"
+    evidence: [D-5, "case 004 D-7"]
+    promotion_condition: "as case 004"
+  - id: CANON_GAP_DECLARATION_VERIFIED
+    kind: checker step (candidate)
+    rule: "a Stage-3 'missing domain' declaration is verified against the accepted-claim index before the gate closes"
+    evidence: ["the gate checker found audio and colour claims this lane had first declared as gaps; the lane then cited 62 ids (06-CONTROLLER-COMPARISON.md §3)"]
+    promotion_condition: "a Canon-stream decision; a lookup test is cheap once the index format is fixed"
+
+directional_only:                                            # class 3 — see ROUTE-OBSERVATIONS.yaml
+  - {id: RO-01, note: "nano-banana-2 nine-pose sheet, 1/1 (combined with case 004: 2/2 first draws passed a consistency card with no stray lettering)"}
+  - {id: RO-02, note: "nano-banana-2 obstacles + plate, 6/6 (combined with case 004: 14/14 textless stills usable first draw)"}
+  - {id: RO-03, note: "lyria-002, 1/1 (combined: 2/2)"}
+  - {id: RO-04, note: "sarvam bulbul:v3 lines verbatim, 3/3"}
+  - {id: RO-05, note: "sarvam bulbul:v3 heard as robotic by the customer, n = 1"}
+  - {id: RO-06, note: "elevenlabs v3: 2/3, per-key quota invisible to the balance read"}
+  - {id: RO-07, note: "gemini TTS: 2/3, one PROHIBITED_CONTENT refusal on a 16-character brand line, n = 1"}
+  - {id: RO-08, note: "gemini flash-lite transcription 7/7"}
+  - {id: RO-09, note: "AAC overshoot ≈ 1.9 dB, n = 2 encodes"}
+
+canon_gap_candidates:                                        # class 4 — report only
+  - id: CANON_GAP_GAME_ARCADE_PIXEL_CHIPTUNE
+    triggered_by_a_production_failure: false
+    observed: "no accepted Canon on game/arcade readability, pixel art or chiptune; declared at Stage 3, bridged by genre convention without incident (LEARNING-PACKET canon_gaps: []); the same gap recorded by case 004"
+    proposal: "Controller decision on whether to seek sources; nothing compiled here"
+  - id: CANON_LOOKUP_DECLARED_EXISTING_CLAIMS_AS_GAPS
+    triggered_by_a_production_failure: false
+    observed: "the gate checker found accepted audio and colour claims that this lane had declared as missing domains; the lane then used them (OBSERVED in the Controller comparison; the checker file stages/CHECK-GATES-1-4.md is the source)"
+    proposal: "see CANON_GAP_DECLARATION_VERIFIED above — a checker step, a Canon-stream decision"
+
+proposals_needing_a_controller_decision:                    # written here, never applied to eval/** or coordination/**
+  - id: ROSTER_POOL_LABELS
+    what: "eval/empirical-planning/ROSTER-REFRESH-2026-09.yaml labels sarvam-bulbul-v3 and elevenlabs-v3 (and elevenlabs-music) billing_pool: cash; eval/capability-map/ROUTING-EVIDENCE-MAP-v0.yaml lists sarvam_credits / elevenlabs_credits; the Controller ruled on 2026-09-20 that these are credits pools and the roster label is a labelling issue (PD-02)"
+    ask: "reconcile the two files under the roster's own refresh process; until then every job that touches these routes must carry the ruling in its spend record, as this one did"
+  - id: GEMINI_TTS_JOB_LOCAL_PIN
+    what: "gemini-3.1-flash-tts-preview was used under a job-local pin with no Registry cell (JOB.yaml qa.pre_dispatch A4)"
+    ask: "whether the routing map should carry a row for it (directional evidence only: RO-07, 2/3 + one refusal)"
+
+not_promoted:                                                # class 5 — true of this job only
+  - "the palette, sizes, positions, obstacle designs and copy of this film"
+  - "the ten logged changes from the ChatGPT direction (job-specific creative decisions; the direction itself was an experiment input, not a system component)"
+  - "the specific refused line 'RentOk mode: on.' (one refusal, no diagnosis)"
+  - "the invented app-icon pictogram (a Stage-2 decision the customer was not asked about)"
+  - "the customer's ranking of the two films (one customer, one pair)"
+  - "session-token counts (accounting, not a KPI)"
