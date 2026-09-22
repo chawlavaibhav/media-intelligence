@@ -56,7 +56,7 @@ decisions:
     check: "Each text block reports its ratio at the darkest and lightest point of its ground: ≥ 4.5:1, or ≥ 3:1 with size and weight stated; no exemption on a message word."
     ids: [sk_alb_c003_0018, sk_alb_c003_0006, sk_alb_c003_0011, sk_wcag_0001, sk_wcag_0014, sk_wcag_0021, sk_wcag_0002, sk_wcag_0031, sk_wcag_0022, sk_wcag_0033, sk_wcag_0018, sk_wcag_0003, sk_sam_c003_0021]
     feeds: [DETERMINISTIC_OR_NON_GENERATIVE_ELEMENTS, VISUAL_SYSTEM, FAILURE_PREVENTION]
-    limits: ["wcag_* are Level AA web thresholds; the source does not claim they optimise readability on a phone feed."]
+    limits: ["wcag_* are web-conformance thresholds; applying them to a composited frame is this pack's reading, not the source's; single-frame only — no default over a moving video ground."]
   - decision_id: TC-D9
     question: "Which letterforms and case; may colour alone carry a distinction?"
     default: "Reading goes by word picture, not letter (alb_0004): mixed case for any running line; all-capitals is the hardest read (0005). No extraordinarily thin or unfamiliar letterforms, above all at low contrast (wcag_0022). Colour is never the only means of a distinction (0007); a ≥ 3:1 lightness difference is a second means unless the hue itself must be identified (0038)."
@@ -127,6 +127,6 @@ waivers:
   - {ref: sk_wcag_0008, relation: depends_on, partner: sk_wcag_0028, reason: "same as the qualified_by waiver above: the Essential term is defined but not claimed by any decision of this pack."}
   - {ref: sk_wcag_0025, relation: qualified_by, partner: sk_wcag_0026, reason: "0026 defines text as a programmatically determinable character sequence expressing language; TC-D11 consumes 0025 only to classify pixels rendered for a look as an image of text; the programmatic-determinability half is a web-markup notion with no counterpart in a composited frame."}
 pack_limits:
-  - "Coverage delta: whip_* = 2016 US print, outdoor and TV craft (seven words is a roadside-poster figure); sb_* = US web copy; wcag_* = web conformance; sam_* = editorial print and web; alb_* = 1963 colour teaching; fre_* = landscape stills. None treats composed text in 9:16 feed video or animated type — placement, size and contrast defaults transfer untested; no source gives a type size, line count or hold for on-screen text."
-  - "A14 (Devanagari & Indic typography) has no contributor: no default for Devanagari letterforms, matra legibility, mixed Hindi–English lines or script pairing; Hindi copy origination (nnn_0052) is compiled in commercial_communication CC-D9."
-  - "Grids (A07): Samara's column, module and reflow doctrine is not compiled beyond sam_0021; no column, gutter or baseline default."
+  - "Coverage delta: whip_* = 2016 US print/outdoor/TV craft (seven words is a poster figure); sb_* = US web copy; wcag_* = web conformance; sam_* = editorial print/web; alb_* = 1963 colour teaching; fre_* = landscape stills. None treats composed text in 9:16 feeds, platform UI safe zones (Reels/Shorts overlays) or animated type — placement, size and contrast transfer untested; no type size, line count or hold given."
+  - "A14 (Devanagari & Indic typography) has no contributor: no default for Devanagari letterforms, matra legibility, mixed Hindi–English lines or script pairing; Hindi copy origination (nnn_0052) is in CC-D9."
+  - "Grids (A07): Samara's column/module doctrine is not compiled beyond sam_0021; no column, gutter or baseline default."

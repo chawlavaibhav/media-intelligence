@@ -95,3 +95,9 @@ touched here.
 
 About 190k tokens, of which ~95k reading the seed packet in sections and claims by id, and ~40k in
 the trim loop (nine compile passes from 3,011 down to 2,495).
+
+## Post-check edits (Controller, from CHECK-typography_and_copy.md — PASS WITH EDITS)
+
+- TC-D8 limit reworded as a scope transfer ("applying [WCAG thresholds] to a composited frame is this pack's reading, not the source's") and the single-frame method declared (no default over a moving video ground).
+- Platform UI safe zones for 9:16 text added to the coverage-delta limit line.
+- Limit lines tightened to fit; 2,500 terse tokens; 29/29 seeds unchanged.

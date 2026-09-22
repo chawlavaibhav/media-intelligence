@@ -176,8 +176,8 @@ counts:
   closure_waivers: 16
   conflicts: 5
   decisions: 11
-  terse_chars: 9980
-  terse_tokens: 2495
+  terse_chars: 9993
+  terse_tokens: 2499
 decisions:
 - check: Offer, benefit, action present as words; a stranger answers the three questions from the key
     frame.
@@ -572,8 +572,8 @@ decisions:
   - VISUAL_SYSTEM
   - FAILURE_PREVENTION
   limits:
-  - wcag_* are Level AA web thresholds; the source does not claim they optimise readability on a phone
-    feed.
+  - wcag_* are web-conformance thresholds; applying them to a composited frame is this pack's reading,
+    not the source's; single-frame only — no default over a moving video ground.
   question: What contrast must composed text hold against its ground?
 - check: No running line in all-caps; stroke not thin at delivered size; every colour-coded difference
     also differs in lightness, weight or shape.
@@ -694,16 +694,15 @@ pack_id: typography_and_copy
 pack_limits:
 - Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite
   text deterministically.
-- 'Coverage delta: whip_* = 2016 US print, outdoor and TV craft (seven words is a roadside-poster figure);
-  sb_* = US web copy; wcag_* = web conformance; sam_* = editorial print and web; alb_* = 1963 colour teaching;
-  fre_* = landscape stills. None treats composed text in 9:16 feed video or animated type — placement,
-  size and contrast defaults transfer untested; no source gives a type size, line count or hold for on-screen
-  text.'
+- 'Coverage delta: whip_* = 2016 US print/outdoor/TV craft (seven words is a poster figure); sb_* = US
+  web copy; wcag_* = web conformance; sam_* = editorial print/web; alb_* = 1963 colour teaching; fre_*
+  = landscape stills. None treats composed text in 9:16 feeds, platform UI safe zones (Reels/Shorts overlays)
+  or animated type — placement, size and contrast transfer untested; no type size, line count or hold
+  given.'
 - 'A14 (Devanagari & Indic typography) has no contributor: no default for Devanagari letterforms, matra
-  legibility, mixed Hindi–English lines or script pairing; Hindi copy origination (nnn_0052) is compiled
-  in commercial_communication CC-D9.'
-- 'Grids (A07): Samara''s column, module and reflow doctrine is not compiled beyond sam_0021; no column,
-  gutter or baseline default.'
+  legibility, mixed Hindi–English lines or script pairing; Hindi copy origination (nnn_0052) is in CC-D9.'
+- 'Grids (A07): Samara''s column/module doctrine is not compiled beyond sam_0021; no column, gutter or
+  baseline default.'
 pack_version: v0
 spec: canon/compilation/COMPILED-DOCTRINE-SPEC-v0.md
 status: PROPOSED — Canon-stream worker output; no Controller decision adopts it; coordination/CONTROL-STATE.md
@@ -828,8 +827,8 @@ terse_injection_text: 'CANON DOCTRINE PACK typography_and_copy v0 (accepted corp
   CHECK: Each text block reports its ratio at the darkest and lightest point of its ground: ≥ 4.5:1, or
   ≥ 3:1 with size and weight stated; no exemption on a message word.
 
-  LIMIT: wcag_* are Level AA web thresholds; the source does not claim they optimise readability on a
-  phone feed.
+  LIMIT: wcag_* are web-conformance thresholds; applying them to a composited frame is this pack''s reading,
+  not the source''s; single-frame only — no default over a moving video ground.
 
 
   TC-D9 [ASSERTED-hedged|QUALIFIED|DATED|FIGURE-UNVERIFIED|MULTI-ORIGIN(2)]
@@ -894,18 +893,17 @@ terse_injection_text: 'CANON DOCTRINE PACK typography_and_copy v0 (accepted corp
   - Devanagari correctness criteria do not exist in Canon — never generate Devanagari glyphs; composite
   text deterministically.
 
-  - Coverage delta: whip_* = 2016 US print, outdoor and TV craft (seven words is a roadside-poster figure);
-  sb_* = US web copy; wcag_* = web conformance; sam_* = editorial print and web; alb_* = 1963 colour teaching;
-  fre_* = landscape stills. None treats composed text in 9:16 feed video or animated type — placement,
-  size and contrast defaults transfer untested; no source gives a type size, line count or hold for on-screen
-  text.
+  - Coverage delta: whip_* = 2016 US print/outdoor/TV craft (seven words is a poster figure); sb_* = US
+  web copy; wcag_* = web conformance; sam_* = editorial print/web; alb_* = 1963 colour teaching; fre_*
+  = landscape stills. None treats composed text in 9:16 feeds, platform UI safe zones (Reels/Shorts overlays)
+  or animated type — placement, size and contrast transfer untested; no type size, line count or hold
+  given.
 
   - A14 (Devanagari & Indic typography) has no contributor: no default for Devanagari letterforms, matra
-  legibility, mixed Hindi–English lines or script pairing; Hindi copy origination (nnn_0052) is compiled
-  in commercial_communication CC-D9.
+  legibility, mixed Hindi–English lines or script pairing; Hindi copy origination (nnn_0052) is in CC-D9.
 
-  - Grids (A07): Samara''s column, module and reflow doctrine is not compiled beyond sam_0021; no column,
-  gutter or baseline default.
+  - Grids (A07): Samara''s column/module doctrine is not compiled beyond sam_0021; no column, gutter or
+  baseline default.
 
   '
 what_a_pass_does_not_establish: Relevance to any brief, doctrine quality, medium fit, outcome improvement,
