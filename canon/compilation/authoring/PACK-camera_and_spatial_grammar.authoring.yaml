@@ -25,28 +25,28 @@ decisions:
   limits: []
 - decision_id: CG-D4
   question: "What angle and height on the product, and how is it staged in depth?"
-  default: "Default the camera to a neutral hat: the angle is simply the most revealing and the viewer thinks about the action (conv_0015); make it a presence only by decision. The most revealing angle on a solid shows the most surfaces — move to one side and raise until none is gained (alt_0010). Depth is tonal separation of foreground from background, either direction (0015); a complete picture: that angle, each surface a different brightness, a ground of another tone (0015; 0010). Across three or more staged planes the most distant is lightest (0017). A flat monotone wall is broken by cast shadow; a mirror adds the lit far side (0016)."
-  check: "Each angle names the surfaces it shows; subject-to-ground separation survives grayscale; staged planes lighten with distance; no flat monotone ground without shadow or reason."
+  default: "Default the camera to a neutral hat: the most revealing angle, the viewer thinking about the action (conv_0015); make it a presence only by decision. The most revealing angle on a solid shows the most surfaces — move to one side and raise until none is gained (alt_0010). Depth is tonal separation of foreground from background, either direction (0015); a complete picture: that angle, each surface a different brightness, a ground of another tone (0015; 0010). Where distance must read, the most distant part is lightest, a full black-to-white scale (0017). A flat monotone wall is broken by cast shadow (0016)."
+  check: "Each angle names the surfaces it shows; subject-to-ground separation survives grayscale; distance, where it must read, lightens toward the far; no flat monotone ground without shadow or reason."
   ids: [sk_conv_c003_0015, sk_alt_c003_0010, sk_alt_c003_0015, sk_alt_c003_0017, sk_alt_c003_0016]
   feeds: [VISUAL_SYSTEM.placement_zone, PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION]
   limits: []
 - decision_id: CG-D5
   question: "Does the camera move in this shot, and why?"
-  default: "Every move has a reason and so does every held camera — moving because you can, or sitting still from laziness, is one error (ms_0002). The camera is the audience's eye; too much movement is as bad as none — it covers up (alt_0014). To move attention without a cut, hide the move behind an action (ms_0010) or hold a static wide, dominant subject blocked to face camera (0017); colour set on the subject in an earlier closer shot directs attention like a move (0016). Never rack focus back and forth; cut to a close-up (0019). A long-to-close move carries two lightings — the slower setup (alt_0021)."
+  default: "Every move has a reason and so does every held camera — moving because you can, or sitting still from laziness, is one error (ms_0002). The camera is the audience's eye; too much movement is as bad as none (alt_0014). To move attention without a cut, hide the move behind an action (ms_0010) or hold a static wide, dominant subject blocked to face camera (0017); colour set on the subject in an earlier closer shot directs attention like a move (0016). Never rack focus back and forth; cut to a close-up (0019). A long-to-close move carries two lightings — the slower setup (alt_0021)."
   check: "Each shot states move or static with a reason; a push-in declares lighting at both ends; no repeated focus shifts."
   ids: [sk_ms_c003_0002, sk_alt_c003_0014, sk_ms_c003_0010, sk_ms_c003_0017, sk_ms_c003_0016, sk_ms_c003_0019, sk_alt_c003_0021]
   feeds: [PRODUCTION_RECIPE, GENERATION_PROMPTS, FAILURE_PREVENTION]
   limits: []
 - decision_id: CG-D6
   question: "What joins the shots, how far apart, how long does each hold?"
-  default: "The edit is the order and rate of release of information (murch_0013). Every shot cut TO gives information the viewer lacks (gote_0004); every departure is motivated by a movement or sound in the outgoing shot at that moment (0006). Cut by default — continuous action, change of impact, of information or locale (0027); consecutive shots of one subject sit at least 30° apart on the arc or change focal length, else they jump (gos_0014). A dissolve reads by its duration (gote_0028); its register is languid and sombre — romantic or sad passages only (0031). A fade bounds a programme or act, or a change of time or locale; audio up under black first (0037). A readable shot holds its describe-aloud duration, a busier frame longer (0053); fast cutting belongs to an action passage (0052)."
+  default: "The edit is the order and rate of release of information (murch_0013). Every shot cut TO gives information the viewer lacks (gote_0004); every departure is motivated by a movement or sound in the outgoing shot (0006). Cut by default — continuous action, change of impact, of information or locale (0027); consecutive shots of one subject sit at least 30° apart on the arc or change focal length, else they jump (gos_0014). A dissolve reads by its duration (gote_0028); its register is languid and sombre — effective in romantic or sad passages (0031). A fade bounds a programme or act, or a change of time or locale; audio up under black first (0037). A readable shot holds its describe-aloud duration, a busier frame longer (0053); fast cutting belongs to an action passage (0052)."
   check: "Per cut: new information in and motivation out named; consecutive shots of one subject at least 30° apart; each dissolve or fade names its condition; readable shots hold their describe-aloud time."
   ids: [sk_murch_c003_0013, sk_gote_c003_0004, sk_gote_c003_0006, sk_gote_c003_0027, sk_gos_c003_0014, sk_gote_c003_0028, sk_gote_c003_0031, sk_gote_c003_0037, sk_gote_c003_0053, sk_gote_c003_0052]
   feeds: [AUDIO_AND_EDIT, PRODUCTION_RECIPE, FAILURE_PREVENTION]
   limits: []
 - decision_id: CG-D7
   question: "When a cut cannot keep everything, what gives first?"
-  default: "Aim for all six at once — emotion, story, rhythm, eye-trace, planarity, 3-D continuity; it usually can be done (murch_0019; 0031). Emotion outweighs the other five together (0020). Otherwise sacrifice from the bottom: space, then planarity, eye-trace, rhythm, story, never emotion (0027); a met higher criterion hides a failed lower one, not the reverse (0028). The Grammar's rules yield to a creative reason, crossing the line included (gos_0013); record the deviation with it."
+  default: "Aim for all six at once — emotion, story, rhythm, eye-trace, planarity, 3-D continuity; it usually can be done (murch_0019; 0031). Emotion outweighs the other five together (0020). Otherwise sacrifice from the bottom: space, then planarity, eye-trace, rhythm, story, never emotion (0027); a met higher criterion seems to hide a failed lower one (0028). The Grammar's rules yield to a creative reason, crossing the line included (gos_0013); record the deviation with it."
   check: "A cut breaking the line, side of frame or 30° names the higher criterion it keeps, in DOCTRINE_DEVIATIONS."
   ids: [sk_murch_c003_0019, sk_murch_c003_0020, sk_murch_c003_0027, sk_murch_c003_0028, sk_murch_c003_0031, sk_gos_c003_0013]
   feeds: [AUDIO_AND_EDIT, DOCTRINE_DEVIATIONS, FAILURE_PREVENTION]
@@ -54,7 +54,7 @@ decisions:
   - "Murch's six are scoped 'for me' and to narrative film; product-film transfer untested."
 - decision_id: CG-D8
   question: "What does the soundtrack do for the space the camera shows?"
-  default: "Sound creates reality faster than picture; stimulate the ear to help the eye (gote_0048). Shots sharing time and place share sound across the cut, level following distance (0019). Music channels an emotion the film has already created, never supplies one (conv_0007); music with a visible origin in the scene takes a different route (0009). Opening music that sets an expectation the film does not meet is a fault however good (0023). Withdraw dialogue and the audience hears the rest of the track as speech (0019)."
+  default: "Sound creates reality faster than picture; stimulate the ear to help the eye (gote_0048). Shots sharing time and place share sound across the cut, level following distance (0019). Music channels an emotion the film has already created, seldom supplies one — a tendency, not a rule (conv_0007); music with a visible origin in the scene takes a different route (0009). Opening music that sets an expectation the film does not meet is a fault however good (0023). Withdraw dialogue and the audience hears the rest of the track as speech (0019)."
   check: "Sound continues across every same-place cut, level by shot size; the opening cue matches what follows; each cue names its emotion or visible source."
   ids: [sk_gote_c003_0048, sk_gote_c003_0019, sk_conv_c003_0007, sk_conv_c003_0009, sk_conv_c003_0023, sk_conv_c003_0019]
   feeds: [AUDIO_AND_EDIT, FAILURE_PREVENTION]
@@ -83,7 +83,7 @@ conflicts:
   kind: contradicts
   between: [sk_alt_c003_0015, sk_alt_c003_0017]
   nature: "symmetrical tonal separation against a preferred direction for distance; both stated in the source"
-  resolution_rule: "0015 governs subject against ground, either direction; 0017 only a progression across three or more staged planes (near dark, far light)."
+  resolution_rule: "0015 governs subject against ground, either direction; 0017 governs the reading of distance itself: the most distant part lightest, a full black-to-white scale (near dark, far light)."
 - conflict_id: CF-05
   decision_ref: CG-D6
   kind: qualified_by
@@ -164,6 +164,6 @@ waivers:
   partner: sk_ms_c003_0018
   reason: "0018 is the invisibility test (the audience registers the scene, not the method) — the other face of the motivation rule, as the source says. CG-D5 consumes the motivation rule; the test does not change what the default says. Left out for the terse budget."
 pack_limits:
-- "Coverage delta: every contributor (Alton 1949; Grammar of the Shot/Edit, Kenworthy 2009; Murch, feature film) assumes a cinema or TV frame; none treats a fixed 9:16 feed, a 15–30 s duration or sound-off autoplay — transfer of arc, 30°, hold and sound defaults to vertical short-form is untested."
-- "No contributor is Indian or treats frontality, darshan or an Indian viewer's reading of the camera; no packshot or frontal-product convention in Canon; assume neither way."
-- "Line, eye-line and reciprocal rules are stated for talent; none sets a camera default for a product alone. static_image: CG-D1 and D4 only; the rest need a cut or timeline, CG-D8 an audio track."
+- "Coverage delta: every contributor (Alton 1949; Grammar of the Shot/Edit, Kenworthy 2009; Murch) assumes a cinema or TV frame; none treats 9:16 feeds, 15–30 s or sound-off autoplay — arc, 30°, hold and sound defaults transfer untested."
+- "No contributor is Indian or treats frontality, darshan or an Indian viewer's reading of the camera; no packshot convention in Canon; assume neither way."
+- "Line, eye-line, reciprocal and move/hold rules are stated for talent; none motivates a move or cut on a product-only beat (a turntable shot) — no default. static_image: CG-D1 and D4 only; the rest need a timeline, CG-D8 an audio track."

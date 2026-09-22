@@ -98,3 +98,12 @@ no seed was dropped and no id was cut to make room.
 
 Roughly 95k tokens: brief + spec + contract + style references (~25k), seed packet in sections plus
 ~45 extra claims by id (~35k), six compile/measure iterations and the two files (~35k).
+
+## Post-check edits (Controller, from CHECK-camera_and_spatial_grammar.md — PASS WITH EDITS)
+
+- CG-D8: "never supplies one" → "seldom supplies one — a tendency, not a rule" (conv_0007 is hedged; same fix as EP-D8).
+- CG-D6: "romantic or sad passages only" → "effective in romantic or sad passages" (gote_0031 is not exclusive).
+- CG-D7: "not the reverse" dropped; "seems to hide" (murch_0028's own words).
+- CG-D4 / CF-04: the "three or more staged planes" condition was not in alt_0015 or alt_0017; replaced by the claims' own wording (most distant part lightest, a full black-to-white scale) for both the default and the conflict rule.
+- The checker's missing question (what motivates a move or cut on a product-only beat, e.g. a turntable shot) added to the talent-rules limit line as a declared gap.
+- Noted, not changed: conv_0007/0019/0023 are cited by both CG-D8 and EP-D8 (duplicate seeding across two packs, allowed by coverage; the injection contract assigns audio to this pack). Decision texts trimmed to fit 2,500 tokens; 25/25 seeds unchanged.
