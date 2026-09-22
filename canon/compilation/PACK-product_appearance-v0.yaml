@@ -53,6 +53,14 @@ closure_waivers:
     this pack consumes only the glance test for imagery. Named here so the omission is visible.
   ref: sk_hop_sa_0035
   relation: depends_on
+- partner: sk_hop_sa_0008
+  reason: 'analogy-basis dependency: 0008 is the salesmanship analogy ("advertising is multiplied salesmanship")
+    from which the one-typical-buyer method is derived; PA-D7 consumes the method and its three prohibitions
+    as stated, and already treats the picture as a salesman (0026). The analogy is compiled as doctrine
+    in commercial_communication CC-D9; its own qualifier (0031, where the analogy breaks: the headline
+    selects the reader) is waived above for 0035 on the same scope ground.'
+  ref: sk_hop_sa_0014
+  relation: depends_on
 - partner: sk_lsm_c003_0016
   reason: mechanism explainer (the jump-rope/picket-fence polarization model); the diagnostic stands on
     the observed behaviour, and the analogy adds tokens without changing any check.
@@ -61,6 +69,23 @@ closure_waivers:
 - partner: sk_lsm_c003_0016
   reason: same mechanism explainer as above; the polarizer default stands on the behaviour, not the analogy.
   ref: sk_lsm_c003_0019
+  relation: depends_on
+- partner: sk_fre_c003_0016
+  reason: 0016 is the source's rejection of placement rules (on the ground that they take the fun and
+    imagination out of the decision) and its contradiction with the source's own nod to classical proportion
+    (0028). PA-D11 consumes only what 0017 itself states — three approximate zones, no precision, 'any
+    rule of thirds can only be approximate' — so the default already carries the qualification; the rejection-versus-proportion
+    tension is arbitrated where the balance doctrine lives, composition_and_attention CA-D2/CF-05, and
+    does not change a placement-by-zone default.
+  ref: sk_fre_c003_0017
+  relation: qualified_by
+- partner: sk_dpci_0100
+  reason: 0100 is the star-portrait carrier of the poster code (a persona's fixed facial features trigger
+    recognition, bounded to Bachchan in the 1970s–80s); PA-D12 consumes 0120 only for the character-type
+    code, its dating and its clothing carrier (0070, cited). A product ad's staged figure is not a film-star
+    portrait, so the star-recognition mechanism does not change the default. Film-poster star doctrine
+    (0100, 0080) is not compiled in any pack (indian_indic_context limits).
+  ref: sk_dpci_0120
   relation: depends_on
 conflicts:
 - between:
@@ -71,8 +96,8 @@ conflicts:
   kind: contradicts
   nature: symmetrical tonal separation against a preferred direction for distance; both stated in the
     source
-  resolution_rule: 0015 governs subject-against-ground (either direction); 0017 governs progression across
-    three or more staged depth planes (near dark, far light). Apply by which structure the frame has.
+  resolution_rule: '0015: subject-against-ground, either direction; 0017: three or more staged depth planes,
+    near dark, far light. Apply by the frame''s structure.'
 - between:
   - sk_alt_c003_0003
   - sk_alt_c003_0004
@@ -81,8 +106,8 @@ conflicts:
   kind: trades_off_with
   nature: cold, quiet grounds against deliberately shiny props — speculars wanted on one, banned on the
     other
-  resolution_rule: 'Decide per object: a glossy prop keeps its declared speculars; the ground behind it
-    stays cold and quiet. Never both treatments on the same surface.'
+  resolution_rule: 'Per object: a glossy prop keeps its declared speculars; the ground behind stays cold
+    and quiet; never both on one surface.'
 - between:
   - sk_alt_c003_0018
   - sk_alt_c003_0011
@@ -90,8 +115,8 @@ conflicts:
   decision_ref: PA-D6
   kind: contradicts
   nature: musical comedy is exempted from the requirement that lighting agree with an established source
-  resolution_rule: 'Product and commercial imagery is not the exempt genre: follow 0011 (source agreement)
-    unless the brief names a theatrical pastiche, and record that as a deviation.'
+  resolution_rule: 'Commercial imagery is not the exempt genre: follow 0011 unless the brief names a theatrical
+    pastiche, recorded as a deviation.'
 - between:
   - sk_lsm_c003_0004
   - sk_lsm_c003_0010
@@ -100,8 +125,8 @@ conflicts:
   kind: contradicts
   nature: diffuse reflection is angle-independent; direct reflection is a mirror image visible at one
     determined angle
-  resolution_rule: 'Scope by declared finish (PA-D1): 0004 governs matte/diffuse surfaces, 0010 governs
-    glossy/direct surfaces. Both hold at once on different surfaces.'
+  resolution_rule: 'By declared finish (PA-D1): 0004 governs matte/diffuse, 0010 glossy/direct; both hold
+    on different surfaces.'
 - between:
   - sk_lsm_c003_0006
   - sk_lsm_c003_0014
@@ -110,8 +135,8 @@ conflicts:
   kind: contradicts
   nature: source size does not change a diffuse reflection; for direct reflection source size and placement
     change everything
-  resolution_rule: 'Scope by reflection type: 0006 governs diffuse surfaces; 0014 governs whether and
-    how large the mirror image appears on direct surfaces.'
+  resolution_rule: 'By reflection type: 0006 diffuse; 0014 whether and how large the mirror image appears
+    on direct surfaces.'
 - between:
   - sk_lsm_c003_0008
   - sk_lsm_c003_0012
@@ -120,8 +145,8 @@ conflicts:
   kind: contradicts
   nature: diffuse brightness falls with distance by the inverse square law; a shiny surface reports the
     source's size, not its distance
-  resolution_rule: 'Scope by reflection type: apply falloff reasoning to diffuse surfaces only; on shiny
-    surfaces reason about apparent source size.'
+  resolution_rule: 'By reflection type: falloff reasoning on diffuse only; on shiny surfaces reason about
+    apparent source size.'
 - between:
   - sk_lsm_c003_0011
   - sk_lsm_c003_0008
@@ -129,8 +154,8 @@ conflicts:
   decision_ref: PA-D2
   kind: contradicts
   nature: the two reflection types respond oppositely to source distance
-  resolution_rule: 'Scope by reflection type: direct-reflection brightness is distance-independent (0011);
-    diffuse follows the inverse square law (0008). Never apply one surface''s rule to the other.'
+  resolution_rule: Direct-reflection brightness is distance-independent (0011); diffuse follows the inverse
+    square law (0008); never swap the rules.
 - between:
   - t_alt_c003_0021
   - t_lsm_c003_0008
@@ -155,10 +180,9 @@ conflicts:
   nature: Alton dresses sets with highly reflective objects so specular highlights give the image life,
     contingent on antihalo film stock (t_alt_c003_0021); LSM names a mirror image of the source appearing
     where the photographer does not want it the unwanted direct reflection (t_lsm_c003_0008)
-  resolution_rule: 'Apply PA-D8''s check: every specular is declared wanted — a deliberately shiny prop
-    keeps its highlights (sk_alt_c003_0004) — or identified and removed (sk_lsm_c003_0018, sk_lsm_c003_0019);
-    technique serves the creative decision (sk_lsm_c003_0020). Alton''s term is contingent on antihalo
-    film stock (DATED).'
+  resolution_rule: Every specular is declared wanted — a shiny prop keeps its highlights (alt_0004) —
+    or identified and removed (lsm_0018, 0019); technique serves the decision (0020); Alton's term is
+    antihalo-stock contingent (DATED).
   tension_ref: T5
 - between:
   - sk_lsmx_0023
@@ -170,8 +194,7 @@ conflicts:
     instead embraces it — the table becomes the light source and a light background is the easiest answer,
     since polished metal reads as black without a reflection to carry
   resolution_rule: 'Material decides: a glossy dielectric box works the suppression ladder (0023); a polished
-    metal box is lit by embracing direct reflection — treat the surroundings as the light source (0035,
-    not compiled into this pack; named so the boundary is visible).'
+    metal box embraces direct reflection — the surroundings become the source (0035, uncompiled).'
 - between:
   - sk_lsmx_0057
   - sk_lsmx_0036
@@ -181,9 +204,8 @@ conflicts:
   nature: black-on-black borrows the metal playbook (find and fill the family) but the source withdraws
     the metal support tricks where polarization differs — the transparent/glossy-black support arrangements
     are stated for metal boxes, not for black subjects generally
-  resolution_rule: Light black as if it were metal (0057); carry the metal SUPPORT arrangements (0036,
-    not compiled into this pack) across only for actual metal — where the subject's polarization behaviour
-    differs, the trick is withdrawn.
+  resolution_rule: Light black as if metal (0057); the metal SUPPORT arrangements (0036, uncompiled) carry
+    across only for actual metal — withdrawn where polarization behaviour differs.
 - between:
   - sk_lsmx_0009
   - sk_lsmx_0038
@@ -193,9 +215,8 @@ conflicts:
   nature: cross-polarization removes direct reflection wholesale; metal rendering depends on direct reflection
     — the purer the metal, the more its edges vanish without a controlled reflection to carry them (the
     disappearing-edge failure)
-  resolution_rule: Cross-polarization (0009) is a dielectric-glare last resort only; never on metal, whose
-    edges the direct reflection constitutes (0038, not compiled into this pack; the metal finishing tools
-    are deferred to the full live-37 compile).
+  resolution_rule: Cross-polarization (0009) is a dielectric-glare last resort; never on metal, whose
+    edges the direct reflection constitutes (0038, uncompiled).
 consumption:
   contract: canon/compilation/INJECTION-CONTRACT-v0.md
   target_schema: FINAL_PRODUCTION_PACKAGE v2 (12 EVAL-037 sections + DOCTRINE_DEVIATIONS)
@@ -204,16 +225,16 @@ corpus_digest: 3f7e3fadb3fb635e74b916c261191978c3dd3defded4db36dc5b2e20887d48bc
 corpus_digest_source: canon/knowledge/CANON-CORPUS-INDEX.yaml fingerprints.accepted_canon (recomputed
   from per-file sha256 entries and cross-checked against disk)
 counts:
-  cited_claim_bytes: 16632
-  cited_sk_objects: 35
-  closure_waivers: 8
+  cited_claim_bytes: 22680
+  cited_sk_objects: 45
+  closure_waivers: 11
   conflicts: 11
-  decisions: 10
-  terse_chars: 9889
-  terse_tokens: 2473
+  decisions: 12
+  terse_chars: 9998
+  terse_tokens: 2500
 decisions:
-- check: Every key object has exactly one declared finish; two surfaces of the same tone still read differently
-    by finish; no surface reads as both matte and mirror-glossy in one shot.
+- check: One declared finish per key object; same-tone surfaces still differ by finish; none reads both
+    matte and mirror-glossy.
   check_id: PA-D1-check
   compiled_from:
   - concept_label: lighting_is_the_management_of_reflection
@@ -263,18 +284,16 @@ decisions:
     source_dir: light-science-magic-ch3
   confidence_marker: '[ASSERTED-hedged|CONTESTED|QUALIFIED|SINGLE-ORIGIN]'
   decision_id: PA-D1
-  default: Declare a finish per named object before any prompt is written and light for the declared finish;
-    the three reflection types are a contrast set (scs_lsm_c003_001) — finish is a property of the surface,
-    not of the light.
+  default: Declare a finish per named object before any prompt and light for it; the three types are a
+    contrast set (lsm_001) — finish belongs to the surface, not the light.
   feeds_sections:
   - VISUAL_SYSTEM.surface_finish_per_key_object
   - GENERATION_PROMPTS
   - FAILURE_PREVENTION
   limits: []
-  question: What reflection type dominates each key product surface — diffuse (matte), direct (glossy),
-    or glare?
-- check: Highlight positions agree with the single implied source; highlight brightness does not fall
-    off with implied source distance; a large soft source reads as a large reflection, never a hard point.
+  question: Which reflection type dominates each key surface — diffuse (matte), direct (glossy) or glare?
+- check: Highlights agree with the one implied source, not dimming with its distance; a large soft source
+    reads large, never hard.
   check_id: PA-D2-check
   compiled_from:
   - concept_label: the_family_of_angles
@@ -319,8 +338,8 @@ decisions:
     source_dir: light-science-magic-ch3
   confidence_marker: '[ASSERTED-hedged|CONTESTED|QUALIFIED|SINGLE-ORIGIN]'
   decision_id: PA-D2
-  default: One highlight per surface, consistent with one implied source placed inside or outside the
-    family of angles by intent (scs_lsm_c003_002); the reflection reports the source's size.
+  default: One highlight per surface, from one implied source placed inside or outside the family of angles
+    by intent (lsm_002); the reflection reports the source's size.
   feeds_sections:
   - VISUAL_SYSTEM.implied_light_source
   - PRODUCTION_RECIPE
@@ -328,8 +347,8 @@ decisions:
   - FAILURE_PREVENTION
   limits: []
   question: Where may the highlight sit on each glossy surface?
-- check: Shadow edge quality and highlight size agree — a soft shadow with a pinpoint specular, or the
-    reverse, is a lighting contradiction.
+- check: Shadow edge and highlight size agree — a soft shadow with a pinpoint specular, or the reverse,
+    contradicts.
   check_id: PA-D3-check
   compiled_from:
   - concept_label: source_size_and_contrast_do_not_change_a_diffuse_reflection
@@ -354,17 +373,15 @@ decisions:
     source_dir: light-science-magic-ch3
   confidence_marker: '[ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|MULTI-ORIGIN(2)]'
   decision_id: PA-D3
-  default: Large/soft relative to subject for product surfaces unless the brief forces drama; choose the
-    instrument for the shadow edge it must produce (sk_alt_c003_0006); for direct reflection the source's
-    size sets the highlight's size (sk_lsm_c003_0014).
+  default: Large/soft relative to subject unless the brief forces drama; pick the instrument by the shadow
+    edge it must produce (alt_0006); for direct reflection, source size sets highlight size (lsm_0014).
   feeds_sections:
   - PRODUCTION_RECIPE
   - GENERATION_PROMPTS
   - FAILURE_PREVENTION
   limits: []
   question: Hard or soft source?
-- check: One nameable fictional source; key direction agrees with it; no shadow in frame contradicts the
-    declared direction.
+- check: One nameable fictional source; key direction agrees; no shadow in frame contradicts it.
   check_id: PA-D4-check
   compiled_from:
   - concept_label: interior_lighting_imitates_the_structure_of_daylight
@@ -399,19 +416,17 @@ decisions:
     source_dir: alton-painting-with-light-ch2
   confidence_marker: '[ASSERTED-hedged|CONTESTED|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]'
   decision_id: PA-D4
-  default: Name the fictional source first, then place the key to agree with it (sk_alt_c003_0011); build
-    in the working order of scs_alt_c003_002 — one source photographs flat, added lights restore roundness
-    (sk_alt_c003_0009), interiors imitate daylight's structure (0008); keep one consistent direction because
-    audiences read light without being taught (0026).
+  default: Name the fictional source first, then place the key to agree (alt_0011); build in alt_002's
+    order — one source photographs flat, added lights restore roundness (0009), interiors imitate daylight's
+    structure (0008); one consistent direction, since audiences read light untaught (0026).
   feeds_sections:
   - VISUAL_SYSTEM.implied_light_source
   - PRODUCTION_RECIPE
   - GENERATION_PROMPTS
   - FAILURE_PREVENTION
   limits: []
-  question: What is the fictional light source, and does everything agree with it?
-- check: Product-to-ground tonal contrast survives a grayscale check; where depth planes are staged, nearer
-    planes are darker than farther ones.
+  question: What is the fictional light source; does everything agree with it?
+- check: Product-to-ground contrast survives grayscale; staged depth planes run dark near, light far.
   check_id: PA-D5-check
   compiled_from:
   - concept_label: depth_comes_from_tonal_separation_between_foreground_and_background
@@ -436,18 +451,17 @@ decisions:
     source_dir: alton-painting-with-light-ch2
   confidence_marker: '[ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|SINGLE-ORIGIN]'
   decision_id: PA-D5
-  default: 'By tonal separation, either direction (sk_alt_c003_0015). Scope rule: 0015 governs subject-against-ground;
-    the dark-to-light progression (0017) governs only staged depth planes. Cold, plain grounds separate
-    warm subjects (0003); a deliberately shiny prop (0004) trades off against a quiet ground — decide
-    per object, never both on one surface.'
+  default: By tonal separation, either direction (alt_0015); the dark-to-light progression (0017) only
+    for staged depth planes. Cold, plain grounds separate warm subjects (0003); a deliberately shiny prop
+    (0004) trades off against a quiet ground (CF-02).
   feeds_sections:
   - VISUAL_SYSTEM.placement_zone
   - GENERATION_PROMPTS
   - FAILURE_PREVENTION
   limits: []
   question: How does the product separate from its ground?
-- check: Mood is attributable to light character — direction, hardness, contrast — not to a brightness
-    slider; the key level is declared and consistent across shots.
+- check: Mood traces to light character — direction, hardness, contrast — not brightness; key level declared
+    and held across shots.
   check_id: PA-D6-check
   compiled_from:
   - concept_label: genre_sets_the_key_of_the_whole_picture_before_any_scene_is_lit
@@ -472,17 +486,16 @@ decisions:
     source_dir: alton-painting-with-light-ch2
   confidence_marker: '[ASSERTED-hedged|CONTESTED|DATED|SINGLE-ORIGIN]'
   decision_id: PA-D6
-  default: Set the key by genre and mood before lighting anything (sk_alt_c003_0018); let level follow
-    the dramatic line (0022); make mood with the character of the light, not exposure (0025); the fictional
-    source still governs (0011).
+  default: Set the key by genre and mood before lighting (alt_0018); level follows the dramatic line (0022);
+    mood from the character of the light, not exposure (0025); the fictional source still governs (0011).
   feeds_sections:
   - VISUAL_SYSTEM
   - PRODUCTION_RECIPE
   - FAILURE_PREVENTION
   limits: []
   question: What key level does the mood require?
-- check: State in one line what the hero image sells at a glance; if that line needs the body copy, the
-    image fails.
+- check: 'One line: what the hero image sells at a glance, to which typical buyer; if it needs the body
+    copy, the image fails.'
   check_id: PA-D7-check
   compiled_from:
   - concept_label: a_picture_must_earn_the_space_it_occupies
@@ -495,6 +508,11 @@ decisions:
     marker: '[REASONED-hedged|CULTURE-BOUND]'
     ref: sk_hop_sa_0035
     source_dir: hopkins-scientific-advertising-ch1-7
+  - concept_label: address_one_typical_individual_not_the_mass
+    kind: source_knowledge
+    marker: '[REASONED-hedged]'
+    ref: sk_hop_sa_0014
+    source_dir: hopkins-scientific-advertising-ch1-7
   - concept_label: the_mail_order_copy_prescriptions
     kind: concept_system
     marker: null
@@ -502,16 +520,17 @@ decisions:
     source_dir: hopkins-scientific-advertising-ch1-7
   confidence_marker: '[REASONED-hedged|DATED|CULTURE-BOUND|MEDIUM-UNTESTED|SINGLE-ORIGIN]'
   decision_id: PA-D7
-  default: Treat the picture as a salesman that must earn its space (sk_hop_sa_0026); assume the viewer
-    decides from a glance at headline or picture (0035); size imagery by importance to the sale, never
-    decoration.
+  default: The picture is a salesman that must earn its space (hop_sa_0026); assume the viewer decides
+    from a glance at headline or picture (0035); size imagery by importance to the sale, never decoration;
+    plan for one imagined typical buyer and do what a salesman would face to face — never amuse, boast
+    or show off (0014).
   feeds_sections:
   - MESSAGE_AND_INFORMATION_HIERARCHY
   - CORE_CREATIVE_IDEA
   - FAILURE_PREVENTION
   limits: []
   question: Does the imagery earn its space commercially?
-- check: Every specular on glass, dark or glossy surfaces is declared wanted or removed; none is accidental.
+- check: Every specular on glass, dark or glossy surfaces is declared wanted or removed; none accidental.
   check_id: PA-D8-check
   compiled_from:
   - concept_label: polarized_direct_reflection_is_dimmer_than_ordinary_direct_reflection
@@ -551,21 +570,19 @@ decisions:
     source_dir: light-science-magic-beyond-ch3
   confidence_marker: '[ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]'
   decision_id: PA-D8
-  default: 'Dark subjects reveal direct reflection because they produce less diffuse reflection (sk_lsm_c003_0017);
-    on black-on-black, capitalize on it — light black as if it were metal, find and fill the family (sk_lsmx_0057).
-    Use the diagnostic guidelines to identify polarized reflection (0018). Polarizing the source makes
-    a reflection manageable (0019), but it sits late in the remedy ladder on cost grounds: try a darker
-    background, the source toward the camera, and camera height first (sk_lsmx_0023); cross-polarizing
-    source and lens buys freedom from geometry only at a large cost (sk_lsmx_0009). Polarized direct reflection
-    is dimmer than ordinary direct reflection (0015).'
+  default: 'Dark subjects reveal direct reflection, producing less diffuse (lsm_0017); black-on-black:
+    light black as if metal — find and fill the family (lsmx_0057). Identify polarized reflection by its
+    diagnostics (lsm_0018); a polarized source makes it manageable (0019) but sits late in the ladder
+    on cost: darker background, source toward camera, camera height first (lsmx_0023); cross-polarizing
+    source and lens buys freedom from geometry at large cost (0009). Polarized direct reflection is dimmer
+    than ordinary (lsm_0015).'
   feeds_sections:
   - PRODUCTION_RECIPE
   - GENERATION_PROMPTS
   - FAILURE_PREVENTION
   limits: []
-  question: Glass, dark or mirror-glossy object in frame — special handling?
-- check: Count visible faces of the product; if a candidate angle shows more surfaces without breaking
-    PA-D2 or PA-D5, prefer it.
+  question: Glass, dark or mirror-glossy object — special handling?
+- check: Count visible faces; prefer the angle showing more unless it breaks PA-D2 or PA-D5.
   check_id: PA-D9-check
   compiled_from:
   - concept_label: the_best_angle_is_the_one_showing_the_most_surfaces
@@ -575,8 +592,7 @@ decisions:
     source_dir: alton-painting-with-light-ch2
   confidence_marker: '[ASSERTED-hedged|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]'
   decision_id: PA-D9
-  default: The angle showing the most surfaces of the product (sk_alt_c003_0010) — Canon's only committed
-    angle-choice criterion.
+  default: The angle showing the most surfaces (alt_0010) — Canon's only committed angle-choice criterion.
   feeds_sections:
   - PRODUCTION_RECIPE
   - GENERATION_PROMPTS
@@ -585,8 +601,8 @@ decisions:
   - 'Packshot convention absent from Canon (A13 application_unbound): hero-angle, label-legibility and
     scale-cue conventions are not in the corpus; this default is one 1949 cinema-era claim — do not overgeneralize.'
   question: Which angle is the hero angle?
-- check: Every deviation from PA-D1..PA-D9 is listed in DOCTRINE_DEVIATIONS with its forcing brief clause;
-    none is silent.
+- check: Every deviation from a PA decision sits in DOCTRINE_DEVIATIONS with its forcing brief clause;
+    none silent.
   check_id: PA-D10-check
   compiled_from:
   - concept_label: the_technique_serves_a_creative_decision_it_does_not_make
@@ -596,14 +612,92 @@ decisions:
     source_dir: light-science-magic-ch3
   confidence_marker: '[ASSERTED-hedged|SINGLE-ORIGIN]'
   decision_id: PA-D10
-  default: 'Technique serves a creative decision it does not make (sk_lsm_c003_0020): any default in this
-    pack yields to an explicit creative decision recorded in DOCTRINE_DEVIATIONS with the brief clause
-    that forces it.'
+  default: 'Technique serves a creative decision it does not make (lsm_0020): any default here yields
+    to an explicit creative decision, recorded in DOCTRINE_DEVIATIONS with its forcing brief clause.'
   feeds_sections:
   - DOCTRINE_DEVIATIONS
   - HARD_CONSTRAINT_CHECK
   limits: []
   question: When may any of the above be overridden?
+- check: Zone and reason named; scale cue and second read visible at delivered size; each move names what
+    it concentrates on.
+  check_id: PA-D11-check
+  compiled_from:
+  - concept_label: three_approximate_zones_not_positions
+    kind: source_knowledge
+    marker: '[ASSERTED-hedged|QUALIFIED]'
+    ref: sk_fre_c003_0017
+    source_dir: freeman-photographers-eye-graphic-guide
+  - concept_label: a_vertical_frame_is_not_the_same_as_a_sense_of_tallness
+    kind: source_knowledge
+    marker: '[REASONED|FIGURE-UNVERIFIED]'
+    ref: sk_fre_c003_0008
+    source_dir: freeman-photographers-eye-graphic-guide
+  - concept_label: a_figure_supplies_scale_but_only_above_a_size_that_depends_on_the_print
+    kind: source_knowledge
+    marker: '[REASONED-hedged|DATED|FIGURE-UNVERIFIED]'
+    ref: sk_fre_c003_0024
+    source_dir: freeman-photographers-eye-graphic-guide
+  - concept_label: a_still_reveal_is_a_balancing_act_between_delay_and_abandonment
+    kind: source_knowledge
+    marker: '[REASONED-hedged]'
+    ref: sk_fre_c003_0025
+    source_dir: freeman-photographers-eye-graphic-guide
+  - concept_label: the_camera_stands_in_for_the_audiences_attention
+    kind: source_knowledge
+    marker: '[ASSERTED-hedged]'
+    ref: sk_alt_c003_0014
+    source_dir: alton-painting-with-light-ch2
+  confidence_marker: '[ASSERTED-hedged|QUALIFIED|DATED|FIGURE-UNVERIFIED|MULTI-ORIGIN(2)]'
+  decision_id: PA-D11
+  default: 'Place by zone — around the centre, near an edge or corner, or off-centre — never a coordinate
+    (fre_0017). A vertical frame is not itself tallness: oppose two elements at the ends of the long axis
+    (0008). With nothing of familiar size in frame, size does not read; a small figure supplies it, as
+    small as possible yet still seen at the delivered size (0024). A late-found second element must stay
+    findable — too small or dim and the viewer leaves (0025). The camera is the audience''s eye; too much
+    movement covers up, as bad as none (alt_0014).'
+  feeds_sections:
+  - VISUAL_SYSTEM.placement_zone
+  - GENERATION_PROMPTS
+  - FAILURE_PREVENTION
+  limits: []
+  question: Where does the product sit, and how do height, scale and a second read register?
+- check: Each prop, garment and figure has a stated meaning and date range; filmi-era codes marked 'period,
+    deliberate'.
+  check_id: PA-D12-check
+  compiled_from:
+  - concept_label: props_and_vehicles_as_a_conventional_vocabulary_for_period_class_and_modernity
+    kind: source_knowledge
+    marker: '[ASSERTED-hedged|QUALIFIED|DATED|CULTURE-BOUND]'
+    ref: sk_dpci_0040
+    source_dir: dwyer-patel-cinema-india
+  - concept_label: clothing_as_a_semiotic_system_with_a_grammar_the_audience_already_holds
+    kind: source_knowledge
+    marker: '[REASONED-hedged|QUALIFIED|DATED|CULTURE-BOUND|FIGURE-UNVERIFIED]'
+    ref: sk_dpci_0070
+    source_dir: dwyer-patel-cinema-india
+  - concept_label: character_types_as_a_compression_code_that_lets_a_poster_carry_a_plot
+    kind: source_knowledge
+    marker: '[REASONED-hedged|QUALIFIED|DATED|CULTURE-BOUND]'
+    ref: sk_dpci_0120
+    source_dir: dwyer-patel-cinema-india
+  - concept_label: the_book_dates_its_own_subject_as_ending_and_says_why
+    kind: source_knowledge
+    marker: '[REASONED-hedged|DATED|CULTURE-BOUND]'
+    ref: sk_dpci_0190
+    source_dir: dwyer-patel-cinema-india
+  confidence_marker: '[ASSERTED-hedged|QUALIFIED|DATED|CULTURE-BOUND|FIGURE-UNVERIFIED|SINGLE-ORIGIN]'
+  decision_id: PA-D12
+  default: 'Each is a code the audience already holds — props for period, class and modernity (dpci_0040),
+    dress for occasion, formality and colour (0070), a figure for its type (0120): Hindi-cinema codes
+    to 2002, a style the source dates as ended (0190). Use as deliberate, dated period codes, never the
+    current default (tables: IN-D3).'
+  feeds_sections:
+  - MESSAGE_AND_INFORMATION_HIERARCHY
+  - VISUAL_SYSTEM
+  - GENERATION_PROMPTS
+  limits: []
+  question: What do props, dress and figures staged with the product signal?
 generated_by: canon/compilation/compile_pilot_packs.py (deterministic; rerun to verify); authored in canon/compilation/authoring/PACK-product_appearance.authoring.yaml
 pack_id: product_appearance
 pack_limits:
@@ -614,20 +708,19 @@ pack_limits:
   where they bite (PA-D8: sk_lsmx_0009, sk_lsmx_0023, sk_lsmx_0057 — polarizer demoted on cost grounds;
   glossy-box remedy ladder ordered cheapest-first; black-on-black lit as if metal). The remainder of the
   extension awaits the full live-37 pack compile.'
-- 'Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india,
-  jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide as contributors to this pack''s
-  domains; none is compiled here — their doctrine (frontality/darshan staging, iconographic correctness,
-  props-as-vocabulary) is absent, not arbitrated.'
-- 'Category-surface gap: no accepted claim covers watch conventions (hand positions) or anisotropic brushed/sunburst
-  surfaces — the diffuse/direct/glare contrast set (PA-D1) does not model radial anisotropic glow; state
-  the gap rather than force one of the three types.'
+- 'Coverage delta: jain-gods-in-the-bazaar (frontality/darshan staging, iconographic codes; CV-D9, IN-D2),
+  carroll-read-this-photographs, hopkins ch8-21: nothing compiled here — absent, not arbitrated.'
+- 'Category gap: no claim covers watch conventions (hand positions) or brushed/sunburst anisotropic surfaces;
+  PA-D1''s types do not model radial glow — state the gap, never force a type.'
+- 'Transfer untested: fre_0008/0024 landscape, 0017 a 3:2 still, alt_0014 narrative film, dpci codes one
+  audience to 2002 — packshots, 9:16 and other audiences assume neither way.'
 pack_version: v0
 spec: canon/compilation/COMPILED-DOCTRINE-SPEC-v0.md
 status: PROPOSED — Canon-stream worker output; no Controller decision adopts it; coordination/CONTROL-STATE.md
   governs.
 stream: canon
 task: REP-05
-terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpus 3f7e3fadb3fb). 10 decisions.
+terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpus 3f7e3fadb3fb). 12 decisions.
   Each DEFAULT is a decision already made: accept it, or override it in DOCTRINE_DEVIATIONS citing the
   brief clause that forces the override. Answer every CHECK in FAILURE_PREVENTION as pass or fix, by decision
   id. Id legend: ids drop the sk_/scs_ prefix and _c003 infix (fre_0020 = sk_fre_c003_0020; 3-digit =
@@ -636,112 +729,104 @@ terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpu
 
   PA-D1 [ASSERTED-hedged|CONTESTED|QUALIFIED|SINGLE-ORIGIN]
 
-  Q: What reflection type dominates each key product surface — diffuse (matte), direct (glossy), or glare?
+  Q: Which reflection type dominates each key surface — diffuse (matte), direct (glossy) or glare?
 
-  DEFAULT: Declare a finish per named object before any prompt is written and light for the declared finish;
-  the three reflection types are a contrast set (scs_lsm_c003_001) — finish is a property of the surface,
-  not of the light.
+  DEFAULT: Declare a finish per named object before any prompt and light for it; the three types are a
+  contrast set (lsm_001) — finish belongs to the surface, not the light.
 
-  CHECK: Every key object has exactly one declared finish; two surfaces of the same tone still read differently
-  by finish; no surface reads as both matte and mirror-glossy in one shot.
+  CHECK: One declared finish per key object; same-tone surfaces still differ by finish; none reads both
+  matte and mirror-glossy.
 
 
   PA-D2 [ASSERTED-hedged|CONTESTED|QUALIFIED|SINGLE-ORIGIN]
 
   Q: Where may the highlight sit on each glossy surface?
 
-  DEFAULT: One highlight per surface, consistent with one implied source placed inside or outside the
-  family of angles by intent (scs_lsm_c003_002); the reflection reports the source''s size.
+  DEFAULT: One highlight per surface, from one implied source placed inside or outside the family of angles
+  by intent (lsm_002); the reflection reports the source''s size.
 
-  CHECK: Highlight positions agree with the single implied source; highlight brightness does not fall
-  off with implied source distance; a large soft source reads as a large reflection, never a hard point.
+  CHECK: Highlights agree with the one implied source, not dimming with its distance; a large soft source
+  reads large, never hard.
 
 
   PA-D3 [ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|MULTI-ORIGIN(2)]
 
   Q: Hard or soft source?
 
-  DEFAULT: Large/soft relative to subject for product surfaces unless the brief forces drama; choose the
-  instrument for the shadow edge it must produce (sk_alt_c003_0006); for direct reflection the source''s
-  size sets the highlight''s size (sk_lsm_c003_0014).
+  DEFAULT: Large/soft relative to subject unless the brief forces drama; pick the instrument by the shadow
+  edge it must produce (alt_0006); for direct reflection, source size sets highlight size (lsm_0014).
 
-  CHECK: Shadow edge quality and highlight size agree — a soft shadow with a pinpoint specular, or the
-  reverse, is a lighting contradiction.
+  CHECK: Shadow edge and highlight size agree — a soft shadow with a pinpoint specular, or the reverse,
+  contradicts.
 
 
   PA-D4 [ASSERTED-hedged|CONTESTED|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]
 
-  Q: What is the fictional light source, and does everything agree with it?
+  Q: What is the fictional light source; does everything agree with it?
 
-  DEFAULT: Name the fictional source first, then place the key to agree with it (sk_alt_c003_0011); build
-  in the working order of scs_alt_c003_002 — one source photographs flat, added lights restore roundness
-  (sk_alt_c003_0009), interiors imitate daylight''s structure (0008); keep one consistent direction because
-  audiences read light without being taught (0026).
+  DEFAULT: Name the fictional source first, then place the key to agree (alt_0011); build in alt_002''s
+  order — one source photographs flat, added lights restore roundness (0009), interiors imitate daylight''s
+  structure (0008); one consistent direction, since audiences read light untaught (0026).
 
-  CHECK: One nameable fictional source; key direction agrees with it; no shadow in frame contradicts the
-  declared direction.
+  CHECK: One nameable fictional source; key direction agrees; no shadow in frame contradicts it.
 
 
   PA-D5 [ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|SINGLE-ORIGIN]
 
   Q: How does the product separate from its ground?
 
-  DEFAULT: By tonal separation, either direction (sk_alt_c003_0015). Scope rule: 0015 governs subject-against-ground;
-  the dark-to-light progression (0017) governs only staged depth planes. Cold, plain grounds separate
-  warm subjects (0003); a deliberately shiny prop (0004) trades off against a quiet ground — decide per
-  object, never both on one surface.
+  DEFAULT: By tonal separation, either direction (alt_0015); the dark-to-light progression (0017) only
+  for staged depth planes. Cold, plain grounds separate warm subjects (0003); a deliberately shiny prop
+  (0004) trades off against a quiet ground (CF-02).
 
-  CHECK: Product-to-ground tonal contrast survives a grayscale check; where depth planes are staged, nearer
-  planes are darker than farther ones.
+  CHECK: Product-to-ground contrast survives grayscale; staged depth planes run dark near, light far.
 
 
   PA-D6 [ASSERTED-hedged|CONTESTED|DATED|SINGLE-ORIGIN]
 
   Q: What key level does the mood require?
 
-  DEFAULT: Set the key by genre and mood before lighting anything (sk_alt_c003_0018); let level follow
-  the dramatic line (0022); make mood with the character of the light, not exposure (0025); the fictional
-  source still governs (0011).
+  DEFAULT: Set the key by genre and mood before lighting (alt_0018); level follows the dramatic line (0022);
+  mood from the character of the light, not exposure (0025); the fictional source still governs (0011).
 
-  CHECK: Mood is attributable to light character — direction, hardness, contrast — not to a brightness
-  slider; the key level is declared and consistent across shots.
+  CHECK: Mood traces to light character — direction, hardness, contrast — not brightness; key level declared
+  and held across shots.
 
 
   PA-D7 [REASONED-hedged|DATED|CULTURE-BOUND|MEDIUM-UNTESTED|SINGLE-ORIGIN]
 
   Q: Does the imagery earn its space commercially?
 
-  DEFAULT: Treat the picture as a salesman that must earn its space (sk_hop_sa_0026); assume the viewer
-  decides from a glance at headline or picture (0035); size imagery by importance to the sale, never decoration.
+  DEFAULT: The picture is a salesman that must earn its space (hop_sa_0026); assume the viewer decides
+  from a glance at headline or picture (0035); size imagery by importance to the sale, never decoration;
+  plan for one imagined typical buyer and do what a salesman would face to face — never amuse, boast or
+  show off (0014).
 
-  CHECK: State in one line what the hero image sells at a glance; if that line needs the body copy, the
-  image fails.
+  CHECK: One line: what the hero image sells at a glance, to which typical buyer; if it needs the body
+  copy, the image fails.
 
 
   PA-D8 [ASSERTED-hedged|CONTESTED|QUALIFIED|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]
 
-  Q: Glass, dark or mirror-glossy object in frame — special handling?
+  Q: Glass, dark or mirror-glossy object — special handling?
 
-  DEFAULT: Dark subjects reveal direct reflection because they produce less diffuse reflection (sk_lsm_c003_0017);
-  on black-on-black, capitalize on it — light black as if it were metal, find and fill the family (sk_lsmx_0057).
-  Use the diagnostic guidelines to identify polarized reflection (0018). Polarizing the source makes a
-  reflection manageable (0019), but it sits late in the remedy ladder on cost grounds: try a darker background,
-  the source toward the camera, and camera height first (sk_lsmx_0023); cross-polarizing source and lens
-  buys freedom from geometry only at a large cost (sk_lsmx_0009). Polarized direct reflection is dimmer
-  than ordinary direct reflection (0015).
+  DEFAULT: Dark subjects reveal direct reflection, producing less diffuse (lsm_0017); black-on-black:
+  light black as if metal — find and fill the family (lsmx_0057). Identify polarized reflection by its
+  diagnostics (lsm_0018); a polarized source makes it manageable (0019) but sits late in the ladder on
+  cost: darker background, source toward camera, camera height first (lsmx_0023); cross-polarizing source
+  and lens buys freedom from geometry at large cost (0009). Polarized direct reflection is dimmer than
+  ordinary (lsm_0015).
 
-  CHECK: Every specular on glass, dark or glossy surfaces is declared wanted or removed; none is accidental.
+  CHECK: Every specular on glass, dark or glossy surfaces is declared wanted or removed; none accidental.
 
 
   PA-D9 [ASSERTED-hedged|DATED|FIGURE-UNVERIFIED|SINGLE-ORIGIN]
 
   Q: Which angle is the hero angle?
 
-  DEFAULT: The angle showing the most surfaces of the product (sk_alt_c003_0010) — Canon''s only committed
-  angle-choice criterion.
+  DEFAULT: The angle showing the most surfaces (alt_0010) — Canon''s only committed angle-choice criterion.
 
-  CHECK: Count visible faces of the product; if a candidate angle shows more surfaces without breaking
-  PA-D2 or PA-D5, prefer it.
+  CHECK: Count visible faces; prefer the angle showing more unless it breaks PA-D2 or PA-D5.
 
   LIMIT: Packshot convention absent from Canon (A13 application_unbound): hero-angle, label-legibility
   and scale-cue conventions are not in the corpus; this default is one 1949 cinema-era claim — do not
@@ -752,54 +837,77 @@ terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpu
 
   Q: When may any of the above be overridden?
 
-  DEFAULT: Technique serves a creative decision it does not make (sk_lsm_c003_0020): any default in this
-  pack yields to an explicit creative decision recorded in DOCTRINE_DEVIATIONS with the brief clause that
-  forces it.
+  DEFAULT: Technique serves a creative decision it does not make (lsm_0020): any default here yields to
+  an explicit creative decision, recorded in DOCTRINE_DEVIATIONS with its forcing brief clause.
 
-  CHECK: Every deviation from PA-D1..PA-D9 is listed in DOCTRINE_DEVIATIONS with its forcing brief clause;
-  none is silent.
+  CHECK: Every deviation from a PA decision sits in DOCTRINE_DEVIATIONS with its forcing brief clause;
+  none silent.
+
+
+  PA-D11 [ASSERTED-hedged|QUALIFIED|DATED|FIGURE-UNVERIFIED|MULTI-ORIGIN(2)]
+
+  Q: Where does the product sit, and how do height, scale and a second read register?
+
+  DEFAULT: Place by zone — around the centre, near an edge or corner, or off-centre — never a coordinate
+  (fre_0017). A vertical frame is not itself tallness: oppose two elements at the ends of the long axis
+  (0008). With nothing of familiar size in frame, size does not read; a small figure supplies it, as small
+  as possible yet still seen at the delivered size (0024). A late-found second element must stay findable
+  — too small or dim and the viewer leaves (0025). The camera is the audience''s eye; too much movement
+  covers up, as bad as none (alt_0014).
+
+  CHECK: Zone and reason named; scale cue and second read visible at delivered size; each move names what
+  it concentrates on.
+
+
+  PA-D12 [ASSERTED-hedged|QUALIFIED|DATED|CULTURE-BOUND|FIGURE-UNVERIFIED|SINGLE-ORIGIN]
+
+  Q: What do props, dress and figures staged with the product signal?
+
+  DEFAULT: Each is a code the audience already holds — props for period, class and modernity (dpci_0040),
+  dress for occasion, formality and colour (0070), a figure for its type (0120): Hindi-cinema codes to
+  2002, a style the source dates as ended (0190). Use as deliberate, dated period codes, never the current
+  default (tables: IN-D3).
+
+  CHECK: Each prop, garment and figure has a stated meaning and date range; filmi-era codes marked ''period,
+  deliberate''.
 
 
   PRE-ARBITRATED CONFLICTS (the rule already decides; do not re-arbitrate):
 
-  CF-01 alt_0015 vs alt_0017: 0015 governs subject-against-ground (either direction); 0017 governs progression
-  across three or more staged depth planes (near dark, far light). Apply by which structure the frame
-  has.
+  CF-01 alt_0015 vs alt_0017: 0015: subject-against-ground, either direction; 0017: three or more staged
+  depth planes, near dark, far light. Apply by the frame''s structure.
 
-  CF-02 alt_0003 vs alt_0004: Decide per object: a glossy prop keeps its declared speculars; the ground
-  behind it stays cold and quiet. Never both treatments on the same surface.
+  CF-02 alt_0003 vs alt_0004: Per object: a glossy prop keeps its declared speculars; the ground behind
+  stays cold and quiet; never both on one surface.
 
-  CF-03 alt_0018 vs alt_0011: Product and commercial imagery is not the exempt genre: follow 0011 (source
-  agreement) unless the brief names a theatrical pastiche, and record that as a deviation.
+  CF-03 alt_0018 vs alt_0011: Commercial imagery is not the exempt genre: follow 0011 unless the brief
+  names a theatrical pastiche, recorded as a deviation.
 
-  CF-04 lsm_0004 vs lsm_0010: Scope by declared finish (PA-D1): 0004 governs matte/diffuse surfaces, 0010
-  governs glossy/direct surfaces. Both hold at once on different surfaces.
+  CF-04 lsm_0004 vs lsm_0010: By declared finish (PA-D1): 0004 governs matte/diffuse, 0010 glossy/direct;
+  both hold on different surfaces.
 
-  CF-05 lsm_0006 vs lsm_0014: Scope by reflection type: 0006 governs diffuse surfaces; 0014 governs whether
-  and how large the mirror image appears on direct surfaces.
+  CF-05 lsm_0006 vs lsm_0014: By reflection type: 0006 diffuse; 0014 whether and how large the mirror
+  image appears on direct surfaces.
 
-  CF-06 lsm_0008 vs lsm_0012: Scope by reflection type: apply falloff reasoning to diffuse surfaces only;
-  on shiny surfaces reason about apparent source size.
+  CF-06 lsm_0008 vs lsm_0012: By reflection type: falloff reasoning on diffuse only; on shiny surfaces
+  reason about apparent source size.
 
-  CF-07 lsm_0011 vs lsm_0008: Scope by reflection type: direct-reflection brightness is distance-independent
-  (0011); diffuse follows the inverse square law (0008). Never apply one surface''s rule to the other.
+  CF-07 lsm_0011 vs lsm_0008: Direct-reflection brightness is distance-independent (0011); diffuse follows
+  the inverse square law (0008); never swap the rules.
 
-  CF-08 t_alt_0021 vs t_lsm_0008: Apply PA-D8''s check: every specular is declared wanted — a deliberately
-  shiny prop keeps its highlights (sk_alt_c003_0004) — or identified and removed (sk_lsm_c003_0018, sk_lsm_c003_0019);
-  technique serves the creative decision (sk_lsm_c003_0020). Alton''s term is contingent on antihalo film
-  stock (DATED).
+  CF-08 t_alt_0021 vs t_lsm_0008: Every specular is declared wanted — a shiny prop keeps its highlights
+  (alt_0004) — or identified and removed (lsm_0018, 0019); technique serves the decision (0020); Alton''s
+  term is antihalo-stock contingent (DATED).
 
   CF-09 lsmx_0023 vs lsmx_0035: Material decides: a glossy dielectric box works the suppression ladder
-  (0023); a polished metal box is lit by embracing direct reflection — treat the surroundings as the light
-  source (0035, not compiled into this pack; named so the boundary is visible).
+  (0023); a polished metal box embraces direct reflection — the surroundings become the source (0035,
+  uncompiled).
 
-  CF-10 lsmx_0057 vs lsmx_0036: Light black as if it were metal (0057); carry the metal SUPPORT arrangements
-  (0036, not compiled into this pack) across only for actual metal — where the subject''s polarization
-  behaviour differs, the trick is withdrawn.
+  CF-10 lsmx_0057 vs lsmx_0036: Light black as if metal (0057); the metal SUPPORT arrangements (0036,
+  uncompiled) carry across only for actual metal — withdrawn where polarization behaviour differs.
 
-  CF-11 lsmx_0009 vs lsmx_0038: Cross-polarization (0009) is a dielectric-glare last resort only; never
-  on metal, whose edges the direct reflection constitutes (0038, not compiled into this pack; the metal
-  finishing tools are deferred to the full live-37 compile).
+  CF-11 lsmx_0009 vs lsmx_0038: Cross-polarization (0009) is a dielectric-glare last resort; never on
+  metal, whose edges the direct reflection constitutes (0038, uncompiled).
 
 
   PACK LIMITS:
@@ -813,14 +921,14 @@ terse_injection_text: 'CANON DOCTRINE PACK product_appearance v0 (accepted corpu
   grounds; glossy-box remedy ladder ordered cheapest-first; black-on-black lit as if metal). The remainder
   of the extension awaits the full live-37 pack compile.
 
-  - Coverage delta (declared, not compiled): CANON-V1-LIVE24-COVERAGE.yaml lists dwyer-patel-cinema-india,
-  jain-gods-in-the-bazaar and freeman-photographers-eye-graphic-guide as contributors to this pack''s
-  domains; none is compiled here — their doctrine (frontality/darshan staging, iconographic correctness,
-  props-as-vocabulary) is absent, not arbitrated.
+  - Coverage delta: jain-gods-in-the-bazaar (frontality/darshan staging, iconographic codes; CV-D9, IN-D2),
+  carroll-read-this-photographs, hopkins ch8-21: nothing compiled here — absent, not arbitrated.
 
-  - Category-surface gap: no accepted claim covers watch conventions (hand positions) or anisotropic brushed/sunburst
-  surfaces — the diffuse/direct/glare contrast set (PA-D1) does not model radial anisotropic glow; state
-  the gap rather than force one of the three types.
+  - Category gap: no claim covers watch conventions (hand positions) or brushed/sunburst anisotropic surfaces;
+  PA-D1''s types do not model radial glow — state the gap, never force a type.
+
+  - Transfer untested: fre_0008/0024 landscape, 0017 a 3:2 still, alt_0014 narrative film, dpci codes
+  one audience to 2002 — packshots, 9:16 and other audiences assume neither way.
 
   '
 what_a_pass_does_not_establish: Relevance to any brief, doctrine quality, medium fit, outcome improvement,
