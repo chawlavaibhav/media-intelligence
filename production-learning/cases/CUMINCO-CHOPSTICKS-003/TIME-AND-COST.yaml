@@ -1,0 +1,85 @@
+# TIME AND COST — case CUMINCO-CHOPSTICKS-003. Mechanical clocks (JOB.yaml ttao stamps from `date -u`, ledger UTC, git) vs human words; never mixed.
+case_id: CUMINCO-CHOPSTICKS-003
+anchors_mechanical:
+  job_start_utc: '2026-09-15T13:17:42Z'
+  planning_complete_utc: '2026-09-15T13:28:37Z'
+  first_paid_call_utc: '2026-09-15T13:39:56Z'
+  last_paid_call_utc: att-051 spoken close (V3), 2026-09-15
+  v1_presented_commit: 8a5927a
+  v2_commit: b53d210
+  v3_commit: c0f849c
+  final_reject_recorded_utc: 2026-09-16 03:45:05+00:00
+time:
+  time_to_outcome_mechanical:
+    value_hms: '14:27:50'
+    from: job_start_utc
+    to: final REJECT recorded (V3)
+    source:
+    - JOB.yaml ttao.job_start_utc
+    - JOB.yaml ttao.human_decision_utc
+    caveat: includes an overnight gap between V3 presentation and the user's verdict; the working span on 15 Sep was ≈ 3 h for planning + three versions
+  time_to_accepted_outcome_human_estimate: null
+  generation_wait_time:
+    mechanical:
+      sum_of_per_call_latency_s: 824
+      note: ATTEMPTS.jsonl latency_s over ok attempts
+    share: small — human review rounds (10) and the voice search (5 rounds, 26 takes) dominated
+  human_review_rounds:
+    micro_qualification_gates: 4
+    voice_rounds: 5
+    assembled_versions: 3
+    total_cycles: 10
+cost:
+  total_known_provider_cost_usd: 5.0907
+  basis: 50 attempts on gen/LEDGER.jsonl @ de1f978 (reserved lines; 47 ok, 3 failed/unsent, all counted); cap USD 8 stated by the user in-session
+  by_route:
+  - route: nano-banana-2
+    calls: 8
+    ok: 7
+    usd: 0.536
+    pool: credits
+  - route: veo-3.1-fast-i2v
+    calls: 7
+    ok: 7
+    usd: 4.2
+    pool: credits
+  - route: sarvam-bulbul-v3
+    calls: 8
+    ok: 8
+    usd: 0.0228
+    pool: sarvam_credits
+  - route: elevenlabs-v3-direct
+    calls: 8
+    ok: 7
+    usd: 0.0987
+    pool: elevenlabs_credits
+  - route: gemini-tts
+    calls: 18
+    ok: 17
+    usd: 0.1729
+    pool: credits
+  - route: lyria
+    calls: 1
+    ok: 1
+    usd: 0.06
+    pool: credits
+  spent_on_voice_search_usd: 0.2947
+  spent_on_rejected_media_usd: 1.334
+  cost_per_accepted_outcome:
+    value: null
+    reason: no accepted outcome; USD 5.0907 produced three rejected versions
+  vendor_billed:
+    value: null
+    reason: no provider statement reconciled; every figure is a ledger upper bound
+counts:
+  paid_generation_attempts: 50
+  ok_attempts: 47
+  human_review_cycles: 10
+  versions: 3
+  voice_takes: 26
+product_conclusion:
+  final_quality: FAILED (rejected ×3)
+  pipeline_efficiency: UNDERPERFORMED — three assembled versions and ≈ 3 working hours reached no acceptance; each rejection was on a dimension no existing
+    gate measured
+  comparison_to_baseline: 'case 001: 5 versions / 7 h 54 m / USD 15.39 to accept; case 002: 1 h 07 m / USD 4.66 / 9 of 10; this case: 3 versions / USD 5.0907
+    / nothing accepted'

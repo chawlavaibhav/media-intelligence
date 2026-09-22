@@ -1,0 +1,31 @@
+# HUMAN VERDICTS — the customer's words on the one presented version of the V2 film.
+# evidence_class: chat_only_human_evidence — the verdict was a chat message to the Controller session at
+# 2026-09-21T16:34:35Z (IST 22:04). It was transcribed verbatim into JOB.yaml versions[0] (commit ee644c3) and into
+# LEARNING-PACKET.yaml human_verdict_final (commit b06deaf). The customer wrote no file; the files are the Controller's transcription.
+case_id: RENTOK-GAME-V2-006
+evidence_class: chat_only_human_evidence
+reviewer: "Vaibhav Chawla — the customer for this job (his own brief) and the human Controller; NOT blind (he had asked for this film after ranking the CQ-001 clips and knew it was 'the video 4 way')"
+verdict_vocabulary: [accept, specific_repair, rebuild_direction, reject]
+
+verdicts:
+  - version: 1
+    verdict: accept
+    presented_as: "the delivered file, presented once by the Controller"
+    presented_utc: "2026-09-21T12:33:00Z"
+    decided_utc: "2026-09-21T16:34:35Z"
+    words_transcribed:
+      - "its already good"                                   # the ACCEPT
+      - "not required"                                       # on the Controller's offer of the checker's USD-0 repair round
+      - "Also, this is finally one amazinh outcome"          # earlier in the same exchange (JOB.yaml versions[0].context_verbatim)
+    reading: "ACCEPT as delivered. 'not required' was said to the offer of a repair round for the checker's recorded defects, so the acceptance covers the file WITH those defects. 'finally one amazing outcome' (INFERRED reading of 'amazinh') is the strongest wording this customer has used on any of the three films on this brief — Lane A got 'video 2 is better', the CQ-001 clips got 'good in drama' / 'better pixelated'."
+    defects_seen: []
+    what_the_words_do_not_say: "which of the checker's defects the customer looked at, if any; whether he watched at phone size; whether the two objections the checker predicted (cut-out motion; small power-up effects at phone size) were noticed and forgiven or not noticed; what 'the video 4 way' delivered that Lane A did not, in his own words"
+
+repair_offer:
+  what_was_offered: "a USD-0 repair round on the checker's findings — the packet and JOB.yaml call it 'six recorded defects'; the checker's own table lists nine new defects (N1–N9), one producer-recorded (P1), one limitation (P2) and three creative/records notes. Which six were put to the customer is NOT on disk (the offer was chat)."
+  answer_verbatim: "not required"
+  consequence: "every checker defect stays on the accepted file, unrepaired, by the customer's choice — recorded as such in SYSTEM-DEFECTS.yaml; none is counted as a customer-flagged defect"
+
+blindness_limitation: "none claimed — this was an ordinary presentation, not a blind packet. The customer knew the method, the cost and that it superseded a film he had already accepted; his verdict is the verdict of the person who commissioned the change."
+
+no_customer_defects_register: "The customer flagged nothing. Every defect in SYSTEM-DEFECTS.yaml was found by the producer's gates or eye (A-1..A-5, R-1, R-2 — closed) or by the independent checker (N1–N9, P1 — open)."

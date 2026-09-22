@@ -180,3 +180,32 @@ class Disjointness(unittest.TestCase):                      # SD-07: offer / cod
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class VoSchedule(unittest.TestCase):                       # CUMINCO-CHOPSTICKS-003 DF-08: "the voices are overlapping"
+    LINES = [{"id": "b1", "start_s": 0.30, "duration_s": 5.32}, {"id": "b2", "start_s": 4.70, "duration_s": 4.12},
+             {"id": "b3", "start_s": 9.10, "duration_s": 3.99}, {"id": "b6", "start_s": 22.00, "duration_s": 4.54}]
+
+    def test_the_case_003_placement_is_refused_on_the_first_overlap(self):
+        with self.assertRaises(LayoutRefused) as cm:
+            gates.check_vo_schedule(self.LINES, film_end_s=25.6)
+        self.assertEqual(cm.exception.code, "VO_LINES_OVERLAP")
+        self.assertEqual(cm.exception.context["pair"], ("b1", "b2"))
+        self.assertAlmostEqual(cm.exception.context["overlap_s"], 0.92, places=2)
+
+    def test_a_line_that_runs_past_the_film_end_is_refused(self):
+        lines = [{"id": "b5", "start_s": 17.7, "duration_s": 3.98}, {"id": "b6", "start_s": 22.0, "duration_s": 4.54}]
+        with self.assertRaises(LayoutRefused) as cm:
+            gates.check_vo_schedule(lines, film_end_s=25.6)
+        self.assertEqual(cm.exception.code, "VO_OVERRUNS_END")
+        self.assertAlmostEqual(cm.exception.context["overrun_s"], 0.94, places=2)
+
+    def test_lines_placed_from_measured_durations_pass_with_the_gap(self):
+        lines = [{"id": "b1", "start_s": 0.3, "duration_s": 5.32}, {"id": "b2", "start_s": 5.92, "duration_s": 4.12},
+                 {"id": "b3", "start_s": 10.34, "duration_s": 3.99}]
+        r = gates.check_vo_schedule(lines, film_end_s=15.0, min_gap_s=0.3)
+        self.assertEqual(r["status"], "PASS"); self.assertEqual(r["lines"], ["b1", "b2", "b3"])
+
+    def test_an_unmeasured_duration_is_an_error_not_a_pass(self):
+        with self.assertRaises(ValueError):
+            gates.check_vo_schedule([{"id": "b1", "start_s": 0, "duration_s": 0}], film_end_s=10)

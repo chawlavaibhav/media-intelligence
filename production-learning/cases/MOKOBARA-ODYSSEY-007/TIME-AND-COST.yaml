@@ -1,0 +1,98 @@
+# TIME AND COST — case MOKOBARA-ODYSSEY-007. Two clocks, never mixed: mechanical (`date -u` stamps written into
+# JOB.yaml / TTAO-START.yaml at the moment of each act; ledger UTC; git commit times) versus human words. Nothing is
+# estimated to look tidy. Where a stamp is inconsistent it is said so (REC-1 in REVISION-TRACE.yaml).
+case_id: MOKOBARA-ODYSSEY-007
+timezone_note: "all stamps UTC; IST = UTC+05:30 (the job ran 22:52 IST 21 Sep → 00:08 IST 22 Sep for production; the customer accepted at 09:16 IST)"
+
+metric_definitions:
+  TTAO: "Time To Accepted Outcome — wall clock from the first production input (job_start_utc, stamped by `date -u` at bootstrap) to the human ACCEPT"
+  CpAO: "Cost per Accepted Outcome — provider spend fully loaded (failed, rejected and superseded attempts included) per accepted deliverable"
+
+anchors_mechanical:                        # JOB.yaml ttao.* and versions[], TTAO-START.yaml, gen/DISPATCH-START-UTC.txt, gen/LEDGER.jsonl, git commit times
+  brief_received_utc: "2026-09-21T17:21:17Z"        # JOB.yaml brief.received_utc = spend authorisation recorded (SPEND-AUTHORISATION.md)
+  job_start_utc: "2026-09-21T17:22:48Z"             # TTAO-START.yaml, stamped by the Producer session at first action
+  planning_complete_utc: "2026-09-21T17:38:00Z"     # JOB.yaml ttao.planning_complete_utc (Stages 1–4; commits 0d4adf2, 9a0a1bb carry IST author times 23:00 / 23:08 = 17:30Z / 17:38Z)
+  dispatch_start_utc: "2026-09-21T17:38:37Z"        # gen/DISPATCH-START-UTC.txt; first ledger reserve att-001 at 17:38:38.98Z
+  dispatch_end_v1_utc: "2026-09-21T17:59:36Z"       # att-018 ok (ledger 17:59:36.19Z)
+  qa_complete_v1_utc: "2026-09-21T18:06:17Z"        # JOB.yaml ttao.qa_complete_utc = human_review_requested_utc
+  presented_v1_utc: "2026-09-21T18:10:00Z"          # JOB.yaml versions[1].presented_utc (hand-written to the minute; HUMAN-VERDICT-V1.md says 'delivered ~18:10Z')
+  human_decision_v1_utc: "2026-09-21T18:14:41Z"     # JOB.yaml ttao.human_decision_v1_utc — SPECIFIC REPAIR (chat time as recorded)
+  checker_report_committed_utc: "2026-09-21T18:20:40Z"   # commit 12f43f5 'independent stage-5 verification' (git author time 23:50:40 +0530) — written on v1, landed after the customer's verdict
+  repair_round_1_start_utc: "2026-09-21T18:20:00Z"  # JOB.yaml ttao.repair_round_1_start_utc
+  first_repair_reserve_utc: "2026-09-21T18:21:18Z"  # att-019 (ledger)
+  last_repair_settle_utc: "2026-09-21T18:30:35Z"    # att-027 ok (ledger)
+  repair_round_1_qa_complete_utc: "2026-09-21T18:38:34Z"   # JOB.yaml ttao.repair_round_1_qa_complete_utc = human_review_requested_v2_utc — the v2 DET-clean point
+  presented_v2_utc: "2026-09-21T18:37:00Z"          # JOB.yaml versions[0].presented_utc — 94 s BEFORE qa_complete; a hand-written minute; not used as an anchor for any derived clock below
+  repair_round_committed_utc: "2026-09-21T18:38:37Z"   # commit 8bc9f33 (git author time 00:08:37 +0530 on 22 Sep)
+  human_decision_utc: "2026-09-22T03:46:25Z"        # JOB.yaml ttao.human_decision_utc / versions[0].decided_utc — ACCEPT on v2 (chat time as recorded; the customer's next morning)
+  verdict_recorded_utc: "2026-09-22T03:46:26Z"      # commit 5e64662 (git author time 09:16:26 +0530) — the record, not the decision
+
+time:
+  time_to_accepted_outcome_mechanical:
+    value_hms: "10:23:37"
+    from: job_start_utc
+    to: human_decision_utc
+    source: [job_yaml_date_u_stamps, controller_recorded_chat_time]
+    caveat: "the start is a machine stamp; the end is the customer's chat message time as the Controller recorded it (JOB.yaml kpis.ttao_hms '10:23:37'). Of these 10 h 24 m, 1:15:46 was production (job_start → the v2 DET-clean file) including one human review cycle inside it (v1 presented at 0:47, judged at 0:52); the v2 file was ready at 18:38:34Z and the customer answered at 03:46:25Z the next day — 9:09:25 of waiting across the night. The difference is the customer's hours, not work."
+    cross_checks:
+      job_start_to_v1_det_clean_hms: "0:43:29"        # job_start → qa_complete_v1 — fully mechanical (the packet's 'ttao_to_human_review: ~42 min' rounds this)
+      job_start_to_v1_presented_hms: "0:47:12"
+      job_start_to_v1_verdict_hms: "0:51:53"          # the first human decision (SPECIFIC REPAIR)
+      v1_verdict_to_v2_det_clean_hms: "0:23:53"       # the repair round, verdict to QA complete (the packet says '~50' — that figure is not derivable from any pair of stamps on the branch; 18:14:41 → 18:38:34 is 23:53; the packet's number is recorded as a discrepancy, not adopted)
+      job_start_to_v2_det_clean_hms: "1:15:46"        # job_start → repair_round_1_qa_complete — the pipeline's clock for the accepted file
+      v2_ready_to_decision_hms: "9:07:51"             # repair_round_1_qa_complete → human_decision (waiting)
+      brief_to_decision_hms: "10:25:08"               # from brief_received_utc
+      planning_hms: "0:15:12"                         # job_start → planning_complete (Stages 1–4 incl. brand fetch, board, route decision)
+      paid_generation_window_v1_hms: "0:20:59"        # dispatch_start → dispatch_end_v1 (18 attempts; per-call latency sum 703.9 s = 11.7 min, ATTEMPTS.jsonl)
+      paid_generation_window_repair_hms: "0:09:17"    # att-019 reserve → att-027 ok (9 attempts; latency sum 367.3 s = 6.1 min; two dispatches overlapped, which is how LG-1 happened)
+  time_to_accepted_outcome_human_estimate: null
+  generation_wait_time:
+    mechanical: {sum_of_per_call_latency_s: 1071.2, note: "27 calls (ATTEMPTS.jsonl latency_s; the failed Lyria call has null latency and is excluded): Veo 3.1 Fast i2v 48.3–73.5 s per clip (n = 14), nano-banana-2 11.5–35.4 s per still (n = 11), Lyria 60.7 s (n = 1 ok)"}
+    share_of_outcome_time: "≈ 24 % of the 1:15:46 production window; ≈ 2.9 % of the 10:23:37 TTAO — generation wait was a real share of production time on this class (every beat is a paid clip), unlike the code-rendered RentOK films where it was negligible"
+  session_tokens_not_a_clock: "not recorded for this job; not priced"
+
+cost:
+  total_known_provider_cost_usd: 7.857
+  basis: "27 `reserved` lines in gen/LEDGER.jsonl @ 130be42 at pinned prices (live PriceBook read at dispatch: nano-banana-2 0.067 per_image via the Gemini API; veo-3.1-fast-i2v 0.10 per_second on Vertex; lyria 0.06 per clip on Vertex); 26 ok, 1 failed and counted (att-014); cumulative_reserved_usd re-added line by line = 7.857 of cap 12.00 (remaining 4.143); the independent checker re-added the first 18 lines (5.389) with no drift; this case re-added all 27 and confirmed no duplicate attempt_id survives in the file (att-020 / att-020b)"
+  by_route:
+    - {route: "IMG-CORE/nano-banana-2 (gemini_api surface; endpoint gemini-3.1-flash-image) with reference images", calls: 11, ok: 11, usd: 0.737, pool: "credits (Google), attested by the human on 2026-09-20 and carried by the authorisation — not machine-readable"}
+    - {route: "VID-I2V/veo-3.1-fast-i2v (Vertex, veo-3.1-fast-generate-001), 9:16 720p, native audio on", calls: 14, ok: 14, seconds_bought: 70, usd: 7.000, pool: "credits (Google)"}
+    - {route: "MUS/lyria+native (Vertex lyria-002)", calls: 2, ok: 1, failed: 1, usd: 0.120, pool: "credits (Google)"}
+    - {route: "code (paint-out, render_text via runtime.compositor.gates, assemble, qa_checks)", calls: "n-a", usd: 0.0}
+  by_version: {1: 5.389, 2: 2.468}
+  by_purpose:
+    first_pass_before_retakes_usd: 3.589             # att-001..015 (the packet's 'first_pass_usd: 3.529' leaves out the counted 0.06 Lyria failure)
+    first_pass_retakes_usd: 1.800                    # att-016, 017, 018 (is_repair true in the ledger; before any human verdict)
+    repair_round_1_usd: 2.468                        # att-019..027 (after the customer's verdict)
+    spent_on_rejected_or_failed_usd: 1.260           # att-009 0.4 (story break) + att-012 0.4 (items left out) + att-014 0.06 (HTTP 500) + att-024 0.4 (bag re-opened; 1.9 s usable, not used)
+    spent_on_takes_used_only_in_v1_usd: 2.400        # att-011 b3 take 1 0.6 + att-013 b6 take 1 0.4 + att-017 b5 take 2 0.6 + att-018 b4 take 2 0.8 — superseded in v2
+    clips_in_the_accepted_file_usd: 3.400            # att-003 0.8 + att-010 0.4 + att-016 0.4 + att-020 0.6 + att-023 0.4 + att-025 0.4 + att-027 0.4 — 7 clips, 28.0 s used of the 34 s bought on those seven (70 s bought in all; the packet's 'clips_bought_s: 46' does not match the ledger and is recorded as a discrepancy)
+    stills_usd: 0.737                                # all 11 used as inputs (7 first pass, 4 repair)
+  cap: {amount_usd: 12.00, used_pct: 65.5, source: "SPEND-AUTHORISATION.md — human answer 'USD 12 (Recommended)': micro-qualification + one full pass + one repair pass; Google credits only, no fal, 0 hidden retries, every failed call counted; Stage 4's expected first pass 3.53 + re-takes ≤ 2.60; actual first pass 5.389, repair round 2.468 (plan ≤ 3.00)"}
+  known_uncertainty:
+    - "Google credits balance not readable (Cloud Billing API disabled on vertexaiproject-507518); the pool reading is a 2026-09-20 human attestation; the reservation is an upper bound"
+    - "no vendor statement reconciled; settled_usd null on every attempt"
+    - "Veo clips are priced by seconds requested (4/6/8), not seconds used (28.0 of 70) — the price of a re-take is the whole clip"
+  cost_per_accepted_outcome:
+    value_usd: 7.857
+    unit: "the accepted 30-s film (one outcome), fully loaded for this job — every failed, rejected, superseded and re-taken attempt included; nothing reused from another job's ledger (the product photos and wordmark are the brand's own public assets, USD 0)"
+    numerator_complete: false
+    missing_components: ["vendor-billed reconciliation (Google credits)", "LLM session tokens for the producer, checker and Controller sessions (not recorded, not priced)", "human Controller time (spend answer, two presentations, two verdicts; not priced)"]
+    baseline_read: {ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml, cpao_usd: 15.39318, ttao: "7 h 54 m mechanical lower bound", cycles: 5, note: "a 57-s presenter film with generative video (Veo i2v, the same family of route) — the nearest production class in the case set; read side by side, never blended"}
+    rentok_v2_read: {ref: production-learning/cases/RENTOK-GAME-V2-006/TIME-AND-COST.yaml, cpao_usd: 0.067, ttao: "0:51:13 to a DET-clean file; 5:09:28 to ACCEPT", cycles: 1, note: "code-rendered animation with one paid still — a different production class; the comparison says what each class costs, not which pipeline is better"}
+
+counts:
+  paid_generation_attempts: 27
+  paid_generation_failed: 1                  # att-014 Lyria HTTP 500 (infrastructure_transient), counted
+  paid_generation_rejected: 3                # att-009, att-012, att-024 — ok calls whose output was not usable
+  paid_repairs: 12                           # 3 first-pass re-takes + 9 repair-round attempts
+  human_review_cycles: 2                     # v1 SPECIFIC REPAIR, v2 ACCEPT (JOB.yaml kpis.human_review_cycles: 1 counts repair rounds)
+  internal_checker_rounds: 1                 # on v1 only; v2 was not independently re-checked
+  defects_closed_before_presentation: 2      # DF-1, DF-2 (partly) — the first-pass re-takes
+  customer_flagged_defects: 5                # v1; all five marked FIXED in v2 by the producer's frame evidence
+  defects_recorded_unrepaired_on_the_accepted_file: 5   # DF-3 arms depth, DF-8b paddle whereabouts (partly), DF-11 lid opening / drift, DF-12 720p, DF-14 no ear check — plus the customer's unitemised 'minor issues'
+
+product_conclusion:
+  final_quality: "SUCCESS_WITH_OPEN_ITEMS — accepted on the second presentation ('still some minor issues but excellent. pass/'); the customer's five v1 items were repaired with cited frames; four producer/checker items stay unrepaired on the accepted file by the round's priority or its scope, and the customer's own minor issues are unitemised. The checker's v1 read — coherent, on-brand, funny in one place, not yet a paid placement — has not been re-run on v2."
+  pipeline_efficiency: "MET_BASELINE on the like-for-like row (case 001, generative video): 1:15:46 to a DET-clean accepted file vs 7 h 54 m; USD 7.857 vs 15.39; 2 cycles vs 5. The 10:23:37 TTAO is 88 % waiting for the customer's morning. Against the RentOK code-rendered films it is slower (1:15 vs 0:51 to a clean file) and ~117x the spend of case 006 — that is the price of generated footage (USD 0.10 per second bought, 70 s bought for 28 used), not a pipeline regression; both numbers are stated, neither is blended into the other."
+  process_conformance: "CONFORMANT with recorded gaps — five stages written and committed before spend (9a0a1bb), written cap, pool by attestation, micro-qualification of the riskiest asset before the full pass, ledger reserved before every dispatch (checker-verified on v1), prompt guard on every paid prompt, independent non-author checker at Stage 5 on v1. GAPS (OBSERVED): no independent check on v2 (the accepted file); the Stage 1–4 gates were not independently checked (no CHECK-GATES file on the branch); the ledger id collision (LG-1) was repaired by hand; the v2 presentation stamp precedes its QA-complete stamp (REC-1)."
