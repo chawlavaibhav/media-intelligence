@@ -187,7 +187,7 @@
         "unit": "per_second",
         "unit_price": "0.1"
       },
-      "refusal_reason": "harness: PreDispatchRefusal: aspect '4:5' is not in the pinned Veo enum ('16:9', '9:16'); pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
+      "refusal_reason": "harness: PreDispatchRefusal: aspect '4:5' is not in the pinned Veo enum ('16:9', '9:16'); not_reserved: refused by the harness before any reservation; ceiling and pool untouched; pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": null,
@@ -215,7 +215,7 @@
       "blocked_by_pool": false,
       "ceiling": {
         "job_ceiling_usd": "5.0",
-        "reserved_before_this_usd": "1.560000",
+        "reserved_before_this_usd": "0.960000",
         "this_attempt_usd": "0.600000",
         "within": true
       },
@@ -262,7 +262,7 @@
         "unit": "per_second",
         "unit_price": "0.1"
       },
-      "refusal_reason": "harness: PreDispatchRefusal: aspect '4:5' is not in the pinned Veo enum ('16:9', '9:16'); pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
+      "refusal_reason": "harness: PreDispatchRefusal: aspect '4:5' is not in the pinned Veo enum ('16:9', '9:16'); not_reserved: refused by the harness before any reservation; ceiling and pool untouched; pool_liquidity_unknown: no pool readings supplied; an attempt is dispatchable only when its pool is positively known to fund it (would_dispatch_if_funded records the pool-agnostic answer)",
       "request": {
         "api_calls_per_trial": 1,
         "body": null,
@@ -291,7 +291,7 @@
     "effective_ceiling_usd": "5.0",
     "job_ceiling_usd": "5.0",
     "request_ceiling_usd": null,
-    "reserved_total_usd": "2.160000",
+    "reserved_total_usd": "0.960000",
     "rule": "attempts reserve in listed order; the running total never crosses the effective ceiling; an attempt that would is blocked_by_ceiling and stays visible"
   },
   "customer_ref": "acct-stage-a-vid",

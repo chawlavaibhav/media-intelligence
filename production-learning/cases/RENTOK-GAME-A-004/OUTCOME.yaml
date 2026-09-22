@@ -1,0 +1,70 @@
+# OUTCOME record — production-learning case RENTOK-GAME-A-004 (lane A of the RentOK two-lane experiment)
+# Everything here is either mechanically verified (git, ledger, sha256, `date -u` stamps in JOB.yaml) or labelled as a human judgment.
+case_id: RENTOK-GAME-A-004
+class: customer_work
+schema: PRODUCTION-LEARNING-CASE-v0
+written_utc: "2026-09-21T05:30:00Z"
+job_id: AGY-2026-09-20-RENTOK-GAME-LANE-A-001
+source_main_sha: 4d919c9df6c9725a2f14c411771565bb09089876   # = JOB.yaml production_base_sha
+job_branch: work/agency-job-rentok-game-lane-a-001            # provenance only; the branch can move
+job_commit: 7dab37a70b004881a1ef9dea465b8aac41e6a979          # the immutable HEAD this case was validated against
+
+final_outcome: accepted
+accepted_version: 1                                            # one presentation; JOB.yaml versions[0].version = 1
+accepted_by: "Vaibhav Chawla (the customer for this job; also the human Controller), blind, in chat"
+acceptance_evidence: chat_only_human_evidence                   # see HUMAN-VERDICTS.yaml
+accepted_utc: "2026-09-20T20:06:00Z"                           # customer message time as recorded by the Controller (JOB.yaml ttao.human_decision_utc); no machine stamp of the message itself
+verdict_verbatim: "both accepted. vidoe one has robotic voice over althouh. video 2 is better"
+verdict_for_this_film: "ACCEPT, preferred ('video 2 is better'); this film was Video Y in the blind packet"
+
+evidence_source:
+  ref: 7dab37a70b004881a1ef9dea465b8aac41e6a979
+  dir: agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-A-001
+  note: "the job branch work/agency-job-rentok-game-lane-a-001 at its HEAD on 2026-09-21; experiment context (contract, spend authorisation, blind packet, Controller comparison) lives on work/experiment-rentok-two-lane-2026-09-20 @ 594e7c9 under experiments/RENTOK-TWO-LANE-2026-09-20/ and is cited in README.md and EVIDENCE-MAP.md"
+
+final_asset:
+  path: gen/final/rentok-game-lane-a-9x16-30s.mp4
+  commit: 7dab37a70b004881a1ef9dea465b8aac41e6a979
+  sha256: 9d50c4c5729f32d198fbaafc642fd78eccc0ee11dee2131cb637270584b5e24a
+  bytes: 33410158
+  measured: "1080x1920 9:16, container 30.021 s (video 30.000 s / 900 frames; AAC priming played, no edit list), h264 High 30 fps + aac 48 kHz stereo, -14.6 LUFS / -2.0 dBTP (checker re-measured, CHECK-STAGE-5.md R1)"
+  presented_as: "Video Y (blind packet, container metadata stripped; packet file sha256 fb43de10…; mapping sealed sha256 39365d62… and opened after the verdict)"
+  supersedes:
+    - {path: gen/final/v2/rentok-game-lane-a-9x16-30s.mp4, sha256: 5769ffa7232e6bb1427ce1f0db7396fedd12e9af58dc7feb5d61f140d20b0ab9, note: "repair round 1 — black end card (D-11 regression)"}
+    - {path: gen/final/v1/rentok-game-lane-a-9x16-30s.mp4, sha256: 6d418c10163e8af033cb3158173a5960d41a2ba4db061e3bdeb8dff039118168, note: "first checker-reviewed file — two elst atoms (D-1), flag hidden (D-2)"}
+
+commercial_purpose: "a 30-s vertical game-style advertising film for RentOK (PG-management app): a pixel-art PG owner beaten by five named problems until the cheat code INSTALL RENTOK APP; Reels / Facebook / Shorts; produced blind against a ChatGPT-directed twin (lane B, case RENTOK-GAME-B-005)"
+production_method: "code-rendered 2-D side-scroller (Pillow → ffmpeg); 7 textless Nano Banana 2 stills (sprite sheet, five obstacles, plate) + 1 Lyria chiptune bed; code SFX; no voice; no generative video; exact text by code bitmap font"
+experiment_context: "lane A = autonomous (brief only); the difference under test was the creative starting point; n = 1 customer, 1 brief — establishes no general winner (00-EXPERIMENT-CONTRACT.md §2; 06-CONTROLLER-COMPARISON.md)"
+
+not_evidence_for:
+  - Capability Registry
+  - Alpha-1
+  - Canon effectiveness
+  - Stage A/B/C benchmark
+  - "any routing rule (every model observation is directional, n <= 7 per route, one job)"
+  - "a general preference for voiceless films (the customer preferred this film and named the other's voice; the two films differ in more than the voice)"
+  - "CpAO completeness (vendor statements unreconciled; session tokens and human time unpriced)"
+  - "the blindness of the verdict as absolute (the human had seen per-lane progress facts in chat: contract §8)"
+
+versions_produced:
+  - {version: 1, commit: "7dab37a", what: "the delivered film after repair round 1 (D-1..D-10) and round 1b (D-11); internal renders animatic v1–v2, final v1–v6 preceded it; presented once, blind, as Video Y", human_verdict: accept}
+
+internal_review_rounds_before_presentation:
+  - {round: "checker Stage 5", file: "gen/final/v1 @ 6d418c10…", verdict: "DELIVERABLE WITH DEFECTS (D-1..D-10)", by: "independent checker session (not a human)", authorised_repair: "human Controller (chat) — incl. the D-7 addendum; the authorisation text is not on disk (NOT VERIFIED beyond JOB.yaml qa.defects 'Controller-authorised')"}
+  - {round: "checker re-verification", file: "gen/final/v2 @ 5769ffa7…", verdict: "DELIVERABLE WITH DEFECTS (D-11 regression)", by: "independent checker session", repair: "round 1b, commit 4bde2d9"}
+internal_review_rounds_note: "these are not human review cycles; the customer saw one file once. They are recorded in REVISION-TRACE.yaml as the trace of the single presented version."
+
+major_human_review_cycles: 1
+versions_to_accept: 1
+template_status: reusable_candidate                            # see ACCEPTED-TEMPLATE.yaml — n = 2 jobs (this and case 005), one customer, one brief
+
+spend:
+  incremental_known_media_spend_usd: 0.529
+  basis: "8 `reserved` lines in gen/LEDGER.jsonl at pinned prices (7 x 0.067 nano-banana-2 + 1 x 0.06 lyria); 0 failed, 0 paid repairs; cap USD 10.00; the checker re-added the ledger and found it byte-identical after the repair rounds"
+  settled: "not reconciled — Google credits are not machine-readable (Cloud Billing API disabled on the project); every reservation is an upper bound"
+
+two_conclusions:
+  final_quality: SUCCESS                                       # accepted first time, preferred of the two; the checker's own two most-likely rejection reasons (small transformation at phone size; sparse lower band) were not raised by the customer
+  pipeline_efficiency_time_to_accepted_outcome: MET_BASELINE   # 1 h 54 m 18 s vs case 001's 7 h 54 m lower bound; USD 0.529 vs 15.39; 1 cycle vs 5 — a different production class, read side by side, never blended
+  rule: "these are reported side by side and never blended into one score"

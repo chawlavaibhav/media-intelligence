@@ -1,0 +1,43 @@
+# REVISION TRACE — one presented version, built through one internal checker round. Root-cause classes are the eleven
+# fixed classes. The three failed paid attempts are not version defects (nothing of theirs entered the film); they are in
+# SYSTEM-DEFECTS.yaml.
+case_id: RENTOK-GAME-B-005
+root_cause_classes_used: [compositor, deterministic_qa, pacing_edit, model_generation, model_audio, creative_direction, infrastructure, orchestration]
+
+versions:
+  - version: 1
+    input_source: "frozen customer brief + confirmed answers + the ChatGPT direction (interrogated element by element; 10 material changes logged with reasons); Stages 1–4 gate-checked by an independent checker (2 reopens: a would-be model-drawn 'PG' nameplate, and the PriceBook pool labels); plan frozen at b585f11"
+    generation_status: "25 paid calls, 22 ok, 3 failed (kept on the ledger): voice audition 9 calls across three routes (Sarvam 3/3, ElevenLabs 2/3, Gemini TTS 2/3), 8 QA transcription calls (7 ok, 1 local fault), A1 nine-pose character sheet micro-qualified then frozen (att-018), five obstacle pairs (att-019..023), world plate (att-024), Lyria (att-025); USD 0.58675 reserved of 10.00; 0 paid repairs"
+    assembly_status: "code render; runtime gates on the first render found R1 (four layout defects) and R2 (audio TP); v1 to the checker (19:18:28Z); repair round 1 → the delivered file (19:46:21Z)"
+    human_verdict: accept
+    defects:
+      # producer-found before the checker (USD 0)
+      - {id: R1, root_cause_class: compositor, detail: "first render: TICKETS RESOLVED plate 1031 px wide; CTA plate bottom at 1249 (safe box 1248); a label 10 px from the name tag; score 3 px into LEVEL 1 — all caught by the runtime bounds/disjoint gates over the layout log before any human saw the film"}
+      - {id: R2, root_cause_class: infrastructure, detail: "true peak +0.6 dBTP after loudnorm; then R2b: AAC overshoot +1.9 dB over the wav — limiter at -3.6 dBTP + 256 kbps"}
+      - {id: R3, root_cause_class: compositor, detail: "name tag rode up with the jump into the label plate — tag fixed at ground"}
+      - {id: R4, root_cause_class: compositor, detail: "cheat bar 8 px above the name tag — raised"}
+      - {id: R5, root_cause_class: infrastructure, detail: "duplicate layout record (QA artefact) — deduped"}
+      - {id: T1, root_cause_class: orchestration, detail: "att-016: the dispatcher reserved a transcription before checking the input file existed; nothing left the machine; the reservation stays on the ledger by rule"}
+      # independent checker, round 0 (stages/CHECK-STAGE-5.md §6) — all USD 0
+      - {id: D-1, root_cause_class: deterministic_qa, detail: "phone graphic rose over the PG OWNER tag 14.9–15.3 s (the brand-moment frame); the disjoint check covered text regions only"}
+      - {id: D-2, root_cause_class: compositor, detail: "flag pole drawn in front of the character 26.6–27.8 s (layer order)"}
+      - {id: D-3, root_cause_class: pacing_edit, detail: "V2 'RentOk mode: on' spoken at 14.70 s while INSTALLING... was on screen; RENTOK MODE: ON appeared at 15.90 s — 1.2 s early; the VO gate checked overlap and film end, not alignment with the words"}
+      - {id: D-4, root_cause_class: model_generation, detail: "red register absent in 3 of 9 sheet cells (jump, hurt, hands-up) — the micro-qualification card said 'every cell carries every identifier', which the sheet did not show; in the film the register blinked out at every jump and through the freeze"}
+      - {id: D-5, root_cause_class: creative_direction, detail: "lower third of every game frame an empty road: the world plate was specified 16:9 at Stage 4 and dropped into 9:16; the film read as letterboxed"}
+      - {id: D-6, root_cause_class: creative_direction, detail: "the same hands-up pose for defeat (CONTINUE?) and victory (LEVEL COMPLETE)"}
+      - {id: D-7, root_cause_class: pacing_edit, detail: "0.6 s of near-silence (-45 to -55 dBFS) between V1 ending and V2 starting, a by-product of the timeline stretch to measured VO"}
+      - {id: D-8, root_cause_class: orchestration, detail: "ATTEMPTS.jsonl verdicts all pending vs JOB.yaml accepted / not_selected / qa_evidence"}
+      # found by the producer's extended check during the repair
+      - {id: D-9, root_cause_class: compositor, detail: "the O5 beam ran 8 px under the name tag 23.9–24.1 s — caught once graphics joined the disjoint set"}
+      - {id: N-1, root_cause_class: creative_direction, detail: "a green tick on the drifting ghost's tag could read as 'paid' (a forbidden implication) — replaced by a cyan 'tracked' ring marker"}
+    repair_requested: "checker: declare D-1..D-5, D-7 with delivery or fix (all USD 0 except D-5, a plate decision)"
+    repair_made: "round 1 (40ff61c): phone 110 px right + G-* graphic boxes in the disjoint check; pole 300 px right, player stops 160 px short, celebration hop (closes D-6 too); V2 at 15.9 s with its string (ends 18.12 s, 0.4 s into the first card — declared); code-drawn register composited on the three cells (tools/repair_sprites.py) and the card corrected; near-parallax foreground pavement with planters/bollards/drains (chosen over a USD 0.067 9:16 re-draw); bed re-enters at V1 end (hole 0.6 → ~0.35 s); verdict fields written; beam origin lowered; ghost marker"
+    repair_succeeded: true                 # checker re-verification: DELIVERABLE; D-5 and the audio hole PARTIAL by stated design limits; no new defect
+    residue_after_repair: ["N-1 the player no longer touches the pole (flag slides on its own)", "N-2 V2 runs 0.4 s into the first card", "N-3 the foreground band is sparse", "about a third of the picture below the action is scenery, kept so the player's feet stay inside the Meta safe box"]
+    cost_usd: 0.0                          # repair round; total job spend 0.58675 was all pre-repair
+    elapsed: {from: "2026-09-20T18:12:53Z job_start (date -u)", to: "2026-09-20T20:06:00Z customer ACCEPT (chat time as recorded)", value_hms: "1:53:07", source: [job_yaml_date_u_stamps, controller_recorded_chat_time]}
+    elapsed_internal_anchors: {planning_complete: "18:40:41Z", first_paid_call: "18:56:12Z", last_paid_call_settled: "19:02:07Z", v1_qa_complete: "19:18:28Z", repair_round_1_complete: "19:46:21Z", blind_packet_sealed: "19:55:59Z", presented: "19:58:00Z"}
+
+media_model_failures_that_reached_a_gate: 1     # D-4 (sheet cells without the register); accepted at micro-qualification on an overstated card, repaired by code
+paid_repairs: 0
+customer_noted_after_acceptance: "HD-01 the announcer heard as robotic (HUMAN-VERDICTS.yaml) — not a version defect the pipeline could have measured; no human ear was on the voice before the customer's"

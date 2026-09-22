@@ -1,0 +1,78 @@
+# OUTCOME record — production-learning case MOKOBARA-ODYSSEY-007 (a 30-s live-action-style spec film for Mokobara:
+# a castaway finds his Transit Backpack, and it holds more than seems possible).
+# Everything here is either mechanically verified (git, ledger, sha256, `date -u` stamps in JOB.yaml) or labelled as a human judgment.
+case_id: MOKOBARA-ODYSSEY-007
+class: spec_work                                               # JOB.yaml `class: spec_work` — Mokobara is a prospecting target (dossier), not a paying customer; the human Controller acted as the customer. The sync brief called it customer_work; the record on the branch says spec_work and the record wins.
+schema: PRODUCTION-LEARNING-CASE-v0
+written_utc: "2026-09-22T04:07:43Z"
+job_id: AGY-2026-09-21-MOKOBARA-ODYSSEY-001
+source_main_sha: c88c0d50e40f28393ccdcb2e2d03ac09ea1fb49f   # = JOB.yaml production_base_sha (origin/main at branch cut)
+job_branch: work/agency-job-mokobara-odyssey-001              # provenance only; on origin
+job_commit: 130be42caae351a5bf8dc8d062b6fbf51e32b353          # the immutable HEAD this case was validated against
+
+final_outcome: accepted
+accepted_version: 2                                            # v1 got SPECIFIC REPAIR (five items); v2 (after repair round 1) got ACCEPT
+accepted_by: "Vaibhav Chawla (the customer for this spec job; also the human Controller), in chat"
+acceptance_evidence: chat_only_human_evidence                   # see HUMAN-VERDICTS.yaml
+accepted_utc: "2026-09-22T03:46:25Z"                           # JOB.yaml ttao.human_decision_utc / versions[0].decided_utc (the customer's message time as the Controller recorded it; next morning IST)
+verdict_verbatim: "still some minor issues but excellent. pass/"
+verdict_for_this_film: "ACCEPT on v2 with unspecified minor issues the customer did not itemise; the producer's and checker's open items (arms at forearm depth, paddle whereabouts 21–24 s, 720p sources, native audio not ear-checked) stay on the accepted file unrepaired"
+
+why_this_job_exists: "the customer's own brief (input/00-CUSTOMER-BRIEF-FROZEN.md): an Odyssey-shaped spec ad for Mokobara, a real D2C brand the prospecting routine ranked first on 2026-09-17 and 2026-09-21 (coordination/commercial/d2c-prospecting/dossiers/mokobara.md on the base sha). Execution instructions asked for the five-stage pipeline, the RentOK feeling/framing/impact learning applied per beat, an independent route decision (not code-rendered animation by default), and a fast first pass."
+
+evidence_source:
+  ref: 130be42caae351a5bf8dc8d062b6fbf51e32b353
+  dir: agency/jobs/AGY-2026-09-21-MOKOBARA-ODYSSEY-001
+  note: "the job branch's HEAD on 2026-09-22 (commit time 09:16:54 +0530), which records the v2 ACCEPT and closes the TTAO clock; nine commits above the base c88c0d5. The accepted asset, its v1, every clip, still, prompt, ledger line and QA frame are on the branch."
+
+final_asset:
+  path: gen/final/mokobara-odyssey-9x16-30s.mp4
+  commit: 130be42caae351a5bf8dc8d062b6fbf51e32b353
+  sha256: 71850d1cf7969ed1ecf8dc3252586e557c05093377e2e202326283ba93a8faff
+  bytes: 33188717
+  measured: "1080x1920 9:16, 30.021 s, H.264 High yuv420p 24 fps + AAC-LC 48 kHz stereo ≈ 195 kbps, moov first, 0 edit lists by box walk, I = -13.4 LUFS / TP = -4.0 dBTP (producer DET on v2, qa/final/qa-results.json); the six Veo clips are 720x1280 upscaled to 1080x1920 at assembly (checker §1 on v1; the v2 clips are the same route)"
+  presented_as: "the file itself, presented by the Controller in chat (JOB.yaml versions[0].presented_utc 18:37:00Z — a stamp 94 s BEFORE the repair round's qa_complete 18:38:34Z; the two stamps were written by hand to the minute and cannot both be exact — recorded, not resolved)"
+  supersedes:
+    - {path: gen/final/v1/mokobara-odyssey-9x16-30s.mp4, sha256: 75d1fc8b2d59368b7358017c342aaca183e1943e8cc27f6aec43e9bc572cf6a2, note: "v1, presented 18:10Z, judged SPECIFIC REPAIR at 18:14:41Z; the independent checker's report (DELIVERABLE WITH DEFECTS, D1–D9) was written on this file"}
+
+commercial_purpose: "a 30-s vertical spec advertisement (Instagram Reels / Facebook / YouTube Shorts) for Mokobara's Transit Backpack 30L in the Private Island colourway: after years alone on a grey island a man finds his navy backpack at the tideline; inside is his wife's photo and, absurdly, everything he needs to go home — his arms go into the bag, an impossibly long paddle comes out; he packs and paddles toward dawn; code end card with the site's own wordmark, 'Transit Backpack · 30L', 'Room for the long way home.', 'mokobara.com'. No price, no dialogue, no Homer or film names."
+production_method: "hero still (Nano Banana 2 with two product photos as reference images) → one still per beat anchored on the hero still + the product photo → Veo 3.1 Fast image-to-video per beat (4–8 s, 720p, native ambience, negative prompt against text/logos/speech) → ffmpeg assembly by an edit list, wordmark super and end card composed by code through runtime.compositor.gates (text bounds, contrast on real pixels, disjointness), one Lyria bed, two-pass loudnorm + limiter; text never in-model; the tiny wordmark the image model copied from the reference photos painted out by code before every clip"
+experiment_context: "not a blind experiment — an ordinary spec production with one customer proxy (the Controller); n = 1 brief, 1 product, 1 customer; the first agency job of this production class (generated live-action-style footage) after three code-rendered RentOK films"
+
+not_evidence_for:
+  - Capability Registry
+  - Alpha-1
+  - Canon effectiveness
+  - Stage A/B/C benchmark
+  - "any routing rule (14 Veo i2v calls and 11 Nano Banana 2 calls on one brief; every model observation is directional)"
+  - "that Nano Banana 2 accepts reference images as a registered capability (it was used as an unregistered IMG-REF cell, micro-qualified for this job only)"
+  - "that the feeling/framing/impact board schema caused the acceptance (the customer's instruction asked for it; nothing isolates its contribution here — the causal evidence remains CQ-001's rank on one 6.8-s beat)"
+  - "CpAO completeness (vendor statements unreconciled; session tokens and human time unpriced)"
+  - "the checker's creative scores (3–4 of 5 per beat on v1) as a customer verdict — the customer's five items overlapped the checker's list on three and not on the other three"
+  - "what the customer's 'still some minor issues' are — unitemised; the open items listed here are the producer's and the checker's, not his"
+  - "a paid placement — the checker judged v1 'not fit to run as a paid ad without one more round'; v2 had that round; nobody has judged v2 for paid placement"
+
+versions_produced:
+  - {version: 1, commit: "7bacd79 (stage 5) / 2e69cd7 (verdict)", what: "first pass: 18 paid attempts (USD 5.389; 1 Lyria HTTP 500 counted; 3 first-pass re-takes), DET 16 PASS / 1 FLAG / 1 NOT_RUN; presented 18:10Z", human_verdict: specific_repair}
+  - {version: 2, commit: "8bc9f33 (repair round) / 5e64662 (verdict)", what: "repair round 1: the customer's five items + the checker's A–E folded into one round; 9 paid attempts (USD 2.468) + two USD-0 fixes (take selection on beat 4; site logo assets, Helvetica Neue, gates on real pixels; 60-ms audio joins); DET 18 PASS / 1 FLAG / 1 NOT_RUN; presented ~18:37Z; accepted next morning IST", human_verdict: accept}
+
+internal_review_rounds_before_presentation:
+  - {round: "micro-qualification of the riskiest asset (hero still → beat-4 still → beat-4 clip)", file: "gen/clips/b4.mp4 @ att-003", verdict: "PASS with note — identity, bag likeness, no lettering, cinematic look; the gag reads through the paddle, NOT through arms to the shoulder", by: "the producer (qa/b4/MICRO-QUAL.md)", repair: "a reserve re-take (att-018) later spent on the shoulder-depth wording; take 1 ended up in v2 after take 2 warped the paddle"}
+  - {round: "producer inspection of every clip at 2 fps (contact sheets) before assembly", file: "qa/b*/contact.jpg", verdict: "2 FAIL (b1: the bag on the shore before it is found; b5: zip closed with items left out) → re-takes att-016, att-017 with one recorded change each", by: "the producer", repair: "USD 1.00 (att-016 0.4 + att-017 0.6)"}
+  - {round: "independent checker Stage 5 on v1 (commit 12f43f5)", file: "v1 @ 75d1fc8b…", verdict: "DELIVERABLE WITH DEFECTS — every number reproduced (duration, container, loudness, ledger 5.389, 17/17 artifact hashes, IP grep 0 hits); customer requirements R5 PARTIAL (food left out; he never departs) and R6 PARTIAL (arms at forearm depth); nine defects D1–D9; presentable as a first pass, not as a paid ad", by: "independent checker session (not a human)", authorised_repair: "folded into repair round 1 with the customer's five items (stages/06 §1); D1 arms, D7 beard, D8 720p and the ear check NOT addressed"}
+internal_review_rounds_note: "the checker's report landed while the customer was already looking at v1 (verdict 18:14:41Z; checker commit 18:20:40Z IST 23:50); the two lists were made independently and overlapped on three items (the tear, the paddle reveal, the paddle already on the raft). The customer did not raise the arms depth, the coconuts or the non-departure; the checker did, and two of those were repaired in v2 anyway."
+
+major_human_review_cycles: 2                                   # v1 SPECIFIC REPAIR → v2 ACCEPT (JOB.yaml kpis.human_review_cycles says 1, counting repair rounds; this case counts presentations judged by the human)
+versions_to_accept: 2
+template_status: reusable_candidate                            # see ACCEPTED-TEMPLATE.yaml — n = 1 accepted job on this topology (hero still → per-beat still → i2v per beat → code stitch/text/end card, with feeling/framing/impact per beat); the underlying still→i2v mechanism also carried case 001 (a different template: a presenter film with VO). reusable_candidate, not job_specific, because Stage 4 designed and named the topology as the general route for live-action-style multi-beat films and its numbers are measured; the n is stated everywhere it appears.
+
+spend:
+  incremental_known_media_spend_usd: 7.857
+  basis: "27 `reserved` lines in gen/LEDGER.jsonl at pinned prices (11 x 0.067 nano-banana-2 per_image = 0.737; 14 Veo 3.1 Fast i2v clips, 70 s at 0.10/s = 7.000; 2 x 0.06 Lyria = 0.120); 26 ok, 1 failed (att-014 Lyria HTTP 500, charged and counted); cap USD 12.00 (SPEND-AUTHORISATION.md); the checker re-added the first 18 lines (5.389) and matched 17/17 artifact hashes; this case re-added all 27 (7.857 = 5.389 + 2.468)"
+  by_version: {1: 5.389, 2: 2.468}
+  settled: "not reconciled — Google credits are not machine-readable (human attestation of 2026-09-20 carried by the authorisation); the reservation is an upper bound; settled_usd is null in JOB.yaml"
+
+two_conclusions:
+  final_quality: "SUCCESS_WITH_OPEN_ITEMS — accepted on the second presentation; the customer called v1 'excpetional work otherwise' and v2 'excellent … pass'; four producer/checker items remain unrepaired on the accepted file (arms not to the shoulder, paddle whereabouts 21–24 s, 720p softness, native audio not ear-checked) and the customer's own 'minor issues' are unitemised"
+  pipeline_efficiency_time_to_accepted_outcome: "MET_BASELINE against the like-for-like row (case 001, the only other generative-video film): 1:15:46 job start → DET-clean v2 and 10:23:37 → ACCEPT (9:09:25 of it the overnight wait) vs 7 h 54 m; USD 7.857 vs 15.39; 2 cycles vs 5. Against the RentOK code-rendered films (0:51 / USD 0.067 for case 006) it is 15 min slower to a clean file and ~117x the spend — a different production class (generated footage at USD 0.10/s vs code), read side by side, never blended"
+  rule: "these are reported side by side and never blended into one score"

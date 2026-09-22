@@ -1,0 +1,81 @@
+# TIME AND COST — case RENTOK-GAME-V2-006. Two clocks, never mixed: mechanical (`date -u` stamps written into JOB.yaml
+# at the moment of each act; ledger UTC; git commit times) versus human words. Nothing is estimated to look tidy.
+case_id: RENTOK-GAME-V2-006
+timezone_note: "all stamps UTC; IST = UTC+05:30 (the job ran 16:55–22:05 IST on 21 Sep 2026)"
+
+metric_definitions:
+  TTAO: "Time To Accepted Outcome — wall clock from the first production input (job_start_utc, stamped by `date -u` at bootstrap) to the human ACCEPT"
+  CpAO: "Cost per Accepted Outcome — provider spend fully loaded (failed and rejected attempts included) per accepted deliverable"
+
+anchors_mechanical:                        # JOB.yaml ttao.* (stamped with `date -u`, never reconstructed), gen/LEDGER.jsonl, git commit times
+  brief_received_utc: "2026-09-21T11:21:39Z"        # the customer's instruction + spend authorisation recorded (JOB.yaml brief.received_utc, SPEND-AUTHORISATION.md)
+  job_start_utc: "2026-09-21T11:25:07Z"             # first act after bootstrap
+  planning_complete_utc: "2026-09-21T12:01:11Z"     # Stages 1–4 written and committed (79b1aea); animatic v2 gated (26 PASS) before this
+  dispatch_start_utc: "2026-09-21T12:01:22Z"        # att-001, the one paid call (ledger reserve 12:01:22.360176Z)
+  dispatch_end_utc: "2026-09-21T12:02:15Z"          # att-001 ok (ledger 12:02:15.974972Z); latency 53.6 s
+  qa_complete_utc: "2026-09-21T12:16:20Z"           # DET 28 PASS / 0 FAIL / 1 NOT_RUN on final-v3-audio at 12:15:45Z; container box walk 12:16:20Z
+  presented_utc: "2026-09-21T12:33:00Z"             # JOB.yaml versions[0].presented_utc (the Controller presented the file)
+  checker_report_committed_utc: "2026-09-21T12:42:59Z"   # commit 23ed0eb 'independent stage-5 verification' (git author time 18:12:59 +0530)
+  human_decision_utc: "2026-09-21T16:34:35Z"        # JOB.yaml ttao.human_decision_utc — the customer's chat message time as recorded by the Controller; no machine stamp of the message exists on disk
+  verdict_recorded_utc: "2026-09-21T16:34:36Z"      # commit ee644c3 (git author time 22:04:36 +0530) — the record, not the decision
+
+time:
+  time_to_accepted_outcome_mechanical:
+    value_hms: "5:09:28"
+    from: job_start_utc
+    to: human_decision_utc
+    source: [job_yaml_date_u_stamps, controller_recorded_chat_time]
+    caveat: "the start is a machine stamp; the end is the customer's chat message time as the Controller recorded it (JOB.yaml ttao.human_decision_utc, kpis.ttao_hms '5:09:28'). Of these 5 h 09 m, only 0:51:13 was production; the file was ready at 12:16:20Z and presented at 12:33Z, and the customer's message came 4 h 01 m after presentation. The difference is waiting time, not work."
+    cross_checks:
+      job_start_to_det_clean_deliverable_hms: "0:51:13"   # job_start → qa_complete_utc — fully mechanical, no chat anchor (LEARNING-PACKET ttao_hms note and human_verdict_final.ttao_note)
+      brief_to_decision_hms: "5:12:56"                     # from brief_received_utc
+      job_start_to_presented_hms: "1:07:53"                # to presented_utc
+      presented_to_decision_hms: "4:01:35"                 # waiting on the customer
+      planning_hms: "0:36:04"                              # job_start → planning_complete (Stages 1–4 incl. board, renderer, two animatics)
+      paid_generation_window_hms: "0:00:53"                # the one call
+      producer_repair_window_hms: "0:14:05"                # dispatch_end → qa_complete (SFX, mix, final v1 → v3, R-1/R-2)
+  time_to_accepted_outcome_human_estimate: null
+  generation_wait_time:
+    mechanical: {sum_of_per_call_latency_s: 53.6, note: "one call (ATTEMPTS.jsonl latency_s); Lane A's 1:1 stills took 9–13 s and the C sheet 11.8 s — one observation, could be load"}
+    share_of_outcome_time: "≈ 1.7 % of the 51-min production window; ≈ 0.3 % of the 5 h 09 m TTAO — generation wait was negligible; writing the board and renderer (~36 min) and the customer's reply (~4 h) were the time"
+  session_tokens_not_a_clock: "not recorded for this job (no Controller comparison document); not priced"
+
+cost:
+  total_known_provider_cost_usd: 0.067
+  basis: "one `reserved` line, gen/LEDGER.jsonl @ b06deaf, pinned price (live PriceBook 0.067 per_image nano-banana-2 via the Gemini API surface, read 2026-09-21); the call returned media; the ledger's cumulative total is 0.067 of cap 3.00; the checker re-added it"
+  by_route:
+    - {route: "IMG-CORE/nano-banana-2 (gemini_api surface; endpoint gemini-3.1-flash-image)", calls: 1, ok: 1, usd: 0.067, pool: "credits (Google), attested by the human on 2026-09-20 and carried by the authorisation — not machine-readable"}
+    - {route: "code (render_v2 / sfx_v2 / assemble_v2): animatic v1, v2; final v1, v2, v3 (+3 mixes)", calls: "n-a", usd: 0.0}
+  by_version: {1: 0.067}
+  spent_on_rejected_or_failed_usd: 0.0
+  cap: {amount_usd: 3.00, used_pct: 2.2, source: "SPEND-AUTHORISATION.md — human answer 'USD 3 (Recommended)', Google Vertex/Gemini credits only, no fal, 0 retries; planned ceiling was 0.201 (3 calls), 1 used"}
+  every_drawing_in_the_film_usd:            # a SEPARATE line, never blended into CpAO
+    value_usd: 0.663
+    composition: "this job 0.067 (V2-S1 sheet) + Lane A 0.529 (base sheet, five obstacles, plate, Lyria bed — case 004 ledger @ 7dab37a) + CQ-001 Treatment C 0.067 (C-A1 sheet — experiment branch @ 41d97c6 treatments/ATTEMPTS.jsonl)"
+    meaning: "what it cost, across three ledgers, to draw everything that appears on screen in the accepted film. The packet rounds it to USD 0.66. It is the right number for 'what did this film cost to draw from nothing'; it is NOT this job's CpAO, because 0.596 of it was spent and accepted on earlier jobs and reused under accepted_in_context provenance."
+  known_uncertainty:
+    - "Google credits balance not readable (Cloud Billing API disabled on vertexaiproject-507518); the pool reading is Lane A's 2026-09-20 human attestation carried by the 2026-09-21 authorisation; the reservation is an upper bound"
+    - "no vendor statement reconciled; settled_usd null"
+    - "the Lane A and CQ-001 figures are read from their own ledgers, not re-reconciled here"
+  cost_per_accepted_outcome:
+    value_usd: 0.067
+    unit: "the accepted 30-s film (one outcome), fully loaded for THIS job — there were no failed or rejected attempts to load; reused assets are outside the numerator by the DESIGN_REUSE_PROVENANCE rule and reported on the separate line above"
+    numerator_complete: false
+    missing_components: ["vendor-billed reconciliation (Google credits)", "LLM session tokens for the producer, checker and Controller sessions (not recorded, not priced)", "human Controller time (spend answer, presentation, decision; not priced)", "the reused assets' USD 0.596 (deliberately outside CpAO; see every_drawing_in_the_film_usd)"]
+    baseline_read: {ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml, cpao_usd: 15.39318, ttao: "7 h 54 m mechanical lower bound", cycles: 5, note: "a 57-s presenter film with generative video — a different production class; read side by side, never blended"}
+    lane_a_read: {ref: production-learning/cases/RENTOK-GAME-A-004/TIME-AND-COST.yaml, cpao_usd: 0.529, ttao: "1:54:18", cycles: 1, note: "the film this job supersedes, same brief — the only like-for-like row; this job's lower CpAO is mostly reuse, and its longer TTAO is mostly the customer's reply time"}
+
+counts:
+  paid_generation_attempts: 1
+  paid_generation_failed: 0
+  paid_repairs: 0
+  human_review_cycles: 1
+  internal_checker_rounds: 1
+  defects_closed_before_presentation: 7      # A-1..A-5 (animatic v1, producer gates + eye) + R-1..R-2 (final-v1, producer gates)
+  defects_recorded_unrepaired_on_the_accepted_file: 10   # checker N1–N9 + P1; the packet says 'six recorded defects' were offered — which six is not on disk (chat); see SYSTEM-DEFECTS.yaml
+  customer_flagged_defects: 0
+
+product_conclusion:
+  final_quality: "SUCCESS — accepted on first presentation without a repair; the customer's words were 'its already good' and 'finally one amazinh outcome'; the independent checker had scored the film 2–4 of 5 on eight creative dimensions and predicted two objections (cut-out motion, small power-up effects) that the customer did not raise"
+  pipeline_efficiency: "MET_BASELINE on cost and cycles (USD 0.067 vs 15.39; 1 cycle vs 5) and on production time (0:51:13 to a DET-clean file vs Lane A's 1:43:40); the 5:09:28 TTAO is longer than Lane A's 1:54:18 only because the customer answered 4 h after presentation — the clock that measures the pipeline is the 51-min one, the clock that measures the outcome is the 5-h one, and both are stated"
+  process_conformance: "CONFORMANT with one recorded gap — five stages, frozen plan before spend (79b1aea), written cap, pool by attestation, USD-0 animatic gated (26 PASS) before the one paid call, ledger reserved before dispatch (checker-verified), independent non-author checker at Stage 5; the Stage 1–4 gates were NOT independently checked on this job (OBSERVED: no stages/CHECK-GATES-1-4.md on the branch; the job carried Lane A's checked stages over and re-verified them itself — JOB.yaml template.reused, qa.pre_dispatch self-reported)"

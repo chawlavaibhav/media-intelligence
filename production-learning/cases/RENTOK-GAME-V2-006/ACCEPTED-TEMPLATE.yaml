@@ -1,0 +1,78 @@
+# ACCEPTED TEMPLATE — the structural template of the V2 film: Lane A's accepted skeleton (case RENTOK-GAME-A-004,
+# code_rendered_side_scroller_with_ai_sprites) plus the direction layer that CQ-001 Treatment C introduced — a board with
+# feeling / framing / impact per beat, a renderer that executes those fields through named primitives, and textless AI
+# sprites. Every value below carries evidence_scope: this_accepted_template. None is a Canon rule; none is a universal
+# pacing norm. Beat times are board.json @ b06deaf (the board the delivered film was rendered from); they are Lane A's.
+case_id: RENTOK-GAME-V2-006
+template_id: code_rendered_side_scroller_with_ai_sprites   # the same id as cases 004/005 — this record adds the direction layer
+template_variant: directed_board_v2                          # feeling / framing / impact per beat + primitive renderer
+template_class: game_style_advertising_film
+status: reusable_candidate                # n = 2 ACCEPTED jobs on this skeleton by the same producer path (Lane A without the direction layer, this job with it), ONE customer, ONE brief; plus CQ-001's blind rank on one beat (C > B > A with the layer). NOT a promoted runtime template.
+source_asset_sha256: 0e76b7b1872317728cfbb08dc948e4c678452ef7d84a0eafd6ece0f89013d122
+total_duration_s: 30.0
+evidence_scope: this_accepted_template
+
+what_is_reusable_here:                    # honest scope: the STRUCTURE, not the film
+  skeleton: "Lane A's fifteen beats and timings (case 004 ACCEPTED-TEMPLATE.yaml structure) — carried over unchanged"
+  direction_layer: "per beat: feeling (one or two words + one line), framing (owner_frac_target per POSE, focus_t at the camera hold, camera keyframes [{t, scale, cx, ease_s}], eye order), impact (a list of {t | t0/t1, primitive, params}) — board.json frames[].feeling / .framing / .impact"
+  renderer_contract: "the renderer reads camera, hit-stop, shake, pose table and audio cues FROM the board (render_v2.py _collect / CAMS / HOLDS / SHAKES / ANTIC); nothing about feel is hard-coded"
+  primitive_names_used: [anticipation, audio, audio_withdraw, checklist_fade, chip_flight, flag_reached, flash_from_source, freeze_dim, grade, hit_stop, hud_flash, hud_phone_icon, hud_refill, impact_frame, impact_star, install, muzzle_flash, obstacle_motion, particles, payoff, phone_fall, pose, projectile, ring, shake]   # the 25 names in board.json impact[]
+  generative_inputs: "textless stills only — character sheets on flat #00FF00 (base 4-pose + two 8-pose expression sheets), one still per obstacle, one plate (all nano-banana-2); one music bed (Lyria) processed per beat by code"
+  what_is_NOT_reusable: "the beats' specific feelings, the obstacle metaphors, the copy deck, the numbers below"
+
+production_method:
+  film: "rendered by code (Pillow frames → ffmpeg), 30 fps, 900 frames, world/UI layer split, camera crop-and-scale with NEAREST resampling"
+  text: "every string set by code (original bitmap font); no in-model text"
+  voice: none
+  motion: "code: obstacle motion curves, hit-stop with catch-up, shake, easing, particles, grade; no generative video"
+  audio: "SFX synthesised from the board's audio cues (53); the reused bed ducked / cut / low-passed / lifted per beat; loudnorm + true limiter"
+  reuse: "everything but one sheet reused under accepted_in_context provenance from two earlier productions (PROVENANCE.md, 61 files blob-verified)"
+
+structure:                                # Lane A's skeleton (case 004); `feeling` = the first words of board.json frames[].feeling, verbatim; framing_target = frames[].framing.owner_frac_target
+  - {n: 1, beat: cold_open_mid_action, start_s: 0.0, end_s: 1.8, feeling: "bustle — a game already running", framing_target: 0.15, content: "owner mid-jump at frame 1, live HUD"}
+  - {n: 2, beat: obstacle_1, start_s: 1.8, end_s: 4.6, feeling: "dread, then a bonk", framing_target: 0.25, content: "wall leans in, sheets flutter → brace → hit-stop, star, shake, knock-back, dazed (TENANT VERIFICATION)"}
+  - {n: 3, beat: obstacle_2, start_s: 4.6, end_s: 7.4, feeling: "menace with a grin", framing_target: 0.25, content: "sack hops with dust → hit (COLLECTING RENT)"}
+  - {n: 4, beat: obstacle_3, start_s: 7.4, end_s: 10.2, feeling: "surprise, then helplessness", framing_target: 0.21, content: "tenant sprints past from BEHIND with speed lines and coins; look-back, reach, trip (LEFT WITHOUT PAYING — never stopped)"}
+  - {n: 5, beat: obstacle_4, start_s: 10.2, end_s: 12.6, feeling: "dread (it wobbles) then a crash", framing_target: 0.16, content: "tower wobbles, topples about its base; the world STOPS while he is under it; crawl out (NO RECONCILIATION)"}
+  - {n: 6, beat: obstacle_5_game_over, start_s: 12.6, end_s: 15.0, feeling: "panic, pain, defeat", framing_target: 0.25, content: "swarm lunges; cold grade + vignette; the swarm hangs over him; GAME OVER? (COMPLAINTS)"}
+  - {n: 7, beat: cheat_code_turning_point, start_s: 15.0, end_s: 18.0, feeling: "a held breath → awe", framing_target: 0.22, content: "panel types INSTALL / RENTOK APP; the phone drops OUT of the panel into his hand; held breath (near-silence); flash from the phone; +10 % lift and cyan highlights after"}
+  - {n: 8, beat: power_up, start_s: 18.0, end_s: 19.6, feeling: "power, rising confidence", framing_target: 0.24, content: "aura, palette shift, health refill ticks, wind-up → fire, POWER UP!"}
+  - {n: 9, beat: clear_1, start_s: 19.6, end_s: 20.8, feeling: "glee", framing_target: 0.15, content: "tick projectile; paper burst; chip DIGITAL KYC"}
+  - {n: 10, beat: clear_2_hero_frame, start_s: 20.8, end_s: 22.0, feeling: "release", framing_target: 0.15, content: "coin fountain inside a shockwave ring — hero frame 651 (21.7 s); AUTOPAY"}
+  - {n: 11, beat: clear_3_tagged_not_stopped, start_s: 22.0, end_s: 23.2, feeling: "control", framing_target: 0.15, content: "ledger tag follows the runner; DUES TRACKED LIVE"}
+  - {n: 12, beat: clear_4, start_s: 23.2, end_s: 24.4, feeling: "order", framing_target: 0.15, content: "dashboard card; ONE DASHBOARD"}
+  - {n: 13, beat: clear_5, start_s: 24.4, end_s: 25.6, feeling: "relief", framing_target: 0.15, content: "red → green pops, swarm fades; COMPLAINT TICKETS"}
+  - {n: 14, beat: flag_level_clear, start_s: 25.6, end_s: 27.6, feeling: "triumph", framing_target: 0.19, content: "brace, jump, cheer, flag rises, confetti, LEVEL CLEAR!; checklist gone by 27.0"}
+  - {n: 15, beat: end_card_brand_cta, start_s: 27.6, end_s: 30.0, feeling: "calm, clear close", framing_target: 0.0, content: "brand-blue card, wordmark, INSTALL RENTOK APP, RENTOK.COM"}
+
+observed_pacing:
+  - {rule: hit_stop_frames_problem_hits, value: 3, evidence_scope: this_accepted_template}
+  - {rule: hit_stop_frames_clearing_hits, value: 2, evidence_scope: this_accepted_template}
+  - {rule: camera_push_range, value: "x1.0 – x1.6, NEAREST", evidence_scope: this_accepted_template}
+  - {rule: scroll_pauses_while_down_s, value: "11.7–12.35, 14.1–18.0", evidence_scope: this_accepted_template}
+  - {rule: held_breath_before_flash_s, value: 0.277, note: "the one near-silence in the film (17.347–17.624), measured by the checker", evidence_scope: this_accepted_template}
+  - {rule: owner_frac_targets_per_pose, value: "hurt 0.25 (F2, F3, F6), reach 0.21, cover 0.16, catch 0.22, fire 0.24, run and jump 0.15, cheer 0.19", note: "per POSE, not one number; the framing gate reads them at focus_t", evidence_scope: this_accepted_template}
+  - {rule: obstacle_beat_s, value: "2.4–2.8", note: "Lane A's (case 004)", evidence_scope: this_accepted_template}
+  - {rule: clear_beat_s, value: 1.2, note: "Lane A's", evidence_scope: this_accepted_template}
+  - {rule: turning_point_hold_s, value: 3.0, note: "Lane A's", evidence_scope: this_accepted_template}
+
+compositor_invariants_used:
+  - every text box logged per frame and kept inside the phone-safe box (65,288)–(888,1248): 4,019 boxes × 900 frames, 0 failures
+  - critical text regions disjoint per frame (0 overlaps)
+  - graphic-vs-text disjoint in screen space, sprite states alive/burst/fallen/leaving (0 overlaps; case 004's GRAPHIC_TEXT_DISJOINT)
+  - framing target per beat at focus_t (0 below target) — now runtime check_framing_target
+  - world fills the frame (camera >= 1.0 on 900 frames) — now runtime check_world_fills_frame
+  - hero frame present in the keyframes
+  - WCAG contrast measured per box (min worst 6.08)
+  - exact copy byte-checked against the frozen deck (0 mismatches)
+  - forbidden-claim scan over every on-screen string (40 distinct in the DET run; 42 in the checker's own scan incl. typing partials; 0 hits)
+  - container: geometry, codec, moov-first, no edit lists by box walk
+  - loudness on the encoded file: -14 LUFS ±1.5, TP ≤ -1 (delivered -14.0 / -2.7)
+  - NOT in the set on this job (hence N1/N2/N5 reached the checker): hero occlusion by a graphic; sprite density across sheets — both now runtime gates
+
+known_limits_of_the_template:            # stages/05 §5.6, confirmed by the checker's scores (2–4 of 5)
+  - "secondary motion, true contact, continuous facial change, parallax on pushes, squash-and-stretch on the character: not possible with rigid cut-outs — a video-model pass on one or two hero beats is the recorded next step (CQ-001 §5), not tried here"
+  - "power-up effects read modest at phone size (checker §5: 2 of 5) — the customer did not object"
+
+not_a_canon_rule: true
+canon_disposition: "no Canon pack is created or edited from this template; animation principles / game feel have no accepted Canon (PROMOTION-QUEUE.yaml canon_gap_candidates); the reasoning behind the direction layer is recorded in board.json principles_note as named references, not Canon"

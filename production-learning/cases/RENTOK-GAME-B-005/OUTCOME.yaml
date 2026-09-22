@@ -1,0 +1,70 @@
+# OUTCOME record — production-learning case RENTOK-GAME-B-005 (lane B of the RentOK two-lane experiment, ChatGPT-directed)
+# Everything here is either mechanically verified (git, ledger, sha256, `date -u` stamps in JOB.yaml) or labelled as a human judgment.
+case_id: RENTOK-GAME-B-005
+class: customer_work
+schema: PRODUCTION-LEARNING-CASE-v0
+written_utc: "2026-09-21T05:30:00Z"
+job_id: AGY-2026-09-20-RENTOK-GAME-LANE-B-001
+source_main_sha: 4d919c9df6c9725a2f14c411771565bb09089876   # = JOB.yaml production_base_sha
+job_branch: work/agency-job-rentok-game-lane-b-001            # provenance only; the branch can move
+job_commit: d0a0583d3372c6f7c49fdeee18643d4cb860cd67          # the immutable HEAD this case was validated against
+
+final_outcome: accepted
+accepted_version: 1                                            # one presentation; JOB.yaml versions[0].version = 1
+accepted_by: "Vaibhav Chawla (the customer for this job; also the human Controller), blind, in chat"
+acceptance_evidence: chat_only_human_evidence
+accepted_utc: "2026-09-20T20:06:00Z"                           # customer message time as recorded by the Controller; no machine stamp of the message itself
+verdict_verbatim: "both accepted. vidoe one has robotic voice over althouh. video 2 is better"
+verdict_for_this_film: "ACCEPT with a noted defect — 'vidoe one has robotic voice over' (this film was Video X); the other film was preferred. The note is a quality observation, not a repair request (JOB.yaml versions[0], LEARNING-PACKET human_verdicts)"
+
+evidence_source:
+  ref: d0a0583d3372c6f7c49fdeee18643d4cb860cd67
+  dir: agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-B-001
+  note: "the job branch work/agency-job-rentok-game-lane-b-001 at its HEAD on 2026-09-21; experiment context on work/experiment-rentok-two-lane-2026-09-20 @ 594e7c9 under experiments/RENTOK-TWO-LANE-2026-09-20/ (cited in README.md and EVIDENCE-MAP.md)"
+
+final_asset:
+  path: gen/final/rentok-game-lane-b-9x16-30s.mp4
+  commit: d0a0583d3372c6f7c49fdeee18643d4cb860cd67
+  sha256: 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78
+  bytes: 15284419
+  measured: "1080x1920 9:16, 30.000 s, 900 frames, h264 High yuv420p 30 fps, AAC-LC 48 kHz stereo; -14.3 LUFS / -1.8 dBTP; VO lines at 11.90 / 15.90 / 26.70 s (checker re-measured by spectral match, CHECK-STAGE-5.md re-verification §1)"
+  presented_as: "Video X (blind packet, container metadata stripped; packet file sha256 233e1818…; mapping sealed sha256 39365d62… and opened after the verdict)"
+  supersedes:
+    - {path: gen/final/v1/rentok-game-lane-b-9x16-30s.mp4, sha256: d9d437d3a83411d6b1e0776f83edd974d6e807bb55953184c72f09f5a6b89df1, note: "the file the checker reviewed (D-1..D-8) — replaced by repair round 1"}
+
+commercial_purpose: "the same brief as case 004: a 30-s vertical game-style advertising film for RentOK; this lane additionally received a ChatGPT-written creative direction to verify and refine (input/02-CHATGPT-DIRECTION-LANE-B-ONLY.md); presented blind against lane A"
+production_method: "code-rendered 2-D side-scroller (Pillow → ffmpeg), world composed at 360x640 and nearest-upscaled x3; 7 textless Nano Banana 2 stills (a nine-pose character sheet, five two-panel obstacle pairs, one 16:9 world plate) + 1 Lyria bed; code SFX; a three-line arcade announcer (Sarvam bulbul:v3 'aditya', chosen from a three-candidate audition no human ear heard); no generative video"
+experiment_context: "lane B = ChatGPT-directed; the lane logged 10 material changes from the supplied direction with reasons (stages/03-CREATIVE.md); the announcer was a lane-B addition, not part of the direction; n = 1 customer, 1 brief"
+
+not_evidence_for:
+  - Capability Registry
+  - Alpha-1
+  - Canon effectiveness
+  - Stage A/B/C benchmark
+  - "any routing rule (directional, n <= 7 per route, one job)"
+  - "that Sarvam bulbul:v3 is unusable — one customer's ear on three short lines, film accepted regardless; no A/B against the other two candidates"
+  - "that the ChatGPT direction helped or hurt (both films passed every mandatory item; the preference tracked an execution choice — 06-CONTROLLER-COMPARISON.md §3, INFERRED)"
+  - "CpAO completeness (Sarvam/ElevenLabs/Google statements unreconciled; only the Gemini routes report usage)"
+  - "the blindness of the verdict as absolute (contract §8)"
+
+versions_produced:
+  - {version: 1, commit: "d0a0583", what: "the delivered film after repair round 1 (checker D-1..D-8 + producer-found D-9, N-1); v1 preceded it; presented once, blind, as Video X", human_verdict: accept}
+
+internal_review_rounds_before_presentation:
+  - {round: "checker Stage 5", file: "gen/final/v1 @ d9d437d3…", verdict: "DELIVERABLE WITH DEFECTS (D-1..D-8)", by: "independent checker session (not a human)", repair_decision: "producer chose a USD-0 code fill for D-5 over a paid 9:16 re-draw (stages/05 Repair round 1); the human Controller's authorisation text is not on disk (NOT VERIFIED)"}
+  - {round: "checker re-verification", file: "gen/final @ 40cf2f40…", verdict: "DELIVERABLE (D-1..D-4, D-8, D-9 fixed; D-5, D-6-audio partial by stated design limits; N-1..N-3 noted)", by: "independent checker session"}
+internal_review_rounds_note: "not human review cycles; the customer saw one file once"
+
+major_human_review_cycles: 1
+versions_to_accept: 1
+template_status: reusable_candidate                            # ACCEPTED-TEMPLATE.yaml — the same template id as case 004, with this lane's beat times
+
+spend:
+  incremental_known_media_spend_usd: 0.58675
+  basis: "25 `reserved` lines in gen/LEDGER.jsonl (checker-reconciled: reservation before settle on all 25; cumulative re-adds); 3 failures kept and counted (att-006 ElevenLabs HTTP 401 per-key quota, att-013 Gemini TTS PROHIBITED_CONTENT, att-016 local fault — nothing sent); 0 paid repairs"
+  settled: "partial — only the Gemini routes report usage (≈ USD 0.0045 for att-007..017); every other line is an upper bound; Sarvam priced in INR (3.0 per 1,000 characters) converted at the pinned rate"
+
+two_conclusions:
+  final_quality: SUCCESS_WITH_ONE_CUSTOMER_NOTED_DEFECT       # accepted; the generated announcer heard as robotic
+  pipeline_efficiency_time_to_accepted_outcome: MET_BASELINE   # 1 h 53 m 07 s; USD 0.587; 1 cycle — vs case 001 7 h 54 m / 15.39 / 5; different production class, read side by side
+  rule: "these are reported side by side and never blended into one score"

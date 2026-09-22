@@ -1,6 +1,8 @@
 # Dossier — Cumin Co.
 
-**Research date:** 2026-09-14 (run 02, `runs/2026-09-14-02.md`). **Score: 87/100. Top 3 — #1.**
+**Research date:** 2026-09-14 (run 02, `runs/2026-09-14-02.md`).
+**Updated:** 2026-09-17 (run `runs/2026-09-17.md`) — see the update note below.
+**Score: 87/100** (unchanged). **Top 3 — #3** (was #1; re-ranked 2026-09-17, reason below).
 **Confidence: MEDIUM–HIGH.**
 
 **This dossier does not choose the final ad.** It is the handoff to the eventual Media Intelligence /
@@ -12,6 +14,51 @@ Creative Director production process, which makes that choice. Everything below 
 > has not been.** Nothing in this dossier describes what their paid creative currently looks like,
 > because the Ad Library returns **HTTP 403** from the cloud environment. That check is the single
 > highest-value thing a human can do before committing production money here.
+
+---
+
+## Update — 2026-09-17
+
+Two changes from the run of 2026-09-17. **Nothing else in this dossier was re-verified on that date;**
+every OBSERVED item below still carries its original 2026-09-14 fetch date.
+
+### A. The predicted adjacent-category expansion has shipped — **The Quill**
+
+This dossier and the pipeline both rested partly on Cumin Co. "launching adjacent categories (glass,
+knives, ceramics)". The knives are now confirmed shipped:
+
+**The Quill** — Cumin Co.'s first precision knife collection, **6 SKUs** (7" chef's knife, 6" Santoku,
+5" utility knife, steak knife, sharpening rod, knife block), live at
+`https://www.cuminco.com/collections/kitchen-knives`, launched **2026-06-13**.
+*(INFERRED: Indian Retailer, Local Samosa, BW Retail World, FM Live — fetched 2026-09-17. The
+collection page itself was not fetched on that date.)*
+
+**Why this matters to production:** it is direct corroboration of the **launch-cadence** thesis this
+whole prospect rests on — Cumin Co. enters new categories and needs a creative language for each one.
+A knife collection is also an excellent Alpha-1 object in its own right (hard surface, steel and wood,
+no claims, no human performance), and a plausible second product if the kadai proves awkward.
+
+**Why the score did not move:** at three months old this is history, not timing. §9 of the prospecting
+brief rewards a *current* trigger. Score held at **87**.
+
+### B. Re-ranked from Top-3 **#1** to **#3** — and not because anything got worse
+
+Cumin Co. still scores 87, above Comet's 84. It ranks third because the Top 3 is ordered by
+**expected probability that a send-worthy spec ad becomes paid work**, not by rubric score.
+
+The Controller's hand-check of 2026-09-14 found roughly **270 active Meta ads**, newest dated 11 Sep,
+already including premium product-led per-SKU and per-colour films. **Cumin Co. does not have a
+quality gap.** The pitch here is *capacity* — and a single spec ad is a poor instrument for winning a
+capacity argument, because it has to beat work the brand is already satisfied with.
+
+The two brands ranked above it — **Mokobara** (91) and **Comet** (84) — each have an *observed
+absence* to fill rather than an incumbent standard to beat, and each puts the work in front of a
+founder rather than a marketing function.
+
+**This is a re-ranking, not a downgrade.** Cumin Co. remains a strong prospect, remains `SHORTLISTED`,
+remains the best **category** fit in the pipeline, and its buyers (ex-Meta and ex-Zomato growth
+operators) remain the most creative-literate in it. If the Controller optimises for the highest-quality
+long-term client rather than the highest conversion probability on one ad, Cumin Co. is still the pick.
 
 ---
 
@@ -262,3 +309,11 @@ ex-growth-leads are equipped to price.
 **2026-09-14** (run 02). All OBSERVED items fetched on that date. Re-verify pricing, the offer codes
 and the catalogue count before production — Shopify merchandising changes daily, and the festive
 offers in particular are dated.
+
+**Updated 2026-09-17** (run `runs/2026-09-17.md`): The Quill knife collection confirmed launched
+2026-06-13 (INFERRED, press); Top-3 rank moved from #1 to #3 on conversion probability. See the
+"Update — 2026-09-17" section near the top. **No OBSERVED item in this dossier was re-fetched on
+2026-09-17** — the site data here is now three days old and the caution above still applies.
+
+**Still outstanding before any spend:** the Meta Ad Library / Instagram hand-check for Instagram
+(@cuminco_india, 80.4K). The Controller's 2026-09-14 hand-check covered the Ad Library.

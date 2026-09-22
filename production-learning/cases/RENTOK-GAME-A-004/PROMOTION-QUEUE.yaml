@@ -1,0 +1,94 @@
+# PROMOTION QUEUE — case RENTOK-GAME-A-004. Five classes, one per item. Class 1 = code on this branch with a test;
+# class 2 = candidate with a promotion condition; class 3 = directional (ROUTE-OBSERVATIONS.yaml); class 4 = Canon gap,
+# report only; class 5 = job-specific, not promoted. Items shared with case RENTOK-GAME-B-005 say so.
+case_id: RENTOK-GAME-A-004
+
+promoted_now:                                                # class 1 — deterministic, in code, with regression tests
+  - id: CONTAINER_EDIT_LIST_CHECK
+    kind: deterministic_qa_check
+    where: "runtime/loop/container.py (assess_edit_lists, count_boxes) — test runtime/tests/test_j_rentok_game_004_005.py ContainerEditLists"
+    rule: "a delivered MP4's edit lists are counted by walking its box tree (moov → trak → edts), never by byte grep or encoder trust; any elst is FAIL when the platform spec says none; no bytes is NOT-RUN, never PASS"
+    closes: [D-1]
+  - id: GRAPHIC_TEXT_DISJOINT
+    kind: deterministic_compositor_gate
+    where: "runtime/compositor/gates.py check_graphic_text_disjoint — test GraphicTextDisjoint (shared with case 005 D-1/D-9)"
+    rule: "declared critical graphics (product, phone, flag, projectile) and critical text boxes may not overlap; the existing text-only disjoint gate cannot see a hero object behind text"
+    closes: [D-2]
+  - id: BRAND_COLOUR_ON_RENDERED_FRAME
+    kind: deterministic_compositor_gate
+    where: "runtime/compositor/gates.py check_brand_colour — test BrandColourOnTheRenderedFrame"
+    rule: "a declared brand colour is verified by pixels sampled from the ENCODED output frame within a per-channel delta of the declared hex; no samples is a refusal; the intent in the record is never the evidence"
+    closes: [D-11, D-8]
+
+candidate_patterns:                                          # class 2 — worked here; needs more evidence before it is a rule
+  - id: CODE_RENDERED_GAME_WITH_AI_SPRITES
+    kind: production template (candidate)
+    rule: "for a game-style / motion-graphics film, render the film by code and use generative models only for textless sprites and plates; identity, exact text and timing become deterministic; repairs become USD 0"
+    evidence: ["this job: 8 paid stills, 0 generative video, 0 paid repairs, 18 defects closed at USD 0", "case 005 converged on the same method independently"]
+    template_file: ACCEPTED-TEMPLATE.yaml
+    promotion_condition: "a second customer and a second brief accepted on this structure (n = 2 jobs / 1 customer / 1 brief today)"
+  - id: ANIMATIC_BEFORE_SPEND
+    kind: workflow (candidate)
+    rule: "render the whole film with placeholder assets and run the compositor gates over its layout log before any paid draw"
+    evidence: [R1, R2a, R2b, R2c, "all found at USD 0 before dispatch"]
+    promotion_condition: "repeat on one more code-rendered job; then a required step in the /media-agency Stage 5 preamble for code-rendered classes"
+  - id: MICRO_QUALIFY_THE_RISKIEST_ASSET_FIRST
+    kind: workflow (existing candidate SPEAKER_MICROQUALIFICATION from case 001, applied to a character sheet)
+    rule: "the riskiest generative item (here the multi-pose sprite sheet) is drawn once, judged against a written card, frozen by sha256, and only then are dependents drawn"
+    evidence: [RO-01, "case 005 applied the same to a nine-pose sheet"]
+    promotion_condition: "case 001 set '≥ 2 more successes'; with cases 004 and 005 that count is reached for the CHARACTER-SHEET variant on one brief — a Controller decision on whether one brief counts as two successes; not promoted here"
+  - id: FIVE_STAGE_PROTOCOL_WITH_NON_AUTHOR_CHECKER
+    kind: process (candidate)
+    rule: "stages 1–4 written and gate-checked by a fresh session that wrote none of them; stage 5 verified and re-verified by the same non-author before presentation; the checker's re-verification is what caught the repair regression (D-11)"
+    evidence: ["stages/CHECK-GATES-1-4.md (2 reopens before spend, one a forbidden-claim depiction)", "stages/CHECK-STAGE-5.md (10 defects + 1 regression on finished files)", "case 005: 2 reopens + 7 defects"]
+    promotion_condition: "specified as a Controller decision, not code: the skill already describes it; promotion means making the checker step mandatory in /media-agency for customer_work"
+  - id: REPAIR_STATEMENT_QUOTES_MEASURED_VALUE
+    kind: process rule (candidate; partly mechanised by BRAND_COLOUR_ON_RENDERED_FRAME)
+    rule: "a repair statement quotes a value measured on the repaired output (a pixel, a timestamp, a box count), never the value the repair intended"
+    evidence: [D-11]
+    promotion_condition: "a line in the /media-agency QA checklist; one more repair round on any job written this way"
+  - id: LAYOUT_LOG_GATES
+    kind: runtime helper (candidate)
+    rule: "the renderer writes every text/logo/graphic box per frame; bounds, disjoint, contrast and exact-copy gates run over the log, not over pixels alone"
+    evidence: ["4,113 boxes × 900 frames checked in seconds; R2a/R2b/R2c found", "case 005: 4,974 placements the same way"]
+    promotion_condition: "a runtime runner any compositor can emit into, after a third code-rendered job shows the log format is stable"
+  - id: CODEC_TRUE_PEAK_MARGIN
+    kind: deterministic_qa rule (candidate)
+    rule: "measure loudness and true peak on the delivered encoded file, not the mix wav; leave ≈ 2 dB pre-encode headroom for square-wave content"
+    evidence: [R5, RO-05, "case 005 R2/R2b (≈ 1.9 dB at 256 kbps)"]
+    promotion_condition: "the check needs ffmpeg at QA time (no runtime module assembles audio today); promote as a /media-agency QA-checklist line now and as code when an assembly step exists in the runtime"
+  - id: COMPOSE_WORLD_ACROSS_THE_FULL_FRAME
+    kind: composition rule (candidate)
+    rule: "the safe box bounds critical elements, not the art; non-critical world fills the whole frame from the first animatic"
+    evidence: [D-7, "case 005 D-5 — both lanes left the lower band empty independently"]
+    promotion_condition: "a layout-log check that measures the fraction of near-uniform rows outside the safe box, once a threshold is agreed from one more job"
+  - id: KEYING_HELPER
+    kind: runtime helper (candidate)
+    rule: "colour keying with connectivity + chroma-shadow rules and a keyability report, so a flat-background sprite draw is cut out the same way every time"
+    evidence: [R3, RO-01]
+    promotion_condition: "one more sprite job; then tools/cutout.py → runtime/compositor"
+
+directional_only:                                            # class 3 — see ROUTE-OBSERVATIONS.yaml
+  - {id: RO-01, note: "nano-banana-2 multi-pose sheet, 1/1 (combined with case 005: 2/2)"}
+  - {id: RO-02, note: "nano-banana-2 obstacle sprites, 5/5"}
+  - {id: RO-03, note: "nano-banana-2 textless plate, 1/1 (combined with case 005 across all stills: 14/14 first draws usable)"}
+  - {id: RO-04, note: "lyria-002 chiptune, 1/1 (combined: 2/2)"}
+  - {id: RO-05, note: "AAC overshoot ≈ 2 dB, n = 3 encodes"}
+  - {id: RO-06, note: "voiceless preferred over the sister lane's generated announcer, n = 1 customer"}
+
+canon_gap_candidates:                                        # class 4 — report only; no pack compiled, no source added
+  - id: CANON_GAP_GAME_ARCADE_PIXEL_CHIPTUNE
+    triggered_by_a_production_failure: false
+    observed: "no accepted Canon on game/arcade readability, pixel art or chiptune; the lane declared the gap at Stage 3 and bridged it by genre convention with explicit reasoning; no failure followed (LEARNING-PACKET canon_gaps: []). Both lanes recorded the same gap."
+    proposal: "Controller decision on whether to seek sources for this domain; nothing compiled here"
+  - id: CANON_LOOKUP_DECLARED_EXISTING_CLAIMS_AS_GAPS
+    triggered_by_a_production_failure: false
+    observed: "in the sister lane (case 005) the gate checker found audio and colour claims that the lane had first declared as missing domains; the lane then used them. This lane's canon block also lists colour_and_visual_register and audio under missing_domains (JOB.yaml canon.missing_domains) — whether accepted claims existed for those is NOT VERIFIED here"
+    proposal: "a checker step (or a lookup test) that verifies a declared gap against the accepted-claim index before Stage 3 closes; a Canon-stream decision"
+
+not_promoted:                                                # class 5 — true of this job only
+  - "the obstacle metaphors, palette, level layout, sprite sizes and copy deck (job-specific creative)"
+  - "the 1.2-s-per-clear tempo and the 3.0-s turning-point hold (accepted once; not a pacing rule — recorded in ACCEPTED-TEMPLATE.yaml with evidence_scope this_accepted_template only)"
+  - "the customer's preference for this film over lane B's (one customer, one pair; the reason given was the other film's voice)"
+  - "the Controller comparison's session-token counts (accounting, not a KPI)"
+  - "the decision to have no voice (D-1 deviation) — a brief-specific muted-first choice, not a rule"

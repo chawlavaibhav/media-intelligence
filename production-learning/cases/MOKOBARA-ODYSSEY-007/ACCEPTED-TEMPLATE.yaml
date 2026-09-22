@@ -1,0 +1,75 @@
+# ACCEPTED TEMPLATE — the structural template of the Mokobara film: a live-action-style story film in seven beats
+# (six generated, one code end card) made by hero still → per-beat stills → image-to-video per beat → code stitch, with
+# feeling / framing / impact per beat. Every value below carries evidence_scope: this_accepted_template. None is a Canon
+# rule; none is a universal pacing norm. Beat times are gen/edl-v2.json @ 130be42 (the edit the accepted v2 was
+# assembled from); the board's design times (board.json) are given where they differ.
+case_id: MOKOBARA-ODYSSEY-007
+template_id: still_to_i2v_story_film_with_product_photo_references
+template_variant: castaway_reveal_seven_beats
+template_class: live_action_style_product_story_film
+status: reusable_candidate                # n = 1 ACCEPTED job on this topology (this one), ONE customer (the Controller as customer proxy), ONE brief, ONE product; accepted on v2 after a repair round; the checker judged v1 'not a paid placement yet' and v2 was not re-checked. NOT a promoted runtime template. The underlying still → i2v mechanism also carried case 001 (service_intro_with_portfolio_proof — a presenter film with speech), which is a different template.
+source_asset_sha256: 71850d1cf7969ed1ecf8dc3252586e557c05093377e2e202326283ba93a8faff
+total_duration_s: 30.021
+evidence_scope: this_accepted_template
+
+why_reusable_candidate_and_not_job_specific: "Stage 4 designed the topology as the general route for the class ('a live-action-style cinematic film … with ONE consistent human protagonist and ONE consistent branded bag across 6 generated beats') and rejected t2v and ref2v by reasoning that applies beyond this brief; the identity mechanism (hero still from product photos → per-beat stills → i2v), the inspection point (a USD 0.067 still before every USD 0.40–0.80 clip), the repair mechanism (end-state still + last-action clip) and the composition path (code text through the compositor gates, brand assets by hash) are all independent of the castaway story. What is job-specific — the beats, the copy, the colourway — is listed below as not reusable. With n = 1 the honest status is candidate; the promotion condition is in PROMOTION-QUEUE.yaml."
+
+what_is_reusable_here:                    # honest scope: the STRUCTURE, not the film
+  skeleton: "open on the problem (a state that says time) → the product found (colour is the hit; brand super) → the reason (a human object inside the product) → the reveal (the product's exaggerated capability, one locked shot) → momentum (using the product) → resolution (leaving, the product worn) → brand close"
+  direction_layer: "per beat: feeling (one or two words + one line), framing (shot, lens, camera, what is in frame), impact (what makes the beat land; sound), and the Canon claim ids the beat rests on — board.json beats[].feeling / .framing / .impact / .canon; a hero_frame declared (beat 4)"
+  identity_mechanism: "four verbatim anchor blocks (protagonist, bag, island, grade) pasted unchanged into every still and clip prompt; one hero still generated with the product's own photos as reference images; every beat still generated with the hero still + one product photo as references; every clip generated from its beat still (first frame fixed)"
+  inspection_points: "hero still inspected (paint out copied marks) → riskiest beat micro-qualified as still + clip → every beat still inspected before its clip → every clip at 2 fps on a contact sheet before assembly"
+  repair_mechanism: "one recorded change per re-take; for a beat failing on its VERB: a still that already shows the END state + a short clip of the last action, with an EXIT action after the goal state; take selection between existing takes before any re-take"
+  composition_contract: "wordmark and logo = the brand's own files by sha256, never redrawn; every string byte-exact from copy-deck.json; text by code (hb-view + Pillow) inside the safe box; the super's contrast measured on the real pixels behind it (runtime.compositor.gates.check_contrast) with the brand's black or white mono asset chosen by that measurement; end card on a colour sampled from the product"
+  generative_inputs: "textless photographic stills (nano-banana-2 with reference images); i2v clips with native ambience (Veo 3.1 Fast, 720p, negative prompt against text/logos/speech/music/extra limbs); one music bed (Lyria, neutral wording)"
+  what_is_NOT_reusable: "the castaway story, the tally marks, the wife's photo, the paddle, the copy, the colourway, the man's design, the numbers below"
+
+production_method:
+  film: "seven segments from six Veo clips (one beat cut from two takes) assembled by an edit list (ffmpeg concat, hard cuts, 60-ms audio crossfades at joins, 0.6-s video crossfade into the end card), 24 fps (the clips' native rate), 1080x1920 from 720x1280 sources"
+  text: "every string set by code (Helvetica Neue via hb-view; the brand's NeurialGrotesk is commercial and absent); no in-model text; a negative prompt and a prompt guard against lettering, brand names, film/myth names and claims not on the product page"
+  voice: none
+  motion: "generative video per beat; no code motion"
+  audio: "native Veo ambience per clip at -4 dB; Lyria bed from 7.5 s at -9 dB, lifting at 20.5 and 24.5, resolving by 30; two-pass loudnorm + limiter"
+  reuse: "publishing spec numbers (safe box, loudness) carried from case 004; loudness/mux flags from case 006's assembler; nothing generated on another job reused"
+
+structure:                                # gen/edl-v2.json (accepted v2); `feeling` = board.json beats[].feeling verbatim; board design times in `board_s`
+  - {n: 1, beat: years_the_problem_state, start_s: 0.0, end_s: 3.5, board_s: "0–3.5", feeling: "endurance — he has been here a very long time", content: "ECU of a hand scratching one more tally mark into rock covered in marks (take 2, 1.5 s) → wide: the small man side-on at the marked rock, sleeveless, empty shore (take 3, 2.0 s); the pull-back the board asked for became a cut"}
+  - {n: 2, beat: product_found_colour_is_the_hit, start_s: 3.5, end_s: 7.5, board_s: "3.5–7.5", feeling: "recognition — the first colour in a grey world", content: "low at the tideline, the navy bag half-buried in grey pebbles; he crouches, brushes sand; brand super (the site's black logo, 420 px) 5.0–7.5 s on the sky"}
+  - {n: 3, beat: the_reason_object_inside, start_s: 7.5, end_s: 13.0, board_s: "7.5–12.5", feeling: "the reason — why he will go back", content: "over-shoulder unzip → yellow lining → a small creased photo of a smiling woman (generated, unnamed); music enters; the bag intact (take 2)"}
+  - {n: 4, beat: the_reveal_exaggerated_capability, start_s: 13.0, end_s: 21.0, board_s: "12.5–20.5", feeling: "disbelief, then a laugh — the bag holds an absurd amount", content: "locked medium, bag centre: both hands in (forearm depth — not to the shoulder), a stick emerges and becomes a paddle far longer than the bag, pulled straight (take 1); HERO FRAME declared here"}
+  - {n: 5, beat: momentum_using_the_product, start_s: 21.0, end_s: 24.2, board_s: "20.5–24.5", feeling: "momentum — a plan", content: "close on hands: the last coconut in, the zip closes, he lifts the full bag out of frame; the pebbles empty (take 4)"}
+  - {n: 6, beat: resolution_leaving_product_worn, start_s: 24.2, end_s: 28.0, board_s: "24.5–28.0", feeling: "hope — the way back", content: "wide at dawn: kneeling on the raft afloat, paddle in both hands from the first frame, two strokes, the raft glides toward the gold horizon, the bag on his back (take 2)"}
+  - {n: 7, beat: brand_close_end_card, start_s: 28.0, end_s: 30.0, board_s: "28.0–30.0", feeling: "home — the brand as the destination", content: "navy end card (colour sampled from the product photo): the site's white wordmark SVG at 700 px · TRANSIT BACKPACK · 30L · Room for the long way home. · mokobara.com; 0.6-s crossfade in from 27.4 s"}
+
+observed_pacing:
+  - {rule: beat_lengths_s, value: "3.5 / 4.0 / 5.5 / 8.0 / 3.2 / 3.8 / 2.0", note: "the reveal beat is the longest (8 s, one locked shot); the checker judged its 5-s set-up / 2.5-s payoff 'the wrong ratio' on v1 — a pacing note, not a rule", evidence_scope: this_accepted_template}
+  - {rule: clip_purchase_lengths_s, value: "4 / 4 / 6 / 8 / 4 / 4 (first pass); re-takes 4 / 6 / 4 / 4 / 4", note: "70 s bought for 28.0 s used across 14 clips; on the seven clips in the film, 34 s bought", evidence_scope: this_accepted_template}
+  - {rule: brand_super_window_s, value: "5.0–7.5", note: "over the moment the product is found; the site's black mono logo on the sky, contrast 6.58:1 on real pixels", evidence_scope: this_accepted_template}
+  - {rule: music_entry_s, value: 7.5, note: "under the reason beat; lifts 20.5, opens 24.5, resolves by 30", evidence_scope: this_accepted_template}
+  - {rule: end_card_s, value: 2.0, note: "plus a 0.6-s crossfade in", evidence_scope: this_accepted_template}
+  - {rule: audio_join_crossfade_ms, value: 60, note: "after the checker measured 40-ms dips at two hard joins on v1", evidence_scope: this_accepted_template}
+  - {rule: per_beat_loudness_curve, value: "-15.6 → -13.7 → -13.6 → -12.7 → -12.0 → -13.1 → -17.6 LUFS (v1, checker)", note: "≈ 3 LU louder through the gag and packing, dropping on the end card", evidence_scope: this_accepted_template}
+  - {rule: safe_box_px, value: "(65,288)-(888,1248)", note: "carried from case 004 (Reels ∩ Shorts safe zones)", evidence_scope: this_accepted_template}
+  - {rule: type_sizes_px, value: "34 / 62 / 40 (product line / tagline / CTA); wordmark 700 px wide", note: "one weight system: Medium for the product line and CTA, Light for the tagline (stages/06 item 5; box heights in gen/overlays/layout.json agree)", evidence_scope: this_accepted_template}
+
+compositor_invariants_used:
+  - every text and logo box inside the safe box (65,288)–(888,1248) — runtime.compositor.gates.check_text_bounds x5, 0 failures
+  - contrast: the super measured against the worst real pixel of 10 frames behind it (6.58:1, display ≥ 3.0); end-card lines against the opaque navy (14.46:1) — check_contrast x4
+  - end-card regions disjoint with a 24-px gap — check_disjoint, 6 pairs, 0 overlaps
+  - exact copy byte-checked against copy-deck.json (3 strings, 0 mismatches)
+  - wordmark and logo = the site's files by sha256 (c443658f…, b3aefbd5…); a fresh rasterisation of the SVG pixel-identical (PSNR ∞, checker)
+  - forbidden-claim and IP scan over every sent prompt and every on-screen string (0 hits over 18 v1 prompts, checker; the guard ran on all 27)
+  - container: 1080x1920, H.264 High, moov first, 0 edit lists by box walk, 29.5–30.5 s
+  - loudness on the encoded file: -14 LUFS ± 1, TP ≤ -1 (delivered -13.4 / -4.0)
+  - frame text hygiene by OCR = FLAG only, resolved by eye
+  - NOT in the set on this job (hence the checker's D1–D8 reached the customer or stayed open): anything about story events, prop geometry, product mechanism, costume — no deterministic gate sees the picture
+
+known_limits_of_the_template:            # from the checker's v1 read and the open items on v2
+  - "the model executes the still's first frame faithfully and the VERB loosely: a pull-back became a cut, 'arm to the shoulder' stayed at the forearm, seven items did not go in, a goal state was undone with time left — the remedy each time was a different still, not a better sentence"
+  - "720p sources; soft on a desktop, unlikely to be noticed on a phone feed"
+  - "one repair round was needed for a first customer acceptance; the checker's own read of v1 was 'not a paid placement without one more round'"
+  - "the customer's named gag (arms swallowed) is not on screen in the accepted file; the paddle carries the joke"
+  - "no voice; no 16:9; native audio never ear-checked by a human on the record"
+
+not_a_canon_rule: true
+canon_disposition: "no Canon pack is created or edited from this template; the beats' Canon claim ids in board.json are citations of existing accepted claims (composition_and_attention and product_appearance compiled; the rest uncompiled and declared as gaps); the Ogilvy/Hopkins humour tension was resolved from existing claims for this brief and is recorded as a decision, not a rule"

@@ -1,0 +1,49 @@
+# ROUTE OBSERVATIONS — per-route observations from this one job. Directional only. routing_authority: none.
+# Nothing here modifies the Registry, the routing map or any rule. Exact n per observation = this job's count from
+# gen/ATTEMPTS.jsonl / gen/LEDGER.jsonl @ 130be42; cross-job counts are stated as context, never as this row's n.
+case_id: MOKOBARA-ODYSSEY-007
+
+observations:
+  - id: RO-01
+    route: "VID-I2V/veo-3.1-fast-i2v (Vertex, veo-3.1-fast-generate-001) — image-to-video from a Nano Banana 2 still, 9:16, 720p, 4/6/8 s, native audio ON, negative prompt (text, logos, speech, music, extra limbs…), five-part prompt with verbatim identity anchors"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 14
+    accepted: 7
+    context: "14 clips across two rounds (att-003, 009–013, 016–018, 020, 023–025, 027), 70 s bought, USD 7.00; 14/14 returned media (0 provider failures); 7 are in the accepted file (28.0 s used); 3 rejected outright (att-009 the product appeared before its reveal; att-012 items left out; att-024 the goal state undone); 4 superseded in v2 by a better take or a re-take. Latency 48.3–73.5 s per clip. Judged by the producer at 2 fps, by the customer twice, and by the independent checker on v1"
+    observed: "identity held: the same lean bearded man from beat 2 onward across 6 clips from 6 different stills anchored on one hero still (checker §4 'the face itself holds well from beat 2 onward'); the bag's colour and silhouette held in every clip (checker §3); the deadpan gag was realised from a text description (arm in, paddle out). What it could NOT do on this job: (a) a camera pull-back from an ECU still → replaced by an in-model hard cut (b1 take 2); (b) 'arm to the shoulder' from a still showing normal rummaging → forearm depth in 2/2 takes; (c) pack seven items in 4–6 s from a still showing them all outside → 0/2 takes; (d) hold a long rigid prop's geometry while drawing it out → blade warped in 1/2 takes; (e) stay at a goal state with clip time left → re-opened the bag 1/1 until an exit action was given; (f) keep a costume text-anchor on a one-change re-take (sleeved shirt 1/1); (g) keep the product absent when the prompt did not mention it (1/1 until negative-prompted). Source resolution 720x1280 upscaled at assembly — soft on desktop, unlikely to be noticed on a phone feed (checker D8)"
+    what_it_does_not_say: "nothing about 1080p Veo, t2v, ref2v or the extend chain (none tried); nothing about other subjects or products; the 'held' judgments are the checker's eye on v1 and the customer's acceptance of v2 — no metric. Cross-job context (not this row's n): case 001 used the same i2v route for a presenter film with native speech (RO-01/RO-02 there)"
+  - id: RO-02
+    route: "IMG-CORE/nano-banana-2 via the Gemini API (endpoint gemini-3.1-flash-image) — 9:16 photographic stills WITH reference images (two product photos for the hero; the hero still + one product photo for each beat still); an unregistered IMG-REF use, micro-qualified for this job"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 11
+    accepted: 11
+    context: "att-001, 002, 004–008 (first pass) and 019, 020b, 021, 026 (repair round); 11/11 usable first draw as clip first-frames, USD 0.737; latency 11.5–35.4 s; every reference image's sha256 recorded per attempt (ATTEMPTS.jsonl); judged by the producer against the product photo and by the checker's comparison sheet (qa/checker/bag-vs-product-…jpg)"
+    observed: "bag likeness from the reference photos: deep navy matte body, slim silhouette, black padded straps, top grab handle, yellow lining, tonal patch, black zip pulls — present in the hero still and every beat still, and carried into the clips (checker §3, 'a close match'); proportions consistent with 48 x 31 x 16 cm. The model COPIED the tiny wordmark from the reference onto the strap band on 2/2 reference-anchored stills that showed that area (hero, b4) — painted out by code before dispatch each time and nothing came back in the video. One still (b3 take 1) drew the open lining with a hanging flap that reads as a tear; the re-draw with 'brand new, completely intact … clean stitched seams' and a negative torn/ripped/damaged was intact 1/1. The reference fixes the CLOSED bag; the opening mechanism was drawn as a hinged lid (b4) and a downward-hanging front pocket (b5 v1) where the product zips at the top"
+    what_it_does_not_say: "nothing about IMG-REF as a registered capability (this is the second job to use references this way — case 001 RO-04 was text-only; the pilot's packshot references were Seedream, RO-07); nothing about other products, people or colourways; 'likeness' is the eye of two people, not a measurement"
+  - id: RO-03
+    route: "MUS/lyria+native (Vertex lyria-002) — 30-s instrumental bed"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 2
+    accepted: 1
+    context: "att-014 HTTP 500 ('Could not generate audio. Please try again with a different prompt.') on a descriptive wording — 'a quiet survival story, sparse solo piano … cold and lonely at first, gradually warming into hope over 30 seconds' (gen/prompts/music.txt); att-015 ok in 60.7 s on a neutral wording — 'solo piano and soft sustained strings, calm and spacious, a gentle build, a warm hopeful ending' (music-v2.txt). USD 0.12, both counted"
+    observed: "one refusal on a story-laden wording, one success on a neutral wording of the same musical ask; the 500 is charged and counted as infrastructure_transient with counts_against_route_quality false (the dispatch tool's failure_basis)"
+    what_it_does_not_say: "that wording caused the 500 (n = 1 each way here). Cross-job context (not this row's n): case 001 RO-09 saw 3 errors (503/500/500) on one wording that mentioned 'advertising', 'creative studio', '58-second' and a first-try success on a neutral rewrite; cases 004 and 005 sent neutral chiptune prompts and got 1/1 each. Across four jobs: descriptive wordings → 4 provider errors on 2 of 2 jobs that tried one; neutral wordings → 4/4 first-try successes. Still directional; still no Registry claim"
+  - id: RO-04
+    route: "AAC 48 kHz stereo ≈ 195 kbps encode of native Veo ambience (-4 dB) + a Lyria bed (-9 dB from 7.5 s) with two-pass loudnorm (I -14, TP -4) then alimiter, -use_editlist 0, +faststart"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 2
+    context: "v1 -13.3 LUFS / -4.1 dBTP (checker re-measured); v2 -13.4 LUFS / -4.0 dBTP (producer DET); the loudness/mux flags carried from case 006's assemble_v2.py (tools/PROVENANCE.md)"
+    observed: "with a limiter stage after loudnorm, true peak landed 3 dB inside the -1 dBTP limit on both encodes of natural-ambience material; the 40-ms level dips at two v1 cuts were an assembly join issue, not an encode issue (DF-10)"
+    what_it_does_not_say: "nothing about square-wave SFX (the RentOK material where headroom alone failed); this is the fourth job on which the limiter stage held (cases 004/005/006 CODEC_TRUE_PEAK_MARGIN) — a candidate rule's evidence, not a rule"
+  - id: RO-05
+    route: "per-beat still → i2v topology as a whole (RO-02 → RO-01), with one recorded change per re-take"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 6
+    context: "six beats; first pass 3 of 6 beat clips usable first draw (b2, b3, b6 — b6 later found to miss the mandatory departure), 2 rejected (b1, b5), 1 PASS-with-note (b4); repair round: 4 of 4 re-taken beats fixed on the first still-first re-take except b5 (second re-take after the exit action was added)"
+    observed: "the still-first mechanism let every bag-likeness and framing decision be inspected at USD 0.067 before a USD 0.40–0.80 clip was bought; where a beat kept failing on its VERB (pack, depart), the fix that worked first draw was to move the still to the END state and ask the clip for only the last action. Cost of the class: 70 s bought for 28 s used; USD 4.27 of 7.86 on re-takes"
+    what_it_does_not_say: "that the ratio would hold on another brief; that 1080p or a different clip length would change the verb failures; n = 1 job"

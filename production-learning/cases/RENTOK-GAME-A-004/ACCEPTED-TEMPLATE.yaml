@@ -1,0 +1,64 @@
+# ACCEPTED TEMPLATE — the structural template of lane A's accepted film, recorded because both RentOK lanes converged on
+# it independently (case RENTOK-GAME-B-005 carries the same template id with its own beat times). Every value below
+# carries evidence_scope: this_accepted_template. None is a Canon rule; none is a universal pacing norm. Beat times are
+# board.json @ 7dab37a (the repaired board the delivered film was rendered from).
+case_id: RENTOK-GAME-A-004
+template_id: code_rendered_side_scroller_with_ai_sprites
+template_class: game_style_advertising_film
+status: accepted_once_per_lane           # n = 2 jobs (cases 004 + 005), ONE customer, ONE brief — not a promoted runtime template
+source_asset_sha256: 9d50c4c5729f32d198fbaafc642fd78eccc0ee11dee2131cb637270584b5e24a
+total_duration_s: 30.0
+evidence_scope: this_accepted_template
+
+production_method:
+  film: "rendered by code (Pillow frames → ffmpeg), 30 fps, 900 frames"
+  generative_inputs: "textless stills only — one multi-pose character sheet on a keyable flat ground, one still per obstacle, one world plate (nano-banana-2); one music bed (Lyria)"
+  text: "every string set by code (original bitmap font); no in-model text"
+  voice: "none in this lane (the sister lane used a generated announcer the customer called robotic)"
+  motion: "code physics and parallax; no generative video"
+
+structure:
+  - {n: 1, beat: cold_open_mid_action, start_s: 0.0, end_s: 1.8, content: "game already in motion at frame 1: owner mid-jump, live HUD (hearts, level, name tag); no title card"}
+  - {n: 2, beat: obstacle_1, start_s: 1.8, end_s: 4.6, content: "obstacle enters from the right with its label (TENANT VERIFICATION); hit; one heart lost"}
+  - {n: 3, beat: obstacle_2, start_s: 4.6, end_s: 7.4, content: "COLLECTING RENT"}
+  - {n: 4, beat: obstacle_3, start_s: 7.4, end_s: 10.2, content: "LEFT WITHOUT PAYING (the owner trips; the tenant is never stopped — honesty line)"}
+  - {n: 5, beat: obstacle_4, start_s: 10.2, end_s: 12.6, content: "NO RECONCILIATION"}
+  - {n: 6, beat: obstacle_5_game_over, start_s: 12.6, end_s: 15.0, content: "COMPLAINTS; GAME OVER? (question mark — the business does not fail)"}
+  - {n: 7, beat: cheat_code_turning_point, start_s: 15.0, end_s: 18.0, content: "panel types INSTALL / RENTOK APP; phone item; colour and health return (HERO turning point held 3.0 s)"}
+  - {n: 8, beat: power_up, start_s: 18.0, end_s: 19.6, content: "aura, phone in hand, POWER UP!"}
+  - {n: 9, beat: clear_1, start_s: 19.6, end_s: 20.8, content: "tick projectile clears obstacle 1; capability chip stamps a permitted claim (DIGITAL KYC)"}
+  - {n: 10, beat: clear_2_hero_frame, start_s: 20.8, end_s: 22.0, content: "AUTOPAY (hero frame at 21.4 s)"}
+  - {n: 11, beat: clear_3_tagged_not_stopped, start_s: 22.0, end_s: 23.2, content: "DUES TRACKED LIVE — the fleeing tenant is tagged, not stopped"}
+  - {n: 12, beat: clear_4, start_s: 23.2, end_s: 24.4, content: "ONE DASHBOARD"}
+  - {n: 13, beat: clear_5, start_s: 24.4, end_s: 25.6, content: "COMPLAINT TICKETS"}
+  - {n: 14, beat: flag_level_clear, start_s: 25.6, end_s: 27.6, content: "flag raised; checklist fades out 26.6–27.0 s so the flag is visible; LEVEL CLEAR!"}
+  - {n: 15, beat: end_card_brand_cta, start_s: 27.6, end_s: 30.0, content: "brand-blue card, wordmark, INSTALL RENTOK APP, RENTOK.COM"}
+
+observed_pacing:
+  - {rule: obstacle_beat_s, value: "2.4–2.8", evidence_scope: this_accepted_template}
+  - {rule: clear_beat_s, value: 1.2, note: "half the obstacle beat — the solution is faster than the problem; not tested against a human as a rule", evidence_scope: this_accepted_template}
+  - {rule: turning_point_hold_s, value: 3.0, evidence_scope: this_accepted_template}
+  - {rule: label_min_readable_s, value: 1.2, note: "the producer's own norm; case 001's important_still_min_hold 3.3 s was read as a starting point and not carried", evidence_scope: this_accepted_template}
+  - {rule: end_card_hold_s, value: 2.4, evidence_scope: this_accepted_template}
+  - {rule: install_event_window_s, value: "10–20 (delivered 17.4)", evidence_scope: this_accepted_template}
+  - {rule: five_problems_then_five_clears_symmetry, value: "same order both halves", evidence_scope: this_accepted_template}
+
+sister_lane_values:                       # case 005 (ChatGPT-directed) on the same structure, for side-by-side reading only
+  obstacle_beat_s: 1.84
+  clear_beat_s: 1.6
+  turning_point: "CONTINUE? freeze 1.4 s + cheat bar 2.8 s + install 2.4 s (10.4–17.0 s)"
+  end_card_hold_s: 2.2
+  voice: "three-line announcer (Sarvam bulbul:v3)"
+  note: "the two lanes chose different beat lengths on the same skeleton; neither set is a rule"
+
+compositor_invariants_used:
+  - every text box logged per frame and kept inside the phone-safe box (65,288)–(888,1248): 4,028 boxes × 900 frames, 0 failures
+  - critical text regions disjoint per frame (0 overlaps); graphics were NOT in the set — hence D-2, now check_graphic_text_disjoint
+  - WCAG contrast measured per box (min worst 6.08)
+  - exact copy byte-checked against the frozen deck (0 mismatches)
+  - forbidden-claim scan over every on-screen string (40 strings, 0 hits)
+  - container: geometry, codec, moov-first, no edit lists (added after D-1)
+  - loudness on the encoded file: -14 LUFS ±1.5, TP ≤ -1
+
+not_a_canon_rule: true
+canon_disposition: "no Canon pack is created or edited from this template; the game/arcade/pixel/chiptune domain has no accepted Canon (PROMOTION-QUEUE.yaml canon_gap_candidates)"

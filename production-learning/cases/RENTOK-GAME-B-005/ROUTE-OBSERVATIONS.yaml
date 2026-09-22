@@ -1,0 +1,77 @@
+# ROUTE OBSERVATIONS — per-route observations from this one job. Directional only. routing_authority: none.
+# Nothing here modifies the Registry, the routing map or any rule. Exact n per observation. Human acceptance never
+# enters the Registry; the customer's ear on the voice is recorded as an observation with n = 1.
+case_id: RENTOK-GAME-B-005
+
+observations:
+  - id: RO-01
+    route: "IMG-CORE/nano-banana-2 via the Gemini API surface — 3x3 nine-pose character sheet on a flat magenta ground"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    accepted: 1
+    context: "att-018, micro-qualified against a six-point card (qa/A1-microqual-card.md) before dependents were drawn; checker re-read the sheet cell by cell"
+    observed: "one identity across nine cells, no lettering, keyable ground; the four run cells differed only slightly in leg phase (motion had to come from code bob/tilt); the red register was missing in 3 of 9 cells (D-4), which the producer's card had overstated as present"
+    what_it_does_not_say: "nothing about other characters or repeatability; n = 1 (with case 004's four-pose sheet: 2/2 sheets held identity with no lettering, 2/2 lost or hid an identifier in at least one pose)"
+  - id: RO-02
+    route: "IMG-CORE/nano-banana-2 (Gemini API) — five two-panel obstacle pairs (creature / cleared state) 16:9 + one 16:9 world plate"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 6
+    accepted: 6
+    context: "att-019..024 with explicit no-text/digits/signs clauses"
+    observed: "6/6 clean on the first draw; the O4 paper tangle carries ruled 'greeked' strokes the checker zoomed and judged not lettering; the plate had no signage after the nameplate was removed from the prompt at the gate (REOPEN 1)"
+  - id: RO-03
+    route: "MUS/lyria+native (lyria-002 on Vertex) — neutral 'upbeat 8-bit chiptune' prompt"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    accepted: 1
+    context: "att-025"
+    observed: "returned 32.77 s without error; RO-09 (case 001) wording sensitivity not triggered; the checker matched the bed in the mix by spectral correlation (0.75); musical content judged by no ear before the customer's"
+  - id: RO-04
+    route: "AUD-TTS/sarvam-bulbul-v3 'aditya' en-IN — three short announcer lines (16–28 characters)"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 3
+    accepted: 3
+    context: "att-001..003; transcripts verbatim (att-007..009); 2.2–2.7 s each; the only candidate to complete all three lines"
+    observed: "3/3 verbatim on transcript; selected on completeness and duration, not by ear"
+  - id: RO-05
+    route: "AUD-TTS/sarvam-bulbul-v3 'aditya' en-IN — as heard in the accepted film"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    context: "the customer's blind verdict; the first human ear on the voice (producer and checker sessions cannot listen)"
+    observed: "'vidoe one has robotic voice over' — heard as robotic; the film was accepted regardless. Second real-production ear observation on this route (case 001 RO-05: robotic on ~1,000-character narration); here 16–28-character lines, so the reading did not depend on line length"
+    what_it_does_not_say: "whether ElevenLabs 'Daniel' or Gemini TTS 'Puck' would have read as less robotic (neither heard by a human); n = 1 listener"
+  - id: RO-06
+    route: "AUD-TTS/elevenlabs-v3-direct 'Daniel'"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 3
+    accepted: 0
+    context: "att-004..006 audition; not selected"
+    observed: "two lines verbatim on transcript; the third failed HTTP 401 quota_exceeded — the API key's own 1,000-credit quota (11 left) is invisible to the subscription balance read (9,054 characters free)"
+  - id: RO-07
+    route: "gemini-3.1-flash-tts-preview 'Puck' (job-local pin; no Registry cell)"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 3
+    accepted: 0
+    context: "att-012..014 audition; not selected"
+    observed: "two lines verbatim (3.2 s each, slower than Sarvam); one 16-character brand line refused as PROHIBITED_CONTENT with no reason; no re-send"
+  - id: RO-08
+    route: "gemini-3.1-flash-lite audio transcription (QA only; job-local pin)"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 7
+    context: "att-007..011, 015, 017 — transcripts of every audition take"
+    observed: "all seven short clips transcribed consistently; the brand name rendered as 'rent okay' / 'Rent OK'"
+  - id: RO-09
+    route: "AAC 256 kbps encode of code SFX + Lyria bed + VO"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 2
+    context: "R2 / R2b: ebur128 on the encoded output"
+    observed: "≈ 1.9 dB true-peak overshoot over the wav; loudnorm alone did not deliver TP ≤ -1; a limiter at -3.6 dBTP landed at -2.2 (v1) and -1.8 (final)"

@@ -1,0 +1,39 @@
+# ROUTE OBSERVATIONS — per-route observations from this one job. Directional only. routing_authority: none.
+# Nothing here modifies the Registry, the routing map or any rule. Exact n per observation = this job's count; the
+# cross-job counts are stated as context, never as this row's n.
+case_id: RENTOK-GAME-V2-006
+
+observations:
+  - id: RO-01
+    route: "IMG-CORE/nano-banana-2 via the Gemini API surface (endpoint gemini-3.1-flash-image) — 16:9 eight-pose expression sheet (2x4) of an already-drawn character, text prompt only, no reference image, flat #00FF00"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    accepted: 1
+    context: "att-001, the job's only paid call (USD 0.067, 53.6 s), micro-qualified on a consistency card (qa/V2-S1-consistency-card.png; gen/assets/v2_cutout.json) against the accepted Lane A idle and the accepted C brace; judged by the producer, re-examined by the independent checker on the film"
+    observed: "first draw usable: same man on all 8 cells (spectacles, hair, checked shirt, trousers, sandals — eye); keys 8/8; red book 5/8 (absent where both arms are busy: cover, cheer, land); keyable 99.95 %; no lettering; 8 cells found (one merged pair split by connected components); standing cell 342 px (= the C sheet's 344; ≈ 61 % of the base sheet's 561). ONE pose miss: 'looking back over his left shoulder, body still facing right' came out facing forward, surprised (P1)"
+    what_it_does_not_say: "nothing about head-turn instructions in general (one instruction, one miss); nothing about a fourth sheet of the same character. Cross-job context (not this row's n): four text-prompted multi-pose sheets of a character on the RentOK brief have passed their consistency card on the first draw — Lane A 4-pose (case 004 RO-01), Lane B 9-pose (case 005), CQ-001 Treatment C 8-pose, this 8-pose — each with one identifier or pose limitation recorded"
+  - id: RO-02
+    route: "IMG-CORE/nano-banana-2 (Gemini API) — latency on a 1376x768 16:9 sheet"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    context: "att-001 ATTEMPTS.jsonl latency_s 53.6; Lane A's 1:1 stills 9–13 s; the C sheet (16:9) 11.8 s"
+    observed: "53.6 s for one 16:9 image — 4–5x the earlier sheets on the same surface"
+    what_it_does_not_say: "whether this is size, load or the time of day; one observation"
+  - id: RO-03
+    route: "AAC 200 kbps encode of code SFX (denser than Lane A's) + a processed Lyria bed, with loudnorm then a true limiter"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 2
+    context: "final-v1 (loudnorm only, Lane A's settings) and the delivered final-v3-audio (loudnorm + alimiter -6 dBFS + 1.5 dB make-up); ebur128 on the encoded files (producer, reproduced by the checker: I -14.0 LUFS, TP -2.7 dBTP)"
+    observed: "headroom alone did not hold on denser SFX (-0.4 dBTP delivered from a -4 dBTP pre-encode target); a limiter stage did (-2.7 dBTP)"
+    what_it_does_not_say: "nothing about other bitrates or bed material; combined with cases 004 (n = 3 encodes) and 005 (n = 2) the AAC overshoot on square-wave content is now seen on three jobs"
+  - id: RO-04
+    route: "code render (Pillow → ffmpeg) driven by BOARD-v2 — 900 frames at 1080x1920 with camera crop-and-scale, hit-stop, shake, grade, particles"
+    evidence_class: directional_production_observation
+    routing_authority: none
+    n: 1
+    context: "tools/render_v2.py; animatic v1 1 m 49 s render time (stages/05 §5.1); final v3 the delivered file"
+    observed: "all fifteen beats executed from the board's feeling/framing/impact fields; the renderer's recorded limits (stages/05 §5.6): no secondary motion, no true contact, discrete facial states only, no parallax on pushes, no squash-and-stretch on the character, two-frame run cycle, density mismatch between sheets"
+    what_it_does_not_say: "that the customer forgave those limits for any reason he stated; that they would be forgiven on a different brief"
