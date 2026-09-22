@@ -41,7 +41,28 @@ Write `job_id`, `class`, `production_base_sha`, `branch`, `ttao.job_start_utc` (
 `date -u`) and the brief verbatim into `JOB.yaml`. **Before reading anything else.** The pilot's
 TTAO had to be reconstructed from session metadata; yours must not. Commit the opened record.
 
+## 1b. Stage forms — the five questions lists are files, not memory
+
+Every job carries five JSON forms in `stages/` — `01-intent.json`, `02-structure.json`,
+`03-creative.json`, `04-selection.json`, `05-verification.json` — whose fields are the five-stage
+question template (`forms/FORMS.md`, schemas in `forms/`). The prose stage files stay as narrative;
+the forms are the record of decisions. A stage is closed only when
+
+```bash
+python3 .claude/skills/media-agency/tools/check_stage.py <job_dir> --through <N>
+```
+
+prints `COMPLETE` for stages 1..N. The gate checks presence, sources, corpus ids, timings, cap and
+checker independence — never whether an answer is good. The dispatch tool calls
+`check_stage.require_stages_complete(job_dir, 4)` before the first paid call; prompts are built
+from the Stage 3 board by `tools/build_prompts.py`, not typed. Worked example (the accepted
+Mokobara job replayed): `forms/examples/mokobara-odyssey-001/`.
+
 ## 2. Intake → Normalized Request
+
+**Form:** `stages/01-intent.json` (`form-1-intent.schema.json`) — mandatory items each with a
+verification method, decisions with cost-if-wrong, asks tagged blocking / default, 3–6 acceptance
+statements. Gate 1 = `check_stage.py --through 1`.
 
 Fill every `intake.*` field. Sources, in order: the brief; the commercial repo (`PROFILE.md` defines
 package contents, sizes, revision counts, the delivery note); production judgment for non-critical
@@ -57,6 +78,10 @@ what the customer said, conservatively; it is never edited later — deviations 
 
 Job class (one): `customer_work` · `upwork_portfolio` · `spec_work` · `internal_experiment`.
 Portfolio and spec work still get a full intake; the "client" is the positioning in `PROFILE.md`.
+
+**Form:** `stages/02-structure.json` (`form-2-structure.schema.json`) — formats with a dated
+source and safe box, facts quote-exact with sources, permitted / forbidden claims, assets have vs
+originate (hashed when had). Gate 2 = `check_stage.py --through 2`.
 
 ## 3. Template-first / learning-first
 
@@ -120,6 +145,12 @@ record the gap in `learning.canon_gaps` only if the production actually fails fo
 
 ## 5. Creative blueprint — the concept
 
+**Form:** `stages/03-creative.json` (`form-3-creative.schema.json`) — the numbered board with
+`feeling / framing / impact` and `first_frame` per beat, the hero frame, the copy deck with a
+source per string, the Canon lookup record and the claims consulted (with `retrieved_by`), the
+non-author review. Gate 3 = `check_stage.py --through 3`. Then `tools/build_prompts.py` writes the
+prompts from the board; a prompt is never typed by hand.
+
 Canon constrains; it does not direct. Write `blueprint.*` before any route is chosen:
 
 | Field | Must answer |
@@ -151,6 +182,11 @@ one accepted master, never separate draws — and each rendition is a deliverabl
 (stage 11: FORMAT_SPECIFIC_REVALIDATION). List every delivered geometry under `plan.deliverables[]`.
 
 ## 7. Route selection — evidence, not fame
+
+**Form:** `stages/04-selection.json` (`form-4-selection.schema.json`) — risk order with a
+micro-qualification test per entry, routes with register cell and price source, pools read,
+expected spend vs cap, order of work. Gate 4 = `check_stage.py --through 4`; nothing is sent
+before it prints `COMPLETE`.
 
 For each generative asset write `plan.assets[].route` from:
 routing evidence (cell status + `production_use_allowed`) → job requirements → surface
@@ -213,6 +249,15 @@ only if the cap is known.
 
 ## 9. Generation — the honest dispatch mechanism
 
+**Gate before the first paid call.** The job's dispatch tool imports the stage gate and refuses
+unless stages 1–4 are complete:
+
+```python
+import sys; sys.path.insert(0, ".claude/skills/media-agency/tools")
+from check_stage import require_stages_complete
+require_stages_complete(JOB_DIR, through=4)   # SystemExit with the missing fields; nothing sent
+```
+
 `runtime/alpha` and `runtime/route.cli --execute` are **dry-only on main** (live transport
 deliberately unwired). Paid dispatch today is done the way the accepted pilot did it: per-route
 recipes (`eval/harness-v2/adapters/**`, `transports.py`; the pilot's `preprod/recipes/*.py` on
@@ -237,6 +282,12 @@ all exact type are shaped with HarfBuzz (`hb-view`) + Pillow (pilot `tools/adcom
 `eval/harness-v2/composite.py`). A render command that exits 0 is not an accepted result.
 
 ## 11. Post-draw QA
+
+**Form:** `stages/05-verification.json` (`form-5-verification.schema.json`) — filled by the
+independent checker (a session that authored none of forms 1–4): every DET check with its tool
+and result, every LJ item with a named judge, failures with earliest stage and the form field
+that would have prevented them, then the customer's verdict verbatim and every Stage 1 acceptance
+statement scored. Gate 5 = `check_stage.py --through 5`.
 
 Run `QA-CHECKLIST.md` in full; write `qa.post_draw` and, for video, `qa.video_frames` with the
 sampled frame list — a video with no `qa.video_frames` row cannot be presented for acceptance.

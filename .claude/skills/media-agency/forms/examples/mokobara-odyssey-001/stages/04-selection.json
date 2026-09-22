@@ -1,0 +1,39 @@
+{
+ "job_id": "AGY-2026-09-21-MOKOBARA-ODYSSEY-001",
+ "author_session": "producer-2026-09-21",
+ "risk_order": [
+  {"rank": 1, "element": "the gag — arm into the backpack to the shoulder, then both arms, then a paddle longer than the bag (veo-3.1-fast-i2v, beat 4)", "beat": 4,
+   "why": "objects in contact with hands and impossible geometry are the known i2v failure class; if this beat cannot be made the film has no joke", "evidence_ref": "RENTOK-CREATIVE-QUALITY-001 Treatment D ('loses quality towards the end'); TAINT-REGISTER VID-I2V clean_observed 5/8",
+   "test": {"what": "hero still + beat-4 still + one 8-s i2v clip before any other clip is bought", "cost_usd": 0.93, "judged_by": "producer by eye on the contact sheet, then the customer on the first pass"}},
+  {"rank": 2, "element": "bag likeness from reference photos in nano-banana-2 (an unregistered IMG-REF use of the IMG-CORE cell)", "beat": 2,
+   "why": "the cell is registered without references; likeness with references is a manual_only use until observed", "evidence_ref": "TAINT-REGISTER IMG-CORE/nano-banana-2 (refs cell manual_only); UPWORK-INTRO-001 hero-still mechanism",
+   "test": {"what": "the hero still with two product photos as references, compared to …Private_Island_1.jpg on a contact sheet", "cost_usd": 0.067, "judged_by": "producer, then checker LJ-2"}}
+ ],
+ "routes": [
+  {"asset_class": "beat stills + hero still", "route_id": "nano-banana-2", "cell": "IMG-CORE/nano-banana-2 (+ reference images: unregistered, micro-qualified)", "evidence_status": "clean_observed 7/8", "production_use_allowed": "manual_only", "price_usd": 0.067, "unit": "image", "pool": "Gemini API key (credits)", "price_source": "runtime PriceBook via tools/dispatch.py quotes"},
+  {"asset_class": "per-beat clips", "route_id": "veo-3.1-fast-i2v", "cell": "VID-I2V/veo-3.1-fast-i2v", "evidence_status": "clean_observed 5/8", "production_use_allowed": "true", "price_usd": 0.10, "unit": "second", "pool": "Vertex SA vertexaiproject-507518 (credits)"},
+  {"asset_class": "music bed", "route_id": "lyria", "cell": "MUS/lyria+native", "evidence_status": "clean_observed 4/4", "production_use_allowed": "true", "price_usd": 0.06, "unit": "clip", "pool": "Vertex (credits)"}
+ ],
+ "known_failures": [
+  {"route_id": "veo-3.1-fast-i2v", "failure": "identity and product drift across separate clips; quality decays late in a clip", "ref": "RENTOK-CREATIVE-QUALITY-001 Treatment D; UPWORK-INTRO-001 SD-04"},
+  {"route_id": "nano-banana-2", "failure": "in-model lettering on products and signs; logo-like marks", "ref": "RENTOK-GAME-A-004 D-2; LIMIT-TEXT"}
+ ],
+ "composited": ["wordmark super (SVG rasterised)", "end card: wordmark, product line, tagline, CTA"],
+ "generated_text_planned": false,
+ "voice": {"source_count": 0, "measured_before_timeline": true},
+ "references": [
+  {"for": "hero still", "refs": ["…Private_Island_1.jpg (front)", "…Private_Island_6.jpg (open)"]},
+  {"for": "every beat still", "refs": ["hero still", "…Private_Island_1.jpg"]},
+  {"for": "every clip (i2v)", "refs": ["the beat still (first frame)"]}
+ ],
+ "pools_read": [
+  {"pool": "Gemini API (nano-banana-2)", "status": "key present by name; quota not exposed by the API — first call is the read", "read_utc": "2026-09-21T17:30:00Z"},
+  {"pool": "Vertex vertexaiproject-507518 (Veo, Lyria)", "status": "SA credentials present; credits balance read in console before the job", "read_utc": "2026-09-21T17:30:00Z"}
+ ],
+ "expected_spend": {"first_pass_usd": 3.53, "repair_allowance_usd": 2.60, "total_usd": 6.13,
+  "lines": [{"item": "micro-qual: hero still + beat-4 still + 8-s clip", "usd": 0.93}, {"item": "5 beat stills", "usd": 0.34}, {"item": "22 s of clips", "usd": 2.20}, {"item": "music bed", "usd": 0.06}, {"item": "re-takes ≤ 3 clips + ≤ 3 stills", "usd": 2.60}]},
+ "order_of_work": ["hero still (identity master)", "beat-4 still + beat-4 clip (riskiest first)", "remaining beat stills, contact sheet", "remaining clips, one change per re-take", "music bed", "assembly: trim to board, super, end card, loudnorm", "DET checks", "independent check"],
+ "decision": {"topology": "hero still → per-beat stills (references) → veo-3.1-fast-i2v per beat → stitch by code",
+  "why": "i2v has the better evidence (5/8 vs ref2v 2/4) and fixes the first frame, so the bag's likeness is decided in a USD 0.067 still that can be inspected before any USD 0.40–0.80 clip",
+  "rejected_alternatives": ["veo-3.1-fast t2v: identity text-only, drifts across 6 clips", "veo-3.1-fast-ref2v: weaker evidence (2/4), free first frame", "gemini-omni t2v: no image conditioning in the registered cell", "multi-shot extend chains / two-speaker: manual_only, not needed"]}
+}

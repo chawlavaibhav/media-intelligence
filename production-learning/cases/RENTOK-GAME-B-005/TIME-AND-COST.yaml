@@ -1,0 +1,83 @@
+# TIME AND COST — case RENTOK-GAME-B-005. Two clocks, never mixed: mechanical (`date -u` stamps in JOB.yaml; ledger UTC;
+# git) versus human words. Nothing is estimated to look tidy.
+case_id: RENTOK-GAME-B-005
+timezone_note: "all stamps UTC; IST = UTC+05:30"
+
+metric_definitions:
+  TTAO: "Time To Accepted Outcome — wall clock from job_start_utc (stamped by `date -u` at bootstrap) to the human ACCEPT"
+  CpAO: "Cost per Accepted Outcome — provider spend fully loaded (failed attempts and unselected audition takes included) per accepted deliverable"
+
+anchors_mechanical:                        # JOB.yaml ttao.* and gen/LEDGER.jsonl
+  brief_received_utc: "2026-09-20T18:00:45Z"
+  job_start_utc: "2026-09-20T18:12:53Z"
+  planning_complete_utc: "2026-09-20T18:40:41Z"
+  cap_stated_utc: "2026-09-20T18:44Z"               # SPEND-AUTHORISATION.md
+  elevenlabs_balance_read_utc: "2026-09-20T18:55:57Z"   # GET /v1/user/subscription — 9,054 characters free; the key's own 1,000-credit quota not shown
+  dispatch_start_utc: "2026-09-20T18:56:12Z"        # att-001 Sarvam line 1
+  dispatch_end_utc: "2026-09-20T19:02:07Z"          # att-025 Lyria settled
+  v1_qa_complete_utc: "2026-09-20T19:18:28Z"        # the file the checker reviewed
+  qa_complete_final_utc: "2026-09-20T19:46:21Z"     # repair round 1
+  blind_packet_sealed_utc: "2026-09-20T19:55:59Z"
+  human_review_requested_utc: "2026-09-20T19:58:00Z"
+  human_decision_utc: "2026-09-20T20:06:00Z"        # chat message time as recorded by the Controller
+  verdict_transcribed_utc: "2026-09-21T03:37:03Z"
+
+time:
+  time_to_accepted_outcome_mechanical:
+    value_hms: "1:53:07"
+    from: job_start_utc
+    to: human_decision_utc
+    source: [job_yaml_date_u_stamps, controller_recorded_chat_time]
+    caveat: "the start is a machine stamp; the end is the customer's chat message time as the Controller recorded it (JOB.yaml kpis.ttao_hms)"
+    cross_checks:
+      brief_to_decision_hms: "2:05:15"
+      job_start_to_deliverable_hms: "1:33:28"        # to qa_complete_final_utc — fully mechanical
+      planning_hms: "0:27:48"
+      paid_generation_window_hms: "0:05:55"          # all 25 calls, incl. the audition and QA transcriptions
+      checker_and_repair_window_hms: "0:27:53"       # v1_qa_complete → qa_complete_final
+  time_to_accepted_outcome_human_estimate: null
+  generation_wait_time:
+    mechanical: {note: "ATTEMPTS.jsonl carries start/end per call; the 25-call window is 5 m 55 s wall clock including sequencing — generation wait was a small fraction of 1 h 53 m"}
+  session_tokens_not_a_clock: "producer ≈ 578 k, checkers ≈ 266 k + 220 k (Controller-side accounting, 06-CONTROLLER-COMPARISON.md §1; not priced)"
+
+cost:
+  total_known_provider_cost_usd: 0.58675
+  basis: "25 `reserved` lines, gen/LEDGER.jsonl @ d0a0583; the checker reconciled ATTEMPTS ⇄ LEDGER (same 25 ids, reservation before settle on all 25, cumulative re-adds, cap 10.00 on every line); the ledger was byte-identical after the repair round"
+  by_route:
+    - {route: "IMG-CORE/nano-banana-2 (gemini_api)", calls: 7, ok: 7, usd: 0.469, pool: "credits (Google), attested by the human"}
+    - {route: "MUS/lyria+native (Vertex)", calls: 1, ok: 1, usd: 0.060, pool: "credits (Google)"}
+    - {route: "gemini-3.1-flash-tts-preview 'Puck' (job-local pin; no Registry cell)", calls: 3, ok: 2, failed: 1, usd: 0.028818, pool: "credits (Google)"}
+    - {route: "gemini-3.1-flash-lite audio transcription (QA only; job-local pin)", calls: 8, ok: 7, failed: 1, usd: 0.0196, pool: "credits (Google)", settled_reported: "≈ 0.0045 (the only routes that report usage)"}
+    - {route: "elevenlabs-v3-direct 'Daniel'", calls: 3, ok: 2, failed: 1, usd: 0.0071, pool: "elevenlabs_credits (routing map) / labelled cash in the PriceBook roster — see SYSTEM-DEFECTS PD-02"}
+    - {route: "sarvam-bulbul-v3 'aditya' en-IN", calls: 3, ok: 3, usd: 0.002232, pool: "sarvam_credits (routing map) / labelled cash in the roster; priced INR 3.0 per 1,000 characters"}
+  by_version: {1: 0.58675}
+  spent_on_failed_or_unselected_usd: 0.0557        # 3 failed (0.015054) + 4 unselected audition takes (0.023507) + 7 QA transcripts (0.01715); the picture assets cost the same as lane A (0.529)
+  cap: {amount_usd: 10.00, used_pct: 5.9}
+  known_uncertainty:
+    - "Google credits not machine-readable (Cloud Billing API disabled); attested by the human; upper bounds"
+    - "ElevenLabs: the subscription endpoint showed 9,054 characters free but the API key carried its own 1,000-credit quota with 11 left — the balance read was misleading (att-006)"
+    - "Sarvam: no balance endpoint known; attested"
+    - "no vendor statement reconciled"
+  cost_per_accepted_outcome:
+    value_usd: 0.58675
+    unit: "the accepted 30-s film (one outcome), fully loaded with the 3 failed calls, the 4 unselected audition takes and the 8 QA transcription calls"
+    numerator_complete: false
+    missing_components: ["vendor-billed reconciliation (Google, ElevenLabs, Sarvam)", "LLM session tokens (producer + two checkers; not priced)", "human Controller time (not priced)"]
+    baseline_read: {ref: production-learning/cases/UPWORK-INTRO-001/TIME-AND-COST.yaml, cpao_usd: 15.39318, ttao: "7 h 54 m mechanical lower bound", cycles: 5, note: "different production class; side by side only"}
+    sister_lane: {case: RENTOK-GAME-A-004, cpao_usd: 0.529, note: "the USD 0.058 difference is entirely this lane's voice audition and QA transcription calls (06-CONTROLLER-COMPARISON.md §1, INFERRED there; OBSERVED here from the two ledgers)"}
+
+counts:
+  paid_generation_attempts: 25              # every paid call on the ledger: 17 generative (9 voice + 7 stills + 1 music) + 8 QA transcription calls
+  paid_generative_attempts: 17
+  paid_qa_calls: 8
+  paid_generation_failed: 3
+  paid_repairs: 0
+  human_review_cycles: 1
+  internal_checker_rounds: 2
+  defects_closed_before_presentation: 16    # R1–R5, T1 + D-1..D-9, N-1
+  customer_flagged_defects: 1               # HD-01 the announcer
+
+product_conclusion:
+  final_quality: "SUCCESS with one customer-noted defect — accepted, not preferred; the generated announcer was heard as robotic by the first human ear on it"
+  pipeline_efficiency: "MET_BASELINE and better on every axis than case 001 (1 h 53 m vs 7 h 54 m; USD 0.59 vs 15.39; 1 cycle vs 5) — a code-rendered class with no generative video; the comparison shows the class's cost, not a pipeline gain"
+  process_conformance: "CONFORMANT with two recorded gaps — the pre-dispatch prompt gate (A1) was not run (the no-lettering clause was honoured by construction; recorded for the inspector), and no human ear heard the voice audition before the voice was frozen"

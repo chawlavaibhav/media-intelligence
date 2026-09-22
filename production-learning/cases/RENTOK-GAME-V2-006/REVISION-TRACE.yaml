@@ -1,0 +1,42 @@
+# REVISION TRACE — one presented version, built through a USD-0 animatic round and the producer's own repair round; then
+# an independent checker round whose repairs the customer declined. Root-cause classes are the eleven fixed classes.
+case_id: RENTOK-GAME-V2-006
+root_cause_classes_used: [compositor, deterministic_qa, creative_direction, infrastructure, model_generation, orchestration]
+
+versions:
+  - version: 1
+    input_source: "the frozen Lane A brief + confirmed answers (input/01-CUSTOMER-BRIEF-FROZEN.md) + the customer's instruction 'make the full 30 second ad the video 4 way' + CQ-001's diagnosis and Treatment C record (input/05, input/06); Lane A's stages 1–2 carried over and re-verified; Stage 3 rewritten as BOARD-v2 (feeling / framing / impact on all 15 beats, board.json via tools/make_board.py); plan frozen at 79b1aea before the one paid call"
+    generation_status: "1 paid call, 1 ok, 0 repairs at the generation layer: att-001 the V2-S1 8-pose expression sheet (nano-banana-2, 16:9, 53.6 s), micro-qualified on a consistency card (keys 8/8, book 5/8, keyable 99.95 %, identity PASS by eye, one pose miss recorded — P1); USD 0.067 reserved of 3.00. Everything else reused: Lane A's base sheet, five obstacles, plate, Lyria bed (7dab37a) and Treatment C's 8-pose sheet (41d97c6), blob-verified in PROVENANCE.md"
+    assembly_status: "USD-0 animatic v1 (stand-ins for the eight new poses) → 4 DET FAIL + 1 feel defect → animatic v2: 26 PASS / 0 FAIL / 3 NOT_RUN, judged beat by beat (stages/03 Part E); after the draw: final v1 → 2 FAIL (FRAMING F4, true peak) → repair round 1 at USD 0 → final-v3-audio = the delivered file, DET 28 PASS / 0 FAIL / 1 NOT_RUN (D1 human eye, done by the author on 61 frames + 16 keyframes)"
+    human_verdict: accept
+    defects:
+      # producer-found on animatic v1 (USD 0) — stages/05 §5.4, JOB.yaml qa.defects
+      - {id: A-1, root_cause_class: infrastructure, detail: "the video-only animatic encode carried an edit list (the mux step had -use_editlist 0, the render encode did not) — caught by the job's own box-walk check, the one promoted from Lane A (case 004 D-1)"}
+      - {id: A-2, root_cause_class: compositor, detail: "the falling phone (world layer) passed behind the cheat panel and under the INSTALL backing for 2 frames — caught by C5 (text) / C5b (graphic-vs-text); repaired by dropping the phone from the panel's bottom edge in the UI layer"}
+      - {id: A-3, root_cause_class: compositor, detail: "the toppling tower's far corner rose 46 px into the label zone (2 frames); the departing swarm crossed the HUD row — caught by C5b; repaired by pivoting the tower at its base centre (max rise 28 px) and fading the swarm out (state 'leaving')"}
+      - {id: A-4, root_cause_class: deterministic_qa, detail: "the FRAMING gate measured owner_frac mid-camera-ease and failed for the wrong reason; the 'cover' stand-in was also double-shrunk — repaired by reading focus_t at the camera hold and setting per-pose targets (a crouched pose is short by design)"}
+      - {id: A-5, root_cause_class: creative_direction, detail: "with the world scrolling on after a knock-down, the fallen tower and the hovering swarm slid off the owner within 0.5 s — judged on the animatic by the producer's eye; repaired by pausing the scroll 11.7–12.35 and 14.1–18.0 and carrying obstacles over into the next beat"}
+      # producer-found on final v1 (USD 0)
+      - {id: R-1, root_cause_class: creative_direction, detail: "F4 owner_frac 0.202 < 0.21: the drawn 'reach' cell is 320 px in a 342-px standing cell, 6 % shorter than the stand-in the target was set on — caught by the FRAMING gate; repaired by pushing the F4 camera x1.4 → x1.5 (x1.45 measured 0.209; x1.5 = 0.216 delivered)"}
+      - {id: R-2, root_cause_class: infrastructure, detail: "true peak -0.4 dBTP after AAC with Lane A's loudnorm settings — the denser SFX overshoot more than Lane A's (case 004 R5 / RO-05, n now 4 encodes across three jobs); repaired by a limiter at -6 dBFS after loudnorm + 1.5 dB make-up → -14.0 LUFS / -2.7 dBTP"}
+      # independent checker on the delivered file (stages/CHECK-STAGE-5.md §4, §6) — OFFERED as a USD-0 round, DECLINED by the customer; all UNREPAIRED
+      - {id: N1, root_cause_class: creative_direction, detail: "the flag rises THROUGH the cheering owner for 26 frames (26.53–27.37 s): pole drawn behind him, flag in front; the C5b gate covers graphic-vs-text only. Board-level (flag draw order / pole position). Unrepaired."}
+      - {id: N2, root_cause_class: compositor, detail: "the raised phone sits exactly over his face for 6 frames at the wind-up (18.20–18.37 s). Unrepaired."}
+      - {id: N3, root_cause_class: creative_direction, detail: "kneel → stand in one frame at 17.37 → 17.40 (cornered_up 381 px → catch 444 px), a pop at the gift moment; no transition pose on the board. Unrepaired."}
+      - {id: N4, root_cause_class: compositor, detail: "dazed pose clipped by the left frame edge 3.77–4.23 s (owner box x0 = -52 px); the document wall drawn over his right side. Unrepaired."}
+      - {id: N5, root_cause_class: compositor, detail: "pixel-density and proportion jump at every base-run → sheet-pose swap (~150 swaps); the producer had recorded it as LJ-11 'not visible at phone size' (INFERRED); the checker found the proportion pop visible at 360 px. Root: the reuse decision accepted two sheets at ≈ 60 % of the base sheet's density. Unrepaired."}
+      - {id: N6, root_cause_class: compositor, detail: "green key fringe on the new sheet's cut-outs (36–194 tinted pixels per pose; 1 px at native, invisible at 360 px). Unrepaired."}
+      - {id: N7, root_cause_class: model_generation, detail: "the tenant sprite is a smooth-shaded illustration, not pixel art (a Lane A asset accepted in Lane A; a style mismatch the eye reads). Unrepaired."}
+      - {id: N8, root_cause_class: creative_direction, detail: "the cheat panel rises as an empty black box over his head for ~3 frames before any text appears. Unrepaired."}
+      - {id: N9, root_cause_class: compositor, detail: "the wordmark raster's own gradient backing is faintly visible on the end card ((1,54,250)→(0,40,231) on (1,55,253)); within case 004's 8-per-channel brand-colour delta, so no gate refuses it. Unrepaired."}
+      - {id: P1, root_cause_class: model_generation, detail: "the 'lookback' cell was drawn facing forward, surprised (V2-D4, recorded before the checker); used 0.25 s; the checker reads it as 'startled', meaning carried by the runner behind him. Unrepaired by the producer's own decision (a redraw risks the seven good cells)."}
+    repair_requested: "the checker listed one repair per defect (all USD 0 except three optional redraws at USD 0.067); the Controller offered the round to the customer; the customer: 'not required'"
+    repair_made: "none after presentation. Before presentation: animatic round (A-1..A-5) and repair round 1 (R-1, R-2), both USD 0"
+    repair_succeeded: true                 # of the repairs made (A-1..A-5, R-1, R-2): every one verified by the DET suite on the delivered file (28/28) and reproduced by the checker
+    cost_usd: 0.0                          # all repairs; total job spend 0.067 was the one first draw
+    elapsed: {from: "2026-09-21T11:25:07Z job_start (date -u)", to: "2026-09-21T16:34:35Z customer ACCEPT (chat time as recorded)", value_hms: "5:09:28", source: [job_yaml_date_u_stamps, controller_recorded_chat_time]}
+    elapsed_internal_anchors: {planning_complete: "12:01:11Z", paid_call: "12:01:22Z → 12:02:15Z", qa_complete_det_clean: "12:16:20Z (0:51:13 from job_start)", presented: "12:33:00Z", checker_report_committed: "12:42:59Z", decision: "16:34:35Z"}
+
+media_model_failures_that_reached_a_gate: 1     # P1: the lookback pose — recorded at the consistency card, accepted with a reason, never repaired
+paid_repairs: 0
+note: "Two things are new in this trace against cases 004/005. (1) The animatic found five defects and the producer's gates two more BEFORE the checker — the checker then reproduced every number and found only production-quality and creative items, none of which blocked presentation. (2) The customer declined the repair round; the accepted file therefore carries ten recorded, unrepaired defects. That is a legitimate outcome (the customer owns the bar), and the case records it as such rather than pretending the file is clean."

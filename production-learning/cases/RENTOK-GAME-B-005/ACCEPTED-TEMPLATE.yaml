@@ -1,0 +1,66 @@
+# ACCEPTED TEMPLATE — lane B's accepted film on the same structural template lane A reached independently (case
+# RENTOK-GAME-A-004 carries the template's first record). Every value below carries evidence_scope: this_accepted_template.
+# None is a Canon rule. Beat times are gen/render/TIMELINE.json @ d0a0583 (the delivered film's timeline, after D-3 moved V2).
+case_id: RENTOK-GAME-B-005
+template_id: code_rendered_side_scroller_with_ai_sprites
+template_class: game_style_advertising_film
+status: accepted_once_per_lane           # n = 2 jobs (cases 004 + 005), ONE customer, ONE brief — not a promoted runtime template
+source_asset_sha256: 40cf2f40bf50c88d04afebb98ea91f6896a83aac8ad4fbdc010b0e289eb42c78
+total_duration_s: 30.0
+evidence_scope: this_accepted_template
+
+production_method:
+  film: "rendered by code (Pillow → ffmpeg), 30 fps, 900 frames; world composed at 360x640 and nearest-upscaled x3"
+  generative_inputs: "textless stills only — one nine-pose character sheet on flat magenta, five two-panel obstacle pairs (creature / cleared state), one 16:9 world plate (nano-banana-2); one music bed (Lyria)"
+  text: "every string set by code (Condensed Bold at full resolution over the low-res world); no in-model text"
+  voice: "three-line arcade announcer (Sarvam bulbul:v3) — heard as robotic by the customer; the sister lane had none"
+  motion: "code scroll, bob/tilt, beams and card transforms; no generative video"
+
+structure:
+  - {n: 1, beat: cold_open_mid_action, start_s: 0.0, end_s: 1.2, content: "owner already running; HUD pops: hearts, LEVEL 1, greyed power-up slot RENTOK MODE: OFF; name tag PG OWNER"}
+  - {n: 2, beat: obstacle_1, start_s: 1.2, end_s: 3.04, content: "UNVERIFIED TENANT creature; hit; heart lost"}
+  - {n: 3, beat: obstacle_2, start_s: 3.04, end_s: 4.88, content: "RENT NOT PAID"}
+  - {n: 4, beat: obstacle_3, start_s: 4.88, end_s: 6.72, content: "LEFT WITHOUT PAYING (ghost with suitcase)"}
+  - {n: 5, beat: obstacle_4, start_s: 6.72, end_s: 8.56, content: "ACCOUNTS MESS (paper tangle)"}
+  - {n: 6, beat: obstacle_5_cornered, start_s: 8.56, end_s: 10.4, content: "COMPLAINT CALLS (phone swarm); cornered"}
+  - {n: 7, beat: freeze_continue, start_s: 10.4, end_s: 11.8, content: "colour drains; hearts blink; CONTINUE?; music drops to a heartbeat"}
+  - {n: 8, beat: cheat_code_types, start_s: 11.8, end_s: 14.6, content: "CHEAT CODE: INSTALL RENTOK types letter by letter; V1 'Cheat code accepted' at 11.9 s"}
+  - {n: 9, beat: install_power_up, start_s: 14.6, end_s: 17.0, content: "INSTALLING... → phone rises into his hand; RENTOK MODE: ON at 15.9 s with V2; hearts refill; sky and road turn brand blue; shield glow"}
+  - {n: 10, beat: clear_1, start_s: 17.0, end_s: 18.6, content: "OK beam → TENANT: VERIFIED card"}
+  - {n: 11, beat: clear_2, start_s: 18.6, end_s: 20.2, content: "AUTOPAY: ON"}
+  - {n: 12, beat: clear_3_tracked_not_recovered, start_s: 20.2, end_s: 21.8, content: "DUES VISIBLE — the ghost is tagged with a tracked marker and drifts on"}
+  - {n: 13, beat: clear_4, start_s: 21.8, end_s: 23.4, content: "REPORTS: DONE"}
+  - {n: 14, beat: clear_5, start_s: 23.4, end_s: 25.0, content: "TICKETS RESOLVED"}
+  - {n: 15, beat: flag, start_s: 25.0, end_s: 26.6, content: "flagpole with the RentOk flag; hop; flag slides; fireworks"}
+  - {n: 16, beat: level_complete, start_s: 26.6, end_s: 27.8, content: "LEVEL COMPLETE banner; score; V3 at 26.7 s"}
+  - {n: 17, beat: end_card_brand_cta, start_s: 27.8, end_s: 30.0, content: "brand-blue card; PG OWNER? LEVEL UP.; wordmark; Get the app"}
+
+observed_pacing:
+  - {rule: obstacle_beat_s, value: 1.84, evidence_scope: this_accepted_template}
+  - {rule: clear_beat_s, value: 1.6, evidence_scope: this_accepted_template}
+  - {rule: freeze_hold_s, value: 1.4, evidence_scope: this_accepted_template}
+  - {rule: cheat_code_typing_s, value: 2.8, note: "grew from the board's 1.8 to fit the measured V1 (MEASURED_VO_DRIVES_TIMELINE)", evidence_scope: this_accepted_template}
+  - {rule: install_beat_s, value: 2.4, evidence_scope: this_accepted_template}
+  - {rule: end_card_hold_s, value: 2.2, evidence_scope: this_accepted_template}
+  - {rule: vo_line_length_chars, value: "16–28", evidence_scope: this_accepted_template}
+  - {rule: five_problems_then_five_clears_symmetry, value: "same order both halves", evidence_scope: this_accepted_template}
+
+sister_lane_values:                       # case 004 (autonomous) on the same structure, side by side only
+  obstacle_beat_s: "2.4–2.8"
+  clear_beat_s: 1.2
+  turning_point: "cheat panel 3.0 s (15.0–18.0 s) + power-up 1.6 s"
+  end_card_hold_s: 2.4
+  voice: none
+  note: "the two lanes chose different beat lengths on the same skeleton; the customer preferred the sister lane and named only the voice"
+
+compositor_invariants_used:
+  - every text plate logged per frame and kept inside the Meta safe box (4,974 placements, 0 failures after R1)
+  - critical text regions disjoint per frame; graphics (G-phone, G-icon, G-flag, G-beam) added to the set after D-1 — now check_graphic_text_disjoint
+  - WCAG contrast per plate (worst 6.927)
+  - exact copy byte-checked against the deck (20/20)
+  - one voice source by construction (mix_audio.py loads A_sarvam_*.wav only; checker-verified by spectral match)
+  - VO overlap / overrun gate (PR #103 port); VO-vs-words alignment added after D-3 — now check_vo_text_alignment
+  - loudness on the encoded file: -14 LUFS ±1.5, TP ≤ -1
+
+not_a_canon_rule: true
+canon_disposition: "no Canon pack is created or edited from this template"
