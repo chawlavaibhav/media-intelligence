@@ -6,8 +6,11 @@ from __future__ import annotations
 
 import re
 
-NO_LETTERING = ("No text, no lettering, no captions, no logos, no signage, no labels with readable words, "
-                "no watermark anywhere in the picture.")
+# The product's own small marks are part of the product; everything else is lettering the model must not add.
+# Live 2026-09-23: a blanket "no logos anywhere" contradicted "preserve the brand details exactly" and the inspector
+# rejected faithful bags for carrying their real badge.
+NO_LETTERING = ("No text, no lettering, no captions, no signage, no watermark and no logos added anywhere in the scene; "
+                "the only marks allowed are the product's own small brand marks exactly as they appear on the reference photos.")
 NO_SPEECH = "No one speaks, sings or moves their lips; natural ambient sound only."
 BASE_NEGATIVE = ["text", "letters", "captions", "watermark", "logo", "signage", "talking", "speech", "singing",
                  "lip movement", "extra fingers", "warped product", "duplicate product"]

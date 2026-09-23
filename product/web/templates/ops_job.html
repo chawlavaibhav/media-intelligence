@@ -13,6 +13,11 @@
 <input type="hidden" name="csrf" value="{{ csrf }}"><label for="ovr">The independent review blocked this direction (above). Release it to the customer anyway — why?</label>
 <input id="ovr" type="text" name="reason" required minlength="20" placeholder="e.g. checked the product page: the side zip exists (photo 2)"><button class="secondary">Override and send for approval</button></form>{% endif %}</div>
 
+{% for w in waiting_takes %}<div class="card"><h2>Pick a take — {{ w.node }}</h2>
+<p class="small">The inspector rejected every draw; it is not qualified to decide alone. Its last note: {{ w.why }}</p>
+<div class="row">{% for t in w.takes %}<div><img src="/assets/{{ t.id }}" alt="take {{ loop.index }}" style="max-width:260px;display:block">
+<form method="post" action="/ops/jobs/{{ job.id }}/select_take"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ t.id }}">
+<input type="text" name="reason" required minlength="15" placeholder="Why this one (product faithful, pose fine…)"><button>Use this take</button></form></div>{% endfor %}</div></div>{% endfor %}
 {% if gateway %}<div class="card"><h2>Presentation gateway</h2>
 {% for g in gateway %}<p><strong>{{ g.asset_id }}</strong> sha256 {{ g.sha256[:16] }}… — {% if g.ready %}<span class="ok">READY</span>{% else %}<span class="bad">BLOCKED ({{ g.blocking|length }})</span>{% endif %}</p>
 <table><tr><th>check</th><th>status</th><th>control</th><th>detail</th><th>waiver</th></tr>

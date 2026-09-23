@@ -144,7 +144,13 @@ Production realities you must design for (learned on real jobs; violating them w
 - STILL: `composition` describes the hero picture (generated WITHOUT text) and where the code-set copy and logo go
   (`text_zone`) so the picture leaves that zone calm. `beats` is empty for stills.
 - `product_anchor`: one paragraph describing the product's exact appearance from the customer's photos/facts, reused
-  verbatim in every generation prompt. `customer_summary`: the idea in 3–5 plain sentences for the customer.
+  verbatim in every generation prompt. An image generator cannot look anything up: never write "as in the reference" or
+  "the section shown open in the photo". Describe the physical construction in words — where each opening, flap, zip and
+  pocket that your pictures show actually is, how it opens, and what it reveals (e.g. "the top front flap unzips along its
+  curved upper edge and folds fully down over the front, revealing a deep bright-yellow bucket compartment"). Anything the
+  photos do not show must not appear.
+- `composition.product_treatment` (stills): how the product must look in the picture — never production instructions
+  (no "cutout", "composite", "retouch", "remove annotations"); the picture is generated from your words and the photos. `customer_summary`: the idea in 3–5 plain sentences for the customer.
 Output JSON only, matching the schema."""
 
 # ── Pre-spend independent review of the direction ─────────────────────────────
@@ -171,9 +177,12 @@ seconds (or at a glance, for a still); is each film beat something a 4–6 s ima
 first frame; is the product kept absent before its reveal and intact after; is there any planned lettering inside generated
 pictures, speech, or an unsupported feature? A `blocker` means production must not start.
 Then check the TRUTH of the world the plan describes, not only its form (world_truth):
+- You are shown the customer's own product photos (the attached images are customer inputs, not the producer's work).
 - product_claims: every physical feature, part or behaviour of the product the plan shows or says (how it opens, where a
   zip runs, what fits inside, materials, colours) with its source — customer_fact (in INTENT/BRIEF facts), product_photo
-  (visible in the supplied photos as described), or none. Anything the planner assumed is `none`.
+  (visible in the attached photos, or printed on them, as described), or none. Also check that product_anchor describes each
+  opening/closure it shows in words a generator can follow — "as in the reference" is not a description (list it as a claim
+  with source none). Anything the planner assumed is `none`.
 - world_specified: is the place concrete enough that a generator draws the right thing (sea vs. drain, time, weather)?
 - prop_whereabouts_gaps: any object whose position between beats is unaccounted for (it leaves the bag, then is somewhere).
 - eyeline_or_staging_issues: who looks at what, who holds what, whether the action reads as intended.
@@ -197,7 +206,9 @@ INSPECT_ROLE = """You inspect one generated asset for a commercial production, a
 You did not make it. Judge only what you can see (and hear, for video): did the required action happen, is the end state
 reached and held, is the product the customer's product (compare to the reference) and intact, is the character the same
 person as in the reference, did anything prohibited or unrequested appear, is there any lettering/wordmark drawn in the
-picture. For a clip, give the best continuous segment to use (in_s/out_s). If you cannot determine something, say
+picture — lettering_present means text, logos or wordmarks the model ADDED; the product's own small marks exactly as on
+the reference photos are part of the product (judge them under product_identity_ok). A pose or staging choice that the
+instruction allows is not an identity failure. For a clip, give the best continuous segment to use (in_s/out_s). If you cannot determine something, say
 cannot_determine — never guess a pass. Output JSON only."""
 
 # ── Independent review of the finished media ──────────────────────────────────

@@ -305,3 +305,40 @@ class WorldTruthBeforeSpend(unittest.TestCase):
             self.assertIn("operator:ops", rows["process:direction_truth"]["detail"])
         finally:
             e.close()
+
+
+class PersonPicksWhenTheInspectorRejectsEverything(unittest.TestCase):
+    """Live 2026-09-23: an unqualified inspector rejected four draws, three of them faithful, and the job failed.
+    Now the job waits for a person, who picks one of the paid draws; nothing is re-bought."""
+
+    def test_all_draws_rejected_pauses_for_a_person_who_picks_and_production_resumes(self):
+        e = Env()
+        try:
+            orig = e.orch.llm.sim.inspector
+
+            def inspector(context, media):
+                out = orig(context, media)
+                out.update(usable=False, notes="the flap sticks out horizontally")
+                return out
+            e.orch.llm.sim.inspector = inspector
+            jid = e.submit("image")
+            e.drain()
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            e.drain()
+            self.assertEqual(e.state(jid), "paused_operator")
+            waiting = [n for n in e.store.nodes(jid) if n["status"] == "needs_person"]
+            self.assertTrue(waiting)
+            paid = len([a for a in e.store.attempts(jid) if a["category"] == "provider"])
+            e.orch.llm.sim.inspector = orig
+            for n in waiting:
+                cand = json.loads(n["note"])["candidates"][0]
+                with self.assertRaises(ValueError):
+                    e.orch.select_take(jid, asset_id=cand, by="operator:vaibhav", reason="ok")
+                e.orch.select_take(jid, asset_id=cand, by="operator:vaibhav", reason="bag faithful to photo 1; flap pose is fine")
+            self.assertEqual(e.state(jid), "producing")
+            e.drain()
+            self.assertEqual(e.state(jid), "operator_hold")
+            self.assertEqual(len([a for a in e.store.attempts(jid) if a["category"] == "provider"]), paid)   # nothing re-bought
+            self.assertTrue(e.store.events(jid, ("take_selected_by_person",)))
+        finally:
+            e.close()

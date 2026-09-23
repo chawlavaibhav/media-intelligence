@@ -102,7 +102,7 @@ class App:
             ("POST", r"/jobs/(?P<jid>job_\w+)/(?P<action>answer|approve|direction-change|changes|accept|reject|budget|upload)", self.job_action),
             ("GET", r"/assets/(?P<aid>ast_\w+)(?P<dl>/download)?", self.asset),
             ("GET", r"/ops", self.ops_home), ("GET", r"/ops/jobs/(?P<jid>job_\w+)", self.ops_job),
-            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override)", self.ops_action),
+            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override|select_take)", self.ops_action),
             ("POST", r"/ops/accounts", self.ops_account), ("POST", r"/ops/invites", self.ops_invite),
         ]
 
@@ -323,6 +323,9 @@ class App:
                  gateway=[verify.gateway(st, jid, a, gw.get("required", {})) for a in finals],
                  canon=st.artifact(jid, "canon_trace"), dreview=st.artifact(jid, "direction_review"),
                  metrics=learning.metrics(st, jid), controls=verify.controls())
+        v.update(waiting_takes=[{"node": n["node_id"], "why": json.loads(n["note"] or "{}").get("why", ""),
+                                 "takes": [st.asset(a) for a in json.loads(n["note"] or "{}").get("candidates", [])]}
+                                for n in st.nodes(jid) if n["status"] == "needs_person"])
         v.update(attestable={r["check_id"]: verify.attestable(r["check_id"]) for g in v["gateway"] for r in g["table"]
                              if verify.attestable(r["check_id"])}, non_waivable=verify.NON_WAIVABLE)
         return self.page("ops_job.html", req, **v)
@@ -349,6 +352,11 @@ class App:
         elif action == "attest":
             try:
                 verify.attest(self.store, jid, f["asset_id"], f["check_id"], by=who, note=f.get("note", ""), outcome=f.get("outcome", "PASS"))
+            except ValueError as e:
+                raise Invalid(str(e))
+        elif action == "select_take":
+            try:
+                self.svc.orch.select_take(jid, asset_id=f.get("asset_id", ""), by=who, reason=f.get("reason", ""))
             except ValueError as e:
                 raise Invalid(str(e))
         elif action == "override":

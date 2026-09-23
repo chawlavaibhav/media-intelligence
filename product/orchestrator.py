@@ -34,6 +34,13 @@ TRANSIENT_RETRIES = 3
 CLIP_LENGTHS = (4, 6, 8)
 
 
+class NeedsPerson(Exception):
+    """Every draw of a node was rejected by an inspector that is not qualified to reject on its own: a person picks."""
+    def __init__(self, node_id, candidates, why):
+        super().__init__(f"{node_id}: a person picks a take from {candidates} (inspector: {why})")
+        self.node_id, self.candidates, self.why = node_id, candidates, why
+
+
 class NodeFailed(Exception):
     pass
 
@@ -186,7 +193,7 @@ class Orchestrator:
                               max_tokens=16000)
             notes = _normalise_direction(d, intent, brief)
             review = self.llm.call(job_id, "direction_reviewer", {"BRIEF": _brief_for_model(brief), "INTENT": _public(intent),
-                                                                   "DIRECTION": _public(d)}, max_tokens=6000)
+                                                                   "DIRECTION": _public(d)}, media=refs, max_tokens=6000)
             if _blockers(review):
                 ctx["INDEPENDENT_REVIEW"] = {"issues": review.get("issues"), "world_truth_blockers": truth_blockers(review)}
                 ctx["NOTE"] = "An independent reviewer blocked this direction. Fix every blocker; keep what works."
@@ -194,7 +201,7 @@ class Orchestrator:
                               max_tokens=16000)
                 notes += _normalise_direction(d, intent, brief)
                 review = self.llm.call(job_id, "direction_reviewer", {"BRIEF": _brief_for_model(brief), "INTENT": _public(intent),
-                                                                       "DIRECTION": _public(d)}, max_tokens=6000)
+                                                                       "DIRECTION": _public(d)}, media=refs, max_tokens=6000)
         trace = {"packs": packs["record"], "cited": d.get("canon_consulted", []), "deviations": d.get("deviations", []),
                  "deep_retrieved": [{"sk_id": c["sk_id"], "source_id": c["source_id"], "retrieved_by": "model_request"} for c in retrieved],
                  "knowledge_requests": d.get("knowledge_requests") or []}
@@ -281,6 +288,20 @@ class Orchestrator:
                               budget_usd=money(max(budget, committed)), budget_authorised_by=by, budget_authorised_at=utc_now(),
                               approved_at=utc_now())
 
+    def select_take(self, job_id, *, asset_id: str, by: str, reason: str):
+        """A person chose one of the inspected draws for a node that was waiting on a person; production resumes."""
+        a = self.store.asset(asset_id)
+        n = self.store.node(job_id, a["node_id"]) if a and a["job_id"] == job_id else None
+        if n is None or n["status"] != "needs_person":
+            raise ValueError("that take does not belong to a node waiting for a person")
+        if len(reason.strip()) < 15:
+            raise ValueError("say why this take is right (at least a sentence)")
+        self.store.set_asset(asset_id, status="candidate")
+        self._done(job_id, n["node_id"], asset_id)
+        self.store.event(job_id, by, "take_selected_by_person", {"node": n["node_id"], "asset": asset_id, "reason": reason.strip()})
+        if not [x for x in self.store.nodes(job_id) if x["status"] == "needs_person"] and self.store.job(job_id)["state"] == "paused_operator":
+            self.store.transition(job_id, "paused_operator", "producing", actor=by, data={"take_selected": asset_id}, pause_reason=None)
+
     def override_direction(self, job_id, *, by: str, reason: str):
         """An operator read the blocked direction and releases it to the customer anyway — named and reasoned, never silent."""
         if len(reason.strip()) < 20:
@@ -350,6 +371,11 @@ class Orchestrator:
                     break
                 ready = [k for k, n in nodes.items() if n["status"] == "pending"
                          and all(nodes[d]["status"] == "done" for d in json.loads(n["deps_json"]) if d in nodes)]
+                waiting = [k for k, n in nodes.items() if n["status"] == "needs_person"]
+                if not ready and waiting:
+                    self._pause(job_id, "producing", "paused_operator",
+                                "a person picks a take for " + ", ".join(waiting) + " (the inspector rejected every draw and is not qualified to decide alone)")
+                    return
                 if not ready:
                     raise NodeFailed("no runnable node; states: " + json.dumps({k: n["status"] for k, n in nodes.items()}))
                 futs = {pool.submit(self._run_node, job_id, k, ctx): k for k in ready if self.store.take_node(job_id, k)}
@@ -360,6 +386,8 @@ class Orchestrator:
                     except (BudgetExhausted, ProviderUnavailable) as e:
                         self.store.set_node(job_id, futs[f], status="pending", note=str(e)[:300])
                         errors.append(e)
+                    except NeedsPerson as e:
+                        self.store.set_node(job_id, futs[f], status="needs_person", note=json.dumps({"candidates": e.candidates, "why": e.why}))
                     except Exception as e:  # noqa: BLE001
                         self.store.set_node(job_id, futs[f], status="failed", note=scrub(str(e))[:500])
                 if errors:
@@ -496,6 +524,9 @@ class Orchestrator:
             self.store.event(job_id, "system", "asset_rejected", {"node": node_id, "asset": aid, "why": verdict.get("notes", "")[:300]})
             cur = self.store.node(job_id, node_id)
             if cur["draws"] >= cur["max_draws"]:
+                if not self.s.reviewer_qualified:
+                    raise NeedsPerson(node_id, [x["id"] for x in self.store.assets(job_id, node_id=node_id) if x["status"] == "rejected"],
+                                      verdict.get("notes", "")[:300])
                 raise NodeFailed(f"{node_id}: no usable draw after {cur['draws']} (last: {verdict.get('notes', '')[:200]})")
             aid = None
 

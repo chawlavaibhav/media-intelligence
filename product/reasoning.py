@@ -51,6 +51,13 @@ ALLOWED_CONTEXT = {
 }
 
 
+# Thinking tokens count against the output cap on every current backend (Gemini maxOutputTokens, OpenAI
+# max_completion_tokens, Anthropic max_tokens with adaptive thinking). Live 2026-09-23: Gemini 3.1 Pro spent 5,985 of
+# a 6,000 cap thinking about the product photos and returned 543 characters of cut-off JSON — twice — and the job failed.
+# Every call gets this headroom on top of its answer budget; reservations are sized on the total.
+THINKING_HEADROOM = 24000
+
+
 class ReasoningFailed(Exception):
     pass
 
@@ -247,6 +254,8 @@ class Reasoner:
                               "media": [(m, len(d)) for m, d in media]})
         est_in = estimate_in_tokens or (len(user_text) + len(knowledge or "") + len(system_role)) // 3 + 1500 * len(media)
         pin, pout = _price(model)
+        if backend is not None:
+            max_tokens = max_tokens + THINKING_HEADROOM
         estimate = (Decimal(est_in) * pin + Decimal(max_tokens) * pout) / Decimal(1_000_000)
         phase = "independent_review" if isolated else ("canon_consultation" if knowledge else "creative_reasoning")
 
