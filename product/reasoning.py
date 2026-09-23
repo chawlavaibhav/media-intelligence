@@ -34,6 +34,10 @@ PRICES = {
     "claude-opus-5-5": (Decimal("4"), Decimal("20")),
     "claude-sonnet-5": (Decimal("2"), Decimal("10")),
     "claude-haiku-4-5": (Decimal("1"), Decimal("5")),
+    # Azure OpenAI Global Standard, ≤ short-context tier (prices.azure.com retail API, eastus, read 2026-09-23)
+    "gpt-5.6-sol": (Decimal("4.00"), Decimal("20.00")),
+    "gpt-5.6-terra": (Decimal("2.00"), Decimal("12.00")),
+    "gpt-5.5": (Decimal("5.00"), Decimal("30.00")),
     "gemini-3.5-flash": (Decimal("1.50"), Decimal("9.00")),
     "gemini-3.1-pro-preview": (Decimal("2.00"), Decimal("12.00")),   # ≤ 200k-token prompts
     "simulated": (Decimal("0"), Decimal("0")),
@@ -141,6 +145,42 @@ class AnthropicBackend:
         return 200, reply, text, reply.get("usage", {})
 
 
+class AzureOpenAIBackend:
+    """Azure OpenAI v1 chat completions (raw HTTPS). `model` is the deployment name. JSON mode + high reasoning effort."""
+    provider = "azure_openai"
+
+    def __init__(self, settings: Settings):
+        self.s = settings
+
+    def send(self, *, model, system_role, knowledge, user_text, media, schema_obj, max_tokens):
+        key, base = self.s.secret("AZURE_OPENAI_API_KEY"), self.s.secret("AZURE_OPENAI_ENDPOINT")
+        if not key or not base:
+            raise ProviderUnavailable("AZURE_OPENAI_ENDPOINT / AZURE_OPENAI_API_KEY are not configured")
+        system = system_role + ("\n\nKNOWLEDGE\n" + knowledge if knowledge else "")
+        content = []
+        for i, (mime, data) in enumerate(media):
+            b64 = base64.b64encode(data).decode()
+            if mime.startswith("image/"):
+                content.append({"type": "image_url", "image_url": {"url": f"data:{mime};base64,{b64}", "detail": "high"}})
+            elif mime == "application/pdf":
+                content.append({"type": "file", "file": {"filename": f"reference-{i + 1}.pdf", "file_data": f"data:{mime};base64,{b64}"}})
+        content.append({"type": "text", "text": user_text})
+        body = {"model": model, "max_completion_tokens": max_tokens, "reasoning_effort": "high",
+                "response_format": {"type": "json_object"},
+                "messages": [{"role": "system", "content": system}, {"role": "user", "content": content}]}
+        st, reply = _http(base.rstrip("/") + "/openai/v1/chat/completions", {"api-key": key}, body, timeout=600)
+        if st != 200:
+            return st, reply, None, {}
+        u = reply.get("usage") or {}
+        cached = (u.get("prompt_tokens_details") or {}).get("cached_tokens", 0)
+        usage = {"input_tokens": u.get("prompt_tokens", 0) - cached, "cache_read_input_tokens": cached,
+                 "output_tokens": u.get("completion_tokens", 0)}
+        ch = (reply.get("choices") or [{}])[0]
+        if ch.get("finish_reason") == "content_filter":
+            return 200, reply, None, usage
+        return 200, reply, (ch.get("message") or {}).get("content") or None, usage
+
+
 class GeminiBackend:
     provider = "gemini"
 
@@ -185,6 +225,8 @@ class Reasoner:
             return GeminiBackend(self.s), "gemini", self.s.reviewer_model
         if role in ("reviewer", "inspector", "direction_reviewer"):
             return AnthropicBackend(self.s), "anthropic", self.s.reviewer_fallback_model
+        if getattr(self.s, "creative_provider", "anthropic") == "azure_openai":
+            return AzureOpenAIBackend(self.s), "azure_openai", self.s.creative_model
         return AnthropicBackend(self.s), "anthropic", self.s.creative_model
 
     def call(self, job_id: str, role: str, context: dict, *, knowledge: str | None = None, media: list = (),

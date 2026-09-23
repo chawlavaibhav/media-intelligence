@@ -4,8 +4,12 @@ job to job from Cumin B → Lane A → CQ-001 → Mokobara). Request/response sh
 
 Routes (cells and evidence from eval/capability-map/TAINT-REGISTER-v1.yaml as recorded in that tool):
   nano-banana-2      IMG-CORE/nano-banana-2        gemini-3.1-flash-image     Gemini API   per image
-  veo-3.1-fast-i2v   VID-I2V/veo-3.1-fast-i2v      veo-3.1-fast-generate-001  Vertex       per second
-  lyria              MUS/lyria+native              lyria-002                  Vertex       per clip
+  veo-3.1-fast-i2v   VID-I2V/veo-3.1-fast-i2v      veo-3.1-fast-generate-preview (Gemini API) | -001 (Vertex)   per second
+  lyria              MUS/lyria+native              lyria-3-clip-preview (Gemini API, 30-s MP3) | lyria-002 (Vertex)  per clip
+Surface (2026-09-23, founder: "you already have gcp key"): the Gemini API key serves all three routes; Vertex is used only
+when MI_MEDIA_SURFACE=vertex and a service account is configured. Veo 3.1 on the Gemini API takes no negativePrompt, so
+exclusions travel in the prompt text; it always generates native audio. PriceBook prices Lyria at USD 0.06 (lyria-002);
+Lyria 3 Clip lists USD 0.04 — the ledger over-reserves by 0.02 per clip, knowingly.
 The still-with-reference-photos use of nano-banana-2 is `manual_only`/unregistered in the taint
 register (P1 assessment item 11); it is the method every accepted job used, and each beta job's
 observations feed the register through the existing (human) promotion rule.
@@ -138,10 +142,32 @@ class LiveProviders:
 
     # Clips — Veo 3.1 fast i2v on Vertex. Submission returns an operation name; the caller records it
     # BEFORE polling so an interrupted worker resumes the poll instead of paying for a second clip.
+    def _gemini_key(self):
+        key = self.s.secret("GOOGLE_API_KEY") or self.s.secret("GEMINI_API_KEY")
+        if not key:
+            raise RuntimeError("GOOGLE_API_KEY is not configured")
+        return key
+
+    def _vertex(self) -> bool:
+        return getattr(self.s, "media_surface", "gemini_api") == "vertex"
+
+    GEMINI = "https://generativelanguage.googleapis.com/v1beta"
+
     def video_submit(self, prompt: str, image: tuple[str, bytes], duration_s: int, aspect: str,
                      negative: str | None, resolution: str = "720p", generate_audio: bool = True) -> ProviderResult:
         if duration_s not in VEO_DURATIONS or aspect not in ("16:9", "9:16"):
             return ProviderResult("failed", message=f"refused locally: Veo needs duration in {VEO_DURATIONS} and 16:9/9:16")
+        if not self._vertex():
+            text = prompt + (f" Avoid: {negative}." if negative else "")
+            body = {"instances": [{"prompt": text, "image": {"inlineData": {"mimeType": image[0],
+                                                                           "data": base64.b64encode(image[1]).decode()}}}],
+                    "parameters": {"aspectRatio": aspect, "durationSeconds": str(duration_s), "resolution": resolution,
+                                   "personGeneration": "allow_adult"}}
+            st, reply = _http_json("POST", f"{self.GEMINI}/models/veo-3.1-fast-generate-preview:predictLongRunning",
+                                   {"x-goog-api-key": self._gemini_key()}, body, timeout=300)
+            if st != 200 or not isinstance(reply, dict) or not reply.get("name"):
+                return ProviderResult("failed", http_status=st, message=scrub(str(reply))[:600], timed_out=bool((reply or {}).get("$timeout")))
+            return ProviderResult("pending", request_ref=reply["name"])
         inst = {"prompt": prompt, "image": {"bytesBase64Encoded": base64.b64encode(image[1]).decode(), "mimeType": image[0]}}
         params = {"sampleCount": 1, "durationSeconds": duration_s, "aspectRatio": aspect, "resolution": resolution,
                   "generateAudio": generate_audio}
@@ -154,6 +180,8 @@ class LiveProviders:
         return ProviderResult("pending", request_ref=reply["name"])
 
     def video_poll(self, operation: str, max_wait_s: int = 720) -> ProviderResult:
+        if not self._vertex():
+            return self._video_poll_gemini(operation, max_wait_s)
         url = self._vertex_url(ROUTES["veo-3.1-fast-i2v"]["model"], "fetchPredictOperation")
         deadline = time.time() + max_wait_s
         while time.time() < deadline:
@@ -175,8 +203,45 @@ class LiveProviders:
             time.sleep(6)
         return ProviderResult("failed", request_ref=operation, timed_out=True, message=f"poll timeout after {max_wait_s} s")
 
-    # Music — Lyria on Vertex
+    def _video_poll_gemini(self, operation: str, max_wait_s: int) -> ProviderResult:
+        key = self._gemini_key()
+        deadline = time.time() + max_wait_s
+        while time.time() < deadline:
+            code, op = _http_json("GET", f"{self.GEMINI}/{operation}", {"x-goog-api-key": key}, None, timeout=120)
+            if code != 200 or not isinstance(op, dict):
+                return ProviderResult("failed", http_status=code, request_ref=operation, message=f"poll: {scrub(str(op))[:300]}")
+            if op.get("done"):
+                if op.get("error"):
+                    return ProviderResult("failed", request_ref=operation, message=f"operation_error: {op['error']}")
+                gv = (op.get("response") or {}).get("generateVideoResponse") or {}
+                samples = gv.get("generatedSamples") or []
+                uri = ((samples[0] if samples else {}).get("video") or {}).get("uri")
+                if not uri:
+                    why = "safety_filtered" if gv.get("raiMediaFilteredCount") else "no_artifact"
+                    return ProviderResult("failed", request_ref=operation, message=f"{why}: {gv.get('raiMediaFilteredReasons')}")
+                req = urllib.request.Request(uri, headers={"x-goog-api-key": key})
+                try:
+                    with urllib.request.urlopen(req, timeout=300) as r:
+                        return ProviderResult("ok", r.read(), "video/mp4", request_ref=operation)
+                except (urllib.error.URLError, TimeoutError) as e:
+                    return ProviderResult("failed", request_ref=operation, message=f"download: {scrub(str(e))[:300]}")
+            time.sleep(6)
+        return ProviderResult("failed", request_ref=operation, timed_out=True, message=f"poll timeout after {max_wait_s} s")
+
+    # Music — Lyria 3 Clip on the Gemini API (30-s MP3), or lyria-002 on Vertex
     def music(self, prompt: str, negative: str | None) -> ProviderResult:
+        if not self._vertex():
+            text = prompt + " Instrumental only: no vocals, no singing, no spoken words." + (f" Avoid: {negative}." if negative else "")
+            st, reply = _http_json("POST", f"{self.GEMINI}/interactions", {"x-goog-api-key": self._gemini_key()},
+                                   {"model": "lyria-3-clip-preview", "input": text}, timeout=300)
+            if st != 200 or not isinstance(reply, dict):
+                return ProviderResult("failed", http_status=st, message=scrub(str(reply))[:600])
+            for step in reply.get("steps") or []:
+                for c in step.get("content") or []:
+                    if c.get("type") == "audio" and c.get("data"):
+                        return ProviderResult("ok", base64.b64decode(c["data"]), c.get("mime_type") or "audio/mpeg",
+                                              request_ref=reply.get("id"))
+            return ProviderResult("failed", http_status=200, message=f"no audio in the reply: {scrub(str(reply))[:300]}")
         inst = {"prompt": prompt}
         if negative:
             inst["negative_prompt"] = negative

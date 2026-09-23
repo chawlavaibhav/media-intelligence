@@ -9,7 +9,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 
 # Key names whose values must never reach a log line, an error message, a prompt or a page.
-SECRET_ENV_NAMES = ("ANTHROPIC_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "MI_VERTEX_SA_JSON",
+SECRET_ENV_NAMES = ("AZURE_OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "MI_VERTEX_SA_JSON",
                     "MI_SECRET_KEY", "ELEVENLABS_API_KEY", "FAL_KEY")
 
 
@@ -26,6 +26,7 @@ class Settings:
     provider_mode: str = "simulated"
     reasoning_mode: str = "simulated"
     creative_model: str = "claude-opus-5"
+    creative_provider: str = "anthropic"          # "anthropic" | "azure_openai" (founder 2026-09-23: GPT family on Aight Azure)
     reviewer_provider: str = "gemini"            # "gemini" (independent family) or "anthropic"
     reviewer_model: str = "gemini-3.5-flash"
     reviewer_fallback_model: str = "claude-sonnet-5"
@@ -33,6 +34,7 @@ class Settings:
     # Gemini 3.1 Pro @4 fps 1/6, both passing a torn bag as "faithful"). Its FAILs still count. A person confirms the rest.
     reviewer_qualified: bool = False
     review_fps: float | None = None              # frames/s the video reviewer samples (Gemini videoMetadata); None = provider default
+    media_surface: str = "gemini_api"             # "gemini_api" (GOOGLE_API_KEY) | "vertex" (service account)
     vertex_project: str | None = None
     vertex_region: str = "us-central1"
     max_upload_bytes: int = 40 * 1024 * 1024
@@ -63,11 +65,13 @@ def load(data_dir: str | Path | None = None, **overrides) -> Settings:
         provider_mode=_env("MI_PROVIDER_MODE", "simulated"),
         reasoning_mode=_env("MI_REASONING_MODE", "simulated"),
         creative_model=_env("MI_CREATIVE_MODEL", "claude-opus-5"),
+        creative_provider=_env("MI_CREATIVE_PROVIDER", "anthropic"),
         reviewer_provider=_env("MI_REVIEWER_PROVIDER", "gemini"),
         reviewer_model=_env("MI_REVIEWER_MODEL", "gemini-3.5-flash"),
         review_fps=float(_env("MI_REVIEW_FPS")) if _env("MI_REVIEW_FPS") else None,
         reviewer_qualified=_env("MI_REVIEWER_QUALIFIED", "0") == "1",
         vertex_project=_env("MI_VERTEX_PROJECT"),
+        media_surface=_env("MI_MEDIA_SURFACE", "gemini_api"),
         vertex_region=_env("MI_VERTEX_REGION", "us-central1"),
         hold_before_preview=_env("MI_HOLD_BEFORE_PREVIEW", "1") == "1",
         base_url=_env("MI_BASE_URL", "http://localhost:8080"),

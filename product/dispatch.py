@@ -138,7 +138,8 @@ class Dispatcher:
             res = self.p.music(prompt, negative)
         if res.status != "ok":
             raise self._fail(att, res, cost)
-        aid = self._register(job_id, node_id, att, res, "audio", "wav", {"prompt": prompt, "route": "lyria"})
+        aid = self._register(job_id, node_id, att, res, "audio", "mp3" if (res.content_type or "").endswith(("mpeg", "mp3")) else "wav",
+                             {"prompt": prompt, "route": "lyria"})
         self.store.settle(att, status="ok", settled_usd=cost)
         return aid
 
