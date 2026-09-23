@@ -1,0 +1,67 @@
+# Failure diary — seed rows from the 23-September P1 v1 live jobs (spec §1, §7.3). Paraphrased from the private evidence
+# repository chawlavaibhav/mi-p1-evidence (no customer material copied). Each row carries labels so the librarian can match
+# it to a planned shot by action class and route.
+rows:
+  - id: FD-0923-01
+    failure_mode: route_cannot_meet_the_demand
+    media: video
+    action_classes: [hands_work_mechanism]
+    routes: [FILM-B, FILM-C]
+    text: Hands pulling zips along a curved track and folding a flap were asked of the i2v video model in six of eight
+      beats; 15 of 16 takes were rejected by the per-clip inspector and the customer rejected the film as robotic, with two
+      different pairs of hands. Evidence job_20260923_7d36a5b6 events take_rejected.
+  - id: FD-0923-02
+    failure_mode: prop_or_product_continuity_drifts_between_shots
+    media: video
+    action_classes: [hands_work_mechanism, insert_object_into_container, lift_closed_product, camera_move_static_product]
+    routes: [FILM-A, FILM-B, FILM-C]
+    text: Every beat still was generated independently from the product photos, so the bag's construction, the room and
+      the sleeves changed between shots; the lining colour changed from navy to yellow between cuts. Fix — one master plate,
+      each shot built from the master plate and the previous shot's end frame.
+  - id: FD-0923-03
+    failure_mode: character_identity_drifts_between_shots
+    media: video
+    action_classes: [hands_work_mechanism, insert_object_into_container, lift_closed_product, simple_hand_gesture]
+    routes: [FILM-C]
+    text: A hands-only film showed hands in two different wardrobes (white cuff vs grey jacket). A hands reference image
+      alone did not hold the wardrobe across independently generated shots.
+  - id: FD-0923-04
+    failure_mode: current_runtime_and_its_gates_bypassed
+    media: video
+    action_classes: []
+    routes: []
+    text: The system's checkers caught the defects (pre-spend review said revise, inspector rejected 12/13 stills and 15/16
+      clips, the job stopped itself at USD 4.30) but a builder acting as operator overrode them and pushed the film through.
+  - id: FD-0923-05
+    failure_mode: supplied_brand_mark_copied_or_mangled_by_the_model
+    media: video
+    action_classes: [legible_text_on_product, product_still_from_infographic_photo]
+    routes: [IMG, FILM-A]
+    text: A still generated with an annotated infographic product photo as reference misspelt the brand plaque ("mokebara")
+      and drew the wrong handle.
+  - id: FD-0923-06
+    failure_mode: provider_content_refusal_false_positive
+    media: video
+    action_classes: [insert_object_into_container]
+    routes: [FILM-C]
+    text: The video provider refused two beats of a harmless packing story ("celebrity likeness", "an issue with the audio");
+      the beats became code push-ins on stills.
+  - id: FD-0923-07
+    failure_mode: lift_began_mid_air
+    media: video
+    action_classes: [lift_closed_product]
+    routes: [FILM-C]
+    text: A hand lifting the closed bag by its handle — the bag floated or began mid-air in both takes.
+  - id: FD-0923-08
+    failure_mode: picture_depicts_a_capability_the_product_lacks
+    media: video
+    action_classes: [hands_work_mechanism]
+    routes: [FILM-B, FILM-C]
+    text: The plan kept a 180-degree laptop compartment "fully unzipped" on an upright bag for six beats; physically it would
+      fall open. The pre-spend reviewer flagged it (revise) and was overridden.
+  - id: FD-0923-09
+    failure_mode: files_overwritten_in_place
+    media: image
+    action_classes: []
+    routes: [IMG]
+    text: The recomposed posters were written to the same paths as the first cut, destroying the first-cut files.
