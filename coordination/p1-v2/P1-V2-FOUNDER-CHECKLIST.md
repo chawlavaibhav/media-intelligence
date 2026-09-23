@@ -222,3 +222,22 @@ https://github.com/chawlavaibhav/media-intelligence/pull/109. Test file names be
 7. **The old v1 orchestrator reference file**, deleted in the phase 5 commit: restore it, or leave it in history?
 
 ## Final test run
+
+On commit `5f3c404` (branch `claude/p1-v2-build`), Linux cloud container, Python 3.11, ffmpeg 6.1, simulated mode, USD 0:
+
+```
+$ PYTHONPATH=. python3 -m unittest discover -s product/tests -t .
+Ran 105 tests in 1530.144s
+OK (skipped=2)
+```
+
+- 105 = 51 new v2 tests + the 54 v1 tests.
+- The 2 skipped are v1 tests that need historical Mokobara media that is not on this machine.
+- The checks on the verbatim 23-September evidence ran, because the private evidence repo was checked out alongside.
+
+```
+$ PYTHONPATH=. python3 -m product.smoke
+PASS  media engine on this host
+PASS  dry image + film jobs through the product
+PASS  backup and restore
+```
