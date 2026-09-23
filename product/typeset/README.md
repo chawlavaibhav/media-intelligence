@@ -51,10 +51,10 @@ pairs across two different products. Until then the founder picks from the top 3
 
 **Taste is not a rule (founder, 2026-09-23): "it is variable, you can't make it a rule."** Which option is best depends
 on the picture, product, words and colours. So: (1) **rules only for facts** — the blocking checks; (2) the picker builds a
-**varied shortlist of 3** (: every option passes every check, and they differ in how they look — text
+**varied shortlist of 3** (`picker.shortlist`: every option passes every check, and they differ in how they look — text
 position, alignment, band, serif/sans, headline scale, product placement); (3) **a person chooses** — the customer on the
-preview page, until a judge is qualified; (4) the founder's 42 labelled picks are kept in  as the
-**test set any automatic judge must pass** before it may choose alone.  features only describe layouts.
+preview page, until a judge is qualified; (4) the founder's 42 labelled picks are kept in `data/judge-eval.json` as the
+**test set any automatic judge must pass** before it may choose alone. `style.py` features only describe layouts.
 
 Earlier reasoning, kept for the record:
 **Rounds 1–2 were bad tests (founder, 2026-09-23):** each pair differed in several ways at once and the win was credited
