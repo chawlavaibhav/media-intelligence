@@ -250,7 +250,7 @@ PASS  backup and restore
 
 `coordination/p1-v2/P1-V2-AMENDMENT-1.md` (spec branch commit `963d791`), applied on 2026-09-23. Same rules as before:
 simulated mode only, USD 0, no cloud changes, nothing merged, tests first, the builder never the operator.
-New tests: `test_v2_amendment1.py` (23 tests). Older tests that assumed you had to confirm or release were changed to the
+New tests: `test_v2_amendment1.py` (20 tests). Older tests that assumed you had to confirm or release were changed to the
 new rules (listed at the end of this section); none was removed.
 
 ### In plain words
@@ -374,4 +374,22 @@ Files: `test_v2_kitchen`, `test_v2_production`, `test_v2_learning`, `test_v2_fou
 
 ### Final test run (amendment 1)
 
-FINAL_RUN_PLACEHOLDER
+On commit `faacdfd` plus this checklist (branch `claude/p1-v2-build`), Linux cloud container, Python 3.11, ffmpeg 6.1,
+simulated mode, USD 0, with the private evidence repo at `1212814` and the old job branches fetched:
+
+```
+$ PYTHONPATH=. python3 -m unittest discover -s product/tests -t .
+Ran 125 tests in 2038.003s
+OK (skipped=2)
+
+$ PYTHONPATH=. python3 -m product.smoke
+PASS  media engine on this host
+PASS  dry image + film jobs through the product      (both accepted, USD 0.134 / 0.194 simulated)
+PASS  backup and restore
+
+$ PYTHONPATH=. python3 -m product.qualification.judges
+big taster 79 available (64 accepted / 15 not), recipe checker 8 available (6 / 2); spent USD 0.000000; nothing qualified
+```
+
+- 125 = the earlier 105 + 20 new amendment tests. The 2 skipped are the same v1 tests as before; they need
+  historical Mokobara media in a folder layout this machine doesn't have.
