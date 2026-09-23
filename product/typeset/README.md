@@ -49,6 +49,14 @@ pairs across two different products. Until then the founder picks from the top 3
 
 | 3 | **Controlled**: Mokobara + Cumin Co., one difference per pair | 12 | — | both brands: **text above the product**, **product off-centre**. Split by brand: Mokobara = left-aligned, serif, modest headline, no band; Cumin Co. = centred, sans, big headline, colour band |
 
+**Taste is not a rule (founder, 2026-09-23): "it is variable, you can't make it a rule."** Which option is best depends
+on the picture, product, words and colours. So: (1) **rules only for facts** — the blocking checks; (2) the picker builds a
+**varied shortlist of 3** (: every option passes every check, and they differ in how they look — text
+position, alignment, band, serif/sans, headline scale, product placement); (3) **a person chooses** — the customer on the
+preview page, until a judge is qualified; (4) the founder's 42 labelled picks are kept in  as the
+**test set any automatic judge must pass** before it may choose alone.  features only describe layouts.
+
+Earlier reasoning, kept for the record:
 **Rounds 1–2 were bad tests (founder, 2026-09-23):** each pair differed in several ways at once and the win was credited
 to the template's name. They almost never compared text-above with text-below directly (1 of 30 pairs), so their
 "text under the product" signal was an artefact. Round-3 preferences, applied back to rounds 1–2, agree on 6/15 and 4/15
@@ -68,7 +76,7 @@ both. **Qualification not yet met:** 67 % blind agreement against the proposed 7
 ## Run it (no spend)
 
 ```bash
-PYTHONPATH=. python -m unittest product.tests.test_typeset          # 23 tests, ~5 s
+PYTHONPATH=. python -m unittest product.tests.test_typeset          # 24 tests, ~8 s
 PYTHONPATH=. python -m product.typeset.demo --out /tmp/ts --format 4:5 --kind poster \
   --plate <plate.png> --product-box 0.13 0.18 0.86 0.86 --logo <logo.png> \
   --headline "Room for the long way home." --small "mokobara.com" --moods premium calm travel

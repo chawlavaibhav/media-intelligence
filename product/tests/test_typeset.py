@@ -225,19 +225,29 @@ class PickerAndTaste(unittest.TestCase):
         page = taste.page(out)
         self.assertIn("Pick the better ad", page.read_text())
 
-    def test_style_profile_moves_the_ranking_per_brand(self):
+    def test_shortlist_offers_varied_options_that_all_pass(self):
+        cands = picker.candidates(kit=self.kit, fmt="4:5", kind="poster", copy=COPY, plate=_plate(self.tmp),
+                                  product_box_norm=[0.2, 0.2, 0.8, 0.9])
+        short = picker.shortlist(cands, 3)
+        from product.typeset import style
+        self.assertEqual(len(short), 3)
+        for c in short:
+            self.assertEqual(C.blocking_failures(c["checks"]), [])
+        fs = [style.features(c["layout"]) for c in short]
+        for i in range(3):
+            for j in range(i + 1, 3):
+                self.assertGreaterEqual(sum(fs[i].get(k) != fs[j].get(k) for k in fs[i]), 2, (fs[i], fs[j]))
+
+    def test_no_taste_rule_changes_the_score(self):
         from product.typeset import style
         saved = style.STYLE.read_text() if style.STYLE.exists() else None
         try:
-            style.STYLE.write_text("global: {}\nbrands:\n  BrandX: {alignment: {prefer: left-aligned}}\n  BrandY: {alignment: {prefer: centred}}\n")
-            kx = E.BrandKit(logo=self.kit.logo, name="BrandX", system="modern_clean")
-            ky = E.BrandKit(logo=self.kit.logo, name="BrandY", system="modern_clean")
-            best_x = picker.candidates(kit=kx, fmt="4:5", kind="poster", copy=COPY, plate=_plate(self.tmp),
-                                       product_box_norm=[0.2, 0.2, 0.8, 0.9])[0]
-            best_y = picker.candidates(kit=ky, fmt="4:5", kind="poster", copy=COPY, plate=_plate(self.tmp),
-                                       product_box_norm=[0.2, 0.2, 0.8, 0.9])[0]
-            self.assertEqual(style.features(best_x["layout"])["alignment"], "left-aligned")
-            self.assertEqual(style.features(best_y["layout"])["alignment"], "centred")
+            style.STYLE.write_text("global: {}\nbrands:\n  BrandX: {alignment: {prefer: left-aligned}}\n")
+            a = picker.candidates(kit=E.BrandKit(logo=self.kit.logo, name="BrandX", system="modern_clean"), fmt="4:5",
+                                  kind="poster", copy=COPY, plate=_plate(self.tmp), product_box_norm=[0.2, 0.2, 0.8, 0.9])
+            b = picker.candidates(kit=E.BrandKit(logo=self.kit.logo, name="BrandY", system="modern_clean"), fmt="4:5",
+                                  kind="poster", copy=COPY, plate=_plate(self.tmp), product_box_norm=[0.2, 0.2, 0.8, 0.9])
+            self.assertEqual([(c["template"], c["variant"], c["score"]) for c in a], [(c["template"], c["variant"], c["score"]) for c in b])
         finally:
             if saved is None:
                 style.STYLE.unlink(missing_ok=True)

@@ -1,4 +1,10 @@
-"""Style features and the founder's style profile.
+"""Style features (descriptors, NOT rules).
+
+2026-09-23: the founder rejected turning taste picks into rules ("it is variable, you can't make it a rule"). Features are
+used only to DESCRIBE layouts — to build a varied shortlist (picker.shortlist) and to analyse picks. `data/style.yaml`
+records what round 3 showed, as history; `score()` below is not used by the picker.
+
+Original notes:
 
 A layout is described by a handful of design features a person actually judges (where the text sits, alignment, a
 colour band, serif or sans, headline scale, whether the product sits off-centre). The founder's controlled picks

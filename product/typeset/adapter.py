@@ -34,7 +34,8 @@ def _meta(best, cands) -> dict:
             "canvas": list(L["canvas"]), "boxes": {(e.id or e.role): list(e.box) for e in L["elements"]},
             "rendered_text": [" ".join(e.lines) for e in L["elements"] if e.kind == "text"],
             "fonts": {e.role: {"family": e.family, "weight": e.weight, "size": e.size} for e in L["elements"] if e.kind == "text"},
-            "alternatives": [{"template": c["template"], "system": c["system"], "score": c["score"]} for c in cands[:6]]}
+            "shortlist": [{"template": c["template"], "system": c["system"], "variant": c.get("variant", ""), "score": c["score"]}
+                          for c in picker.shortlist(cands, 3)]}
 
 
 def still_ad(*, plate: Path, out: Path, aspect: str, direction: dict, kit: E.BrandKit, product_box_norm: list | None):
