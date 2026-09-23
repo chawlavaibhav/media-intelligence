@@ -532,8 +532,12 @@ def _rejected(k, job_id, node_id, aid, verdict) -> str:
     goes back to the chef (films) or to the founder (a master plate, plate or character has no shot to re-plan)."""
     k.store.set_asset(aid, status="rejected")
     why = (verdict.get("notes") or "") + ("; differences: " + "; ".join(verdict.get("differences") or []) if verdict.get("differences") else "")
-    k.store.event(job_id, "system", "take_rejected", {"node": node_id, "asset": aid, "why": why[:400]})
     cur = k.store.node(job_id, node_id)
+    cspec = json.loads(cur["spec_json"])
+    shot = next((s for s in (k.store.artifact(job_id, "recipe") or {}).get("shots", []) if s["n"] == cspec.get("shot")), None)
+    k.store.event(job_id, "system", "take_rejected", {"node": node_id, "asset": aid, "why": why[:400],
+                                                      "action_class": shot["action_class"] if shot else None,
+                                                      "route": cspec.get("route")})
     if cur["draws"] < cur["max_draws"]:
         flow.send_back(k.store, job_id, "SB-TASTER-RETRY", key=node_id, why=why)
         return why[:300] or "the previous attempt was rejected by the small taster"

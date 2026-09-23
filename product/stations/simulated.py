@@ -253,7 +253,9 @@ class SimulatedWorkers:
             "sound": {"music_brief": "warm, understated, gentle build", "ambience": "room tone"},
             "product_anchor": f"{name} exactly as the customer's photos show it, clean and intact",
             "master_plate": {"description": f"{name} at rest on a warm oak table by a window, soft morning light", "product_state": "closed, intact"},
-            "character": {"present": False, "description": ""},
+            "character": ({"present": True, "description": "the same two hands and lower forearms, off-white cuffs, no rings, in every shot"}
+                          if media_kind == "video" and re.search(r"\bonly hands|hands only|\bhands\b", b.get("CUSTOMER_EXACT_WORDS", ""), re.I)
+                          else {"present": False, "description": ""}),
             "copy_deck": copy,
             "composition": {"hero": f"{name} centre-left, three-quarter view", "text_zone": "top" if media_kind == "image" else "none",
                             "background": "calm warm wall", "product_treatment": "soft key light, gentle shadow"},
@@ -329,6 +331,13 @@ class SimulatedWorkers:
                         "proposed_change": {"target": "failure_diary", "why": "a defect found on a finished cut",
                                             "diff": {"text": d.get("description", "")[:600], "failure_mode": d.get("earliest_stage") or "unknown",
                                                      "action_classes": classes, "routes": routes, "media": jf.get("media")}}})
+        sent = [x for x in jf.get("send_backs") or [] if x.get("rule") == "SB-RECIPE"]
+        if sent:
+            per.append({"worker": "chef", "what_went_right": "", "what_went_wrong": f"the recipe was sent back {len(sent)} times",
+                        "evidence_refs": [f"send_back SB-RECIPE round {x.get('round')}" for x in sent],
+                        "proposed_change": {"target": "rulebook_card", "why": f"{len(sent)} recipe send-backs: {sent[-1].get('why', '')[:200]}",
+                                            "diff": {"worker": "chef", "changes": {"kra_add": "Before planning any hand action, read its "
+                                                     "equipment-sheet row; plan a still of the state for anything marked cannot."}}}})
         for w in ("waiter", "pantry_checker", "recipe_checker"):
             per.append({"worker": w, "what_went_right": "form complete", "what_went_wrong": "", "evidence_refs": [f"{w} form"], "proposed_change": None})
         return {"outcome": outcome, "what_the_customer_said": jf.get("verdict_words") or "(no words recorded)", "per_worker": per}

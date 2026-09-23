@@ -9,17 +9,13 @@ import json
 def job_file(k, job_id: str) -> dict:
     job = k.store.job(job_id)
     recipe = k.store.artifact(job_id, "recipe") or {}
-    rej = {}
+    rej, classes_at, routes_at = {}, {}, {}
     for e in k.store.events(job_id, ("take_rejected",)):
-        n = json.loads(e["data_json"]).get("node")
-        rej[n] = rej.get(n, 0) + 1
-    shots = {s["n"]: s for s in recipe.get("shots", [])}
-    classes, routes = {}, {}
-    for n in k.store.nodes(job_id):
-        spec = json.loads(n["spec_json"])
-        if spec.get("shot") in shots:
-            classes[n["node_id"]] = shots[spec["shot"]]["action_class"]
-            routes[n["node_id"]] = shots[spec["shot"]]["route"]
+        d = json.loads(e["data_json"])
+        key = f"{d.get('node')}|{d.get('action_class')}"          # the class and route AT THE TIME of the rejection
+        rej[key] = rej.get(key, 0) + 1
+        classes_at[key], routes_at[key] = d.get("action_class"), d.get("route")
+    classes, routes = dict(classes_at), dict(routes_at)
     words = [f["text"] for f in k.store.feedback(job_id) if f["kind"] in ("reject", "revision")]
     fr = k.store.artifact(job_id, "final_review") or {}
     return {"job_id": job_id, "title": job["title"], "media": job["media"], "outcome": job["outcome"] or "abandoned",
