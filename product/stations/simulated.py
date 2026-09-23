@@ -192,7 +192,7 @@ class SimulatedWorkers:
             if any(k in c.lower() or c.lower() in k for k in accepted):
                 continue
             actions.append({"id": f"A{len(actions) + 1}", "action": c, "action_class": cls[0], "required_by_customer": True})
-        for inst, use in accepted.items():
+        for use in dict.fromkeys(accepted.values()):
             actions.append({"id": f"A{len(actions) + 1}", "action": use, "action_class": "product_state_still", "required_by_customer": True})
         if media_kind == "video" and not any(a["action_class"] == "camera_move_static_product" for a in actions):
             actions.insert(0, {"id": "A0", "action": "the camera moves gently around the product at rest",

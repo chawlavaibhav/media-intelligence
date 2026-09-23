@@ -139,3 +139,28 @@ def product_words(intent: dict) -> list:
     p = intent.get("product") or {}
     words = [p.get("category") or ""] + re.findall(r"[A-Za-z]{4,}", p.get("category") or "")
     return [w for w in dict.fromkeys(words) if w]
+
+
+# ── v2: one master plate, every shot chained from it (spec §5 head cook, §6.1) ──────────────────────────────────────────
+def master_plate_prompt(recipe: dict, guard: dict, *, aspect: str, with_product_ref: bool) -> str:
+    """The master plate: the film's one world — room, light, product — at rest. Every shot is built from it."""
+    mp = recipe.get("master_plate") or {}
+    lines = [f"A cinematic film still that establishes the whole film's world. {_visual(mp.get('description', ''))}",
+             f"The product: {_anchor(recipe, guard)} State: {_visual(mp.get('product_state') or 'intact')}; brand new, completely intact, "
+             f"exactly as in the reference photo{'s' if with_product_ref else ''}."]
+    ch = recipe.get("character") or {}
+    if ch.get("present"):
+        lines.append(f"The person: {_visual(ch.get('description', ''))}")
+    lines += [_look(recipe), f"Aspect ratio {aspect}. Photorealistic.", NO_LETTERING]
+    return _strip(" ".join(lines), guard["forbidden_words"])
+
+
+CHAIN_CLAUSE = ("Continuity: the same room, light, product (shape, colour, every opening) and the same hands/person and wardrobe "
+                "as the MASTER PLATE reference image{prev}. Nothing about the product changes.")
+
+
+def shot_frame_prompt(recipe: dict, guard: dict, shot: dict, *, aspect: str, has_previous: bool, correction: str = "") -> str:
+    base = still_prompt(recipe, guard, beat=shot, aspect=aspect, with_product_ref=True, with_character_ref=False)
+    chain = CHAIN_CLAUSE.format(prev="; it continues directly from the PREVIOUS SHOT reference image" if has_previous else "")
+    corr = f" Correct this from the last attempt: {_visual(correction)}." if correction else ""
+    return _strip(base.replace(NO_LETTERING, chain + corr + " " + NO_LETTERING), guard["forbidden_words"])
