@@ -266,3 +266,42 @@ class EveryApplicableControlRunsOnTheProductionPath(unittest.TestCase):
                     self.assertEqual(sorted(want - seen), [], f"{kind} {aid}")
         finally:
             e.close()
+
+
+
+class WorldTruthBeforeSpend(unittest.TestCase):
+    """Atlas MDR8-03 (a zip the product does not have) / MOKO7-18 (the paddle's whereabouts): an unsourced product claim
+    blocks the direction before any production spend; only a named operator's reasoned override releases it."""
+
+    def test_an_unsourced_product_claim_stops_the_job_before_spend_and_approve_refuses_it(self):
+        e = Env()
+        try:
+            orig = e.orch.llm.sim.direction_reviewer
+
+            def reviewer(context, media):
+                out = orig(context, media)
+                out["world_truth"] = {"product_claims": [{"claim": "ONE long zip running the full height of the side", "where": "beat 3",
+                                                          "source": "none"}], "world_specified": "yes", "world_note": "grey pebble sea shore",
+                                      "prop_whereabouts_gaps": [], "eyeline_or_staging_issues": []}
+                return out
+            e.orch.llm.sim.direction_reviewer = reviewer
+            jid = e.submit("video")
+            e.drain()
+            self.assertEqual(e.state(jid), "paused_operator")
+            self.assertIn("unsourced product claim", e.store.job(jid)["pause_reason"])
+            self.assertEqual(e.store.assets(jid, role="preview"), [])                      # nothing paid while blocked
+            self.assertEqual([a for a in e.store.attempts(jid) if a["category"] == "provider"], [])
+            with self.assertRaises(PermissionError):
+                e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            with self.assertRaises(ValueError):
+                e.orch.override_direction(jid, by="operator:ops", reason="fine")
+            e.orch.override_direction(jid, by="operator:ops", reason="checked the product page: the side zip exists (photo 2)")
+            self.assertEqual(e.state(jid), "awaiting_approval")
+            self.assertTrue(e.store.assets(jid, role="preview"))
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            e.drain()
+            rows = {r["check_id"]: r for aid in e.orch._final_assets(jid) for r in e.store.checks(aid)}
+            self.assertEqual(rows["process:direction_truth"]["status"], "FLAG")
+            self.assertIn("operator:ops", rows["process:direction_truth"]["detail"])
+        finally:
+            e.close()

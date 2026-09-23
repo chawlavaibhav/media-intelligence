@@ -147,7 +147,9 @@ class SimulatedReasoning:
         intent = _ctx(context, "INTENT") or {}
         return {"verdict": "approve",
                 "mandatory_coverage": [{"mandatory_id": m["id"], "covered": True, "where": "copy deck / beats"} for m in intent.get("mandatory", [])],
-                "issues": [], "feasibility_risks": []}
+                "issues": [], "feasibility_risks": [],
+                "world_truth": {"product_claims": [], "world_specified": "yes", "world_note": "simulated — nobody checked",
+                                "prop_whereabouts_gaps": [], "eyeline_or_staging_issues": []}}
 
     def inspector(self, context, media):
         return {"usable": True, "required_action_occurred": "cannot_determine", "end_state_reached": "cannot_determine",
@@ -163,6 +165,7 @@ class SimulatedReasoning:
                 "continuity": {"verdict": "cannot_determine", "evidence": "simulated"},
                 "model_lettering": {"present": "cannot_determine", "evidence": "simulated"},
                 "subject_obstructed": {"present": "cannot_determine", "evidence": "simulated"},
+                "product_across_shots": {"verdict": "cannot_determine", "evidence": "simulated"},
                 "commercial_read": "not evaluated (simulated)",
                 "audio": {"speech_or_singing": "cannot_determine", "notes": "simulated"},
                 "summary_for_customer": "Simulated review — no one has looked at this media."}

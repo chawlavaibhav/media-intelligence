@@ -53,10 +53,15 @@ class Env:
         return self.store.job(jid)["state"]
 
     def waive_all(self, jid, why="DRY RUN — simulated media; nothing was verified"):
+        from product import verify
         g = self.store.artifact(jid, "gateway")
         for r in g["results"]:
             for b in r["blocking"]:
-                self.store.waive(jid, r["asset_id"], b["check_id"], "operator:test", why)
+                if b["check_id"] in verify.NON_WAIVABLE:
+                    verify.attest(self.store, jid, r["asset_id"], b["check_id"], by="operator:test",
+                                  note="DRY RUN — test tone and pink noise only; no real listen was needed")
+                else:
+                    self.store.waive(jid, r["asset_id"], b["check_id"], "operator:test", why)
 
     def to_review(self, jid, budget="15"):
         """submitted → ready_for_review, with the operator waiving what a dry run cannot verify."""

@@ -8,13 +8,21 @@
 {% if job.pause_reason %}<br><span class="warn">Paused/failed: {{ job.pause_reason }}</span>{% endif %}</p>
 <div class="card"><form method="post" action="/ops/jobs/{{ job.id }}/pause" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="reason" value="paused by operator"><button class="secondary">Pause</button></form>
 {% if job.resume_state %}<form method="post" action="/ops/jobs/{{ job.id }}/resume" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="secondary">Resume → {{ job.resume_state }}</button></form>{% endif %}
-{% if job.state == 'operator_hold' %}<form method="post" action="/ops/jobs/{{ job.id }}/release" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Release to customer</button></form>{% endif %}</div>
+{% if job.state == 'operator_hold' %}<form method="post" action="/ops/jobs/{{ job.id }}/release" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Release to customer</button></form>{% endif %}
+{% if job.state == 'paused_operator' and job.resume_state == 'directing' %}<form method="post" action="/ops/jobs/{{ job.id }}/override" class="override">
+<input type="hidden" name="csrf" value="{{ csrf }}"><label for="ovr">The independent review blocked this direction (above). Release it to the customer anyway — why?</label>
+<input id="ovr" type="text" name="reason" required minlength="20" placeholder="e.g. checked the product page: the side zip exists (photo 2)"><button class="secondary">Override and send for approval</button></form>{% endif %}</div>
 
 {% if gateway %}<div class="card"><h2>Presentation gateway</h2>
 {% for g in gateway %}<p><strong>{{ g.asset_id }}</strong> sha256 {{ g.sha256[:16] }}… — {% if g.ready %}<span class="ok">READY</span>{% else %}<span class="bad">BLOCKED ({{ g.blocking|length }})</span>{% endif %}</p>
 <table><tr><th>check</th><th>status</th><th>control</th><th>detail</th><th>waiver</th></tr>
 {% for r in g.table %}<tr><td>{{ r.check_id }}</td><td class="{{ r.status }}">{{ r.status }}</td><td class="small">{{ r.control }}</td><td class="small">{{ r.detail }}</td>
-<td class="small">{% if r.waived_by %}{{ r.waived_by }}: {{ r.waiver_reason }}{% elif r.status in ('FAIL','NOT_VERIFIED') %}
+<td class="small">{% if r.check_id in attestable and r.status != 'PASS' %}
+<form method="post" action="/ops/jobs/{{ job.id }}/attest"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ g.asset_id }}"><input type="hidden" name="check_id" value="{{ r.check_id }}">
+<p class="small">{{ attestable[r.check_id] }}. <a href="/assets/{{ g.asset_id }}">Play the file</a>. This cannot be waived.</p>
+<input type="text" name="note" required minlength="15" placeholder="What you heard (e.g. full listen on headphones: ambience + music only)">
+<select name="outcome" aria-label="Outcome"><option value="PASS">Heard it — fine</option><option value="FAIL">Heard a problem</option></select><button class="secondary">Record my listen</button></form>
+{% elif r.waived_by %}{{ r.waived_by }}: {{ r.waiver_reason }}{% elif r.status in ('FAIL','NOT_VERIFIED') %}
 <form method="post" action="/ops/jobs/{{ job.id }}/waive"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ g.asset_id }}"><input type="hidden" name="check_id" value="{{ r.check_id }}">
 <input type="text" name="reason" placeholder="Reason (e.g. listened in full: no speech)" required minlength="10"><button class="secondary">Waive</button></form>{% endif %}</td></tr>{% endfor %}</table>{% endfor %}</div>{% endif %}
 

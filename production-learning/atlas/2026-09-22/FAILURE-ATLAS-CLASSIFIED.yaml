@@ -1,0 +1,5646 @@
+# (header of the source file, kept verbatim) FAILURE-ATLAS-RAW — every defect, failure, rejection and known limitation recorded by this programme.
+# Read-only extraction for the Media Intelligence Controller, 2026-09-22. One row per defect. No bucketing, no theory.
+# Sources: production-learning/cases/*/ on main; job branches read with `git show <ref>:<path>`; today's on-disk job.
+# `class_as_recorded` is copied from the record, never invented. Where a record gives two classes, both are copied.
+
+meta:
+  written_utc: "2026-09-22T00:00:00Z"
+  repo_main: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence
+  worktree: /Users/vaibhavchawla/Vaibhav_Personal_Projects/media-intelligence-mokobara-v3
+  job_short_codes:
+    UPW1: UPWORK-INTRO-001
+    UPW2: UPWORK-PORTFOLIO-002
+    CUM3: CUMINCO-CHOPSTICKS-003
+    RGA4: RENTOK-GAME-A-004 (job AGY-2026-09-20-RENTOK-GAME-LANE-A-001)
+    RGB5: RENTOK-GAME-B-005 (job AGY-2026-09-20-RENTOK-GAME-LANE-B-001)
+    RGV6: RENTOK-GAME-V2-006 (job AGY-2026-09-21-RENTOK-GAME-V2-001)
+    MOKO7: MOKOBARA-ODYSSEY-007 (job AGY-2026-09-21-MOKOBARA-ODYSSEY-001)
+    CQ1: RENTOK-CREATIVE-QUALITY-001 (experiment branch, four treatments)
+    MDR8: AGY-2026-09-22-MOKOBARA-DEEPREAD-001 (today, on disk, uncommitted)
+  found_by_vocabulary: [producer_gate, producer_eye, independent_checker, customer, controller]
+
+# FAILURE-ATLAS-CLASSIFIED — the 225 raw defect rows with a mechanism bucket and a failure-mode label added.
+# Derived from FAILURE-ATLAS-RAW.yaml on 2026-09-22. Nothing in the original rows was altered; three fields were added to each row:
+#   bucket        — one of B1..B10 below. Every row lands in exactly one.
+#   failure_mode  — the mechanism inside that bucket, stable across jobs so recurrence can be counted.
+#   recurrence    — PREVENTED | RECURRED-DESPITE-CODE | RECURRED-NOTE-ONLY | RECURRED-NO-FIX | NEW (single occurrence so far).
+#
+# Recurrence rule used (stated so it can be checked): a mode is a recurrence only when the MECHANISM repeats, not the symptom.
+# Where a code artefact existed at or before a later occurrence and the mode still happened, the chain is RECURRED-DESPITE-CODE.
+# Where the only response was prose (a candidate pattern, a directional note, a line in a case file), it is RECURRED-NOTE-ONLY.
+# Where the record shows nothing was done, it is RECURRED-NO-FIX. PREVENTED means the later occurrence was stopped by the promoted code before delivery.
+
+buckets:
+  B1:
+    name: |-
+      Declared output rule never measured on the rendered file
+    mechanism: |-
+      A rule existed in words — a spec, a token, a safe box, a loudness target, a container spec, or an approved board — and the delivered frame or file was never measured against it. Either no check existed, the check was scoped too narrowly, or the check existed in code and was not run. What would have had to be different: the rule measured on the rendered output before anyone saw it.
+    rows: 62
+    jobs_spanned: 8
+    failure_modes:
+      - mode: audio_hole_at_a_clip_join
+        rows: 3
+        jobs: [UPWORK-PORTFOLIO-002, RENTOK-GAME-B-005, MOKOBARA-ODYSSEY-007]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          002 promoted CROSS_CLIP_VOICE_CONTINUITY (identity, not silence); the hole itself only ever drew a candidate
+      - mode: audio_mix_and_line_placement_defect
+        rows: 1
+        jobs: [CUMINCO-CHOPSTICKS-003]
+        recurrence: NEW
+      - mode: brand_colour_measured_wrong_on_the_frame
+        rows: 3
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-V2-006]
+        recurrence: RECURRED-DESPITE-CODE
+        first_response: |-
+          BRAND_COLOUR_ON_RENDERED_FRAME promoted_now after 004
+      - mode: codec_true_peak_overshoot
+        rows: 4
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-B-005, RENTOK-CREATIVE-QUALITY-001, RENTOK-GAME-V2-006]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          pre-encode target lowered inside 004; CODEC_TRUE_PEAK_MARGIN raised as a candidate and never promoted
+      - mode: container_spec_violation
+        rows: 2
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-V2-006]
+        recurrence: PREVENTED
+        first_response: |-
+          CONTAINER_EDIT_LIST_CHECK promoted_now after 004
+      - mode: container_timing_anomaly
+        rows: 1
+        jobs: [RENTOK-CREATIVE-QUALITY-001]
+        recurrence: NEW
+      - mode: copy_over_photographic_content
+        rows: 4
+        jobs: [UPWORK-PORTFOLIO-002, CUMINCO-CHOPSTICKS-003]
+        recurrence: RECURRED-DESPITE-CODE
+        first_response: |-
+          REJECTED_DESIGN_REUSE and FORMAT_SPECIFIC_REVALIDATION promoted_now after 002
+      - mode: crop_cuts_the_subject
+        rows: 3
+        jobs: [UPWORK-INTRO-001, UPWORK-PORTFOLIO-002]
+        recurrence: RECURRED-DESPITE-CODE
+        first_response: |-
+          CROP_FIT_DECLARATION promoted_now after 001
+      - mode: element_leaves_the_safe_box
+        rows: 3
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-B-005]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          LAYOUT_LOG_GATES — candidate after 004
+      - mode: element_overlap_collision
+        rows: 10
+        jobs: [UPWORK-INTRO-001, UPWORK-PORTFOLIO-002, RENTOK-GAME-A-004, RENTOK-GAME-B-005, RENTOK-GAME-V2-006]
+        recurrence: RECURRED-DESPITE-CODE
+        first_response: |-
+          ELEMENT_DISJOINTNESS promoted_now after 001
+      - mode: fit_loop_breaks_the_stack
+        rows: 1
+        jobs: [UPWORK-PORTFOLIO-002]
+        recurrence: NEW
+      - mode: format_variant_not_revalidated
+        rows: 1
+        jobs: [CUMINCO-CHOPSTICKS-003]
+        recurrence: NEW
+      - mode: framing_target_missed_at_the_focus_moment
+        rows: 1
+        jobs: [RENTOK-GAME-V2-006]
+        recurrence: NEW
+      - mode: geometry_token_inconsistency
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: hero_clipped_by_the_frame_edge
+        rows: 1
+        jobs: [RENTOK-GAME-V2-006]
+        recurrence: NEW
+      - mode: hero_or_key_content_occluded
+        rows: 6
+        jobs: [UPWORK-INTRO-001, RENTOK-GAME-A-004, RENTOK-GAME-B-005, RENTOK-CREATIVE-QUALITY-001, RENTOK-GAME-V2-006]
+        recurrence: RECURRED-DESPITE-CODE
+        first_response: |-
+          001 repaired in V4.1, not_promoted; GRAPHIC_TEXT_DISJOINT promoted_now after 004
+      - mode: keying_residue_on_a_cut_out
+        rows: 2
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-V2-006]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          KEYING_HELPER — candidate after 004
+      - mode: layer_order_error
+        rows: 2
+        jobs: [RENTOK-GAME-B-005, RENTOK-GAME-V2-006]
+        recurrence: PREVENTED
+        first_response: |-
+          005 repaired it in place, not_promoted; GRAPHIC_TEXT_DISJOINT from 004 was already in code
+      - mode: renderer_output_diverges_from_the_approved_board
+        rows: 4
+        jobs: [RENTOK-GAME-A-004]
+        recurrence: NEW
+      - mode: text_contrast_on_background
+        rows: 3
+        jobs: [UPWORK-INTRO-001, UPWORK-PORTFOLIO-002, MOKOBARA-ODYSSEY-007]
+        recurrence: RECURRED-DESPITE-CODE
+        first_response: |-
+          CONTRAST_GATE promoted_now after 001
+      - mode: text_out_of_bounds
+        rows: 2
+        jobs: [UPWORK-INTRO-001, UPWORK-PORTFOLIO-002]
+        recurrence: RECURRED-DESPITE-CODE
+        first_response: |-
+          TEXT_BOUNDS_GATE promoted_now after 001
+      - mode: text_reads_clipped_although_it_fits
+        rows: 1
+        jobs: [UPWORK-PORTFOLIO-002]
+        recurrence: NEW
+      - mode: vo_lines_overlap_on_the_timeline
+        rows: 1
+        jobs: [CUMINCO-CHOPSTICKS-003]
+        recurrence: NEW
+      - mode: voice_over_out_of_step_with_the_screen
+        rows: 1
+        jobs: [RENTOK-GAME-B-005]
+        recurrence: NEW
+      - mode: world_does_not_fill_the_frame
+        rows: 1
+        jobs: [RENTOK-GAME-V2-006]
+        recurrence: NEW
+  B10:
+    name: |-
+      A check that could not, or did not, run
+    mechanism: |-
+      The defect class was known and the check was named, but no session could execute it (nobody can hear the audio), the instrument was unreliable (OCR on texture, transcription of the brand name), or the check was simply recorded NOT_RUN. What would have had to be different: an instrument, or a human, actually able to perform the check before delivery.
+    rows: 12
+    jobs_spanned: 6
+    failure_modes:
+      - mode: a_declared_check_was_never_run
+        rows: 1
+        jobs: [RENTOK-GAME-B-005]
+        recurrence: NEW
+      - mode: coverage_asserted_but_never_verified
+        rows: 2
+        jobs: [RENTOK-GAME-A-004, RENTOK-CREATIVE-QUALITY-001]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          nothing — not_promoted
+      - mode: no_human_ear_on_the_delivered_audio
+        rows: 7
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-B-005, RENTOK-CREATIVE-QUALITY-001, RENTOK-GAME-V2-006, MOKOBARA-ODYSSEY-007, AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          nothing — 004 recorded it open ('directional_only'); at 005 a written pattern VOICE_CAST_BY_A_HUMAN_EAR was raised as a candidate and never became code
+      - mode: our_qa_instrument_is_unreliable
+        rows: 2
+        jobs: [RENTOK-GAME-B-005, MOKOBARA-ODYSSEY-007]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          noted only (directional) after 005
+  B2:
+    name: |-
+      Generative output never checked against its own prompt
+    mechanism: |-
+      A route was told to do X on one asset and returned not-X — an extra object, drawn lettering, an ignored instruction, a mangled brand mark, a mandatory action that never happens. Nothing compared the returned asset with the instruction that bought it; only a human eye could catch it, and often did not. What would have had to be different: the returned asset read back against its own prompt before it entered the cut.
+    rows: 26
+    jobs_spanned: 8
+    failure_modes:
+      - mode: mandatory_event_never_happens_on_screen
+        rows: 3
+        jobs: [MOKOBARA-ODYSSEY-007, AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          MANDATORY_EVENT_VISIBILITY_LJ_LINE — class 2 candidate after 007
+      - mode: model_undoes_the_goal_state_inside_the_clip
+        rows: 1
+        jobs: [MOKOBARA-ODYSSEY-007]
+        recurrence: NEW
+      - mode: mouths_move_under_a_voice_over
+        rows: 1
+        jobs: [CUMINCO-CHOPSTICKS-003]
+        recurrence: NEW
+      - mode: product_rendered_damaged_or_deformed
+        rows: 2
+        jobs: [MOKOBARA-ODYSSEY-007]
+        recurrence: NEW
+      - mode: prompt_instruction_ignored_by_the_model
+        rows: 8
+        jobs: [UPWORK-INTRO-001, RENTOK-CREATIVE-QUALITY-001, RENTOK-GAME-V2-006, MOKOBARA-ODYSSEY-007, AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          nothing — 001 accepted it and filed 'directional_only — RO-01, routing_authority none'
+      - mode: required_identifier_missing_from_the_model_output
+        rows: 1
+        jobs: [RENTOK-GAME-B-005]
+        recurrence: NEW
+      - mode: supplied_brand_mark_copied_or_mangled_by_the_model
+        rows: 2
+        jobs: [CUMINCO-CHOPSTICKS-003, MOKOBARA-ODYSSEY-007]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          a candidate prompt clause ('turn the mark away') after 003
+      - mode: unrequested_lettering_in_frame
+        rows: 4
+        jobs: [UPWORK-INTRO-001, RENTOK-GAME-B-005, RENTOK-CREATIVE-QUALITY-001]
+        recurrence: RECURRED-DESPITE-CODE
+        first_response: |-
+          VIDEO_FRAME_TEXT_HYGIENE promoted_now after 001
+      - mode: unrequested_object_in_frame
+        rows: 4
+        jobs: [UPWORK-INTRO-001, UPWORK-PORTFOLIO-002, RENTOK-CREATIVE-QUALITY-001, MOKOBARA-ODYSSEY-007]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          directional_only — RO-08 after 001
+  B3:
+    name: |-
+      Nothing binds one generated asset to the next
+    mechanism: |-
+      Each shot, sheet or line was generated independently, so identity, props, style, voice and state were free to change between them. No lock at generation and no continuity check at assembly. What would have had to be different: a carried identity/state and a cross-asset comparison at assembly.
+    rows: 12
+    jobs_spanned: 6
+    failure_modes:
+      - mode: character_identity_drifts_between_shots
+        rows: 3
+        jobs: [MOKOBARA-ODYSSEY-007, AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          directional_only — RO-01; left UNREPAIRED on the accepted 007 film
+      - mode: prop_or_product_continuity_drifts_between_shots
+        rows: 3
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+      - mode: state_continuity_breaks_inside_the_clip
+        rows: 1
+        jobs: [RENTOK-CREATIVE-QUALITY-001]
+        recurrence: NEW
+      - mode: style_or_density_mismatch_between_assets
+        rows: 2
+        jobs: [RENTOK-GAME-V2-006]
+        recurrence: NEW
+      - mode: the_same_asset_differs_between_generation_runs
+        rows: 1
+        jobs: [RENTOK-GAME-A-004]
+        recurrence: NEW
+      - mode: voice_identity_changes_between_clips
+        rows: 2
+        jobs: [UPWORK-PORTFOLIO-002]
+        recurrence: NEW
+  B4:
+    name: |-
+      The plan never said it
+    mechanism: |-
+      The board, script or direction was silent on the thing that later read wrong — the world, the period, the eyeline, the transition, where a prop went, what the ad must structurally contain, how long the voice actually runs. No output check could have caught it, because there was no declared rule to check. What would have had to be different: the plan had to contain the requirement before any spend.
+    rows: 17
+    jobs_spanned: 7
+    failure_modes:
+      - mode: ad_structure_element_missing_from_the_board
+        rows: 2
+        jobs: [UPWORK-INTRO-001, CUMINCO-CHOPSTICKS-003]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          nothing — not_promoted at 001
+      - mode: approved_copy_line_not_carried_into_the_cut
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: composition_band_cramped_in_the_animatic
+        rows: 1
+        jobs: [RENTOK-GAME-A-004]
+        recurrence: NEW
+      - mode: continuity_between_beats_not_boarded
+        rows: 1
+        jobs: [MOKOBARA-ODYSSEY-007]
+        recurrence: NEW
+      - mode: customer_requirement_not_carried_into_the_board
+        rows: 1
+        jobs: [MOKOBARA-ODYSSEY-007]
+        recurrence: NEW
+      - mode: eyeline_not_boarded
+        rows: 1
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+      - mode: no_transition_state_boarded
+        rows: 2
+        jobs: [RENTOK-GAME-V2-006]
+        recurrence: NEW
+      - mode: pose_or_state_list_gap_in_the_board
+        rows: 1
+        jobs: [RENTOK-GAME-B-005]
+        recurrence: NEW
+      - mode: the_world_was_never_specified
+        rows: 2
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+      - mode: timeline_fixed_before_the_voice_was_measured
+        rows: 1
+        jobs: [CUMINCO-CHOPSTICKS-003]
+        recurrence: NEW
+      - mode: world_logic_not_boarded
+        rows: 1
+        jobs: [RENTOK-GAME-V2-006]
+        recurrence: NEW
+      - mode: world_not_composed_across_the_full_frame
+        rows: 3
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-B-005]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          COMPOSE_WORLD_ACROSS_THE_FULL_FRAME — candidate after 004
+  B5:
+    name: |-
+      A claim about the real world asserted, never sourced
+    mechanism: |-
+      The record stated something about the real product, brand or customer that was not true and not traceable to a source, or the picture depicted a capability the product does not have. What would have had to be different: every real-world noun and claim tied to a verified source before it entered a prompt.
+    rows: 3
+    jobs_spanned: 3
+    failure_modes:
+      - mode: picture_depicts_a_capability_the_product_lacks
+        rows: 2
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-B-005]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          fixed at the gate at USD 0, not_promoted
+      - mode: product_fact_asserted_without_a_source
+        rows: 1
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+  B6:
+    name: |-
+      Not good enough by human judgement
+    mechanism: |-
+      No declared rule was broken and no route misbehaved. The work simply did not clear the bar of the human looking at it — opening, pacing, scale on a phone, range, expressiveness, environment, overall verdict. What would have had to be different: better direction and craft, judged by a human before delivery rather than after.
+    rows: 31
+    jobs_spanned: 7
+    failure_modes:
+      - mode: accepted_with_unnamed_minor_issues
+        rows: 1
+        jobs: [MOKOBARA-ODYSSEY-007]
+        recurrence: NEW
+      - mode: beat_does_not_earn_its_time
+        rows: 1
+        jobs: [MOKOBARA-ODYSSEY-007]
+        recurrence: NEW
+      - mode: better_assets_did_not_move_the_verdict
+        rows: 1
+        jobs: [RENTOK-CREATIVE-QUALITY-001]
+        recurrence: NEW
+      - mode: character_expressiveness_limited
+        rows: 2
+        jobs: [RENTOK-CREATIVE-QUALITY-001]
+        recurrence: NEW
+      - mode: creative_range_not_demonstrated
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: effect_or_payoff_reads_weak_at_phone_size
+        rows: 6
+        jobs: [RENTOK-GAME-A-004, RENTOK-CREATIVE-QUALITY-001, RENTOK-GAME-V2-006]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          nothing — not_promoted at 004
+      - mode: environment_too_poor_to_hold_attention
+        rows: 1
+        jobs: [RENTOK-GAME-V2-006]
+        recurrence: NEW
+      - mode: first_draw_rejected_by_eye_at_the_gate
+        rows: 1
+        jobs: [CUMINCO-CHOPSTICKS-003]
+        recurrence: NEW
+      - mode: music_does_not_follow_the_story
+        rows: 1
+        jobs: [RENTOK-CREATIVE-QUALITY-001]
+        recurrence: NEW
+      - mode: opening_not_strong
+        rows: 2
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: overall_verdict_not_good_enough
+        rows: 5
+        jobs: [UPWORK-INTRO-001, CUMINCO-CHOPSTICKS-003, RENTOK-CREATIVE-QUALITY-001, MOKOBARA-ODYSSEY-007, AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          nothing — not_promoted
+      - mode: pacing_wrong
+        rows: 3
+        jobs: [UPWORK-INTRO-001, MOKOBARA-ODYSSEY-007]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          nothing — not_promoted
+      - mode: positioning_undersold
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: proof_or_subject_reads_too_small
+        rows: 5
+        jobs: [UPWORK-INTRO-001, RENTOK-GAME-A-004, RENTOK-CREATIVE-QUALITY-001]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          nothing — not_promoted
+  B7:
+    name: |-
+      A route asked for work its qualification never covered
+    mechanism: |-
+      The route was selected on evidence that did not cover the actual demand — line length, clip length, language, style-hold, resolution, item count, quota — or was asked to do something it has never been shown to do. What would have had to be different: qualification on the real demand, by the real judge, before the route was bought.
+    rows: 19
+    jobs_spanned: 7
+    failure_modes:
+      - mode: no_qualified_route_existed_for_the_demand
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: renderer_capability_limit
+        rows: 3
+        jobs: [RENTOK-CREATIVE-QUALITY-001, RENTOK-GAME-V2-006]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          documented in TREATMENT-C.md, not_promoted
+      - mode: route_cannot_hold_the_style
+        rows: 3
+        jobs: [RENTOK-CREATIVE-QUALITY-001]
+        recurrence: NEW
+      - mode: route_cannot_meet_the_demand
+        rows: 5
+        jobs: [UPWORK-INTRO-001, CUMINCO-CHOPSTICKS-003, RENTOK-GAME-B-005, AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          directional_only — RO-03, n=1 (a Registry note with routing_authority none)
+      - mode: route_degrades_beyond_its_qualified_length
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: route_output_below_the_delivery_spec
+        rows: 1
+        jobs: [MOKOBARA-ODYSSEY-007]
+        recurrence: NEW
+      - mode: voice_route_shipped_without_a_human_ear_on_the_real_demand
+        rows: 5
+        jobs: [UPWORK-INTRO-001, CUMINCO-CHOPSTICKS-003, RENTOK-GAME-B-005]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          SPEAKER_MICROQUALIFICATION — candidate_pattern after 001; VOICE_BY_EAR_FIRST — candidate after 003
+  B8:
+    name: |-
+      Process, orchestration, records and spend
+    mechanism: |-
+      Failures of the machinery around the work: no frozen plan before paid calls, the current runtime bypassed, attempt ids colliding, money reserved before inputs were validated, records that disagree with each other, our own measuring instruments wrong, no customer dossier, rubrics that score the wrong thing. What would have had to be different: the operating procedure and its tooling.
+    rows: 35
+    jobs_spanned: 9
+    failure_modes:
+      - mode: attempt_id_collision
+        rows: 2
+        jobs: [CUMINCO-CHOPSTICKS-003, MOKOBARA-ODYSSEY-007]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          ATTEMPT_ID_LOCK — candidate; the record says explicitly 'not fixed in code on this job'
+      - mode: copy_invented_during_execution_not_frozen
+        rows: 1
+        jobs: [UPWORK-PORTFOLIO-002]
+        recurrence: NEW
+      - mode: current_runtime_and_its_gates_bypassed
+        rows: 3
+        jobs: [UPWORK-PORTFOLIO-002]
+        recurrence: NEW
+      - mode: cycle_time_and_human_review_load
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: gates_check_the_form_of_a_plan_not_the_truth_of_its_world
+        rows: 1
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+      - mode: ledger_attribution_wrong
+        rows: 1
+        jobs: [UPWORK-PORTFOLIO-002]
+        recurrence: NEW
+      - mode: money_reserved_before_the_input_was_validated
+        rows: 1
+        jobs: [RENTOK-GAME-B-005]
+        recurrence: NEW
+      - mode: no_customer_dossier_carries_product_truth_between_jobs
+        rows: 1
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+      - mode: no_frozen_plan_before_the_first_paid_call
+        rows: 2
+        jobs: [UPWORK-PORTFOLIO-002]
+        recurrence: NEW
+      - mode: no_standard_acceptance_check_set
+        rows: 1
+        jobs: [UPWORK-PORTFOLIO-002]
+        recurrence: NEW
+      - mode: our_evaluation_rubric_scored_the_wrong_thing
+        rows: 1
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+      - mode: our_own_measuring_instrument_was_wrong
+        rows: 2
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-V2-006]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          fixed in the job's own script, not_promoted
+      - mode: records_inconsistent_between_files
+        rows: 8
+        jobs: [RENTOK-GAME-A-004, RENTOK-GAME-B-005, RENTOK-GAME-V2-006, MOKOBARA-ODYSSEY-007]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          fixed by hand in 004 ('one pass over both files'), not_promoted
+      - mode: route_cost_or_efficiency_finding
+        rows: 1
+        jobs: [RENTOK-CREATIVE-QUALITY-001]
+        recurrence: NEW
+      - mode: spend_authorisation_or_cap_missing
+        rows: 2
+        jobs: [UPWORK-PORTFOLIO-002, RENTOK-GAME-A-004]
+        recurrence: PREVENTED
+        first_response: |-
+          PAID_PRODUCTION_PREFLIGHT promoted_now after 002
+      - mode: spend_committed_before_the_risky_element_was_qualified
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: spend_records_incomplete_or_unreconciled
+        rows: 2
+        jobs: [UPWORK-INTRO-001, UPWORK-PORTFOLIO-002]
+        recurrence: RECURRED-NO-FIX
+        first_response: |-
+          nothing — not_promoted
+      - mode: the_deep_reading_was_scoped_to_craft_not_to_the_world
+        rows: 1
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+      - mode: tooling_gap_in_our_own_guard
+        rows: 2
+        jobs: [RENTOK-GAME-B-005]
+        recurrence: NEW
+      - mode: work_split_across_sessions_lost_the_handoff
+        rows: 1
+        jobs: [AGY-2026-09-22-MOKOBARA-DEEPREAD-001]
+        recurrence: NEW
+  B9:
+    name: |-
+      Provider-side failure outside our control
+    mechanism: |-
+      The provider returned an error, a refusal, an exhausted quota or an anomalous latency. We cannot prevent these. What would have had to be different: correct classification, pool readings per key, and a retry policy — not a different creative decision.
+    rows: 8
+    jobs_spanned: 5
+    failure_modes:
+      - mode: pool_balance_killed_a_planned_route
+        rows: 1
+        jobs: [UPWORK-INTRO-001]
+        recurrence: NEW
+      - mode: pool_reading_wrong_for_the_key_actually_used
+        rows: 1
+        jobs: [RENTOK-GAME-B-005]
+        recurrence: NEW
+      - mode: provider_content_refusal_false_positive
+        rows: 2
+        jobs: [CUMINCO-CHOPSTICKS-003, RENTOK-GAME-B-005]
+        recurrence: RECURRED-NOTE-ONLY
+        first_response: |-
+          directional_only — RO-03, n=12 after 003
+      - mode: provider_latency_anomaly
+        rows: 1
+        jobs: [RENTOK-GAME-V2-006]
+        recurrence: NEW
+      - mode: provider_transient_5xx_or_unavailable
+        rows: 3
+        jobs: [UPWORK-INTRO-001, MOKOBARA-ODYSSEY-007]
+        recurrence: PREVENTED
+        first_response: |-
+          TRANSIENT_ERROR_CLASSIFICATION promoted_now after 001
+
+defects:
+
+# ───────────────────────────── UPW1 · UPWORK-INTRO-001 (14 Sep 2026) ─────────────────────────────
+
+- id: UPW1-01
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: text_out_of_bounds
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-01)
+  verbatim: |-
+    text clipped at canvas / card edges
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — in V4 (gates added); V3 was rejected
+  promoted: |-
+    TEXT_BOUNDS_GATE — promoted_now
+
+- id: UPW1-02
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: text_contrast_on_background
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-02)
+  verbatim: |-
+    text colour lost against photographic backgrounds
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — V4
+  promoted: |-
+    CONTRAST_GATE — promoted_now
+
+- id: UPW1-03
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: crop_cuts_the_subject
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-03)
+  verbatim: |-
+    creatives cropped in wrappers and full-screen slots
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — V4
+  promoted: |-
+    CROP_FIT_DECLARATION — promoted_now
+
+- id: UPW1-04
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: geometry_token_inconsistency
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-04)
+  verbatim: |-
+    square and rounded card geometry in the same film
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — V4
+  promoted: |-
+    GEOMETRY_TOKENS — promoted_now
+
+- id: UPW1-05
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: voice_route_shipped_without_a_human_ear_on_the_real_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-05)
+  verbatim: |-
+    narration judged horribly robotic [Sarvam bulbul:v3 chosen for ~48 s of continuous narration on the strength of Lab evidence gathered on <= 70-character lines]
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / routing_voice_selection (model_note: RO-05 exists)
+  repaired: |-
+    yes — V4 dropped narration to the first 7.75 s and used a Veo native-speech presenter
+  promoted: |-
+    SPEAKER_MICROQUALIFICATION — candidate_pattern
+
+- id: UPW1-06
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: unrequested_lettering_in_frame
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-06)
+  verbatim: |-
+    Kling i2v clip showed letter-shaped signage although the source still was text-clean
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa (model_note: RO-06)
+  repaired: |-
+    yes — clip excluded by the executor
+  promoted: |-
+    VIDEO_FRAME_TEXT_HYGIENE — promoted_now
+
+- id: UPW1-07
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-07)
+  verbatim: |-
+    offer pill and code line collided to the eye
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — V4.1
+  promoted: |-
+    ELEMENT_DISJOINTNESS — promoted_now
+
+- id: UPW1-08
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: no_qualified_route_existed_for_the_demand
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-08)
+  verbatim: |-
+    speaker route unresolved at plan time (no Registry cell for single-speaker English native speech from an anchored still)
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    yes — V4 micro-qualification
+  promoted: |-
+    SPEAKER_MICROQUALIFICATION — candidate_pattern
+
+- id: UPW1-09
+  bucket: B9
+  bucket_name: |-
+    Provider-side failure outside our control
+  failure_mode: provider_transient_5xx_or_unavailable
+  recurrence: PREVENTED
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-09)
+  verbatim: |-
+    Vertex Veo returned gRPC 14 UNAVAILABLE twice, then succeeded 100 s later
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    infrastructure_transient / provider
+  repaired: |-
+    yes — succeeded on retry (V4); ledger label 'failed_or_filtered' recorded as ambiguous
+  promoted: |-
+    TRANSIENT_ERROR_CLASSIFICATION — promoted_now
+
+- id: UPW1-10
+  bucket: B9
+  bucket_name: |-
+    Provider-side failure outside our control
+  failure_mode: provider_transient_5xx_or_unavailable
+  recurrence: PREVENTED
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-10)
+  verbatim: |-
+    Lyria HTTP 503 / 500 / 500 on the frozen prompt; neutral rewrite succeeded first time
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    infrastructure_transient / provider
+  repaired: |-
+    yes — neutral rewrite (V3)
+  promoted: |-
+    TRANSIENT_ERROR_CLASSIFICATION — promoted_now
+
+- id: UPW1-11
+  bucket: B9
+  bucket_name: |-
+    Provider-side failure outside our control
+  failure_mode: pool_balance_killed_a_planned_route
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-11)
+  verbatim: |-
+    video slots dropped (B3, Kora motion) and the Wan fallback structurally dead because fal cash was USD 3.23 then 0.26 while the cap was INR 2,000
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    partial — V4.1 added a Kora hook beat at USD 0; the pool gap itself unrepaired on the job
+  promoted: |-
+    PROVIDER_POOL_AVAILABILITY — promoted_now
+
+- id: UPW1-12
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: spend_committed_before_the_risky_element_was_qualified
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-12)
+  verbatim: |-
+    two versions built around presenter footage before the presenter was judged; V2 chain quality degraded
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration (model_note: RO-02 Veo extend chaining did degrade)
+  repaired: |-
+    no — V1/V2 lineage abandoned (USD 8.08 sunk)
+  promoted: |-
+    SPEAKER_MICROQUALIFICATION — candidate_pattern
+
+- id: UPW1-13
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: cycle_time_and_human_review_load
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/SYSTEM-DEFECTS.yaml (SD-13)
+  verbatim: |-
+    ~7-8 h end to end for one 57-s asset; five human review cycles
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    no — recorded as the baseline; pipeline efficiency UNDERPERFORMED
+  promoted: |-
+    TTAO_PRIMARY_KPI — adopted_by_controller
+
+- id: UPW1-14
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: proof_or_subject_reads_too_small
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V1) + HUMAN-VERDICTS.yaml
+  verbatim: |-
+    actual video proof too small; too much phone/mockup framing
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    creative_direction
+  repaired: |-
+    partial — V2 repair 'succeeded: partial'; fully only at V4 (full-screen proof)
+  promoted: |-
+    not_promoted
+
+- id: UPW1-15
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: opening_not_strong
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V1)
+  verbatim: |-
+    opening not visually exceptional
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    creative_direction
+  repaired: |-
+    partial — recurred at V2 ('opening still not strong enough')
+  promoted: |-
+    not_promoted
+
+- id: UPW1-16
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: pacing_wrong
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V1)
+  verbatim: |-
+    presenter blocks too long
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pacing_edit
+  repaired: |-
+    yes — V2 one-voice presenter chain shortened
+  promoted: |-
+    not_promoted
+
+- id: UPW1-17
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: creative_range_not_demonstrated
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V1)
+  verbatim: |-
+    creative range insufficient
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    creative_direction
+  repaired: |-
+    partial — recurred at V4 ('not enough creative-range proof'); closed in V4.1 by the Kora range beat
+  promoted: |-
+    not_promoted
+
+- id: UPW1-18
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: positioning_undersold
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V1)
+  verbatim: |-
+    24h / 4h differentiation undersold
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    commercial_positioning
+  repaired: |-
+    partial — recurred at V4 ('4-Hour Express treatment too weak'); closed in V4.1
+  promoted: |-
+    not_promoted
+
+- id: UPW1-19
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_degrades_beyond_its_qualified_length
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V2)
+  verbatim: |-
+    presenter quality degraded later in the film (chained extends)
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    model_generation
+  repaired: |-
+    no — V2 rebuilt away; lineage abandoned
+  promoted: |-
+    directional_only — RO-02 (routing_authority none)
+
+- id: UPW1-20
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: proof_or_subject_reads_too_small
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V2)
+  verbatim: |-
+    still cautious phone/mockup presentation
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    creative_direction
+  repaired: |-
+    yes — V3/V4 rebuild direction
+  promoted: |-
+    not_promoted
+
+- id: UPW1-21
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: opening_not_strong
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V2)
+  verbatim: |-
+    opening still not strong enough
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    creative_direction
+  repaired: |-
+    yes — V4 architecture
+  promoted: |-
+    not_promoted
+
+- id: UPW1-22
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: overall_verdict_not_good_enough
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V2) + HUMAN-VERDICTS.yaml
+  verbatim: |-
+    "competent, not extraordinary" (verdict rebuild_direction)
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    creative_direction
+  repaired: |-
+    yes — V4.1 accepted
+  promoted: |-
+    not_promoted
+
+- id: UPW1-23
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: pacing_wrong
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V3)
+  verbatim: |-
+    pacing too rushed to focus on one creative
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pacing_edit
+  repaired: |-
+    yes — V4 slower proof beats
+  promoted: |-
+    not_promoted
+
+- id: UPW1-24
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: ad_structure_element_missing_from_the_board
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V3) + HUMAN-VERDICTS.yaml
+  verbatim: |-
+    no direct-to-camera speaker ... became a hard requirement
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    creative_direction
+  repaired: |-
+    yes — V4
+  promoted: |-
+    SPEAKER_MICROQUALIFICATION — candidate_pattern
+
+- id: UPW1-25
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: approved_copy_line_not_carried_into_the_cut
+  recurrence: NEW
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V4)
+  verbatim: |-
+    strongest positioning phrase 'and it can't suck' lost
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    commercial_positioning
+  repaired: |-
+    yes — V4.1 (152 px beat, 1.3 s)
+  promoted: |-
+    not_promoted
+
+- id: UPW1-26
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: hero_or_key_content_occluded
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/REVISION-TRACE.yaml (V4)
+  verbatim: |-
+    speaker bubble persisted over hero creative — read as a watermark
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pacing_edit
+  repaired: |-
+    yes — V4.1 (bubble off every full-screen creative beat)
+  promoted: |-
+    not_promoted
+
+- id: UPW1-27
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: prompt_instruction_ignored_by_the_model
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/ROUTE-OBSERVATIONS.yaml (RO-01)
+  verbatim: |-
+    framing drifted slightly wider than the still; a hand entered the frame edge briefly despite 'hands out of frame'
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    directional_production_observation (accepted anyway; 53/60)
+  repaired: |-
+    no — accepted in the delivered film
+  promoted: |-
+    directional_only — RO-01, routing_authority none
+
+- id: UPW1-28
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_cannot_meet_the_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/ROUTE-OBSERVATIONS.yaml (RO-03)
+  verbatim: |-
+    transcript not verbatim (inserted 'make'); timbre judged synthetic/robotic ... scored 45/60; rejected on this job
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    directional_production_observation (Gemini Omni 1.1 Flash speaker candidate)
+  repaired: |-
+    n/a — candidate rejected, Veo used instead
+  promoted: |-
+    directional_only — RO-03, n=1
+
+- id: UPW1-29
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: unrequested_lettering_in_frame
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/ROUTE-OBSERVATIONS.yaml (RO-04)
+  verbatim: |-
+    r1 drew blurred handwriting-like sheets on the wall despite the no-text instruction
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    directional_production_observation (Nano Banana 2 anchor still)
+  repaired: |-
+    yes — r2 with paper/notes/posters explicitly forbidden was clean
+  promoted: |-
+    directional_only — RO-04, n=2
+
+- id: UPW1-30
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: prompt_instruction_ignored_by_the_model
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/ROUTE-OBSERVATIONS.yaml (RO-07)
+  verbatim: |-
+    two scene instructions partly ignored (diya placement, 'dark burgundy' world)
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    directional_production_observation (Seedream 5 Pro Edit)
+  repaired: |-
+    no — accepted 6/6 regardless
+  promoted: |-
+    directional_only — RO-07, n=6
+
+- id: UPW1-31
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: unrequested_object_in_frame
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/ROUTE-OBSERVATIONS.yaml (RO-08)
+  verbatim: |-
+    FLUX.2 Pro 0/1 (extra rice bowl, no copy space) — GPT Image 2 redraw accepted
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    directional_production_observation (count + negative-space brief failure)
+  repaired: |-
+    yes — GPT Image 2 redraw
+  promoted: |-
+    directional_only — RO-08
+
+- id: UPW1-32
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: spend_records_incomplete_or_unreconciled
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-INTRO-001
+  date: 2026-09-14
+  source: |-
+    production-learning/cases/UPWORK-INTRO-001/OUTCOME.yaml (spend.known_uncertainty)
+  verbatim: |-
+    vendor statements (fal, GCP, Sarvam) never reconciled ... unknown whether Lyria's 3 failed calls or Veo's 2 UNAVAILABLE operations billed; ~12 triage calls ... not in any ledger
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    known_uncertainty (CpAO completeness)
+  repaired: |-
+    no — open
+  promoted: |-
+    not_promoted
+
+# ───────────────────────────── UPW2 · UPWORK-PORTFOLIO-002 (15 Sep 2026) ─────────────────────────────
+
+- id: UPW2-01
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: no_frozen_plan_before_the_first_paid_call
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-01)
+  verbatim: |-
+    no normalized request, blueprint, acceptance contract or route plan existed before the first paid call of the batch
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    no — process defect, spans every version
+  promoted: |-
+    PAID_PRODUCTION_PREFLIGHT — promoted_now
+
+- id: UPW2-02
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: copy_invented_during_execution_not_frozen
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-02)
+  verbatim: |-
+    commercial copy for IronLeaf, GyaanBox and Nivaas was invented by the operator during execution ... not frozen and approved before spend
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    no — copy still marked 'draft for approval' in the delivered README
+  promoted: |-
+    PAID_PRODUCTION_PREFLIGHT — promoted_now
+
+- id: UPW2-03
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: no_frozen_plan_before_the_first_paid_call
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-03)
+  verbatim: |-
+    paid calls began immediately after each human 'go' (N1: 'go' -> dispatch in the same turn; N2 motion likewise)
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    no
+  promoted: |-
+    PAID_PRODUCTION_PREFLIGHT — promoted_now
+
+- id: UPW2-04
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: no_standard_acceptance_check_set
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-04)
+  verbatim: |-
+    acceptance checks were ad hoc per asset ... Ten known-class defects reached the Controller in one export; a 2.9-s narration hole was accepted
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa
+  repaired: |-
+    no
+  promoted: |-
+    QA_COVERAGE_ENFORCEMENT + CROSS_CLIP_VOICE_CONTINUITY — both promoted_now
+
+- id: UPW2-05
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: voice_identity_changes_between_clips
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-05)
+  verbatim: |-
+    cross-clip voice consistency was not checked (N2): each narrated clip passed alone; the assembled pair had two different narrators
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa
+  repaired: |-
+    no — tile skipped
+  promoted: |-
+    CROSS_CLIP_VOICE_CONTINUITY — promoted_now
+
+- id: UPW2-06
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: current_runtime_and_its_gates_bypassed
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-06)
+  verbatim: |-
+    the merged PR #98 learnings (runtime/compositor gates, frame_hygiene, pools, provider_errors) were bypassed ... a bypassed gate is a production-system defect even when the gate exists elsewhere
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    no
+  promoted: |-
+    QA_COVERAGE_ENFORCEMENT — promoted_now
+
+- id: UPW2-07
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: current_runtime_and_its_gates_bypassed
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-07)
+  verbatim: |-
+    pilot scripts were used instead of the current runtime / the media-agency workflow being built in PR #99
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    no
+  promoted: |-
+    PAID_PRODUCTION_PREFLIGHT — promoted_now
+
+- id: UPW2-08
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: spend_authorisation_or_cap_missing
+  recurrence: PREVENTED
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-08)
+  verbatim: |-
+    the spend record (v4/plan/SPEND-AMENDMENT-V4.md) was not amended before the portfolio calls ... no per-job cap was written
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    no
+  promoted: |-
+    PAID_PRODUCTION_PREFLIGHT — promoted_now
+
+- id: UPW2-09
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: ledger_attribution_wrong
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (PD-09)
+  verbatim: |-
+    the eight paid lines were appended to the V4 film's ledger lineage (cumulative 7.3112 -> 11.9708) instead of a distinct job; per-tile clocks and per-tile CpAO therefore do not exist
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    pipeline_failure / orchestration
+  repaired: |-
+    no
+  promoted: |-
+    PAID_PRODUCTION_PREFLIGHT — promoted_now
+
+- id: UPW2-10
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: text_out_of_bounds
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-01) + HUMAN-VERDICTS.yaml (HD-01)
+  verbatim: |-
+    "9:16 offer-in-motion clip — '15% OFF' runs off the panel" / customer: "9X 16 motion is getting text cutoff."
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor (known_class_from_case_001 TEXT_BOUNDS_GATE; gate existed, NOT RUN)
+  repaired: |-
+    yes — B2, commit 662fba4
+  promoted: |-
+    QA_COVERAGE_ENFORCEMENT (promoted_now) + READABILITY_MARGIN (candidate)
+
+- id: UPW2-11
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: text_reads_clipped_although_it_fits
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-02)
+  verbatim: |-
+    hook ad — 'SIMPLIFIED.' touches the panel edge; reads as clipped although the box fits
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor (TEXT_BOUNDS_GATE insufficient alone)
+  repaired: |-
+    yes — B2, 662fba4 (headline budget = panel width minus 5 %)
+  promoted: |-
+    READABILITY_MARGIN — candidate
+
+- id: UPW2-12
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: copy_over_photographic_content
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-03)
+  verbatim: |-
+    Kora hook 1 in 1:1 / 4:5 / 9:16 / WA — headline over the figure and garment
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — B2 (picture over a solid oxblood panel)
+  promoted: |-
+    FORMAT_SPECIFIC_REVALIDATION + REJECTED_DESIGN_REUSE — both promoted_now
+
+- id: UPW2-13
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: text_contrast_on_background
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-04)
+  verbatim: |-
+    all Kora files — cream type on a light beige wall, hard to read, unfinished
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor (CONTRAST_GATE existed; NOT RUN)
+  repaired: |-
+    yes — B2 (editorial split)
+  promoted: |-
+    QA_COVERAGE_ENFORCEMENT + REJECTED_DESIGN_REUSE — promoted_now
+
+- id: UPW2-14
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: copy_over_photographic_content
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-05)
+  verbatim: |-
+    Dhaba 47 1:1 — Hindi copy over the food; colour combination poor
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor (root: reuse of the REJECTED V3 Dhaba treatment)
+  repaired: |-
+    yes — B2, c3995c6
+  promoted: |-
+    REJECTED_DESIGN_REUSE — promoted_now
+
+- id: UPW2-15
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: crop_cuts_the_subject
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-06)
+  verbatim: |-
+    Dhaba 47 9:16 — the dal bowl cut at the right edge
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor (CROP_FIT_DECLARATION)
+  repaired: |-
+    yes — B2 (crop centred on the dish cluster)
+  promoted: |-
+    FORMAT_SPECIFIC_REVALIDATION (promoted_now) + SUBJECT_AWARE_CROP_ANCHORING (candidate)
+
+- id: UPW2-16
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: copy_over_photographic_content
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-07)
+  verbatim: |-
+    Dhaba 47 WA — same copy-over-photo defect
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — B2, c3995c6
+  promoted: |-
+    FORMAT_SPECIFIC_REVALIDATION — promoted_now
+
+- id: UPW2-17
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-08)
+  verbatim: |-
+    GyaanBox 1:1 — the offer pill on the seam cuts the plant
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor (accepted_in_context treated as universally reusable)
+  repaired: |-
+    yes — B2 (pill moved fully inside the panel on every brand)
+  promoted: |-
+    REJECTED_DESIGN_REUSE + FORMAT_SPECIFIC_REVALIDATION — promoted_now
+
+- id: UPW2-18
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-09)
+  verbatim: |-
+    Dhaba contact sheet 2 — banner overlapping the photos
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — B2, c3995c6
+  promoted: |-
+    REJECTED_DESIGN_REUSE — promoted_now
+
+- id: UPW2-19
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-10)
+  verbatim: |-
+    all GyaanBox files — banner overlapping the photos
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — B2, c3995c6
+  promoted: |-
+    REJECTED_DESIGN_REUSE — promoted_now
+
+- id: UPW2-20
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: crop_cuts_the_subject
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-11)
+  verbatim: |-
+    IronLeaf — packshot lid cut by the cover crop; then a visible rectangle behind the contained packshot; then a dark halo (operator-caught over three renders)
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / compositor (CROP_FIT_DECLARATION rule existed; NOT APPLIED)
+  repaired: |-
+    yes — B2, 662fba4 (contain on a flat top-band colour with 22 % feather)
+  promoted: |-
+    QA_COVERAGE_ENFORCEMENT (promoted_now) + SUBJECT_AWARE_CROP_ANCHORING (candidate)
+
+- id: UPW2-21
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: fit_loop_breaks_the_stack
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-12)
+  verbatim: |-
+    Dhaba 4:5 after the first fix — the Hindi headline shrank until it was smaller than the pill (operator-caught)
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / compositor (fit loop shrank only the headline)
+  repaired: |-
+    yes — B2 (whole stack scaled proportionally)
+  promoted: |-
+    STACK_LEVEL_FIT — candidate
+
+- id: UPW2-22
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: audio_hole_at_a_clip_join
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-13a) + HUMAN-VERDICTS.yaml
+  verbatim: |-
+    "Nivaas v1 — narration line 2 split by a 2.9-s hole across the extend; 720p images soft/generic; statics cut from video frames" / customer: "all nivas homes are pathetic. voice not continous, images that are scarppy."
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    media_model_failure / model_audio_and_generation; also pipeline_failure / deterministic_qa
+  repaired: |-
+    no — N1 rejected, tile ultimately skipped
+  promoted: |-
+    CROSS_CLIP_VOICE_CONTINUITY (promoted_now) + STILLS_FIRST_STORY_PRODUCTION (candidate)
+
+- id: UPW2-23
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: voice_identity_changes_between_clips
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/SYSTEM-DEFECTS.yaml (SD-HD-13b) + HUMAN-VERDICTS.yaml
+  verbatim: |-
+    "Nivaas v2 — two clips, two different narrator voices" / customer: "voice is shit. changing again, skip it altogrther."
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    media_model_failure / model_audio; also pipeline_failure / deterministic_qa
+  repaired: |-
+    no — tile 7 skipped; both attempts parked under _rejected/
+  promoted: |-
+    CROSS_CLIP_VOICE_CONTINUITY (promoted_now) + SINGLE_VOICE_SOURCE_FOR_NARRATED_MULTI_CLIP (candidate)
+
+- id: UPW2-24
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: unrequested_object_in_frame
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/ROUTE-OBSERVATIONS.yaml (RO-05)
+  verbatim: |-
+    steam wisps grew strong in the last 3 s (noted, not rejected)
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    directional_production_observation (Gemini Omni i2v)
+  repaired: |-
+    no — accepted
+  promoted: |-
+    directional_only — RO-04_05, n=1
+
+- id: UPW2-25
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: current_runtime_and_its_gates_bypassed
+  recurrence: NEW
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/HUMAN-VERDICTS.yaml (controller_meta_verdict_after_the_batch)
+  verbatim: |-
+    i suspect you didnt use the pipeline either properly ... no there were more things- the text vs bg colour, overlaps of banner on images and all the issues i highlighted
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    process_conformance NON_CONFORMANT (OUTCOME.yaml two_conclusions)
+  repaired: |-
+    no — the finding that matters; drove PD-01..PD-09
+  promoted: |-
+    PAID_PRODUCTION_PREFLIGHT + QA_COVERAGE_ENFORCEMENT — promoted_now
+
+- id: UPW2-26
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: spend_records_incomplete_or_unreconciled
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    UPWORK-PORTFOLIO-002
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/UPWORK-PORTFOLIO-002/OUTCOME.yaml (spend)
+  verbatim: |-
+    operator_reported_in_chat_usd 3.9 ... WRONG — a chat figure quoted before the second Nivaas attempt and never recomputed; the ledger governs (4.6596)
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    records / spend misreport
+  repaired: |-
+    yes — corrected in the case record
+  promoted: |-
+    not_promoted
+
+# ───────────────────────────── CUM3 · CUMINCO-CHOPSTICKS-003 (15-16 Sep 2026) ─────────────────────────────
+
+- id: CUM3-01
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: supplied_brand_mark_copied_or_mangled_by_the_model
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-01) + branch origin/work/agency-job-cuminco-chopsticks-001:agency/jobs/AGY-2026-09-15-CUMINCO-CHOPSTICKS-001/JOB.yaml (DF-01)
+  verbatim: |-
+    the model reproduced the bowl's embossed brand mark from the reference and garbled it ('cumin ca.'); his bowl held a curry
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    media_model_failure / product_fidelity
+  repaired: |-
+    yes — plate-A r2 (att-008)
+  promoted: |-
+    candidate: turn-the-mark-away prompt clause for supplied packshots with moulded lettering
+
+- id: CUM3-02
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: audio_mix_and_line_placement_defect
+  recurrence: NEW
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-02) + HUMAN-VERDICTS.yaml (V1)
+  verbatim: |-
+    "'random audio' — VO lines shifted and mix pumping" / customer: "crapy. the video has got some random audio"
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / V1 mix
+  repaired: |-
+    yes — V2 (edge-only trim, per-line LUFS, ducked bed, limiter)
+  promoted: |-
+    AUDIO_EDGE_TRIM_ONLY — candidate
+
+- id: CUM3-03
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: mouths_move_under_a_voice_over
+  recurrence: NEW
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-03) + HUMAN-VERDICTS.yaml (V1)
+  verbatim: |-
+    "mouths moving under a voice-over" / customer: "her lips are omving"
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    media_model_failure / clip-1 and clip-5 r1
+  repaired: |-
+    yes — att-049/050 regenerated with 'nobody speaks, mouths closed'
+  promoted: |-
+    CLOSED_MOUTH_UNDER_VO — candidate
+
+- id: CUM3-04
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: copy_over_photographic_content
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-04) + HUMAN-VERDICTS.yaml (V1)
+  verbatim: |-
+    "text and cards over chopsticks/noodles" / customer: "the text is coming on figures"
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / V1 composition
+  repaired: |-
+    yes — V2 (dense 4-fps per-frame wall-obstruction gate)
+  promoted: |-
+    WALL_OBSTRUCTION_GATE — candidate
+
+- id: CUM3-05
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: timeline_fixed_before_the_voice_was_measured
+  recurrence: NEW
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-05)
+  verbatim: |-
+    23.5-25.6 s vs the 18-s plan [beat lengths fixed before the VO was measured]
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / timeline
+  repaired: |-
+    partial — V2 trimmed to 22.9 s; V3 back to 25.6 s
+  promoted: |-
+    VO_FIRST_TIMELINE — candidate
+
+- id: CUM3-06
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: attempt_id_collision
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-06)
+  verbatim: |-
+    two concurrent dispatch processes issued the same attempt id
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    infrastructure_transient / dispatch
+  repaired: |-
+    yes — ledger alias line; not fixed in code on this job
+  promoted: |-
+    ATTEMPT_ID_LOCK — candidate
+
+- id: CUM3-07
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: ad_structure_element_missing_from_the_board
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-07) + HUMAN-VERDICTS.yaml (V2)
+  verbatim: |-
+    "no product hero, no end card, no brand early/throughout, no Direction — 'does not look like an ad'" / customer: "did cannon say nothing about product positioning? ... it does not look like ad at all"
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / blueprint (commercial_communication pack fired but uncompiled, C-10)
+  repaired: |-
+    yes structurally in V3 — but V3 was rejected on audio
+  promoted: |-
+    AD_STRUCTURE_MINIMUM (candidate) + Canon gap candidate (commercial_communication)
+
+- id: CUM3-08
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: vo_lines_overlap_on_the_timeline
+  recurrence: NEW
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-16
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-08) + HUMAN-VERDICTS.yaml (V3)
+  verbatim: |-
+    "'the voices are overlapping': b1->b2 overlap 0.92 s, b6 overrun 0.94 s" / customer: "this is still bad. the voices are overlapping ... reject completely"
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / V3 mix
+  repaired: |-
+    no — job rejected; the gate is promoted
+  promoted: |-
+    VO_SCHEDULE_GATE — promoted_now (runtime/compositor/gates.py check_vo_schedule)
+
+- id: CUM3-09
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: format_variant_not_revalidated
+  recurrence: NEW
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/SYSTEM-DEFECTS.yaml (SD-09)
+  verbatim: |-
+    feed formats had no copy zone after the crop: cards on 3 beats, brand mark absent on most beats
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / format adaptation
+  repaired: |-
+    no — 4:5 and 1:1 delivered on cards, flagged CF2
+  promoted: |-
+    GEOMETRY_NEEDS_ITS_OWN_PLATES — candidate
+
+- id: CUM3-10
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: voice_route_shipped_without_a_human_ear_on_the_real_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/HUMAN-VERDICTS.yaml (gate: voice round 1)
+  verbatim: |-
+    "we could use hidi comfoting voice. all three are robotic" (Sarvam priya/shreya, ElevenLabs Sarah)
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    gate rejection (micro-qualification, voice)
+  repaired: |-
+    yes — five rounds later Gemini TTS Leda 'bubbly' accepted
+  promoted: |-
+    VOICE_BY_EAR_FIRST — candidate
+
+- id: CUM3-11
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: voice_route_shipped_without_a_human_ear_on_the_real_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/HUMAN-VERDICTS.yaml (gate: voice rounds 2-3)
+  verbatim: |-
+    stick to english. but voices are not good. at all. why ae we not using veo models with voice? ... i also dont agree on voice being an issue
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    gate rejection; direction given
+  repaired: |-
+    yes — round 5
+  promoted: |-
+    VOICE_BY_EAR_FIRST — candidate
+
+- id: CUM3-12
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: voice_route_shipped_without_a_human_ear_on_the_real_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/HUMAN-VERDICTS.yaml (gate: voice round 4)
+  verbatim: |-
+    leda is good. a little slower though. the shrillness and excitement is still miissing.
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    specific repair at a micro-qualification gate
+  repaired: |-
+    yes — round 5 'bubbly' accepted
+  promoted: |-
+    VOICE_BY_EAR_FIRST — candidate
+
+- id: CUM3-13
+  bucket: B9
+  bucket_name: |-
+    Provider-side failure outside our control
+  failure_mode: provider_content_refusal_false_positive
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/ROUTE-OBSERVATIONS.yaml (RO-03)
+  verbatim: |-
+    1 PROHIBITED_CONTENT false-positive on an innocuous line; raw output is L16 PCM 24 kHz with long silent tails
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    directional_production_observation (Gemini TTS Leda, no Registry cell)
+  repaired: |-
+    unknown — recorded, not repaired on the job
+  promoted: |-
+    directional_only — RO-03, n=12
+
+- id: CUM3-14
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_cannot_meet_the_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/ROUTE-OBSERVATIONS.yaml (RO-05)
+  verbatim: |-
+    rejected by ear; no Indian-English premade voice on the account; quota exhausted at 54 credits
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    directional_production_observation (ElevenLabs v3 direct, 6 takes, 0 accepted)
+  repaired: |-
+    no — route dropped
+  promoted: |-
+    directional_only — RO-05, n=6
+
+- id: CUM3-15
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_cannot_meet_the_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/ROUTE-OBSERVATIONS.yaml (RO-02)
+  verbatim: |-
+    two-shots animate mouths unless told 'nobody speaks, mouths closed' and even then open-mouth laughter persisted ~1.2 s from a plate that had it baked in
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    directional_production_observation (veo-3.1-fast-i2v, n=7)
+  repaired: |-
+    partial — persistence remained
+  promoted: |-
+    CLOSED_MOUTH_UNDER_VO — candidate (note the ~1.2-s persistence)
+
+- id: CUM3-16
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: first_draw_rejected_by_eye_at_the_gate
+  recurrence: NEW
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-15
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/REVISION-TRACE.yaml (pre_assembly) + HUMAN-VERDICTS.yaml
+  verbatim: |-
+    "plate-H1 (2 draws, r2 accepted)" — r1 rejected at the micro-qualification gate
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    micro-qualification gate rejection
+  repaired: |-
+    yes — r2
+  promoted: |-
+    not_promoted
+
+- id: CUM3-17
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: overall_verdict_not_good_enough
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    CUMINCO-CHOPSTICKS-003
+  date: 2026-09-16
+  source: |-
+    production-learning/cases/CUMINCO-CHOPSTICKS-003/OUTCOME.yaml (two_conclusions)
+  verbatim: |-
+    FAILED — no version accepted; the last rejection was on assembly audio (VO lines overlapping), the previous on ad structure, the first on mix / mouths / text placement
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    final_quality FAILED; process_conformance CONFORMANT in shape
+  repaired: |-
+    no — job abandoned, diagnosis ordered
+  promoted: |-
+    VO_SCHEDULE_GATE — promoted_now
+
+# ───────────────────────────── RGA4 · RENTOK-GAME-A-004 (20 Sep 2026) ─────────────────────────────
+
+- id: RGA4-01
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: container_spec_violation
+  recurrence: PREVENTED
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-1)
+  verbatim: |-
+    the first deliverable carried two `elst` (edit list) atoms ... while the lane's own platform spec row said none; DET-A8 passed the container on geometry, codec, size and moov-first
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa (container)
+  repaired: |-
+    yes — USD 0 re-mux, repair round 1 (f1174f8)
+  promoted: |-
+    CONTAINER_EDIT_LIST_CHECK — promoted_now
+
+- id: RGA4-02
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: hero_or_key_content_occluded
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-2)
+  verbatim: |-
+    the raised flag — the customer's 'gets the flag' payoff — was hidden behind the checklist and `LEVEL CLEAR!` for 27.2-27.6 s
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (occlusion); root is the board (creative_direction)
+  repaired: |-
+    yes — USD 0, round 1
+  promoted: |-
+    GRAPHIC_TEXT_DISJOINT — promoted_now
+
+- id: RGA4-03
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: brand_colour_measured_wrong_on_the_frame
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-11)
+  verbatim: |-
+    the repair for D-8 sampled pixel (100,100) of the logo raster — a fully transparent rounded corner — so the end card and the 0.3-s freeze-dim rendered black (0,0,0) instead of brand blue
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (repair regression) + deterministic_qa (no colour check)
+  repaired: |-
+    yes — round 1b (4bde2d9)
+  promoted: |-
+    BRAND_COLOUR_ON_RENDERED_FRAME (promoted_now) + REPAIR_STATEMENT_QUOTES_MEASURED_VALUE (candidate)
+
+- id: RGA4-04
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: composition_band_cramped_in_the_animatic
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (R1)
+  verbatim: |-
+    animatic v1 play band cramped (ground 1130)
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / creative_direction
+  repaired: |-
+    yes — ground 1180 (USD 0)
+  promoted: |-
+    ANIMATIC_BEFORE_SPEND — candidate
+
+- id: RGA4-05
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (R2a)
+  verbatim: |-
+    checklist chip backings overlapped, 171 frames [row pitch 48 < backing 62 px]
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — pad / pitch, USD 0 before any spend
+  promoted: |-
+    LAYOUT_LOG_GATES — candidate (existing gate did its job)
+
+- id: RGA4-06
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_leaves_the_safe_box
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (R2b)
+  verbatim: |-
+    cheat-panel text left the safe box during slide-out, 33 frames
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — panel fades in place
+  promoted: |-
+    LAYOUT_LOG_GATES — candidate
+
+- id: RGA4-07
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_leaves_the_safe_box
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (R2c)
+  verbatim: |-
+    chip flight start outside the safe box, 29 frames
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — origin clamped
+  promoted: |-
+    LAYOUT_LOG_GATES — candidate
+
+- id: RGA4-08
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: keying_residue_on_a_cut_out
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (R3)
+  verbatim: |-
+    enclosed green pockets and the model's dark-green ground shadow survived the flood-fill key
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / compositor (cut-out)
+  repaired: |-
+    yes — colour keying + chroma-shadow removal + fringe erosion
+  promoted: |-
+    KEYING_HELPER — candidate
+
+- id: RGA4-09
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: proof_or_subject_reads_too_small
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (R4)
+  verbatim: |-
+    sprites read small at phone size [the checker still called the sprites small at 360 px (§7); the customer did not]
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / creative_direction
+  repaired: |-
+    partial — +18 % / +15 %; still flagged by the checker at 360 px
+  promoted: |-
+    not_promoted
+
+- id: RGA4-10
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: codec_true_peak_overshoot
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (R5)
+  verbatim: |-
+    AAC true peak -0.4 / -0.3 dBTP after encoding a -2.6 dBTP wav (target <= -1)
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / audio assembly
+  repaired: |-
+    yes — pre-encode target -4 dBTP -> -2.0 dBTP delivered
+  promoted: |-
+    CODEC_TRUE_PEAK_MARGIN — candidate (cross-case n=2, then 3)
+
+- id: RGA4-11
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: our_own_measuring_instrument_was_wrong
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (F-05)
+  verbatim: |-
+    the first ebur128 regex read the running 'I:' line (-70 LUFS at t=0) instead of the summary
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / tooling
+  repaired: |-
+    yes — fixed before any record was written
+  promoted: |-
+    not_promoted
+
+- id: RGA4-12
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: renderer_output_diverges_from_the_approved_board
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-3)
+  verbatim: |-
+    projectile a plain cyan square (board: a tick mark)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (renderer simplified the board)
+  repaired: |-
+    yes — pixfont tick glyph at scale 4; checker re-verified 'still a small mark at phone size (expected)'
+  promoted: |-
+    not_promoted
+
+- id: RGA4-13
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: renderer_output_diverges_from_the_approved_board
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-4)
+  verbatim: |-
+    phone item vanished in the flash; owner never held it; events note said otherwise
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (renderer vs record drift)
+  repaired: |-
+    yes — phone held 17.6-19.6 s; checker residue: 'reads as held out rather than gripped'
+  promoted: |-
+    not_promoted
+
+- id: RGA4-14
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: the_same_asset_differs_between_generation_runs
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-5)
+  verbatim: |-
+    red register present in run-A, absent in run-B -> flicker at 8 pose changes/s
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    partly model (the sheet hid the book in one pose), the flicker is the compositor's (pipeline)
+  repaired: |-
+    yes — run-A book patched behind run-B by code
+  promoted: |-
+    MICRO_QUALIFY_THE_RISKIEST_ASSET_FIRST — candidate; cross-case with 005 D-4
+
+- id: RGA4-15
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: renderer_output_diverges_from_the_approved_board
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-6)
+  verbatim: |-
+    four board-specified clears rendered as one generic routine; the record promised more than the film showed
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — per-obstacle clears
+  promoted: |-
+    not_promoted
+
+- id: RGA4-16
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: world_not_composed_across_the_full_frame
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-7)
+  verbatim: |-
+    lower 40 % of every gameplay frame a plain ochre lane [the world was composed only inside the safe box]
+  found_by: |-
+    producer_eye + independent_checker (Controller addendum ordered the fill)
+  class_as_recorded: |-
+    pipeline_failure / creative_direction (composition)
+  repaired: |-
+    yes — nearer-parallax kerb/tracks/drain/scooter layer (USD 0)
+  promoted: |-
+    COMPOSE_WORLD_ACROSS_THE_FULL_FRAME — candidate; cross-case with 005 D-5
+
+- id: RGA4-17
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: brand_colour_measured_wrong_on_the_frame
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-8)
+  verbatim: |-
+    faint rectangle: the logo raster's card blue vs #0038FF
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — via D-11 regression then hard-coded measurement
+  promoted: |-
+    BRAND_COLOUR_ON_RENDERED_FRAME — promoted_now
+
+- id: RGA4-18
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: renderer_output_diverges_from_the_approved_board
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-9)
+  verbatim: |-
+    full-frame white hit flashes (board: on the character)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (renderer simplification)
+  repaired: |-
+    yes — silhouette-only flash
+  promoted: |-
+    not_promoted
+
+- id: RGA4-19
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: records_inconsistent_between_files
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/SYSTEM-DEFECTS.yaml (D-10)
+  verbatim: |-
+    ATTEMPTS.jsonl verdict pending vs JOB.yaml accepted; frozen_asset null; checker_inspected false
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / records
+  repaired: |-
+    yes — one pass over both files
+  promoted: |-
+    not_promoted; cross-case with 005 D-8 (n=2)
+
+- id: RGA4-20
+  bucket: B5
+  bucket_name: |-
+    A claim about the real world asserted, never sourced
+  failure_mode: picture_depicts_a_capability_the_product_lacks
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-a-001:agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-A-001/stages/CHECK-GATES-1-4.md (REOPENED 3-A)
+  verbatim: |-
+    the clearing of obstacle 3 (F9.3, 'a tick tags him; he freezes') shows RentOk stopping a tenant who is leaving. The site offers tracking ... not stopping anyone. The chip text is honest; the picture is not.
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    gate REOPEN (Gate 3, board question / forbidden-claim depiction)
+  repaired: |-
+    yes — USD 0 record fix before spend
+  promoted: |-
+    not_promoted
+
+- id: RGA4-21
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-a-001:.../stages/CHECK-GATES-1-4.md (REOPENED 3-B, Q14)
+  verbatim: |-
+    Two zone problems found — REOPENED 3-B and NOTE 6 [a text collision on the flag frame]
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    gate REOPEN (Gate 3, copy zones)
+  repaired: |-
+    yes — USD 0 record fix before spend
+  promoted: |-
+    not_promoted
+
+- id: RGA4-22
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: records_inconsistent_between_files
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-a-001:.../stages/CHECK-GATES-1-4.md (Gate 2 record defect)
+  verbatim: |-
+    02-STRUCTURE.md §2.2 says the safe-area page's sha256 is 'in SHA256SUMS.txt' — OBSERVED it is not (the sums file lists 8 entries; three files are absent)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    record defect (non-blocking NOTE)
+  repaired: |-
+    unknown — checker supplied the computed hashes
+  promoted: |-
+    not_promoted
+
+- id: RGA4-23
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: spend_authorisation_or_cap_missing
+  recurrence: PREVENTED
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-a-001:.../stages/CHECK-GATES-1-4.md (Gate 4)
+  verbatim: |-
+    JOB.yaml spend.cap = null and spend.pool_readings = [] ... the dispatch tool correctly refuses everything until they exist
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    Controller inputs, not producer defects — hard stop before any paid call
+  repaired: |-
+    yes — cap and pool reading supplied before dispatch
+  promoted: |-
+    PROVIDER_POOL_AVAILABILITY (case 001) applied
+
+- id: RGA4-24
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: effect_or_payoff_reads_weak_at_phone_size
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-a-001:.../stages/CHECK-STAGE-5.md (§7, plain English)
+  verbatim: |-
+    the 'gun sort of power' reads as a small cyan dot and the app itself is a blue rectangle on screen for a third of a second — the transformation is told by words more than shown by picture
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    "most likely reason a real customer would reject it" (creative risk, not repaired)
+  repaired: |-
+    partial — D-4 repair put the phone on screen for ~2 s; the dot remains small
+  promoted: |-
+    not_promoted
+
+- id: RGA4-25
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: proof_or_subject_reads_too_small
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-a-001:.../stages/CHECK-STAGE-5.md (§7)
+  verbatim: |-
+    the bottom 40 % of every frame is an empty brown band and the sprites are small in the middle of a tall phone screen, which at Reels size can feel like a game viewed from too far away
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    most likely reason a real customer would reject it
+  repaired: |-
+    partial — D-7 parallax fill; sprite scale still called small at 360 px
+  promoted: |-
+    COMPOSE_WORLD_ACROSS_THE_FULL_FRAME — candidate
+
+- id: RGA4-26
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: no_human_ear_on_the_delivered_audio
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/ROUTE-OBSERVATIONS.yaml (RO-03, RO-04)
+  verbatim: |-
+    "the paid text detector was not run — recorded NOT_RUN" / "the checker could not listen — the customer's ACCEPT is the only ear on it"
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    QA coverage gap (NOT_RUN, never PASS)
+  repaired: |-
+    no — open
+  promoted: |-
+    directional_only — RO-03, RO-04
+
+- id: RGA4-27
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: coverage_asserted_but_never_verified
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-A-004
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-A-004/PROMOTION-QUEUE.yaml (CANON_LOOKUP_DECLARED_EXISTING_CLAIMS_AS_GAPS)
+  verbatim: |-
+    this lane's canon block also lists colour_and_visual_register and audio under missing_domains ... whether accepted claims existed for those is NOT VERIFIED here
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    canon_gap_candidate (report only, no production failure followed)
+  repaired: |-
+    unknown
+  promoted: |-
+    canon_gap_candidate — not promoted
+
+# ───────────────────────────── RGB5 · RENTOK-GAME-B-005 (20 Sep 2026) ─────────────────────────────
+
+- id: RGB5-01
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: hero_or_key_content_occluded
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-1)
+  verbatim: |-
+    the phone graphic rose over the PG OWNER name tag 14.9-15.3 s, hiding most of the final R on the brand-moment frame
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa (disjointness scope)
+  repaired: |-
+    yes — USD 0, phone 110 px right
+  promoted: |-
+    GRAPHIC_TEXT_DISJOINT — promoted_now (shared with 004 D-2)
+
+- id: RGB5-02
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-9)
+  verbatim: |-
+    the O5 beam ran 8 px under the name tag at 23.9-24.1 s
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — USD 0, swarm 30 px lower, beam origin 18 px lower
+  promoted: |-
+    GRAPHIC_TEXT_DISJOINT — promoted_now
+
+- id: RGB5-03
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: voice_over_out_of_step_with_the_screen
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-3)
+  verbatim: |-
+    V2 'RentOk mode: on' began at 14.70 s; the screen read INSTALLING... until 15.87 s ... the announcer was 1.2 s ahead of its own words
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa (VO timeline)
+  repaired: |-
+    yes — USD 0, V2 moved to 15.9 s (residue N-2: runs 0.4 s into the first card, declared)
+  promoted: |-
+    VO_TEXT_ALIGNMENT — promoted_now (check_vo_text_alignment)
+
+- id: RGB5-04
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: money_reserved_before_the_input_was_validated
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (T1)
+  verbatim: |-
+    att-016: the dispatcher wrote a `reserved` ledger line for a QA transcription, then found the input file ... did not exist; nothing left the machine ... the runtime bridge had the same fault in a different form
+  found_by: |-
+    producer_eye (job tool); controller (runtime bridge, at sync)
+  class_as_recorded: |-
+    pipeline_failure / orchestration (dispatch ordering)
+  repaired: |-
+    yes — job tool and runtime/execute/bridge.py both fixed
+  promoted: |-
+    VALIDATE_BEFORE_RESERVE — promoted_now
+
+- id: RGB5-05
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: required_identifier_missing_from_the_model_output
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-4)
+  verbatim: |-
+    the nine-pose sheet (att-018) had no red register in cells 5 (jump), 6 (hurt) and 7 (hands-up); the micro-qualification card said 'every cell carries every identifier'
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    media_model_failure / generation + micro-qualification judgement
+  repaired: |-
+    yes — USD 0, code-drawn register composited on three cells
+  promoted: |-
+    MICRO_QUALIFICATION_CARD_IS_READ_CELL_BY_CELL — candidate (checker item, not code)
+
+- id: RGB5-06
+  bucket: B9
+  bucket_name: |-
+    Provider-side failure outside our control
+  failure_mode: pool_reading_wrong_for_the_key_actually_used
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (att-006)
+  verbatim: |-
+    ElevenLabs HTTP 401 quota_exceeded on the longest line ... 'You have 11 credits remaining, while 28 credits are required'. The subscription endpoint ... showed 9,054 characters free
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    infrastructure_transient / pool reading
+  repaired: |-
+    no — counted as failed; candidate B dropped, no retry
+  promoted: |-
+    PER_KEY_QUOTA_IN_POOL_READINGS — candidate
+
+- id: RGB5-07
+  bucket: B9
+  bucket_name: |-
+    Provider-side failure outside our control
+  failure_mode: provider_content_refusal_false_positive
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (att-013)
+  verbatim: |-
+    Gemini TTS refused the 16-character line 'RentOk mode: on.' as PROHIBITED_CONTENT (blockReason; no further reason); the other two lines on the same route succeeded
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    infrastructure_transient / provider refusal (counts_against_route_quality false)
+  repaired: |-
+    no — counted; candidate C dropped, no re-send
+  promoted: |-
+    directional_only — RO-07
+
+- id: RGB5-08
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: records_inconsistent_between_files
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (PD-02)
+  verbatim: |-
+    the PriceBook roster labels sarvam-bulbul-v3 and elevenlabs-v3 billing_pool: cash, while the routing map lists sarvam_credits / elevenlabs_credits
+  found_by: |-
+    independent_checker (gate checker REOPEN 2)
+  class_as_recorded: |-
+    pipeline_failure / roster labelling
+  repaired: |-
+    no — proposal only; this branch does not edit eval/**
+  promoted: |-
+    proposal to the Controller / roster owner — not_promoted
+
+- id: RGB5-09
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: unrequested_lettering_in_frame
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-b-001:agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-B-001/stages/CHECK-GATES-1-4.md (REOPEN 1)
+  verbatim: |-
+    the world contains a 'PG' nameplate on the building ... So the nameplate is either model-drawn text (contradicts §4.4 'no text generated') or does not exist (then G2's identifier list is wrong)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    gate REOPEN (Gate 3, copy zones / model-drawn lettering risk)
+  repaired: |-
+    yes — nameplate removed from the A3 prompt at the gate (RO-02: 'the plate had no signage after the nameplate was removed')
+  promoted: |-
+    not_promoted
+
+- id: RGB5-10
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: no_human_ear_on_the_delivered_audio
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-b-001:.../stages/CHECK-GATES-1-4.md (Q8 residual risks, NOTE 3)
+  verbatim: |-
+    code-synthesised 'power-up chime', 'hurt blip' and 'coin-like' stamp sounds can drift towards the famous motifs by accident — the QA plan has no explicit by-ear check on SFX/music against Nintendo motifs
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    residual IP risk (INFERRED, non-blocking NOTE)
+  repaired: |-
+    no — no by-ear check ever ran
+  promoted: |-
+    not_promoted
+
+- id: RGB5-11
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: tooling_gap_in_our_own_guard
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-b-001:.../stages/CHECK-GATES-1-4.md (NOTE 4)
+  verbatim: |-
+    the prompt-word guard in dispatch.py covers mario/nintendo/... but not 'peach', and Stage 2's 'Super' word rule would collide with the brand tagline 'superapp'
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    tooling gap (non-blocking NOTE)
+  repaired: |-
+    unknown
+  promoted: |-
+    not_promoted
+
+- id: RGB5-12
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: records_inconsistent_between_files
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    origin/work/agency-job-rentok-game-lane-b-001:.../stages/CHECK-GATES-1-4.md (NOTE 10)
+  verbatim: |-
+    the IMG-CORE cell's registered surface is `vertex` but the tool calls the Gemini API ... whether that key bills the same credit pool is not established in the record
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    records / pool provenance gap
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: RGB5-13
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_leaves_the_safe_box
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (R1)
+  verbatim: |-
+    first render: a 1031-px card, a CTA 1 px outside the safe box, two 3-10 px overlaps
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — USD 0, condensed card font and positions
+  promoted: |-
+    LAYOUT_LOG_GATES — candidate
+
+- id: RGB5-14
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: codec_true_peak_overshoot
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (R2 / R2b)
+  verbatim: |-
+    TP +0.6 dBTP after loudnorm; then +1.9 dB AAC overshoot
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / audio assembly
+  repaired: |-
+    yes — limiter -3.6 dBTP + 256 kbps -> -1.8 dBTP delivered
+  promoted: |-
+    CODEC_TRUE_PEAK_MARGIN — candidate
+
+- id: RGB5-15
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (R3)
+  verbatim: |-
+    name tag rode up with the jump into the label plate
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — tag at ground
+  promoted: |-
+    not_promoted
+
+- id: RGB5-16
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (R4)
+  verbatim: |-
+    cheat bar 8 px above the name tag
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — raised
+  promoted: |-
+    not_promoted
+
+- id: RGB5-17
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: tooling_gap_in_our_own_guard
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (R5)
+  verbatim: |-
+    duplicate layout record per frame (QA artefact)
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    pipeline_failure / tooling
+  repaired: |-
+    yes — dedupe
+  promoted: |-
+    not_promoted
+
+- id: RGB5-18
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: layer_order_error
+  recurrence: PREVENTED
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-2)
+  verbatim: |-
+    flag pole drawn through the character 26.6-27.8 s
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (layer order)
+  repaired: |-
+    yes — residue N-1: the player no longer touches the pole
+  promoted: |-
+    not_promoted
+
+- id: RGB5-19
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: world_not_composed_across_the_full_frame
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-5)
+  verbatim: |-
+    lower third of every game frame empty road — a 16:9 plate in a 9:16 frame; 640 near-uniform rows (33 %)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / creative_direction (Stage 4 plate spec)
+  repaired: |-
+    partial — USD 0 near-parallax pavement (640 -> ~344 rows, 18 %); PARTIAL by the checker
+  promoted: |-
+    COMPOSE_WORLD_ACROSS_THE_FULL_FRAME — candidate; cross-case with 004 D-7
+
+- id: RGB5-20
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: pose_or_state_list_gap_in_the_board
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-6)
+  verbatim: |-
+    the same hands-up pose for defeat and victory
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / creative_direction (pose list)
+  repaired: |-
+    yes — victory rendered as a hop in the jump cell
+  promoted: |-
+    not_promoted
+
+- id: RGB5-21
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: audio_hole_at_a_clip_join
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-7)
+  verbatim: |-
+    0.6 s near-silence between V1 and V2 (14.1-14.7 s)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / audio mix / pacing
+  repaired: |-
+    partial — hole 0.6 -> ~0.35 s; the voice file's own silent tail remains
+  promoted: |-
+    not_promoted
+
+- id: RGB5-22
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: records_inconsistent_between_files
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (D-8)
+  verbatim: |-
+    ATTEMPTS.jsonl verdicts all pending vs JOB.yaml
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / records
+  repaired: |-
+    yes — verdicts written
+  promoted: |-
+    not_promoted; cross-case with 004 D-10 (n=2)
+
+- id: RGB5-23
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: a_declared_check_was_never_run
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (A1-not-run)
+  verbatim: |-
+    canon/gate/run_gate.py was not run over the three prompts (JOB.yaml qa.pre_dispatch A1 NOT_RUN); the no-lettering clause was honoured by construction
+  found_by: |-
+    producer_gate (self-recorded)
+  class_as_recorded: |-
+    pipeline_failure / pre-dispatch gate coverage
+  repaired: |-
+    no — a coverage gap in the record; no outcome harm
+  promoted: |-
+    case 002 QA_COVERAGE_ENFORCEMENT applies; not re-promoted
+
+- id: RGB5-24
+  bucket: B5
+  bucket_name: |-
+    A claim about the real world asserted, never sourced
+  failure_mode: picture_depicts_a_capability_the_product_lacks
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (N-1)
+  verbatim: |-
+    a green tick on the drifting ghost's tag could read as 'paid' — the film must not imply recovery
+  found_by: |-
+    producer_eye (during the repair)
+  class_as_recorded: |-
+    pipeline_failure / creative_direction (claim implication)
+  repaired: |-
+    yes — cyan tracked-ring marker
+  promoted: |-
+    not_promoted
+
+- id: RGB5-25
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: voice_route_shipped_without_a_human_ear_on_the_real_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/SYSTEM-DEFECTS.yaml (HD-01) + HUMAN-VERDICTS.yaml
+  verbatim: |-
+    'vidoe one has robotic voice over' — the customer, blind [the first human ear on the voice]
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    media_model_failure / voice (route quality as heard)
+  repaired: |-
+    no — accepted regardless, no repair asked
+  promoted: |-
+    VOICE_CAST_BY_A_HUMAN_EAR — candidate; directional RO-05
+
+- id: RGB5-26
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: world_not_composed_across_the_full_frame
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/REVISION-TRACE.yaml (residue_after_repair)
+  verbatim: |-
+    N-3 the foreground band is sparse ... about a third of the picture below the action is scenery, kept so the player's feet stay inside the Meta safe box
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    residue after repair (stated design limit)
+  repaired: |-
+    no — PARTIAL by stated design limits
+  promoted: |-
+    COMPOSE_WORLD_ACROSS_THE_FULL_FRAME — candidate
+
+- id: RGB5-27
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: no_human_ear_on_the_delivered_audio
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/HUMAN-VERDICTS.yaml (why_no_human_ear_earlier)
+  verbatim: |-
+    Sound remains unheard by anyone — the one open check
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    QA coverage gap (no session can listen)
+  repaired: |-
+    no — the customer's ear was the first
+  promoted: |-
+    VOICE_CAST_BY_A_HUMAN_EAR — candidate
+
+- id: RGB5-28
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_cannot_meet_the_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/ROUTE-OBSERVATIONS.yaml (RO-01)
+  verbatim: |-
+    the four run cells differed only slightly in leg phase (motion had to come from code bob/tilt)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    directional_production_observation (nine-pose sheet limitation)
+  repaired: |-
+    no — worked around in code
+  promoted: |-
+    directional_only — RO-01, n=1
+
+- id: RGB5-29
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: our_qa_instrument_is_unreliable
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-B-005
+  date: 2026-09-20
+  source: |-
+    production-learning/cases/RENTOK-GAME-B-005/ROUTE-OBSERVATIONS.yaml (RO-08)
+  verbatim: |-
+    "the brand name rendered as 'rent okay' / 'Rent OK'" (QA transcription route)
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    directional_production_observation (transcription QA limitation)
+  repaired: |-
+    no — noted
+  promoted: |-
+    directional_only — RO-08, n=7
+
+# ───────────────────────────── RGV6 · RENTOK-GAME-V2-006 (21 Sep 2026) ─────────────────────────────
+
+- id: RGV6-01
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: hero_or_key_content_occluded
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N1)
+  verbatim: |-
+    the flag rises THROUGH the cheering owner for 26 frames, 26.53-27.37 s ... the triumph beat shows the hero half-hidden by a blue rectangle
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (occlusion of the hero by another graphic); root is the board
+  repaired: |-
+    no — repair offered, customer declined ('not required')
+  promoted: |-
+    HERO_VISIBLE — promoted_now (check_hero_visible)
+
+- id: RGV6-02
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: hero_or_key_content_occluded
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N2)
+  verbatim: |-
+    the raised phone sits exactly over the owner's head for 6 frames, 18.20-18.37 s, at 'rising confidence'
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (phone anchor on the windup pose)
+  repaired: |-
+    no — declined
+  promoted: |-
+    HERO_VISIBLE — promoted_now
+
+- id: RGV6-03
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: our_own_measuring_instrument_was_wrong
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (A-4)
+  verbatim: |-
+    on animatic v1 the framing check read owner_frac at a moment the camera was still easing (0.156 at 8.40 s against 0.21) and failed for the wrong reason; the 'cover' stand-in was also double-shrunk
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa (the job's new FRAMING gate, first version)
+  repaired: |-
+    yes — focus_t moved to the hold; per-pose targets
+  promoted: |-
+    FRAMING_TARGET_AT_FOCUS — promoted_now
+
+- id: RGV6-04
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: framing_target_missed_at_the_focus_moment
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (R-1)
+  verbatim: |-
+    final-v1: F4 owner_frac 0.202 < 0.21 — the drawn 'reach' cell is 320 px in a 342-px standing cell, 6 % shorter than the stand-in the target was tuned on
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / creative_direction (camera) surfaced by deterministic_qa
+  repaired: |-
+    yes — USD 0 camera push x1.4 -> x1.5 (0.216 delivered)
+  promoted: |-
+    FRAMING_TARGET_AT_FOCUS — promoted_now
+
+- id: RGV6-05
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: hero_clipped_by_the_frame_edge
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N4)
+  verbatim: |-
+    the dazed owner is clipped by the left frame edge 3.77-4.23 s: his box reaches x = -52 px, the book and left arm cut; the document wall is drawn over his right side
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (camera centre during the F2 push)
+  repaired: |-
+    no — declined
+  promoted: |-
+    FRAMING_TARGET_AT_FOCUS — promoted_now (HERO_CLIPPED_BY_FRAME)
+
+- id: RGV6-06
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: world_does_not_fill_the_frame
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (LJ-15)
+  verbatim: |-
+    with a camera that pushes to x1.6 and pulls back to x1.0, a pull-out below x1.0 would show the frame's own background beside the world (a black band or letterbox)
+  found_by: |-
+    producer_gate (designed in), independent_checker (confirmed by eye)
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa (coverage) — "not a shipped defect"
+  repaired: |-
+    n/a — the gate existed and passed
+  promoted: |-
+    WORLD_FILLS_FRAME — promoted_now
+
+- id: RGV6-07
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: style_or_density_mismatch_between_assets
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N5)
+  verbatim: |-
+    every swap between a base run pose ... and a sheet pose ... pops in grain and proportion ... some 150 swaps in the film. At native 1080 clearly visible
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / reuse decision (R4) + compositor; partly model (the model drew a smaller figure on a 16:9 sheet)
+  repaired: |-
+    no — declined
+  promoted: |-
+    SPRITE_DENSITY_CONSISTENCY — promoted_now (check_sprite_density)
+
+- id: RGV6-08
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: container_spec_violation
+  recurrence: PREVENTED
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (A-1)
+  verbatim: |-
+    animatic v1 (video-only H.264 with B-frames) carried an edit list; the mux step had -use_editlist 0, the render encode did not
+  found_by: |-
+    producer_gate (the job's box-walk check, promoted from case 004 D-1)
+  class_as_recorded: |-
+    pipeline_failure / infrastructure (encode)
+  repaired: |-
+    yes — USD 0 before spend
+  promoted: |-
+    not re-promoted; evidence CONTAINER_EDIT_LIST_CHECK works (second job)
+
+- id: RGV6-09
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: layer_order_error
+  recurrence: PREVENTED
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (A-2)
+  verbatim: |-
+    the falling phone (world layer) passed behind the cheat panel and under the INSTALL backing for 2 frames
+  found_by: |-
+    producer_gate (C5 / C5b over the layout log)
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — USD 0 before spend
+  promoted: |-
+    not re-promoted; GRAPHIC_TEXT_DISJOINT (case 004 D-2) caught it
+
+- id: RGV6-10
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: element_overlap_collision
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (A-3)
+  verbatim: |-
+    the toppling tower's far corner rose 46 px into the label zone (2 frames); the departing swarm crossed the HUD row
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / compositor
+  repaired: |-
+    yes — pivot at the base centre; swarm fades out with state 'leaving'
+  promoted: |-
+    SPRITE_STATE_SEMANTICS_IN_OCCLUSION_GATES — candidate
+
+- id: RGV6-11
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: world_logic_not_boarded
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (A-5)
+  verbatim: |-
+    with the world scrolling on after a knock-down, the fallen tower and the hovering swarm slid off the owner within 0.5 s — the thing that beat him left him
+  found_by: |-
+    producer_eye (on animatic v1)
+  class_as_recorded: |-
+    pipeline_failure / creative_direction (world logic)
+  repaired: |-
+    yes — scroll pauses 11.7-12.35 and 14.1-18.0 (USD 0)
+  promoted: |-
+    WORLD_STOPS_WHEN_HE_IS_DOWN — candidate
+
+- id: RGV6-12
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: codec_true_peak_overshoot
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (R-2)
+  verbatim: |-
+    true peak -0.4 dBTP after AAC with Lane A's loudnorm settings (TP -4 pre-encode) — denser SFX overshoot more
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    pipeline_failure / audio assembly
+  repaired: |-
+    yes — alimiter -6 dBFS + 1.5 dB make-up -> -14.0 LUFS / -2.7 dBTP
+  promoted: |-
+    CODEC_TRUE_PEAK_MARGIN — candidate (n=3 jobs)
+
+- id: RGV6-13
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: no_transition_state_boarded
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N3)
+  verbatim: |-
+    kneel -> stand in one frame at 17.37 -> 17.40 (cornered_up 381 px -> catch 444 px): a pop at the gift moment
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / creative_direction (board: no transition pose)
+  repaired: |-
+    no — declined
+  promoted: |-
+    POSE_HEIGHT_JUMP_CHECK — candidate (class 2 until a board field exists)
+
+- id: RGV6-14
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: keying_residue_on_a_cut_out
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N6)
+  verbatim: |-
+    green key fringe on the new sheet's cut-outs: 194 tinted px around the trip pose, 153 around dazed, 36-52 around brace/lookback/cover ... a 1-px halo at native, invisible at 360 px
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (cut-out keying)
+  repaired: |-
+    no — declined
+  promoted: |-
+    KEYING_HELPER — candidate; cross-case with 004 R3 (third sheet)
+
+- id: RGV6-15
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: style_or_density_mismatch_between_assets
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N7)
+  verbatim: |-
+    the tenant sprite (Lane A att-004) is a smooth-shaded illustration with soft edges while the owner and the other four obstacles are pixel art
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    media_model_failure / reuse (R2) — style consistency across accepted assets
+  repaired: |-
+    no — declined
+  promoted: |-
+    REUSED_ASSET_STYLE_CHECK — candidate
+
+- id: RGV6-16
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: no_transition_state_boarded
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N8)
+  verbatim: |-
+    the cheat panel rises as an empty black box over the owner's head for ~3 frames before 'CHEAT CODE:' appears
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / creative_direction (panel entry)
+  repaired: |-
+    no — declined
+  promoted: |-
+    not_promoted
+
+- id: RGV6-17
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: brand_colour_measured_wrong_on_the_frame
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (N9)
+  verbatim: |-
+    the wordmark raster's own gradient backing is faintly visible against the card blue: card (1,55,253); raster box (1,54,250) -> (0,40,231)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / compositor (end card); "a sampling-plan gap, not a gate gap"
+  repaired: |-
+    no — declined
+  promoted: |-
+    not_promoted
+
+- id: RGV6-18
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: prompt_instruction_ignored_by_the_model
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (P1)
+  verbatim: |-
+    cell 1 'standing and looking back over his left shoulder' came out facing forward with raised eyebrows and an open mouth; used 0.25 s
+  found_by: |-
+    producer_gate (consistency card); independent_checker agreed it reads as 'startled'
+  class_as_recorded: |-
+    media_model_failure / generation (one pose of eight)
+  repaired: |-
+    no — producer chose no repair draw (a redraw regenerates all eight cells)
+  promoted: |-
+    directional_only — RO-01
+
+- id: RGV6-19
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: renderer_capability_limit
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-rentok-game-v2-001:agency/jobs/AGY-2026-09-21-RENTOK-GAME-V2-001/stages/CHECK-STAGE-5.md (§4 P2, §5)
+  verbatim: |-
+    Rigid bitmaps: no secondary motion, no squash-and-stretch on the character, two-frame run cycle, contact stood in by overlap (producer-recorded §5.6)
+  found_by: |-
+    independent_checker (producer-recorded)
+  class_as_recorded: |-
+    limitation (P2, not scored as a defect)
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: RGV6-20
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: effect_or_payoff_reads_weak_at_phone_size
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-rentok-game-v2-001:.../stages/CHECK-STAGE-5.md (§5 Five distinct payoffs, score 3; §6)
+  verbatim: |-
+    Do not read: the ledger tag on the runner (3 — a 60-px card over a man who simply keeps running away), the swarm flip (5 — red -> olive ... reads as 'muddied', not 'solved')
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    "partly recorded (Stage 3 specifies them; the execution is small)" — weak payoffs
+  repaired: |-
+    no — declined
+  promoted: |-
+    not_promoted
+
+- id: RGV6-21
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: effect_or_payoff_reads_weak_at_phone_size
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-rentok-game-v2-001:.../stages/CHECK-STAGE-5.md (§5 Impact / power-up excitement, score 2; §6)
+  verbatim: |-
+    the muzzle flash is a small sparkle, the tick is a dot with a faint trail, the shockwave ring is thin, and the bursts are speckle — modest at 1080, faint on a phone
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    creative gap (new; impact spec at Stage 3)
+  repaired: |-
+    no — declined
+  promoted: |-
+    not_promoted
+
+- id: RGV6-22
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: environment_too_poor_to_hold_attention
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-rentok-game-v2-001:.../stages/CHECK-STAGE-5.md (§5 Environmental richness, score 2)
+  verbatim: |-
+    One repeating building plate and an empty street from 0 to 27.6 s; the pushes enlarge the same wall; no parallax, no street life, no props beyond the obstacles
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    creative-quality score 2 (environmental richness)
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: RGV6-23
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: records_inconsistent_between_files
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-rentok-game-v2-001:.../stages/CHECK-STAGE-5.md (§1 note, §6 Records)
+  verbatim: |-
+    Records: 'back by 4.4' vs 4.9; 'one white frame' vs two [Stage 3 table] — a records mismatch, not a film defect
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    records defect
+  repaired: |-
+    no — declined
+  promoted: |-
+    not_promoted
+
+- id: RGV6-24
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: no_human_ear_on_the_delivered_audio
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-rentok-game-v2-001:.../stages/CHECK-STAGE-5.md (§2 A6 caveat, §7)
+  verbatim: |-
+    "obstacle 3 is not visibly stopped and obstacle 5's payoff reads weakly" / "sound by ear (LJ-14) and the melody's originality — both CANNOT_DETERMINE from this session"
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    caveat on a PASS + QA coverage gap (NOT CHECKED)
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: RGV6-25
+  bucket: B9
+  bucket_name: |-
+    Provider-side failure outside our control
+  failure_mode: provider_latency_anomaly
+  recurrence: NEW
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/ROUTE-OBSERVATIONS.yaml (RO-02)
+  verbatim: |-
+    53.6 s for one 16:9 image — 4-5x the earlier sheets on the same surface
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    directional_production_observation (latency anomaly, n=1)
+  repaired: |-
+    n/a
+  promoted: |-
+    directional_only — RO-02
+
+- id: RGV6-26
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: records_inconsistent_between_files
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-GAME-V2-006
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/RENTOK-GAME-V2-006/SYSTEM-DEFECTS.yaml (tally.packet_discrepancy)
+  verbatim: |-
+    JOB.yaml and LEARNING-PACKET.yaml say the customer declined a round for 'six recorded defects'; the checker's table records N1-N9 + P1 (ten) ... Which six were put to the customer is chat-only and NOT on disk
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    records discrepancy / evidence gap
+  repaired: |-
+    no — the case records all ten as unrepaired
+  promoted: |-
+    not_promoted
+
+# ───────────────────────────── MOKO7 · MOKOBARA-ODYSSEY-007 (21-22 Sep 2026) ─────────────────────────────
+
+- id: MOKO7-01
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: attempt_id_collision
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (LG-1)
+  verbatim: |-
+    att-020 was issued to two attempts ... next_attempt_id() = 1 + the number of lines in gen/ATTEMPTS.jsonl — a file appended only at SETTLE ... the collision window is the full latency of every in-flight call
+  found_by: |-
+    producer_gate (at the second reserve)
+  class_as_recorded: |-
+    pipeline_failure / orchestration (attempt-id allocation)
+  repaired: |-
+    yes — hand relabel to att-020b; dispatches serialised
+  promoted: |-
+    LEDGER_LOCK_ATOMIC_ATTEMPT_IDS — class 2 candidate (why_not_class_1 stated); nothing promoted to code from this job
+
+- id: MOKO7-02
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: mandatory_event_never_happens_on_screen
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-8)
+  verbatim: |-
+    v1 beat 6 (att-013): he stands knee-deep beside the raft for all 4 s ... the customer's mandatory 'goes back' never happens on screen
+  found_by: |-
+    independent_checker (D3); customer (the second paddle)
+  class_as_recorded: |-
+    media_model_failure / generation (beat 6) + board (Stage 3 asked for more action than the clip length)
+  repaired: |-
+    yes — v2 (att-020b/023, USD 0.467), FIXED first draw
+  promoted: |-
+    MANDATORY_EVENT_VISIBILITY_LJ_LINE — class 2 candidate
+
+- id: MOKO7-03
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: audio_hole_at_a_clip_join
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-10)
+  verbatim: |-
+    at the 3.5-s and 7.5-s cuts the incoming clip's native ambience sits ~15-20 dB below the outgoing for the first ~40 ms then recovers — a faint hole
+  found_by: |-
+    independent_checker (measured)
+  class_as_recorded: |-
+    pipeline_failure / audio assembly (joins)
+  repaired: |-
+    yes — v2 60-ms acrossfade at every join; 'FIXED by construction', not re-measured on v2
+  promoted: |-
+    AUDIO_JOIN_CROSSFADE / AUDIO_LEVEL_CONTINUITY_AT_CUTS — class 2 candidate
+
+- id: MOKO7-04
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: text_contrast_on_background
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-9) + HUMAN-VERDICTS.yaml (v1 items 4, 5)
+  verbatim: |-
+    "wordmark super = the site's white SVG at 300 px on a grey backing box; end card text in Avenir Next" / customer: "use mokobara logo/name properly", "the text font style could be better"
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    pipeline_failure / compositor (overlays)
+  repaired: |-
+    yes — v2 at USD 0 (black logo PNG at 420 px, contrast 6.58:1 vs white 1.3:1; Helvetica Neue with the site's tracking)
+  promoted: |-
+    BRAND_FONT_FALLBACK_WITH_SITE_CSS_STYLING — class 2 candidate
+
+- id: MOKO7-05
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: unrequested_object_in_frame
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-1)
+  verbatim: |-
+    the open bag with yellow showing lies at his feet before he has found it — the prompt never mentioned the bag
+  found_by: |-
+    producer_eye (contact sheet)
+  class_as_recorded: |-
+    media_model_failure / generation (beat 1, Veo i2v)
+  repaired: |-
+    yes — take 2 (att-016, USD 0.40) with a negative prompt naming the product
+  promoted: |-
+    NEGATIVE_PROMPT_THE_PRODUCT_BEFORE_ITS_REVEAL — candidate
+
+- id: MOKO7-06
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: prompt_instruction_ignored_by_the_model
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-2)
+  verbatim: |-
+    take 1 (4 s): one coconut in, zip closed with fish, rope, gourd, flare and two coconuts still out; take 2 (6 s, 'EVERY item goes in'): fish, rope, flare in, coconuts + gourd out at the zip
+  found_by: |-
+    producer_eye (take 1), independent_checker D2 (take 2)
+  class_as_recorded: |-
+    media_model_failure / generation (beat 5, Veo i2v)
+  repaired: |-
+    yes — v2 changed the mechanism (end-state still + last-action i2v)
+  promoted: |-
+    END_STATE_STILL_PLUS_LAST_ACTION_I2V — candidate
+
+- id: MOKO7-07
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: model_undoes_the_goal_state_inside_the_clip
+  recurrence: NEW
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-2b)
+  verbatim: |-
+    att-024: coconut in, lid closed at 1.5 s, then the model RE-OPENED the bag for 2-4 s — 1.9 s usable
+  found_by: |-
+    producer_eye (sheet)
+  class_as_recorded: |-
+    media_model_failure / generation (beat 5 take 3, Veo i2v)
+  repaired: |-
+    yes — take 4 (att-025) added an exit action
+  promoted: |-
+    EXIT_ACTION_AFTER_GOAL_STATE — candidate
+
+- id: MOKO7-08
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: prompt_instruction_ignored_by_the_model
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-4)
+  verbatim: |-
+    the one change that emptied the shore also produced a hard in-model cut at 1.54 s to a static full-length portrait looking into the lens, a sleeved buttoned shirt ... and no marked rock in the wide; no pull-back exists
+  found_by: |-
+    producer_eye (costume only); independent_checker (the cut, the rock)
+  class_as_recorded: |-
+    media_model_failure / generation (beat 1 take 2, Veo i2v)
+  repaired: |-
+    yes — v2 (att-026/027, USD 0.467) FIXED
+  promoted: |-
+    directional_only — RO-01
+
+- id: MOKO7-09
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: product_rendered_damaged_or_deformed
+  recurrence: NEW
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-6) + HUMAN-VERDICTS.yaml (v1 item 1)
+  verbatim: |-
+    "the lower-left of the open lining shows an irregular hanging flap that reads as a TEAR" / customer: "the bag was slightly torn when he saw her wife photo"
+  found_by: |-
+    customer; independent_checker (D6-iii)
+  class_as_recorded: |-
+    media_model_failure / still generation (beat 3, nano-banana-2 with references)
+  repaired: |-
+    yes — v2 still + 6-s clip (att-019/020, USD 0.667), clean seams over 12 sampled frames
+  promoted: |-
+    directional_only — RO-02
+
+- id: MOKO7-10
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: product_rendered_damaged_or_deformed
+  recurrence: NEW
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-7) + HUMAN-VERDICTS.yaml (v1 item 2)
+  verbatim: |-
+    "the paddle blade warps and the shaft bends in the last 1.5 s of take 2 (att-018) — the take used in v1" / customer: "looked weird coming out of bag"
+  found_by: |-
+    customer; producer_eye (side-by-side sheets in the repair round)
+  class_as_recorded: |-
+    media_model_failure / generation (beat 4 take 2, Veo i2v)
+  repaired: |-
+    yes — edit only, USD 0: take 1 used in v2 ('the take we had not used was the fix; keep every take')
+  promoted: |-
+    TAKE_SELECTION_BEFORE_RETAKE — candidate
+
+- id: MOKO7-11
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: mandatory_event_never_happens_on_screen
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-3)
+  verbatim: |-
+    both hands inside the open bag at wrist-to-forearm depth ... no frame with an arm past the elbow, no chin on the rim ... Stage 5's LJ-3 overstated what the take contains
+  found_by: |-
+    producer_gate (micro-qual note); independent_checker (D1)
+  class_as_recorded: |-
+    media_model_failure / generation + route (beat 4, both takes)
+  repaired: |-
+    no — UNREPAIRED on the accepted file; the addendum ranked the straight paddle above arm depth
+  promoted: |-
+    not_promoted
+
+- id: MOKO7-12
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: character_identity_drifts_between_shots
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-11)
+  verbatim: |-
+    beard jet-black/fuller in beat 1 vs grey-streaked in beats 3-4; bracelet on the right wrist in beats 2, 4, 5 (anchor: left); the bag's top opens as a hinged lid at 16.5 s and the front pocket hangs open downward at 22.5 s
+  found_by: |-
+    independent_checker (D6-i/ii, D7)
+  class_as_recorded: |-
+    media_model_failure / generation (identity across 6 clips)
+  repaired: |-
+    partial — v2 fixed the front pocket; the lid opening and beard/bracelet drift UNREPAIRED
+  promoted: |-
+    directional_only — RO-01
+
+- id: MOKO7-13
+  bucket: B9
+  bucket_name: |-
+    Provider-side failure outside our control
+  failure_mode: provider_transient_5xx_or_unavailable
+  recurrence: PREVENTED
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-5)
+  verbatim: |-
+    att-014 HTTP 500 'Could not generate audio. Please try again with a different prompt.' ... counted USD 0.06; att-015 with [neutral wording] ok in 60.7 s
+  found_by: |-
+    producer_gate (dispatch tool)
+  class_as_recorded: |-
+    infrastructure_transient / provider (Lyria on Vertex)
+  repaired: |-
+    yes — one neutral re-send, recorded as a new attempt
+  promoted: |-
+    TRANSIENT_ERROR_CLASSIFICATION (case 001) worked as designed — not re-promoted
+
+- id: MOKO7-14
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: our_qa_instrument_is_unreliable
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-13)
+  verbatim: |-
+    tesseract returned tokens on 40 of 56 generated frames — tally marks, pebbles and sea ('fiat', 'Wars', 'PULA') ... no readable lettering exists
+  found_by: |-
+    producer_gate (designed), independent_checker (resolved by eye)
+  class_as_recorded: |-
+    pipeline_failure / deterministic_qa (frame text hygiene) — false-positive class
+  repaired: |-
+    n/a
+  promoted: |-
+    OCR_ON_TEXTURE_IS_A_FLAG_NOT_A_GATE — candidate
+
+- id: MOKO7-15
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_output_below_the_delivery_spec
+  recurrence: NEW
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-12)
+  verbatim: |-
+    the six Veo clips are 720x1280 and were upscaled to 1080x1920 at assembly — the main source of the 'soft' look; the producer's Stage 5 did not state it
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    pipeline_failure / routing (resolution)
+  repaired: |-
+    no — route price; UNREPAIRED on the accepted file
+  promoted: |-
+    records rule proposed (state source resolution beside delivered) — not_promoted
+
+- id: MOKO7-16
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: no_human_ear_on_the_delivered_audio
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (DF-14)
+  verbatim: |-
+    speech or singing in the native Veo audio was never checked by a human on v1 or v2; no local recogniser ... the producer 'heard none on a quick listen'
+  found_by: |-
+    producer_gate (NOT_RUN), independent_checker (CANNOT_DETERMINE)
+  class_as_recorded: |-
+    pipeline_failure / QA coverage (audio by ear)
+  repaired: |-
+    no — the accepted file has never been ear-checked by a human on the record
+  promoted: |-
+    same class as case 005 VOICE_CAST_BY_A_HUMAN_EAR — not_promoted here
+
+- id: MOKO7-17
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: records_inconsistent_between_files
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-22
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/SYSTEM-DEFECTS.yaml (REC-1)
+  verbatim: |-
+    presented_utc for v2 (18:37:00Z) precedes the repair round's qa_complete (18:38:34Z) by 94 s; versions[] carries a stale duplicate v2 entry ... first_pass_usd 3.529 omits the counted 0.06 failure (ledger 3.589)
+  found_by: |-
+    controller (this sync)
+  class_as_recorded: |-
+    pipeline_failure / records (JOB.yaml / LEARNING-PACKET.yaml)
+  repaired: |-
+    no — job branch never touched; each discrepancy recorded beside the ledger figure
+  promoted: |-
+    not_promoted
+
+- id: MOKO7-18
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: continuity_between_beats_not_boarded
+  recurrence: NEW
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/REVISION-TRACE.yaml (v2 DF-8b)
+  verbatim: |-
+    PARTLY: the paddle leaves the bag at ~19 s, is absent in beat 5's close frame, and is in his hands from beat 6's first frame — where it went between 21 and 24 s is still not shown
+  found_by: |-
+    independent_checker (D5); customer named the v1 form of it
+  class_as_recorded: |-
+    creative_direction (board never says where the paddle goes between beats 4 and 6)
+  repaired: |-
+    partial — no second appearance in v2; the gap in continuity remains
+  promoted: |-
+    not_promoted
+
+- id: MOKO7-19
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: accepted_with_unnamed_minor_issues
+  recurrence: NEW
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-22
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/HUMAN-VERDICTS.yaml (v2)
+  verbatim: |-
+    still some minor issues but excellent. pass/
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    unitemised human note — accept with unnamed minor issues; not mapped onto the recorded open items
+  repaired: |-
+    no — unitemised, never identified
+  promoted: |-
+    not_promoted
+
+- id: MOKO7-20
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: customer_requirement_not_carried_into_the_board
+  recurrence: NEW
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-mokobara-odyssey-001:agency/jobs/AGY-2026-09-21-MOKOBARA-ODYSSEY-001/stages/CHECK-STAGE-5.md (§2 R2)
+  verbatim: |-
+    PASS on 'years'; 'kept' not shown ... 'Kept' (held by someone) is not depicted ... If the customer meant captivity, nothing in the film shows it
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    customer-requirement partial (R2)
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: MOKO7-21
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: beat_does_not_earn_its_time
+  recurrence: NEW
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-mokobara-odyssey-001:.../stages/CHECK-STAGE-5.md (§5 Beat 1, score 3; §4)
+  verbatim: |-
+    The static stare-at-camera that follows says nothing ... The frontal stare reads as a lookbook photo, not a survival film
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    creative quality score 3 (beat 1 endurance)
+  repaired: |-
+    yes — v2 beat 1 rebuilt (ECU + wide)
+  promoted: |-
+    not_promoted
+
+- id: MOKO7-22
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: pacing_wrong
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-mokobara-odyssey-001:.../stages/CHECK-STAGE-5.md (§5 Comic timing of beat 4, score 3)
+  verbatim: |-
+    5 s set-up / 2.5 s payoff is the wrong ratio ... The 5 s of ordinary rummaging before it is the weak stretch: nothing impossible happens, so the disbelief is not built before the paddle
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    creative quality score 3 (comic timing)
+  repaired: |-
+    no — the re-cut option (2 s set-up / 4 s payoff at USD 0) was not bought
+  promoted: |-
+    not_promoted
+
+- id: MOKO7-23
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: overall_verdict_not_good_enough
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    origin/work/agency-job-mokobara-odyssey-001:.../stages/CHECK-STAGE-5.md (§5 'Would a D2C brand run this', score 3; §7)
+  verbatim: |-
+    As a paid placement: not yet — the arms gag, the packing leftovers, the non-departure and the beat-1 costume would each draw a note from a brand manager
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    DELIVERABLE WITH DEFECTS — fit to present as a first pass, not fit to run as a paid ad without one more round
+  repaired: |-
+    partial — one round was run; the checker never re-verified v2 (no CHECK-STAGE-6.md exists)
+  promoted: |-
+    not_promoted
+
+- id: MOKO7-24
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: supplied_brand_mark_copied_or_mangled_by_the_model
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    MOKOBARA-ODYSSEY-007
+  date: 2026-09-21
+  source: |-
+    production-learning/cases/MOKOBARA-ODYSSEY-007/REVISION-TRACE.yaml (v1 generation_status)
+  verbatim: |-
+    two [stills] carried a copied wordmark mark painted out by code
+  found_by: |-
+    producer_gate
+  class_as_recorded: |-
+    media_model_failure (brand mark copied into a generated still); repaired pre-dispatch by code paint-out
+  repaired: |-
+    yes — *.edit.json paint-out; nothing came back in the video
+  promoted: |-
+    not_promoted
+
+# ───────────────────────────── CQ1 · RENTOK-CREATIVE-QUALITY-001 (21 Sep 2026, four treatments) ─────────────────────────────
+
+- id: CQ1-01
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: effect_or_payoff_reads_weak_at_phone_size
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment A, baseline = accepted Lane A beat)
+  date: 2026-09-21
+  source: |-
+    origin/work/experiment-rentok-creative-quality-001:experiments/RENTOK-CREATIVE-QUALITY-001/evaluation/BLIND-EVALUATION.md (clip-3)
+  verbatim: |-
+    power is a thin cyan outline and a fingernail-sized tick ... invisible at phone width, so the paper wall appears to dissolve on its own
+  found_by: |-
+    independent_checker (blind evaluator)
+  class_as_recorded: |-
+    R5/R6 marginal pass; Q1 prompt adherence 2
+  repaired: |-
+    no — baseline was the accepted film
+  promoted: |-
+    diagnosis input — Cause A CONFIRMED
+
+- id: CQ1-02
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: character_expressiveness_limited
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment A)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-3 Q3, Q4, Q6 = 2)
+  verbatim: |-
+    one face, standing -> running only ... flashes mark events, nothing has weight ... the character does not seem to play
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    creative-quality scores 2 (expressiveness, motion, gameplay readability)
+  repaired: |-
+    no
+  promoted: |-
+    diagnosis input
+
+- id: CQ1-03
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: proof_or_subject_reads_too_small
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment A)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-3 Q2, Q8 = 3/2)
+  verbatim: |-
+    a plainer backdrop than clip-2 and the smallest sprite of the four, so less to look at ... the small sprite makes the product moment even easier to miss
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    creative-quality scores
+  repaired: |-
+    no
+  promoted: |-
+    diagnosis input
+
+- id: CQ1-04
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: music_does_not_follow_the_story
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment A and B)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (Q7 PROVISIONAL, clip-2/3)
+  verbatim: |-
+    loudness range is 2.9 LU and the level does not drop at the defeat, i.e. the music runs flat through the story
+  found_by: |-
+    independent_checker (measured; cannot hear)
+  class_as_recorded: |-
+    audiovisual impact 2 (PROVISIONAL — measurement only)
+  repaired: |-
+    no
+  promoted: |-
+    diagnosis input
+
+- id: CQ1-05
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: better_assets_did_not_move_the_verdict
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment B, asset prompts only)
+  date: 2026-09-21
+  source: |-
+    .../07-DIAGNOSIS-AND-ROUTE.md §3 Cause B
+  verbatim: |-
+    Treatment B, which changed only the asset prompts and produced visibly richer stills, scored identical to the baseline with the evaluator (18 = 18) ... Better pictures did not move the beat
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    Cause B REFUTED as the primary cause (USD 0.335, 5 draws, no gain)
+  repaired: |-
+    n/a — treatment abandoned
+  promoted: |-
+    refutation recorded; prompt layer was never the bottleneck
+
+- id: CQ1-06
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: unrequested_lettering_in_frame
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment B)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-2 Q1 = 2)
+  verbatim: |-
+    an extra 'COLLECTING RENT' label intrudes at the end (f069)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    prompt-adherence defect (score 2)
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: CQ1-07
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: character_expressiveness_limited
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment B)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-2 Q2, Q6)
+  verbatim: |-
+    the character is a sprite standing still on a background for 3.5 s ... he stands and things happen to him on cue for the first four seconds
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    creative-quality scores 3 / 2
+  repaired: |-
+    no
+  promoted: |-
+    diagnosis input
+
+- id: CQ1-08
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: hero_or_key_content_occluded
+  recurrence: RECURRED-DESPITE-CODE
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment C, direction + renderer)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-4 Q1 = 3)
+  verbatim: |-
+    the cheat box slides up over the character for a few frames (f012) and a translucent ghost of the box hangs over the scene after the flash (f037)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    prompt-adherence intrusions (score 3)
+  repaired: |-
+    no on this clip; the V2 job's A-2 repair addressed the panel/phone overlap class
+  promoted: |-
+    not_promoted
+
+- id: CQ1-09
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: effect_or_payoff_reads_weak_at_phone_size
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment C)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-4 Q4, Q6, ranking)
+  verbatim: |-
+    its 'power' is a projectile the size of a fingernail and the wall fades away rather than breaking, so the payoff feels like a label rather than a win ... a customer would ask 'where is the power?'
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    motion quality 3 / gameplay readability 3
+  repaired: |-
+    no — carried into the V2 full film (RGV6-21)
+  promoted: |-
+    diagnosis input
+
+- id: CQ1-10
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: effect_or_payoff_reads_weak_at_phone_size
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment C)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-4 Q8 = 3)
+  verbatim: |-
+    the chip lasts 0.4 s and disappears before the end, and the power is hard to see at phone width
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    commercial suitability 3
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: CQ1-11
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: renderer_capability_limit
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment C)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-4 Q3 = 4)
+  verbatim: |-
+    the states cut rather than flow, so not a 5
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    character expressiveness 4 (with a named limit)
+  repaired: |-
+    no — same limit recorded again in RGV6 (§5 'he expresses in snapshots, not in motion')
+  promoted: |-
+    not_promoted
+
+- id: CQ1-12
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_cannot_hold_the_style
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment D, Veo i2v production-method change)
+  date: 2026-09-21
+  source: |-
+    .../07-DIAGNOSIS-AND-ROUTE.md §3 Cause C + evaluation/BLIND-EVALUATION.md (clip-1 R8, Q2)
+  verbatim: |-
+    style softening from pixel art to painterly after the burst ... the character and effects are soft and painterly while the HUD and background are crisp pixel art, so the picture reads as two styles composited
+  found_by: |-
+    independent_checker; customer ("video 1 looses quality towards the end")
+  class_as_recorded: |-
+    Cause C PARTIALLY CONFIRMED as a trade — a real loss in control and style fidelity
+  repaired: |-
+    no — method not adopted as the backbone
+  promoted: |-
+    route proposal only (hero beats optional, with a style-consistency gate)
+
+- id: CQ1-13
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_cannot_hold_the_style
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment D)
+  date: 2026-09-21
+  source: |-
+    .../07-DIAGNOSIS-AND-ROUTE.md §3 Cause C and §5 capability risks
+  verbatim: |-
+    the street drifting to other buildings after ~ 5 s ... no evidence that Veo holds pixel-art style beyond ~ 5 s (n = 3, all drifted)
+  found_by: |-
+    producer_eye (pre-verdict) + independent_checker
+  class_as_recorded: |-
+    capability risk, honest (n=3)
+  repaired: |-
+    no — mitigation proposed (shorter clips, style-lock line)
+  promoted: |-
+    directional only
+
+- id: CQ1-14
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: unrequested_object_in_frame
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment D)
+  date: 2026-09-21
+  source: |-
+    .../07-DIAGNOSIS-AND-ROUTE.md §3 Cause C
+  verbatim: |-
+    one or two unrequested elements per draw (duplicate book 2/3, spark flash 2/3)
+  found_by: |-
+    producer_eye
+  class_as_recorded: |-
+    media model behaviour (Veo i2v)
+  repaired: |-
+    no
+  promoted: |-
+    directional only
+
+- id: CQ1-15
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: codec_true_peak_overshoot
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment D)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (Part iii, clip-1)
+  verbatim: |-
+    True peak -0.2 dBTP — over the -1 dBTP limit
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    technical constraint FAIL (the only one in the packet)
+  repaired: |-
+    no on the clip; mitigation named (true-peak limiting in the mix)
+  promoted: |-
+    CODEC_TRUE_PEAK_MARGIN — candidate (cross-case)
+
+- id: CQ1-16
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: prompt_instruction_ignored_by_the_model
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment D)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-1 Q1 = 3)
+  verbatim: |-
+    the finished cheat code 'INSTALL RENTOK APP' is on screen for exactly one frame (1/30 s) before the box clears
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    prompt adherence 3
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: CQ1-17
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: state_continuity_breaks_inside_the_clip
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment D)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-1 Q1)
+  verbatim: |-
+    the chip appears at 5.4 s while the wall is still standing, and for a few frames the dropped red register lies on the ground while he also holds one
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    prompt adherence 3 (continuity)
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: CQ1-18
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_cannot_hold_the_style
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment D)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (clip-1 Q2 = 3)
+  verbatim: |-
+    the character is drawn soft and wobbly, the complaint bubbles smear into a red blob at the hit
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    visual quality 3
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: CQ1-19
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: route_cost_or_efficiency_finding
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment D)
+  date: 2026-09-21
+  source: |-
+    .../07-DIAGNOSIS-AND-ROUTE.md §3 Cause C
+  verbatim: |-
+    Cost 36x a still per attempt (USD 0.80 vs 0.067), 3 attempts to reach a usable take
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    cost/efficiency finding
+  repaired: |-
+    n/a
+  promoted: |-
+    route proposal — optional hero beats only
+
+- id: CQ1-20
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: overall_verdict_not_good_enough
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (all four treatments)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (ranking §2) 
+  verbatim: |-
+    neither [clip-1 nor clip-4] would be accepted as-is
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    acceptance judgement across the whole packet
+  repaired: |-
+    no — the diagnosis produced a route, not an accepted asset
+  promoted: |-
+    diagnosis input
+
+- id: CQ1-21
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: no_human_ear_on_the_delivered_audio
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (all four)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (Part iii, audible claims)
+  verbatim: |-
+    a human should listen to those two stretches to be sure [speech-band level within 1 dB of full band]
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    QA coverage gap — evaluator cannot hear; audio scores PROVISIONAL
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: CQ1-22
+  bucket: B1
+  bucket_name: |-
+    Declared output rule never measured on the rendered file
+  failure_mode: container_timing_anomaly
+  recurrence: NEW
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment A, clip-3)
+  date: 2026-09-21
+  source: |-
+    .../evaluation/BLIND-EVALUATION.md (Part iii, frame rate)
+  verbatim: |-
+    30 fps nominal; average rate 29.93 (timestamps slightly uneven)
+  found_by: |-
+    independent_checker
+  class_as_recorded: |-
+    technical measurement anomaly (not a stated FAIL)
+  repaired: |-
+    no
+  promoted: |-
+    not_promoted
+
+- id: CQ1-23
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: renderer_capability_limit
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (Treatment C renderer)
+  date: 2026-09-21
+  source: |-
+    .../07-DIAGNOSIS-AND-ROUTE.md §5 capability risks
+  verbatim: |-
+    the renderer's remaining gaps (secondary motion, true contact, squash-and-stretch on pixel art) are documented in TREATMENT-C.md and do not go away
+  found_by: |-
+    producer_gate (self-recorded)
+  class_as_recorded: |-
+    known renderer limitation
+  repaired: |-
+    no — recurs as RGV6-19 (P2)
+  promoted: |-
+    not_promoted
+
+- id: CQ1-24
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: coverage_asserted_but_never_verified
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    RENTOK-CREATIVE-QUALITY-001 (method)
+  date: 2026-09-21
+  source: |-
+    .../07-DIAGNOSIS-AND-ROUTE.md §5 capability risks
+  verbatim: |-
+    a strong 7-s beat does not guarantee a strong 30-s film — the 30-s cut has five obstacle beats and the same customer will judge pacing across all of them
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    honest capability risk
+  repaired: |-
+    n/a
+  promoted: |-
+    not_promoted
+
+# ───────────────────────────── MDR8 · AGY-2026-09-22-MOKOBARA-DEEPREAD-001 (today, on disk) ─────────────────────────────
+
+- id: MDR8-01
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: character_identity_drifts_between_shots
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/HUMAN-VERDICT-V1.md (C1)
+  verbatim: |-
+    two person. the chracter was young and then gotten old
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    identity discontinuity between separately generated beats; earliest stage 4 (route) — no identity lock beyond a reference still
+  repaired: |-
+    no — v1 REJECTED; fix 5 proposed (Stage 4 risk order must include identity-across-shots)
+  promoted: |-
+    n/a — no PROMOTION-QUEUE exists for this job yet
+
+- id: MDR8-02
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: prompt_instruction_ignored_by_the_model
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/HUMAN-VERDICT-V1.md (C2)
+  verbatim: |-
+    bag was not closed/zipped properly- AI slops
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    the bag is carried open/gaping in beats where the board says it is shut; earliest stage 3 (board)
+  repaired: |-
+    no
+  promoted: |-
+    n/a
+
+- id: MDR8-03
+  bucket: B5
+  bucket_name: |-
+    A claim about the real world asserted, never sourced
+  failure_mode: product_fact_asserted_without_a_source
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/HUMAN-VERDICT-V1.md (C3) + RCA-V1.md §3
+  verbatim: |-
+    "it also opens weirdly. i dont think so there is a zip there" — board asserted "ONE long zip running the full height of the bag's side"; the product page says "180 degree flat opening"
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    the opening mechanism is wrong for the real product; earliest stage 2 (facts) — asserted, not sourced; a Controller error, not a model failure
+  repaired: |-
+    no — fixes 1 and 2 proposed (required physical_facts block; every physical noun traces to a fact or is declared invented)
+  promoted: |-
+    n/a
+
+- id: MDR8-04
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: eyeline_not_boarded
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/HUMAN-VERDICT-V1.md (C4)
+  verbatim: |-
+    photo he is showing to camera not looking hinself
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    beat 3 plays the photograph to camera; earliest stage 3 — the neutral-camera claim was cited but not carried into the beat's words
+  repaired: |-
+    no — fix 4 proposed (per-beat eyeline required)
+  promoted: |-
+    n/a
+
+- id: MDR8-05
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: the_world_was_never_specified
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/HUMAN-VERDICT-V1.md (C5)
+  verbatim: |-
+    also, it looks like a drain and not sea.
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    the location reads as a channel/culvert, not an open ocean shore; earliest stage 3 (board anchor)
+  repaired: |-
+    no — fix 3 proposed (board gains a `world` block)
+  promoted: |-
+    n/a
+
+- id: MDR8-06
+  bucket: B4
+  bucket_name: |-
+    The plan never said it
+  failure_mode: the_world_was_never_specified
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/HUMAN-VERDICT-V1.md (C6)
+  verbatim: |-
+    the items out of bag are modern. completely lost the odyssey refrence
+  found_by: |-
+    customer
+  class_as_recorded: |-
+    most damaging of the six; earliest stage 3 — the board listed modern props by construction; no Canon check covers prop period
+  repaired: |-
+    no — fix 3 proposed
+  promoted: |-
+    n/a
+
+- id: MDR8-07
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: prompt_instruction_ignored_by_the_model
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (B, beat 1)
+  verbatim: |-
+    bag standing upright in the surf, clean, no yellow visible [board asked for half-buried in wet sand, side-on, one thread of yellow]
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    PARTIAL — pose and yellow missed
+  repaired: |-
+    no
+  promoted: |-
+    n/a
+
+- id: MDR8-08
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: prop_or_product_continuity_drifts_between_shots
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (B, beat 5)
+  verbatim: |-
+    at 22.5 s the bag briefly reads as a different, darker roll-top bag
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    PARTIAL (product fidelity)
+  repaired: |-
+    no
+  promoted: |-
+    n/a
+
+- id: MDR8-09
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: prop_or_product_continuity_drifts_between_shots
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (B, beat 6)
+  verbatim: |-
+    the raft is now bamboo, not the driftwood of beat 5
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    PARTIAL — raft changes between beats
+  repaired: |-
+    no
+  promoted: |-
+    n/a
+
+- id: MDR8-10
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: character_identity_drifts_between_shots
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (C, constraints)
+  verbatim: |-
+    'The EXACT same man' in every prompt — FAIL — at least three distinct men: b2 (young, dark), b3 (older, grey-bearded), b4 (the hero still's man)
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    declared-constraint FAIL
+  repaired: |-
+    no
+  promoted: |-
+    n/a
+
+- id: MDR8-11
+  bucket: B3
+  bucket_name: |-
+    Nothing binds one generated asset to the next
+  failure_mode: prop_or_product_continuity_drifts_between_shots
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (C, constraints)
+  verbatim: |-
+    opening mechanism inconsistent: a side slot in b4, a 180 degree flat clamshell in b3/b5
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    declared-constraint PARTIAL ('The EXACT same backpack')
+  repaired: |-
+    no
+  promoted: |-
+    n/a
+
+- id: MDR8-12
+  bucket: B10
+  bucket_name: |-
+    A check that could not, or did not, run
+  failure_mode: no_human_ear_on_the_delivered_audio
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (C, constraints)
+  verbatim: |-
+    audio content by ear (is there any speech or singing?) — NOT CHECKED — I cannot listen ... this needs a human ear or a speech detector before release
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    QA coverage gap (the one cell not checkable)
+  repaired: |-
+    no — same gap as MOKO7-16 and RGB5-27
+  promoted: |-
+    n/a
+
+- id: MDR8-13
+  bucket: B2
+  bucket_name: |-
+    Generative output never checked against its own prompt
+  failure_mode: mandatory_event_never_happens_on_screen
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (D, M1)
+  verbatim: |-
+    the hand-repaired strap is visible in b1; the *touch* that says 'his' was never shot
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    mandatory item M1 PARTIAL
+  repaired: |-
+    no
+  promoted: |-
+    n/a
+
+- id: MDR8-14
+  bucket: B7
+  bucket_name: |-
+    A route asked for work its qualification never covered
+  failure_mode: route_cannot_meet_the_demand
+  recurrence: RECURRED-NOTE-ONLY
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (D, M5) + RCA-V1.md §6
+  verbatim: |-
+    arms-in-bag failed 4 paid attempts; carried instead by a pole twice the bag's length
+  found_by: |-
+    producer_gate (micro-qualification, refused at USD 0.93)
+  class_as_recorded: |-
+    mandatory item M5 PARTIAL, by declared deviation; the micro-qualification gate worked
+  repaired: |-
+    no — deviation declared; the same defect case 007 shipped unrepaired
+  promoted: |-
+    n/a
+
+- id: MDR8-15
+  bucket: B6
+  bucket_name: |-
+    Not good enough by human judgement
+  failure_mode: overall_verdict_not_good_enough
+  recurrence: RECURRED-NO-FIX
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/REVIEW-V1-COMPLETE.md (E, A1/A2/A3)
+  verbatim: |-
+    A1 the bag is recognisably the Transit Backpack in every beat — NO; A2 the gag reads — NO; A3 with sound off the story reads — PARTIAL ... the changing man breaks it
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    Stage 1 acceptance statements failed
+  repaired: |-
+    no — 'The film is not deliverable'
+  promoted: |-
+    n/a
+
+- id: MDR8-16
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: gates_check_the_form_of_a_plan_not_the_truth_of_its_world
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/RCA-V1.md (RC-1)
+  verbatim: |-
+    The new machinery checks the *form* of a plan, never the *truth of the world* it describes ... the stage forms passed first time, all four stages, with all six defects already inside them
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    root cause RC-1 (gate design gap)
+  repaired: |-
+    no — fixes 1-4 proposed, USD 0 form and gate changes
+  promoted: |-
+    n/a
+
+- id: MDR8-17
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: work_split_across_sessions_lost_the_handoff
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/RCA-V1.md (RC-2)
+  verbatim: |-
+    Facts and the board were written by different sessions, and the physical world fell in the gap ... Stage 2 recorded 16 facts — all commercial. Not one describes how the product opens
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    root cause RC-2 (orchestration / session split)
+  repaired: |-
+    no — fix 1 proposed
+  promoted: |-
+    n/a
+
+- id: MDR8-18
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: the_deep_reading_was_scoped_to_craft_not_to_the_world
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/RCA-V1.md (RC-3)
+  verbatim: |-
+    The reading was aimed at craft, not at the world ... Deep reading answers the questions you ask it.
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    root cause RC-3 (Canon reading design)
+  repaired: |-
+    no
+  promoted: |-
+    n/a
+
+- id: MDR8-19
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: our_evaluation_rubric_scored_the_wrong_thing
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/RCA-V1.md (RC-4)
+  verbatim: |-
+    Our own tests optimised for the wrong thing ... Nothing in the rubric scored world consistency, product truth or eyelines, so the method we selected is tuned for plans that read well
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    root cause RC-4 (blind-judge rubric gap)
+  repaired: |-
+    no — fix 7 proposed
+  promoted: |-
+    n/a
+
+- id: MDR8-20
+  bucket: B8
+  bucket_name: |-
+    Process, orchestration, records and spend
+  failure_mode: no_customer_dossier_carries_product_truth_between_jobs
+  recurrence: NEW
+  job: |-
+    AGY-2026-09-22-MOKOBARA-DEEPREAD-001
+  date: 2026-09-22
+  source: |-
+    agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/RCA-V1.md (RC-5)
+  verbatim: |-
+    Nothing carries a customer's product truth between jobs ... There is no per-customer, per-product dossier that a later job inherits — so every job re-earns the same facts, and can re-lose them
+  found_by: |-
+    controller
+  class_as_recorded: |-
+    root cause RC-5 (no customer dossier)
+  repaired: |-
+    no — fix 6 proposed
+  promoted: |-
+    n/a
+
+# ───────────────────────────────────────── counts ─────────────────────────────────────────
+
+counts_per_job:
+  UPWORK-INTRO-001: 32
+  UPWORK-PORTFOLIO-002: 26
+  CUMINCO-CHOPSTICKS-003: 17
+  RENTOK-GAME-A-004: 27
+  RENTOK-GAME-B-005: 29
+  RENTOK-GAME-V2-006: 26
+  MOKOBARA-ODYSSEY-007: 24
+  RENTOK-CREATIVE-QUALITY-001 (experiment, 4 treatments): 24
+  AGY-2026-09-22-MOKOBARA-DEEPREAD-001 (today, on disk): 20
+total_rows: 225
+
+# Rows whose class the record itself leaves ambiguous. Nothing here is a judgement; each names the ambiguity.
+unclassifiable_or_ambiguous:
+  - id: UPW1-09
+    why: |-
+      SD-09 is classed infrastructure_transient, but the record notes it was written to the ledger as `failed_or_filtered` — an ambiguous label that is the stated reason TRANSIENT_ERROR_CLASSIFICATION was promoted. Whether it billed is 'unknown' (OUTCOME.yaml).
+  - id: UPW1-12 / UPW1-19
+    why: |-
+      SD-12 classes the V1/V2 presenter problem as pipeline_failure/orchestration with a model_note; REVISION-TRACE classes the same observation (V2 chain degraded) as model_generation. Two records, two classes; both copied, kept as two rows.
+  - id: UPW1-05
+    why: |-
+      SD-05 says pipeline_failure/routing_voice_selection while REVISION-TRACE's V3 row calls the same defect model_audio. The record itself states the distinction is contested.
+  - id: UPW2-22 / UPW2-23
+    why: |-
+      SD-HD-13a/13b each carry TWO classes in one record: media_model_failure plus an `also:` pipeline_failure/deterministic_qa. Not a single class.
+  - id: RGA4-14
+    why: |-
+      D-5's `not_a_model_failure` field is the string 'partly — the sheet hid the book in one pose (model), the flicker is the compositor's (pipeline)'. Neither class alone.
+  - id: RGB5-07
+    why: |-
+      att-013's `not_a_model_failure` field is the string 'a provider refusal, classed provider_refusal, counts_against_route_quality false' — recorded as infrastructure_transient but the field does not answer yes/no.
+  - id: RGV6-06
+    why: |-
+      LJ-15 is explicitly 'not a shipped defect' — a gate that existed and passed, promoted anyway. It is in the defect list but has repaired: n-a and no observed failure.
+  - id: RGV6-07
+    why: |-
+      N5's `not_a_model_failure` is 'partly — the model drew a smaller figure on a 16:9 sheet ...; the decision to mix them is the pipeline's'.
+  - id: RGV6-26
+    why: |-
+      The packet discrepancy: JOB.yaml/LEARNING-PACKET say six defects were put to the customer; the checker's table lists ten plus a limitation plus three notes. Which six is chat-only and NOT on disk, so no row can be marked customer-declined with certainty.
+  - id: MOKO7-02
+    why: |-
+      DF-8's `not_a_model_failure` is 'partly — the clip did what a 4-s clip can; the ask exceeded it'. Split between generation and board.
+  - id: MOKO7-19
+    why: |-
+      'still some minor issues but excellent. pass/' — the customer's v2 note is unitemised and the case explicitly refuses to map it onto the recorded open items. The defect(s) it refers to are unknown.
+  - id: MOKO7-24
+    why: |-
+      The copied wordmark on two stills is recorded only inside REVISION-TRACE's generation_status prose ('painted out by code'), with no defect id and no class assigned anywhere.
+  - id: CQ1-*
+    why: |-
+      The experiment has no SYSTEM-DEFECTS.yaml and no promotion queue. Every CQ1 row's class is the evaluator's score dimension or the diagnosis's cause label, not a defect class from the eleven fixed classes.
+  - id: MDR8-*
+    why: |-
+      Today's job is uncommitted and has no SYSTEM-DEFECTS.yaml, REVISION-TRACE.yaml or PROMOTION-QUEUE.yaml yet. Classes are copied from the RCA's 'earliest stage / root cause' columns, which are not the eleven fixed root-cause classes.
+  - id: RGB5-08
+    why: |-
+      PD-02 is a roster labelling disagreement between two files that the Controller ruled on; it is recorded in SYSTEM-DEFECTS as a pipeline_failure but 'repair: none here — proposal only'. Whether it is a defect of this job or of eval/** is not settled in the record.
+
+reading_gaps:
+  - "No file could not be read. Every case directory on main and every named branch path resolved."
+  - "Not extracted (out of scope of the named sources): per-attempt ATTEMPTS.jsonl/LEDGER.jsonl rows, qa/ image evidence, EVIDENCE-MAP.md, TIME-AND-COST.yaml, ACCEPTED-TEMPLATE.yaml."
+  - "CUMINCO-CHOPSTICKS-003 has no branch CHECK-*.md or stages/05-*.md (the job predates the checker step); its branch evidence is JOB.yaml qa.defects, which duplicates SYSTEM-DEFECTS.yaml SD-01..SD-09."
+  - "MOKOBARA-ODYSSEY-007 v2 was never independently re-checked: no CHECK-STAGE-6.md exists on the branch. The customer's 'pass' is the only judgment on v2."
+  - "Which six of the ten RENTOK-GAME-V2-006 checker defects were put to the customer is chat-only and not on disk."

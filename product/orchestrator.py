@@ -187,8 +187,8 @@ class Orchestrator:
             notes = _normalise_direction(d, intent, brief)
             review = self.llm.call(job_id, "direction_reviewer", {"BRIEF": _brief_for_model(brief), "INTENT": _public(intent),
                                                                    "DIRECTION": _public(d)}, max_tokens=6000)
-            if review["verdict"] == "revise" and any(i["severity"] == "blocker" for i in review.get("issues", [])):
-                ctx["INDEPENDENT_REVIEW"] = review.get("issues")
+            if _blockers(review):
+                ctx["INDEPENDENT_REVIEW"] = {"issues": review.get("issues"), "world_truth_blockers": truth_blockers(review)}
                 ctx["NOTE"] = "An independent reviewer blocked this direction. Fix every blocker; keep what works."
                 d = self.llm.call(job_id, "creative_director", ctx, knowledge=packs["payload"], media=refs + self._brief_docs(job_id),
                               max_tokens=16000)
@@ -202,12 +202,20 @@ class Orchestrator:
         d["_normalisation_notes"] = notes
         self.store.put_artifact(job_id, "direction", d, "creative_director")
         self.store.put_artifact(job_id, "direction_review", review, "direction_reviewer")
+        still_blocked = _blockers(review)
         q = self.estimate(job_id, d, intent)
         self.store.put_artifact(job_id, "quote", q, "system")
-        self._preview(job_id, d, intent)
+        if not still_blocked:
+            self._preview(job_id, d, intent)
         acct = self.store.account(self.store.job(job_id)["account_id"])
         cap = dec(brief.get("max_budget_usd") or 0)
-        if acct["auto_approve"] and cap >= dec(q["recommended_budget_usd"]) and not _blockers(review):
+        if still_blocked:
+            # PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND: a direction the independent reviewer still blocks after the revision round
+            # never reaches the customer's approve button; a person reads it and either redirects or overrides with a reason.
+            why = "; ".join([i.get("issue", "") for i in review.get("issues", []) if i.get("severity") == "blocker"] + truth_blockers(review))
+            self._pause(job_id, "directing", "paused_operator", f"independent review blocked the direction: {why[:600]}")
+            return
+        if acct["auto_approve"] and cap >= dec(q["recommended_budget_usd"]):
             self.approve(job_id, by="auto-approve (account setting)", budget_usd=cap)
             return
         self.store.transition(job_id, "directing", "awaiting_approval", actor="system")
@@ -259,6 +267,9 @@ class Orchestrator:
 
     def approve(self, job_id, *, by: str, budget_usd, note: str = ""):
         job = self.store.job(job_id)
+        review = self.store.artifact(job_id, "direction_review") or {}
+        if _blockers(review) and not self.store.artifact(job_id, "direction_override"):
+            raise PermissionError("the independent review blocked this direction; it cannot be approved until our team resolves it")
         acct = self.store.account(job["account_id"])
         budget = dec(budget_usd)
         if budget > dec(acct["ceiling_usd"]):
@@ -269,6 +280,17 @@ class Orchestrator:
                               data={"budget_usd": money(budget), "note": note, "direction_version": len(self.store.artifact_versions(job_id, "direction"))},
                               budget_usd=money(max(budget, committed)), budget_authorised_by=by, budget_authorised_at=utc_now(),
                               approved_at=utc_now())
+
+    def override_direction(self, job_id, *, by: str, reason: str):
+        """An operator read the blocked direction and releases it to the customer anyway — named and reasoned, never silent."""
+        if len(reason.strip()) < 20:
+            raise ValueError("an override needs a reason a colleague could audit (at least a sentence)")
+        self.store.put_artifact(job_id, "direction_override", {"by": by, "reason": reason.strip(),
+                                                               "blockers": truth_blockers(self.store.artifact(job_id, "direction_review") or {})}, by)
+        if not self.store.assets(job_id, role="preview"):
+            self._preview(job_id, self.store.artifact(job_id, "direction"), self.store.artifact(job_id, "intent"))
+        self.store.transition(job_id, "paused_operator", "awaiting_approval", actor=by, data={"override": reason.strip()}, pause_reason=None)
+        self.store.timing_start(job_id, "customer_wait", "approval")
 
     def request_direction_change(self, job_id, text: str, by: str):
         self.store.put_artifact(job_id, "concept_change", {"request": text, "by": by}, by)
@@ -908,8 +930,11 @@ def _public(d: dict) -> dict:
     return {k: v for k, v in d.items() if not k.startswith("_")}
 
 
+truth_blockers = verify.truth_blockers
+
+
 def _blockers(review) -> bool:
-    return any(i.get("severity") == "blocker" for i in review.get("issues", []))
+    return any(i.get("severity") == "blocker" for i in review.get("issues", [])) or bool(truth_blockers(review))
 
 
 def _brief_for_model(brief: dict) -> dict:

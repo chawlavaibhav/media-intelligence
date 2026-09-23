@@ -144,6 +144,13 @@ class WebJourney(unittest.TestCase):
                 op.req("POST", f"/ops/jobs/{jid}/waive", {"csrf": tok, "asset_id": r["asset_id"], "check_id": b["check_id"],
                                                           "reason": "dry run — simulated media, nothing to verify"})
         op.req("POST", f"/ops/jobs/{jid}/release", {"csrf": tok})
+        # the listen cannot be waived: the film is still held until a person records what they heard
+        self.assertEqual(self.e.state(jid), "operator_hold")
+        self.assertIn(b"This cannot be waived", op.req("GET", f"/ops/jobs/{jid}")["body"])
+        for r in g["results"]:
+            op.req("POST", f"/ops/jobs/{jid}/attest", {"csrf": tok, "asset_id": r["asset_id"], "check_id": "audio_heard_by_person",
+                                                       "note": "dry run: test tone and pink noise, no speech", "outcome": "PASS"})
+        op.req("POST", f"/ops/jobs/{jid}/release", {"csrf": tok})
         self.assertEqual(self.e.state(jid), "ready_for_review")
         self.assertTrue(self.app.jinja)  # templates compiled
 

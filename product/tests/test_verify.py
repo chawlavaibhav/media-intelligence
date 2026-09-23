@@ -18,10 +18,34 @@ class ControlRegister(unittest.TestCase):
             case = Path(f).parent.name
             for d in yaml.safe_load(open(f)).get("defects") or []:
                 known.add(f"{case}:{d['id']}")
-        cited = {s for c in verify.controls().values() for s in c["sources"] if not s.startswith(("runtime/", "product/"))}
+        cited = {s for c in verify.controls().values() for s in c["sources"] if not s.startswith(("runtime/", "product/", "atlas:"))}
         self.assertEqual(sorted(known - cited), [])
         self.assertEqual(sorted(cited - known), [])
         self.assertGreaterEqual(len(known), 120)
+
+    def test_the_recovered_atlas_is_reconciled_row_for_row_with_its_own_identifiers(self):
+        atlas = yaml.safe_load(open(REPO / "production-learning/atlas/2026-09-22/FAILURE-ATLAS-CLASSIFIED.yaml"))["defects"]
+        reg = yaml.safe_load(open(verify.CONTROLS_FILE))
+        modes = reg["atlas_reconciliation"]["modes"]
+        ids = {r["id"] for r in atlas}
+        self.assertEqual((len(atlas), len({r["failure_mode"] for r in atlas})), (225, 104))
+        self.assertEqual({m["mode"] for m in modes}, {r["failure_mode"] for r in atlas})
+        listed = [rid for m in modes for rid in m["rows"]]
+        self.assertEqual(sorted(listed), sorted(ids))                       # every row once, no invented row
+        by_row = {r["id"]: r for r in atlas}
+        for m in modes:
+            self.assertTrue(all(by_row[r]["failure_mode"] == m["mode"] and by_row[r]["bucket"] == m["bucket"] for r in m["rows"]), m["mode"])
+            self.assertIn(m["p1"], ("enforced", "reviewer_obligation", "by_construction", "excluded_by_scope", "not_applicable_p1",
+                                    "human_judgement", "operator_process", "deferred"))
+            for c in m["controls"]:
+                self.assertIn(c, verify.controls(), m["mode"])
+            if m["beta_critical"]:
+                # a beta-critical mechanism needs a machine or a named person behind it — never prose, never "later"
+                self.assertIn(m["p1"], ("enforced", "reviewer_obligation", "by_construction"), m["mode"])
+                self.assertTrue(any(verify.controls()[c]["status"] in ("enforced", "reviewer_obligation", "by_construction")
+                                    for c in m["controls"]), m["mode"])
+        cited = [s[6:] for c in verify.controls().values() for s in c["sources"] if s.startswith("atlas:")]
+        self.assertTrue(cited and set(cited) <= ids)
 
     def test_every_control_names_a_known_status(self):
         for c in verify.controls().values():
@@ -220,7 +244,8 @@ class EvidenceBackedPass(unittest.TestCase):
         d = {"copy_deck": [{"id": "c1", "text": "Pack less. Go further."}, {"id": "c2", "text": "₹2,499"}]}
         self.assertEqual(verify.exact_copy_match(["₹2,499"], d, ["Pack less. Go further."])["status"], "FAIL")
         self.assertEqual(verify.exact_copy_match(["₹2,499"], d, None)["status"], "NOT_VERIFIED")
-        self.assertEqual(verify.exact_copy_match(["₹2,499"], d, ["₹2,499"])["status"], "PASS")
+        self.assertEqual(verify.exact_copy_match(["₹2,499"], d, ["₹2,499"])["status"], "FAIL")   # approved line c1 dropped
+        self.assertEqual(verify.exact_copy_match(["₹2,499"], d, ["₹2,499", "Pack less. Go further."])["status"], "PASS")
 
     def test_a_reviewer_that_says_nothing_about_a_property_does_not_pass_it(self):
         review = {"verdict": "pass", "modalities_evaluated": ["video_frames", "audio"], "_call": {"isolated": True},
@@ -262,3 +287,40 @@ class HistoricalRealMedia(unittest.TestCase):
             st = {r["check_id"]: r["status"] for r in rows}
             self.assertEqual((st["delivery_conformance"], st["no_black_frames"], st["loudness_true_peak"], st["container_edit_lists"]),
                              ("PASS", "PASS", "PASS", "PASS"))
+
+
+class PersonChecksCannotBeWaived(unittest.TestCase):
+    def test_a_waiver_does_not_discharge_the_listen_but_a_recorded_listen_does(self):
+        e = Env()
+        try:
+            jid = e.submit()
+            p = e.dir / "f.mp4"; p.write_bytes(b"film")
+            aid = e.store.add_asset(jid, path=p, kind="video", source="composed", content_type="video/mp4")
+            req = {"audio_heard_by_person": "AUDIO_REVIEWED_BY_EAR"}
+            e.store.waive(jid, aid, "audio_heard_by_person", "operator:x", "no time to listen, customer is waiting")
+            self.assertFalse(verify.gateway(e.store, jid, aid, req)["ready"])
+            with self.assertRaises(ValueError):
+                verify.attest(e.store, jid, aid, "audio_heard_by_person", by="operator:x", note="ok")
+            verify.attest(e.store, jid, aid, "audio_heard_by_person", by="operator:x",
+                          note="full listen on headphones: surf, wind and the music bed only")
+            g = verify.gateway(e.store, jid, aid, req)
+            self.assertTrue(g["ready"])
+            self.assertEqual(g["table"][0]["runner"], "person:operator:x")
+        finally:
+            e.close()
+
+
+_MDR8 = next((b / "media-intelligence-mokobara-v3/agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/gen/final/mokobara-deepread-9x16-30s.mp4"
+              for b in (REPO.parent, REPO.parent.parent)
+              if (b / "media-intelligence-mokobara-v3/agency/jobs/AGY-2026-09-22-MOKOBARA-DEEPREAD-001/gen/final/mokobara-deepread-9x16-30s.mp4").exists()),
+             None)
+
+
+@unittest.skipUnless(_MDR8, "the rejected MDR8 film is not on this host")
+class HistoricalRejectedFilm(unittest.TestCase):
+    def test_the_rejected_mdr8_film_fails_true_peak_which_the_atlas_never_recorded(self):
+        # codec_true_peak_overshoot, 5th occurrence (atlas rows: 4, none on MDR8). Found 2026-09-23 by running the P1 checks.
+        rows = {r["check_id"]: r for r in verify.film_checks(_MDR8, cuts=[3.58, 8.08, 12.58, 19.08, 23.58], source_sizes=[[720, 1280]],
+                                                              delivered=(1080, 1920), planned_s=30.0, card_in_s=26.2)}
+        self.assertEqual(rows["loudness_true_peak"]["status"], "FAIL", rows["loudness_true_peak"]["detail"])
+        self.assertEqual(rows["no_black_frames"]["status"], "PASS")

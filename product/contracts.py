@@ -154,6 +154,14 @@ DIRECTION_REVIEW = obj({
     "issues": {"type": "array", "items": obj({"severity": {"type": "string", "enum": ["blocker", "major", "minor"]},
                                               "where": S, "issue": S, "fix": S})},
     "feasibility_risks": SA,
+    "world_truth": obj({
+        "product_claims": {"type": "array", "items": obj({
+            "claim": S, "where": S, "source": {"type": "string", "enum": ["customer_fact", "product_photo", "none"]}})},
+        "world_specified": {"type": "string", "enum": ["yes", "no", "n/a"]},
+        "world_note": S,
+        "prop_whereabouts_gaps": {"type": "array", "items": obj({"prop": S, "between": S, "gap": S})},
+        "eyeline_or_staging_issues": {"type": "array", "items": obj({"beat": S, "issue": S})},
+    }),
 })
 
 DIRECTION_REVIEW_ROLE = """You are an independent reviewer at a commercial production company. You did not write this creative
@@ -161,7 +169,15 @@ direction. Before any money is spent, check it against the customer's INTENT: do
 beat/element; is exact copy preserved; does it answer the objective and audience; would the idea be understood in the first
 seconds (or at a glance, for a still); is each film beat something a 4–6 s image-to-video clip can actually complete from its
 first frame; is the product kept absent before its reveal and intact after; is there any planned lettering inside generated
-pictures, speech, or an unsupported feature? A `blocker` means production must not start. Output JSON only."""
+pictures, speech, or an unsupported feature? A `blocker` means production must not start.
+Then check the TRUTH of the world the plan describes, not only its form (world_truth):
+- product_claims: every physical feature, part or behaviour of the product the plan shows or says (how it opens, where a
+  zip runs, what fits inside, materials, colours) with its source — customer_fact (in INTENT/BRIEF facts), product_photo
+  (visible in the supplied photos as described), or none. Anything the planner assumed is `none`.
+- world_specified: is the place concrete enough that a generator draws the right thing (sea vs. drain, time, weather)?
+- prop_whereabouts_gaps: any object whose position between beats is unaccounted for (it leaves the bag, then is somewhere).
+- eyeline_or_staging_issues: who looks at what, who holds what, whether the action reads as intended.
+Output JSON only."""
 
 # ── Generated-output inspection (per still / clip) ────────────────────────────
 INSPECT = obj({
@@ -199,6 +215,8 @@ OUTPUT_REVIEW = obj({
                        "evidence": S}),
     "model_lettering": obj({"present": {"type": "string", "enum": ["yes", "no", "cannot_determine"]}, "evidence": S}),
     "subject_obstructed": obj({"present": {"type": "string", "enum": ["yes", "no", "cannot_determine"]}, "evidence": S}),
+    "product_across_shots": obj({"verdict": {"type": "string", "enum": ["consistent", "inconsistent", "single_shot", "cannot_determine"]},
+                                 "evidence": S}),
     "commercial_read": S,
     "audio": obj({"speech_or_singing": {"type": "string", "enum": ["yes", "no", "cannot_determine", "n/a"]}, "notes": S}),
     "summary_for_customer": S,
@@ -213,7 +231,9 @@ warped, unrequested, or lettered by the model; is the edit coherent; for sound, 
 be none), and is the mix clean at the cuts. Passed technical checks are not evidence of quality. For every defect give where
 (beat/time/element), severity, the earliest stage that caused it, and one concrete repair. `pass` only if a demanding
 customer would accept it as is. If you cannot see or hear something, list it as cannot_determine. Answer
-product_fidelity, continuity, model_lettering and subject_obstructed (is the product or subject covered, cut off or blocked by
+product_fidelity, continuity, model_lettering (any lettering OR logo/wordmark the model drew — only code-set text and the
+supplied logo file are allowed), product_across_shots (is it the same product, same colour/shape/opening, in every shot?) and
+subject_obstructed (is the product or subject covered, cut off or blocked by
 text, graphics or other objects?) explicitly with the evidence you saw (time/region): these answers are what
 the delivery decision rests on, and a question you did not answer counts as unverified, never as passed. Output JSON only."""
 

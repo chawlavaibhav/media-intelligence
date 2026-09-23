@@ -40,6 +40,7 @@ def required_checks(media_kind: str, *, mandatory_ids: list, has_copy: bool, has
     for m in mandatory_ids:
         req[f"mandatory:{m}"] = "MANDATORY_EVENT_VISIBILITY_LJ_LINE"
     req.update(PROCESS_CONTROLS)
+    req["process:direction_truth"] = "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND"
     req["subject_unobstructed"] = "SUBJECT_OBSTRUCTION"
     if media_kind == "image":
         req["format_revalidated"] = "FORMAT_SPECIFIC_REVALIDATION"
@@ -59,7 +60,27 @@ def required_checks(media_kind: str, *, mandatory_ids: list, has_copy: bool, has
         if has_character:
             req["character_continuity"] = "CHARACTER_CONTINUITY"
         req.update(PROCESS_CONTROLS_VIDEO)
+        req["product_across_shots"] = "PRODUCT_CONTINUITY_ACROSS_SHOTS"
+        req["audio_heard_by_person"] = "AUDIO_REVIEWED_BY_EAR"
     return req
+
+
+# Obligations only a person can discharge, by doing the thing — never by a waiver. The atlas's most repeated mechanism
+# (no_human_ear_on_the_delivered_audio: six jobs) recurred because "nobody could listen" was always waivable in effect.
+NON_WAIVABLE = {"audio_heard_by_person"}
+ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on: no speech, no singing, no clicks or holes at the cuts, "
+                                       "music suits the story"}
+
+
+def attest(store: Store, job_id: str, asset_id: str, check_id: str, *, by: str, note: str, outcome: str = "PASS"):
+    """A named person performed the check on this exact file and recorded what they found."""
+    if check_id not in ATTESTABLE:
+        raise ValueError(f"{check_id} is not a person-performed check")
+    if len(note.strip()) < 15:
+        raise ValueError("say what you heard/saw (at least a sentence)")
+    store.record_check(job_id, asset_id, check_id=check_id, status="PASS" if outcome == "PASS" else "FAIL", blocking=True,
+                       runner=f"person:{by}", detail=note.strip()[:1000], evidence={"by": by, "statement": ATTESTABLE[check_id]},
+                       control_ids=["AUDIO_REVIEWED_BY_EAR"])
 
 
 def record_rows(store: Store, job_id: str, asset_id: str, rows: list, *, runner: str, prefix: str = ""):
@@ -101,8 +122,11 @@ def exact_copy_match(exact_strings: list, direction: dict, rendered: list | None
     drawn = set(rendered)
     not_in_deck = [s for s in exact_strings if s and s not in deck]
     not_drawn = [s for s in exact_strings if s and s not in drawn]
+    # atlas approved_copy_line_not_carried_into_the_cut (UPW1-25): every approved deck line is placed somewhere
+    dropped = [t for t in deck if t and t not in drawn and t not in exact_strings]
     problems = ([f"altered or missing in the copy deck: {not_in_deck}"] if not_in_deck else []) + \
-               ([f"not drawn on this file: {not_drawn}"] if not_drawn else [])
+               ([f"not drawn on this file: {not_drawn}"] if not_drawn else []) + \
+               ([f"approved copy lines not carried into the cut: {dropped}"] if dropped else [])
     return {"check_id": "exact_copy_match", "control": "EXACT_COPY_MATCH", "status": "FAIL" if problems else "PASS",
             "detail": "; ".join(problems) or f"{len(exact_strings)} customer strings drawn verbatim on this file",
             "evidence": {"rendered": sorted(drawn), "required": list(exact_strings)}}
@@ -149,6 +173,9 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
         bad.append(f"video {p['video_codec']}/{p['pix_fmt']} (needs h264/yuv420p to play everywhere)")
     if not p["has_audio"] or p["audio_codec"] != "aac":
         bad.append(f"audio {p['audio_codec'] or 'missing'} (needs AAC)")
+    fr = media.frame_rates(path)
+    if fr and fr["r"] != fr["avg"]:
+        bad.append(f"uneven frame timing: nominal {fr['r']} vs average {fr['avg']}")
     if planned_s is not None and abs(p["duration_s"] - planned_s) > 0.25:
         bad.append(f"duration {p['duration_s']:.2f}s ≠ planned {planned_s:.2f}s")
     rows.append({"check_id": "delivery_conformance", "control": "DELIVERY_CONFORMANCE", "status": "FAIL" if bad else "PASS",
@@ -249,9 +276,13 @@ def review_rows(review: dict, *, mandatory_ids: list, media_kind: str, asset_sha
         mods = [m.lower() for m in review.get("modalities_evaluated", [])]
         sp = (review.get("audio") or {}).get("speech_or_singing")
         if not simulated and "audio" not in mods:
-            nv("audio_reviewed", "AUDIO_REVIEWED_BY_EAR", "the reviewer did not listen to the audio; a human listen is required")
+            rows.append({"check_id": "audio_reviewed", "control": "AUDIO_REVIEWED_BY_EAR", "status": "NOT_VERIFIED", "blocking": False,
+                         "detail": "the model reviewer did not listen; the person's listen (audio_heard_by_person) decides"})
         else:
             row("audio_reviewed", "AUDIO_REVIEWED_BY_EAR", sp, ("no",), ("yes",), f"speech/singing: {sp}; {(review.get('audio') or {}).get('notes', '')}")
+        pa = review.get("product_across_shots") if isinstance(review.get("product_across_shots"), dict) else {}
+        row("product_across_shots", "PRODUCT_CONTINUITY_ACROSS_SHOTS", pa.get("verdict"), ("consistent", "single_shot"), ("inconsistent",),
+            f"{pa.get('verdict')}: {pa.get('evidence', '')}")
         ct = review.get("continuity") if isinstance(review.get("continuity"), dict) else {}
         row("character_continuity", "CHARACTER_CONTINUITY", ct.get("verdict"), ("consistent",), ("inconsistent",),
             f"{ct.get('verdict')}: {ct.get('evidence', '')}")
@@ -267,6 +298,18 @@ def format_revalidated(store: Store, asset_id: str, fmt: str) -> dict:
     ok = lay.get("canvas") == want and len(gates) >= 3
     return {"check_id": "format_revalidated", "control": "FORMAT_SPECIFIC_REVALIDATION", "status": "PASS" if ok else "FAIL",
             "detail": f"{fmt}: composed on {lay.get('canvas')} (ordered {want}); {len(gates)} compositor gates on this file"}
+
+
+# ── world / product truth of the direction (decided by code from the reviewer's structured answers) ──
+def truth_blockers(review) -> list:
+    """World/product-truth failures, decided by code from the reviewer's structured answers (not by its severity words)."""
+    wt = review.get("world_truth") or {}
+    out = [f"unsourced product claim: {c.get('claim')} ({c.get('where')})" for c in wt.get("product_claims", []) if c.get("source") == "none"]
+    if wt.get("world_specified") == "no":
+        out.append(f"the world is not specified: {wt.get('world_note', '')}")
+    out += [f"{g.get('prop')} unaccounted for {g.get('between')}: {g.get('gap')}" for g in wt.get("prop_whereabouts_gaps", [])]
+    return out
+
 
 
 # ── process controls: proven from the ledger, graph and event log of this job ─────────────────
@@ -313,9 +356,26 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
     add("process:provider_pool", not held and (not streaks or paused),
         f"unsettled reservations: {held or 'none'}; transient runs ≥3: {sorted(set(streaks)) or 'none'}"
         + ("; job paused for the provider" if streaks else ""))
+    # 4. the direction that was paid for had its world/product truth checked before spend (atlas B4/B5, MDR8)
+    dr = store.artifact(job_id, "direction_review") or {}
+    ov = store.artifact(job_id, "direction_override")
+    simulated_dr = (dr.get("world_truth") or {}).get("world_note", "").startswith("simulated")
+    tb = truth_blockers(dr) if dr else ["no direction review on record"]
+    claims = (dr.get("world_truth") or {}).get("product_claims", [])
+    if not dr or simulated_dr:
+        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "NOT_VERIFIED",
+                     "detail": "no independent truth review of the direction" + (" (simulated)" if simulated_dr else "")})
+    elif tb and ov:
+        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG", "blocking": False,
+                     "detail": f"overridden by {ov['by']}: {ov['reason'][:200]} — open: {tb}"})
+    else:
+        add_row = {"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FAIL" if tb else "PASS",
+                   "detail": "; ".join(tb) or f"{len(claims)} product claims, all sourced; world specified; no prop gaps",
+                   "evidence": dr.get("world_truth")}
+        rows.append(add_row)
     if media_kind != "video":
         return rows
-    # 4. a new draw only after the previous take was inspected and rejected
+    # 5. a new draw only after the previous take was inspected and rejected
     rejected = {}
     for e in store.events(job_id, ("take_rejected",)):
         n = json.loads(e["data_json"]).get("node"); rejected[n] = rejected.get(n, 0) + 1
@@ -368,7 +428,7 @@ def gateway(store: Store, job_id: str, asset_id: str, required: dict) -> dict:
         if r is not None and r["asset_sha256"] != sha:
             status = "NOT_VERIFIED"           # a result for another version of the file proves nothing about this one
         is_blocking = (r["blocking"] if r else True) and status in ("FAIL", "NOT_VERIFIED")
-        w = waived.get(cid)
+        w = waived.get(cid) if cid not in NON_WAIVABLE else None
         entry = {"check_id": cid, "control": required.get(cid) or (r["control_ids"] if r else ""), "status": status,
                  "detail": r["detail"] if r else "no result recorded for this exact file", "runner": r["runner"] if r else None,
                  "waived_by": w["by_user"] if w else None, "waiver_reason": w["reason"] if w else None}

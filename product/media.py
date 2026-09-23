@@ -368,6 +368,16 @@ def scene_cuts(path, threshold: float = 0.4) -> list:
     return [float(x) for x in re.findall(r"pts_time:([\d.]+)", r.stderr)]
 
 
+def frame_rates(path) -> dict | None:
+    r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=r_frame_rate,avg_frame_rate",
+                        "-of", "json", str(path)], capture_output=True, text=True)
+    try:
+        st = json.loads(r.stdout)["streams"][0]
+        return {"r": st["r_frame_rate"], "avg": st["avg_frame_rate"]}
+    except (ValueError, KeyError, IndexError):
+        return None
+
+
 def black_spans(path, *, min_s: float = 0.2, pix_th: float = 0.10) -> list:
     """[(start, end)] where the picture is (near) black for ≥ min_s — a dropped or covered picture."""
     r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-vf",

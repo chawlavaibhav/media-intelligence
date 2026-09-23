@@ -36,6 +36,11 @@ def media_engine(tmp: Path):
     from product import compose, media, verify
     if not media.have_ffmpeg():
         raise RuntimeError("ffmpeg/ffprobe not installed — the media engine cannot run on this host")
+    from PIL import features
+    if not features.check("raqm"):
+        raise RuntimeError("Pillow has no raqm text shaping on this host — Devanagari would render unshaped (install libraqm0)")
+    for probe_text, kind in (("₹2,499", "bold"), ("₹185 प्रति लीटर", "regular")):
+        media.measure_text(probe_text, size=48, kind=kind)      # raises if no installed font covers every glyph
     plate = tmp / "plate.png"
     plate.write_bytes(media.sim_image(1080, 1080, seed=3))
     logo = tmp / "logo.svg"
@@ -62,7 +67,8 @@ def media_engine(tmp: Path):
                               supers=[{"png": sup, "t_in": 3.7, "t_out": 6.9}], music=wav, out=tmp / "film.mp4", size=(1080, 1920),
                               card_s=3.0, workdir=tmp / "asm")
     p = media.probe(tmp / "film.mp4")
-    rows = verify.film_checks(tmp / "film.mp4", cuts=rep["cuts_s"], source_sizes=[[720, 1280]], delivered=(1080, 1920))
+    rows = verify.film_checks(tmp / "film.mp4", cuts=rep["cuts_s"], source_sizes=[[720, 1280]], delivered=(1080, 1920),
+                              planned_s=rep["duration_s"], card_in_s=rep["card_in_s"])
     fails = [r for r in rows if r["status"] != "PASS"] + bad + [c for c in card_checks + sup_checks if c["status"] == "FAIL"]
     if fails or abs(p["duration_s"] - rep["duration_s"]) > 0.3 or (p["width"], p["height"]) != (1080, 1920):
         raise RuntimeError(json.dumps({"fails": fails, "probe": p}, default=str)[:1500])

@@ -102,7 +102,7 @@ class App:
             ("POST", r"/jobs/(?P<jid>job_\w+)/(?P<action>answer|approve|direction-change|changes|accept|reject|budget|upload)", self.job_action),
             ("GET", r"/assets/(?P<aid>ast_\w+)(?P<dl>/download)?", self.asset),
             ("GET", r"/ops", self.ops_home), ("GET", r"/ops/jobs/(?P<jid>job_\w+)", self.ops_job),
-            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry)", self.ops_action),
+            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override)", self.ops_action),
             ("POST", r"/ops/accounts", self.ops_account), ("POST", r"/ops/invites", self.ops_invite),
         ]
 
@@ -322,7 +322,7 @@ class App:
                  checks={a: st.checks(a) for a in finals},
                  gateway=[verify.gateway(st, jid, a, gw.get("required", {})) for a in finals],
                  canon=st.artifact(jid, "canon_trace"), dreview=st.artifact(jid, "direction_review"),
-                 metrics=learning.metrics(st, jid), controls=verify.controls())
+                 metrics=learning.metrics(st, jid), controls=verify.controls(), attestable=verify.ATTESTABLE)
         return self.page("ops_job.html", req, **v)
 
     def ops_action(self, req, jid, action):
@@ -337,11 +337,23 @@ class App:
             target = f.get("to") or j["resume_state"]
             self.store.transition(jid, j["state"], target, actor=who, data={"reason": f.get("reason", "")}, pause_reason=None)
         elif action == "waive":
+            if f.get("check_id") in verify.NON_WAIVABLE:
+                raise Invalid("this check cannot be waived — a person has to perform it and record what they found")
             if len(f.get("reason", "").strip()) < 10:
                 raise Invalid("a waiver needs a reason (at least a sentence)")
             self.store.waive(jid, f["asset_id"], f["check_id"], who, f["reason"].strip())
         elif action == "release":
             self.svc.orch.release_hold(jid, who)
+        elif action == "attest":
+            try:
+                verify.attest(self.store, jid, f["asset_id"], f["check_id"], by=who, note=f.get("note", ""), outcome=f.get("outcome", "PASS"))
+            except ValueError as e:
+                raise Invalid(str(e))
+        elif action == "override":
+            try:
+                self.svc.orch.override_direction(jid, by=who, reason=f.get("reason", ""))
+            except ValueError as e:
+                raise Invalid(str(e))
         return redirect(f"/ops/jobs/{jid}")
 
     def ops_account(self, req):
