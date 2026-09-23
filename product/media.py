@@ -295,8 +295,9 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
         inputs += ["-loop", "1", "-t", f"{sp['t_out'] - sp['t_in'] + 0.1:.3f}", "-i", str(sp["png"])]
     for i, s in enumerate(segments):
         t0, use = float(s["in"]), float(s["use"])
+        # out_range=tv: a JPEG-sourced segment is full-range (yuvj420p) and would ship a file some players reject
         f.append(f"[{i}:v]trim={t0}:{t0 + use},setpts=PTS-STARTPTS,scale={W}:{H}:force_original_aspect_ratio=increase:"
-                 f"flags=lanczos,crop={W}:{H},setsar=1,fps={fps},format=yuv420p[v{i}]")
+                 f"flags=lanczos:out_range=tv,crop={W}:{H},setsar=1,fps={fps},format=yuv420p[v{i}]")
         tail = audio_join if i < n - 1 else 0
         if probe(s["clip"])["has_audio"]:
             f.append(f"[{i}:a]atrim={t0}:{t0 + use + tail},asetpts=PTS-STARTPTS,aresample=48000,"
@@ -308,7 +309,7 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
     for i in range(1, n):
         f.append(f"[{prev}][a{i}]acrossfade=d={audio_join}:c1=tri:c2=tri[ax{i}]"); prev = f"ax{i}"
     f.append(f"[{prev}]anull[acat]")
-    f.append(f"[{iec}:v]scale={W}:{H},setsar=1,fps={fps},format=yuv420p,settb=AVTB[ec]")
+    f.append(f"[{iec}:v]scale={W}:{H}:out_range=tv,setsar=1,fps={fps},format=yuv420p,settb=AVTB[ec]")
     f.append(f"[vcat][ec]xfade=transition=fade:duration={xfade}:offset={total_v - xfade:.3f}[vx]")
     cur = "vx"
     for j, sp in enumerate(supers):
@@ -331,6 +332,7 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
     raw = workdir / "assembled-raw.mov"
     run(["ffmpeg", "-y", "-loglevel", "error"] + inputs + ["-filter_complex", ";".join(f), "-map", f"[{cur}]", "-map", "[amix]",
          "-t", f"{total:.3f}", "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-profile:v", "high", "-pix_fmt", "yuv420p",
+         "-color_range", "tv",
          "-r", str(fps), "-c:a", "pcm_s16le", str(raw)])
     wav, norm, vid = workdir / "audio-raw.wav", workdir / "audio-mix.wav", workdir / "video-only.mp4"
     run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(raw), "-map", "0:a", "-c:a", "pcm_s16le", str(wav)])
@@ -532,4 +534,16 @@ def extend_plate(plate: Path, *, canvas: tuple, extra: int, side: str, out: Path
         m[-1:, :] = m[-1:, :]      # far edge stays anchored to the frame
     bg.paste(small, (x0, y0), Image.fromarray(m.astype("uint8")).filter(ImageFilter.GaussianBlur(2)))
     bg.save(out)
+    return out
+
+
+def still_motion(still: Path, out: Path, *, duration_s: float, size: tuple = (720, 1280), fps: int = 24, push: float = 0.06) -> Path:
+    """A slow push-in on a still, by code (no generation, USD 0): the honest fallback when a video provider refuses a beat."""
+    w, h = size
+    frames = max(1, int(round(duration_s * fps)))
+    vf = (f"scale={w * 2}:{h * 2}:force_original_aspect_ratio=increase,crop={w * 2}:{h * 2},"
+          f"zoompan=z='1+{push}*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s={w}x{h}:fps={fps},"
+          f"scale=out_range=tv,format=yuv420p")
+    run(["ffmpeg", "-y", "-v", "error", "-loop", "1", "-i", str(still), "-vf", vf, "-frames:v", str(frames),
+         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(fps), str(out)])
     return out

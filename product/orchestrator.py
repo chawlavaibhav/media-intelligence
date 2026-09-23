@@ -288,6 +288,28 @@ class Orchestrator:
                               budget_usd=money(max(budget, committed)), budget_authorised_by=by, budget_authorised_at=utc_now(),
                               approved_at=utc_now())
 
+    def use_still_motion(self, job_id, *, node_id: str, by: str, reason: str):
+        """Operator fallback when a provider keeps refusing a beat: the beat's approved still becomes a code push-in clip
+        (USD 0). Recorded as code motion — never presented as generated video; the reviewer and the person still judge it."""
+        n = self.store.node(job_id, node_id)
+        if n is None or n["kind"] != "clip" or n["status"] not in ("failed", "needs_person", "pending"):
+            raise ValueError("only a clip beat that failed or waits for a person can fall back to still motion")
+        if len(reason.strip()) < 15:
+            raise ValueError("say why (at least a sentence)")
+        spec = json.loads(n["spec_json"])
+        beat = next(b for b in self.store.artifact(job_id, "direction")["beats"] if b["n"] == spec["beat"])
+        still = self.store.asset(self.store.node(job_id, f"still_b{beat['n']}")["selected_asset_id"])
+        use = float(beat["duration_s"])
+        out = self.job_dir(job_id) / "gen" / f"{node_id}__still-motion.mp4"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        media.still_motion(Path(still["path"]), out, duration_s=use + 0.5)
+        aid = self.store.add_asset(job_id, path=out, kind="video", source="composed", content_type="video/mp4", node_id=node_id,
+                                   meta={"code_motion": True, "from_still": still["id"], "in_s": 0.0, "use_s": use, "reason": reason.strip(),
+                                         "det": {"check_id": "no_in_model_cut", "status": "PASS", "detail": "code push-in on one still"}})
+        self._done(job_id, node_id, aid)
+        self.store.event(job_id, by, "still_motion_fallback", {"node": node_id, "asset": aid, "still": still["id"], "reason": reason.strip()})
+        return aid
+
     def select_take(self, job_id, *, asset_id: str, by: str, reason: str, in_s: float | None = None):
         """A person chose one of the inspected draws for a node that was waiting on a person; production resumes.
         For a clip the person may also set where the used segment starts (e.g. to skip a flash of a foreign logo)."""
@@ -349,12 +371,12 @@ class Orchestrator:
                     deps = [f"still_b{b['n']}"] + ([] if b["n"] == risky["n"] else [f"clip_b{risky['n']}"])
                     self.store.put_node(job_id, f"clip_b{b['n']}", kind="clip", deps=deps,
                                         spec={"beat": b["n"], "aspect": aspect, "qualify": b["n"] == risky["n"]})
-                    if b.get("super_id"):
+                    if b.get("super_id") and not self._logo_copy(d, b["super_id"], job_id):
                         self.store.put_node(job_id, f"super_b{b['n']}", kind="super", deps=[f"clip_b{b['n']}"],
                                             spec={"beat": b["n"], "copy_id": b["super_id"], "aspect": aspect})
                 self.store.put_node(job_id, "music", kind="music", deps=[], spec={})
                 self.store.put_node(job_id, "end_card", kind="end_card", deps=[], spec={"aspect": aspect, "duration_s": card["duration_s"]})
-                deps = [f"clip_b{b['n']}" for b in beats] + [f"super_b{b['n']}" for b in beats if b.get("super_id")] + ["music", "end_card"]
+                deps = [f"clip_b{b['n']}" for b in beats] + [f"super_b{b['n']}" for b in beats if b.get("super_id") and not self._logo_copy(d, b["super_id"], job_id)] + ["music", "end_card"]
                 self.store.put_node(job_id, "film", kind="assemble", deps=deps, spec={"aspect": aspect, "card_s": card["duration_s"]}, max_draws=1)
         self.store.event(job_id, "system", "plan", {"nodes": [n["node_id"] for n in self.store.nodes(job_id)]})
         self.store.transition(job_id, "planning", "producing", actor="system")
@@ -680,7 +702,7 @@ class Orchestrator:
             cm = json.loads(clip["meta_json"])
             segs.append({"clip": clip["path"], "in": cm.get("in_s", 0.0), "use": float(b["duration_s"]), "beat": b["n"], "asset": clip["id"]})
             sn = self.store.node(job_id, f"super_b{b['n']}")
-            if sn:
+            if sn and not self._logo_copy(d, b.get("super_id"), job_id):
                 supers.append({"png": self.store.asset(sn["selected_asset_id"])["path"], "t_in": round(t + 0.2, 2),
                                "t_out": round(t + float(b["duration_s"]) - 0.1, 2), "beat": b["n"], "asset": sn["selected_asset_id"]})
             t += float(b["duration_s"])
@@ -735,7 +757,7 @@ class Orchestrator:
                 a = self.store.asset(aid)
                 meta = json.loads(a["meta_json"])
                 rows = [verify.ledger_integrity(self.store, job_id),
-                        verify.exact_copy_match(self.exact_strings(job_id), d, self._rendered_text(meta, media_kind)),
+                        verify.exact_copy_match(self.exact_strings(job_id), d, self._rendered_text(meta, media_kind), logo_present=bool(logo)),
                         verify.not_previously_rejected(self.store, job_id, aid), verify.ad_structure(d, media_kind, bool(logo))]
                 if media_kind == "video" and not meta.get("placeholder"):
                     srcs = []
@@ -766,7 +788,7 @@ class Orchestrator:
                 media=review_media.get("refs", []) + review_media["items"], max_tokens=8000)
         review["_reviewed_sha256"] = review_media["shas"]
         self.store.put_artifact(job_id, "review", review, "reviewer")
-        super_ids = [f"b{b['n']}" for b in d.get("beats", []) if b.get("super_id")]
+        super_ids = [f"b{b['n']}" for b in d.get("beats", []) if b.get("super_id") and self.store.node(job_id, f"super_b{b['n']}")]
         req = verify.required_checks(media_kind, mandatory_ids=mandatory_ids, has_copy=bool(d.get("copy_deck")), has_logo=bool(logo),
                                      super_ids=super_ids, has_character=bool((d.get("character") or {}).get("present")))
         results = []
@@ -780,7 +802,9 @@ class Orchestrator:
         repairs = self.store.artifact_versions(job_id, "internal_repair")
         fixable = [x for x in review.get("defects", []) if x.get("severity") in ("blocker", "major") and x.get("beat")
                    and x.get("earliest_stage") in ("generation", "reference")]
-        if fixable and len(repairs) < MAX_INTERNAL_REPAIRS and not review.get("_simulated"):
+        # Automatic re-draws spend money on the reviewer's word: only a QUALIFIED reviewer may trigger them (live 2026-09-23:
+        # an unqualified reviewer's repair reset all eight beats of a finished film and ran the budget to its cap).
+        if fixable and len(repairs) < MAX_INTERNAL_REPAIRS and not review.get("_simulated") and self.s.reviewer_qualified:
             targets = self._invalidate_beats(job_id, {int(x["beat"]): x["repair"] for x in fixable})
             self.store.put_artifact(job_id, "internal_repair", {"defects": fixable, "nodes": targets}, "system")
             self.store.transition(job_id, "checking", "producing", actor="system", data={"internal_repair": targets})
@@ -792,6 +816,10 @@ class Orchestrator:
         else:
             self.store.transition(job_id, "checking", "operator_hold", actor="system",
                                   data={"ready": ready, "blocking": [b["check_id"] for r in results for b in r["blocking"]][:40]})
+
+    def _logo_copy(self, d, copy_id, job_id) -> bool:
+        c = next((c for c in d.get("copy_deck", []) if c["id"] == copy_id), None)
+        return bool(c and self._logo(job_id) and compose.is_logo_line(c))
 
     def _rendered_text(self, meta: dict, media_kind: str):
         """The strings drawn by code onto this final file (None when no render record exists)."""

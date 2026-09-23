@@ -133,7 +133,7 @@ def ledger_integrity(store: Store, job_id: str) -> dict:
             "detail": "; ".join(problems) or f"{len(rows)} attempts, ids unique, all settled, USD {committed} of {budget}"}
 
 
-def exact_copy_match(exact_strings: list, direction: dict, rendered: list | None) -> dict:
+def exact_copy_match(exact_strings: list, direction: dict, rendered: list | None, logo_present: bool = False) -> dict:
     """Every customer string must be in the copy deck verbatim AND have been drawn, by code, on this exact file
     (the renderer refuses any string its font cannot draw, so a rendered string is a glyph-complete one)."""
     deck = {c["text"] for c in direction.get("copy_deck", [])}
@@ -144,6 +144,9 @@ def exact_copy_match(exact_strings: list, direction: dict, rendered: list | None
     not_in_deck = [s for s in exact_strings if s and s not in deck]
     not_drawn = [s for s in exact_strings if s and s not in drawn]
     # atlas approved_copy_line_not_carried_into_the_cut (UPW1-25): every approved deck line is placed somewhere
+    from product.compose import is_logo_line
+    logo_lines = {c["text"] for c in direction.get("copy_deck", []) if logo_present and is_logo_line(c)}
+    drawn |= logo_lines                     # delivered by the supplied logo file, not by type
     dropped = [t for t in deck if t and t not in drawn and t not in exact_strings]
     problems = ([f"altered or missing in the copy deck: {not_in_deck}"] if not_in_deck else []) + \
                ([f"not drawn on this file: {not_drawn}"] if not_drawn else []) + \
@@ -358,7 +361,9 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
                      "status": "NOT_VERIFIED" if nv else ("PASS" if ok else "FAIL"), "detail": detail, "evidence": evidence or {}})
 
     # 1. no production spend before the customer authorised a budget (preview frames ride the planning allowance)
-    auth_at = job["budget_authorised_at"]
+    # the FIRST authorisation of production spend (the approval), not the latest raise — a later budget increase must not
+    # make earlier, properly authorised spend look unauthorised (live film job, 2026-09-23)
+    auth_at = job["approved_at"] or job["budget_authorised_at"]
     early = [a["seq"] for a in prov if a["node_id"] != "preview" and (not auth_at or a["reserved_at"] < auth_at)]
     unpriced = [a["seq"] for a in prov if dec(a["reserved_usd"]) <= 0]
     add("process:paid_preflight", bool(job["budget_authorised_by"]) and not early and not unpriced,

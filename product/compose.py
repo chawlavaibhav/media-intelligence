@@ -7,6 +7,7 @@ template beyond a safe margin, a type scale and the contrast rule.
 """
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 from product import media
@@ -35,10 +36,16 @@ def _short(r: dict) -> str:
     return ", ".join(f"{k}={r[k]}" for k in keys if k in r) or "PASS"
 
 
-def _lines(direction: dict, ids: list | None = None) -> list:
+def is_logo_line(c: dict) -> bool:
+    """A copy-deck entry the director assigned to the supplied logo: it IS the logo, placed as the image, never typeset
+    (live 2026-09-23: 'Supplied logo asset used unaltered, not recreated as typeset' was typeset as 'Mokobara' three times)."""
+    return bool(re.search(r"\b(logo|wordmark|brand mark)\b", c.get("role") or "", re.I))
+
+
+def _lines(direction: dict, ids: list | None = None, logo_present: bool = True) -> list:
     deck = {c["id"]: c for c in direction.get("copy_deck", [])}
     order = ids or [c["id"] for c in direction.get("copy_deck", [])]
-    return [deck[i] for i in order if i in deck]
+    return [deck[i] for i in order if i in deck and not (logo_present and is_logo_line(deck[i]))]
 
 
 def _ink_for(samples_fn, box, role) -> tuple:
@@ -60,7 +67,7 @@ def lockup_ad(*, plate: Path, out: Path, aspect: str, direction: dict, logo: Pat
     W, H = media.FORMAT_PX[aspect]
     m = int(min(W, H) * 0.06)
     safe = (m, m, W - m, H - m)
-    lines = _lines(direction)
+    lines = _lines(direction, logo_present=logo is not None)
     gap, clear = int(H * 0.022), int(H * 0.05)
     items = []                                    # (id, kind, payload, w, h, meta)
     if logo is not None:
@@ -235,7 +242,7 @@ def end_card(*, out: Path, size: tuple, direction: dict, logo: Path | None, work
     bg = (direction.get("end_card") or {}).get("background_hex") or "#101010"
     m = int(min(W, H) * 0.08)
     safe = (m, m, W - m, H - m)
-    lines = _lines(direction, (direction.get("end_card") or {}).get("copy_ids"))
+    lines = _lines(direction, (direction.get("end_card") or {}).get("copy_ids"), logo_present=logo is not None)
     ink = WHITE if G.contrast_ratio(G.relative_luminance(WHITE), G.relative_luminance(bg)) >= 4.5 else INK
     items, checks, boxes = [], [], {}
     if logo is not None:
