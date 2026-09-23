@@ -27,16 +27,17 @@ from product.store import BudgetExhausted, Store, dec, sha256_json
 from runtime.execute import provider_errors
 
 # USD per million tokens: (input, output). Anthropic first-party list prices (claude-api reference, cached
-# 2026-06-24). Gemini rows are NOT verified in this repository — set MI_PRICE_<MODEL>=in,out to override.
+# 2026-06-24; IDs confirmed). Gemini: ai.google.dev/gemini-api/docs/pricing, paid tier, read 2026-09-23 (output
+# includes thinking tokens). Override with MI_PRICE_<MODEL>=in,out.
 PRICES = {
     "claude-opus-5": (Decimal("5"), Decimal("25")),
     "claude-opus-5-5": (Decimal("4"), Decimal("20")),
     "claude-sonnet-5": (Decimal("2"), Decimal("10")),
     "claude-haiku-4-5": (Decimal("1"), Decimal("5")),
-    "gemini-3.5-flash": (Decimal("0.60"), Decimal("5.00")),   # UNVERIFIED conservative placeholder
+    "gemini-3.5-flash": (Decimal("1.50"), Decimal("9.00")),
     "simulated": (Decimal("0"), Decimal("0")),
 }
-PRICE_BASIS = {"gemini-3.5-flash": "unverified_placeholder"}
+PRICE_BASIS = {"gemini-3.5-flash": "ai.google.dev pricing page, paid tier, 2026-09-23"}
 
 ALLOWED_CONTEXT = {
     "direction_reviewer": {"BRIEF", "INTENT", "DIRECTION"},
@@ -117,11 +118,19 @@ class AnthropicBackend:
             if mime.startswith("image/"):
                 content.append({"type": "image", "source": {"type": "base64", "media_type": mime,
                                                              "data": base64.b64encode(data).decode()}})
+            elif mime == "application/pdf":      # a customer's brief deck / storyboard reference
+                content.append({"type": "document", "source": {"type": "base64", "media_type": mime,
+                                                                "data": base64.b64encode(data).decode()}})
         content.append({"type": "text", "text": user_text})
         body = {"model": model, "max_tokens": max_tokens, "system": system,
                 "thinking": {"type": "adaptive"}, "output_config": {"effort": "high"},
                 "messages": [{"role": "user", "content": content}]}
         headers = {"x-api-key": key, "anthropic-version": "2023-06-01"}
+        if model in ("claude-opus-5", "claude-fable-5-1"):
+            # a safety-classifier refusal on a harmless ad brief is re-served by the platform's default fallback
+            # instead of failing the job; the reply still reports which model answered (usage is billed per model)
+            body["fallbacks"] = "default"
+            headers["anthropic-beta"] = "server-side-fallback-2026-07-01"
         st, reply = _http(self.URL, headers, body, timeout=600)
         if st != 200:
             return st, reply, None, {}

@@ -1,0 +1,31 @@
+# Reviewer qualification key — MOKOBARA-ODYSSEY-007 v1 (defective) and v2 (accepted).
+# Sources: stages/CHECK-STAGE-5.md (independent human checker, D1–D9) and HUMAN-VERDICT-V1.md (customer, 5 items),
+# on the job branch work/agency-job-mokobara-odyssey-001. Acceptance (P1 assessment T2.4): on v1 the reviewer finds
+# ≥ 4 of the 6 TARGET defects; on v2 it must not report the repaired ones as present (false alarm), and should still
+# see the ones left unrepaired (D1, D5). Matching is PROPOSED by keyword + time overlap and CONFIRMED by a person.
+job: AGY-2026-09-21-MOKOBARA-ODYSSEY-001
+target_on_v1: [D1, D5, OAR_REVEAL, TEAR, FONT, LOGO]
+pass_mark_v1: 4
+defects:
+  - {id: D1, what: "arms never go into the bag past the forearm; the named 'arms in the bag' gag is not shown", t: [12.5, 20.5],
+     words: [arm, forearm, elbow, rummag, reach, gag], v1: present, v2: present}
+  - {id: D5, what: "paddle continuity: out of the bag ~20 s, absent in beat 5, already on the raft in beat 6", t: [20.0, 26.0],
+     words: [paddle, oar, continuity, already, raft, appears, magically], v1: present, v2: present}
+  - {id: OAR_REVEAL, what: "the paddle/oar coming out of the bag looks weird (warps / bends)", t: [15.0, 20.5],
+     words: [paddle, oar, warp, bend, weird, distort, morph, shaft, blade], v1: present, v2: repaired}
+  - {id: TEAR, what: "the bag lining shows a flap that reads as a tear", t: [7.5, 12.5],
+     words: [tear, torn, rip, flap, damage, fray, lining], v1: present, v2: repaired}
+  - {id: FONT, what: "end-card typography is generic (system geometric sans)", t: [26.0, 30.1],
+     words: [font, typeface, typograph, type, generic], v1: present, v2: repaired}
+  - {id: LOGO, what: "brand wordmark shown as a white logo on a grey backing box that reads as a caption", t: [20.5, 30.1],
+     words: [logo, wordmark, brand, box, backing, caption, mokobara], v1: present, v2: repaired}
+  - {id: D2, what: "zip closes with coconuts and gourd still outside", t: [20.5, 24.5], words: [coconut, gourd, zip, outside, left], v1: present, v2: repaired}
+  - {id: D3, what: "no push-off: he stands by the raft; the mandatory departure never happens", t: [24.5, 28.0],
+     words: [push, depart, leave, stands, raft, never], v1: present, v2: repaired}
+  - {id: D4, what: "beat 1 in-model hard cut to a static frontal portrait; long-sleeved shirt", t: [0.0, 3.5],
+     words: [cut, portrait, shirt, sleeve, costume], v1: present, v2: repaired}
+  - {id: D6_GEOMETRY, what: "bag opens as a hinged lid at 16.5 s; front pocket hangs open at 22.5 s", t: [16.0, 23.0],
+     words: [lid, pocket, hinge, geometry, open], v1: present, v2: partly}
+  - {id: D7, what: "beard shade and bracelet wrist drift between clips", t: [0.0, 26.0], words: [beard, bracelet, wrist, drift, hair], v1: present, v2: present}
+  - {id: D8, what: "720p sources upscaled, soft at 1080p", t: [0.0, 30.1], words: [soft, resolution, blur, 720, upscal], v1: present, v2: present}
+  - {id: D9, what: "40-ms ambience dips at the 3.5 s and 7.5 s cuts", t: [3.4, 7.6], words: [dip, drop, audio, ambience, cut, gap], v1: present, v2: repaired}

@@ -236,3 +236,29 @@ class EvidenceBackedPass(unittest.TestCase):
                   "model_lettering": {"present": "no", "evidence": "x"}}
         rows = verify.review_rows(review, mandatory_ids=[], media_kind="image", asset_sha256="bbb")
         self.assertTrue(all(r["status"] == "NOT_VERIFIED" for r in rows), rows)
+
+
+import os
+_MOKO_REL = "media-intelligence-mokobara/agency/jobs/AGY-2026-09-21-MOKOBARA-ODYSSEY-001/gen/final"
+MOKOBARA = next((p for p in [Path(os.environ.get("MI_HISTORICAL_MOKOBARA", "/nonexistent"))] + [b / _MOKO_REL for b in (REPO.parent, REPO.parent.parent)]
+                 if (p / "v1/mokobara-odyssey-9x16-30s.mp4").exists()), Path("/nonexistent"))
+
+
+@unittest.skipUnless((MOKOBARA / "v1/mokobara-odyssey-9x16-30s.mp4").exists(), "historical Mokobara films not on this host")
+class HistoricalRealMedia(unittest.TestCase):
+    """The delivered-film checks on real historical media: the defective v1 fails where the record says, the repaired v2 passes."""
+
+    def test_mokobara_df10_audio_holes_fail_v1_and_the_crossfaded_v2_passes(self):
+        v1 = verify.film_checks(MOKOBARA / "v1/mokobara-odyssey-9x16-30s.mp4", cuts=[1.54, 3.5, 7.5, 12.5, 20.5, 24.5],
+                                source_sizes=[[720, 1280]], delivered=(1080, 1920), planned_s=30.0, card_in_s=26.0)
+        v2 = verify.film_checks(MOKOBARA / "mokobara-odyssey-9x16-30s.mp4", cuts=[1.5, 3.5, 7.5, 13.0, 21.0, 24.21],
+                                source_sizes=[[720, 1280]], delivered=(1080, 1920), planned_s=30.0, card_in_s=26.0)
+        j1 = next(r for r in v1 if r["check_id"] == "audio_joins")
+        j2 = next(r for r in v2 if r["check_id"] == "audio_joins")
+        self.assertEqual(j1["status"], "FAIL")
+        self.assertIn("3.50s", j1["detail"]); self.assertIn("7.50s", j1["detail"])
+        self.assertEqual(j2["status"], "PASS", j2["detail"])
+        for rows in (v1, v2):
+            st = {r["check_id"]: r["status"] for r in rows}
+            self.assertEqual((st["delivery_conformance"], st["no_black_frames"], st["loudness_true_peak"], st["container_edit_lists"]),
+                             ("PASS", "PASS", "PASS", "PASS"))

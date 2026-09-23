@@ -72,6 +72,11 @@ class Orchestrator:
                 out.append((a["content_type"], Path(a["path"]).read_bytes()))
         return out
 
+    def _brief_docs(self, job_id, limit=2):
+        """PDF references the customer supplied (brief decks, storyboards) — read by the planning roles."""
+        return [(a["content_type"], Path(a["path"]).read_bytes()) for a in self.uploads(job_id)
+                if a["content_type"] == "application/pdf" and a["bytes"] < 20_000_000][:limit]
+
     def _logo(self, job_id):
         rows = self.uploads(job_id, "logo")
         return Path(rows[-1]["path"]) if rows else None
@@ -128,7 +133,7 @@ class Orchestrator:
                "SUPPLIED_ASSETS": [{"role": a["role"], "type": a["content_type"], "name": json.loads(a["meta_json"]).get("filename")}
                                    for a in self.uploads(job_id)]}
         with self.store.timed(job_id, "understanding"):
-            intent = self.llm.call(job_id, "strategist", ctx, media=self._ref_images(job_id, 2), max_tokens=8000)
+            intent = self.llm.call(job_id, "strategist", ctx, media=self._ref_images(job_id, 2) + self._brief_docs(job_id), max_tokens=8000)
         _enforce_intent(intent, brief)
         self.store.put_artifact(job_id, "intent", intent, "strategist")
         if not intent["supported"]:
@@ -169,21 +174,24 @@ class Orchestrator:
             ctx["CUSTOMER_CHANGE_REQUEST"] = prior
         refs = self._ref_images(job_id, 3)
         with self.store.timed(job_id, "creative_planning"):
-            d = self.llm.call(job_id, "creative_director", ctx, knowledge=packs["payload"], media=refs, max_tokens=16000)
+            d = self.llm.call(job_id, "creative_director", ctx, knowledge=packs["payload"], media=refs + self._brief_docs(job_id),
+                              max_tokens=16000)
             retrieved = []
             if d.get("knowledge_requests"):
                 with self.store.timed(job_id, "canon_consultation", "deep"):
                     retrieved = canon_access.deep_retrieve(d["knowledge_requests"][:4], limit=12)
                 ctx["RETRIEVED_CLAIMS"] = retrieved
                 ctx["NOTE"] = "Deeper knowledge you asked for is in RETRIEVED_CLAIMS. Finalise; knowledge_requests must now be empty."
-                d = self.llm.call(job_id, "creative_director", ctx, knowledge=packs["payload"], media=refs, max_tokens=16000)
+                d = self.llm.call(job_id, "creative_director", ctx, knowledge=packs["payload"], media=refs + self._brief_docs(job_id),
+                              max_tokens=16000)
             notes = _normalise_direction(d, intent, brief)
             review = self.llm.call(job_id, "direction_reviewer", {"BRIEF": _brief_for_model(brief), "INTENT": _public(intent),
                                                                    "DIRECTION": _public(d)}, max_tokens=6000)
             if review["verdict"] == "revise" and any(i["severity"] == "blocker" for i in review.get("issues", [])):
                 ctx["INDEPENDENT_REVIEW"] = review.get("issues")
                 ctx["NOTE"] = "An independent reviewer blocked this direction. Fix every blocker; keep what works."
-                d = self.llm.call(job_id, "creative_director", ctx, knowledge=packs["payload"], media=refs, max_tokens=16000)
+                d = self.llm.call(job_id, "creative_director", ctx, knowledge=packs["payload"], media=refs + self._brief_docs(job_id),
+                              max_tokens=16000)
                 notes += _normalise_direction(d, intent, brief)
                 review = self.llm.call(job_id, "direction_reviewer", {"BRIEF": _brief_for_model(brief), "INTENT": _public(intent),
                                                                        "DIRECTION": _public(d)}, max_tokens=6000)

@@ -173,20 +173,26 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
         ok = tp <= -1.0 and abs(il + 14) <= 2
         rows.append({"check_id": "loudness_true_peak", "control": "CODEC_TRUE_PEAK_MARGIN", "status": "PASS" if ok else "FAIL",
                      "detail": f"integrated {il} LUFS, true peak {tp} dBTP (limits -14±2, ≤ -1.0)", "evidence": ld})
-    worst, bad, unmeasured = 0.0, [], []
+    # A join "hole" is a dip that recovers: the 30 ms after the cut against BOTH the 100 ms before it and the 150–300 ms
+    # after it (a cut to a quieter scene is a level change, not a hole). Calibrated on real media, MOKOBARA-ODYSSEY-007
+    # DF-10: v1's recorded holes at 3.5 s / 7.5 s measure 10.6 / 8.8 dB; the crossfaded v2 measures ≤ 0.9 dB at all six
+    # cuts, and its 7.5 s cut to a quieter shot (−7.3 dB level change) measures −1.3. Limit 6 dB.
+    worst, bad, unmeasured, ev = -99.0, [], [], []
     for t in cuts:
-        before, after = media.rms_db(path, t - 0.05, 0.05), media.rms_db(path, t, 0.05)
-        if before is None or after is None:
+        before, after, later = media.rms_db(path, t - 0.10, 0.10), media.rms_db(path, t + 0.005, 0.03), media.rms_db(path, t + 0.15, 0.15)
+        if None in (before, after, later):
             unmeasured.append(t)
             continue
-        drop = before - after
-        worst = max(worst, drop)
-        if drop > 12.0:
-            bad.append(f"{t:.2f}s drop {drop:.1f} dB")
-    status = "FAIL" if bad else ("NOT_VERIFIED" if unmeasured else "PASS")
-    rows.append({"check_id": "audio_joins", "control": "AUDIO_LEVEL_CONTINUITY_AT_CUTS", "status": status,
+        hole = min(before, later) - after
+        ev.append({"t": t, "before_db": before, "after_db": after, "later_db": later, "hole_db": round(hole, 1)})
+        worst = max(worst, hole)
+        if hole > 6.0:
+            bad.append(f"{t:.2f}s hole {hole:.1f} dB")
+    status = "FAIL" if bad else ("NOT_VERIFIED" if unmeasured or not cuts else "PASS")
+    rows.append({"check_id": "audio_joins", "control": "AUDIO_LEVEL_CONTINUITY_AT_CUTS", "status": status, "evidence": {"cuts": ev},
                  "detail": "; ".join(bad) or (f"could not measure the level at {unmeasured}" if unmeasured else
-                                              f"{len(cuts)} cuts, worst level drop {worst:.1f} dB (limit 12)")})
+                                              ("no cut positions were supplied" if not cuts else
+                                               f"{len(cuts)} cuts, worst dip {worst:.1f} dB (limit 6)"))})
     # disclosure, with a flag when a source is stretched more than 1.5× to reach the delivered frame
     scale = max((max(delivered[0] / w, delivered[1] / h) for w, h in source_sizes if w and h), default=None)
     rows.append({"check_id": "source_resolution", "control": "SOURCE_RESOLUTION_STATED",
