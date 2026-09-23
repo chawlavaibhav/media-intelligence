@@ -75,10 +75,18 @@ class WebJourney(unittest.TestCase):
         return dict(r["headers"])["Location"].split("/")[-1]
 
     def test_customer_can_submit_approve_and_see_every_stage_page(self):
+        # v2 steps: the pantry checker's question (the brief's "zipped shut" is offered as a still), the founder's
+        # confirmation of the unqualified recipe checker, the master-plate approval, the founder's release
         jid = self._create()
         self.assertEqual(len(self.e.store.assets(jid, source="customer")), 2)
         self.assertIn(b"Understanding your brief", self.c.req("GET", f"/jobs/{jid}")["body"])
         self.e.drain()
+        page = self.c.req("GET", f"/jobs/{jid}")["body"]
+        self.assertIn(b"we need something from you", page)
+        n = len(self.e.store.artifact(jid, "feasibility")["alternatives"])
+        tok = self.c.csrf(f"/jobs/{jid}")
+        self.c.req("POST", f"/jobs/{jid}/input", {"csrf": tok, **{f"alt_{i}": "yes" for i in range(n)}}, files=[])
+        self.assertEqual(self.e.front(jid), "awaiting_approval")
         page = self.c.req("GET", f"/jobs/{jid}")["body"]
         self.assertIn(b"Creative direction", page)
         self.assertIn(b"Approve direction", page)
@@ -89,11 +97,15 @@ class WebJourney(unittest.TestCase):
         tok = self.c.csrf(f"/jobs/{jid}")
         self.c.req("POST", f"/jobs/{jid}/approve", {"csrf": tok, "budget_usd": "15"})
         self.e.drain()
+        self.assertEqual(self.e.state(jid), "awaiting_master_approval")
+        tok = self.c.csrf(f"/jobs/{jid}")
+        self.c.req("POST", f"/jobs/{jid}/master", {"csrf": tok})
+        self.e.drain()
         self.assertEqual(self.e.state(jid), "operator_hold")
         final = self.e.orch._final_assets(jid)[0]
         self.assertTrue(self.c.req("GET", f"/assets/{final}")["status"].startswith("404"))      # not before release
         self.e.waive_all(jid)
-        self.e.orch.release_hold(jid, "operator:test")
+        self.e.release(jid)
         page = self.c.req("GET", f"/jobs/{jid}")["body"]
         self.assertIn(b"Accept and download", page)
         self.assertTrue(self.c.req("GET", f"/assets/{final}")["status"].startswith("200"))
@@ -128,29 +140,46 @@ class WebJourney(unittest.TestCase):
         self.assertTrue(r["status"].startswith("400"))
 
     def test_operator_pages_render_and_the_operator_can_waive_and_release(self):
+        # v2 (spec 6.4): an operator can view but not waive or release; the founder can, with reasons, and the listen
+        # still cannot be waived — the founder must record what they heard
         jid = self._create()
-        self.e.drain()
+        self.e.front(jid)
         self.e.orch.approve(jid, by="buyer@acme.test", budget_usd="15")
-        self.e.drain()
+        self.e.produce(jid)
         self.e.operator()
         op = Client(self.app)
-        op.login("founder@mi.test")
+        op.login("ops@mi.test")
         self.assertIn(b"Presentation gateway", op.req("GET", f"/ops/jobs/{jid}")["body"])
         self.assertIn(jid.encode(), op.req("GET", "/ops")["body"])
-        g = self.e.store.artifact(jid, "gateway")
+        g = self.e.store.artifact(jid, "gateway_report")
+        r0, b0 = g["results"][0], g["results"][0]["blocking"][0]
         tok = op.csrf(f"/ops/jobs/{jid}")
-        for r in g["results"]:
-            for b in r["blocking"]:
-                op.req("POST", f"/ops/jobs/{jid}/waive", {"csrf": tok, "asset_id": r["asset_id"], "check_id": b["check_id"],
-                                                          "reason": "dry run — simulated media, nothing to verify"})
-        op.req("POST", f"/ops/jobs/{jid}/release", {"csrf": tok})
-        # the listen cannot be waived: the film is still held until a person records what they heard
-        self.assertEqual(self.e.state(jid), "operator_hold")
-        self.assertIn(b"This cannot be waived", op.req("GET", f"/ops/jobs/{jid}")["body"])
-        for r in g["results"]:
-            op.req("POST", f"/ops/jobs/{jid}/attest", {"csrf": tok, "asset_id": r["asset_id"], "check_id": "audio_heard_by_person",
-                                                       "note": "dry run: test tone and pink noise, no speech", "outcome": "PASS"})
-        op.req("POST", f"/ops/jobs/{jid}/release", {"csrf": tok})
+        r = op.req("POST", f"/ops/jobs/{jid}/waive", {"csrf": tok, "asset_id": r0["asset_id"], "check_id": b0["check_id"],
+                                                      "reason": "dry run — simulated media, nothing to verify"})
+        self.assertTrue(r["status"].startswith("403"))
+        self.assertTrue(op.req("POST", f"/ops/jobs/{jid}/release", {"csrf": tok})["status"].startswith("403"))
+        self.e.founder_session()
+        fo = Client(self.app)
+        fo.login("founder@mi.test")
+        tok = fo.csrf(f"/ops/jobs/{jid}")
+        from product import verify
+        for res in g["results"]:
+            for b in res["blocking"]:
+                if not verify.attestable(b["check_id"]):
+                    fo.req("POST", f"/ops/jobs/{jid}/waive", {"csrf": tok, "asset_id": res["asset_id"], "check_id": b["check_id"],
+                                                              "reason": "dry run — simulated media, nothing to verify"})
+        r = fo.req("POST", f"/ops/jobs/{jid}/waive", {"csrf": tok, "asset_id": r0["asset_id"], "check_id": "audio_heard_by_person",
+                                                      "reason": "no time to listen, the customer is waiting"})
+        self.assertTrue(r["status"].startswith("400"))
+        fo.req("POST", f"/ops/jobs/{jid}/release", {"csrf": tok})
+        self.assertEqual(self.e.state(jid), "operator_hold")                  # the person-checks are still open
+        self.assertIn(b"This cannot be waived", fo.req("GET", f"/ops/jobs/{jid}")["body"])
+        for res in g["results"]:
+            for b in res["blocking"]:
+                if verify.attestable(b["check_id"]):
+                    fo.req("POST", f"/ops/jobs/{jid}/attest", {"csrf": tok, "asset_id": res["asset_id"], "check_id": b["check_id"],
+                                                               "note": "dry run: test tone and pink noise, no speech", "outcome": "PASS"})
+        fo.req("POST", f"/ops/jobs/{jid}/release", {"csrf": tok})
         self.assertEqual(self.e.state(jid), "ready_for_review")
         self.assertTrue(self.app.jinja)  # templates compiled
 

@@ -1,23 +1,36 @@
-# Media Intelligence P1 — the product
+# Media Intelligence P1 v2 — the product
 
-Status, evidence and blockers: `coordination/p1/P1-BUILD-STATUS.md`. Operating it: `deploy/RUNBOOK-P1.md`.
-
-```
-python3 -m unittest discover -s product/tests -t .      # 37 tests, USD 0
-python3 -m product.smoke                                  # media engine on this host + dry jobs + backup/restore
-MI_DATA_DIR=/tmp/mi python3 -m product.admin init-operator --email you@example.com
-MI_DATA_DIR=/tmp/mi python3 -m product.web.app --port 8080 &   MI_DATA_DIR=/tmp/mi python3 -m product.worker &
-```
+Built to `coordination/p1-v2/P1-V2-BUILD-SPEC.md`; judged by `coordination/p1-v2/P1-V2-FOUNDER-CHECKLIST.md`.
 Defaults are `MI_PROVIDER_MODE=simulated` and `MI_REASONING_MODE=simulated`: nothing paid can leave the host.
 
-| Module | Role |
+## Reproduce from a fresh checkout (USD 0)
+
+```
+git clone https://github.com/chawlavaibhav/media-intelligence && cd media-intelligence && git checkout claude/p1-v2-build
+python3 -m venv .venv && .venv/bin/pip install -r deploy/requirements.txt      # plus ffmpeg and Pillow with raqm
+PYTHONPATH=. .venv/bin/python -m unittest discover -s product/tests -t .       # every test, v2 and v1 (~25-30 min)
+PYTHONPATH=. .venv/bin/python -m product.smoke                                  # media engine + dry jobs + backup/restore
+PYTHONPATH=. .venv/bin/python -m product.qualification.judges                   # judges' harness, simulated (qualifies nothing)
+# optional: clone the private evidence repo next to this one (../mi-p1-evidence) to also run the checks on the
+# verbatim 23-September records and to give the judges' harness its 14 cases
+MI_DATA_DIR=/tmp/mi .venv/bin/python -m product.admin init-founder --email you@example.com   # once; prints an invite link
+MI_DATA_DIR=/tmp/mi .venv/bin/python -m product.web.app --port 8080 &   MI_DATA_DIR=/tmp/mi .venv/bin/python -m product.worker &
+```
+
+## Layout (spec §12)
+
+| Where | What |
 |---|---|
-| `store.py` `states.py` | authoritative job state, ledger (atomic reserve + attempt ids), leases, events, timings |
-| `orchestrator.py` `worker.py` | five-stage pipeline as idempotent steps; asset graph; pauses; revision |
-| `reasoning.py` `contracts.py` `simulated.py` | strategist, creative director, isolated reviewers; output contracts |
-| `canon_access.py` | ten adopted packs via the runtime lookup; bounded, logged deep retrieval |
-| `providers.py` `dispatch.py` | the one paid-dispatch path (nano-banana-2, Veo 3.1 fast i2v, Lyria) |
-| `prompts.py` `compose.py` `media.py` | deterministic prompts; exact text/logos by code; ffmpeg assembly |
-| `verify.py` `data/FAILURE-CONTROLS-v1.yaml` | checks on exact file versions; the presentation gateway |
-| `learning.py` | metrics and the production-learning case skeleton |
-| `web/` `service.py` `admin.py` | customer + operator app; accounts; backup/restore |
+| `flow.py` (`states.py` re-exports it) | states, founder-only exits, the send-back table and its limits (§6) |
+| `orchestrator.py` | the small flow controller: one station per state; customer and founder decisions |
+| `stations/waiter.py` `pantry.py` `chef.py` `recipe_check.py` `head_cook.py` `assembly.py` `tasters.py` `changes.py` `diary.py` | one module per worker (§3) |
+| `stations/simulated.py` | deterministic stand-ins for the seven AI workers (tests and dry runs only) |
+| `ai.py` | every AI call: card + form schema + the customer's exact words + input forms + tray; records card version, tray, estimated cost |
+| `rulebook/` | worker cards (mission, vision, KRA, instructions) and form schemas as versioned data (§4, §5, §7.4) |
+| `library/` | equipment sheet, failure diary, recipe library, Canon pages, the librarian's trays (§7.3, §8) |
+| `shelf/` | the customer shelf (§7.2) |
+| `lessons/` | the lesson queue; founder approves, edits or rejects (§7.5) |
+| `authority.py` | only a signed-in founder session can override, pick a take, release, resume or decide a lesson (§6.4) |
+| `cost.py` | the quote's reasoning line and the per-worker reasoning report (§9.4) |
+| `qualification/judges.py` | the judges' qualification harness (§10) |
+| `store.py` `dispatch.py` `providers.py` `media.py` `compose.py` `verify.py` `web/` `admin.py` | kept from v1 and adapted |

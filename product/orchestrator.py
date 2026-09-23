@@ -290,6 +290,11 @@ class Orchestrator:
 
     _final_assets = final_assets
 
+    def exact_strings(self, job_id) -> list:
+        """The customer's exact strings, with any change the customer later requested applied."""
+        from product.stations.tasters import exact_strings
+        return exact_strings(self, job_id)
+
     def qualified(self, judge: str) -> bool:
         return judge in self.s.qualified_judges
 

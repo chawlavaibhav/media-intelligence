@@ -66,26 +66,50 @@ class Env:
     def state(self, jid):
         return self.store.job(jid)["state"]
 
+    def front(self, jid):
+        """v2 front of house: accept the pantry checker's alternatives and confirm the recipe (founder) → the plan card."""
+        self.drain()
+        if self.state(jid) == "awaiting_customer_input":
+            f = self.store.artifact(jid, "feasibility")
+            self.orch.provide_input(jid, by=self.user["email"], accepted_alternatives=[
+                {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
+            self.drain()
+        if self.state(jid) == "paused_for_founder" and (self.store.artifact(jid, "founder_decision") or {}).get("decision") == "confirm recipe":
+            self.orch.confirm_recipe(jid, session=self.founder_session(), reason="Plan read in the test: routes and continuity are fine.")
+        return self.state(jid)
+
+    def produce(self, jid):
+        """After approval: drain, approving the master plate (the customer) whenever production waits for it."""
+        self.drain()
+        while self.state(jid) == "awaiting_master_approval":
+            self.orch.approve_master(jid, by=self.user["email"])
+            self.drain()
+        return self.state(jid)
+
     def waive_all(self, jid, why="DRY RUN — simulated media; nothing was verified"):
+        """The founder, at the door, in a dry run: confirm the person-checks and waive what a simulation cannot verify."""
         from product import verify
-        g = self.store.artifact(jid, "gateway")
+        s = self.founder_session()
+        g = self.store.artifact(jid, "gateway_report")
         for r in g["results"]:
             for b in r["blocking"]:
-                if b["check_id"] in verify.NON_WAIVABLE:
-                    verify.attest(self.store, jid, r["asset_id"], b["check_id"], by="operator:test",
-                                  note="DRY RUN — test tone and pink noise only; no real listen was needed")
+                if verify.attestable(b["check_id"]):
+                    self.orch.confirm_check(jid, session=s, asset_id=r["asset_id"], check_id=b["check_id"],
+                                            note="DRY RUN — test tone and pink noise only; no real look or listen was possible")
                 else:
-                    self.store.waive(jid, r["asset_id"], b["check_id"], "operator:test", why)
+                    self.orch.waive_check(jid, session=s, asset_id=r["asset_id"], check_id=b["check_id"], reason=why)
+
+    def release(self, jid):
+        self.orch.release(jid, session=self.founder_session())
 
     def to_review(self, jid, budget="15"):
-        """submitted → ready_for_review, with the operator waiving what a dry run cannot verify."""
-        self.drain()
-        assert self.state(jid) == "awaiting_approval", self.state(jid)
+        """submitted → ready_for_review, with the founder confirming/waiving what a dry run cannot verify."""
+        assert self.front(jid) == "awaiting_approval", self.state(jid)
         self.orch.approve(jid, by=self.user["email"], budget_usd=budget)
-        self.drain()
+        self.produce(jid)
         assert self.state(jid) == "operator_hold", (self.state(jid), self.store.job(jid)["pause_reason"])
         self.waive_all(jid)
-        self.orch.release_hold(jid, "operator:test")
+        self.release(jid)
         return jid
 
     def close(self):
