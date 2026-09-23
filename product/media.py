@@ -226,12 +226,21 @@ def fit_text(text: str, *, max_w: int, start_size: int, min_size: int, kind: str
 
 
 def logo_png(src: Path, width: int, out: Path) -> Path:
+    """The supplied mark at `width` px of VISIBLE ink: transparent margins in the file are trimmed first (a 900x600 file
+    carrying a 838x124 wordmark was sized by its padding and shipped at a quarter of the intended size)."""
+    from PIL import Image
+    raw = out.with_name(out.stem + "-raw.png")
     if src.suffix.lower() == ".svg":
         if not shutil.which("rsvg-convert"):
             raise MediaError("rsvg-convert is required to rasterise an SVG logo")
-        run(["rsvg-convert", "-w", str(width), "-o", str(out), str(src)])
+        run(["rsvg-convert", "-w", str(max(width * 2, 800)), "-o", str(raw), str(src)])
     else:
-        run(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-vf", f"scale={width}:-1:flags=lanczos,format=rgba", str(out)])
+        Image.open(src).convert("RGBA").save(raw)
+    im = Image.open(raw).convert("RGBA")
+    bb = im.getchannel("A").getbbox()
+    if bb:
+        im = im.crop(bb)
+    im.resize((width, max(1, round(im.height * width / im.width))), Image.LANCZOS).save(out)
     return out
 
 
@@ -423,4 +432,104 @@ def reencode_small(path, out: Path, *, height: int = 720) -> Path:
 def export_format(master: Path, out: Path, size: tuple) -> Path:
     run(["ffmpeg", "-y", "-v", "error", "-i", str(master), "-vf", f"scale={size[0]}:{size[1]}:force_original_aspect_ratio=increase,"
          f"crop={size[0]}:{size[1]}", "-frames:v", "1", str(out)])
+    return out
+
+
+# ── product colour match (generated plates drift darker/duller than the real product) ─────────────
+_BANDS = {  # hue range (0..1), min saturation, value range — the product's dominant colours, found on the reference photos
+    "dark": ((0.55, 0.78), 0.18, (0.08, 0.75)),
+    "bright": ((0.08, 0.20), 0.45, (0.50, 1.00)),
+}
+
+
+def _hsv(arr):
+    import numpy as np
+    r, g, b = (arr[..., i] / 255.0 for i in range(3))
+    mx, mn = np.max(arr / 255.0, axis=-1), np.min(arr / 255.0, axis=-1)
+    d = mx - mn + 1e-9
+    h = np.where(mx == r, ((g - b) / d) % 6, np.where(mx == g, (b - r) / d + 2, (r - g) / d + 4)) / 6.0
+    s = np.where(mx > 0, (mx - mn) / (mx + 1e-9), 0)
+    return h, s, mx
+
+
+def _band_weight(arr, band, feather=0.03):
+    import numpy as np
+    (h0, h1), smin, (v0, v1) = _BANDS[band]
+    h, s, v = _hsv(arr)
+    dh = np.maximum(np.maximum(h0 - h, h - h1), 0)
+    w = np.clip(1 - dh / feather, 0, 1) * np.clip((s - smin) / 0.1 + 1, 0, 1) * ((v >= v0) & (v <= v1))
+    return w
+
+
+def colour_match(plate: Path, refs: list, out: Path, *, max_gain: float = 1.35) -> dict:
+    """Move the plate's product colours (a dark body band and a bright accent band) to the reference photos' means,
+    channel gain within each band, feathered; background untouched. Returns before/after distances per band."""
+    import numpy as np
+    from PIL import Image
+    im = np.asarray(Image.open(plate).convert("RGB"), dtype=np.float64)
+    ref_px = []
+    for r in refs:
+        a = Image.open(r).convert("RGB"); a.thumbnail((600, 600)); ref_px.append(np.asarray(a, dtype=np.float64).reshape(-1, 3))
+    ref = np.concatenate(ref_px) if ref_px else np.zeros((0, 3))
+    res, outim = {}, im.copy()
+    for band in _BANDS:
+        rw = _band_weight(ref[None, ...], band)[0] if len(ref) else np.zeros(0)
+        pw = _band_weight(im, band)
+        if rw.sum() < 0.005 * max(1, len(ref)) or pw.sum() < 0.005 * pw.size:
+            res[band] = {"applied": False, "reason": "band not present on both"}
+            continue
+        ref_mean = (ref * rw[:, None]).sum(0) / rw.sum()
+        plate_mean = (im * pw[..., None]).sum((0, 1)) / pw.sum()
+        gain = np.clip(ref_mean / np.maximum(plate_mean, 1), 1 / max_gain, max_gain)
+        outim = outim * (1 + (gain - 1) * pw[..., None])
+        after = (np.clip(outim, 0, 255) * pw[..., None]).sum((0, 1)) / pw.sum()
+        res[band] = {"applied": True, "reference_rgb": [round(x) for x in ref_mean], "before_rgb": [round(x) for x in plate_mean],
+                     "after_rgb": [round(x) for x in after], "distance_before": round(float(np.linalg.norm(plate_mean - ref_mean)), 1),
+                     "distance_after": round(float(np.linalg.norm(after - ref_mean)), 1), "gain": [round(float(x), 3) for x in gain]}
+    Image.fromarray(np.clip(outim, 0, 255).astype("uint8")).save(out)
+    return res
+
+
+def calm_extent(plate: Path, *, canvas: tuple, side: str = "top", tol: float = 6.0) -> int:
+    """Pixels of uniform background from the top (or bottom) edge of the cover-cropped plate: where the picture's content
+    starts. Measured on the image itself — the text zone must end before the product, whatever an inspector says."""
+    import numpy as np
+    from PIL import Image, ImageOps
+    cw, ch = canvas
+    with Image.open(plate) as im:
+        g = ImageOps.fit(im.convert("L"), (cw, ch), method=Image.LANCZOS).resize((cw // 8, ch // 8), Image.BILINEAR)
+    a = np.asarray(g, dtype=np.float64)
+    rows = a if side == "top" else a[::-1]
+    ref = np.median(rows[:3], axis=0)
+    for i, row in enumerate(rows):
+        if np.abs(row - ref).max() > tol * 3 or row.std() > tol:
+            return i * 8
+    return ch
+
+
+def extend_plate(plate: Path, *, canvas: tuple, extra: int, side: str, out: Path) -> Path:
+    """Make room for copy on a uniform-background plate: the picture is scaled down (anchored to the far edge) and the
+    freed band is filled with the plate's own edge colour, feathered — no generation, no crop of the product."""
+    import numpy as np
+    from PIL import Image, ImageOps, ImageFilter
+    cw, ch = canvas
+    with Image.open(plate) as im:
+        base = ImageOps.fit(im.convert("RGB"), (cw, ch), method=Image.LANCZOS)
+    a = np.asarray(base, dtype=np.float64)
+    edge = np.median(a[:6] if side == "top" else a[-6:], axis=(0, 1))
+    f = (ch - extra) / ch
+    sw, sh = int(cw * f), int(ch * f)
+    small = base.resize((sw, sh), Image.LANCZOS)
+    bg = Image.new("RGB", (cw, ch), tuple(int(x) for x in edge))
+    x0, y0 = (cw - sw) // 2, (ch - sh if side == "top" else 0)
+    feather = max(8, int(min(cw, ch) * 0.06))
+    mask = Image.new("L", (sw, sh), 255)
+    m = np.asarray(mask, dtype=np.float64)
+    ramp = np.clip(np.arange(max(sw, sh)) / feather, 0, 1)
+    rows, cols = ramp[:sh][:, None], ramp[:sw][None, :]
+    m = m * (rows if side == "top" else rows[::-1]) * np.minimum(cols, cols[:, ::-1])
+    if side == "top":
+        m[-1:, :] = m[-1:, :]      # far edge stays anchored to the frame
+    bg.paste(small, (x0, y0), Image.fromarray(m.astype("uint8")).filter(ImageFilter.GaussianBlur(2)))
+    bg.save(out)
     return out

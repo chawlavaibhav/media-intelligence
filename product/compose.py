@@ -51,9 +51,95 @@ def _ink_for(samples_fn, box, role) -> tuple:
     return None, gate("contrast", "CONTRAST_GATE", G.check_contrast, WHITE, samples, role=role)
 
 
+def lockup_ad(*, plate: Path, out: Path, aspect: str, direction: dict, logo: Path | None, workdir: Path,
+              product_box_norm: list | None, zone: str) -> tuple:
+    """Top/bottom copy zone as ONE brand lockup: the logo leads (the largest element), then the headline, then the rest.
+    The block keeps a measured clearance from the product; if the plate's empty band is too small, the picture is scaled
+    down and the background extended (founder, 2026-09-23: "text is overlapping the image; brand name/logo is smaller
+    than the tag line")."""
+    W, H = media.FORMAT_PX[aspect]
+    m = int(min(W, H) * 0.06)
+    safe = (m, m, W - m, H - m)
+    lines = _lines(direction)
+    gap, clear = int(H * 0.022), int(H * 0.05)
+    items = []                                    # (id, kind, payload, w, h, meta)
+    if logo is not None:
+        lp = media.logo_png(logo, int(W * 0.40), workdir / f"lockup-logo-{W}x{H}-{Path(out).stem}.png")
+        lw, lh = _png_size(lp)
+        if lh > H * 0.09:                         # a tall mark is capped by height, not width
+            lp = media.logo_png(logo, int(lw * H * 0.09 / lh), workdir / f"lockup-logo-{W}x{H}-{Path(out).stem}-h.png")
+            lw, lh = _png_size(lp)
+        items.append(("logo", "image", lp, lw, lh, None))
+    for i, c in enumerate(lines):
+        start = int(W * (0.058 if i == 0 else 0.034))
+        if logo is not None and i == 0:
+            start = min(start, int(items[0][4] * 0.8))   # the headline never outweighs the brand
+        size, (dx, dy, tw, th) = media.fit_text(c["text"], max_w=W - 2 * m, start_size=start, min_size=max(22, int(start * 0.5)),
+                                                kind="bold" if i == 0 else "regular")
+        items.append((c["id"], "text", c, tw, th, (size, dx, dy, i)))
+    gaps = [int(gap * 1.6) if it[0] == "logo" else gap for it in items[:-1]]   # the brand mark gets air below it
+    block = sum(it[4] for it in items) + sum(gaps)
+    need = m + block + clear
+    free = media.calm_extent(plate, canvas=(W, H), side=zone)
+    src, extended = plate, 0
+    base_free = free
+    for _ in range(3):                  # re-measure after each extension (8-px sampling + the feathered edge)
+        if free >= need:
+            break
+        # shrinking the picture by f also moves its content: extra + free·(H − extra)/H ≥ need
+        extended += int((need - free) / max(0.2, 1 - base_free / H)) + 8
+        src = media.extend_plate(plate, canvas=(W, H), extra=extended, side=zone, out=workdir / f"{Path(plate).stem}-{zone}-ext-{W}x{H}.png")
+        free = media.calm_extent(src, canvas=(W, H), side=zone)
+    y = m if zone == "top" else H - m - block
+    sample = lambda box: media.luminance_samples(src, box, canvas=(W, H))
+    checks, layers, boxes = [], [], {}
+    for name, kind, payload, w, h, meta in items:
+        x = (W - w) // 2
+        box = (x, y, x + w, y + h)
+        boxes[name] = box
+        if kind == "image":
+            layers.append({"type": "image", "path": payload, "x": x, "y": y})
+        else:
+            size, dx, dy, i = meta
+            role = _role(size, W)
+            ink, cres = _ink_for(sample, box, role)
+            if ink is None:
+                pad = int(size * 0.3)
+                layers.append({"type": "box", "x": box[0] - pad, "y": box[1] - pad, "w": w + 2 * pad, "h": h + 2 * pad, "colour": INK})
+                ink = WHITE
+                cres = gate("contrast", "CONTRAST_GATE", G.check_contrast, ink, [], role=role, backing_hex=INK)
+            cres["check_id"] = f"contrast:{name}"
+            checks.append(cres)
+            layers.append({"type": "text", "text": payload["text"], "size": size, "colour": ink, "x": x - dx, "y": y - dy,
+                           "kind": "bold" if i == 0 else "regular"})
+            checks.append(gate(f"fit:{name}", "CROP_FIT_DECLARATION", G.check_fit, {"id": name, "fit": "contain", "source_size": (w, h), "box": box}))
+        checks.append(gate(f"bounds:{name}", "TEXT_BOUNDS_GATE", G.check_text_bounds, box, canvas=(0, 0, W, H), container=safe, id_=name))
+        y += h + (int(gap * 1.6) if name == "logo" else gap)
+    checks.append(gate("disjoint", "ELEMENT_DISJOINTNESS", G.check_disjoint, boxes, critical=tuple(boxes), min_gap_px=8))
+    # measured clearance: the lockup ends before the picture's content starts, with room to breathe
+    block_edge = max(b[3] for b in boxes.values()) if zone == "top" else H - min(b[1] for b in boxes.values())
+    ok = block_edge + clear <= free + 1
+    checks.append({"check_id": "clear_of_product", "control": "HERO_VISIBLE", "status": "PASS" if ok else "FAIL",
+                   "detail": f"copy ends {block_edge}px from the {zone} edge; picture content starts at {free}px; clearance needed {clear}px"
+                             + (f"; background extended by {extended}px" if extended else ""),
+                   "evidence": {"block_edge": block_edge, "content_start": free, "clearance": clear, "extended_px": extended}})
+    if product_box_norm and len(product_box_norm) == 4:
+        pb = (int(product_box_norm[0] * W), int(product_box_norm[1] * H), int(product_box_norm[2] * W), int(product_box_norm[3] * H))
+        checks.append(gate("hero_visible", "HERO_VISIBLE", G.check_hero_visible, pb, boxes, max_covered_frac=0.05, id_="product"))
+    else:
+        checks.append({**checks[-1], "check_id": "hero_visible", "detail": "measured on the picture: " + checks[-1]["detail"]})
+    media.compose(canvas=(W, H), out=out, plate=src, layers=layers)
+    return out, checks, {"canvas": [W, H], "safe": safe, "zone": zone, "boxes": boxes, "extended_px": extended,
+                         "rendered_text": [L["text"] for L in layers if L["type"] == "text"]}
+
+
 def still_ad(*, plate: Path, out: Path, aspect: str, direction: dict, logo: Path | None, workdir: Path,
              product_box_norm: list | None) -> tuple:
     """Compose one format. Returns (out_path, checks, layout)."""
+    zone0 = (direction.get("composition") or {}).get("text_zone", "top")
+    if zone0 in ("top", "bottom", "none"):
+        return lockup_ad(plate=plate, out=out, aspect=aspect, direction=direction, logo=logo, workdir=workdir,
+                         product_box_norm=product_box_norm, zone="bottom" if zone0 == "none" else zone0)
     W, H = media.FORMAT_PX[aspect]
     m = int(min(W, H) * 0.06)
     safe = (m, m, W - m, H - m)
@@ -64,6 +150,11 @@ def still_ad(*, plate: Path, out: Path, aspect: str, direction: dict, logo: Path
     # zone box inside the safe area
     if zone in ("top", "bottom"):
         zh = int((H - 2 * m) * 0.30)
+        # the zone ends where the picture's content begins (measured), so copy never sits on the product
+        free = media.calm_extent(plate, canvas=(W, H), side=zone) - int(m * 0.5)
+        if product_box_norm and len(product_box_norm) == 4:
+            free = min(free, int((product_box_norm[1] if zone == "top" else 1 - product_box_norm[3]) * H) - int(m * 0.5))
+        zh = max(int(H * 0.10), min(zh, free - m))
         zbox = (m, m, W - m, m + zh) if zone == "top" else (m, H - m - zh, W - m, H - m)
     else:
         zw = int((W - 2 * m) * 0.42)

@@ -607,8 +607,25 @@ class Orchestrator:
         if not media.have_ffmpeg():
             return self._placeholder_final(job_id, n, plate["path"], out, "image/png")
         pbox = json.loads(plate["meta_json"]).get("product_box")
-        path, checks, layout = compose.still_ad(plate=Path(plate["path"]), out=out, aspect=spec["aspect"], direction=ctx["d"],
+        # Generated product colours drift (live 2026-09-23: navy 18 % darker than the real bag; the founder: "a little colour
+        # off"). The product's dominant colours are matched to the customer's own photos, background untouched, and the
+        # measured before/after distance is recorded on the delivered file.
+        src_plate, colour_rows = Path(plate["path"]), []
+        photos = [Path(u["path"]) for u in self.uploads(job_id, "product") if (u["content_type"] or "").startswith("image/")]
+        if photos:
+            matched = ctx["workdir"] / f"{Path(plate['path']).stem}-colour.png"
+            cm = media.colour_match(src_plate, photos, matched)
+            applied = {b: r for b, r in cm.items() if r.get("applied")}
+            worst = max((r["distance_after"] for r in applied.values()), default=None)
+            colour_rows.append({"check_id": "product_colour_match", "control": "PRODUCT_INTACT_AND_FAITHFUL",
+                                "status": "PASS" if worst is not None and worst <= 8 else "FLAG", "blocking": False,
+                                "detail": "; ".join(f"{b}: distance {r['distance_before']} -> {r['distance_after']} (reference {r['reference_rgb']})"
+                                                    for b, r in applied.items()) or "no product colour band found on both",
+                                "evidence": cm})
+            src_plate = matched
+        path, checks, layout = compose.still_ad(plate=src_plate, out=out, aspect=spec["aspect"], direction=ctx["d"],
                                                 logo=ctx["logo"], workdir=ctx["workdir"], product_box_norm=pbox)
+        checks = checks + colour_rows
         aid = self.store.add_asset(job_id, path=path, kind="image", source="composed", content_type="image/png", node_id=n["node_id"],
                                    role="deliverable", cut=ctx["cut"], meta={"format": spec["aspect"], "layout": layout, "plate": plate["id"]})
         verify.record_rows(self.store, job_id, aid, checks, runner="compositor_gates")
@@ -736,7 +753,9 @@ class Orchestrator:
                                                              "forbidden": intent["forbidden"]},
                 "DIRECTION": {k: d.get(k) for k in ("proposition", "selected_concept", "audience_experience", "beats", "copy_deck", "composition")},
                 "DETERMINISTIC_CHECKS": [{"check": r["check_id"], "status": r["status"]} for aid in finals for r in self.store.checks(aid)],
-                "MEDIA_NOTE": review_media["note"]}, media=review_media["items"], max_tokens=8000)
+                "MEDIA_NOTE": ("The first image(s) are the customer's own product photos (reference, not the work); the rest is the "
+                               "finished work. " if review_media.get("refs") else "") + review_media["note"]},
+                media=review_media.get("refs", []) + review_media["items"], max_tokens=8000)
         review["_reviewed_sha256"] = review_media["shas"]
         self.store.put_artifact(job_id, "review", review, "reviewer")
         super_ids = [f"b{b['n']}" for b in d.get("beats", []) if b.get("super_id")]
@@ -800,7 +819,10 @@ class Orchestrator:
                 sheet = media.contact_sheet(a["path"], Path(a["path"]).with_name("contact.png"))
                 items.append(("image/png", sheet.read_bytes()))
                 note += "Contact sheet at 2 fps; the audio could not be sent to this reviewer. "
-        return {"items": items, "note": note or "no media", "shas": shas}
+        refs = []
+        if finals:
+            refs = list(self._ref_images(self.store.asset(finals[0])["job_id"], 2))
+        return {"items": items, "note": note or "no media", "shas": shas, "refs": refs}
 
     def _invalidate_beats(self, job_id, notes_by_beat: dict) -> list:
         changed = []

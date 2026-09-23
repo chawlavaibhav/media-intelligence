@@ -242,8 +242,8 @@ warped, unrequested, or lettered by the model; is the edit coherent; for sound, 
 be none), and is the mix clean at the cuts. Passed technical checks are not evidence of quality. For every defect give where
 (beat/time/element), severity, the earliest stage that caused it, and one concrete repair. `pass` only if a demanding
 customer would accept it as is. If you cannot see or hear something, list it as cannot_determine. Answer
-product_fidelity, continuity, model_lettering (any lettering OR logo/wordmark the model drew — only code-set text and the
-supplied logo file are allowed), product_across_shots (is it the same product, same colour/shape/opening, in every shot?) and
+product_fidelity, continuity, model_lettering (any lettering OR logo/wordmark the model drew — code-set text, the supplied
+logo file and the product's OWN marks exactly as on the customer's reference photos are allowed; compare with the photos), product_across_shots (is it the same product, same colour/shape/opening, in every shot?) and
 subject_obstructed (is the product or subject covered, cut off or blocked by
 text, graphics or other objects?) explicitly with the evidence you saw (time/region): these answers are what
 the delivery decision rests on, and a question you did not answer counts as unverified, never as passed. Output JSON only."""

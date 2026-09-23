@@ -6,7 +6,7 @@ set -euo pipefail
 : "${REF:?set REF to the branch or commit to deploy}"
 REPO_URL="${REPO_URL:-https://github.com/chawlavaibhav/media-intelligence}"
 apt-get update -q
-apt-get install -y -q python3 python3-yaml python3-jinja2 python3-cryptography python3-pil libraqm0 ffmpeg librsvg2-bin \
+apt-get install -y -q python3 python3-yaml python3-jinja2 python3-cryptography python3-pil python3-numpy libraqm0 ffmpeg librsvg2-bin \
     fonts-dejavu-core fonts-noto-core git sqlite3 caddy
 id mi >/dev/null 2>&1 || useradd --system --home /srv/mi --shell /usr/sbin/nologin mi
 mkdir -p /srv/mi/data/backups /etc/mi
