@@ -36,19 +36,23 @@ class TheV1RecipeIsSentBackBeforeSpend(unittest.TestCase):
             u, f = e.store.artifact(jid, "understanding"), e.store.artifact(jid, "feasibility")
             e.orch.sim.chef__recipe = lambda b, media: fx.v1_recipe(u, f)            # the chef insists on the v1 recipe
             e.orch.step(jid)
-            self.assertEqual(e.state(jid), "paused_for_founder")                  # 2 send-back rounds, then the founder
+            # 2 send-back rounds, then the SYSTEM applies the safest alternative (amendment 1 §3) — never the founder
             self.assertEqual(flow.rounds_used(e.store, jid, "SB-RECIPE"), 2)
-            rc = e.store.artifact(jid, "recipe_check")
+            self.assertEqual(len(e.store.artifact_versions(jid, "recipe")), 4)        # 3 by the chef + the system's safe re-plan
+            rc = e.store.artifact(jid, "recipe_check", 3)                            # the third check of the chef's v1 recipe
             self.assertEqual(rc["verdict_after_code"], "send_back")
             cannot = {x["where"].split(" ")[1] for x in rc["code_findings"] if x["rule"] == "R1:cannot_on_route"}
             for n in ("2", "3", "5", "6", "7"):                                   # zips pulled, flap folded/raised, zips closed
                 self.assertIn(n, cannot, rc["code_findings"])
             self.assertTrue(any("EQ-001" in x["finding"] for x in rc["code_findings"]))
             self.assertTrue(any(x["rule"] == "R3:risky_not_limited" for x in rc["code_findings"]))   # the laptop slide, the lift
-            self.assertEqual(provider_attempts(e, jid), [])                        # never reached a paid call
-            with self.assertRaises(PermissionError):
-                e.orch.approve(jid, by=e.user["email"], budget_usd="15")          # the customer cannot approve it either
-            self.assertEqual(len(e.store.artifact_versions(jid, "recipe")), 3)
+            self.assertEqual([a for a in provider_attempts(e, jid) if a["node_id"] != "preview"], [])   # no production spend
+            v1 = e.store.artifact(jid, "recipe", 3)
+            self.assertTrue(all(s["route"] == "FILM-C" for s in v1["shots"] if s["route"] != "END-CARD"))
+            safe = e.store.artifact(jid, "recipe")
+            for n in (2, 3, 5, 6, 7):                                             # the mechanism shots are stills now
+                self.assertEqual(next(s for s in safe["shots"] if s["n"] == n)["route"], "FILM-A")
+            self.assertEqual(e.state(jid), "awaiting_approval")
         finally:
             e.close()
 
@@ -71,20 +75,16 @@ class TheV1RecipeIsSentBackBeforeSpend(unittest.TestCase):
             e.close()
 
 
-class RecipeRoundsAndTheFounder(unittest.TestCase):
-    def test_a_good_recipe_waits_for_the_founders_confirmation_while_the_checker_is_unqualified_then_reaches_the_customer(self):
+class RecipeRoundsAndTheCustomer(unittest.TestCase):
+    def test_a_good_recipe_goes_straight_to_the_customer_as_our_reviewer_found_no_problems(self):
         e = Env()
         try:
             jid = fx.submit_backpack_film(e)
             to_directing(e, jid)
             e.orch.step(jid)
-            self.assertEqual(e.state(jid), "paused_for_founder")
-            self.assertEqual(e.store.artifact(jid, "founder_decision")["decision"], "confirm recipe")
+            self.assertEqual(e.state(jid), "awaiting_approval")                  # amendment 1 §3: no founder confirmation
             self.assertEqual(e.store.artifact(jid, "recipe_check")["verdict_after_code"], "approve")
-            with self.assertRaises(PermissionError):
-                e.orch.confirm_recipe(jid, session="operator:claude", reason="the plan looks fine to the builder")
-            e.orch.confirm_recipe(jid, session=e.founder_session(), reason="Read the plan: stills for the zips, one risky slide first.")
-            self.assertEqual(e.state(jid), "awaiting_approval")
+            self.assertEqual(e.store.artifact(jid, "plan_note")["text"], "Our reviewer found no problems with this plan.")
             q = e.store.artifact(jid, "quote")
             self.assertIn("reasoning_line_usd", q)
             self.assertTrue(e.store.assets(jid, role="preview"))                  # the sample picture (the master plate draft)
@@ -94,19 +94,21 @@ class RecipeRoundsAndTheFounder(unittest.TestCase):
         finally:
             e.close()
 
-    def test_after_two_send_backs_only_the_founder_can_override_and_the_reason_is_kept(self):
+    def test_the_founder_may_still_override_the_reviewers_objections_but_never_has_to_and_the_reason_is_kept(self):
         e = Env()
         try:
             jid = fx.submit_backpack_film(e)
             to_directing(e, jid)
-            u, f = e.store.artifact(jid, "understanding"), e.store.artifact(jid, "feasibility")
-            e.orch.sim.chef__recipe = lambda b, media: fx.v1_recipe(u, f)
+            orig = e.orch.sim.recipe_checker__recipe_check
+            e.orch.sim.recipe_checker__recipe_check = lambda b, m: {**orig(b, m), "verdict": "send_back"}
             e.orch.step(jid)
-            self.assertEqual(e.state(jid), "paused_for_founder")
+            self.assertEqual(e.state(jid), "awaiting_approval")                  # objections go to the customer
+            self.assertTrue(e.store.artifact(jid, "plan_objections"))
             with self.assertRaises(PermissionError):
                 e.orch.override_recipe(jid, session=e.session_of("buyer@acme.test"), reason="customer wants it anyway, push it")
             e.orch.override_recipe(jid, session=e.founder_session(), reason="Testing the override path; this recipe must not ship.")
-            self.assertEqual(e.state(jid), "awaiting_approval")
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")             # no need to accept objections once overridden
+            self.assertEqual(e.state(jid), "planning")
             o = e.store.overrides(jid, "recipe_send_back")[0]
             self.assertEqual(o["founder_email"], "founder@mi.test")
             self.assertIn("must not ship", o["reason"])

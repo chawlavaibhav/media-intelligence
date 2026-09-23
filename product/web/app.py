@@ -99,12 +99,13 @@ class App:
             ("POST", r"/invite/(?P<tok>[\w-]+)", self.invite), ("GET", r"/", self.home), ("GET", r"/jobs/new", self.new_job),
             ("POST", r"/jobs", self.create_job), ("GET", r"/jobs/(?P<jid>job_\w+)", self.job_page),
             ("GET", r"/jobs/(?P<jid>job_\w+)/status", self.job_status),
-            ("POST", r"/jobs/(?P<jid>job_\w+)/(?P<action>answer|approve|direction-change|changes|accept|reject|budget|upload|input|master|abandon)", self.job_action),
+            ("POST", r"/jobs/(?P<jid>job_\w+)/(?P<action>answer|approve|direction-change|changes|accept|reject|budget|upload|input|master|abandon|decide)", self.job_action),
             ("GET", r"/shelf", self.shelf_page), ("POST", r"/shelf/(?P<sid>shf_\w+)", self.shelf_action),
             ("GET", r"/assets/(?P<aid>ast_\w+)(?P<dl>/download)?", self.asset),
             ("GET", r"/ops", self.ops_home), ("GET", r"/ops/jobs/(?P<jid>job_\w+)", self.ops_job),
-            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override|select_take|confirm_recipe|override_recipe|override_final|close|approve_master)", self.ops_action),
+            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override|select_take|override_recipe|override_final|close|approve_master)", self.ops_action),
             ("GET", r"/ops/lessons", self.ops_lessons), ("POST", r"/ops/lessons/(?P<lid>lsn_\w+)", self.ops_lesson_action),
+            ("GET", r"/ops/digest", self.ops_digest), ("POST", r"/ops/lessons/(?P<lid>lsn_\w+)/undo", self.ops_lesson_undo),
             ("GET", r"/ops/rulebook", self.ops_rulebook), ("GET", r"/ops/library", self.ops_library),
             ("POST", r"/ops/accounts", self.ops_account), ("POST", r"/ops/invites", self.ops_invite),
         ]
@@ -250,7 +251,10 @@ class App:
                 "preview": [a for a in st.assets(jid, role="preview")][-1:], "finals": [st.asset(a) for a in finals], "report": report,
                 "deliverables": deliverables, "uploads": st.assets(jid, source="customer"), "ledger": st.ledger_summary(jid),
                 "feedback": st.feedback(jid), "deliveries": st.deliveries(jid), "revision": st.artifact(jid, "revision_plan"),
-                "account": st.account(j["account_id"]), "nodes": [n for n in st.nodes(jid) if n["status"] != "retired"]}
+                "account": st.account(j["account_id"]), "nodes": [n for n in st.nodes(jid) if n["status"] != "retired"],
+                "plan_note": st.artifact(jid, "plan_note"), "plan_objections": _current_objections(st, jid),
+                "customer_notes": (st.artifact(jid, "customer_notes") or {}).get("notes", []),
+                "customer_decision": st.artifact(jid, "customer_decision")}
 
     def job_page(self, req, jid):
         u = self.user(req)
@@ -275,7 +279,9 @@ class App:
             o.answer(jid, ans, who)
         elif action == "approve":
             o.approve(jid, by=who, budget_usd=f.get("budget_usd") or self.store.artifact(jid, "quote")["recommended_budget_usd"],
-                      note=f.get("note", ""))
+                      note=f.get("note", ""), accept_objections=f.get("accept_objections") == "yes")
+        elif action == "decide":
+            o.decide(jid, by=who, choice=f.get("choice", ""), note=f.get("note", "")[:1000], budget_usd=f.get("budget_usd") or None)
         elif action == "direction-change":
             o.request_direction_change(jid, f.get("text", "")[:2000], who)
         elif action == "changes":
@@ -389,8 +395,6 @@ class App:
                 o.release(jid, session=req.session)
             elif action == "select_take":
                 o.select_take(jid, session=req.session, asset_id=f.get("asset_id", ""), reason=f.get("reason", ""))
-            elif action == "confirm_recipe":
-                o.confirm_recipe(jid, session=req.session, reason=f.get("reason", ""))
             elif action in ("override", "override_recipe"):
                 o.override_recipe(jid, session=req.session, reason=f.get("reason", ""))
             elif action == "override_final":
@@ -408,6 +412,30 @@ class App:
     def ops_lessons(self, req):
         u = self.user(req, "operator")
         return self.page("ops_lessons.html", req, lessons=self.svc.orch.lessons.all(), is_founder=u["role"] == "founder", json=json)
+
+    def ops_digest(self, req):
+        """The founder's weekly digest (amendment 1 §4): what the kitchen learned by itself, from which job, on what evidence,
+        before → after — with Undo per item; plus the money/override/safety lessons that wait for the founder."""
+        u = self.user(req, "operator")
+        rows = self.svc.orch.lessons.digest(7)
+        groups = {"applied": [], "founder_only": [], "waiting_support": [], "rolled_back": [], "undone": [], "other": []}
+        for r in rows:
+            groups.get(r["status"], groups["other"]).append(r)
+        return self.page("ops_digest.html", req, groups=groups, is_founder=u["role"] == "founder", json=json)
+
+    def ops_lesson_undo(self, req, lid):
+        self.user(req, "operator")
+        o = self.svc.orch
+        row = o.lessons.lesson(lid)
+        from product import authority
+        try:
+            proof = authority.founder_proof(self.store, req.session, job_id=row["job_id"], action="undo a lesson")
+            o.lessons.undo(lid, founder=proof, note=req.form.get("note", ""))
+        except PermissionError as e:
+            return Response("403 Forbidden", self.render("error.html", req, message=str(e)))
+        except (ValueError, KeyError) as e:
+            raise Invalid(str(e))
+        return redirect("/ops/digest")
 
     def ops_lesson_action(self, req, lid):
         self.user(req, "operator")
@@ -475,3 +503,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def _current_objections(st, jid):
+    """The reviewer's objections, only while they are about the plan the customer is looking at."""
+    obj = st.artifact(jid, "plan_objections")
+    return obj if obj and obj["recipe_version"] == len(st.artifact_versions(jid, "recipe")) else None

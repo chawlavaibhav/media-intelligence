@@ -165,6 +165,9 @@ class WriteOnceViolation(Exception):
     """A file path that already holds a registered asset was about to be reused (spec §7.1: files are write-once)."""
 
 
+LESSON_COLUMNS = ("kind", "support_key", "watch_json", "undone_by", "undone_at", "undo_note")
+
+
 class Store:
     def __init__(self, db_path: str | Path):
         self.db_path = str(db_path)
@@ -176,6 +179,10 @@ class Store:
             for col, typ in LLM_CALL_COLUMNS:
                 if col not in have:
                     c.execute(f"ALTER TABLE llm_calls ADD COLUMN {col} {typ}")
+            have = {r["name"] for r in c.execute("PRAGMA table_info(lessons)")}
+            for col in LESSON_COLUMNS:                 # amendment 1 §4: kind, support, watch and undo of automated lessons
+                if col not in have:
+                    c.execute(f"ALTER TABLE lessons ADD COLUMN {col} TEXT")
 
     # ── connections ──────────────────────────────────────────────────────────────
     def connect(self) -> sqlite3.Connection:

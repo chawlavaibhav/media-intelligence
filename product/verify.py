@@ -80,6 +80,16 @@ ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on
                                         "product, the same hands/person, the same room and light, nothing warped"}
 
 
+# Amendment 1 §3: checks are either MEASURED (code, on the exact file: they still block, and a measured FAIL never ships) or
+# JUDGEMENT (a model's or a person's opinion: an unqualified judge's "yes" and "cannot tell" go to the customer, whose
+# preview is the final check; the customer's acceptance is recorded against each one as a `customer:` row).
+JUDGEMENT = set(ATTESTABLE) | {"audio_reviewed", "process:direction_truth", "clips:required_action", "clips:end_state"}
+
+
+def is_judgement(check_id: str) -> bool:
+    return check_id in JUDGEMENT or check_id.startswith("mandatory:")
+
+
 def attestable(check_id: str) -> str | None:
     if check_id in ATTESTABLE:
         return ATTESTABLE[check_id]
@@ -406,6 +416,7 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
     rc = store.artifact(job_id, "recipe_check") or {}
     over = store.overrides(job_id, "recipe_send_back")
     confirmed = store.overrides(job_id, "confirm_recipe")
+    went_ahead = store.events(job_id, ("customer_accepted_objections",))
     sim_rc = bool((rc.get("written_by") or {}).get("simulated"))
     if not rc:
         rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "NOT_VERIFIED",
@@ -413,6 +424,10 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
     elif rc.get("verdict_after_code") != "approve" and over:
         rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG",
                      "blocking": False, "detail": f"recipe send-back overridden by {over[-1]['founder_email']}: {over[-1]['reason'][:200]}"})
+    elif rc.get("verdict_after_code") != "approve" and went_ahead:
+        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG",
+                     "blocking": False, "detail": "our reviewer objected to the plan; the customer read the objections and chose to go "
+                                                  f"ahead ({json.loads(went_ahead[-1]['data_json']).get('objections', [])[:3]})"})
     elif rc.get("verdict_after_code") != "approve":
         rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FAIL",
                      "detail": "the recipe checker sent the recipe back"})
@@ -433,9 +448,10 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
     over = []
     for n in shot_nodes:
         draws = [a for a in prov if a["node_id"] == n["node_id"] and a["status"] == "ok"]
-        if max(0, len(draws) - 1) > rejected.get(n["node_id"], 0):
+        rounds = int(json.loads(n["spec_json"]).get("repair_round") or 0)     # a repair / change / re-plan round allows a new draw
+        if max(0, len(draws) - 1) > rejected.get(n["node_id"], 0) + rounds:
             over.append(n["node_id"])
-    add("process:take_selection", not over, f"outputs redrawn without a rejected attempt: {over or 'none'}")
+    add("process:take_selection", not over, f"outputs redrawn without a rejected attempt or a repair round: {over or 'none'}")
     # 6. risky shots were produced and tasted before any other shot was paid for
     risky = [n["node_id"] for n in shot_nodes if n["kind"] == "shot" and json.loads(n["spec_json"]).get("risky")]
     shot_atts = [a for a in prov if (a["node_id"] or "").startswith(("shot_", "frame_")) and not a["is_repair"]]
@@ -497,15 +513,22 @@ def gateway(store: Store, job_id: str, asset_id: str, required: dict) -> dict:
         if r is not None and (r["runner"].startswith("person:") or r["runner"].startswith("founder:")) \
                 and ("confirm", f"{asset_id}:{cid}") not in backed:
             status, detail = "NOT_VERIFIED", f"a person-recorded result not confirmed by the founder is ignored ({r['runner']})"
+        if r is not None and r["runner"].startswith("customer:") and not is_judgement(cid):
+            status, detail = "NOT_VERIFIED", "a customer cannot sign off a measured check"
         is_blocking = (r["blocking"] if r else True) and status in ("FAIL", "NOT_VERIFIED")
         w = waived.get(cid) if cid not in NON_WAIVABLE else None
         entry = {"check_id": cid, "control": required.get(cid) or (r["control_ids"] if r else ""), "status": status,
-                 "detail": detail, "runner": r["runner"] if r else None,
+                 "detail": detail, "runner": r["runner"] if r else None, "kind": "judgement" if is_judgement(cid) else "measured",
                  "waived_by": w["by_user"] if w else None, "waiver_reason": w["reason"] if w else None}
         table.append(entry)
         if is_blocking and not w:
             blocking.append(entry)
     shown = [{"kind": o["kind"], "target": o["target"], "by": o["founder_email"], "reason": o["reason"], "utc": o["created"]}
              for o in ovs if is_founder_user(store, o["founder_user_id"])]
+    measured = [b for b in blocking if b["kind"] == "measured"]
     return {"asset_id": asset_id, "sha256": sha, "ready": not blocking, "blocking": blocking, "table": table,
+            # presentable: nothing MEASURED blocks — the customer's preview is the final check on the judgement rows
+            "presentable": not measured, "measured_blocking": measured,
+            "measured_failed": [b for b in measured if b["status"] == "FAIL"],
+            "judgement_open": [b for b in blocking if b["kind"] == "judgement"],
             "waived": [e for e in table if e["waived_by"]], "ignored_waivers": ignored, "founder_overrides": shown}

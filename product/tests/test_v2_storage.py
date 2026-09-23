@@ -149,7 +149,8 @@ class Library(unittest.TestCase):
 
 
 class LessonQueueApplies(unittest.TestCase):
-    def test_lessons_wait_and_only_an_approved_one_changes_its_store(self):
+    def test_lessons_are_applied_by_kind_and_a_money_lesson_waits_for_the_founder(self):
+        """Amendment 1 §4 (storage half; the behaviour tests are in test_v2_amendment1.py)."""
         e = Env()
         try:
             st = e.store
@@ -161,20 +162,20 @@ class LessonQueueApplies(unittest.TestCase):
                  "proposed_change": {"target": "equipment_sheet", "why": "floated in both takes",
                                      "diff": {"id": "EQ-003", "action_class": "lift_closed_product", "verdict": "cannot", "sample_count": 4}}},
                 {"worker": "chef", "what_went_right": "-", "what_went_wrong": "-", "evidence_refs": [],
-                 "proposed_change": {"target": "rulebook_card", "why": "repeat", "diff": {"worker": "chef", "changes": {"kra_add": "No lifts."}}}},
+                 "proposed_change": {"target": "rulebook_card", "why": "repeat",
+                                     "diff": {"worker": "chef", "changes": {"kra_add": "Spend up to the budget cap without asking."}}}},
                 {"worker": "waiter", "what_went_right": "ok", "what_went_wrong": "", "evidence_refs": [], "proposed_change": None}]}
             ids = q.enqueue(jid, form)
             self.assertEqual(len(ids), 2)
             eq = library.EquipmentSheet(st)
-            self.assertEqual(eq.verdict("lift_closed_product", "FILM-C")["verdict"], "risky")     # nothing applied yet
-            with self.assertRaises(PermissionError):
-                q.decide(ids[0], founder="operator:claude", decision="approve", note="looks right to me, applying")
-            f = e.founder()
-            q.decide(ids[0], founder=f, decision="approve", note="Both takes floated; do not offer lifts until re-qualified.")
-            self.assertEqual(eq.verdict("lift_closed_product", "FILM-C")["verdict"], "cannot")
-            q.decide(ids[1], founder=f, decision="reject", note="Too broad; the equipment sheet already covers it.")
-            self.assertEqual(rulebook.Rulebook(st).version("chef"), 1)
+            self.assertEqual(eq.verdict("lift_closed_product", "FILM-C")["verdict"], "cannot")      # careful: applied at once
             self.assertEqual(json.loads(q.lesson(ids[0])["applied_json"])["version"], 2)
+            self.assertEqual(q.lesson(ids[1])["status"], "founder_only")                          # money: never automatic
+            self.assertEqual(rulebook.Rulebook(st).version("chef"), 1)
+            with self.assertRaises(PermissionError):
+                q.decide(ids[1], founder="operator:claude", decision="approve", note="looks right to me, applying")
+            q.decide(ids[1], founder=e.founder(), decision="reject", note="Budget rules are mine; never in a card.")
+            self.assertEqual(rulebook.Rulebook(st).version("chef"), 1)
             self.assertEqual(q.waiting(), [])
         finally:
             e.close()

@@ -11,9 +11,7 @@
 <div class="card"><h2>Decisions</h2>
 {% if founder_decision and job.state == 'paused_for_founder' %}<p><strong>You are asked to:</strong> {{ founder_decision.decision }} — {{ founder_decision.reason }}</p>{% endif %}
 <form method="post" action="/ops/jobs/{{ job.id }}/pause" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="reason" value="paused by our team"><button class="secondary">Pause</button></form>
-{% if job.state == 'paused_for_founder' and founder_decision and founder_decision.decision == 'confirm recipe' %}
-<form method="post" action="/ops/jobs/{{ job.id }}/confirm_recipe"><input type="hidden" name="csrf" value="{{ csrf }}"><label for="cr">Confirm the recipe (the recipe checker is not yet qualified) — what did you check?</label>
-<input id="cr" type="text" name="reason" required minlength="15"><button>Confirm recipe</button></form>{% endif %}
+
 {% if job.state == 'paused_for_founder' and forms.recipe_check and forms.recipe_check.verdict_after_code != 'approve' %}
 <form method="post" action="/ops/jobs/{{ job.id }}/override_recipe"><input type="hidden" name="csrf" value="{{ csrf }}"><label for="or">Override the recipe checker's send-back — why?</label>
 <input id="or" type="text" name="reason" required minlength="15"><button class="danger">Override recipe check</button></form>{% endif %}
@@ -54,7 +52,9 @@
 {% if g.founder_overrides %}<p class="small"><strong>Overrides shown on this report:</strong> {% for o in g.founder_overrides %}{{ o.kind }} by {{ o.by }} — “{{ o.reason }}”; {% endfor %}</p>{% endif %}{% endfor %}</div>{% endif %}
 
 {% if cost %}<div class="card"><h2>AI reasoning cost (estimated per worker{{ ', live actuals' if cost.mode == 'live' }})</h2>
-<p>Total {{ cost.estimated_total_usd|usd }} against the target {{ cost.budget_usd|usd }} — {% if cost.within_budget %}<span class="ok">within</span>{% else %}<span class="bad">over the target</span>{% endif %}</p>
+<p>Total {{ cost.estimated_total_usd|usd }}{% if cost.images_in_set %} for a set of {{ cost.images_in_set }} images = {{ cost.per_image_usd|usd }} per image{% endif %}.
+Targets: film {{ cost.targets.film|usd }} per film, image {{ cost.targets.image|usd }} per image. This job ({{ cost.target_measured }}):
+{% if cost.within_budget %}<span class="ok">within its target</span>{% else %}<span class="bad">over its target</span>{% endif %}</p>
 <table><tr><th>worker</th><th>model</th><th>calls (+expected)</th><th>estimated</th><th>actual</th></tr>
 {% for w, x in cost.per_worker.items() %}<tr><td>{{ w }}</td><td class="small">{{ x.model }}</td><td>{{ x.calls }}{% if x.expected_calls %} (+{{ x.expected_calls }}){% endif %}</td>
 <td>{{ ((x.estimated_usd|float) + (x.expected_usd|float))|round(4) }}</td><td>{{ x.actual_usd }}</td></tr>{% endfor %}</table><p class="small muted">{{ cost.basis }}</p></div>{% endif %}

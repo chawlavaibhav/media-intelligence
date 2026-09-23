@@ -12,7 +12,8 @@ PYTHONPATH=. .venv/bin/python -m unittest discover -s product/tests -t .       #
 PYTHONPATH=. .venv/bin/python -m product.smoke                                  # media engine + dry jobs + backup/restore
 PYTHONPATH=. .venv/bin/python -m product.qualification.judges                   # judges' harness, simulated (qualifies nothing)
 # optional: clone the private evidence repo next to this one (../mi-p1-evidence) to also run the checks on the
-# verbatim 23-September records and to give the judges' harness its 14 cases
+# verbatim 23-September records and to give the judges' harness its cases (incl. the 76 old-job films and images);
+# `git fetch origin 'refs/heads/work/*:refs/remotes/origin/work/*'` gives the recipe checker its 6 old-job plans
 MI_DATA_DIR=/tmp/mi .venv/bin/python -m product.admin init-founder --email you@example.com   # once; prints an invite link
 MI_DATA_DIR=/tmp/mi .venv/bin/python -m product.web.app --port 8080 &   MI_DATA_DIR=/tmp/mi .venv/bin/python -m product.worker &
 ```
@@ -29,8 +30,8 @@ MI_DATA_DIR=/tmp/mi .venv/bin/python -m product.web.app --port 8080 &   MI_DATA_
 | `rulebook/` | worker cards (mission, vision, KRA, instructions) and form schemas as versioned data (§4, §5, §7.4) |
 | `library/` | equipment sheet, failure diary, recipe library, Canon pages, the librarian's trays (§7.3, §8) |
 | `shelf/` | the customer shelf (§7.2) |
-| `lessons/` | the lesson queue; founder approves, edits or rejects (§7.5) |
-| `authority.py` | only a signed-in founder session can override, pick a take, release, resume or decide a lesson (§6.4) |
+| `lessons/` | the lesson queue: lessons applied automatically by kind, rulebook changes watched and rolled back, undo; only money/override/safety lessons wait for the founder (§7.5, amendment 1 §4) |
+| `authority.py` | only a signed-in founder session can override, pick a take, release, resume, decide or undo a lesson (§6.4) — none of it ever required (amendment 1 §3) |
 | `cost.py` | the quote's reasoning line and the per-worker reasoning report (§9.4) |
 | `qualification/judges.py` | the judges' qualification harness (§10) |
 | `store.py` `dispatch.py` `providers.py` `media.py` `compose.py` `verify.py` `web/` `admin.py` | kept from v1 and adapted |

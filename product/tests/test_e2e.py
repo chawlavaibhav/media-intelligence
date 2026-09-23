@@ -45,7 +45,7 @@ class FilmJourney(unittest.TestCase):
         before = {k: n["selected_asset_id"] for k, n in nodes.items()}
         e.orch.request_changes(jid, e.user["email"], [{"target": "shot:2", "text": "slower slide"}])
         e.drain()
-        self.assertEqual(e.state(jid), "operator_hold")
+        self.assertEqual(e.state(jid), "ready_for_review")                  # amendment 1 §3: no founder hold by default
         after = {n["node_id"]: n["selected_asset_id"] for n in e.store.nodes(jid)}
         changed = sorted(k for k in after if after[k] != before[k])
         self.assertIn("shot_2", changed)
@@ -54,8 +54,6 @@ class FilmJourney(unittest.TestCase):
         self.assertNotIn("frame_2", changed)                       # a clip change keeps the approved first frame
         self.assertNotIn("music", changed)
         self.assertNotIn("master", changed)
-        e.waive_all(jid)
-        e.release(jid)
         e.orch.accept(jid, e.user["email"])
         self.assertEqual(e.state(jid), "accepted")
         d = e.store.deliveries(jid)
@@ -148,7 +146,7 @@ class BudgetExhaustion(unittest.TestCase):
             self.assertLessEqual(e.store.committed_usd(jid), Decimal("1.20"))
             self.assertIn("more", j["pause_reason"])
             e.svc.raise_budget(e.user, jid, "15")
-            self.assertEqual(e.produce(jid), "operator_hold")
+            self.assertEqual(e.produce(jid), "ready_for_review")
             self.assertLessEqual(e.store.committed_usd(jid), Decimal("15"))
         finally:
             e.close()
@@ -161,7 +159,7 @@ class ProviderFailureInjection(unittest.TestCase):
             jid = film(e)
             e.front(jid)
             e.orch.approve(jid, by=e.user["email"], budget_usd="15")
-            self.assertEqual(e.produce(jid), "operator_hold")
+            self.assertEqual(e.produce(jid), "ready_for_review")
             failed = [a for a in e.store.attempts(jid) if a["status"] == "failed"]
             self.assertEqual([(a["route"], a["failure_class"]) for a in failed], [("veo-3.1-fast-i2v", "infrastructure_transient")])
         finally:
@@ -178,7 +176,7 @@ class ProviderFailureInjection(unittest.TestCase):
             e.orch.approve_master(jid, by=e.user["email"])
             e.worker.run_once()          # producing → music fails 3x
             self.assertEqual(e.state(jid), "paused_provider")
-            self.assertEqual(e.produce(jid), "operator_hold")   # retry window 0 s in tests; the fault queue is empty now
+            self.assertEqual(e.produce(jid), "ready_for_review")   # retry window 0 s in tests; the fault queue is empty now
         finally:
             e.close()
 
@@ -201,7 +199,7 @@ class WorkerCrash(unittest.TestCase):
             from product.worker import Worker
             w2 = Worker(e.s, e.store, e.orch)
             w2.drain()
-            self.assertEqual(e.state(jid), "operator_hold", e.store.job(jid)["pause_reason"])
+            self.assertEqual(e.state(jid), "ready_for_review", e.store.job(jid)["pause_reason"])
             rows = e.store.attempts(jid)
             self.assertEqual(len({r["id"] for r in rows}), len(rows))
             self.assertEqual([r for r in rows if r["status"] == "reserved"], [])
@@ -281,7 +279,8 @@ class EveryApplicableControlRunsOnTheProductionPath(unittest.TestCase):
 class WorldTruthBeforeSpend(unittest.TestCase):
     """Atlas MDR8-03 (a zip the product does not have) / MOKO7-18 (the paddle's whereabouts): an unsourced product claim
     blocks the plan before any production spend. v2: the recipe checker (which replaced v1's direction reviewer) sends it
-    back; after 2 rounds only the FOUNDER's reasoned override releases it (v1: any named operator)."""
+    back; after 2 rounds the system tries the safest alternative, and if the checker still objects the CUSTOMER sees the
+    objections and decides (amendment 1 §3). The founder's reasoned override remains available, founder-only."""
 
     def test_an_unsourced_product_claim_stops_the_job_before_spend_and_approve_refuses_it(self):
         e = Env()
@@ -297,19 +296,18 @@ class WorldTruthBeforeSpend(unittest.TestCase):
             e.orch.sim.recipe_checker__recipe_check = checker
             jid = film(e)
             e.front(jid)
-            self.assertEqual(e.state(jid), "paused_for_founder")
-            self.assertIn("SB-RECIPE", e.store.job(jid)["pause_reason"])
+            self.assertEqual(e.state(jid), "awaiting_approval")                             # the customer decides
+            self.assertIn("ONE long zip", " ".join(e.store.artifact(jid, "plan_objections")["plain_words"]))
             self.assertEqual(e.store.assets(jid, role="preview"), [])                      # nothing paid while blocked
             self.assertEqual([a for a in e.store.attempts(jid) if a["category"] == "provider"], [])
             with self.assertRaises(PermissionError):
-                e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+                e.orch.approve(jid, by=e.user["email"], budget_usd="15")                 # not without reading the objections
             with self.assertRaises(PermissionError):
                 e.orch.override_recipe(jid, session="operator:ops", reason="checked the product page: the side zip exists")
             with self.assertRaises(ValueError):
                 e.orch.override_recipe(jid, session=e.founder_session(), reason="fine")
             e.orch.override_recipe(jid, session=e.founder_session(), reason="checked the product page: the side zip exists (photo 2)")
             self.assertEqual(e.state(jid), "awaiting_approval")
-            self.assertTrue(e.store.assets(jid, role="preview"))
             e.orch.approve(jid, by=e.user["email"], budget_usd="15")
             e.produce(jid)
             rows = {r["check_id"]: r for aid in e.orch._final_assets(jid) for r in e.store.checks(aid)}
@@ -319,12 +317,12 @@ class WorldTruthBeforeSpend(unittest.TestCase):
             e.close()
 
 
-class FounderPicksWhenTheTasterRejectsEverything(unittest.TestCase):
+class TheTasterRejectsEverything(unittest.TestCase):
     """Live 2026-09-23: an unqualified inspector rejected four draws, three of them faithful, and the job failed; v1 then
-    let 'a person' (in practice the builder) pick takes. v2: the job waits for the FOUNDER, who alone may pick one of the
-    paid takes, with a reason; nothing is re-bought."""
+    let 'a person' (in practice the builder) pick takes. Amendment 1 §3: nobody waits for the founder — after its allowed
+    attempts the best take is kept, flagged and noted on the customer's preview; the customer's look is the final check."""
 
-    def test_all_attempts_rejected_pauses_for_the_founder_who_picks_and_production_resumes(self):
+    def test_all_attempts_rejected_keeps_the_best_take_flagged_and_the_customer_is_told(self):
         e = Env()
         try:
             orig = e.orch.sim.small_taster__ingredient_check
@@ -338,26 +336,16 @@ class FounderPicksWhenTheTasterRejectsEverything(unittest.TestCase):
             e.front(jid)
             e.orch.approve(jid, by=e.user["email"], budget_usd="15")
             e.drain()
-            self.assertEqual(e.state(jid), "paused_for_founder")
-            waiting = [n for n in e.store.nodes(jid) if n["status"] == "needs_founder"]
-            self.assertTrue(waiting)
-            paid = len(e.store.attempts(jid))
-            e.orch.sim.small_taster__ingredient_check = orig
-            for n in waiting:
-                cand = json.loads(n["note"])["candidates"][0]
-                with self.assertRaises(PermissionError):
-                    e.orch.select_take(jid, session="operator:vaibhav", asset_id=cand, reason="bag faithful to photo 1; flap pose is fine")
-                with self.assertRaises(ValueError):
-                    e.orch.select_take(jid, session=e.founder_session(), asset_id=cand, reason="ok")
-                e.orch.select_take(jid, session=e.founder_session(), asset_id=cand, reason="bag faithful to photo 1; flap pose is fine")
-            self.assertIn(e.state(jid), ("producing", "paused_for_founder"))
-            e.drain()
-            self.assertEqual(e.state(jid), "operator_hold")
-            picked = {n["node_id"] for n in waiting}
-            rebought = [a for a in e.store.attempts(jid)[paid:] if a["category"] == "provider" and a["node_id"] in picked]
-            self.assertEqual(rebought, [])                                      # the picked output was not bought again
-            # (v2: the 4:5 plate is built from the picked 1:1 master picture, so it is bought only now — a first purchase)
-            self.assertTrue(e.store.events(jid, ("take_selected_by_founder",)))
+            self.assertEqual(e.state(jid), "ready_for_review")
+            flagged = [n for n in e.store.nodes(jid) if json.loads(n["spec_json"]).get("flagged")]
+            self.assertTrue(flagged)
+            self.assertFalse([n for n in e.store.nodes(jid) if n["status"] == "needs_founder"])
+            for n in flagged:
+                self.assertLessEqual(len([a for a in e.store.attempts(jid) if a["category"] == "provider" and a["node_id"] == n["node_id"]]),
+                                     n["max_draws"])                             # never a third identical request
+            self.assertIn("flap sticks out", " ".join(e.store.artifact(jid, "customer_notes")["notes"]))
+            self.assertTrue(e.store.events(jid, ("take_kept_flagged",)))
+            self.assertFalse([x for x in e.store.events(jid, ("state",)) if json.loads(x["data_json"]).get("to") == "paused_for_founder"])
         finally:
             e.close()
 

@@ -75,8 +75,8 @@ class WebJourney(unittest.TestCase):
         return dict(r["headers"])["Location"].split("/")[-1]
 
     def test_customer_can_submit_approve_and_see_every_stage_page(self):
-        # v2 steps: the pantry checker's question (the brief's "zipped shut" is offered as a still), the founder's
-        # confirmation of the unqualified recipe checker, the master-plate approval, the founder's release
+        # v2 steps: the pantry checker's question (the brief's "zipped shut" is offered as a still), the master-plate
+        # approval; since amendment 1 §3 no founder step — the customer's preview is the final check
         jid = self._create()
         self.assertEqual(len(self.e.store.assets(jid, source="customer")), 2)
         self.assertIn(b"Understanding your brief", self.c.req("GET", f"/jobs/{jid}")["body"])
@@ -101,11 +101,8 @@ class WebJourney(unittest.TestCase):
         tok = self.c.csrf(f"/jobs/{jid}")
         self.c.req("POST", f"/jobs/{jid}/master", {"csrf": tok})
         self.e.drain()
-        self.assertEqual(self.e.state(jid), "operator_hold")
+        self.assertEqual(self.e.state(jid), "ready_for_review")
         final = self.e.orch._final_assets(jid)[0]
-        self.assertTrue(self.c.req("GET", f"/assets/{final}")["status"].startswith("404"))      # not before release
-        self.e.waive_all(jid)
-        self.e.release(jid)
         page = self.c.req("GET", f"/jobs/{jid}")["body"]
         self.assertIn(b"Accept and download", page)
         self.assertTrue(self.c.req("GET", f"/assets/{final}")["status"].startswith("200"))
@@ -141,7 +138,8 @@ class WebJourney(unittest.TestCase):
 
     def test_operator_pages_render_and_the_operator_can_waive_and_release(self):
         # v2 (spec 6.4): an operator can view but not waive or release; the founder can, with reasons, and the listen
-        # still cannot be waived — the founder must record what they heard
+        # still cannot be waived. Amendment 1 §3: the hold before preview is the founder's CHOICE (switched on here).
+        self.e.s.hold_before_preview = True
         jid = self._create()
         self.e.front(jid)
         self.e.orch.approve(jid, by="buyer@acme.test", budget_usd="15")
@@ -171,8 +169,6 @@ class WebJourney(unittest.TestCase):
         r = fo.req("POST", f"/ops/jobs/{jid}/waive", {"csrf": tok, "asset_id": r0["asset_id"], "check_id": "audio_heard_by_person",
                                                       "reason": "no time to listen, the customer is waiting"})
         self.assertTrue(r["status"].startswith("400"))
-        fo.req("POST", f"/ops/jobs/{jid}/release", {"csrf": tok})
-        self.assertEqual(self.e.state(jid), "operator_hold")                  # the person-checks are still open
         self.assertIn(b"This cannot be waived", fo.req("GET", f"/ops/jobs/{jid}")["body"])
         for res in g["results"]:
             for b in res["blocking"]:

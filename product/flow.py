@@ -5,6 +5,11 @@ Two kinds of exit need the founder (spec §6.4) and the store refuses them witho
   - leaving `paused_for_founder`, `failed` or `paused_operator` (a person decides what happens next), and
   - `operator_hold -> ready_for_review` (releasing a file to the customer).
 Pausing is open to the system and to any operator; deciding is not.
+
+Amendment 1 §3 (founder decision 2026-09-23): nobody waits for the founder. Every send-back limit ends with the SYSTEM
+(a safer plan, a safer route, an automatic repair) and then the CUSTOMER (accept as is / change / stop) — never in a
+founder-only state. The founder-only states remain for a founder who CHOOSES to intervene (pausing a job, switching the
+hold before preview on), and every founder override stays available; none is ever required.
 """
 from __future__ import annotations
 
@@ -24,6 +29,7 @@ STATES = {
     "producing":                (5, "Producing", "worker"),
     "awaiting_master_approval": (5, "Approve the look of your film", "customer"),
     "checking":                 (5, "Checking the work", "worker"),
+    "needs_customer_decision":  (5, "A check failed — your decision is needed", "customer"),
     "operator_hold":            (5, "Final quality check by our team", "founder"),
     "ready_for_review":         (5, "Ready for your review", "customer"),
     "revising":                 (5, "Making your changes", "worker"),
@@ -40,7 +46,7 @@ STATES = {
 WORKER_STATES = ("submitted", "understanding", "feasibility", "directing", "planning", "producing", "checking", "revising",
                  "paused_provider")
 CUSTOMER_STATES = ("needs_answers", "awaiting_customer_input", "awaiting_approval", "awaiting_master_approval",
-                   "ready_for_review", "paused_budget")
+                   "ready_for_review", "paused_budget", "needs_customer_decision")
 TERMINAL = ("accepted", "rejected", "refused", "abandoned")
 PAUSES = ("paused_budget", "paused_provider", "paused_operator", "paused_for_founder")
 
@@ -53,7 +59,7 @@ RAIL = [
     ("Checking we can make it", ("feasibility", "awaiting_customer_input")),
     ("Creative plan", ("directing", "awaiting_approval")),
     ("Producing", ("planning", "producing", "awaiting_master_approval", "revising")),
-    ("Checking", ("checking", "operator_hold")),
+    ("Checking", ("checking", "operator_hold", "needs_customer_decision")),
     ("Ready for review", ("ready_for_review", "accepted")),
 ]
 
@@ -75,8 +81,9 @@ ALLOWED = {
     "producing": {"awaiting_master_approval", "checking", "directing", "paused_for_founder", "failed", "paused_budget",
                   "paused_provider", "paused_operator"},
     "awaiting_master_approval": {"producing", "abandoned", "paused_operator", "paused_for_founder"},
-    "checking": {"producing", "directing", "operator_hold", "ready_for_review", "paused_for_founder", "failed", "paused_budget",
-                 "paused_provider", "paused_operator"},
+    "checking": {"producing", "directing", "operator_hold", "ready_for_review", "needs_customer_decision", "paused_for_founder",
+                 "failed", "paused_budget", "paused_provider", "paused_operator"},
+    "needs_customer_decision": {"producing", "abandoned", "paused_operator"},
     "operator_hold": {"ready_for_review", "producing", "paused_operator", "paused_for_founder", "failed", "abandoned"},
     "ready_for_review": {"accepted", "revising", "rejected", "abandoned", "paused_operator"},
     "revising": {"producing", "directing", "failed", "paused_budget", "paused_operator", "paused_provider", "paused_for_founder"},
@@ -95,7 +102,13 @@ def can(frm: str, to: str) -> bool:
     return to in ALLOWED.get(frm, set())
 
 
+# A customer may always walk away from a stopped job (amendment 1 §3: a job never waits on the founder to be closed).
+CUSTOMER_EXITS = {("failed", "abandoned")}
+
+
 def needs_founder(frm: str, to: str) -> bool:
+    if (frm, to) in CUSTOMER_EXITS:
+        return False
     return frm in FOUNDER_ONLY_FROM or (frm, to) in FOUNDER_ONLY_EDGES
 
 
@@ -120,18 +133,26 @@ SEND_BACKS = [
     {"id": "SB-PANTRY-CANNOT", "from": "pantry_checker", "when": "verdict cannot_make",
      "to": "waiter -> customer with alternatives", "limit": None, "limit_note": "—", "then": "—"},
     {"id": "SB-RECIPE", "from": "recipe_checker", "when": "send_back", "to": "chef", "limit": 2,
-     "limit_note": "2 rounds", "then": "paused_for_founder"},
+     "limit_note": "2 rounds (per plan cycle: a customer change or a big-taster re-plan starts a new cycle)", "then": "SB-RECIPE-SAFE"},
+    {"id": "SB-RECIPE-SAFE", "from": "system", "when": "the recipe checker sent the recipe back twice",
+     "to": "system: the pantry checker's safest alternative for the problem shots, re-checked once", "limit": 1,
+     "limit_note": "1 per plan cycle",
+     "then": "customer: sees the objections in plain words and chooses go ahead / change the brief / stop (USD 0 spent)"},
     {"id": "SB-TASTER-RETRY", "from": "small_taster", "when": "output rejected", "to": "head cook retries that output",
      "limit": 2, "limit_note": "2 attempts per output, each retry changes something", "then": "SB-TASTER-REPLAN"},
     {"id": "SB-TASTER-REPLAN", "from": "small_taster", "when": "2 rejected attempts on one output",
      "to": "chef re-plans that shot (route/action change)", "limit": 1, "limit_note": "1 re-plan per shot",
-     "then": "paused_for_founder"},
-    {"id": "SB-BIG-FIX", "from": "big_taster", "when": "verdict fix", "to": "head cook redoes only the named shots",
-     "limit": 2, "limit_note": "2 rounds", "then": "paused_for_founder"},
-    {"id": "SB-BIG-FAIL", "from": "big_taster", "when": "verdict fail with earliest_stage plan", "to": "chef",
-     "limit": 1, "limit_note": "1 round", "then": "paused_for_founder"},
-    {"id": "SB-BIG-STOP", "from": "big_taster", "when": "2 failed rounds", "to": "paused_for_founder",
-     "limit": 0, "limit_note": "the founder decides", "then": "—"},
+     "then": "system: the shot switches to FILM-A (a still with code motion); the customer's preview notes it"},
+    {"id": "SB-BIG-FIX", "from": "big_taster / door guard", "when": "verdict fix, or a measured check FAILED",
+     "to": "system: automatic repair of only the named shots (or the failing files), within the approved budget",
+     "limit": 2, "limit_note": "2 rounds; the approved budget is never exceeded (out of budget = paused_budget, the customer decides)",
+     "then": "SB-BIG-STOP"},
+    {"id": "SB-BIG-FAIL", "from": "big_taster", "when": "verdict fail with earliest_stage plan", "to": "chef (a new plan for the customer)",
+     "limit": 1, "limit_note": "1 round", "then": "SB-BIG-STOP"},
+    {"id": "SB-BIG-STOP", "from": "big_taster / door guard", "when": "fail again, or repairs used up",
+     "to": "customer: sees the film with the plain report — accept as is / changes (priced) / reject; a measured FAIL "
+           "never ships: the customer is told what failed and chooses stop or paid rework",
+     "limit": 0, "limit_note": "the customer decides", "then": "—"},
     {"id": "SB-CUSTOMER-CHANGE", "from": "customer", "when": "change request",
      "to": "waiter classifies -> the affected station only", "limit": None, "limit_note": "per quote", "then": "—"},
 ]

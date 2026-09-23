@@ -1,6 +1,6 @@
 """The diary writer (spec §3, §4.11, §5, §7.5): cheap AI, run after the job closes — accepted, rejected or abandoned.
-It reads the whole job file and the customer's verdict and PROPOSES lessons per worker; each proposal waits in the lesson
-queue until the founder approves, edits or rejects it. Nothing is changed here."""
+It reads the whole job file and the customer's verdict and PROPOSES lessons per worker; the lesson queue applies each by its
+kind (amendment 1 §4) and, with this job closed, reviews every watched rulebook change (rolled back if results dropped)."""
 from __future__ import annotations
 
 import json
@@ -39,4 +39,5 @@ def write(k, job_id: str) -> list:
     k.put_form(job_id, "lessons", form)
     ids = k.lessons.enqueue(job_id, form)
     k.store.event(job_id, "diary_writer", "lessons_proposed", {"lessons": ids})
+    k.lessons.review_watches()
     return ids

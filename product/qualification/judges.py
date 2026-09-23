@@ -8,11 +8,18 @@ The cases (JUDGE-CASES.yaml) are old jobs whose verdict the founder already gave
 runs through the product's own worker call (its rulebook card, the customer's exact words, its form) and is scored
 against the known verdicts with the pass marks in PASS-MARKS.yaml. A simulated run can never qualify a judge, and neither
 can a run whose pass marks the founder has not confirmed. A case whose files are not on this host is "unavailable".
+
+Amendment 1 §2: the big taster is also tested on the old jobs the founder already judged (historical/CASES.yaml in the
+evidence repo: 14 films, 62 images) — a file is used only if its SHA-256 matches the case record — and the recipe checker
+on the old jobs whose plan is on the job's branch in this repository (read with `git show`). Agreement is reported
+SEPARATELY for accepted and not-accepted cases (and their mean), and the pass marks apply to each group.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import subprocess
 import sys
 import tempfile
 from decimal import Decimal
@@ -35,6 +42,30 @@ def evidence_root() -> Path | None:
     return None
 
 
+CONTENT_TYPES = {".mp4": "video/mp4", ".mov": "video/quicktime", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+                 ".webp": "image/webp"}
+
+
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def git_file(branch: str, path: str) -> str | None:
+    """A file from an old job's branch in this repository (origin/<branch>, or a local <branch>); None if not on this host."""
+    for ref in (f"origin/{branch}", branch):
+        try:
+            out = subprocess.run(["git", "-C", str(config.REPO), "show", f"{ref}:{path}"], capture_output=True, timeout=30)
+        except (OSError, subprocess.TimeoutExpired):
+            return None
+        if out.returncode == 0:
+            return out.stdout.decode("utf-8", "replace")
+    return None
+
+
 def _jsonl(root, name):
     return [json.loads(line) for line in (root / "db" / "export" / name).read_text().splitlines() if line.strip()]
 
@@ -45,6 +76,15 @@ class Evidence:
         self.assets = {a["id"]: a for a in _jsonl(root, "assets.jsonl")} if root else {}
         self.artifacts = _jsonl(root, "artifacts.jsonl") if root else []
         self.jobs = {j["id"]: j for j in _jsonl(root, "jobs.jsonl")} if root else {}
+
+    def historical(self, ev: dict):
+        """(path, content type) for a historical case file, only when it is on this host AND its SHA-256 matches."""
+        if not self.root:
+            return None
+        p = self.root / ev["historical"]
+        if not p.exists() or sha256_file(p) != ev["sha256"]:
+            return None
+        return p, CONTENT_TYPES.get(p.suffix.lower(), "application/octet-stream")
 
     def asset(self, aid):
         a = self.assets.get(aid)
@@ -98,6 +138,7 @@ def run(*, live=False, founder_session=None, product_data=None, budget="2.00", o
         st.set_job(jid, budget_authorised_by=authorised_by or "simulated (USD 0)", budget_authorised_at=utc_now())
         rows = [globals()[f"_{judge}"](k, jid, c, ev) for c in cases[judge]]
         report["judges"][judge] = _score(judge, rows, marks, live)
+    report["recipe_checker_missing"] = cases.get("recipe_checker_missing", [])
     report["spent_usd"] = str(sum(Decimal(a["settled_usd"] or 0) for a in st.q("SELECT settled_usd FROM attempts")))
     (work / "qualification-report.json").write_text(json.dumps(report, indent=1, default=str))
     report["report_path"] = str(work / "qualification-report.json")
@@ -110,6 +151,8 @@ def _words(ev, job):
 
 
 def _recipe_checker(k, jid, c, ev):
+    if "branch" in c:
+        return _recipe_checker_historical(k, jid, c)
     d = ev.artifact(c["evidence"]["job"], c["evidence"]["artifact"], c["evidence"]["version"]) if ev.root else None
     if d is None:
         return {"id": c["id"], "available": False, "known": c["known_verdict"]}
@@ -118,6 +161,27 @@ def _recipe_checker(k, jid, c, ev):
            "FEASIBILITY": {"note": "v1 had no feasibility check; judge the plan against the equipment you know"},
            "RECIPE": recipe_from_v1(d)}
     f = k.workers.call(jid, "recipe_checker", "recipe_check", ctx, exact_words=_words(ev, c["evidence"]["job"]))
+    got = "accept" if f["verdict"] == "approve" and f["predicted_acceptance"] != "unlikely" else "reject"
+    return {"id": c["id"], "available": True, "known": c["known_verdict"], "got": got, "verdict": f["verdict"],
+            "predicted_acceptance": f["predicted_acceptance"], "simulated": f["written_by"]["simulated"]}
+
+
+def _recipe_checker_historical(k, jid, c):
+    plan = git_file(c["branch"], c["plan"])
+    if plan is None:
+        return {"id": c["id"], "available": False, "known": c["known_verdict"], "why": f"{c['branch']} is not on this host"}
+    brief_raw = git_file(c["branch"], c["brief"]) if c.get("brief") else None
+    words = "(the customer's words are not on this host)"
+    if brief_raw:
+        try:
+            b = json.loads(brief_raw)
+            words = (b.get("brief") or {}).get("text") or json.dumps(b.get("brief") or b, ensure_ascii=False)[:6000]
+        except ValueError:
+            words = brief_raw[:6000]
+    ctx = {"UNDERSTANDING": {"note": "an old job from before P1; its brief is the customer's exact words above"},
+           "FEASIBILITY": {"note": "old jobs had no feasibility check; judge the plan against the equipment you know"},
+           "RECIPE": {"plan_document": plan[:24000], "source": f"{c['branch']}:{c['plan']}"}}
+    f = k.workers.call(jid, "recipe_checker", "recipe_check", ctx, exact_words=words)
     got = "accept" if f["verdict"] == "approve" and f["predicted_acceptance"] != "unlikely" else "reject"
     return {"id": c["id"], "available": True, "known": c["known_verdict"], "got": got, "verdict": f["verdict"],
             "predicted_acceptance": f["predicted_acceptance"], "simulated": f["written_by"]["simulated"]}
@@ -139,7 +203,14 @@ def _small_taster(k, jid, c, ev):
 
 def _big_taster(k, jid, c, ev):
     media_items, words = [], None
-    if "evidence" in c and ev.root:
+    known = c.get("known_judge_verdict") or {"accept": "pass", "reject": "fail"}[c["known_verdict"]]
+    if "historical" in c.get("evidence", {}):
+        hit = ev.historical(c["evidence"])
+        if not hit:
+            return {"id": c["id"], "available": False, "known": known, "why": "file not on this host or its SHA-256 does not match"}
+        p, ctype = hit
+        media_items = [(ctype, p.read_bytes())]
+    elif "evidence" in c and ev.root:
         hit = ev.asset(c["evidence"]["asset"])
         if hit:
             a, p = hit
@@ -156,19 +227,35 @@ def _big_taster(k, jid, c, ev):
         except SystemExit:
             pass
     if not media_items:
-        return {"id": c["id"], "available": False, "known": c["known_verdict"]}
-    ctx = {"UNDERSTANDING": {"objective": c["what"]}, "MANDATORY": [], "MEASUREMENTS": [],
+        return {"id": c["id"], "available": False, "known": known}
+    ctx = {"UNDERSTANDING": {"objective": c.get("what") or f"{c.get('case')} version {c.get('version')} ({c.get('media')})"},
+           "MANDATORY": [], "MEASUREMENTS": [],
            "MEDIA_NOTE": "The attached item is the finished work, exactly as the customer saw it."}
-    f = k.workers.call(jid, "big_taster", "final_review", ctx, exact_words=words, media=media_items)
-    got = "accept" if f["verdict"] == "pass" else "reject"
+    f = k.workers.call(jid, "big_taster", "final_review", ctx, exact_words=words or "(the customer's words are not on this host)",
+                       media=media_items)
+    got = f["verdict"]
     found = []
-    if c["id"] == "BT-MOKO7-V1":
+    if c["id"] == MOKO7_V1:
         from product.qualification.qualify_reviewer import KEY, propose_matches
         key = yaml.safe_load(KEY.read_text())
         found = [m["id"] for m in propose_matches({"defects": [{**d, "beat": d.get("shot")} for d in f["defects"]]}, key, "v1")
                  if m["target"] and m["proposed_reviewer_defects"]]
-    return {"id": c["id"], "available": True, "known": c["known_verdict"], "got": got, "defects_found": found,
+    return {"id": c["id"], "available": True, "known": known, "got": got, "defects_found": found, "media": c.get("media"),
             "simulated": f["written_by"]["simulated"]}
+
+
+MOKO7_V1 = "BT-H-MOKOBARA-ODYSSEY-007-1"
+
+
+def _split_agreement(avail, accepted_value, agrees) -> dict:
+    """Agreement on accepted and on not-accepted cases, separately, and their mean (amendment 1 §2)."""
+    acc = [r for r in avail if r["known"] == accepted_value]
+    rest = [r for r in avail if r["known"] != accepted_value]
+    a = round(sum(agrees(r) for r in acc) / len(acc), 3) if acc else None
+    n = round(sum(agrees(r) for r in rest) / len(rest), 3) if rest else None
+    return {"accepted_cases": len(acc), "not_accepted_cases": len(rest), "agreement_accepted": a, "agreement_not_accepted": n,
+            "agreement_balanced": round((a + n) / 2, 3) if a is not None and n is not None else None,
+            "agreement": round(sum(agrees(r) for r in avail) / len(avail), 3) if avail else None}
 
 
 def _score(judge, rows, marks, live) -> dict:
@@ -176,9 +263,10 @@ def _score(judge, rows, marks, live) -> dict:
     out = {"cases": rows, "available": len(avail), "unavailable": len(rows) - len(avail)}
     m = marks[judge]
     if judge == "recipe_checker":
-        agree = sum(r["got"] == r["known"] for r in avail)
-        out["agreement"] = round(agree / len(avail), 3) if avail else None
-        passed = out["agreement"] is not None and out["agreement"] >= m["agreement_with_known_outcome_min"]
+        out.update(_split_agreement(avail, "accept", lambda r: r["got"] == r["known"]))
+        mk = m["agreement_with_known_outcome_min"]
+        passed = out["agreement_accepted"] is not None and out["agreement_not_accepted"] is not None \
+            and out["agreement_accepted"] >= mk and out["agreement_not_accepted"] >= mk
     elif judge == "small_taster":
         bad = [r for r in avail if r["known"] == "bad"]
         good = [r for r in avail if r["known"] == "good"]
@@ -187,11 +275,16 @@ def _score(judge, rows, marks, live) -> dict:
         passed = (out["known_bad_caught"] is not None and out["good_wrongly_rejected"] is not None
                   and out["known_bad_caught"] >= m["known_bad_caught_min"] and out["good_wrongly_rejected"] <= m["good_wrongly_rejected_max"])
     else:
-        agree = sum(r["got"] == r["known"] for r in avail)
-        out["agreement"] = round(agree / len(avail), 3) if avail else None
-        moko = next((r for r in avail if r["id"] == "BT-MOKO7-V1"), None)
+        # accepted ↔ the judge says pass; not accepted ↔ the judge says fix or fail (exact fix/fail agreement reported too)
+        out.update(_split_agreement(avail, "pass", lambda r: (r["got"] == "pass") == (r["known"] == "pass")))
+        out["exact_verdict_agreement"] = round(sum(r["got"] == r["known"] for r in avail) / len(avail), 3) if avail else None
+        out["by_media"] = {m_: _split_agreement([r for r in avail if r.get("media") == m_], "pass",
+                                                lambda r: (r["got"] == "pass") == (r["known"] == "pass")) for m_ in ("film", "image")}
+        moko = next((r for r in avail if r["id"] == MOKO7_V1), None)
         out["moko7_v1_target_defects_found"] = len(moko["defects_found"]) if moko else None
-        passed = (out["agreement"] is not None and out["agreement"] >= m["agreement_with_customer_verdict_min"]
+        mk = m["agreement_with_customer_verdict_min"]
+        passed = (out["agreement_accepted"] is not None and out["agreement_not_accepted"] is not None
+                  and out["agreement_accepted"] >= mk and out["agreement_not_accepted"] >= mk
                   and moko is not None and len(moko["defects_found"]) >= m["moko7_v1_target_defects_found_min"])
     simulated = any(r.get("simulated") for r in avail) or not live
     out["meets_pass_marks"] = bool(passed)

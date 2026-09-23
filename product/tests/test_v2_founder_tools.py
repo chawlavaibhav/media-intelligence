@@ -21,11 +21,12 @@ class CostReport(unittest.TestCase):
         e = Env()
         try:
             jid = fx.submit_backpack_film(e)
-            self.assertEqual(fx.film_to_hold(e, jid), "operator_hold")
+            self.assertEqual(fx.film_to_hold(e, jid), "ready_for_review")
             q = e.store.artifact(jid, "quote")
             self.assertGreater(Decimal(q["reasoning_line_usd"]), 0)                 # the quote shows the reasoning line
             r = cost.reasoning_report(e.orch, jid, e.store.artifact(jid, "recipe"))
             self.assertEqual(r["budget_usd"], "0.30")
+            self.assertEqual(r["targets"], {"film": "0.30", "image": "0.08"})           # amendment 1 §1: both targets shown
             self.assertEqual(r["mode"], "simulated")
             workers = set(r["per_worker"])
             self.assertTrue({"waiter", "pantry_checker", "chef", "recipe_checker", "small_taster", "big_taster", "diary_writer"} <= workers)
@@ -76,6 +77,9 @@ class JudgesQualification(unittest.TestCase):
             st = rep["judges"]["small_taster"]
             self.assertEqual(st["available"], 9)
             self.assertIsNotNone(st["known_bad_caught"])
+        self.assertEqual(len(rep["judges"]["big_taster"]["cases"]), 3 + 14 + 62)          # amendment 1 §2: the old jobs too
+        self.assertEqual(len(rep["judges"]["recipe_checker"]["cases"]), 2 + 6)
+        self.assertEqual([m["case"] for m in rep["recipe_checker_missing"]], ["UPWORK-PORTFOLIO-002"])
 
     def test_a_live_run_is_refused_without_the_founders_own_session(self):
         with self.assertRaises(SystemExit):
@@ -88,19 +92,20 @@ class JudgesQualification(unittest.TestCase):
         finally:
             e.close()
 
-    def test_until_qualified_a_judges_no_blocks_and_its_yes_needs_the_founder(self):
+    def test_until_qualified_a_judges_no_blocks_and_its_yes_goes_to_the_customers_preview(self):
         e = Env()
         try:
             self.assertEqual(e.s.qualified_judges, ())
             jid = e.submit("image", text="A calm launch poster for our navy travel backpack; the bag must be the first thing you see; no people.")
             e.drain()
-            self.assertEqual(e.state(jid), "paused_for_founder")                     # the recipe checker's yes → founder confirms
-            e.orch.confirm_recipe(jid, session=e.founder_session(), reason="Plan read: one clean product picture per format.")
+            self.assertEqual(e.state(jid), "awaiting_approval")                      # amendment 1 §3: straight to the customer
             e.orch.approve(jid, by=e.user["email"], budget_usd="15")
             e.drain()
-            self.assertEqual(e.state(jid), "operator_hold")
-            blocking = {b["check_id"] for r in e.store.artifact(jid, "gateway_report")["results"] for b in r["blocking"]}
-            self.assertTrue({"small_taster_confirmed", "independent_review", "product_fidelity"} <= blocking, blocking)
+            self.assertEqual(e.state(jid), "ready_for_review")
+            results = e.store.artifact(jid, "gateway_report")["results"]
+            open_ = {b["check_id"] for r in results for b in r["judgement_open"]}
+            self.assertTrue({"small_taster_confirmed", "independent_review", "product_fidelity"} <= open_, open_)
+            self.assertTrue(all(r["presentable"] and not r["ready"] for r in results))   # shown, not yet verified
         finally:
             e.close()
 
@@ -125,49 +130,65 @@ class FounderPages(unittest.TestCase):
         e.orch.provide_input(jid, by=e.user["email"], accepted_alternatives=[
             {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
         e.drain()
-        self.assertEqual(e.state(jid), "paused_for_founder")
+        self.assertEqual(e.state(jid), "awaiting_approval")                      # no founder wait (amendment 1 §3)
         page = self.ops.req("GET", f"/ops/jobs/{jid}")["body"]
-        self.assertIn(b"confirm recipe", page)
         self.assertIn(b"You can view and pause", page)
         tok = self.ops.csrf(f"/ops/jobs/{jid}")
-        r = self.ops.req("POST", f"/ops/jobs/{jid}/confirm_recipe", {"csrf": tok, "reason": "looks fine to me, operator here"})
+        r = self.ops.req("POST", f"/ops/jobs/{jid}/pause", {"csrf": tok, "reason": "the customer phoned; hold it"})
+        self.assertTrue(r["status"].startswith("303"), r["status"])             # anyone on the team may pause (an intervention)
+        self.assertEqual(e.state(jid), "paused_operator")
+        tok = self.ops.csrf(f"/ops/jobs/{jid}")
+        r = self.ops.req("POST", f"/ops/jobs/{jid}/resume", {"csrf": tok, "reason": "looks fine to me, operator here"})
         self.assertTrue(r["status"].startswith("403"), r["status"])
-        self.assertEqual(e.state(jid), "paused_for_founder")
+        self.assertEqual(e.state(jid), "paused_operator")
         tok = self.f.csrf(f"/ops/jobs/{jid}")
-        r = self.f.req("POST", f"/ops/jobs/{jid}/confirm_recipe", {"csrf": tok, "reason": "Plan read: zips as stills, risky slides first."})
+        r = self.f.req("POST", f"/ops/jobs/{jid}/resume", {"csrf": tok, "reason": "Spoke to the customer: zips as stills is fine."})
         self.assertTrue(r["status"].startswith("303"), r["body"][:300])
         self.assertEqual(e.state(jid), "awaiting_approval")
         page = self.f.req("GET", f"/ops/jobs/{jid}")["body"]
         self.assertIn(b"Founder overrides on this job", page)
         self.assertIn(b"zips as stills", page)
         self.assertIn(b"AI reasoning cost", page)
-        for path in ("/ops/rulebook", "/ops/library", "/ops/lessons", "/ops"):
+        for path in ("/ops/rulebook", "/ops/library", "/ops/lessons", "/ops/digest", "/ops"):
             r = self.ops.req("GET", path)
             self.assertTrue(r["status"].startswith("200"), path)
         self.assertIn(b"EQ-001", self.f.req("GET", "/ops/library")["body"])
         self.assertIn(b"KRA", self.f.req("GET", "/ops/rulebook")["body"])
 
-    def test_the_founder_approves_edits_or_rejects_lessons_in_the_web_app_and_an_operator_cannot(self):
+    def test_the_founder_undoes_an_applied_lesson_and_decides_a_money_lesson_in_the_web_app_and_an_operator_cannot(self):
         e = self.e
         jid = e.submit("image", text="A calm launch poster for our navy travel backpack; the bag must be the first thing you see; no people.")
         e.drain()
-        e.orch.abandon(jid, "founder", "closing to test the lesson queue", founder_session=e.founder_session())
-        waiting = e.orch.lessons.waiting()
-        self.assertTrue(waiting)
-        lid = waiting[0]["id"]
-        self.assertIn(lid.encode(), self.ops.req("GET", "/ops/lessons")["body"])
-        tok = self.ops.csrf("/ops/lessons")
-        r = self.ops.req("POST", f"/ops/lessons/{lid}", {"csrf": tok, "decision": "approve", "note": "operator trying to approve this"})
+        e.orch.abandon(jid, e.user["email"], "closing to test the lessons")
+        applied = [r for r in e.orch.lessons.all(jid) if r["status"] == "applied" and r["target"] == "recipe_library"]
+        self.assertTrue(applied)
+        lid = applied[0]["id"]
+        rid = json.loads(applied[0]["applied_json"])["id"]
+        self.assertIn(lid.encode(), self.ops.req("GET", "/ops/digest")["body"])
+        tok = self.ops.csrf("/ops/digest")
+        r = self.ops.req("POST", f"/ops/lessons/{lid}/undo", {"csrf": tok, "note": "operator trying to undo this one"})
         self.assertTrue(r["status"].startswith("403"))
-        self.assertEqual(e.orch.lessons.lesson(lid)["status"], "waiting")
-        tok = self.f.csrf("/ops/lessons")
-        edited = json.loads(waiting[0]["proposal_json"])
-        edited["summary"] = "Edited by the founder: calm poster, bag first."
-        r = self.f.req("POST", f"/ops/lessons/{lid}", {"csrf": tok, "decision": "edit", "note": "Keep it, but with my wording of the summary.",
-                                                        "edited": json.dumps(edited)})
+        self.assertEqual(e.orch.lessons.lesson(lid)["status"], "applied")
+        tok = self.f.csrf("/ops/digest")
+        r = self.f.req("POST", f"/ops/lessons/{lid}/undo", {"csrf": tok, "note": "A closed test job is not a recipe worth keeping."})
         self.assertTrue(r["status"].startswith("303"), r["body"][:300])
-        self.assertEqual(e.orch.lessons.lesson(lid)["status"], "approved_edited")
-        self.assertIn(b"Edited by the founder", self.f.req("GET", "/ops/library")["body"])
+        self.assertEqual(e.orch.lessons.lesson(lid)["status"], "undone")
+        self.assertEqual(e.orch.lessons.lesson(lid)["undone_by"], "founder:founder@mi.test")
+        self.assertIsNone(e.store.q1("SELECT id FROM recipe_library WHERE id=?", (rid,)))
+        # a money lesson waits for the founder, who may approve it with an edit
+        [money] = e.orch.lessons.enqueue(jid, {"per_worker": [{"worker": "chef", "evidence_refs": ["test"], "proposed_change": {
+            "target": "rulebook_card", "why": "cheaper plans", "diff": {"worker": "chef", "changes": {"kra_add": "Keep each plan under USD 0.10."}}}}]})
+        self.assertEqual(e.orch.lessons.lesson(money)["status"], "founder_only")
+        tok = self.ops.csrf("/ops/lessons")
+        r = self.ops.req("POST", f"/ops/lessons/{money}", {"csrf": tok, "decision": "approve", "note": "operator trying to approve this"})
+        self.assertTrue(r["status"].startswith("403"))
+        tok = self.f.csrf("/ops/lessons")
+        edited = {"worker": "chef", "changes": {"kra_add": "Edited by the founder: keep plans short."}}
+        r = self.f.req("POST", f"/ops/lessons/{money}", {"csrf": tok, "decision": "edit", "note": "Keep it, but with my wording, no numbers.",
+                                                         "edited": json.dumps(edited)})
+        self.assertTrue(r["status"].startswith("303"), r["body"][:300])
+        self.assertEqual(e.orch.lessons.lesson(money)["status"], "approved_edited")
+        self.assertIn("Edited by the founder: keep plans short.", e.orch.rulebook.card("chef")["kra"])
 
     def test_the_customer_answers_the_pantry_checker_approves_the_master_plate_and_manages_the_shelf_in_the_web_app(self):
         e = self.e
@@ -182,7 +203,6 @@ class FounderPages(unittest.TestCase):
         r = c.req("POST", f"/jobs/{jid}/input", {"csrf": tok, **{f"alt_{i}": "yes" for i in range(n)}, "note": "fine"}, files=[])
         self.assertTrue(r["status"].startswith("303"), r["body"][:300])
         e.drain()
-        e.orch.confirm_recipe(jid, session=e.founder_session(), reason="Plan read: zips as stills, risky slides first.")
         tok = c.csrf(f"/jobs/{jid}")
         page = c.req("GET", f"/jobs/{jid}")["body"]
         self.assertIn(b"Planning and checking (AI reasoning, estimated)", page)

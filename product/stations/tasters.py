@@ -2,13 +2,16 @@
 §5, §6.2, §6.4).
 
     finished cut → measuring tools (deterministic checks on the exact file) → big taster (Final review form)
-      pass → door guard: every required check PASS (or waived by the founder) → the customer's preview
-              (while `hold_before_preview` is on, or anything blocks, the cut waits in operator_hold for the founder)
-      fix  → the head cook redoes ONLY the named shots (2 rounds)
+      pass → door guard: no MEASURED check blocks → the customer's preview (the final check on every judgement row)
+      fix  → the system repairs ONLY the named shots automatically, within the approved budget (2 rounds)
       fail with earliest_stage plan → the chef re-plans (1 round) → recipe check → the plan goes back to the customer
-      2 failed rounds → the founder decides
-While the big taster is unqualified its "pass" counts only as "the founder confirms" (its rows are NOT_VERIFIED until the
-founder records a confirmation); its "no" still blocks.
+      fail again / repairs used up → the customer sees the cut with the plain report: accept as is / changes / reject
+      a measured FAIL → never shown: repaired automatically (same 2 rounds); still failing → the customer is told what
+      failed and chooses stop or a paid rework (needs_customer_decision)
+Amendment 1 §3: nobody waits for the founder. An unqualified big taster's "pass" (and an unqualified small taster) is
+not evidence, so those rows stay open until the CUSTOMER accepts the preview, which is recorded against each of them.
+The founder may still switch the hold before preview on (MI_HOLD_BEFORE_PREVIEW=1), override, waive or confirm — never
+required.
 """
 from __future__ import annotations
 
@@ -73,30 +76,145 @@ def check_cut(k, job_id: str):
     results = [verify.gateway(k.store, job_id, aid, req) for aid in finals]
     k.put_form(job_id, "gateway_report", {"results": results, "required": req, "overrides": results[0]["founder_overrides"] if results else []},
                by="door_guard")
-    verdict = review["verdict"]
-    if verdict != "pass":
-        return _send_back(k, job_id, review)
-    ready = all(r["ready"] for r in results)
-    if ready and not k.s.hold_before_preview:
-        k.store.transition(job_id, "checking", "ready_for_review", actor="door_guard", presented_at=utc_now())
-        k.store.timing_start(job_id, "customer_wait", "review")
-    else:
+    if review["verdict"] != "pass":
+        return _send_back(k, job_id, review, results)
+    if any(r["measured_failed"] for r in results):
+        return measured_repair(k, job_id, results)
+    present(k, job_id, results)
+
+
+def present(k, job_id, results):
+    """The door guard lets the cut through to the customer unless a MEASURED check blocks it. Judgement rows an unqualified
+    judge could not settle are the customer's to settle by looking; the preview says so."""
+    if not all(r["presentable"] for r in results):
+        return customer_decision(k, job_id, results)          # a measured check could not run / failed: never shown
+    if any(r["judgement_open"] for r in results):
+        from product.stations.chef import add_customer_note
+        add_customer_note(k, job_id, "Our automatic reviewers are still in training, so your look at this preview is the final "
+                                     "check: accept it only if it is right.")
+    if k.s.hold_before_preview:        # the founder chose to look first (MI_HOLD_BEFORE_PREVIEW=1)
         k.store.transition(job_id, "checking", "operator_hold", actor="door_guard",
-                           data={"ready": ready, "blocking": [b["check_id"] for r in results for b in r["blocking"]][:40]})
+                           data={"hold_before_preview": True, "open": [b["check_id"] for r in results for b in r["blocking"]][:40]})
+        return
+    k.store.transition(job_id, "checking", "ready_for_review", actor="door_guard", presented_at=utc_now())
+    k.store.timing_start(job_id, "customer_wait", "review")
 
 
-def _send_back(k, job_id, review):
+def plain_report(review) -> str:
+    defects = review.get("defects") or []
+    parts = [f"{d.get('where') or 'the cut'}: {d.get('description', '')}" for d in defects]
+    return ((review.get("summary_for_customer") or "").strip() + (" Problems our reviewer found: " + "; ".join(parts) + "." if parts else "")).strip()
+
+
+def _to_customer(k, job_id, review, results):
+    """Repairs used up, or the plan failed twice: the customer sees the cut with the plain report and decides (accept as is,
+    changes — priced — or reject). A measured FAIL still never ships."""
+    from product.stations.chef import add_customer_note
+    report = plain_report(review)
+    k.store.put_artifact(job_id, "review_report", {"verdict": review["verdict"], "plain": report, "defects": review.get("defects", [])},
+                         "big_taster")
+    add_customer_note(k, job_id, f"Our reviewer is still not satisfied after the automatic repairs ({review['verdict']}): {report} "
+                                 "You can accept it as is, ask for changes (priced before any spend), or reject it.")
+    k.store.event(job_id, "system", "to_customer_with_report", {"verdict": review["verdict"]})
+    if any(r["measured_failed"] for r in results):
+        return customer_decision(k, job_id, results)
+    present(k, job_id, results)
+
+
+def measured_repair(k, job_id, results):
+    """A measured check FAILED on the exact file: it never ships. The system repairs it automatically (SB-BIG-FIX, 2 rounds,
+    within the approved budget); still failing → the customer decides (stop or a paid rework)."""
+    failed = [{"asset_id": r["asset_id"], "check_id": b["check_id"], "detail": b["detail"]} for r in results for b in r["measured_failed"]]
+    why = "; ".join(f"{x['check_id']}: {str(x['detail'])[:100]}" for x in failed)[:600]
+    try:
+        flow.send_back(k.store, job_id, "SB-BIG-FIX", why=why)
+    except flow.LimitReached:
+        return customer_decision(k, job_id, results)
+    from product.stations.head_cook import _reset_downstream
+    reset = []
+    for x in {f["asset_id"] for f in failed}:
+        node = k.store.asset(x)["node_id"]
+        if node:
+            reset += _reset_downstream(k, job_id, node, f"measured check failed: {why[:250]}")
+    k.store.put_artifact(job_id, "internal_repair", {"measured": failed, "defects": [], "nodes": sorted(set(reset))}, "door_guard")
+    k.store.transition(job_id, "checking", "producing", actor="door_guard", data={"repair": sorted(set(reset)), "measured_failed": why})
+
+
+def rework_price(k, job_id, asset_ids) -> str:
+    from decimal import Decimal
+    from product.dispatch import quote as provider_quote
+    if k.store.job(job_id)["media"] == "image":
+        return str((Decimal(2 * len(asset_ids)) * provider_quote("nano-banana-2")).quantize(Decimal("0.01")))
+    q = k.store.artifact(job_id, "quote") or {}
+    return str(Decimal(q.get("media_ceiling_usd") or "1.00"))
+
+
+def customer_decision(k, job_id, results):
+    """A measured check blocks and the automatic repairs are used up: the customer is told, in plain words, what failed and
+    chooses stop (nothing more is spent) or a paid rework (one more attempt at the failing files, priced)."""
+    blocked = [{"asset_id": r["asset_id"], "check_id": b["check_id"], "status": b["status"], "detail": str(b["detail"])[:300]}
+               for r in results for b in r["measured_blocking"]]
+    assets = sorted({b["asset_id"] for b in blocked})
+    k.store.put_artifact(job_id, "customer_decision", {
+        "what_failed": blocked, "options": ["stop", "rework"], "rework_price_usd": rework_price(k, job_id, assets),
+        "plain": "An automatic measurement failed on the finished file, so we will not deliver it: "
+                 + "; ".join(f"{b['check_id'].replace('_', ' ')} — {b['detail'][:120]}" for b in blocked)[:900]
+                 + ". You can stop here (nothing more is spent) or pay for one more attempt at the failing files."}, "door_guard")
+    k.store.transition(job_id, "checking", "needs_customer_decision", actor="door_guard", data={"blocked": [b["check_id"] for b in blocked]})
+    k.store.timing_start(job_id, "customer_wait", "decision")
+
+
+def decide(k, job_id, *, by: str, choice: str, note: str = "", budget_usd=None):
+    """The customer's answer to needs_customer_decision: stop, or a paid rework within their account ceiling."""
+    from decimal import Decimal
+    from product.store import dec, money
+    job = k.store.job(job_id)
+    if job["state"] != "needs_customer_decision":
+        raise ValueError("there is no decision waiting on this job")
+    d = k.store.artifact(job_id, "customer_decision")
+    k._end_wait(job_id, "decision")
+    if choice == "stop":
+        from product.stations import diary
+        k.store.transition(job_id, "needs_customer_decision", "abandoned", actor=by, data={"reason": note[:300] or "customer stopped"},
+                           closed_at=utc_now(), outcome="abandoned")
+        diary.write(k, job_id)
+        return
+    if choice != "rework":
+        raise ValueError(choice)
+    price = Decimal(d["rework_price_usd"])
+    budget = max(dec(budget_usd) if budget_usd else Decimal(0), k.store.committed_usd(job_id) + price, dec(job["budget_usd"]))
+    if budget > dec(k.store.account(job["account_id"])["ceiling_usd"]):
+        raise PermissionError(f"USD {money(budget)} is above the account ceiling")
+    from product.stations.head_cook import _reset_downstream
+    reset = []
+    for aid in {b["asset_id"] for b in d["what_failed"]}:
+        node = k.store.asset(aid)["node_id"]
+        root = node.replace("ad_", "plate_") if node and node.startswith("ad_") and k.store.node(job_id, node.replace("ad_", "plate_")) else node
+        if root:
+            reset += _reset_downstream(k, job_id, root, f"paid rework: {note[:200]}")
+    k.store.event(job_id, by, "customer_rework", {"price_usd": str(price), "budget_usd": money(budget), "nodes": sorted(set(reset))})
+    k.store.transition(job_id, "needs_customer_decision", "producing", actor=by, data={"rework": sorted(set(reset))},
+                       budget_usd=money(budget), budget_authorised_by=by, budget_authorised_at=utc_now())
+
+
+def _send_back(k, job_id, review, results):
     """The big taster said no. Where it goes is decided here by code, from the defects' earliest stage (spec §6.2)."""
     defects = [d for d in review.get("defects", []) if d.get("severity") in ("blocker", "major")] or review.get("defects", [])
     plan = [d for d in defects if d.get("earliest_stage") == "plan"]
     shots = sorted({int(d["shot"]) for d in defects if d.get("shot")})
     why = "; ".join(f"{d.get('id')}: {d.get('description', '')[:120]}" for d in defects)[:600]
     if review["verdict"] == "fail" and plan or (review["verdict"] == "fail" and not shots):
-        flow.send_back(k.store, job_id, "SB-BIG-FAIL", why=why)             # 1 round; a second fail → the founder
+        try:
+            flow.send_back(k.store, job_id, "SB-BIG-FAIL", why=why)         # 1 round; a second fail → the customer decides
+        except flow.LimitReached:
+            return _to_customer(k, job_id, review, results)
         k.store.put_artifact(job_id, "replan_request", {"from": "big_taster", "defects": defects, "why": why}, "big_taster")
         k.store.transition(job_id, "checking", "directing", actor="big_taster", data={"reason": "the recipe itself is wrong", "why": why})
         return
-    flow.send_back(k.store, job_id, "SB-BIG-FIX", why=why)                  # 2 rounds, then the founder
+    try:
+        flow.send_back(k.store, job_id, "SB-BIG-FIX", why=why)              # 2 automatic rounds, then the customer decides
+    except flow.LimitReached:
+        return _to_customer(k, job_id, review, results)
     from product.stations.head_cook import _reset_downstream
     reset = []
     for n in shots:
@@ -199,15 +317,14 @@ def founder_override(k, job_id, proof, reason):
 
 
 def release(k, job_id, proof):
+    """The founder, who chose to hold cuts before the preview, lets one through. Measured checks must still pass (or be
+    waived by the founder); judgement rows are the customer's to settle at the preview."""
     rep = k.store.artifact(job_id, "gateway_report") or {"results": []}
     req = required(k, job_id)
     fresh = [verify.gateway(k.store, job_id, r["asset_id"], req) for r in rep["results"]]
-    if not fresh or not all(r["ready"] for r in fresh):
-        raise PermissionError("the door guard still blocks: " + ", ".join(b["check_id"] for r in fresh for b in r["blocking"])
-                              + " — confirm or waive each (founder), or fix them")
-    fr = k.store.artifact(job_id, "final_review") or {}
-    if fr.get("verdict") != "pass" and not k.store.overrides(job_id, "big_taster"):
-        raise PermissionError("the big taster did not pass this cut and the founder has not overridden it")
+    if not fresh or not all(r["presentable"] for r in fresh):
+        raise PermissionError("the door guard still blocks: " + ", ".join(b["check_id"] for r in fresh for b in r["measured_blocking"])
+                              + " — waive each (founder), or fix them")
     k.put_form(job_id, "gateway_report", {"results": fresh, "required": req, "overrides": fresh[0]["founder_overrides"],
                                           "released_by": proof.actor}, by="door_guard")
     k.store.transition(job_id, "operator_hold", "ready_for_review", actor=proof.actor, founder=proof, presented_at=utc_now())
@@ -218,10 +335,21 @@ def accept(k, job_id, by: str):
     from product.stations import diary
     req = required(k, job_id)
     finals = k.final_assets(job_id)
+    if k.store.job(job_id)["state"] != "ready_for_review":
+        raise PermissionError("there is no preview waiting for your acceptance")
     for aid in finals:
         g = verify.gateway(k.store, job_id, aid, req)
+        if not g["presentable"]:
+            raise PermissionError(f"{aid} is not presentable: {[b['check_id'] for b in g['measured_blocking']]}")
+        objected = (k.store.artifact(job_id, "final_review") or {}).get("verdict") not in (None, "pass")
+        for b in g["judgement_open"]:        # the customer's preview is the final check on every judgement row (amendment 1 §3)
+            k.store.record_check(job_id, aid, check_id=b["check_id"], status="PASS", blocking=True, runner=f"customer:{by}",
+                                 detail="the customer looked at the preview and accepted it"
+                                        + (" as is, over our reviewer's objection" if b["status"] == "FAIL" or objected else "")
+                                        + f" (was {b['status']}: {str(b['detail'])[:160]})")
+        g = verify.gateway(k.store, job_id, aid, req)
         if not g["ready"]:
-            raise PermissionError(f"{aid} is not presentable: {[b['check_id'] for b in g['blocking']]}")
+            raise PermissionError(f"{aid} is not deliverable: {[b['check_id'] for b in g['blocking']]}")
     for aid in finals:
         k.store.deliver(job_id, aid, by)
     k._end_wait(job_id, "review")

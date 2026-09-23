@@ -21,8 +21,10 @@ def _env(name: str, default: str | None = None) -> str | None:
 # Spec §9.3: each worker's model is configuration (MI_MODEL_<WORKER>="provider:model"), never hard-coded in a station.
 # Tiers: strongest (chef) — company A; strong, another company (recipe checker, big taster, small-taster escalation) —
 # company B; cheap (waiter, pantry checker, small taster, diary writer). The decision slot is optional (spec §9.3, H4).
+# Amendment 1 §1: image jobs only use a cheaper chef (MI_MODEL_CHEF_IMAGE), a mid-tier model from the film chef's company.
 DEFAULT_WORKER_MODELS = {
     "chef": "azure_openai:gpt-5.6-sol",
+    "chef_image": "azure_openai:gpt-5.6-terra",
     "recipe_checker": "gemini:gemini-3.1-pro-preview",
     "big_taster": "gemini:gemini-3.1-pro-preview",
     "small_taster_escalation": "gemini:gemini-3.1-pro-preview",
@@ -33,7 +35,7 @@ DEFAULT_WORKER_MODELS = {
 }
 COMPANY = {"anthropic": "anthropic", "azure_openai": "openai", "openai": "openai", "gemini": "google", "decision": "decision"}
 # Reasoning effort per worker (spec §9.4: medium by default).
-DEFAULT_EFFORT = {"chef": "medium", "recipe_checker": "medium", "big_taster": "medium", "small_taster_escalation": "medium"}
+DEFAULT_EFFORT = {"chef": "medium", "chef_image": "medium", "recipe_checker": "medium", "big_taster": "medium", "small_taster_escalation": "medium"}
 
 
 def worker_models() -> dict:
@@ -52,10 +54,11 @@ def check_independence(models: dict):
     """The chef and the judges must come from different AI companies (spec §3, §9.3, checklist C4)."""
     def company(w):
         return COMPANY.get(models[w].split(":", 1)[0], models[w].split(":", 1)[0])
-    for judge in ("recipe_checker", "big_taster"):
-        if company(judge) == company("chef"):
-            raise ValueError(f"the chef ({models['chef']}) and the {judge} ({models[judge]}) are from the same company; "
-                             f"the judges must be independent")
+    for chef in [c for c in ("chef", "chef_image") if c in models]:
+        for judge in ("recipe_checker", "big_taster"):
+            if company(judge) == company(chef):
+                raise ValueError(f"the {chef} ({models[chef]}) and the {judge} ({models[judge]}) are from the same company; "
+                                 f"the judges must be independent")
 
 
 @dataclass
@@ -81,8 +84,9 @@ class Settings:
     account_default_ceiling_usd: Decimal = Decimal("25.00")
     worker_concurrency: int = 4
     lease_seconds: int = 900
-    # Hold every finished cut for an operator look before the customer sees it (H-6: on for early beta).
-    hold_before_preview: bool = True
+    # Hold every finished cut for the founder's look before the customer sees it. Amendment 1 §3: off by default — the
+    # customer's preview is the final check; the founder may switch it on (MI_HOLD_BEFORE_PREVIEW=1) to intervene.
+    hold_before_preview: bool = False
     base_url: str = "http://localhost:8080"
     fault_injection: dict = field(default_factory=dict)
     models: dict = field(default_factory=lambda: dict(DEFAULT_WORKER_MODELS))
@@ -116,7 +120,7 @@ def load(data_dir: str | Path | None = None, **overrides) -> Settings:
         vertex_project=_env("MI_VERTEX_PROJECT"),
         media_surface=_env("MI_MEDIA_SURFACE", "gemini_api"),
         vertex_region=_env("MI_VERTEX_REGION", "us-central1"),
-        hold_before_preview=_env("MI_HOLD_BEFORE_PREVIEW", "1") == "1",
+        hold_before_preview=_env("MI_HOLD_BEFORE_PREVIEW", "0") == "1",
         base_url=_env("MI_BASE_URL", "http://localhost:8080"),
         worker_concurrency=int(_env("MI_WORKER_CONCURRENCY", "4")),
         models=worker_models(),

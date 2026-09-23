@@ -134,6 +134,18 @@ class EquipmentSheet:
         return {"id": rid, "version": version, "action_class": change["action_class"], "verdict": change["verdict"]}
 
 
+    def restore(self, row: dict, *, by: str, source_lesson: str | None) -> int:
+        """A new version of `row["id"]` with exactly the given content (an undo — history is never rewritten)."""
+        cur = next((r for r in self.rows() if r["id"] == row["id"]), None)
+        version = (cur["version"] + 1) if cur else 1
+        with self.store.tx() as c:
+            c.execute("INSERT INTO equipment_rows VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                      (row["id"], version, row.get("generator") or "veo-3.1-fast-i2v", json.dumps(row.get("routes") or []), row["action_class"],
+                       row["verdict"], int(row.get("sample_count") or 0), json.dumps(row.get("evidence_refs") or []), row.get("note"),
+                       row.get("alternative"), by, source_lesson, utc_now()))
+        return version
+
+
 # ── failure diary ──────────────────────────────────────────────────────────────────────────────────────────────
 @functools.lru_cache(maxsize=1)
 def _atlas_rows() -> list:

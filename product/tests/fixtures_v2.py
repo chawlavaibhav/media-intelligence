@@ -102,16 +102,14 @@ def evidence_film(ev: Path) -> dict:
 
 
 def film_to_hold(e, jid, *, accept_alternatives=True):
-    """Drive a film order through the front of house, the founder's recipe confirmation, the customer's approval and
-    master-plate approval, to the door guard. Returns the final state."""
+    """Drive a film order through the front of house, the customer's approval and master-plate approval, to the door
+    guard (ready_for_review, or operator_hold when a test switched the founder's hold on). Returns the final state."""
     e.drain()
     if e.state(jid) == "awaiting_customer_input" and accept_alternatives:
         f = e.store.artifact(jid, "feasibility")
         e.orch.provide_input(jid, by=e.user["email"], accepted_alternatives=[
             {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
         e.drain()
-    if e.state(jid) == "paused_for_founder" and e.store.artifact(jid, "founder_decision")["decision"] == "confirm recipe":
-        e.orch.confirm_recipe(jid, session=e.founder_session(), reason="Read the plan: stills for zips; risky slides first.")
     if e.state(jid) == "awaiting_approval":
         e.orch.approve(jid, by=e.user["email"], budget_usd="15")
         e.drain()

@@ -25,9 +25,9 @@ from product.store import sha256_bytes, sha256_json, utc_now
 
 # Expected answer size and thinking per worker (tokens) — the basis of the cost estimate; measured live values replace
 # these once live jobs have run (the ledger records actuals).
-EXPECTED_OUT = {"waiter": 1500, "pantry_checker": 1000, "chef": 3500, "recipe_checker": 1500, "small_taster": 350,
+EXPECTED_OUT = {"waiter": 1500, "pantry_checker": 1000, "chef": 3500, "chef_image": 2000, "recipe_checker": 1500, "small_taster": 350,
                 "small_taster_escalation": 500, "big_taster": 1800, "diary_writer": 2000}
-EXPECTED_THINKING = {"chef": 2000, "recipe_checker": 1000, "big_taster": 1000, "small_taster_escalation": 500}
+EXPECTED_THINKING = {"chef": 2000, "chef_image": 1000, "recipe_checker": 1000, "big_taster": 1000, "small_taster_escalation": 500}
 BATCH_DISCOUNT = {"diary_writer": Decimal("0.5")}          # the diary writer runs after the job on batch pricing
 IMAGE_TOKENS = 1300
 VIDEO_TOKENS_PER_S = 300

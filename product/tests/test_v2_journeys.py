@@ -1,10 +1,10 @@
 """P1 v2 phase 8 — full simulated journeys through the web app (spec §13 step 8; checklist J3), and spec §11 test 11 across
 every AI worker. Only HTTP requests by the customer and by the founder, plus the worker process; USD 0, real ffmpeg."""
 import hashlib
+import json
 import re
 import unittest
 
-from product import verify
 from product.tests import fixtures_v2 as fx
 from product.tests.support import Env
 from product.tests.test_web import Client
@@ -31,22 +31,8 @@ class WebJourneys(unittest.TestCase):
         self.assertTrue(r["status"].startswith("303"), (path, r["status"], r["body"][:400]))
         return r
 
-    def founder_at_the_door(self, jid):
-        """The founder, on the job page: confirm each person-check and waive what a simulation cannot verify, then release."""
-        page = f"/ops/jobs/{jid}"
-        g = self.e.store.artifact(jid, "gateway_report")
-        for res in g["results"]:
-            for b in res["blocking"]:
-                if verify.attestable(b["check_id"]):
-                    self.post(self.f, f"/ops/jobs/{jid}/attest", page, {"asset_id": res["asset_id"], "check_id": b["check_id"],
-                                                                         "note": "DRY RUN — looked at the stand-in file; simulated media",
-                                                                         "outcome": "PASS"})
-                else:
-                    self.post(self.f, f"/ops/jobs/{jid}/waive", page, {"asset_id": res["asset_id"], "check_id": b["check_id"],
-                                                                        "reason": "DRY RUN — a simulation cannot verify this"})
-        self.post(self.f, f"/ops/jobs/{jid}/release", page, {})
-
     def test_the_rejected_films_order_becomes_an_accepted_film_through_the_web_app_with_lessons_for_the_founder(self):
+        """Amendment 1 §3: nobody waits for the founder — the customer approves the plan, the look, and the preview."""
         e = self.e
         ups = [("product_photos", name, fx.with_shows(make_png(64, 64, seed=10 + i), shows), "image/png")
                for i, (name, shows) in enumerate(fx.BACKPACK_PHOTOS)] + [("logo", "logo.png", make_png(32, 16, seed=5), "image/png")]
@@ -62,29 +48,26 @@ class WebJourneys(unittest.TestCase):
         n = len(e.store.artifact(jid, "feasibility")["alternatives"])
         self.post(self.c, f"/jobs/{jid}/input", f"/jobs/{jid}", {**{f"alt_{i}": "yes" for i in range(n)}}, files=[])
         e.drain()
-        self.assertEqual(e.state(jid), "paused_for_founder")                       # the recipe checker is not qualified
-        self.post(self.f, f"/ops/jobs/{jid}/confirm_recipe", f"/ops/jobs/{jid}", {"reason": "Plan read: zips as stills; slides first."})
-        self.assertEqual(e.state(jid), "awaiting_approval")
+        self.assertEqual(e.state(jid), "awaiting_approval")                        # no founder step (amendment 1 §3)
+        self.assertIn(b"Our reviewer found no problems", self.c.req("GET", f"/jobs/{jid}")["body"])
         self.post(self.c, f"/jobs/{jid}/approve", f"/jobs/{jid}", {"budget_usd": "15"})
         e.drain()
         self.assertEqual(e.state(jid), "awaiting_master_approval")
         self.post(self.c, f"/jobs/{jid}/master", f"/jobs/{jid}", {})
         e.drain()
-        self.assertEqual(e.state(jid), "operator_hold")
-        self.founder_at_the_door(jid)
         self.assertEqual(e.state(jid), "ready_for_review")
+        self.assertIn(b"your look at this preview is the final check", self.c.req("GET", f"/jobs/{jid}")["body"])
         self.post(self.c, f"/jobs/{jid}/changes", f"/jobs/{jid}", {"target_1": "shot:2", "change_1": "a slower slide"})
         e.drain()
-        self.assertEqual(e.state(jid), "operator_hold")
-        self.founder_at_the_door(jid)
+        self.assertEqual(e.state(jid), "ready_for_review")
         self.post(self.c, f"/jobs/{jid}/accept", f"/jobs/{jid}", {})
         self.assertEqual(e.state(jid), "accepted")
         final = e.store.deliveries(jid)[0]["asset_id"]
         dl = self.c.req("GET", f"/assets/{final}/download")
         self.assertTrue(dl["status"].startswith("200"))
         self.assertEqual(hashlib.sha256(dl["body"]).hexdigest(), e.store.deliveries(jid)[0]["asset_sha256"])
-        # the founder sees the lessons, the shelf proposals reach the customer
-        self.assertIn(jid.encode(), self.f.req("GET", "/ops/lessons")["body"])
+        # the founder sees what was learned (applied automatically, undoable), the shelf proposals reach the customer
+        self.assertIn(jid.encode(), self.f.req("GET", "/ops/digest")["body"])
         self.assertIn(b"Approve", self.c.req("GET", "/shelf")["body"])
         # spec §11 test 11: every AI worker carried the order slip's words byte for byte
         sha = hashlib.sha256(fx.BACKPACK_FILM_ORDER.encode()).hexdigest()
@@ -93,11 +76,15 @@ class WebJourneys(unittest.TestCase):
         for c in calls:
             self.assertEqual(c["exact_words_sha256"], sha, c["worker"])
             self.assertIn("CUSTOMER_EXACT_WORDS", c["context_kinds"].split(","))
-        # nothing reached the customer without the founder at the door, and no builder or script decided anything
-        actors = {x["actor"] for x in e.store.events(jid) if x["kind"] == "founder_override"}
-        self.assertEqual(actors, {"founder:founder@mi.test"})
-        for w in e.store.q("SELECT by_user FROM waivers WHERE job_id=?", (jid,)):
-            self.assertEqual(e.store.user(w["by_user"])["role"], "founder")
+        # nobody waited for the founder, no builder or script decided anything, and the customer's acceptance is recorded
+        # against every judgement check the unqualified judges could not settle
+        self.assertFalse([x for x in e.store.events(jid, ("state",)) if json.loads(x["data_json"]).get("to") in
+                          ("paused_for_founder", "operator_hold")])
+        self.assertEqual(e.store.overrides(jid), [])
+        self.assertEqual(e.store.q("SELECT * FROM waivers WHERE job_id=?", (jid,)), [])
+        rows = {r["check_id"]: r for r in e.store.checks(final)}
+        for cid in ("independent_review", "audio_heard_by_person", "small_taster_confirmed"):
+            self.assertEqual(rows[cid]["runner"], "customer:buyer@acme.test", cid)
 
     def test_an_image_order_is_accepted_through_the_web_app(self):
         e = self.e
@@ -111,15 +98,13 @@ class WebJourneys(unittest.TestCase):
                               ("logo", "logo.png", make_png(32, 16, seed=5), "image/png")])
         jid = dict(r["headers"])["Location"].split("/")[-1]
         e.drain()
-        self.post(self.f, f"/ops/jobs/{jid}/confirm_recipe", f"/ops/jobs/{jid}", {"reason": "Plan read: one clean picture per format."})
         page = self.c.req("GET", f"/jobs/{jid}")["body"]
         self.assertIn(b"Approve direction", page)
         prev = re.search(rb'/assets/(ast_\w+)"', page).group(1).decode()
         self.assertTrue(self.c.req("GET", f"/assets/{prev}")["status"].startswith("200"))
         self.post(self.c, f"/jobs/{jid}/approve", f"/jobs/{jid}", {"budget_usd": "10"})
         e.drain()
-        self.assertEqual(e.state(jid), "operator_hold")
-        self.founder_at_the_door(jid)
+        self.assertEqual(e.state(jid), "ready_for_review")
         self.post(self.c, f"/jobs/{jid}/accept", f"/jobs/{jid}", {})
         self.assertEqual(e.state(jid), "accepted")
         self.assertEqual(len(e.store.deliveries(jid)), 2)

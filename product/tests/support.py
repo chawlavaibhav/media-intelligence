@@ -67,15 +67,13 @@ class Env:
         return self.store.job(jid)["state"]
 
     def front(self, jid):
-        """v2 front of house: accept the pantry checker's alternatives and confirm the recipe (founder) → the plan card."""
+        """v2 front of house: accept the pantry checker's alternatives → the plan card (no founder step: amendment 1 §3)."""
         self.drain()
         if self.state(jid) == "awaiting_customer_input":
             f = self.store.artifact(jid, "feasibility")
             self.orch.provide_input(jid, by=self.user["email"], accepted_alternatives=[
                 {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
             self.drain()
-        if self.state(jid) == "paused_for_founder" and (self.store.artifact(jid, "founder_decision") or {}).get("decision") == "confirm recipe":
-            self.orch.confirm_recipe(jid, session=self.founder_session(), reason="Plan read in the test: routes and continuity are fine.")
         return self.state(jid)
 
     def produce(self, jid):
@@ -103,13 +101,15 @@ class Env:
         self.orch.release(jid, session=self.founder_session())
 
     def to_review(self, jid, budget="15"):
-        """submitted → ready_for_review, with the founder confirming/waiving what a dry run cannot verify."""
+        """submitted → ready_for_review. Nobody waits for the founder (amendment 1 §3); only when a test switched the
+        founder's hold on does the founder confirm/waive and release."""
         assert self.front(jid) == "awaiting_approval", self.state(jid)
         self.orch.approve(jid, by=self.user["email"], budget_usd=budget)
         self.produce(jid)
-        assert self.state(jid) == "operator_hold", (self.state(jid), self.store.job(jid)["pause_reason"])
-        self.waive_all(jid)
-        self.release(jid)
+        if self.state(jid) == "operator_hold":
+            self.waive_all(jid)
+            self.release(jid)
+        assert self.state(jid) == "ready_for_review", (self.state(jid), self.store.job(jid)["pause_reason"])
         return jid
 
     def close(self):

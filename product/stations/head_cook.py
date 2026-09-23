@@ -7,7 +7,8 @@
     end frame) as references. Risky shots are produced and checked first; every other shot waits on them.
   - IMAGES: the first format's plate is the master; the other formats are generated with it as a reference.
   - Small taster on each generated picture/clip. "No" is binding: retry once with a changed request (its notes as a
-    correction), then the chef re-plans that shot (1 per shot), then the founder decides. Never a third identical request.
+    correction), then the chef re-plans that shot (1 per shot), then the system switches it to FILM-A, and on FILM-A the
+    best take is kept, flagged and noted on the customer's preview (amendment 1 §3). Never a third identical request.
   - Every output is written to a new, unique path (write-once). The Production log form records source images, links,
     routes, attempts and choices.
 """
@@ -30,6 +31,14 @@ class NeedsFounder(Exception):
     def __init__(self, node_id, candidates, why):
         super().__init__(f"{node_id}: {why}")
         self.node_id, self.candidates, self.why = node_id, candidates, why
+
+
+class KeepFlagged(Exception):
+    """Amendment 1 §3: an output the small taster rejected on every allowed attempt, on the safest route there is. The
+    latest take is kept, flagged, and noted on the customer's preview — the customer's look is the final check."""
+    def __init__(self, node_id, asset_id, why):
+        super().__init__(f"{node_id}: kept flagged — {why}")
+        self.node_id, self.asset_id, self.why = node_id, asset_id, why
 
 
 class ShotReplan(Exception):
@@ -200,6 +209,7 @@ def _reset_downstream(k, job_id, node_id, note=None):
         todo += [m for m, n in nodes.items() if x in json.loads(n["deps_json"])]
     for x in seen:
         spec = json.loads(nodes[x]["spec_json"])
+        spec["repair_round"] = int(spec.get("repair_round") or 0) + 1      # redraws after a reset are repairs, not retakes
         if x == node_id and note:
             spec["revision_note"] = note
             spec.pop("reuse", None)
@@ -227,7 +237,7 @@ def produce(k, job_id: str):
         ready = [x for x, n in nodes.items() if n["status"] == "pending"
                  and all(nodes[d]["status"] == "done" for d in json.loads(n["deps_json"]) + json.loads(n["spec_json"]).get("gates", [])
                          if d in nodes)]
-        if not ready and waiting:
+        if not ready and waiting:          # only after a founder's own intervention (amendment 1 §3); never by the system
             notes = {x: json.loads(nodes[x]["note"] or "{}").get("why", "") for x in waiting}
             k.to_founder(job_id, "producing", "the small taster rejected every take of " + ", ".join(waiting)
                          + ": the founder picks a take, or closes the job — " + "; ".join(f"{x}: {w}" for x, w in notes.items())[:400],
@@ -244,18 +254,22 @@ def produce(k, job_id: str):
         except (BudgetExhausted, ProviderUnavailable):
             k.store.set_node(job_id, x, status="pending")
             raise
-        except NeedsFounder as e:
+        except NeedsFounder as e:              # only reachable through a founder's own intervention
             k.store.set_node(job_id, x, status="needs_founder", note=json.dumps({"candidates": e.candidates, "why": e.why}))
+        except KeepFlagged as e:
+            _keep_flagged(k, job_id, x, e.asset_id, e.why)
         except IdenticalRequestRefused as e:
-            k.store.set_node(job_id, x, status="needs_founder", note=json.dumps({"candidates": _takes(k, job_id, x), "why": str(e)}))
+            takes = _takes(k, job_id, x)
+            if not takes:
+                raise _node_failed(f"{x}: {e}")
+            _keep_flagged(k, job_id, x, takes[-1], str(e))
         except ShotReplan as e:
             from product.stations import chef
             k.store.set_node(job_id, x, status="pending")
             try:
                 recipe = chef.replan_shot(k, job_id, e.shot, e.why)
-            except flow.LimitReached as lim:
-                k.store.set_node(job_id, x, status="needs_founder", note=json.dumps({"candidates": _takes(k, job_id, x), "why": str(lim)}))
-                continue
+            except flow.LimitReached:
+                recipe = chef.force_still(k, job_id, e.shot, e.why)      # the system, not the founder (amendment 1 §3)
             ctx = _ctx(k, job_id)
             _replace_shot_nodes(k, job_id, e.shot, recipe)
         if x == "master" and _master_needs_approval(k, job_id):
@@ -275,6 +289,19 @@ def produce(k, job_id: str):
 def _node_failed(msg):
     from product.orchestrator import NodeFailed
     return NodeFailed(msg)
+
+
+def _keep_flagged(k, job_id, node_id, asset_id, why):
+    k.store.set_asset(asset_id, status="candidate")
+    _done(k, job_id, node_id, asset_id)
+    spec = json.loads(k.store.node(job_id, node_id)["spec_json"])
+    k.store.set_node(job_id, node_id, spec_json=json.dumps({**spec, "flagged": why[:300]}))
+    k.store.event(job_id, "system", "take_kept_flagged", {"node": node_id, "asset": asset_id, "why": why[:300]})
+    from product.stations.chef import add_customer_note
+    what = f"shot {spec['shot']}" if spec.get("shot") else {"master": "the look of the film (master plate)", "character": "the character"}.get(
+        node_id, node_id.replace("_", " "))
+    add_customer_note(k, job_id, f"Please look closely at {what}: our automatic checker was not satisfied with any attempt "
+                                 f"({why[:160]}); we kept the best one for you to judge.")
 
 
 def _replace_shot_nodes(k, job_id, shot_n, recipe):
@@ -470,7 +497,7 @@ def _node_image(k, job_id, n, spec, ctx):
         prompt, refs, instruction, source = _image_request(k, job_id, n, spec, ctx, correction)
         if aid is None:
             aid = _draw(k, job_id, node_id, lambda: k.dispatch.image(job_id, node_id, prompt=prompt, aspect=spec["aspect"], refs=refs,
-                                                                   guard=ctx["guard"], meta={"format": spec["aspect"], "shot": spec.get("shot"),
+                                                                   guard=ctx["guard"], is_repair=bool(spec.get("repair_round")), meta={"format": spec["aspect"], "shot": spec.get("shot"),
                                                                                              "source_kind": source, "correction": correction}))
         a = k.store.asset(aid)
         verdict = taste(k, job_id, node_id, instruction, a, prev=_prev_bytes(k, job_id, spec))
@@ -511,7 +538,7 @@ def _node_shot(k, job_id, n, spec, ctx):
         aid = aid or _draw(k, job_id, node_id, lambda: k.dispatch.video(job_id, node_id, prompt=prompt, image=(frame["content_type"] or "image/png",
                                                                                                        Path(frame["path"]).read_bytes()),
                                                                  duration_s=dur, aspect=spec["aspect"], negative=negative, guard=ctx["guard"],
-                                                                 meta={"shot": s["n"], "route": spec["route"], "from_frame": frame["id"]}))
+                                                                 is_repair=bool(spec.get("repair_round")), meta={"shot": s["n"], "route": spec["route"], "from_frame": frame["id"]}))
         a = k.store.asset(aid)
         det = _clip_det(a, use)
         instruction = {"asset": f"clip for shot {s['n']} ({dur}s; {use}s used)", "action": s["action"], "end_state": s["end_state"],
@@ -546,12 +573,15 @@ def _rejected(k, job_id, node_id, aid, verdict) -> str:
                                                       "action_class": shot["action_class"] if shot else None,
                                                       "route": cspec.get("route")})
     if cur["draws"] < cur["max_draws"]:
-        flow.send_back(k.store, job_id, "SB-TASTER-RETRY", key=node_id, why=why)
-        return why[:300] or "the previous attempt was rejected by the small taster"
+        try:
+            flow.send_back(k.store, job_id, "SB-TASTER-RETRY", key=node_id, why=why)
+            return why[:300] or "the previous attempt was rejected by the small taster"
+        except flow.LimitReached:
+            pass                        # this output's retries were used up in an earlier round: go straight to the next rule
     spec = json.loads(cur["spec_json"])
-    if cur["kind"] in ("frame", "shot") and not spec.get("replanned"):
-        raise ShotReplan(node_id, spec["shot"], why[:400])
-    raise NeedsFounder(node_id, _takes(k, job_id, node_id), f"rejected {cur['draws']} times: {why[:300]}")
+    if cur["kind"] in ("frame", "shot") and (not spec.get("replanned") or spec.get("route") != "FILM-A"):
+        raise ShotReplan(node_id, spec["shot"], why[:400])        # the chef re-plans once; then the system forces FILM-A
+    raise KeepFlagged(node_id, aid, f"rejected {cur['draws']} times: {why[:300]}")
 
 
 def taste(k, job_id, node_id, instruction, a, *, prev=None, video_seconds=8.0) -> dict:

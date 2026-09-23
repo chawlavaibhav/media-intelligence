@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% block title %}This week's learning · Operator{% endblock %}
+{% block body %}
+<p class="small"><a href="/ops">← Operator</a></p>
+<h1>This week's learning</h1>
+<p class="muted">What the kitchen learned by itself in the last 7 days, from which job, on what evidence, and what changed.
+Each change can be undone: undo restores the exact previous version and records who undid it.{% if not is_founder %} <strong>Only the founder can undo or decide.</strong>{% endif %}</p>
+{% macro lesson(l, undo=False, decide=False) %}<div class="card"><h3>{{ l.target.replace('_', ' ') }} — {{ l.worker }} <span class="chip">{{ l.kind or '' }}</span> <span class="chip">{{ l.status }}</span></h3>
+<p class="small muted">{{ l.id }} · from <a href="/ops/jobs/{{ l.job_id }}">{{ l.job_id }}</a> · {{ l.created[:16] }} · evidence {{ l.evidence_json }}</p>
+<p>{{ l.why }}</p>
+{% if l.applied_json %}{% set a = json.loads(l.applied_json) %}<table><tr><th>Before</th><th>After</th></tr>
+<tr><td><pre class="small">{{ json.dumps(a.get('before'), indent=1, ensure_ascii=False) }}</pre></td><td><pre class="small">{{ json.dumps(a.get('after'), indent=1, ensure_ascii=False) }}</pre></td></tr></table>
+{% endif %}<details><summary class="small">The lesson as proposed</summary><pre class="small">{{ json.dumps(json.loads(l.proposal_json), indent=1, ensure_ascii=False) }}</pre></details>
+<p class="small">{{ l.decision_note or '' }}{% if l.undone_by %} · undone by {{ l.undone_by }}: {{ l.undo_note }}{% endif %}</p>
+{% if undo and is_founder %}<form method="post" action="/ops/lessons/{{ l.id }}/undo"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="u{{ l.id }}">Why undo</label><input id="u{{ l.id }}" type="text" name="note" required minlength="15"><p><button class="danger">Undo</button></p></form>{% endif %}
+{% if decide and is_founder %}<form method="post" action="/ops/lessons/{{ l.id }}"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="n{{ l.id }}">Your reason</label><input id="n{{ l.id }}" type="text" name="note" required minlength="15">
+<p><button name="decision" value="approve">Approve</button> <button class="danger" name="decision" value="reject">Reject</button></p></form>{% endif %}
+</div>{% endmacro %}
+<h2>Waiting for you (money, overrides, safety) — {{ groups.founder_only|length }}</h2>
+{% for l in groups.founder_only %}{{ lesson(l, decide=True) }}{% else %}<p class="muted">Nothing.</p>{% endfor %}
+<h2>Applied automatically — {{ groups.applied|length }}</h2>
+{% for l in groups.applied %}{{ lesson(l, undo=True) }}{% else %}<p class="muted">Nothing.</p>{% endfor %}
+<h2>Bolder changes waiting for a second accepted job — {{ groups.waiting_support|length }}</h2>
+{% for l in groups.waiting_support %}{{ lesson(l) }}{% else %}<p class="muted">Nothing.</p>{% endfor %}
+<h2>Rolled back automatically — {{ groups.rolled_back|length }}</h2>
+{% for l in groups.rolled_back %}{{ lesson(l) }}{% else %}<p class="muted">Nothing.</p>{% endfor %}
+<h2>Undone — {{ groups.undone|length }}</h2>
+{% for l in groups.undone %}{{ lesson(l) }}{% else %}<p class="muted">Nothing.</p>{% endfor %}
+{% endblock %}

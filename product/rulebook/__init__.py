@@ -141,6 +141,28 @@ class Rulebook:
                       (worker, new["version"], json.dumps(new, ensure_ascii=False), by, reason.strip(), source_lesson, utc_now()))
         return new["version"]
 
+    def card_at(self, worker: str, version: int) -> dict:
+        seed = seed_cards()[worker]
+        if int(version) == int(seed["version"]):
+            return copy.deepcopy(seed)
+        row = self.store.q1("SELECT card_json FROM rulebook_versions WHERE worker=? AND version=?", (worker, int(version)))
+        if not row:
+            raise KeyError(f"{worker} v{version}")
+        return json.loads(row["card_json"])
+
+    def restore(self, worker: str, version: int, *, by: str, reason: str, source_lesson: str | None = None) -> int:
+        """A new card version whose content is exactly version `version` (an undo or an automatic rollback — history is
+        never rewritten)."""
+        if not reason or len(reason.strip()) < 10:
+            raise ValueError("a rulebook restore needs a reason")
+        new = self.card_at(worker, version)
+        new["version"] = self.version(worker) + 1
+        from product.store import utc_now
+        with self.store.tx() as c:
+            c.execute("INSERT INTO rulebook_versions (worker, version, card_json, by, reason, source_lesson, created) VALUES (?,?,?,?,?,?,?)",
+                      (worker, new["version"], json.dumps(new, ensure_ascii=False), by, reason.strip(), source_lesson, utc_now()))
+        return new["version"]
+
     def card_text(self, worker: str, form_name: str) -> tuple:
         """(system text, card version): the stable prefix of every AI call — card first, then the form's instructions."""
         c = self.card(worker)

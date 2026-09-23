@@ -321,7 +321,10 @@ class SimulatedProviders:
             return f
         duration_s, aspect = self._ops.get(operation, (4, "9:16"))
         from product import media
-        data = media.sim_video(duration_s, aspect, seed=len(operation))
+        # one seed per request (v2: was len(operation), so e.g. requests 5 and 8 produced byte-identical clips and a
+        # customer's change could reproduce the very file they had sent back)
+        seed = int(operation.rsplit("-", 1)[-1]) if operation.rsplit("-", 1)[-1].isdigit() else len(operation)
+        data = media.sim_video(duration_s, aspect, seed=seed)
         if data is None:
             from runtime.loop.synthetic import make_mp4_stub
             w, h = ASPECT_PX.get(aspect, (720, 1280))

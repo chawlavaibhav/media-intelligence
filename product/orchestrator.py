@@ -8,7 +8,10 @@ an order goes when a station says no (spec §6, §12).
     planning / producing       stations/head_cook.py   (master plate → shots chained from master + previous; small taster)
     checking                   stations/tasters.py     (assembly + measuring tools → big taster → door guard)
     revising                   stations/changes.py     (the waiter's Change request → only the affected station)
-    closed jobs                stations/diary.py       (Lessons → the lesson queue; nothing applied until the founder approves)
+    closed jobs                stations/diary.py       (Lessons → applied automatically by kind, logged, undoable — amendment 1 §4)
+
+Amendment 1 §3: nobody waits for the founder — every limit ends with the system and then the customer. Founder decisions
+below stay available, founder-only, and are never required.
 
 Every step reads its inputs from the store, writes its outputs, and ends in a compare-and-set transition, so a restarted
 worker re-runs at most the step it was in. Customer decisions are methods taking the customer's email; founder decisions
@@ -200,9 +203,9 @@ class Orchestrator:
         self._end_wait(job_id, "customer_input")
         self.store.transition(job_id, "awaiting_customer_input", "understanding", actor=by, data={"customer_input": True})
 
-    def approve(self, job_id, *, by: str, budget_usd, note: str = ""):
+    def approve(self, job_id, *, by: str, budget_usd, note: str = "", accept_objections: bool = False):
         from product.stations import chef
-        return chef.approve(self, job_id, by=by, budget_usd=budget_usd, note=note)
+        return chef.approve(self, job_id, by=by, budget_usd=budget_usd, note=note, accept_objections=accept_objections)
 
     def request_plan_change(self, job_id, text: str, by: str):
         self.store.put_artifact(job_id, "plan_change", {"request": text, "by": by}, by)
@@ -218,6 +221,11 @@ class Orchestrator:
     def request_changes(self, job_id, by: str, items: list):
         from product.stations import changes
         return changes.request(self, job_id, by, items)
+
+    def decide(self, job_id, *, by: str, choice: str, note: str = "", budget_usd=None):
+        """A measured check failed and the automatic repairs are used up: the customer stops or pays for a rework."""
+        from product.stations import tasters
+        return tasters.decide(self, job_id, by=by, choice=choice, note=note, budget_usd=budget_usd)
 
     def accept(self, job_id, by: str):
         from product.stations import tasters
@@ -257,10 +265,6 @@ class Orchestrator:
     def override_recipe(self, job_id, *, session, reason: str):
         from product.stations import chef
         return chef.founder_override(self, job_id, self.founder(session, job_id, "override the recipe checker"), reason)
-
-    def confirm_recipe(self, job_id, *, session, reason: str):
-        from product.stations import chef
-        return chef.founder_confirm(self, job_id, self.founder(session, job_id, "confirm the recipe"), reason)
 
     def select_take(self, job_id, *, session, asset_id: str, reason: str):
         from product.stations import head_cook

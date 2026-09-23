@@ -60,7 +60,9 @@ class FlowTable(unittest.TestCase):
     def test_the_send_back_table_matches_spec_6_2(self):
         r = flow.RULES
         self.assertEqual(r["SB-RECIPE"]["limit"], 2)
-        self.assertEqual(r["SB-RECIPE"]["then"], "paused_for_founder")
+        self.assertEqual(r["SB-RECIPE"]["then"], "SB-RECIPE-SAFE")                  # amendment 1 §3: system, then customer
+        for rule in flow.SEND_BACKS:
+            self.assertNotIn("paused_for_founder", rule["then"] + rule["to"])
         self.assertEqual(r["SB-TASTER-RETRY"]["limit"], 2)
         self.assertEqual(r["SB-TASTER-REPLAN"]["limit"], 1)
         self.assertEqual(r["SB-BIG-FIX"]["limit"], 2)

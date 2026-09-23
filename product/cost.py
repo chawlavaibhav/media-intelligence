@@ -1,6 +1,7 @@
 """Cost: the quote the customer sees and the reasoning-cost report per worker (spec §9.4).
 
-Reasoning budgets are TARGETS to measure, not promises: USD 0.03 per image job, USD 0.30 per film job. In simulated mode
+Reasoning budgets are TARGETS to measure, not promises: USD 0.30 per film job and USD 0.08 per image (amendment 1 §1:
+one image recipe may produce a set of images — one per format — so an image job's reasoning is shared across its set). In simulated mode
 every AI call records an ESTIMATED cost (product/ai.py: token estimate × the configured model's list price), so a
 simulated job reports what its reasoning would have cost live, per worker, before any money is spent. Live jobs record
 the actual settled cost per call in the ledger; the report shows both.
@@ -13,7 +14,8 @@ from decimal import Decimal
 from product.dispatch import quote as provider_quote
 from product.library import tokens
 
-BUDGET = {"image": Decimal("0.03"), "video": Decimal("0.30")}
+BUDGET = {"image": Decimal("0.08"), "video": Decimal("0.30")}          # image: per image in the set; video: per film
+TARGETS = {"film": str(BUDGET["video"]), "image": str(BUDGET["image"])}
 CLIP_LENGTHS = (4, 6, 8)
 CARD_AND_SCHEMA_TOKENS = 1100      # the stable prefix of a small-taster / big-taster call (measured from the rulebook files)
 
@@ -78,12 +80,23 @@ def reasoning_report(k, job_id: str, recipe: dict | None = None, *, stage: str =
             e["expected_calls"] += 1
             e["expected_usd"] += k.workers.estimate(w, tin)[1]
     total = sum(e["estimated_usd"] + e["expected_usd"] for e in per.values())
+    images = images_in_set(k, job_id) if media == "image" else None
+    per_image = (total / images).quantize(Decimal("0.0001")) if images else None
+    measured = per_image if media == "image" else total
     return {"media": media, "budget_usd": str(BUDGET[media]), "estimated_total_usd": str(total.quantize(Decimal("0.0001"))),
-            "within_budget": total <= BUDGET[media], "mode": k.s.reasoning_mode,
+            "targets": dict(TARGETS), "images_in_set": images, "per_image_usd": str(per_image) if per_image is not None else None,
+            "target_measured": "per image in the set" if media == "image" else "per film",
+            "within_budget": measured <= BUDGET[media], "mode": k.s.reasoning_mode,
             "basis": "token estimates x the configured models' list prices (product/reasoning.py PRICES); "
                      "live jobs replace estimates with the ledger's settled cost",
             "per_worker": {w: {kk: (str(v.quantize(Decimal('0.000001'))) if isinstance(v, Decimal) else v) for kk, v in e.items()}
                            for w, e in sorted(per.items())}}
+
+
+def images_in_set(k, job_id) -> int:
+    """How many images one image recipe produces: one per requested format (amendment 1 §1)."""
+    u = k.store.artifact(job_id, "understanding") or {}
+    return max(1, len((u.get("deliverable") or {}).get("formats") or k.brief(job_id).get("formats") or ["1:1"]))
 
 
 def quote(k, job_id: str, recipe: dict) -> dict:
@@ -114,6 +127,9 @@ def quote(k, job_id: str, recipe: dict) -> dict:
     return {"lines": [{"item": a, "units": n, "unit_usd": str(p), "usd": str((Decimal(n) * p).quantize(Decimal('0.01')))} for a, n, p in lines],
             "media_ceiling_usd": str(media_usd.quantize(Decimal("0.01"))),
             "reasoning_line_usd": str(reasoning.quantize(Decimal("0.01"))), "reasoning_budget_usd": rep["budget_usd"],
+            "images_in_set": rep["images_in_set"],
+            **({"reasoning_per_image_usd": str(Decimal(rep["per_image_usd"]).quantize(Decimal("0.001")))} if media == "image" else {}),
+            "reasoning_targets": rep["targets"], "reasoning_within_target": rep["within_budget"],
             "reasoning_basis": rep["basis"], "recommended_budget_usd": str(max(total, Decimal("0.50"))),
             "basis": "unit prices x planned draws incl. one retry allowance per output; reasoning = per-worker estimate (spec 9.4)"}
 

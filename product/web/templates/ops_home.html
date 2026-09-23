@@ -1,7 +1,7 @@
 {% extends "base.html" %}{% block title %}Operator · Media Intelligence{% endblock %}
 {% block body %}
 <h1>Operator</h1>
-<p><a href="/ops/lessons">Lesson queue</a> · <a href="/ops/rulebook">Rulebook, forms, send-back rules, models</a> · <a href="/ops/library">Kitchen library</a></p>
+<p><a href="/ops/digest">This week's learning (digest)</a> · <a href="/ops/lessons">All lessons</a> · <a href="/ops/rulebook">Rulebook, forms, send-back rules, models</a> · <a href="/ops/library">Kitchen library</a></p>
 <p class="small muted">Everyone on the team can view and pause. Only the founder, signed in, can override a check, pick a take, confirm a judge, release a file, resume a job or decide a lesson.</p>
 {% if invite %}<div class="card"><strong>Invitation link (send it privately; single use):</strong><pre>{{ invite }}</pre></div>{% endif %}
 <div class="card"><h2>Jobs</h2><table><tr><th>Job</th><th>Account</th><th>Type</th><th>State</th><th>Updated</th></tr>
