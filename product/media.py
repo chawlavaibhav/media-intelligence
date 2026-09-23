@@ -1,4 +1,5 @@
-"""The deterministic media engine. One system dependency: ffmpeg/ffprobe (+ rsvg-convert for SVG logos).
+"""The deterministic media engine. System dependencies: ffmpeg/ffprobe (+ rsvg-convert for SVG logos); text is
+drawn by Pillow (FreeType + HarfBuzz/raqm shaping) so it never depends on how ffmpeg was built (no drawtext).
 
 Exact text, logos and brand colours are rendered here, by code (Mechanism B), never by a model. Text
 boxes are MEASURED by rendering each line alone and reading back its alpha, so the compositor gates
@@ -17,6 +18,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import unicodedata
 from pathlib import Path
 
 FONT_CANDIDATES = {
@@ -25,7 +27,7 @@ FONT_CANDIDATES = {
     "bold": [os.environ.get("MI_FONT_BOLD", ""), "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
              "/usr/share/fonts/TTF/DejaVuSans-Bold.ttf", "/System/Library/Fonts/Supplemental/Arial Bold.ttf"],
     "devanagari": [os.environ.get("MI_FONT_DEVANAGARI", ""), "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf",
-                   "/usr/share/fonts/opentype/noto/NotoSansDevanagari-Regular.ttf"],
+                   "/usr/share/fonts/opentype/noto/NotoSansDevanagari-Regular.ttf", "/System/Library/Fonts/Kohinoor.ttc"],
 }
 FORMAT_PX = {"1:1": (1080, 1080), "4:5": (1080, 1350), "9:16": (1080, 1920), "16:9": (1920, 1080)}
 
@@ -38,13 +40,28 @@ def have_ffmpeg() -> bool:
     return bool(shutil.which("ffmpeg") and shutil.which("ffprobe"))
 
 
+FALLBACK_FONTS = ["/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+                  "/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/Kohinoor.ttc"]
+
+
 def font(kind: str = "regular", text: str = "") -> str:
+    """The first configured font for `kind` that has a real glyph for every character of `text` (₹, Devanagari…).
+    Never silently draws tofu: if nothing covers the text, that is a MediaError."""
     if text and re.search(r"[\u0900-\u097F]", text):
         kind = "devanagari"
-    for p in FONT_CANDIDATES.get(kind, []) + FONT_CANDIDATES["regular"]:
-        if p and Path(p).exists():
+    seen, tried = set(), []
+    for p in FONT_CANDIDATES.get(kind, []) + FONT_CANDIDATES["regular"] + FALLBACK_FONTS:
+        if not p or p in seen or not Path(p).exists():
+            continue
+        seen.add(p)
+        if not text:
             return p
-    raise MediaError("no usable font file found; set MI_FONT_REGULAR / MI_FONT_BOLD")
+        miss = missing_glyphs(text, p)
+        if not miss:
+            return p
+        tried.append(f"{Path(p).name} lacks {''.join(miss)}")
+    raise MediaError("no usable font covers " + repr(text) + (": " + "; ".join(tried) if tried else
+                     "; set MI_FONT_REGULAR / MI_FONT_BOLD"))
 
 
 def run(cmd: list, *, capture=True) -> subprocess.CompletedProcess:
@@ -142,21 +159,57 @@ def _alpha_bbox(raw: bytes, w: int, h: int):
     return xs0, y0, xs1, y1
 
 
-def _drawtext(text_file: str, fontfile: str, size: int, colour: str, x, y) -> str:
-    esc = lambda p: p.replace("\\", "\\\\").replace(":", "\\:").replace("'", "\\'")
-    return (f"drawtext=fontfile='{esc(fontfile)}':textfile='{esc(text_file)}':fontsize={size}:"
-            f"fontcolor={colour}:x={x}:y={y}")
+def _rgba(hex_colour: str) -> tuple:
+    h = hex_colour.lstrip("#")
+    if len(h) == 3:
+        h = "".join(c * 2 for c in h)
+    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) + ((int(h[6:8], 16),) if len(h) == 8 else (255,))
+
+
+def _pil_font(path: str, size: int):
+    from PIL import ImageFont
+    try:
+        return ImageFont.truetype(path, size, layout_engine=ImageFont.Layout.RAQM)
+    except (OSError, ImportError, KeyError):
+        return ImageFont.truetype(path, size)
+
+
+def missing_glyphs(text: str, fontfile: str) -> list:
+    """Characters the font draws as its .notdef box (tofu) — an exact-text failure, not a style choice."""
+    from PIL import Image, ImageDraw
+    f = _pil_font(fontfile, 48)
+
+    def glyph(ch):
+        im = Image.new("L", (96, 96)); ImageDraw.Draw(im).text((24, 12), ch, font=f, fill=255)
+        return im.tobytes()
+    tofu = glyph("\U0010FFFD")
+    out = []
+    for ch in dict.fromkeys(text):
+        if ch.isspace() or unicodedata.category(ch).startswith("M"):   # combining marks shape with their base
+            continue
+        if glyph(ch) == tofu:
+            out.append(ch)
+    return out
+
+
+def text_image(text: str, *, size: int, kind: str = "regular", colour: str = "#ffffff", canvas: tuple, x: int, y: int):
+    """RGBA canvas with `text` drawn at origin (x, y) = left edge / ascender line, as measure_text reports it."""
+    from PIL import Image, ImageDraw
+    ff = font(kind, text)
+    miss = missing_glyphs(text, ff)
+    if miss:
+        raise MediaError(f"font {Path(ff).name} has no glyph for {miss!r} in {text!r}")
+    img = Image.new("RGBA", tuple(int(v) for v in canvas), (0, 0, 0, 0))
+    ImageDraw.Draw(img).text((int(x), int(y)), text, font=_pil_font(ff, int(size)), fill=_rgba(colour), anchor="la")
+    return img
 
 
 def measure_text(text: str, *, size: int, kind: str = "regular") -> tuple:
-    """(dx, dy, w, h): the inked box of `text` drawn at (0,0) with this font and size."""
+    """(dx, dy, w, h): the inked box of `text` drawn at (0,0) with this font and size (read back from real pixels)."""
     ff = font(kind, text)
-    cw, ch = max(64, int(len(text) * size * 0.9) + size * 2), size * 3
-    with tempfile.TemporaryDirectory() as d:
-        tf = Path(d) / "t.txt"; tf.write_text(text, encoding="utf-8")
-        vf = f"color=c=0x00000000:s={cw}x{ch},format=rgba,{_drawtext(str(tf), ff, size, 'white', size, size)}"
-        raw = run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", vf, "-frames:v", "1", "-f", "rawvideo", "-pix_fmt", "rgba", "-"]).stdout
-    bb = _alpha_bbox(raw, cw, ch)
+    cw = int(_pil_font(ff, size).getlength(text)) + size * 3
+    img = text_image(text, size=size, kind=kind, canvas=(cw, size * 4), x=size, y=size)
+    bb = img.getchannel("A").getbbox()
     if bb is None:
         raise MediaError(f"text rendered no pixels: {text!r} (font {ff} may lack these glyphs)")
     return bb[0] - size, bb[1] - size, bb[2] - bb[0], bb[3] - bb[1]
@@ -186,7 +239,7 @@ def compose(*, canvas: tuple, out: Path, plate: Path | None = None, background_h
             layers: list = (), transparent: bool = False) -> Path:
     """Render layers over a plate (cover-cropped to the canvas) or a flat background.
     layers: {"type":"image","path":P,"x":int,"y":int} | {"type":"text","text":s,"size":n,"colour":"#fff","x":int,"y":int,"kind":k}
-    Text layers carry the origin they were measured at (x,y = drawtext origin)."""
+    Text layers carry the origin they were measured at (x,y = left edge / ascender line)."""
     cw, ch = canvas
     inputs, chain = [], []
     if plate is not None:
@@ -208,9 +261,12 @@ def compose(*, canvas: tuple, out: Path, plate: Path | None = None, background_h
                 chain.append(f"[{cur}]drawbox=x={int(L['x'])}:y={int(L['y'])}:w={int(L['w'])}:h={int(L['h'])}:"
                              f"color={hex_to_ffmpeg(L['colour'])}:t=fill[b{i + 1}]")
             else:
-                tf = tmp / f"t{i}.txt"; tf.write_text(L["text"], encoding="utf-8")
-                chain.append(f"[{cur}]" + _drawtext(str(tf), font(L.get("kind", "regular"), L["text"]), int(L["size"]),
-                                                    hex_to_ffmpeg(L.get("colour", "#ffffff")), int(L["x"]), int(L["y"])) + f"[b{i + 1}]")
+                tp = tmp / f"t{i}.png"
+                text_image(L["text"], size=int(L["size"]), kind=L.get("kind", "regular"), colour=L.get("colour", "#ffffff"),
+                           canvas=(cw, ch), x=int(L["x"]), y=int(L["y"])).save(tp)
+                inputs += ["-i", str(tp)]
+                chain.append(f"[{cur}][{n_in}:v]overlay=0:0:format=auto[b{i + 1}]")
+                n_in += 1
             cur = f"b{i + 1}"
         out.parent.mkdir(parents=True, exist_ok=True)
         run(["ffmpeg", "-y", "-v", "error"] + inputs + ["-filter_complex", ";".join(chain), "-map", f"[{cur}]",
