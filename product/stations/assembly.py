@@ -27,7 +27,26 @@ def _colour_refs(k, job_id) -> list:
     return out
 
 
+def brand_fonts(k, job_id) -> list:
+    """The customer's approved brand font files (newest version of each), recorded as used by this job."""
+    job = k.store.job(job_id)
+    out = []
+    for it in k.shelf.approved(job["account_id"], "brand_font"):
+        if it["path"]:
+            k.shelf.record_use(job_id, job["account_id"], it["id"], "brand_font")
+            out.append(it["path"])
+    return out
+
+
 def compose_still(k, job_id, n, spec, ctx):
+    tok = media.BRAND_FONTS.set(tuple(brand_fonts(k, job_id)))
+    try:
+        return _compose_still(k, job_id, n, spec, ctx)
+    finally:
+        media.BRAND_FONTS.reset(tok)
+
+
+def _compose_still(k, job_id, n, spec, ctx):
     from product.stations.head_cook import fid
     plate = k.store.asset(k.store.node(job_id, n["node_id"].replace("ad_", "plate_"))["selected_asset_id"])
     out = k.store.new_output_path(k.job_dir(job_id) / "out", f"cut{ctx['cut']}-{fid(spec['aspect'])}", "png")
@@ -55,6 +74,14 @@ def compose_still(k, job_id, n, spec, ctx):
 
 
 def end_card(k, job_id, n, spec, ctx):
+    tok = media.BRAND_FONTS.set(tuple(brand_fonts(k, job_id)))
+    try:
+        return _end_card(k, job_id, n, spec, ctx)
+    finally:
+        media.BRAND_FONTS.reset(tok)
+
+
+def _end_card(k, job_id, n, spec, ctx):
     size = media.FORMAT_PX[spec["aspect"]]
     out = k.store.new_output_path(ctx["workdir"], f"endcard-cut{ctx['cut']}", "png")
     if not media.have_ffmpeg():
@@ -70,6 +97,14 @@ def end_card(k, job_id, n, spec, ctx):
 
 
 def super(k, job_id, n, spec, ctx):  # noqa: A001 — the node kind is called "super"
+    tok = media.BRAND_FONTS.set(tuple(brand_fonts(k, job_id)))
+    try:
+        return _super(k, job_id, n, spec, ctx)
+    finally:
+        media.BRAND_FONTS.reset(tok)
+
+
+def _super(k, job_id, n, spec, ctx):
     size = media.FORMAT_PX[spec["aspect"]]
     deck = {c["id"]: c["text"] for c in ctx["recipe"]["copy_deck"]}
     clip = k.store.asset(k.store.node(job_id, f"shot_{spec['shot']}")["selected_asset_id"])

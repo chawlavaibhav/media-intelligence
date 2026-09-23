@@ -74,6 +74,34 @@ class CustomerShelf(unittest.TestCase):
             s.record_use("job_y", self.other, i1, "character")
 
 
+class BrandFontsFromTheShelf(unittest.TestCase):
+    """Spec §5 sign painter: the brand's type from the customer shelf — and still never a font that lacks a glyph."""
+
+    def test_an_approved_brand_font_is_used_first_but_only_when_it_covers_every_character(self):
+        from product import media
+        bold = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+        if not Path(bold).exists():
+            self.skipTest("DejaVu fonts are not installed on this host")
+        e = Env()
+        try:
+            shelf = Shelf(e.store, e.s.data_dir)
+            sid = shelf.propose(e.acct, kind="brand_font", key="Brand Sans", data={"name": "Brand Sans"}, file=Path(bold))
+            shelf.decide(e.acct, sid, approve=True, by="buyer@acme.test")
+            jid = e.submit("image")
+            from product.stations.assembly import brand_fonts
+            fonts = brand_fonts(e.orch, jid)
+            self.assertEqual(len(fonts), 1)
+            self.assertIn("brand_font", {u["used_for"] for u in shelf.uses(jid)})
+            tok = media.BRAND_FONTS.set(tuple(fonts))
+            try:
+                self.assertEqual(media.font("regular", "Room for the long way home."), fonts[0])
+                self.assertNotEqual(media.font("regular", "₹185 प्रति लीटर"), fonts[0])     # no Devanagari in it: not used
+            finally:
+                media.BRAND_FONTS.reset(tok)
+        finally:
+            e.close()
+
+
 class Library(unittest.TestCase):
     def test_the_equipment_sheet_says_veo_cannot_do_hands_working_zips_with_its_evidence(self):
         e = Env()

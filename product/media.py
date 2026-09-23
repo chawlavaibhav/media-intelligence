@@ -44,13 +44,20 @@ FALLBACK_FONTS = ["/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf", "/usr/s
                   "/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/Kohinoor.ttc"]
 
 
+import contextvars
+
+# The customer's approved brand fonts (from their shelf), set per job by the sign painter (stations/assembly.py). They are
+# tried first, and still only used when they have a real glyph for every character.
+BRAND_FONTS: contextvars.ContextVar = contextvars.ContextVar("brand_fonts", default=())
+
+
 def font(kind: str = "regular", text: str = "") -> str:
     """The first configured font for `kind` that has a real glyph for every character of `text` (₹, Devanagari…).
     Never silently draws tofu: if nothing covers the text, that is a MediaError."""
     if text and re.search(r"[\u0900-\u097F]", text):
         kind = "devanagari"
     seen, tried = set(), []
-    for p in FONT_CANDIDATES.get(kind, []) + FONT_CANDIDATES["regular"] + FALLBACK_FONTS:
+    for p in list(BRAND_FONTS.get()) + FONT_CANDIDATES.get(kind, []) + FONT_CANDIDATES["regular"] + FALLBACK_FONTS:
         if not p or p in seen or not Path(p).exists():
             continue
         seen.add(p)
