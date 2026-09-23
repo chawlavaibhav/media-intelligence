@@ -821,7 +821,7 @@ class Orchestrator:
                 note += "Contact sheet at 2 fps; the audio could not be sent to this reviewer. "
         refs = []
         if finals:
-            refs = list(self._ref_images(self.store.asset(finals[0])["job_id"], 2))
+            refs = list(self._ref_images(self.store.asset(finals[0])["job_id"], 4))   # every product photo: the open-pocket one was 3rd
         return {"items": items, "note": note or "no media", "shas": shas, "refs": refs}
 
     def _invalidate_beats(self, job_id, notes_by_beat: dict) -> list:

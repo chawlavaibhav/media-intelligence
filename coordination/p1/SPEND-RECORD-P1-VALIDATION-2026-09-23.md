@@ -24,3 +24,4 @@
 | 2026-09-23 | Reviewer qualification v1 — gemini-3.1-pro-preview @4 fps (1 call) | 0.066064 | 0.103264 |
 | 2026-09-23 | Azure OpenAI gpt-5.6-sol connection test (1 call) | 0.001240 | 0.104504 |
 | 2026-09-23 | Live image job (job_20260923_6720871c) through understanding, 2 directions, 6 stills — at operator hold for takes | 2.178217 | 2.282721 |
+| 2026-09-23 | Live image job — recomposition + final review; ACCEPTED by founder, downloaded (job total 2.275137) | 0.096917 | 2.379641 |
