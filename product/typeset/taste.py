@@ -39,17 +39,20 @@ def page(d: Path, max_pairs: int = 30, seed: int = 7) -> Path:
     ok = [c for c in cands if c["score"] > -1000]
     pairs = list(itertools.combinations(range(len(ok)), 2))
     random.Random(seed).shuffle(pairs)
-    pairs = pairs[:max_pairs]
+    return page_pairs(d, [(ok[a]["file"], ok[b]["file"]) for a, b in pairs[:max_pairs]], seed=seed)
+
+
+def page_pairs(d: Path, pairs: list, seed: int = 7, title: str = "Layout taste test") -> Path:
+    """A one-file page for an explicit list of (file_a, file_b) pairs; sides are shuffled so position carries no hint."""
     rows = []
-    for k, (a, b) in enumerate(pairs):
-        A, B = ok[a], ok[b]
+    for k, (A, B) in enumerate(pairs):
         if random.Random(seed + k).random() < 0.5:
             A, B = B, A
-        rows.append(f"""<div class="pair" data-a="{html.escape(A['file'])}" data-b="{html.escape(B['file'])}">
+        rows.append(f"""<div class="pair" data-a="{html.escape(A)}" data-b="{html.escape(B)}">
 <p>Pair {k + 1} of {len(pairs)} — which is the better ad?</p>
-<label><input type="radio" name="p{k}" value="a"><img src="{_embed(d, A['file'])}"></label>
-<label><input type="radio" name="p{k}" value="b"><img src="{_embed(d, B['file'])}"></label></div>""")
-    doc = f"""<!doctype html><meta charset="utf-8"><title>Layout taste test</title>
+<label><input type="radio" name="p{k}" value="a"><img src="{_embed(d, A)}"></label>
+<label><input type="radio" name="p{k}" value="b"><img src="{_embed(d, B)}"></label></div>""")
+    doc = f"""<!doctype html><meta charset="utf-8"><title>{html.escape(title)}</title>
 <style>body{{font:15px system-ui;margin:24px;background:#f6f5f2}}.pair{{background:#fff;border:1px solid #ddd;border-radius:10px;
 padding:12px;margin:0 0 18px}}.pair label{{display:inline-block;width:48%;margin-right:1%;cursor:pointer;vertical-align:top}}
 img{{width:100%;border:3px solid transparent;border-radius:6px}}input{{display:none}}input:checked+img{{border-color:#2f6fed}}

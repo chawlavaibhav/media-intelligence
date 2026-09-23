@@ -322,7 +322,7 @@ def _feathered(img: Image.Image, frac: float = 0.04) -> Image.Image:
     return m
 
 
-def _place_plate(canvas: Image.Image, plate: Image.Image, region: tuple, mode: str, product_box_norm):
+def _place_plate(canvas: Image.Image, plate: Image.Image, region: tuple, mode: str, product_box_norm, shift: float = 0.0):
     W, H = canvas.size
     x0, y0, x1, y1 = region
     if mode == "cover":
@@ -351,8 +351,8 @@ def _place_plate(canvas: Image.Image, plate: Image.Image, region: tuple, mode: s
                 s = min(s, (y1 - y0) / max(1e-6, pb[3] * plate.height))
             pw, ph = int(plate.width * s), int(plate.height * s)
             oy = y1 - ph if mode == "fit_below" else y0
-        ox = int(W / 2 - (pb[0] + pb[2]) / 2 * pw)
-        if pw >= W:
+        ox = int(W / 2 + shift * W - (pb[0] + pb[2]) / 2 * pw)
+        if pw >= W and not shift:
             ox = max(W - pw, min(0, ox))
         pr = plate.resize((pw, ph), Image.LANCZOS).convert("RGB")
         canvas.paste(pr, (ox, oy), _feathered(pr))
@@ -384,10 +384,12 @@ def luminance_grid(img: Image.Image, box: tuple, grid: int = 24) -> list:
 
 
 def layout(*, template_id: str, fmt: str, system_id: str, kit: BrandKit, copy: list, plate: Path | None = None,
-           product_box_norm: list | None = None) -> dict:
+           product_box_norm: list | None = None, overrides: dict | None = None) -> dict:
     """Typeset one candidate. Returns {'image': PIL image, 'ground': image before text, 'elements': [...], meta...}.
-    Raises TypesetError when the copy cannot be fitted within the template's limits."""
-    T = template(template_id)
+    Raises TypesetError when the copy cannot be fitted within the template's limits.
+    `overrides` changes one property of the template (e.g. {"block": {"align": "left"}}, {"panel": None},
+    {"product_shift": -0.12}) — used by controlled taste tests that vary a single factor."""
+    T = _merge(template(template_id), overrides or {})
     if fmt not in T["formats"]:
         raise TypesetError(f"template {template_id} does not support {fmt}")
     W, H = FORMAT_PX[fmt]
@@ -536,7 +538,8 @@ def layout(*, template_id: str, fmt: str, system_id: str, kit: BrandKit, copy: l
         else:
             raise TypesetError(f"unknown plate mode {mode}")
         product_px, plate_px = _place_plate(ground, pimg, region, "cover" if mode == "cover" else
-                                            ("fit_below" if mode == "fit_below" else "fit_above"), product_box_norm)
+                                            ("fit_below" if mode == "fit_below" else "fit_above"), product_box_norm,
+                                            shift=float(T.get("product_shift", 0.0)))
     if panel_box:
         ImageDraw.Draw(ground).rectangle(panel_box, fill=_hex(getattr(kit, T["panel"]["colour"])))
         for e in placed:
@@ -588,6 +591,18 @@ def layout(*, template_id: str, fmt: str, system_id: str, kit: BrandKit, copy: l
     return {"image": img, "ground": ground, "elements": placed, "template": template_id, "system": system_id, "fmt": fmt,
             "canvas": (W, H), "margin": margin, "panel": panel_box, "product_box": product_px, "plate_box": plate_px,
             "contrast": contrast, "copy": copy, "kind": T["kind"]}
+
+
+def _merge(base: dict, over: dict) -> dict:
+    out = dict(base)
+    for k, v in over.items():
+        if v is None:
+            out.pop(k, None)
+        elif isinstance(v, dict) and isinstance(out.get(k), dict):
+            out[k] = _merge(out[k], v)
+        else:
+            out[k] = v
+    return out
 
 
 def _panel_px(T, W, H, frame):
