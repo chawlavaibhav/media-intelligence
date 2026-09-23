@@ -159,9 +159,11 @@ class LiveProviders:
             return ProviderResult("failed", message=f"refused locally: Veo needs duration in {VEO_DURATIONS} and 16:9/9:16")
         if not self._vertex():
             text = prompt + (f" Avoid: {negative}." if negative else "")
-            body = {"instances": [{"prompt": text, "image": {"inlineData": {"mimeType": image[0],
-                                                                           "data": base64.b64encode(image[1]).decode()}}}],
-                    "parameters": {"aspectRatio": aspect, "durationSeconds": str(duration_s), "resolution": resolution,
+            # Live 2026-09-23: the documented `inlineData` form is refused by predictLongRunning ("`inlineData` isn't supported
+            # by this model", HTTP 400); the Image object takes bytesBase64Encoded + mimeType.
+            body = {"instances": [{"prompt": text, "image": {"bytesBase64Encoded": base64.b64encode(image[1]).decode(),
+                                                             "mimeType": image[0]}}],
+                    "parameters": {"aspectRatio": aspect, "durationSeconds": int(duration_s), "resolution": resolution,
                                    "personGeneration": "allow_adult"}}
             st, reply = _http_json("POST", f"{self.GEMINI}/models/veo-3.1-fast-generate-preview:predictLongRunning",
                                    {"x-goog-api-key": self._gemini_key()}, body, timeout=300)

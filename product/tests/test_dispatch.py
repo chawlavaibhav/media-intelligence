@@ -1,3 +1,4 @@
+import tempfile
 import unittest
 
 from product.dispatch import DispatchFailed, GuardRefused
@@ -76,3 +77,24 @@ class Recovery(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class VeoGeminiRequestShape(unittest.TestCase):
+    """Pinned from two live 400s (2026-09-23): image as bytesBase64Encoded (not inlineData), durationSeconds a number."""
+
+    def test_the_request_body_matches_what_the_live_api_accepted(self):
+        from unittest import mock
+        from product import config, providers
+        s = config.load(tempfile.mkdtemp(), media_surface="gemini_api")
+        sent = {}
+
+        def fake(method, url, headers, payload=None, timeout=0):
+            sent.update(url=url, body=payload)
+            return 200, {"name": "models/veo/operations/x"}
+        with mock.patch.object(providers, "_http_json", fake), mock.patch.dict("os.environ", {"GOOGLE_API_KEY": "k" * 12}):
+            r = providers.LiveProviders(s).video_submit("hands zip the bag", ("image/png", b"png"), 6, "9:16", "text")
+        inst, par = sent["body"]["instances"][0], sent["body"]["parameters"]
+        self.assertEqual(r.status, "pending")
+        self.assertIn("bytesBase64Encoded", inst["image"]); self.assertNotIn("inlineData", inst["image"])
+        self.assertIsInstance(par["durationSeconds"], int)
+        self.assertIn("Avoid: text", inst["prompt"])

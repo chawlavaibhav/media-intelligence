@@ -288,8 +288,9 @@ class Orchestrator:
                               budget_usd=money(max(budget, committed)), budget_authorised_by=by, budget_authorised_at=utc_now(),
                               approved_at=utc_now())
 
-    def select_take(self, job_id, *, asset_id: str, by: str, reason: str):
-        """A person chose one of the inspected draws for a node that was waiting on a person; production resumes."""
+    def select_take(self, job_id, *, asset_id: str, by: str, reason: str, in_s: float | None = None):
+        """A person chose one of the inspected draws for a node that was waiting on a person; production resumes.
+        For a clip the person may also set where the used segment starts (e.g. to skip a flash of a foreign logo)."""
         a = self.store.asset(asset_id)
         n = self.store.node(job_id, a["node_id"]) if a and a["job_id"] == job_id else None
         if n is None or n["status"] != "needs_person":
@@ -297,6 +298,9 @@ class Orchestrator:
         if len(reason.strip()) < 15:
             raise ValueError("say why this take is right (at least a sentence)")
         self.store.set_asset(asset_id, status="candidate")
+        if in_s is not None:
+            m = json.loads(a["meta_json"]); m["in_s"] = float(in_s); m["in_s_set_by"] = by
+            self.store.set_asset(asset_id, meta_json=json.dumps(m, default=str))
         self._done(job_id, n["node_id"], asset_id)
         self.store.event(job_id, by, "take_selected_by_person", {"node": n["node_id"], "asset": asset_id, "reason": reason.strip()})
         if not [x for x in self.store.nodes(job_id) if x["status"] == "needs_person"] and self.store.job(job_id)["state"] == "paused_operator":
@@ -559,7 +563,8 @@ class Orchestrator:
                                                          is_repair=is_repair, meta={"beat": beat["n"]}))
             a = self.store.asset(aid)
             det = self._clip_det(a, use)
-            items = self._clip_media(a)
+            # the product reference goes first so the inspector can tell the product's own marks from model lettering
+            items = ([ctx["refs"][0]] if ctx.get("refs") and beat.get("product_present") else []) + self._clip_media(a)
             verdict = self._inspect(job_id, instruction, items)
             seg = verdict.get("best_segment") or {}
             t_in = float(seg.get("in_s") or 0.0)
@@ -580,6 +585,9 @@ class Orchestrator:
                 if usable:                                  # TAKE_SELECTION_BEFORE_RETAKE: the best kept take, flagged
                     self.store.event(job_id, "system", "take_selected_with_flags", {"node": node_id, "asset": usable[0][1]})
                     return self._done(job_id, node_id, usable[0][1])
+                if not self.s.reviewer_qualified:
+                    # an unqualified inspector does not get to kill the film alone: a person looks at the paid takes
+                    raise NeedsPerson(node_id, [t[1] for t in takes], verdict.get("notes", "")[:300])
                 if spec.get("qualify"):
                     raise NodeFailed(f"qualification failed on beat {beat['n']}: the route did not show the required action "
                                      f"({verdict.get('notes', '')[:200]}); a changed production method is needed")

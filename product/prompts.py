@@ -111,11 +111,21 @@ def clip_negative(direction: dict, guard: dict, beat: dict, product_words: list)
     return _strip(", ".join(dict.fromkeys(n for n in neg if n)), guard["forbidden_words"])
 
 
+_HANDS_ONLY = re.compile(r"\b(no face|never (a|the) face|only (by )?(the |two )?(same )?(\w+ )?hands|hands only|hands and (lower )?forearms only)\b", re.I)
+
+
 def character_prompt(direction: dict, guard: dict, aspect: str) -> str:
+    """The reference image frames the character the way the film will: a hands-only film gets a hands reference
+    (live 2026-09-23: 'full body and clear face' contradicted a hands-only plan and both draws were rightly rejected)."""
     ch = direction.get("character") or {}
-    return _strip(f"Character reference photograph: {ch.get('description', '')}. Full body and clear face, standing, neutral "
-                  f"expression, plain light-grey studio background, even soft light. {_look(direction)} Aspect ratio {aspect}. "
-                  f"{NO_LETTERING}", guard["forbidden_words"])
+    desc = ch.get("description", "")
+    if _HANDS_ONLY.search(desc):
+        framing = ("Close-up reference photograph of the two hands and lower forearms only, palms down then relaxed, cuffs "
+                   "visible; no face, head, torso or other body part anywhere in the frame")
+    else:
+        framing = "Full body and clear face, standing, neutral expression"
+    return _strip(f"Character reference photograph: {_visual(desc)} {framing}, plain light-grey studio background, even soft "
+                  f"light. {_look(direction)} Aspect ratio {aspect}. {NO_LETTERING}", guard["forbidden_words"])
 
 
 def music_prompt(direction: dict, guard: dict) -> tuple:
