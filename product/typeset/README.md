@@ -43,12 +43,17 @@ pairs across two different products. Until then the founder picks from the top 3
 | Round | Brand / format | Pairs | Picker agreed before learning | What the founder preferred |
 |---|---|---:|---:|---|
 | 1 | Mokobara backpack, 4:5 | 15 | 5 (33 %) | text under the product; rejected dark bottom bands (1 win, 7 losses) |
-| 2 | Cumin Co. bowl, 4:5 | 15 | (pending) | — the real test: does round 1's learning carry to a different brand? |
+| 2 | Cumin Co. bowl, 4:5 | 15 | **10 (67 %) — blind**, scored with round-1 learning only | text under the product again (5–0); the big headline won 3–0; the band at the bottom **won** 3–1 (sage green, no logo) though it lost 1–7 on Mokobara (navy, logo) |
+
+**What the two rounds say.** One preference held across both brands: text under the product (`bottom_center`, 11 wins, 1 loss).
+Others depend on the brand, so taste is now stored at two levels: **global** (moves half as fast; what holds across
+brands) and **per brand** (in `taste.yaml → brands`, keyed by `BrandKit.name`, the customer shelf's memory). The picker adds
+both. **Qualification not yet met:** 67 % blind agreement against the proposed 75 %. Next: a third brand, blind.
 
 ## Run it (no spend)
 
 ```bash
-PYTHONPATH=. python -m unittest product.tests.test_typeset          # 21 tests, ~3 s
+PYTHONPATH=. python -m unittest product.tests.test_typeset          # 22 tests, ~3 s
 PYTHONPATH=. python -m product.typeset.demo --out /tmp/ts --format 4:5 --kind poster \
   --plate <plate.png> --product-box 0.13 0.18 0.86 0.86 --logo <logo.png> \
   --headline "Room for the long way home." --small "mokobara.com" --moods premium calm travel

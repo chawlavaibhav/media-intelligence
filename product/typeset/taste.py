@@ -64,20 +64,27 @@ document.getElementById('out').value=JSON.stringify(r)}}</script>"""
     return out
 
 
-def ingest(d: Path, results: list) -> dict:
+def ingest(d: Path, results: list, brand: str = "", label: str = "") -> dict:
+    """Picks move this brand's weights by STEP and the global weights by STEP/2 (global = what holds across brands;
+    round 2 showed some preferences are brand-specific: the dark band lost 1–7 on Mokobara, won 3–1 on Cumin Co.)."""
     cands = {c["file"]: c for c in json.loads((d / "candidates.json").read_text())}
     w = picker.taste_weights()
-    w.setdefault("templates", {})
-    w.setdefault("systems", {})
+    targets = [(w, STEP / 2)]
+    if brand:
+        targets.append((w.setdefault("brands", {}).setdefault(brand, {}), STEP))
+    for t, _ in targets:
+        t.setdefault("templates", {})
+        t.setdefault("systems", {})
     agree = 0
     for r in results:
         win, lose = cands[r["winner"]], cands[r["loser"]]
         agree += win["score"] > lose["score"]
-        for key, field in (("templates", "template"), ("systems", "system")):
-            if win[field] != lose[field]:
-                w[key][win[field]] = max(-CAP, min(CAP, w[key].get(win[field], 0.0) + STEP))
-                w[key][lose[field]] = max(-CAP, min(CAP, w[key].get(lose[field], 0.0) - STEP))
-    w.setdefault("history", []).append({"dir": str(d), "pairs": len(results), "picker_agreed": agree})
+        for t, step in targets:
+            for key, field in (("templates", "template"), ("systems", "system")):
+                if win[field] != lose[field]:
+                    t[key][win[field]] = max(-CAP, min(CAP, t[key].get(win[field], 0.0) + step))
+                    t[key][lose[field]] = max(-CAP, min(CAP, t[key].get(lose[field], 0.0) - step))
+    w.setdefault("history", []).append({"round": label or str(d), "brand": brand, "pairs": len(results), "picker_agreed": agree})
     picker.TASTE.write_text(yaml.safe_dump(w, sort_keys=True))
     return {"pairs": len(results), "picker_agreed": agree, "agreement": round(agree / len(results), 3) if results else None}
 
@@ -87,11 +94,13 @@ def main():
     ap.add_argument("cmd", choices=["page", "ingest"])
     ap.add_argument("--dir", required=True, type=Path)
     ap.add_argument("--results", type=Path)
+    ap.add_argument("--brand", default="")
+    ap.add_argument("--label", default="")
     a = ap.parse_args()
     if a.cmd == "page":
         print(page(a.dir))
     else:
-        print(json.dumps(ingest(a.dir, json.loads(a.results.read_text())), indent=1))
+        print(json.dumps(ingest(a.dir, json.loads(a.results.read_text()), a.brand, a.label), indent=1))
 
 
 if __name__ == "__main__":

@@ -120,13 +120,14 @@ class BrandKit:
     moods: list = field(default_factory=list)
     fonts: dict = field(default_factory=dict)   # brand's own faces: {"display": {"file": path, "weight": 700}, "text": {...}}
     preferred_templates: list = field(default_factory=list)
+    name: str = ""                       # brand name: keys this brand's own taste weights (data/taste.yaml → brands)
     logo_reversible: bool = False        # Canon TC-D10: never recolour the mark; on a dark ground use the brand's own
                                          # variant (`logo_on_dark`). True only if a brand explicitly permits it.
 
     @classmethod
     def from_shelf(cls, d: dict) -> "BrandKit":
         k = cls(**{key: d[key] for key in ("primary", "ink", "on_primary", "background", "system", "moods",
-                                             "fonts", "preferred_templates", "logo_reversible") if key in d})
+                                             "fonts", "preferred_templates", "logo_reversible", "name") if key in d})
         k.logo = Path(d["logo"]) if d.get("logo") else None
         k.logo_on_dark = Path(d["logo_on_dark"]) if d.get("logo_on_dark") else None
         return k
