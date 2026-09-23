@@ -38,7 +38,9 @@ def run(L: dict) -> list:
 
     # 3. hierarchy: headline > sub > small, each step at least 1.2x
     sizes = {e.role: e.size for e in texts}
-    order = [r for r in ("headline", "sub", "small") if r in sizes]
+    order = [r for r in ("offer", "headline", "sub", "small") if r in sizes]
+    if "offer" in order and sizes["offer"] < sizes.get("headline", 0):
+        order = [r for r in ("headline", "offer", "sub", "small") if r in sizes]
     steps = [(a, b, sizes[a] / sizes[b]) for a, b in zip(order, order[1:])]
     weak = [f"{a}/{b}={r:.2f}" for a, b, r in steps if r < 1.2]
     rows.append(_row("hierarchy", not weak, "clear steps " + ", ".join(f"{a}/{b}={r:.2f}" for a, b, r in steps)
@@ -46,7 +48,7 @@ def run(L: dict) -> list:
 
     # 4. legible on a phone
     small = [f"{e.role} {e.size * E.PHONE_CSS_WIDTH / W:.1f}px" for e in texts
-             if e.size * E.PHONE_CSS_WIDTH / W < E.MIN_CSS_PX.get(e.role, 12)]
+             if e.size * E.PHONE_CSS_WIDTH / W < E.MIN_CSS_PX.get(e.role, E.MIN_CSS_PX["sub"] if e.role == "offer" else 12)]
     rows.append(_row("phone_legibility", not small, "every line ≥ its minimum on a 390-px phone" if not small
                      else "too small on a phone: " + ", ".join(small)))
 

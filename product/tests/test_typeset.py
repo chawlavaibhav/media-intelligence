@@ -137,6 +137,58 @@ class Layouts(unittest.TestCase):
         self.assertEqual(head.family, "brand_display")
 
 
+class Additions(unittest.TestCase):
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.kit = E.BrandKit(logo=_logo(self.tmp), moods=["premium", "calm"])
+
+    def test_capitals_are_tracked_open_and_mixed_case_is_not(self):
+        sys_ = E.system("modern_clean")
+        caps = E._text_element({"id": "a", "text": "FREE SHIPPING", "role": "small"}, sys_, self.kit, 40, 1000, 1, "left")
+        mixed = E._text_element({"id": "b", "text": "Free shipping", "role": "small"}, sys_, self.kit, 40, 1000, 1, "left")
+        self.assertGreater(caps.tracking, 0)
+        self.assertEqual(mixed.tracking, 0)
+
+    def test_offer_is_recognised_and_needs_an_offer_layout(self):
+        deck = [{"id": "C01", "text": "Room for the long way home.", "role": "Headline"},
+                {"id": "C02", "text": "Launch price ₹5,999", "role": "Price"},
+                {"id": "C03", "text": "mokobara.com", "role": "Website"}]
+        copy = E.roles_from_copy_deck(deck)
+        self.assertEqual([c["role"] for c in copy], ["headline", "offer", "small"])
+        cands = picker.candidates(kit=self.kit, fmt="4:5", kind="poster", copy=copy, plate=_plate(self.tmp),
+                                  product_box_norm=[0.2, 0.2, 0.8, 0.9])
+        self.assertEqual({c["template"] for c in cands}, {"offer_stack"})
+        best = cands[0]
+        self.assertEqual(C.blocking_failures(best["checks"]), [], best["checks"])
+        offer = next(e for e in best["layout"]["elements"] if e.role == "offer")
+        head = next(e for e in best["layout"]["elements"] if e.role == "headline")
+        self.assertGreater(offer.size, head.size)
+
+    def test_product_box_is_detected_on_a_studio_plate(self):
+        box = E.detect_product_box(_plate(self.tmp))
+        self.assertIsNotNone(box)
+        for got, want in zip(box, [200 / 900, 250 / 1125, 700 / 900, 1000 / 1125]):
+            self.assertAlmostEqual(got, want, delta=0.02)
+        self.assertIsNone(E.detect_product_box(_plate(self.tmp, busy=True)))
+
+    def test_super_gets_a_backing_on_a_busy_shot_and_none_on_a_calm_one(self):
+        from product.typeset import supers
+        calm = [Image.new("RGB", (1080, 1920), (30, 40, 60))] * 3
+        s = supers.make(text="The top stick does all the work.", frames=calm, fmt="9:16", kit=self.kit, system_id="modern_clean")
+        self.assertFalse(s.backed)
+        self.assertTrue(all(r["status"] == "PASS" for r in s.checks), s.checks)
+        busy = [Image.open(_plate(self.tmp, busy=True)).resize((1080, 1920))]
+        s = supers.make(text="The top stick does all the work.", frames=busy, fmt="9:16", kit=self.kit, system_id="modern_clean")
+        self.assertTrue(s.backed)
+        self.assertTrue(all(r["status"] == "PASS" for r in s.checks), s.checks)
+
+    def test_super_reading_time(self):
+        from product.typeset import supers
+        calm = [Image.new("RGB", (1080, 1920), (30, 40, 60))]
+        s = supers.make(text="Pinch. Lift. Eat.", frames=calm, fmt="9:16", kit=self.kit, system_id="modern_clean", duration_s=0.8)
+        self.assertEqual({r["check_id"]: r for r in s.checks}["super_reading_time"]["status"], "FAIL")
+
+
 class PickerAndTaste(unittest.TestCase):
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp())

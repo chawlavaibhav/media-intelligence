@@ -157,6 +157,7 @@ def systems_for(moods: list, limit: int = 3) -> list:
 
 # ── copy ─────────────────────────────────────────────────────────────────────────────────────────────────────────
 
+OFFERISH = re.compile(r"(₹|\bRs\.?\s?\d|\d+\s?%|\bflat\b.*\boff\b|\bfree\b)", re.I)
 URLISH = re.compile(r"(\.[a-z]{2,}(/|\b))|(^www\.)|(@)", re.I)
 
 
@@ -168,7 +169,9 @@ def roles_from_copy_deck(deck: list) -> list:
         role_txt = (c.get("role") or "").lower()
         if re.search(r"\b(logo|wordmark|brand mark)\b", role_txt):
             continue
-        if URLISH.search(c["text"]) or re.search(r"\b(website|url|cta|call to action|legal)\b", role_txt):
+        if OFFERISH.search(c["text"]) or re.search(r"\b(offer|price|discount)\b", role_txt):
+            role = "offer"
+        elif URLISH.search(c["text"]) or re.search(r"\b(website|url|cta|call to action|legal)\b", role_txt):
             role = "small"
         elif not headline_taken:
             role, headline_taken = "headline", True
@@ -180,7 +183,18 @@ def roles_from_copy_deck(deck: list) -> list:
 
 # ── line breaking ────────────────────────────────────────────────────────────────────────────────────────────────
 
-def balanced_lines(text: str, font: ImageFont.FreeTypeFont, max_w: int, max_lines: int) -> list | None:
+def is_caps(text: str) -> bool:
+    letters = [c for c in text if c.isalpha()]
+    return bool(letters) and all(c.isupper() for c in letters) and not DEVANAGARI.search(text)
+
+
+def tracked_length(font: ImageFont.FreeTypeFont, text: str, tracking_px: float = 0.0) -> float:
+    if not tracking_px:
+        return font.getlength(text)
+    return sum(font.getlength(ch) for ch in text) + tracking_px * max(0, len(text) - 1)
+
+
+def balanced_lines(text: str, font: ImageFont.FreeTypeFont, max_w: int, max_lines: int, tracking_px: float = 0.0) -> list | None:
     """Break `text` into ≤ max_lines lines that each fit max_w, choosing the most even set of line widths and never
     leaving a single short word alone on the last line when that can be avoided. None if it cannot fit."""
     words = text.split()
@@ -191,7 +205,7 @@ def balanced_lines(text: str, font: ImageFont.FreeTypeFont, max_w: int, max_line
         for cuts in itertools.combinations(range(1, len(words)), n - 1):
             idx = (0,) + cuts + (len(words),)
             lines = [" ".join(words[idx[i]:idx[i + 1]]) for i in range(n)]
-            widths = [font.getlength(L) for L in lines]
+            widths = [tracked_length(font, L, tracking_px) for L in lines]
             if max(widths) > max_w:
                 continue
             cost = (max(widths) - min(widths)) ** 2 if n > 1 else 0.0
@@ -224,6 +238,7 @@ class Element:
     line_boxes: list = field(default_factory=list)
     on_panel: bool = False
     logo_path: str = ""
+    tracking: float = 0.0          # extra letter-spacing in px (all-capitals lines only)
 
 
 def _px(frac_box, W, H, frame=None):
@@ -244,7 +259,7 @@ def content_frame(fmt: str, W: int, H: int):
 
 
 def _face(role: str, text: str, sys_: dict, kit: BrandKit):
-    spec = sys_["display"] if role == "headline" else sys_["text"]
+    spec = sys_["display"] if role in ("headline", "offer") else sys_["text"]
     fid, weight = spec["family"], int(spec["weight"])
     custom = kit.custom_families()
     if DEVANAGARI.search(text) and "devanagari" not in _family(fid, custom).get("scripts", []):
@@ -258,20 +273,22 @@ def _face(role: str, text: str, sys_: dict, kit: BrandKit):
 def _text_element(c: dict, sys_: dict, kit: BrandKit, size: int, max_w: int, max_lines: int, align: str):
     fid, weight, custom = _face(c["role"], c["text"], sys_, kit)
     f = load_font(fid, weight, size, custom)
-    lines = balanced_lines(c["text"], f, max_w, max_lines)
+    # capitals read as blocks and need air between letters (Albers: capitals hinder reading) — track them open
+    tracking = size * (0.10 if c["role"] == "small" else 0.05) if is_caps(c["text"]) else 0.0
+    lines = balanced_lines(c["text"], f, max_w, max_lines, tracking)
     if lines is None:
         return None
     serif = _family(fid, custom).get("class") == "serif"
-    leading = (1.06 if serif else 1.1) if c["role"] == "headline" else 1.32
+    leading = (1.06 if serif else 1.1) if c["role"] in ("headline", "offer") else 1.32
     return Element(role=c["role"], kind="text", id=c["id"], text=c["text"], lines=lines, family=fid, weight=weight,
-                   size=size, leading=leading, align=align)
+                   size=size, leading=leading, align=align, tracking=tracking)
 
 
 def _measure(el: Element, kit: BrandKit):
     """(width, height, ascent) of a text element at its size, from font metrics (baseline-to-baseline leading)."""
     f = load_font(el.family, el.weight, el.size, kit.custom_families())
     asc, desc = f.getmetrics()
-    w = max(f.getlength(L) for L in el.lines)
+    w = max(tracked_length(f, L, el.tracking) for L in el.lines)
     h = int(asc + desc + (len(el.lines) - 1) * el.size * el.leading)
     return int(w), h, asc
 
@@ -317,13 +334,22 @@ def _place_plate(canvas: Image.Image, plate: Image.Image, region: tuple, mode: s
         # it shrinks only as much as needed for the product (not the whole picture) to clear the text region. The
         # picture's own empty background may run under the text — calm_ground then judges those real pixels.
         pb = product_box_norm
-        s = W / plate.width
-        if mode == "fit_below":
-            s = min(s, (y1 - y0) / max(1e-6, (1 - pb[1]) * plate.height))
+        pad = int((y1 - y0) * 0.04)
+        if studio_plate(plate):
+            # calm studio ground: frame the PRODUCT, not the photo — enlarge it to fill its region (≤ 1.6x of the
+            # source's own pixels, ≤ 82 % of the width), its base resting just above the region's far edge
+            s = min((y1 - y0) * 0.86 / max(1e-6, (pb[3] - pb[1]) * plate.height),
+                    W * 0.78 / max(1e-6, (pb[2] - pb[0]) * plate.width), 1.6 * W / plate.width)
+            pw, ph = int(plate.width * s), int(plate.height * s)
+            oy = (y0 + y1) // 2 - int((pb[1] + pb[3]) / 2 * ph)      # product centred in its region: balanced space
         else:
-            s = min(s, (y1 - y0) / max(1e-6, pb[3] * plate.height))
-        pw, ph = int(plate.width * s), int(plate.height * s)
-        oy = y1 - ph if mode == "fit_below" else y0
+            s = W / plate.width
+            if mode == "fit_below":
+                s = min(s, (y1 - y0) / max(1e-6, (1 - pb[1]) * plate.height))
+            else:
+                s = min(s, (y1 - y0) / max(1e-6, pb[3] * plate.height))
+            pw, ph = int(plate.width * s), int(plate.height * s)
+            oy = y1 - ph if mode == "fit_below" else y0
         ox = int(W / 2 - (pb[0] + pb[2]) / 2 * pw)
         if pw >= W:
             ox = max(W - pw, min(0, ox))
@@ -387,6 +413,10 @@ def layout(*, template_id: str, fmt: str, system_id: str, kit: BrandKit, copy: l
                 continue
             if role == "headline":
                 s, ml = size, hl["max_lines"]
+            elif role == "offer":
+                order_ = T["block"]["order"]
+                hero = "headline" not in order_ or order_.index("offer") < order_.index("headline")
+                s, ml = (int(size * 1.25), 2) if hero else (max(int(size / scale), int(W * 0.04)), 2)
             elif role == "sub":
                 s, ml = max(int(size / scale), int(W * 0.036)), 3
             else:
@@ -494,10 +524,10 @@ def layout(*, template_id: str, fmt: str, system_id: str, kit: BrandKit, copy: l
         if mode == "cover":
             region = (0, 0, W, H)
         elif mode == "fit_below":
-            region = (0, used[3] + gap, W, (min(foot) - gap) if foot else H)
+            region = (0, used[3] + gap, W, (min(foot) - gap) if foot else H - margin)
             ground.paste(_edge_colour(pimg, "top"), (0, 0, W, H))
         elif mode == "fit_above":
-            region = (0, (max(head) + gap) if head else 0, W, used[1] - gap)
+            region = (0, (max(head) + gap) if head else margin, W, used[1] - gap)
             ground.paste(_edge_colour(pimg, "bottom"), (0, 0, W, H))
         elif mode == "fit_above_panel":
             region = (0, 0, W, panel_box[1])
@@ -548,11 +578,9 @@ def layout(*, template_id: str, fmt: str, system_id: str, kit: BrandKit, copy: l
         colour = e.colour or kit.ink
         boxes, yb = [], e.box[1] + asc
         for L in e.lines:
-            lw = f.getlength(L)
+            lw = tracked_length(f, L, e.tracking)
             x = {"left": e.box[0], "center": e.box[0] + ((e.box[2] - e.box[0]) - lw) / 2, "right": e.box[2] - lw}[e.align]
-            draw.text((x, yb), L, font=f, fill=_hex(colour), anchor="ls")
-            bb = draw.textbbox((x, yb), L, font=f, anchor="ls")
-            boxes.append(tuple(int(v) for v in bb))
+            boxes.append(draw_line(draw, (x, yb), L, f, _hex(colour), e.tracking))
             yb += e.size * e.leading
         e.line_boxes = boxes
         e.box = (min(b[0] for b in boxes), min(b[1] for b in boxes), max(b[2] for b in boxes), max(b[3] for b in boxes))
@@ -566,6 +594,52 @@ def _panel_px(T, W, H, frame):
     pb = T["panel"]["box"]
     x0, y0, x1, y1 = _px(pb, W, H, frame)
     return (0 if pb[0] <= 0 else x0, 0 if pb[1] <= 0 else y0, W if pb[2] >= 1 else x1, H if pb[3] >= 1 else y1)
+
+
+def draw_line(draw, xy, text, font, fill, tracking_px: float = 0.0) -> tuple:
+    """Draw one line at baseline `xy`; with tracking, letter by letter. Returns the inked box."""
+    x, y = xy
+    if not tracking_px:
+        draw.text((x, y), text, font=font, fill=fill, anchor="ls")
+        return tuple(int(v) for v in draw.textbbox((x, y), text, font=font, anchor="ls"))
+    boxes = []
+    for ch in text:
+        draw.text((x, y), ch, font=font, fill=fill, anchor="ls")
+        if not ch.isspace():
+            boxes.append(draw.textbbox((x, y), ch, font=font, anchor="ls"))
+        x += font.getlength(ch) + tracking_px
+    return (int(min(b[0] for b in boxes)), int(min(b[1] for b in boxes)), int(max(b[2] for b in boxes)), int(max(b[3] for b in boxes)))
+
+
+def studio_plate(plate: Image.Image, tol: float = 18.0) -> bool:
+    """True when the picture's border is one calm colour (a studio packshot), so the frame may be extended with it."""
+    a = np.asarray(plate.convert("RGB"), dtype=np.float32)
+    h, w = a.shape[:2]
+    k = max(2, min(h, w) // 50)
+    edge = np.concatenate([a[:k].reshape(-1, 3), a[-k:].reshape(-1, 3), a[:, :k].reshape(-1, 3), a[:, -k:].reshape(-1, 3)])
+    return float(np.median(np.linalg.norm(edge - np.median(edge, axis=0), axis=1))) <= tol / 2
+
+
+def detect_product_box(plate: Path, tol: float = 18.0):
+    """The product's box, as fractions of the plate, on a studio plate whose background is one calm colour: everything
+    that differs from the edge colour by more than `tol` (RGB distance). None when the background is not calm enough to
+    trust (the caller must then supply the box, e.g. from the inspector)."""
+    im = Image.open(plate).convert("RGB")
+    a = np.asarray(im, dtype=np.float32)
+    h, w = a.shape[:2]
+    edge = np.concatenate([a[:max(2, h // 50)].reshape(-1, 3), a[-max(2, h // 50):].reshape(-1, 3),
+                           a[:, :max(2, w // 50)].reshape(-1, 3), a[:, -max(2, w // 50):].reshape(-1, 3)])
+    bg = np.median(edge, axis=0)
+    if float(np.median(np.linalg.norm(edge - bg, axis=1))) > tol / 2:
+        return None
+    diff = np.linalg.norm(a - bg, axis=2) > tol
+    diff = np.asarray(Image.fromarray((diff * 255).astype("uint8")).filter(ImageFilter.MinFilter(5)).filter(ImageFilter.MaxFilter(5))) > 0
+    ys, xs = np.nonzero(diff)
+    if len(xs) < w * h * 0.01:
+        return None
+    x0, x1 = np.percentile(xs, [0.5, 99.5])
+    y0, y1 = np.percentile(ys, [0.5, 99.5])
+    return [round(float(x0) / w, 3), round(float(y0) / h, 3), round(float(x1) / w, 3), round(float(y1) / h, 3)]
 
 
 def _inside(a, b) -> bool:

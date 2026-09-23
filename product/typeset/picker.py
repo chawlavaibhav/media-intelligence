@@ -54,6 +54,10 @@ def candidates(*, kit: E.BrandKit, fmt: str, kind: str, copy: list, plate: Path 
     for tid in tids:
         if fmt not in T[tid]["formats"] or T[tid]["kind"] != kind:
             continue
+        slots = set(T[tid].get("block", {}).get("order", [])) | set(T[tid].get("corners", {}))
+        roles = {c["role"] for c in copy}
+        if ("offer" in slots) != ("offer" in roles):
+            continue          # an offer layout needs an offer line; any other layout would drop the offer
         for sid in sids:
             try:
                 L = E.layout(template_id=tid, fmt=fmt, system_id=sid, kit=kit, copy=copy, plate=plate,

@@ -63,10 +63,11 @@ def main():
     ap.add_argument("--format", default="4:5")
     ap.add_argument("--kind", default="poster", choices=["poster", "endcard"])
     ap.add_argument("--plate", type=Path)
-    ap.add_argument("--product-box", type=float, nargs=4)
+    ap.add_argument("--product-box", type=float, nargs=4, help="omit to detect it on a calm studio plate")
     ap.add_argument("--logo", type=Path)
     ap.add_argument("--headline", required=True)
     ap.add_argument("--sub")
+    ap.add_argument("--offer")
     ap.add_argument("--small")
     ap.add_argument("--moods", nargs="*", default=[])
     ap.add_argument("--system")
@@ -76,10 +77,13 @@ def main():
     copy = [{"id": "C01", "text": a.headline, "role": "headline"}]
     if a.sub:
         copy.append({"id": "C02", "text": a.sub, "role": "sub"})
+    if a.offer:
+        copy.append({"id": "C04", "text": a.offer, "role": "offer"})
     if a.small:
         copy.append({"id": "C03", "text": a.small, "role": "small"})
     kit = E.BrandKit(primary=a.primary, ink=a.primary, background=a.background, logo=a.logo, system=a.system, moods=a.moods)
-    rows = run(out=a.out, fmt=a.format, kind=a.kind, copy=copy, kit=kit, plate=a.plate, product_box=a.product_box)
+    pb = a.product_box or (E.detect_product_box(a.plate) if a.plate else None)
+    rows = run(out=a.out, fmt=a.format, kind=a.kind, copy=copy, kit=kit, plate=a.plate, product_box=pb)
     for r in rows[:10]:
         print(r["rank"], r["template"], r["system"], r["score"], r["error"] or "")
 

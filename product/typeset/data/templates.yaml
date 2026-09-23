@@ -75,6 +75,16 @@ templates:
     logo_width: 0.16
     headline: {max_lines: 2, max_size: 0.062, min_size: 0.052}
 
+  offer_stack:
+    kind: poster
+    formats: ["1:1", "4:5", "9:16"]
+    description: The offer (price, discount) is the hero at the top-left, the headline supports it, product below. For sale and launch-price ads.
+    block: {box: [0.08, 0.06, 0.86, 0.40], align: left, valign: top, order: [offer, headline, sub, small]}
+    corners: {logo: br}
+    plate: fit_below
+    logo_width: 0.18
+    headline: {max_lines: 2, max_size: 0.07, min_size: 0.052}
+
   endcard_center:
     kind: endcard
     formats: ["9:16", "1:1", "4:5", "16:9"]
