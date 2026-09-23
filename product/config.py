@@ -18,6 +18,46 @@ def _env(name: str, default: str | None = None) -> str | None:
     return v if v not in (None, "") else default
 
 
+# Spec §9.3: each worker's model is configuration (MI_MODEL_<WORKER>="provider:model"), never hard-coded in a station.
+# Tiers: strongest (chef) — company A; strong, another company (recipe checker, big taster, small-taster escalation) —
+# company B; cheap (waiter, pantry checker, small taster, diary writer). The decision slot is optional (spec §9.3, H4).
+DEFAULT_WORKER_MODELS = {
+    "chef": "azure_openai:gpt-5.6-sol",
+    "recipe_checker": "gemini:gemini-3.1-pro-preview",
+    "big_taster": "gemini:gemini-3.1-pro-preview",
+    "small_taster_escalation": "gemini:gemini-3.1-pro-preview",
+    "waiter": "anthropic:claude-haiku-4-5",
+    "pantry_checker": "anthropic:claude-haiku-4-5",
+    "small_taster": "anthropic:claude-haiku-4-5",
+    "diary_writer": "anthropic:claude-haiku-4-5",
+}
+COMPANY = {"anthropic": "anthropic", "azure_openai": "openai", "openai": "openai", "gemini": "google", "decision": "decision"}
+# Reasoning effort per worker (spec §9.4: medium by default).
+DEFAULT_EFFORT = {"chef": "medium", "recipe_checker": "medium", "big_taster": "medium", "small_taster_escalation": "medium"}
+
+
+def worker_models() -> dict:
+    out = dict(DEFAULT_WORKER_MODELS)
+    for w in list(out):
+        v = _env("MI_MODEL_" + w.upper())
+        if v:
+            out[w] = v
+    dm = _env("MI_MODEL_DECISION")
+    if dm:
+        out["decision"] = dm
+    return out
+
+
+def check_independence(models: dict):
+    """The chef and the judges must come from different AI companies (spec §3, §9.3, checklist C4)."""
+    def company(w):
+        return COMPANY.get(models[w].split(":", 1)[0], models[w].split(":", 1)[0])
+    for judge in ("recipe_checker", "big_taster"):
+        if company(judge) == company("chef"):
+            raise ValueError(f"the chef ({models['chef']}) and the {judge} ({models[judge]}) are from the same company; "
+                             f"the judges must be independent")
+
+
 @dataclass
 class Settings:
     data_dir: Path
@@ -45,6 +85,9 @@ class Settings:
     hold_before_preview: bool = True
     base_url: str = "http://localhost:8080"
     fault_injection: dict = field(default_factory=dict)
+    models: dict = field(default_factory=lambda: dict(DEFAULT_WORKER_MODELS))
+    # Judges that have passed qualification (spec §10). Until then a judge's "no" blocks and its "yes" = founder confirms.
+    qualified_judges: tuple = ()
 
     @property
     def db_path(self) -> Path:
@@ -76,9 +119,12 @@ def load(data_dir: str | Path | None = None, **overrides) -> Settings:
         hold_before_preview=_env("MI_HOLD_BEFORE_PREVIEW", "1") == "1",
         base_url=_env("MI_BASE_URL", "http://localhost:8080"),
         worker_concurrency=int(_env("MI_WORKER_CONCURRENCY", "4")),
+        models=worker_models(),
+        qualified_judges=tuple(x for x in (_env("MI_QUALIFIED_JUDGES", "") or "").split(",") if x),
     )
     for k, v in overrides.items():
         setattr(s, k, v)
+    check_independence(s.models)
     if s.provider_mode not in ("simulated", "live") or s.reasoning_mode not in ("simulated", "live"):
         raise ValueError("MI_PROVIDER_MODE / MI_REASONING_MODE must be 'simulated' or 'live'")
     s.data_dir.mkdir(parents=True, exist_ok=True)

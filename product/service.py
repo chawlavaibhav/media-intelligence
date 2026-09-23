@@ -156,7 +156,7 @@ class Service:
             self.add_upload(user, jid, **up)
         return jid
 
-    def add_upload(self, user, job_id, *, role: str, filename: str, data: bytes, content_type: str = ""):
+    def add_upload(self, user, job_id, *, role: str, filename: str, data: bytes, content_type: str = "", label: str | None = None):
         job = self.job(user, job_id)
         if role not in ROLES:
             raise Invalid("unknown upload role")
@@ -171,7 +171,8 @@ class Service:
         p = d / f"{secrets.token_hex(4)}-{safe}"
         p.write_bytes(data)
         return self.store.add_asset(job["id"], path=p, kind="upload", source="customer", content_type=ctype, role=role,
-                                    status="supplied", meta={"filename": safe, "uploaded_by": user["email"]})
+                                    status="supplied", meta={"filename": safe, "uploaded_by": user["email"],
+                                                                     "label": (label or "").strip()[:200] or None})
 
     def job(self, user, job_id):
         if user["role"] in ("operator", "founder"):
