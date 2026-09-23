@@ -7,7 +7,7 @@ Defaults are `MI_PROVIDER_MODE=simulated` and `MI_REASONING_MODE=simulated`: not
 
 ```
 git clone https://github.com/chawlavaibhav/media-intelligence && cd media-intelligence && git checkout claude/p1-v2-build
-python3 -m venv .venv && .venv/bin/pip install -r deploy/requirements.txt      # plus ffmpeg and Pillow with raqm
+python3 -m venv .venv && .venv/bin/pip install -r deploy/requirements.txt      # plus ffmpeg, Pillow with raqm, fonts-noto-core and librsvg2-bin (Debian/Ubuntu apt names)
 PYTHONPATH=. .venv/bin/python -m unittest discover -s product/tests -t .       # every test, v2 and v1 (~25-30 min)
 PYTHONPATH=. .venv/bin/python -m product.smoke                                  # media engine + dry jobs + backup/restore
 PYTHONPATH=. .venv/bin/python -m product.qualification.judges                   # judges' harness, simulated (qualifies nothing)
