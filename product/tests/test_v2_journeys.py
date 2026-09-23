@@ -94,8 +94,10 @@ class WebJourneys(unittest.TestCase):
             self.assertEqual(c["exact_words_sha256"], sha, c["worker"])
             self.assertIn("CUSTOMER_EXACT_WORDS", c["context_kinds"].split(","))
         # nothing reached the customer without the founder at the door, and no builder or script decided anything
-        actors = {x["actor"] for x in e.store.events(jid) if x["kind"] in ("founder_override", "waiver")}
+        actors = {x["actor"] for x in e.store.events(jid) if x["kind"] == "founder_override"}
         self.assertEqual(actors, {"founder:founder@mi.test"})
+        for w in e.store.q("SELECT by_user FROM waivers WHERE job_id=?", (jid,)):
+            self.assertEqual(e.store.user(w["by_user"])["role"], "founder")
 
     def test_an_image_order_is_accepted_through_the_web_app(self):
         e = self.e

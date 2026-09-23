@@ -497,11 +497,18 @@ def _node_shot(k, job_id, n, spec, ctx):
         return _done(k, job_id, node_id, aid)
     dur = cost.clip_len(use)
     correction = ""
+    # a clip paid for before a worker died and recovered by a resumed poll (dispatch.recover) is tasted and used — never re-bought
+    recovered = [x["id"] for x in k.store.assets(job_id, node_id=node_id, status="candidate") if json.loads(x["meta_json"]).get("recovered")]
     while True:
         prompt = prompts.clip_prompt(ctx["recipe"], ctx["guard"], s) + (f" Correct: {correction}." if correction else "") + \
             (f" Change requested: {spec['revision_note']}." if spec.get("revision_note") else "")
         negative = prompts.clip_negative(ctx["recipe"], ctx["guard"], s, [])
-        aid = _draw(k, job_id, node_id, lambda: k.dispatch.video(job_id, node_id, prompt=prompt, image=(frame["content_type"] or "image/png",
+        if recovered:
+            aid = recovered.pop(0)
+            k.store.event(job_id, "system", "recovered_take_used", {"node": node_id, "asset": aid})
+        else:
+            aid = None
+        aid = aid or _draw(k, job_id, node_id, lambda: k.dispatch.video(job_id, node_id, prompt=prompt, image=(frame["content_type"] or "image/png",
                                                                                                        Path(frame["path"]).read_bytes()),
                                                                  duration_s=dur, aspect=spec["aspect"], negative=negative, guard=ctx["guard"],
                                                                  meta={"shot": s["n"], "route": spec["route"], "from_frame": frame["id"]}))

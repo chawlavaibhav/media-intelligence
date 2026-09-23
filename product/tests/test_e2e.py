@@ -341,7 +341,7 @@ class FounderPicksWhenTheTasterRejectsEverything(unittest.TestCase):
             self.assertEqual(e.state(jid), "paused_for_founder")
             waiting = [n for n in e.store.nodes(jid) if n["status"] == "needs_founder"]
             self.assertTrue(waiting)
-            paid = len([a for a in e.store.attempts(jid) if a["category"] == "provider"])
+            paid = len(e.store.attempts(jid))
             e.orch.sim.small_taster__ingredient_check = orig
             for n in waiting:
                 cand = json.loads(n["note"])["candidates"][0]
@@ -353,7 +353,10 @@ class FounderPicksWhenTheTasterRejectsEverything(unittest.TestCase):
             self.assertIn(e.state(jid), ("producing", "paused_for_founder"))
             e.drain()
             self.assertEqual(e.state(jid), "operator_hold")
-            self.assertEqual(len([a for a in e.store.attempts(jid) if a["category"] == "provider"]), paid)   # nothing re-bought
+            picked = {n["node_id"] for n in waiting}
+            rebought = [a for a in e.store.attempts(jid)[paid:] if a["category"] == "provider" and a["node_id"] in picked]
+            self.assertEqual(rebought, [])                                      # the picked output was not bought again
+            # (v2: the 4:5 plate is built from the picked 1:1 master picture, so it is bought only now — a first purchase)
             self.assertTrue(e.store.events(jid, ("take_selected_by_founder",)))
         finally:
             e.close()

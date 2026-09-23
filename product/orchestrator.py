@@ -151,7 +151,7 @@ class Orchestrator:
         else:
             return state
         try:
-            fn(self, job_id) if fn is not self.resume_provider else fn(job_id)
+            fn(job_id) if state == "paused_provider" else fn(self, job_id)
         except BudgetExhausted as e:
             self.pause(job_id, state, "paused_budget", f"needs about USD {e.shortfall} more (USD {e.available} of USD {e.budget} left)")
         except ProviderUnavailable as e:
