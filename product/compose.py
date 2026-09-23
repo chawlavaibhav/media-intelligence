@@ -13,6 +13,13 @@ from product import media
 from runtime.compositor import gates as G
 
 WHITE, INK = "#ffffff", "#141414"
+# "Large text" (WCAG 3:1) is judged at the size a phone shows the ad, not in canvas pixels: a 1080-px-wide ad is
+# ~390 CSS px on a phone, so 24 CSS px ≈ 6 % of the canvas width. Below that a line is body text and needs 4.5:1.
+DISPLAY_FRAC = 0.06
+
+
+def _role(size: int, canvas_w: int) -> str:
+    return "display" if size >= canvas_w * DISPLAY_FRAC else "body"
 
 
 def gate(check_id: str, control: str, fn, *args, **kw) -> dict:
@@ -74,29 +81,35 @@ def still_ad(*, plate: Path, out: Path, aspect: str, direction: dict, logo: Path
     total_h = sum(p[5] for p in placed) + gap * max(0, len(placed) - 1)
     y = zbox[1] + max(0, ((zbox[3] - zbox[1]) - total_h) // 2)
     sample = lambda box: media.luminance_samples(plate, box, canvas=(W, H))
+    rows = []
     for c, size, dx, dy, tw, th in placed:
         x_ink = zbox[0] + (max_w - tw) // 2
         box = (x_ink, y, x_ink + tw, y + th)
-        role = "display" if size >= 40 else "body"
+        role = _role(size, W)
         ink, cres = _ink_for(sample, box, role)
-        if ink is None:     # neither ink reads: an opaque backing panel behind the zone, recorded as such
-            pad = int(size * 0.35)
-            panel = (max(0, box[0] - pad), max(0, box[1] - pad), min(W, box[2] + pad), min(H, box[3] + pad))
-            layers.append({"type": "box", "x": panel[0], "y": panel[1], "w": panel[2] - panel[0], "h": panel[3] - panel[1],
-                           "colour": INK})
-            ink = WHITE
-            cres = gate(f"contrast:{c['id']}", "CONTRAST_GATE", G.check_contrast, ink, [], role=role, backing_hex=INK)
-        else:
-            cres["check_id"] = f"contrast:{c['id']}"
+        rows.append([c, size, dx, dy, box, role, ink, cres])
+        y += th + gap
+    if any(r[6] is None for r in rows):
+        # Some line reads in neither ink on these pixels: one opaque panel behind the whole text block, every line
+        # white on it (one panel, not per-line boxes that crowd the next line). Recorded as a backed contrast check.
+        pad = int(base * 0.35)
+        x0 = min(r[4][0] for r in rows) - pad; y0 = rows[0][4][1] - pad
+        x1 = max(r[4][2] for r in rows) + pad; y1 = rows[-1][4][3] + pad
+        panel = (max(0, x0), max(0, y0), min(W, x1), min(H, y1))
+        layers.append({"type": "box", "x": panel[0], "y": panel[1], "w": panel[2] - panel[0], "h": panel[3] - panel[1], "colour": INK})
+        for r in rows:
+            r[6] = WHITE
+            r[7] = gate("contrast", "CONTRAST_GATE", G.check_contrast, WHITE, [], role=r[5], backing_hex=INK)
+    for c, size, dx, dy, box, role, ink, cres in rows:
+        cres["check_id"] = f"contrast:{c['id']}"
         checks.append(cres)
         layers.append({"type": "text", "text": c["text"], "size": size, "colour": ink, "x": box[0] - dx, "y": box[1] - dy,
                        "kind": "bold" if c is placed[0][0] else "regular"})
         checks.append(gate(f"bounds:{c['id']}", "TEXT_BOUNDS_GATE", G.check_text_bounds, box, canvas=(0, 0, W, H), container=safe,
                            id_=c["id"]))
         checks.append(gate(f"fit:{c['id']}", "CROP_FIT_DECLARATION", G.check_fit,
-                           {"id": c["id"], "fit": "contain", "source_size": (tw, th), "box": box}))
+                           {"id": c["id"], "fit": "contain", "source_size": (box[2] - box[0], box[3] - box[1]), "box": box}))
         boxes[c["id"]] = box
-        y += th + gap
     if logo is not None:
         lw = int(W * 0.22)
         lp = media.logo_png(logo, lw, workdir / f"logo-{lw}.png")
@@ -116,7 +129,8 @@ def still_ad(*, plate: Path, out: Path, aspect: str, direction: dict, logo: Path
         checks.append({"check_id": "hero_visible", "control": "HERO_VISIBLE", "status": "NOT_VERIFIED",
                        "detail": "the product was not located on the plate by an independent inspection", "evidence": {}})
     media.compose(canvas=(W, H), out=out, plate=plate, layers=layers)
-    return out, checks, {"canvas": [W, H], "safe": safe, "zone": zone, "boxes": boxes}
+    return out, checks, {"canvas": [W, H], "safe": safe, "zone": zone, "boxes": boxes,
+                         "rendered_text": [L["text"] for L in layers if L["type"] == "text"]}
 
 
 def _png_size(p: Path) -> tuple:
@@ -158,13 +172,15 @@ def end_card(*, out: Path, size: tuple, direction: dict, logo: Path | None, work
                            "kind": "bold" if i == 0 else "regular"})
             checks.append(gate(f"contrast:{name}", "CONTRAST_GATE", G.check_contrast, ink, [], role="body", backing_hex=bg))
         checks.append(gate(f"bounds:{name}", "TEXT_BOUNDS_GATE", G.check_text_bounds, box, canvas=(0, 0, W, H), container=safe, id_=name))
+        if meta is not None:
+            checks.append(gate(f"fit:{name}", "CROP_FIT_DECLARATION", G.check_fit, {"id": name, "fit": "contain", "source_size": (w, h), "box": box}))
         y += h + gap
     checks.append(gate("disjoint", "ELEMENT_DISJOINTNESS", G.check_disjoint, boxes, critical=tuple(boxes), min_gap_px=16))
     media.compose(canvas=(W, H), out=out, background_hex=bg, layers=layers)
     corner = media.mean_rgb(out, (0, 0, max(8, m // 2), max(8, m // 2)), canvas=(W, H))
     checks.append(gate("brand_colour:end_card", "BRAND_COLOUR_ON_RENDERED_FRAME", G.check_brand_colour, corner, bg,
                        id_="end_card_background"))
-    return out, checks, {"boxes": boxes, "background_hex": bg}
+    return out, checks, {"boxes": boxes, "background_hex": bg, "rendered_text": [L["text"] for L in layers if L["type"] == "text"]}
 
 
 def super_overlay(*, out: Path, size: tuple, text: str, clip: Path, clip_in: float, use: float, clip_size: tuple) -> tuple:
@@ -178,18 +194,19 @@ def super_overlay(*, out: Path, size: tuple, text: str, clip: Path, clip_in: flo
     for k in range(4):
         t = clip_in + use * (k + 0.5) / 4
         samples += media.luminance_samples(clip, box, canvas=(W, H), t=t, grid=12)
-    ink, cres = _ink_for(lambda _b: samples, box, "display")
+    ink, cres = _ink_for(lambda _b: samples, box, _role(s, W))
     layers = []
     checks = []
     if ink is None:
         pad = int(s * 0.4)
         layers.append({"type": "box", "x": box[0] - pad, "y": box[1] - pad, "w": tw + 2 * pad, "h": th + 2 * pad, "colour": INK})
         ink = WHITE
-        cres = gate("contrast:super", "CONTRAST_GATE", G.check_contrast, ink, [], role="display", backing_hex=INK)
+        cres = gate("contrast:super", "CONTRAST_GATE", G.check_contrast, ink, [], role=_role(s, W), backing_hex=INK)
     cres["check_id"] = "contrast:super"
     checks.append(cres)
     layers.append({"type": "text", "text": text, "size": s, "colour": ink, "x": x - dx, "y": y - dy, "kind": "bold"})
     checks.append(gate("bounds:super", "TEXT_BOUNDS_GATE", G.check_text_bounds, box, canvas=(0, 0, W, H),
                        container=(m, m, W - m, H - m), id_="super"))
+    checks.append(gate("fit:super", "CROP_FIT_DECLARATION", G.check_fit, {"id": "super", "fit": "contain", "source_size": (tw, th), "box": box}))
     media.compose(canvas=(W, H), out=out, layers=layers, transparent=True)
     return out, checks

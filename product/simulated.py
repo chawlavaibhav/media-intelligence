@@ -159,7 +159,10 @@ class SimulatedReasoning:
         intent = _ctx(context, "INTENT") or {}
         return {"verdict": "pass", "modalities_evaluated": ["simulated"],
                 "mandatory": [{"mandatory_id": m["id"], "visible": "cannot_determine", "evidence": "simulated"} for m in intent.get("mandatory", [])],
-                "defects": [], "product_fidelity": "not evaluated (simulated)", "continuity": "not evaluated (simulated)",
+                "defects": [], "product_fidelity": {"verdict": "cannot_determine", "evidence": "simulated"},
+                "continuity": {"verdict": "cannot_determine", "evidence": "simulated"},
+                "model_lettering": {"present": "cannot_determine", "evidence": "simulated"},
+                "subject_obstructed": {"present": "cannot_determine", "evidence": "simulated"},
                 "commercial_read": "not evaluated (simulated)",
                 "audio": {"speech_or_singing": "cannot_determine", "notes": "simulated"},
                 "summary_for_customer": "Simulated review — no one has looked at this media."}

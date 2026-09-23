@@ -239,3 +239,30 @@ class Learning(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EveryApplicableControlRunsOnTheProductionPath(unittest.TestCase):
+    """Controller review of PR #108, concern 2: a control mapped in YAML is not a control unless the real production
+    path writes its result onto the delivered file."""
+
+    def test_image_and_film_jobs_record_every_applicable_control_on_their_deliverables(self):
+        import json
+        from product import verify
+        e = Env()
+        try:
+            for kind in ("image", "video"):
+                jid = e.submit(kind)
+                e.drain()
+                e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+                e.drain()
+                applies = ("any", kind, "text") + (("audio",) if kind == "video" else ())
+                want = {c["id"] for c in verify.controls().values()
+                        if c["status"] in ("enforced", "reviewer_obligation") and c["applies"].split()[0] in applies}
+                for aid in e.orch._final_assets(jid):
+                    seen = set()
+                    for r in e.store.checks(aid):
+                        c = r["control_ids"]
+                        seen.update(json.loads(c) if c.startswith("[") else [c])
+                    self.assertEqual(sorted(want - seen), [], f"{kind} {aid}")
+        finally:
+            e.close()

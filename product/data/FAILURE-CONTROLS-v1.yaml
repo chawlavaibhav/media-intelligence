@@ -46,6 +46,7 @@ controls:
     implementation: product/store.py Store.reserve (PermissionError); product/dispatch.py quote()
     status: enforced
     regression: product/tests/test_store.py::NoSpendWithoutAuthorisation
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
 
   - id: TRANSIENT_ERROR_CLASSIFICATION
     sources: [UPWORK-INTRO-001:SD-09, UPWORK-INTRO-001:SD-10, MOKOBARA-ODYSSEY-007:DF-5, RENTOK-GAME-B-005:att-013]
@@ -57,6 +58,7 @@ controls:
     implementation: product/dispatch.py Dispatcher._fail; product/orchestrator.py
     status: enforced
     regression: product/tests/test_e2e.py::ProviderFailureInjection
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
 
   - id: PROVIDER_POOL_AVAILABILITY
     sources: [UPWORK-INTRO-001:SD-11, RENTOK-GAME-B-005:att-006]
@@ -67,6 +69,7 @@ controls:
     implementation: product/orchestrator.py
     status: enforced
     note: per-key quota reading (PER_KEY_QUOTA_IN_POOL_READINGS) is not implemented — no provider exposes it to this code
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
 
   - id: QA_COVERAGE_ENFORCEMENT
     sources: [UPWORK-PORTFOLIO-002:PD-04, UPWORK-PORTFOLIO-002:PD-06, UPWORK-PORTFOLIO-002:SD-HD-01, UPWORK-PORTFOLIO-002:SD-HD-04,
@@ -124,7 +127,7 @@ controls:
   - id: BRAND_COLOUR_ON_RENDERED_FRAME
     sources: [RENTOK-GAME-A-004:D-11, RENTOK-GAME-A-004:D-8]
     stage: 5
-    applies: any
+    applies: video   # P1 stills paint no brand-colour field (the logo is the customer's file); the film end card does
     detection: runtime.compositor.gates.check_brand_colour on pixels sampled from the rendered end card / colour field
     implementation: product/compose.py
     status: enforced
@@ -155,6 +158,7 @@ controls:
       separate asset version with its own gate rows (SUBJECT_AWARE_CROP_ANCHORING is avoided rather than implemented)
     implementation: product/orchestrator.py image graph; product/compose.py
     status: enforced
+    detection: "product/verify.py format_revalidated — the file was composed on its own ordered canvas and carries its own compositor gate rows"
 
   - id: REJECTED_DESIGN_REUSE
     sources: [UPWORK-PORTFOLIO-002:SD-HD-03, UPWORK-PORTFOLIO-002:SD-HD-04, UPWORK-PORTFOLIO-002:SD-HD-05, UPWORK-PORTFOLIO-002:SD-HD-08,
@@ -215,7 +219,7 @@ controls:
     applies: video
     prevention: the director contract requires the first frame to hold the beat's idea and a big state change to be put in the
       still; the pre-spend direction review checks each beat's feasibility
-    detection: inspector end_state_reached / required_action_occurred
+    detection: inspector required_action_occurred / end_state_reached on every selected clip, rolled up onto the film (clips:required_action, clips:end_state); an unanswered clip is NOT_VERIFIED
     implementation: product/contracts.py DIRECTION_ROLE + DIRECTION_REVIEW_ROLE; product/orchestrator.py
     status: reviewer_obligation
 
@@ -234,6 +238,7 @@ controls:
     prevention: every take is kept and inspected; a new draw is made only when no kept take is usable
     implementation: product/orchestrator.py
     status: enforced
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
 
   - id: MANDATORY_EVENT_VISIBILITY_LJ_LINE
     sources: [MOKOBARA-ODYSSEY-007:DF-8, MOKOBARA-ODYSSEY-007:DF-3]
@@ -270,6 +275,7 @@ controls:
       qualification stops dependent spend and asks for a changed method
     implementation: product/orchestrator.py (qualification node)
     status: enforced
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
 
   - id: AUDIO_REVIEWED_BY_EAR
     sources: [MOKOBARA-ODYSSEY-007:DF-14, RENTOK-GAME-B-005:HD-01]
@@ -301,7 +307,7 @@ controls:
     sources: [CUMINCO-CHOPSTICKS-003:SD-04, CUMINCO-CHOPSTICKS-003:SD-09]
     stage: 5
     applies: any
-    detection: reviewer defects (subject/product obstructed or geometry wrong)
+    detection: reviewer answers subject_obstructed (yes/no/cannot_determine + evidence) on the delivered file; unanswered = NOT_VERIFIED
     status: reviewer_obligation
 
   # ── excluded by P1 scope: refused at intake (the refusal is the control) ──────────────────────────
@@ -340,3 +346,24 @@ controls:
       not written by hand; job-specific tooling does not exist in the product path
     implementation: product/learning.py; product/store.py timings
     status: by_construction
+
+  # ── Found by running the P1 engine on real ffmpeg (2026-09-23). Source = the regression that reproduces the defect.
+  - id: DELIVERY_CONFORMANCE
+    sources: [product/tests/test_verify.py::FilmPictureChecks]
+    stage: 5
+    applies: video
+    detection: ffprobe on the delivered MP4 — ordered frame size, h264/yuv420p, AAC present, duration within 0.25 s of the plan
+    implementation: product/verify.py film_checks
+    status: enforced
+    regression: product/tests/test_verify.py::FilmPictureChecks
+
+  - id: NO_BLACK_OR_DROPPED_PICTURE
+    sources: [product/tests/test_verify.py::FilmPictureChecks]
+    stage: 5
+    applies: video
+    detection: blackdetect on the delivered picture (any black span >= 0.2 s fails; the card is a crossfade, never black);
+      freezedetect flags a picture frozen >= 1.5 s before the end card. Caught a super rendered on an opaque black
+      canvas that blacked out every beat it sat on while all nine other checks passed.
+    implementation: product/verify.py film_checks; product/media.py black_spans/frozen_spans
+    status: enforced
+    regression: product/tests/test_verify.py::FilmPictureChecks

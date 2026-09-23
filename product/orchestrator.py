@@ -582,7 +582,7 @@ class Orchestrator:
         path, checks = compose.super_overlay(out=out, size=size, text=deck.get(spec["copy_id"], ""), clip=Path(clip["path"]),
                                              clip_in=cm.get("in_s", 0.0), use=cm.get("use_s", 3.0), clip_size=size)
         aid = self.store.add_asset(job_id, path=path, kind="image", source="composed", content_type="image/png", node_id=n["node_id"],
-                                   cut=ctx["cut"], meta={"checks": checks, "beat": spec["beat"]})
+                                   cut=ctx["cut"], meta={"checks": checks, "beat": spec["beat"], "rendered_text": [deck.get(spec["copy_id"], "")]})
         return self._done(job_id, n["node_id"], aid)
 
     def _node_assemble(self, job_id, n, spec, ctx):
@@ -646,19 +646,26 @@ class Orchestrator:
         logo = self._logo(job_id)
         with self.store.timed(job_id, "deterministic_verification"):
             for aid in finals:
-                rows = [verify.ledger_integrity(self.store, job_id), verify.exact_copy_match(self.exact_strings(job_id), d),
-                        verify.not_previously_rejected(self.store, job_id, aid), verify.ad_structure(d, media_kind, bool(logo))]
                 a = self.store.asset(aid)
-                if media_kind == "video" and not json.loads(a["meta_json"]).get("placeholder"):
-                    meta = json.loads(a["meta_json"])
+                meta = json.loads(a["meta_json"])
+                rows = [verify.ledger_integrity(self.store, job_id),
+                        verify.exact_copy_match(self.exact_strings(job_id), d, self._rendered_text(meta, media_kind)),
+                        verify.not_previously_rejected(self.store, job_id, aid), verify.ad_structure(d, media_kind, bool(logo))]
+                if media_kind == "video" and not meta.get("placeholder"):
                     srcs = []
                     for s in meta["segments"]:
                         try:
                             p = media.probe(s["clip"]); srcs.append([p["width"], p["height"]])
                         except media.MediaError:
                             pass
-                    rows += verify.film_checks(Path(a["path"]), cuts=meta["assembly"]["cuts_s"], source_sizes=srcs,
-                                               delivered=media.FORMAT_PX[json.loads(self.store.node(job_id, "film")["spec_json"])["aspect"]])
+                    rep = meta["assembly"]
+                    rows += verify.film_checks(Path(a["path"]), cuts=rep["cuts_s"], source_sizes=srcs,
+                                               delivered=media.FORMAT_PX[json.loads(self.store.node(job_id, "film")["spec_json"])["aspect"]],
+                                               planned_s=rep.get("duration_s"), card_in_s=rep.get("card_in_s"))
+                if media_kind == "image" and not meta.get("placeholder"):
+                    rows.append(verify.format_revalidated(self.store, aid, meta.get("format")))
+                clips = [sg["asset"] for sg in meta.get("segments", [])]
+                rows += verify.process_controls(self.store, job_id, media_kind, clip_asset_ids=clips)
                 verify.record_rows(self.store, job_id, aid, rows, runner="deterministic")
         review_media = self._review_media(finals, media_kind)
         with self.store.timed(job_id, "independent_review", "final"):
@@ -669,13 +676,15 @@ class Orchestrator:
                 "DIRECTION": {k: d.get(k) for k in ("proposition", "selected_concept", "audience_experience", "beats", "copy_deck", "composition")},
                 "DETERMINISTIC_CHECKS": [{"check": r["check_id"], "status": r["status"]} for aid in finals for r in self.store.checks(aid)],
                 "MEDIA_NOTE": review_media["note"]}, media=review_media["items"], max_tokens=8000)
+        review["_reviewed_sha256"] = review_media["shas"]
         self.store.put_artifact(job_id, "review", review, "reviewer")
         super_ids = [f"b{b['n']}" for b in d.get("beats", []) if b.get("super_id")]
         req = verify.required_checks(media_kind, mandatory_ids=mandatory_ids, has_copy=bool(d.get("copy_deck")), has_logo=bool(logo),
-                                     super_ids=super_ids)
+                                     super_ids=super_ids, has_character=bool((d.get("character") or {}).get("present")))
         results = []
         for aid in finals:
-            verify.record_rows(self.store, job_id, aid, verify.review_rows(review, mandatory_ids=mandatory_ids, media_kind=media_kind),
+            verify.record_rows(self.store, job_id, aid, verify.review_rows(review, mandatory_ids=mandatory_ids, media_kind=media_kind,
+                                                                           asset_sha256=self.store.asset(aid)["sha256"]),
                                runner=f"independent_review:{(review.get('_call') or {}).get('model')}")
             results.append(verify.gateway(self.store, job_id, aid, req))
         self.store.put_artifact(job_id, "gateway", {"results": results, "required": req}, "system")
@@ -695,13 +704,28 @@ class Orchestrator:
             self.store.transition(job_id, "checking", "operator_hold", actor="system",
                                   data={"ready": ready, "blocking": [b["check_id"] for r in results for b in r["blocking"]][:40]})
 
+    def _rendered_text(self, meta: dict, media_kind: str):
+        """The strings drawn by code onto this final file (None when no render record exists)."""
+        if meta.get("placeholder"):
+            return None
+        if media_kind == "image":
+            return (meta.get("layout") or {}).get("rendered_text")
+        card = json.loads(self.store.asset(meta["end_card"])["meta_json"]).get("layout", {}).get("rendered_text")
+        if card is None:
+            return None
+        out = list(card)
+        for sp in meta.get("supers", []):
+            out += json.loads(self.store.asset(sp["asset"])["meta_json"]).get("rendered_text") or []
+        return out
+
     def _review_media(self, finals, media_kind) -> dict:
-        items, note = [], ""
+        items, note, shas = [], "", []
         for aid in finals:
             a = self.store.asset(aid)
             if json.loads(a["meta_json"]).get("placeholder"):
                 note += f"{aid}: stand-in file (no media engine on this host) — nothing to look at. "
                 continue
+            shas.append(a["sha256"])
             if media_kind == "image":
                 items.append(("image/png", Path(a["path"]).read_bytes()))
                 note += f"image {len(items)}: {json.loads(a['meta_json']).get('format')} at delivery size. "
@@ -714,7 +738,7 @@ class Orchestrator:
                 sheet = media.contact_sheet(a["path"], Path(a["path"]).with_name("contact.png"))
                 items.append(("image/png", sheet.read_bytes()))
                 note += "Contact sheet at 2 fps; the audio could not be sent to this reviewer. "
-        return {"items": items, "note": note or "no media"}
+        return {"items": items, "note": note or "no media", "shas": shas}
 
     def _invalidate_beats(self, job_id, notes_by_beat: dict) -> list:
         changed = []

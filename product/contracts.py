@@ -193,8 +193,12 @@ OUTPUT_REVIEW = obj({
         "id": S, "where": S, "severity": {"type": "string", "enum": ["blocker", "major", "minor"]}, "description": S,
         "earliest_stage": {"type": "string", "enum": ["plan", "reference", "route", "generation", "composition"]},
         "beat": {"type": ["integer", "null"]}, "repair": S})},
-    "product_fidelity": S,
-    "continuity": S,
+    "product_fidelity": obj({"verdict": {"type": "string", "enum": ["faithful", "not_faithful", "product_not_shown", "cannot_determine"]},
+                             "evidence": S}),
+    "continuity": obj({"verdict": {"type": "string", "enum": ["consistent", "inconsistent", "no_recurring_character", "cannot_determine"]},
+                       "evidence": S}),
+    "model_lettering": obj({"present": {"type": "string", "enum": ["yes", "no", "cannot_determine"]}, "evidence": S}),
+    "subject_obstructed": obj({"present": {"type": "string", "enum": ["yes", "no", "cannot_determine"]}, "evidence": S}),
     "commercial_read": S,
     "audio": obj({"speech_or_singing": {"type": "string", "enum": ["yes", "no", "cannot_determine", "n/a"]}, "notes": S}),
     "summary_for_customer": S,
@@ -208,7 +212,10 @@ time or region); is the product faithful to the reference and intact; is the cha
 warped, unrequested, or lettered by the model; is the edit coherent; for sound, is there any speech or singing (there must
 be none), and is the mix clean at the cuts. Passed technical checks are not evidence of quality. For every defect give where
 (beat/time/element), severity, the earliest stage that caused it, and one concrete repair. `pass` only if a demanding
-customer would accept it as is. If you cannot see or hear something, list it as cannot_determine. Output JSON only."""
+customer would accept it as is. If you cannot see or hear something, list it as cannot_determine. Answer
+product_fidelity, continuity, model_lettering and subject_obstructed (is the product or subject covered, cut off or blocked by
+text, graphics or other objects?) explicitly with the evidence you saw (time/region): these answers are what
+the delivery decision rests on, and a question you did not answer counts as unverified, never as passed. Output JSON only."""
 
 # ── Customer revision routing ─────────────────────────────────────────────────
 REVISION = obj({

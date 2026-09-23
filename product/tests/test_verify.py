@@ -18,7 +18,7 @@ class ControlRegister(unittest.TestCase):
             case = Path(f).parent.name
             for d in yaml.safe_load(open(f)).get("defects") or []:
                 known.add(f"{case}:{d['id']}")
-        cited = {s for c in verify.controls().values() for s in c["sources"] if not s.startswith("runtime/")}
+        cited = {s for c in verify.controls().values() for s in c["sources"] if not s.startswith(("runtime/", "product/"))}
         self.assertEqual(sorted(known - cited), [])
         self.assertEqual(sorted(cited - known), [])
         self.assertGreaterEqual(len(known), 120)
@@ -61,13 +61,15 @@ class UnrunCheckBlocks(unittest.TestCase):
     def test_a_simulated_review_can_never_pass(self):
         review = {"verdict": "pass", "modalities_evaluated": ["simulated"], "_simulated": True, "_call": {"isolated": True},
                   "mandatory": [{"mandatory_id": "M1", "visible": "yes", "evidence": "x"}], "defects": [],
-                  "product_fidelity": "faithful", "continuity": "consistent", "audio": {"speech_or_singing": "no", "notes": ""}}
+                  "product_fidelity": {"verdict": "faithful", "evidence": "x"}, "continuity": {"verdict": "consistent", "evidence": "x"},
+                  "model_lettering": {"present": "no", "evidence": "x"}, "audio": {"speech_or_singing": "no", "notes": ""}}
         rows = verify.review_rows(review, mandatory_ids=["M1"], media_kind="video")
         self.assertTrue(all(r["status"] == "NOT_VERIFIED" for r in rows))
 
     def test_a_live_review_that_did_not_listen_leaves_audio_unverified(self):
         review = {"verdict": "pass", "modalities_evaluated": ["video_frames"], "_call": {"isolated": True},
-                  "mandatory": [], "defects": [], "product_fidelity": "faithful", "continuity": "consistent",
+                  "mandatory": [], "defects": [], "product_fidelity": {"verdict": "faithful", "evidence": "x"},
+                  "continuity": {"verdict": "consistent", "evidence": "x"}, "model_lettering": {"present": "no", "evidence": "x"},
                   "audio": {"speech_or_singing": "cannot_determine", "notes": ""}}
         rows = {r["check_id"]: r["status"] for r in verify.review_rows(review, mandatory_ids=[], media_kind="video")}
         self.assertEqual(rows["audio_reviewed"], "NOT_VERIFIED")
@@ -97,9 +99,11 @@ class HistoricalRegressions(unittest.TestCase):
 
     def test_an_altered_exact_price_string_fails_the_copy_check(self):
         d = {"copy_deck": [{"id": "c1", "text": "₹186 प्रति लीटर", "source": "customer_exact"}]}
-        self.assertEqual(verify.exact_copy_match(["₹185 प्रति लीटर"], d)["status"], "FAIL")
+        drawn = [c["text"] for c in d["copy_deck"]]
+        self.assertEqual(verify.exact_copy_match(["₹185 प्रति लीटर"], d, drawn)["status"], "FAIL")
         d["copy_deck"][0]["text"] = "₹185 प्रति लीटर"
-        self.assertEqual(verify.exact_copy_match(["₹185 प्रति लीटर"], d)["status"], "PASS")
+        drawn = [c["text"] for c in d["copy_deck"]]
+        self.assertEqual(verify.exact_copy_match(["₹185 प्रति लीटर"], d, drawn)["status"], "PASS")
 
     def test_rentok_v2_n1_graphic_over_the_hero_fails_and_a_clear_layout_passes(self):
         hero = [0.30, 0.35, 0.70, 0.90]
@@ -128,3 +132,107 @@ class HistoricalRegressions(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FilmPictureChecks(unittest.TestCase):
+    """Defects found the first time the engine ran on real ffmpeg (2026-09-23): each is caught; the repair passes."""
+
+    @classmethod
+    def setUpClass(cls):
+        import tempfile
+        from product import media
+        from product.providers import _wav
+        from PIL import Image
+        cls.media = media
+        cls.d = Path(tempfile.mkdtemp(prefix="mi-film-"))
+        cls.clips = []
+        for i in range(2):
+            p = cls.d / f"c{i}.mp4"; p.write_bytes(media.sim_video(3, "9:16", seed=i + 1)); cls.clips.append(p)
+        cls.card = cls.d / "card.png"; Image.new("RGB", (1080, 1920), (31, 42, 68)).save(cls.card)
+        cls.bed = cls.d / "bed.wav"; cls.bed.write_bytes(_wav(10.0))
+        cls.good_super, _ = compose.super_overlay(out=cls.d / "super.png", size=(1080, 1920), text="Pack less. Go further.",
+                                                  clip=cls.clips[1], clip_in=0.0, use=2.5, clip_size=(1080, 1920))
+        # the defect as it shipped: a "transparent" super that was really an opaque black canvas
+        cls.black_super = cls.d / "super-black.png"
+        im = Image.new("RGBA", (1080, 1920), (0, 0, 0, 255)); im.alpha_composite(Image.open(cls.good_super).convert("RGBA")); im.save(cls.black_super)
+
+    def _film(self, super_png, name):
+        rep = self.media.assemble_film(segments=[{"clip": c, "in": 0.0, "use": 2.5} for c in self.clips], endcard=self.card,
+                                       supers=[{"png": super_png, "t_in": 2.7, "t_out": 4.9}], music=self.bed, out=self.d / name,
+                                       size=(1080, 1920), card_s=2.0, workdir=self.d / ("w-" + name))
+        rows = verify.film_checks(self.d / name, cuts=rep["cuts_s"], source_sizes=[[720, 1280]], delivered=(1080, 1920),
+                                  planned_s=rep["duration_s"], card_in_s=rep["card_in_s"])
+        return {r["check_id"]: r for r in rows}
+
+    def test_a_super_on_an_opaque_canvas_blacks_out_the_beat_and_fails(self):
+        self.assertEqual(Image_mode(self.good_super), "RGBA")
+        bad = self._film(self.black_super, "bad.mp4")
+        self.assertEqual(bad["no_black_frames"]["status"], "FAIL", bad["no_black_frames"])
+        good = self._film(self.good_super, "good.mp4")
+        self.assertEqual(good["no_black_frames"]["status"], "PASS", good["no_black_frames"])
+        self.assertEqual(good["delivery_conformance"]["status"], "PASS", good["delivery_conformance"])
+
+    def test_a_film_of_the_wrong_size_or_length_fails_conformance(self):
+        rep = self._film(self.good_super, "good2.mp4")
+        rows = {r["check_id"]: r for r in verify.film_checks(self.d / "good2.mp4", cuts=[], source_sizes=[[720, 1280]],
+                                                              delivered=(1080, 1350), planned_s=30.0)}
+        self.assertEqual(rows["delivery_conformance"]["status"], "FAIL")
+        self.assertIn("duration", rows["delivery_conformance"]["detail"])
+
+
+def Image_mode(p):
+    from PIL import Image
+    return Image.open(p).mode
+
+
+class DeliveredPixelsAreMeasuredPixels(unittest.TestCase):
+    def test_a_half_transparent_plate_is_delivered_opaque_so_contrast_judges_what_ships(self):
+        import tempfile
+        from PIL import Image
+        from product import media
+        d = Path(tempfile.mkdtemp(prefix="mi-still-"))
+        Image.new("RGBA", (1080, 1080), (110, 67, 161, 140)).save(d / "plate.png")
+        deck = {"copy_deck": [{"id": "c1", "text": "Pack less. Go further."}, {"id": "c2", "text": "₹2,499 · acme.in"}],
+                "composition": {"text_zone": "top"}}
+        out, checks, lay = compose.still_ad(plate=d / "plate.png", out=d / "ad.png", aspect="1:1", direction=deck, logo=None,
+                                            workdir=d, product_box_norm=None)
+        im = Image.open(out)
+        self.assertEqual(im.mode, "RGB")
+        self.assertEqual(im.getpixel((540, 700)), (110, 67, 161))
+        self.assertEqual(sorted(lay["rendered_text"]), sorted(c["text"] for c in deck["copy_deck"]))
+
+    def test_small_lines_are_body_text_at_phone_size(self):
+        self.assertEqual(compose._role(41, 1080), "body")
+        self.assertEqual(compose._role(81, 1080), "display")
+
+
+class GlyphCoverage(unittest.TestCase):
+    def test_the_chosen_font_draws_the_rupee_sign_and_uncovered_text_is_refused(self):
+        from product import media
+        f = media.font("bold", "₹1,299")
+        self.assertEqual(media.missing_glyphs("₹1,299", f), [])
+        with self.assertRaises(media.MediaError):
+            media.font("regular", "\U0001F600\u4e2d")
+
+
+class EvidenceBackedPass(unittest.TestCase):
+    def test_exact_copy_is_judged_on_what_was_drawn_on_the_file(self):
+        d = {"copy_deck": [{"id": "c1", "text": "Pack less. Go further."}, {"id": "c2", "text": "₹2,499"}]}
+        self.assertEqual(verify.exact_copy_match(["₹2,499"], d, ["Pack less. Go further."])["status"], "FAIL")
+        self.assertEqual(verify.exact_copy_match(["₹2,499"], d, None)["status"], "NOT_VERIFIED")
+        self.assertEqual(verify.exact_copy_match(["₹2,499"], d, ["₹2,499"])["status"], "PASS")
+
+    def test_a_reviewer_that_says_nothing_about_a_property_does_not_pass_it(self):
+        review = {"verdict": "pass", "modalities_evaluated": ["video_frames", "audio"], "_call": {"isolated": True},
+                  "mandatory": [], "defects": [], "audio": {"speech_or_singing": "no", "notes": ""}}
+        rows = {r["check_id"]: r["status"] for r in verify.review_rows(review, mandatory_ids=["M1"], media_kind="video")}
+        for cid in ("product_fidelity", "no_model_lettering", "character_continuity", "mandatory:M1"):
+            self.assertEqual(rows[cid], "NOT_VERIFIED", cid)
+        self.assertEqual(rows["audio_reviewed"], "PASS")
+
+    def test_a_review_of_another_file_proves_nothing_about_this_one(self):
+        review = {"verdict": "pass", "modalities_evaluated": ["image"], "_call": {"isolated": True}, "_reviewed_sha256": ["aaa"],
+                  "mandatory": [], "defects": [], "product_fidelity": {"verdict": "faithful", "evidence": "x"},
+                  "model_lettering": {"present": "no", "evidence": "x"}}
+        rows = verify.review_rows(review, mandatory_ids=[], media_kind="image", asset_sha256="bbb")
+        self.assertTrue(all(r["status"] == "NOT_VERIFIED" for r in rows), rows)

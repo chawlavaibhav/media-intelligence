@@ -237,42 +237,33 @@ def logo_png(src: Path, width: int, out: Path) -> Path:
 
 def compose(*, canvas: tuple, out: Path, plate: Path | None = None, background_hex: str | None = None,
             layers: list = (), transparent: bool = False) -> Path:
-    """Render layers over a plate (cover-cropped to the canvas) or a flat background.
-    layers: {"type":"image","path":P,"x":int,"y":int} | {"type":"text","text":s,"size":n,"colour":"#fff","x":int,"y":int,"kind":k}
+    """Render layers over a plate (cover-cropped to the canvas) or a flat background, with real alpha throughout.
+    layers: {"type":"image","path":P,"x":int,"y":int} | {"type":"box","x","y","w","h","colour":"#rrggbb[aa]"}
+            | {"type":"text","text":s,"size":n,"colour":"#fff","x":int,"y":int,"kind":k}
     Text layers carry the origin they were measured at (x,y = left edge / ascender line)."""
-    cw, ch = canvas
-    inputs, chain = [], []
+    from PIL import Image, ImageDraw, ImageOps
+    cw, ch = (int(v) for v in canvas)
     if plate is not None:
-        inputs += ["-i", str(plate)]
-        chain.append(f"[0:v]scale={cw}:{ch}:force_original_aspect_ratio=increase:flags=lanczos,crop={cw}:{ch},setsar=1,format=rgba[b0]")
+        with Image.open(plate) as im:
+            # Alpha on a plate is dropped (as ffmpeg's samplers read it), so the contrast gate measures the very
+            # pixels that are delivered — a half-transparent plate once shipped a washed-out ad that "passed".
+            base = ImageOps.fit(ImageOps.exif_transpose(im).convert("RGB"), (cw, ch), method=Image.LANCZOS).convert("RGBA")
     else:
-        col = "0x00000000" if transparent else hex_to_ffmpeg(background_hex or "#000000")
-        inputs += ["-f", "lavfi", "-i", f"color=c={col}:s={cw}x{ch}"]
-        chain.append("[0:v]format=rgba[b0]")
-    cur, n_in = "b0", 1
-    tmp = Path(tempfile.mkdtemp(prefix="mi-compose-"))
-    try:
-        for i, L in enumerate(layers):
-            if L["type"] == "image":
-                inputs += ["-i", str(L["path"])]
-                chain.append(f"[{cur}][{n_in}:v]overlay={int(L['x'])}:{int(L['y'])}:format=auto[b{i + 1}]")
-                n_in += 1
-            elif L["type"] == "box":
-                chain.append(f"[{cur}]drawbox=x={int(L['x'])}:y={int(L['y'])}:w={int(L['w'])}:h={int(L['h'])}:"
-                             f"color={hex_to_ffmpeg(L['colour'])}:t=fill[b{i + 1}]")
-            else:
-                tp = tmp / f"t{i}.png"
-                text_image(L["text"], size=int(L["size"]), kind=L.get("kind", "regular"), colour=L.get("colour", "#ffffff"),
-                           canvas=(cw, ch), x=int(L["x"]), y=int(L["y"])).save(tp)
-                inputs += ["-i", str(tp)]
-                chain.append(f"[{cur}][{n_in}:v]overlay=0:0:format=auto[b{i + 1}]")
-                n_in += 1
-            cur = f"b{i + 1}"
-        out.parent.mkdir(parents=True, exist_ok=True)
-        run(["ffmpeg", "-y", "-v", "error"] + inputs + ["-filter_complex", ";".join(chain), "-map", f"[{cur}]",
-             "-frames:v", "1", str(out)])
-    finally:
-        shutil.rmtree(tmp, ignore_errors=True)
+        base = Image.new("RGBA", (cw, ch), (0, 0, 0, 0) if transparent else _rgba(background_hex or "#000000"))
+    for L in layers:
+        if L["type"] == "image":
+            with Image.open(L["path"]) as im:
+                base.alpha_composite(ImageOps.exif_transpose(im).convert("RGBA"), dest=(int(L["x"]), int(L["y"])))
+        elif L["type"] == "box":
+            box = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
+            ImageDraw.Draw(box).rectangle([int(L["x"]), int(L["y"]), int(L["x"]) + int(L["w"]) - 1, int(L["y"]) + int(L["h"]) - 1],
+                                          fill=_rgba(L["colour"]))
+            base.alpha_composite(box)
+        else:
+            base.alpha_composite(text_image(L["text"], size=int(L["size"]), kind=L.get("kind", "regular"),
+                                            colour=L.get("colour", "#ffffff"), canvas=(cw, ch), x=int(L["x"]), y=int(L["y"])))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    (base if transparent else base.convert("RGB")).save(out)
     return out
 
 
@@ -375,6 +366,23 @@ def scene_cuts(path, threshold: float = 0.4) -> list:
     r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-vf", f"select='gt(scene,{threshold})',showinfo",
                         "-f", "null", "-"], capture_output=True, text=True)
     return [float(x) for x in re.findall(r"pts_time:([\d.]+)", r.stderr)]
+
+
+def black_spans(path, *, min_s: float = 0.2, pix_th: float = 0.10) -> list:
+    """[(start, end)] where the picture is (near) black for ≥ min_s — a dropped or covered picture."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-vf",
+                        f"blackdetect=d={min_s}:pic_th=0.98:pix_th={pix_th}", "-an", "-f", "null", "-"], capture_output=True, text=True)
+    return [(float(a), float(b)) for a, b in re.findall(r"black_start:([\d.]+) black_end:([\d.]+)", r.stderr)]
+
+
+def frozen_spans(path, *, min_s: float = 1.5, noise: float = 0.001) -> list:
+    """[(start, end)] where the picture does not change for ≥ min_s."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-vf", f"freezedetect=n={noise}:d={min_s}",
+                        "-an", "-f", "null", "-"], capture_output=True, text=True)
+    starts = [float(x) for x in re.findall(r"freeze_start: ([\d.]+)", r.stderr)]
+    ends = [float(x) for x in re.findall(r"freeze_end: ([\d.]+)", r.stderr)]
+    dur = probe(path)["duration_s"]
+    return [(a, ends[i] if i < len(ends) else dur) for i, a in enumerate(starts)]
 
 
 def frame_png(path, t: float, out: Path, width: int = 540) -> Path:
