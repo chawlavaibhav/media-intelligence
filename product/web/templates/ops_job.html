@@ -19,9 +19,9 @@
 {% for r in g.table %}<tr><td>{{ r.check_id }}</td><td class="{{ r.status }}">{{ r.status }}</td><td class="small">{{ r.control }}</td><td class="small">{{ r.detail }}</td>
 <td class="small">{% if r.check_id in attestable and r.status != 'PASS' %}
 <form method="post" action="/ops/jobs/{{ job.id }}/attest"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ g.asset_id }}"><input type="hidden" name="check_id" value="{{ r.check_id }}">
-<p class="small">{{ attestable[r.check_id] }}. <a href="/assets/{{ g.asset_id }}">Play the file</a>. This cannot be waived.</p>
-<input type="text" name="note" required minlength="15" placeholder="What you heard (e.g. full listen on headphones: ambience + music only)">
-<select name="outcome" aria-label="Outcome"><option value="PASS">Heard it — fine</option><option value="FAIL">Heard a problem</option></select><button class="secondary">Record my listen</button></form>
+<p class="small">{{ attestable[r.check_id] }}. <a href="/assets/{{ g.asset_id }}">Open the file</a>.{% if r.check_id in non_waivable %} This cannot be waived.{% endif %}</p>
+<input type="text" name="note" required minlength="15" placeholder="What you saw/heard, with the moment (e.g. 0:12 bag intact, zip closes)">
+<select name="outcome" aria-label="Outcome"><option value="PASS">Checked — fine</option><option value="FAIL">Found a problem</option></select><button class="secondary">Record my check</button></form>
 {% elif r.waived_by %}{{ r.waived_by }}: {{ r.waiver_reason }}{% elif r.status in ('FAIL','NOT_VERIFIED') %}
 <form method="post" action="/ops/jobs/{{ job.id }}/waive"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ g.asset_id }}"><input type="hidden" name="check_id" value="{{ r.check_id }}">
 <input type="text" name="reason" placeholder="Reason (e.g. listened in full: no speech)" required minlength="10"><button class="secondary">Waive</button></form>{% endif %}</td></tr>{% endfor %}</table>{% endfor %}</div>{% endif %}

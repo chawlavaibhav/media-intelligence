@@ -322,7 +322,9 @@ class App:
                  checks={a: st.checks(a) for a in finals},
                  gateway=[verify.gateway(st, jid, a, gw.get("required", {})) for a in finals],
                  canon=st.artifact(jid, "canon_trace"), dreview=st.artifact(jid, "direction_review"),
-                 metrics=learning.metrics(st, jid), controls=verify.controls(), attestable=verify.ATTESTABLE)
+                 metrics=learning.metrics(st, jid), controls=verify.controls())
+        v.update(attestable={r["check_id"]: verify.attestable(r["check_id"]) for g in v["gateway"] for r in g["table"]
+                             if verify.attestable(r["check_id"])}, non_waivable=verify.NON_WAIVABLE)
         return self.page("ops_job.html", req, **v)
 
     def ops_action(self, req, jid, action):

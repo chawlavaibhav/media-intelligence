@@ -324,3 +324,20 @@ class HistoricalRejectedFilm(unittest.TestCase):
                                                               delivered=(1080, 1920), planned_s=30.0, card_in_s=26.2)}
         self.assertEqual(rows["loudness_true_peak"]["status"], "FAIL", rows["loudness_true_peak"]["detail"])
         self.assertEqual(rows["no_black_frames"]["status"], "PASS")
+
+
+class UnqualifiedReviewer(unittest.TestCase):
+    def test_an_unqualified_reviewers_fine_is_not_evidence_but_its_fail_still_blocks(self):
+        review = {"verdict": "repair", "modalities_evaluated": ["video", "audio"], "_call": {"isolated": True},
+                  "mandatory": [{"mandatory_id": "B6", "visible": "yes", "evidence": "0:24 he paddles away"}],
+                  "defects": [{"id": "x", "severity": "blocker", "description": "arms gag missing"}],
+                  "product_fidelity": {"verdict": "faithful", "evidence": "perfect match"},
+                  "continuity": {"verdict": "consistent", "evidence": "x"}, "model_lettering": {"present": "no", "evidence": "x"},
+                  "product_across_shots": {"verdict": "inconsistent", "evidence": "bag darker at 22.5 s"},
+                  "audio": {"speech_or_singing": "no", "notes": ""}}
+        rows = {r["check_id"]: r["status"] for r in verify.review_rows(review, mandatory_ids=["B6"], media_kind="video", qualified=False)}
+        self.assertEqual(rows["product_fidelity"], "NOT_VERIFIED")
+        self.assertEqual(rows["mandatory:B6"], "NOT_VERIFIED")
+        self.assertEqual(rows["product_across_shots"], "FAIL")
+        self.assertEqual(rows["independent_review"], "FAIL")
+        self.assertIsNotNone(verify.attestable("mandatory:B6"))

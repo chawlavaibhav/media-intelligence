@@ -1,0 +1,252 @@
+{
+ "film": "v1",
+ "sha256": "75d1fc8b2d59368b7358017c342aaca183e1943e8cc27f6aec43e9bc572cf6a2",
+ "live": true,
+ "review": {
+  "verdict": "repair",
+  "modalities_evaluated": [
+   "video",
+   "audio"
+  ],
+  "mandatory": [
+   {
+    "mandatory_id": "B1",
+    "visible": "yes",
+    "evidence": "00:00-00:03, tally marks on rock, pulling back to show the protagonist on the grey shore."
+   },
+   {
+    "mandatory_id": "B2",
+    "visible": "yes",
+    "evidence": "00:03-00:07, navy backpack on the pebble beach, protagonist crouches and brushes it."
+   },
+   {
+    "mandatory_id": "B3",
+    "visible": "yes",
+    "evidence": "00:07-00:12, open bag reveals yellow lining and the photo of a woman."
+   },
+   {
+    "mandatory_id": "B4",
+    "visible": "partial",
+    "evidence": "00:12-00:20, protagonist pulls a paddle from the bag, but the specific double-arm deep-dive gag is not fully executed."
+   },
+   {
+    "mandatory_id": "B5",
+    "visible": "yes",
+    "evidence": "00:20-00:24, packing coconuts, dried fish, and a flare into the backpack."
+   },
+   {
+    "mandatory_id": "B6",
+    "visible": "yes",
+    "evidence": "00:24-00:28, wide shot of protagonist paddling away on a raft with the backpack."
+   },
+   {
+    "mandatory_id": "B7",
+    "visible": "yes",
+    "evidence": "00:28-00:30, navy end card displaying wordmark, tagline, and CTA."
+   }
+  ],
+  "defects": [
+   {
+    "id": "DF01",
+    "where": "00:03 and 00:07",
+    "severity": "minor",
+    "description": "Audio volume dropouts at the cut boundaries.",
+    "earliest_stage": "composition",
+    "beat": 2,
+    "repair": "Apply short crossfades to smooth out ambient sound transitions."
+   },
+   {
+    "id": "DF02",
+    "where": "00:12-00:18",
+    "severity": "minor",
+    "description": "The comedic gag of inserting both arms to the shoulders is omitted, weakening the visual punch.",
+    "earliest_stage": "generation",
+    "beat": 4,
+    "repair": "Re-edit or re-generate the segment to show the dual-arm insertion before pulling out the paddle."
+   }
+  ],
+  "product_fidelity": {
+   "verdict": "faithful",
+   "evidence": "00:04, 00:08, 00:21. The backpack perfectly matches the slim navy exterior and bright yellow interior details of the reference product."
+  },
+  "continuity": {
+   "verdict": "consistent",
+   "evidence": "00:02, 00:10, 00:13, 00:25. The protagonist's ragged attire, long hair, and weathered look remain uniform."
+  },
+  "model_lettering": {
+   "present": "no",
+   "evidence": "00:05 and 00:28. The overlays and end card display clean, code-set typography."
+  },
+  "subject_obstructed": {
+   "present": "no",
+   "evidence": "00:04, 00:21. The backpack remains fully visible and centered during product close-ups."
+  },
+  "product_across_shots": {
+   "verdict": "consistent",
+   "evidence": "00:04, 00:08, 00:21, 00:25. The bag design, coloration, and features are consistent across all scenes."
+  },
+  "commercial_read": "An effective and atmospheric travel-bag commercial that leverages an adventurous narrative to demonstrate high volume capacity.",
+  "audio": {
+   "speech_or_singing": "no",
+   "notes": "Instrumental music and environmental sound effects only. No spoken words or vocals."
+  },
+  "summary_for_customer": "The video delivers strong brand presence, visual consistency, and a clear narrative arc. Minor audio dropout issues at cuts need to be resolved, and the comedic deep-reach gag can be refined for maximum humor.",
+  "_call": {
+   "isolated": true,
+   "model": "gemini-3.5-flash",
+   "provider": "gemini"
+  }
+ },
+ "proposed_matches": [
+  {
+   "id": "D1",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [
+    1
+   ],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D5",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "OAR_REVEAL",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "TEAR",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "FONT",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "LOGO",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D2",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D3",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D4",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D6_GEOMETRY",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D7",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D8",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D9",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [
+    0
+   ],
+   "confirmed_by_person": null
+  }
+ ],
+ "review_rows": [
+  {
+   "check_id": "independent_review",
+   "control": "QA_COVERAGE_ENFORCEMENT",
+   "status": "FAIL",
+   "detail": "verdict repair; 2 defects (0 blocker/major); isolated=True"
+  },
+  {
+   "check_id": "product_fidelity",
+   "control": "PRODUCT_INTACT_AND_FAITHFUL",
+   "status": "PASS",
+   "detail": "faithful: 00:04, 00:08, 00:21. The backpack perfectly matches the slim navy exterior and bright yellow interior details of the reference product."
+  },
+  {
+   "check_id": "no_model_lettering",
+   "control": "VIDEO_FRAME_TEXT_HYGIENE",
+   "status": "PASS",
+   "detail": "no: 00:05 and 00:28. The overlays and end card display clean, code-set typography."
+  },
+  {
+   "check_id": "subject_unobstructed",
+   "control": "SUBJECT_OBSTRUCTION",
+   "status": "PASS",
+   "detail": "no: 00:04, 00:21. The backpack remains fully visible and centered during product close-ups."
+  },
+  {
+   "check_id": "audio_reviewed",
+   "control": "AUDIO_REVIEWED_BY_EAR",
+   "status": "PASS",
+   "detail": "speech/singing: no; Instrumental music and environmental sound effects only. No spoken words or vocals."
+  },
+  {
+   "check_id": "product_across_shots",
+   "control": "PRODUCT_CONTINUITY_ACROSS_SHOTS",
+   "status": "PASS",
+   "detail": "consistent: 00:04, 00:08, 00:21, 00:25. The bag design, coloration, and features are consistent across all scenes."
+  },
+  {
+   "check_id": "character_continuity",
+   "control": "CHARACTER_CONTINUITY",
+   "status": "PASS",
+   "detail": "consistent: 00:02, 00:10, 00:13, 00:25. The protagonist's ragged attire, long hair, and weathered look remain uniform."
+  }
+ ],
+ "ledger": {
+  "budget_usd": "0.500000",
+  "committed_usd": "0.037200",
+  "by_category": {
+   "reasoning": "0.037200"
+  },
+  "attempts": 1,
+  "failed": 0,
+  "uncertain": 0,
+  "repair_usd": "0.000000"
+ }
+}

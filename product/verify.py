@@ -69,18 +69,39 @@ def required_checks(media_kind: str, *, mandatory_ids: list, has_copy: bool, has
 # (no_human_ear_on_the_delivered_audio: six jobs) recurred because "nobody could listen" was always waivable in effect.
 NON_WAIVABLE = {"audio_heard_by_person"}
 ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on: no speech, no singing, no clicks or holes at the cuts, "
-                                       "music suits the story"}
+                                       "music suits the story",
+              "independent_review": "Watched the whole piece at phone size: a demanding customer would accept it as is",
+              "product_fidelity": "The product is the customer's product — shape, colour, parts, openings — intact, not torn or warped",
+              "product_across_shots": "The product is the same product in every shot",
+              "character_continuity": "The person is the same person in every shot (face, hair, clothes, accessories)",
+              "no_model_lettering": "No lettering, logo or wordmark was drawn by the model; only code-set text and the supplied logo",
+              "subject_unobstructed": "The product/subject is never covered, cut off or blocked by text, graphics or objects"}
+
+
+def attestable(check_id: str) -> str | None:
+    if check_id in ATTESTABLE:
+        return ATTESTABLE[check_id]
+    if check_id.startswith("mandatory:"):
+        return f"The mandatory item {check_id[10:]} visibly happens on screen (I can name the moment)"
+    return None
 
 
 def attest(store: Store, job_id: str, asset_id: str, check_id: str, *, by: str, note: str, outcome: str = "PASS"):
     """A named person performed the check on this exact file and recorded what they found."""
-    if check_id not in ATTESTABLE:
+    statement = attestable(check_id)
+    if statement is None:
         raise ValueError(f"{check_id} is not a person-performed check")
     if len(note.strip()) < 15:
         raise ValueError("say what you heard/saw (at least a sentence)")
     store.record_check(job_id, asset_id, check_id=check_id, status="PASS" if outcome == "PASS" else "FAIL", blocking=True,
-                       runner=f"person:{by}", detail=note.strip()[:1000], evidence={"by": by, "statement": ATTESTABLE[check_id]},
-                       control_ids=["AUDIO_REVIEWED_BY_EAR"])
+                       runner=f"person:{by}", detail=note.strip()[:1000], evidence={"by": by, "statement": statement},
+                       control_ids=[_CONTROL_OF.get(check_id, "MANDATORY_EVENT_VISIBILITY_LJ_LINE")])
+
+
+_CONTROL_OF = {"audio_heard_by_person": "AUDIO_REVIEWED_BY_EAR", "independent_review": "QA_COVERAGE_ENFORCEMENT",
+               "product_fidelity": "PRODUCT_INTACT_AND_FAITHFUL", "product_across_shots": "PRODUCT_CONTINUITY_ACROSS_SHOTS",
+               "character_continuity": "CHARACTER_CONTINUITY", "no_model_lettering": "VIDEO_FRAME_TEXT_HYGIENE",
+               "subject_unobstructed": "SUBJECT_OBSTRUCTION"}
 
 
 def record_rows(store: Store, job_id: str, asset_id: str, rows: list, *, runner: str, prefix: str = ""):
@@ -231,7 +252,8 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
     return rows
 
 
-def review_rows(review: dict, *, mandatory_ids: list, media_kind: str, asset_sha256: str | None = None) -> list:
+def review_rows(review: dict, *, mandatory_ids: list, media_kind: str, asset_sha256: str | None = None,
+                qualified: bool = True) -> list:
     """Turn an independent review into check rows for ONE file. Simulated reviews never PASS; a review that was not
     shown this exact file proves nothing about it; an unanswered question is NOT_VERIFIED, never a pass by silence."""
     simulated = bool(review.get("_simulated")) or "simulated" in (review.get("modalities_evaluated") or [])
@@ -248,7 +270,10 @@ def review_rows(review: dict, *, mandatory_ids: list, media_kind: str, asset_sha
             return nv(cid, ctl, "simulated reviewer — nobody looked: " + detail)
         if unseen:
             return nv(cid, ctl, "the reviewer was not shown this exact file")
-        if answer in ok_values:
+        if answer in ok_values and not qualified:
+            rows.append({"check_id": cid, "control": ctl, "status": "NOT_VERIFIED",
+                         "detail": f"the model reviewer says fine, but it is not qualified to pass this — a person confirms: {detail}"})
+        elif answer in ok_values:
             rows.append({"check_id": cid, "control": ctl, "status": "PASS", "detail": detail})
         elif answer in fail_values:
             rows.append({"check_id": cid, "control": ctl, "status": "FAIL", "detail": detail})

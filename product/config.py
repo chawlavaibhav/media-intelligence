@@ -29,6 +29,10 @@ class Settings:
     reviewer_provider: str = "gemini"            # "gemini" (independent family) or "anthropic"
     reviewer_model: str = "gemini-3.5-flash"
     reviewer_fallback_model: str = "claude-sonnet-5"
+    # An UNQUALIFIED model reviewer's PASS is not evidence (MOKO7 v1 qualification 2026-09-23: Gemini 3.5 Flash 1/6,
+    # Gemini 3.1 Pro @4 fps 1/6, both passing a torn bag as "faithful"). Its FAILs still count. A person confirms the rest.
+    reviewer_qualified: bool = False
+    review_fps: float | None = None              # frames/s the video reviewer samples (Gemini videoMetadata); None = provider default
     vertex_project: str | None = None
     vertex_region: str = "us-central1"
     max_upload_bytes: int = 40 * 1024 * 1024
@@ -61,6 +65,8 @@ def load(data_dir: str | Path | None = None, **overrides) -> Settings:
         creative_model=_env("MI_CREATIVE_MODEL", "claude-opus-5"),
         reviewer_provider=_env("MI_REVIEWER_PROVIDER", "gemini"),
         reviewer_model=_env("MI_REVIEWER_MODEL", "gemini-3.5-flash"),
+        review_fps=float(_env("MI_REVIEW_FPS")) if _env("MI_REVIEW_FPS") else None,
+        reviewer_qualified=_env("MI_REVIEWER_QUALIFIED", "0") == "1",
         vertex_project=_env("MI_VERTEX_PROJECT"),
         vertex_region=_env("MI_VERTEX_REGION", "us-central1"),
         hold_before_preview=_env("MI_HOLD_BEFORE_PREVIEW", "1") == "1",

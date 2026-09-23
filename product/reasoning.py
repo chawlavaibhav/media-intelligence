@@ -35,6 +35,7 @@ PRICES = {
     "claude-sonnet-5": (Decimal("2"), Decimal("10")),
     "claude-haiku-4-5": (Decimal("1"), Decimal("5")),
     "gemini-3.5-flash": (Decimal("1.50"), Decimal("9.00")),
+    "gemini-3.1-pro-preview": (Decimal("2.00"), Decimal("12.00")),   # ≤ 200k-token prompts
     "simulated": (Decimal("0"), Decimal("0")),
 }
 PRICE_BASIS = {"gemini-3.5-flash": "ai.google.dev pricing page, paid tier, 2026-09-23"}
@@ -152,7 +153,10 @@ class GeminiBackend:
             raise ProviderUnavailable("GOOGLE_API_KEY is not configured")
         parts = []
         for mime, data in media:
-            parts.append({"inlineData": {"mimeType": mime, "data": base64.b64encode(data).decode()}})
+            part = {"inlineData": {"mimeType": mime, "data": base64.b64encode(data).decode()}}
+            if mime.startswith("video/") and getattr(self.s, "review_fps", None):
+                part["videoMetadata"] = {"fps": self.s.review_fps}      # default sampling is 1 frame/s: too coarse for a 1-s warp
+            parts.append(part)
         parts.append({"text": user_text})
         sys_text = system_role + ("\n\nKNOWLEDGE\n" + knowledge if knowledge else "")
         body = {"systemInstruction": {"parts": [{"text": sys_text}]}, "contents": [{"role": "user", "parts": parts}],

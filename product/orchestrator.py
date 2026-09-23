@@ -714,7 +714,8 @@ class Orchestrator:
         results = []
         for aid in finals:
             verify.record_rows(self.store, job_id, aid, verify.review_rows(review, mandatory_ids=mandatory_ids, media_kind=media_kind,
-                                                                           asset_sha256=self.store.asset(aid)["sha256"]),
+                                                                           asset_sha256=self.store.asset(aid)["sha256"],
+                                                                           qualified=self.s.reviewer_qualified),
                                runner=f"independent_review:{(review.get('_call') or {}).get('model')}")
             results.append(verify.gateway(self.store, job_id, aid, req))
         self.store.put_artifact(job_id, "gateway", {"results": results, "required": req}, "system")
