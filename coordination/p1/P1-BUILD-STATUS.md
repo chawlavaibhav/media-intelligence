@@ -1,13 +1,60 @@
 # Media Intelligence P1 — build status and continuation record
 
-Branch `claude/confident-franklin-s1v8ln` (from main `f0ad1fa`, 2026-09-22). Worker: one Claude Code session
-(overnight, single agent). Nothing merged to main; no paid call made; no cloud resource created.
+Branch `claude/confident-franklin-s1v8ln` (from main `f0ad1fa`). PR #108 (draft). Nothing merged to main; no paid call
+made; no cloud resource created. Session 1: cloud, 2026-09-22 (built). Session 2: founder's laptop, 2026-09-23 (below).
 
-**State: none of the three completion states is reached.** STATE 1 (implementation complete) is blocked by
-the media engine never having executed (see §4 B1). STATE 2 and 3 need authorised live runs and human verdicts.
+**State: implementation-complete milestone reached on the laptop in dry mode (STATE 1, dry).** The media engine runs on real
+ffmpeg; image and film jobs complete the whole customer journey over HTTP. NOT reached: real-media validated (needs live spend),
+deployed (needs hosting decision), authorised for beta (founder). See §0.
 
-Labels: **TESTED** = exercised by an automated test in this session, with the result shown; **WRITTEN** = code
-exists and is on the production path but has not executed here; **MISSING** = not built.
+Labels: **TESTED** = exercised by an automated test, with the result shown; **WRITTEN** = code exists and is on the production
+path but has not executed; **MISSING** = not built.
+
+## 0. Laptop session 2026-09-23 — what changed, what is proven, what is blocked
+
+**Proven on this Mac (USD 0).** 51 product tests OK (twice); `python3 -m product.smoke` all PASS; `python3 -m product.journey
+--dry` PASS for film and image against the running web app + worker: invite → brief + uploads → direction → approval →
+production → operator release → preview of the real file → text change → re-release → accept → download (sha256 = accepted
+version); a second account gets 404 on the job and its file. Engine overhead approval → verified 30-s cut: ~20 s
+(composition 10.6 s, deterministic checks 4.4 s); provider and reasoning time unmeasured until live.
+
+**Defects found by running real media, all fixed with regressions:** ffmpeg `drawtext` absent from Homebrew builds (text now
+Pillow/raqm, coverage-aware font choice — Arial Bold has no ₹); supers composed on an opaque black canvas blacked out every
+beat under a super while all checks passed (compose rewritten with real alpha; `no_black_frames` added); a half-transparent
+plate shipped a washed-out still whose contrast was measured on opaque pixels; 41-px lines judged as "large text"; a heartbeat
+race could re-lock a released job for 15 min; recovery of paid in-flight calls depended on detecting a takeover.
+
+**Controller concerns on PR #108.** (1) Every PASS is now evidence on the delivered file: exact copy judged on the strings drawn;
+reviewer answers are enums with evidence (silence = NOT_VERIFIED); a review of another file proves nothing (sha-bound);
+unmeasurable = NOT_VERIFIED. (2) A permanent test asserts every applicable enforced/reviewer control leaves a row on image and
+film deliverables; process controls are proven from the ledger/graph/events. (3) Real media: `audio_joins` calibrated on
+MOKOBARA v1/v2 (v1 fails at its two recorded holes, v2 passes); the rejected MDR8 film fails true peak (−0.9 dBTP) — a defect
+the atlas never recorded. The reviewer MODEL is not yet qualified: `product/qualification/` runs the product's own reviewer on
+MOKO7 v1/v2 against a key from the human checker + customer verdict — needs the spend record below.
+
+**Recovered failure atlas.** `FAILURE-ANALYSIS.md` (~/Documents) and `FAILURE-ATLAS-RAW/CLASSIFIED.yaml` (uncommitted
+MOKOBARA-DEEPREAD job folder) committed verbatim in `production-learning/atlas/2026-09-22/`. Totals confirmed: 225 rows,
+104 modes, 39 recurring. All 104 modes have one P1 disposition in `product/data/FAILURE-CONTROLS-v1.yaml`
+(`atlas_reconciliation`; 44 enforced, 14 reviewer, 12 by construction, 13 human judgement, 10 not applicable, 8 excluded,
+2 operator process, 1 deferred: per-customer product dossier). All 50 beta-critical modes have a machine or a named person
+behind them (tested). New on the production path: PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND (a reviewer blocker previously never
+stopped a customer approval — now approve() refuses it; override is named and reasoned); audio_heard_by_person (required,
+NON-WAIVABLE, a person's recorded listen); PRODUCT_CONTINUITY_ACROSS_SHOTS; approved copy lines must be drawn; frame timing.
+
+**Decisions needed (exact):**
+- D1 Spend record for live validation — proposed cap **USD 20**: reviewer qualification on MOKO7 v1+v2 (≤ USD 1), one live
+  image job through the UI (≤ USD 4), one live 30-s film job (≤ USD 15; dry quote: providers USD 8.19 incl. one retake per
+  clip, reasoning ≈ 2–3). Pools: Gemini API key (stills + reviewer) and Vertex (Veo, Lyria).
+- D2 A valid **ANTHROPIC_API_KEY**: the key in ~/.mi-keys returns `authentication_error: API key is invalid`.
+- D3 **Vertex credentials** for Veo/Lyria: the product authenticates with a service-account key file + project
+  (`MI_VERTEX_SA_JSON`, `MI_VERTEX_PROJECT`); this Mac has only a personal gcloud login. Which project/account is authorised?
+- D4 **Hosting**: one small VM (assessment H-3: GCE e2-standard-2 on credits), a DNS name, approval to create it. `deploy/install.sh`
+  then runs the smoke test before taking traffic; `product.journey` is the post-deploy end-to-end test.
+- D5 A **non-builder reviewer** for the first real outputs, and the founder's beta-release decision.
+
+**Next executable action once D1–D3 land:** `python3 -m product.qualification.qualify_reviewer --film v1 --live` and `--film v2
+--live` (confirm the proposed matches by hand; pass mark ≥ 4 of 6 on v1); then one live image job and one live film job
+through the web UI with `MI_PROVIDER_MODE=live MI_REASONING_MODE=live`, recording `product.admin metrics --job <id>`.
 
 ---
 
@@ -191,7 +238,6 @@ Evidence key: `T:` test name in `product/tests/`; `S:` smoke step; `R:` record/f
 
 - Email notifications (customer learns state from the page only).
 - A one-command customer-data purge (runbook gives the manual procedure).
-- PDF/storyboard references are stored but not passed to the models.
 - Per-request capability matching beyond the fixed P1 route table; voice-over stays refused.
 - Coverage measurement of the deep-retrieval ranking against `HAND-RETRIEVED-CLAIMS.yaml`.
 - Re-recording the runtime planner fixtures broken by the Canon adoption.

@@ -10,7 +10,8 @@ a targeted text change → re-release → acceptance → download, whose bytes m
 With --other-invite, a second customer must be unable to see the job or its files.
 
 --dry: the deployment runs simulated providers/reasoning, so nothing in the cut was looked at by a reviewer; the
-operator step then waives each blocking check with the reason "DRY RUN". Never use --dry against live mode.
+operator step then waives each NOT_VERIFIED check with the reason "DRY RUN" and records a dry listen. A check that was
+measured and FAILED stops the journey even in --dry. Never use --dry against live mode.
 Passwords are generated per run and never printed.
 """
 from __future__ import annotations
@@ -47,6 +48,7 @@ class Client:
             code, body, hdrs = e.code, e.read(), e.headers
         if follow and code in (302, 303) and hdrs.get("Location"):
             return self.req("GET", hdrs["Location"])
+        self.last_url = url
         return code, body, hdrs
 
     def get(self, path):
@@ -127,14 +129,24 @@ def wait(c: Client, jid, until: set, timeout_s: float, log: dict) -> str:
 def operator_release(op: Client, jid, dry: bool):
     code, body, _ = op.get(f"/ops/jobs/{jid}")
     assert code == 200, code
-    pending = re.findall(rb'name="asset_id" value="(ast_\w+)"><input type="hidden" name="check_id" value="([^"]+)"', body)
+    pending = re.findall(rb'action="/ops/jobs/\w+/(waive|attest)"><input type="hidden" name="csrf" value="[0-9a-f]+">'
+                         rb'<input type="hidden" name="asset_id" value="(ast_\w+)"><input type="hidden" name="check_id" value="([^"]+)"', body)
+    failed = re.findall(rb'<tr><td>([^<]+)</td><td class="FAIL">FAIL</td>', body)
+    if failed:
+        raise AssertionError(f"measured failures on the cut — never waived, not even in a dry run: {sorted(set(f.decode() for f in failed))}")
     if pending and not dry:
-        raise AssertionError(f"{len(pending)} blocking checks need a person's look; this journey waives only in --dry")
-    for aid, cid in pending:
+        raise AssertionError(f"{len(pending)} checks need a person (listen / look); this journey performs them only in --dry")
+    for kind, aid, cid in pending:
+        if kind == b"attest":
+            op.post(f"/ops/jobs/{jid}/attest", {"asset_id": aid.decode(), "check_id": cid.decode(), "outcome": "PASS",
+                                               "note": "DRY RUN — simulated film: test tone and pink noise, no speech or singing"},
+                    csrf_from=f"/ops/jobs/{jid}")
+            continue
         op.post(f"/ops/jobs/{jid}/waive", {"asset_id": aid.decode(), "check_id": cid.decode(),
                                           "reason": "DRY RUN — simulated media; nothing was verified by a reviewer"},
                 csrf_from=f"/ops/jobs/{jid}")
-    step(f"  operator waived {len(pending)} blocking checks (dry) and releases the cut")
+    step(f"  operator recorded {sum(1 for k, *_ in pending if k == b'attest')} listen(s), waived "
+         f"{sum(1 for k, *_ in pending if k == b'waive')} unverifiable dry checks, and releases the cut")
     op.post(f"/ops/jobs/{jid}/release", {}, csrf_from=f"/ops/jobs/{jid}")
 
 
@@ -177,9 +189,9 @@ def main(argv=None):
     code, body, hdrs = cust.post("/jobs", {**fields, "csrf": cust.csrf("/jobs/new")},
                                  files=[("product_photos", "bag.png", "image/png", make_png(256, 256, seed=2)),
                                         ("logo", "logo.svg", "image/svg+xml", logo)])
-    m = re.search(rb"/jobs/(job_\w+)", body) or re.search(r"/jobs/(job_\w+)", hdrs.get("Location", "") or "")
-    assert m, f"no job id after submit ({code})"
-    jid = m.group(1).decode() if isinstance(m.group(1), bytes) else m.group(1)
+    m = re.search(r"/jobs/(job_\w+)", cust.last_url)
+    assert m, f"no job page after submit ({code}): {re.findall(rb'<h1>[^<]*|<p>[^<]*', body)[:3]}"
+    jid = m.group(1)
     step(f"job {jid}")
 
     s = wait(cust, jid, {"needs_answers", "awaiting_approval"}, a.timeout, log)
