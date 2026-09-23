@@ -34,9 +34,8 @@ def score(L: dict, rows: list, taste: dict) -> float:
     pb = L.get("product_box")
     if pb:
         s += 25.0 * min(1.0, ((pb[2] - pb[0]) * (pb[3] - pb[1]) / (W * H)) / 0.35)   # a big product
-    ratios = [v.get("worst_ratio", 0) for v in L["contrast"].values() if v]
-    if ratios:
-        s += 2.0 * min(5.0, min(ratios) - 3.0)
+    # Contrast is a pass/fail check, not a score: extra contrast beyond "readable" earned up to +10 here and pushed the
+    # white-on-navy panel layouts to the top; the founder rejected them in 7 of 8 pairs (taste round 1, 2026-09-23).
     s += float(taste.get("templates", {}).get(L["template"], 0.0))
     s += float(taste.get("systems", {}).get(L["system"], 0.0))
     return round(s, 2)
