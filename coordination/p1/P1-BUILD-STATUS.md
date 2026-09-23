@@ -1,6 +1,24 @@
 # Media Intelligence P1 — build status and continuation record
 
-> **2026-09-23: handed over.** Start with `HANDOVER-2026-09-23.md`.
+> **Current state (2026-09-23, final — supersedes every "State" line below).** Start with `P1-REVIEW-ENTRY.md`.
+>
+> | | |
+> |---|---|
+> | Implemented | Everything in §1's table exists on this branch, including the media engine, live Azure OpenAI / Gemini / Veo / Lyria transports and the web app. |
+> | Dry-tested (USD 0) | 54 product tests OK (2026-09-23, 245 s, real ffmpeg); `product.smoke` PASS (media engine, dry image + film jobs, backup/restore); `product.journey --dry` PASS earlier the same day. |
+> | Live-tested | One image job and one film job, locally on the founder's Mac, through the web app and worker, with the builder acting as operator. |
+> | Customer-accepted | Image: Mokobara launch poster `job_20260923_6720871c`, 1:1 + 4:5, USD 2.28. |
+> | Customer-rejected | Film: 30-s Reel `job_20260923_7d36a5b6`, USD 13.59 — "two random hands, too many AI slops … robotic … blue and then turned yellow". The model reviewer also returned FAIL on both cuts; the gateway never marked it presentable. |
+> | Unqualified | Model reviewer/inspector (1/6 on MOKO7 v1). Its PASS is not evidence of quality. |
+> | Known defects | See `P1-REVIEW-ENTRY.md` §F (product drift, unnatural hand action, Veo refusals, still-motion fallbacks, 1 h 47 min to first cut, output files overwritten in place, no learning case for the film). |
+> | Missing | Deployment/VM, email notifications, brand fonts, per-customer product dossier, a beta customer run without a developer. |
+> | Deployment | Not deployed. Azure RG `aight-mi-p1` holds only the AOAI account and `gpt-5.6-sol` deployment. |
+> | Spend | USD 15.97 of the USD 20 validation authority (`SPEND-RECORD-P1-VALIDATION-2026-09-23.md`). No further spend is authorised. |
+> | Evidence | Private repo `chawlavaibhav/mi-p1-evidence` (both jobs, all media, sanitized ledger, manifest). |
+>
+> Everything below this box is the **historical** record, left as written at each stage: §0 was written at the dry-mode
+> milestone *before* any paid call, and §1–§6 at the first build (2026-09-22), when ffmpeg had never run. Their "State",
+> "WRITTEN, NEVER EXECUTED" and "no paid call made" statements were true then and are not current.
 
 Branch `claude/confident-franklin-s1v8ln` (from main `f0ad1fa`). PR #108 (draft). Nothing merged to main; no paid call
 made; no cloud resource created. Session 1: cloud, 2026-09-22 (built). Session 2: founder's laptop, 2026-09-23 (below).
