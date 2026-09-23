@@ -36,12 +36,12 @@ def score(L: dict, rows: list, taste: dict) -> float:
         s += 25.0 * min(1.0, ((pb[2] - pb[0]) * (pb[3] - pb[1]) / (W * H)) / 0.35)   # a big product
     # Contrast is a pass/fail check, not a score: extra contrast beyond "readable" earned up to +10 here and pushed the
     # white-on-navy panel layouts to the top; the founder rejected them in 7 of 8 pairs (taste round 1, 2026-09-23).
-    # the founder's taste: patterns that held across brands (global) + what this brand's rounds showed (brand)
-    s += float(taste.get("templates", {}).get(L["template"], 0.0))
-    s += float(taste.get("systems", {}).get(L["system"], 0.0))
-    brand = taste.get("brands", {}).get(L.get("brand") or "", {})
-    s += float(brand.get("templates", {}).get(L["template"], 0.0))
-    s += float(brand.get("systems", {}).get(L["system"], 0.0))
+    # The founder's taste, as STYLE FEATURES (style.py / data/style.yaml): where the text sits, alignment, colour band,
+    # serif or sans, headline scale, product placement — global where brands agreed, per brand where they split.
+    # Template-name weights from rounds 1–2 (data/taste.yaml) are kept as history only: those pairs differed in several
+    # ways at once, so a win could not be credited to any one choice (founder: "bad tests").
+    from product.typeset import style
+    s += style.score(L, L.get("brand") or "")
     return round(s, 2)
 
 
@@ -62,18 +62,25 @@ def candidates(*, kit: E.BrandKit, fmt: str, kind: str, copy: list, plate: Path 
         roles = {c["role"] for c in copy}
         if ("offer" in slots) != ("offer" in roles):
             continue          # an offer layout needs an offer line; any other layout would drop the offer
+        from product.typeset import style
+        variants = [("", None)]
+        if product_box_norm and style.preferences(kit.name).get("symmetry") == "product off-centre":
+            # the founder prefers the product off-centre: also try it shifted away from the text's side
+            align = T[tid].get("block", {}).get("align", "center")
+            variants.append(("offset", {"product_shift": 0.12 if align != "right" else -0.12}))
         for sid in sids:
-            try:
-                L = E.layout(template_id=tid, fmt=fmt, system_id=sid, kit=kit, copy=copy, plate=plate,
-                             product_box_norm=product_box_norm)
-            except E.TypesetError as exc:
-                out.append({"template": tid, "system": sid, "fmt": fmt, "score": -2000.0, "checks": [], "layout": None,
-                            "error": str(exc)})
-                continue
-            L["brand"] = kit.name
-            rows = C.run(L)
-            out.append({"template": tid, "system": sid, "fmt": fmt, "score": score(L, rows, taste), "checks": rows,
-                        "layout": L, "error": None})
+            for vname, ov in variants:
+                try:
+                    L = E.layout(template_id=tid, fmt=fmt, system_id=sid, kit=kit, copy=copy, plate=plate,
+                                 product_box_norm=product_box_norm, overrides=ov)
+                except E.TypesetError as exc:
+                    out.append({"template": tid, "system": sid, "variant": vname, "fmt": fmt, "score": -2000.0, "checks": [],
+                                "layout": None, "error": str(exc)})
+                    continue
+                L["brand"] = kit.name
+                rows = C.run(L)
+                out.append({"template": tid, "system": sid, "variant": vname, "fmt": fmt, "score": score(L, rows, taste),
+                            "checks": rows, "layout": L, "error": None})
     out.sort(key=lambda c: -c["score"])
     if judge is not None:
         good = [c for c in out if c["score"] > -1000]

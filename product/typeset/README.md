@@ -21,6 +21,8 @@ typographic choices: no typefaces, no scale, no grid, no layouts to choose from.
 | Engine | `engine.py` | fits the exact copy: balanced line breaks (no widows), largest headline that fits, sizes stepped down the scale, product kept as large as possible, ink chosen by measured contrast |
 | Checks | `checks.py` | blocking: exact copy, ≤ 2 typefaces, phone legibility, safe area, contrast, calm ground, product clear, no collisions, logo size/contrast. Flags: hierarchy, line length, widows, product scale |
 | Picker | `picker.py` | renders every template × type system, drops blocked ones, ranks by craft score + the founder's taste weights (+ an optional vision judge, off by default) |
+| Style profile | `style.py`, `data/style.yaml` | the founder's taste as design features (text position, alignment, band, serif/sans, headline scale, product placement), global + per brand |
+| Controlled test | `experiment.py` | builds taste rounds where each pair differs in exactly one feature, and reads the verdicts |
 | Taste test | `taste.py` | a one-file page of side-by-side pairs; the founder's picks become weights in `data/taste.yaml` and measure how often the picker already agreed |
 | Adapter | `adapter.py` | `still_ad(...)` / `end_card(...)` with the same return shape as `product/compose.py`, for the P1 v2 build to switch over behind a flag |
 | Film supers | `supers.py` | on-screen captions judged across several frames of the shot: kept clear of the product and hands, readable in every frame, opaque brand pill only when the picture is busy, reading-time check (0.6 s + 3 words/s) |
@@ -45,7 +47,20 @@ pairs across two different products. Until then the founder picks from the top 3
 | 1 | Mokobara backpack, 4:5 | 15 | 5 (33 %) | text under the product; rejected dark bottom bands (1 win, 7 losses) |
 | 2 | Cumin Co. bowl, 4:5 | 15 | **10 (67 %) — blind**, scored with round-1 learning only | text under the product again (5–0); the big headline won 3–0; the band at the bottom **won** 3–1 (sage green, no logo) though it lost 1–7 on Mokobara (navy, logo) |
 
-**What the two rounds say.** One preference held across both brands: text under the product (`bottom_center`, 11 wins, 1 loss).
+| 3 | **Controlled**: Mokobara + Cumin Co., one difference per pair | 12 | — | both brands: **text above the product**, **product off-centre**. Split by brand: Mokobara = left-aligned, serif, modest headline, no band; Cumin Co. = centred, sans, big headline, colour band |
+
+**Rounds 1–2 were bad tests (founder, 2026-09-23):** each pair differed in several ways at once and the win was credited
+to the template's name. They almost never compared text-above with text-below directly (1 of 30 pairs), so their
+"text under the product" signal was an artefact. Round-3 preferences, applied back to rounds 1–2, agree on 6/15 and 4/15
+(the rest ties or misses) — i.e. rounds 1–2 cannot confirm or refute them. **Taste now lives in `data/style.yaml` as
+style features** (`style.py`), global where both brands agreed, per brand where they split; the picker scores every
+layout by the features it has, and tries an off-centre product when that is preferred. `data/taste.yaml` (template-name
+weights) is kept as history and no longer used for scoring.
+
+**Evidence strength:** one controlled pick per feature per brand. Next: repeat round 3 on a different format (1:1 or
+9:16) — a preference that repeats is kept; one that flips is treated as "doesn't matter" and left to the brand's default.
+
+**What the two rounds say (superseded by round 3, kept for the record).** One preference held across both brands: text under the product (`bottom_center`, 11 wins, 1 loss).
 Others depend on the brand, so taste is now stored at two levels: **global** (moves half as fast; what holds across
 brands) and **per brand** (in `taste.yaml → brands`, keyed by `BrandKit.name`, the customer shelf's memory). The picker adds
 both. **Qualification not yet met:** 67 % blind agreement against the proposed 75 %. Next: a third brand, blind.
@@ -53,7 +68,7 @@ both. **Qualification not yet met:** 67 % blind agreement against the proposed 7
 ## Run it (no spend)
 
 ```bash
-PYTHONPATH=. python -m unittest product.tests.test_typeset          # 22 tests, ~3 s
+PYTHONPATH=. python -m unittest product.tests.test_typeset          # 23 tests, ~5 s
 PYTHONPATH=. python -m product.typeset.demo --out /tmp/ts --format 4:5 --kind poster \
   --plate <plate.png> --product-box 0.13 0.18 0.86 0.86 --logo <logo.png> \
   --headline "Room for the long way home." --small "mokobara.com" --moods premium calm travel
