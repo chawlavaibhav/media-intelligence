@@ -22,6 +22,18 @@ def _strip(text: str, words: list) -> str:
     return re.sub(r"\bthe the\b", "the", text)
 
 
+_OVERLAY = re.compile(r"\b(logo|logos|wordmark|code-set|code set|composit\w*|overlay\w*|supers?|headline|tagline|copy deck|"
+                      r"text layer|end card|typeset|caption\w*|website|url)\b", re.I)
+
+
+def _visual(text: str) -> str:
+    """Only what the camera sees. The director's notes about code-set layers (logo, headline, supers, end card) never reach
+    a generator — live 2026-09-23: 'a small supplied logo occupies the upper-left margin as a code-set layer' came back as a
+    drawn 'SUPPLIED' label. The word 'supplied' is dropped for the same reason."""
+    keep = [s for s in re.split(r"(?<=[.;!?])\s+", text or "") if s and not _OVERLAY.search(s)]
+    return re.sub(r"\bsupplied\s+", "", " ".join(keep), flags=re.I).strip()
+
+
 def guard_for(intent: dict, direction: dict, brief: dict) -> dict:
     """What the dispatcher must refuse in any prompt of this job."""
     exact = [c["text"] for c in direction.get("copy_deck", [])] + list(brief.get("exact_strings") or [])
@@ -32,7 +44,7 @@ def guard_for(intent: dict, direction: dict, brief: dict) -> dict:
 
 
 def _anchor(direction: dict, guard: dict) -> str:
-    return _strip(direction.get("product_anchor", ""), guard["forbidden_words"])
+    return _strip(_visual(direction.get("product_anchor", "")), guard["forbidden_words"])
 
 
 def _look(direction: dict) -> str:
@@ -46,8 +58,8 @@ def still_prompt(direction: dict, guard: dict, *, beat: dict | None = None, aspe
     lines = []
     if beat is None:          # the hero picture of a still ad
         c = direction.get("composition") or {}
-        lines.append(f"A commercial product photograph. {c.get('hero', '')}. Background: {c.get('background', '')}. "
-                     f"Product treatment: {c.get('product_treatment', '')}.")
+        lines.append(f"A commercial product photograph. {_visual(c.get('hero', ''))} Background: {_visual(c.get('background', ''))} "
+                     f"Product treatment: {_visual(c.get('product_treatment', ''))}")
         zone = c.get("text_zone", "none")
         if zone != "none":
             lines.append(f"Keep the {zone} {'third' if zone in ('top', 'bottom') else 'side'} of the frame calm and uncluttered "
@@ -55,9 +67,9 @@ def still_prompt(direction: dict, guard: dict, *, beat: dict | None = None, aspe
         lines.append(f"The product: {_anchor(direction, guard)} It is brand new, completely intact, clean, exactly as in the "
                      f"reference photo{'s' if with_product_ref else ''}.")
     else:
-        lines.append(f"A cinematic film still, the first frame of a shot. {beat.get('first_frame', '')}.")
+        lines.append(f"A cinematic film still, the first frame of a shot. {_visual(beat.get('first_frame', ''))}")
         if beat.get("product_present"):
-            lines.append(f"The product: {_anchor(direction, guard)} State: {beat.get('product_state') or 'intact'}; "
+            lines.append(f"The product: {_anchor(direction, guard)} State: {_visual(beat.get('product_state') or 'intact')}; "
                          f"brand new, completely intact, exactly as in the reference photo.")
         else:
             lines.append("The product does not appear anywhere in this picture; no bag, box, bottle or package of any kind.")
@@ -69,7 +81,7 @@ def still_prompt(direction: dict, guard: dict, *, beat: dict | None = None, aspe
             lines.append("Continuity: " + "; ".join(beat["continuity"]) + ".")
         if beat.get("must_not"):
             lines.append("Must not appear: " + ", ".join(_strip(m, guard["forbidden_words"]) for m in beat["must_not"]) + ".")
-        lines.append(f"Camera: {beat.get('camera', '')}.")
+        lines.append(f"Camera: {_visual(beat.get('camera', ''))}")
     lines.append(_look(direction))
     lines.append(f"Aspect ratio {aspect}. Photorealistic.")
     lines.append(NO_LETTERING)
@@ -77,15 +89,15 @@ def still_prompt(direction: dict, guard: dict, *, beat: dict | None = None, aspe
 
 
 def clip_prompt(direction: dict, guard: dict, beat: dict) -> str:
-    parts = [f"Animate this exact first frame. {beat.get('action', '')}.",
-             f"By the end of the shot: {beat.get('end_state', '')}."]
+    parts = [f"Animate this exact first frame. {_visual(beat.get('action', ''))}",
+             f"By the end of the shot: {_visual(beat.get('end_state', ''))}"]
     if beat.get("exit_action"):
-        parts.append(f"After that: {beat['exit_action']}. The goal state is never undone.")
+        parts.append(f"After that: {_visual(beat['exit_action'])} The goal state is never undone.")
     if beat.get("product_present"):
         parts.append("The product stays exactly as in the first frame: same shape, colour and details, intact, never deforming.")
     else:
         parts.append("The product never appears in this shot.")
-    parts.append(f"Camera: {beat.get('camera', '')}. One continuous shot, no cuts, no scene change.")
+    parts.append(f"Camera: {_visual(beat.get('camera', ''))} One continuous shot, no cuts, no scene change.")
     parts.append(NO_SPEECH)
     parts.append("No text or lettering appears.")
     return _strip(" ".join(parts), guard["forbidden_words"])

@@ -268,7 +268,7 @@ class Orchestrator:
                 risky = _riskiest_beat(d)
                 aid = self.dispatch.image(job_id, "preview", prompt=prompts.still_prompt(d, guard, beat=risky, aspect=aspect,
                                                                                          with_product_ref=bool(refs), with_character_ref=False),
-                                          aspect=aspect, refs=refs if risky.get("product_present") else [], guard=guard,
+                                          aspect=aspect, refs=refs[:2] if risky.get("product_present") else [], guard=guard,
                                           meta={"beat": risky["n"], "preview": True})
         self.store.set_asset(aid, role="preview")
 
