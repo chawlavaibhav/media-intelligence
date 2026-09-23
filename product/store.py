@@ -277,7 +277,9 @@ class Store:
 
     def release(self, job_id: str, owner: str):
         with self.tx() as c:
-            c.execute("UPDATE jobs SET lease_until=0 WHERE id=? AND lease_owner=?", (job_id, owner))
+            # the owner is cleared too: a late heartbeat can no longer re-lock a released job, and the next worker's
+            # claim is not mistaken for a takeover of a dead worker's lease
+            c.execute("UPDATE jobs SET lease_until=0, lease_owner=NULL WHERE id=? AND lease_owner=?", (job_id, owner))
 
     # ── events ──────────────────────────────────────────────────────────────────
     def _event(self, c, job_id, actor, kind, data):

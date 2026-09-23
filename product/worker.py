@@ -34,28 +34,29 @@ class Worker:
         if job is None:
             return False
         jid = job["id"]
-        # a lease taken over from another worker means that worker died mid-step: settle its in-flight calls first
-        takeovers = [e for e in self.store.events(jid, ("lease_taken_over",)) if self.id in e["data_json"]]
-        if takeovers:
+        # Only the lease holder runs a step, and a step settles its own reservations before it returns. So a reservation
+        # still open when a job is claimed was left by a step that died (killed process, expired lease, or an exception
+        # that unwound it): settle those in-flight calls first — whichever way the previous worker went.
+        if any(a["status"] == "reserved" for a in self.store.attempts(jid)):
             rec = self.orch.dispatch.recover(jid)
             if rec:
                 self.store.event(jid, self.id, "recovered_in_flight", {"attempts": rec})
-        hb = threading.Thread(target=self._heartbeat, args=(jid,), daemon=True)
-        self._busy = True
+        done = threading.Event()
+        hb = threading.Thread(target=self._heartbeat, args=(jid, done), daemon=True)
         hb.start()
         try:
             before = job["state"]
             after = self.orch.step(jid)
             log.info("job %s: %s -> %s", jid, before, after)
         finally:
-            self._busy = False
+            done.set()
+            hb.join(timeout=5)
             self.store.release(jid, self.id)
         return True
 
-    def _heartbeat(self, jid):
-        while getattr(self, "_busy", False) and not self.stop.is_set():
+    def _heartbeat(self, jid, done: threading.Event):
+        while not done.wait(min(30, self.s.lease_seconds / 3)) and not self.stop.is_set():
             self.store.renew(jid, self.id, self.s.lease_seconds)
-            time.sleep(min(30, self.s.lease_seconds / 3))
 
     def drain(self, max_steps: int = 500) -> int:
         n = 0
