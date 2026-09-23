@@ -99,3 +99,37 @@ def evidence_film(ev: Path) -> dict:
     ups = [json.loads(line) for line in (ev / "db/export/assets.jsonl").read_text().splitlines()]
     ups = [a for a in ups if a["job_id"] == job["id"] and a["source"] == "customer"]
     return {"brief": brief, "uploads": [(a["role"], ev / "livebeta" / a["path"]) for a in ups]}
+
+
+def film_to_hold(e, jid, *, accept_alternatives=True):
+    """Drive a film order through the front of house, the founder's recipe confirmation, the customer's approval and
+    master-plate approval, to the door guard. Returns the final state."""
+    e.drain()
+    if e.state(jid) == "awaiting_customer_input" and accept_alternatives:
+        f = e.store.artifact(jid, "feasibility")
+        e.orch.provide_input(jid, by=e.user["email"], accepted_alternatives=[
+            {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
+        e.drain()
+    if e.state(jid) == "paused_for_founder" and e.store.artifact(jid, "founder_decision")["decision"] == "confirm recipe":
+        e.orch.confirm_recipe(jid, session=e.founder_session(), reason="Read the plan: stills for zips; risky slides first.")
+    if e.state(jid) == "awaiting_approval":
+        e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+        e.drain()
+    if e.state(jid) == "awaiting_master_approval":
+        e.orch.approve_master(jid, by=e.user["email"])
+        e.drain()
+    return e.state(jid)
+
+
+def confirm_and_release(e, jid, note="DRY RUN — simulated media; the founder looked at nothing real"):
+    """What the founder does at the door in a dry run: confirm the person-checks, waive what a simulation cannot verify."""
+    from product import verify
+    s = e.founder_session()
+    g = e.store.artifact(jid, "gateway_report")
+    for r in g["results"]:
+        for b in r["blocking"]:
+            if verify.attestable(b["check_id"]):
+                e.orch.confirm_check(jid, session=s, asset_id=r["asset_id"], check_id=b["check_id"], note=note)
+            else:
+                e.orch.waive_check(jid, session=s, asset_id=r["asset_id"], check_id=b["check_id"], reason=note)
+    e.orch.release(jid, session=s)

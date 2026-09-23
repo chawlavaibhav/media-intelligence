@@ -88,7 +88,10 @@ def after_approved_recipe(k, job_id, recipe, founder=None):
     q = cost.quote(k, job_id, recipe)
     k.store.put_artifact(job_id, "quote", q, "system")
     from product.stations import head_cook
-    head_cook.sample_picture(k, job_id, recipe)
+    prev = [a for a in k.store.assets(job_id, role="preview")]
+    same_master = prev and json.loads(prev[-1]["meta_json"]).get("master_plate") == recipe.get("master_plate")
+    if not same_master:                     # a re-plan that keeps the master plate does not buy a new sample picture
+        head_cook.sample_picture(k, job_id, recipe)
     frm = k.store.job(job_id)["state"]
     acct = k.store.account(k.store.job(job_id)["account_id"])
     cap = dec(k.brief(job_id).get("max_budget_usd") or 0)

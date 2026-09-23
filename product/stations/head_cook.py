@@ -80,7 +80,8 @@ def sample_picture(k, job_id: str, recipe: dict):
         p = k.store.new_output_path(k.job_dir(job_id) / "gen", "master__shelf", Path(shelf_master["path"]).suffix.lstrip(".") or "png")
         shutil.copyfile(shelf_master["path"], p)
         aid = k.store.add_asset(job_id, path=p, kind="image", source="shelf", content_type="image/png", node_id="preview", role="preview",
-                                meta={"shelf_item": shelf_master["id"], "shelf_version": shelf_master["version"], "master": True, "format": aspect})
+                                meta={"shelf_item": shelf_master["id"], "shelf_version": shelf_master["version"], "master": True, "format": aspect,
+                                      "master_plate": recipe.get("master_plate")})
         k.shelf.record_use(job_id, job["account_id"], shelf_master["id"], "master_plate")
         return aid
     refs = product_refs(k, job_id)
@@ -91,7 +92,8 @@ def sample_picture(k, job_id: str, recipe: dict):
         prompt = prompts.master_plate_prompt(recipe, g, aspect=aspect, with_product_ref=bool(refs))
     with k.store.timed(job_id, "asset_preparation", "sample picture"):
         aid = k.dispatch.image(job_id, "preview", prompt=prompt, aspect=aspect, refs=refs, guard=g,
-                               meta={"format": aspect, "preview": True, "master": job["media"] == "video"})
+                               meta={"format": aspect, "preview": True, "master": job["media"] == "video",
+                                     "master_plate": recipe.get("master_plate")})
     k.store.set_asset(aid, role="preview")
     return aid
 
@@ -147,9 +149,11 @@ def plan(k, job_id: str):
                     deps.append(f"shot_{prev}")
                 elif prev and s["n"] not in risky:
                     deps.append(f"shot_{prev}")
-                deps += [f"shot_{r}" for r in risky if r != s["n"] and s["n"] not in risky]
+                # "risky first" is a GATE (wait for the risky shots to pass), not a picture dependency: redoing a risky
+                # shot later must not redo the shots that merely waited for it
+                gates = [f"shot_{r}" for r in risky if r != s["n"] and s["n"] not in risky]
                 spec = {"shot": s["n"], "aspect": aspect, "route": s["route"], "starts_from": s["starts_from"],
-                        "previous": f"shot_{prev}" if prev else None, "risky": s["n"] in risky, "fp": _shot_fp(s)}
+                        "previous": f"shot_{prev}" if prev else None, "risky": s["n"] in risky, "fp": _shot_fp(s), "gates": gates}
                 want.append((f"frame_{s['n']}", "frame", list(dict.fromkeys(deps)), spec))
                 want.append((f"shot_{s['n']}", "shot", [f"frame_{s['n']}"], dict(spec)))
                 if s.get("super_id") and not _logo_copy(k, job_id, recipe, s["super_id"]):
@@ -171,7 +175,7 @@ def plan(k, job_id: str):
         if node_id not in [w[0] for w in want]:
             k.store.set_node(job_id, node_id, status="retired", note="not in the current recipe")
     # anything downstream of a changed node is redone
-    changed = [w[0] for w in want if w[0] not in keep]
+    changed = [w[0] for w in want if w[0] not in keep and w[0] in existing]
     for c in changed:
         _reset_downstream(k, job_id, c)
     k.store.event(job_id, "system", "plan", {"nodes": [w[0] for w in want], "kept": keep})
@@ -221,7 +225,8 @@ def produce(k, job_id: str):
             break
         waiting = [x for x, n in nodes.items() if n["status"] == "needs_founder"]
         ready = [x for x, n in nodes.items() if n["status"] == "pending"
-                 and all(nodes[d]["status"] == "done" for d in json.loads(n["deps_json"]) if d in nodes)]
+                 and all(nodes[d]["status"] == "done" for d in json.loads(n["deps_json"]) + json.loads(n["spec_json"]).get("gates", [])
+                         if d in nodes)]
         if not ready and waiting:
             notes = {x: json.loads(nodes[x]["note"] or "{}").get("why", "") for x in waiting}
             k.to_founder(job_id, "producing", "the small taster rejected every take of " + ", ".join(waiting)

@@ -75,7 +75,9 @@ ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on
               "product_across_shots": "The product is the same product in every shot",
               "character_continuity": "The person is the same person in every shot (face, hair, clothes, accessories)",
               "no_model_lettering": "No lettering, logo or wordmark was drawn by the model; only code-set text and the supplied logo",
-              "subject_unobstructed": "The product/subject is never covered, cut off or blocked by text, graphics or objects"}
+              "subject_unobstructed": "The product/subject is never covered, cut off or blocked by text, graphics or objects",
+              "small_taster_confirmed": "I looked at every picture and clip the small taster passed in this cut: the customer's "
+                                        "product, the same hands/person, the same room and light, nothing warped"}
 
 
 def attestable(check_id: str) -> str | None:
@@ -114,7 +116,7 @@ def waive(store: Store, job_id: str, asset_id: str, check_id: str, *, founder, r
 _CONTROL_OF = {"audio_heard_by_person": "AUDIO_REVIEWED_BY_EAR", "independent_review": "QA_COVERAGE_ENFORCEMENT",
                "product_fidelity": "PRODUCT_INTACT_AND_FAITHFUL", "product_across_shots": "PRODUCT_CONTINUITY_ACROSS_SHOTS",
                "character_continuity": "CHARACTER_CONTINUITY", "no_model_lettering": "VIDEO_FRAME_TEXT_HYGIENE",
-               "subject_unobstructed": "SUBJECT_OBSTRUCTION"}
+               "subject_unobstructed": "SUBJECT_OBSTRUCTION", "small_taster_confirmed": "QA_COVERAGE_ENFORCEMENT"}
 
 
 def record_rows(store: Store, job_id: str, asset_id: str, rows: list, *, runner: str, prefix: str = ""):
@@ -358,6 +360,7 @@ PROCESS_CONTROLS = {"process:paid_preflight": "PAID_PRODUCTION_PREFLIGHT",
                     "process:failures_classified": "TRANSIENT_ERROR_CLASSIFICATION",
                     "process:provider_pool": "PROVIDER_POOL_AVAILABILITY"}
 PROCESS_CONTROLS_VIDEO = {"process:take_selection": "TAKE_SELECTION_BEFORE_RETAKE",
+                          "process:continuity_chain": "PRODUCT_CONTINUITY_ACROSS_SHOTS",
                           "process:riskiest_first": "RISKIEST_ACTION_QUALIFIED_FIRST",
                           "clips:required_action": "END_STATE_STILL_PLUS_LAST_ACTION_I2V",
                           "clips:end_state": "END_STATE_STILL_PLUS_LAST_ACTION_I2V"}
@@ -399,61 +402,70 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
     add("process:provider_pool", not held and (not streaks or paused),
         f"unsettled reservations: {held or 'none'}; transient runs ≥3: {sorted(set(streaks)) or 'none'}"
         + ("; job paused for the provider" if streaks else ""))
-    # 4. the direction that was paid for had its world/product truth checked before spend (atlas B4/B5, MDR8)
-    dr = store.artifact(job_id, "direction_review") or {}
-    ov = store.artifact(job_id, "direction_override")
-    simulated_dr = (dr.get("world_truth") or {}).get("world_note", "").startswith("simulated")
-    tb = truth_blockers(dr) if dr else ["no direction review on record"]
-    claims = (dr.get("world_truth") or {}).get("product_claims", [])
-    if not dr or simulated_dr:
+    # 4. the recipe that was paid for passed the recipe checker (or the founder overrode it, named and reasoned)
+    rc = store.artifact(job_id, "recipe_check") or {}
+    over = store.overrides(job_id, "recipe_send_back")
+    confirmed = store.overrides(job_id, "confirm_recipe")
+    sim_rc = bool((rc.get("written_by") or {}).get("simulated"))
+    if not rc:
         rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "NOT_VERIFIED",
-                     "detail": "no independent truth review of the direction" + (" (simulated)" if simulated_dr else "")})
-    elif tb and ov:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG", "blocking": False,
-                     "detail": f"overridden by {ov['by']}: {ov['reason'][:200]} — open: {tb}"})
+                     "detail": "no recipe check on record"})
+    elif rc.get("verdict_after_code") != "approve" and over:
+        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG",
+                     "blocking": False, "detail": f"recipe send-back overridden by {over[-1]['founder_email']}: {over[-1]['reason'][:200]}"})
+    elif rc.get("verdict_after_code") != "approve":
+        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FAIL",
+                     "detail": "the recipe checker sent the recipe back"})
+    elif sim_rc and not confirmed:
+        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "NOT_VERIFIED",
+                     "detail": "simulated recipe check — nobody judged the recipe"})
     else:
-        add_row = {"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FAIL" if tb else "PASS",
-                   "detail": "; ".join(tb) or f"{len(claims)} product claims, all sourced; world specified; no prop gaps",
-                   "evidence": dr.get("world_truth")}
-        rows.append(add_row)
+        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "PASS",
+                     "detail": f"recipe checker approved; code rules clean ({len(rc.get('code_findings', []))} findings)"
+                               + (f"; confirmed by {confirmed[-1]['founder_email']}" if confirmed else "")})
     if media_kind != "video":
         return rows
-    # 5. a new draw only after the previous take was inspected and rejected
+    shot_nodes = [n for n in store.nodes(job_id) if n["kind"] in ("shot", "frame") and n["status"] != "retired"]
+    # 5. a new attempt only after the previous one was tasted and rejected
     rejected = {}
     for e in store.events(job_id, ("take_rejected",)):
         n = json.loads(e["data_json"]).get("node"); rejected[n] = rejected.get(n, 0) + 1
     over = []
-    for n in store.nodes(job_id):
-        if n["kind"] == "clip":
-            draws = [a for a in prov if a["node_id"] == n["node_id"] and a["status"] == "ok"]
-            if len(draws) > n["max_draws"] or max(0, len(draws) - 1) > rejected.get(n["node_id"], 0):
-                over.append(n["node_id"])
-    add("process:take_selection", not over, f"clips redrawn without a rejected take or beyond the cap: {over or 'none'}")
-    # 5. the riskiest beat's clip was produced and inspected before any other clip was dispatched
-    q = [n for n in store.nodes(job_id) if n["kind"] == "clip" and json.loads(n["spec_json"]).get("qualify")]
-    clip_atts = [a for a in prov if (a["node_id"] or "").startswith("clip_") and not a["is_repair"]]
-    if not q:
-        add("process:riskiest_first", False, "no clip was marked for qualification", nv=True)
+    for n in shot_nodes:
+        draws = [a for a in prov if a["node_id"] == n["node_id"] and a["status"] == "ok"]
+        if max(0, len(draws) - 1) > rejected.get(n["node_id"], 0):
+            over.append(n["node_id"])
+    add("process:take_selection", not over, f"outputs redrawn without a rejected attempt: {over or 'none'}")
+    # 6. risky shots were produced and tasted before any other shot was paid for
+    risky = [n["node_id"] for n in shot_nodes if n["kind"] == "shot" and json.loads(n["spec_json"]).get("risky")]
+    shot_atts = [a for a in prov if (a["node_id"] or "").startswith(("shot_", "frame_")) and not a["is_repair"]]
+    if not risky:
+        add("process:riskiest_first", True, "no risky shot in this recipe (every shot reliable on its route)")
     else:
-        qid = q[0]["node_id"]
-        first_q = next((a for a in clip_atts if a["node_id"] == qid), None)
-        before = [a["node_id"] for a in clip_atts if first_q and a["seq"] < first_q["seq"]]
-        others = [a for a in clip_atts if a["node_id"] != qid]
-        early_o = [a["node_id"] for a in others if first_q and first_q["settled_at"] and a["reserved_at"] < first_q["settled_at"]]
-        add("process:riskiest_first", bool(first_q) and not before and not early_o,
-            f"qualification clip {qid} (seq {first_q['seq'] if first_q else '-'}); other clips dispatched before it settled: "
-            f"{sorted(set(before + early_o)) or 'none'}")
-    # 6. the inspector saw each selected clip reach its action and end state
+        risky_nodes = set(risky) | {r.replace("shot_", "frame_") for r in risky}
+        last_risky = max((a["seq"] for a in shot_atts if a["node_id"] in risky_nodes), default=None)
+        early = [a["node_id"] for a in shot_atts if a["node_id"] not in risky_nodes and last_risky and a["seq"] < last_risky]
+        add("process:riskiest_first", last_risky is not None and not early,
+            f"risky shots {risky}; other shots paid for before the risky ones were done: {sorted(set(early)) or 'none'}")
+    # 7. continuity: every shot starts from the master plate or the previous shot's end frame (the production log)
+    log = store.artifact(job_id, "production_log") or {"entries": []}
+    frames = [e for e in log["entries"] if e["node"].startswith("frame_")]
+    broken = [e["node"] for e in frames if e["source_kind"] not in ("master_plate", "previous_shot_end")]
+    add("process:continuity_chain", bool(frames) and not broken,
+        f"{len(frames)} shots; built from the master plate or the previous end frame; broken: {broken or 'none'}")
+    # 8. the small taster saw each selected (generated) clip reach its action and end state
     for cid, key in (("clips:required_action", "required_action_occurred"), ("clips:end_state", "end_state_reached")):
         ans = {}
         for aid in clip_asset_ids:
-            insp = json.loads(store.asset(aid)["meta_json"]).get("inspection") or {}
-            ans[aid] = insp.get(key)
+            m = json.loads(store.asset(aid)["meta_json"])
+            if m.get("code_motion"):
+                continue
+            ans[aid] = (m.get("inspection") or {}).get(key)
         vals = set(ans.values())
         if "no" in vals:
-            add(cid, False, f"the inspector reported NO on {[k for k, v in ans.items() if v == 'no']}", ans)
-        elif vals <= {"yes"} and ans:
-            add(cid, True, f"{len(ans)} selected clips: yes", ans)
+            add(cid, False, f"the small taster reported NO on {[k for k, v in ans.items() if v == 'no']}", ans)
+        elif vals <= {"yes"}:
+            add(cid, True, f"{len(ans)} generated clips: yes" if ans else "no generated clip in this cut (code motion only)", ans)
         else:
             add(cid, False, f"not established on {[k for k, v in ans.items() if v != 'yes']} ({sorted(map(str, vals))})", ans, nv=True)
     return rows
