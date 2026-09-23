@@ -55,6 +55,6 @@ PYTHONPATH=. python -m product.typeset.taste page --dir /tmp/ts
 4. **Letter-spacing for all-caps labels** and optical kerning pairs (Pillow draws default spacing).
 5. **Vision judge wiring**: `picker.JUDGE_PROMPT` is written; connecting it to a cheap vision model is a paid step for later.
 6. **Brand onboarding**: collecting brand fonts (with licence confirmation) and a dark-ground logo onto the customer shelf.
-   **Founder ruling (2026-09-23): a logo may be reversed to white on a dark ground** (`logo_reversible`, default True).
-   A brand that forbids it sets `logo_reversible: false` on its shelf; then a dark logo on a dark band is refused unless the
-   brand supplies its own dark-ground variant (`logo_on_dark`).
+   **The logo is never recoloured by default** (Canon TC-D10; the founder briefly allowed reversal to white on 2026-09-23,
+   then withdrew it the same day). On a dark ground the brand must supply its own variant (`logo_on_dark`); otherwise a
+   dark logo on a dark band is refused. A brand that explicitly permits reversal can set `logo_reversible: true` on its shelf.

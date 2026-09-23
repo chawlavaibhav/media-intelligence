@@ -120,8 +120,8 @@ class BrandKit:
     moods: list = field(default_factory=list)
     fonts: dict = field(default_factory=dict)   # brand's own faces: {"display": {"file": path, "weight": 700}, "text": {...}}
     preferred_templates: list = field(default_factory=list)
-    logo_reversible: bool = True         # a single-colour mark may be shown in `on_primary` on dark grounds (founder
-                                         # ruling 2026-09-23); a brand that forbids it sets False on its shelf
+    logo_reversible: bool = False        # Canon TC-D10: never recolour the mark; on a dark ground use the brand's own
+                                         # variant (`logo_on_dark`). True only if a brand explicitly permits it.
 
     @classmethod
     def from_shelf(cls, d: dict) -> "BrandKit":
