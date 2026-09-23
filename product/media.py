@@ -98,7 +98,7 @@ def sim_image(w: int, h: int, *, seed: int, label: str = "") -> bytes | None:
     hue = (seed * 67) % 360
     with tempfile.TemporaryDirectory() as d:
         out = Path(d) / "s.png"
-        run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", f"gradients=s={w}x{h}:seed={seed}:speed=0",
+        run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", f"gradients=s={w}x{h}:seed={seed}:speed=0.00001",
              "-vf", f"hue=h={hue}", "-frames:v", "1", str(out)])
         return out.read_bytes()
 

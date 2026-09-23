@@ -78,12 +78,48 @@ CREATE TABLE IF NOT EXISTS llm_calls (
 CREATE TABLE IF NOT EXISTS deliveries (
   id INTEGER PRIMARY KEY AUTOINCREMENT, job_id TEXT NOT NULL, asset_id TEXT NOT NULL, asset_sha256 TEXT NOT NULL,
   accepted_by TEXT NOT NULL, created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS overrides (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, job_id TEXT NOT NULL, kind TEXT NOT NULL, target TEXT NOT NULL,
+  founder_user_id TEXT NOT NULL, founder_email TEXT NOT NULL, reason TEXT NOT NULL, data_json TEXT NOT NULL, created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS rulebook_versions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, worker TEXT NOT NULL, version INTEGER NOT NULL, card_json TEXT NOT NULL,
+  by TEXT NOT NULL, reason TEXT NOT NULL, source_lesson TEXT, created TEXT NOT NULL, UNIQUE(worker, version));
+CREATE TABLE IF NOT EXISTS request_fingerprints (
+  job_id TEXT NOT NULL, fingerprint TEXT NOT NULL, route TEXT NOT NULL, node_id TEXT, sent INTEGER NOT NULL,
+  first_utc TEXT NOT NULL, last_utc TEXT NOT NULL, PRIMARY KEY (job_id, fingerprint));
+CREATE TABLE IF NOT EXISTS shelf_items (
+  id TEXT PRIMARY KEY, account_id TEXT NOT NULL, kind TEXT NOT NULL, key TEXT NOT NULL, version INTEGER NOT NULL,
+  data_json TEXT NOT NULL, path TEXT, sha256 TEXT, status TEXT NOT NULL, decided_by TEXT, decided_at TEXT,
+  source_job_id TEXT, created TEXT NOT NULL, UNIQUE(account_id, kind, key, version));
+CREATE TABLE IF NOT EXISTS shelf_uses (
+  job_id TEXT NOT NULL, shelf_item_id TEXT NOT NULL, version INTEGER NOT NULL, used_for TEXT NOT NULL, created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS equipment_rows (
+  id TEXT NOT NULL, version INTEGER NOT NULL, generator TEXT NOT NULL, routes TEXT NOT NULL, action_class TEXT NOT NULL,
+  verdict TEXT NOT NULL, sample_count INTEGER NOT NULL, evidence_json TEXT NOT NULL, note TEXT, alternative TEXT,
+  by TEXT NOT NULL, source_lesson TEXT, created TEXT NOT NULL, PRIMARY KEY (id, version));
+CREATE TABLE IF NOT EXISTS recipe_library (
+  id TEXT PRIMARY KEY, source_job_id TEXT NOT NULL, account_id TEXT, media TEXT NOT NULL, product_category TEXT,
+  action_classes TEXT NOT NULL, routes TEXT NOT NULL, outcome TEXT NOT NULL, customer_words TEXT, recipe_json TEXT NOT NULL,
+  summary TEXT NOT NULL, private INTEGER NOT NULL DEFAULT 0, by TEXT NOT NULL, source_lesson TEXT, created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS failure_diary (
+  id TEXT PRIMARY KEY, source_job_id TEXT, account_id TEXT, media TEXT, action_classes TEXT NOT NULL, routes TEXT NOT NULL,
+  failure_mode TEXT NOT NULL, text TEXT NOT NULL, private INTEGER NOT NULL DEFAULT 0, by TEXT NOT NULL,
+  source_lesson TEXT, created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS lessons (
+  id TEXT PRIMARY KEY, job_id TEXT NOT NULL, worker TEXT NOT NULL, target TEXT NOT NULL, proposal_json TEXT NOT NULL,
+  why TEXT NOT NULL, evidence_json TEXT NOT NULL, status TEXT NOT NULL, decided_by TEXT, decided_at TEXT,
+  decision_note TEXT, applied_json TEXT, created TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS ix_events_job ON events(job_id, id);
 CREATE INDEX IF NOT EXISTS ix_attempts_job ON attempts(job_id, seq);
 CREATE INDEX IF NOT EXISTS ix_assets_job ON assets(job_id);
 CREATE INDEX IF NOT EXISTS ix_checks_asset ON checks(asset_id);
 CREATE INDEX IF NOT EXISTS ix_jobs_state ON jobs(state, lease_until);
 """
+
+# v2 columns on llm_calls: which worker and form, the rulebook card version, the fingerprint of the customer's exact
+# words the call carried, the librarian's tray, and the estimated cost (simulated mode reports estimates, spec §9.4)
+LLM_CALL_COLUMNS = [("worker", "TEXT"), ("form", "TEXT"), ("card_version", "INTEGER"), ("exact_words_sha256", "TEXT"),
+                    ("tray_ids", "TEXT"), ("est_in_tokens", "INTEGER"), ("est_out_tokens", "INTEGER"), ("est_cost_usd", "TEXT")]
 
 HELD_STATUSES = ("reserved", "uncertain")      # money held but not settled
 MONEY = Decimal("0.000001")
@@ -125,6 +161,10 @@ class StaleState(Exception):
     """A transition was attempted from a state the job is no longer in."""
 
 
+class WriteOnceViolation(Exception):
+    """A file path that already holds a registered asset was about to be reused (spec §7.1: files are write-once)."""
+
+
 class Store:
     def __init__(self, db_path: str | Path):
         self.db_path = str(db_path)
@@ -132,6 +172,10 @@ class Store:
         self._local = threading.local()
         with self.connect() as c:
             c.executescript(SCHEMA)
+            have = {r["name"] for r in c.execute("PRAGMA table_info(llm_calls)")}
+            for col, typ in LLM_CALL_COLUMNS:
+                if col not in have:
+                    c.execute(f"ALTER TABLE llm_calls ADD COLUMN {col} {typ}")
 
     # ── connections ──────────────────────────────────────────────────────────────
     def connect(self) -> sqlite3.Connection:
@@ -234,16 +278,27 @@ class Store:
         return brief
 
     def transition(self, job_id: str, frm: str | tuple, to: str, *, actor: str, data: dict | None = None,
-                   **fields) -> None:
-        """Compare-and-set state change. Raises StaleState if the job is not in `frm`."""
+                   founder=None, **fields) -> None:
+        """Compare-and-set state change. Raises StaleState if the job is not in `frm`. A founder-only exit (flow.py)
+        needs `founder=` a FounderProof that still matches a live founder session; otherwise PermissionError."""
         frm_t = (frm,) if isinstance(frm, str) else tuple(frm)
+        from product.authority import verify_proof
+        from product.flow import can, needs_founder
+        cur = self.job(job_id)
+        if cur is not None and cur["state"] in frm_t and needs_founder(cur["state"], to) and not verify_proof(self, founder):
+            self.event(job_id, actor, "override_refused", {"action": f"{cur['state']} -> {to}",
+                                                           "why": "only the founder, signed in, can do this"})
+            raise PermissionError(f"refused: {cur['state']} -> {to} is the founder's decision (caller: {actor})")
         with self.tx() as c:
             row = c.execute("SELECT state FROM jobs WHERE id=?", (job_id,)).fetchone()
             if row is None or row["state"] not in frm_t:
                 raise StaleState(f"job {job_id} is {row['state'] if row else 'missing'}, not {frm_t}")
-            from product.states import can
             if not can(row["state"], to):
                 raise StaleState(f"job {job_id}: {row['state']} -> {to} is not a permitted transition")
+            if needs_founder(row["state"], to):
+                if not verify_proof(self, founder):
+                    raise PermissionError(f"refused: {row['state']} -> {to} is the founder's decision (caller: {actor})")
+                actor = founder.actor
             sets = ["state=?", "updated=?", "version=version+1"]
             args: list[Any] = [to, utc_now()]
             for k, v in fields.items():
@@ -414,10 +469,24 @@ class Store:
         p = Path(path).resolve()
         stored = str(p.relative_to(self.root)) if p.is_relative_to(self.root) else str(p)
         with self.tx() as c:
+            if c.execute("SELECT 1 FROM assets WHERE path=? OR path=?", (stored, str(p))).fetchone():
+                raise WriteOnceViolation(f"{stored} already holds a registered file; every version needs its own path")
             c.execute("INSERT INTO assets VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                       (aid, job_id, node_id, kind, role, stored, sha256_bytes(data), content_type, len(data), source,
                        attempt_id, status, cut, json.dumps(meta or {}, ensure_ascii=False, default=str), utc_now()))
         return aid
+
+    def new_output_path(self, directory: Path, stem: str, ext: str) -> Path:
+        """A path no asset has used and no file occupies: <stem>-v<k>.<ext>. Files are write-once (spec §7.1)."""
+        directory = Path(directory)
+        directory.mkdir(parents=True, exist_ok=True)
+        k = 1
+        while True:
+            p = directory / f"{stem}-v{k}.{ext}"
+            rel = str(p.resolve().relative_to(self.root)) if p.resolve().is_relative_to(self.root) else str(p.resolve())
+            if not p.exists() and not self.q1("SELECT 1 FROM assets WHERE path=? OR path=?", (rel, str(p.resolve()))):
+                return p
+            k += 1
 
     def _abs(self, row):
         """Asset rows carry paths relative to the data directory; callers get an absolute path."""
@@ -464,10 +533,30 @@ class Store:
         return list(latest.values())
 
     def waive(self, job_id, asset_id, check_id, by_user, reason):
+        """Low-level row write. The door guard counts a waiver only when `by_user` is a founder user id AND a matching
+        founder override row exists (verify.gateway) — use Kitchen.override_check, which checks the founder's session."""
         with self.tx() as c:
             c.execute("INSERT INTO waivers (job_id, asset_id, check_id, by_user, reason, created) VALUES (?,?,?,?,?,?)",
                       (job_id, asset_id, check_id, by_user, reason, utc_now()))
             self._event(c, job_id, by_user, "waiver", {"asset_id": asset_id, "check_id": check_id, "reason": reason})
+
+    def add_override(self, job_id: str, *, kind: str, target: str, founder, reason: str, data: dict | None = None) -> int:
+        from product.authority import check_reason, verify_proof
+        if not verify_proof(self, founder):
+            self.event(job_id, getattr(founder, "actor", str(founder)[:60]), "override_refused",
+                       {"action": f"{kind} {target}", "why": "only the founder, signed in, can do this"})
+            raise PermissionError(f"refused: only the founder can override ({kind} {target})")
+        reason = check_reason(reason)
+        with self.tx() as c:
+            oid = c.execute("INSERT INTO overrides (job_id, kind, target, founder_user_id, founder_email, reason, data_json, created) "
+                            "VALUES (?,?,?,?,?,?,?,?)", (job_id, kind, target, founder.user_id, founder.email, reason,
+                                                          json.dumps(data or {}, ensure_ascii=False, default=str), utc_now())).lastrowid
+            self._event(c, job_id, founder.actor, "founder_override", {"id": oid, "kind": kind, "target": target, "reason": reason})
+        return oid
+
+    def overrides(self, job_id: str, kind: str | None = None):
+        rows = self.q("SELECT * FROM overrides WHERE job_id=? ORDER BY id", (job_id,))
+        return [r for r in rows if kind is None or r["kind"] == kind]
 
     def waivers(self, asset_id: str):
         return self.q("SELECT * FROM waivers WHERE asset_id=?", (asset_id,))
@@ -513,12 +602,14 @@ class Store:
         return self.q("SELECT * FROM timings WHERE job_id=? ORDER BY started", (job_id,))
 
     # ── reasoning calls ─────────────────────────────────────────────────────────
-    def llm_start(self, job_id, *, role, provider, model, isolated, input_sha256, context_kinds, attempt_id=None) -> int:
+    def llm_start(self, job_id, *, role, provider, model, isolated, input_sha256, context_kinds, attempt_id=None,
+                  **v2) -> int:
+        cols = [k for k, _ in LLM_CALL_COLUMNS if k in v2]
         with self.tx() as c:
             return c.execute("INSERT INTO llm_calls (job_id, role, provider, model, isolated, input_sha256, context_kinds, "
-                             "status, attempt_id, started) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                             f"status, attempt_id, started{''.join(', ' + k for k in cols)}) VALUES (?,?,?,?,?,?,?,?,?,?{',?' * len(cols)})",
                              (job_id, role, provider, model, int(isolated), input_sha256, ",".join(context_kinds),
-                              "running", attempt_id, time.time())).lastrowid
+                              "running", attempt_id, time.time(), *[v2[k] for k in cols])).lastrowid
 
     def llm_end(self, call_id, *, status, output=None, usage=None):
         with self.tx() as c:

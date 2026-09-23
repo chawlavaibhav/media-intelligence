@@ -86,16 +86,29 @@ def attestable(check_id: str) -> str | None:
     return None
 
 
-def attest(store: Store, job_id: str, asset_id: str, check_id: str, *, by: str, note: str, outcome: str = "PASS"):
-    """A named person performed the check on this exact file and recorded what they found."""
+def attest(store: Store, job_id: str, asset_id: str, check_id: str, *, founder, note: str, outcome: str = "PASS"):
+    """The founder performed the check on this exact file and recorded what they found (spec §6.4: an unqualified judge's
+    "yes" counts only once the founder confirms). `founder` is a FounderProof from authority.founder_proof(); the
+    confirmation is stored as an override row, and the door guard counts the result only when that row exists."""
     statement = attestable(check_id)
     if statement is None:
         raise ValueError(f"{check_id} is not a person-performed check")
     if len(note.strip()) < 15:
         raise ValueError("say what you heard/saw (at least a sentence)")
+    store.add_override(job_id, kind="confirm", target=f"{asset_id}:{check_id}", founder=founder, reason=note.strip(),
+                       data={"outcome": outcome, "statement": statement})
     store.record_check(job_id, asset_id, check_id=check_id, status="PASS" if outcome == "PASS" else "FAIL", blocking=True,
-                       runner=f"person:{by}", detail=note.strip()[:1000], evidence={"by": by, "statement": statement},
+                       runner=f"founder:{founder.email}", detail=note.strip()[:1000],
+                       evidence={"by": founder.actor, "statement": statement},
                        control_ids=[_CONTROL_OF.get(check_id, "MANDATORY_EVENT_VISIBILITY_LJ_LINE")])
+
+
+def waive(store: Store, job_id: str, asset_id: str, check_id: str, *, founder, reason: str):
+    """The founder overrides a door-guard block on this exact file, with a written reason (spec §6.4)."""
+    if check_id in NON_WAIVABLE:
+        raise ValueError("this check cannot be waived — a person has to perform it and record what they found")
+    store.add_override(job_id, kind="check_waiver", target=f"{asset_id}:{check_id}", founder=founder, reason=reason)
+    store.waive(job_id, asset_id, check_id, founder.user_id, reason.strip())
 
 
 _CONTROL_OF = {"audio_heard_by_person": "AUDIO_REVIEWED_BY_EAR", "independent_review": "QA_COVERAGE_ENFORCEMENT",
@@ -448,22 +461,39 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
 
 # ── the gateway ────────────────────────────────────────────────────────────────────────────────
 def gateway(store: Store, job_id: str, asset_id: str, required: dict) -> dict:
+    """The door guard. Nothing leaves with a failed or missing check; only the founder can override, with a reason.
+    A waiver or a person-performed result counts only when a founder override row backs it (authority.py)."""
+    from product.authority import is_founder_user
+    ovs = store.overrides(job_id)
+    backed = {(o["kind"], o["target"]): o for o in ovs if is_founder_user(store, o["founder_user_id"])}
     rows = {r["check_id"]: r for r in store.checks(asset_id)}
-    waived = {w["check_id"]: w for w in store.waivers(asset_id)}
+    waived, ignored = {}, []
+    for w in store.waivers(asset_id):
+        o = backed.get(("check_waiver", f"{asset_id}:{w['check_id']}"))
+        if o and o["founder_user_id"] == w["by_user"]:
+            waived[w["check_id"]] = {"by_user": o["founder_email"], "reason": o["reason"]}
+        else:
+            ignored.append({"check_id": w["check_id"], "by": w["by_user"], "why": "not made by the signed-in founder — ignored"})
     sha = store.asset(asset_id)["sha256"]
     blocking, table = [], []
     for cid in sorted(set(required) | set(rows)):
         r = rows.get(cid)
         status = r["status"] if r else "NOT_VERIFIED"
+        detail = r["detail"] if r else "no result recorded for this exact file"
         if r is not None and r["asset_sha256"] != sha:
             status = "NOT_VERIFIED"           # a result for another version of the file proves nothing about this one
+        if r is not None and (r["runner"].startswith("person:") or r["runner"].startswith("founder:")) \
+                and ("confirm", f"{asset_id}:{cid}") not in backed:
+            status, detail = "NOT_VERIFIED", f"a person-recorded result not confirmed by the founder is ignored ({r['runner']})"
         is_blocking = (r["blocking"] if r else True) and status in ("FAIL", "NOT_VERIFIED")
         w = waived.get(cid) if cid not in NON_WAIVABLE else None
         entry = {"check_id": cid, "control": required.get(cid) or (r["control_ids"] if r else ""), "status": status,
-                 "detail": r["detail"] if r else "no result recorded for this exact file", "runner": r["runner"] if r else None,
+                 "detail": detail, "runner": r["runner"] if r else None,
                  "waived_by": w["by_user"] if w else None, "waiver_reason": w["reason"] if w else None}
         table.append(entry)
         if is_blocking and not w:
             blocking.append(entry)
+    shown = [{"kind": o["kind"], "target": o["target"], "by": o["founder_email"], "reason": o["reason"], "utc": o["created"]}
+             for o in ovs if is_founder_user(store, o["founder_user_id"])]
     return {"asset_id": asset_id, "sha256": sha, "ready": not blocking, "blocking": blocking, "table": table,
-            "waived": [e for e in table if e["waived_by"]]}
+            "waived": [e for e in table if e["waived_by"]], "ignored_waivers": ignored, "founder_overrides": shown}

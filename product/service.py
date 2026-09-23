@@ -59,9 +59,14 @@ class Service:
         self.orch = orch or Orchestrator(settings, store)
 
     # ── accounts and access ──────────────────────────────────────────────────────────────────
+    def founder_exists(self) -> bool:
+        return self.store.q1("SELECT 1 FROM users WHERE role='founder'") is not None
+
     def create_invite(self, *, email: str, role: str, account_id: str | None, by: str) -> str:
-        if role not in ("customer", "operator"):
+        if role not in ("customer", "operator", "founder"):
             raise Invalid("role")
+        if role == "founder" and self.founder_exists():
+            raise Invalid("a founder account already exists; there is exactly one founder")
         tok = secrets.token_urlsafe(24)
         with self.store.tx() as c:
             c.execute("INSERT INTO invites VALUES (?,?,?,?,?,NULL)", (token_hash(tok), account_id, email.strip().lower(), role, utc_now()))
@@ -77,6 +82,8 @@ class Service:
         with self.store.tx() as c:
             if c.execute("SELECT 1 FROM users WHERE email=?", (row["email"],)).fetchone():
                 raise Invalid("an account already exists for this email")
+            if row["role"] == "founder" and c.execute("SELECT 1 FROM users WHERE role='founder'").fetchone():
+                raise Invalid("a founder account already exists; there is exactly one founder")
             c.execute("INSERT INTO users VALUES (?,?,?,?,?,?,?)", (uid, row["account_id"], row["email"], name.strip()[:80],
                                                                    row["role"], hash_pw(password), utc_now()))
             c.execute("UPDATE invites SET used_at=? WHERE token_hash=?", (utc_now(), token_hash(token)))
@@ -167,7 +174,7 @@ class Service:
                                     status="supplied", meta={"filename": safe, "uploaded_by": user["email"]})
 
     def job(self, user, job_id):
-        if user["role"] == "operator":
+        if user["role"] in ("operator", "founder"):
             j = self.store.job(job_id)
         else:
             j = self.store.job_for_account(job_id, user["account_id"])

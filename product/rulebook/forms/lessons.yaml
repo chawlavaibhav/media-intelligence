@@ -1,0 +1,27 @@
+# Lessons — the diary writer (spec §4.11). Proposals only; each waits in the lesson queue for the founder.
+form: lessons
+version: 1
+written_by: diary_writer
+schema:
+  type: object
+  required: [outcome, what_the_customer_said, per_worker]
+  properties:
+    outcome: {type: string, enum: [accepted, rejected, abandoned]}
+    what_the_customer_said: {type: string}
+    per_worker:
+      type: array
+      items:
+        type: object
+        required: [worker, what_went_right, what_went_wrong, evidence_refs, proposed_change]
+        properties:
+          worker: {type: string}
+          what_went_right: {type: string}
+          what_went_wrong: {type: string}
+          evidence_refs: {type: array, items: {type: string}}
+          proposed_change:
+            type: [object, "null"]
+            required: [target, diff, why]
+            properties:
+              target: {type: string, enum: [rulebook_card, equipment_sheet, recipe_library, failure_diary, customer_shelf, form]}
+              diff: {type: object}
+              why: {type: string}

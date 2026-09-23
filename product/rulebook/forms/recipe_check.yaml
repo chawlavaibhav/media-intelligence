@@ -1,0 +1,38 @@
+# Recipe check — the recipe checker (spec §4.5). Code adds `code_findings` and may force `send_back`.
+form: recipe_check
+version: 1
+written_by: recipe_checker
+ai_fields: [verdict, predicted_acceptance, acceptance_reason, mandatory_coverage, issues, add_steps, past_failures_matched]
+schema:
+  type: object
+  required: [verdict, predicted_acceptance, acceptance_reason, mandatory_coverage, issues, add_steps, past_failures_matched,
+             code_findings, verdict_after_code]
+  properties:
+    verdict: {type: string, enum: [approve, add_steps, send_back]}
+    predicted_acceptance: {type: string, enum: [likely, uncertain, unlikely]}
+    acceptance_reason: {type: string}
+    mandatory_coverage:
+      type: array
+      items:
+        type: object
+        required: [mandatory_id, covered, where]
+        properties: {mandatory_id: {type: string}, covered: {type: boolean}, where: {type: string}}
+    issues:
+      type: array
+      items:
+        type: object
+        required: [severity, where, issue, fix]
+        properties:
+          severity: {type: string, enum: [blocker, major, minor]}
+          where: {type: string}
+          issue: {type: string}
+          fix: {type: string}
+    add_steps: {type: array, items: {type: string}}
+    past_failures_matched: {type: array, items: {type: string}}
+    code_findings:
+      type: array
+      items:
+        type: object
+        required: [rule, where, finding]
+        properties: {rule: {type: string}, where: {type: string}, finding: {type: string}}
+    verdict_after_code: {type: string, enum: [approve, add_steps, send_back]}

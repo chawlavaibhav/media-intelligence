@@ -32,6 +32,29 @@ class GuardRefused(Exception):
     pass
 
 
+class IdenticalRequestRefused(GuardRefused):
+    """Spec §6.2: never send the same request to the same generator a third time; a retry must change something."""
+
+
+# Outcomes that count as the generator having answered THIS request (a take was made, or the provider refused the
+# content). A transient infrastructure failure (5xx, timeout, 429) is not an answer: resending it is not a retry of
+# the same creative request, so it does not count towards the limit.
+MAX_IDENTICAL_SENDS = 2
+
+
+def fingerprint(route: str, **inputs) -> str:
+    from product.store import sha256_bytes, sha256_json
+    norm = {}
+    for k, v in inputs.items():
+        if k in ("refs",):
+            norm[k] = [sha256_bytes(b) for _, b in (v or [])]
+        elif k == "image" and v is not None:
+            norm[k] = sha256_bytes(v[1])
+        else:
+            norm[k] = v
+    return sha256_json({"route": route, **norm})
+
+
 class DispatchFailed(Exception):
     def __init__(self, msg, failure_class, retryable):
         super().__init__(msg)
@@ -90,6 +113,20 @@ class Dispatcher:
         return DispatchFailed(f"{fc}: {scrub(res.message)[:200]}", fc, bool(cls.get("retry_eligible")) or res.timed_out
                               or (res.http_status or 0) >= 500 or res.http_status == 429)
 
+    def _check_identical(self, job_id, node_id, route, fp):
+        row = self.store.q1("SELECT sent FROM request_fingerprints WHERE job_id=? AND fingerprint=?", (job_id, fp))
+        if row and row["sent"] >= MAX_IDENTICAL_SENDS:
+            self.store.event(job_id, "system", "identical_request_refused", {"node": node_id, "route": route, "fingerprint": fp[:16],
+                                                                            "sent_before": row["sent"]})
+            raise IdenticalRequestRefused(f"{node_id}: this exact request was already answered {row['sent']} times by {route}; "
+                                          f"a retry must change the route, the source image or the instruction")
+
+    def _count(self, job_id, node_id, route, fp):
+        now = utc_now()
+        with self.store.tx() as c:
+            c.execute("INSERT INTO request_fingerprints (job_id, fingerprint, route, node_id, sent, first_utc, last_utc) VALUES (?,?,?,?,1,?,?) "
+                      "ON CONFLICT(job_id, fingerprint) DO UPDATE SET sent=sent+1, last_utc=excluded.last_utc", (job_id, fp, route, node_id, now, now))
+
     def _register(self, job_id, node_id, att, res: ProviderResult, kind: str, ext: str, meta: dict) -> str:
         out = self._out(job_id, node_id, att, ext)
         out.write_bytes(res.data)
@@ -98,13 +135,19 @@ class Dispatcher:
 
     def image(self, job_id, node_id, *, prompt, aspect, refs, guard: dict, is_repair=False, meta=None) -> str:
         prompt_guard(prompt, **guard)
+        fp = fingerprint("nano-banana-2", prompt=prompt, aspect=aspect, refs=refs)
+        self._check_identical(job_id, node_id, "nano-banana-2", fp)
         cost = quote("nano-banana-2")
         att = self.store.reserve(job_id, route="nano-banana-2", category="provider", amount_usd=cost, node_id=node_id,
                                  is_repair=is_repair)
         with self.store.timed(job_id, "provider", f"{node_id} still"):
             res = self.p.image(prompt, aspect, refs)
         if res.status != "ok":
-            raise self._fail(att, res, cost)
+            err = self._fail(att, res, cost)
+            if err.failure_class == "provider_refusal":
+                self._count(job_id, node_id, "nano-banana-2", fp)
+            raise err
+        self._count(job_id, node_id, "nano-banana-2", fp)
         aid = self._register(job_id, node_id, att, res, "image", "png",
                              {"prompt": prompt, "aspect": aspect, "route": "nano-banana-2", **(meta or {})})
         self.store.settle(att, status="ok", settled_usd=cost, detail=f"{len(res.data)} bytes")
@@ -113,6 +156,8 @@ class Dispatcher:
     def video(self, job_id, node_id, *, prompt, image, duration_s, aspect, negative, guard: dict, is_repair=False,
               meta=None) -> str:
         prompt_guard(prompt, **guard)
+        fp = fingerprint("veo-3.1-fast-i2v", prompt=prompt, image=image, duration_s=duration_s, aspect=aspect, negative=negative)
+        self._check_identical(job_id, node_id, "veo-3.1-fast-i2v", fp)
         cost = quote("veo-3.1-fast-i2v", duration_s=duration_s)
         att = self.store.reserve(job_id, route="veo-3.1-fast-i2v", category="provider", amount_usd=cost, node_id=node_id,
                                  is_repair=is_repair)
@@ -122,7 +167,11 @@ class Dispatcher:
                 self.store.mark_request(att, res.request_ref)
                 res = self.p.video_poll(res.request_ref)
         if res.status != "ok":
-            raise self._fail(att, res, cost)
+            err = self._fail(att, res, cost)
+            if err.failure_class == "provider_refusal":
+                self._count(job_id, node_id, "veo-3.1-fast-i2v", fp)
+            raise err
+        self._count(job_id, node_id, "veo-3.1-fast-i2v", fp)
         aid = self._register(job_id, node_id, att, res, "video", "mp4",
                              {"prompt": prompt, "negative": negative, "duration_s": duration_s, "aspect": aspect,
                               "route": "veo-3.1-fast-i2v", **(meta or {})})
@@ -131,6 +180,8 @@ class Dispatcher:
 
     def music(self, job_id, node_id, *, prompt, negative, guard: dict, is_repair=False) -> str:
         prompt_guard(prompt, needs_no_lettering=False, **guard)
+        fp = fingerprint("lyria", prompt=prompt, negative=negative)
+        self._check_identical(job_id, node_id, "lyria", fp)
         cost = quote("lyria")
         att = self.store.reserve(job_id, route="lyria", category="provider", amount_usd=cost, node_id=node_id,
                                  is_repair=is_repair)
@@ -138,6 +189,7 @@ class Dispatcher:
             res = self.p.music(prompt, negative)
         if res.status != "ok":
             raise self._fail(att, res, cost)
+        self._count(job_id, node_id, "lyria", fp)
         aid = self._register(job_id, node_id, att, res, "audio", "mp3" if (res.content_type or "").endswith(("mpeg", "mp3")) else "wav",
                              {"prompt": prompt, "route": "lyria"})
         self.store.settle(att, status="ok", settled_usd=cost)

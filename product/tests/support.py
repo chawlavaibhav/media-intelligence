@@ -32,10 +32,24 @@ class Env:
         self.svc.redeem_invite(tok, name="Buyer", password="correct horse battery")
         return self.store.user_by_email(email)
 
-    def operator(self, email="founder@mi.test"):
+    def operator(self, email="ops@mi.test"):
         tok = self.svc.create_invite(email=email, role="operator", account_id=None, by="test")
-        self.svc.redeem_invite(tok, name="Founder", password="correct horse battery")
+        self.svc.redeem_invite(tok, name="Ops", password="correct horse battery")
         return self.store.user_by_email(email)
+
+    def founder_session(self, email="founder@mi.test") -> str:
+        """The one founder account, signed in: returns the session token (what the web app holds in its cookie)."""
+        if not self.store.user_by_email(email):
+            tok = self.svc.create_invite(email=email, role="founder", account_id=None, by="test")
+            self.svc.redeem_invite(tok, name="Founder", password="correct horse battery")
+        return self.svc.login(email, "correct horse battery")
+
+    def founder(self, email="founder@mi.test"):
+        from product.authority import founder_proof
+        return founder_proof(self.store, self.founder_session(email))
+
+    def session_of(self, email) -> str:
+        return self.svc.login(email, "correct horse battery")
 
     def submit(self, media="video", text=None, budget="20", exact=("Pack less. Go further.",), user=None, **kw):
         return self.svc.submit(user or self.user, title=f"test {media}", media=media, text=text or (FILM_BRIEF if media == "video" else IMAGE_BRIEF),
