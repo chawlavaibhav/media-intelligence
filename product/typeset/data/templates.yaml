@@ -1,0 +1,97 @@
+# Layout templates. Coordinates are fractions of the canvas (x0, y0, x1, y1). A template fixes WHERE things go and
+# the size limits; the type system fixes WHICH faces and the scale; the engine measures and fits the real copy.
+#
+# roles:   headline (the customer's main line) · sub (a supporting line) · small (URL, CTA, legal) · logo (supplied mark)
+# block:   the text block; `order` stacks roles top to bottom; roles listed under `corners` are placed in a corner instead.
+# plate:   cover        — the picture fills the canvas (text sits on calm picture area; checks refuse busy backgrounds)
+#          fit_below    — the picture is scaled into the area below the block, background = the plate's own edge colour
+#          fit_above    — the same, above the block
+#          none         — no picture (end cards): solid brand background
+# panel:   an opaque colour band drawn before the text (brand colour or background colour)
+# reels_safe: for 9:16, the area Instagram leaves free of its own buttons and captions. On 9:16 every block and corner is
+#   laid out INSIDE this area (template fractions are taken relative to it); pictures and panels still bleed to the edge.
+# Every headline minimum is >= 0.052 of the width: 20 CSS px on a 390-px phone, the legibility floor in checks.py.
+
+reels_safe: [0.06, 0.12, 0.94, 0.80]
+
+templates:
+  top_center_stack:
+    kind: poster
+    formats: ["1:1", "4:5", "9:16"]
+    description: Logo, headline and URL centred above the product. Calm, catalogue-premium.
+    block: {box: [0.08, 0.055, 0.92, 0.29], align: center, valign: top, order: [logo, headline, sub, small]}
+    plate: fit_below
+    logo_width: 0.30
+    headline: {max_lines: 2, max_size: 0.075, min_size: 0.052}
+
+  top_left_editorial:
+    kind: poster
+    formats: ["1:1", "4:5", "9:16"]
+    description: Large left-aligned headline at the top, URL under it, logo small in a bottom corner. Magazine feel.
+    block: {box: [0.08, 0.06, 0.78, 0.33], align: left, valign: top, order: [headline, sub, small]}
+    corners: {logo: br}
+    plate: fit_below
+    logo_width: 0.18
+    headline: {max_lines: 3, max_size: 0.095, min_size: 0.055}
+
+  bottom_center:
+    kind: poster
+    formats: ["1:1", "4:5", "9:16"]
+    description: Product on top, headline and URL centred underneath; logo top-left.
+    block: {box: [0.08, 0.74, 0.92, 0.945], align: center, valign: bottom, order: [headline, sub, small]}
+    corners: {logo: tl}
+    plate: fit_above
+    logo_width: 0.18
+    headline: {max_lines: 2, max_size: 0.07, min_size: 0.052}
+
+  panel_bottom:
+    kind: poster
+    formats: ["1:1", "4:5", "9:16"]
+    description: Solid brand-colour band at the bottom carrying headline and URL; logo right in the band. Robust on busy pictures.
+    panel: {box: [0.0, 0.72, 1.0, 1.0], colour: primary}
+    block: {box: [0.07, 0.75, 0.74, 0.95], align: left, valign: center, order: [headline, sub, small]}
+    corners: {logo: br_panel}
+    plate: fit_above_panel
+    logo_width: 0.20
+    headline: {max_lines: 2, max_size: 0.07, min_size: 0.052}
+
+  headline_hero:
+    kind: poster
+    formats: ["4:5", "9:16"]
+    description: The headline is the hero — oversized, three lines max — product below; logo and URL share the foot.
+    block: {box: [0.07, 0.05, 0.93, 0.40], align: left, valign: top, order: [headline]}
+    corners: {logo: bl, small: br}
+    plate: fit_below
+    logo_width: 0.17
+    headline: {max_lines: 3, max_size: 0.13, min_size: 0.07}
+
+  minimal_corner:
+    kind: poster
+    formats: ["1:1", "4:5", "9:16"]
+    description: Quiet luxury — the picture fills the frame, a short headline sits small in the lower-left, logo top-left.
+    block: {box: [0.08, 0.76, 0.68, 0.95], align: left, valign: bottom, order: [headline, small]}
+    corners: {logo: tl}
+    plate: cover
+    logo_width: 0.16
+    headline: {max_lines: 2, max_size: 0.062, min_size: 0.052}
+
+  endcard_center:
+    kind: endcard
+    formats: ["9:16", "1:1", "4:5", "16:9"]
+    description: Logo, line and URL centred on the brand background. The default film end card.
+    block: {box: [0.10, 0.30, 0.90, 0.64], align: center, valign: center, order: [logo, headline, small]}
+    plate: none
+    background: background
+    logo_width: 0.42
+    headline: {max_lines: 3, max_size: 0.075, min_size: 0.052}
+
+  endcard_line_first:
+    kind: endcard
+    formats: ["9:16", "4:5"]
+    description: The line is the hero, left-aligned, large; logo and URL small at the foot, inside the Reels-safe area.
+    block: {box: [0.09, 0.24, 0.91, 0.60], align: left, valign: center, order: [headline]}
+    corners: {logo: bl_safe, small: br_safe}
+    plate: none
+    background: background
+    logo_width: 0.26
+    headline: {max_lines: 4, max_size: 0.11, min_size: 0.06}

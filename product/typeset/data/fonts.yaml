@@ -1,0 +1,144 @@
+# House font library. Every file is SIL Open Font License (OFL), downloaded from github.com/google/fonts on 2026-09-23;
+# URLs and SHA-256 in fonts/SOURCES.json, licence text in each family's OFL.txt. OFL permits commercial use in ads.
+# `axes` lists the variable axes by name; `weights` maps a weight to a static file when the family ships statics.
+families:
+  inter:
+    name: Inter
+    class: sans
+    scripts: [latin]
+    file: inter/Inter[opsz,wght].ttf
+    axes: {Weight: [100, 900], "Optical size": [14, 32]}
+  dmsans:
+    name: DM Sans
+    class: sans
+    scripts: [latin]
+    file: dmsans/DMSans[opsz,wght].ttf
+    axes: {Weight: [100, 1000], "Optical size": [9, 40]}
+  manrope:
+    name: Manrope
+    class: sans
+    scripts: [latin]
+    file: manrope/Manrope[wght].ttf
+    axes: {Weight: [200, 800]}
+  outfit:
+    name: Outfit
+    class: sans
+    scripts: [latin]
+    file: outfit/Outfit[wght].ttf
+    axes: {Weight: [100, 900]}
+  spacegrotesk:
+    name: Space Grotesk
+    class: sans
+    scripts: [latin]
+    file: spacegrotesk/SpaceGrotesk[wght].ttf
+    axes: {Weight: [300, 700]}
+  bricolagegrotesque:
+    name: Bricolage Grotesque
+    class: display-sans
+    scripts: [latin]
+    file: bricolagegrotesque/BricolageGrotesque[opsz,wdth,wght].ttf
+    axes: {Weight: [200, 800], "Optical size": [12, 96], Width: [75, 100]}
+  poppins:
+    name: Poppins
+    class: sans
+    scripts: [latin, devanagari]
+    weights: {400: poppins/Poppins-Regular.ttf, 500: poppins/Poppins-Medium.ttf, 600: poppins/Poppins-SemiBold.ttf,
+              700: poppins/Poppins-Bold.ttf}
+  playfairdisplay:
+    name: Playfair Display
+    class: serif
+    scripts: [latin]
+    file: playfairdisplay/PlayfairDisplay[wght].ttf
+    axes: {Weight: [400, 900]}
+  fraunces:
+    name: Fraunces
+    class: serif
+    scripts: [latin]
+    file: fraunces/Fraunces[SOFT,WONK,opsz,wght].ttf
+    axes: {Weight: [100, 900], "Optical size": [9, 144]}
+  cormorantgaramond:
+    name: Cormorant Garamond
+    class: serif
+    scripts: [latin]
+    file: cormorantgaramond/CormorantGaramond[wght].ttf
+    axes: {Weight: [300, 700]}
+  instrumentserif:
+    name: Instrument Serif
+    class: serif
+    scripts: [latin]
+    weights: {400: instrumentserif/InstrumentSerif-Regular.ttf}
+  notosansdevanagari:
+    name: Noto Sans Devanagari
+    class: sans
+    scripts: [devanagari, latin]
+    file: notosansdevanagari/NotoSansDevanagari[wdth,wght].ttf
+    axes: {Weight: [100, 900], Width: [62, 100]}
+  mukta:
+    name: Mukta
+    class: sans
+    scripts: [devanagari, latin]
+    weights: {400: mukta/Mukta-Regular.ttf, 600: mukta/Mukta-SemiBold.ttf, 700: mukta/Mukta-Bold.ttf}
+  tirodevanagarihindi:
+    name: Tiro Devanagari Hindi
+    class: serif
+    scripts: [devanagari, latin]
+    weights: {400: tirodevanagarihindi/TiroDevanagariHindi-Regular.ttf}
+
+# Type systems: a display face for the headline and a text face for everything else, with a modular scale.
+# The chef names a mood; the kit (or the picker) chooses a system whose moods match. `devanagari` is the face used
+# for any line containing Devanagari when the system's own faces lack it.
+systems:
+  quiet_premium:
+    moods: [premium, calm, minimal, travel]
+    display: {family: instrumentserif, weight: 400}
+    text: {family: inter, weight: 500}
+    scale: 1.414
+    devanagari: tirodevanagarihindi
+  modern_clean:
+    moods: [modern, clean, calm, tech, premium]
+    display: {family: manrope, weight: 700}
+    text: {family: manrope, weight: 500}
+    scale: 1.333
+    devanagari: mukta
+  editorial_serif:
+    moods: [editorial, premium, fashion, heritage]
+    display: {family: playfairdisplay, weight: 600}
+    text: {family: dmsans, weight: 500}
+    scale: 1.5
+    devanagari: tirodevanagarihindi
+  luxury_light:
+    moods: [luxury, calm, minimal, beauty]
+    display: {family: cormorantgaramond, weight: 500}
+    text: {family: inter, weight: 400}
+    scale: 1.5
+    devanagari: tirodevanagarihindi
+  bold_d2c:
+    moods: [bold, playful, youthful, food, mass]
+    display: {family: bricolagegrotesque, weight: 750}
+    text: {family: inter, weight: 500}
+    scale: 1.5
+    devanagari: mukta
+  friendly_round:
+    moods: [friendly, playful, youthful, kids, app]
+    display: {family: outfit, weight: 650}
+    text: {family: outfit, weight: 450}
+    scale: 1.333
+    devanagari: mukta
+  indian_popular:
+    moods: [mass, friendly, bharat, festive, app]
+    display: {family: poppins, weight: 600}
+    text: {family: poppins, weight: 400}
+    scale: 1.333
+    devanagari: poppins
+  tech_sharp:
+    moods: [tech, modern, bold, fintech]
+    display: {family: spacegrotesk, weight: 600}
+    text: {family: inter, weight: 400}
+    scale: 1.333
+    devanagari: notosansdevanagari
+  warm_serif:
+    moods: [warm, heritage, food, craft, premium]
+    display: {family: fraunces, weight: 600}
+    text: {family: dmsans, weight: 450}
+    scale: 1.414
+    devanagari: tirodevanagarihindi
