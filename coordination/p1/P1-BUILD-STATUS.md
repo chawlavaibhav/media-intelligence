@@ -1,5 +1,7 @@
 # Media Intelligence P1 — build status and continuation record
 
+> **2026-09-23: handed over.** Start with `HANDOVER-2026-09-23.md`.
+
 Branch `claude/confident-franklin-s1v8ln` (from main `f0ad1fa`). PR #108 (draft). Nothing merged to main; no paid call
 made; no cloud resource created. Session 1: cloud, 2026-09-22 (built). Session 2: founder's laptop, 2026-09-23 (below).
 
