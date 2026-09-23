@@ -165,10 +165,11 @@ class FailureDiary:
     def __init__(self, store: Store):
         self.store = store
 
-    def all(self, account_id: str | None) -> list:
+    def all(self, account_id: str | None, *, staff: bool = False) -> list:
+        """staff=True only for the founder's pages; a tray always passes the job's account (private items stay private)."""
         rows = _seed_failures() + _atlas_rows()
         for r in self.store.q("SELECT * FROM failure_diary ORDER BY created"):
-            if r["private"] and r["account_id"] != account_id:
+            if r["private"] and r["account_id"] != account_id and not staff:
                 continue
             rows.append({"id": r["id"], "section": "failure_diary", "failure_mode": r["failure_mode"], "bucket": None,
                          "action_classes": json.loads(r["action_classes"]), "routes": json.loads(r["routes"]), "media": r["media"],
@@ -207,10 +208,10 @@ class RecipeLibrary:
     def __init__(self, store: Store):
         self.store = store
 
-    def all(self, account_id: str | None) -> list:
+    def all(self, account_id: str | None, *, staff: bool = False) -> list:
         rows = list(_seed_recipes())
         for r in self.store.q("SELECT * FROM recipe_library ORDER BY created"):
-            if r["private"] and r["account_id"] != account_id:
+            if r["private"] and r["account_id"] != account_id and not staff:
                 continue
             rows.append({"id": r["id"], "section": "recipe_library", "media": r["media"], "product_category": r["product_category"],
                          "outcome": r["outcome"], "action_classes": json.loads(r["action_classes"]), "routes": json.loads(r["routes"]),

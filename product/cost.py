@@ -47,8 +47,10 @@ def expected_calls(recipe: dict, media: str, formats: list) -> list:
     return out
 
 
-def reasoning_report(k, job_id: str, recipe: dict | None = None) -> dict:
-    """Per worker: calls made (estimated and, when live, actual cost) + calls still expected. Compared with the budget."""
+def reasoning_report(k, job_id: str, recipe: dict | None = None, *, stage: str = "final") -> dict:
+    """Per worker: calls made (estimated and, when live, actual cost) + calls still expected. Compared with the budget.
+    stage "quote": before production — every call the recipe implies is still expected.
+    stage "final": after production — only the calls made, plus the diary writer if it has not run yet."""
     job = k.store.job(job_id)
     media = job["media"]
     per = {}
@@ -67,7 +69,10 @@ def reasoning_report(k, job_id: str, recipe: dict | None = None) -> dict:
                                    "expected_usd": Decimal(0), "model": k.s.models.get(w, "")})["actual_usd"] += Decimal(a["settled_usd"])
     if recipe is not None:
         formats = (k.store.artifact(job_id, "understanding") or {}).get("deliverable", {}).get("formats") or []
-        for w, tin in expected_calls(recipe, media, formats):
+        todo = expected_calls(recipe, media, formats)
+        if stage == "final":
+            todo = [(w, t) for w, t in todo if w == "diary_writer" and "diary_writer" not in per]
+        for w, tin in todo:
             e = per.setdefault(w, {"calls": 0, "estimated_usd": Decimal(0), "actual_usd": Decimal(0), "expected_calls": 0,
                                    "expected_usd": Decimal(0), "model": k.s.models.get(w, "")})
             e["expected_calls"] += 1
@@ -103,7 +108,7 @@ def quote(k, job_id: str, recipe: dict) -> dict:
                 lines.append((f"shot {s['n']} moving picture ({c}s, up to 2 takes)", 2, provider_quote("veo-3.1-fast-i2v", duration_s=c)))
         lines.append(("music bed", 2, provider_quote("lyria")))
     media_usd = sum(Decimal(n) * p for _, n, p in lines)
-    rep = reasoning_report(k, job_id, recipe)
+    rep = reasoning_report(k, job_id, recipe, stage="quote")
     reasoning = Decimal(rep["estimated_total_usd"])
     total = (media_usd + reasoning).quantize(Decimal("0.01"))
     return {"lines": [{"item": a, "units": n, "unit_usd": str(p), "usd": str((Decimal(n) * p).quantize(Decimal('0.01')))} for a, n, p in lines],

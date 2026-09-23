@@ -1,0 +1,45 @@
+# Judges' qualification set (spec §10): old cases whose verdict the founder already gave. No new generation.
+# `evidence:` paths are relative to the private repository chawlavaibhav/mi-p1-evidence (MI_P1_EVIDENCE, or a checkout next
+# to this repository); `agency:` cases need the historical Mokobara job folder (MI_HISTORICAL_MOKOBARA_JOB). A case whose
+# files are not on the host is reported "unavailable" and counts for nothing — never as a pass.
+recipe_checker:
+  - id: RC-0923-FILM
+    what: the plan of the rejected 30-s packing reel (8 hand-action beats on the video model, each generated independently)
+    evidence: {job: job_20260923_7d36a5b6, artifact: direction, version: 1}
+    known_verdict: reject            # the customer rejected what this plan produced
+    known_reasons: [hands operating zips and flaps on the video model, no continuity plan across independently generated beats]
+  - id: RC-0923-POSTER
+    what: the plan of the accepted launch poster
+    evidence: {job: job_20260923_6720871c, artifact: direction, version: latest}
+    known_verdict: accept
+    known_reasons: []
+small_taster:
+  # known bad: takes that went into the rejected film, and stills the founder's verdict or the evidence shows are wrong
+  - {id: ST-B1, evidence: {asset: ast_9c41e6a1c37ae312}, what: clip b1 in the rejected film, known: bad, why: "two different hands; robotic motion"}
+  - {id: ST-B2, evidence: {asset: ast_e1463fe49a8929cc}, what: clip b2 in the rejected film, known: bad, why: "hands on zips, morphing flap"}
+  - {id: ST-B5, evidence: {asset: ast_a2eebe8e7b155fe5}, what: clip b5 in the rejected film, known: bad, why: "flap and bag construction change"}
+  - {id: ST-B7, evidence: {asset: ast_6efc2f0bd18396f0}, what: clip b7 in the rejected film, known: bad, why: "zips; robotic"}
+  - {id: ST-B8, evidence: {asset: ast_38ba4912d43c3aaf}, what: clip b8 in the rejected film, known: bad, why: "bag floats; lining colour changes"}
+  - {id: ST-S7, evidence: {asset: ast_b21cbb8344d7f745}, what: still b7, known: bad, why: "brand misspelt 'mokebara' on the plaque"}
+  - {id: ST-S6, evidence: {asset: ast_8f7372e7db48bd64}, what: still b6, known: bad, why: "wrong handle, legible plaque text"}
+  # known good: the poster plates the founder picked and accepted (v1's inspector had rejected both — a false rejection)
+  - {id: ST-P11, evidence: {asset: ast_5296eab7f908a2bf}, what: 1:1 poster plate, known: good, why: "in the accepted poster"}
+  - {id: ST-P45, evidence: {asset: ast_f0f2661bdca8936b}, what: 4:5 poster plate, known: good, why: "in the accepted poster"}
+big_taster:
+  - id: BT-0923-FILM
+    evidence: {asset: ast_96ccb4b092b8f40b}
+    what: the rejected 30-s reel, exactly as the founder saw it
+    known_verdict: reject
+    known_defects: [two different pairs of hands, robotic / jerky motion, bag colour changes between shots, zips and flaps morph]
+  - {id: BT-0923-P11, evidence: {asset: ast_e05db60251c4ab8d}, what: accepted poster 1:1, known_verdict: accept, known_defects: []}
+  - {id: BT-0923-P45, evidence: {asset: ast_8008723f7cc0cdc4}, what: accepted poster 4:5, known_verdict: accept, known_defects: []}
+  - id: BT-MOKO7-V1
+    agency: {film: v1}
+    what: MOKOBARA-ODYSSEY-007 v1 (see MOKOBARA-V1-V2-KEY.yaml)
+    known_verdict: reject
+    known_defects: [D1, D5, OAR_REVEAL, TEAR, FONT, LOGO]
+  - id: BT-MOKO7-V2
+    agency: {film: v2}
+    what: MOKOBARA-ODYSSEY-007 v2, accepted
+    known_verdict: accept
+    known_defects: [D1, D5]

@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Lesson queue · Operator{% endblock %}
+{% block body %}
+<p class="small"><a href="/ops">← Operator</a></p>
+<h1>Lesson queue</h1>
+<p class="muted">Proposals from the diary writer after every closed job. Nothing changes until the founder approves, edits or rejects each one.{% if not is_founder %} <strong>You can read these; only the founder can decide.</strong>{% endif %}</p>
+{% for l in lessons %}<div class="card"><h2>{{ l.target.replace('_', ' ') }} — {{ l.worker }} <span class="chip">{{ l.status }}</span></h2>
+<p class="small muted">From <a href="/ops/jobs/{{ l.job_id }}">{{ l.job_id }}</a> · {{ l.created[:16] }} · evidence {{ l.evidence_json }}</p>
+<p>{{ l.why }}</p><pre>{{ json.dumps(json.loads(l.proposal_json), indent=1, ensure_ascii=False) }}</pre>
+{% if l.status == 'waiting' %}<form method="post" action="/ops/lessons/{{ l.id }}"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="n{{ l.id }}">Your reason</label><input id="n{{ l.id }}" type="text" name="note" required minlength="15">
+<label for="e{{ l.id }}">Edited proposal (only for "approve with my edit")</label><textarea id="e{{ l.id }}" name="edited">{{ l.proposal_json }}</textarea>
+<p><button name="decision" value="approve">Approve</button> <button class="secondary" name="decision" value="edit">Approve with my edit</button>
+<button class="danger" name="decision" value="reject">Reject</button></p></form>
+{% else %}<p class="small">Decided by {{ l.decided_by }}: {{ l.decision_note }}{% if l.applied_json %} · applied: {{ l.applied_json }}{% endif %}</p>{% endif %}</div>
+{% else %}<div class="card"><p class="muted">No lessons yet.</p></div>{% endfor %}
+{% endblock %}

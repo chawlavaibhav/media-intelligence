@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Your brand shelf · Media Intelligence{% endblock %}
+{% block body %}
+<p class="small"><a href="/">← Your jobs</a></p>
+<h1>Your brand shelf</h1>
+<p class="muted">What we keep for your next jobs: logo, colours, product photos, the hands or person you approved, and the look of your films. We only use an item after you approve it, once. Older versions are kept.</p>
+<div class="card"><table><tr><th>What</th><th>Item</th><th>Version</th><th>Status</th><th></th></tr>
+{% for it in items %}{% set d = it.data_json|loads %}<tr><td>{{ it.kind.replace('_', ' ') }}</td><td>{{ it.key }}{% if d.shows %}<br><span class="small muted">{{ d.shows }}</span>{% endif %}{% if d.description %}<br><span class="small muted">{{ d.description }}</span>{% endif %}</td>
+<td>v{{ it.version }}</td><td>{{ it.status }}</td><td>{% if it.status == 'proposed' %}
+<form method="post" action="/shelf/{{ it.id }}" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="decision" value="approve"><button>Approve</button></form>
+<form method="post" action="/shelf/{{ it.id }}" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="decision" value="reject"><button class="secondary">Don't keep</button></form>{% endif %}</td></tr>
+{% else %}<tr><td colspan="5" class="muted">Nothing yet — your first accepted job fills the shelf.</td></tr>{% endfor %}</table></div>
+{% endblock %}

@@ -1,0 +1,11 @@
+# Pass marks for the three judges (spec §10). PROPOSED — the founder confirms or changes them (checklist I2).
+# Until a judge passes a LIVE run on this set, its "no" blocks and its "yes" means "the founder confirms".
+status: proposed_not_confirmed_by_founder
+recipe_checker:
+  agreement_with_known_outcome_min: 0.80     # verdict approve ↔ accept, send_back ↔ reject
+small_taster:
+  known_bad_caught_min: 0.80
+  good_wrongly_rejected_max: 0.20
+big_taster:
+  moko7_v1_target_defects_found_min: 4       # of 6 (D1, D5, OAR_REVEAL, TEAR, FONT, LOGO)
+  agreement_with_customer_verdict_min: 0.80  # pass ↔ accept, fix/fail ↔ reject

@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block title %}Rulebook · Operator{% endblock %}
+{% block body %}
+<p class="small"><a href="/ops">← Operator</a></p>
+<h1>Rulebook</h1>
+<div class="card"><h2>Models (configuration, MI_MODEL_&lt;WORKER&gt;)</h2><table>{% for w, m in models.items() %}<tr><td>{{ w }}</td><td>{{ m }}</td></tr>{% endfor %}</table>
+<p class="small">Qualified judges: {{ qualified|join(', ') or 'none — every judge\'s "yes" needs the founder to confirm' }}</p></div>
+{% for w, c, hist in cards %}<div class="card"><h2>{{ w.replace('_', ' ') }} <span class="chip">{{ c.kind }}</span> <span class="chip">card v{{ c.version }}</span></h2>
+<p><strong>Mission:</strong> {{ c.mission }}</p>{% if c.vision %}<p><strong>Vision:</strong> {{ c.vision }}</p>{% endif %}
+<p><strong>KRA:</strong></p><ol>{% for k in c.kra %}<li>{{ k }}</li>{% endfor %}</ol>
+{% if c.measured_by %}<p class="small"><strong>Measured by:</strong> {{ c.measured_by|join('; ') }}</p>{% endif %}
+<p class="small"><strong>Forms:</strong> {{ (c.forms or [])|join(', ') }} · history: {% for h in hist %}v{{ h.version }} ({{ h.by }}{% if h.reason %}: {{ h.reason[:80] }}{% endif %}) {% endfor %}</p></div>{% endfor %}
+<div class="card"><h2>Send-back rules</h2><table><tr><th>from</th><th>when</th><th>goes to</th><th>limit</th><th>then</th></tr>
+{% for r in send_backs %}<tr><td>{{ r['from'] }}</td><td>{{ r.when }}</td><td>{{ r.to }}</td><td>{{ r.limit_note }}</td><td>{{ r.then }}</td></tr>{% endfor %}</table></div>
+<div class="card"><h2>Forms</h2><table>{% for n, f in forms.items() %}<tr><td>{{ n }}</td><td>v{{ f.version }}</td><td>{{ f.written_by }}</td><td class="small">{{ f.schema.required|join(', ') }}</td></tr>{% endfor %}</table></div>
+{% endblock %}

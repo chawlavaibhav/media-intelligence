@@ -19,7 +19,7 @@
 <form method="post" action="/jobs/{{ job.id }}/budget"><input type="hidden" name="csrf" value="{{ csrf }}">
 <label for="b">New maximum budget (USD, up to {{ "%.2f"|format(account.ceiling_usd|float) }})</label><input id="b" type="number" step="0.5" name="budget_usd" value="{{ (job.budget_usd|float + 5)|round(1) }}">
 <p><button>Raise budget and continue</button></p></form></div>
-{% elif job.state in ('paused_provider', 'paused_operator', 'failed') %}
+{% elif job.state in ('paused_provider', 'paused_operator', 'failed', 'paused_for_founder') %}
 <div class="card"><h2>{{ label(job.state) }}</h2><p class="muted">Our team can see this job and will get it moving; you don't need to do anything.</p></div>
 {% endif %}
 
@@ -32,6 +32,26 @@
 <textarea id="q{{ q.id }}" name="q_{{ q.id }}"></textarea>
 <p class="small"><input type="checkbox" name="delegate_{{ q.id }}" id="d{{ q.id }}"> <label for="d{{ q.id }}" style="display:inline;font-weight:400">Decide for me</label></p>{% endfor %}
 <p><button>Send answers</button></p></form></div>
+{% endif %}
+
+{% if job.state == 'awaiting_customer_input' and feasibility %}
+<div class="card"><h2>Before we spend anything, we need something from you</h2>
+<ul>{% for a in feasibility.ask_customer %}<li>{{ a }}</li>{% endfor %}</ul>
+<form method="post" action="/jobs/{{ job.id }}/input" enctype="multipart/form-data"><input type="hidden" name="csrf" value="{{ csrf }}">
+{% for a in feasibility.alternatives %}<p class="small"><input type="checkbox" name="alt_{{ loop.index0 }}" value="yes" id="alt{{ loop.index0 }}">
+<label for="alt{{ loop.index0 }}" style="display:inline;font-weight:400">Instead of “{{ a.for_action }}”: {{ a.alternative }}</label></p>{% endfor %}
+<label for="ph">Add a photo (optional)</label><input id="ph" type="file" name="photo" accept="image/*">
+<label for="lb">What does the photo show?</label><input id="lb" type="text" name="label" placeholder="e.g. the front pocket open">
+<label for="fa">Anything we should know (optional)</label><textarea id="fa" name="facts"></textarea>
+<p><button>Send and continue</button></p></form>
+<p class="muted small">Nothing has been spent on production yet.</p></div>
+{% endif %}
+
+{% if job.state == 'awaiting_master_approval' and master %}
+<div class="card"><h2>Approve the look of your film</h2>
+<div class="media"><img src="/assets/{{ master.id }}" alt="The master picture every shot is built from"></div>
+<p class="muted small">Every shot is built from this picture — the room, the light, the product. Approve it and we make the shots.</p>
+<form method="post" action="/jobs/{{ job.id }}/master"><input type="hidden" name="csrf" value="{{ csrf }}"><p><button>Approve and make the film</button></p></form></div>
 {% endif %}
 
 {% if intent and job.state not in ('refused',) %}
@@ -53,7 +73,7 @@
 {% if direction.copy_deck %}<h3>Words on screen</h3><ul>{% for c in direction.copy_deck %}<li>“{{ c.text }}” <span class="muted small">{{ 'your exact text' if c.source == 'customer_exact' else 'our suggestion' }}</span></li>{% endfor %}</ul>{% endif %}
 {% if job.state == 'awaiting_approval' %}
 <h3>Quote</h3><table>{% for l in quote.lines %}{% if l.units %}<tr><td>{{ l.item }}</td><td>{{ l.usd|usd }}</td></tr>{% endif %}{% endfor %}
-<tr><td>Planning and checking</td><td>{{ quote.reasoning_allowance_usd|usd }}</td></tr>
+<tr><td>Planning and checking (AI reasoning, estimated)</td><td>{{ quote.reasoning_line_usd|usd }}</td></tr>
 <tr><th>Recommended budget (includes a re-take allowance)</th><th>{{ quote.recommended_budget_usd|usd }}</th></tr></table>
 <p class="muted small">You're only charged for what production actually uses; we pause and ask before going over the budget you set.</p>
 <form method="post" action="/jobs/{{ job.id }}/approve"><input type="hidden" name="csrf" value="{{ csrf }}">
@@ -65,6 +85,11 @@
 <p><button class="secondary">Ask for a different direction</button></p></form>
 {% endif %}
 </div>{% endif %}
+
+{% if job.state in ('awaiting_approval', 'needs_answers', 'awaiting_customer_input', 'ready_for_review', 'awaiting_master_approval') %}
+<div class="card"><form method="post" action="/jobs/{{ job.id }}/abandon"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="ab">No longer need this? Close the job</label><input id="ab" type="text" name="reason" placeholder="Why (optional)">
+<p><button class="secondary">Close this job</button></p></form></div>{% endif %}
 
 {% if job.state in ('planning', 'producing', 'checking', 'operator_hold', 'revising') %}
 <div class="card"><h2>Production</h2>
@@ -93,7 +118,7 @@
 <h3>Request specific changes</h3><p class="muted small">Point each change at the part it's about; we redo only that part.</p>
 {% for i in range(1, 4) %}<div class="row"><div style="flex:0 1 220px"><select name="target_{{ i }}" aria-label="Which part">
 <option value="">Whole piece</option>
-{% for b in direction.beats %}{% if b.first_frame|lower != 'end card' %}<option value="beat:{{ b.n }}">Shot {{ b.n }} — {{ b.purpose }}</option>{% endif %}{% endfor %}
+{% for b in direction.beats %}{% if b.first_frame|lower != 'end card' %}<option value="shot:{{ b.n }}">Shot {{ b.n }} — {{ b.purpose }}</option>{% endif %}{% endfor %}
 {% for c in direction.copy_deck %}<option value="copy:{{ c.id }}">Text: “{{ c.text[:30] }}”</option>{% endfor %}
 {% if direction.beats %}<option value="music">Music</option>{% else %}<option value="picture">The picture</option>{% endif %}
 </select></div><div><textarea name="change_{{ i }}" placeholder="{{ 'What should change? For text, write: text to \"New exact words\"' if i == 1 else 'Another change (optional)' }}"></textarea></div></div>{% endfor %}
