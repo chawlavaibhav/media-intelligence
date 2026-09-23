@@ -113,8 +113,11 @@ def film_to_hold(e, jid, *, accept_alternatives=True):
     if e.state(jid) == "awaiting_approval":
         e.orch.approve(jid, by=e.user["email"], budget_usd="15")
         e.drain()
-    if e.state(jid) == "awaiting_master_approval":
-        e.orch.approve_master(jid, by=e.user["email"])
+    while e.state(jid) in ("awaiting_master_approval", "awaiting_taste"):
+        if e.state(jid) == "awaiting_master_approval":
+            e.orch.approve_master(jid, by=e.user["email"])
+        else:
+            e.orch.approve_taste(jid, by=e.user["email"])
         e.drain()
     return e.state(jid)
 

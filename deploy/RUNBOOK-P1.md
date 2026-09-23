@@ -37,6 +37,24 @@ customer: the preview says the customer's look is the final check, and their acc
 A **measured** check (code on the exact file) that fails still never reaches the customer: the kitchen repairs it
 automatically (2 rounds, within the approved budget), then asks the customer to stop or pay for a rework.
 
+## Telling customers it's their turn (email)
+
+Every time a job needs the customer (questions, the plan, the look, the first taste, the finished work, a decision,
+more budget) it is shown on their page and, when a mail server is configured, emailed to them. Set in `/etc/mi/mi.env`:
+`MI_SMTP_HOST`, `MI_SMTP_PORT` (587), `MI_SMTP_USER`, `MI_SMTP_PASSWORD`, `MI_MAIL_FROM`. Without them nothing breaks;
+the notice stays on the page. The email says only what is needed and links to the order — never the kitchen.
+
+## Trying models for the judges (model trial)
+
+The judges are independent of the models. To compare candidate models on the old cases you already judged:
+```
+python3 -m product.qualification.judges --trial --estimate                        # cost per model, USD 0
+python3 -m product.qualification.judges --trial --max-usd 20 --approved-by "<who approved, when>"
+```
+The candidates are listed in `product/qualification/judges.py` (`TRIAL_MODELS`); `azure_openai:<deployment>` works for
+any model deployed on the Azure resource. A model whose keys are missing is skipped. A trial never qualifies a judge
+and never changes the product's models.
+
 ## Daily operation
 
 - `/ops` lists every job and its state; a paused/failed job shows its reason.

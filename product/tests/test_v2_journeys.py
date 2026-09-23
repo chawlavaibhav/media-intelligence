@@ -55,6 +55,12 @@ class WebJourneys(unittest.TestCase):
         self.assertEqual(e.state(jid), "awaiting_master_approval")
         self.post(self.c, f"/jobs/{jid}/master", f"/jobs/{jid}", {})
         e.drain()
+        self.assertEqual(e.state(jid), "awaiting_taste")                           # the hardest shot, made first, to taste
+        page = self.c.req("GET", f"/jobs/{jid}")["body"]
+        self.assertIn(b"Have a first taste", page)
+        self.assertIn(b"is made.", page)                                           # the progress line kept moving
+        self.post(self.c, f"/jobs/{jid}/taste", f"/jobs/{jid}", {})
+        e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")
         self.assertIn(b"your look at this preview is the final check", self.c.req("GET", f"/jobs/{jid}")["body"])
         self.post(self.c, f"/jobs/{jid}/changes", f"/jobs/{jid}", {"target_1": "shot:2", "change_1": "a slower slide"})

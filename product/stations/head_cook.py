@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import time
 from pathlib import Path
@@ -278,6 +279,11 @@ def produce(k, job_id: str):
                                data={"master": k.store.node(job_id, "master")["selected_asset_id"]})
             k.store.timing_start(job_id, "customer_wait", "master")
             return
+        if _taste_ready(k, job_id):
+            write_log(k, job_id)
+            k.store.transition(job_id, "producing", "awaiting_taste", actor="system", data={"taste": taste_nodes(k, job_id)})
+            k.store.timing_start(job_id, "customer_wait", "taste")
+            return
     write_log(k, job_id)
     finals = k.final_assets(job_id)
     if not k.store.job(job_id)["first_cut_at"]:
@@ -300,8 +306,9 @@ def _keep_flagged(k, job_id, node_id, asset_id, why):
     from product.stations.chef import add_customer_note
     what = f"shot {spec['shot']}" if spec.get("shot") else {"master": "the look of the film (master plate)", "character": "the character"}.get(
         node_id, node_id.replace("_", " "))
-    add_customer_note(k, job_id, f"Please look closely at {what}: our automatic checker was not satisfied with any attempt "
-                                 f"({why[:160]}); we kept the best one for you to judge.")
+    reason = re.sub(r"^rejected \d+ times:\s*", "", why).split("; differences:")[0].strip()
+    add_customer_note(k, job_id, f"Please look closely at {what}: we weren't fully happy with it"
+                                 + (f" ({reason[:160]})" if reason else "") + ", so we kept our best version for you to judge.")
 
 
 def _replace_shot_nodes(k, job_id, shot_n, recipe):
@@ -323,6 +330,52 @@ def _master_needs_approval(k, job_id) -> bool:
     if json.loads(n["spec_json"]).get("shelf_item"):
         return False                               # already approved by the customer on their shelf
     return not k.store.events(job_id, ("master_approved",))
+
+
+# ── the taste (founder 2026-09-23): the hardest shot is made first and shown to the customer before the rest ────────
+def taste_nodes(k, job_id) -> list:
+    """The shots the customer tastes: the risky ones (made first anyway), else the first moving shot. Stills-only films
+    have no taste — the approved look already shows what they will get."""
+    if k.store.job(job_id)["media"] != "video":
+        return []
+    shots = [n for n in k.store.nodes(job_id) if n["kind"] == "shot" and n["status"] != "retired"]
+    risky = [n["node_id"] for n in shots if json.loads(n["spec_json"]).get("risky")]
+    if risky:
+        return sorted(risky)
+    moving = sorted((json.loads(n["spec_json"]).get("shot") or 0, n["node_id"]) for n in shots
+                    if json.loads(n["spec_json"]).get("route") in ("FILM-B", "FILM-C"))
+    return [moving[0][1]] if moving else []
+
+
+def _taste_ready(k, job_id) -> bool:
+    if k.store.events(job_id, ("taste_approved",)):
+        return False
+    nodes = taste_nodes(k, job_id)
+    return bool(nodes) and all(k.store.node(job_id, x)["status"] == "done" for x in nodes)
+
+
+def approve_taste(k, job_id, *, by: str):
+    if k.store.job(job_id)["state"] != "awaiting_taste":
+        raise ValueError("there is no shot waiting for your taste")
+    k.store.event(job_id, by, "taste_approved", {"shots": taste_nodes(k, job_id)})
+    k._end_wait(job_id, "taste")
+    k.store.transition(job_id, "awaiting_taste", "producing", actor=by, data={"taste_approved": True})
+
+
+def change_taste(k, job_id, *, by: str, text: str):
+    """The customer asks for a change to the tasted shot(s): only those are redone (within the approved budget), then
+    they taste again."""
+    if k.store.job(job_id)["state"] != "awaiting_taste":
+        raise ValueError("there is no shot waiting for your taste")
+    text = (text or "").strip()
+    if len(text) < 3:
+        raise ValueError("tell us what to change")
+    k.store.add_feedback(job_id, asset_id=None, target="taste", text=text[:2000], kind="taste", by_user=by)
+    for x in taste_nodes(k, job_id):
+        _reset_downstream(k, job_id, x, f"the customer asked: {text[:300]}")
+    k.store.event(job_id, by, "taste_change", {"text": text[:300]})
+    k._end_wait(job_id, "taste")
+    k.store.transition(job_id, "awaiting_taste", "producing", actor=by, data={"taste_change": text[:300]})
 
 
 def approve_master(k, job_id, *, by: str, founder_session: str | None = None):
@@ -394,6 +447,13 @@ def _done(k, job_id, node_id, asset_id):
     if asset_id:
         k.store.set_asset(asset_id, status="selected")
     k.store.set_node(job_id, node_id, status="done", selected_asset_id=asset_id)
+    n = k.store.node(job_id, node_id)
+    if n:                                   # the customer's progress line (customer.py): what was finished, in plain words
+        from product import customer
+        shots = len([s for s in (k.store.artifact(job_id, "recipe") or {}).get("shots", []) if s.get("route") != "END-CARD"])
+        words = customer.node_words(n["kind"], json.loads(n["spec_json"]), shots)
+        if words:
+            customer.tell(k.store, job_id, words)
 
 
 def _draw(k, job_id, node_id, fn):

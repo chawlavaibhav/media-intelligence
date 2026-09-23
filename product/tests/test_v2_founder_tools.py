@@ -205,7 +205,7 @@ class FounderPages(unittest.TestCase):
         e.drain()
         tok = c.csrf(f"/jobs/{jid}")
         page = c.req("GET", f"/jobs/{jid}")["body"]
-        self.assertIn(b"Planning and checking (AI reasoning, estimated)", page)
+        self.assertIn(b"Planning and quality checks", page)
         c.req("POST", f"/jobs/{jid}/approve", {"csrf": tok, "budget_usd": "15"})
         e.drain()
         self.assertEqual(e.state(jid), "awaiting_master_approval")

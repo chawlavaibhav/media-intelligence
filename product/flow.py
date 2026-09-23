@@ -28,6 +28,7 @@ STATES = {
     "planning":                 (4, "Preparing production", "worker"),
     "producing":                (5, "Producing", "worker"),
     "awaiting_master_approval": (5, "Approve the look of your film", "customer"),
+    "awaiting_taste":           (5, "Taste the first shot of your film", "customer"),
     "checking":                 (5, "Checking the work", "worker"),
     "needs_customer_decision":  (5, "A check failed — your decision is needed", "customer"),
     "operator_hold":            (5, "Final quality check by our team", "founder"),
@@ -45,7 +46,7 @@ STATES = {
 
 WORKER_STATES = ("submitted", "understanding", "feasibility", "directing", "planning", "producing", "checking", "revising",
                  "paused_provider")
-CUSTOMER_STATES = ("needs_answers", "awaiting_customer_input", "awaiting_approval", "awaiting_master_approval",
+CUSTOMER_STATES = ("needs_answers", "awaiting_customer_input", "awaiting_approval", "awaiting_master_approval", "awaiting_taste",
                    "ready_for_review", "paused_budget", "needs_customer_decision")
 TERMINAL = ("accepted", "rejected", "refused", "abandoned")
 PAUSES = ("paused_budget", "paused_provider", "paused_operator", "paused_for_founder")
@@ -58,13 +59,13 @@ RAIL = [
     ("Understanding", ("submitted", "understanding", "needs_answers")),
     ("Checking we can make it", ("feasibility", "awaiting_customer_input")),
     ("Creative plan", ("directing", "awaiting_approval")),
-    ("Producing", ("planning", "producing", "awaiting_master_approval", "revising")),
+    ("Producing", ("planning", "producing", "awaiting_master_approval", "awaiting_taste", "revising")),
     ("Checking", ("checking", "operator_hold", "needs_customer_decision")),
     ("Ready for review", ("ready_for_review", "accepted")),
 ]
 
 _WORK = {"understanding", "feasibility", "directing", "planning", "producing", "checking", "revising"}
-_WAITS = {"needs_answers", "awaiting_customer_input", "awaiting_approval", "awaiting_master_approval"}
+_WAITS = {"needs_answers", "awaiting_customer_input", "awaiting_approval", "awaiting_master_approval", "awaiting_taste"}
 
 ALLOWED = {
     "submitted": {"understanding", "failed", "paused_operator"},
@@ -78,9 +79,10 @@ ALLOWED = {
                   "paused_provider", "refused"},
     "awaiting_approval": {"directing", "planning", "rejected", "abandoned", "paused_operator"},
     "planning": {"producing", "failed", "paused_budget", "paused_operator", "paused_provider"},
-    "producing": {"awaiting_master_approval", "checking", "directing", "paused_for_founder", "failed", "paused_budget",
+    "producing": {"awaiting_master_approval", "awaiting_taste", "checking", "directing", "paused_for_founder", "failed", "paused_budget",
                   "paused_provider", "paused_operator"},
     "awaiting_master_approval": {"producing", "abandoned", "paused_operator", "paused_for_founder"},
+    "awaiting_taste": {"producing", "abandoned", "paused_operator"},
     "checking": {"producing", "directing", "operator_hold", "ready_for_review", "needs_customer_decision", "paused_for_founder",
                  "failed", "paused_budget", "paused_provider", "paused_operator"},
     "needs_customer_decision": {"producing", "abandoned", "paused_operator"},

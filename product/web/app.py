@@ -28,6 +28,7 @@ from wsgiref.simple_server import WSGIRequestHandler, WSGIServer, make_server
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from product import config, learning, states, verify
+from product import customer as customer_words
 from product.service import Invalid, Service
 from product.store import Store, dec
 
@@ -91,6 +92,7 @@ class App:
         self.jinja = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]))
         self.jinja.globals.update(states=states, label=states.label, rail=states.RAIL, rail_position=states.rail_position,
                                   json=json, simulated=(self.s.provider_mode == "simulated" or self.s.reasoning_mode == "simulated"))
+        self.jinja.filters["plain"] = customer_words.plain
         self.jinja.filters["usd"] = lambda v: f"USD {dec(v):.2f}" if v not in (None, "") else "—"
         self.jinja.filters["loads"] = lambda v: json.loads(v) if v else {}
         self.routes = [
@@ -99,7 +101,7 @@ class App:
             ("POST", r"/invite/(?P<tok>[\w-]+)", self.invite), ("GET", r"/", self.home), ("GET", r"/jobs/new", self.new_job),
             ("POST", r"/jobs", self.create_job), ("GET", r"/jobs/(?P<jid>job_\w+)", self.job_page),
             ("GET", r"/jobs/(?P<jid>job_\w+)/status", self.job_status),
-            ("POST", r"/jobs/(?P<jid>job_\w+)/(?P<action>answer|approve|direction-change|changes|accept|reject|budget|upload|input|master|abandon|decide)", self.job_action),
+            ("POST", r"/jobs/(?P<jid>job_\w+)/(?P<action>answer|approve|direction-change|changes|accept|reject|budget|upload|input|master|abandon|decide|taste|taste-change)", self.job_action),
             ("GET", r"/shelf", self.shelf_page), ("POST", r"/shelf/(?P<sid>shf_\w+)", self.shelf_action),
             ("GET", r"/assets/(?P<aid>ast_\w+)(?P<dl>/download)?", self.asset),
             ("GET", r"/ops", self.ops_home), ("GET", r"/ops/jobs/(?P<jid>job_\w+)", self.ops_job),
@@ -254,7 +256,11 @@ class App:
                 "account": st.account(j["account_id"]), "nodes": [n for n in st.nodes(jid) if n["status"] != "retired"],
                 "plan_note": st.artifact(jid, "plan_note"), "plan_objections": _current_objections(st, jid),
                 "customer_notes": (st.artifact(jid, "customer_notes") or {}).get("notes", []),
-                "customer_decision": st.artifact(jid, "customer_decision")}
+                "customer_decision": st.artifact(jid, "customer_decision"),
+                "progress": customer_words.progress(st, jid),
+                "checked": customer_words.checked_list(report) if report else [],
+                "taste": [st.asset(st.node(jid, x)["selected_asset_id"]) for x in _taste_nodes(self.svc.orch, jid)
+                          if st.node(jid, x) and st.node(jid, x)["selected_asset_id"]] if j["state"] == "awaiting_taste" else []}
 
     def job_page(self, req, jid):
         u = self.user(req)
@@ -280,6 +286,10 @@ class App:
         elif action == "approve":
             o.approve(jid, by=who, budget_usd=f.get("budget_usd") or self.store.artifact(jid, "quote")["recommended_budget_usd"],
                       note=f.get("note", ""), accept_objections=f.get("accept_objections") == "yes")
+        elif action == "taste":
+            o.approve_taste(jid, by=who)
+        elif action == "taste-change":
+            o.change_taste(jid, by=who, text=f.get("text", "")[:2000])
         elif action == "decide":
             o.decide(jid, by=who, choice=f.get("choice", ""), note=f.get("note", "")[:1000], budget_usd=f.get("budget_usd") or None)
         elif action == "direction-change":
@@ -509,3 +519,8 @@ def _current_objections(st, jid):
     """The reviewer's objections, only while they are about the plan the customer is looking at."""
     obj = st.artifact(jid, "plan_objections")
     return obj if obj and obj["recipe_version"] == len(st.artifact_versions(jid, "recipe")) else None
+
+
+def _taste_nodes(k, jid):
+    from product.stations.head_cook import taste_nodes
+    return taste_nodes(k, jid)

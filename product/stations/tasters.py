@@ -18,7 +18,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from product import flow, media, verify
+from product import customer, flow, media, verify
 from product.store import utc_now
 
 
@@ -113,8 +113,8 @@ def _to_customer(k, job_id, review, results):
     report = plain_report(review)
     k.store.put_artifact(job_id, "review_report", {"verdict": review["verdict"], "plain": report, "defects": review.get("defects", [])},
                          "big_taster")
-    add_customer_note(k, job_id, f"Our reviewer is still not satisfied after the automatic repairs ({review['verdict']}): {report} "
-                                 "You can accept it as is, ask for changes (priced before any spend), or reject it.")
+    add_customer_note(k, job_id, f"We tried to improve this ourselves and our reviewer still has comments: {report} "
+                                 "You decide: accept it as it is, ask for changes, or turn it down.")
     k.store.event(job_id, "system", "to_customer_with_report", {"verdict": review["verdict"]})
     if any(r["measured_failed"] for r in results):
         return customer_decision(k, job_id, results)
@@ -157,9 +157,10 @@ def customer_decision(k, job_id, results):
     assets = sorted({b["asset_id"] for b in blocked})
     k.store.put_artifact(job_id, "customer_decision", {
         "what_failed": blocked, "options": ["stop", "rework"], "rework_price_usd": rework_price(k, job_id, assets),
-        "plain": "An automatic measurement failed on the finished file, so we will not deliver it: "
-                 + "; ".join(f"{b['check_id'].replace('_', ' ')} — {b['detail'][:120]}" for b in blocked)[:900]
-                 + ". You can stop here (nothing more is spent) or pay for one more attempt at the failing files."}, "door_guard")
+        "plain": "We checked the finished work and something isn't right yet, so we won't send it to you like this. "
+                 + " ".join(dict.fromkeys(customer.problem_words(b["check_id"]) for b in blocked))
+                 + " We tried to fix it ourselves. You can stop here (nothing more is spent), or ask us to make it again "
+                   "(about USD " + rework_price(k, job_id, assets) + ")."}, "door_guard")
     k.store.transition(job_id, "checking", "needs_customer_decision", actor="door_guard", data={"blocked": [b["check_id"] for b in blocked]})
     k.store.timing_start(job_id, "customer_wait", "decision")
 

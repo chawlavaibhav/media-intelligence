@@ -156,15 +156,32 @@ def safe_replan(k, job_id, recipe: dict, rc: dict, cycle: str):
     objections_to_customer(k, job_id, recipe, rc)
 
 
+RULE_WORDS = {
+    "R1": "asks for something our video tools can't do reliably yet",
+    "R2": "uses an action we already told you we can't film",
+    "R3": "is a difficult shot; we would make and show it to you first",
+    "R4": "needs to start from the look you approve",
+    "R5": "leaves out something you asked for",
+}
+
+
 def plain_objections(rc: dict) -> list:
+    """The reviewer's objections as the customer reads them: no rule codes, equipment ids or internal names."""
     out = []
     for i in rc.get("issues", []):
-        out.append(f"{i.get('where') or 'The plan'}: {i['issue']}" + (f" (suggested: {i['fix']})" if i.get("fix") else ""))
+        out.append(f"{(i.get('where') or 'The plan').capitalize()}: {i['issue']}" + (f" (our suggestion: {i['fix']})" if i.get("fix") else ""))
     for x in rc.get("code_findings", []):
-        words = re.sub(r"\s*\((?:EQ-|seed|row)[^)]*\)", "", x["finding"]).replace("_", " ").replace("CANNOT", "not something our "
-                                                                                                       "video tools can do reliably")
-        out.append(f"{x['where'].split(':')[0].capitalize()}: {words}")
-    out += [f"Missing step: {a}" for a in rc.get("add_steps", [])]
+        code = x["rule"].split(":")[0]
+        where = x["where"].split(" (")[0].split(":")[0].strip()
+        if code == "R5" and "exact string" in x["finding"]:
+            line = "Your exact words are missing from the plan."
+        elif code == "R5":
+            line = f"The plan {RULE_WORDS['R5']}: {x['finding'].split(chr(39))[1] if chr(39) in x['finding'] else x['where']}."
+        else:
+            line = f"{where.capitalize() if where else 'One shot'} {RULE_WORDS.get(code, 'needs another look')}."
+        if line not in out:
+            out.append(line)
+    out += [f"A step is missing: {a}" for a in rc.get("add_steps", [])]
     return out or ["Our reviewer does not expect this plan to meet your brief."]
 
 

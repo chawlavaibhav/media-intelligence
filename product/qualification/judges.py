@@ -3,6 +3,9 @@
     python3 -m product.qualification.judges                         # simulated: USD 0, proves the plumbing, qualifies nothing
     python3 -m product.qualification.judges --live --founder-session TOKEN --product-data DIR --budget 2.00
                                                                      # live: ONLY with the founder's own signed-in session
+    python3 -m product.qualification.judges --trial --estimate       # model trial: estimated cost per candidate model, USD 0
+    python3 -m product.qualification.judges --trial --max-usd 10 --approved-by "founder in chat, 2026-09-23"
+                                                                     # model trial: real calls, hard cap; compares models, qualifies nothing
 
 The cases (JUDGE-CASES.yaml) are old jobs whose verdict the founder already gave; nothing new is generated. Each judge
 runs through the product's own worker call (its rulebook card, the customer's exact words, its form) and is scored
@@ -145,6 +148,89 @@ def run(*, live=False, founder_session=None, product_data=None, budget="2.00", o
     return report
 
 
+# ── model trial (founder 2026-09-23: the kitchen is independent of the models; try several, cheap, open and strong) ──
+# Each judge runs the same known-verdict cases on each candidate model. A trial compares models; it never qualifies a
+# judge and never changes the product's configuration. Models are "provider:model" (azure_openai:<deployment name> works
+# for any model deployed on the Azure resource, including open models such as DeepSeek, Llama or Kimi if deployed there).
+TRIAL_MODELS = {
+    "recipe_checker": ["azure_openai:gpt-5.6-terra", "azure_openai:gpt-5.6-sol", "azure_openai:DeepSeek-V3.1",
+                       "azure_openai:Kimi-K2-Instruct", "gemini:gemini-3.1-pro-preview"],
+    "small_taster": ["azure_openai:gpt-5.6-terra", "azure_openai:Llama-4-Maverick-17B-128E-Instruct-FP8", "anthropic:claude-haiku-4-5",
+                     "gemini:gemini-3.5-flash"],
+    "big_taster": ["azure_openai:gpt-5.6-terra", "azure_openai:gpt-5.6-sol", "azure_openai:Llama-4-Maverick-17B-128E-Instruct-FP8",
+                   "gemini:gemini-3.1-pro-preview"],
+}
+KEYS = {"azure_openai": ("AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT"), "anthropic": ("ANTHROPIC_API_KEY",),
+        "gemini": ("GOOGLE_API_KEY",)}
+
+
+def _usable(spec: str) -> str | None:
+    """Why this model cannot be called on this host (a missing key), or None."""
+    import os
+    need = KEYS.get(spec.split(":", 1)[0], ())
+    missing = [kk for kk in need if not os.environ.get(kk)]
+    if spec.startswith("gemini:") and os.environ.get("GEMINI_API_KEY"):
+        missing = []
+    return f"missing {', '.join(missing)}" if missing else None
+
+
+def trial(*, models: dict | None = None, max_usd="10.00", estimate_only=False, approved_by=None, out=None,
+          judges=("recipe_checker", "small_taster", "big_taster")) -> dict:
+    """Run each judge's cases on each candidate model (or, with estimate_only, price it at USD 0). A hard cap: the run
+    stops before the case that would take the total past max_usd."""
+    from product.reasoning import _price
+    models = models or TRIAL_MODELS
+    cases = yaml.safe_load((HERE / "JUDGE-CASES.yaml").read_text())
+    marks = yaml.safe_load((HERE / "PASS-MARKS.yaml").read_text())
+    if not estimate_only and not approved_by:
+        raise SystemExit("a paid model trial needs --approved-by (who approved the spend, and when) and --max-usd")
+    work = Path(out or tempfile.mkdtemp(prefix="mi-trial-"))
+    ev = Evidence(evidence_root())
+    cap, report = Decimal(str(max_usd)), {"utc": utc_now(), "estimate_only": estimate_only, "approved_by": approved_by,
+                                           "max_usd": str(max_usd), "evidence_repo": str(ev.root) if ev.root else None, "judges": {}}
+    spent = Decimal(0)
+    for judge in judges:
+        report["judges"][judge] = {}
+        for spec in models.get(judge, []):
+            why = None if estimate_only else _usable(spec)
+            row = {"model": spec, "price_per_mtok": [str(x) for x in _price(spec.split(":", 1)[1])]}
+            if why:
+                report["judges"][judge][spec] = {**row, "skipped": why}
+                continue
+            s = config.load(work / judge / spec.replace(":", "_").replace("/", "_"),
+                            reasoning_mode="simulated" if estimate_only else "live", provider_mode="simulated")
+            s.models = {**s.models, judge: spec}
+            st = Store(s.db_path)
+            k = Orchestrator(s, st)
+            acct = st.create_account("model-trial", ceiling_usd=str(cap))
+            jid = st.create_job(account_id=acct, user_id="trial", title=f"trial {judge} {spec}", media="video",
+                                brief={"text": f"model trial of the {judge}"}, budget_usd=str(cap - spent))
+            st.set_job(jid, budget_authorised_by=approved_by or "estimate (USD 0)", budget_authorised_at=utc_now())
+            rows, est = [], Decimal(0)
+            for c in cases[judge]:
+                done = sum(Decimal(a["settled_usd"] or 0) for a in st.q("SELECT settled_usd FROM attempts"))
+                if not estimate_only and spent + done >= cap:
+                    rows.append({"id": c["id"], "available": False, "known": c.get("known") or c.get("known_verdict"), "why": "spend cap reached"})
+                    continue
+                try:
+                    rows.append(globals()[f"_{judge}"](k, jid, c, ev))
+                except Exception as e:  # noqa: BLE001 — one model failing on one case is a result, not a crash
+                    rows.append({"id": c["id"], "available": False, "known": c.get("known") or c.get("known_verdict"),
+                                 "why": f"call failed: {str(config.scrub(str(e)))[:200]}"})
+            est = sum(Decimal(r["est_cost_usd"] or 0) for r in st.llm_calls(jid))
+            paid = sum(Decimal(a["settled_usd"] or 0) for a in st.q("SELECT settled_usd FROM attempts"))
+            spent += paid
+            scored = _score(judge, rows, marks, live=not estimate_only)
+            scored.pop("cases", None) if estimate_only else None
+            report["judges"][judge][spec] = {**row, "estimated_usd": str(est.quantize(Decimal("0.0001"))),
+                                            "spent_usd": str(paid.quantize(Decimal("0.0001"))), **scored,
+                                            "qualified": False, "why_not_qualified": "a model trial never qualifies a judge"}
+    report["spent_usd"] = str(spent.quantize(Decimal("0.000001")))
+    (work / "model-trial-report.json").write_text(json.dumps(report, indent=1, default=str))
+    report["report_path"] = str(work / "model-trial-report.json")
+    return report
+
+
 def _words(ev, job):
     j = ev.jobs.get(job)
     return json.loads(j["brief_json"])["text"] if j else "(the customer's words are not on this host)"
@@ -210,6 +296,13 @@ def _big_taster(k, jid, c, ev):
             return {"id": c["id"], "available": False, "known": known, "why": "file not on this host or its SHA-256 does not match"}
         p, ctype = hit
         media_items = [(ctype, p.read_bytes())]
+        if ctype.startswith("video/") and not k.s.models.get("big_taster", "").startswith("gemini"):
+            from product import media as media_mod
+            sheet = Path(tempfile.mkdtemp(prefix="mi-sheet-")) / "contact.png"
+            try:
+                media_items = [("image/png", media_mod.contact_sheet(p, sheet).read_bytes())]
+            except media_mod.MediaError:
+                pass
     elif "evidence" in c and ev.root:
         hit = ev.asset(c["evidence"]["asset"])
         if hit:
@@ -302,7 +395,20 @@ def main(argv=None):
     ap.add_argument("--product-data")
     ap.add_argument("--budget", default="2.00")
     ap.add_argument("--out")
+    ap.add_argument("--trial", action="store_true")
+    ap.add_argument("--estimate", action="store_true")
+    ap.add_argument("--max-usd", default="10.00")
+    ap.add_argument("--approved-by")
     a = ap.parse_args(argv)
+    if a.trial:
+        rep = trial(max_usd=a.max_usd, estimate_only=a.estimate, approved_by=a.approved_by, out=a.out)
+        for j, per in rep["judges"].items():
+            for spec, r in per.items():
+                print(f"{j:15s} {spec:55s} " + (f"skipped: {r['skipped']}" if r.get("skipped") else
+                      f"est USD {r['estimated_usd']:>8s} spent USD {r['spent_usd']:>8s} "
+                      f"accepted {r.get('agreement_accepted')} not-accepted {r.get('agreement_not_accepted')}"))
+        print("report:", rep["report_path"], "spent USD", rep["spent_usd"])
+        return 0
     rep = run(live=a.live, founder_session=a.founder_session, product_data=a.product_data, budget=a.budget, out=a.out)
     print(json.dumps({j: {kk: v for kk, v in r.items() if kk != "cases"} for j, r in rep["judges"].items()}, indent=1))
     print("report:", rep["report_path"], "spent USD", rep["spent_usd"])

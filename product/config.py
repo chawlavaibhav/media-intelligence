@@ -10,7 +10,7 @@ REPO = Path(__file__).resolve().parents[1]
 
 # Key names whose values must never reach a log line, an error message, a prompt or a page.
 SECRET_ENV_NAMES = ("AZURE_OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY", "MI_VERTEX_SA_JSON",
-                    "MI_SECRET_KEY", "ELEVENLABS_API_KEY", "FAL_KEY")
+                    "MI_SECRET_KEY", "ELEVENLABS_API_KEY", "FAL_KEY", "MI_SMTP_PASSWORD", "AZURE_OPENAI_ENDPOINT")
 
 
 def _env(name: str, default: str | None = None) -> str | None:

@@ -393,3 +393,27 @@ big taster 79 available (64 accepted / 15 not), recipe checker 8 available (6 / 
 
 - 125 = the earlier 105 + 20 new amendment tests. The 2 skipped are the same v1 tests as before; they need
   historical Mokobara media in a folder layout this machine doesn't have.
+
+## The customer's experience and the model trial (your instructions in chat, 2026-09-23)
+
+"We don't show them the kitchen, but we keep them engaged." Built in simulated mode (USD 0). The new tests are in
+`test_v2_customer.py` (7 tests).
+
+| # | What you asked | Status | Evidence |
+|---|---|---|---|
+| X1 | Never show the kitchen: no workers, models, routes, checks, retries or technical detail on the customer's pages | **Done** | `product/customer.py`; the page now shows a plain "What we checked" list, "Your plan", "Scene by scene" and a simple price. Route codes and equipment ids are stripped from any text a worker wrote (`plain` filter). Test: every customer page, at every step of a film, is scanned for kitchen words — none found (`test_the_customer_sees_the_order_the_progress_and_the_plan_but_never_the_kitchen_at_any_step`). |
+| X2 | Keep the customer engaged: show progress, so the waiter never disappears | **Done** | A "Progress" card on the job page, updated as the kitchen works: "We've received your order", "Our creative team is writing your plan", "Shot 2 of 4 is made", "Giving everything a final check", "It's ready for you". The page refreshes itself. |
+| X3 | The waiter's order sheet, presented nicely | **Done** | A "Your order" card: the customer's words, sizes, length, product, exact words and attachments. It sits above "What we understood" and the questions. |
+| X4 | Show the plan (not the recipe) and a first look before spending | **Done** | Plan card: the idea, scene by scene in plain words, the words on screen, a sample picture and a simple price. Objections, if any, are in plain words ("Shot 2 asks for something our video tools can't do reliably yet."). |
+| X5 | Show a still or a short piece of the hardest shot, to save money and catch misses | **Done** | After the look is approved, the hardest shot (or the first moving shot) is made first and shown: "Have a first taste". The customer says "Looks good — make the rest" or asks for a change (only that shot is redone, inside the approved budget, then tasted again), or closes the job. Nothing else is bought before the taste. Images have no taste step (the sample picture already shows the work). Test: `test_the_hardest_shot_is_tasted_before_the_rest_is_made_and_a_change_redoes_only_that_shot`. |
+| X6 | Tell the customer when they are needed | **Done** (email needs a mail account) | Every "your turn" is recorded and shown; it is emailed when `MI_SMTP_*` is set (see the runbook). There is no mail account yet, so today it is on the page only. Test with a stand-in mail server: `test_the_customer_is_told_every_time_it_is_their_turn…`. |
+| X7 | Customers can change anything about their product | **Done** (existing) | Plan changes, taste changes and targeted changes after the preview. Changes after the preview are not priced separately yet; they are covered by the approved budget. |
+| X8 | Test the judges on several models (cheap, open, strong), independent of any one model | **Partly** — built, not run | `judges.trial`: every judge runs the old known-verdict cases on each candidate model, with a hard spending cap. It reports agreement on accepted and rejected work separately, plus cost. A trial never qualifies a judge. Films are shown as frame sheets to models that cannot watch video. Open models deployed on Azure are supported. **Not run: this machine has no Azure, Google or Anthropic keys.** Estimate (USD 0) for the default candidates: about USD 15–30 in total (open-model prices are unknown, so they are priced high on purpose). |
+
+**To run the model trial:** add `AZURE_OPENAI_API_KEY` and `AZURE_OPENAI_ENDPOINT` to this cloud environment's settings
+(the environment menu in the session's title bar → Edit → environment variables; `GOOGLE_API_KEY` too if you want Gemini in
+the comparison). Tell me the deployment names on your Azure resource (e.g. which open models you have deployed). A new
+session picks the keys up; I then run it with the cap you approve and report the results.
+
+**Test run for this round:** `PYTHONPATH=. python3 -m unittest discover -s product/tests -t .` → Ran 132 tests, OK (skipped=2).
+The 125 earlier tests plus the 7 new customer and model-trial tests.

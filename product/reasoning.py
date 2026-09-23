@@ -172,10 +172,17 @@ class AzureOpenAIBackend:
             elif mime == "application/pdf":
                 content.append({"type": "file", "file": {"filename": f"reference-{i + 1}.pdf", "file_data": f"data:{mime};base64,{b64}"}})
         content.append({"type": "text", "text": user_text})
-        body = {"model": model, "max_completion_tokens": max_tokens, "reasoning_effort": effort or "low",
-                "response_format": {"type": "json_object"},
+        body = {"model": model, "response_format": {"type": "json_object"},
                 "messages": [{"role": "system", "content": system}, {"role": "user", "content": content}]}
-        st, reply = _http(base.rstrip("/") + "/openai/v1/chat/completions", {"api-key": key}, body, timeout=600)
+        if model.lower().startswith(("gpt", "o1", "o3", "o4")):          # OpenAI reasoning models
+            body.update(max_completion_tokens=max_tokens, reasoning_effort=effort or "low")
+        else:                                                             # other models deployed on the resource (open models)
+            body.update(max_tokens=max_tokens)
+        url = base.rstrip("/") + "/openai/v1/chat/completions"
+        st, reply = _http(url, {"api-key": key}, body, timeout=600)
+        if st == 400 and "response_format" in json.dumps(reply)[:2000]:  # a model without JSON mode: ask in words only
+            body.pop("response_format")
+            st, reply = _http(url, {"api-key": key}, body, timeout=600)
         if st != 200:
             return st, reply, None, {}
         u = reply.get("usage") or {}

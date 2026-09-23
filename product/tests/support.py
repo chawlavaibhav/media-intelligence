@@ -77,10 +77,13 @@ class Env:
         return self.state(jid)
 
     def produce(self, jid):
-        """After approval: drain, approving the master plate (the customer) whenever production waits for it."""
+        """After approval: drain, approving the master plate and the taste (the customer) whenever production waits."""
         self.drain()
-        while self.state(jid) == "awaiting_master_approval":
-            self.orch.approve_master(jid, by=self.user["email"])
+        while self.state(jid) in ("awaiting_master_approval", "awaiting_taste"):
+            if self.state(jid) == "awaiting_master_approval":
+                self.orch.approve_master(jid, by=self.user["email"])
+            else:
+                self.orch.approve_taste(jid, by=self.user["email"])      # the customer tastes the hardest shot
             self.drain()
         return self.state(jid)
 

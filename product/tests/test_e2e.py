@@ -174,6 +174,9 @@ class ProviderFailureInjection(unittest.TestCase):
             e.worker.run_once()          # planning
             e.worker.run_once()          # producing → the master plate, then it waits for the customer
             e.orch.approve_master(jid, by=e.user["email"])
+            e.worker.run_once()          # producing → the hardest shot first, then the customer tastes it
+            self.assertEqual(e.state(jid), "awaiting_taste")
+            e.orch.approve_taste(jid, by=e.user["email"])
             e.worker.run_once()          # producing → music fails 3x
             self.assertEqual(e.state(jid), "paused_provider")
             self.assertEqual(e.produce(jid), "ready_for_review")   # retry window 0 s in tests; the fault queue is empty now
@@ -199,6 +202,9 @@ class WorkerCrash(unittest.TestCase):
             from product.worker import Worker
             w2 = Worker(e.s, e.store, e.orch)
             w2.drain()
+            while e.state(jid) == "awaiting_taste":                 # the customer tastes the hardest shot
+                e.orch.approve_taste(jid, by=e.user["email"])
+                w2.drain()
             self.assertEqual(e.state(jid), "ready_for_review", e.store.job(jid)["pause_reason"])
             rows = e.store.attempts(jid)
             self.assertEqual(len({r["id"] for r in rows}), len(rows))

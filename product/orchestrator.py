@@ -154,7 +154,7 @@ class Orchestrator:
         else:
             return state
         try:
-            fn(job_id) if state == "paused_provider" else fn(self, job_id)
+            self._step(fn, job_id, state)
         except BudgetExhausted as e:
             self.pause(job_id, state, "paused_budget", f"needs about USD {e.shortfall} more (USD {e.available} of USD {e.budget} left)")
         except ProviderUnavailable as e:
@@ -173,7 +173,14 @@ class Orchestrator:
                 self.pause(job_id, state, "failed", f"internal error: {scrub(repr(e))[:200]}")
             except StaleState:
                 pass
-        return self.store.job(job_id)["state"]
+        now = self.store.job(job_id)["state"]
+        if now != state:                    # it's the customer's turn: tell them (page always; email when configured)
+            from product import customer
+            customer.notify_turn(self, job_id, now)
+        return now
+
+    def _step(self, fn, job_id, state):
+        fn(job_id) if state == "paused_provider" else fn(self, job_id)
 
     def resume_provider(self, job_id):
         job = self.store.job(job_id)
@@ -217,6 +224,14 @@ class Orchestrator:
     def approve_master(self, job_id, *, by: str, founder_session: str | None = None):
         from product.stations import head_cook
         return head_cook.approve_master(self, job_id, by=by, founder_session=founder_session)
+
+    def approve_taste(self, job_id, *, by: str):
+        from product.stations import head_cook
+        return head_cook.approve_taste(self, job_id, by=by)
+
+    def change_taste(self, job_id, *, by: str, text: str):
+        from product.stations import head_cook
+        return head_cook.change_taste(self, job_id, by=by, text=text)
 
     def request_changes(self, job_id, by: str, items: list):
         from product.stations import changes

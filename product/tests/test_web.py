@@ -88,7 +88,7 @@ class WebJourney(unittest.TestCase):
         self.c.req("POST", f"/jobs/{jid}/input", {"csrf": tok, **{f"alt_{i}": "yes" for i in range(n)}}, files=[])
         self.assertEqual(self.e.front(jid), "awaiting_approval")
         page = self.c.req("GET", f"/jobs/{jid}")["body"]
-        self.assertIn(b"Creative direction", page)
+        self.assertIn(b"Your plan", page)
         self.assertIn(b"Approve direction", page)
         self.assertNotIn(b"veo", page.lower())                         # no provider internals on customer pages
         self.assertNotIn(b"nano-banana", page.lower())
@@ -101,6 +101,10 @@ class WebJourney(unittest.TestCase):
         tok = self.c.csrf(f"/jobs/{jid}")
         self.c.req("POST", f"/jobs/{jid}/master", {"csrf": tok})
         self.e.drain()
+        if self.e.state(jid) == "awaiting_taste":          # only when the film has a moving shot to taste
+            tok = self.c.csrf(f"/jobs/{jid}")
+            self.c.req("POST", f"/jobs/{jid}/taste", {"csrf": tok})
+            self.e.drain()
         self.assertEqual(self.e.state(jid), "ready_for_review")
         final = self.e.orch._final_assets(jid)[0]
         page = self.c.req("GET", f"/jobs/{jid}")["body"]
