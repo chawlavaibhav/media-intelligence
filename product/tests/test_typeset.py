@@ -115,7 +115,8 @@ class Layouts(unittest.TestCase):
         rows = {r["check_id"]: r for r in C.run(L)}
         self.assertEqual(rows["product_clear"]["status"], "FAIL")
 
-    def test_dark_logo_on_dark_panel_is_refused_unless_the_brand_allows_reversing(self):
+    def test_dark_logo_on_dark_panel_is_refused_only_when_the_brand_forbids_reversing(self):
+        self.kit.logo_reversible = False
         L = E.layout(template_id="panel_bottom", fmt="4:5", system_id="quiet_premium", kit=self.kit, copy=COPY,
                      plate=_plate(self.tmp), product_box_norm=[0.2, 0.2, 0.8, 0.9])
         self.assertEqual({r["check_id"]: r for r in C.run(L)}["logo"]["status"], "FAIL")

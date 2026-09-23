@@ -21,7 +21,7 @@ def run(*, out: Path, fmt: str, kind: str, copy: list, kit: E.BrandKit, plate: P
     cands = picker.candidates(kit=kit, fmt=fmt, kind=kind, copy=copy, plate=plate, product_box_norm=product_box)
     rows = []
     for rank, c in enumerate(cands, 1):
-        name = f"{kind}-{fmt.replace(':', 'x')}-{rank:02d}-{c['template']}-{c['system']}.png"
+        name = f"{kind}-{fmt.replace(':', 'x')}-{c['template']}-{c['system']}.png"   # stable: taste results survive re-ranking
         rec = {k: c[k] for k in ("template", "system", "fmt", "score", "checks", "error")}
         rec["rank"], rec["file"] = rank, name if c["layout"] else None
         if c["layout"]:
