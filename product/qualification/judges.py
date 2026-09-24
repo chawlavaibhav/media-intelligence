@@ -96,12 +96,75 @@ class Evidence:
         p = self.root / "livebeta" / a["path"]
         return (a, p) if p.exists() else None
 
+    def product_photos(self, job, limit=3) -> list:
+        """The customer's own product photos for a P1 job (what the waiter and the recipe checker see)."""
+        out = []
+        for a in self.assets.values():
+            if a["job_id"] == job and a.get("role") == "product" and a.get("source") == "customer":
+                p = self.root / "livebeta" / a["path"]
+                if p.exists():
+                    out.append((a["content_type"] or "image/jpeg", p.read_bytes()))
+        return out[:limit]
+
     def artifact(self, job, kind, version):
         rows = [x for x in self.artifacts if x["job_id"] == job and x["kind"] == kind]
         if not rows:
             return None
         row = max(rows, key=lambda x: x["version"]) if version == "latest" else next((x for x in rows if x["version"] == version), None)
         return json.loads(row["data_json"]) if row else None
+
+
+# Old jobs: the customer's order, the waiter's sheet of the time (01-INTENT / normalized request) and product photos, so a
+# judge of an old job gets the same inputs a v2 judge gets (founder 2026-09-24).
+OLD_JOBS = {
+    "MOKOBARA-ODYSSEY-007": {"branch": "work/agency-job-mokobara-odyssey-001", "job": "agency/jobs/AGY-2026-09-21-MOKOBARA-ODYSSEY-001",
+                             "brief": "brief.job.json", "sheet": "stages/01-INTENT.md",
+                             "photos": ["source/mokobara/The_Transit_Backpack_30L_Private_Island_1.jpg",
+                                        "source/mokobara/The_Transit_Backpack_30L_Private_Island_2.jpg",
+                                        "source/mokobara/The_Transit_Backpack_30L_Private_Island_5.jpg"]},
+    "RENTOK-GAME-A-004": {"branch": "work/agency-job-rentok-game-lane-a-001", "job": "agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-A-001",
+                          "brief": "brief.job.json", "sheet": "stages/01-INTENT.md", "photos": []},
+    "RENTOK-GAME-B-005": {"branch": "work/agency-job-rentok-game-lane-b-001", "job": "agency/jobs/AGY-2026-09-20-RENTOK-GAME-LANE-B-001",
+                          "brief": "brief.job.json", "sheet": "stages/01-INTENT.md", "photos": []},
+    "RENTOK-GAME-V2-006": {"branch": "work/agency-job-rentok-game-v2-001", "job": "agency/jobs/AGY-2026-09-21-RENTOK-GAME-V2-001",
+                           "brief": "brief.job.json", "sheet": "stages/01-INTENT.md", "photos": []},
+    "CUMINCO-CHOPSTICKS-003": {"branch": "work/agency-job-cuminco-chopsticks-001", "job": "agency/jobs/AGY-2026-09-15-CUMINCO-CHOPSTICKS-001",
+                               "brief": "brief.job.json", "sheet": None,
+                               "photos": ["source/images/Slide_01.jpg", "source/images/Single_Green.jpg", "source/images/Set_of_2_Rose.jpg"]},
+    "UPWORK-INTRO-001": {"branch": "work/pilot-upwork-intro-video-v4", "job": "pilots/upwork-intro-video-2026-09-14",
+                         "brief": "preprod/COMMERCIAL-BRIEF.md", "sheet": "v4/plan/NORMALIZED-REQUEST-V4.yaml", "photos": []},
+}
+
+
+def git_bytes(branch: str, path: str) -> bytes | None:
+    import subprocess
+    r = subprocess.run(["git", "show", f"origin/{branch}:{path}"], cwd=config.REPO, capture_output=True)
+    return r.stdout if r.returncode == 0 else None
+
+
+def old_job_inputs(case: str) -> dict:
+    """{'words', 'sheet', 'photos'} for an old job, from its own branch; missing parts are said to be missing."""
+    j = OLD_JOBS.get(case)
+    if not j:
+        return {"words": "(no order on record for this job)", "sheet": None, "photos": []}
+    raw = git_file(j["branch"], f"{j['job']}/{j['brief']}")
+    words = "(no order on record for this job)"
+    if raw:
+        try:
+            b = json.loads(raw)
+            words = (b.get("brief") or {}).get("text") or json.dumps(b.get("brief") or b, ensure_ascii=False)[:6000]
+            extra = {k: b[k] for k in ("exact_text_strings", "deliverable_request") if k in b}
+            if extra:
+                words += "\n\nORDER DETAILS: " + json.dumps(extra, ensure_ascii=False)[:3000]
+        except ValueError:
+            words = raw[:6000]
+    sheet = git_file(j["branch"], f"{j['job']}/{j['sheet']}") if j.get("sheet") else None
+    photos = []
+    for ph in j.get("photos", []):
+        b = git_bytes(j["branch"], f"{j['job']}/{ph}")
+        if b:
+            photos.append(("image/jpeg" if ph.lower().endswith((".jpg", ".jpeg")) else "image/png", b))
+    return {"words": words, "sheet": sheet[:12000] if sheet else None, "photos": photos}
 
 
 def recipe_from_v1(direction: dict) -> dict:
@@ -112,6 +175,8 @@ def recipe_from_v1(direction: dict) -> dict:
         shots.append({"n": b["n"], "duration_s": b["duration_s"], "action": b.get("action"), "first_frame": b.get("first_frame"),
                       "end_state": b.get("end_state"), "route": "END-CARD" if card else "FILM-C", "starts_from": "master_plate",
                       "product_state": b.get("product_state"), "continuity": b.get("continuity")})
+    if not shots:  # a still-image plan has no beats: the whole direction is the recipe, not an empty shot list
+        return dict(direction) | {"deliverable_kind": "still image (no shots; the plan is the concept, composition and copy)"}
     return {k: direction.get(k) for k in ("proposition", "selected_concept", "product_anchor", "character", "copy_deck", "composition",
                                           "risks")} | {"shots": shots}
 
@@ -217,8 +282,8 @@ def trial(*, models: dict | None = None, max_usd="10.00", estimate_only=False, a
                 except Exception as e:  # noqa: BLE001 — one model failing on one case is a result, not a crash
                     rows.append({"id": c["id"], "available": False, "known": c.get("known") or c.get("known_verdict"),
                                  "why": f"call failed: {str(config.scrub(str(e)))[:200]}"})
-            est = sum(Decimal(r["est_cost_usd"] or 0) for r in st.llm_calls(jid))
-            paid = sum(Decimal(a["settled_usd"] or 0) for a in st.q("SELECT settled_usd FROM attempts"))
+            est = sum((Decimal(r["est_cost_usd"] or 0) for r in st.llm_calls(jid)), Decimal(0))
+            paid = sum((Decimal(a["settled_usd"] or 0) for a in st.q("SELECT settled_usd FROM attempts")), Decimal(0))
             spent += paid
             scored = _score(judge, rows, marks, live=not estimate_only)
             scored.pop("cases", None) if estimate_only else None
@@ -246,7 +311,8 @@ def _recipe_checker(k, jid, c, ev):
     ctx = {"UNDERSTANDING": {kk: intent.get(kk) for kk in ("objective", "audience", "mandatory", "deliverable", "product")},
            "FEASIBILITY": {"note": "v1 had no feasibility check; judge the plan against the equipment you know"},
            "RECIPE": recipe_from_v1(d)}
-    f = k.workers.call(jid, "recipe_checker", "recipe_check", ctx, exact_words=_words(ev, c["evidence"]["job"]))
+    f = k.workers.call(jid, "recipe_checker", "recipe_check", ctx, exact_words=_words(ev, c["evidence"]["job"]),
+                       media=ev.product_photos(c["evidence"]["job"]))
     got = "accept" if f["verdict"] == "approve" and f["predicted_acceptance"] != "unlikely" else "reject"
     return {"id": c["id"], "available": True, "known": c["known_verdict"], "got": got, "verdict": f["verdict"],
             "predicted_acceptance": f["predicted_acceptance"], "simulated": f["written_by"]["simulated"]}
@@ -254,20 +320,14 @@ def _recipe_checker(k, jid, c, ev):
 
 def _recipe_checker_historical(k, jid, c):
     plan = git_file(c["branch"], c["plan"])
+    structure = git_file(c["branch"], c["plan"].rsplit("/", 1)[0] + "/02-STRUCTURE.md") if c["plan"].endswith("03-CREATIVE.md") else None
     if plan is None:
         return {"id": c["id"], "available": False, "known": c["known_verdict"], "why": f"{c['branch']} is not on this host"}
-    brief_raw = git_file(c["branch"], c["brief"]) if c.get("brief") else None
-    words = "(the customer's words are not on this host)"
-    if brief_raw:
-        try:
-            b = json.loads(brief_raw)
-            words = (b.get("brief") or {}).get("text") or json.dumps(b.get("brief") or b, ensure_ascii=False)[:6000]
-        except ValueError:
-            words = brief_raw[:6000]
-    ctx = {"UNDERSTANDING": {"note": "an old job from before P1; its brief is the customer's exact words above"},
+    inp = old_job_inputs(c["case"]) if c.get("case") else {"words": "(no order on record)", "sheet": None, "photos": []}
+    ctx = {"UNDERSTANDING": {"waiters_sheet": inp["sheet"] or "(this old job kept no separate sheet; its order above is complete)"},
            "FEASIBILITY": {"note": "old jobs had no feasibility check; judge the plan against the equipment you know"},
-           "RECIPE": {"plan_document": plan[:24000], "source": f"{c['branch']}:{c['plan']}"}}
-    f = k.workers.call(jid, "recipe_checker", "recipe_check", ctx, exact_words=words)
+           "RECIPE": {"structure_document": structure, "plan_document": plan, "source": f"{c['branch']}:{c['plan']}"}}
+    f = k.workers.call(jid, "recipe_checker", "recipe_check", ctx, exact_words=inp["words"], media=inp["photos"])
     got = "accept" if f["verdict"] == "approve" and f["predicted_acceptance"] != "unlikely" else "reject"
     return {"id": c["id"], "available": True, "known": c["known_verdict"], "got": got, "verdict": f["verdict"],
             "predicted_acceptance": f["predicted_acceptance"], "simulated": f["written_by"]["simulated"]}
@@ -296,13 +356,6 @@ def _big_taster(k, jid, c, ev):
             return {"id": c["id"], "available": False, "known": known, "why": "file not on this host or its SHA-256 does not match"}
         p, ctype = hit
         media_items = [(ctype, p.read_bytes())]
-        if ctype.startswith("video/") and not k.s.models.get("big_taster", "").startswith("gemini"):
-            from product import media as media_mod
-            sheet = Path(tempfile.mkdtemp(prefix="mi-sheet-")) / "contact.png"
-            try:
-                media_items = [("image/png", media_mod.contact_sheet(p, sheet).read_bytes())]
-            except media_mod.MediaError:
-                pass
     elif "evidence" in c and ev.root:
         hit = ev.asset(c["evidence"]["asset"])
         if hit:
@@ -321,8 +374,27 @@ def _big_taster(k, jid, c, ev):
             pass
     if not media_items:
         return {"id": c["id"], "available": False, "known": known}
-    ctx = {"UNDERSTANDING": {"objective": c.get("what") or f"{c.get('case')} version {c.get('version')} ({c.get('media')})"},
-           "MANDATORY": [], "MEASUREMENTS": [],
+    sent_type = media_items[0][0]
+    if sent_type.startswith("video/") and not k.s.models.get("big_taster", "").startswith("gemini"):
+        # only Gemini takes video with sound; every other model gets the same contact sheet of still frames
+        from product import media as media_mod
+        tmp = Path(tempfile.mkdtemp(prefix="mi-sheet-"))
+        (tmp / "film.mp4").write_bytes(media_items[0][1])
+        try:
+            media_items = [("image/png", media_mod.contact_sheet(tmp / "film.mp4", tmp / "contact.png").read_bytes())]
+        except media_mod.MediaError:
+            return {"id": c["id"], "available": False, "known": known, "why": "could not make a contact sheet"}
+    understanding = {"what": c.get("what") or f"{c.get('case')} version {c.get('version')} ({c.get('media')})"}
+    if c.get("case"):
+        inp = old_job_inputs(c["case"])
+        words = inp["words"]
+        understanding["waiters_sheet"] = inp["sheet"] or "(this old job kept no separate sheet; its order is complete)"
+    elif "evidence" in c and ev.root and c["evidence"].get("asset"):
+        a = ev.assets.get(c["evidence"]["asset"])
+        intent = ev.artifact(a["job_id"], "intent", "latest") if a else None
+        if intent:
+            understanding["waiters_sheet"] = {kk: intent.get(kk) for kk in ("objective", "audience", "mandatory", "forbidden", "deliverable", "product")}
+    ctx = {"UNDERSTANDING": understanding, "MANDATORY": [], "MEASUREMENTS": [],
            "MEDIA_NOTE": "The attached item is the finished work, exactly as the customer saw it."}
     f = k.workers.call(jid, "big_taster", "final_review", ctx, exact_words=words or "(the customer's words are not on this host)",
                        media=media_items)
@@ -333,8 +405,10 @@ def _big_taster(k, jid, c, ev):
         key = yaml.safe_load(KEY.read_text())
         found = [m["id"] for m in propose_matches({"defects": [{**d, "beat": d.get("shot")} for d in f["defects"]]}, key, "v1")
                  if m["target"] and m["proposed_reviewer_defects"]]
+    saw = ("video with sound" if media_items[0][0].startswith("video/") else
+           "still frames, no sound" if sent_type.startswith("video/") else "image")
     return {"id": c["id"], "available": True, "known": known, "got": got, "defects_found": found, "media": c.get("media"),
-            "simulated": f["written_by"]["simulated"]}
+            "saw": saw, "had_order": not str(words or "").startswith("("), "simulated": f["written_by"]["simulated"]}
 
 
 MOKO7_V1 = "BT-H-MOKOBARA-ODYSSEY-007-1"
