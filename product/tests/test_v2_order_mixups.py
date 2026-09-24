@@ -44,5 +44,14 @@ class OrderMixups(unittest.TestCase):
         self.assertIsNone(waiter.media_mismatch({"media": "image", "formats": ["1:1"]}, "A launch poster for our backpack"))
 
 
+class OnScreenText(unittest.TestCase):
+    def test_a_quoted_concept_name_is_not_on_screen_text_but_quoted_words_to_show_are(self):
+        # live check 2026-09-24: Concept, "One key": was taken as required on-screen text
+        self.assertEqual(waiter.on_screen_quotes('Concept, "One key": handheld, phone-shot feel'), [])
+        self.assertEqual(waiter.on_screen_quotes('The words "Pack less. Go further." and "acme.in" must appear exactly.'),
+                         ["Pack less. Go further.", "acme.in"])
+        self.assertEqual(waiter.on_screen_quotes('End on our line "Room for the long way home."'), ["Room for the long way home."])
+
+
 if __name__ == "__main__":
     unittest.main()

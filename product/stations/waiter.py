@@ -56,6 +56,24 @@ IMAGE_SAID = re.compile(r"\b(posters?|stills?|static|banners?|carousels?|flyers?
 SHORT_IMAGE = re.compile(r"\b(image|picture|poster|still)\b", re.I)          # a short answer: "image please"
 SECONDS = re.compile(r"\b(\d{1,3})\s*-?\s*(?:s|secs?|seconds?)\b", re.I)
 QUOTED = re.compile(r'["“”]([^"“”\n]{2,160})["“”]|‘([^‘’\n]{2,160})’')
+# A quote is exact on-screen text only when the words just before it say so ("the words", "headline", "end on", "text
+# cards"…). Live check 2026-09-24: a concept name in quotes (Concept, "One key":) was taken as required on-screen text.
+ON_SCREEN = re.compile(r"\b(text|texts|words?|lines?|says?|reads?|appears?|headline|tagline|slogan|caption|copy|title|"
+                       r"overlay|on[- ]screen|end (?:on|card|with)|written|write|spell\w*|cta|url|website|label)\b", re.I)
+
+
+def on_screen_quotes(text: str) -> list:
+    out = []
+    for m in QUOTED.finditer(text or ""):
+        q = (m.group(1) or m.group(2) or "").strip()
+        before = text[max(0, m.start() - 60):m.start()]
+        between_quotes = bool(out) and re.fullmatch(r"[\s,/;&and]*", text[prev_end:m.start()] or "") is not None
+        if q and (ON_SCREEN.search(before) or between_quotes):
+            out.append(q)
+            prev_end = m.end()
+        elif q:
+            prev_end = m.end()
+    return out
 VERTICAL = re.compile(r"\b(reels?|stor(?:y|ies)|shorts|vertical|9:16)\b", re.I)
 LANDSCAPE = re.compile(r"\b(youtube|landscape|horizontal|widescreen|16:9)\b", re.I)
 IMAGE_SIZES = [("1:1", re.compile(r"\b(square|1:1)\b", re.I)), ("4:5", re.compile(r"\b(4:5|portrait)\b", re.I)),
@@ -99,7 +117,8 @@ def decide_order(k, job_id, answers: dict, form: dict | None = None) -> dict:
         dur = None
         fmts = [f for f, rx in IMAGE_SIZES if any(rx.search(t) for t in texts)] or \
             [f for f in (d.get("formats") or []) if f in ("1:1", "4:5", "9:16", "16:9")] or ["1:1"]
-    exact = list(dict.fromkeys((a or b).strip() for t in texts for a, b in QUOTED.findall(t) if (a or b).strip()))[:8]
+    in_answer = [(a or b).strip() for a, b in QUOTED.findall(said or "") if (a or b).strip()]   # replying to our text question
+    exact = list(dict.fromkeys(on_screen_quotes(words) + in_answer))[:8]
     prev = k.store.artifact(job_id, "order_change") or {}
     product = dict(prev.get("product") or {})
     if form and form.get("product"):
