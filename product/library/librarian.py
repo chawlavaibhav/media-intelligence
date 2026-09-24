@@ -11,15 +11,16 @@ from __future__ import annotations
 import json
 
 from product import library, rulebook
-from product.library import bm25, tokens
+from product.library import bm25, stats, tokens
 
 CAPS = {"chef": 6000, "recipe_checker": 4000, "pantry_checker": 1500}
 MAX_COOKBOOK_PAGES = 6
 MAX_RECIPES = 3
-# Founder ruling 2026-09-24: "weaken the impact of failure notes unless they repeat multiple times — it's causing more harm
-# than good". A failure note reaches a tray only when its kind was seen on MIN_FAILURE_JOBS different jobs and was not
-# since prevented; one note per kind; a few at most; each labelled as a watch-out, not a rule.
-MIN_FAILURE_JOBS = 3
+# Founder rulings 2026-09-24: "weaken the impact of failure notes unless they repeat multiple times — it's causing more harm
+# than good", and "use stats — what is significant and what is not per the sample size". A failure note reaches a tray only
+# when its kind recurs significantly more often than a one-off, given how many jobs are on record (exact binomial test,
+# stats.recurs_significantly), and was not since prevented; one note per kind; a few at most; each labelled as a watch-out
+# with its rate and confidence interval.
 MAX_FAILURES = {"chef": 3, "recipe_checker": 5}
 
 
@@ -37,13 +38,13 @@ class Librarian:
     def _failures(self, query, classes, routes, account_id, media, worker="chef"):
         rows = [r for r in self.failures.all(account_id) if set(r["action_classes"]) & set(classes)
                 and (not routes or not r["routes"] or set(r["routes"]) & set(routes)) and (not r.get("media") or r["media"] == media)
-                and r.get("times_seen", 1) >= MIN_FAILURE_JOBS and r.get("recurrence") != "PREVENTED"]
+                and stats.recurs_significantly(r.get("times_seen", 1), r.get("jobs_on_record", 1)) and r.get("recurrence") != "PREVENTED"]
         out, kinds = [], set()
         for s, d in bm25(query, rows):
             if d.get("failure_mode") in kinds:
                 continue
             kinds.add(d.get("failure_mode"))
-            out.append(_item({**d, "text": f"Watch-out (seen on {d['times_seen']} jobs): {d['text']}"}, s))
+            out.append(_item({**d, "text": f"Watch-out ({stats.describe(d['times_seen'], d['jobs_on_record'])}): {d['text']}"}, s))
             if len(out) >= MAX_FAILURES.get(worker, 3):
                 break
         return out

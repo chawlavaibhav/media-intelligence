@@ -187,13 +187,16 @@ class FailureDiary:
             rows.append({"id": r["id"], "section": "failure_diary", "failure_mode": r["failure_mode"], "bucket": None,
                          "action_classes": json.loads(r["action_classes"]), "routes": json.loads(r["routes"]), "media": r["media"],
                          "text": r["text"], "account_id": r["account_id"], "source_job_id": r["source_job_id"]})
-        # How many different jobs hit the same kind of failure (founder 2026-09-24: a failure only carries weight when it
-        # repeats; one-off failures steered the chef into safe, lifeless plans).
-        jobs = {}
+        # How many different jobs hit the same kind of failure, out of all jobs on record (founder 2026-09-24: a failure
+        # only carries weight when it repeats significantly for the sample size — see library/stats.py).
+        jobs, all_jobs = {}, set()
         for r in rows:
-            jobs.setdefault(r.get("failure_mode"), set()).add(r.get("source_job_id") or r["id"])
+            job = r.get("source_job_id") or r["id"]
+            jobs.setdefault(r.get("failure_mode"), set()).add(job)
+            all_jobs.add(job)
         for r in rows:
             r["times_seen"] = len(jobs.get(r.get("failure_mode"), ()))
+            r["jobs_on_record"] = len(all_jobs)
         return rows
 
     def add(self, entry: dict, *, by: str, source_lesson: str | None, account_id: str | None = None) -> str:
