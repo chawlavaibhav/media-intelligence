@@ -121,9 +121,14 @@ class Clarification(unittest.TestCase):
 
 class Refusal(unittest.TestCase):
     def test_a_talking_head_voice_over_brief_is_refused_at_intake_with_zero_production_spend(self):
+        # founder 2026-09-24: the customer is first offered the nearest alternative; refused only if they decline it
         e = Env()
         try:
             jid = e.submit("video", text="A talking head explainer with a voice-over narrating our app features for 20 seconds.")
+            e.drain()
+            self.assertEqual(e.state(jid), "needs_answers")
+            from product.stations import waiter
+            e.orch.answer(jid, {waiter.ALT_Q: "no"}, by=e.user["email"])
             e.drain()
             self.assertEqual(e.state(jid), "refused")
             self.assertEqual([a for a in e.store.attempts(jid) if a["category"] == "provider"], [])
