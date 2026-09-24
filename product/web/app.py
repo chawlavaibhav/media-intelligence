@@ -372,7 +372,7 @@ class App:
         req_checks = required(o, jid) if st.artifact(jid, "understanding") and st.artifact(jid, "recipe") else {}
         forms = {k: st.artifact(jid, k) for k in ("order_slip", "understanding", "feasibility", "recipe", "recipe_check", "production_log",
                                                   "final_review", "lessons", "change_request")}
-        trays = {w: st.artifact(jid, f"tray:{w}") for w in ("pantry_checker", "chef", "recipe_checker")}
+        trays = {w: st.artifact(jid, f"tray:{w}") for w in ("chef",)}
         v.update(events=st.events(jid), attempts=st.attempts(jid), llm=st.llm_calls(jid), assets=st.assets(jid),
                  gateway=[verify.gateway(st, jid, a, req_checks) for a in finals], forms=forms, trays=trays,
                  overrides=st.overrides(jid), founder_decision=st.artifact(jid, "founder_decision"),
@@ -463,7 +463,7 @@ class App:
         rb = self.svc.orch.rulebook
         cards = [(w, rb.card(w), rb.history(w)) for w in rulebook.AI_WORKERS + rulebook.CODE_WORKERS]
         return self.page("ops_rulebook.html", req, cards=cards, forms=rulebook.forms(), send_backs=flow.SEND_BACKS, models=self.s.models,
-                         qualified=tuple(j for j in ("recipe_checker", "head_cook", "gatekeeper") if self.svc.orch.qualified(j)))
+                         qualified=tuple(j for j in ("head_cook", "gatekeeper") if self.svc.orch.qualified(j)))
 
     def ops_library(self, req):
         self.user(req, "operator")

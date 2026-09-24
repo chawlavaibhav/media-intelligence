@@ -61,8 +61,7 @@ FOUNDER_ONLY_FROM = ("paused_for_founder", "failed", "paused_operator")
 FOUNDER_ONLY_EDGES = {("operator_hold", "ready_for_review")}
 
 RAIL = [
-    ("Understanding", ("submitted", "understanding", "needs_answers")),
-    ("Checking we can make it", ("feasibility", "awaiting_customer_input")),
+    ("Understanding", ("submitted", "understanding", "needs_answers", "feasibility", "awaiting_customer_input")),
     ("Creative plan", ("directing", "awaiting_approval")),
     ("Producing", ("planning", "producing", "awaiting_master_approval", "awaiting_taste", "revising")),
     ("Checking", ("checking", "operator_hold", "needs_customer_decision")),

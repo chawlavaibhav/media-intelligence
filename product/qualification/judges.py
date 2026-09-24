@@ -181,7 +181,7 @@ def recipe_from_v1(direction: dict) -> dict:
                                           "risks")} | {"shots": shots}
 
 
-def run(*, live=False, founder_session=None, product_data=None, budget="2.00", out=None, judges=("recipe_checker", "head_cook", "gatekeeper")):
+def run(*, live=False, founder_session=None, product_data=None, budget="2.00", out=None, judges=("head_cook", "gatekeeper")):
     cases = yaml.safe_load((HERE / "JUDGE-CASES.yaml").read_text())
     marks = yaml.safe_load((HERE / "PASS-MARKS.yaml").read_text())
     authorised_by = None
@@ -223,8 +223,6 @@ def run(*, live=False, founder_session=None, product_data=None, budget="2.00", o
 # judge and never changes the product's configuration. Models are "provider:model" (azure_openai:<deployment name> works
 # for any model deployed on the Azure resource, including open models such as DeepSeek, Llama or Kimi if deployed there).
 TRIAL_MODELS = {
-    "recipe_checker": ["azure_openai:gpt-5.6-terra", "azure_openai:gpt-5.6-sol", "azure_openai:DeepSeek-V3.1",
-                       "azure_openai:Kimi-K2-Instruct", "gemini:gemini-3.1-pro-preview"],
     "head_cook": ["azure_openai:gpt-5.6-terra", "azure_openai:Llama-4-Maverick-17B-128E-Instruct-FP8", "anthropic:claude-haiku-4-5",
                      "gemini:gemini-3.5-flash"],
     "gatekeeper": ["azure_openai:gpt-5.6-terra", "azure_openai:gpt-5.6-sol", "azure_openai:Llama-4-Maverick-17B-128E-Instruct-FP8",
@@ -245,7 +243,7 @@ def _usable(spec: str) -> str | None:
 
 
 def trial(*, models: dict | None = None, max_usd="10.00", estimate_only=False, approved_by=None, out=None,
-          judges=("recipe_checker", "head_cook", "gatekeeper")) -> dict:
+          judges=("head_cook", "gatekeeper")) -> dict:
     """Run each judge's cases on each candidate model (or, with estimate_only, price it at USD 0). A hard cap: the run
     stops before the case that would take the total past max_usd."""
     from product.reasoning import _price

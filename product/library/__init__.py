@@ -295,6 +295,15 @@ def _seed_recipes() -> list:
          "text": "30-s 9:16 hands-only packing reel for a backpack: eight shots of hands sliding a laptop in, unzipping and folding "
                  "the front flap, packing clothes, re-zipping and lifting the bag, each shot generated independently. "
                  "Outcome REJECTED: 'two random hands, too many AI slops, robotic; the colour changed'."},
+        {"id": "RL-0922-MOKOBARA-FILM", "section": "recipe_library", "media": "video", "product_category": "backpack", "outcome": "accepted",
+         "action_classes": ["person_performance", "simple_hand_gesture", "insert_object_into_container", "camera_move_static_product"],
+         "routes": ["FILM-C"], "account_id": None, "source_job_id": "AGY-2026-09-21-MOKOBARA-ODYSSEY-001",
+         "text": "30-s 9:16 comic survival film for a backpack: a castaway on a grey volcanic island. Every beat is a designed still "
+                 "that the video model brings to life (six moving beats + a code end card): tally marks scratched on rock, the navy bag "
+                 "found at the tideline, her photograph lifted from the yellow lining, the gag — both arms inside the bag to the shoulders "
+                 "— packing, rowing home at dawn. Each beat written with its feeling, framing and impact; the man, bag, island and grade "
+                 "described once and repeated in every prompt; weak takes fixed by one sharper prompt each. Outcome ACCEPTED: "
+                 "'excellent. pass'."},
         {"id": "RL-0923-IMG", "section": "recipe_library", "media": "image", "product_category": "backpack", "outcome": "accepted",
          "action_classes": ["product_still_from_clean_photo"], "routes": ["IMG"], "account_id": None,
          "source_job_id": "job_20260923_6720871c",

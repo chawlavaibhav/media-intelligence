@@ -377,6 +377,13 @@ def propose_shelf(k, job_id):
             sh.propose(acct, kind="product_photo", key=f"{product}/{json.loads(a['meta_json']).get('filename')}",
                        data={"product": product, "role": r["role"], "shows": r["shows"]}, file=Path(a["path"]), source_job_id=job_id)
     recipe = k.store.artifact(job_id, "recipe") or {}
+    m = k.store.node(job_id, "master")
+    if m and m["selected_asset_id"] and not json.loads(m["spec_json"]).get("shelf_item") and not k.store.events(job_id, ("master_approved",)):
+        # kitchen v3: the look of the film is no longer approved mid-job, so an accepted job offers it for the shelf
+        a = k.store.asset(m["selected_asset_id"])
+        sh.propose(acct, kind="master_plate", key=product,
+                   data={"description": (recipe.get("look") or {}).get("picture_prompt") or (recipe.get("master_plate") or {}).get("description", ""),
+                         "asset": a["id"]}, file=Path(a["path"]), source_job_id=job_id)
     ch = k.store.node(job_id, "character")
     if (recipe.get("character") or {}).get("present") and ch and ch["selected_asset_id"] and not json.loads(ch["spec_json"]).get("shelf_item"):
         a = k.store.asset(ch["selected_asset_id"])
