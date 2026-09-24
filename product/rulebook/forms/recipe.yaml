@@ -1,10 +1,12 @@
 # Recipe — the chef (spec §4.4). v1 DIRECTION + BEAT fields; each shot names route, action class, what it starts from.
+# v2 (founder 2026-09-24): a descriptive recipe in plain English, the Mokobara way — the story told in full, identity
+# anchors described once, and every shot with title / feeling / framing / impact and a full description paragraph.
 form: recipe
-version: 1
+version: 2
 written_by: chef
 schema:
   type: object
-  required: [proposition, concepts, selected_concept, rationale, audience_experience, hook, remember, visual_language,
+  required: [proposition, concepts, selected_concept, rationale, audience_experience, hook, remember, story, identity_anchors, visual_language,
              sound, product_anchor, master_plate, character, copy_deck, composition, shots, end_card, risks,
              library_used, reuse_shelf_items, customer_summary]
   properties:
@@ -22,6 +24,11 @@ schema:
     audience_experience: {type: string}
     hook: {type: string}
     remember: {type: string}
+    story: {type: string}
+    identity_anchors:
+      type: object
+      required: [person, product, world, grade]
+      properties: {person: {type: string}, product: {type: string}, world: {type: string}, grade: {type: string}}
     visual_language:
       type: object
       required: [look, light, palette, camera]
@@ -61,11 +68,16 @@ schema:
       type: array
       items:
         type: object
-        required: [n, duration_s, purpose, first_frame, action, end_state, camera, route, action_class, starts_from,
+        required: [n, duration_s, title, feeling, framing, impact, description, purpose, first_frame, action, end_state, camera, route, action_class, starts_from,
                    feasibility_refs, product_present, product_state, continuity, must_not, super_id, mandatory_ids]
         properties:
           n: {type: integer}
           duration_s: {type: number}
+          title: {type: string}
+          feeling: {type: string}
+          framing: {type: string}
+          impact: {type: string}
+          description: {type: string}
           purpose: {type: string}
           first_frame: {type: string}
           action: {type: string}

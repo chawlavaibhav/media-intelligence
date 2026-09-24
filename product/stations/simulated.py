@@ -230,7 +230,11 @@ class SimulatedWorkers:
             mand = [m["id"] for m in u.get("mandatory", []) if not m["requirement"].startswith("the exact text")]
             for i, (a, v) in enumerate(usable):
                 risky = v["verdict"] == "risky"
-                shots.append({"n": i + 1, "duration_s": each, "purpose": "show it", "first_frame": f"{name} in the master-plate room; {a['action']}",
+                shots.append({"n": i + 1, "duration_s": each, "title": f"Moment {i + 1}", "feeling": "recognition",
+                              "framing": f"medium shot, eye level: {a['action']}", "impact": "the product turns the moment",
+                              "description": f"A 35mm eye-level medium shot in the master-plate room by a window with soft morning "
+                                             f"light: {a['action']}. The viewer recognises the moment and feels relief.",
+                              "purpose": "show it", "first_frame": f"{name} in the master-plate room; {a['action']}",
                               "action": a["action"], "end_state": "the moment holds", "camera": "35mm, eye level", "route": v["route"],
                               "action_class": a["action_class"], "starts_from": "master_plate" if (i == 0 or risky) else "previous_shot_end",
                               "feasibility_refs": [a["id"]], "product_present": True, "product_state": "intact",
@@ -239,7 +243,10 @@ class SimulatedWorkers:
                 if risky:
                     risks.append({"shot": i + 1, "action_id": a["id"], "risk": f"{a['action_class']} is risky on {v['route']}",
                                   "limit": "produced first from the master plate; one simple action; code motion fallback"})
-            shots.append({"n": len(shots) + 1, "duration_s": 3.0, "purpose": "sign-off", "first_frame": "end card", "action": "none",
+            shots.append({"n": len(shots) + 1, "duration_s": 3.0, "title": "End card", "feeling": "the idea, remembered",
+                          "framing": "code-set end card", "impact": "the product name and the last line",
+                          "description": "The end card, set by code: the product name and the closing line on a plain background.",
+                          "purpose": "sign-off", "first_frame": "end card", "action": "none",
                           "end_state": "logo and line", "camera": "n/a", "route": "END-CARD", "action_class": "none", "starts_from": "still_only",
                           "feasibility_refs": [], "product_present": False, "product_state": "n/a", "continuity": [], "must_not": [],
                           "super_id": None, "mandatory_ids": [m["id"] for m in u.get("mandatory", []) if m["requirement"].startswith("the exact text")]})
@@ -248,6 +255,10 @@ class SimulatedWorkers:
             "concepts": [{"name": "The quiet fix", "idea": f"an ordinary moment, resolved by {name}", "why_it_works": "product as hero"}],
             "selected_concept": "The quiet fix", "rationale": "simplest route from the audience's moment to the product truth",
             "audience_experience": "recognition, then relief", "hook": "a moment the viewer knows", "remember": name,
+            "story": (f"An ordinary morning in a warm home. Someone the viewer could be meets a small everyday snag, and {name} "
+                      f"quietly resolves it; the film ends on their relieved smile and the product at rest in the soft window light."),
+            "identity_anchors": {"person": "none unless the brief asks for one", "product": f"{name} exactly as the customer's photos show it",
+                                 "world": "a warm oak table by a window, soft morning light", "grade": "natural, warm, premium"},
             "visual_language": {"look": "natural, premium", "light": "one soft window light", "palette": ["#1f2a44", "#f4efe6"],
                                 "camera": "35mm, shallow depth"},
             "sound": {"music_brief": "warm, understated, gentle build", "ambience": "room tone"},

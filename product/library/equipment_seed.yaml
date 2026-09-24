@@ -3,6 +3,12 @@
 # lesson queue) and live in the store; this file is never edited by the running product. A pair with no row is `unknown`,
 # which the pantry checker treats as `risky`.
 #
+# Statistics (founder ruling 2026-09-24: "apply stats to the equipment sheet too"): a row with `successes`/`failures` has
+# its verdict COMPUTED from them by exact binomial bounds (library/stats.py, EquipmentSheet.rows): `cannot` only when the
+# failure rate is significantly above 50 %, `reliable` only when it is significantly below 25 %, otherwise `risky`. The
+# written `verdict` is kept as `declared_verdict`. Rows with `basis: policy` (a founder decision, not an observation) or
+# `basis: deterministic` (code that cannot fail at random) keep their declared verdict.
+#
 # Evidence ids:
 #   EV-0923-FILM   private repo chawlavaibhav/mi-p1-evidence, job_20260923_7d36a5b6 (the rejected 30-s Reel): events
 #                  take_rejected 05:02–06:37 UTC (15 of 16 Veo takes rejected by the per-clip inspector), the founder's
@@ -17,6 +23,8 @@ rows:
     action_class: hands_work_mechanism
     verdict: cannot
     sample_count: 16
+    successes: 1
+    failures: 15
     evidence_refs: [EV-0923-FILM, ATLAS-B7]
     note: hands pulling zips and folding the flap on the backpack — 15 of 16 takes rejected; the founder rejected the film
       ("two random hands, too many AI slops, robotic").
@@ -27,6 +35,8 @@ rows:
     action_class: insert_object_into_container
     verdict: risky
     sample_count: 0
+    successes: 0
+    failures: 0
     evidence_refs: [EV-0923-FILM]
     note: not yet observed — beat 4 was refused by the provider twice; the risk is the recipe checker's written prediction.
     alternative: show the object already inside as a still (FILM-A).
@@ -36,6 +46,8 @@ rows:
     action_class: lift_closed_product
     verdict: risky
     sample_count: 2
+    successes: 0
+    failures: 2
     evidence_refs: [EV-0923-FILM]
     note: the bag floated or began mid-air in both takes.
     alternative: end on the closed bag at rest (FILM-A), or a camera move around it (FILM-B).
@@ -55,6 +67,8 @@ rows:
     action_class: product_still_from_clean_photo
     verdict: reliable
     sample_count: 1
+    successes: 1
+    failures: 0
     evidence_refs: [EV-0923-IMG]
     note: product fidelity from a single clean product photo — the launch poster was accepted.
     alternative: null
@@ -64,6 +78,8 @@ rows:
     action_class: product_still_from_infographic_photo
     verdict: risky
     sample_count: 1
+    successes: 0
+    failures: 1
     evidence_refs: [EV-0923-FILM]
     note: an annotated, text-labelled infographic reference confused the geometry; the brand was misspelt "mokebara" on the
       plaque (still_b7).
@@ -74,6 +90,9 @@ rows:
     action_class: legible_text_on_product
     verdict: cannot
     sample_count: 1
+    successes: 0
+    failures: 1
+    basis: policy
     evidence_refs: [EV-0923-FILM]
     note: legible brand text drawn by the picture model is unreliable ("mokebara").
     alternative: code-composed text and the supplied logo only.
@@ -83,6 +102,7 @@ rows:
     action_class: camera_move_static_product
     verdict: reliable
     sample_count: 3
+    basis: deterministic
     evidence_refs: [EV-0923-FILM]
     note: push-in / pan on an approved still is deterministic code (three beats of the rejected film used it; the robotic
       feel came from the generated clips around them, not from the code motion).
@@ -93,6 +113,7 @@ rows:
     action_class: product_state_still
     verdict: reliable
     sample_count: 3
+    basis: deterministic
     evidence_refs: [EV-0923-FILM]
     note: a still of a product state held with gentle code motion.
     alternative: null
@@ -102,6 +123,7 @@ rows:
     action_class: speech_or_lipsync
     verdict: cannot
     sample_count: 0
+    basis: policy
     evidence_refs: [SPEC-9.1]
     note: not offered in P1 (no speech anywhere).
     alternative: music, ambience and code-set supers.
@@ -111,6 +133,7 @@ rows:
     action_class: identifiable_person
     verdict: cannot
     sample_count: 0
+    basis: policy
     evidence_refs: [SPEC-9.1]
     note: not offered in P1.
     alternative: an anonymous person, or hands only.
@@ -120,6 +143,7 @@ rows:
     action_class: multi_step_manipulation
     verdict: cannot
     sample_count: 0
+    basis: policy
     evidence_refs: [SPEC-9.1, EV-0923-FILM]
     note: several manipulations in one shot are not offered.
     alternative: one simple action per shot, or stills of each state.
@@ -129,6 +153,8 @@ rows:
     action_class: camera_move_static_product
     verdict: risky
     sample_count: 0
+    successes: 0
+    failures: 0
     evidence_refs: []
     note: FILM-B's intended use; not yet observed on a P1 job, so it is qualified first like any risky shot.
     alternative: code motion on an approved still (FILM-A).

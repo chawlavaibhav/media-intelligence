@@ -63,18 +63,24 @@ def submit_backpack_film(env, *, text=BACKPACK_FILM_ORDER, photos=BACKPACK_PHOTO
 def v1_recipe(understanding: dict, feasibility: dict) -> dict:
     """The v1 film's recipe re-expressed in the v2 Recipe form: every action shot on the video route (FILM-C), each shot
     generated from its own still — exactly what the 23-September job did."""
-    shots = [{"n": n, "duration_s": float(d), "purpose": "packing", "first_frame": "the upright backpack on a table",
+    shots = [{"n": n, "duration_s": float(d), "title": f"Pack {n}", "feeling": "satisfaction", "framing": "medium close-up on the hands",
+              "impact": "one more thing fits", "description": f"Medium close-up on two hands at the bag on an oak table: {a}.",
+              "purpose": "packing", "first_frame": "the upright backpack on a table",
               "action": a, "end_state": "the step completed", "camera": "medium close-up", "route": "FILM-C",
               "action_class": "simple_hand_gesture", "starts_from": "master_plate", "feasibility_refs": [],
               "product_present": True, "product_state": "intact", "continuity": ["same two hands"], "must_not": [], "super_id": None,
               "mandatory_ids": []} for n, d, a in V1_FILM_SHOTS]
-    shots.append({"n": 9, "duration_s": 3.0, "purpose": "sign-off", "first_frame": "end card", "action": "none", "end_state": "logo and line",
+    shots.append({"n": 9, "duration_s": 3.0, "title": "End card", "feeling": "the idea, remembered", "framing": "code-set end card",
+                  "impact": "name and line", "description": "The end card, set by code.", "purpose": "sign-off", "first_frame": "end card", "action": "none", "end_state": "logo and line",
                   "camera": "n/a", "route": "END-CARD", "action_class": "none", "starts_from": "still_only", "feasibility_refs": [],
                   "product_present": False, "product_state": "n/a", "continuity": [], "must_not": [], "super_id": None,
                   "mandatory_ids": [m["id"] for m in understanding.get("mandatory", [])]})
     return {"proposition": "Everything for two days, packed in thirty seconds", "concepts": [{"name": "The pack", "idea": "hands pack the bag",
             "why_it_works": "shows capacity"}], "selected_concept": "The pack", "rationale": "v1", "audience_experience": "satisfying",
             "hook": "a laptop slides in", "remember": "it all fits",
+            "story": "Two hands pack a navy backpack on an oak table for a two-day trip, one item after another, and it all fits.",
+            "identity_anchors": {"person": "two medium-brown hands with off-white cuffs", "product": "the navy backpack with its yellow front bucket",
+                                 "world": "an oak table", "grade": "premium, soft"},
             "visual_language": {"look": "premium", "light": "soft", "palette": ["#101820"], "camera": "macro"},
             "sound": {"music_brief": "calm", "ambience": "room"}, "product_anchor": "the navy backpack with its yellow front bucket",
             "master_plate": {"description": "the backpack upright on an oak table", "product_state": "closed"},

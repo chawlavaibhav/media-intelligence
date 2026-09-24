@@ -140,8 +140,11 @@ def safe_replan(k, job_id, recipe: dict, rc: dict, cycle: str):
             if s["n"] in problems:
                 alt = _safest(k, f, s)
                 note["shots"].append({"shot": s["n"], "was": {"route": s["route"], "action": s["action"]}, "now": alt})
+                # founder 2026-09-24: the safe step changes HOW the moment is made, never WHETHER it exists — the shot keeps its
+                # title, feeling, framing and description; only the making changes.
                 s.update(route="FILM-A", action_class="product_state_still", starts_from="master_plate", feasibility_refs=[],
-                         action=f"held still: {alt}", end_state=alt)
+                         action=f"held still: {alt}", end_state=alt,
+                         description=(s.get("description", "") + f" Made as a held still: {alt} The feeling of the shot stays.").strip())
         safe["risks"] = [r for r in safe.get("risks", []) if r.get("shot") not in problems]
         from product.stations import recipe_check
         rc = recipe_check.check(k, job_id, safe, _tray(k, job_id, u, f, safe, worker="recipe_checker"))
@@ -330,7 +333,10 @@ def normalise(r: dict, u: dict, slip: dict) -> list:
         return notes
     shots = r.get("shots") or []
     if not any(s["route"] == "END-CARD" for s in shots):
-        shots.append({"n": len(shots) + 1, "duration_s": 3.0, "purpose": "sign-off", "first_frame": "end card", "action": "none",
+        shots.append({"n": len(shots) + 1, "duration_s": 3.0, "title": "End card", "feeling": "the idea, remembered",
+                      "framing": "code-set end card", "impact": "the product name and the last line",
+                      "description": "The end card, set by code: the product name and the closing line on a plain background.",
+                      "purpose": "sign-off", "first_frame": "end card", "action": "none",
                       "end_state": "logo and line", "camera": "n/a", "route": "END-CARD", "action_class": "none", "starts_from": "still_only",
                       "feasibility_refs": [], "product_present": False, "product_state": "n/a", "continuity": [], "must_not": [],
                       "super_id": None, "mandatory_ids": []})

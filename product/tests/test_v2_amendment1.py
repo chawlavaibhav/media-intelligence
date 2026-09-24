@@ -387,21 +387,22 @@ class LearningIsAutomated(unittest.TestCase):
 
     def test_a_rulebook_change_applies_is_watched_for_five_jobs_and_rolls_back_on_a_drop(self):
         e, q = self.e, self.q
+        s = int(rulebook.seed_cards()["chef"]["version"])
         for _ in range(5):
-            closed_job(e, "accepted", card=1)
-        [lid] = q.enqueue(closed_job(e, "accepted", card=1), lesson("chef", "rulebook_card",
+            closed_job(e, "accepted", card=s)
+        [lid] = q.enqueue(closed_job(e, "accepted", card=s), lesson("chef", "rulebook_card",
                                                                     {"worker": "chef", "changes": {"kra_add": "Always open on a close-up."}}))
         self.assertEqual(q.lesson(lid)["status"], "applied")
         v1_kra = rulebook.seed_cards()["chef"]["kra"]
-        self.assertEqual(e.orch.rulebook.version("chef"), 2)
+        self.assertEqual(e.orch.rulebook.version("chef"), s + 1)
         for _ in range(4):
-            closed_job(e, "rejected", card=2)
+            closed_job(e, "rejected", card=s + 1)
         self.assertEqual(q.review_watches(), [])                                    # only 4 watched jobs so far
-        closed_job(e, "rejected", card=2)
+        closed_job(e, "rejected", card=s + 1)
         rolled = q.review_watches()
         self.assertEqual(rolled, [lid])
         self.assertEqual(e.orch.rulebook.card("chef")["kra"], v1_kra)
-        self.assertEqual(e.orch.rulebook.version("chef"), 3)
+        self.assertEqual(e.orch.rulebook.version("chef"), s + 2)
         self.assertEqual(q.lesson(lid)["status"], "rolled_back")
         self.assertIn("rolled back", e.orch.rulebook.history("chef")[-1]["reason"])
 

@@ -21,7 +21,7 @@ class RulebookAndForms(unittest.TestCase):
         for w in rulebook.AI_WORKERS + rulebook.CODE_WORKERS:
             self.assertIn(w, cards, w)
             c = cards[w]
-            self.assertTrue(c["mission"] and c["kra"] and c["version"] == 1, w)
+            self.assertTrue(c["mission"] and c["kra"] and int(c["version"]) >= 1, w)
         for w in rulebook.AI_WORKERS:
             for f in cards[w]["forms"]:
                 self.assertIn(f, rulebook.forms(), f"{w} writes {f}, which has no schema")
@@ -32,7 +32,7 @@ class RulebookAndForms(unittest.TestCase):
         for name in ("order_slip", "understanding", "feasibility", "recipe", "recipe_check", "production_log",
                      "ingredient_check", "final_review", "change_request", "gateway_report", "lessons", "tray", "rulebook_card"):
             self.assertIn(name, fs)
-            self.assertEqual(fs[name]["version"], 1)
+            self.assertGreaterEqual(int(fs[name]["version"]), 1)
         shot = fs["recipe"]["schema"]["properties"]["shots"]["items"]["properties"]
         self.assertIn("hands_work_mechanism", shot["action_class"]["enum"])
         self.assertEqual(set(rulebook.ai_schema("feasibility")["properties"]), {"product_truth", "actions_needed"})
@@ -41,17 +41,18 @@ class RulebookAndForms(unittest.TestCase):
         e = Env()
         try:
             rb = rulebook.Rulebook(e.store)
-            self.assertEqual(rb.version("chef"), 1)
+            seed = int(rulebook.seed_cards()["chef"]["version"])       # v2 since the founder's 2026-09-24 ruling
+            self.assertEqual(rb.version("chef"), seed)
             with self.assertRaises(ValueError):
                 rb.change_card("chef", {"kra_add": "x"}, by="founder:f", reason="")
             v = rb.change_card("chef", {"kra_add": "Never plan hands on zips."}, by="founder:f", reason="lesson L-1 approved")
-            self.assertEqual(v, 2)
+            self.assertEqual(v, seed + 1)
             self.assertIn("Never plan hands on zips.", rb.card("chef")["kra"])
-            self.assertEqual(rulebook.seed_cards()["chef"]["version"], 1)
-            self.assertEqual([h["version"] for h in rb.history("chef")], [1, 2])
+            self.assertEqual(rulebook.seed_cards()["chef"]["version"], seed)
+            self.assertEqual([h["version"] for h in rb.history("chef")], [seed, seed + 1])
             text, ver = rb.card_text("chef", "recipe")
-            self.assertEqual(ver, 2)
-            self.assertTrue(text.startswith("RULEBOOK CARD — chef (version 2)"))
+            self.assertEqual(ver, seed + 1)
+            self.assertTrue(text.startswith(f"RULEBOOK CARD — chef (version {seed + 1})"))
         finally:
             e.close()
 

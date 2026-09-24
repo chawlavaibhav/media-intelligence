@@ -171,11 +171,11 @@ class LessonQueueApplies(unittest.TestCase):
             self.assertEqual(eq.verdict("lift_closed_product", "FILM-C")["verdict"], "cannot")      # careful: applied at once
             self.assertEqual(json.loads(q.lesson(ids[0])["applied_json"])["version"], 2)
             self.assertEqual(q.lesson(ids[1])["status"], "founder_only")                          # money: never automatic
-            self.assertEqual(rulebook.Rulebook(st).version("chef"), 1)
+            self.assertEqual(rulebook.Rulebook(st).version("chef"), int(rulebook.seed_cards()["chef"]["version"]))
             with self.assertRaises(PermissionError):
                 q.decide(ids[1], founder="operator:claude", decision="approve", note="looks right to me, applying")
             q.decide(ids[1], founder=e.founder(), decision="reject", note="Budget rules are mine; never in a card.")
-            self.assertEqual(rulebook.Rulebook(st).version("chef"), 1)
+            self.assertEqual(rulebook.Rulebook(st).version("chef"), int(rulebook.seed_cards()["chef"]["version"]))
             self.assertEqual(q.waiting(), [])
         finally:
             e.close()
