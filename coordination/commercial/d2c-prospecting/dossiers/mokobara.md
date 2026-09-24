@@ -1,9 +1,27 @@
 # Dossier — Mokobara
 
-**Research date:** 2026-09-17 · **re-verified 2026-09-21 (run 04)**
-**Run:** `runs/2026-09-17.md`, re-verified by `runs/2026-09-21.md`
-**Pipeline score:** **91/100** — the highest recorded in this workstream. **Held at 91 in run 04.**
-**Top-3 rank:** **#1 — the brand to produce for first.** Unchanged; nothing displaced it.
+**Research date:** 2026-09-17 · **re-verified 2026-09-21 (run 04)** · **re-verified 2026-09-24 (run 05)**
+**Run:** `runs/2026-09-17.md`, re-verified by `runs/2026-09-21.md` and `runs/2026-09-24.md`
+**Pipeline score:** **91/100** — the highest recorded in this workstream. **Held at 91 in runs 04 and 05.**
+**Top-3 rank:** **#1 — the brand to produce for first.** Unchanged across three runs; nothing displaced it.
+
+> ### Run 05 update (2026-09-24) — the case STRENGTHENED
+>
+> - **Footprint re-OBSERVED 2026-09-24, unchanged for a third consecutive run:** Pixel
+>   `1284843575057243` **CAPI-on**, `AW-682701744`, `GTM-W4G9LV2`, `G-V228WWBZ6B`, Shopify,
+>   GoKwik + Shopflo, Judge.me.
+> - **NEW HERO LAUNCH, 13 days old: `Marshal Terra Backpack` — ₹12,999 (from ₹15,999), published
+>   2026-09-11** (OBSERVED via `products.json`). Also `Transit Z — White Noise` (2026-09-07) and
+>   `Transit Z — Perfect Camouflage` (2026-09-01): **three launches inside the festive window.**
+> - **The `Marshal Terra`'s headline feature is `AirStrap` — a spring system that absorbs carry weight**
+>   (INFERRED — their own PDP copy). This is a **mechanical benefit that is invisible in a photograph and
+>   needs no human performance to dramatise** — an unusually strong match for the impossible-visual-metaphor
+>   territory, on a hard-surface product, at a ₹12,999 price point. **Consider it as an alternative hero SKU
+>   to the Transit Backpack 30L** selected below; the production process makes the final call.
+> - **YouTube `@mokobara` re-confirmed `channelOwnerEmptyStateRenderer` = ZERO uploads, 2026-09-24.**
+>   The format gap underwriting this entire dossier is **verified open across three consecutive runs.**
+> - Offer copy for the new SKU is, as before, **published by the brand** as `price` / `compare_at_price` —
+>   we invent no number.
 **Stage:** `SHORTLISTED`
 
 > **Re-verification, 2026-09-21 (run 04).** Everything load-bearing in this dossier was re-read from

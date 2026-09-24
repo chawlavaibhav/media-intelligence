@@ -1,7 +1,19 @@
 # Dossier — Comet
 
-**Research date:** 2026-09-17 · **updated 2026-09-21 (run 04)**
-**Run:** `runs/2026-09-17.md`, updated by `runs/2026-09-21.md`
+**Research date:** 2026-09-17 · **updated 2026-09-21 (run 04)** · **re-verified 2026-09-24 (run 05)**
+**Run:** `runs/2026-09-17.md`, updated by `runs/2026-09-21.md`, re-verified by `runs/2026-09-24.md`
+
+> ### Run 05 update (2026-09-24) — no change; score held at 87
+>
+> - **Footprint re-OBSERVED 2026-09-24, unchanged:** Pixel `663517755793437` **CAPI-on**,
+>   `AW-11256510101`, `G-7VX8KTRTYC`, `GT-KFTM99T`, Shopify, Judge.me, Razorpay.
+>   **Still no GTM — the page source shows the whole picture.**
+> - **YouTube `@wearcomet` re-confirmed ZERO uploads, 2026-09-24.**
+> - **`Astra` independently corroborated:** LocalSamosa's third-week-of-September 2026 roundup lists
+>   *"Comet — Astra Women's Sneaker inspired by ballet aesthetics"* (INFERRED), matching run 04's
+>   primary-evidence finding from the storefront.
+> - The `new-arrivals` collection handle returned no JSON this run — **a handle difference, not a signal.**
+> - **The Instagram hand-check remains the open question** and is unchanged as the next action.
 **Pipeline score:** **87/100** (was 84 — +3 on new primary evidence, run 04)
 **Top-3 rank:** **#2**
 **Stage:** `SHORTLISTED`

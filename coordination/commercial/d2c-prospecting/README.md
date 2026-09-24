@@ -70,6 +70,25 @@ Recorded so no future run rediscovers these. Full detail in `runs/2026-09-17.md`
   unrelated international school), `blueteaworld.com` (parked/expired), `spinbot.in` (114-byte empty
   body — the same signature as Nothing But), `assembly.com` vs `assemblytravel.com`, `bagline.in` →
   `bagline.com`, and `@uppercaseofficial` on YouTube (a phone-case seller, not the luggage brand).
+- **`/collections/<handle>/products.json?limit=N` is the fastest true trigger check (learned run 05).**
+  It returns `published_at` per SKU, so a brand's *actual* launch cadence is readable first-hand in one
+  call — far better than trusting a press date. In run 05 this single call **refreshed Mokobara's trigger**
+  (a 13-day-old ₹12,999 hero launch run 04 did not have), **exposed uppercase's stale one** (no new arrival
+  in 4.5 months), **killed The Pant Project** (a heavy paid stack against a `new-arrivals` shelf whose newest
+  SKU was a year old), and **corrected Salty's** (the "recent" bags vertical is eleven months old).
+  **Make this a standing check on every deep-researched brand, including incumbents.**
+- **`sitemap_products_1.xml` is not at the store root on many Shopify stores (learned run 05).** Fetch
+  `/sitemap.xml` first and follow the `<loc>` entries it indexes. Five stores returned a product count of
+  0 in run 05 until this was corrected.
+- **A 114-byte body is a recurring trap, not a footprint result.** `ikonicme.com` and `solvedskin.com` both
+  returned `HTTP 200` with a **114-byte** body in run 05 — the same signature already recorded for Nothing
+  But and SpinBot. Treat 114 bytes (and `HTTP 000` / 0 bytes) as **"domain not established"**, never as
+  "no ad tags".
+- **Read YouTube upload counts as unique `"videoId"` matches** on `/@handle/videos`. The
+  `accessibilityData` label parse returns nothing on current YouTube markup (run 05). Confirm the handle via
+  `vanityChannelUrl` + channel description before trusting it.
+- **Job-board discovery searches are near-zero yield (run 05).** Phrased as a web search they return SEO
+  listicles, not brand-level signals. Not worth repeating in that form.
 - **Meta Ad Library has returned HTTP 403 in every run to date** (run 04: five queries, 481-byte
   bodies). Record it and move on; never attempt to log in or scrape around it.
 
@@ -77,7 +96,7 @@ Recorded so no future run rediscovers these. Full detail in `runs/2026-09-17.md`
 
 | Source | What it gives | Caveat |
 |---|---|---|
-| **LocalSamosa, "Brand Announcements, Launches and Releases"** (weekly) | The best **current-trigger** source found to date — dated, brand-level, launch-level. It produced the Comet `Astra` and AntiNorm updates in run 04 | Mixes D2C with conglomerates, hospitality and spirits; screen hard |
+| **LocalSamosa, "Brand Announcements, Launches and Releases"** (weekly) | The best **current-trigger** source found to date — dated, brand-level, launch-level. It produced the Comet `Astra` and AntiNorm updates in run 04, and **~75 dated launch items across two weekly editions in run 05** (the run's highest-yield source by a wide margin) | Mixes D2C with conglomerates, hospitality and spirits; screen hard — run 05 dropped ~20 of its items as MNC, alcohol or hospitality |
 | **Inc42 FAST42 (D2C growth ranking)** | A legitimate pool of real operating consumer brands in the "large enough to pay, small enough to reach" band, with growth data. **Not** the same object as the "Top 20 Funded D2C Startups" index rejected in run 02 | Carries **no current trigger** — every name still needs one |
 | **Entrackr weekly funding report** | The funding window, reliably dated | Consumer yield is often thin |
 | `niharkhandelwal.substack.com` deal roundups | High-yield consumer deal flow (run 03) | Check the RSS date before mining — editions can lag |

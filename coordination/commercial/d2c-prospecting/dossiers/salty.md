@@ -1,7 +1,35 @@
 # Dossier — Salty
 
-**Research date:** 2026-09-14. **Score:** 88/100. **Confidence:** MEDIUM.
-**Top-3 rank:** #1 — the brand recommended to produce for first.
+**Research date:** 2026-09-14 · **re-verified first-hand 2026-09-24 (run 05)**.
+**Score:** **89/100** (pipeline value; this dossier's original header said 88 — the pipeline governs).
+**Confidence:** MEDIUM. **Top-3 rank:** **#3** (run 05 — promoted from #4; it was #1 only in run 01).
+**Stage:** `SHORTLISTED`
+
+> ### Run 05 update (2026-09-24) — READ THIS BEFORE THE RUN-01 BANNER BELOW
+>
+> **The run-01 banner immediately below is OUT OF DATE and must not be read as current.** It says no page
+> here was ever fetched. That was true on 2026-09-14 in run 01 only. **Salty's footprint was observed
+> first-hand in run 02, and the site was re-fetched again on 2026-09-24 in run 05.**
+>
+> - **Footprint re-OBSERVED 2026-09-24, consistent with run 02:** Pixel `361781499194146` **CAPI-on**,
+>   `AW-10892904816`, **`GTM-5XSQNLV`**, `G-KHH8DKF6J6`, `GT-WFMT4PQ`, Shopify, GoKwik, Judge.me.
+> - **Catalogue newly measured: 8,683 products / 533 collections** (OBSERVED via sitemap index) —
+>   **the largest catalogue in the entire pipeline.**
+> - **Bags vertical confirmed live and discounting:** `Camilla Mini Crossbody Bag` in four colourways at
+>   **₹2,099 from ₹4,199 (50% off)**; `Marble Finish Acrylic Mini Clutch` and `Molten Gold Party Mini
+>   Clutch` at **₹1,749 from ₹2,999**. Offer copy is **brand-published** as `price` / `compare_at_price` —
+>   we invent no number.
+>
+> **⚠ CORRECTION carried from `runs/2026-09-24.md` §6.** Earlier framing implied the bags vertical was a
+> *recent* expansion. **It is not.** Those SKUs published **2025-10-19 and 2025-10-07 — roughly eleven
+> months ago** (OBSERVED 2026-09-24), and the Series A trigger is January 2026. **Salty has no fresh launch
+> trigger, and no approach should claim one.**
+>
+> **Why it is still Top-3 #3.** The gap is *durable and first-hand verified*: a 19-SKU premium vertical live
+> for eleven months, permanently discounted ~50%, that the Controller's own Ad Library hand-check found in
+> **zero** active Meta ads (`runs/2026-09-14.md` §9). The persistence of the gap is the argument. Its
+> **"why now" is the festive window plus the standing discount — not a product launch**, and it should be
+> put to the brand that way.
 
 > **Evidence status for this whole dossier: `INFERRED (search-summary)`, 2026-09-14.**
 > This session's egress policy blocked every external host, so **no page here was fetched and seen** —
