@@ -237,6 +237,26 @@ def _png_size(p: Path) -> tuple:
     return struct.unpack(">II", b[16:24])
 
 
+def _logo_on(lp: Path, bg_hex: str, ink_hex: str) -> Path:
+    """A dark mark on a dark card (or a light one on a light card) disappears — live 2026-09-25: a navy wordmark on a
+    near-black end card. Then its neutral ink (not its brand-coloured accents, e.g. a red full stop) takes the card's text
+    colour, the way a brand's one-colour reversed mark does."""
+    from PIL import Image
+    im = Image.open(lp).convert("RGBA")
+    px = [p for p in im.getdata() if p[3] > 128]
+    if not px:
+        return lp
+    neutral = [p for p in px if max(p[:3]) - min(p[:3]) < 60] or px
+    mean = "#%02x%02x%02x" % tuple(sum(p[i] for p in neutral) // len(neutral) for i in range(3))
+    if G.contrast_ratio(G.relative_luminance(mean), G.relative_luminance(bg_hex)) >= 3.0:
+        return lp
+    r, g, b = (int(ink_hex[i:i + 2], 16) for i in (1, 3, 5))
+    im.putdata([(r, g, b, p[3]) if max(p[:3]) - min(p[:3]) < 60 else p for p in im.getdata()])
+    out = lp.with_name(lp.stem + "-reversed.png")
+    im.save(out)
+    return out
+
+
 def end_card(*, out: Path, size: tuple, direction: dict, logo: Path | None, workdir: Path) -> tuple:
     W, H = size
     bg = (direction.get("end_card") or {}).get("background_hex") or "#101010"
@@ -246,7 +266,7 @@ def end_card(*, out: Path, size: tuple, direction: dict, logo: Path | None, work
     ink = WHITE if G.contrast_ratio(G.relative_luminance(WHITE), G.relative_luminance(bg)) >= 4.5 else INK
     items, checks, boxes = [], [], {}
     if logo is not None:
-        lp = media.logo_png(logo, int(W * 0.5), workdir / "endcard-logo.png")
+        lp = _logo_on(media.logo_png(logo, int(min(W, H) * 0.6), workdir / "endcard-logo.png"), bg, ink)
         lw, lh = _png_size(lp)
         items.append(("logo", lp, lw, lh, None))
     for i, c in enumerate(lines):

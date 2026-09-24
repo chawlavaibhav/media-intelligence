@@ -292,6 +292,15 @@ def _node_failed(msg):
 
 
 def _keep_flagged(k, job_id, node_id, asset_id, why):
+    a = k.store.asset(asset_id)
+    meta = json.loads(a["meta_json"])
+    if not (a["content_type"] or "").startswith("image/") and a["kind"] == "video" and "det" not in meta:
+        # a take kept without having been measured (e.g. its worker stopped mid-taste): measure it now, never ship it unmeasured
+        spec0 = json.loads(k.store.node(job_id, node_id)["spec_json"])
+        use = meta.get("use_s") or next((float(s["duration_s"]) for s in (k.store.artifact(job_id, "recipe") or {}).get("shots", [])
+                                         if s["n"] == spec0.get("shot")), 3.0)
+        k.store.set_asset(asset_id, meta_json=json.dumps({**meta, "det": _clip_det(a, float(use)), "use_s": float(use),
+                                                          "in_s": meta.get("in_s", 0.0)}, default=str))
     k.store.set_asset(asset_id, status="candidate")
     _done(k, job_id, node_id, asset_id)
     spec = json.loads(k.store.node(job_id, node_id)["spec_json"])
