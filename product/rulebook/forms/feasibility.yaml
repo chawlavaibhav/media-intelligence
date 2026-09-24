@@ -46,7 +46,9 @@ schema:
       items:
         type: object
         required: [for_action, alternative]
-        properties: {for_action: {type: string}, alternative: {type: string}}
+        properties: {for_action: {type: string}, alternative: {type: string}, action_class: {type: string}}
+    limits: {type: array, items: {type: string}}      # code: parts/states already requested once, carried as limits (loop guard)
+    loop_guard: {type: array, items: {type: object}}  # code: what the loop guard applied instead of asking the customer again
     reference_risks:
       type: array
       items:

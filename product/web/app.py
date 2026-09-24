@@ -316,7 +316,8 @@ class App:
             for x in req.files:
                 self.svc.add_upload(u, jid, role="product", filename=x["filename"], data=x["data"], label=f.get("label") or None)
             feas = self.store.artifact(jid, "feasibility") or {}
-            accepted = [{"instead_of": a["for_action"], "use": a["alternative"]} for i, a in enumerate(feas.get("alternatives", []))
+            accepted = [{"instead_of": a["for_action"], "use": a["alternative"], **({"action_class": a["action_class"]} if a.get("action_class") else {})}
+                        for i, a in enumerate(feas.get("alternatives", []))
                         if f.get(f"alt_{i}") == "yes"]
             o.provide_input(jid, by=who, accepted_alternatives=accepted, facts=[f.get("facts", "")], note=f.get("note", ""))
         elif action == "master":
