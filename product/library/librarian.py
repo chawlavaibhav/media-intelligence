@@ -63,7 +63,8 @@ class Librarian:
         for r in self.equipment.rows():
             if r["action_class"] in classes or (r["action_class"] == "any" and set(r["routes"]) & set(routes or r["routes"])):
                 text = (f"{r['id']} v{r['version']}: {r['generator']} on {'/'.join(r['routes'])} × {r['action_class']} → {r['verdict'].upper()} "
-                        f"(samples {r['sample_count']}; evidence {', '.join(r['evidence_refs']) or 'none'}). {r.get('note') or ''}"
+                        f"({r.get('evidence') or 'samples ' + str(r['sample_count'])}; evidence {', '.join(r['evidence_refs']) or 'none'}). "
+                        f"{r.get('note') or ''}"
                         + (f" Alternative: {r['alternative']}" if r.get("alternative") else ""))
                 out.append(_item({"id": r["id"], "section": "equipment_sheet", "text": text}, 2.0))
         return out

@@ -92,11 +92,41 @@ class EquipmentSheet:
         """Seed rows overlaid by store versions (the newest version of each id wins); new ids are added."""
         out = {r["id"]: {**r, "version": 1, "by": "seed (repository)", "source_lesson": None} for r in self.seed()}
         for r in self.store.q("SELECT * FROM equipment_rows ORDER BY id, version"):
+            ev = json.loads(r["evidence_json"])
+            ev = ev if isinstance(ev, dict) else {"refs": ev}          # older rows stored a plain list of evidence ids
             out[r["id"]] = {"id": r["id"], "version": r["version"], "generator": r["generator"], "routes": json.loads(r["routes"]),
                             "action_class": r["action_class"], "verdict": r["verdict"], "sample_count": r["sample_count"],
-                            "evidence_refs": json.loads(r["evidence_json"]), "note": r["note"], "alternative": r["alternative"],
-                            "by": r["by"], "source_lesson": r["source_lesson"]}
-        return list(out.values())
+                            "evidence_refs": ev.get("refs") or [], "note": r["note"], "alternative": r["alternative"],
+                            "by": r["by"], "source_lesson": r["source_lesson"],
+                            **{k: ev[k] for k in ("successes", "failures", "basis") if k in ev}}
+        return [self._with_statistics(r) for r in out.values()]
+
+    # Founder ruling 2026-09-24: "apply stats to the equipment sheet too". A verdict is only as strong as its sample.
+    CANNOT_IF_FAILURE_RATE_ABOVE = 0.5      # significantly more likely to fail than to work
+    RELIABLE_IF_FAILURE_RATE_BELOW = 0.25   # significantly likely to work
+
+    @classmethod
+    def _with_statistics(cls, r: dict) -> dict:
+        """A row that records `successes`/`failures` gets its verdict computed from them (exact one-sided 95 % bounds on
+        the failure rate); the written verdict is kept as `declared_verdict`. Policy and deterministic rows, `note` rows
+        and rows without counts keep their declared verdict."""
+        from product.library import stats
+        r = dict(r)
+        r["declared_verdict"] = r["verdict"]
+        if r.get("basis") in ("policy", "deterministic", "lesson") or r["verdict"] not in RANK or "failures" not in r:
+            r["evidence"] = {"policy": "a founder decision, not an observation", "deterministic": "deterministic code",
+                             "lesson": "set by a lesson without counts, not a statistical result"}.get(r.get("basis"), "no counts recorded")
+            return r
+        f, n = int(r.get("failures") or 0), int(r.get("failures") or 0) + int(r.get("successes") or 0)
+        if n and stats.lower_bound(f, n) > cls.CANNOT_IF_FAILURE_RATE_ABOVE:
+            r["verdict"] = "cannot"
+        elif n and stats.upper_bound(f, n) < cls.RELIABLE_IF_FAILURE_RATE_BELOW:
+            r["verdict"] = "reliable"
+        else:
+            r["verdict"] = "risky"
+        lo, hi = stats.interval(f, n) if n else (0.0, 1.0)
+        r["evidence"] = (f"{f} of {n} attempts failed (failure rate 95% CI {lo:.0%}–{hi:.0%})" if n else "no attempts yet")
+        return r
 
     def verdict(self, action_class: str, route: str) -> dict:
         """reliable | risky | cannot for (class, route), with the row that decided it. No row = unknown = risky."""
@@ -126,11 +156,19 @@ class EquipmentSheet:
                "routes": change.get("routes") or (cur or {}).get("routes") or ["FILM-C"],
                "sample_count": int(change.get("sample_count", (cur or {}).get("sample_count", 0))),
                "evidence_refs": change.get("evidence_refs") or (cur or {}).get("evidence_refs") or [],
+               # evidence accumulates: a lesson adds its observed successes/failures to what the row already had
+               "counts": {k: int((cur or {}).get(k) or 0) + int(change.get(k) or 0) for k in ("successes", "failures")
+                          if k in change or k in (cur or {})},
+               # a lesson that sets a verdict without bringing counts is a declared verdict, labelled as such; with counts,
+               # the statistics decide (founder rulings 2026-09-24: learning is automatic; verdicts follow the evidence)
+               "basis": change.get("basis") or (None if ("successes" in change or "failures" in change) else "lesson"),
                "note": change.get("note") or (cur or {}).get("note"), "alternative": change.get("alternative") or (cur or {}).get("alternative")}
         with self.store.tx() as c:
             c.execute("INSERT INTO equipment_rows VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
                       (rid, version, row["generator"], json.dumps(row["routes"]), change["action_class"], change["verdict"],
-                       row["sample_count"], json.dumps(row["evidence_refs"]), row["note"], row["alternative"], by, source_lesson, utc_now()))
+                       (sum(row["counts"].values()) if row["counts"] else row["sample_count"]),
+                       json.dumps({"refs": row["evidence_refs"], **row["counts"], **({"basis": row["basis"]} if row["basis"] else {})}),
+                       row["note"], row["alternative"], by, source_lesson, utc_now()))
         return {"id": rid, "version": version, "action_class": change["action_class"], "verdict": change["verdict"]}
 
 
@@ -141,7 +179,9 @@ class EquipmentSheet:
         with self.store.tx() as c:
             c.execute("INSERT INTO equipment_rows VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
                       (row["id"], version, row.get("generator") or "veo-3.1-fast-i2v", json.dumps(row.get("routes") or []), row["action_class"],
-                       row["verdict"], int(row.get("sample_count") or 0), json.dumps(row.get("evidence_refs") or []), row.get("note"),
+                       row.get("declared_verdict") or row["verdict"], int(row.get("sample_count") or 0),
+                       json.dumps({"refs": row.get("evidence_refs") or [], **{k: row[k] for k in ("successes", "failures", "basis") if k in row}}),
+                       row.get("note"),
                        row.get("alternative"), by, source_lesson, utc_now()))
         return version
 
