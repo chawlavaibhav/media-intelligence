@@ -367,16 +367,14 @@ class LearningIsAutomated(unittest.TestCase):
         self.assertEqual(q.lesson(a)["status"], "applied_with_support")
         self.assertEqual(e.orch.equipment.verdict("lift_closed_product", "FILM-C")["verdict"], "reliable")
 
-    def test_a_change_to_a_judges_card_may_relax_a_check_so_it_waits_for_two_accepted_jobs_then_is_watched(self):
+    def test_a_change_to_a_judges_card_may_relax_a_check_so_it_waits_for_the_founders_review(self):
+        # reviewer 2026-09-24 (founder: "do both the fixes"): was ≥ 2 accepted jobs then auto; now always the founder's review
         e, q = self.e, self.q
         diff = {"worker": "small_taster", "changes": {"kra_add": "A slightly soft edge on the product is acceptable."}}
-        [a] = q.enqueue(closed_job(e, "accepted"), lesson("small_taster", "rulebook_card", diff))
-        self.assertEqual((q.lesson(a)["kind"], q.lesson(a)["status"]), ("bold", "waiting_support"))
+        for _ in range(3):
+            [a] = q.enqueue(closed_job(e, "accepted"), lesson("small_taster", "rulebook_card", diff))
+            self.assertEqual((q.lesson(a)["kind"], q.lesson(a)["status"]), ("founder_only", "founder_only"))
         self.assertEqual(e.orch.rulebook.version("small_taster"), 1)
-        [b] = q.enqueue(closed_job(e, "accepted"), lesson("small_taster", "rulebook_card", diff))
-        self.assertEqual(q.lesson(b)["status"], "applied")
-        self.assertEqual(e.orch.rulebook.version("small_taster"), 2)
-        self.assertEqual(json.loads(q.lesson(b)["watch_json"])["status"], "watching")
 
     def test_one_customers_taste_goes_on_that_customers_shelf_only(self):
         e, q = self.e, self.q

@@ -469,7 +469,7 @@ class App:
         rb = self.svc.orch.rulebook
         cards = [(w, rb.card(w), rb.history(w)) for w in rulebook.AI_WORKERS + rulebook.CODE_WORKERS]
         return self.page("ops_rulebook.html", req, cards=cards, forms=rulebook.forms(), send_backs=flow.SEND_BACKS, models=self.s.models,
-                         qualified=self.s.qualified_judges)
+                         qualified=tuple(j for j in ("recipe_checker", "small_taster", "big_taster") if self.svc.orch.qualified(j)))
 
     def ops_library(self, req):
         self.user(req, "operator")

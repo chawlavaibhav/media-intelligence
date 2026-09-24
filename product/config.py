@@ -108,9 +108,6 @@ class Settings:
     reviewer_provider: str = "gemini"            # "gemini" (independent family) or "anthropic"
     reviewer_model: str = "gemini-3.5-flash"
     reviewer_fallback_model: str = "claude-sonnet-5"
-    # An UNQUALIFIED model reviewer's PASS is not evidence (MOKO7 v1 qualification 2026-09-23: Gemini 3.5 Flash 1/6,
-    # Gemini 3.1 Pro @4 fps 1/6, both passing a torn bag as "faithful"). Its FAILs still count. A person confirms the rest.
-    reviewer_qualified: bool = False
     review_fps: float | None = None              # frames/s the video reviewer samples (Gemini videoMetadata); None = provider default
     media_surface: str = "gemini_api"             # "gemini_api" (GOOGLE_API_KEY) | "vertex" (service account)
     vertex_project: str | None = None
@@ -125,8 +122,8 @@ class Settings:
     base_url: str = "http://localhost:8080"
     fault_injection: dict = field(default_factory=dict)
     models: dict = field(default_factory=lambda: dict(DEFAULT_WORKER_MODELS))
-    # Judges that have passed qualification (spec §10). Until then a judge's "no" blocks and its "yes" = founder confirms.
-    qualified_judges: tuple = ()
+    # Judges are qualified only by a founder-recorded live run for the exact model (store.judge_qualifications,
+    # Orchestrator.qualified); there is deliberately no setting for it (reviewer 2026-09-24).
 
     @property
     def db_path(self) -> Path:
@@ -151,7 +148,6 @@ def load(data_dir: str | Path | None = None, **overrides) -> Settings:
         reviewer_provider=_env("MI_REVIEWER_PROVIDER", "gemini"),
         reviewer_model=_env("MI_REVIEWER_MODEL", "gemini-3.5-flash"),
         review_fps=float(_env("MI_REVIEW_FPS")) if _env("MI_REVIEW_FPS") else None,
-        reviewer_qualified=_env("MI_REVIEWER_QUALIFIED", "0") == "1",
         vertex_project=_env("MI_VERTEX_PROJECT"),
         media_surface=_env("MI_MEDIA_SURFACE", "gemini_api"),
         vertex_region=_env("MI_VERTEX_REGION", "us-central1"),
@@ -159,10 +155,13 @@ def load(data_dir: str | Path | None = None, **overrides) -> Settings:
         base_url=_env("MI_BASE_URL", "http://localhost:8080"),
         worker_concurrency=int(_env("MI_WORKER_CONCURRENCY", "4")),
         models=worker_models(),
-        qualified_judges=tuple(x for x in (_env("MI_QUALIFIED_JUDGES", "") or "").split(",") if x),
     )
     for k, v in overrides.items():
         setattr(s, k, v)
+    for flag in ("MI_QUALIFIED_JUDGES", "MI_REVIEWER_QUALIFIED"):
+        if _env(flag):  # reviewer 2026-09-24: a setting can no longer qualify a judge; only a recorded live run can
+            import logging
+            logging.getLogger("mi").warning("%s is ignored: judges are qualified only by a founder-recorded live run", flag)
     check_independence(s.models)
     check_vision(s.models)
     if s.provider_mode not in ("simulated", "live") or s.reasoning_mode not in ("simulated", "live"):

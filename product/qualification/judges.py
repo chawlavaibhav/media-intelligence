@@ -208,8 +208,13 @@ def run(*, live=False, founder_session=None, product_data=None, budget="2.00", o
         report["judges"][judge] = _score(judge, rows, marks, live)
     report["recipe_checker_missing"] = cases.get("recipe_checker_missing", [])
     report["spent_usd"] = str(sum(Decimal(a["settled_usd"] or 0) for a in st.q("SELECT settled_usd FROM attempts")))
-    (work / "qualification-report.json").write_text(json.dumps(report, indent=1, default=str))
+    body = json.dumps(report, indent=1, default=str)
+    (work / "qualification-report.json").write_text(body)
     report["report_path"] = str(work / "qualification-report.json")
+    if live:  # the ONLY way a judge becomes qualified: this founder-authorised live run met the confirmed marks, for this model
+        digest = hashlib.sha256(body.encode()).hexdigest()
+        report["recorded"] = {j: pstore.record_qualification(judge=j, model=s.models[j], result=r, report_sha256=digest, founder=proof)
+                              for j, r in report["judges"].items() if r.get("qualified")}
     return report
 
 

@@ -315,7 +315,9 @@ class Orchestrator:
         return exact_strings(self, job_id)
 
     def qualified(self, judge: str) -> bool:
-        return judge in self.s.qualified_judges
+        """Only a founder-recorded live qualification run, for the exact model now configured (reviewer 2026-09-24).
+        No setting, env flag or admin command makes a judge qualified."""
+        return self.store.qualification(judge, self.s.models.get(judge)) is not None
 
 
 def _ts(utc: str) -> float:

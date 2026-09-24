@@ -95,7 +95,7 @@ class JudgesQualification(unittest.TestCase):
     def test_until_qualified_a_judges_no_blocks_and_its_yes_goes_to_the_customers_preview(self):
         e = Env()
         try:
-            self.assertEqual(e.s.qualified_judges, ())
+            self.assertFalse(any(e.orch.qualified(j) for j in ("recipe_checker", "small_taster", "big_taster")))
             jid = e.submit("image", text="A calm launch poster for our navy travel backpack; the bag must be the first thing you see; no people.")
             e.drain()
             self.assertEqual(e.state(jid), "awaiting_approval")                      # amendment 1 §3: straight to the customer

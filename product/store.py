@@ -105,6 +105,9 @@ CREATE TABLE IF NOT EXISTS failure_diary (
   id TEXT PRIMARY KEY, source_job_id TEXT, account_id TEXT, media TEXT, action_classes TEXT NOT NULL, routes TEXT NOT NULL,
   failure_mode TEXT NOT NULL, text TEXT NOT NULL, private INTEGER NOT NULL DEFAULT 0, by TEXT NOT NULL,
   source_lesson TEXT, created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS judge_qualifications (
+  id TEXT PRIMARY KEY, judge TEXT NOT NULL, model TEXT NOT NULL, report_sha256 TEXT NOT NULL, result_json TEXT NOT NULL,
+  recorded_by TEXT NOT NULL, recorded_at TEXT NOT NULL, revoked_by TEXT, revoked_at TEXT, revoke_note TEXT);
 CREATE TABLE IF NOT EXISTS lessons (
   id TEXT PRIMARY KEY, job_id TEXT NOT NULL, worker TEXT NOT NULL, target TEXT NOT NULL, proposal_json TEXT NOT NULL,
   why TEXT NOT NULL, evidence_json TEXT NOT NULL, status TEXT NOT NULL, decided_by TEXT, decided_at TEXT,
@@ -626,3 +629,33 @@ class Store:
 
     def llm_calls(self, job_id):
         return self.q("SELECT * FROM llm_calls WHERE job_id=? ORDER BY id", (job_id,))
+
+    # ── judge qualification (reviewer 2026-09-24: a judge is proven only by a recorded live run, never by a setting) ──
+    def record_qualification(self, *, judge: str, model: str, result: dict, report_sha256: str, founder) -> str:
+        """Called only by qualification.judges.run(live=True) for a judge whose live result met the confirmed pass marks."""
+        from product.authority import verify_proof
+        if not verify_proof(self, founder):
+            raise PermissionError("only the founder, signed in, can record a judge's qualification")
+        if not result.get("qualified") or result.get("simulated_run"):
+            raise ValueError("only a live run that met the confirmed pass marks can qualify a judge")
+        qid = new_id("qal")
+        with self.tx() as c:
+            c.execute("INSERT INTO judge_qualifications (id, judge, model, report_sha256, result_json, recorded_by, recorded_at) "
+                      "VALUES (?,?,?,?,?,?,?)", (qid, judge, model, report_sha256, json.dumps(result, default=str), founder.actor, utc_now()))
+        return qid
+
+    def qualification(self, judge: str, model: str | None):
+        """The standing qualification of `judge` for exactly this `provider:model` (a model change voids it), or None."""
+        if not model:
+            return None
+        return self.q1("SELECT * FROM judge_qualifications WHERE judge=? AND model=? AND revoked_at IS NULL "
+                       "ORDER BY recorded_at DESC LIMIT 1", (judge, model))
+
+    def revoke_qualification(self, judge: str, *, founder, note: str) -> int:
+        from product.authority import check_reason, verify_proof
+        if not verify_proof(self, founder):
+            raise PermissionError("only the founder, signed in, can revoke a judge's qualification")
+        note = check_reason(note)
+        with self.tx() as c:
+            return c.execute("UPDATE judge_qualifications SET revoked_by=?, revoked_at=?, revoke_note=? WHERE judge=? AND revoked_at IS NULL",
+                             (founder.actor, utc_now(), note, judge)).rowcount

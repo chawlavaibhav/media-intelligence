@@ -4,13 +4,20 @@ The diary writer proposes; code classifies each proposal and applies it by kind 
 
   careful   equipment → risky/cannot, a failure-diary entry, a stricter check    applied immediately
   record    a recipe kept with its outcome (recipe library)                      applied immediately
-  bold      equipment → reliable, a check relaxed (any change to a judge's card)  applied once ≥ 2 ACCEPTED jobs support it
+  bold      equipment → reliable                                                  applied once ≥ 2 ACCEPTED jobs support it
   customer  one customer's taste or brand fact                                   applied to THAT customer's shelf only
   rulebook  rulebook card / KRA wording                                          applied as a new card version, then WATCHED:
             the next 5 jobs that use it are compared with the previous 5; acceptance down or blocking checks up →
             rolled back automatically (a new version with the old content), and the rollback is recorded
-  founder_only  money limits, budgets, spend caps, who may override, safety rules, form (schema) changes
-            never applied automatically; waits for the founder
+  founder_only  money limits, budgets, spend caps, who may override, safety rules, form (schema) changes, ANY change
+            to a checker's card, and any other card change that edits or removes what is there (not a plain added line)
+            never applied automatically; waits for the founder's weekly review (never inside a running job)
+
+2026-09-24 (independent reviewer, founder: "do both the fixes"): the class is decided by WHAT a lesson changes, not by its
+words. A word list let "let the door guard release a film with a continuity mistake for repeat customers" through because
+it said none of the words. The word list stays only as an extra tripwire: a hit forces review, it never allows anything.
+Retry limits (flow.SEND_BACKS) and the master-plate continuity rule (stations/recipe_check.py R3/R4) are code, so no card
+wording can change them.
 
 Every applied lesson is logged with its job, its evidence and before/after. The founder's weekly digest (/ops/digest)
 lists them with an Undo per item; undo restores the exact previous version and records who undid it.
@@ -30,6 +37,10 @@ WATCH_JOBS = 5
 BOLD_SUPPORT = 2
 SYSTEM = "system:auto-apply"
 JUDGES = ("recipe_checker", "small_taster", "big_taster")
+# Every worker that checks or can block work: its card only changes at the founder's review (reviewer, 2026-09-24).
+CHECKERS = JUDGES + ("small_taster_escalation", "pantry_checker", "door_guard", "measuring_tools")
+# The only card changes code can tell are purely additive: a new KRA line, or an instruction under a NEW key.
+ADDITIVE_KEYS = ("kra_add", "instructions")
 # Money, spend, who may override, safety — founder only, never applied by code (amendment 1 §4, last row).
 FOUNDER_ONLY_WORDS = re.compile(
     r"\b(budgets?|usd|prices?|pricing|costs?|spend(?:ing)?|caps?|ceilings?|refunds?|charges?|payments?|pay|money|dollars?|"
@@ -51,11 +62,10 @@ class LessonQueue:
         if target == "customer_shelf":
             return "customer", None
         if target == "rulebook_card":
-            if diff.get("worker") in JUDGES:
-                # a judge's card can relax a check, and code cannot tell looser wording from stricter: treated as bolder
-                # (≥ 2 accepted jobs), then applied under the same 5-job watch as every card change
-                return "bold", f"rulebook:{diff['worker']}:{sha256_json(diff.get('changes', {}))[:16]}"
-            return "rulebook", None
+            # a checker's card can relax a check, and code cannot tell looser wording from stricter: the founder reviews it
+            if diff.get("worker") in CHECKERS or not self._additive(diff):
+                return "founder_only", None
+            return "rulebook", None                            # a plain added line, then the 5-job watch
         if target == "recipe_library":
             return "record", None
         if target == "failure_diary":
@@ -70,6 +80,21 @@ class LessonQueue:
                 return "careful", None
             return "bold", f"equipment:{diff.get('action_class')}:{','.join(sorted(cur['routes']))}:{new}"
         raise ValueError(target)
+
+    def _additive(self, diff: dict) -> bool:
+        """True only if the change adds and removes/rewrites nothing on the worker's current card."""
+        changes = diff.get("changes") or {}
+        if not changes or set(changes) - set(ADDITIVE_KEYS):
+            return False
+        if "instructions" in changes:
+            new = changes["instructions"]
+            try:
+                cur = (self.rulebook.card(diff.get("worker")) or {}).get("instructions") or {}
+            except Exception:  # noqa: BLE001 — an unknown worker is not additive
+                return False
+            if not isinstance(new, dict) or set(new) & set(cur):
+                return False
+        return True
 
     def _equipment_before(self, diff: dict) -> dict:
         row = next((r for r in self.equipment.rows() if r["id"] == diff.get("id")), None) if diff.get("id") else None
