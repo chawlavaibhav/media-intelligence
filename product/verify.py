@@ -35,8 +35,9 @@ def required_checks(media_kind: str, *, mandatory_ids: list, has_copy: bool, has
            "not_previously_rejected": "REJECTED_DESIGN_REUSE",
            "independent_review": "QA_COVERAGE_ENFORCEMENT",
            "product_fidelity": "PRODUCT_INTACT_AND_FAITHFUL",
-           "no_model_lettering": "VIDEO_FRAME_TEXT_HYGIENE",
-           "ad_structure": "AD_STRUCTURE_MINIMUM"}
+           "no_model_lettering": "VIDEO_FRAME_TEXT_HYGIENE"}
+    # kitchen v3: "ad_structure" (a brand line / logo in every ad) is no longer required — the gatekeeper checks the dish
+    # against what the customer ordered (a film that must carry no logo failed it on 2026-09-24).
     for m in mandatory_ids:
         req[f"mandatory:{m}"] = "MANDATORY_EVENT_VISIBILITY_LJ_LINE"
     req.update(PROCESS_CONTROLS)
@@ -76,7 +77,7 @@ ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on
               "character_continuity": "The person is the same person in every shot (face, hair, clothes, accessories)",
               "no_model_lettering": "No lettering, logo or wordmark was drawn by the model; only code-set text and the supplied logo",
               "subject_unobstructed": "The product/subject is never covered, cut off or blocked by text, graphics or objects",
-              "small_taster_confirmed": "I looked at every picture and clip the small taster passed in this cut: the customer's "
+              "head_cook_confirmed": "I looked at every picture and clip the small taster passed in this cut: the customer's "
                                         "product, the same hands/person, the same room and light, nothing warped"}
 
 
@@ -126,7 +127,7 @@ def waive(store: Store, job_id: str, asset_id: str, check_id: str, *, founder, r
 _CONTROL_OF = {"audio_heard_by_person": "AUDIO_REVIEWED_BY_EAR", "independent_review": "QA_COVERAGE_ENFORCEMENT",
                "product_fidelity": "PRODUCT_INTACT_AND_FAITHFUL", "product_across_shots": "PRODUCT_CONTINUITY_ACROSS_SHOTS",
                "character_continuity": "CHARACTER_CONTINUITY", "no_model_lettering": "VIDEO_FRAME_TEXT_HYGIENE",
-               "subject_unobstructed": "SUBJECT_OBSTRUCTION", "small_taster_confirmed": "QA_COVERAGE_ENFORCEMENT"}
+               "subject_unobstructed": "SUBJECT_OBSTRUCTION", "head_cook_confirmed": "QA_COVERAGE_ENFORCEMENT"}
 
 
 def record_rows(store: Store, job_id: str, asset_id: str, rows: list, *, runner: str, prefix: str = ""):
@@ -412,32 +413,12 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
     add("process:provider_pool", not held and (not streaks or paused),
         f"unsettled reservations: {held or 'none'}; transient runs ≥3: {sorted(set(streaks)) or 'none'}"
         + ("; job paused for the provider" if streaks else ""))
-    # 4. the recipe that was paid for passed the recipe checker (or the founder overrode it, named and reasoned)
-    rc = store.artifact(job_id, "recipe_check") or {}
-    over = store.overrides(job_id, "recipe_send_back")
-    confirmed = store.overrides(job_id, "confirm_recipe")
-    went_ahead = store.events(job_id, ("customer_accepted_objections",))
-    sim_rc = bool((rc.get("written_by") or {}).get("simulated"))
-    if not rc:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "NOT_VERIFIED",
-                     "detail": "no recipe check on record"})
-    elif rc.get("verdict_after_code") != "approve" and over:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG",
-                     "blocking": False, "detail": f"recipe send-back overridden by {over[-1]['founder_email']}: {over[-1]['reason'][:200]}"})
-    elif rc.get("verdict_after_code") != "approve" and went_ahead:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG",
-                     "blocking": False, "detail": "our reviewer objected to the plan; the customer read the objections and chose to go "
-                                                  f"ahead ({json.loads(went_ahead[-1]['data_json']).get('objections', [])[:3]})"})
-    elif rc.get("verdict_after_code") != "approve":
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FAIL",
-                     "detail": "the recipe checker sent the recipe back"})
-    elif sim_rc and not confirmed:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "NOT_VERIFIED",
-                     "detail": "simulated recipe check — nobody judged the recipe"})
-    else:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "PASS",
-                     "detail": f"recipe checker approved; code rules clean ({len(rc.get('code_findings', []))} findings)"
-                               + (f"; confirmed by {confirmed[-1]['founder_email']}" if confirmed else "")})
+    # 4. kitchen v3: the recipe that was paid for is the one the CUSTOMER approved (there is no recipe checker)
+    approvals = [e for e in store.events(job_id, ("state",)) if json.loads(e["data_json"]).get("to") == "planning"]
+    who = approvals[-1]["actor"] if approvals else None
+    rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND",
+                 "status": "PASS" if who else "FAIL",
+                 "detail": f"the customer approved the recipe ({who})" if who else "no recorded approval of the recipe before spend"})
     if media_kind != "video":
         return rows
     shot_nodes = [n for n in store.nodes(job_id) if n["kind"] in ("shot", "frame") and n["status"] != "retired"]

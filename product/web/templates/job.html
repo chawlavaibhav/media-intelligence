@@ -10,7 +10,7 @@
 <p><strong>{{ label(job.state) }}</strong>{% if job.state in states.WORKER_STATES %} <span class="muted small">— this page refreshes itself; you can close it and come back.</span>{% endif %}</p>
 
 <div class="card"><h2>Progress</h2><ol class="small" style="margin:0;padding-left:1.2rem">
-{% for p in progress %}<li{% if loop.last %} style="font-weight:600"{% endif %}>{{ p.text }} <span class="muted">{{ p.utc[11:16] }}</span></li>{% endfor %}</ol>
+{% for p in progress %}<li{% if loop.last %} style="font-weight:600"{% endif %}>{{ p.text }} <span class="muted">{{ p.utc[11:16] }}</span>{% if p.asset %}<div class="media"><img src="/assets/{{ p.asset }}" alt="How it is looking" loading="lazy"></div>{% endif %}</li>{% endfor %}</ol>
 {% if job.state in states.WORKER_STATES %}<p class="muted small">We're working on it — this page updates by itself, and we'll let you know when we need you.</p>{% endif %}</div>
 
 <details class="card"{% if job.state in ('submitted', 'understanding', 'needs_answers') %} open{% endif %}><summary><strong>Your order</strong></summary>

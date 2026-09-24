@@ -1,12 +1,13 @@
-# Ingredient check — the small taster (spec §4.7). v1 INSPECT + previous/master plate comparison.
+# Ingredient check — the head cook's tasting skill (kitchen v3; was the small taster). v2 adds the repair decision and a
+# sharper prompt for a retake, so the head cook repairs a take instead of code freezing it.
 form: ingredient_check
-version: 1
-written_by: small_taster
+version: 2
+written_by: head_cook
 schema:
   type: object
   required: [usable, unsure, required_action_occurred, end_state_reached, product_identity_ok, character_consistent,
              matches_master_plate, matches_previous_plate, differences, prohibited_present, unrequested_elements,
-             lettering_present, best_segment, notes]
+             lettering_present, best_segment, notes, repair, better_prompt]
   properties:
     usable: {type: boolean}
     unsure: {type: boolean}
@@ -25,3 +26,5 @@ schema:
       required: [in_s, out_s]
       properties: {in_s: {type: number}, out_s: {type: number}}
     notes: {type: string}
+    repair: {type: string, enum: [keep, retake, restage, use_photo, tell_customer]}
+    better_prompt: {type: string}

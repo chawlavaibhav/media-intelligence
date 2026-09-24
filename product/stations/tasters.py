@@ -1,17 +1,12 @@
-"""Stations 9 and 10 — the big taster (strong AI from another company) and the door guard (code) (spec §3, §4.8, §4.10,
-§5, §6.2, §6.4).
+"""The gatekeeper (kitchen v3, founder-approved 2026-09-25): the one final check, from another AI company than the chef,
+watching the finished film with its sound, against what the customer ordered — plus the measuring tools (deterministic
+checks on the exact file: exact words, sizes, cuts, the money ledger).
 
-    finished cut → measuring tools (deterministic checks on the exact file) → big taster (Final review form)
-      pass → door guard: no MEASURED check blocks → the customer's preview (the final check on every judgement row)
-      fix  → the system repairs ONLY the named shots automatically, within the approved budget (2 rounds)
-      fail with earliest_stage plan → the chef re-plans (1 round) → recipe check → the plan goes back to the customer
-      fail again / repairs used up → the customer sees the cut with the plain report: accept as is / changes / reject
-      a measured FAIL → never shown: repaired automatically (same 2 rounds); still failing → the customer is told what
-      failed and chooses stop or a paid rework (needs_customer_decision)
-Amendment 1 §3: nobody waits for the founder. An unqualified big taster's "pass" (and an unqualified small taster) is
-not evidence, so those rows stay open until the CUSTOMER accepts the preview, which is recorded against each of them.
-The founder may still switch the hold before preview on (MI_HOLD_BEFORE_PREVIEW=1), override, waive or confirm — never
-required.
+    pass → the customer receives the dish
+    fix  → the head cook repairs ONLY the named shots, within the approved budget (2 rounds), then the gatekeeper looks again
+    fail (not the dish that was ordered) → the chef rewrites the recipe (1 round) and the customer approves it again
+    still failing / repairs used up → the customer sees the dish with the plain report and decides
+The gatekeeper never judges taste (the customer's) and never asks for a safer or different idea.
 """
 from __future__ import annotations
 
@@ -31,8 +26,8 @@ def required(k, job_id) -> dict:
     req = verify.required_checks(media_kind, mandatory_ids=[m["id"] for m in u.get("mandatory", [])], has_copy=bool(recipe.get("copy_deck")),
                                  has_logo=bool(k.logo(job_id)), super_ids=supers,
                                  has_character=bool((recipe.get("character") or {}).get("present")))
-    if not k.qualified("small_taster"):
-        req["small_taster_confirmed"] = "QA_COVERAGE_ENFORCEMENT"
+    if not k.qualified("head_cook"):
+        req["head_cook_confirmed"] = "QA_COVERAGE_ENFORCEMENT"
     return req
 
 
@@ -48,7 +43,7 @@ def check_cut(k, job_id: str):
             meta = json.loads(a["meta_json"])
             rows = [verify.ledger_integrity(k.store, job_id),
                     verify.exact_copy_match(exact_strings(k, job_id), recipe, _rendered_text(k, meta, media_kind), logo_present=bool(logo)),
-                    verify.not_previously_rejected(k.store, job_id, aid), verify.ad_structure(_as_direction(recipe), media_kind, bool(logo))]
+                    verify.not_previously_rejected(k.store, job_id, aid)]
             if media_kind == "video" and not meta.get("placeholder"):
                 srcs = []
                 for sg in meta["segments"]:
@@ -71,8 +66,8 @@ def check_cut(k, job_id: str):
     for aid in finals:
         verify.record_rows(k.store, job_id, aid, verify.review_rows(_as_v1_review(review), mandatory_ids=mids, media_kind=media_kind,
                                                                     asset_sha256=k.store.asset(aid)["sha256"],
-                                                                    qualified=k.qualified("big_taster", review["written_by"]["model"])),
-                           runner=f"big_taster:{review['written_by']['model']}")
+                                                                    qualified=k.qualified("gatekeeper", review["written_by"]["model"])),
+                           runner=f"gatekeeper:{review['written_by']['model']}")
     results = [verify.gateway(k.store, job_id, aid, req) for aid in finals]
     k.put_form(job_id, "gateway_report", {"results": results, "required": req, "overrides": results[0]["founder_overrides"] if results else []},
                by="door_guard")
@@ -112,7 +107,7 @@ def _to_customer(k, job_id, review, results):
     from product.stations.chef import add_customer_note
     report = plain_report(review)
     k.store.put_artifact(job_id, "review_report", {"verdict": review["verdict"], "plain": report, "defects": review.get("defects", [])},
-                         "big_taster")
+                         "gatekeeper")
     add_customer_note(k, job_id, f"We tried to improve this ourselves and our reviewer still has comments: {report} "
                                  "You decide: accept it as it is, ask for changes, or turn it down.")
     k.store.event(job_id, "system", "to_customer_with_report", {"verdict": review["verdict"]})
@@ -210,8 +205,8 @@ def _send_back(k, job_id, review, results):
             flow.send_back(k.store, job_id, "SB-BIG-FAIL", why=why)         # 1 round; a second fail → the customer decides
         except flow.LimitReached:
             return _to_customer(k, job_id, review, results)
-        k.store.put_artifact(job_id, "replan_request", {"from": "big_taster", "defects": defects, "why": why}, "big_taster")
-        k.store.transition(job_id, "checking", "directing", actor="big_taster", data={"reason": "the recipe itself is wrong", "why": why})
+        k.store.put_artifact(job_id, "replan_request", {"from": "gatekeeper", "defects": defects, "why": why}, "gatekeeper")
+        k.store.transition(job_id, "checking", "directing", actor="gatekeeper", data={"reason": "the recipe itself is wrong", "why": why})
         return
     try:
         flow.send_back(k.store, job_id, "SB-BIG-FIX", why=why)              # 2 automatic rounds, then the customer decides
@@ -226,8 +221,8 @@ def _send_back(k, job_id, review, results):
     if not reset:
         for x in ("film",) if k.store.node(job_id, "film") else [n["node_id"] for n in k.store.nodes(job_id) if n["kind"] == "compose_still"]:
             reset += _reset_downstream(k, job_id, x, why[:300])
-    k.store.put_artifact(job_id, "internal_repair", {"defects": defects, "nodes": sorted(set(reset))}, "big_taster")
-    k.store.transition(job_id, "checking", "producing", actor="big_taster", data={"fix": sorted(set(reset))})
+    k.store.put_artifact(job_id, "internal_repair", {"defects": defects, "nodes": sorted(set(reset))}, "gatekeeper")
+    k.store.transition(job_id, "checking", "producing", actor="gatekeeper", data={"fix": sorted(set(reset))})
 
 
 def _stage(defects, n):
@@ -246,7 +241,7 @@ def big_taste(k, job_id, finals, media_kind) -> dict:
         if media_kind == "image":
             items.append(("image/png", Path(a["path"]).read_bytes()))
             note += f"image {len(items)}: {json.loads(a['meta_json']).get('format')} at delivery size. "
-        elif k.s.models.get("big_taster", "").startswith("gemini"):
+        elif k.s.models.get("gatekeeper", "").startswith("gemini"):
             small = k.store.new_output_path(Path(a["path"]).parent, Path(a["path"]).stem + "-review", "mp4")
             media.reencode_small(a["path"], small)
             items.append(("video/mp4", small.read_bytes()))
@@ -265,8 +260,8 @@ def big_taste(k, job_id, finals, media_kind) -> dict:
                           "work. " if refs else "") + (note or "no media")}
     total = sum(float(s["duration_s"]) for s in (k.store.artifact(job_id, "recipe") or {}).get("shots", [])) or 8.0
     with k.store.timed(job_id, "independent_review", "big taster"):
-        review = k.workers.call(job_id, "big_taster", "final_review", ctx, exact_words=k.exact_words(job_id), media=refs + items,
-                                model_key="big_taster_image" if media_kind == "image" and "big_taster_image" in k.s.models else None,
+        review = k.workers.call(job_id, "gatekeeper", "final_review", ctx, exact_words=k.exact_words(job_id), media=refs + items,
+                                model_key="gatekeeper_image" if media_kind == "image" and "gatekeeper_image" in k.s.models else None,
                                 video_seconds=total, sim_args={"cut": len(k.store.artifact_versions(job_id, "final_review")) + 1})
     review["_reviewed_sha256"] = shas
     return review
@@ -312,7 +307,7 @@ def founder_override(k, job_id, proof, reason):
     fr = k.store.artifact(job_id, "final_review") or {}
     if fr.get("verdict") == "pass":
         raise ValueError("the big taster passed this cut; nothing to override")
-    k.store.add_override(job_id, kind="big_taster", target=f"final_review v{len(k.store.artifact_versions(job_id, 'final_review'))}",
+    k.store.add_override(job_id, kind="gatekeeper", target=f"final_review v{len(k.store.artifact_versions(job_id, 'final_review'))}",
                          founder=proof, reason=reason, data={"verdict": fr.get("verdict"), "defects": fr.get("defects")})
     if k.store.job(job_id)["state"] == "paused_for_founder":
         k.store.transition(job_id, "paused_for_founder", "operator_hold", actor=proof.actor, founder=proof, data={"reason": reason},

@@ -25,18 +25,17 @@ from product.store import sha256_bytes, sha256_json, utc_now
 
 # Expected answer size and thinking per worker (tokens) — the basis of the cost estimate; measured live values replace
 # these once live jobs have run (the ledger records actuals).
-EXPECTED_OUT = {"waiter": 1500, "pantry_checker": 1000, "chef": 3500, "chef_image": 2000, "recipe_checker": 1500, "small_taster": 350,
-                "small_taster_escalation": 500, "big_taster": 1800, "big_taster_image": 1800, "diary_writer": 2000}
-EXPECTED_THINKING = {"chef": 2000, "chef_image": 1000, "recipe_checker": 1000, "big_taster": 1000, "big_taster_image": 1000,
-                     "small_taster_escalation": 500}
+# kitchen v3: the chef writes every prompt in full (a longer recipe); the head cook's tasting may write a sharper prompt.
+EXPECTED_OUT = {"waiter": 1500, "chef": 7000, "chef_image": 3000, "head_cook": 900, "head_cook_av": 1200, "gatekeeper": 1800,
+                "gatekeeper_image": 1800, "diary_writer": 2000}
+EXPECTED_THINKING = {"chef": 3000, "chef_image": 1000, "gatekeeper": 1000, "gatekeeper_image": 1000, "head_cook_av": 500}
 BATCH_DISCOUNT = {"diary_writer": Decimal("0.5")}          # the diary writer runs after the job on batch pricing
 IMAGE_TOKENS = 1300
 VIDEO_TOKENS_PER_S = 300
 
 JUDGE_CONTEXT = {
-    "recipe_checker": {"CUSTOMER_EXACT_WORDS", "UNDERSTANDING", "FEASIBILITY", "RECIPE", "TRAY"},
-    "small_taster": {"CUSTOMER_EXACT_WORDS", "INSTRUCTION", "MEASUREMENTS", "MEDIA_NOTE"},
-    "big_taster": {"CUSTOMER_EXACT_WORDS", "UNDERSTANDING", "MEASUREMENTS", "MEDIA_NOTE", "MANDATORY"},
+    "head_cook": {"CUSTOMER_EXACT_WORDS", "INSTRUCTION", "MEASUREMENTS", "MEDIA_NOTE", "VOICE_OVER"},
+    "gatekeeper": {"CUSTOMER_EXACT_WORDS", "UNDERSTANDING", "MEASUREMENTS", "MEDIA_NOTE", "MANDATORY"},
 }
 
 

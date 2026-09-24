@@ -1,20 +1,18 @@
-"""The flow controller ("the kitchen"): code holds the state; each station does one job; the send-back rules decide where
-an order goes when a station says no (spec §6, §12).
+"""The flow controller ("the kitchen", v3 — founder-approved 2026-09-25): code holds the state and the memory; each role
+does its job from its card.
 
-    state                      station
-    submitted / understanding  stations/waiter.py      (Understanding; questions)
-    feasibility                stations/pantry.py      (Feasibility; need_input / cannot_make pause the job at USD 0)
-    directing                  stations/chef.py        (librarian tray → Recipe → Recipe check; send_back ≤ 2 rounds)
-    planning / producing       stations/head_cook.py   (master plate → shots chained from master + previous; small taster)
-    checking                   stations/tasters.py     (assembly + measuring tools → big taster → door guard)
-    revising                   stations/changes.py     (the waiter's Change request → only the affected station)
-    closed jobs                stations/diary.py       (Lessons → applied automatically by kind, logged, undoable — amendment 1 §4)
+    state                      role
+    submitted / understanding  stations/waiter.py      (the waiter: Understanding; questions only when they change the dish)
+    directing                  stations/chef.py        (the chef: librarian tray incl. the Canon → the Recipe, written in full)
+    awaiting_approval          the customer            (the recipe, the price and the look of the film: go ahead or change)
+    planning / producing       stations/head_cook.py   (the head cook: cooks, tastes every take on another company's model,
+                                                        repairs; posts kept stills to the customer's page)
+    checking                   stations/tasters.py     (the gatekeeper: the finished dish against the order)
+    revising                   stations/changes.py     (the customer's changes to a finished dish)
+    closed jobs                stations/diary.py       (the memory keeper: lessons, applied automatically, undoable)
 
-Amendment 1 §3: nobody waits for the founder — every limit ends with the system and then the customer. Founder decisions
-below stay available, founder-only, and are never required.
-Beta rules (founder 2026-09-24): the founder is never inside a running job. A step error retries twice by itself (events
-`step_retry`), then the customer chooses try again / stop (`needs_retry_decision`); a send-back limit that reaches this
-controller ends with the customer (the plan with the objections in plain words), never with the founder.
+The pantry checker and the recipe checker are retired (a job found in `feasibility` is handed straight to the chef). The
+founder is never inside a running job; a step error retries twice by itself, then the customer chooses try again / stop.
 
 Every step reads its inputs from the store, writes its outputs, and ends in a compare-and-set transition, so a restarted
 worker re-runs at most the step it was in. Customer decisions are methods taking the customer's email; founder decisions
@@ -138,7 +136,7 @@ class Orchestrator:
         self.store.transition(job_id, frm, to, actor=actor, data={"reason": reason}, resume_state=frm, pause_reason=reason[:600])
 
     # ── worker entry ───────────────────────────────────────────────────────────────────────────────────
-    STEPS = {"submitted": ("waiter", "understand"), "understanding": ("waiter", "understand"), "feasibility": ("pantry", "check"),
+    STEPS = {"submitted": ("waiter", "understand"), "understanding": ("waiter", "understand"), "feasibility": ("waiter", "hand_to_chef"),
              "directing": ("chef", "direct"), "planning": ("head_cook", "plan"), "producing": ("head_cook", "produce"),
              "checking": ("tasters", "check_cut"), "revising": ("changes", "revise")}
 
@@ -207,16 +205,7 @@ class Orchestrator:
             pass
 
     def _limit_reached(self, job_id, state, e):
-        """A send-back limit that no station handled. In directing (the system's safe re-plan was already used in this plan
-        cycle) the customer sees the plan with the objections in plain words and chooses go ahead / change / stop. Anywhere
-        else it is a step error: retried, then the customer's try again / stop. Never the founder."""
-        from product.stations import chef
-        recipe, rc = self.store.artifact(job_id, "recipe"), self.store.artifact(job_id, "recipe_check")
-        if state == "directing" and recipe and rc:
-            self.store.event(job_id, "system", "limit_to_customer", {"rule": e.rule_id, "key": e.key})
-            if rc.get("verdict_after_code") == "approve":
-                return chef.after_approved_recipe(self, job_id, recipe)
-            return chef.objections_to_customer(self, job_id, recipe, rc)
+        """A send-back limit that no station handled: a step error — retried, then the customer's try again / stop."""
         self.store.event(job_id, "system", "step_failed", {"state": state, "error": str(e)[:800]})
         self._step_error(job_id, state, str(e)[:300])
 
@@ -338,13 +327,9 @@ class Orchestrator:
         self.store.add_override(job_id, kind="resume", target=f"{job['state']}->{target}", founder=proof, reason=reason)
         self.store.transition(job_id, job["state"], target, actor=proof.actor, founder=proof, data={"reason": reason}, pause_reason=None)
 
-    def override_recipe(self, job_id, *, session, reason: str):
-        from product.stations import chef
-        return chef.founder_override(self, job_id, self.founder(session, job_id, "override the recipe checker"), reason)
-
     def override_final_review(self, job_id, *, session, reason: str):
         from product.stations import tasters
-        return tasters.founder_override(self, job_id, self.founder(session, job_id, "override the big taster"), reason)
+        return tasters.founder_override(self, job_id, self.founder(session, job_id, "override the gatekeeper"), reason)
 
     def waive_check(self, job_id, *, session, asset_id: str, check_id: str, reason: str):
         proof = self.founder(session, job_id, f"waive {check_id}")
@@ -373,7 +358,7 @@ class Orchestrator:
 
     def qualified(self, judge: str, model: str | None = None) -> bool:
         """Only a founder-recorded live qualification run, for the exact model now configured — or `model`, the one that
-        actually judged (an image job's final check runs on big_taster_image) (reviewer 2026-09-24). No setting, env flag
+        actually judged (an image job's final check runs on gatekeeper_image) (reviewer 2026-09-24). No setting, env flag
         or admin command makes a judge qualified."""
         return self.store.qualification(judge, model or self.s.models.get(judge)) is not None
 

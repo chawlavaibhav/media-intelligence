@@ -1,0 +1,27 @@
+# Voice cast — the head cook casts and configures the voice model for the chef's voice direction (kitchen v3, founder
+# 2026-09-25: "the voice was robotic because we were not doing the configuration").
+form: voice_cast
+version: 1
+written_by: head_cook
+schema:
+  type: object
+  required: [provider, voice, language_code, settings, lines, why]
+  properties:
+    provider: {type: string, enum: [sarvam, azure, google, elevenlabs]}
+    voice: {type: string}
+    language_code: {type: string}
+    settings:
+      type: object
+      required: [pace, pitch, style, style_prompt]
+      properties:
+        pace: {type: number}
+        pitch: {type: number}
+        style: {type: string}
+        style_prompt: {type: string}
+    lines:
+      type: array
+      items:
+        type: object
+        required: [shot, text, ssml]
+        properties: {shot: {type: integer}, text: {type: string}, ssml: {type: string}}
+    why: {type: string}

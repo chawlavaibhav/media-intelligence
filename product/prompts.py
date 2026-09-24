@@ -16,11 +16,18 @@ BASE_NEGATIVE = ["text", "letters", "captions", "watermark", "logo", "signage", 
                  "lip movement", "extra fingers", "warped product", "duplicate product"]
 
 
-def _strip(text: str, words: list) -> str:
+def _strip(text: str, words: list, drop: tuple | list = ()) -> str:
+    """`drop`: on-screen copy lines. A sentence that quotes one is ABOUT the words on screen, so the whole sentence goes —
+    live 2026-09-24: '"Aaram Se Dekho" appears below her' became '"the" appears below her' and the picture model drew the
+    word "the". `words` (brand, product name) are replaced by "the product", so product descriptions survive."""
+    if drop:
+        pats = [re.compile(r"(?<!\w)" + re.escape(d) + r"(?!\w)", re.I) for d in drop if d and len(d.strip()) > 1]
+        text = " ".join(s for s in re.split(r"(?<=[.;!?])\s+", text or "") if not any(p.search(s) for p in pats))
     for w in sorted({w for w in words if w and len(w) > 1}, key=len, reverse=True):
         # (?<!\w)/(?!\w) rather than \b, so a string that starts or ends in punctuation ("Pack less. Go further.") is scrubbed too
-        text = re.sub(r"(?<!\w)" + re.escape(w) + r"(?!\w)", "the", text, flags=re.I)
-    return re.sub(r"\bthe the\b", "the", text)
+        text = re.sub(r"(?<!\w)" + re.escape(w) + r"(?!\w)", "the product", text, flags=re.I)
+    text = re.sub(r"\b(the|a|an) the product\b", "the product", text, flags=re.I)
+    return re.sub(r"\bthe product('s)? (\w+ )?(product|phone|device|smartphone)\b", r"the \2\3", text, flags=re.I)
 
 
 _OVERLAY = re.compile(r"\b(logo|logos|wordmark|code-set|code set|composit\w*|overlay\w*|supers?|headline|tagline|copy deck|"
@@ -43,12 +50,14 @@ def guard_for(intent: dict, direction: dict, brief: dict) -> dict:
     forbidden += list(brief.get("forbidden_words") or [])
     # every exact string the dispatcher refuses (dispatch.prompt_guard: longer than 3 characters) is scrubbed from the
     # prompts like the brand — live 2026-09-24: a recipe naming "iPhone Duo" in its product anchor could never produce
-    forbidden += [s for s in exact if s and len(s) > 3 and s not in forbidden]
-    return {"exact_strings": exact, "forbidden_words": forbidden}
+    names = {s.lower() for s in (brief.get("exact_strings") or [])} | {brand.lower()}
+    copy_lines = [c["text"] for c in direction.get("copy_deck", []) if c.get("text") and c["text"].lower() not in names]
+    forbidden += [s for s in exact if s and len(s) > 3 and s not in forbidden and s not in copy_lines]
+    return {"exact_strings": exact, "forbidden_words": forbidden, "copy_lines": copy_lines}
 
 
 def _anchor(direction: dict, guard: dict) -> str:
-    return _strip(_visual(direction.get("product_anchor", "")), guard["forbidden_words"])
+    return _strip(_visual(direction.get("product_anchor", "")), guard["forbidden_words"], guard.get("copy_lines", ()))
 
 
 def _look(direction: dict) -> str:
@@ -89,12 +98,12 @@ def still_prompt(direction: dict, guard: dict, *, beat: dict | None = None, aspe
         if beat.get("continuity"):
             lines.append("Continuity: " + "; ".join(beat["continuity"]) + ".")
         if beat.get("must_not"):
-            lines.append("Must not appear: " + ", ".join(_strip(m, guard["forbidden_words"]) for m in beat["must_not"]) + ".")
+            lines.append("Must not appear: " + ", ".join(_strip(m, guard["forbidden_words"], guard.get("copy_lines", ())) for m in beat["must_not"]) + ".")
         lines.append(f"Camera: {_visual(beat.get('camera', ''))}")
     lines.append(_look(direction))
     lines.append(f"Aspect ratio {aspect}. Photorealistic.")
     lines.append(NO_LETTERING)
-    return _strip(" ".join(lines), guard["forbidden_words"])
+    return _strip(" ".join(lines), guard["forbidden_words"], guard.get("copy_lines", ()))
 
 
 def clip_prompt(direction: dict, guard: dict, beat: dict) -> str:
@@ -111,7 +120,7 @@ def clip_prompt(direction: dict, guard: dict, beat: dict) -> str:
     parts.append(f"Camera: {_visual(beat.get('camera', ''))} One continuous shot, no cuts, no scene change.")
     parts.append(NO_SPEECH)
     parts.append("No text or lettering appears.")
-    return _strip(" ".join(parts), guard["forbidden_words"])
+    return _strip(" ".join(parts), guard["forbidden_words"], guard.get("copy_lines", ()))
 
 
 def clip_negative(direction: dict, guard: dict, beat: dict, product_words: list) -> str:
@@ -119,7 +128,7 @@ def clip_negative(direction: dict, guard: dict, beat: dict, product_words: list)
     if not beat.get("product_present"):
         neg += product_words
     neg += ["scene cut", "camera cut", "morphing"]
-    return _strip(", ".join(dict.fromkeys(n for n in neg if n)), guard["forbidden_words"])
+    return _strip(", ".join(dict.fromkeys(n for n in neg if n)), guard["forbidden_words"], guard.get("copy_lines", ()))
 
 
 _HANDS_ONLY = re.compile(r"\b(no face|never (a|the) face|only (by )?(the |two )?(same )?(\w+ )?hands|hands only|hands and (lower )?forearms only)\b", re.I)
@@ -136,13 +145,13 @@ def character_prompt(direction: dict, guard: dict, aspect: str) -> str:
     else:
         framing = "Full body and clear face, standing, neutral expression"
     return _strip(f"Character reference photograph: {_visual(desc)} {framing}, plain light-grey studio background, even soft "
-                  f"light. {_look(direction)} Aspect ratio {aspect}. {NO_LETTERING}", guard["forbidden_words"])
+                  f"light. {_look(direction)} Aspect ratio {aspect}. {NO_LETTERING}", guard["forbidden_words"], guard.get("copy_lines", ()))
 
 
 def music_prompt(direction: dict, guard: dict) -> tuple:
     s = direction.get("sound") or {}
     p = _strip(f"Instrumental music bed for a short commercial film: {s.get('music_brief', '')}. Instrumental only, no vocals, "
-               f"no singing, no spoken words.", guard["forbidden_words"])
+               f"no singing, no spoken words.", guard["forbidden_words"], guard.get("copy_lines", ()))
     return p, "vocals, singing, voice, speech, lyrics"
 
 
@@ -154,7 +163,11 @@ def product_words(intent: dict) -> list:
 
 # ── v2: one master plate, every shot chained from it (spec §5 head cook, §6.1) ──────────────────────────────────────────
 def master_plate_prompt(recipe: dict, guard: dict, *, aspect: str, with_product_ref: bool) -> str:
-    """The master plate: the film's one world — room, light, product — at rest. Every shot is built from it."""
+    """The master plate: the film's one world — room, light, product — at rest. Every shot is built from it.
+    Kitchen v3: the chef's own look prompt, sent as written (plus the fixed safety lines)."""
+    if (recipe.get("look") or {}).get("picture_prompt"):
+        return chef_picture_prompt(recipe["look"]["picture_prompt"], guard, aspect=aspect,
+                                   refs_note="The product must match the product reference photos exactly." if with_product_ref else "")
     mp = recipe.get("master_plate") or {}
     lines = [f"A cinematic film still that establishes the whole film's world. {_visual(mp.get('description', ''))}",
              f"The product: {_anchor(recipe, guard)} State: {_visual(mp.get('product_state') or 'intact')}; brand new, completely intact, "
@@ -163,7 +176,7 @@ def master_plate_prompt(recipe: dict, guard: dict, *, aspect: str, with_product_
     if ch.get("present"):
         lines.append(f"The person: {_visual(ch.get('description', ''))}")
     lines += [_look(recipe), f"Aspect ratio {aspect}. Photorealistic.", NO_LETTERING]
-    return _strip(" ".join(lines), guard["forbidden_words"])
+    return _strip(" ".join(lines), guard["forbidden_words"], guard.get("copy_lines", ()))
 
 
 CHAIN_CLAUSE = ("Continuity: the same room, light, product (shape, colour, every opening) and the same hands/person and wardrobe "
@@ -174,4 +187,22 @@ def shot_frame_prompt(recipe: dict, guard: dict, shot: dict, *, aspect: str, has
     base = still_prompt(recipe, guard, beat=shot, aspect=aspect, with_product_ref=True, with_character_ref=False)
     chain = CHAIN_CLAUSE.format(prev="; it continues directly from the PREVIOUS SHOT reference image" if has_previous else "")
     corr = f" Correct this from the last attempt: {_visual(correction)}." if correction else ""
-    return _strip(base.replace(NO_LETTERING, chain + corr + " " + NO_LETTERING), guard["forbidden_words"])
+    return _strip(base.replace(NO_LETTERING, chain + corr + " " + NO_LETTERING), guard["forbidden_words"], guard.get("copy_lines", ()))
+
+
+# ── kitchen v3: the chef writes every prompt in full; code adds only the fixed safety lines ──────────────────────────────
+def chef_picture_prompt(text: str, guard: dict, *, aspect: str, refs_note: str = "", correction: str = "") -> str:
+    """The chef's (or the head cook's sharpened) picture prompt, as written. Code only removes sentences about on-screen
+    words, replaces the brand/product name, and appends the aspect ratio, the reference note and the no-lettering line."""
+    body = _strip(text or "", guard["forbidden_words"], guard.get("copy_lines", ()))
+    extra = " ".join(x for x in (refs_note, f"Aspect ratio {aspect}.") if x)
+    return f"{body.strip()} {extra} {NO_LETTERING}".strip()
+
+
+def chef_motion_prompt(text: str, guard: dict) -> str:
+    body = _strip(text or "", guard["forbidden_words"], guard.get("copy_lines", ()))
+    return f"{body.strip()} {NO_SPEECH} No text or lettering appears.".strip()
+
+
+REFS_NOTE = ("Reference images, in order: the look of the film (same person, room, light and product), then the previous "
+             "shot if given, then the product photo. Keep all of them exactly.")

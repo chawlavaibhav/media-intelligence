@@ -143,12 +143,16 @@ def assemble(k, job_id, n, spec, ctx):
     out = k.store.new_output_path(k.job_dir(job_id) / "out", f"cut{ctx['cut']}-{fid(spec['aspect'])}", "mp4")
     if not media.have_ffmpeg():
         return placeholder_final(k, job_id, n, segs[0]["clip"], out, "video/mp4", ctx, extra={"segments": segs, "supers": supers})
+    vn = k.store.node(job_id, "voice")
+    voice = k.store.asset(vn["selected_asset_id"]) if vn and vn["status"] == "done" and vn["selected_asset_id"] else None
     rep = media.assemble_film(segments=[{**sg, "beat": sg["shot"]} for sg in segs], endcard=Path(endcard["path"]), supers=supers,
                               music=Path(music["path"]), out=out, size=size, card_s=float(spec["card_s"]),
+                              voice=Path(voice["path"]) if voice else None,
                               workdir=ctx["workdir"] / f"assemble-cut{ctx['cut']}-{int(time.time() * 1000)}")
     aid = k.store.add_asset(job_id, path=out, kind="video", source="composed", content_type="video/mp4", node_id=n["node_id"],
                             role="deliverable", cut=ctx["cut"],
-                            meta={"segments": segs, "supers": supers, "assembly": rep, "end_card": endcard["id"], "music": music["id"]})
+                            meta={"segments": segs, "supers": supers, "assembly": rep, "end_card": endcard["id"], "music": music["id"],
+                                  "voice": voice["id"] if voice else None})
     rows = [dict(r, check_id="end_card:" + r["check_id"]) for r in json.loads(endcard["meta_json"]).get("checks", [])]
     for sp in supers:
         for r in json.loads(k.store.asset(sp["asset"])["meta_json"]).get("checks", []):

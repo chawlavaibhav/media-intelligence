@@ -13,7 +13,7 @@ import json
 from product import library, rulebook
 from product.library import bm25, stats, tokens
 
-CAPS = {"chef": 6000, "recipe_checker": 4000, "pantry_checker": 1500}
+CAPS = {"chef": 8000, "pantry_checker": 1500}
 MAX_COOKBOOK_PAGES = 6
 MAX_RECIPES = 3
 # Founder rulings 2026-09-24: "weaken the impact of failure notes unless they repeat multiple times — it's causing more harm
@@ -21,7 +21,7 @@ MAX_RECIPES = 3
 # when its kind recurs significantly more often than a one-off, given how many jobs are on record (exact binomial test,
 # stats.recurs_significantly), and was not since prevented; one note per kind; a few at most; each labelled as a watch-out
 # with its rate and confidence interval.
-MAX_FAILURES = {"chef": 3, "recipe_checker": 5}
+MAX_FAILURES = {"chef": 3}
 
 
 def _item(d, score, section=None):
@@ -97,6 +97,7 @@ class Librarian:
         else:  # chef
             cook, record = self._cookbooks(query, cookbook_args)
             groups = [cook, self._shelf(account_id), self._recipes(query, media, product_category, account_id, classes),
+                      self._equipment(classes, routes),                                    # the cheat sheet: the tools' track record
                       self._failures(query, classes, routes, account_id, media, worker)]      # craft first, watch-outs last
         # round-robin across sections so every section is represented before any one fills the cap
         chosen, used = [], 0

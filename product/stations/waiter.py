@@ -33,7 +33,12 @@ def understand(k, job_id: str):
         k.store.transition(job_id, "understanding", "needs_answers", actor="system")
         k.store.timing_start(job_id, "customer_wait", "answers")
         return
-    k.store.transition(job_id, "understanding", "feasibility", actor="system")
+    k.store.transition(job_id, "understanding", "directing", actor="system")      # kitchen v3: straight to the chef
+
+
+def hand_to_chef(k, job_id: str):
+    """A job left in the retired `feasibility` step (kitchen v3 removed the pantry checker) goes straight to the chef."""
+    k.store.transition(job_id, "feasibility", "directing", actor="system", data={"reason": "kitchen v3: no pantry checker"})
 
 
 def _floor(k, job_id, form, slip, words):

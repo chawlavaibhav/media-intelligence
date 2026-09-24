@@ -286,7 +286,7 @@ def compose(*, canvas: tuple, out: Path, plate: Path | None = None, background_h
 # ── film ─────────────────────────────────────────────────────────────────────────────────────────
 def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | None, out: Path, size: tuple,
                   card_s: float, workdir: Path, fps: int = 24, xfade: float = 0.6, audio_join: float = 0.06,
-                  music_from_s: float = 0.0) -> dict:
+                  music_from_s: float = 0.0, voice: Path | None = None) -> dict:
     """segments: [{"clip": path, "in": s, "use": s}]; supers: [{"png": path, "t_in": s, "t_out": s}] (full-frame RGBA)."""
     W, H = size
     workdir.mkdir(parents=True, exist_ok=True)
@@ -333,7 +333,14 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
         f.append(f"[{im}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:{span:.3f},asetpts=PTS-STARTPTS,"
                  f"afade=t=in:d=1.5,afade=t=out:st={max(0.0, span - 1.8):.2f}:d=1.8,adelay={int(music_from_s * 1000)}|{int(music_from_s * 1000)},"
                  f"volume=-9dB[bed]")
-        f.append(f"[acat]apad=whole_dur={total:.3f},volume=-4dB[amb];[amb][bed]amix=inputs=2:duration=first:normalize=0[amix]")
+        if voice:                   # kitchen v3: the voice-over leads; the music bed and the scene sound sit under it
+            iv = im + 1
+            inputs += ["-i", str(voice)]
+            f.append(f"[{iv}:a]aresample=48000,aformat=channel_layouts=stereo,apad=whole_dur={total:.3f},atrim=0:{total:.3f}[vo]")
+            f.append(f"[bed]volume=-6dB[bedlo];[acat]apad=whole_dur={total:.3f},volume=-10dB[amb];"
+                     f"[amb][bedlo][vo]amix=inputs=3:duration=first:normalize=0[amix]")
+        else:
+            f.append(f"[acat]apad=whole_dur={total:.3f},volume=-4dB[amb];[amb][bed]amix=inputs=2:duration=first:normalize=0[amix]")
     else:
         f.append(f"[acat]apad=whole_dur={total:.3f},volume=-4dB[amix]")
     raw = workdir / "assembled-raw.mov"
