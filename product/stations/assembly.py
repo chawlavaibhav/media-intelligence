@@ -4,6 +4,7 @@ overwrote the image job's first-cut posters), and brand fonts/colours come from 
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import time
 from pathlib import Path
@@ -130,7 +131,13 @@ def assemble(k, job_id, n, spec, ctx):
     for s in shots:
         clip = k.store.asset(k.store.node(job_id, f"shot_{s['n']}")["selected_asset_id"])
         cm = json.loads(clip["meta_json"])
-        segs.append({"clip": clip["path"], "in": cm.get("in_s", 0.0), "use": float(s["duration_s"]), "shot": s["n"], "asset": clip["id"]})
+        # live 2026-09-25: the video model sometimes gives a person a voice. A clip the head cook kept flagged, or whose tasting
+        # heard speech, keeps its picture but not its own sound (the music bed carries the film there).
+        heard = " ".join(str(x) for x in ((cm.get("inspection") or {}).get("notes"), (cm.get("inspection") or {}).get("differences")))
+        spec_flag = json.loads(k.store.node(job_id, f"shot_{s['n']}")["spec_json"]).get("flagged")
+        mute = bool(spec_flag) or bool(re.search(r"speak|speech|talk|voice|lip|dialog|subtitle|sing|narrat", heard, re.I))
+        segs.append({"clip": clip["path"], "in": cm.get("in_s", 0.0), "use": float(s["duration_s"]), "shot": s["n"], "asset": clip["id"],
+                     "mute": mute})
         sn = k.store.node(job_id, f"super_{s['n']}")
         if sn and sn["status"] == "done" and sn["selected_asset_id"]:
             supers.append({"png": k.store.asset(sn["selected_asset_id"])["path"], "t_in": round(t + 0.2, 2),

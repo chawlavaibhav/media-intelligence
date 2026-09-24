@@ -306,7 +306,7 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
         f.append(f"[{i}:v]trim={t0}:{t0 + use},setpts=PTS-STARTPTS,scale={W}:{H}:force_original_aspect_ratio=increase:"
                  f"flags=lanczos:out_range=tv,crop={W}:{H},setsar=1,fps={fps},format=yuv420p[v{i}]")
         tail = audio_join if i < n - 1 else 0
-        if probe(s["clip"])["has_audio"]:
+        if probe(s["clip"])["has_audio"] and not s.get("mute"):
             f.append(f"[{i}:a]atrim={t0}:{t0 + use + tail},asetpts=PTS-STARTPTS,aresample=48000,"
                      f"aformat=channel_layouts=stereo[a{i}]")
         else:
