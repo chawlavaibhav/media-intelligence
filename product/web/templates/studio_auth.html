@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{# Sign-in and invitation in the studio's look (founder 2026-09-24: the first thing a friend sees must be the studio). #}
+<title>{% block title %}Aight Studio{% endblock %}</title>
+<style>
+:root{--bg:#f7f5f0;--paper:#fffdf9;--ink:#1f1d1a;--soft:#6b665d;--faint:#a29b8f;--line:#e6e1d7;--accent:#2f4a3a;--accent-ink:#f7f5f0;
+  --glow:rgba(150,185,155,.28);--bad:#8a2f2a;--serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"Helvetica Neue",sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#1a1816;--paper:#252220;--ink:#ece6db;--soft:#b2aa9c;--faint:#7c756a;--line:#34302a;
+  --accent:#a8c3ad;--accent-ink:#1a1816;--glow:rgba(120,160,128,.14);--bad:#e59a92}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse 60% 40% at 50% 12%,var(--glow),transparent 70%),var(--bg);
+  color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center;padding:0 20px}
+.wordmark{font-family:var(--serif);font-size:20px;letter-spacing:.03em;margin:34px 0 0;color:var(--ink);text-decoration:none}
+.wordmark span{color:var(--faint);font-style:italic}
+main{width:100%;max-width:400px;margin:auto 0;padding:48px 0 80px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,7vw,40px);line-height:1.15;margin:0 0 10px;text-align:center}
+.lede{color:var(--soft);text-align:center;margin:0 0 30px}
+label{display:block;font-size:14px;color:var(--soft);margin:16px 0 6px}
+input{width:100%;font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:13px 15px;outline:none}
+input:focus{border-color:var(--faint)}
+button{width:100%;margin-top:24px;font:inherit;font-weight:500;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:13px 18px;cursor:pointer}
+.err{color:var(--bad);text-align:center;margin:0 0 8px;font-size:15px}
+.note{color:var(--faint);font-size:13px;text-align:center;margin-top:22px}
+</style>
+</head>
+<body>
+<a class="wordmark" href="/">Aight <span>Studio</span></a>
+<main>{% block body %}{% endblock %}</main>
+</body>
+</html>
