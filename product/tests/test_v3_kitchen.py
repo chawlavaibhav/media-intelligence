@@ -379,6 +379,20 @@ class APhotoShotKeepsTheFilmsShape(unittest.TestCase):
             e.close()
 
 
+class TheCopyCheckReadsTheBoard(unittest.TestCase):
+    def test_a_line_set_on_two_lines_matches_and_an_unplaced_deck_line_is_not_required(self):
+        from product import verify
+        board = {"copy_deck": [{"id": "p", "text": "One key to AI\nthat always gives back a little more."},
+                               {"id": "c", "text": "Use ₹1,000 of AI."}, {"id": "u", "text": "getaight.ai"}],
+                 "shots": [{"n": 1, "super_id": None}], "end_card": {"copy_ids": ["p", "u"]}}
+        r = verify.exact_copy_match(["One key to AI that always gives back a little more.", "getaight.ai"], board,
+                                    ["One key to AI that always gives back a little more.", "getaight.ai"])
+        self.assertEqual(r["status"], "PASS", r["detail"])
+        board["shots"][0]["super_id"] = "c"                                   # placed on a shot: now it must be drawn
+        r = verify.exact_copy_match(["getaight.ai"], board, ["One key to AI that always gives back a little more.", "getaight.ai"])
+        self.assertEqual(r["status"], "FAIL")
+
+
 class ChefAndTastersAreDifferentCompanies(unittest.TestCase):
     def test_default_models_are_independent_and_a_same_company_taster_is_refused(self):
         m = config.worker_models()

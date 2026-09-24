@@ -162,18 +162,24 @@ def ledger_integrity(store: Store, job_id: str) -> dict:
 def exact_copy_match(exact_strings: list, direction: dict, rendered: list | None, logo_present: bool = False) -> dict:
     """Every customer string must be in the copy deck verbatim AND have been drawn, by code, on this exact file
     (the renderer refuses any string its font cannot draw, so a rendered string is a glyph-complete one)."""
-    deck = {c["text"] for c in direction.get("copy_deck", [])}
+    def n(s):                                # a line set on two lines is the same words (live 2026-09-25: an end card
+        return " ".join((s or "").split())    # set "One key to AI / that always gives back…" failed as "not drawn")
+    deck = {n(c["text"]) for c in direction.get("copy_deck", [])}
     if rendered is None:
         return {"check_id": "exact_copy_match", "control": "EXACT_COPY_MATCH", "status": "NOT_VERIFIED",
                 "detail": "no render record for this file: which strings it carries is unknown"}
-    drawn = set(rendered)
-    not_in_deck = [s for s in exact_strings if s and s not in deck]
-    not_drawn = [s for s in exact_strings if s and s not in drawn]
-    # atlas approved_copy_line_not_carried_into_the_cut (UPW1-25): every approved deck line is placed somewhere
+    drawn = {n(r) for r in rendered}
+    not_in_deck = [s for s in exact_strings if s and n(s) not in deck]
+    not_drawn = [s for s in exact_strings if s and n(s) not in drawn]
+    # atlas approved_copy_line_not_carried_into_the_cut (UPW1-25): every line the approved board PLACES (on a shot or the end
+    # card) is drawn. Kitchen v3: a deck line the chef placed nowhere (e.g. the real screen already says it) is not required.
     from product.compose import is_logo_line
-    logo_lines = {c["text"] for c in direction.get("copy_deck", []) if logo_present and is_logo_line(c)}
+    logo_lines = {n(c["text"]) for c in direction.get("copy_deck", []) if logo_present and is_logo_line(c)}
     drawn |= logo_lines                     # delivered by the supplied logo file, not by type
-    dropped = [t for t in deck if t and t not in drawn and t not in exact_strings]
+    placed_ids = {s.get("super_id") for s in direction.get("shots", []) if s.get("super_id")} | \
+        set((direction.get("end_card") or {}).get("copy_ids") or [])
+    placed = {n(c["text"]) for c in direction.get("copy_deck", []) if c.get("id") in placed_ids} if direction.get("shots") else deck
+    dropped = [t for t in placed if t and t not in drawn and t not in {n(s) for s in exact_strings}]
     problems = ([f"altered or missing in the copy deck: {not_in_deck}"] if not_in_deck else []) + \
                ([f"not drawn on this file: {not_drawn}"] if not_drawn else []) + \
                ([f"approved copy lines not carried into the cut: {dropped}"] if dropped else [])
