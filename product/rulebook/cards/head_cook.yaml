@@ -1,7 +1,7 @@
 # Rulebook card — head_cook (kitchen v3, founder-approved 2026-09-25). Seed version; later versions live in the store.
 worker: head_cook
 kind: ai+code
-version: 5
+version: 6
 model_tier: cheap_other_company
 forms:
 - ingredient_check
@@ -64,6 +64,10 @@ instructions:
     product description in the recipe (INSTRUCTION). Compare part by part — overall shape, the camera or key parts and
     where they sit, frame, colour — and name each difference you SEE. Never write a product description from memory; when
     you describe the product in `better_prompt`, copy the chef's product description word for word.
+    PROPORTION. Retake for what a viewer would notice or what breaks the order: the wrong product, a wrong or warped
+    face, extra fingers, stray words, the moment not happening, the wrong feeling, a continuity break between shots. A
+    detail nobody watching would notice (sleeve length, which hand wears a ring, the exact shade of a cup) is never worth
+    another take: note it and serve the take. Every take costs the customer money.
     Then decide `repair`:
     - `keep`: it is the shot.
     - `edit`: most of the picture is right (the person, the room, the light) and one or two things are wrong (the product,

@@ -2,13 +2,16 @@
 "Image 1:1". "No one fills a form like this." — "Let the user enter a prompt. The form was an internal instrument the
 waiter fills for the kitchen." The customer's first message creates the job; the waiter fills the order from their
 words and asks in the thread when something that matters is unclear; the job continues in the same thread. USD 0,
-simulated, offline."""
+simulated, offline.
+
+Kitchen v3 (2026-09-25): the film thread runs order -> recipe -> the dish (no pantry question, no look / first-shot
+wait); a step error is shown with the chef's step. No test retired."""
 import json
 import re
 import unittest
 from unittest import mock
 
-from product.stations import pantry, waiter
+from product.stations import chef, waiter
 from product.tests import fixtures_v2 as fx
 from product.tests.support import Env
 from product.tests.test_v2_customer import kitchen_words
@@ -196,18 +199,9 @@ class TheJobIsAConversation(ChatBase):
         st = json.loads(self.c.req("GET", f"/jobs/{jid}/status")["body"])
         self.assertEqual((st["state"], st["line"]), ("submitted", "Reading your brief…"))
         e.drain()
-        self.assertEqual(e.state(jid), "awaiting_customer_input")
-        page = self.check(jid, "input", "abandon", words=("Sounds good",))
-        self.assertNotIn(b"data-poll", page)
-        self.post(jid, "input", {"facts": "the lining is bright yellow"}, files=[])
-        e.drain()
-        if e.state(jid) == "awaiting_customer_input":                       # our suggestions, accepted with one tap
-            page = self.page(f"/jobs/{jid}")
-            n = len(e.store.artifact(jid, "feasibility")["alternatives"])
-            self.post(jid, "input", {f"alt_{i}": "yes" for i in range(n)})
-            e.drain()
         self.assertEqual(e.state(jid), "awaiting_approval")
-        page = self.check(jid, "approve", "direction-change", words=("Approve and start", "the lining is bright yellow"))
+        page = self.check(jid, "approve", "direction-change", "abandon", words=("Approve and start",))
+        self.assertNotIn(b"data-poll", page)                                           # the customer's turn: no refreshing
         q = e.store.artifact(jid, "quote")
         self.assertIn(f'name="budget_usd" value="{q["recommended_budget_usd"]}"'.encode(), page)   # the exact price
         self.assertRegex(page, rb"about <strong>\$\d+\.\d\d</strong>")
@@ -219,16 +213,7 @@ class TheJobIsAConversation(ChatBase):
             self.check(jid, "budget")
             e.svc.raise_budget(e.user, jid, "30")
             e.drain()
-        self.assertEqual(e.state(jid), "awaiting_master_approval")
-        page = self.check(jid, "master", words=("This looks right",))
-        self.assertIn(f'/assets/{e.store.node(jid, "master")["selected_asset_id"]}'.encode(), page)
-        self.post(jid, "master", {})
-        e.drain()
-        self.assertEqual(e.state(jid), "awaiting_taste")
-        page = self.check(jid, "taste", "taste-change", words=("Make the rest",))
-        self.post(jid, "taste", {})
-        e.drain()
-        self.assertEqual(e.state(jid), "ready_for_review")
+        self.assertEqual(e.state(jid), "ready_for_review")                  # v3: no look / first-shot wait in between
         page = self.check(jid, "accept", "changes", "reject")
         self.assertIn(b"<video", page)
         self.post(jid, "accept", {})
@@ -251,7 +236,7 @@ class TheJobIsAConversation(ChatBase):
     def test_something_went_wrong_asks_try_again_or_stop(self):
         e = self.e
         from product.tests.test_v2_beta_rules import failing
-        with mock.patch.object(pantry, "check", failing(pantry.check, 99)):
+        with mock.patch.object(chef, "direct", failing(chef.direct, 99)):
             jid = e.submit("image", text=IMAGE_ORDER)
             e.drain()
         self.assertEqual(e.state(jid), "needs_retry_decision")
