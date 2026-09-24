@@ -288,6 +288,15 @@ class ThePhotoToolFollowsTheChefsCropAndFill(unittest.TestCase):
         self.assertEqual(out.getpixel((5, 5)), (238, 236, 231))           # a thin band sits on its own colour, not stretched
 
 
+class TheWaiterReadsTheLength(unittest.TestCase):
+    def test_an_age_group_is_never_read_as_seconds(self):
+        from product.stations.waiter import seconds_in
+        self.assertEqual(seconds_in(["15-second Reel for people in their 50s"]), 15)
+        self.assertEqual(seconds_in(["make it 30 seconds for folks in their 40s"]), 30)
+        self.assertEqual(seconds_in(["a 20s reel"]), 20)
+        self.assertIsNone(seconds_in(["an ad for people aged 50s"]))
+
+
 class ChefAndTastersAreDifferentCompanies(unittest.TestCase):
     def test_default_models_are_independent_and_a_same_company_taster_is_refused(self):
         m = config.worker_models()
@@ -309,6 +318,12 @@ class ChefPromptsAreSentAsWritten(unittest.TestCase):
         self.assertTrue(p.endswith(prompts.NO_LETTERING))
         from product.dispatch import prompt_guard
         prompt_guard(p, **g)
+
+    def test_a_short_line_is_cut_only_where_it_is_quoted_and_a_quoted_line_may_span_sentences(self):
+        self.assertEqual(prompts._strip('She walks home. "Ghar" appears below. Her ghar is warm.', [], ["Ghar"]),
+                         "She walks home. Her ghar is warm.")
+        self.assertEqual(prompts._strip("Meera smiles. “Kholo. Badi screen.” fades in. The lamp glows.", [], ["Kholo. Badi screen."]),
+                         "Meera smiles. The lamp glows.")
 
 
 if __name__ == "__main__":

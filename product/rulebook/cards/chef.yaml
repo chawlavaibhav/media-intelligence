@@ -2,7 +2,7 @@
 # a film is moving moments, 'not AI slop' means real-looking, descriptions are what the viewer sees and feels). Seed version; later versions live in the store.
 worker: chef
 kind: ai
-version: 7
+version: 8
 model_tier: strongest
 forms:
 - recipe
@@ -137,6 +137,8 @@ instructions:
     - `copy_deck`: the words on screen: few, big, in the audience's language, benefits not specifications. The customer's
       exact strings appear verbatim.
     - If CUSTOMER_CHANGE_REQUEST is present, rewrite the recipe to honour it and keep everything the customer did not ask to change.
+    - If GATEKEEPER_FOUND is present, the finished film was checked against the order and found to be the wrong dish; with
+      PREVIOUS_RECIPE, rewrite so the dish is the one ordered, fixing exactly what was found, and keep what was right.
     - `library_used`: the ids from the TRAY that shaped a decision. `customer_summary`: the plan in three plain sentences.
     - BEFORE YOU HAND IT OVER, read your board back as the customer will. Is it a film with a person and a real moment, or
       a slideshow? Does the story move someone, or list features? Is every description something the viewer sees and

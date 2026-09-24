@@ -21,8 +21,27 @@ def _strip(text: str, words: list, drop: tuple | list = ()) -> str:
     live 2026-09-24: '"Aaram Se Dekho" appears below her' became '"the" appears below her' and the picture model drew the
     word "the". `words` (brand, product name) are replaced by "the product", so product descriptions survive."""
     if drop:
-        pats = [re.compile(r"(?<!\w)" + re.escape(d) + r"(?!\w)", re.I) for d in drop if d and len(d.strip()) > 1]
-        text = " ".join(s for s in re.split(r"(?<=[.;!?])\s+", text or "") if not any(p.search(s) for p in pats))
+        # a sentence goes when it QUOTES a line, or contains a long line (3+ words) verbatim; a short line such as "Ghar"
+        # only when quoted — otherwise every sentence that mentions home would vanish from the chef's prompt
+        q = r"[\"'“”‘’«»]\s*"
+        pats = []
+        for d in drop:
+            d = (d or "").strip()
+            if len(d) <= 1:
+                continue
+            e = re.escape(d.rstrip(".!?"))
+            pats.append(re.compile(q + e + r"[.!?]?\s*[\"'“”‘’«»]", re.I))
+            if len(d.split()) >= 3:
+                pats.append(re.compile(r"(?<!\w)" + e + r"(?!\w)", re.I))
+        text = text or ""
+        hits = [m.span() for p in pats for m in p.finditer(text)]
+        keep, pos = [], 0
+        for piece in re.split(r"(?<=[.;!?])\s+", text):     # sentences, with their positions (a quoted line may span two)
+            start = text.index(piece, pos)
+            end = pos = start + len(piece)
+            if not any(a < end and b > start for a, b in hits):
+                keep.append(piece)
+        text = " ".join(keep)
     for w in sorted({w for w in words if w and len(w) > 1}, key=len, reverse=True):
         # (?<!\w)/(?!\w) rather than \b, so a string that starts or ends in punctuation ("Pack less. Go further.") is scrubbed too
         text = re.sub(r"(?<!\w)" + re.escape(w) + r"(?!\w)", "the product", text, flags=re.I)

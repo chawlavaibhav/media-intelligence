@@ -152,6 +152,10 @@ class EquipmentSheet:
         if r.get("basis") in ("policy", "deterministic", "lesson") or r["verdict"] not in RANK or "failures" not in r:
             r["evidence"] = {"policy": "a founder decision, not an observation", "deterministic": "deterministic code",
                              "lesson": "set by a lesson without counts, not a statistical result"}.get(r.get("basis"), "no counts recorded")
+            if r.get("basis") == "lesson" and r["verdict"] in ("cannot", "reliable"):
+                # one job's word is not evidence (founder 2026-09-24: failures inform, statistics decide): at most "risky"
+                r["verdict"] = "risky"
+                r["evidence"] += f"; declared '{r['declared_verdict']}', shown as risky until counts prove it"
             return r
         f, n = int(r.get("failures") or 0), int(r.get("failures") or 0) + int(r.get("successes") or 0)
         if n and stats.lower_bound(f, n) > cls.CANNOT_IF_FAILURE_RATE_ABOVE:

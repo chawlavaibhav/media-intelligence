@@ -55,8 +55,10 @@ class EquipmentVerdictsFollowTheEvidence(unittest.TestCase):
         self.assertEqual((r["successes"], r["failures"]), (20, 0))
         self.assertEqual(r["verdict"], "reliable")                           # 0 of 20 failed: upper bound 14% < 25%
 
-    def test_a_lesson_without_counts_is_kept_and_labelled(self):
+    def test_a_lesson_without_counts_is_kept_labelled_and_never_stronger_than_risky(self):
+        """Architect review 2026-09-25: one job's word is not evidence — a count-less 'cannot' is shown as risky."""
         self.eq.apply({"id": "EQ-003", "action_class": "lift_closed_product", "verdict": "cannot"}, by="lesson", source_lesson="L-2")
         r = self.row("EQ-003")
-        self.assertEqual(r["verdict"], "cannot")
+        self.assertEqual(r["verdict"], "risky")
+        self.assertEqual(r["declared_verdict"], "cannot")
         self.assertIn("without counts", r["evidence"])

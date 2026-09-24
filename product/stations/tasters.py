@@ -86,8 +86,7 @@ def present(k, job_id, results):
         return customer_decision(k, job_id, results)          # a measured check could not run / failed: never shown
     if any(r["judgement_open"] for r in results):
         from product.stations.chef import add_customer_note
-        add_customer_note(k, job_id, "Our automatic reviewers are still in training, so your look at this preview is the final "
-                                     "check: accept it only if it is right.")
+        add_customer_note(k, job_id, "Please watch the whole film with the sound on before you accept it: your look is the final check.")
     if k.s.hold_before_preview:        # the founder chose to look first (MI_HOLD_BEFORE_PREVIEW=1)
         k.store.transition(job_id, "checking", "operator_hold", actor="door_guard",
                            data={"hold_before_preview": True, "open": [b["check_id"] for r in results for b in r["blocking"]][:40]})

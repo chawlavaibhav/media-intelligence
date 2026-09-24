@@ -63,10 +63,13 @@ def direct(k, job_id: str):
     fail = k.store.artifact(job_id, "replan_request")
     if fail and not fail.get("_used"):
         extra["GATEKEEPER_FOUND"] = fail
+        prev = k.store.artifact(job_id, "recipe")
+        if prev:
+            extra["PREVIOUS_RECIPE"] = _public(prev)
     recipe = _chef_call(k, job_id, u, extra)
     k.put_form(job_id, "recipe", recipe)
     _mark_used(k, job_id)
-    to_customer(k, job_id, recipe)
+    to_customer(k, job_id, recipe, again="GATEKEEPER_FOUND" in extra)
 
 
 def _mark_used(k, job_id):
@@ -76,12 +79,14 @@ def _mark_used(k, job_id):
             k.store.put_artifact(job_id, kind, {**a, "_used": True}, "system")
 
 
-def to_customer(k, job_id, recipe):
+def to_customer(k, job_id, recipe, again: bool = False):
     """The recipe goes to the customer with the price and the look of the film (a still picture they can see)."""
     q = cost.quote(k, job_id, recipe)
     k.store.put_artifact(job_id, "quote", q, "system")
-    k.store.put_artifact(job_id, "plan_note", {"text": "Here is the recipe for your dish. Read it, then say go ahead or tell us what "
-                                                       "to change.", "objections": False}, "system")
+    text = ("Our final check found the finished film was not the dish you ordered, so the chef has rewritten the recipe. "
+            "Read it, then say go ahead or tell us what to change." if again else
+            "Here is the recipe for your dish. Read it, then say go ahead or tell us what to change.")
+    k.store.put_artifact(job_id, "plan_note", {"text": text, "objections": False}, "system")
     from product.stations import head_cook
     prev = [a for a in k.store.assets(job_id, role="preview")]
     look = (recipe.get("look") or {}).get("picture_prompt")

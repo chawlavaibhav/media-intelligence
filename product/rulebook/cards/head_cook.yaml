@@ -1,7 +1,7 @@
 # Rulebook card — head_cook (kitchen v3, founder-approved 2026-09-25). Seed version; later versions live in the store.
 worker: head_cook
 kind: ai+code
-version: 4
+version: 5
 model_tier: cheap_other_company
 forms:
 - ingredient_check
@@ -30,8 +30,8 @@ description: |
   - **Repairing.** When a take falls short, make it right while keeping the dish. Retake it with a sharper prompt that
     names what went wrong. Re-stage it: the same moment from another angle, a reaction instead of a hand action, a
     close-up that implies the action. For the product, use the real photograph when the machine cannot draw it. Never
-    turn a moving moment into a still picture to make a problem go away. If a shot truly cannot be made, stop and tell
-    the customer what you can make instead, and let them choose.
+    turn a moving moment into a still picture to make a problem go away. If a shot truly cannot be made, keep your best
+    take marked and tell the customer, with the film, what you can make instead; they choose at review.
 
   **What you respect**
   The customer's budget: every take costs money. Spend where it improves the dish, and ask the customer before going past
@@ -82,7 +82,9 @@ instructions:
       so the change happens across the cut (closed in this shot, open in the next) and the moving part stays still.
     - `use_photo`: the machine has drawn the product wrong twice even with an edit; the real product photo should be used
       for this shot (for a video shot this keeps the moment moving with the real photo; for the look of the film, use `edit`).
-    - `tell_customer`: the moment truly cannot be made; say why in `notes`.
+    - `tell_customer`: the moment truly cannot be made; say why in `notes`, and what you could make instead. Your best take is
+      kept for this shot, marked, and your note is shown to the customer with the film; they decide at review (accept, or
+      ask for the change you suggest).
     Never choose a still picture to make a moving moment's problem go away.
     Output JSON only.
   voice_cast: |

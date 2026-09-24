@@ -54,7 +54,18 @@ PROMPT_NOTE_UNDECIDED = (" Their words do not say whether they want a film or a 
 IMAGE_SAID = re.compile(r"\b(posters?|stills?|static|banners?|carousels?|flyers?|thumbnails?|print ads?|(?:image|picture|photo) ads?|"
                         r"(?:an?|one|single|two|three|\d) (?:images?|pictures?)|(?:instagram|insta|feed|social|linkedin|facebook) posts?)\b", re.I)
 SHORT_IMAGE = re.compile(r"\b(image|picture|poster|still)\b", re.I)          # a short answer: "image please"
-SECONDS = re.compile(r"\b(\d{1,3})\s*-?\s*(?:s|secs?|seconds?)\b", re.I)
+SECONDS = re.compile(r"\b(\d{1,3})\s*-?\s*(?:secs?|seconds?)\b", re.I)
+# "15s" also means seconds, but "in their 50s" / "aged 60s" is an age: a bare "s" never counts after an age word
+BARE_SECONDS = re.compile(r"(?<!their )(?<!the )(?<!in )(?<!aged )(?<!early )(?<!late )(?<!mid-)(?<!mid )\b(\d{1,2})s\b", re.I)
+
+
+def seconds_in(texts) -> int | None:
+    for rx in (SECONDS, BARE_SECONDS):
+        for t in reversed(texts):
+            m = rx.findall(t or "")
+            if m:
+                return int(m[-1])
+    return None
 QUOTED = re.compile(r'["“”]([^"“”\n]{2,160})["“”]|‘([^‘’\n]{2,160})’')
 # A quote is exact on-screen text only when the words just before it say so ("the words", "headline", "end on", "text
 # cards"…). Live check 2026-09-24: a concept name in quotes (Concept, "One key":) was taken as required on-screen text.
@@ -109,7 +120,7 @@ def decide_order(k, job_id, answers: dict, form: dict | None = None) -> dict:
     texts = [words, said]
     d = (form or {}).get("deliverable") or {}
     if media == "video":
-        secs = next((int(m[-1]) for t in reversed(texts) if (m := SECONDS.findall(t))), None) or d.get("duration_s") or 15
+        secs = seconds_in(texts) or d.get("duration_s") or 15
         dur = float(min(30, max(6, int(float(secs)))))
         fmts = ["16:9"] if any(LANDSCAPE.search(t) for t in texts) else ["9:16"] if any(VERTICAL.search(t) for t in texts) else \
             [f for f in (d.get("formats") or []) if f in ("9:16", "16:9")][:1] or ["9:16"]
