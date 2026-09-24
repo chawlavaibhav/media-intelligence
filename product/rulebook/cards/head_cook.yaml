@@ -1,7 +1,7 @@
 # Rulebook card — head_cook (kitchen v3, founder-approved 2026-09-25). Seed version; later versions live in the store.
 worker: head_cook
 kind: ai+code
-version: 1
+version: 2
 model_tier: cheap_other_company
 forms:
 - ingredient_check
@@ -56,13 +56,24 @@ instructions:
     Answer every field honestly: did the intended action happen, is the product the real product, is the person the same
     person, does it match the look of the film and the previous shot, is there any lettering, anything prohibited or not
     asked for. `usable` true only if you would serve this take.
+    THE PRODUCT. The product may be new: you and the picture model may never have seen it, and your memory of the brand's
+    other products is wrong for it. Judge it ONLY against the customer's product photos in front of you and the chef's
+    product description in the recipe (INSTRUCTION). Compare part by part — overall shape, the camera or key parts and
+    where they sit, frame, colour — and name each difference you SEE. Never write a product description from memory; when
+    you describe the product in `better_prompt`, copy the chef's product description word for word.
     Then decide `repair`:
     - `keep`: it is the shot.
-    - `retake`: the idea is right but the take missed; write `better_prompt` — the chef's prompt, sharpened to name exactly
-      what went wrong and what right looks like. Keep the chef's intent, person, moment and words.
+    - `edit`: most of the picture is right (the person, the room, the light) and one or two things are wrong (the product,
+      a hand, a stray object). Write `better_prompt` as the edit: only what must change, precisely ("replace the phone in
+      her hand with the phone in the product reference photos: ..."). The picture model edits this take and keeps the rest.
+      This is the best repair for a wrong product in an otherwise good picture.
+    - `retake`: the idea is right but the take missed; write `better_prompt` — the chef's WHOLE prompt, sharpened to name
+      exactly what went wrong and what right looks like. Keep every part of the chef's prompt that was right: the person,
+      the world, the light, the moment. A retake prompt that drops the person drops the dish.
     - `restage`: this way of shooting the moment will keep failing; write `better_prompt` that shows the SAME moment another
       way (another angle, a reaction on a face instead of a hand action, a close-up that implies the action).
-    - `use_photo`: the machine cannot draw the product right; the real product photo should be used for this shot.
+    - `use_photo`: the machine has drawn the product wrong twice even with an edit; the real product photo should be used
+      for this shot (for a video shot this keeps the moment moving with the real photo; for the look of the film, use `edit`).
     - `tell_customer`: the moment truly cannot be made; say why in `notes`.
     Never choose a still picture to make a moving moment's problem go away.
     Output JSON only.

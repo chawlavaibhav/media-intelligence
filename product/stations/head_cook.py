@@ -59,12 +59,15 @@ def guard(k, job_id, recipe):
     return prompts.guard_for({"brand": u.get("brand")}, recipe, k.brief(job_id))
 
 
-def product_refs(k, job_id, limit=2) -> list:
-    """Reference photos for the generator: product views first, then details; never lifestyle/people or logo photos.
-    Infographic photos go last (EQ-006: annotated references are risky)."""
+def product_refs(k, job_id, limit=3) -> list:
+    """Reference photos for the generator and the head cook: the ones the chef chose (`reference_photos`, best first);
+    otherwise product views first, then details, never lifestyle/people or logo photos, infographics last (EQ-006)."""
     u = k.store.artifact(job_id, "understanding") or {}
+    chosen = (k.store.artifact(job_id, "recipe") or {}).get("reference_photos") or []
+    by_n = {r.get("photo"): r for r in u.get("photo_roles", [])}
     order = {"product_view": 0, "product_detail": 1, "infographic": 2}
-    roles = sorted([r for r in u.get("photo_roles", []) if r["role"] in order], key=lambda r: order[r["role"]])
+    roles = [by_n[n] for n in chosen if n in by_n] or \
+        sorted([r for r in u.get("photo_roles", []) if r["role"] in order], key=lambda r: order[r["role"]])
     out = []
     for r in roles[:limit]:
         a = k.store.asset(r["asset_id"])
@@ -241,7 +244,11 @@ def produce(k, job_id: str):
             takes = _takes(k, job_id, x)
             if not takes:
                 raise _node_failed(f"{x}: {e}")
-            _keep_flagged(k, job_id, x, takes[-1], str(e))
+            # the customer is told what the head cook found wrong, never the dispatcher's refusal (it names our models)
+            last = [json.loads(v["data_json"]) for v in k.store.events(job_id, ("take_rejected",))]
+            last = [d for d in last if d.get("node") == x]
+            k.store.event(job_id, "system", "identical_request_refused", {"node": x, "error": str(e)[:300]})
+            _keep_flagged(k, job_id, x, takes[-1], (last[-1].get("why") if last else "") or "our last takes were not right")
         if x == "master" and _master_needs_approval(k, job_id):
             write_log(k, job_id)
             k.store.transition(job_id, "producing", "awaiting_master_approval", actor="system",
@@ -460,6 +467,16 @@ def _image_request(k, job_id, n, spec, ctx, correction=""):
     recipe, g, refs = ctx["recipe"], ctx["guard"], ctx["refs"]
     aspect = spec["aspect"]
     kind = n["kind"]
+    if spec.get("edit_from") and k.store.asset(spec["edit_from"]):
+        # the head cook's `edit` repair: most of the take is right, so the picture model edits it instead of redrawing it
+        take = k.store.asset(spec["edit_from"])
+        text = ("Edit the first image. Keep everything in it exactly as it is (the person, face, age, clothes, pose, room, "
+                "light, colours and framing) and change only this: " + spec.get("edit_instruction", "") +
+                (" The product must match the product reference photos (the images after the first) exactly." if refs else ""))
+        p = prompts.chef_picture_prompt(text, g, aspect=aspect)
+        return p, [(take["content_type"] or "image/png", Path(take["path"]).read_bytes())] + list(refs), \
+            {"asset": f"{n['node_id']} — an edit of the previous take", "prompt": p, "edit_instruction": spec.get("edit_instruction")}, \
+            f"edit of {take['id']}"
     if kind == "master":
         p = prompts.master_plate_prompt(recipe, g, aspect=aspect, with_product_ref=bool(refs))
         if spec.get("prompt_override"):
@@ -489,7 +506,7 @@ def _image_request(k, job_id, n, spec, ctx, correction=""):
     s = ctx["shots"][spec["shot"]]
     m = _selected_bytes(k, job_id, "master")
     prev_end = _end_frame(k, job_id, spec["previous"]) if spec.get("previous") else None
-    use = [m] + ([prev_end] if prev_end else []) + (refs[:1] if s.get("product_present") else [])
+    use = [m] + ([prev_end] if prev_end else []) + (list(refs) if s.get("product_present") else [])
     text = spec.get("prompt_override") or s.get("picture_prompt") or s.get("first_frame", "")
     if spec.get("revision_note"):
         text += f" Change requested by the customer: {spec['revision_note']}."
@@ -611,6 +628,15 @@ def _rejected(k, job_id, node_id, aid, verdict) -> str:
     better = (verdict.get("better_prompt") or "").strip()
     k.store.event(job_id, "head_cook", "take_rejected", {"node": node_id, "asset": aid, "why": why[:400], "repair": repair,
                                                          "tool": cspec.get("tool"), "route": cspec.get("route")})
+    image_kind = cur["kind"] in ("master", "frame", "plate", "character")
+    if image_kind and (repair == "edit" or (repair == "use_photo" and cur["kind"] != "frame")) and better:
+        # most of the picture is right: edit this take (the person and the room stay; only what was wrong changes)
+        k.store.set_node(job_id, node_id, spec_json=json.dumps({**cspec, "edit_from": aid, "edit_instruction": better}))
+        k.store.event(job_id, "head_cook", "head_cook_repair", {"node": node_id, "repair": "edit", "better_prompt": better[:1500]})
+        if cur["draws"] >= cur["max_draws"]:
+            raise KeepFlagged(node_id, aid, f"rejected {cur['draws']} times: {why[:300]}")
+        return why[:300]
+    cspec.pop("edit_from", None)
     if repair == "use_photo" and cur["kind"] in ("frame", "shot") and product_refs(k, job_id, 1):
         shot = cspec["shot"]
         for x in (f"frame_{shot}", f"shot_{shot}"):
@@ -636,12 +662,14 @@ def _rejected(k, job_id, node_id, aid, verdict) -> str:
 def taste(k, job_id, node_id, instruction, a, *, prev=None, video_seconds=8.0) -> dict:
     """The head cook tastes one take (kitchen v3) on a model from a different company than the chef's: pictures on
     `head_cook`, clips (watched with their sound) on `head_cook_av`."""
-    ctx = {"INSTRUCTION": instruction,
+    recipe = k.store.artifact(job_id, "recipe") or {}
+    product = (recipe.get("identity_anchors") or {}).get("product")
+    ctx = {"INSTRUCTION": {**instruction, **({"product_description": product} if product else {})},
            "MEDIA_NOTE": "Images in order: the look of the film (if any), the previous shot's frame (if any), the customer's "
-                         "product photo, then the take to taste (last)."}
+                         "product photos, then the take to taste (last)."}
     master = _selected_bytes(k, job_id, "master") if k.store.node(job_id, "master") and k.store.node(job_id, "master")["selected_asset_id"] \
         and node_id != "master" else None
-    refs = ([master] if master else []) + list(prev or [])[:1] + product_refs(k, job_id, 1)
+    refs = ([master] if master else []) + list(prev or [])[:1] + product_refs(k, job_id)
     is_clip = not (a["content_type"] or "").startswith("image/")
     key = "head_cook_av" if is_clip else "head_cook"
     items = refs + _media_of(k, a, key)

@@ -214,6 +214,7 @@ class SimulatedWorkers:
             "sound": {"music_prompt": "warm, understated piano with a gentle build; instrumental", "ambience": "room tone, a cup set down"},
             "voice_over": voice, "copy_deck": copy, "shots": shots,
             "end_card": {"copy_ids": [c["id"] for c in copy], "background_hex": "#1f2a44"},
+            "reference_photos": [1] if b.get("PHOTOS") not in (None, "no photos supplied") else [],
             "library_used": tray_ids,
             "customer_summary": f"One warm evening with {name}: a real moment, the product exactly as it is, and your words at the end."}
 

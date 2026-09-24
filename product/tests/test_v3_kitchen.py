@@ -134,6 +134,37 @@ class TheHeadCookRepairs(unittest.TestCase):
         finally:
             e.close()
 
+    def test_a_wrong_product_in_a_good_picture_is_edited_not_redrawn_and_the_taster_sees_the_chefs_product_words(self):
+        e = Env()
+        try:
+            jid = e.submit(duration_s=15)
+            e.drain()
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            real = e.orch.sim.head_cook__ingredient_check
+            seen = {"n": 0, "product": None}
+
+            def wrong_phone(b, media, **kw):
+                v = real(b, media, **kw)
+                if kw.get("node_id") == "frame_1":
+                    seen["product"] = b["INSTRUCTION"].get("product_description")
+                    if seen["n"] == 0:
+                        seen["n"] += 1
+                        return {**v, "usable": False, "repair": "edit", "notes": "the phone is a different model",
+                                "better_prompt": "Replace the phone in her hand with the phone in the product reference photos."}
+                return v
+            e.orch.sim.head_cook__ingredient_check = wrong_phone
+            e.drain()
+            spec = json.loads(e.store.node(jid, "frame_1")["spec_json"])
+            rejected = [a for a in e.store.assets(jid, node_id="frame_1") if a["status"] == "rejected"]
+            self.assertEqual(spec.get("edit_from"), rejected[0]["id"])
+            edits = [json.loads(x["data_json"]) for x in e.store.events(jid, ("head_cook_repair",))]
+            self.assertEqual([x["repair"] for x in edits if x["node"] == "frame_1"], ["edit"])
+            kept = e.store.asset(e.store.node(jid, "frame_1")["selected_asset_id"])
+            self.assertTrue(json.loads(kept["meta_json"])["source_kind"].startswith("edit of "))
+            self.assertEqual(seen["product"], e.store.artifact(jid, "recipe")["identity_anchors"]["product"])
+        finally:
+            e.close()
+
     def test_use_photo_switches_the_shot_to_the_real_product_photo(self):
         e = Env()
         try:

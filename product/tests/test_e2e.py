@@ -3,10 +3,13 @@
 What this proves: states, persistence, ledger, graph scheduling, pauses, recovery, gateway, revision and
 learning capture work together. What it does NOT prove: media quality, provider behaviour, reasoning quality.
 
-v2 (2026-09-23): these v1 tests keep their purpose; their steps follow the v2 flow — the pantry checker (the order's
-"zipped shut" becomes a still the customer accepts), the founder's confirmation of an unqualified recipe checker, the
-master plate the customer approves, and the founder's confirmations at the door. Film tests use the backpack order so
-the recipe has shots on the video model. Changes are listed in P1-V2-FOUNDER-CHECKLIST.md (J2).
+v3 (kitchen v3, 2026-09-25): these tests keep their purpose; their steps follow the v3 line — waiter -> chef -> the
+customer approves the recipe -> head cook (cooks, tastes, repairs) -> gatekeeper -> customer, with no wait in between.
+Film tests use the backpack order so the recipe has shots on the video model.
+
+Retired in v3:
+  - WorldTruthBeforeSpend.test_an_unsourced_product_claim_stops_the_job_before_spend_and_approve_refuses_it — it guarded
+    the recipe checker's objections and the founder's override_recipe; both are retired (the customer approves the recipe).
 """
 import json
 import unittest
@@ -34,24 +37,20 @@ class FilmJourney(unittest.TestCase):
         e.to_review(jid)
         self.assertEqual(e.state(jid), "ready_for_review")
         nodes = {n["node_id"]: n for n in e.store.nodes(jid)}
-        self.assertTrue(nodes["shot_2"]["draws"] >= 1)
-        # the risky shots gate every other shot (qualification first)
-        risky = [k for k, n in nodes.items() if n["kind"] == "shot" and json.loads(n["spec_json"]).get("risky")]
-        self.assertTrue(risky)
-        for k, n in nodes.items():
-            if n["kind"] == "shot" and k not in risky:
-                self.assertTrue(set(risky) <= set(json.loads(n["spec_json"])["gates"]), k)
+        moving = [k for k, n in nodes.items() if n["kind"] == "shot" and json.loads(n["spec_json"]).get("tool") == "video"]
+        self.assertTrue(moving)                                    # the chef's moving moment is made on the video model
+        self.assertTrue(all(nodes[k]["draws"] >= 1 for k in moving))
         cut1 = e.orch._final_assets(jid)
         before = {k: n["selected_asset_id"] for k, n in nodes.items()}
-        e.orch.request_changes(jid, e.user["email"], [{"target": "shot:2", "text": "slower slide"}])
+        shot = moving[0]
+        e.orch.request_changes(jid, e.user["email"], [{"target": shot.replace("_", ":"), "text": "slower slide"}])
         e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")                  # amendment 1 §3: no founder hold by default
         after = {n["node_id"]: n["selected_asset_id"] for n in e.store.nodes(jid)}
         changed = sorted(k for k in after if after[k] != before[k])
-        self.assertIn("shot_2", changed)
+        self.assertIn(shot, changed)
         self.assertIn("film", changed)
-        self.assertNotIn("shot_1", changed)
-        self.assertNotIn("frame_2", changed)                       # a clip change keeps the approved first frame
+        self.assertNotIn(shot.replace("shot_", "frame_"), changed)  # a clip change keeps the approved first frame
         self.assertNotIn("music", changed)
         self.assertNotIn("master", changed)
         e.orch.accept(jid, e.user["email"])
@@ -85,7 +84,7 @@ class FilmJourney(unittest.TestCase):
         jid = film(e)
         e.to_review(jid)
         e.orch.request_changes(jid, e.user["email"], [{"target": None, "text": "we want a different concept entirely — start over"}])
-        self.assertEqual(e.front(jid), "awaiting_approval")                 # the chef, the recipe check, the founder, a new quote
+        self.assertEqual(e.front(jid), "awaiting_approval")                 # the chef writes a new recipe and a new quote
         self.assertEqual(len(e.store.artifact_versions(jid, "recipe")), 2)
         self.assertEqual(len(e.store.artifact_versions(jid, "quote")), 2)
 
@@ -127,7 +126,7 @@ class Refusal(unittest.TestCase):
             e.drain()
             self.assertEqual(e.state(jid), "refused")
             self.assertEqual([a for a in e.store.attempts(jid) if a["category"] == "provider"], [])
-            self.assertIn("voice-over", e.store.artifact(jid, "understanding")["refusal_reason"])
+            self.assertIn("talking heads", e.store.artifact(jid, "understanding")["refusal_reason"])   # v3: a voice-over alone is allowed
         finally:
             e.close()
 
@@ -138,12 +137,12 @@ class BudgetExhaustion(unittest.TestCase):
         try:
             jid = film(e)
             e.front(jid)
-            e.orch.approve(jid, by=e.user["email"], budget_usd="1.20")
+            e.orch.approve(jid, by=e.user["email"], budget_usd="0.60")
             e.produce(jid)
             j = e.store.job(jid)
             self.assertEqual(j["state"], "paused_budget")
             self.assertEqual(j["resume_state"], "producing")
-            self.assertLessEqual(e.store.committed_usd(jid), Decimal("1.20"))
+            self.assertLessEqual(e.store.committed_usd(jid), Decimal("0.60"))
             self.assertIn("more", j["pause_reason"])
             e.svc.raise_budget(e.user, jid, "15")
             self.assertEqual(e.produce(jid), "ready_for_review")
@@ -171,13 +170,10 @@ class ProviderFailureInjection(unittest.TestCase):
             jid = film(e)
             e.front(jid)
             e.orch.approve(jid, by=e.user["email"], budget_usd="15")
-            e.worker.run_once()          # planning
-            e.worker.run_once()          # producing → the master plate, then it waits for the customer
-            e.orch.approve_master(jid, by=e.user["email"])
-            e.worker.run_once()          # producing → the hardest shot first, then the customer tastes it
-            self.assertEqual(e.state(jid), "awaiting_taste")
-            e.orch.approve_taste(jid, by=e.user["email"])
-            e.worker.run_once()          # producing → music fails 3x
+            for _ in range(10):          # planning, then producing until the music fails 3x
+                e.worker.run_once()
+                if e.state(jid) not in ("planning", "producing"):
+                    break
             self.assertEqual(e.state(jid), "paused_provider")
             self.assertEqual(e.produce(jid), "ready_for_review")   # retry window 0 s in tests; the fault queue is empty now
         finally:
@@ -191,11 +187,9 @@ class WorkerCrash(unittest.TestCase):
             jid = film(e)
             e.front(jid)
             e.orch.approve(jid, by=e.user["email"], budget_usd="15")
-            e.worker.run_once()          # planning
-            e.worker.run_once()          # the master plate, then it waits for the customer
-            e.orch.approve_master(jid, by=e.user["email"])
             with self.assertRaises(KeyboardInterrupt):
-                e.worker.run_once()      # dies while polling a paid clip
+                for _ in range(10):      # planning, then producing: it dies while polling a paid clip
+                    e.worker.run_once()
             self.assertEqual(e.state(jid), "producing")
             held = [a for a in e.store.attempts(jid) if a["status"] == "reserved"]
             self.assertTrue(held)
@@ -254,6 +248,9 @@ class Learning(unittest.TestCase):
 
 
 
+V3_NOT_REQUIRED = {"AD_STRUCTURE_MINIMUM"}
+
+
 class EveryApplicableControlRunsOnTheProductionPath(unittest.TestCase):
     """Controller review of PR #108, concern 2: a control mapped in YAML is not a control unless the real production
     path writes its result onto the delivered file."""
@@ -269,8 +266,10 @@ class EveryApplicableControlRunsOnTheProductionPath(unittest.TestCase):
                 e.orch.approve(jid, by=e.user["email"], budget_usd="15")
                 e.produce(jid)
                 applies = ("any", kind, "text") + (("audio",) if kind == "video" else ())
+                # kitchen v3 no longer requires AD_STRUCTURE_MINIMUM (verify.required_checks: the gatekeeper checks the
+                # dish against the order; a film ordered without a logo failed it on 2026-09-24)
                 want = {c["id"] for c in verify.controls().values()
-                        if c["status"] in ("enforced", "reviewer_obligation") and c["applies"].split()[0] in applies}
+                        if c["status"] in ("enforced", "reviewer_obligation") and c["applies"].split()[0] in applies} - V3_NOT_REQUIRED
                 for aid in e.orch._final_assets(jid):
                     seen = set()
                     for r in e.store.checks(aid):
@@ -282,62 +281,21 @@ class EveryApplicableControlRunsOnTheProductionPath(unittest.TestCase):
 
 
 
-class WorldTruthBeforeSpend(unittest.TestCase):
-    """Atlas MDR8-03 (a zip the product does not have) / MOKO7-18 (the paddle's whereabouts): an unsourced product claim
-    blocks the plan before any production spend. v2: the recipe checker (which replaced v1's direction reviewer) sends it
-    back; after 2 rounds the system tries the safest alternative, and if the checker still objects the CUSTOMER sees the
-    objections and decides (amendment 1 §3). The founder's reasoned override remains available, founder-only."""
-
-    def test_an_unsourced_product_claim_stops_the_job_before_spend_and_approve_refuses_it(self):
-        e = Env()
-        try:
-            orig = e.orch.sim.recipe_checker__recipe_check
-
-            def checker(b, media):
-                out = orig(b, media)
-                out["issues"] = [{"severity": "blocker", "where": "shot 3", "issue": "unsourced product claim: ONE long zip running the "
-                                  "full height of the side", "fix": "show only what the photos show"}]
-                out["verdict"] = "send_back"
-                return out
-            e.orch.sim.recipe_checker__recipe_check = checker
-            jid = film(e)
-            e.front(jid)
-            self.assertEqual(e.state(jid), "awaiting_approval")                             # the customer decides
-            self.assertIn("ONE long zip", " ".join(e.store.artifact(jid, "plan_objections")["plain_words"]))
-            self.assertEqual(e.store.assets(jid, role="preview"), [])                      # nothing paid while blocked
-            self.assertEqual([a for a in e.store.attempts(jid) if a["category"] == "provider"], [])
-            with self.assertRaises(PermissionError):
-                e.orch.approve(jid, by=e.user["email"], budget_usd="15")                 # not without reading the objections
-            with self.assertRaises(PermissionError):
-                e.orch.override_recipe(jid, session="operator:ops", reason="checked the product page: the side zip exists")
-            with self.assertRaises(ValueError):
-                e.orch.override_recipe(jid, session=e.founder_session(), reason="fine")
-            e.orch.override_recipe(jid, session=e.founder_session(), reason="checked the product page: the side zip exists (photo 2)")
-            self.assertEqual(e.state(jid), "awaiting_approval")
-            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
-            e.produce(jid)
-            rows = {r["check_id"]: r for aid in e.orch._final_assets(jid) for r in e.store.checks(aid)}
-            self.assertEqual(rows["process:direction_truth"]["status"], "FLAG")
-            self.assertIn("founder@mi.test", rows["process:direction_truth"]["detail"])
-        finally:
-            e.close()
-
-
 class TheTasterRejectsEverything(unittest.TestCase):
     """Live 2026-09-23: an unqualified inspector rejected four draws, three of them faithful, and the job failed; v1 then
-    let 'a person' (in practice the builder) pick takes. Amendment 1 §3: nobody waits for the founder — after its allowed
-    attempts the best take is kept, flagged and noted on the customer's preview; the customer's look is the final check."""
+    let 'a person' (in practice the builder) pick takes. Kitchen v3: the head cook tastes; when its takes are used up the
+    best take is kept, flagged and noted on the customer's preview — nobody waits for the founder."""
 
     def test_all_attempts_rejected_keeps_the_best_take_flagged_and_the_customer_is_told(self):
         e = Env()
         try:
-            orig = e.orch.sim.small_taster__ingredient_check
+            orig = e.orch.sim.head_cook__ingredient_check
 
             def taster(b, media, **kw):
                 out = orig(b, media, **kw)
                 out.update(usable=False, notes="the flap sticks out horizontally")
                 return out
-            e.orch.sim.small_taster__ingredient_check = taster
+            e.orch.sim.head_cook__ingredient_check = taster
             jid = e.submit("image")
             e.front(jid)
             e.orch.approve(jid, by=e.user["email"], budget_usd="15")

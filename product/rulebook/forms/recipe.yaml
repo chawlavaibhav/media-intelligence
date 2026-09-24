@@ -8,7 +8,7 @@ written_by: chef
 schema:
   type: object
   required: [selected_concept, remember, story, audience_person, identity_anchors, look, sound, voice_over, copy_deck, shots,
-             end_card, library_used, customer_summary]
+             end_card, reference_photos, library_used, customer_summary]
   properties:
     selected_concept: {type: string}
     remember: {type: string}
@@ -75,5 +75,6 @@ schema:
       type: object
       required: [copy_ids, background_hex]
       properties: {copy_ids: {type: array, items: {type: string}}, background_hex: {type: string}}
+    reference_photos: {type: array, items: {type: integer}}
     library_used: {type: array, items: {type: string}}
     customer_summary: {type: string}
