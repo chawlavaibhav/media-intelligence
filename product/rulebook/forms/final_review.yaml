@@ -1,0 +1,67 @@
+# Final review — the big taster (spec §4.8). v1 OUTPUT_REVIEW shape; verdict pass | fix | fail.
+form: final_review
+version: 1
+written_by: big_taster
+schema:
+  type: object
+  required: [verdict, modalities_evaluated, mandatory, defects, product_fidelity, continuity, model_lettering,
+             subject_obstructed, product_across_shots, commercial_read, audio, summary_for_customer]
+  properties:
+    verdict: {type: string, enum: [pass, fix, fail]}
+    modalities_evaluated: {type: array, items: {type: string}}
+    mandatory:
+      type: array
+      items:
+        type: object
+        required: [mandatory_id, visible, evidence]
+        properties:
+          mandatory_id: {type: string}
+          visible: {type: string, enum: ["yes", "no", partial, cannot_determine]}
+          evidence: {type: string}
+    defects:
+      type: array
+      items:
+        type: object
+        required: [id, where, severity, description, earliest_stage, shot, repair]
+        properties:
+          id: {type: string}
+          where: {type: string}
+          severity: {type: string, enum: [blocker, major, minor]}
+          description: {type: string}
+          earliest_stage: {type: string, enum: [plan, reference, route, generation, composition]}
+          shot: {type: [integer, "null"]}
+          repair: {type: string}
+    product_fidelity:
+      type: object
+      required: [verdict, evidence]
+      properties:
+        verdict: {type: string, enum: [faithful, not_faithful, product_not_shown, cannot_determine]}
+        evidence: {type: string}
+    continuity:
+      type: object
+      required: [verdict, evidence]
+      properties:
+        verdict: {type: string, enum: [consistent, inconsistent, no_recurring_character, cannot_determine]}
+        evidence: {type: string}
+    model_lettering:
+      type: object
+      required: [present, evidence]
+      properties: {present: {type: string, enum: ["yes", "no", cannot_determine]}, evidence: {type: string}}
+    subject_obstructed:
+      type: object
+      required: [present, evidence]
+      properties: {present: {type: string, enum: ["yes", "no", cannot_determine]}, evidence: {type: string}}
+    product_across_shots:
+      type: object
+      required: [verdict, evidence]
+      properties:
+        verdict: {type: string, enum: [consistent, inconsistent, single_shot, cannot_determine]}
+        evidence: {type: string}
+    commercial_read: {type: string}
+    audio:
+      type: object
+      required: [speech_or_singing, notes]
+      properties:
+        speech_or_singing: {type: string, enum: ["yes", "no", cannot_determine, n/a]}
+        notes: {type: string}
+    summary_for_customer: {type: string}

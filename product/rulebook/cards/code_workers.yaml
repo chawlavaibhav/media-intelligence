@@ -1,0 +1,42 @@
+# Cards for the code helpers (spec §5). They make no AI calls; the card is the contract their code is tested against.
+cards:
+  - worker: head_cook
+    kind: code
+    version: 1
+    forms: [production_log]
+    mission: One dish, one memory.
+    kra:
+      - Master plate first and approved.
+      - Every shot built from the master plate and the previous shot's end.
+      - Never a third identical retry.
+      - Every output written to a new, unique file path.
+  - worker: door_guard
+    kind: code
+    version: 1
+    forms: [gateway_report]
+    mission: Nothing leaves with a failed or missing check.
+    kra:
+      - Only the founder can override, with a reason, logged.
+  - worker: librarian
+    kind: code
+    version: 1
+    forms: [tray]
+    mission: Give each worker only what it needs.
+    kra:
+      - Filter by labels, rank by similarity, keep within the cap.
+      - Log every tray so we can see what a worker knew.
+  - worker: sign_painter
+    kind: code
+    version: 1
+    forms: []
+    mission: The customer's words, exactly, legibly, in the brand's type.
+    kra:
+      - Exact strings drawn by code, checked on the delivered file.
+      - Brand fonts and colours from the customer shelf when approved.
+  - worker: measuring_tools
+    kind: code
+    version: 1
+    forms: []
+    mission: Measure the delivered file, never the plan.
+    kra:
+      - Every deterministic check is recorded against the exact file version.

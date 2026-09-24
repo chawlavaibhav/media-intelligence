@@ -1,0 +1,84 @@
+# Understanding — written by the waiter (spec §4.2). v1 INTENT fields + exact words, photo roles, mismatches.
+form: understanding
+version: 1
+written_by: waiter
+schema:
+  type: object
+  required: [customer_exact_words, supported, refusal_reason, nearest_supported_alternative, unsupported_features, objective,
+             audience, audience_response, brand, product, deliverable, mandatory, forbidden, photo_roles, mismatches,
+             assumptions, questions, ambiguity, accepted_alternatives, tone, market, language]
+  properties:
+    customer_exact_words: {type: string}
+    supported: {type: boolean}
+    refusal_reason: {type: [string, "null"]}
+    nearest_supported_alternative: {type: [string, "null"]}
+    unsupported_features: {type: array, items: {type: string}}
+    objective: {type: string}
+    audience: {type: string}
+    audience_response:
+      type: object
+      required: [think, feel, do]
+      properties: {think: {type: string}, feel: {type: string}, do: {type: string}}
+    brand: {type: string}
+    product:
+      type: object
+      required: [name, category, facts]
+      properties: {name: {type: string}, category: {type: string}, facts: {type: array, items: {type: string}}}
+    deliverable:
+      type: object
+      required: [media, formats, duration_s]
+      properties:
+        media: {type: string, enum: [image, video]}
+        formats: {type: array, items: {type: string}}
+        duration_s: {type: [number, "null"]}
+    mandatory:
+      type: array
+      items:
+        type: object
+        required: [id, requirement, source, observable_as]
+        properties:
+          id: {type: string}
+          requirement: {type: string}
+          source: {type: string, enum: [customer_stated, customer_supplied, customer_answer]}
+          observable_as: {type: string}
+    forbidden: {type: array, items: {type: string}}
+    photo_roles:
+      type: array
+      items:
+        type: object
+        required: [photo, asset_id, role, shows, customer_label]
+        properties:
+          photo: {type: integer}
+          asset_id: {type: string}
+          role: {type: string, enum: [product_view, product_detail, lifestyle, infographic, logo, other]}
+          shows: {type: string}
+          customer_label: {type: [string, "null"]}
+    mismatches:
+      type: array
+      items:
+        type: object
+        required: [what, where, why_it_matters]
+        properties: {what: {type: string}, where: {type: string}, why_it_matters: {type: string}}
+    assumptions:
+      type: array
+      items:
+        type: object
+        required: [assumption, cost_if_wrong]
+        properties: {assumption: {type: string}, cost_if_wrong: {type: string, enum: [low, medium, high]}}
+    questions:
+      type: array
+      maxItems: 5
+      items:
+        type: object
+        required: [id, question, why_it_matters, default_if_delegated]
+        properties: {id: {type: string}, question: {type: string}, why_it_matters: {type: string}, default_if_delegated: {type: string}}
+    ambiguity: {type: string, enum: [low, medium, high]}
+    accepted_alternatives:
+      type: array
+      items:
+        type: object
+        required: [instead_of, use]
+        properties: {instead_of: {type: string}, use: {type: string}}
+    tone: {type: string}
+    market: {type: string}
+    language: {type: string}

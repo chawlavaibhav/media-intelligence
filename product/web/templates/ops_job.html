@@ -5,52 +5,72 @@
 <p class="small"><a href="/ops">← Operator</a></p>
 <h1>{{ job.title }} <span class="chip">{{ job.state }}</span></h1>
 <p class="small muted">{{ job.id }} · account {{ job.account_id }} · budget {{ job.budget_usd|usd }} authorised by {{ job.budget_authorised_by or '—' }} · committed {{ ledger.committed_usd|usd }}
-{% if job.pause_reason %}<br><span class="warn">Paused/failed: {{ job.pause_reason }}</span>{% endif %}</p>
-<div class="card"><form method="post" action="/ops/jobs/{{ job.id }}/pause" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="reason" value="paused by operator"><button class="secondary">Pause</button></form>
-{% if job.resume_state %}<form method="post" action="/ops/jobs/{{ job.id }}/resume" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="secondary">Resume → {{ job.resume_state }}</button></form>{% endif %}
-{% if job.state == 'operator_hold' %}<form method="post" action="/ops/jobs/{{ job.id }}/release" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Release to customer</button></form>{% endif %}
-{% if job.state == 'paused_operator' and job.resume_state == 'directing' %}<form method="post" action="/ops/jobs/{{ job.id }}/override" class="override">
-<input type="hidden" name="csrf" value="{{ csrf }}"><label for="ovr">The independent review blocked this direction (above). Release it to the customer anyway — why?</label>
-<input id="ovr" type="text" name="reason" required minlength="20" placeholder="e.g. checked the product page: the side zip exists (photo 2)"><button class="secondary">Override and send for approval</button></form>{% endif %}</div>
+{% if job.pause_reason %}<br><span class="warn">Paused: {{ job.pause_reason }}</span>{% endif %}</p>
+{% if not is_founder %}<p class="warn small">You can view and pause. Every decision below is the founder's and will be refused for anyone else.</p>{% endif %}
 
-{% for w in waiting_takes %}<div class="card"><h2>Pick a take — {{ w.node }}</h2>
-<p class="small">The inspector rejected every draw; it is not qualified to decide alone. Its last note: {{ w.why }}</p>
-<div class="row">{% for t in w.takes %}<div><img src="/assets/{{ t.id }}" alt="take {{ loop.index }}" style="max-width:260px;display:block">
-<form method="post" action="/ops/jobs/{{ job.id }}/select_take"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ t.id }}">
-<input type="text" name="reason" required minlength="15" placeholder="Why this one (product faithful, pose fine…)"><button>Use this take</button></form></div>{% endfor %}</div></div>{% endfor %}
-{% if gateway %}<div class="card"><h2>Presentation gateway</h2>
+<div class="card"><h2>Decisions</h2>
+{% if founder_decision and job.state == 'paused_for_founder' %}<p><strong>You are asked to:</strong> {{ founder_decision.decision }} — {{ founder_decision.reason }}</p>{% endif %}
+<form method="post" action="/ops/jobs/{{ job.id }}/pause" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="reason" value="paused by our team"><button class="secondary">Pause</button></form>
+
+{% if job.state == 'paused_for_founder' and forms.recipe_check and forms.recipe_check.verdict_after_code != 'approve' %}
+<form method="post" action="/ops/jobs/{{ job.id }}/override_recipe"><input type="hidden" name="csrf" value="{{ csrf }}"><label for="or">Override the recipe checker's send-back — why?</label>
+<input id="or" type="text" name="reason" required minlength="15"><button class="danger">Override recipe check</button></form>{% endif %}
+{% if job.state == 'paused_for_founder' and forms.final_review and forms.final_review.verdict != 'pass' %}
+<form method="post" action="/ops/jobs/{{ job.id }}/override_final"><input type="hidden" name="csrf" value="{{ csrf }}"><label for="of">Override the big taster's "{{ forms.final_review.verdict }}" — why?</label>
+<input id="of" type="text" name="reason" required minlength="15"><button class="danger">Override big taster</button></form>{% endif %}
+{% if job.state == 'awaiting_master_approval' %}<form method="post" action="/ops/jobs/{{ job.id }}/approve_master"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Approve the master plate for the customer</button></form>{% endif %}
+{% if job.resume_state and job.state in ('paused_for_founder', 'paused_operator', 'failed') %}
+<form method="post" action="/ops/jobs/{{ job.id }}/resume"><input type="hidden" name="csrf" value="{{ csrf }}"><label for="rs">Resume → {{ job.resume_state }} — why?</label>
+<input id="rs" type="text" name="reason" required minlength="15"><button class="secondary">Resume</button></form>{% endif %}
+{% if job.state == 'operator_hold' %}<form method="post" action="/ops/jobs/{{ job.id }}/release"><input type="hidden" name="csrf" value="{{ csrf }}"><button>Release to customer</button></form>{% endif %}
+{% if job.state not in ('accepted', 'rejected', 'refused', 'abandoned') %}<form method="post" action="/ops/jobs/{{ job.id }}/close"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="cl">Close the job (lessons are still written) — why?</label><input id="cl" type="text" name="reason" required minlength="15"><button class="secondary">Close job</button></form>{% endif %}
+</div>
+
+{% if overrides %}<div class="card"><h2>Founder overrides on this job</h2><table><tr><th>when</th><th>what</th><th>target</th><th>by</th><th>reason</th></tr>
+{% for o in overrides %}<tr><td class="small">{{ o.created[:19] }}</td><td>{{ o.kind }}</td><td class="small">{{ o.target }}</td><td>{{ o.founder_email }}</td><td>{{ o.reason }}</td></tr>{% endfor %}</table></div>{% endif %}
+
+{% if gateway %}<div class="card"><h2>Presentation gateway (door guard)</h2>
 {% for g in gateway %}<p><strong>{{ g.asset_id }}</strong> sha256 {{ g.sha256[:16] }}… — {% if g.ready %}<span class="ok">READY</span>{% else %}<span class="bad">BLOCKED ({{ g.blocking|length }})</span>{% endif %}</p>
-<table><tr><th>check</th><th>status</th><th>control</th><th>detail</th><th>waiver</th></tr>
-{% for r in g.table %}<tr><td>{{ r.check_id }}</td><td class="{{ r.status }}">{{ r.status }}</td><td class="small">{{ r.control }}</td><td class="small">{{ r.detail }}</td>
+{% if g.ignored_waivers %}<p class="warn small">Ignored waivers (not made by the founder): {{ g.ignored_waivers }}</p>{% endif %}
+<table><tr><th>check</th><th>status</th><th>detail</th><th>founder action</th></tr>
+{% for r in g.table %}<tr><td>{{ r.check_id }}</td><td class="{{ r.status }}">{{ r.status }}</td><td class="small">{{ r.detail }}</td>
 <td class="small">{% if r.check_id in attestable and r.status != 'PASS' %}
 <form method="post" action="/ops/jobs/{{ job.id }}/attest"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ g.asset_id }}"><input type="hidden" name="check_id" value="{{ r.check_id }}">
 <p class="small">{{ attestable[r.check_id] }}. <a href="/assets/{{ g.asset_id }}">Open the file</a>.{% if r.check_id in non_waivable %} This cannot be waived.{% endif %}</p>
-<input type="text" name="note" required minlength="15" placeholder="What you saw/heard, with the moment (e.g. 0:12 bag intact, zip closes)">
+<input type="text" name="note" required minlength="15" placeholder="What you saw/heard, with the moment">
 <select name="outcome" aria-label="Outcome"><option value="PASS">Checked — fine</option><option value="FAIL">Found a problem</option></select><button class="secondary">Record my check</button></form>
 {% elif r.waived_by %}{{ r.waived_by }}: {{ r.waiver_reason }}{% elif r.status in ('FAIL','NOT_VERIFIED') %}
 <form method="post" action="/ops/jobs/{{ job.id }}/waive"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ g.asset_id }}"><input type="hidden" name="check_id" value="{{ r.check_id }}">
-<input type="text" name="reason" placeholder="Reason (e.g. listened in full: no speech)" required minlength="10"><button class="secondary">Waive</button></form>{% endif %}</td></tr>{% endfor %}</table>{% endfor %}</div>{% endif %}
+<input type="text" name="reason" placeholder="Reason" required minlength="15"><button class="secondary">Waive</button></form>{% endif %}</td></tr>{% endfor %}</table>
+{% if g.founder_overrides %}<p class="small"><strong>Overrides shown on this report:</strong> {% for o in g.founder_overrides %}{{ o.kind }} by {{ o.by }} — “{{ o.reason }}”; {% endfor %}</p>{% endif %}{% endfor %}</div>{% endif %}
 
-<div class="row">
-<div class="card"><h2>Original brief (frozen)</h2><pre>{{ json.dumps(brief, indent=1, ensure_ascii=False) }}</pre></div>
-<div class="card"><h2>Intent (stage 1)</h2><pre>{{ json.dumps(intent, indent=1, ensure_ascii=False) }}</pre>{% if answers %}<h3>Answers</h3><pre>{{ json.dumps(answers, indent=1, ensure_ascii=False) }}</pre>{% endif %}</div>
-</div>
-<div class="card"><h2>Direction (stage 3) + independent pre-spend review</h2><pre>{{ json.dumps(direction, indent=1, ensure_ascii=False) }}</pre><pre>{{ json.dumps(dreview, indent=1, ensure_ascii=False) }}</pre></div>
-<div class="card"><h2>Canon trace</h2>{% if canon %}<p class="small">Packs injected: {{ canon.packs.packs_injected|join(', ') }} · {{ canon.packs.tokens }} tokens · gap {{ canon.packs.canon_gap }} · prefix {{ canon.packs.prefix_sha256[:12] }}</p>
-<table><tr><th>cited id</th><th>decision it influenced</th></tr>{% for c in canon.cited %}<tr><td>{{ c.id }}</td><td>{{ c.decision }}</td></tr>{% endfor %}</table>
-{% if canon.deep_retrieved %}<p class="small">Deep claims retrieved on request: {% for c in canon.deep_retrieved %}{{ c.sk_id }} {% endfor %}</p>{% endif %}
-{% if canon.deviations %}<p class="small">Deviations: {{ canon.deviations }}</p>{% endif %}{% endif %}</div>
+{% if cost %}<div class="card"><h2>AI reasoning cost (estimated per worker{{ ', live actuals' if cost.mode == 'live' }})</h2>
+<p>Total {{ cost.estimated_total_usd|usd }}{% if cost.images_in_set %} for a set of {{ cost.images_in_set }} images = {{ cost.per_image_usd|usd }} per image{% endif %}.
+Targets: film {{ cost.targets.film|usd }} per film, image {{ cost.targets.image|usd }} per image. This job ({{ cost.target_measured }}):
+{% if cost.within_budget %}<span class="ok">within its target</span>{% else %}<span class="bad">over its target</span>{% endif %}</p>
+<table><tr><th>worker</th><th>model</th><th>calls (+expected)</th><th>estimated</th><th>actual</th></tr>
+{% for w, x in cost.per_worker.items() %}<tr><td>{{ w }}</td><td class="small">{{ x.model }}</td><td>{{ x.calls }}{% if x.expected_calls %} (+{{ x.expected_calls }}){% endif %}</td>
+<td>{{ ((x.estimated_usd|float) + (x.expected_usd|float))|round(4) }}</td><td>{{ x.actual_usd }}</td></tr>{% endfor %}</table><p class="small muted">{{ cost.basis }}</p></div>{% endif %}
+
+{% if forms.production_log %}<div class="card"><h2>Production log</h2><p class="small">Master plate {{ forms.production_log.master_plate.asset_id }} · approved by {{ forms.production_log.master_plate.approved_by or '—' }}{% if forms.production_log.master_plate.reused_from_shelf %} · from the customer's shelf{% endif %}</p>
+<table><tr><th>node</th><th>shot</th><th>route</th><th>built from</th><th>previous</th><th>attempts</th><th>selected</th></tr>
+{% for e in forms.production_log.entries %}<tr><td>{{ e.node }}</td><td>{{ e.shot or '' }}</td><td>{{ e.route }}</td><td class="small">{{ e.source_kind }} {{ e.source_image or '' }}</td><td class="small">{{ e.previous_shot or '' }}</td>
+<td class="small">{% for a in e.attempts %}{{ a.attempt }}:{{ a.status }} {% endfor %}</td><td class="small">{{ e.selected or '' }}</td></tr>{% endfor %}</table></div>{% endif %}
+
+<div class="card"><h2>Trays (what each worker was given)</h2>{% for w, t in trays.items() %}{% if t %}<p class="small"><strong>{{ w }}</strong>: {{ t.tokens }} / {{ t.cap_tokens }} tokens — {% for i in t['items'] %}{{ i.id }} {% endfor %}</p>{% endif %}{% endfor %}</div>
+{% for name, f in forms.items() %}{% if f %}<div class="card"><details><summary>{{ name.replace('_', ' ') }} (form v{{ f.form_version or 1 }}{% if f.rulebook_card_version %}, card v{{ f.rulebook_card_version }}{% endif %}{% if f.written_by %}, {{ f.written_by.model if f.written_by.model is defined else f.written_by }}{% endif %})</summary>
+<pre>{{ json.dumps(f, indent=1, ensure_ascii=False) }}</pre></details></div>{% endif %}{% endfor %}
+{% if lessons %}<div class="card"><h2>Lessons from this job</h2><ul>{% for l in lessons %}<li>{{ l.worker }} → {{ l.target }} <span class="chip">{{ l.status }}</span> {{ l.why }}</li>{% endfor %}</ul><p><a href="/ops/lessons">Lesson queue</a></p></div>{% endif %}
+
 <div class="card"><h2>Asset graph</h2><table><tr><th>node</th><th>kind</th><th>deps</th><th>status</th><th>draws</th><th>selected</th><th>note</th></tr>
 {% for n in nodes %}<tr><td>{{ n.node_id }}</td><td>{{ n.kind }}</td><td class="small">{{ (n.deps_json|loads)|join(', ') }}</td><td>{{ n.status }}</td><td>{{ n.draws }}/{{ n.max_draws }}</td>
 <td class="small">{% if n.selected_asset_id %}<a href="/assets/{{ n.selected_asset_id }}">{{ n.selected_asset_id }}</a>{% endif %}</td><td class="small">{{ n.note or '' }}</td></tr>{% endfor %}</table></div>
-<div class="card"><h2>Ledger ({{ attempts|length }} attempts)</h2><p class="small">{{ ledger }}</p><table><tr><th>id</th><th>node</th><th>route</th><th>cat</th><th>reserved</th><th>settled</th><th>status</th><th>failure</th><th>detail</th></tr>
-{% for a in attempts %}<tr><td class="small">{{ a.id.split(':')[-1] }}</td><td class="small">{{ a.node_id or '' }}</td><td class="small">{{ a.route }}</td><td class="small">{{ a.category }}</td><td>{{ a.reserved_usd }}</td><td>{{ a.settled_usd or '' }}</td><td>{{ a.status }}</td><td class="small">{{ a.failure_class or '' }}</td><td class="small">{{ (a.detail or '')[:120] }}</td></tr>{% endfor %}</table></div>
-<div class="card"><h2>Reasoning calls</h2><table><tr><th>#</th><th>role</th><th>model</th><th>isolated</th><th>context seen</th><th>status</th><th>usage</th></tr>
-{% for c in llm %}<tr><td>{{ c.id }}</td><td>{{ c.role }}</td><td class="small">{{ c.provider }}/{{ c.model }}</td><td>{{ 'yes' if c.isolated else '' }}</td><td class="small">{{ c.context_kinds }}</td><td>{{ c.status }}</td><td class="small">{{ c.usage_json }}</td></tr>{% endfor %}</table></div>
-<div class="card"><h2>Assets</h2><div class="beats">{% for a in assets %}<div class="beat"><a href="/assets/{{ a.id }}">{{ a.id }}</a><br>{{ a.kind }} · {{ a.source }} · {{ a.status }}{% if a.role %} · {{ a.role }}{% endif %}{% if a.cut %} · cut {{ a.cut }}{% endif %}<br><span class="muted">{{ a.node_id or '' }}</span>
-{% if a.kind in ('image','upload') and a.content_type.startswith('image/') %}<br><img src="/assets/{{ a.id }}" alt="" style="max-width:100%;max-height:120px">{% endif %}</div>{% endfor %}</div></div>
-{% if review %}<div class="card"><h2>Independent review of the finished media</h2><pre>{{ json.dumps(review, indent=1, ensure_ascii=False) }}</pre></div>{% endif %}
+<div class="card"><h2>Ledger ({{ attempts|length }} attempts)</h2><table><tr><th>id</th><th>node</th><th>route</th><th>cat</th><th>reserved</th><th>settled</th><th>status</th><th>failure</th></tr>
+{% for a in attempts %}<tr><td class="small">{{ a.id.split(':')[-1] }}</td><td class="small">{{ a.node_id or '' }}</td><td class="small">{{ a.route }}</td><td class="small">{{ a.category }}</td><td>{{ a.reserved_usd }}</td><td>{{ a.settled_usd or '' }}</td><td>{{ a.status }}</td><td class="small">{{ a.failure_class or '' }}</td></tr>{% endfor %}</table></div>
+<div class="card"><h2>AI calls</h2><table><tr><th>#</th><th>worker · form</th><th>model</th><th>card</th><th>words sha</th><th>tray</th><th>est. USD</th><th>status</th></tr>
+{% for c in llm %}<tr><td>{{ c.id }}</td><td>{{ c.worker }} · {{ c.form }}</td><td class="small">{{ c.provider }}/{{ c.model }}</td><td>v{{ c.card_version }}</td><td class="small">{{ (c.exact_words_sha256 or '')[:10] }}</td>
+<td class="small">{{ c.tray_ids or '' }}</td><td>{{ c.est_cost_usd }}</td><td>{{ c.status }}</td></tr>{% endfor %}</table></div>
 <div class="card"><h2>Timing and cost</h2><pre>{{ json.dumps(metrics, indent=1) }}</pre></div>
-<div class="card"><h2>Feedback and revisions</h2><table>{% for f in feedback %}<tr><td>{{ f.created[:19] }}</td><td>{{ f.kind }}</td><td>{{ f.target }}</td><td>{{ f.text }}</td><td>{{ f.resolved_in_cut or '' }}</td></tr>{% endfor %}</table>{% if revision %}<pre>{{ json.dumps(revision, indent=1, ensure_ascii=False) }}</pre>{% endif %}</div>
 <div class="card"><details><summary>Event log ({{ events|length }})</summary><table>{% for e in events %}<tr><td class="small">{{ e.utc[:19] }}</td><td class="small">{{ e.actor }}</td><td>{{ e.kind }}</td><td class="small">{{ e.data_json[:400] }}</td></tr>{% endfor %}</table></details></div>
 {% endblock %}

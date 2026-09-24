@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Kitchen library · Operator{% endblock %}
+{% block body %}
+<p class="small"><a href="/ops">← Operator</a></p>
+<h1>Kitchen library</h1>
+<div class="card"><h2>Equipment sheet</h2><table><tr><th>id</th><th>generator</th><th>routes</th><th>action</th><th>verdict</th><th>samples</th><th>evidence</th><th>note / alternative</th></tr>
+{% for r in equipment %}<tr><td>{{ r.id }} v{{ r.version }}</td><td>{{ r.generator }}</td><td>{{ r.routes|join(', ') }}</td><td>{{ r.action_class }}</td>
+<td class="{{ 'FAIL' if r.verdict == 'cannot' else ('FLAG' if r.verdict == 'risky' else 'PASS') }}">{{ r.verdict }}</td><td>{{ r.sample_count }}</td><td class="small">{{ r.evidence_refs|join(', ') }}</td>
+<td class="small">{{ r.note }}{% if r.alternative %}<br><em>Alternative:</em> {{ r.alternative }}{% endif %}</td></tr>{% endfor %}</table></div>
+<div class="card"><h2>Recipe library ({{ recipes|length }})</h2><table>{% for r in recipes %}<tr><td>{{ r.id }}</td><td>{{ r.media }}</td><td>{{ r.outcome }}</td><td class="small">{{ r.text }}</td></tr>{% endfor %}</table></div>
+<div class="card"><details><summary>Failure diary ({{ failures|length }} entries)</summary><table>{% for r in failures %}<tr><td>{{ r.id }}</td><td class="small">{{ r.failure_mode }}</td><td class="small">{{ r.action_classes|join(', ') }}</td><td class="small">{{ r.text[:300] }}</td></tr>{% endfor %}</table></details></div>
+{% endblock %}

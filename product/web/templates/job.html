@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block head %}{% if job.state in states.WORKER_STATES %}<meta http-equiv="refresh" content="6">{% endif %}{% endblock %}
+{# The customer's page (founder 2026-09-23): no kitchen on show — the order, the progress, the plan, tastes, the work. #}
 {% block title %}{{ job.title }} · Media Intelligence{% endblock %}
 {% block body %}
 <p class="small"><a href="/">← Your jobs</a></p>
@@ -7,6 +8,17 @@
 {% set pos = rail_position(job.state, job.resume_state) %}
 <div class="rail">{% for name, _ in rail %}<span class="{{ 'now' if loop.index0 == pos else ('done' if loop.index0 < pos else '') }}">{{ name }}</span>{% endfor %}</div>
 <p><strong>{{ label(job.state) }}</strong>{% if job.state in states.WORKER_STATES %} <span class="muted small">— this page refreshes itself; you can close it and come back.</span>{% endif %}</p>
+
+<div class="card"><h2>Progress</h2><ol class="small" style="margin:0;padding-left:1.2rem">
+{% for p in progress %}<li{% if loop.last %} style="font-weight:600"{% endif %}>{{ p.text }} <span class="muted">{{ p.utc[11:16] }}</span></li>{% endfor %}</ol>
+{% if job.state in states.WORKER_STATES %}<p class="muted small">We're working on it — this page updates by itself, and we'll let you know when we need you.</p>{% endif %}</div>
+
+<details class="card"{% if job.state in ('submitted', 'understanding', 'needs_answers') %} open{% endif %}><summary><strong>Your order</strong></summary>
+<p style="white-space:pre-wrap">{{ brief.text }}</p>
+<p class="small">{{ 'A film' if brief.media == 'video' else 'Pictures' }}{% if brief.formats %} · {{ brief.formats|join(', ') }}{% endif %}{% if brief.media == 'video' and brief.duration_s %} · {{ brief.duration_s }} seconds{% endif %}{% if (brief.product or {}).get('name') %} · {{ brief.product.name }}{% endif %}</p>
+{% if brief.exact_strings %}<p class="small">Exact words: {% for x in brief.exact_strings %}“{{ x }}”{{ ', ' if not loop.last }}{% endfor %}</p>{% endif %}
+{% if uploads %}<ul class="small">{% for u in uploads %}<li><a href="/assets/{{ u.id }}">{{ (u.meta_json|loads).filename }}</a></li>{% endfor %}</ul>{% endif %}
+</details>
 
 {% if job.state == 'refused' %}
 <div class="card"><h2>We can't make this one in the beta</h2>
@@ -17,9 +29,15 @@
 {% if job.state == 'paused_budget' %}
 <div class="card"><h2>Paused — this job needs more budget</h2><p>{{ job.pause_reason }}</p>
 <form method="post" action="/jobs/{{ job.id }}/budget"><input type="hidden" name="csrf" value="{{ csrf }}">
-<label for="b">New maximum budget (USD, up to {{ "%.2f"|format(account.ceiling_usd|float) }})</label><input id="b" type="number" step="0.5" name="budget_usd" value="{{ (job.budget_usd|float + 5)|round(1) }}">
+<label for="b">New maximum budget (USD{% if ceiling_enforced %}, up to {{ "%.2f"|format(account.ceiling_usd|float) }}{% endif %})</label><input id="b" type="number" step="0.5" name="budget_usd" value="{{ (job.budget_usd|float + 5)|round(1) }}">
 <p><button>Raise budget and continue</button></p></form></div>
-{% elif job.state in ('paused_provider', 'paused_operator', 'failed') %}
+{% elif job.state == 'needs_retry_decision' %}
+<div class="card"><h2>Something went wrong on our side</h2><p>{{ job.pause_reason }}</p>
+<form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="try_again">
+<p><button>Try again</button></p></form>
+<form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="stop">
+<p><button class="secondary">Stop here (nothing more is spent)</button></p></form></div>
+{% elif job.state in ('paused_provider', 'paused_operator', 'failed', 'paused_for_founder') %}
 <div class="card"><h2>{{ label(job.state) }}</h2><p class="muted">Our team can see this job and will get it moving; you don't need to do anything.</p></div>
 {% endif %}
 
@@ -34,6 +52,37 @@
 <p><button>Send answers</button></p></form></div>
 {% endif %}
 
+{% if job.state == 'awaiting_customer_input' and feasibility %}
+<div class="card"><h2>Before we spend anything, we need something from you</h2>
+<ul>{% for a in feasibility.ask_customer %}<li>{{ a|plain }}</li>{% endfor %}</ul>
+<form method="post" action="/jobs/{{ job.id }}/input" enctype="multipart/form-data"><input type="hidden" name="csrf" value="{{ csrf }}">
+{% for a in feasibility.alternatives %}<p class="small"><input type="checkbox" name="alt_{{ loop.index0 }}" value="yes" id="alt{{ loop.index0 }}">
+<label for="alt{{ loop.index0 }}" style="display:inline;font-weight:400">Instead of “{{ a.for_action|plain }}”: {{ a.alternative|plain }}</label></p>{% endfor %}
+<label for="ph">Add a photo (optional)</label><input id="ph" type="file" name="photo" accept="image/*">
+<label for="lb">What does the photo show?</label><input id="lb" type="text" name="label" placeholder="e.g. the front pocket open">
+<label for="fa">Anything we should know (optional)</label><textarea id="fa" name="facts"></textarea>
+<p><button>Send and continue</button></p></form>
+<p class="muted small">Nothing has been spent on production yet.</p></div>
+{% endif %}
+
+{% if job.state == 'awaiting_master_approval' and master %}
+<div class="card"><h2>Approve the look of your film</h2>
+<div class="media"><img src="/assets/{{ master.id }}" alt="The master picture every shot is built from"></div>
+<p class="muted small">Every shot is built from this picture — the room, the light, the product. Approve it and we make the shots.</p>
+<form method="post" action="/jobs/{{ job.id }}/master"><input type="hidden" name="csrf" value="{{ csrf }}"><p><button>Approve and make the film</button></p></form></div>
+{% endif %}
+
+{% if job.state == 'awaiting_taste' and taste %}
+<div class="card"><h2>Have a first taste</h2>
+<p>We made the most difficult shot first, so you can see it before we make the rest.</p>
+<div class="media">{% for a in taste %}{% if a.kind == 'video' %}<video controls preload="metadata" src="/assets/{{ a.id }}"></video>{% else %}<img src="/assets/{{ a.id }}" alt="The first shot">{% endif %}{% endfor %}</div>
+<form method="post" action="/jobs/{{ job.id }}/taste"><input type="hidden" name="csrf" value="{{ csrf }}"><p><button>Looks good — make the rest</button></p></form>
+<form method="post" action="/jobs/{{ job.id }}/taste-change"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="tc">Or tell us what to change in this shot</label><textarea id="tc" name="text" required></textarea>
+<p><button class="secondary">Change this shot</button></p></form>
+<p class="muted small">Changes to this shot stay within the budget you approved.</p></div>
+{% endif %}
+
 {% if intent and job.state not in ('refused',) %}
 <div class="card"><h2>What we understood</h2>
 <p><strong>Objective:</strong> {{ intent.objective }}<br><strong>For:</strong> {{ intent.audience }}<br>
@@ -42,29 +91,46 @@
 {% if intent.assumptions %}<h3>Assumptions we're making</h3><ul>{% for a in intent.assumptions %}<li>{{ a.assumption }}</li>{% endfor %}</ul>{% endif %}
 </div>{% endif %}
 
-{% if direction and job.state in ('awaiting_approval', 'planning', 'producing', 'checking', 'operator_hold', 'ready_for_review', 'revising', 'accepted') %}
-<div class="card"><h2>Creative direction</h2>
-<p style="font-size:1.05rem">{{ direction.customer_summary }}</p>
+{% if direction and job.state in ('awaiting_approval', 'planning', 'producing', 'awaiting_master_approval', 'awaiting_taste', 'checking', 'operator_hold', 'ready_for_review', 'revising', 'accepted') %}
+<div class="card"><h2>Your plan</h2>
+<p style="font-size:1.05rem">{{ direction.customer_summary|plain }}</p>
 <p><strong>Idea:</strong> {{ direction.selected_concept }} — {{ direction.proposition }}</p>
 <p class="muted">{{ direction.audience_experience }}</p>
 {% if preview %}<div class="media">{% for p in preview %}<img src="/assets/{{ p.id }}" alt="Preview frame for the creative direction">{% endfor %}</div>
 <p class="muted small">Preview frame{{ 's' if preview|length > 1 }} — the look and the product as we'll produce them. Text and logo are set precisely afterwards.</p>{% endif %}
-{% if direction.beats %}<h3>Storyboard</h3><div class="beats">{% for b in direction.beats %}<div class="beat"><strong>{{ b.n }}. {{ b.purpose }}</strong> <span class="muted">({{ b.duration_s }} s)</span><br>{{ b.first_frame }}<br><span class="muted">{{ b.action }}</span></div>{% endfor %}</div>{% endif %}
+{% if direction.beats %}<h3>Scene by scene</h3><div class="beats">{% for b in direction.beats %}<div class="beat"><strong>{{ b.n }}. {{ b.purpose|capitalize }}</strong> <span class="muted">({{ b.duration_s|round(1) }} s)</span><br>{{ (b.action if b.action != 'none' else 'Your logo and closing words')|plain }}</div>{% endfor %}</div>{% endif %}
 {% if direction.copy_deck %}<h3>Words on screen</h3><ul>{% for c in direction.copy_deck %}<li>“{{ c.text }}” <span class="muted small">{{ 'your exact text' if c.source == 'customer_exact' else 'our suggestion' }}</span></li>{% endfor %}</ul>{% endif %}
 {% if job.state == 'awaiting_approval' %}
-<h3>Quote</h3><table>{% for l in quote.lines %}{% if l.units %}<tr><td>{{ l.item }}</td><td>{{ l.usd|usd }}</td></tr>{% endif %}{% endfor %}
-<tr><td>Planning and checking</td><td>{{ quote.reasoning_allowance_usd|usd }}</td></tr>
-<tr><th>Recommended budget (includes a re-take allowance)</th><th>{{ quote.recommended_budget_usd|usd }}</th></tr></table>
+{% if plan_note %}<p class="{{ 'warn' if plan_objections else 'ok' }}"><strong>{{ plan_note.text }}</strong></p>{% endif %}
+{% if plan_objections %}<h3>Our reviewer's objections</h3><ul>{% for o in plan_objections.plain_words %}<li>{{ o|plain }}</li>{% endfor %}</ul>
+<p class="muted small">You choose: go ahead with this plan anyway, change your brief below, or stop (close the job — nothing has been spent on production).</p>{% endif %}
+<h3>Price</h3><table>
+<tr><td>{{ 'Making your film' if brief.media == 'video' else 'Making your pictures' }} (includes a spare attempt for anything that needs redoing)</td><td>{{ quote.media_ceiling_usd|usd }}</td></tr>
+<tr><td>Planning and quality checks</td><td>{{ quote.reasoning_line_usd|usd }}</td></tr>
+<tr><th>Recommended budget</th><th>{{ quote.recommended_budget_usd|usd }}</th></tr></table>
 <p class="muted small">You're only charged for what production actually uses; we pause and ask before going over the budget you set.</p>
 <form method="post" action="/jobs/{{ job.id }}/approve"><input type="hidden" name="csrf" value="{{ csrf }}">
-<label for="bud">Production budget you authorise (USD, up to {{ "%.2f"|format(account.ceiling_usd|float) }})</label>
+<label for="bud">Production budget you authorise (USD{% if ceiling_enforced %}, up to {{ "%.2f"|format(account.ceiling_usd|float) }}{% endif %})</label>
 <input id="bud" type="number" step="0.5" name="budget_usd" value="{{ [quote.recommended_budget_usd|float, brief.max_budget_usd|float]|max }}">
-<p><button>Approve direction and start production</button></p></form>
+{% if plan_objections %}<p><label><input type="checkbox" name="accept_objections" value="yes" required> I have read our reviewer's objections and want to go ahead anyway</label></p>{% endif %}
+<p><button>{{ 'Go ahead with this plan' if plan_objections else 'Approve direction and start production' }}</button></p></form>
 <form method="post" action="/jobs/{{ job.id }}/direction-change"><input type="hidden" name="csrf" value="{{ csrf }}">
 <label for="chg">Or tell us what to change in the direction</label><textarea id="chg" name="text" required></textarea>
 <p><button class="secondary">Ask for a different direction</button></p></form>
 {% endif %}
 </div>{% endif %}
+
+{% if job.state == 'needs_customer_decision' and customer_decision %}
+<div class="card"><h2>A check failed — your decision</h2><p>{{ customer_decision.plain|plain }}</p>
+<form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="rework">
+<p><button>Pay for one more attempt (about {{ customer_decision.rework_price_usd|usd }})</button></p></form>
+<form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="stop">
+<p><button class="secondary">Stop here (nothing more is spent)</button></p></form></div>{% endif %}
+
+{% if job.state in ('awaiting_approval', 'needs_answers', 'awaiting_customer_input', 'ready_for_review', 'awaiting_master_approval', 'awaiting_taste', 'failed') %}
+<div class="card"><form method="post" action="/jobs/{{ job.id }}/abandon"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="ab">No longer need this? Close the job</label><input id="ab" type="text" name="reason" placeholder="Why (optional)">
+<p><button class="secondary">Close this job</button></p></form></div>{% endif %}
 
 {% if job.state in ('planning', 'producing', 'checking', 'operator_hold', 'revising') %}
 <div class="card"><h2>Production</h2>
@@ -78,13 +144,8 @@
 {% if a.kind == 'video' %}<video controls preload="metadata" src="/assets/{{ a.id }}"></video>{% else %}<img src="/assets/{{ a.id }}" alt="Finished creative">{% endif %}
 <p class="small muted">Version {{ a.cut }} · {{ (a.meta_json|loads).get('format', '') }}
 {% if job.state == 'accepted' %} · <a href="/assets/{{ a.id }}/download">Download</a>{% endif %}</p></div>{% endfor %}
-{% if report %}<h3>What we checked</h3>
-{% for r in report %}<table>
-{% for row in r.table %}{% if row.status == 'PASS' %}{% elif row.waived_by %}<tr><td class="warn">Not verified by machine (accepted by our team)</td><td>{{ row.check_id }}</td><td class="small">{{ row.waiver_reason }}</td></tr>
-{% else %}<tr><td class="{{ row.status }}">{{ row.status }}</td><td>{{ row.check_id }}</td><td class="small">{{ row.detail }}</td></tr>{% endif %}{% endfor %}
-<tr><td class="ok">Passed</td><td colspan="2">{{ r.table|selectattr('status', 'equalto', 'PASS')|list|length }} automated checks on this exact file</td></tr>
-</table>{% endfor %}
-{% if review %}<p><strong>Independent reviewer:</strong> {{ review.summary_for_customer }}</p>{% endif %}{% endif %}
+{% if checked %}<h3>What we checked</h3><ul class="small">{% for c in checked %}<li class="ok">✓ {{ c }}</li>{% endfor %}</ul>{% endif %}
+{% if customer_notes and job.state == 'ready_for_review' %}<h3>Please note</h3><ul>{% for n in customer_notes %}<li>{{ n|plain }}</li>{% endfor %}</ul>{% endif %}
 </div>
 {% if job.state == 'ready_for_review' %}
 <div class="card"><h2>Your decision</h2>
@@ -93,7 +154,7 @@
 <h3>Request specific changes</h3><p class="muted small">Point each change at the part it's about; we redo only that part.</p>
 {% for i in range(1, 4) %}<div class="row"><div style="flex:0 1 220px"><select name="target_{{ i }}" aria-label="Which part">
 <option value="">Whole piece</option>
-{% for b in direction.beats %}{% if b.first_frame|lower != 'end card' %}<option value="beat:{{ b.n }}">Shot {{ b.n }} — {{ b.purpose }}</option>{% endif %}{% endfor %}
+{% for b in direction.beats %}{% if b.first_frame|lower != 'end card' %}<option value="shot:{{ b.n }}">Shot {{ b.n }} — {{ b.purpose }}</option>{% endif %}{% endfor %}
 {% for c in direction.copy_deck %}<option value="copy:{{ c.id }}">Text: “{{ c.text[:30] }}”</option>{% endfor %}
 {% if direction.beats %}<option value="music">Music</option>{% else %}<option value="picture">The picture</option>{% endif %}
 </select></div><div><textarea name="change_{{ i }}" placeholder="{{ 'What should change? For text, write: text to \"New exact words\"' if i == 1 else 'Another change (optional)' }}"></textarea></div></div>{% endfor %}
@@ -106,9 +167,5 @@
 {% if feedback %}<div class="card"><h2>History</h2><table>{% for f in feedback %}<tr><td class="small muted">{{ f.created[:16].replace('T',' ') }}</td><td>{{ f.kind }}</td><td>{{ f.target or 'whole piece' }}</td><td>{{ f.text }}</td><td class="small">{{ ('in version ' ~ f.resolved_in_cut) if f.resolved_in_cut else '' }}</td></tr>{% endfor %}</table>
 {% if deliverables|length > 1 %}<p class="small muted">Versions produced: {% for d in deliverables %}v{{ d.cut }} {% endfor %}</p>{% endif %}</div>{% endif %}
 
-<div class="card"><details><summary>Your brief and files</summary>
-<p style="white-space:pre-wrap">{{ brief.text }}</p>
-{% if brief.exact_strings %}<p><strong>Exact text:</strong> {% for s in brief.exact_strings %}“{{ s }}” {% endfor %}</p>{% endif %}
-<ul>{% for u in uploads %}<li><a href="/assets/{{ u.id }}">{{ (u.meta_json|loads).filename }}</a> <span class="muted small">{{ u.role }}</span></li>{% endfor %}</ul>
-</details></div>
+
 {% endblock %}

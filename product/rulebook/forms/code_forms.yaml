@@ -1,0 +1,98 @@
+# Forms written by code or by a person (no model fills them). Each is still versioned and schema-checked.
+forms:
+  - form: order_slip
+    version: 1
+    written_by: customer
+    schema:
+      type: object
+      required: [customer_exact_words, media, formats, duration_s, exact_strings, product, brand_colours, photos,
+                 max_budget_usd, forbidden_words, references_note]
+      properties:
+        customer_exact_words: {type: string}
+        media: {type: string, enum: [image, video]}
+        formats: {type: array, items: {type: string}}
+        duration_s: {type: [number, "null"]}
+        exact_strings: {type: array, items: {type: string}}
+        product: {type: object}
+        brand_colours: {type: array, items: {type: string}}
+        photos:
+          type: array
+          items:
+            type: object
+            required: [photo, asset_id, customer_label, filename]
+            properties: {photo: {type: integer}, asset_id: {type: string}, customer_label: {type: [string, "null"]},
+                         filename: {type: string}}
+        max_budget_usd: {type: string}
+        forbidden_words: {type: array, items: {type: string}}
+        references_note: {type: string}
+  - form: production_log
+    version: 1
+    written_by: head_cook
+    schema:
+      type: object
+      required: [master_plate, entries]
+      properties:
+        master_plate:
+          type: object
+          required: [node, asset_id, approved_by, approved_utc, reused_from_shelf]
+          properties:
+            node: {type: [string, "null"]}
+            asset_id: {type: [string, "null"]}
+            approved_by: {type: [string, "null"]}
+            approved_utc: {type: [string, "null"]}
+            reused_from_shelf: {type: [string, "null"]}
+        entries:
+          type: array
+          items:
+            type: object
+            required: [node, shot, route, source_image, source_kind, previous_shot, attempts, selected, reason]
+            properties:
+              node: {type: string}
+              shot: {type: [integer, "null"]}
+              route: {type: string}
+              source_image: {type: [string, "null"]}
+              source_kind: {type: string}
+              previous_shot: {type: [string, "null"]}
+              attempts: {type: array}
+              selected: {type: [string, "null"]}
+              reason: {type: string}
+  - form: gateway_report
+    version: 1
+    written_by: door_guard
+    schema:
+      type: object
+      required: [results, required, overrides]
+      properties:
+        results: {type: array}
+        required: {type: object}
+        overrides: {type: array}
+  - form: tray
+    version: 1
+    written_by: librarian
+    schema:
+      type: object
+      required: [for_worker, cap_tokens, tokens, items]
+      properties:
+        for_worker: {type: string}
+        cap_tokens: {type: integer}
+        tokens: {type: integer}
+        items:
+          type: array
+          items:
+            type: object
+            required: [id, section, tokens, score]
+            properties: {id: {type: string}, section: {type: string}, tokens: {type: integer}, score: {type: number}}
+  - form: rulebook_card
+    version: 1
+    written_by: founder
+    schema:
+      type: object
+      required: [worker, kind, version, mission, kra]
+      properties:
+        worker: {type: string}
+        kind: {type: string}
+        version: {type: integer}
+        mission: {type: string}
+        vision: {type: string}
+        kra: {type: array, items: {type: string}}
+        instructions: {type: object}

@@ -1,0 +1,54 @@
+# Action classes: the categories the equipment sheet is written in (spec §4.3, §9). The pantry checker's model names a
+# class for every action; code then re-reads the action text with these patterns and keeps the HIGHER-risk class when
+# they disagree (a model can never talk an action out of a `cannot` class). Order matters: the first match wins, so the
+# most restrictive classes come first.
+classes:
+  - id: speech_or_lipsync
+    description: a person talks, sings, narrates, or moves their lips
+    patterns: ['\bspeak', '\btalk', '\bsing', '\bsays?\b', 'dialog', 'voice[- ]?over', 'lip[- ]?sync', 'narrat']
+  - id: identifiable_person
+    description: a recognisable real person or celebrity likeness
+    patterns: ['celebrity', 'look[- ]?alike', 'shah ?rukh', 'virat', 'deepika']
+  - id: hands_work_mechanism
+    description: hands operate a zip, flap, buckle, clasp, lid hinge, strap lock or other mechanism on the product
+    patterns: ['\bzip', '\bunzip', 'zipper', '\bflap\b', 'buckle', 'clasp', 'velcro', 'strap lock', 'drawstring',
+               'fasten', '\bpulls?\b.*\b(track|edge|pull)', 'hinge', '\bunfold', 'fold(s|ed)? (the |it )?(flap|lid|cover)']
+    manipulation: true
+  - id: multi_step_manipulation
+    description: two or more manipulations in one shot (code sets this when an action names several manipulation classes)
+    patterns: []
+    manipulation: true
+  - id: legible_text_on_product
+    description: the generator draws readable brand text or a logo on the product
+    patterns: ['legible (brand|logo|text)', 'readable (brand|logo|text)', 'wordmark (reads|visible)']
+  - id: insert_object_into_container
+    description: an object goes into a bag, box, pocket or compartment
+    patterns: ['slides? (straight )?(down )?into', 'goes into', '\binto the (bag|pocket|compartment|bucket|box)',
+               '\binserts?\b', '\bseated in\b', '\bslides?\b', '\bpack(s|ed|ing)?\b.*\binto\b', 'lower(s|ed)? .* into', 'put(s)? .* in(to)? the']
+    manipulation: true
+  - id: lift_closed_product
+    description: a hand lifts or carries the closed product
+    patterns: ['\blift', 'pick(s|ed)? up', '\bcarr(y|ies)', 'raise(s|d)? the (bag|product|box)', 'by (the|its) handle']
+    manipulation: true
+  - id: simple_hand_gesture
+    description: one simple hand action that does not operate the product (point, touch, place on a table, hold up)
+    patterns: ['\bpoints?\b', '\btouch', 'places? .* on', '\bholds? up', '\bhand(s)? rest']
+    manipulation: true
+  - id: person_performance
+    description: a person walks, turns, reacts or performs on camera
+    patterns: ['\bwalk', '\bdanc', '\bsmil', '\blaugh', '\bturns? to', '\breacts?\b']
+  - id: camera_move_static_product
+    description: the camera moves around a product that does not change (orbit, reveal, push-in, pan)
+    patterns: ['\borbit', 'circles? the', 'push[- ]?in', '\bdolly', '\bpan(s)? ', 'reveal', 'camera (moves|glides|drifts|rises|tracks)']
+  - id: product_state_still
+    description: a still picture of the product in a state (open, closed, packed) — no action is performed
+    patterns: ['\bstill\b', 'shown (open|closed)', 'at rest', 'end card']
+  - id: product_still_from_clean_photo
+    description: a product picture generated from a clean product photo (IMG route)
+    patterns: []
+  - id: product_still_from_infographic_photo
+    description: a product picture generated from an annotated, text-labelled infographic reference
+    patterns: []
+  - id: none
+    description: no action (end card, held frame)
+    patterns: []

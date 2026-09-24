@@ -38,6 +38,9 @@ PRICES = {
     "gpt-5.6-sol": (Decimal("4.00"), Decimal("20.00")),
     "gpt-5.6-terra": (Decimal("2.00"), Decimal("12.00")),
     "gpt-5.5": (Decimal("5.00"), Decimal("30.00")),
+    "gpt-5.6-luna": (Decimal("0.20"), Decimal("1.20")),
+    # Azure AI Foundry, Global Standard (prices.azure.com retail API, read 2026-09-23; used in the judges' model trial)
+    "Kimi-K2.6": (Decimal("1.045"), Decimal("4.40")),
     "gemini-3.5-flash": (Decimal("1.50"), Decimal("9.00")),
     "gemini-3.1-pro-preview": (Decimal("2.00"), Decimal("12.00")),   # ≤ 200k-token prompts
     "simulated": (Decimal("0"), Decimal("0")),
@@ -118,7 +121,7 @@ class AnthropicBackend:
     def __init__(self, settings: Settings):
         self.s = settings
 
-    def send(self, *, model, system_role, knowledge, user_text, media, schema_obj, max_tokens):
+    def send(self, *, model, system_role, knowledge, user_text, media, schema_obj, max_tokens, effort="high"):
         key = self.s.secret("ANTHROPIC_API_KEY")
         if not key:
             raise ProviderUnavailable("ANTHROPIC_API_KEY is not configured")
@@ -133,10 +136,12 @@ class AnthropicBackend:
             elif mime == "application/pdf":      # a customer's brief deck / storyboard reference
                 content.append({"type": "document", "source": {"type": "base64", "media_type": mime,
                                                                 "data": base64.b64encode(data).decode()}})
+            else:  # the Messages API takes no video or audio: refuse rather than judge work never seen
+                raise ReasoningFailed(f"{mime} cannot be sent to {model}; send a contact sheet of stills instead")
         content.append({"type": "text", "text": user_text})
-        body = {"model": model, "max_tokens": max_tokens, "system": system,
-                "thinking": {"type": "adaptive"}, "output_config": {"effort": "high"},
-                "messages": [{"role": "user", "content": content}]}
+        body = {"model": model, "max_tokens": max_tokens, "system": system, "messages": [{"role": "user", "content": content}]}
+        if effort:            # cheap workers run without extended thinking (effort None)
+            body.update(thinking={"type": "adaptive"}, output_config={"effort": effort})
         headers = {"x-api-key": key, "anthropic-version": "2023-06-01"}
         if model in ("claude-opus-5", "claude-fable-5-1"):
             # a safety-classifier refusal on a harmless ad brief is re-served by the platform's default fallback
@@ -159,23 +164,35 @@ class AzureOpenAIBackend:
     def __init__(self, settings: Settings):
         self.s = settings
 
-    def send(self, *, model, system_role, knowledge, user_text, media, schema_obj, max_tokens):
+    def send(self, *, model, system_role, knowledge, user_text, media, schema_obj, max_tokens, effort="high"):
         key, base = self.s.secret("AZURE_OPENAI_API_KEY"), self.s.secret("AZURE_OPENAI_ENDPOINT")
         if not key or not base:
             raise ProviderUnavailable("AZURE_OPENAI_ENDPOINT / AZURE_OPENAI_API_KEY are not configured")
         system = system_role + ("\n\nKNOWLEDGE\n" + knowledge if knowledge else "")
         content = []
+        from product.config import can_see
+        if media and not can_see(f"azure_openai:{model}"):
+            raise ReasoningFailed(f"{model} takes text only; refusing to send it {len(media)} attachment(s) it would silently drop")
         for i, (mime, data) in enumerate(media):
             b64 = base64.b64encode(data).decode()
             if mime.startswith("image/"):
                 content.append({"type": "image_url", "image_url": {"url": f"data:{mime};base64,{b64}", "detail": "high"}})
             elif mime == "application/pdf":
                 content.append({"type": "file", "file": {"filename": f"reference-{i + 1}.pdf", "file_data": f"data:{mime};base64,{b64}"}})
+            else:  # video and audio cannot go to this API: refuse rather than let the model judge work it never saw
+                raise ReasoningFailed(f"{mime} cannot be sent to {model} on Azure OpenAI; send a contact sheet of stills instead")
         content.append({"type": "text", "text": user_text})
-        body = {"model": model, "max_completion_tokens": max_tokens, "reasoning_effort": "high",
-                "response_format": {"type": "json_object"},
+        body = {"model": model, "response_format": {"type": "json_object"},
                 "messages": [{"role": "system", "content": system}, {"role": "user", "content": content}]}
-        st, reply = _http(base.rstrip("/") + "/openai/v1/chat/completions", {"api-key": key}, body, timeout=600)
+        if model.lower().startswith(("gpt", "o1", "o3", "o4")):          # OpenAI reasoning models
+            body.update(max_completion_tokens=max_tokens, reasoning_effort=effort or "low")
+        else:                                                             # other models deployed on the resource (open models)
+            body.update(max_tokens=max_tokens)
+        url = base.rstrip("/") + "/openai/v1/chat/completions"
+        st, reply = _http(url, {"api-key": key}, body, timeout=600)
+        if st == 400 and "response_format" in json.dumps(reply)[:2000]:  # a model without JSON mode: ask in words only
+            body.pop("response_format")
+            st, reply = _http(url, {"api-key": key}, body, timeout=600)
         if st != 200:
             return st, reply, None, {}
         u = reply.get("usage") or {}
@@ -194,7 +211,7 @@ class GeminiBackend:
     def __init__(self, settings: Settings):
         self.s = settings
 
-    def send(self, *, model, system_role, knowledge, user_text, media, schema_obj, max_tokens):
+    def send(self, *, model, system_role, knowledge, user_text, media, schema_obj, max_tokens, effort="high"):
         key = self.s.secret("GOOGLE_API_KEY") or self.s.secret("GEMINI_API_KEY")
         if not key:
             raise ProviderUnavailable("GOOGLE_API_KEY is not configured")
@@ -237,16 +254,24 @@ class Reasoner:
         return AnthropicBackend(self.s), "anthropic", self.s.creative_model
 
     def call(self, job_id: str, role: str, context: dict, *, knowledge: str | None = None, media: list = (),
-             max_tokens: int = 16000, estimate_in_tokens: int | None = None) -> dict:
-        system_role, out_schema = contracts.ROLES[role]
-        isolated = role in contracts.ISOLATED_ROLES
-        if isolated:
+             max_tokens: int = 16000, estimate_in_tokens: int | None = None, system_role: str | None = None,
+             out_schema: dict | None = None, route: tuple | None = None, sim=None, record: dict | None = None,
+             isolated: bool | None = None, effort: str = "high") -> dict:
+        """v1 roles use contracts.ROLES; v2 workers (product/ai.py) pass their rulebook card as `system_role`, their form
+        schema as `out_schema`, the configured (backend, provider, model) as `route`, a simulated responder as `sim`,
+        and the v2 llm_calls columns as `record`."""
+        if system_role is None:
+            system_role, out_schema = contracts.ROLES[role]
+        isolated = (role in contracts.ISOLATED_ROLES) if isolated is None else isolated
+        if isolated and role in ALLOWED_CONTEXT:
             extra = set(context) - ALLOWED_CONTEXT[role]
             if extra:
                 raise ReasoningFailed(f"{role} is an independent role; refusing producer context {sorted(extra)}")
             if knowledge:
                 raise ReasoningFailed(f"{role} is an independent role; it does not receive the producer's knowledge block")
-        backend, provider, model = self._backend_and_model(role)
+        backend, provider, model = route if route is not None else self._backend_and_model(role)
+        if self.s.reasoning_mode == "simulated":
+            backend, provider, model = None, "simulated", "simulated"
         user_text = "\n\n".join(f"## {k}\n{v if isinstance(v, str) else json.dumps(v, ensure_ascii=False, indent=1)}"
                                 for k, v in context.items())
         user_text += "\n\n## OUTPUT\nReturn one JSON object with exactly these fields (JSON Schema):\n" + json.dumps(out_schema)
@@ -264,16 +289,16 @@ class Reasoner:
         for attempt in range(3):
             att = self.store.reserve(job_id, route=f"llm:{model}", category="reasoning", amount_usd=estimate)
             call_id = self.store.llm_start(job_id, role=role, provider=provider, model=model, isolated=isolated,
-                                           input_sha256=in_sha, context_kinds=sorted(context), attempt_id=att)
+                                           input_sha256=in_sha, context_kinds=sorted(context), attempt_id=att, **(record or {}))
             with self.store.timed(job_id, phase, role):
                 if backend is None:
-                    out = self.sim.respond(role, context, media)
+                    out = sim() if sim is not None else self.sim.respond(role, context, media)
                     st, text, usage, reply = 200, json.dumps(out), {"input_tokens": 0, "output_tokens": 0}, {}
                 else:
                     try:
                         st, reply, text, usage = backend.send(model=model, system_role=system_role, knowledge=knowledge,
                                                               user_text=user_text + messages_extra, media=list(media),
-                                                              schema_obj=out_schema, max_tokens=max_tokens)
+                                                              schema_obj=out_schema, max_tokens=max_tokens, effort=effort)
                     except ProviderUnavailable as e:
                         self.store.settle(att, status="released", settled_usd=0, failure_class="configuration", detail=str(e))
                         self.store.llm_end(call_id, status="not_configured")

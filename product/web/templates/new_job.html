@@ -42,8 +42,8 @@
 <div class="card">
 <h2>Budget</h2>
 <label for="max_budget_usd">Maximum production budget for this job (USD)</label>
-<input id="max_budget_usd" type="number" step="0.5" min="1" max="{{ account.ceiling_usd }}" name="max_budget_usd" value="15">
-<p class="muted small">You'll see a quote with the creative direction and confirm the budget before production starts. Your account limit per job is {{ account.ceiling_usd|usd }}.</p>
+<input id="max_budget_usd" type="number" step="0.5" min="1"{% if ceiling_enforced %} max="{{ account.ceiling_usd }}"{% endif %} name="max_budget_usd" value="15">
+<p class="muted small">You'll see a quote with the creative direction and confirm the budget before production starts. The minimum is USD 1.{% if ceiling_enforced %} Your account limit per job is {{ account.ceiling_usd|usd }}.{% endif %}</p>
 <p><input type="checkbox" id="allow_preview" name="allow_preview" value="yes" checked> <label for="allow_preview" style="display:inline;font-weight:400">Allow up to USD 3 for planning and preview images before I approve the direction.</label></p>
 <p class="muted small">This beta makes still ads and short films with music and on-screen text. It does not do voice-over, dialogue, lip-sync or real people's likeness — we'll tell you straight away if a request needs those.</p>
 <p><button type="submit">Send request</button></p>

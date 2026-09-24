@@ -66,6 +66,7 @@ class UnrunCheckBlocks(unittest.TestCase):
         self.e.close()
 
     def test_missing_required_check_blocks_and_a_waiver_with_a_name_unblocks(self):
+        # v2 (spec 6.4): a named waiver counts only when the signed-in founder made it; a name string alone is ignored
         req = {"ledger_integrity": "X", "hero_visible": "HERO_VISIBLE"}
         self.e.store.record_check(self.jid, self.aid, check_id="ledger_integrity", status="PASS", blocking=True, runner="t", detail="")
         g = verify.gateway(self.e.store, self.jid, self.aid, req)
@@ -73,6 +74,8 @@ class UnrunCheckBlocks(unittest.TestCase):
         self.assertEqual([b["check_id"] for b in g["blocking"]], ["hero_visible"])
         self.assertEqual(g["blocking"][0]["status"], "NOT_VERIFIED")
         self.e.store.waive(self.jid, self.aid, "hero_visible", "founder", "looked at it: product fully visible")
+        self.assertFalse(verify.gateway(self.e.store, self.jid, self.aid, req)["ready"])
+        verify.waive(self.e.store, self.jid, self.aid, "hero_visible", founder=self.e.founder(), reason="looked at it: product fully visible")
         self.assertTrue(verify.gateway(self.e.store, self.jid, self.aid, req)["ready"])
 
     def test_a_result_recorded_for_another_version_of_the_file_does_not_count(self):
@@ -297,15 +300,17 @@ class PersonChecksCannotBeWaived(unittest.TestCase):
             p = e.dir / "f.mp4"; p.write_bytes(b"film")
             aid = e.store.add_asset(jid, path=p, kind="video", source="composed", content_type="video/mp4")
             req = {"audio_heard_by_person": "AUDIO_REVIEWED_BY_EAR"}
-            e.store.waive(jid, aid, "audio_heard_by_person", "operator:x", "no time to listen, customer is waiting")
+            f = e.founder()
+            with self.assertRaises(ValueError):
+                verify.waive(e.store, jid, aid, "audio_heard_by_person", founder=f, reason="no time to listen, customer is waiting")
             self.assertFalse(verify.gateway(e.store, jid, aid, req)["ready"])
             with self.assertRaises(ValueError):
-                verify.attest(e.store, jid, aid, "audio_heard_by_person", by="operator:x", note="ok")
-            verify.attest(e.store, jid, aid, "audio_heard_by_person", by="operator:x",
+                verify.attest(e.store, jid, aid, "audio_heard_by_person", founder=f, note="ok")
+            verify.attest(e.store, jid, aid, "audio_heard_by_person", founder=f,
                           note="full listen on headphones: surf, wind and the music bed only")
             g = verify.gateway(e.store, jid, aid, req)
             self.assertTrue(g["ready"])
-            self.assertEqual(g["table"][0]["runner"], "person:operator:x")
+            self.assertEqual(g["table"][0]["runner"], "founder:founder@mi.test")
         finally:
             e.close()
 

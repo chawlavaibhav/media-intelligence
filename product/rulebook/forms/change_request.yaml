@@ -1,0 +1,26 @@
+# Change request — the waiter (spec §4.9; the separate change-taker of v1 is merged into the waiter).
+form: change_request
+version: 1
+written_by: waiter
+schema:
+  type: object
+  required: [class, targets, preserve, copy_changes, explanation_for_customer]
+  properties:
+    class: {type: string, enum: [technical_repair, targeted_change, concept_change]}
+    targets:
+      type: array
+      items:
+        type: object
+        required: [kind, ref, change]
+        properties:
+          kind: {type: string, enum: [shot, first_frame, master_plate, copy, music, edit, composition]}
+          ref: {type: string}
+          change: {type: string}
+    preserve: {type: array, items: {type: string}}
+    copy_changes:
+      type: array
+      items:
+        type: object
+        required: [id, text]
+        properties: {id: {type: string}, text: {type: string}}
+    explanation_for_customer: {type: string}

@@ -1,6 +1,10 @@
 """Operator command line: bootstrap, accounts, invitations, backup and restore.
 
-    python3 -m product.admin init-operator --email founder@example.com     # prints a one-time invitation link
+There is deliberately NO command here that overrides a check, picks a take, releases a file or resumes a job: those are
+the founder's decisions and need the founder signed in to the web app (spec §6.4, product/authority.py).
+
+    python3 -m product.admin init-founder --email founder@example.com      # ONCE: the one founder account (invitation link)
+    python3 -m product.admin init-operator --email ops@example.com         # staff: view and pause; cannot override anything
     python3 -m product.admin create-account --name "Acme" --ceiling 40
     python3 -m product.admin invite --email buyer@acme.com --account acct_... [--role customer]
     python3 -m product.admin backup --out /backups/mi-2026-09-23.tar.gz
@@ -61,6 +65,7 @@ def restore(archive: Path, data_dir: Path) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
+    p = sub.add_parser("init-founder"); p.add_argument("--email", required=True)
     p = sub.add_parser("init-operator"); p.add_argument("--email", required=True)
     p = sub.add_parser("create-account"); p.add_argument("--name", required=True); p.add_argument("--ceiling", default="25"); p.add_argument("--auto-approve", action="store_true")
     p = sub.add_parser("invite"); p.add_argument("--email", required=True); p.add_argument("--account"); p.add_argument("--role", default="customer")
@@ -73,7 +78,10 @@ def main():
     s = config.load()
     st = Store(s.db_path)
     svc = Service(s, st)
-    if a.cmd == "init-operator":
+    if a.cmd == "init-founder":
+        tok = svc.create_invite(email=a.email, role="founder", account_id=None, by="cli")
+        print(f"{s.base_url}/invite/{tok}")
+    elif a.cmd == "init-operator":
         tok = svc.create_invite(email=a.email, role="operator", account_id=None, by="cli")
         print(f"{s.base_url}/invite/{tok}")
     elif a.cmd == "create-account":

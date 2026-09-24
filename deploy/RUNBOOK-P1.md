@@ -9,12 +9,19 @@ The install runs `python3 -m product.smoke` **before** enabling the services. It
 (media engine on this host, dry image + film jobs, backup/restore). Do not take traffic on a FAIL.
 
 Then: edit `/etc/mi/mi.env` (hostname, keys), copy `deploy/Caddyfile` to `/etc/caddy/Caddyfile` with the real
-hostname, `systemctl reload caddy`, and create the first operator:
+hostname, `systemctl reload caddy`, and then **the founder** creates the founder account:
 
 ```
-sudo -u mi sh -c 'set -a; . /etc/mi/mi.env; PYTHONPATH=/srv/mi/app python3 -m product.admin init-operator --email you@company'
+sudo -u mi sh -c 'set -a; . /etc/mi/mi.env; PYTHONPATH=/srv/mi/app python3 -m product.admin init-founder --email founder@company'
 ```
-Open the printed link, set a password, sign in → `/ops` → create the customer account (per-job ceiling) → invite.
+The founder opens the printed link, sets the password, signs in → `/ops` → creates the customer account (per-job ceiling)
+→ invites customers and any operators.
+
+**The founder account is created and held only by the founder** (amendment 1 §6). A builder, an operator, an AI agent
+or any script must never run `init-founder`, never receive the invite link, and never create, know or store the founder's
+password — not in a file, an environment variable, a note or a chat. (The v1 builder held the operator login; that must
+not happen again.) If anyone else ever held it, the founder resets it. Operators get their own accounts by invitation:
+they can see and pause jobs, never decide.
 
 ## Modes
 
@@ -23,23 +30,47 @@ Open the printed link, set a password, sign in → `/ops` → create the custome
 | `MI_PROVIDER_MODE=simulated` | no image/video/music call can leave the host; test media; USD 0 |
 | `MI_REASONING_MODE=simulated` | no model call leaves the host; deterministic stand-ins |
 | `live` (either) | real calls, each one reserved against the job's authorised budget first |
-| `MI_HOLD_BEFORE_PREVIEW=1` | every finished cut waits in `operator_hold` for an operator look (recommended for the first beta jobs) |
+| `MI_HOLD_BEFORE_PREVIEW=1` | the founder chooses to look first: every finished cut waits in `operator_hold` until the founder releases it. Off by default |
 
-A simulated review can never pass the independent-review check; in simulated mode every cut stops at
-`operator_hold` and can only reach the customer through named waivers. That is by design.
+Nobody waits for the founder (amendment 1 §3). An unqualified judge's "pass" is not evidence, so those checks go to the
+customer: the preview says the customer's look is the final check, and their acceptance is recorded against each one.
+A **measured** check (code on the exact file) that fails still never reaches the customer: the kitchen repairs it
+automatically (2 rounds, within the approved budget), then asks the customer to stop or pay for a rework.
+
+## Telling customers it's their turn (email)
+
+Every time a job needs the customer (questions, the plan, the look, the first taste, the finished work, a decision,
+more budget) it is shown on their page and, when a mail server is configured, emailed to them. Set in `/etc/mi/mi.env`:
+`MI_SMTP_HOST`, `MI_SMTP_PORT` (587), `MI_SMTP_USER`, `MI_SMTP_PASSWORD`, `MI_MAIL_FROM`. Without them nothing breaks;
+the notice stays on the page. The email says only what is needed and links to the order — never the kitchen.
+
+## Trying models for the judges (model trial)
+
+The judges are independent of the models. To compare candidate models on the old cases you already judged:
+```
+python3 -m product.qualification.judges --trial --estimate                        # cost per model, USD 0
+python3 -m product.qualification.judges --trial --max-usd 20 --approved-by "<who approved, when>"
+```
+The candidates are listed in `product/qualification/judges.py` (`TRIAL_MODELS`); `azure_openai:<deployment>` works for
+any model deployed on the Azure resource. A model whose keys are missing is skipped. A trial never qualifies a judge
+and never changes the product's models.
 
 ## Daily operation
 
 - `/ops` lists every job and its state; a paused/failed job shows its reason.
 - `/ops/jobs/<id>`: brief (frozen), intent, direction, pre-spend review, Canon trace, asset graph, ledger,
   reasoning calls (with the context each saw), assets, gateway table, metrics, event log.
-- **Gateway blocked** (`operator_hold`): look at the media. For each FAIL/NOT_VERIFIED row either get it fixed
-  (pause → change → resume) or waive it with a real reason (e.g. "listened end to end on headphones: no speech").
-  Release sends the cut to the customer. Waivers are recorded against the exact file version.
+- **Held before preview** (`operator_hold`, only when the founder switched the hold on): the founder looks at the media,
+  waives a measured row only with a real reason, and releases. Waivers are recorded against the exact file version.
+- **needs_customer_decision**: a measured check still fails after the automatic repairs; the customer chooses stop or
+  a paid rework on their job page. Nothing to do unless they ask.
+- **Weekly**: the founder reads `/ops/digest` — what the kitchen learned by itself, with Undo per item — and decides the
+  lessons that touch money, overrides or safety (the only ones that wait).
 - **paused_budget**: the customer raises the budget on their page (or the operator asks them to). Never raise
   a customer's budget on their behalf.
 - **paused_provider**: retried automatically after 60 s. Persistent failures: check provider status / credit pools.
-- **failed**: read the reason in the event log; fix; `Resume` (goes back to the recorded state).
+- **failed** (an internal error — a bug, not a decision): read the reason in the event log; fix; the founder resumes
+  (goes back to the recorded state). The customer can always close a failed job themselves.
 
 ## Worker restart / crash
 
