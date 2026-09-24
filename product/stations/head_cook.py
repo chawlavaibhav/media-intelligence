@@ -474,6 +474,8 @@ def _draw(k, job_id, node_id, fn):
         except DispatchFailed as e:
             k.store.event(job_id, "system", "provider_failure", {"node": node_id, "class": e.failure_class, "error": str(e)[:300]})
             if not e.retryable:
+                if e.failure_class == "provider_refusal" and "audio" in str(e).lower():
+                    raise                       # the shot adapts (its sound sentences left out) — see _node_shot
                 raise _node_failed(f"{node_id}: {e}")
             k.store.set_node(job_id, node_id, draws=cur["draws"])
             transient += 1
