@@ -652,12 +652,14 @@ def taste(k, job_id, node_id, instruction, a, *, prev=None, video_seconds=8.0) -
                          "then the output to inspect (last)."}
     master = _selected_bytes(k, job_id, "master") if k.store.node(job_id, "master") and k.store.node(job_id, "master")["selected_asset_id"] \
         and node_id != "master" else None
-    items = ([master] if master else []) + list(prev or [])[:1] + product_refs(k, job_id, 1) + _media_of(k, a)
+    refs = ([master] if master else []) + list(prev or [])[:1] + product_refs(k, job_id, 1)
+    items = refs + _media_of(k, a)
     with k.store.timed(job_id, "independent_review", f"small taster {node_id}"):
         v = k.workers.call(job_id, "small_taster", "ingredient_check", ctx, exact_words=k.exact_words(job_id), media=items,
                            video_seconds=video_seconds, sim_args={"node_id": node_id})
         if v.get("unsure"):
-            v2 = k.workers.call(job_id, "small_taster", "ingredient_check", ctx, exact_words=k.exact_words(job_id), media=items,
+            v2 = k.workers.call(job_id, "small_taster", "ingredient_check", ctx, exact_words=k.exact_words(job_id),
+                                media=refs + _media_of(k, a, "small_taster_escalation"),   # the clip as THIS model can take it
                                 model_key="small_taster_escalation", video_seconds=video_seconds, sim_args={"node_id": node_id, "escalated": True})
             v2["escalated_from"] = v.get("llm_call_id")
             v = v2
@@ -670,10 +672,10 @@ def taste(k, job_id, node_id, instruction, a, *, prev=None, video_seconds=8.0) -
     return v
 
 
-def _media_of(k, a) -> list:
+def _media_of(k, a, key: str = "small_taster") -> list:
     if (a["content_type"] or "").startswith("image/"):
         return [(a["content_type"], Path(a["path"]).read_bytes())]
-    if k.s.models.get("small_taster", "").startswith("gemini") and media.have_ffmpeg():
+    if k.s.models.get(key, "").startswith("gemini") and media.have_ffmpeg():
         return [("video/mp4", Path(a["path"]).read_bytes())]
     if not media.have_ffmpeg():
         return []

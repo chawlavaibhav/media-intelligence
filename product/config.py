@@ -50,10 +50,45 @@ def worker_models() -> dict:
     return out
 
 
+# Who MADE a model, read from its name (model trial 2026-09-24: Kimi, DeepSeek and Mistral are served from the Aight Azure
+# resource but are not OpenAI's). A name that matches nothing falls back to the host's company.
+MAKERS = (("gpt", "openai"), ("o1", "openai"), ("o3", "openai"), ("o4", "openai"), ("claude", "anthropic"),
+          ("gemini", "google"), ("gemma", "google"), ("kimi", "moonshot"), ("deepseek", "deepseek"), ("mistral", "mistral"),
+          ("llama", "meta"), ("grok", "xai"), ("qwen", "alibaba"))
+# Models that take text only. They drop attached pictures without an error (DeepSeek-V4-Flash, model trial 2026-09-24), so
+# they may never hold a worker that is shown pictures. Extend with MI_TEXT_ONLY_MODELS="name,name".
+TEXT_ONLY_MODELS = ("deepseek-v4-flash", "deepseek-v3.2")
+# Workers that are sent pictures or films: everyone except the diary writer and the decision slot.
+SEEING_WORKERS = ("waiter", "pantry_checker", "chef", "chef_image", "recipe_checker", "small_taster", "small_taster_escalation",
+                  "big_taster")
+
+
+def maker(spec: str) -> str:
+    host, _, name = spec.partition(":")
+    low = name.lower()
+    for prefix, company in MAKERS:
+        if low.startswith(prefix):
+            return company
+    return COMPANY.get(host, host)
+
+
+def can_see(spec: str) -> bool:
+    name = spec.partition(":")[2].lower()
+    extra = tuple(x.strip().lower() for x in (_env("MI_TEXT_ONLY_MODELS", "") or "").split(",") if x.strip())
+    return name not in TEXT_ONLY_MODELS + extra
+
+
+def check_vision(models: dict):
+    """A worker that is shown pictures must have a model that can see them."""
+    for w in SEEING_WORKERS:
+        if w in models and not can_see(models[w]):
+            raise ValueError(f"the {w} is shown pictures but {models[w]} takes text only; choose a model that can see")
+
+
 def check_independence(models: dict):
-    """The chef and the judges must come from different AI companies (spec §3, §9.3, checklist C4)."""
+    """The chef and the judges must come from different AI makers (spec §3, §9.3, checklist C4) — the maker, not the host."""
     def company(w):
-        return COMPANY.get(models[w].split(":", 1)[0], models[w].split(":", 1)[0])
+        return maker(models[w])
     for chef in [c for c in ("chef", "chef_image") if c in models]:
         for judge in ("recipe_checker", "big_taster"):
             if company(judge) == company(chef):
@@ -129,6 +164,7 @@ def load(data_dir: str | Path | None = None, **overrides) -> Settings:
     for k, v in overrides.items():
         setattr(s, k, v)
     check_independence(s.models)
+    check_vision(s.models)
     if s.provider_mode not in ("simulated", "live") or s.reasoning_mode not in ("simulated", "live"):
         raise ValueError("MI_PROVIDER_MODE / MI_REASONING_MODE must be 'simulated' or 'live'")
     s.data_dir.mkdir(parents=True, exist_ok=True)

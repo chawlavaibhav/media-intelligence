@@ -133,6 +133,8 @@ class AnthropicBackend:
             elif mime == "application/pdf":      # a customer's brief deck / storyboard reference
                 content.append({"type": "document", "source": {"type": "base64", "media_type": mime,
                                                                 "data": base64.b64encode(data).decode()}})
+            else:  # the Messages API takes no video or audio: refuse rather than judge work never seen
+                raise ReasoningFailed(f"{mime} cannot be sent to {model}; send a contact sheet of stills instead")
         content.append({"type": "text", "text": user_text})
         body = {"model": model, "max_tokens": max_tokens, "system": system, "messages": [{"role": "user", "content": content}]}
         if effort:            # cheap workers run without extended thinking (effort None)
@@ -165,12 +167,17 @@ class AzureOpenAIBackend:
             raise ProviderUnavailable("AZURE_OPENAI_ENDPOINT / AZURE_OPENAI_API_KEY are not configured")
         system = system_role + ("\n\nKNOWLEDGE\n" + knowledge if knowledge else "")
         content = []
+        from product.config import can_see
+        if media and not can_see(f"azure_openai:{model}"):
+            raise ReasoningFailed(f"{model} takes text only; refusing to send it {len(media)} attachment(s) it would silently drop")
         for i, (mime, data) in enumerate(media):
             b64 = base64.b64encode(data).decode()
             if mime.startswith("image/"):
                 content.append({"type": "image_url", "image_url": {"url": f"data:{mime};base64,{b64}", "detail": "high"}})
             elif mime == "application/pdf":
                 content.append({"type": "file", "file": {"filename": f"reference-{i + 1}.pdf", "file_data": f"data:{mime};base64,{b64}"}})
+            else:  # video and audio cannot go to this API: refuse rather than let the model judge work it never saw
+                raise ReasoningFailed(f"{mime} cannot be sent to {model} on Azure OpenAI; send a contact sheet of stills instead")
         content.append({"type": "text", "text": user_text})
         body = {"model": model, "response_format": {"type": "json_object"},
                 "messages": [{"role": "system", "content": system}, {"role": "user", "content": content}]}
