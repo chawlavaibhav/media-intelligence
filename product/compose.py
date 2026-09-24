@@ -250,10 +250,10 @@ def end_card(*, out: Path, size: tuple, direction: dict, logo: Path | None, work
         lw, lh = _png_size(lp)
         items.append(("logo", lp, lw, lh, None))
     for i, c in enumerate(lines):
-        start = int(W * (0.06 if i == 0 else 0.04))
-        size, (dx, dy, tw, th) = media.fit_text(c["text"], max_w=W - 2 * m, start_size=start, min_size=24, kind="bold" if i == 0 else "regular")
+        start = int(min(W, H) * (0.13 if i == 0 else 0.08))          # the name big, the line after it readable at a glance
+        size, (dx, dy, tw, th) = media.fit_text(c["text"], max_w=W - 2 * m, start_size=start, min_size=40, kind="bold" if i == 0 else "regular")
         items.append((c["id"], c["text"], tw, th, (size, dx, dy, i)))
-    gap = int(W * 0.04)
+    gap = int(min(W, H) * 0.045)
     total = sum(it[3] for it in items) + gap * max(0, len(items) - 1)
     y = (H - total) // 2
     layers = []
@@ -285,8 +285,9 @@ def super_overlay(*, out: Path, size: tuple, text: str, clip: Path, clip_in: flo
     """A full-frame transparent PNG carrying one line in the lower third; contrast sampled from the clip frames it sits on."""
     W, H = size
     m = int(min(W, H) * 0.07)
-    s, (dx, dy, tw, th) = media.fit_text(text, max_w=W - 2 * m, start_size=int(W * 0.06), min_size=28, kind="bold")
-    x, y = (W - tw) // 2, int(H * 0.74)
+    # sized by the frame's SHORT side (a vertical film's words were ~3% of its height — too small for 50+ eyes, 2026-09-25)
+    s, (dx, dy, tw, th) = media.fit_text(text, max_w=W - 2 * m, start_size=int(min(W, H) * 0.085), min_size=36, kind="bold")
+    x, y = (W - tw) // 2, int(H * (0.76 if H > W else 0.78))
     box = (x, y, x + tw, y + th)
     samples = []
     for k in range(4):
@@ -296,10 +297,18 @@ def super_overlay(*, out: Path, size: tuple, text: str, clip: Path, clip_in: flo
     layers = []
     checks = []
     if ink is None:
-        pad = int(s * 0.4)
-        layers.append({"type": "box", "x": box[0] - pad, "y": box[1] - pad, "w": tw + 2 * pad, "h": th + 2 * pad, "colour": INK})
+        # a soft darkening of the lower frame (a film's grade, not a subtitle box); contrast is checked against the frame
+        # as it will be seen under it (black at up to 70 %: linear luminance x 0.3)
+        peak, steps = 0.75, 12
+        solid = max(0, y - int(th * 0.5))                 # behind and below the words: black at `peak`
+        top = max(0, solid - int(th * 2.0))               # above them: a ramp from clear to `peak`, in bands that never overlap
+        for i in range(steps):
+            y0, y1 = top + (solid - top) * i // steps, top + (solid - top) * (i + 1) // steps
+            if y1 > y0:
+                layers.append({"type": "box", "x": 0, "y": y0, "w": W, "h": y1 - y0, "colour": f"#000000{int(255 * peak * (i + 1) / (steps + 1)):02x}"})
+        layers.append({"type": "box", "x": 0, "y": solid, "w": W, "h": H - solid, "colour": f"#000000{int(255 * peak):02x}"})
         ink = WHITE
-        cres = gate("contrast:super", "CONTRAST_GATE", G.check_contrast, ink, [], role=_role(s, W), backing_hex=INK)
+        cres = gate("contrast:super", "CONTRAST_GATE", G.check_contrast, ink, [v * (1 - peak) for v in samples], role=_role(s, W))
     cres["check_id"] = "contrast:super"
     checks.append(cres)
     layers.append({"type": "text", "text": text, "size": s, "colour": ink, "x": x - dx, "y": y - dy, "kind": "bold"})
