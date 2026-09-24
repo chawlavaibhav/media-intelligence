@@ -117,6 +117,9 @@ class Settings:
     vertex_region: str = "us-central1"
     max_upload_bytes: int = 40 * 1024 * 1024
     account_default_ceiling_usd: Decimal = Decimal("25.00")
+    # Beta rules (founder 2026-09-24): the customer owns the money decision — no account ceiling in beta. The job's own
+    # budget and the "needs about USD X more — continue?" question stay; MI_ENFORCE_ACCOUNT_CEILING=1 brings the cap back.
+    account_ceiling_enforced: bool = False
     worker_concurrency: int = 4
     lease_seconds: int = 900
     # Hold every finished cut for the founder's look before the customer sees it. Amendment 1 §3: off by default — the
@@ -156,6 +159,7 @@ def load(data_dir: str | Path | None = None, **overrides) -> Settings:
         media_surface=_env("MI_MEDIA_SURFACE", "gemini_api"),
         vertex_region=_env("MI_VERTEX_REGION", "us-central1"),
         hold_before_preview=_env("MI_HOLD_BEFORE_PREVIEW", "0") == "1",
+        account_ceiling_enforced=_env("MI_ENFORCE_ACCOUNT_CEILING", "0") == "1",
         base_url=_env("MI_BASE_URL", "http://localhost:8080"),
         worker_concurrency=int(_env("MI_WORKER_CONCURRENCY", "4")),
         models=worker_models(),

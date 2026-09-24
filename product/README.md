@@ -31,7 +31,7 @@ MI_DATA_DIR=/tmp/mi .venv/bin/python -m product.web.app --port 8080 &   MI_DATA_
 | `library/` | equipment sheet, failure diary, recipe library, Canon pages, the librarian's trays (§7.3, §8) |
 | `shelf/` | the customer shelf (§7.2) |
 | `lessons/` | the lesson queue: lessons applied automatically by kind, rulebook changes watched and rolled back, undo; only money/override/safety lessons wait for the founder (§7.5, amendment 1 §4) |
-| `authority.py` | only a signed-in founder session can override, pick a take, release, resume, decide or undo a lesson (§6.4) — none of it ever required (amendment 1 §3) |
+| `authority.py` | only a signed-in founder session can override, release, resume, decide or undo a lesson (§6.4) — none of it ever required (amendment 1 §3) |
 | `cost.py` | the quote's reasoning line and the per-worker reasoning report (§9.4) |
 | `qualification/judges.py` | the judges' qualification harness (§10) |
 | `store.py` `dispatch.py` `providers.py` `media.py` `compose.py` `verify.py` `web/` `admin.py` | kept from v1 and adapted |

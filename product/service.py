@@ -138,8 +138,10 @@ class Service:
         except InvalidOperation:
             raise Invalid("budget must be a number")
         acct = self.store.account(user["account_id"])
-        if cap <= 0 or cap > dec(acct["ceiling_usd"]):
-            raise Invalid(f"set a maximum production budget between USD 1 and your account limit (USD {acct['ceiling_usd']})")
+        if cap < 1:
+            raise Invalid("set a maximum production budget of at least USD 1")
+        if self.s.account_ceiling_enforced and cap > dec(acct["ceiling_usd"]):      # off in beta (founder 2026-09-24)
+            raise Invalid(f"set a maximum production budget no higher than your account limit (USD {acct['ceiling_usd']})")
         if not allow_preview_spend:
             raise Invalid("please allow the small planning allowance so we can prepare the creative direction")
         colours = [c for c in brand_colours if re.fullmatch(r"#[0-9a-fA-F]{6}", c or "")]
@@ -194,7 +196,7 @@ class Service:
         j = self.job(user, job_id)
         acct = self.store.account(j["account_id"])
         b = dec(new_budget)
-        if b > dec(acct["ceiling_usd"]):
+        if self.s.account_ceiling_enforced and b > dec(acct["ceiling_usd"]):      # off in beta: the customer decides
             raise Invalid(f"above the account limit USD {acct['ceiling_usd']}")
         if b <= dec(j["budget_usd"]):
             raise Invalid("the new budget must be higher than the current one")

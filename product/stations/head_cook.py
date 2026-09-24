@@ -28,12 +28,6 @@ from product.store import BudgetExhausted, utc_now
 TRANSIENT_RETRIES = 3
 
 
-class NeedsFounder(Exception):
-    def __init__(self, node_id, candidates, why):
-        super().__init__(f"{node_id}: {why}")
-        self.node_id, self.candidates, self.why = node_id, candidates, why
-
-
 class KeepFlagged(Exception):
     """Amendment 1 §3: an output the small taster rejected on every allowed attempt, on the safest route there is. The
     latest take is kept, flagged, and noted on the customer's preview — the customer's look is the final check."""
@@ -234,16 +228,9 @@ def produce(k, job_id: str):
         nodes = {n["node_id"]: n for n in k.store.nodes(job_id) if n["status"] != "retired"}
         if all(n["status"] == "done" for n in nodes.values()):
             break
-        waiting = [x for x, n in nodes.items() if n["status"] == "needs_founder"]
         ready = [x for x, n in nodes.items() if n["status"] == "pending"
                  and all(nodes[d]["status"] == "done" for d in json.loads(n["deps_json"]) + json.loads(n["spec_json"]).get("gates", [])
                          if d in nodes)]
-        if not ready and waiting:          # only after a founder's own intervention (amendment 1 §3); never by the system
-            notes = {x: json.loads(nodes[x]["note"] or "{}").get("why", "") for x in waiting}
-            k.to_founder(job_id, "producing", "the small taster rejected every take of " + ", ".join(waiting)
-                         + ": the founder picks a take, or closes the job — " + "; ".join(f"{x}: {w}" for x, w in notes.items())[:400],
-                         "pick a take")
-            return
         if not ready:
             raise _node_failed("no runnable node; states: " + json.dumps({x: n["status"] for x, n in nodes.items()}))
         order = sorted(ready, key=lambda x: (not json.loads(nodes[x]["spec_json"]).get("risky"), x))
@@ -255,8 +242,6 @@ def produce(k, job_id: str):
         except (BudgetExhausted, ProviderUnavailable):
             k.store.set_node(job_id, x, status="pending")
             raise
-        except NeedsFounder as e:              # only reachable through a founder's own intervention
-            k.store.set_node(job_id, x, status="needs_founder", note=json.dumps({"candidates": e.candidates, "why": e.why}))
         except KeepFlagged as e:
             _keep_flagged(k, job_id, x, e.asset_id, e.why)
         except IdenticalRequestRefused as e:
@@ -399,22 +384,6 @@ def approve_master(k, job_id, *, by: str, founder_session: str | None = None):
     k._end_wait(job_id, "master")
     k.store.transition(job_id, "awaiting_master_approval", "producing", actor=by, data={"master_approved": aid})
     write_log(k, job_id)
-
-
-def founder_select_take(k, job_id, proof, asset_id, reason):
-    """The founder overrides the small taster's "no" by picking one of the paid takes (spec §6.4). Nothing is re-bought."""
-    a = k.store.asset(asset_id)
-    n = k.store.node(job_id, a["node_id"]) if a and a["job_id"] == job_id else None
-    if n is None or n["status"] != "needs_founder":
-        raise ValueError("that take does not belong to an output waiting for the founder")
-    k.store.add_override(job_id, kind="take", target=f"{n['node_id']}:{asset_id}", founder=proof, reason=reason,
-                         data={"taster": json.loads(a["meta_json"]).get("inspection")})
-    k.store.set_asset(asset_id, status="candidate")
-    _done(k, job_id, n["node_id"], asset_id)
-    k.store.event(job_id, proof.actor, "take_selected_by_founder", {"node": n["node_id"], "asset": asset_id, "reason": reason})
-    if not [x for x in k.store.nodes(job_id) if x["status"] == "needs_founder"] and k.store.job(job_id)["state"] == "paused_for_founder":
-        k.store.transition(job_id, "paused_for_founder", "producing", actor=proof.actor, founder=proof, data={"take_selected": asset_id},
-                           pause_reason=None)
 
 
 # ── nodes ───────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -623,7 +592,9 @@ def _usable(v) -> bool:
 
 def _rejected(k, job_id, node_id, aid, verdict) -> str:
     """A binding "no": record it; retry once with the taster's notes as a correction; after 2 rejected attempts the shot
-    goes back to the chef (films) or to the founder (a master plate, plate or character has no shot to re-plan)."""
+    goes back to the chef once (films), then the system switches it to FILM-A; on FILM-A, or for a master plate, plate or
+    character (no shot to re-plan), the best take is kept, flagged and noted on the customer's preview (amendment 1 §3).
+    Beta rules 2026-09-24: the old "the founder picks a take" wait is removed — nothing reached it."""
     k.store.set_asset(aid, status="rejected")
     why = (verdict.get("notes") or "") + ("; differences: " + "; ".join(verdict.get("differences") or []) if verdict.get("differences") else "")
     cur = k.store.node(job_id, node_id)
@@ -776,5 +747,5 @@ def write_log(k, job_id):
     return log
 
 
-__all__ = ["plan", "produce", "sample_picture", "approve_master", "founder_select_take", "write_log", "taste", "verify",
+__all__ = ["plan", "produce", "sample_picture", "approve_master", "write_log", "taste", "verify",
            "IdenticalRequestRefused"]

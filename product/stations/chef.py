@@ -251,7 +251,7 @@ def approve(k, job_id, *, by: str, budget_usd, note: str = "", accept_objections
         raise PermissionError("the recipe checker sent this recipe back; it cannot be approved until it is fixed")
     acct = k.store.account(job["account_id"])
     budget = dec(budget_usd)
-    if budget > dec(acct["ceiling_usd"]):
+    if k.s.account_ceiling_enforced and budget > dec(acct["ceiling_usd"]):      # off in beta (founder 2026-09-24)
         raise PermissionError(f"USD {budget} is above the account ceiling USD {acct['ceiling_usd']}")
     committed = k.store.committed_usd(job_id)
     k._end_wait(job_id, "approval")

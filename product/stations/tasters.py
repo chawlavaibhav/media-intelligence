@@ -166,7 +166,8 @@ def customer_decision(k, job_id, results):
 
 
 def decide(k, job_id, *, by: str, choice: str, note: str = "", budget_usd=None):
-    """The customer's answer to needs_customer_decision: stop, or a paid rework within their account ceiling."""
+    """The customer's answer to needs_customer_decision: stop, or a paid rework (the customer's money decision; within the
+    account ceiling only when MI_ENFORCE_ACCOUNT_CEILING is on — off in beta, 2026-09-24)."""
     from decimal import Decimal
     from product.store import dec, money
     job = k.store.job(job_id)
@@ -184,7 +185,7 @@ def decide(k, job_id, *, by: str, choice: str, note: str = "", budget_usd=None):
         raise ValueError(choice)
     price = Decimal(d["rework_price_usd"])
     budget = max(dec(budget_usd) if budget_usd else Decimal(0), k.store.committed_usd(job_id) + price, dec(job["budget_usd"]))
-    if budget > dec(k.store.account(job["account_id"])["ceiling_usd"]):
+    if k.s.account_ceiling_enforced and budget > dec(k.store.account(job["account_id"])["ceiling_usd"]):   # off in beta
         raise PermissionError(f"USD {money(budget)} is above the account ceiling")
     from product.stations.head_cook import _reset_downstream
     reset = []

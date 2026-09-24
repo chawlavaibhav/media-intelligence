@@ -12,6 +12,9 @@ an order goes when a station says no (spec §6, §12).
 
 Amendment 1 §3: nobody waits for the founder — every limit ends with the system and then the customer. Founder decisions
 below stay available, founder-only, and are never required.
+Beta rules (founder 2026-09-24): the founder is never inside a running job. A step error retries twice by itself (events
+`step_retry`), then the customer chooses try again / stop (`needs_retry_decision`); a send-back limit that reaches this
+controller ends with the customer (the plan with the objections in plain words), never with the founder.
 
 Every step reads its inputs from the store, writes its outputs, and ends in a compare-and-set transition, so a restarted
 worker re-runs at most the step it was in. Customer decisions are methods taking the customer's email; founder decisions
@@ -37,6 +40,7 @@ from product.stations.simulated import SimulatedWorkers
 from product.store import BudgetExhausted, StaleState, Store, dec, money, utc_now
 
 PREVIEW_ALLOWANCE_USD = Decimal("3.00")      # planning reasoning + the sample picture, authorised at submission
+STEP_RETRIES = 2                             # automatic retries of a step that errored, then the customer (2026-09-24)
 
 
 class NodeFailed(Exception):
@@ -133,11 +137,6 @@ class Orchestrator:
     def pause(self, job_id, frm, to, reason, actor="system"):
         self.store.transition(job_id, frm, to, actor=actor, data={"reason": reason}, resume_state=frm, pause_reason=reason[:600])
 
-    def to_founder(self, job_id, frm, reason, decision: str):
-        """Stop and ask the founder. `decision` names what the founder is asked to decide (shown on the operator page)."""
-        self.store.put_artifact(job_id, "founder_decision", {"decision": decision, "reason": reason, "from_state": frm}, "system")
-        self.pause(job_id, frm, "paused_for_founder", reason)
-
     # ── worker entry ───────────────────────────────────────────────────────────────────────────────────
     STEPS = {"submitted": ("waiter", "understand"), "understanding": ("waiter", "understand"), "feasibility": ("pantry", "check"),
              "directing": ("chef", "direct"), "planning": ("head_cook", "plan"), "producing": ("head_cook", "produce"),
@@ -160,19 +159,16 @@ class Orchestrator:
         except ProviderUnavailable as e:
             self.pause(job_id, state, "paused_provider", f"a production service is unavailable: {scrub(str(e))[:200]}")
         except flow.LimitReached as e:
-            self.to_founder(job_id, state, str(e), "send-back limit reached")
+            self._limit_reached(job_id, state, e)
         except StaleState:
             pass
         except (ReasoningFailed, NodeFailed, GuardRefused, media.MediaError) as e:
             self.store.event(job_id, "system", "step_failed", {"state": state, "error": scrub(str(e))[:800]})
-            self.pause(job_id, state, "failed", scrub(str(e))[:300])
+            self._step_error(job_id, state, scrub(str(e))[:300])
         except Exception as e:  # noqa: BLE001 — any unexpected fault is recorded, never swallowed silently
             self.store.event(job_id, "system", "step_crashed", {"state": state, "error": scrub(repr(e))[:800],
                                                                  "trace": scrub(traceback.format_exc())[-2000:]})
-            try:
-                self.pause(job_id, state, "failed", f"internal error: {scrub(repr(e))[:200]}")
-            except StaleState:
-                pass
+            self._step_error(job_id, state, f"internal error: {scrub(repr(e))[:200]}")
         now = self.store.job(job_id)["state"]
         if now != state:                    # it's the customer's turn: tell them (page always; email when configured)
             from product import customer
@@ -181,6 +177,48 @@ class Orchestrator:
 
     def _step(self, fn, job_id, state):
         fn(job_id) if state == "paused_provider" else fn(self, job_id)
+
+    def _retries(self, job_id, state) -> int:
+        """Automatic retries of `state` since the job last changed state (a customer's "try again" starts afresh)."""
+        n = 0
+        for e in reversed(self.store.events(job_id, ("state", "step_retry"))):
+            if e["kind"] == "state":
+                break
+            n += json.loads(e["data_json"]).get("state") == state
+        return n
+
+    def _step_error(self, job_id, state, error: str):
+        """Beta rules 2026-09-24: a step that errored is retried by the system (at most STEP_RETRIES times, each an event);
+        then the customer decides: try again (the same step, fresh retries) or stop (closed; nothing more is spent)."""
+        try:
+            if self.store.job(job_id)["state"] != state:
+                return                                         # the step moved the job on before it failed: nothing to retry
+            n = self._retries(job_id, state)
+            if n < STEP_RETRIES:
+                self.store.event(job_id, "system", "step_retry", {"state": state, "retry": n + 1, "error": error[:300]})
+                return                                         # the job stays in `state`: the next worker claim re-runs it
+            resume = self.store.job(job_id)["resume_state"] if state == "paused_provider" else state
+            self.store.transition(job_id, state, "needs_retry_decision", actor="system",
+                                  data={"reason": error, "retries": n}, resume_state=resume,
+                                  pause_reason="Something went wrong on our side and our automatic retries did not fix it. "
+                                               "You can ask us to try again, or stop here (nothing more is spent).")
+            self.store.timing_start(job_id, "customer_wait", "retry")
+        except StaleState:
+            pass
+
+    def _limit_reached(self, job_id, state, e):
+        """A send-back limit that no station handled. In directing (the system's safe re-plan was already used in this plan
+        cycle) the customer sees the plan with the objections in plain words and chooses go ahead / change / stop. Anywhere
+        else it is a step error: retried, then the customer's try again / stop. Never the founder."""
+        from product.stations import chef
+        recipe, rc = self.store.artifact(job_id, "recipe"), self.store.artifact(job_id, "recipe_check")
+        if state == "directing" and recipe and rc:
+            self.store.event(job_id, "system", "limit_to_customer", {"rule": e.rule_id, "key": e.key})
+            if rc.get("verdict_after_code") == "approve":
+                return chef.after_approved_recipe(self, job_id, recipe)
+            return chef.objections_to_customer(self, job_id, recipe, rc)
+        self.store.event(job_id, "system", "step_failed", {"state": state, "error": str(e)[:800]})
+        self._step_error(job_id, state, str(e)[:300])
 
     def resume_provider(self, job_id):
         job = self.store.job(job_id)
@@ -238,9 +276,32 @@ class Orchestrator:
         return changes.request(self, job_id, by, items)
 
     def decide(self, job_id, *, by: str, choice: str, note: str = "", budget_usd=None):
-        """A measured check failed and the automatic repairs are used up: the customer stops or pays for a rework."""
+        """A measured check failed and the automatic repairs are used up: the customer stops or pays for a rework. After a
+        step error the same customer decision is try again / stop (after_error)."""
+        if self.store.job(job_id)["state"] == "needs_retry_decision":
+            return self.after_error(job_id, by=by, choice=choice, note=note)
         from product.stations import tasters
         return tasters.decide(self, job_id, by=by, choice=choice, note=note, budget_usd=budget_usd)
+
+    def after_error(self, job_id, *, by: str, choice: str, note: str = ""):
+        """The customer's answer to needs_retry_decision (beta rules 2026-09-24): "try_again" resumes the step that errored
+        (with fresh automatic retries); "stop" closes the job — nothing more is spent on production."""
+        job = self.store.job(job_id)
+        if job["state"] != "needs_retry_decision":
+            raise ValueError("there is nothing waiting for you to try again")
+        if choice not in ("try_again", "stop"):
+            raise ValueError(f"choose try_again or stop, not {choice!r}")
+        self._end_wait(job_id, "retry")
+        if choice == "try_again":
+            self.store.event(job_id, by, "customer_retry", {"state": job["resume_state"]})
+            self.store.transition(job_id, "needs_retry_decision", job["resume_state"], actor=by, data={"try_again": True},
+                                  pause_reason=None)
+            return
+        from product.stations import diary
+        self.store.transition(job_id, "needs_retry_decision", "abandoned", actor=by,
+                              data={"reason": note[:300] or "the customer stopped after an error on our side"},
+                              closed_at=utc_now(), outcome="abandoned")
+        diary.write(self, job_id)
 
     def accept(self, job_id, by: str):
         from product.stations import tasters
@@ -280,10 +341,6 @@ class Orchestrator:
     def override_recipe(self, job_id, *, session, reason: str):
         from product.stations import chef
         return chef.founder_override(self, job_id, self.founder(session, job_id, "override the recipe checker"), reason)
-
-    def select_take(self, job_id, *, session, asset_id: str, reason: str):
-        from product.stations import head_cook
-        return head_cook.founder_select_take(self, job_id, self.founder(session, job_id, "pick a take"), asset_id, reason)
 
     def override_final_review(self, job_id, *, session, reason: str):
         from product.stations import tasters

@@ -34,6 +34,7 @@ STATE_WORDS = {
     "ready_for_review": "It's ready for you.",
     "revising": "We're making your changes.",
     "needs_customer_decision": "We need your decision on one thing.",
+    "needs_retry_decision": "Something went wrong on our side. You can ask us to try again, or stop here.",
     "paused_budget": "We've paused: this needs a little more budget.",
     "paused_provider": "One of our production services is slow; we'll carry on shortly.",
     "paused_operator": "Our team is taking a look; we'll carry on shortly.",
@@ -151,6 +152,7 @@ TURN_WORDS = {
     "awaiting_taste": "A first shot of your film is ready to taste",
     "ready_for_review": "Your work is ready",
     "needs_customer_decision": "We need your decision",
+    "needs_retry_decision": "Something went wrong on our side — try again or stop?",
     "paused_budget": "Your job needs a little more budget",
 }
 

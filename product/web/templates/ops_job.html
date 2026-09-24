@@ -27,12 +27,6 @@
 <label for="cl">Close the job (lessons are still written) — why?</label><input id="cl" type="text" name="reason" required minlength="15"><button class="secondary">Close job</button></form>{% endif %}
 </div>
 
-{% for w in waiting_takes %}<div class="card"><h2>Pick a take — {{ w.node }}</h2>
-<p class="small">The small taster rejected every attempt: {{ w.why }}. Picking one overrides its "no" — say why.</p>
-<div class="row">{% for t in w.takes %}<div>{% if t.content_type.startswith('image/') %}<img src="/assets/{{ t.id }}" alt="take {{ loop.index }}" style="max-width:260px;display:block">{% else %}<video controls src="/assets/{{ t.id }}" style="max-width:260px"></video>{% endif %}
-<form method="post" action="/ops/jobs/{{ job.id }}/select_take"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="asset_id" value="{{ t.id }}">
-<input type="text" name="reason" required minlength="15" placeholder="Why this one"><button>Use this take</button></form></div>{% endfor %}</div></div>{% endfor %}
-
 {% if overrides %}<div class="card"><h2>Founder overrides on this job</h2><table><tr><th>when</th><th>what</th><th>target</th><th>by</th><th>reason</th></tr>
 {% for o in overrides %}<tr><td class="small">{{ o.created[:19] }}</td><td>{{ o.kind }}</td><td class="small">{{ o.target }}</td><td>{{ o.founder_email }}</td><td>{{ o.reason }}</td></tr>{% endfor %}</table></div>{% endif %}
 

@@ -78,12 +78,7 @@ class RiskiestShotFirstAndOnlyTheFounderPicksATake(unittest.TestCase):
             self.assertIn("rejected", json.loads(n["spec_json"])["flagged"])                            # kept, flagged
             self.assertIn("shot 2", " ".join(e.store.artifact(jid, "customer_notes")["notes"]))         # ...and the customer is told
             self.assertFalse([x for x in e.store.nodes(jid) if x["status"] == "needs_founder"])
-            take = n["selected_asset_id"]
-            e.operator("ops@mi.test")
-            for caller in ("w-123-abc", "operator:claude (builder, P1 validation)", e.session_of("ops@mi.test"), e.session_of("buyer@acme.test")):
-                with self.assertRaises(PermissionError):                                                 # picking a take stays founder-only
-                    e.orch.select_take(jid, session=caller, asset_id=take, reason="this take looks fine to me, use it")
-            self.assertGreaterEqual(len(e.store.events(jid, ("override_refused",))), 4)
+            self.assertFalse(hasattr(e.orch, "select_take"))           # beta rules 2026-09-24: no "the founder picks a take" wait
         finally:
             e.close()
 

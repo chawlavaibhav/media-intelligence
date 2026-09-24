@@ -29,8 +29,14 @@
 {% if job.state == 'paused_budget' %}
 <div class="card"><h2>Paused — this job needs more budget</h2><p>{{ job.pause_reason }}</p>
 <form method="post" action="/jobs/{{ job.id }}/budget"><input type="hidden" name="csrf" value="{{ csrf }}">
-<label for="b">New maximum budget (USD, up to {{ "%.2f"|format(account.ceiling_usd|float) }})</label><input id="b" type="number" step="0.5" name="budget_usd" value="{{ (job.budget_usd|float + 5)|round(1) }}">
+<label for="b">New maximum budget (USD{% if ceiling_enforced %}, up to {{ "%.2f"|format(account.ceiling_usd|float) }}{% endif %})</label><input id="b" type="number" step="0.5" name="budget_usd" value="{{ (job.budget_usd|float + 5)|round(1) }}">
 <p><button>Raise budget and continue</button></p></form></div>
+{% elif job.state == 'needs_retry_decision' %}
+<div class="card"><h2>Something went wrong on our side</h2><p>{{ job.pause_reason }}</p>
+<form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="try_again">
+<p><button>Try again</button></p></form>
+<form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="stop">
+<p><button class="secondary">Stop here (nothing more is spent)</button></p></form></div>
 {% elif job.state in ('paused_provider', 'paused_operator', 'failed', 'paused_for_founder') %}
 <div class="card"><h2>{{ label(job.state) }}</h2><p class="muted">Our team can see this job and will get it moving; you don't need to do anything.</p></div>
 {% endif %}
@@ -104,7 +110,7 @@
 <tr><th>Recommended budget</th><th>{{ quote.recommended_budget_usd|usd }}</th></tr></table>
 <p class="muted small">You're only charged for what production actually uses; we pause and ask before going over the budget you set.</p>
 <form method="post" action="/jobs/{{ job.id }}/approve"><input type="hidden" name="csrf" value="{{ csrf }}">
-<label for="bud">Production budget you authorise (USD, up to {{ "%.2f"|format(account.ceiling_usd|float) }})</label>
+<label for="bud">Production budget you authorise (USD{% if ceiling_enforced %}, up to {{ "%.2f"|format(account.ceiling_usd|float) }}{% endif %})</label>
 <input id="bud" type="number" step="0.5" name="budget_usd" value="{{ [quote.recommended_budget_usd|float, brief.max_budget_usd|float]|max }}">
 {% if plan_objections %}<p><label><input type="checkbox" name="accept_objections" value="yes" required> I have read our reviewer's objections and want to go ahead anyway</label></p>{% endif %}
 <p><button>{{ 'Go ahead with this plan' if plan_objections else 'Approve direction and start production' }}</button></p></form>
