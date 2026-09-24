@@ -91,7 +91,7 @@ class App:
         self.secret = (self.s.secret("MI_SECRET_KEY") or self._local_secret()).encode()
         self.jinja = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]))
         self.jinja.globals.update(states=states, label=states.label, rail=states.RAIL, rail_position=states.rail_position,
-                                  json=json, simulated=(self.s.provider_mode == "simulated" or self.s.reasoning_mode == "simulated"))
+                                  json=json, ceiling_enforced=self.s.account_ceiling_enforced, simulated=(self.s.provider_mode == "simulated" or self.s.reasoning_mode == "simulated"))
         self.jinja.filters["plain"] = customer_words.plain
         self.jinja.filters["usd"] = lambda v: f"USD {dec(v):.2f}" if v not in (None, "") else "—"
         self.jinja.filters["loads"] = lambda v: json.loads(v) if v else {}
@@ -105,7 +105,7 @@ class App:
             ("GET", r"/shelf", self.shelf_page), ("POST", r"/shelf/(?P<sid>shf_\w+)", self.shelf_action),
             ("GET", r"/assets/(?P<aid>ast_\w+)(?P<dl>/download)?", self.asset),
             ("GET", r"/ops", self.ops_home), ("GET", r"/ops/jobs/(?P<jid>job_\w+)", self.ops_job),
-            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override|select_take|override_recipe|override_final|close|approve_master)", self.ops_action),
+            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override|override_recipe|override_final|close|approve_master)", self.ops_action),
             ("GET", r"/ops/lessons", self.ops_lessons), ("POST", r"/ops/lessons/(?P<lid>lsn_\w+)", self.ops_lesson_action),
             ("GET", r"/ops/digest", self.ops_digest), ("POST", r"/ops/lessons/(?P<lid>lsn_\w+)/undo", self.ops_lesson_undo),
             ("GET", r"/ops/rulebook", self.ops_rulebook), ("GET", r"/ops/library", self.ops_library),
@@ -377,9 +377,6 @@ class App:
                  overrides=st.overrides(jid), founder_decision=st.artifact(jid, "founder_decision"),
                  cost=cost.reasoning_report(o, jid, st.artifact(jid, "recipe")) if st.artifact(jid, "understanding") else None,
                  metrics=learning.metrics(st, jid), is_founder=u["role"] == "founder", lessons=o.lessons.all(jid))
-        v.update(waiting_takes=[{"node": n["node_id"], "why": json.loads(n["note"] or "{}").get("why", ""),
-                                 "takes": [st.asset(a) for a in json.loads(n["note"] or "{}").get("candidates", [])]}
-                                for n in st.nodes(jid) if n["status"] == "needs_founder"])
         v.update(attestable={r["check_id"]: verify.attestable(r["check_id"]) for g in v["gateway"] for r in g["table"]
                              if verify.attestable(r["check_id"])}, non_waivable=verify.NON_WAIVABLE)
         return self.page("ops_job.html", req, **v)
@@ -403,8 +400,6 @@ class App:
                                 outcome=f.get("outcome", "PASS"))
             elif action == "release":
                 o.release(jid, session=req.session)
-            elif action == "select_take":
-                o.select_take(jid, session=req.session, asset_id=f.get("asset_id", ""), reason=f.get("reason", ""))
             elif action in ("override", "override_recipe"):
                 o.override_recipe(jid, session=req.session, reason=f.get("reason", ""))
             elif action == "override_final":

@@ -95,8 +95,9 @@ class OnlyTheFounderCanOverride(unittest.TestCase):
         self.e = Env()
         self.jid = self.e.submit("image")
         self.e.store.transition(self.jid, "submitted", "understanding", actor="system")
-        self.e.store.transition(self.jid, "understanding", "paused_for_founder", actor="system", data={"reason": "test"},
-                                resume_state="understanding", pause_reason="test")
+        # beta rules 2026-09-24: the system can no longer enter a founder pause, so the fixture puts the job there directly
+        self.assertFalse(flow.can("understanding", "paused_for_founder"))
+        self.e.store.set_job(self.jid, state="paused_for_founder", resume_state="understanding", pause_reason="test")
 
     def tearDown(self):
         self.e.close()

@@ -10,6 +10,10 @@ Amendment 1 §3 (founder decision 2026-09-23): nobody waits for the founder. Eve
 (a safer plan, a safer route, an automatic repair) and then the CUSTOMER (accept as is / change / stop) — never in a
 founder-only state. The founder-only states remain for a founder who CHOOSES to intervene (pausing a job, switching the
 hold before preview on), and every founder override stays available; none is ever required.
+
+Beta rules (founder decision 2026-09-24): the founder is never inside a running job. No state the system works in can
+even lead to `paused_for_founder` or `failed` (the table below refuses it); a step error retries twice by itself and then
+the CUSTOMER chooses try again / stop (`needs_retry_decision`).
 """
 from __future__ import annotations
 
@@ -31,6 +35,7 @@ STATES = {
     "awaiting_taste":           (5, "Taste the first shot of your film", "customer"),
     "checking":                 (5, "Checking the work", "worker"),
     "needs_customer_decision":  (5, "A check failed — your decision is needed", "customer"),
+    "needs_retry_decision":     (5, "Something went wrong on our side — try again or stop", "customer"),
     "operator_hold":            (5, "Final quality check by our team", "founder"),
     "ready_for_review":         (5, "Ready for your review", "customer"),
     "revising":                 (5, "Making your changes", "worker"),
@@ -40,14 +45,14 @@ STATES = {
     "paused_budget":            (5, "Paused — needs more budget", "customer"),
     "paused_provider":          (5, "Paused — a production service is unavailable; retrying", "worker"),
     "paused_operator":          (5, "Paused by our team", "founder"),
-    "paused_for_founder":       (5, "Our team is reviewing a decision", "founder"),
+    "paused_for_founder":       (5, "Paused — we'll carry on shortly", "founder"),
     "failed":                   (5, "Stopped — our team has been notified", "founder"),
 }
 
 WORKER_STATES = ("submitted", "understanding", "feasibility", "directing", "planning", "producing", "checking", "revising",
                  "paused_provider")
 CUSTOMER_STATES = ("needs_answers", "awaiting_customer_input", "awaiting_approval", "awaiting_master_approval", "awaiting_taste",
-                   "ready_for_review", "paused_budget", "needs_customer_decision")
+                   "ready_for_review", "paused_budget", "needs_customer_decision", "needs_retry_decision")
 TERMINAL = ("accepted", "rejected", "refused", "abandoned")
 PAUSES = ("paused_budget", "paused_provider", "paused_operator", "paused_for_founder")
 
@@ -65,32 +70,36 @@ RAIL = [
 ]
 
 _WORK = {"understanding", "feasibility", "directing", "planning", "producing", "checking", "revising"}
-_WAITS = {"needs_answers", "awaiting_customer_input", "awaiting_approval", "awaiting_master_approval", "awaiting_taste"}
+_WAITS = {"needs_answers", "awaiting_customer_input", "awaiting_approval", "awaiting_master_approval", "awaiting_taste",
+          "needs_retry_decision"}
 
+# Beta rules 2026-09-24: no state the system works in (or a customer waits in) leads to `failed` or `paused_for_founder`;
+# a step error goes to `needs_retry_decision` (the customer: try again / stop). Only a person's pause (paused_operator) and
+# the founder's own optional hold before the preview (operator_hold) remain.
+_ERR = {"needs_retry_decision"}
 ALLOWED = {
-    "submitted": {"understanding", "failed", "paused_operator"},
-    "understanding": {"needs_answers", "refused", "feasibility", "failed", "paused_budget", "paused_operator", "paused_provider",
-                      "paused_for_founder"},
+    "submitted": {"understanding", "paused_operator"} | _ERR,
+    "understanding": {"needs_answers", "refused", "feasibility", "paused_budget", "paused_operator", "paused_provider"} | _ERR,
     "needs_answers": {"understanding", "paused_operator", "rejected", "abandoned"},
-    "feasibility": {"awaiting_customer_input", "directing", "failed", "paused_budget", "paused_operator", "paused_provider",
-                    "paused_for_founder"},
+    "feasibility": {"awaiting_customer_input", "directing", "paused_budget", "paused_operator", "paused_provider"} | _ERR,
     "awaiting_customer_input": {"understanding", "abandoned", "paused_operator"},
-    "directing": {"awaiting_approval", "planning", "paused_for_founder", "failed", "paused_budget", "paused_operator",
-                  "paused_provider", "refused"},
+    "directing": {"awaiting_approval", "planning", "paused_budget", "paused_operator", "paused_provider", "refused"} | _ERR,
     "awaiting_approval": {"directing", "planning", "rejected", "abandoned", "paused_operator"},
-    "planning": {"producing", "failed", "paused_budget", "paused_operator", "paused_provider"},
-    "producing": {"awaiting_master_approval", "awaiting_taste", "checking", "directing", "paused_for_founder", "failed", "paused_budget",
-                  "paused_provider", "paused_operator"},
-    "awaiting_master_approval": {"producing", "abandoned", "paused_operator", "paused_for_founder"},
+    "planning": {"producing", "paused_budget", "paused_operator", "paused_provider"} | _ERR,
+    "producing": {"awaiting_master_approval", "awaiting_taste", "checking", "directing", "paused_budget", "paused_provider",
+                  "paused_operator"} | _ERR,
+    "awaiting_master_approval": {"producing", "abandoned", "paused_operator"},
     "awaiting_taste": {"producing", "abandoned", "paused_operator"},
-    "checking": {"producing", "directing", "operator_hold", "ready_for_review", "needs_customer_decision", "paused_for_founder",
-                 "failed", "paused_budget", "paused_provider", "paused_operator"},
+    "checking": {"producing", "directing", "operator_hold", "ready_for_review", "needs_customer_decision", "paused_budget",
+                 "paused_provider", "paused_operator"} | _ERR,
     "needs_customer_decision": {"producing", "abandoned", "paused_operator"},
+    # the customer's answer after a step error: try again (back to the step) or stop (closed; nothing more is spent)
+    "needs_retry_decision": _WORK | {"submitted", "abandoned", "paused_operator"},
     "operator_hold": {"ready_for_review", "producing", "paused_operator", "paused_for_founder", "failed", "abandoned"},
     "ready_for_review": {"accepted", "revising", "rejected", "abandoned", "paused_operator"},
-    "revising": {"producing", "directing", "failed", "paused_budget", "paused_operator", "paused_provider", "paused_for_founder"},
+    "revising": {"producing", "directing", "paused_budget", "paused_operator", "paused_provider"} | _ERR,
     "paused_budget": _WORK | {"rejected", "abandoned", "paused_operator"},
-    "paused_provider": _WORK | {"failed", "paused_operator"},
+    "paused_provider": _WORK | {"paused_operator"} | _ERR,
     # a pause never skips a check: resuming goes back to work, to a customer wait, or to the founder's hold — never
     # straight to the customer's review (that is operator_hold -> ready_for_review, founder only)
     "paused_operator": _WORK | _WAITS | {"operator_hold", "paused_for_founder", "abandoned", "rejected"},
@@ -119,7 +128,7 @@ def label(state: str) -> str:
 
 
 def rail_position(state: str, resume_state: str | None = None) -> int:
-    s = resume_state if state in PAUSES and resume_state else state
+    s = resume_state if (state in PAUSES or state == "needs_retry_decision") and resume_state else state
     for i, (_, members) in enumerate(RAIL):
         if s in members:
             return i
