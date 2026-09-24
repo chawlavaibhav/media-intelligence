@@ -1,5 +1,8 @@
 """P1 v2 phase 8 — full simulated journeys through the web app (spec §13 step 8; checklist J3), and spec §11 test 11 across
-every AI worker. Only HTTP requests by the customer and by the founder, plus the worker process; USD 0, real ffmpeg."""
+every AI worker. Only HTTP requests by the customer and by the founder, plus the worker process; USD 0, real ffmpeg.
+
+Kitchen v3 (2026-09-25): the film journey follows the v3 line — no pantry question, no look / first-shot wait; the
+AI workers are the waiter, the chef, the head cook, the gatekeeper and the diary writer. No test retired."""
 import hashlib
 import json
 import re
@@ -11,7 +14,9 @@ from product.tests.test_web import Client
 from product.web.app import App
 from runtime.loop.synthetic import make_png
 
-ALL_AI_WORKERS = {"waiter", "pantry_checker", "chef", "recipe_checker", "small_taster", "big_taster", "diary_writer"}
+from product import rulebook
+
+ALL_AI_WORKERS = set(rulebook.AI_WORKERS)
 
 
 class WebJourneys(unittest.TestCase):
@@ -32,7 +37,7 @@ class WebJourneys(unittest.TestCase):
         return r
 
     def test_the_rejected_films_order_becomes_an_accepted_film_through_the_web_app_with_lessons_for_the_founder(self):
-        """Amendment 1 §3: nobody waits for the founder — the customer approves the plan, the look, and the preview."""
+        """Kitchen v3: nobody waits for the founder — the customer approves the recipe and receives the dish."""
         e = self.e
         ups = [("product_photos", name, fx.with_shows(make_png(64, 64, seed=10 + i), shows), "image/png")
                for i, (name, shows) in enumerate(fx.BACKPACK_PHOTOS)] + [("logo", "logo.png", make_png(32, 16, seed=5), "image/png")]
@@ -43,27 +48,14 @@ class WebJourneys(unittest.TestCase):
                                          "max_budget_usd": "15", "allow_preview": "yes", "references_note": fx.BACKPACK_NOTE}, files=ups)
         jid = dict(r["headers"])["Location"].split("/")[-1]
         e.drain()
+        self.assertEqual(e.state(jid), "awaiting_approval")                        # waiter -> chef -> the customer
         page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
-        self.assertIn(b"We can&#39;t film", page)                                    # hands zipping the bag: cannot, with an alternative
-        n = len(e.store.artifact(jid, "feasibility")["alternatives"])
-        self.post(self.c, f"/jobs/{jid}/input", f"/jobs/{jid}", {**{f"alt_{i}": "yes" for i in range(n)}}, files=[])
-        e.drain()
-        self.assertEqual(e.state(jid), "awaiting_approval")                        # no founder step (amendment 1 §3)
-        self.assertIn(b"Our reviewer found no problems", self.c.req("GET", f"/jobs/{jid}/details")["body"])
+        self.assertIn(b"Approve direction", page)
         self.post(self.c, f"/jobs/{jid}/approve", f"/jobs/{jid}", {"budget_usd": "15"})
-        e.drain()
-        self.assertEqual(e.state(jid), "awaiting_master_approval")
-        self.post(self.c, f"/jobs/{jid}/master", f"/jobs/{jid}", {})
-        e.drain()
-        self.assertEqual(e.state(jid), "awaiting_taste")                           # the hardest shot, made first, to taste
-        page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
-        self.assertIn(b"Have a first taste", page)
-        self.assertIn(b"is made.", page)                                           # the progress line kept moving
-        self.post(self.c, f"/jobs/{jid}/taste", f"/jobs/{jid}", {})
         e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")
         self.assertIn(b"your look at this preview is the final check", self.c.req("GET", f"/jobs/{jid}/details")["body"])
-        self.post(self.c, f"/jobs/{jid}/changes", f"/jobs/{jid}", {"target_1": "shot:2", "change_1": "a slower slide"})
+        self.post(self.c, f"/jobs/{jid}/changes", f"/jobs/{jid}", {"target_1": "shot:1", "change_1": "a slower slide"})
         e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")
         self.post(self.c, f"/jobs/{jid}/accept", f"/jobs/{jid}", {})
@@ -89,7 +81,7 @@ class WebJourneys(unittest.TestCase):
         self.assertEqual(e.store.overrides(jid), [])
         self.assertEqual(e.store.q("SELECT * FROM waivers WHERE job_id=?", (jid,)), [])
         rows = {r["check_id"]: r for r in e.store.checks(final)}
-        for cid in ("independent_review", "audio_heard_by_person", "small_taster_confirmed"):
+        for cid in ("independent_review", "audio_heard_by_person"):
             self.assertEqual(rows[cid]["runner"], "customer:buyer@acme.test", cid)
 
     def test_an_image_order_is_accepted_through_the_web_app(self):

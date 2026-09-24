@@ -210,7 +210,7 @@ class SimulatedWorkers:
                       f"comfort follows; the film ends on their smile and the product at rest in the soft lamp light."),
             "identity_anchors": {"person": person, "product": f"{name} exactly as the customer's photos show it", "world": world,
                                  "grade": "natural, warm, premium"},
-            "look": {"picture_prompt": look, "text_zone": "top"},
+            "look": {"picture_prompt": look, "text_zone": "top", "product_present": True},
             "sound": {"music_prompt": "warm, understated piano with a gentle build; instrumental", "ambience": "room tone, a cup set down"},
             "voice_over": voice, "copy_deck": copy, "shots": shots,
             "end_card": {"copy_ids": [c["id"] for c in copy], "background_hex": "#1f2a44"},

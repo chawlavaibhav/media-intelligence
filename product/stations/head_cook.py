@@ -59,6 +59,11 @@ def guard(k, job_id, recipe):
     return prompts.guard_for({"brand": u.get("brand")}, recipe, k.brief(job_id))
 
 
+def look_has_product(recipe: dict) -> bool:
+    """The chef says whether the product is in the look of the film (recipe v3 `look.product_present`; older recipes: yes)."""
+    return bool((recipe.get("look") or {}).get("product_present", True))
+
+
 def product_refs(k, job_id, limit=3) -> list:
     """Reference photos for the generator and the head cook: the ones the chef chose (`reference_photos`, best first);
     otherwise product views first, then details, never lifestyle/people or logo photos, infographics last (EQ-006)."""
@@ -91,7 +96,7 @@ def sample_picture(k, job_id: str, recipe: dict):
                                       "master_plate": recipe.get("master_plate")})
         k.shelf.record_use(job_id, job["account_id"], shelf_master["id"], "master_plate")
         return aid
-    refs = product_refs(k, job_id)
+    refs = product_refs(k, job_id) if (job["media"] == "image" or look_has_product(recipe)) else []
     g = guard(k, job_id, recipe)
     if job["media"] == "image":
         prompt = prompts.still_prompt(recipe, g, aspect=aspect, with_product_ref=bool(refs), with_character_ref=False)
@@ -470,6 +475,8 @@ def _image_request(k, job_id, n, spec, ctx, correction=""):
     if spec.get("edit_from") and k.store.asset(spec["edit_from"]):
         # the head cook's `edit` repair: most of the take is right, so the picture model edits it instead of redrawing it
         take = k.store.asset(spec["edit_from"])
+        if (kind == "master" and not look_has_product(recipe)) or (kind == "frame" and not ctx["shots"][spec["shot"]].get("product_present")):
+            refs = []
         text = ("Edit the first image. Keep everything in it exactly as it is (the person, face, age, clothes, pose, room, "
                 "light, colours and framing) and change only this: " + spec.get("edit_instruction", "") +
                 (" The product must match the product reference photos (the images after the first) exactly." if refs else ""))
@@ -478,11 +485,14 @@ def _image_request(k, job_id, n, spec, ctx, correction=""):
             {"asset": f"{n['node_id']} — an edit of the previous take", "prompt": p, "edit_instruction": spec.get("edit_instruction")}, \
             f"edit of {take['id']}"
     if kind == "master":
+        has = look_has_product(recipe)
+        refs = refs if has else []
         p = prompts.master_plate_prompt(recipe, g, aspect=aspect, with_product_ref=bool(refs))
         if spec.get("prompt_override"):
             p = prompts.chef_picture_prompt(spec["prompt_override"], g, aspect=aspect,
                                             refs_note="The product must match the product reference photos exactly." if refs else "")
-        return p, refs, {"asset": "master plate — the film's one world", "prompt": p}, "product photos"
+        return p, refs, {"asset": "master plate — the film's one world", "prompt": p, "product_present": has}, \
+            "product photos" if refs else "the chef's look prompt"
     if kind == "plate":
         p = prompts.still_prompt(recipe, g, aspect=aspect, with_product_ref=bool(refs), with_character_ref=False)
         use = list(refs)
@@ -626,8 +636,11 @@ def _rejected(k, job_id, node_id, aid, verdict) -> str:
     cspec = json.loads(cur["spec_json"])
     repair = verdict.get("repair") or "retake"
     better = (verdict.get("better_prompt") or "").strip()
+    # the shot's action class at the time of the rejection: the diary writer turns repeated rejections into equipment lessons
+    shot = next((s for s in (k.store.artifact(job_id, "recipe") or {}).get("shots", []) if s["n"] == cspec.get("shot")), None)
     k.store.event(job_id, "head_cook", "take_rejected", {"node": node_id, "asset": aid, "why": why[:400], "repair": repair,
-                                                         "tool": cspec.get("tool"), "route": cspec.get("route")})
+                                                         "tool": cspec.get("tool"), "route": cspec.get("route"),
+                                                         "action_class": shot.get("action_class") if shot else None})
     image_kind = cur["kind"] in ("master", "frame", "plate", "character")
     if image_kind and (repair == "edit" or (repair == "use_photo" and cur["kind"] != "frame")) and better:
         # most of the picture is right: edit this take (the person and the room stay; only what was wrong changes)
@@ -663,13 +676,14 @@ def taste(k, job_id, node_id, instruction, a, *, prev=None, video_seconds=8.0) -
     """The head cook tastes one take (kitchen v3) on a model from a different company than the chef's: pictures on
     `head_cook`, clips (watched with their sound) on `head_cook_av`."""
     recipe = k.store.artifact(job_id, "recipe") or {}
-    product = (recipe.get("identity_anchors") or {}).get("product")
+    here = instruction.get("product_present", True) is not False
+    product = (recipe.get("identity_anchors") or {}).get("product") if here else None
     ctx = {"INSTRUCTION": {**instruction, **({"product_description": product} if product else {})},
            "MEDIA_NOTE": "Images in order: the look of the film (if any), the previous shot's frame (if any), the customer's "
                          "product photos, then the take to taste (last)."}
     master = _selected_bytes(k, job_id, "master") if k.store.node(job_id, "master") and k.store.node(job_id, "master")["selected_asset_id"] \
         and node_id != "master" else None
-    refs = ([master] if master else []) + list(prev or [])[:1] + product_refs(k, job_id)
+    refs = ([master] if master else []) + list(prev or [])[:1] + (product_refs(k, job_id) if here else [])
     is_clip = not (a["content_type"] or "").startswith("image/")
     key = "head_cook_av" if is_clip else "head_cook"
     items = refs + _media_of(k, a, key)

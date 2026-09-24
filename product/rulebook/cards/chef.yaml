@@ -2,7 +2,7 @@
 # a film is moving moments, 'not AI slop' means real-looking, descriptions are what the viewer sees and feels). Seed version; later versions live in the store.
 worker: chef
 kind: ai
-version: 5
+version: 7
 model_tier: strongest
 forms:
 - recipe
@@ -86,13 +86,21 @@ instructions:
       overall shape and proportions in each state (closed, open), where each visible part sits and what shape it is (e.g.
       "a horizontal pill-shaped camera bar across the top of the back, holding two large round lenses side by side"),
       colours and finishes, what the screen shows. Name what it must NOT look like when a well-known look-alike exists.
+      A product NEW to the picture model (launched recently, or a small brand's own design) is drawn from its nearest
+      famous look-alike, however well you describe it (the cheat sheet has the numbers). Plan around that the way a
+      director plans around a difficult prop: in the moving moments show the side the machine CAN draw — a screen, a plain
+      outline, the product partly turned or partly held — and let the detailed side (cameras, logos, mechanisms, labels)
+      appear only in the customer's real photos (the `photo` tool). The moments stay; only the angle changes.
     - `reference_photos`: the numbers of the customer's photos (1 = first) that show the product most clearly on its own,
       best first, at most 3. These go to the picture model with every prompt that shows the product, and to the head cook
       when tasting. Prefer a clean single-product photo over a collage or a photo crowded with other products.
     - `look.picture_prompt`: the full prompt for the look of the film — one scene (never a collage), the person, the room, the
       light. This is the picture every other shot is built from, so it sets the person, the world and the light; keep the
       product out of it, or small and partly held, because a product drawn slightly wrong here is copied into every shot.
-      Each shot that shows the product describes it in full (the product anchor) and gets the reference photos. `look.text_zone`:
+      Each shot that shows the product describes it in full (the product anchor) and gets the reference photos.
+      `look.product_present`: whether the product is IN this picture (false when it is left out — then no product reference
+      photos go with it and nobody expects the product there). A product that exists only as a screen, an app or a service
+      is shown through its real screenshots (the `photo` tool), never drawn into the look of the film. `look.text_zone`:
       where the words sit.
     - `shots`: the board. Durations add up to the ordered length; the last shot is the end card (`tool: end_card`, 2-3 s).
       For every shot: `title`, `feeling`, `framing` (what the camera sees, moment by moment), `impact`, `description`, and `tool`.

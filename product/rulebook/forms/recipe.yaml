@@ -20,9 +20,10 @@ schema:
       properties: {person: {type: string}, product: {type: string}, world: {type: string}, grade: {type: string}}
     look:
       type: object
-      required: [picture_prompt, text_zone]
+      required: [picture_prompt, text_zone, product_present]
       properties:
         picture_prompt: {type: string}
+        product_present: {type: boolean}
         text_zone: {type: string, enum: [top, bottom, none]}
     sound:
       type: object

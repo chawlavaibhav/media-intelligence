@@ -188,6 +188,43 @@ class TheHeadCookRepairs(unittest.TestCase):
             e.close()
 
 
+class WhereTheProductBelongs(unittest.TestCase):
+    def test_a_look_without_the_product_gets_no_product_photos_and_the_taster_does_not_ask_for_it(self):
+        e = Env()
+        try:
+            orig = e.orch.sim.chef__recipe
+
+            def chef(b, media):
+                r = orig(b, media)
+                r["look"]["product_present"] = False
+                return r
+            e.orch.sim.chef__recipe = chef
+            sent, tasted = [], []
+            real_image = e.orch.dispatch.image
+
+            def image(job_id, node_id, **kw):
+                sent.append((node_id, len(kw.get("refs") or [])))
+                return real_image(job_id, node_id, **kw)
+            e.orch.dispatch.image = image
+            real_taste = e.orch.sim.head_cook__ingredient_check
+
+            def taste(b, media, **kw):
+                if kw.get("node_id") == "master":
+                    tasted.append(b["INSTRUCTION"])
+                return real_taste(b, media, **kw)
+            e.orch.sim.head_cook__ingredient_check = taste
+            jid = e.submit(duration_s=15)
+            e.drain()
+            self.assertEqual([n for n, refs in sent if n == "preview" and refs], [])       # the look drawn without product photos
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            e.drain()
+            self.assertTrue(tasted)
+            self.assertFalse(tasted[0]["product_present"])
+            self.assertNotIn("product_description", tasted[0])
+        finally:
+            e.close()
+
+
 class ThePhotoToolFollowsTheChefsCropAndFill(unittest.TestCase):
     def test_a_screen_is_cropped_and_kept_whole_as_a_card_never_cut_out(self):
         from PIL import Image

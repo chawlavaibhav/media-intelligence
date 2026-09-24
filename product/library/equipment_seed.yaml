@@ -158,6 +158,22 @@ rows:
     evidence_refs: []
     note: FILM-B's intended use; not yet observed on a P1 job, so it is qualified first like any risky shot.
     alternative: code motion on an approved still (FILM-A).
+  - id: EQ-015
+    generator: nano-banana-2
+    routes: [IMG, FILM-A, FILM-B, FILM-C]
+    action_class: product_still_from_clean_photo
+    verdict: cannot
+    sample_count: 6
+    successes: 0
+    failures: 6
+    evidence_refs: [IPHONE-DUO-0924-A, IPHONE-DUO-0924-B]
+    note: "a product NEW to the picture model (Apple iPhone Duo, launched after the model was trained), its detailed side (the
+      back: camera bar, lenses, logo) drawn in a person's hands. 6 takes over two jobs with clean reference photos and a
+      part-by-part description: a clamshell flip phone, an iPhone 15 slab, and three edits that kept a wrong half-open phone
+      with a triangle camera. The FRONT (a screen with thin borders, the fold line) was drawn right each time."
+    alternative: in moving shots show the side the machine can draw (the screen, the simple outline); show the detailed side
+      only in the customer's real photos (the photo tool).
+
   - id: EQ-014
     generator: veo-3.1-fast-i2v
     routes: [FILM-C]

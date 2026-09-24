@@ -67,17 +67,13 @@ class Env:
         return self.store.job(jid)["state"]
 
     def front(self, jid):
-        """v2 front of house: accept the pantry checker's alternatives → the plan card (no founder step: amendment 1 §3)."""
+        """Kitchen v3 front of house: the waiter, then the chef → the recipe card for the customer's approval."""
         self.drain()
-        if self.state(jid) == "awaiting_customer_input":
-            f = self.store.artifact(jid, "feasibility")
-            self.orch.provide_input(jid, by=self.user["email"], accepted_alternatives=[
-                {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
-            self.drain()
         return self.state(jid)
 
     def produce(self, jid):
-        """After approval: drain, approving the master plate and the taste (the customer) whenever production waits."""
+        """After approval: drain. The look / first-shot waits are off in v3 (MI_CUSTOMER_TASTES=1 switches them on); when
+        a test switches them on, the customer approves each one."""
         self.drain()
         while self.state(jid) in ("awaiting_master_approval", "awaiting_taste"):
             if self.state(jid) == "awaiting_master_approval":

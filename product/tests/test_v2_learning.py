@@ -1,5 +1,9 @@
 """P1 v2 phase 6 — the diary writer and the lessons it proposes, applied automatically by kind since amendment 1 §4.
-Spec §11 tests 9, 10, 14 and the journey half of 13 (a second job reuses the customer's shelf). USD 0, real ffmpeg."""
+Spec §11 tests 9, 10, 14 and the journey half of 13 (a second job reuses the customer's shelf). USD 0, real ffmpeg.
+
+Kitchen v3 (2026-09-25): the pantry checker is retired, so the equipment sheet reaches the next job through the chef's
+tray (memory for awareness), and the rulebook lesson no longer comes from recipe-checker send-backs (retired) — the
+diary writer proposes it directly. No test retired."""
 import json
 import unittest
 
@@ -36,7 +40,7 @@ class DiaryOnEveryOutcome(unittest.TestCase):
             e.orch.reject(rejected, e.user["email"], "too dark, the bag looks black")
             abandoned = fx.submit_backpack_film(e)
             e.drain()
-            self.assertEqual(e.state(abandoned), "awaiting_customer_input")
+            self.assertEqual(e.state(abandoned), "awaiting_approval")         # the customer walks away from the recipe
             e.orch.abandon(abandoned, e.user["email"], "we changed our minds about the reel")
             for jid, outcome in ((accepted, "accepted"), (rejected, "rejected"), (abandoned, "abandoned")):
                 les = e.store.artifact(jid, "lessons")
@@ -66,58 +70,57 @@ class DiaryOnEveryOutcome(unittest.TestCase):
 class ApprovedLessonsChangeTheNextJob(unittest.TestCase):
     """Spec §11 test 10 (equipment sheet) and test 14 (rulebook)."""
 
-    def test_a_more_careful_equipment_lesson_is_used_by_the_next_jobs_pantry_check_and_the_founder_can_undo_it(self):
+    def test_a_more_careful_equipment_lesson_reaches_the_next_jobs_chef_and_the_founder_can_undo_it(self):
         e = Env()
         try:
-            orig = e.orch.sim.small_taster__ingredient_check
+            orig = e.orch.sim.head_cook__ingredient_check
 
             def taster(b, media, **kw):
                 out = orig(b, media, **kw)
-                if kw.get("node_id") in ("frame_2", "shot_2"):
-                    out.update(usable=False, notes="the laptop passes through the bag wall")
+                if kw.get("node_id") == "shot_1":
+                    out.update(usable=False, notes="the hand passes through the bag wall")
                 return out
-            e.orch.sim.small_taster__ingredient_check = taster
+            e.orch.sim.head_cook__ingredient_check = taster
             first = fx.submit_backpack_film(e)
-            self.assertEqual(e.orch.equipment.verdict("insert_object_into_container", "FILM-C")["verdict"], "risky")
             fx.film_to_hold(e, first)
-            self.assertEqual(e.state(first), "ready_for_review")            # the shot became a still; the customer decides
-            e.orch.abandon(first, e.user["email"], "the slide was the point of the film; closing")
+            self.assertEqual(e.state(first), "ready_for_review")            # the best take kept, flagged; the customer decides
+            cls = next(s for s in e.store.artifact(first, "recipe")["shots"] if s["n"] == 1)["action_class"]
+            before = e.orch.equipment.verdict(cls, "FILM-C")["verdict"]
+            self.assertNotEqual(before, "cannot")
+            e.orch.abandon(first, e.user["email"], "the moment was the point of the film; closing")
             proposals = [r for r in e.orch.lessons.all(first) if r["target"] == "equipment_sheet"]
-            ins = [r for r in proposals if json.loads(r["proposal_json"])["action_class"] == "insert_object_into_container"]
+            ins = [r for r in proposals if json.loads(r["proposal_json"])["action_class"] == cls]
             self.assertTrue(ins, [json.loads(r["proposal_json"]) for r in proposals])
             self.assertEqual((ins[0]["kind"], ins[0]["status"]), ("careful", "applied"))          # more careful: applied at once
+            self.assertEqual(e.orch.equipment.verdict(cls, "FILM-C")["verdict"], "cannot")
             second = fx.submit_backpack_film(e)
             e.drain()
-            f = e.store.artifact(second, "feasibility")
-            slide = next(a for a in f["actions_needed"] if "laptop" in a["action"])
-            self.assertEqual(slide["best_verdict"], "cannot")
-            row = next(v for v in f["route_verdicts"] if v["action_id"] == slide["id"] and v["route"] == "FILM-C")
-            self.assertTrue(row["equipment_row"])
-            self.assertTrue(any("laptop" in x["for_action"] for x in f["alternatives"]))
-            e.orch.lessons.undo(ins[0]["id"], founder=e.founder(), note="The slide worked on the next brand; restore the old verdict.")
-            third = fx.submit_backpack_film(e)
-            e.drain()
-            f = e.store.artifact(third, "feasibility")
-            slide = next(a for a in f["actions_needed"] if "laptop" in a["action"])
-            self.assertEqual(slide["best_verdict"], "risky")                  # undone: the previous verdict is back
+            rows = [r["id"] for r in e.orch.equipment.rows() if r["action_class"] == cls and "FILM-C" in r["routes"] and r["verdict"] == "cannot"]
+            tray = {i["id"] for i in e.store.artifact(second, "tray:chef")["items"] if i["section"] == "equipment_sheet"}
+            self.assertTrue(set(rows) & tray, (rows, tray))                # the next chef is aware of it
+            e.orch.lessons.undo(ins[0]["id"], founder=e.founder(), note="The moment worked on the next brand; restore the old verdict.")
+            self.assertEqual(e.orch.equipment.verdict(cls, "FILM-C")["verdict"], before)           # undone: the previous verdict is back
         finally:
             e.close()
 
     def test_every_call_records_its_card_version_and_a_rulebook_lesson_bumps_it_for_the_next_job_under_watch(self):
         e = Env()
         try:
+            orig = e.orch.sim.diary_writer__lessons
+
+            def diary(b, media):
+                out = orig(b, media)
+                out["per_worker"].append({"worker": "chef", "what_went_right": "", "what_went_wrong": "the customer walked away",
+                                          "evidence_refs": ["the customer's words"],
+                                          "proposed_change": {"target": "rulebook_card", "why": "the customer closed the job at the recipe",
+                                                              "diff": {"worker": "chef", "changes": {"kra_add": "Read the customer's "
+                                                                       "must-haves back in the story's first line."}}}})
+                return out
+            e.orch.sim.diary_writer__lessons = diary
             first = fx.submit_backpack_film(e)
             e.drain()
-            f = e.store.artifact(first, "feasibility")
-            e.orch.provide_input(first, by=e.user["email"], accepted_alternatives=[
-                {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
-            e.orch.step(first)
-            e.orch.step(first)
-            u, f = e.store.artifact(first, "understanding"), e.store.artifact(first, "feasibility")
-            e.orch.sim.chef__recipe = lambda b, media: fx.v1_recipe(u, f)
-            e.orch.step(first)
-            self.assertEqual(e.state(first), "awaiting_approval")            # the system's safe re-plan, for the customer
-            e.orch.abandon(first, e.user["email"], "the chef kept planning hands on zips")
+            self.assertEqual(e.state(first), "awaiting_approval")
+            e.orch.abandon(first, e.user["email"], "the chef missed the zip")
             for c in e.store.llm_calls(first):
                 self.assertEqual(c["card_version"], int(rulebook.seed_cards()[c["worker"]]["version"]), c["worker"])
             lesson = next(r for r in e.orch.lessons.all(first) if r["target"] == "rulebook_card")
@@ -126,7 +129,7 @@ class ApprovedLessonsChangeTheNextJob(unittest.TestCase):
             self.assertEqual(e.orch.rulebook.version("chef"), int(rulebook.seed_cards()["chef"]["version"]) + 1)
             hist = e.orch.rulebook.history("chef")
             self.assertEqual(hist[-1]["source_lesson"], lesson["id"])
-            del e.orch.sim.chef__recipe
+            e.orch.sim.diary_writer__lessons = orig
             second = fx.submit_backpack_film(e)
             fx.film_to_hold(e, second)
             chef_calls = [c for c in e.store.llm_calls(second) if c["worker"] == "chef"]
@@ -142,33 +145,34 @@ class ApprovedLessonsChangeTheNextJob(unittest.TestCase):
 class SecondJobReusesTheShelf(unittest.TestCase):
     """Spec §11 test 13 (journey half) and checklist G4."""
 
-    def test_the_second_film_for_the_same_customer_reuses_their_logo_character_and_master_plate_and_another_account_sees_none(self):
+    def test_the_second_film_for_the_same_customer_reuses_their_logo_and_colours_and_another_account_sees_none(self):
+        # kitchen v3: there is no separate character picture (the chef's identity anchors carry the person in every
+        # prompt), and the chef writes each film's look afresh (the v3 recipe has no reuse_shelf_items), so the second
+        # job reuses the logo and colours; the look of the film is on the shelf, shown to the chef
         e = Env()
         try:
             first = fx.submit_backpack_film(e)
             self.assertEqual(fx.film_to_hold(e, first), "ready_for_review")
             e.orch.accept(first, e.user["email"])
             proposed = e.orch.shelf.items(e.acct, status="proposed")
-            self.assertTrue({"logo", "brand_colour", "product_photo", "character"} <= {r["kind"] for r in proposed})
+            self.assertTrue({"logo", "brand_colour", "product_photo", "master_plate"} <= {r["kind"] for r in proposed})
             for r in proposed:
                 e.orch.shelf.decide(e.acct, r["id"], approve=True, by=e.user["email"])
             approved = {r["kind"] for r in e.orch.shelf.approved(e.acct)}
-            self.assertIn("master_plate", approved)                         # approved once, in the first job
+            self.assertIn("master_plate", approved)                         # approved once, after the first job
             # second job: no logo, no colours supplied
             ups = [u for u in fx.photo_uploads() if u["role"] != "logo"]
             second = e.svc.submit(e.user, title="second reel", media="video", text=fx.BACKPACK_FILM_ORDER, formats=["9:16"], duration_s=30,
                                   exact_strings=fx.BACKPACK_EXACT, product=fx.BACKPACK_PRODUCT, brand_colours=[], max_budget_usd="15",
                                   allow_preview_spend=True, uploads=ups, references_note=fx.BACKPACK_NOTE)
             state = fx.film_to_hold(e, second)
-            self.assertEqual(state, "ready_for_review")                     # no master-plate approval needed: it is on the shelf
+            self.assertEqual(state, "ready_for_review")
             slip = e.store.artifact(second, "order_slip")
             self.assertTrue(slip["prefilled_from_shelf"])
             self.assertEqual(slip["brand_colours"], ["#101820"])
             used = {u["used_for"] for u in e.orch.shelf.uses(second)}
-            self.assertTrue({"master_plate", "character", "logo", "brand_colour"} <= used, used)
-            for node in ("master", "character"):
-                self.assertEqual([a for a in e.store.attempts(second) if a["node_id"] == node], [], node)
-                self.assertEqual(e.store.asset(e.store.node(second, node)["selected_asset_id"])["source"], "shelf")
+            self.assertTrue({"logo", "brand_colour"} <= used, used)
+            self.assertTrue(e.orch.shelf.summary(e.acct)["master_plates"])  # the look is on the shelf for the chef to see
             # another account: nothing of this shelf reaches its waiter or its chef
             other = e.store.create_account("Rival Co", ceiling_usd="20")
             spy = e.customer("spy@rival.test", other)

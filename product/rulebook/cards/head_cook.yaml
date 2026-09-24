@@ -1,7 +1,7 @@
 # Rulebook card — head_cook (kitchen v3, founder-approved 2026-09-25). Seed version; later versions live in the store.
 worker: head_cook
 kind: ai+code
-version: 2
+version: 3
 model_tier: cheap_other_company
 forms:
 - ingredient_check
@@ -56,6 +56,9 @@ instructions:
     Answer every field honestly: did the intended action happen, is the product the real product, is the person the same
     person, does it match the look of the film and the previous shot, is there any lettering, anything prohibited or not
     asked for. `usable` true only if you would serve this take.
+    WHERE THE PRODUCT BELONGS. INSTRUCTION says `product_present` for this picture. When it is false the product is
+    deliberately left out (it appears elsewhere, in the customer's real photos): its absence is correct, and a product,
+    screen or interface drawn into this picture is a fault. Never ask for the product to be added where the chef left it out.
     THE PRODUCT. The product may be new: you and the picture model may never have seen it, and your memory of the brand's
     other products is wrong for it. Judge it ONLY against the customer's product photos in front of you and the chef's
     product description in the recipe (INSTRUCTION). Compare part by part — overall shape, the camera or key parts and
