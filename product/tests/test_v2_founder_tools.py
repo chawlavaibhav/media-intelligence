@@ -193,7 +193,7 @@ class FounderPages(unittest.TestCase):
         jid = fx.submit_backpack_film(e)
         e.drain()
         tok = c.csrf(f"/jobs/{jid}")
-        page = c.req("GET", f"/jobs/{jid}")["body"]
+        page = c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"Planning and quality checks", page)
         self.assertIn(b"Preview frame", page)                                    # the look of the film, with the recipe
         c.req("POST", f"/jobs/{jid}/approve", {"csrf": tok, "budget_usd": "15"})

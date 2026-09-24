@@ -1,0 +1,187 @@
+{% extends "studio_base.html" %}
+{# The job as a conversation (founder 2026-09-24). The same data and the same customer actions as job.html (kept at
+   /jobs/<id>/details); one primary action per moment; the work is the hero. Never a state name, never the kitchen. #}
+{% set s = job.state %}
+{% set working_now = s in states.WORKER_STATES or s in ('operator_hold',) %}
+{% block title %}{{ job.title }} · Aight Studio{% endblock %}
+{% block body_attrs %}{% if working_now %} data-poll="/jobs/{{ job.id }}/status" data-updated="{{ job.updated }}" data-line="{{ working or '' }}"{% endif %}{% endblock %}
+{% block head %}{% if working_now %}<noscript><meta http-equiv="refresh" content="8"></noscript>{% endif %}{% endblock %}
+{% block style %}
+.head{padding:28px 0 8px}
+.back{font-size:14px;color:var(--soft);text-decoration:none}.back:hover{color:var(--ink)}
+.head h1{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.2;margin:14px 0 4px}
+.head .what{color:var(--faint);font-size:14px;margin:0}
+.thread{display:flex;flex-direction:column;gap:22px;padding:22px 0 {{ '170px' if composer else '90px' }}}
+.you{align-self:flex-end;max-width:86%;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.you .b{background:var(--bubble);border-radius:20px 20px 6px 20px;padding:11px 16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.thumbs img{width:64px;height:64px;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:var(--paper)}
+.note{font-size:13.5px;color:var(--faint);display:block;padding-left:15px;text-indent:-15px}
+.note::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--line);margin:0 10px 2px 0;vertical-align:middle;text-indent:0}
+details.steps summary{cursor:pointer;list-style:none}details.steps summary::-webkit-details-marker{display:none}
+details.steps .more{color:var(--faint);opacity:.75}details.steps[open] .more{display:none}
+details.steps > .note{margin:8px 0 0 15px}
+.us{font-family:var(--serif);font-size:18.5px;line-height:1.6}
+.us p{margin:0 0 .7em}.us p:last-child{margin:0}
+.us .small{font-family:var(--sans);font-size:14px;color:var(--soft);line-height:1.5}
+.us ol,.us ul{margin:.2em 0 .8em;padding-left:1.3em}.us li{margin:.25em 0}
+.us .quote{font-style:italic}
+.us .hint{font-family:var(--sans);font-size:14px;color:var(--faint);margin-top:-.3em}
+.working{display:flex;align-items:baseline;gap:6px;color:var(--soft)}
+.dots{display:inline-flex;gap:4px}.dots i{width:5px;height:5px;border-radius:50%;background:var(--faint);animation:b 1.3s infinite both}
+.dots i:nth-child(2){animation-delay:.18s}.dots i:nth-child(3){animation-delay:.36s}
+@keyframes b{0%,80%,100%{opacity:.2}40%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.dots i{animation:none;opacity:.6}}
+.hero{margin:6px 0 4px}
+.hero img,.hero video{display:block;width:auto;max-width:100%;height:auto;max-height:min(72vh,760px);margin:0 auto;border-radius:16px;background:#0f0e0c;box-shadow:0 12px 40px rgba(40,30,10,.12)}
+.hero video{width:100%}
+.hero + .hero{margin-top:14px}
+.hero figcaption{font-family:var(--sans);font-size:13px;color:var(--faint);margin-top:8px}
+.acts{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;font-family:var(--sans)}
+.acts form{margin:0}
+.check{display:flex;gap:10px;align-items:flex-start;font-family:var(--sans);font-size:15px;line-height:1.45;margin:6px 0 10px}
+.check input{margin-top:3px;width:18px;height:18px;accent-color:var(--accent)}
+details.quiet{font-family:var(--sans);font-size:14px;color:var(--soft)}
+details.quiet summary{cursor:pointer;list-style:none;display:inline}details.quiet summary::-webkit-details-marker{display:none}
+details.quiet summary:hover{color:var(--ink)}
+details.quiet .inl{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+details.quiet input[type=text]{flex:1;min-width:180px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:10px 16px;font-size:15px}
+.dock{position:fixed;left:var(--sidew);right:0;bottom:0;padding:22px 16px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(to bottom,rgba(0,0,0,0),var(--bg) 38%)}
+.dock .col{padding:0}
+.dock .composer:not(.big) .picked{flex:0 1 auto;max-width:38%}
+.foot{font-size:13px;color:var(--faint);text-align:center;margin:8px 0 0}.foot a{color:var(--faint)}
+@media (max-width:899px){.dock{left:0}}
+@media (max-width:600px){
+  .col{padding:0 16px}.head{padding-top:18px}.head h1{font-size:24px}.us{font-size:17.5px}
+  .hero{margin-left:-16px;margin-right:-16px}.hero img,.hero video{width:100%;border-radius:0;max-height:none;box-shadow:none}
+  .hero figcaption{padding:0 16px}.you{max-width:92%}}
+{% endblock %}
+{% block body %}
+<main class="col">
+<div class="head"><a class="back" href="/">← All ads</a>
+<h1>{{ job.title }}</h1>{% if order %}<p class="what">{{ order }}</p>{% endif %}</div>
+
+<div class="thread" id="thread">
+{% for m in thread %}
+{% if m.who == 'customer' %}<div class="you"><div class="b">{{ m.text }}</div>
+{% if m.photos %}<div class="thumbs">{% for a in m.photos %}<img src="/assets/{{ a }}" alt="Your photo">{% endfor %}</div>{% endif %}</div>
+{% elif m.kind == 'steps' and m.earlier %}<details class="steps"><summary class="note">{{ m.text }} <span class="more">· {{ m.earlier|length }} earlier step{{ 's' if m.earlier|length > 1 }}</span></summary>
+{% for t in m.earlier %}<div class="note">{{ t }}</div>{% endfor %}</details>
+{% elif m.kind == 'steps' %}<div class="note">{{ m.text }}</div>
+{% else %}<div class="us"><p>{{ m.text }}</p></div>{% endif %}
+{% endfor %}
+
+{# ── the moment: what we're doing, or what we need from you ─────────────────────────────────────────────── #}
+<div id="now"></div>
+{% if working_now and working %}
+<div class="us working" aria-live="polite"><span>{{ working }}</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+
+{% elif s == 'needs_answers' and intent %}
+<div class="us">
+<p>{{ 'Before we start, one question.' if intent.questions|length == 1 else 'Before we start, a few questions.' }}</p>
+{% for q in intent.questions %}<p>{{ q.question|plain }}</p>
+{% if q.default_if_delegated %}<p class="hint">If you'd like us to decide: {{ q.default_if_delegated|plain }}</p>{% endif %}{% endfor %}
+<p class="small">Just reply below.</p>
+<div class="acts"><form method="post" action="/jobs/{{ job.id }}/answer"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="delegate_all" value="yes">
+<button class="btn quiet" type="submit">Decide for me</button></form></div>
+</div>
+
+{% elif s == 'awaiting_customer_input' and feasibility %}
+<div class="us">
+<p>One thing before we begin.</p>
+{% for a in feasibility.ask_customer %}<p>{{ a|plain }}</p>{% endfor %}
+{% if feasibility.alternatives %}<p>Here's what we suggest instead:</p>
+<ul>{% for a in feasibility.alternatives %}<li>{{ a.alternative|plain }} <span class="small">(instead of {{ a.for_action|plain }})</span></li>{% endfor %}</ul>{% endif %}
+<p class="small">Reply below, or add a photo with the paperclip. Nothing has been spent on production yet.</p>
+{% if feasibility.alternatives %}<div class="acts"><form method="post" action="/jobs/{{ job.id }}/input" enctype="multipart/form-data"><input type="hidden" name="csrf" value="{{ csrf }}">
+{% for a in feasibility.alternatives %}<input type="hidden" name="alt_{{ loop.index0 }}" value="yes">{% endfor %}
+<button class="btn" type="submit">Sounds good</button></form></div>{% endif %}
+</div>
+
+{% elif s == 'awaiting_approval' and direction %}
+<div class="us">
+<p>Here's our plan.</p>
+<p>{{ direction.customer_summary|plain }}</p>
+</div>
+{% for p in preview %}<figure class="hero"><img src="/assets/{{ p.id }}" alt="A first look at your ad"><figcaption>A first look — the setting and your product. Your words and logo are set precisely afterwards.</figcaption></figure>{% endfor %}
+<div class="us">
+{% if direction.beats %}<p>Scene by scene:</p><ol>{% for b in direction.beats %}<li>{{ (b.action if b.action != 'none' else 'Your logo and closing words')|plain }}</li>{% endfor %}</ol>{% endif %}
+{% if direction.copy_deck %}<p>The words on screen:</p><ul>{% for c in direction.copy_deck %}<li class="quote">“{{ c.text }}”</li>{% endfor %}</ul>{% endif %}
+{% if plan_objections %}<p>Before you decide — our reviewer has concerns:</p><ul>{% for o in plan_objections.plain_words %}<li>{{ o|plain }}</li>{% endfor %}</ul>{% endif %}
+<p>All in, this will cost about <strong>{{ quote.recommended_budget_usd|dollars }}</strong>.</p>
+<p class="small">That includes a spare attempt for anything that needs redoing. You only pay for what's used, and we'll ask before going over.</p>
+<form method="post" action="/jobs/{{ job.id }}/approve"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="budget_usd" value="{{ quote.recommended_budget_usd }}">
+{% if plan_objections %}<label class="check"><input type="checkbox" name="accept_objections" value="yes" required> I've read the concerns and want to go ahead</label>{% endif %}
+<div class="acts"><button class="btn" type="submit">Approve and start</button><button class="textbtn" type="button" data-focus="composer-text">Change something</button></div></form>
+</div>
+
+{% elif s == 'awaiting_master_approval' and master %}
+<div class="us"><p>Here's the look of your film — the setting, the light, your product. Every scene is built from this.</p></div>
+<figure class="hero"><img src="/assets/{{ master.id }}" alt="The look of your film"></figure>
+<div class="acts"><form method="post" action="/jobs/{{ job.id }}/master"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="btn" type="submit">This looks right</button></form></div>
+
+{% elif s == 'awaiting_taste' and taste %}
+<div class="us"><p>We made the trickiest shot first, so you can see it before we make the rest.</p></div>
+{% for a in taste %}<figure class="hero">{% if a.kind == 'video' %}<video controls playsinline preload="metadata" src="/assets/{{ a.id }}"></video>{% else %}<img src="/assets/{{ a.id }}" alt="The first shot">{% endif %}</figure>{% endfor %}
+<div class="acts"><form method="post" action="/jobs/{{ job.id }}/taste"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="btn" type="submit">Make the rest</button></form>
+<button class="textbtn" type="button" data-focus="composer-text">Change this shot</button></div>
+
+{% elif s in ('ready_for_review', 'accepted') and finals %}
+<div class="us"><p>{{ 'Delivered. Thank you!' if s == 'accepted' else ("It's ready." if (finals[0].cut or 1) == 1 else 'Here is the new version.') }}</p></div>
+{% for a in finals %}<figure class="hero">{% if a.kind == 'video' %}<video controls playsinline preload="metadata" src="/assets/{{ a.id }}"></video>{% else %}<img src="/assets/{{ a.id }}" alt="Your finished ad">{% endif %}
+{% if s == 'accepted' %}<figcaption><a href="/assets/{{ a.id }}/download">Download</a></figcaption>{% endif %}</figure>{% endfor %}
+<div class="us">
+{% if customer_notes and s == 'ready_for_review' %}<ul>{% for n in customer_notes %}<li>{{ n|plain }}</li>{% endfor %}</ul>{% endif %}
+{% if checked %}<details class="quiet"><summary>What we checked</summary><ul>{% for c in checked %}<li>{{ c }}</li>{% endfor %}</ul></details>{% endif %}
+</div>
+{% if s == 'ready_for_review' %}
+<div class="acts"><form method="post" action="/jobs/{{ job.id }}/accept"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="btn" type="submit">Accept</button></form>
+<button class="textbtn" type="button" data-focus="composer-text">Request changes</button>
+<details class="quiet"><summary class="textbtn">Reject</summary><form class="inl" method="post" action="/jobs/{{ job.id }}/reject"><input type="hidden" name="csrf" value="{{ csrf }}">
+<input type="text" name="reason" aria-label="What missed the mark?" placeholder="What missed the mark?"><button class="btn quiet" type="submit">Reject</button></form></details></div>
+{% endif %}
+
+{% elif s == 'paused_budget' %}
+<div class="us"><p>To finish, this needs a little more than you approved — about {{ (budget_next|float - job.budget_usd|float)|dollars }} more. Shall we carry on?</p>
+<p class="small">You'll only pay for what's used.</p></div>
+<div class="acts"><form method="post" action="/jobs/{{ job.id }}/budget"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="budget_usd" value="{{ budget_next }}">
+<button class="btn" type="submit">Continue</button></form></div>
+
+{% elif s == 'needs_retry_decision' %}
+<div class="us"><p>Something went wrong on our side. Shall we try again?</p><p class="small">If you stop here, nothing more is spent.</p></div>
+<div class="acts"><form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="try_again"><button class="btn" type="submit">Try again</button></form>
+<form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="stop"><button class="textbtn" type="submit">Stop here</button></form></div>
+
+{% elif s == 'needs_customer_decision' and customer_decision %}
+<div class="us"><p>{{ customer_decision.plain|plain }}</p>
+<p>One more attempt would cost about {{ customer_decision.rework_price_usd|dollars }}.</p></div>
+<div class="acts"><form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="rework"><button class="btn" type="submit">Try once more</button></form>
+<form method="post" action="/jobs/{{ job.id }}/decide"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="choice" value="stop"><button class="textbtn" type="submit">Stop here</button></form></div>
+
+{% elif s == 'refused' %}
+<div class="us"><p>We can't make this one yet. {{ (intent.refusal_reason if intent else '')|plain }}</p>
+{% if intent and intent.nearest_supported_alternative %}<p>What we can make instead: {{ intent.nearest_supported_alternative|plain }}</p>{% endif %}
+<p class="small">Nothing was spent. <a href="/">Start a new ad</a></p></div>
+
+{% elif s in ('paused_operator', 'paused_for_founder', 'failed') %}
+<div class="us"><p>Our team is taking a look — we'll carry on shortly. You don't need to do anything.</p></div>
+
+{% elif s in ('rejected', 'abandoned') %}
+<div class="us"><p>This ad is closed. <a href="/">Start a new one</a> whenever you like.</p></div>
+{% endif %}
+
+{% if s in ('needs_answers', 'awaiting_customer_input', 'awaiting_approval', 'awaiting_master_approval', 'awaiting_taste') %}
+<details class="quiet"><summary>Close this ad</summary><form class="inl" method="post" action="/jobs/{{ job.id }}/abandon"><input type="hidden" name="csrf" value="{{ csrf }}">
+<input type="text" name="reason" aria-label="Why (optional)" placeholder="Why (optional)"><button class="btn quiet" type="submit">Close</button></form></details>
+{% endif %}
+<p class="foot"><a href="/jobs/{{ job.id }}/details">All details</a></p>
+<div id="end"></div>
+</div>
+</main>
+{% if composer %}
+<div class="dock"><div class="col">
+{% with action="/jobs/" ~ job.id ~ "/" ~ composer[0], field=composer[1], placeholder=composer[2], files=composer[3], file_field="photo", big=False, value="" %}{% include "_composer.html" %}{% endwith %}
+</div></div>
+{% endif %}
+{% endblock %}

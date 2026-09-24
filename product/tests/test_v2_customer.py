@@ -34,7 +34,7 @@ class KeepTheCustomerEngaged(unittest.TestCase):
         self.e.close()
 
     def page(self, jid):
-        return self.c.req("GET", f"/jobs/{jid}")["body"]
+        return self.c.req("GET", f"/jobs/{jid}/details")["body"]
 
     def test_the_customer_sees_the_order_the_progress_and_the_plan_but_never_the_kitchen_at_any_step(self):
         """Kitchen v3: the customer approves the recipe and receives the dish; the kept stills show on the page as they are made."""

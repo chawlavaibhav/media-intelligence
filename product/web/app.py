@@ -17,6 +17,7 @@ import mimetypes
 import re
 import secrets
 import traceback
+from decimal import ROUND_CEILING
 from email.parser import BytesParser
 from email.policy import default as email_default
 from http import cookies
@@ -29,7 +30,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from product import config, learning, states, verify
 from product import customer as customer_words
-from product.service import Invalid, Service
+from product.service import Invalid, Service, upload_role
 from product.store import Store, dec
 
 log = logging.getLogger("mi.web")
@@ -92,14 +93,18 @@ class App:
         self.jinja = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]))
         self.jinja.globals.update(states=states, label=states.label, rail=states.RAIL, rail_position=states.rail_position,
                                   json=json, ceiling_enforced=self.s.account_ceiling_enforced, simulated=(self.s.provider_mode == "simulated" or self.s.reasoning_mode == "simulated"))
+        self.jinja.globals.update(list_words=customer_words.list_words)
         self.jinja.filters["plain"] = customer_words.plain
         self.jinja.filters["usd"] = lambda v: f"USD {dec(v):.2f}" if v not in (None, "") else "—"
         self.jinja.filters["loads"] = lambda v: json.loads(v) if v else {}
+        self.jinja.filters["dollars"] = lambda v: f"${dec(v):.2f}" if v not in (None, "") else "—"
         self.routes = [
             ("GET", r"/healthz", self.healthz), ("GET", r"/login", self.login_form), ("POST", r"/login", self.login),
             ("POST", r"/logout", self.logout), ("GET", r"/invite/(?P<tok>[\w-]+)", self.invite_form),
-            ("POST", r"/invite/(?P<tok>[\w-]+)", self.invite), ("GET", r"/", self.home), ("GET", r"/jobs/new", self.new_job),
+            ("POST", r"/invite/(?P<tok>[\w-]+)", self.invite), ("GET", r"/", self.home), ("GET", r"/(?:jobs/)?new", self.chat_new),
+            ("GET", r"/(?:jobs/)?new/form", self.new_job), ("POST", r"/prompt", self.prompt), ("GET", r"/static/chat\.js", self.chat_js),
             ("POST", r"/jobs", self.create_job), ("GET", r"/jobs/(?P<jid>job_\w+)", self.job_page),
+            ("GET", r"/jobs/(?P<jid>job_\w+)/details", self.job_details),
             ("GET", r"/jobs/(?P<jid>job_\w+)/status", self.job_status),
             ("POST", r"/jobs/(?P<jid>job_\w+)/(?P<action>answer|approve|direction-change|changes|accept|reject|budget|upload|input|master|abandon|decide|taste|taste-change)", self.job_action),
             ("GET", r"/shelf", self.shelf_page), ("POST", r"/shelf/(?P<sid>shf_\w+)", self.shelf_action),
@@ -143,7 +148,7 @@ class App:
             body = body.encode()
         base = [("X-Content-Type-Options", "nosniff"), ("X-Frame-Options", "DENY"), ("Referrer-Policy", "same-origin"),
                 ("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline'; "
-                                            "script-src 'none'; frame-ancestors 'none'; form-action 'self'")]
+                                            "script-src 'self'; frame-ancestors 'none'; form-action 'self'")]
         if not any(h[0] == "Content-Type" for h in headers):
             headers.append(("Content-Type", "text/html; charset=utf-8"))
         start_response(status, base + headers + [("Content-Length", str(len(body)))])
@@ -208,10 +213,60 @@ class App:
 
     # ── customer ───────────────────────────────────────────────────────────────────────────────
     def home(self, req):
+        """The customer's first screen (founder 2026-09-24): a greeting, the prompt box, and their ads as a quiet list."""
         u = self.user(req)
         if u["role"] in ("operator", "founder"):
             raise redirect("/ops")
-        return self.page("home.html", req, jobs=self.store.jobs_for_account(u["account_id"]), account=self.store.account(u["account_id"]))
+        return self._prompt_page(req, u)
+
+    def _prompt_page(self, req, u, status="200 OK", error=None, text=""):
+        return Response(status, self.render("home.html", req, error=error, text=text, **self._shell(u, "home")))
+
+    def _thumb(self, j) -> dict | None:
+        """The picture that stands for an ad: the finished work once the customer may see it, else the first look,
+        else their own product photo."""
+        st, jid = self.store, j["id"]
+        if j["state"] in ("ready_for_review", "accepted", "revising", "rejected"):
+            for n in st.nodes(jid):
+                if n["kind"] in ("compose_still", "assemble") and n["selected_asset_id"]:
+                    a = st.asset(n["selected_asset_id"])
+                    return {"src": f"/assets/{a['id']}", "video": a["kind"] == "video"}
+        prev = st.assets(jid, role="preview")
+        if prev:
+            return {"src": f"/assets/{prev[-1]['id']}", "video": False}
+        for a in st.assets(jid, source="customer"):
+            if a["role"] == "product" and a["content_type"].startswith("image/"):
+                return {"src": f"/assets/{a['id']}", "video": False}
+        return None
+
+    def _shell(self, u, current=None) -> dict:
+        """What every customer page's sidebar shows: their ads (with a picture each), and the brand shelf if there is one."""
+        recents = [{"id": j["id"], "href": f"/jobs/{j['id']}", "title": j["title"], "state": customer_words.list_words(j["state"]),
+                    "yours": j["state"] in states.CUSTOMER_STATES, "thumb": self._thumb(j)}
+                   for j in self.store.jobs_for_account(u["account_id"])]
+        return {"recents": recents, "current": current, "has_brand": bool(self.svc.orch.shelf.items(u["account_id"]))}
+
+    # ── the studio chat (founder 2026-09-24): a prompt starts the job, and the job is a conversation ─────────────
+    def chat_js(self, req):
+        return Response("200 OK", (HERE / "static" / "chat.js").read_bytes(),
+                        [("Content-Type", "text/javascript; charset=utf-8"), ("Cache-Control", "public, max-age=300")])
+
+    def chat_new(self, req):
+        self.user(req, "customer")
+        raise redirect("/")
+
+    def prompt(self, req):
+        """The first message creates the job at once; the waiter fills in the order from the customer's words."""
+        u = self.user(req, "customer")
+        text = req.form.get("text", "")
+        uploads = [{"role": upload_role(x["filename"], x["content_type"]), "filename": x["filename"], "data": x["data"],
+                    "content_type": x["content_type"]} for x in req.files]
+        try:
+            jid = self.svc.submit_prompt(u, text=text, uploads=uploads)
+        except Invalid as e:
+            msg = str(e)
+            return self._prompt_page(req, u, "400 Bad Request", msg[:1].upper() + msg[1:] + ".", text=text)
+        return redirect(f"/jobs/{jid}")
 
     def new_job(self, req):
         u = self.user(req, "customer")
@@ -246,7 +301,7 @@ class App:
         recipe = st.artifact(jid, "recipe")
         direction = dict(recipe, beats=[dict(s, first_frame=s["first_frame"]) for s in recipe.get("shots", [])]) if recipe else None
         master = st.node(jid, "master")
-        return {"job": j, "brief": st.original_brief(jid), "intent": st.artifact(jid, "understanding"), "direction": direction,
+        return {"job": j, "brief": self.svc.orch.brief(jid), "intent": st.artifact(jid, "understanding"), "direction": direction,
                 "feasibility": st.artifact(jid, "feasibility"), "review": st.artifact(jid, "final_review"), "quote": st.artifact(jid, "quote"),
                 "answers": st.artifact(jid, "answers"), "gateway_saved": gw,
                 "master": st.asset(master["selected_asset_id"]) if master and master["selected_asset_id"] else None,
@@ -263,13 +318,36 @@ class App:
                           if st.node(jid, x) and st.node(jid, x)["selected_asset_id"]] if j["state"] == "awaiting_taste" else []}
 
     def job_page(self, req, jid):
+        """The customer's job is a conversation (chat_job.html); staff see the full page."""
+        u = self.user(req)
+        if u["role"] != "customer":
+            return self.job_details(req, jid)
+        v = self._job_view(jid, u)
+        j = v["job"]
+        m = re.search(r"USD ([\d.]+) more", j["pause_reason"] or "")
+        short = dec(m.group(1)) if m else dec(5)
+        nxt = dec(j["budget_usd"]) + max(short * dec("1.5"), dec(1))
+        # the one input box at the bottom: what a typed reply means in this moment (action, field, placeholder, photos?)
+        composer = {"needs_answers": ("answer", "reply", "Reply…", False),
+                    "awaiting_customer_input": ("input", "facts", "Reply, or add a photo…", True),
+                    "awaiting_approval": ("direction-change", "text", "Tell us what to change in the plan…", False),
+                    "awaiting_taste": ("taste-change", "text", "Tell us what to change in this shot…", False),
+                    "ready_for_review": ("changes", "change_1", "Tell us what to change…", False)}.get(j["state"])
+        v.update(thread=customer_words.thread(self.store, jid, u["email"]), working=customer_words.working_line(self.store, jid),
+                 composer=composer, budget_next=f"{(nxt * 2).to_integral_value(ROUND_CEILING) / 2:.2f}",
+                 order=customer_words.order_line(v["brief"]) if j["media"] in ("image", "video")
+                 and not (self.store.artifact(jid, "order_change") or {}).get("provisional") else None, **self._shell(u, jid))
+        return self.page("chat_job.html", req, **v)
+
+    def job_details(self, req, jid):
         u = self.user(req)
         return self.page("job.html", req, **self._job_view(jid, u))
 
     def job_status(self, req, jid):
         u = self.user(req)
         j = self.svc.job(u, jid)
-        body = json.dumps({"state": j["state"], "label": states.label(j["state"]), "updated": j["updated"]})
+        body = json.dumps({"state": j["state"], "label": states.label(j["state"]), "updated": j["updated"],
+                           "line": customer_words.working_line(self.store, jid)})
         return Response("200 OK", body, [("Content-Type", "application/json")])
 
     def job_action(self, req, jid, action):
@@ -282,6 +360,11 @@ class App:
             ans = {k[2:]: v for k, v in f.items() if k.startswith("q_") and v.strip()}
             for k in [k[9:] for k in f if k.startswith("delegate_")]:
                 ans[k] = "decide for me (use your default)"
+            asked = [q["id"] for q in (self.store.artifact(jid, "understanding") or {}).get("questions", [])]
+            if f.get("reply", "").strip():                 # the chat: one typed reply answers what we asked, verbatim
+                ans.update({q: f["reply"].strip()[:4000] for q in asked if q not in ans})
+            if f.get("delegate_all") == "yes":
+                ans.update({q: "decide for me (use your default)" for q in asked if q not in ans})
             o.answer(jid, ans, who)
         elif action == "approve":
             o.approve(jid, by=who, budget_usd=f.get("budget_usd") or self.store.artifact(jid, "quote")["recommended_budget_usd"],
@@ -505,8 +588,6 @@ def main():
     srv.serve_forever()
 
 
-if __name__ == "__main__":
-    main()
 
 
 def _current_objections(st, jid):
@@ -518,3 +599,6 @@ def _current_objections(st, jid):
 def _taste_nodes(k, jid):
     from product.stations.head_cook import taste_nodes
     return taste_nodes(k, jid)
+
+if __name__ == "__main__":
+    main()

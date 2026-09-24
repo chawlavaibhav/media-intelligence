@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{# The customer's studio (founder 2026-09-24: "It's a studio." — "see such clean interfaces"): a slim sidebar (new ad,
+   recents, brand, account) that becomes a top bar on phones; one calm column; the studio's voice in a serif; the
+   customer's words in a soft bubble; the work as the hero. No boxes inside boxes, no admin tables, no state names. #}
+<title>{% block title %}Aight Studio{% endblock %}</title>
+<style>
+:root{--bg:#f7f5f0;--side:#f0ede6;--paper:#fffdf9;--ink:#1f1d1a;--soft:#6b665d;--faint:#a29b8f;--line:#e6e1d7;--bubble:#ece8df;
+  --accent:#2f4a3a;--accent-ink:#f7f5f0;--glow:rgba(150,185,155,.28);--bad:#8a2f2a;--sidew:256px;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"Helvetica Neue",sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#1a1816;--side:#201e1b;--paper:#252220;--ink:#ece6db;--soft:#b2aa9c;--faint:#7c756a;
+  --line:#34302a;--bubble:#2e2a25;--accent:#a8c3ad;--accent-ink:#1a1816;--glow:rgba(120,160,128,.14);--bad:#e59a92}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:3px;text-decoration-color:var(--faint)}
+button{font:inherit}
+img,video{max-width:100%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wordmark{font-family:var(--serif);font-size:19px;letter-spacing:.03em;text-decoration:none;color:var(--ink);white-space:nowrap}
+.wordmark span{color:var(--faint);font-style:italic}
+
+/* sidebar (desktop) */
+.side{position:fixed;top:0;bottom:0;left:0;width:var(--sidew);background:var(--side);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;padding:22px 14px 16px;z-index:5}
+.side .wordmark{padding:0 10px;margin-bottom:22px}
+.newad{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:var(--paper);border:1px solid var(--line);
+  text-decoration:none;font-weight:500;font-size:15px;box-shadow:0 1px 2px rgba(40,30,10,.04)}
+.newad:hover{border-color:var(--faint)}
+.newad i{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-style:normal;font-size:17px;line-height:1}
+.nav{margin:14px 0 0;display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;text-decoration:none;font-size:15px;color:var(--soft)}
+.nav a:hover,.nav a.on{background:var(--bubble);color:var(--ink)}
+.recents{margin-top:22px;flex:1;min-height:0;overflow:auto}
+.recents h2{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0 12px 6px}
+.recents a{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:10px;text-decoration:none;font-size:14px}
+.recents a:hover,.recents a.on{background:var(--bubble)}
+.recents .rt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini{flex:none;width:28px;height:28px;border-radius:8px;object-fit:cover;background:var(--bubble);border:1px solid var(--line);
+  display:inline-flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;color:var(--soft)}
+.account{display:flex;align-items:center;gap:10px;padding:12px 10px 0;border-top:1px solid var(--line);margin-top:10px}
+.avatar{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:inline-flex;
+  align-items:center;justify-content:center;font-weight:600;font-size:14px}
+.account .who{flex:1;min-width:0;font-size:14px;line-height:1.3}.account .who small{display:block;color:var(--faint);font-size:12px;overflow:hidden;text-overflow:ellipsis}
+.linkish{background:none;border:0;padding:4px 0;font-size:13px;color:var(--soft);cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.linkish:hover{color:var(--ink)}
+.account form{margin:0}
+
+/* top bar (phones) */
+.topbar{display:none;position:sticky;top:0;z-index:5;align-items:center;justify-content:space-between;padding:12px 16px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .tb{display:flex;align-items:center;gap:10px}
+.plus{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-size:20px;line-height:1}
+
+.main{margin-left:var(--sidew);min-height:100vh}
+.testmode{text-align:center;font-size:12px;letter-spacing:.02em;color:var(--faint);padding:10px 16px 0}
+.col{max-width:720px;margin:0 auto;padding:0 28px}
+@media (max-width:899px){.side{display:none}.topbar{display:flex}.main{margin-left:0}.col{padding:0 16px}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;border-radius:999px;border:0;
+  background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600;letter-spacing:.01em;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn.quiet{background:var(--paper);color:var(--ink);border:1px solid var(--line);font-weight:500}
+.btn.quiet:hover{border-color:var(--soft);filter:none}
+.textbtn{background:none;border:0;padding:10px 4px;color:var(--soft);font-size:15px;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
+.textbtn:hover{color:var(--ink)}
+input[type=text],textarea{font:inherit;color:var(--ink)}
+.err{color:var(--bad);font-size:15px}
+
+/* the composer: one soft rounded card, a + for photos, a round send button */
+.composer{display:flex;align-items:flex-end;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:6px;
+  box-shadow:0 1px 2px rgba(40,30,10,.04),0 10px 30px rgba(40,30,10,.07)}
+.composer:focus-within{border-color:var(--faint)}
+.composer textarea{flex:1;min-width:0;border:0;background:transparent;resize:none;outline:none;font-size:16px;line-height:1.45;padding:10px 8px;height:44px;max-height:220px}
+.composer.big{flex-wrap:wrap;border-radius:28px;padding:16px 14px 12px;
+  background:linear-gradient(135deg,var(--paper) 0%,var(--paper) 55%,color-mix(in srgb,var(--paper) 88%,#b9d0bd) 100%)}
+.composer.big textarea{flex:1 1 100%;height:auto;min-height:104px;padding:6px 8px;font-size:18px;line-height:1.5}
+.composer.big .row{display:flex;flex:1 1 100%;align-items:center;gap:8px}
+.icon{flex:none;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:0;
+  background:transparent;color:var(--soft);cursor:pointer;padding:0}
+.icon.clip{border:1px solid var(--line);background:var(--paper)}
+.icon:hover{background:var(--bubble);color:var(--ink)}
+.icon.send{width:44px;height:44px;background:var(--accent);color:var(--accent-ink)}
+.icon.send:hover{filter:brightness(1.1);background:var(--accent)}
+.icon.send[disabled]{opacity:.4;cursor:default}
+.picked{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
+.composer:not(.big) .picked{flex:0 1 auto;max-width:38%}
+.picked span{font-size:13px;color:var(--soft);background:var(--bubble);border-radius:999px;padding:3px 10px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+{% block style %}{% endblock %}
+</style>
+{% block head %}{% endblock %}
+<script src="/static/chat.js" defer></script>
+</head>
+<body{% block body_attrs %}{% endblock %}>
+{% set initial = ((user.name or user.email or '?')[:1])|upper if user else '?' %}
+<aside class="side" aria-label="Studio">
+<a class="wordmark" href="/">Aight <span>Studio</span></a>
+<a class="newad" href="/"><i aria-hidden="true">+</i> New ad</a>
+<nav class="nav"><a href="/"{% if current == 'home' %} class="on"{% endif %}>Your ads</a>{% if has_brand %}<a href="/shelf">Brand</a>{% endif %}</nav>
+{% if recents %}<div class="recents"><h2>Recents</h2>
+{% for a in recents[:12] %}<a href="{{ a.href }}"{% if a.id == current %} class="on"{% endif %}>{% if a.thumb and not a.thumb.video %}<img class="mini" src="{{ a.thumb.src }}" alt="">{% else %}<span class="mini" aria-hidden="true">{{ a.title[:1]|upper }}</span>{% endif %}<span class="rt">{{ a.title }}</span></a>{% endfor %}
+</div>{% else %}<div class="recents"></div>{% endif %}
+{% if user %}<div class="account"><span class="avatar" aria-hidden="true">{{ initial }}</span><span class="who">{{ user.name or 'Your account' }}<small>{{ user.email }}</small></span>
+<form method="post" action="/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="linkish" type="submit">Sign out</button></form></div>{% endif %}
+</aside>
+<header class="topbar"><a class="wordmark" href="/">Aight <span>Studio</span></a>
+<span class="tb"><a class="plus" href="/" aria-label="New ad">+</a>{% if user %}<form method="post" action="/logout" style="margin:0"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="linkish" type="submit">Sign out</button></form>{% endif %}</span></header>
+<div class="main">
+{% if simulated %}<div class="testmode">Test mode — nothing here is real production</div>{% endif %}
+{% block body %}{% endblock %}
+</div>
+</body>
+</html>

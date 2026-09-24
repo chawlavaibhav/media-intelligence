@@ -1,12 +1,51 @@
-{% extends "base.html" %}{% block title %}Your jobs · Media Intelligence{% endblock %}
+{% extends "studio_base.html" %}{% block title %}Aight Studio{% endblock %}
+{# The first screen (founder 2026-09-24): "The way I open a session and send a prompt — that's how it should be."
+   One question, one prompt card with a + for photos, a few starting points, and the customer's ads as large cards. #}
+{% block style %}
+.hero{position:relative;padding:12vh 0 0;text-align:center}
+.hero::before{content:"";position:absolute;inset:-40px -30% auto;height:420px;z-index:-1;pointer-events:none;
+  background:radial-gradient(closest-side,var(--glow),transparent)}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:52px;line-height:1.08;letter-spacing:-.015em;margin:0 0 12px}
+.hero p{color:var(--soft);margin:0 auto 30px;font-size:16.5px;max-width:520px}
+.hero .composer{text-align:left}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:18px 0 0}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:9px 16px;font-size:14px;color:var(--ink);cursor:pointer}
+.chip:hover{border-color:var(--faint)}
+.yours{margin:88px 0 90px}
+.yours h2{font-family:var(--serif);font-weight:400;font-size:24px;margin:0 0 18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:22px 18px}
+.card{display:block;text-decoration:none}
+.card .th{display:block;width:100%;aspect-ratio:4/5;border-radius:18px;object-fit:cover;background:var(--bubble);border:1px solid var(--line)}
+.card .ph{display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:44px;color:var(--faint);
+  background:linear-gradient(160deg,var(--bubble),color-mix(in srgb,var(--bubble) 80%,#b9d0bd))}
+.card .ct{display:block;margin:10px 2px 0;font-size:15px;font-weight:500;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.card .cs{display:block;margin:2px 2px 0;font-size:13px;color:var(--soft)}.card .cs.you{color:var(--accent);font-weight:600}
+.card:hover .th{border-color:var(--faint)}
+@media (max-width:899px){.hero{padding-top:7vh}.hero h1{font-size:36px}.hero p{font-size:15.5px}
+  .cards{grid-template-columns:1fr 1fr;gap:18px 12px}.yours{margin-top:60px}.chips{justify-content:flex-start}}
+{% endblock %}
 {% block body %}
-<div style="display:flex;justify-content:space-between;align-items:center"><h1>Your jobs</h1><a class="btn" href="/jobs/new">New request</a></div>
-<p class="muted small">{{ account.name }}{% if ceiling_enforced %} · account limit per job {{ account.ceiling_usd|usd }}{% endif %}{% if account.auto_approve %} · creative directions within budget are approved automatically{% endif %} · <a href="/shelf">Your brand shelf</a></p>
-<div class="card">
-{% if not jobs %}<p>No jobs yet. <a href="/jobs/new">Start your first request</a> — a sentence is enough.</p>{% else %}
-<table><tr><th>Job</th><th>Type</th><th>Status</th><th>Created</th></tr>
-{% for j in jobs %}<tr><td><a href="/jobs/{{ j.id }}">{{ j.title }}</a></td><td>{{ 'Film' if j.media == 'video' else 'Image' }}</td>
-<td>{{ label(j.state) }}</td><td class="muted small">{{ j.created[:16].replace('T',' ') }} UTC</td></tr>{% endfor %}
-</table>{% endif %}
+<main class="col">
+<section class="hero">
+<h1>What shall we make today?</h1>
+<p>Tell us about your product and the ad you have in mind — we'll ask if anything is unclear.</p>
+{% if error %}<p class="err" role="alert">{{ error }}</p>{% endif %}
+{% with action="/prompt", field="text", placeholder="Describe the ad you want — drop in product photos or your logo", files=True, file_field="photos", big=True, value=text %}{% include "_composer.html" %}{% endwith %}
+<div class="chips" aria-label="Starting points">
+<button class="chip" type="button" data-fill="A 20-second Instagram Reel for my ">A 20-second Reel</button>
+<button class="chip" type="button" data-fill="A launch poster for my ">A launch poster</button>
+<button class="chip" type="button" data-fill="A square post and a story for my ">A post and a story</button>
+<button class="chip" type="button" data-fill="A short film that brings my product photo to life: ">Animate my product photo</button>
 </div>
+</section>
+{% if recents %}
+<section class="yours" aria-label="Your ads">
+<h2>Your ads</h2>
+<div class="cards">{% for a in recents %}<a class="card" href="{{ a.href }}">
+{% if a.thumb and a.thumb.video %}<video class="th" src="{{ a.thumb.src }}#t=0.5" muted playsinline preload="metadata"></video>
+{% elif a.thumb %}<img class="th" src="{{ a.thumb.src }}" alt="">
+{% else %}<span class="th ph" aria-hidden="true">{{ a.title[:1]|upper }}</span>{% endif %}
+<span class="ct">{{ a.title }}</span><span class="cs{{ ' you' if a.yours }}">{{ a.state }}</span></a>{% endfor %}</div>
+</section>{% endif %}
+</main>
 {% endblock %}
