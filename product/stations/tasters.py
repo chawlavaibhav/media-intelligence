@@ -71,7 +71,7 @@ def check_cut(k, job_id: str):
     for aid in finals:
         verify.record_rows(k.store, job_id, aid, verify.review_rows(_as_v1_review(review), mandatory_ids=mids, media_kind=media_kind,
                                                                     asset_sha256=k.store.asset(aid)["sha256"],
-                                                                    qualified=k.qualified("big_taster")),
+                                                                    qualified=k.qualified("big_taster", review["written_by"]["model"])),
                            runner=f"big_taster:{review['written_by']['model']}")
     results = [verify.gateway(k.store, job_id, aid, req) for aid in finals]
     k.put_form(job_id, "gateway_report", {"results": results, "required": req, "overrides": results[0]["founder_overrides"] if results else []},
@@ -265,6 +265,7 @@ def big_taste(k, job_id, finals, media_kind) -> dict:
     total = sum(float(s["duration_s"]) for s in (k.store.artifact(job_id, "recipe") or {}).get("shots", [])) or 8.0
     with k.store.timed(job_id, "independent_review", "big taster"):
         review = k.workers.call(job_id, "big_taster", "final_review", ctx, exact_words=k.exact_words(job_id), media=refs + items,
+                                model_key="big_taster_image" if media_kind == "image" and "big_taster_image" in k.s.models else None,
                                 video_seconds=total, sim_args={"cut": len(k.store.artifact_versions(job_id, "final_review")) + 1})
     review["_reviewed_sha256"] = shas
     return review

@@ -22,20 +22,25 @@ def _env(name: str, default: str | None = None) -> str | None:
 # Tiers: strongest (chef) — company A; strong, another company (recipe checker, big taster, small-taster escalation) —
 # company B; cheap (waiter, pantry checker, small taster, diary writer). The decision slot is optional (spec §9.3, H4).
 # Amendment 1 §1: image jobs only use a cheaper chef (MI_MODEL_CHEF_IMAGE), a mid-tier model from the film chef's company.
+# Beta (founder 2026-09-24): checkers as picked from the model trial; Anthropic skipped for now, cheap workers on the
+# Aight Azure models; an image job's final check needs no sound, so a cheap model that sees images does it (Kimi); only a
+# film's final check needs Gemini (the one model that is sent the film WITH its sound).
 DEFAULT_WORKER_MODELS = {
     "chef": "azure_openai:gpt-5.6-sol",
     "chef_image": "azure_openai:gpt-5.6-terra",
     "recipe_checker": "gemini:gemini-3.1-pro-preview",
     "big_taster": "gemini:gemini-3.1-pro-preview",
+    "big_taster_image": "azure_openai:Kimi-K2.6",
     "small_taster_escalation": "gemini:gemini-3.1-pro-preview",
-    "waiter": "anthropic:claude-haiku-4-5",
-    "pantry_checker": "anthropic:claude-haiku-4-5",
-    "small_taster": "anthropic:claude-haiku-4-5",
-    "diary_writer": "anthropic:claude-haiku-4-5",
+    "waiter": "azure_openai:gpt-5.6-luna",
+    "pantry_checker": "azure_openai:gpt-5.6-luna",
+    "small_taster": "azure_openai:Kimi-K2.6",
+    "diary_writer": "azure_openai:gpt-5.6-luna",
 }
 COMPANY = {"anthropic": "anthropic", "azure_openai": "openai", "openai": "openai", "gemini": "google", "decision": "decision"}
 # Reasoning effort per worker (spec §9.4: medium by default).
-DEFAULT_EFFORT = {"chef": "medium", "chef_image": "medium", "recipe_checker": "medium", "big_taster": "medium", "small_taster_escalation": "medium"}
+DEFAULT_EFFORT = {"chef": "medium", "chef_image": "medium", "recipe_checker": "medium", "big_taster": "medium", "big_taster_image": "medium",
+                  "small_taster_escalation": "medium"}
 
 
 def worker_models() -> dict:
@@ -60,7 +65,7 @@ MAKERS = (("gpt", "openai"), ("o1", "openai"), ("o3", "openai"), ("o4", "openai"
 TEXT_ONLY_MODELS = ("deepseek-v4-flash", "deepseek-v3.2")
 # Workers that are sent pictures or films: everyone except the diary writer and the decision slot.
 SEEING_WORKERS = ("waiter", "pantry_checker", "chef", "chef_image", "recipe_checker", "small_taster", "small_taster_escalation",
-                  "big_taster")
+                  "big_taster", "big_taster_image")
 
 
 def maker(spec: str) -> str:
@@ -90,7 +95,7 @@ def check_independence(models: dict):
     def company(w):
         return maker(models[w])
     for chef in [c for c in ("chef", "chef_image") if c in models]:
-        for judge in ("recipe_checker", "big_taster"):
+        for judge in [j for j in ("recipe_checker", "big_taster", "big_taster_image") if j in models]:
             if company(judge) == company(chef):
                 raise ValueError(f"the {chef} ({models[chef]}) and the {judge} ({models[judge]}) are from the same company; "
                                  f"the judges must be independent")

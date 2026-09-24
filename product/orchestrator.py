@@ -314,10 +314,11 @@ class Orchestrator:
         from product.stations.tasters import exact_strings
         return exact_strings(self, job_id)
 
-    def qualified(self, judge: str) -> bool:
-        """Only a founder-recorded live qualification run, for the exact model now configured (reviewer 2026-09-24).
-        No setting, env flag or admin command makes a judge qualified."""
-        return self.store.qualification(judge, self.s.models.get(judge)) is not None
+    def qualified(self, judge: str, model: str | None = None) -> bool:
+        """Only a founder-recorded live qualification run, for the exact model now configured — or `model`, the one that
+        actually judged (an image job's final check runs on big_taster_image) (reviewer 2026-09-24). No setting, env flag
+        or admin command makes a judge qualified."""
+        return self.store.qualification(judge, model or self.s.models.get(judge)) is not None
 
 
 def _ts(utc: str) -> float:

@@ -38,6 +38,9 @@ PRICES = {
     "gpt-5.6-sol": (Decimal("4.00"), Decimal("20.00")),
     "gpt-5.6-terra": (Decimal("2.00"), Decimal("12.00")),
     "gpt-5.5": (Decimal("5.00"), Decimal("30.00")),
+    "gpt-5.6-luna": (Decimal("0.20"), Decimal("1.20")),
+    # Azure AI Foundry, Global Standard (prices.azure.com retail API, read 2026-09-23; used in the judges' model trial)
+    "Kimi-K2.6": (Decimal("1.045"), Decimal("4.40")),
     "gemini-3.5-flash": (Decimal("1.50"), Decimal("9.00")),
     "gemini-3.1-pro-preview": (Decimal("2.00"), Decimal("12.00")),   # ≤ 200k-token prompts
     "simulated": (Decimal("0"), Decimal("0")),
