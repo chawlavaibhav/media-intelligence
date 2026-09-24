@@ -359,6 +359,26 @@ class TheGatekeepersFixIsTheSizeOfTheFault(unittest.TestCase):
             e.close()
 
 
+class APhotoShotKeepsTheFilmsShape(unittest.TestCase):
+    def test_a_landscape_film_s_photo_shot_moves_on_a_landscape_canvas(self):
+        from product import media
+        if not media.have_ffmpeg():
+            self.skipTest("no ffmpeg")
+        e = Env()
+        try:
+            jid = e.submit(duration_s=15, formats=["16:9"])
+            e.drain()
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            e.drain()
+            photo_shots = [n for n in e.store.nodes(jid) if n["kind"] == "shot" and json.loads(n["spec_json"]).get("route") == "FILM-A"]
+            self.assertTrue(photo_shots)
+            for n in photo_shots:
+                p = media.probe(e.store.asset(n["selected_asset_id"])["path"])
+                self.assertGreater(p["width"], p["height"])          # live 2026-09-25: it was cut to a portrait slice
+        finally:
+            e.close()
+
+
 class ChefAndTastersAreDifferentCompanies(unittest.TestCase):
     def test_default_models_are_independent_and_a_same_company_taster_is_refused(self):
         m = config.worker_models()

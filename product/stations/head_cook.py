@@ -598,7 +598,9 @@ def _node_shot(k, job_id, n, spec, ctx):
     if spec["route"] == "FILM-A":
         out = k.store.new_output_path(k.job_dir(job_id) / "gen", f"{node_id}__code-motion", "mp4")
         if media.have_ffmpeg():
-            media.still_motion(Path(frame["path"]), out, duration_s=use + 0.5)
+            fw, fh = media.FORMAT_PX.get(spec["aspect"], (1080, 1920))
+            # the film's own shape (live 2026-09-25: the default portrait canvas cut a 16:9 frame to its middle third)
+            media.still_motion(Path(frame["path"]), out, duration_s=use + 0.5, size=(fw * 2 // 3 // 2 * 2, fh * 2 // 3 // 2 * 2))
         else:
             out.write_bytes(Path(frame["path"]).read_bytes())
         aid = k.store.add_asset(job_id, path=out, kind="video", source="composed", content_type="video/mp4", node_id=node_id,
