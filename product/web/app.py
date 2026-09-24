@@ -589,8 +589,6 @@ def main():
     srv.serve_forever()
 
 
-if __name__ == "__main__":
-    main()
 
 
 def _current_objections(st, jid):
@@ -602,3 +600,6 @@ def _current_objections(st, jid):
 def _taste_nodes(k, jid):
     from product.stations.head_cook import taste_nodes
     return taste_nodes(k, jid)
+
+if __name__ == "__main__":
+    main()

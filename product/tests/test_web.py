@@ -1,6 +1,7 @@
 import io
 import re
 import unittest
+from pathlib import Path
 import uuid
 from http.cookies import SimpleCookie
 from urllib.parse import urlencode
@@ -186,3 +187,14 @@ class WebJourney(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ServedAsAScript(unittest.TestCase):
+    def test_nothing_is_defined_after_the_server_starts(self):
+        # 2026-09-24 live: helpers defined below `if __name__ == "__main__": main()` never existed when the site ran as
+        # `python -m product.web.app` (main() blocks), so every job page returned 500 while every test (which imports) passed
+        import ast
+        from product.web import app
+        body = ast.parse(Path(app.__file__).read_text()).body
+        idx = next(i for i, n in enumerate(body) if isinstance(n, ast.If) and "__main__" in ast.unparse(n.test))
+        self.assertEqual(idx, len(body) - 1, "the __main__ block must be the last statement in product/web/app.py")
