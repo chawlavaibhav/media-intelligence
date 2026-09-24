@@ -293,6 +293,10 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
     n = len(segments)
     total_v = sum(s["use"] for s in segments)
     total = total_v + card_s
+    # a line belongs to its shot: it is gone before the dip into the end card starts (live 2026-09-25: the last line hung
+    # over the end card)
+    supers = [{**sp, "t_out": min(float(sp["t_out"]), total_v - xfade - 0.05)} for sp in supers
+              if min(float(sp["t_out"]), total_v - xfade - 0.05) - float(sp["t_in"]) > 0.4]
     inputs, f = [], []
     for s in segments:
         inputs += ["-i", str(s["clip"])]
@@ -317,7 +321,15 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
         f.append(f"[{prev}][a{i}]acrossfade=d={audio_join}:c1=tri:c2=tri[ax{i}]"); prev = f"ax{i}"
     f.append(f"[{prev}]anull[acat]")
     f.append(f"[{iec}:v]scale={W}:{H}:out_range=tv,setsar=1,fps={fps},format=yuv420p,settb=AVTB[ec]")
-    f.append(f"[vcat][ec]xfade=transition=fade:duration={xfade}:offset={total_v - xfade:.3f}[vx]")
+    # dip through the end card's own tone, never a see-through dissolve (live 2026-09-25: the logo ghosted over the last
+    # scene and read as a render glitch)
+    try:
+        from PIL import Image, ImageStat
+        lum = sum(ImageStat.Stat(Image.open(endcard).convert("L")).mean) / 255.0
+    except Exception:
+        lum = 0.0
+    dip = "fadewhite" if lum > 0.6 else "fadeblack"
+    f.append(f"[vcat][ec]xfade=transition={dip}:duration={xfade}:offset={total_v - xfade:.3f}[vx]")
     cur = "vx"
     for j, sp in enumerate(supers):
         k = iec + 1 + j
