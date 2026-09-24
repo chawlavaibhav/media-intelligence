@@ -11,7 +11,10 @@ import re
 # rejected faithful bags for carrying their real badge.
 NO_LETTERING = ("No text, no lettering, no captions, no signage, no watermark and no logos added anywhere in the scene; "
                 "the only marks allowed are the product's own small brand marks exactly as they appear on the reference photos.")
-NO_SPEECH = "No one speaks, sings or moves their lips; natural ambient sound only."
+# live 2026-09-25: "no one speaks" alone still gave people a voice (and then the model added its own subtitles); the video
+# model follows a POSITIVE description of the soundtrack better, so the sound is described as it should be heard
+NO_SPEECH = ("Audio: only quiet room tone and soft natural ambience — no voices, no dialogue, no narration, no singing. "
+             "Everyone stays silent, lips gently closed throughout; no subtitles.")
 BASE_NEGATIVE = ["text", "letters", "captions", "watermark", "logo", "signage", "talking", "speech", "singing",
                  "lip movement", "extra fingers", "warped product", "duplicate product"]
 
