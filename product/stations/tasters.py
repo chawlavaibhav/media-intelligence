@@ -66,7 +66,8 @@ def check_cut(k, job_id: str):
     for aid in finals:
         verify.record_rows(k.store, job_id, aid, verify.review_rows(_as_v1_review(review), mandatory_ids=mids, media_kind=media_kind,
                                                                     asset_sha256=k.store.asset(aid)["sha256"],
-                                                                    qualified=k.qualified("gatekeeper", review["written_by"]["model"])),
+                                                                    qualified=k.qualified("gatekeeper", review["written_by"]["model"]),
+                                                                    voice_over=bool(((k.store.artifact(job_id, "recipe") or {}).get("voice_over") or {}).get("wanted"))),
                            runner=f"gatekeeper:{review['written_by']['model']}")
     results = [verify.gateway(k.store, job_id, aid, req) for aid in finals]
     k.put_form(job_id, "gateway_report", {"results": results, "required": req, "overrides": results[0]["founder_overrides"] if results else []},
@@ -217,16 +218,13 @@ def _send_back(k, job_id, review, results):
     for n in shots:
         if k.store.node(job_id, f"shot_{n}"):
             note = "; ".join(d.get("repair", "") for d in defects if d.get("shot") == n)[:300]
-            reset += _reset_downstream(k, job_id, f"frame_{n}" if _stage(defects, n) in ("reference",) else f"shot_{n}", note)
+            # the first frame is redrawn too: a clip remade from the same wrong frame copies the fault
+            reset += _reset_downstream(k, job_id, f"frame_{n}", note)
     if not reset:
         for x in ("film",) if k.store.node(job_id, "film") else [n["node_id"] for n in k.store.nodes(job_id) if n["kind"] == "compose_still"]:
             reset += _reset_downstream(k, job_id, x, why[:300])
     k.store.put_artifact(job_id, "internal_repair", {"defects": defects, "nodes": sorted(set(reset))}, "gatekeeper")
     k.store.transition(job_id, "checking", "producing", actor="gatekeeper", data={"fix": sorted(set(reset))})
-
-
-def _stage(defects, n):
-    return next((d.get("earliest_stage") for d in defects if d.get("shot") == n), "generation")
 
 
 def big_taste(k, job_id, finals, media_kind) -> dict:
@@ -254,8 +252,21 @@ def big_taste(k, job_id, finals, media_kind) -> dict:
     from product.stations.head_cook import product_refs
     refs = product_refs(k, job_id, 3)
     checks = [{"check": r["check_id"], "status": r["status"]} for aid in finals for r in k.store.checks(aid)]
+    recipe = k.store.artifact(job_id, "recipe") or {}
+    t0, board = 0.0, []
+    deck = {c["id"]: c["text"] for c in recipe.get("copy_deck", [])}
+    for s in recipe.get("shots", []):
+        board.append({"shot": s["n"], "title": s.get("title"), "starts_s": round(t0, 2), "duration_s": s.get("duration_s"),
+                      "what_we_see": s.get("description"), "tool": s.get("tool"), "words_on_screen": deck.get(s.get("super_id"))})
+        t0 += float(s.get("duration_s") or 0)
+    vo = recipe.get("voice_over") or {}
     ctx = {"UNDERSTANDING": {kk: u[kk] for kk in ("objective", "audience", "audience_response", "forbidden", "deliverable")},
            "MANDATORY": u.get("mandatory", []), "MEASUREMENTS": checks,
+           # the board the customer approved is part of the order (kitchen v3): the gatekeeper checks the dish against it
+           "APPROVED_BOARD": {"shots": board, "copy_deck": list(deck.values()), "product": u.get("product"),
+                              "end_card": [deck.get(i) for i in (recipe.get("end_card") or {}).get("copy_ids", [])],
+                              "voice_over": {"wanted": bool(vo.get("wanted")), "language": vo.get("language"),
+                                             "lines": [ln.get("text") for ln in vo.get("lines", [])]}},
            "MEDIA_NOTE": ("The first image(s) are the customer's own product photos (reference, not the work); the rest is the finished "
                           "work. " if refs else "") + (note or "no media")}
     total = sum(float(s["duration_s"]) for s in (k.store.artifact(job_id, "recipe") or {}).get("shots", [])) or 8.0

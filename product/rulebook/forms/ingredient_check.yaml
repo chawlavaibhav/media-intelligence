@@ -1,7 +1,7 @@
 # Ingredient check — the head cook's tasting skill (kitchen v3; was the small taster). v2 adds the repair decision and a
 # sharper prompt for a retake, so the head cook repairs a take instead of code freezing it.
 form: ingredient_check
-version: 3
+version: 4
 written_by: head_cook
 schema:
   type: object
@@ -28,3 +28,4 @@ schema:
     notes: {type: string}
     repair: {type: string, enum: [keep, retake, edit, restage, use_photo, tell_customer]}
     better_prompt: {type: string}
+    better_picture_prompt: {type: string}

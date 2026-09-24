@@ -1,7 +1,16 @@
 """P1 v2 amendment 1 (coordination/p1-v2/P1-V2-AMENDMENT-1.md, founder decisions 2026-09-23). USD 0, simulated.
 
 §1 image cost target + image chef · §2 judges tested on old jobs · §3 nobody waits for the founder · §4 learning automated ·
-§6 founder account note in the runbook."""
+§6 founder account note in the runbook.
+
+Kitchen v3 (2026-09-25): the big taster is now the gatekeeper and the small taster the head cook; the pantry checker and
+the recipe checker are retired. Retired here:
+  - test_after_two_send_backs_the_system_replans_with_safe_alternatives_and_the_customer_decides_if_it_still_fails —
+    guarded the recipe checker's send-backs, the system's safe re-plan and the customer's acknowledgement of objections;
+    all three are retired (the customer approves the chef's recipe).
+  - test_a_risky_shot_that_fails_after_its_replan_becomes_a_still_with_code_motion_and_the_preview_says_so — guarded the
+    forced still; v3 never freezes a moving moment (the weak-take case is covered in test_v2_production).
+"""
 import json
 import os
 import unittest
@@ -31,12 +40,8 @@ def no_founder_wait(test, e, jid):
 
 
 def accept_alternatives(e, jid):
+    """v3: no pantry question — the waiter and the chef run to the recipe card."""
     e.drain()
-    if e.state(jid) == "awaiting_customer_input":
-        f = e.store.artifact(jid, "feasibility")
-        e.orch.provide_input(jid, by=e.user["email"], accepted_alternatives=[
-            {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
-        e.drain()
 
 
 # ── §1 cost ────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -83,9 +88,9 @@ class ImageCost(unittest.TestCase):
 
 # ── §2 judges on old jobs ──────────────────────────────────────────────────────────────────────────────────────────────
 class JudgesOnOldJobs(unittest.TestCase):
-    def test_the_big_taster_set_holds_the_14_films_and_62_images_with_the_verdict_mapping_and_pass_marks_are_confirmed(self):
+    def test_the_gatekeeper_set_holds_the_14_films_and_62_images_with_the_verdict_mapping_and_pass_marks_are_confirmed(self):
         cases = yaml.safe_load((REPO / "product/qualification/JUDGE-CASES.yaml").read_text())
-        hist = [c for c in cases["big_taster"] if c["id"].startswith("BT-H-")]
+        hist = [c for c in cases["gatekeeper"] if c["id"].startswith("BT-H-")]
         self.assertEqual(len([c for c in hist if c["media"] == "film"]), 14)
         self.assertEqual(len([c for c in hist if c["media"] == "image"]), 62)
         mapping = {"accept": "pass", "specific_repair": "fix", "rebuild_direction": "fail", "reject": "fail"}
@@ -101,21 +106,20 @@ class JudgesOnOldJobs(unittest.TestCase):
 
     @unittest.skipUnless(fx.evidence_dir() and (fx.evidence_dir() / "historical/CASES.yaml").exists(), "historical cases not on this host")
     def test_the_harness_scores_accepted_and_not_accepted_separately_verifies_hashes_and_still_never_qualifies_simulated(self):
-        rep = judges.run(judges=("big_taster", "recipe_checker"))
-        bt = rep["judges"]["big_taster"]
+        rep = judges.run(judges=("gatekeeper",))
+        bt = rep["judges"]["gatekeeper"]
         self.assertGreaterEqual(bt["available"], 79)
         for key in ("agreement_accepted", "agreement_not_accepted", "agreement_balanced"):
             self.assertIn(key, bt)
         self.assertFalse(bt["qualified"])
         self.assertIn("simulated", bt["why_not_qualified"])
-        self.assertIn("agreement_balanced", rep["judges"]["recipe_checker"])
         self.assertEqual(rep["spent_usd"], "0.000000")
 
     def test_a_file_whose_hash_does_not_match_is_unavailable_never_judged(self):
         with mock.patch.object(judges, "sha256_file", return_value="0" * 64):
             ev = judges.Evidence(fx.evidence_dir())
             if ev.root and (ev.root / "historical/CASES.yaml").exists():
-                c = next(c for c in yaml.safe_load((REPO / "product/qualification/JUDGE-CASES.yaml").read_text())["big_taster"]
+                c = next(c for c in yaml.safe_load((REPO / "product/qualification/JUDGE-CASES.yaml").read_text())["gatekeeper"]
                          if c["id"].startswith("BT-H-"))
                 self.assertIsNone(ev.historical(c["evidence"]))
 
@@ -128,12 +132,12 @@ class NobodyWaitsForTheFounder(unittest.TestCase):
     def tearDown(self):
         self.e.close()
 
-    def test_an_unqualified_recipe_checkers_approve_goes_straight_to_the_customer_as_our_reviewer_found_no_problems(self):
+    def test_the_chefs_recipe_goes_straight_to_the_customer_and_the_customers_preview_is_the_final_check(self):
         e = self.e
         jid = e.submit("image", text=IMAGE_ORDER)
         e.drain()
         self.assertEqual(e.state(jid), "awaiting_approval")
-        self.assertIn("found no problems", e.store.artifact(jid, "plan_note")["text"])
+        self.assertIsNone(e.store.artifact(jid, "recipe_check"))            # v3: no recipe checker between chef and customer
         e.orch.approve(jid, by=e.user["email"], budget_usd="10")
         e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")                  # the customer's preview is the final check
@@ -143,82 +147,23 @@ class NobodyWaitsForTheFounder(unittest.TestCase):
         self.assertTrue(rows["independent_review"]["runner"].startswith("customer:"))
         self.assertEqual(e.state(jid), "accepted")
 
-    def test_after_two_send_backs_the_system_replans_with_safe_alternatives_and_the_customer_decides_if_it_still_fails(self):
+    def test_gatekeeper_fix_repairs_automatically_within_the_approved_budget_and_never_spends_beyond_it(self):
         e = self.e
-        jid = fx.submit_backpack_film(e)
-        e.orch.sim.chef__recipe = lambda b, media: fx.v1_recipe(e.store.artifact(jid, "understanding"), e.store.artifact(jid, "feasibility"))
-        accept_alternatives(e, jid)
-        self.assertEqual(e.state(jid), "awaiting_approval")                  # the system's safe re-plan passed the checker
-        self.assertEqual(flow.rounds_used(e.store, jid, "SB-RECIPE"), 2)
-        rep = e.store.artifact(jid, "system_replan")
-        self.assertTrue(rep["shots"])
-        self.assertEqual(e.store.artifact(jid, "recipe_check")["verdict_after_code"], "approve")
-        r = e.store.artifact(jid, "recipe")
-        for s in r["shots"]:
-            if "zip" in s["action"].lower() or s["n"] in [x["shot"] for x in rep["shots"]]:
-                self.assertEqual(s["route"], "FILM-A")
-        self.assertNotIn("objections", json.dumps(e.store.artifact(jid, "plan_note")).lower().replace('"objections": false', ""))
-        no_founder_wait(self, e, jid)
-        # if the checker still objects, the customer sees the objections and chooses: go ahead, change the brief, or stop
-        e2 = Env()
-        try:
-            jid2 = fx.submit_backpack_film(e2)
-            orig = e2.orch.sim.recipe_checker__recipe_check
-            e2.orch.sim.recipe_checker__recipe_check = lambda b, m: {**orig(b, m), "verdict": "send_back",
-                                                                      "issues": [{"severity": "major", "where": "shot 2", "issue": "the idea is flat",
-                                                                                  "fix": "find a surprise"}]}
-            accept_alternatives(e2, jid2)
-            self.assertEqual(e2.state(jid2), "awaiting_approval")
-            self.assertEqual([x["shot"] for x in e2.store.artifact(jid2, "system_replan")["shots"]], [2])
-            obj = e2.store.artifact(jid2, "plan_objections")
-            self.assertIn("the idea is flat", " ".join(obj["plain_words"]))
-            self.assertEqual([a for a in e2.store.attempts(jid2) if a["category"] == "provider"], [])      # USD 0 so far
-            with self.assertRaises(PermissionError):
-                e2.orch.approve(jid2, by=e2.user["email"], budget_usd="15")                 # must acknowledge the objections
-            e2.orch.approve(jid2, by=e2.user["email"], budget_usd="15", accept_objections=True)
-            self.assertEqual(e2.state(jid2), "planning")
-            self.assertTrue(e2.store.events(jid2, ("customer_accepted_objections",)))
-            no_founder_wait(self, e2, jid2)
-        finally:
-            e2.close()
-
-    def test_a_risky_shot_that_fails_after_its_replan_becomes_a_still_with_code_motion_and_the_preview_says_so(self):
-        e = self.e
-        orig = e.orch.sim.small_taster__ingredient_check
-
-        def taster(b, media, **kw):
-            out = orig(b, media, **kw)
-            if kw.get("node_id") in ("frame_2", "shot_2"):
-                out.update(usable=False, notes="the laptop passes through the bag wall")
-            return out
-        e.orch.sim.small_taster__ingredient_check = taster
-        jid = fx.submit_backpack_film(e)
-        accept_alternatives(e, jid)
-        e.orch.approve(jid, by=e.user["email"], budget_usd="15")
-        e.produce(jid)
-        self.assertEqual(e.state(jid), "ready_for_review")
-        self.assertEqual(e.store.artifact(jid, "recipe")["shots"][1]["route"], "FILM-A")
-        notes = " ".join(e.store.artifact(jid, "customer_notes")["notes"])
-        self.assertIn("shot 2", notes)
-        no_founder_wait(self, e, jid)
-
-    def test_big_taster_fix_repairs_automatically_within_the_approved_budget_and_never_spends_beyond_it(self):
-        e = self.e
-        orig = e.orch.sim.big_taster__final_review
+        orig = e.orch.sim.gatekeeper__final_review
 
         def big(b, media, **kw):
             out = orig(b, media, **kw)
-            out.update(verdict="fix", defects=[{"id": "D1", "where": "shot 2", "severity": "major", "description": "the laptop morphs",
-                                                "earliest_stage": "generation", "shot": 2, "repair": "redraw the slide"}])
+            out.update(verdict="fix", defects=[{"id": "D1", "where": "shot 3", "severity": "major", "description": "the laptop morphs",
+                                                "earliest_stage": "generation", "shot": 3, "repair": "redraw the bag"}])
             return out
-        e.orch.sim.big_taster__final_review = big
+        e.orch.sim.gatekeeper__final_review = big
         spent_at_first_look = []
         orig_big = big
 
         def big(b, media, **kw):
             spent_at_first_look.append(e.store.committed_usd(jid))
             return orig_big(b, media, **kw)
-        e.orch.sim.big_taster__final_review = big
+        e.orch.sim.gatekeeper__final_review = big
         jid = fx.submit_backpack_film(e)
         accept_alternatives(e, jid)
         e.orch.approve(jid, by=e.user["email"], budget_usd="15")
@@ -235,7 +180,7 @@ class NobodyWaitsForTheFounder(unittest.TestCase):
         # the same job with a budget that only just covers the first cut: the repair stops at the cap and asks the customer
         e2 = Env()
         try:
-            e2.orch.sim.big_taster__final_review = orig_big
+            e2.orch.sim.gatekeeper__final_review = orig_big
             jid2 = fx.submit_backpack_film(e2)
             accept_alternatives(e2, jid2)
             cap = spent_at_first_look[0] + Decimal("0.01")
@@ -248,16 +193,16 @@ class NobodyWaitsForTheFounder(unittest.TestCase):
         finally:
             e2.close()
 
-    def test_a_big_taster_fail_after_its_round_goes_to_the_customer_who_may_accept_as_is(self):
+    def test_a_gatekeeper_fail_after_its_round_goes_to_the_customer_who_may_accept_as_is(self):
         e = self.e
-        orig = e.orch.sim.big_taster__final_review
+        orig = e.orch.sim.gatekeeper__final_review
 
         def big(b, media, **kw):
             out = orig(b, media, **kw)
             out.update(verdict="fail", defects=[{"id": "D2", "where": "whole", "severity": "blocker", "description": "the story is flat",
                                                  "earliest_stage": "plan", "shot": None, "repair": "re-plan"}])
             return out
-        e.orch.sim.big_taster__final_review = big
+        e.orch.sim.gatekeeper__final_review = big
         jid = e.submit("image", text=IMAGE_ORDER)
         e.drain()
         e.orch.approve(jid, by=e.user["email"], budget_usd="10")
@@ -370,11 +315,12 @@ class LearningIsAutomated(unittest.TestCase):
     def test_a_change_to_a_judges_card_may_relax_a_check_so_it_waits_for_the_founders_review(self):
         # reviewer 2026-09-24 (founder: "do both the fixes"): was ≥ 2 accepted jobs then auto; now always the founder's review
         e, q = self.e, self.q
-        diff = {"worker": "small_taster", "changes": {"kra_add": "A slightly soft edge on the product is acceptable."}}
+        seed = e.orch.rulebook.version("head_cook")
+        diff = {"worker": "head_cook", "changes": {"kra_add": "A slightly soft edge on the product is acceptable."}}
         for _ in range(3):
-            [a] = q.enqueue(closed_job(e, "accepted"), lesson("small_taster", "rulebook_card", diff))
+            [a] = q.enqueue(closed_job(e, "accepted"), lesson("head_cook", "rulebook_card", diff))
             self.assertEqual((q.lesson(a)["kind"], q.lesson(a)["status"]), ("founder_only", "founder_only"))
-        self.assertEqual(e.orch.rulebook.version("small_taster"), 1)
+        self.assertEqual(e.orch.rulebook.version("head_cook"), seed)
 
     def test_one_customers_taste_goes_on_that_customers_shelf_only(self):
         e, q = self.e, self.q

@@ -1,7 +1,7 @@
 # Rulebook card — gatekeeper (kitchen v3, founder-approved 2026-09-25). Seed version; later versions live in the store.
 worker: gatekeeper
 kind: ai
-version: 1
+version: 2
 model_tier: strong_other_company
 forms:
 - final_review
@@ -40,6 +40,10 @@ measured_by:
 instructions:
   final_review: |
     YOU ARE CHECKING THE FINISHED DISH AGAINST THE ORDER (use the whole card above). You watch and listen to all of it.
+    The order is the customer's words (CUSTOMER_EXACT_WORDS, MANDATORY) plus the board they approved (APPROVED_BOARD: each
+    shot with its start second, what we see, the words on screen, the end card, the product facts, the voice-over they
+    asked for). Use its shot numbers and seconds when you name a defect. The board is what was ordered, not a judgement
+    to repeat: if the film differs from it in a way that matters to the customer, that is a defect.
     - `mandatory`: for each must-have in the order, whether it is visible, with evidence.
     - `verdict`: `pass` if everything ordered is there and true; `fix` if a specific shot or line must be repaired; `fail`
       only if the dish is not the kind of dish ordered at all.

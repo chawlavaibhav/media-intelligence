@@ -1,7 +1,7 @@
 # Rulebook card — head_cook (kitchen v3, founder-approved 2026-09-25). Seed version; later versions live in the store.
 worker: head_cook
 kind: ai+code
-version: 3
+version: 4
 model_tier: cheap_other_company
 forms:
 - ingredient_check
@@ -75,6 +75,11 @@ instructions:
       the world, the light, the moment. A retake prompt that drops the person drops the dish.
     - `restage`: this way of shooting the moment will keep failing; write `better_prompt` that shows the SAME moment another
       way (another angle, a reaction on a face instead of a hand action, a close-up that implies the action).
+    - A CLIP that failed because of its FIRST FRAME (the product already wrong in it, an awkward pose, the wrong starting
+      state) will fail again however the motion is worded. Then also write `better_picture_prompt`: the chef's first-frame
+      prompt, rewritten so the clip can succeed (and `better_prompt` for the motion). The frame is redrawn and the clip made
+      from it. Moments where a small mechanism moves (a hinge opening, a lid, a zip) warp on the video model: re-stage them
+      so the change happens across the cut (closed in this shot, open in the next) and the moving part stays still.
     - `use_photo`: the machine has drawn the product wrong twice even with an edit; the real product photo should be used
       for this shot (for a video shot this keeps the moment moving with the real photo; for the look of the film, use `edit`).
     - `tell_customer`: the moment truly cannot be made; say why in `notes`.

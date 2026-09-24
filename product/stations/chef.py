@@ -22,7 +22,8 @@ def _tray(k, job_id, u, recipe=None, worker="chef"):
     job = k.store.job(job_id)
     words = k.exact_words(job_id)
     classes = sorted(set(library.classify(words)) | {"person_performance", "simple_hand_gesture", "product_state_still",
-                                                      "product_still_from_clean_photo", "camera_move_static_product"})
+                                                      "product_still_from_clean_photo", "camera_move_static_product",
+                                                      "new_product_detail"})
     routes = ["IMG"] if u["deliverable"]["media"] == "image" else ["FILM-A", "FILM-B", "FILM-C"]
     slip = k.store.artifact(job_id, "order_slip")
     args = {"media": u["deliverable"]["media"], "brief_text": words, "market": u.get("market") or "IN",

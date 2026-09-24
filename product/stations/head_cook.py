@@ -34,6 +34,10 @@ MAX_TAKES = int(os.environ.get("MI_MAX_TAKES", "4"))           # per output: mon
 CUSTOMER_TASTES = os.environ.get("MI_CUSTOMER_TASTES", "0") == "1"
 
 
+class Reframed(Exception):
+    """The head cook sent a clip back to its first frame: the frame is redrawn and the clip remade from it."""
+
+
 class KeepFlagged(Exception):
     """Amendment 1 §3: an output the small taster rejected on every allowed attempt, on the safest route there is. The
     latest take is kept, flagged, and noted on the customer's preview — the customer's look is the final check."""
@@ -243,17 +247,26 @@ def produce(k, job_id: str):
         except (BudgetExhausted, ProviderUnavailable):
             k.store.set_node(job_id, x, status="pending")
             raise
+        except Reframed:
+            continue
         except KeepFlagged as e:
             _keep_flagged(k, job_id, x, e.asset_id, e.why)
         except IdenticalRequestRefused as e:
             takes = _takes(k, job_id, x)
-            if not takes:
+            answered = [a["id"] for a in k.store.assets(job_id, node_id=x) if a["status"] == "selected"]
+            if not takes and answered:
+                # a node reset by a repair upstream sends a request already answered (its inputs did not change): the
+                # earlier answer, which the head cook already kept, is used again — never a failed step
+                k.store.event(job_id, "head_cook", "identical_answer_reused", {"node": x, "asset": answered[-1]})
+                _done(k, job_id, x, answered[-1])
+            elif not takes:
                 raise _node_failed(f"{x}: {e}")
-            # the customer is told what the head cook found wrong, never the dispatcher's refusal (it names our models)
-            last = [json.loads(v["data_json"]) for v in k.store.events(job_id, ("take_rejected",))]
-            last = [d for d in last if d.get("node") == x]
-            k.store.event(job_id, "system", "identical_request_refused", {"node": x, "error": str(e)[:300]})
-            _keep_flagged(k, job_id, x, takes[-1], (last[-1].get("why") if last else "") or "our last takes were not right")
+            else:
+                # the customer is told what the head cook found wrong, never the dispatcher's refusal (it names our models)
+                last = [json.loads(v["data_json"]) for v in k.store.events(job_id, ("take_rejected",))]
+                last = [d for d in last if d.get("node") == x]
+                _keep_flagged(k, job_id, x, takes[-1], f"rejected {len(last)} times: "
+                              + ((last[-1].get("why") if last else "") or "our last takes were not right"))
         if x == "master" and _master_needs_approval(k, job_id):
             write_log(k, job_id)
             k.store.transition(job_id, "producing", "awaiting_master_approval", actor="system",
@@ -519,7 +532,7 @@ def _image_request(k, job_id, n, spec, ctx, correction=""):
     use = [m] + ([prev_end] if prev_end else []) + (list(refs) if s.get("product_present") else [])
     text = spec.get("prompt_override") or s.get("picture_prompt") or s.get("first_frame", "")
     if spec.get("revision_note"):
-        text += f" Change requested by the customer: {spec['revision_note']}."
+        text += f" Change requested: {spec['revision_note']}."
     p = prompts.chef_picture_prompt(text, g, aspect=aspect, refs_note=prompts.REFS_NOTE)
     return p, use, {"asset": f"first frame of shot {s['n']} — {s.get('title', '')}", "prompt": p,
                     "chef_description": s.get("description"), "feeling": s.get("feeling"),
@@ -592,7 +605,7 @@ def _node_shot(k, job_id, n, spec, ctx):
         spec = json.loads(k.store.node(job_id, node_id)["spec_json"])
         motion = spec.get("motion_override") or s.get("motion_prompt") or s.get("action", "")
         prompt = prompts.chef_motion_prompt(motion, ctx["guard"]) + \
-            (f" Change requested by the customer: {spec['revision_note']}." if spec.get("revision_note") else "")
+            (f" Change requested: {spec['revision_note']}." if spec.get("revision_note") else "")
         negative = prompts.clip_negative(ctx["recipe"], ctx["guard"], s, [])
         if recovered:
             aid = recovered.pop(0)
@@ -650,11 +663,27 @@ def _rejected(k, job_id, node_id, aid, verdict) -> str:
             raise KeepFlagged(node_id, aid, f"rejected {cur['draws']} times: {why[:300]}")
         return why[:300]
     cspec.pop("edit_from", None)
+    reframe = (verdict.get("better_picture_prompt") or "").strip()
+    if cur["kind"] == "shot" and reframe and int(cspec.get("reframes") or 0) < 1 and k.store.node(job_id, f"frame_{cspec['shot']}"):
+        # the clip failed because of its first frame: redraw the frame (once per shot — money protection), then remake the clip
+        shot = cspec["shot"]
+        fx = f"frame_{shot}"
+        fspec = json.loads(k.store.node(job_id, fx)["spec_json"])
+        for kk in ("edit_from", "edit_instruction", "flagged", "reuse"):
+            fspec.pop(kk, None)
+        k.store.set_node(job_id, fx, spec_json=json.dumps({**fspec, "prompt_override": reframe}))
+        k.store.set_node(job_id, node_id, spec_json=json.dumps({**cspec, "reframes": int(cspec.get("reframes") or 0) + 1,
+                                                                **({"motion_override": better} if better else {})}))
+        _reset_downstream(k, job_id, fx)
+        k.store.event(job_id, "head_cook", "head_cook_repair", {"node": node_id, "repair": "reframe", "better_prompt": reframe[:1500]})
+        raise Reframed(node_id)
     if repair == "use_photo" and cur["kind"] in ("frame", "shot") and product_refs(k, job_id, 1):
         shot = cspec["shot"]
         for x in (f"frame_{shot}", f"shot_{shot}"):
             sp = json.loads(k.store.node(job_id, x)["spec_json"])
-            sp.update(tool="photo", route="FILM-A", switched_to_photo=why[:200])
+            # the first frame becomes the real photo; the shot keeps the chef's tool and route, so a moving moment still
+            # moves (the video model animates the real photo) — never a still in its place
+            sp.update(switched_to_photo=why[:200], **({"tool": "photo"} if x.startswith("frame_") else {}))
             k.store.set_node(job_id, x, spec_json=json.dumps(sp), **({"kind": "photo"} if x.startswith("frame_") else {}))
         if cur["kind"] == "shot":
             _reset_downstream(k, job_id, f"frame_{shot}", "the real product photo is used for this shot")
@@ -912,10 +941,12 @@ def _node_voice(k, job_id, n, spec, ctx):
         starts[s["n"]] = t
         t += float(s["duration_s"])
     total = t
-    notes = ""
+    notes, last_vid = "", None
     while True:
         cur = k.store.node(job_id, node_id)
         if cur["draws"] >= cur["max_draws"]:
+            if last_vid:            # like a picture: the last voice take is kept, flagged, and the customer is told
+                raise KeepFlagged(node_id, last_vid, f"voice rejected {cur['draws']} times: {notes[:300]}")
             raise _node_failed(f"{node_id}: {cur['max_draws']} voice takes used; last note: {notes[:200]}")
         board = [{"shot": s["n"], "title": s.get("title"), "starts_s": round(starts[s["n"]], 2), "duration_s": s["duration_s"]}
                  for s in recipe["shots"]]
@@ -948,6 +979,7 @@ def _node_voice(k, job_id, n, spec, ctx):
             return _done(k, job_id, node_id, vid)
         notes = (v.get("notes") or "") + (f" Try: {v['better_prompt']}" if v.get("better_prompt") else "")
         k.store.set_asset(vid, status="rejected")
+        last_vid = vid
         k.store.event(job_id, "head_cook", "take_rejected", {"node": node_id, "asset": vid, "why": notes[:400], "repair": v.get("repair")})
 
 

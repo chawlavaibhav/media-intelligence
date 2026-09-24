@@ -165,6 +165,36 @@ class TheHeadCookRepairs(unittest.TestCase):
         finally:
             e.close()
 
+    def test_a_clip_that_failed_because_of_its_first_frame_gets_a_new_frame_once(self):
+        e = Env()
+        try:
+            jid = e.submit(duration_s=15)
+            e.drain()
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            real = e.orch.sim.head_cook__ingredient_check
+            seen = {"n": 0}
+
+            def frame_at_fault(b, media, **kw):
+                v = real(b, media, **kw)
+                if kw.get("node_id") == "shot_1":
+                    seen["n"] += 1
+                    return {**v, "usable": False, "repair": "restage", "notes": "the phone is already open in the first frame",
+                            "better_prompt": "She glances down at the closed phone and smiles.",
+                            "better_picture_prompt": "REFRAMED: she holds the closed phone, screen towards us."}
+                return v
+            e.orch.sim.head_cook__ingredient_check = frame_at_fault
+            e.drain()
+            f1 = json.loads(e.store.node(jid, "frame_1")["spec_json"])
+            s1 = json.loads(e.store.node(jid, "shot_1")["spec_json"])
+            self.assertIn("REFRAMED", f1.get("prompt_override", ""))
+            self.assertEqual(s1.get("reframes"), 1)                                    # once only: money protection
+            repairs = [json.loads(x["data_json"])["repair"] for x in e.store.events(jid, ("head_cook_repair",))
+                       if json.loads(x["data_json"])["node"] == "shot_1"]
+            self.assertEqual(repairs.count("reframe"), 1)
+            self.assertEqual(e.store.node(jid, "shot_1")["status"], "done")           # kept flagged after its takes, never stuck
+        finally:
+            e.close()
+
     def test_use_photo_switches_the_shot_to_the_real_product_photo(self):
         e = Env()
         try:
@@ -184,6 +214,8 @@ class TheHeadCookRepairs(unittest.TestCase):
             e.drain()
             self.assertEqual(e.store.node(jid, "frame_3")["kind"], "photo")
             self.assertTrue(e.store.events(jid, ("switched_to_photo",)))
+            r = {s["n"]: s for s in e.store.artifact(jid, "recipe")["shots"]}
+            self.assertEqual(json.loads(e.store.node(jid, "shot_3")["spec_json"])["route"], r[3]["route"])   # the shot keeps its tool
         finally:
             e.close()
 

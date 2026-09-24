@@ -69,8 +69,8 @@ def required_checks(media_kind: str, *, mandatory_ids: list, has_copy: bool, has
 # Obligations only a person can discharge, by doing the thing — never by a waiver. The atlas's most repeated mechanism
 # (no_human_ear_on_the_delivered_audio: six jobs) recurred because "nobody could listen" was always waivable in effect.
 NON_WAIVABLE = {"audio_heard_by_person"}
-ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on: no speech, no singing, no clicks or holes at the cuts, "
-                                       "music suits the story",
+ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on: no speech or singing except the voice-over the "
+                                       "customer ordered, no clicks or holes at the cuts, music suits the story",
               "independent_review": "Watched the whole piece at phone size: a demanding customer would accept it as is",
               "product_fidelity": "The product is the customer's product — shape, colour, parts, openings — intact, not torn or warped",
               "product_across_shots": "The product is the same product in every shot",
@@ -282,7 +282,7 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
 
 
 def review_rows(review: dict, *, mandatory_ids: list, media_kind: str, asset_sha256: str | None = None,
-                qualified: bool = True) -> list:
+                qualified: bool = True, voice_over: bool = False) -> list:
     """Turn an independent review into check rows for ONE file. Simulated reviews never PASS; a review that was not
     shown this exact file proves nothing about it; an unanswered question is NOT_VERIFIED, never a pass by silence."""
     simulated = bool(review.get("_simulated")) or "simulated" in (review.get("modalities_evaluated") or [])
@@ -333,7 +333,9 @@ def review_rows(review: dict, *, mandatory_ids: list, media_kind: str, asset_sha
             rows.append({"check_id": "audio_reviewed", "control": "AUDIO_REVIEWED_BY_EAR", "status": "NOT_VERIFIED", "blocking": False,
                          "detail": "the model reviewer did not listen; the person's listen (audio_heard_by_person) decides"})
         else:
-            row("audio_reviewed", "AUDIO_REVIEWED_BY_EAR", sp, ("no",), ("yes",), f"speech/singing: {sp}; {(review.get('audio') or {}).get('notes', '')}")
+            # a voice-over the customer ordered is speech that belongs (kitchen v3); only unordered speech is a fault
+            row("audio_reviewed", "AUDIO_REVIEWED_BY_EAR", sp, ("no", "yes") if voice_over else ("no",), () if voice_over else ("yes",),
+                f"speech/singing: {sp}{' (a voice-over was ordered)' if voice_over else ''}; {(review.get('audio') or {}).get('notes', '')}")
         pa = review.get("product_across_shots") if isinstance(review.get("product_across_shots"), dict) else {}
         row("product_across_shots", "PRODUCT_CONTINUITY_ACROSS_SHOTS", pa.get("verdict"), ("consistent", "single_shot"), ("inconsistent",),
             f"{pa.get('verdict')}: {pa.get('evidence', '')}")

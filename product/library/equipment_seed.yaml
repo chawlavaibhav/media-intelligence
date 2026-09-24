@@ -28,7 +28,7 @@ rows:
     evidence_refs: [EV-0923-FILM, ATLAS-B7]
     note: hands pulling zips and folding the flap on the backpack — 15 of 16 takes rejected; the founder rejected the film
       ("two random hands, too many AI slops, robotic").
-    alternative: show the before and after states as separate stills (FILM-A) and cut between them; no hand operates the mechanism.
+    alternative: re-stage the same moment around the mechanism — the face and the result on video (before, then after), the hand action implied by the cut; a still only for an exact product detail.
   - id: EQ-002
     generator: veo-3.1-fast-i2v
     routes: [FILM-C]
@@ -39,7 +39,7 @@ rows:
     failures: 0
     evidence_refs: [EV-0923-FILM]
     note: not yet observed — beat 4 was refused by the provider twice; the risk is the recipe checker's written prediction.
-    alternative: show the object already inside as a still (FILM-A).
+    alternative: re-stage — the person's reaction and the object already inside, on video; the insertion implied by the cut.
   - id: EQ-003
     generator: veo-3.1-fast-i2v
     routes: [FILM-C]
@@ -50,7 +50,7 @@ rows:
     failures: 2
     evidence_refs: [EV-0923-FILM]
     note: the bag floated or began mid-air in both takes.
-    alternative: end on the closed bag at rest (FILM-A), or a camera move around it (FILM-B).
+    alternative: re-stage — the person with the closed bag on video (a glance, a pat, walking off with it), or a camera move around it (FILM-B).
   - id: EQ-004
     generator: veo-3.1-fast-i2v
     routes: [FILM-B, FILM-C]
@@ -125,8 +125,9 @@ rows:
     sample_count: 0
     basis: policy
     evidence_refs: [SPEC-9.1]
-    note: not offered in P1 (no speech anywhere).
-    alternative: music, ambience and code-set supers.
+    note: a person ON SCREEN speaking or lip-syncing is not offered (the video model's lips and words are unreliable). A voice-over
+      heard over the film is different and is offered when the customer asks (cast and recorded by the head cook).
+    alternative: the person reacts without speaking; the words come as a voice-over (when asked) or code-set supers.
   - id: EQ-011
     generator: veo-3.1-fast-i2v
     routes: [FILM-B, FILM-C]
@@ -146,7 +147,7 @@ rows:
     basis: policy
     evidence_refs: [SPEC-9.1, EV-0923-FILM]
     note: several manipulations in one shot are not offered.
-    alternative: one simple action per shot, or stills of each state.
+    alternative: one simple action per shot, each on video.
   - id: EQ-013
     generator: veo-3.1-fast-i2v
     routes: [FILM-B]
@@ -161,7 +162,7 @@ rows:
   - id: EQ-015
     generator: nano-banana-2
     routes: [IMG, FILM-A, FILM-B, FILM-C]
-    action_class: product_still_from_clean_photo
+    action_class: new_product_detail
     verdict: cannot
     sample_count: 6
     successes: 0
