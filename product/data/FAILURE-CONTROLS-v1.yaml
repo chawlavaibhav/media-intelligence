@@ -1,0 +1,1470 @@
+# FAILURE-CONTROLS-v1 — the historical failure record made operational for P1.
+#
+# Source of the identifiers: production-learning/cases/*/SYSTEM-DEFECTS.yaml (120 defect rows across the seven
+# published cases, read 2026-09-22). Ids are `<CASE>:<defect id>` exactly as written there; control names are the
+# candidate/promoted names those rows already use. No new taxonomy.
+#
+# NOT RECONCILED: FAILURE-ANALYSIS.md / FAILURE-ATLAS-RAW.yaml / FAILURE-ATLAS-CLASSIFIED.yaml (2026-09-22, "225 defects,
+# 104 mechanisms") were not found on main, on any fetched branch, or on this machine. Their totals are NOT claimed here.
+# When recovered, map each atlas mechanism to a control below (or add one) — the loader refuses unknown fields only.
+#
+# status:
+#   enforced            code runs on every applicable job and writes a check row against the exact asset version
+#   by_construction     the product path cannot produce the defect (the reason is stated)
+#   reviewer_obligation an independent reviewer/inspector must answer it; unanswered = NOT_VERIFIED (blocks presentation)
+#   excluded_by_scope   the defect belongs to a feature P1 refuses at intake (refusal is the control)
+#   not_applicable_p1   the defect belongs to a production method P1 does not use (code-rendered animation)
+# stage: 1 intent · 2 structure · 3 creative · 4 selection · 5 execution/verification
+# applies: any | image | video | audio | text
+
+controls:
+  - id: ATTEMPT_ID_UNIQUE_AND_RESERVE_MINTED
+    sources: [MOKOBARA-ODYSSEY-007:LG-1, CUMINCO-CHOPSTICKS-003:SD-06]
+    stage: 4
+    applies: any
+    prevention: attempt ids are minted inside the BEGIN IMMEDIATE transaction that checks the cap and writes the reservation
+    detection: LEDGER_INTEGRITY check (unique ids, every reservation settled or explicitly uncertain, committed <= budget)
+    implementation: product/store.py Store.reserve; product/verify.py ledger_integrity
+    status: enforced
+    regression: product/tests/test_store.py::ConcurrentReservation
+
+  - id: VALIDATE_BEFORE_RESERVE
+    sources: [RENTOK-GAME-B-005:T1]
+    stage: 4
+    applies: any
+    prevention: price quote and prompt guard run before the reservation; a refused request costs USD 0
+    implementation: product/dispatch.py Dispatcher.image/video/music
+    status: by_construction
+    regression: product/tests/test_dispatch.py::GuardBeforeReserve
+
+  - id: PAID_PRODUCTION_PREFLIGHT
+    sources: [UPWORK-PORTFOLIO-002:PD-01, UPWORK-PORTFOLIO-002:PD-02, UPWORK-PORTFOLIO-002:PD-03, UPWORK-PORTFOLIO-002:PD-07,
+              UPWORK-PORTFOLIO-002:PD-08, UPWORK-PORTFOLIO-002:PD-09]
+    stage: 4
+    applies: any
+    prevention: no provider reservation without a customer budget authorisation recorded on the job; unpriced routes refused
+    implementation: product/store.py Store.reserve (PermissionError); product/dispatch.py quote()
+    status: enforced
+    regression: product/tests/test_store.py::NoSpendWithoutAuthorisation
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
+
+  - id: TRANSIENT_ERROR_CLASSIFICATION
+    sources: [UPWORK-INTRO-001:SD-09, UPWORK-INTRO-001:SD-10, MOKOBARA-ODYSSEY-007:DF-5, RENTOK-GAME-B-005:att-013]
+    stage: 5
+    applies: any
+    prevention: every failed call is classified (infrastructure_transient | provider_refusal | unclassified), charged per class,
+      counted as its own attempt, never scored as model quality; transient failures retry within the node's draw allowance
+      then pause the job as paused_provider
+    implementation: product/dispatch.py Dispatcher._fail; product/orchestrator.py
+    status: enforced
+    regression: product/tests/test_e2e.py::ProviderFailureInjection
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
+
+  - id: PROVIDER_POOL_AVAILABILITY
+    sources: [UPWORK-INTRO-001:SD-11, RENTOK-GAME-B-005:att-006]
+    stage: 5
+    applies: any
+    prevention: repeated transient failure pauses the job (paused_provider) with the reason visible to the operator; no pool
+      balance is machine-readable, so pool exhaustion is detected by failure, not predicted
+    implementation: product/orchestrator.py
+    status: enforced
+    note: per-key quota reading (PER_KEY_QUOTA_IN_POOL_READINGS) is not implemented — no provider exposes it to this code
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
+
+  - id: QA_COVERAGE_ENFORCEMENT
+    sources: [UPWORK-PORTFOLIO-002:PD-04, UPWORK-PORTFOLIO-002:PD-06, UPWORK-PORTFOLIO-002:SD-HD-01, UPWORK-PORTFOLIO-002:SD-HD-04,
+              UPWORK-PORTFOLIO-002:SD-HD-11, RENTOK-GAME-B-005:A1-not-run, MOKOBARA-ODYSSEY-007:REC-1]
+    stage: 5
+    applies: any
+    prevention: the presentation gateway lists every check applicable to the job and requires a PASS (or a named waiver) on the
+      exact asset version presented; a check never run is NOT_VERIFIED and blocks
+    implementation: product/verify.py Gateway
+    status: enforced
+    regression: product/tests/test_verify.py::UnrunCheckBlocks
+
+  - id: TEXT_BOUNDS_GATE
+    sources: [UPWORK-INTRO-001:SD-01, UPWORK-INTRO-001:SD-04]
+    stage: 5
+    applies: text
+    detection: runtime.compositor.gates.check_text_bounds on every measured text and logo box, per delivered format
+    implementation: product/compose.py
+    status: enforced
+
+  - id: CONTRAST_GATE
+    sources: [UPWORK-INTRO-001:SD-02, MOKOBARA-ODYSSEY-007:DF-9]
+    stage: 5
+    applies: text
+    detection: runtime.compositor.gates.check_contrast against luminance sampled from the real pixels behind each text box
+      (worst pixel rule); the compositor picks light/dark ink and adds a scrim only when neither passes
+    implementation: product/compose.py
+    status: enforced
+
+  - id: CROP_FIT_DECLARATION
+    sources: [UPWORK-INTRO-001:SD-03, UPWORK-PORTFOLIO-002:SD-HD-12, UPWORK-PORTFOLIO-002:SD-HD-02]
+    stage: 5
+    applies: text
+    detection: every string is fitted (size stepped down to a floor) and runtime.compositor.gates.check_fit is recorded
+    implementation: product/compose.py
+    status: enforced
+
+  - id: ELEMENT_DISJOINTNESS
+    sources: [UPWORK-INTRO-001:SD-07, RENTOK-GAME-A-004:D-2, RENTOK-GAME-B-005:D-1, RENTOK-GAME-B-005:D-9]
+    stage: 5
+    applies: text
+    detection: runtime.compositor.gates.check_disjoint over every text/logo box
+    implementation: product/compose.py
+    status: enforced
+
+  - id: HERO_VISIBLE
+    sources: [RENTOK-GAME-V2-006:N1, RENTOK-GAME-V2-006:N2]
+    stage: 5
+    applies: image
+    detection: runtime.compositor.gates.check_hero_visible — product box (from the independent still inspection) vs every
+      code-set text/logo box; NOT_VERIFIED when the inspection could not locate the product
+    implementation: product/compose.py
+    status: enforced
+
+  - id: BRAND_COLOUR_ON_RENDERED_FRAME
+    sources: [RENTOK-GAME-A-004:D-11, RENTOK-GAME-A-004:D-8]
+    stage: 5
+    applies: video   # P1 stills paint no brand-colour field (the logo is the customer's file); the film end card does
+    detection: runtime.compositor.gates.check_brand_colour on pixels sampled from the rendered end card / colour field
+    implementation: product/compose.py
+    status: enforced
+
+  - id: EXACT_COPY_MATCH
+    sources: [runtime/spec/text_strategy.py code_set_on_textless_plate (the customer's exact strings are never drawn by a model)]
+    stage: 5
+    applies: text
+    prevention: exact strings are rendered from the copy deck via textfile (no re-typing); prompts carrying an exact string are refused
+    detection: every customer_exact string in the intent record appears verbatim in the copy deck used for the render
+    implementation: product/verify.py exact_copy_match; product/dispatch.py prompt_guard
+    status: enforced
+
+  - id: VIDEO_FRAME_TEXT_HYGIENE
+    sources: [UPWORK-INTRO-001:SD-06, MOKOBARA-ODYSSEY-007:DF-13]
+    stage: 5
+    applies: any
+    prevention: every generation prompt carries the no-lettering clause (refused otherwise)
+    detection: the independent inspector reports lettering_present per still/clip; OCR is not used as a gate (DF-13)
+    implementation: product/dispatch.py prompt_guard; product/orchestrator.py inspection
+    status: reviewer_obligation
+
+  - id: FORMAT_SPECIFIC_REVALIDATION
+    sources: [UPWORK-PORTFOLIO-002:SD-HD-03, UPWORK-PORTFOLIO-002:SD-HD-06, UPWORK-PORTFOLIO-002:SD-HD-07, UPWORK-PORTFOLIO-002:SD-HD-08]
+    stage: 5
+    applies: image
+    prevention: each format is its own composition over its own plate (no crop of another format's master), and each is a
+      separate asset version with its own gate rows (SUBJECT_AWARE_CROP_ANCHORING is avoided rather than implemented)
+    implementation: product/orchestrator.py image graph; product/compose.py
+    status: enforced
+    detection: "product/verify.py format_revalidated — the file was composed on its own ordered canvas and carries its own compositor gate rows"
+
+  - id: REJECTED_DESIGN_REUSE
+    sources: [UPWORK-PORTFOLIO-002:SD-HD-03, UPWORK-PORTFOLIO-002:SD-HD-04, UPWORK-PORTFOLIO-002:SD-HD-05, UPWORK-PORTFOLIO-002:SD-HD-08,
+              UPWORK-PORTFOLIO-002:SD-HD-09, UPWORK-PORTFOLIO-002:SD-HD-10]
+    stage: 5
+    applies: any
+    detection: an asset whose sha256 equals a version the customer already rejected or asked to change cannot be presented again
+    implementation: product/verify.py not_previously_rejected
+    status: enforced
+
+  - id: CONTAINER_EDIT_LIST_CHECK
+    sources: [RENTOK-GAME-A-004:D-1]
+    stage: 5
+    applies: video
+    detection: runtime.loop.container.assess_edit_lists on the delivered MP4 (assembly muxes with -use_editlist 0)
+    implementation: product/verify.py
+    status: enforced
+
+  - id: CODEC_TRUE_PEAK_MARGIN
+    sources: [RENTOK-GAME-A-004:R5, RENTOK-GAME-B-005:R2, RENTOK-GAME-V2-006:R-2]
+    stage: 5
+    applies: video
+    detection: ebur128 on the delivered AAC file — true peak <= -1.0 dBTP and integrated loudness -14 +/- 2 LUFS
+    implementation: product/verify.py
+    status: enforced
+
+  - id: AUDIO_LEVEL_CONTINUITY_AT_CUTS
+    sources: [MOKOBARA-ODYSSEY-007:DF-10]
+    stage: 5
+    applies: video
+    prevention: 60-ms acrossfade at every join (assembly default)
+    detection: RMS of the 50 ms after each cut vs the 50 ms before; a drop over 12 dB fails (provisional threshold — the only
+      datum is the checker's 15-20 dB measurement on v1)
+    implementation: product/media.py assemble_film; product/verify.py
+    status: enforced
+
+  - id: IN_MODEL_HARD_CUT
+    sources: [MOKOBARA-ODYSSEY-007:DF-4]
+    stage: 5
+    applies: video
+    detection: scene-change detection inside the used segment of every generated clip; a cut the board did not ask for fails
+      the take (another take is selected or drawn)
+    implementation: product/orchestrator.py clip acceptance; product/media.py scene_cuts
+    status: enforced
+
+  - id: NEGATIVE_PROMPT_THE_PRODUCT_BEFORE_ITS_REVEAL
+    sources: [MOKOBARA-ODYSSEY-007:DF-1]
+    stage: 4
+    applies: video
+    prevention: for beats with product_present=false the prompt builder states the absence and adds the product to the negative prompt
+    detection: inspector prohibited_present
+    implementation: product/prompts.py
+    status: by_construction
+
+  - id: END_STATE_STILL_PLUS_LAST_ACTION_I2V
+    sources: [MOKOBARA-ODYSSEY-007:DF-2, MOKOBARA-ODYSSEY-007:DF-8]
+    stage: 3
+    applies: video
+    prevention: the director contract requires the first frame to hold the beat's idea and a big state change to be put in the
+      still; the pre-spend direction review checks each beat's feasibility
+    detection: inspector required_action_occurred / end_state_reached on every selected clip, rolled up onto the film (clips:required_action, clips:end_state); an unanswered clip is NOT_VERIFIED
+    implementation: product/contracts.py DIRECTION_ROLE + DIRECTION_REVIEW_ROLE; product/orchestrator.py
+    status: reviewer_obligation
+
+  - id: EXIT_ACTION_AFTER_GOAL_STATE
+    sources: [MOKOBARA-ODYSSEY-007:DF-2b]
+    stage: 4
+    applies: video
+    prevention: beats carry exit_action; the prompt builder appends it after the goal state
+    implementation: product/prompts.py
+    status: by_construction
+
+  - id: TAKE_SELECTION_BEFORE_RETAKE
+    sources: [MOKOBARA-ODYSSEY-007:DF-7]
+    stage: 5
+    applies: video
+    prevention: every take is kept and inspected; a new draw is made only when no kept take is usable
+    implementation: product/orchestrator.py
+    status: enforced
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
+
+  - id: MANDATORY_EVENT_VISIBILITY_LJ_LINE
+    sources: [MOKOBARA-ODYSSEY-007:DF-8, MOKOBARA-ODYSSEY-007:DF-3]
+    stage: 5
+    applies: any
+    detection: the independent reviewer answers every mandatory id with visible yes/no/partial and evidence; anything but yes
+      blocks presentation unless waived by a named person
+    implementation: product/verify.py mandatory_visibility
+    status: reviewer_obligation
+
+  - id: PRODUCT_INTACT_AND_FAITHFUL
+    sources: [MOKOBARA-ODYSSEY-007:DF-6, MOKOBARA-ODYSSEY-007:DF-11, CUMINCO-CHOPSTICKS-003:SD-01]
+    stage: 5
+    applies: any
+    prevention: product anchor paragraph + customer reference photos in every still; 'intact, clean seams' clause wherever the product appears
+    detection: inspector product_identity_ok per asset; reviewer product_fidelity on the finished media
+    implementation: product/prompts.py; product/orchestrator.py
+    status: reviewer_obligation
+
+  - id: CHARACTER_CONTINUITY
+    sources: [MOKOBARA-ODYSSEY-007:DF-11, MOKOBARA-ODYSSEY-007:DF-4]
+    stage: 5
+    applies: video
+    prevention: a character reference still is generated first and passed as a reference to every beat still
+    detection: inspector character_consistent; reviewer continuity
+    implementation: product/orchestrator.py video graph
+    status: reviewer_obligation
+
+  - id: RISKIEST_ACTION_QUALIFIED_FIRST
+    sources: [MOKOBARA-ODYSSEY-007:DF-3, RENTOK-GAME-A-004:R1, RENTOK-GAME-B-005:D-4]
+    stage: 4
+    applies: video
+    prevention: the beat the director marks riskiest is produced and inspected before the other beats are dispatched; a failed
+      qualification stops dependent spend and asks for a changed method
+    implementation: product/orchestrator.py (qualification node)
+    status: enforced
+    detection: product/verify.py process_controls proves it from this job's ledger, graph and events and records a row on every delivered file
+
+  - id: AUDIO_REVIEWED_BY_EAR
+    sources: [MOKOBARA-ODYSSEY-007:DF-14, RENTOK-GAME-B-005:HD-01]
+    stage: 5
+    applies: video
+    detection: the reviewer must evaluate the audio modality (the film is sent with its sound); speech_or_singing must be 'no';
+      if audio was not evaluated the check is NOT_VERIFIED and a human listen is required
+    implementation: product/verify.py audio_reviewed
+    status: enforced
+    person_check: "audio_heard_by_person — required on every film, NON-WAIVABLE; only a named person's recorded listen (verify.attest,
+      operator page) satisfies it. The atlas's most repeated mechanism (no_human_ear_on_the_delivered_audio, six jobs) recurred because
+      the obligation could always be waived or asserted; the model reviewer's listen is supporting evidence only."
+
+  - id: SOURCE_RESOLUTION_STATED
+    sources: [MOKOBARA-ODYSSEY-007:DF-12]
+    stage: 5
+    applies: video
+    detection: the delivery record states generated source resolution beside delivered resolution
+    implementation: product/verify.py source_resolution
+    status: enforced
+
+  - id: AD_STRUCTURE_MINIMUM
+    sources: [CUMINCO-CHOPSTICKS-003:SD-07]
+    stage: 3
+    applies: any
+    detection: the brand mark is placed (end card / still) and the product appears in at least one beat; the direction reviewer
+      checks that the ad answers objective, product and call to action
+    implementation: product/verify.py ad_structure
+    status: enforced
+
+  - id: SUBJECT_OBSTRUCTION
+    sources: [CUMINCO-CHOPSTICKS-003:SD-04, CUMINCO-CHOPSTICKS-003:SD-09]
+    stage: 5
+    applies: any
+    detection: reviewer answers subject_obstructed (yes/no/cannot_determine + evidence) on the delivered file; unanswered = NOT_VERIFIED
+    status: reviewer_obligation
+
+  # ── excluded by P1 scope: refused at intake (the refusal is the control) ──────────────────────────
+  - id: VOICE_AND_SPEECH_FEATURES
+    sources: [CUMINCO-CHOPSTICKS-003:SD-02, CUMINCO-CHOPSTICKS-003:SD-03, CUMINCO-CHOPSTICKS-003:SD-05, CUMINCO-CHOPSTICKS-003:SD-08,
+              RENTOK-GAME-B-005:D-3, RENTOK-GAME-B-005:HD-01, UPWORK-INTRO-001:SD-05, UPWORK-INTRO-001:SD-08, UPWORK-INTRO-001:SD-12,
+              UPWORK-PORTFOLIO-002:PD-04, UPWORK-PORTFOLIO-002:PD-05, UPWORK-PORTFOLIO-002:SD-HD-13a, UPWORK-PORTFOLIO-002:SD-HD-13b]
+    stage: 1
+    applies: audio
+    prevention: voice-over, dialogue and lip-sync are refused at intake with the reason and USD 0 spend; prompts forbid speech
+    detection: AUDIO_REVIEWED_BY_EAR (speech_or_singing must be 'no')
+    status: excluded_by_scope
+
+  # ── not applicable: code-rendered animation (the RentOK method) is not a P1 class ────────────────
+  - id: CODE_RENDERED_ANIMATION_CONTROLS
+    sources: [RENTOK-GAME-A-004:R2a, RENTOK-GAME-A-004:R2b, RENTOK-GAME-A-004:R2c, RENTOK-GAME-A-004:R3, RENTOK-GAME-A-004:R4,
+              RENTOK-GAME-A-004:D-3, RENTOK-GAME-A-004:D-4, RENTOK-GAME-A-004:D-5, RENTOK-GAME-A-004:D-6, RENTOK-GAME-A-004:D-7,
+              RENTOK-GAME-A-004:D-9, RENTOK-GAME-B-005:R1, RENTOK-GAME-B-005:R3, RENTOK-GAME-B-005:R4, RENTOK-GAME-B-005:D-2,
+              RENTOK-GAME-B-005:D-5, RENTOK-GAME-B-005:D-6, RENTOK-GAME-B-005:D-7, RENTOK-GAME-V2-006:A-4, RENTOK-GAME-V2-006:R-1,
+              RENTOK-GAME-V2-006:N4, RENTOK-GAME-V2-006:LJ-15, RENTOK-GAME-V2-006:N5, RENTOK-GAME-V2-006:A-2, RENTOK-GAME-V2-006:A-3,
+              RENTOK-GAME-V2-006:A-5, RENTOK-GAME-V2-006:N3, RENTOK-GAME-V2-006:N6, RENTOK-GAME-V2-006:N7, RENTOK-GAME-V2-006:N8,
+              RENTOK-GAME-V2-006:N9, RENTOK-GAME-V2-006:P1]
+    stage: 5
+    applies: none
+    status: not_applicable_p1
+    note: framing-target, world-fills-frame, sprite density, keying, pose height and occlusion-semantics gates stay in
+      runtime/compositor/gates.py with their tests; P1 has no sprite/game renderer to call them. They re-enter when that class does.
+
+  # ── records / tooling / metrics ─────────────────────────────────────────────────────────────────
+  - id: PRODUCTION_RECORDS_FROM_THE_STORE
+    sources: [RENTOK-GAME-A-004:D-10, RENTOK-GAME-A-004:F-05, RENTOK-GAME-B-005:D-8, RENTOK-GAME-B-005:R5, RENTOK-GAME-B-005:PD-02,
+              RENTOK-GAME-V2-006:A-1, UPWORK-INTRO-001:SD-13, RENTOK-GAME-B-005:N-1]
+    stage: 5
+    applies: any
+    prevention: attempts, costs, timings (TTAO and first-cut latency), verdicts and the case skeleton are generated from the store,
+      not written by hand; job-specific tooling does not exist in the product path
+    implementation: product/learning.py; product/store.py timings
+    status: by_construction
+
+  # ── Found by running the P1 engine on real ffmpeg (2026-09-23). Source = the regression that reproduces the defect.
+  - id: DELIVERY_CONFORMANCE
+    sources: [product/tests/test_verify.py::FilmPictureChecks]
+    stage: 5
+    applies: video
+    detection: ffprobe on the delivered MP4 — ordered frame size, h264/yuv420p, AAC present, duration within 0.25 s of the plan
+    implementation: product/verify.py film_checks
+    status: enforced
+    regression: product/tests/test_verify.py::FilmPictureChecks
+
+  - id: NO_BLACK_OR_DROPPED_PICTURE
+    sources: [product/tests/test_verify.py::FilmPictureChecks]
+    stage: 5
+    applies: video
+    detection: blackdetect on the delivered picture (any black span >= 0.2 s fails; the card is a crossfade, never black);
+      freezedetect flags a picture frozen >= 1.5 s before the end card. Caught a super rendered on an opaque black
+      canvas that blacked out every beat it sat on while all nine other checks passed.
+    implementation: product/verify.py film_checks; product/media.py black_spans/frozen_spans
+    status: enforced
+    regression: product/tests/test_verify.py::FilmPictureChecks
+
+  # ── From the recovered atlas (2026-09-23). Source = atlas row ids (atlas:<id>), preserved verbatim.
+  - id: PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+    sources: [atlas:MDR8-03, atlas:MDR8-04, atlas:MDR8-05, atlas:MDR8-16, atlas:MDR8-17, atlas:MDR8-18, atlas:MOKO7-18, atlas:MOKO7-20]
+    stage: 3
+    applies: any
+    prevention: the pre-spend direction review lists every product claim with its source (customer_fact | product_photo | none),
+      whether the world is specified, prop-whereabouts gaps and eyeline/staging issues; code (verify.truth_blockers) turns an
+      unsourced claim, an unspecified world or a prop gap into a blocker, sends it back for one revision, and if it survives the job
+      pauses for an operator — approve() refuses it until a named operator overrides with a reason. No paid preview while blocked.
+    detection: "process:direction_truth row on every deliverable (FAIL on open blockers, FLAG when overridden, NOT_VERIFIED when simulated)"
+    implementation: product/orchestrator.py direct/approve/override_direction; product/verify.py truth_blockers, process_controls
+    status: enforced
+    regression: product/tests/test_e2e.py::WorldTruthBeforeSpend
+
+  - id: PRODUCT_CONTINUITY_ACROSS_SHOTS
+    sources: [atlas:MDR8-08, atlas:MDR8-09, atlas:CQ1-17]
+    stage: 5
+    applies: video
+    detection: the independent reviewer answers product_across_shots (consistent | inconsistent | single_shot | cannot_determine)
+      with evidence on the delivered film; silence is NOT_VERIFIED
+    implementation: product/contracts.py OUTPUT_REVIEW; product/verify.py review_rows
+    status: reviewer_obligation
+    regression: product/tests/test_verify.py::EvidenceBackedPass
+
+atlas_reconciliation:
+  # production-learning/atlas/2026-09-22/FAILURE-ATLAS-CLASSIFIED.yaml (sha256 ec8893028acf0d7b…), recovered 2026-09-23 from the
+  # uncommitted MOKOBARA-DEEPREAD job folder and ~/Documents. 225 rows, 104 failure modes (39 recurring across jobs), ten buckets
+  # B1–B10 — the atlas's own identifiers, unchanged. Each mode gets ONE P1 disposition and the controls above that carry it.
+  # p1: enforced | reviewer_obligation | by_construction | excluded_by_scope | not_applicable_p1 | human_judgement (no machine can
+  # decide it; operator hold + customer revision) | operator_process (off-product task) | deferred (not built; stated).
+  source_sha256_prefix: ec8893028acf0d7b
+  modes:
+    - mode: audio_hole_at_a_clip_join
+      bucket: B1
+      rows:
+      - UPW2-22
+      - RGB5-21
+      - MOKO7-03
+      p1: enforced
+      controls:
+      - AUDIO_LEVEL_CONTINUITY_AT_CUTS
+      beta_critical: true
+      note: 60-ms acrossfades by construction + dip-both-sides measurement calibrated on MOKO7 v1/v2
+    - mode: audio_mix_and_line_placement_defect
+      bucket: B1
+      rows:
+      - CUM3-02
+      p1: excluded_by_scope
+      controls:
+      - VOICE_AND_SPEECH_FEATURES
+      beta_critical: false
+      note: voice-over refused at intake
+    - mode: brand_colour_measured_wrong_on_the_frame
+      bucket: B1
+      rows:
+      - RGA4-03
+      - RGA4-17
+      - RGV6-17
+      p1: enforced
+      controls:
+      - BRAND_COLOUR_ON_RENDERED_FRAME
+      beta_critical: true
+      note: sampled from the rendered end card
+    - mode: codec_true_peak_overshoot
+      bucket: B1
+      rows:
+      - RGA4-10
+      - RGB5-14
+      - RGV6-12
+      - CQ1-15
+      p1: enforced
+      controls:
+      - CODEC_TRUE_PEAK_MARGIN
+      beta_critical: true
+      note: ebur128 on the delivered AAC
+    - mode: container_spec_violation
+      bucket: B1
+      rows:
+      - RGA4-01
+      - RGV6-08
+      p1: enforced
+      controls:
+      - CONTAINER_EDIT_LIST_CHECK
+      - DELIVERY_CONFORMANCE
+      beta_critical: true
+      note: moov walk + ffprobe on the delivered MP4
+    - mode: container_timing_anomaly
+      bucket: B1
+      rows:
+      - CQ1-22
+      p1: enforced
+      controls:
+      - DELIVERY_CONFORMANCE
+      beta_critical: false
+      note: nominal vs average frame rate compared on the delivered file (added 2026-09-23)
+    - mode: copy_over_photographic_content
+      bucket: B1
+      rows:
+      - UPW2-12
+      - UPW2-14
+      - UPW2-16
+      - CUM3-04
+      p1: enforced
+      controls:
+      - CONTRAST_GATE
+      - HERO_VISIBLE
+      - FORMAT_SPECIFIC_REVALIDATION
+      beta_critical: true
+      note: contrast measured on the delivered pixels (2026-09-23 fix); one backing panel when no ink reads
+    - mode: crop_cuts_the_subject
+      bucket: B1
+      rows:
+      - UPW1-03
+      - UPW2-15
+      - UPW2-20
+      p1: enforced
+      controls:
+      - CROP_FIT_DECLARATION
+      - FORMAT_SPECIFIC_REVALIDATION
+      - SUBJECT_OBSTRUCTION
+      beta_critical: true
+      note: one plate per format, never a crop of another
+    - mode: element_leaves_the_safe_box
+      bucket: B1
+      rows:
+      - RGA4-06
+      - RGA4-07
+      - RGB5-13
+      p1: enforced
+      controls:
+      - TEXT_BOUNDS_GATE
+      beta_critical: true
+      note: every code-set element is bounds-gated inside the safe box
+    - mode: element_overlap_collision
+      bucket: B1
+      rows:
+      - UPW1-07
+      - UPW2-17
+      - UPW2-18
+      - UPW2-19
+      - RGA4-05
+      - RGA4-21
+      - RGB5-02
+      - RGB5-15
+      - RGB5-16
+      - RGV6-10
+      p1: enforced
+      controls:
+      - ELEMENT_DISJOINTNESS
+      beta_critical: true
+      note: every code-set element box is disjointness-gated on the file it is drawn on
+    - mode: fit_loop_breaks_the_stack
+      bucket: B1
+      rows:
+      - UPW2-21
+      p1: enforced
+      controls:
+      - CROP_FIT_DECLARATION
+      - ELEMENT_DISJOINTNESS
+      beta_critical: false
+      note: fitted sizes then disjointness on the stack
+    - mode: format_variant_not_revalidated
+      bucket: B1
+      rows:
+      - CUM3-09
+      p1: enforced
+      controls:
+      - FORMAT_SPECIFIC_REVALIDATION
+      beta_critical: true
+      note: format_revalidated row on every still
+    - mode: framing_target_missed_at_the_focus_moment
+      bucket: B1
+      rows:
+      - RGV6-04
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: code camera moves are not a P1 method
+    - mode: geometry_token_inconsistency
+      bucket: B1
+      rows:
+      - UPW1-04
+      p1: by_construction
+      controls:
+      - TEXT_BOUNDS_GATE
+      beta_critical: false
+      note: one safe box derived from the canvas
+    - mode: hero_clipped_by_the_frame_edge
+      bucket: B1
+      rows:
+      - RGV6-05
+      p1: reviewer_obligation
+      controls:
+      - SUBJECT_OBSTRUCTION
+      - HERO_VISIBLE
+      beta_critical: true
+      note: reviewer answers subject_obstructed (cut off / blocked) on the delivered file
+    - mode: hero_or_key_content_occluded
+      bucket: B1
+      rows:
+      - UPW1-26
+      - RGA4-02
+      - RGB5-01
+      - RGV6-01
+      - RGV6-02
+      - CQ1-08
+      p1: enforced
+      controls:
+      - HERO_VISIBLE
+      - SUBJECT_OBSTRUCTION
+      beta_critical: true
+      note: 'stills: measured against the inspected product box; film: reviewer answers subject_obstructed'
+    - mode: keying_residue_on_a_cut_out
+      bucket: B1
+      rows:
+      - RGA4-08
+      - RGV6-14
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: P1 does no keying / cut-outs
+    - mode: layer_order_error
+      bucket: B1
+      rows:
+      - RGB5-18
+      - RGV6-09
+      p1: by_construction
+      controls:
+      - ELEMENT_DISJOINTNESS
+      beta_critical: false
+      note: 'fixed layer order: plate, backing, text, logo'
+    - mode: renderer_output_diverges_from_the_approved_board
+      bucket: B1
+      rows:
+      - RGA4-12
+      - RGA4-13
+      - RGA4-15
+      - RGA4-18
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: P1 has no code-rendered animation
+    - mode: text_contrast_on_background
+      bucket: B1
+      rows:
+      - UPW1-02
+      - UPW2-13
+      - MOKO7-04
+      p1: enforced
+      controls:
+      - CONTRAST_GATE
+      beta_critical: true
+      note: worst-pixel rule on the delivered pixels; 'large text' judged at phone size (6 % of width)
+    - mode: text_out_of_bounds
+      bucket: B1
+      rows:
+      - UPW1-01
+      - UPW2-10
+      p1: enforced
+      controls:
+      - TEXT_BOUNDS_GATE
+      beta_critical: true
+      note: inked box measured from real pixels
+    - mode: text_reads_clipped_although_it_fits
+      bucket: B1
+      rows:
+      - UPW2-11
+      p1: enforced
+      controls:
+      - CROP_FIT_DECLARATION
+      - TEXT_BOUNDS_GATE
+      beta_critical: true
+      note: fit and bounds judged on the inked box
+    - mode: vo_lines_overlap_on_the_timeline
+      bucket: B1
+      rows:
+      - CUM3-08
+      p1: excluded_by_scope
+      controls:
+      - VOICE_AND_SPEECH_FEATURES
+      beta_critical: false
+      note: voice-over refused at intake
+    - mode: voice_over_out_of_step_with_the_screen
+      bucket: B1
+      rows:
+      - RGB5-03
+      p1: excluded_by_scope
+      controls:
+      - VOICE_AND_SPEECH_FEATURES
+      beta_critical: false
+      note: voice-over refused at intake
+    - mode: world_does_not_fill_the_frame
+      bucket: B1
+      rows:
+      - RGV6-06
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: generated plates fill the frame; code-drawn worlds are not a P1 method
+    - mode: mandatory_event_never_happens_on_screen
+      bucket: B2
+      rows:
+      - MOKO7-02
+      - MOKO7-11
+      - MDR8-13
+      p1: reviewer_obligation
+      controls:
+      - MANDATORY_EVENT_VISIBILITY_LJ_LINE
+      - RISKIEST_ACTION_QUALIFIED_FIRST
+      beta_critical: true
+      note: one row per mandatory item on the delivered file
+    - mode: model_undoes_the_goal_state_inside_the_clip
+      bucket: B2
+      rows:
+      - MOKO7-07
+      p1: by_construction
+      controls:
+      - EXIT_ACTION_AFTER_GOAL_STATE
+      - END_STATE_STILL_PLUS_LAST_ACTION_I2V
+      beta_critical: true
+      note: exit action boarded; end state inspected
+    - mode: mouths_move_under_a_voice_over
+      bucket: B2
+      rows:
+      - CUM3-03
+      p1: excluded_by_scope
+      controls:
+      - VOICE_AND_SPEECH_FEATURES
+      beta_critical: false
+      note: no voice-over, no lip movement in P1
+    - mode: product_rendered_damaged_or_deformed
+      bucket: B2
+      rows:
+      - MOKO7-09
+      - MOKO7-10
+      p1: reviewer_obligation
+      controls:
+      - PRODUCT_INTACT_AND_FAITHFUL
+      beta_critical: true
+      note: product_fidelity enum on the delivered file
+    - mode: prompt_instruction_ignored_by_the_model
+      bucket: B2
+      rows:
+      - UPW1-27
+      - UPW1-30
+      - RGV6-18
+      - MOKO7-06
+      - MOKO7-08
+      - CQ1-16
+      - MDR8-02
+      - MDR8-07
+      p1: reviewer_obligation
+      controls:
+      - END_STATE_STILL_PLUS_LAST_ACTION_I2V
+      - MANDATORY_EVENT_VISIBILITY_LJ_LINE
+      - TAKE_SELECTION_BEFORE_RETAKE
+      beta_critical: true
+      note: every take inspected against its own instruction; roll-up onto the film
+    - mode: required_identifier_missing_from_the_model_output
+      bucket: B2
+      rows:
+      - RGB5-05
+      p1: reviewer_obligation
+      controls:
+      - PRODUCT_INTACT_AND_FAITHFUL
+      beta_critical: false
+      note: product identity checked per take and on the file
+    - mode: supplied_brand_mark_copied_or_mangled_by_the_model
+      bucket: B2
+      rows:
+      - CUM3-01
+      - MOKO7-24
+      p1: reviewer_obligation
+      controls:
+      - VIDEO_FRAME_TEXT_HYGIENE
+      - PRODUCT_INTACT_AND_FAITHFUL
+      beta_critical: true
+      note: model_lettering now asks for model-drawn logos/wordmarks too
+    - mode: unrequested_lettering_in_frame
+      bucket: B2
+      rows:
+      - UPW1-06
+      - UPW1-29
+      - RGB5-09
+      - CQ1-06
+      p1: reviewer_obligation
+      controls:
+      - VIDEO_FRAME_TEXT_HYGIENE
+      beta_critical: true
+      note: reviewer answers model_lettering explicitly; inspector per take
+    - mode: unrequested_object_in_frame
+      bucket: B2
+      rows:
+      - UPW1-31
+      - UPW2-24
+      - MOKO7-05
+      - CQ1-14
+      p1: reviewer_obligation
+      controls:
+      - NEGATIVE_PROMPT_THE_PRODUCT_BEFORE_ITS_REVEAL
+      - SUBJECT_OBSTRUCTION
+      beta_critical: true
+      note: inspector prohibited/unrequested elements per take
+    - mode: character_identity_drifts_between_shots
+      bucket: B3
+      rows:
+      - MOKO7-12
+      - MDR8-01
+      - MDR8-10
+      p1: reviewer_obligation
+      controls:
+      - CHARACTER_CONTINUITY
+      beta_critical: true
+      note: character reference node feeds every still; continuity enum on the film
+    - mode: prop_or_product_continuity_drifts_between_shots
+      bucket: B3
+      rows:
+      - MDR8-08
+      - MDR8-09
+      - MDR8-11
+      p1: reviewer_obligation
+      controls:
+      - PRODUCT_CONTINUITY_ACROSS_SHOTS
+      beta_critical: true
+      note: reviewer answers product_across_shots on the film (added 2026-09-23)
+    - mode: state_continuity_breaks_inside_the_clip
+      bucket: B3
+      rows:
+      - CQ1-17
+      p1: reviewer_obligation
+      controls:
+      - END_STATE_STILL_PLUS_LAST_ACTION_I2V
+      - PRODUCT_CONTINUITY_ACROSS_SHOTS
+      beta_critical: true
+      note: inspector end state per take; reviewer continuity on the film
+    - mode: style_or_density_mismatch_between_assets
+      bucket: B3
+      rows:
+      - RGV6-07
+      - RGV6-15
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: rows are code-drawn asset sets
+    - mode: the_same_asset_differs_between_generation_runs
+      bucket: B3
+      rows:
+      - RGA4-14
+      p1: by_construction
+      controls:
+      - PRODUCTION_RECORDS_FROM_THE_STORE
+      beta_critical: false
+      note: the selected take is kept by sha256; nothing is regenerated silently
+    - mode: voice_identity_changes_between_clips
+      bucket: B3
+      rows:
+      - UPW2-05
+      - UPW2-23
+      p1: excluded_by_scope
+      controls:
+      - VOICE_AND_SPEECH_FEATURES
+      beta_critical: false
+      note: no voices in P1
+    - mode: ad_structure_element_missing_from_the_board
+      bucket: B4
+      rows:
+      - UPW1-24
+      - CUM3-07
+      p1: enforced
+      controls:
+      - AD_STRUCTURE_MINIMUM
+      beta_critical: true
+      note: brand placed, product present
+    - mode: approved_copy_line_not_carried_into_the_cut
+      bucket: B4
+      rows:
+      - UPW1-25
+      p1: enforced
+      controls:
+      - EXACT_COPY_MATCH
+      beta_critical: true
+      note: every approved deck line must be drawn on the file (added 2026-09-23)
+    - mode: composition_band_cramped_in_the_animatic
+      bucket: B4
+      rows:
+      - RGA4-04
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: animatic bands are not a P1 method
+    - mode: continuity_between_beats_not_boarded
+      bucket: B4
+      rows:
+      - MOKO7-18
+      p1: enforced
+      controls:
+      - PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+      beta_critical: true
+      note: prop_whereabouts_gaps is a code-decided blocker before spend (MOKO7-18 paddle)
+    - mode: customer_requirement_not_carried_into_the_board
+      bucket: B4
+      rows:
+      - MOKO7-20
+      p1: enforced
+      controls:
+      - MANDATORY_EVENT_VISIBILITY_LJ_LINE
+      beta_critical: true
+      note: direction reviewer mandatory_coverage before spend; one row per mandatory on the file
+    - mode: eyeline_not_boarded
+      bucket: B4
+      rows:
+      - MDR8-04
+      p1: reviewer_obligation
+      controls:
+      - PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+      beta_critical: true
+      note: eyeline_or_staging_issues asked before spend; the reviewer sees the film
+    - mode: no_transition_state_boarded
+      bucket: B4
+      rows:
+      - RGV6-13
+      - RGV6-16
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: animation-state boards are not a P1 method
+    - mode: pose_or_state_list_gap_in_the_board
+      bucket: B4
+      rows:
+      - RGB5-20
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: pose sheets are not a P1 method
+    - mode: the_world_was_never_specified
+      bucket: B4
+      rows:
+      - MDR8-05
+      - MDR8-06
+      p1: enforced
+      controls:
+      - PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+      beta_critical: true
+      note: direction reviewer answers world_specified; 'no' is a code-decided blocker before spend
+    - mode: timeline_fixed_before_the_voice_was_measured
+      bucket: B4
+      rows:
+      - CUM3-05
+      p1: excluded_by_scope
+      controls:
+      - VOICE_AND_SPEECH_FEATURES
+      beta_critical: false
+      note: no voice-over
+    - mode: world_logic_not_boarded
+      bucket: B4
+      rows:
+      - RGV6-11
+      p1: enforced
+      controls:
+      - PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+      beta_critical: true
+      note: world truth checked before spend
+    - mode: world_not_composed_across_the_full_frame
+      bucket: B4
+      rows:
+      - RGA4-16
+      - RGB5-19
+      - RGB5-26
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: code-drawn worlds are not a P1 method
+    - mode: picture_depicts_a_capability_the_product_lacks
+      bucket: B5
+      rows:
+      - RGA4-20
+      - RGB5-24
+      p1: enforced
+      controls:
+      - PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+      - PRODUCT_INTACT_AND_FAITHFUL
+      beta_critical: true
+      note: every product claim needs a source before spend
+    - mode: product_fact_asserted_without_a_source
+      bucket: B5
+      rows:
+      - MDR8-03
+      p1: enforced
+      controls:
+      - PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+      beta_critical: true
+      note: 'MDR8-03 zip: an unsourced product claim blocks approval until fixed or overridden by a named operator'
+    - mode: accepted_with_unnamed_minor_issues
+      bucket: B6
+      rows:
+      - MOKO7-19
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: feedback captured as free text on acceptance
+    - mode: beat_does_not_earn_its_time
+      bucket: B6
+      rows:
+      - MOKO7-21
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: human verdict; per-beat revision
+    - mode: better_assets_did_not_move_the_verdict
+      bucket: B6
+      rows:
+      - CQ1-05
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: evaluation finding, not a delivery defect
+    - mode: character_expressiveness_limited
+      bucket: B6
+      rows:
+      - CQ1-02
+      - CQ1-07
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: human verdict
+    - mode: creative_range_not_demonstrated
+      bucket: B6
+      rows:
+      - UPW1-17
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: human verdict
+    - mode: effect_or_payoff_reads_weak_at_phone_size
+      bucket: B6
+      rows:
+      - RGA4-24
+      - RGV6-20
+      - RGV6-21
+      - CQ1-01
+      - CQ1-09
+      - CQ1-10
+      p1: human_judgement
+      controls:
+      - QA_COVERAGE_ENFORCEMENT
+      beta_critical: false
+      note: reviewer judges at intended viewing size; the customer's verdict decides (operator hold + revision)
+    - mode: environment_too_poor_to_hold_attention
+      bucket: B6
+      rows:
+      - RGV6-22
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: human verdict
+    - mode: first_draw_rejected_by_eye_at_the_gate
+      bucket: B6
+      rows:
+      - CUM3-16
+      p1: by_construction
+      controls:
+      - TAKE_SELECTION_BEFORE_RETAKE
+      beta_critical: false
+      note: a gate working as designed; takes are inspected and kept
+    - mode: music_does_not_follow_the_story
+      bucket: B6
+      rows:
+      - CQ1-04
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: the person's listen covers whether the music suits the story
+    - mode: opening_not_strong
+      bucket: B6
+      rows:
+      - UPW1-15
+      - UPW1-21
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: human verdict
+    - mode: overall_verdict_not_good_enough
+      bucket: B6
+      rows:
+      - UPW1-22
+      - CUM3-17
+      - MOKO7-23
+      - CQ1-20
+      - MDR8-15
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: no machine can decide it; operator hold before preview + customer revision/reject loop
+    - mode: pacing_wrong
+      bucket: B6
+      rows:
+      - UPW1-16
+      - UPW1-23
+      - MOKO7-22
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: customer revision routes it to the edit
+    - mode: positioning_undersold
+      bucket: B6
+      rows:
+      - UPW1-18
+      p1: human_judgement
+      controls: []
+      beta_critical: false
+      note: human verdict; the direction states the proposition for approval
+    - mode: proof_or_subject_reads_too_small
+      bucket: B6
+      rows:
+      - UPW1-14
+      - UPW1-20
+      - RGA4-09
+      - RGA4-25
+      - CQ1-03
+      p1: human_judgement
+      controls:
+      - QA_COVERAGE_ENFORCEMENT
+      beta_critical: false
+      note: reviewer judges at viewing size; human verdict decides
+    - mode: no_qualified_route_existed_for_the_demand
+      bucket: B7
+      rows:
+      - UPW1-08
+      p1: excluded_by_scope
+      controls:
+      - VOICE_AND_SPEECH_FEATURES
+      beta_critical: false
+      note: refused at intake
+    - mode: renderer_capability_limit
+      bucket: B7
+      rows:
+      - RGV6-19
+      - CQ1-11
+      - CQ1-23
+      p1: not_applicable_p1
+      controls:
+      - CODE_RENDERED_ANIMATION_CONTROLS
+      beta_critical: false
+      note: code renderers are not a P1 method
+    - mode: route_cannot_hold_the_style
+      bucket: B7
+      rows:
+      - CQ1-12
+      - CQ1-13
+      - CQ1-18
+      p1: reviewer_obligation
+      controls:
+      - RISKIEST_ACTION_QUALIFIED_FIRST
+      - CHARACTER_CONTINUITY
+      beta_critical: false
+      note: qualification first; continuity on the film
+    - mode: route_cannot_meet_the_demand
+      bucket: B7
+      rows:
+      - UPW1-28
+      - CUM3-14
+      - CUM3-15
+      - RGB5-28
+      - MDR8-14
+      p1: enforced
+      controls:
+      - RISKIEST_ACTION_QUALIFIED_FIRST
+      beta_critical: true
+      note: fixed P1 route table; unsupported requests refused at intake; the riskiest beat qualifies the route before other spend
+    - mode: route_degrades_beyond_its_qualified_length
+      bucket: B7
+      rows:
+      - UPW1-19
+      p1: by_construction
+      controls:
+      - RISKIEST_ACTION_QUALIFIED_FIRST
+      beta_critical: false
+      note: clips are 4–8 s i2v; no chained extends
+    - mode: route_output_below_the_delivery_spec
+      bucket: B7
+      rows:
+      - MOKO7-15
+      p1: enforced
+      controls:
+      - SOURCE_RESOLUTION_STATED
+      beta_critical: false
+      note: upscale factor stated; > 1.5x flagged
+    - mode: voice_route_shipped_without_a_human_ear_on_the_real_demand
+      bucket: B7
+      rows:
+      - UPW1-05
+      - CUM3-10
+      - CUM3-11
+      - CUM3-12
+      - RGB5-25
+      p1: excluded_by_scope
+      controls:
+      - VOICE_AND_SPEECH_FEATURES
+      beta_critical: false
+      note: no voice routes in P1
+    - mode: attempt_id_collision
+      bucket: B8
+      rows:
+      - CUM3-06
+      - MOKO7-01
+      p1: enforced
+      controls:
+      - ATTEMPT_ID_UNIQUE_AND_RESERVE_MINTED
+      beta_critical: true
+      note: ids minted inside the reservation transaction
+    - mode: copy_invented_during_execution_not_frozen
+      bucket: B8
+      rows:
+      - UPW2-02
+      p1: by_construction
+      controls:
+      - EXACT_COPY_MATCH
+      beta_critical: false
+      note: the copy deck is part of the approved direction
+    - mode: current_runtime_and_its_gates_bypassed
+      bucket: B8
+      rows:
+      - UPW2-06
+      - UPW2-07
+      - UPW2-25
+      p1: enforced
+      controls:
+      - QA_COVERAGE_ENFORCEMENT
+      beta_critical: true
+      note: presentation, release and acceptance all re-run the gateway; there is no other path to the customer
+    - mode: cycle_time_and_human_review_load
+      bucket: B8
+      rows:
+      - UPW1-13
+      p1: enforced
+      controls:
+      - PRODUCTION_RECORDS_FROM_THE_STORE
+      beta_critical: false
+      note: phase timings recorded per job
+    - mode: gates_check_the_form_of_a_plan_not_the_truth_of_its_world
+      bucket: B8
+      rows:
+      - MDR8-16
+      p1: enforced
+      controls:
+      - PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+      beta_critical: true
+      note: world_truth answered and decided by code before spend
+    - mode: ledger_attribution_wrong
+      bucket: B8
+      rows:
+      - UPW2-09
+      p1: by_construction
+      controls:
+      - PRODUCTION_RECORDS_FROM_THE_STORE
+      beta_critical: false
+      note: one ledger per job
+    - mode: money_reserved_before_the_input_was_validated
+      bucket: B8
+      rows:
+      - RGB5-04
+      p1: by_construction
+      controls:
+      - VALIDATE_BEFORE_RESERVE
+      beta_critical: false
+      note: guard before reserve
+    - mode: no_customer_dossier_carries_product_truth_between_jobs
+      bucket: B8
+      rows:
+      - MDR8-20
+      p1: deferred
+      controls: []
+      beta_critical: false
+      note: 'NOT BUILT: facts live per job; a per-customer product dossier is post-first-job work'
+    - mode: no_frozen_plan_before_the_first_paid_call
+      bucket: B8
+      rows:
+      - UPW2-01
+      - UPW2-03
+      p1: enforced
+      controls:
+      - PAID_PRODUCTION_PREFLIGHT
+      beta_critical: true
+      note: direction + quote approved before production spend
+    - mode: no_standard_acceptance_check_set
+      bucket: B8
+      rows:
+      - UPW2-04
+      p1: enforced
+      controls:
+      - QA_COVERAGE_ENFORCEMENT
+      beta_critical: true
+      note: required_checks per media kind
+    - mode: our_evaluation_rubric_scored_the_wrong_thing
+      bucket: B8
+      rows:
+      - MDR8-19
+      p1: reviewer_obligation
+      controls:
+      - PRODUCT_CONTINUITY_ACROSS_SHOTS
+      - PRODUCT_INTACT_AND_FAITHFUL
+      beta_critical: false
+      note: the reviewer is asked product truth and cross-shot consistency explicitly
+    - mode: our_own_measuring_instrument_was_wrong
+      bucket: B8
+      rows:
+      - RGA4-11
+      - RGV6-03
+      p1: enforced
+      controls:
+      - QA_COVERAGE_ENFORCEMENT
+      beta_critical: true
+      note: instruments regression-tested on real media (audio joins, contrast, black frames)
+    - mode: records_inconsistent_between_files
+      bucket: B8
+      rows:
+      - RGA4-19
+      - RGA4-22
+      - RGB5-08
+      - RGB5-12
+      - RGB5-22
+      - RGV6-23
+      - RGV6-26
+      - MOKO7-17
+      p1: by_construction
+      controls:
+      - PRODUCTION_RECORDS_FROM_THE_STORE
+      beta_critical: true
+      note: one store; every page and record is rendered from it
+    - mode: route_cost_or_efficiency_finding
+      bucket: B8
+      rows:
+      - CQ1-19
+      p1: operator_process
+      controls:
+      - PRODUCTION_RECORDS_FROM_THE_STORE
+      beta_critical: false
+      note: PriceBook quote per job; cost reviewed by the operator
+    - mode: spend_authorisation_or_cap_missing
+      bucket: B8
+      rows:
+      - UPW2-08
+      - RGA4-23
+      p1: enforced
+      controls:
+      - PAID_PRODUCTION_PREFLIGHT
+      beta_critical: true
+      note: reservation refused without an authorised budget
+    - mode: spend_committed_before_the_risky_element_was_qualified
+      bucket: B8
+      rows:
+      - UPW1-12
+      p1: enforced
+      controls:
+      - RISKIEST_ACTION_QUALIFIED_FIRST
+      beta_critical: true
+      note: process:riskiest_first row on every film
+    - mode: spend_records_incomplete_or_unreconciled
+      bucket: B8
+      rows:
+      - UPW1-32
+      - UPW2-26
+      p1: operator_process
+      controls:
+      - PRODUCTION_RECORDS_FROM_THE_STORE
+      beta_critical: false
+      note: per-job ledger incl. failures; vendor-statement reconciliation stays an operator task
+    - mode: the_deep_reading_was_scoped_to_craft_not_to_the_world
+      bucket: B8
+      rows:
+      - MDR8-18
+      p1: enforced
+      controls:
+      - PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND
+      beta_critical: true
+      note: the pre-spend review asks world/product truth explicitly
+    - mode: tooling_gap_in_our_own_guard
+      bucket: B8
+      rows:
+      - RGB5-11
+      - RGB5-17
+      p1: by_construction
+      controls:
+      - VALIDATE_BEFORE_RESERVE
+      beta_critical: false
+      note: guard before reserve
+    - mode: work_split_across_sessions_lost_the_handoff
+      bucket: B8
+      rows:
+      - MDR8-17
+      p1: by_construction
+      controls:
+      - PRODUCTION_RECORDS_FROM_THE_STORE
+      beta_critical: false
+      note: one orchestrator, one store, one direction artifact
+    - mode: pool_balance_killed_a_planned_route
+      bucket: B9
+      rows:
+      - UPW1-11
+      p1: enforced
+      controls:
+      - PROVIDER_POOL_AVAILABILITY
+      beta_critical: false
+      note: paused_provider with the reason visible
+    - mode: pool_reading_wrong_for_the_key_actually_used
+      bucket: B9
+      rows:
+      - RGB5-06
+      p1: enforced
+      controls:
+      - PROVIDER_POOL_AVAILABILITY
+      beta_critical: false
+      note: credentials read by name from the job's environment
+    - mode: provider_content_refusal_false_positive
+      bucket: B9
+      rows:
+      - CUM3-13
+      - RGB5-07
+      p1: enforced
+      controls:
+      - TRANSIENT_ERROR_CLASSIFICATION
+      beta_critical: true
+      note: classified provider_refusal; not charged to route quality; reasoning uses the refusal fallback
+    - mode: provider_latency_anomaly
+      bucket: B9
+      rows:
+      - RGV6-25
+      p1: enforced
+      controls:
+      - PRODUCTION_RECORDS_FROM_THE_STORE
+      beta_critical: false
+      note: per-attempt provider timings
+    - mode: provider_transient_5xx_or_unavailable
+      bucket: B9
+      rows:
+      - UPW1-09
+      - UPW1-10
+      - MOKO7-13
+      p1: enforced
+      controls:
+      - TRANSIENT_ERROR_CLASSIFICATION
+      beta_critical: true
+      note: classified, counted, retried, paused
+    - mode: a_declared_check_was_never_run
+      bucket: B10
+      rows:
+      - RGB5-23
+      p1: enforced
+      controls:
+      - QA_COVERAGE_ENFORCEMENT
+      beta_critical: true
+      note: the gateway blocks on any required check with no row
+    - mode: coverage_asserted_but_never_verified
+      bucket: B10
+      rows:
+      - RGA4-27
+      - CQ1-24
+      p1: enforced
+      controls:
+      - QA_COVERAGE_ENFORCEMENT
+      beta_critical: true
+      note: an applicable check without a row on the exact file is NOT_VERIFIED and blocks
+    - mode: no_human_ear_on_the_delivered_audio
+      bucket: B10
+      rows:
+      - RGA4-26
+      - RGB5-10
+      - RGB5-27
+      - RGV6-24
+      - MOKO7-16
+      - CQ1-21
+      - MDR8-12
+      p1: enforced
+      controls:
+      - AUDIO_REVIEWED_BY_EAR
+      beta_critical: true
+      note: 'audio_heard_by_person: required, NON-WAIVABLE, satisfied only by a named person''s recorded listen'
+    - mode: our_qa_instrument_is_unreliable
+      bucket: B10
+      rows:
+      - RGB5-29
+      - MOKO7-14
+      p1: enforced
+      controls:
+      - VIDEO_FRAME_TEXT_HYGIENE
+      - AUDIO_LEVEL_CONTINUITY_AT_CUTS
+      beta_critical: true
+      note: instruments calibrated on real historical media with regression tests; OCR stays a reviewer question, not a gate

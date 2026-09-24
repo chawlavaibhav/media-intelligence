@@ -1,0 +1,6 @@
+# Python dependencies of the P1 product (the runtime needs only PyYAML). Pin in the VM image.
+PyYAML>=6.0
+Jinja2>=3.1
+cryptography>=41     # Vertex service-account token signing (RS256)
+Pillow>=10.1          # text rendering (raqm shaping for Devanagari) — ffmpeg drawtext is build-dependent
+numpy>=1.26          # product colour match on generated plates

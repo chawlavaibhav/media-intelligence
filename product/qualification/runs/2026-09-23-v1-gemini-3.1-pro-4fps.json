@@ -1,0 +1,281 @@
+{
+ "model": "gemini-3.1-pro-preview",
+ "fps": 4.0,
+ "film": "v1",
+ "sha256": "75d1fc8b2d59368b7358017c342aaca183e1943e8cc27f6aec43e9bc572cf6a2",
+ "live": true,
+ "review": {
+  "verdict": "repair",
+  "modalities_evaluated": [
+   "video",
+   "audio"
+  ],
+  "mandatory": [
+   {
+    "mandatory_id": "B1",
+    "visible": "partial",
+    "evidence": "0:00 opens on close-up of tally marks, but cuts to wide instead of pulling back."
+   },
+   {
+    "mandatory_id": "B2",
+    "visible": "yes",
+    "evidence": "0:03 bag is at tideline, he crouches, text appears at 0:05."
+   },
+   {
+    "mandatory_id": "B3",
+    "visible": "partial",
+    "evidence": "0:07 shows him looking at the photo, but misses the over-the-shoulder unzipping action."
+   },
+   {
+    "mandatory_id": "B4",
+    "visible": "no",
+    "evidence": "0:12 shows him pulling a paddle, but the 'both arms to the shoulders' joke is missing."
+   },
+   {
+    "mandatory_id": "B5",
+    "visible": "yes",
+    "evidence": "0:20 items are packed into the bag."
+   },
+   {
+    "mandatory_id": "B6",
+    "visible": "yes",
+    "evidence": "0:24 he wades into the sea pushing a raft with the bag on his back."
+   },
+   {
+    "mandatory_id": "B7",
+    "visible": "yes",
+    "evidence": "0:28 end card displays required text on navy."
+   }
+  ],
+  "defects": [
+   {
+    "id": "defect_1",
+    "where": "0:00-0:02",
+    "severity": "major",
+    "description": "Camera cuts instead of performing the requested continuous pull-back.",
+    "earliest_stage": "generation",
+    "beat": 1,
+    "repair": "Regenerate shot with a continuous camera move."
+   },
+   {
+    "id": "defect_2",
+    "where": "0:07-0:12",
+    "severity": "major",
+    "description": "Missing the requested over-the-shoulder angle and unzipping action.",
+    "earliest_stage": "generation",
+    "beat": 3,
+    "repair": "Regenerate to show the action of unzipping from an OTS perspective."
+   },
+   {
+    "id": "defect_3",
+    "where": "0:12-0:20",
+    "severity": "blocker",
+    "description": "Core physical comedy gag (both arms inside the bag) is completely missing.",
+    "earliest_stage": "generation",
+    "beat": 4,
+    "repair": "Animate the actor putting both arms up to the shoulders into the bag."
+   },
+   {
+    "id": "defect_4",
+    "where": "3.5s, 7.5s",
+    "severity": "minor",
+    "description": "Audio holes at cut points.",
+    "earliest_stage": "composition",
+    "beat": null,
+    "repair": "Apply crossfades to audio tracks at joins."
+   }
+  ],
+  "product_fidelity": {
+   "verdict": "faithful",
+   "evidence": "Navy backpack with yellow lining matches the general description."
+  },
+  "continuity": {
+   "verdict": "consistent",
+   "evidence": "Character maintains long hair, beard, and torn clothing."
+  },
+  "model_lettering": {
+   "present": "no",
+   "evidence": "No generated text observed on the bag or environment."
+  },
+  "subject_obstructed": {
+   "present": "no",
+   "evidence": "Superimposed text does not block key actions or the product."
+  },
+  "product_across_shots": {
+   "verdict": "consistent",
+   "evidence": "Bag retains its color and boxy shape across scenes."
+  },
+  "commercial_read": "The film sets the right mood but completely misses the requested deadpan comedy in the middle, flattening the narrative.",
+  "audio": {
+   "speech_or_singing": "no",
+   "notes": "Sound design is present, but fails technical checks at edits."
+  },
+  "summary_for_customer": "The visual grade and character design hit the brief, but the central comedic beat (the arms-deep gag) is entirely missing, requiring regeneration. Minor audio edits are also needed.",
+  "_call": {
+   "id": 1,
+   "provider": "gemini",
+   "model": "gemini-3.1-pro-preview",
+   "isolated": true,
+   "context_kinds": [
+    "BRIEF",
+    "DETERMINISTIC_CHECKS",
+    "DIRECTION",
+    "INTENT",
+    "MEDIA_NOTE"
+   ],
+   "cost_usd": "0.066064"
+  }
+ },
+ "proposed_matches": [
+  {
+   "id": "D1",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [
+    2
+   ],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D5",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "OAR_REVEAL",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "TEAR",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "FONT",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "LOGO",
+   "truth_on_this_file": "present",
+   "target": true,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D2",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D3",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D4",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D6_GEOMETRY",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D7",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D8",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [],
+   "confirmed_by_person": null
+  },
+  {
+   "id": "D9",
+   "truth_on_this_file": "present",
+   "target": false,
+   "proposed_reviewer_defects": [
+    3
+   ],
+   "confirmed_by_person": null
+  }
+ ],
+ "review_rows": [
+  {
+   "check_id": "independent_review",
+   "control": "QA_COVERAGE_ENFORCEMENT",
+   "status": "FAIL",
+   "detail": "verdict repair; 4 defects (3 blocker/major); isolated=True"
+  },
+  {
+   "check_id": "product_fidelity",
+   "control": "PRODUCT_INTACT_AND_FAITHFUL",
+   "status": "PASS",
+   "detail": "faithful: Navy backpack with yellow lining matches the general description."
+  },
+  {
+   "check_id": "no_model_lettering",
+   "control": "VIDEO_FRAME_TEXT_HYGIENE",
+   "status": "PASS",
+   "detail": "no: No generated text observed on the bag or environment."
+  },
+  {
+   "check_id": "subject_unobstructed",
+   "control": "SUBJECT_OBSTRUCTION",
+   "status": "PASS",
+   "detail": "no: Superimposed text does not block key actions or the product."
+  },
+  {
+   "check_id": "audio_reviewed",
+   "control": "AUDIO_REVIEWED_BY_EAR",
+   "status": "PASS",
+   "detail": "speech/singing: no; Sound design is present, but fails technical checks at edits."
+  },
+  {
+   "check_id": "product_across_shots",
+   "control": "PRODUCT_CONTINUITY_ACROSS_SHOTS",
+   "status": "PASS",
+   "detail": "consistent: Bag retains its color and boxy shape across scenes."
+  },
+  {
+   "check_id": "character_continuity",
+   "control": "CHARACTER_CONTINUITY",
+   "status": "PASS",
+   "detail": "consistent: Character maintains long hair, beard, and torn clothing."
+  }
+ ],
+ "ledger": {
+  "budget_usd": "0.400000",
+  "committed_usd": "0.066064",
+  "by_category": {
+   "reasoning": "0.066064"
+  },
+  "attempts": 1,
+  "failed": 0,
+  "uncertain": 0,
+  "repair_usd": "0.000000"
+ }
+}

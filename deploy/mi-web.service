@@ -1,0 +1,22 @@
+[Unit]
+Description=Media Intelligence P1 — web application
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=mi
+Group=mi
+WorkingDirectory=/srv/mi/app
+EnvironmentFile=/etc/mi/mi.env
+Environment=PYTHONPATH=/srv/mi/app
+ExecStart=/usr/bin/python3 -m product.web.app --host 127.0.0.1 --port 8080
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/mi/data
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

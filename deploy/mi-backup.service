@@ -1,0 +1,11 @@
+[Unit]
+Description=Media Intelligence P1 — nightly backup (database + media), then copy off-host
+
+[Service]
+Type=oneshot
+User=mi
+Group=mi
+WorkingDirectory=/srv/mi/app
+EnvironmentFile=/etc/mi/mi.env
+Environment=PYTHONPATH=/srv/mi/app
+ExecStart=/bin/sh -c 'f=/srv/mi/data/backups/mi-$(date -u +%%Y%%m%%dT%%H%%M%%SZ).tar.gz; /usr/bin/python3 -m product.admin backup --out "$f" && if [ -n "$MI_BACKUP_BUCKET" ]; then gsutil -q cp "$f" "$MI_BACKUP_BUCKET/"; fi; find /srv/mi/data/backups -name "mi-*.tar.gz" -mtime +7 -delete'
