@@ -20,6 +20,18 @@ ALLOWED_UPLOADS = {
 }
 ROLES = ("product", "logo", "reference")
 FORMATS = ("1:1", "4:5", "9:16", "16:9")
+UNDECIDED = "undecided"               # a prompt order's media until the waiter decides it (jobs.media is never empty)
+PROMPT_MAX_BUDGET_USD = "30"          # a prompt order's cap, not an authorisation: the customer approves the price with the plan
+
+
+def upload_role(filename: str, content_type: str = "") -> str:
+    """A chat attachment's role, from its name: a logo, a reference document, or (by default) a product photo."""
+    low = (filename or "").lower()
+    if "logo" in low or content_type == "image/svg+xml" or low.endswith(".svg"):
+        return "logo"
+    if content_type == "application/pdf" or low.endswith(".pdf"):
+        return "reference"
+    return "product"
 
 
 class Invalid(ValueError):
@@ -153,6 +165,33 @@ class Service:
         allowance = min(PREVIEW_ALLOWANCE_USD, cap)
         jid = self.store.create_job(account_id=user["account_id"], user_id=user["id"], title=title.strip()[:120] or text[:60],
                                     media=media, brief=brief, budget_usd=allowance)
+        self.store.set_job(jid, budget_authorised_by=f"{user['email']} (planning allowance at submission)", budget_authorised_at=utc_now())
+        for up in uploads:
+            self.add_upload(user, jid, **up)
+        return jid
+
+    def submit_prompt(self, user, *, text: str, uploads: list = (), max_budget_usd=PROMPT_MAX_BUDGET_USD) -> str:
+        """A job from a prompt alone (founder 2026-09-24: "Let the user enter a prompt. The form was an internal instrument
+        the waiter fills for the kitchen."). The customer's words are the brief, verbatim; media, sizes, length and exact
+        text are left for the waiter to decide from those words (stations/waiter.py: decide_order) — it asks in the
+        thread when something that matters is unclear. The budget here is only a generous cap (no ceiling in beta): what
+        is authorised at submission is the small planning allowance, and the customer approves the exact price with the
+        plan."""
+        if user["role"] != "customer" or not user["account_id"]:
+            raise Invalid("only a customer account can submit jobs")
+        if not (text or "").strip():
+            raise Invalid("tell us what you'd like — a sentence is enough")
+        cap = dec(max_budget_usd)
+        if self.s.account_ceiling_enforced:
+            cap = min(cap, dec(self.store.account(user["account_id"])["ceiling_usd"]))
+        brief = {"text": text.strip()[:6000], "media": None, "formats": [], "duration_s": None, "exact_strings": [],
+                 "product": {k: "" for k in ("name", "brand", "category", "description")}, "brand_colours": [],
+                 "max_budget_usd": money(cap), "references_note": "", "forbidden_words": [], "ordered_by": "prompt",
+                 "submitted_by": user["email"], "submitted_utc": utc_now()}
+        first = re.split(r"(?<=[.!?])\s|\n", brief["text"], maxsplit=1)[0]
+        title = first if len(first) <= 60 else first[:57].rsplit(" ", 1)[0] + "…"
+        jid = self.store.create_job(account_id=user["account_id"], user_id=user["id"], title=title, media=UNDECIDED, brief=brief,
+                                    budget_usd=min(PREVIEW_ALLOWANCE_USD, cap))
         self.store.set_job(jid, budget_authorised_by=f"{user['email']} (planning allowance at submission)", budget_authorised_at=utc_now())
         for up in uploads:
             self.add_upload(user, jid, **up)

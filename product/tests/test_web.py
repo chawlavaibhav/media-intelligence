@@ -64,7 +64,7 @@ class WebJourney(unittest.TestCase):
         self.e.close()
 
     def _create(self):
-        tok = self.c.csrf("/jobs/new")
+        tok = self.c.csrf("/jobs/new/form")
         r = self.c.req("POST", "/jobs", {"csrf": tok, "brief": FILM_BRIEF, "media": "video", "formats": ["9:16"], "duration_s": "20",
                                          "product_name": "Voyager 30L", "brand": "Acme", "category": "backpack",
                                          "exact_text": "Pack less. Go further.", "brand_colours": "#1f2a44", "max_budget_usd": "15",
@@ -79,15 +79,15 @@ class WebJourney(unittest.TestCase):
         # approval; since amendment 1 §3 no founder step — the customer's preview is the final check
         jid = self._create()
         self.assertEqual(len(self.e.store.assets(jid, source="customer")), 2)
-        self.assertIn(b"Understanding your brief", self.c.req("GET", f"/jobs/{jid}")["body"])
+        self.assertIn(b"Understanding your brief", self.c.req("GET", f"/jobs/{jid}/details")["body"])
         self.e.drain()
-        page = self.c.req("GET", f"/jobs/{jid}")["body"]
+        page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"we need something from you", page)
         n = len(self.e.store.artifact(jid, "feasibility")["alternatives"])
         tok = self.c.csrf(f"/jobs/{jid}")
         self.c.req("POST", f"/jobs/{jid}/input", {"csrf": tok, **{f"alt_{i}": "yes" for i in range(n)}}, files=[])
         self.assertEqual(self.e.front(jid), "awaiting_approval")
-        page = self.c.req("GET", f"/jobs/{jid}")["body"]
+        page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"Your plan", page)
         self.assertIn(b"Approve direction", page)
         self.assertNotIn(b"veo", page.lower())                         # no provider internals on customer pages
@@ -107,7 +107,7 @@ class WebJourney(unittest.TestCase):
             self.e.drain()
         self.assertEqual(self.e.state(jid), "ready_for_review")
         final = self.e.orch._final_assets(jid)[0]
-        page = self.c.req("GET", f"/jobs/{jid}")["body"]
+        page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"Accept and download", page)
         self.assertTrue(self.c.req("GET", f"/assets/{final}")["status"].startswith("200"))
         self.assertTrue(self.c.req("GET", f"/assets/{final}/download")["status"].startswith("404"))  # not before acceptance
@@ -127,7 +127,7 @@ class WebJourney(unittest.TestCase):
         c2.login("spy@other.test")
         self.assertTrue(c2.req("GET", f"/jobs/{jid}")["status"].startswith("404"))
         self.assertTrue(c2.req("GET", f"/assets/{up}")["status"].startswith("404"))
-        tok2 = c2.csrf("/jobs/new")
+        tok2 = c2.csrf("/jobs/new/form")
         self.assertTrue(c2.req("POST", f"/jobs/{jid}/accept", {"csrf": tok2})["status"].startswith("404"))
         self.assertTrue(self.c.req("POST", f"/jobs/{jid}/accept", {"csrf": "forged"})["status"].startswith("403"))
         self.assertTrue(c2.req("GET", "/ops")["status"].startswith("404"))
@@ -135,7 +135,7 @@ class WebJourney(unittest.TestCase):
         self.assertTrue(anon.req("GET", f"/jobs/{jid}")["status"].startswith("303"))
 
     def test_unsupported_upload_types_are_refused(self):
-        tok = self.c.csrf("/jobs/new")
+        tok = self.c.csrf("/jobs/new/form")
         r = self.c.req("POST", "/jobs", {"csrf": tok, "brief": "a poster", "media": "image", "max_budget_usd": "5", "allow_preview": "yes"},
                        files=[("product_photos", "x.png", b"MZ\x90\x00 not an image", "image/png")])
         self.assertTrue(r["status"].startswith("400"))
