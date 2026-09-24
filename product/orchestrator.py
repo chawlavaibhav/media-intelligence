@@ -295,7 +295,11 @@ class Orchestrator:
             raise ValueError(f"choose try_again or stop, not {choice!r}")
         self._end_wait(job_id, "retry")
         if choice == "try_again":
-            self.store.event(job_id, by, "customer_retry", {"state": job["resume_state"]})
+            # the customer chose to pay for more attempts: a node that stopped with its allowance used gets a fresh one
+            fresh = [n["node_id"] for n in self.store.nodes(job_id) if n["status"] in ("running", "failed") and n["draws"] >= n["max_draws"]]
+            for x in fresh:
+                self.store.set_node(job_id, x, status="pending", draws=0)
+            self.store.event(job_id, by, "customer_retry", {"state": job["resume_state"], "fresh_attempts": fresh})
             self.store.transition(job_id, "needs_retry_decision", job["resume_state"], actor=by, data={"try_again": True},
                                   pause_reason=None)
             return

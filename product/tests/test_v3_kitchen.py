@@ -297,6 +297,40 @@ class TheWaiterReadsTheLength(unittest.TestCase):
         self.assertIsNone(seconds_in(["an ad for people aged 50s"]))
 
 
+class AClipWhoseSoundIsRefused(unittest.TestCase):
+    def test_is_made_again_without_generated_sound_in_the_same_attempt(self):
+        e = Env(fault_injection={"video_poll": ["audio_refusal"]})
+        try:
+            jid = e.submit(duration_s=15)
+            e.drain()
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            e.drain()
+            self.assertTrue(e.store.events(jid, ("clip_audio_refused",)))
+            silent = [a for a in e.store.assets(jid) if json.loads(a["meta_json"]).get("generated_audio") is False]
+            self.assertTrue(silent)
+            self.assertIn(e.state(jid), ("ready_for_review", "operator_hold", "needs_customer_decision"))
+        finally:
+            e.close()
+
+
+class AClipRefusedForItsSoundEvenWhenSilent(unittest.TestCase):
+    def test_is_asked_for_again_with_the_sound_sentences_left_out(self):
+        from product.stations.head_cook import _without_sound
+        self.assertEqual(_without_sound("She nods. A soft chime sounds. The camera drifts left."), "She nods. The camera drifts left.")
+        e = Env(fault_injection={"video_poll": ["audio_refusal", "audio_refusal"]})
+        try:
+            jid = e.submit(duration_s=15)
+            e.drain()
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            e.drain()
+            left = [json.loads(x["data_json"]) for x in e.store.events(jid, ("head_cook_repair",))
+                    if json.loads(x["data_json"])["repair"] == "sound_left_out"]
+            self.assertEqual(len(left), 1)
+            self.assertIn(e.state(jid), ("ready_for_review", "operator_hold", "needs_customer_decision"))
+        finally:
+            e.close()
+
+
 class ChefAndTastersAreDifferentCompanies(unittest.TestCase):
     def test_default_models_are_independent_and_a_same_company_taster_is_refused(self):
         m = config.worker_models()

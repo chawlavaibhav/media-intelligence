@@ -115,7 +115,8 @@ class GatekeeperSendBacks(unittest.TestCase):
             # fix → only shot 3 (and what is built from it) was redone; after the second pass the fail went to the chef
             fix = e.store.artifact(jid, "internal_repair")
             self.assertIn("shot_3", fix["nodes"])
-            for x in ("master", "frame_1", "shot_1", "frame_2", "shot_2", "frame_3", "music"):
+            self.assertIn("frame_3", fix["nodes"])            # v3: a clip remade from the same wrong frame copies the fault
+            for x in ("master", "frame_1", "shot_1", "frame_2", "shot_2", "music"):
                 self.assertNotIn(x, fix["nodes"], x)
             self.assertEqual(flow.rounds_used(e.store, jid, "SB-BIG-FIX"), 1)
             self.assertEqual(flow.rounds_used(e.store, jid, "SB-BIG-FAIL"), 1)

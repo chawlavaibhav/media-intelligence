@@ -366,6 +366,8 @@ class SimulatedProviders:
                 return ProviderResult("failed", timed_out=True, message="simulated timeout")
             if f == "crash":
                 raise KeyboardInterrupt("simulated worker crash during provider call")
+            if f == "audio_refusal":                   # live 2026-09-25: Veo's audio safety filter
+                return ProviderResult("failed", message="safety_filtered: ['We encountered an issue with the audio for your prompt']")
             return ProviderResult("failed", http_status=int(f), message=f"simulated HTTP {f}")
         return None
 

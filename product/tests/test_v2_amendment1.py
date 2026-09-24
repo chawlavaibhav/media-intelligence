@@ -289,10 +289,12 @@ class LearningIsAutomated(unittest.TestCase):
         [lid] = q.enqueue(jid, lesson("small_taster", "equipment_sheet", {"id": "EQ-003", "action_class": "lift_closed_product",
                                                                           "verdict": "cannot", "sample_count": 4}))
         self.assertEqual(q.lesson(lid)["status"], "applied")
-        self.assertEqual(e.orch.equipment.verdict("lift_closed_product", "FILM-C")["verdict"], "cannot")
+        # one job's word is not evidence: the row now says cannot, shown as risky until counts prove it (founder 2026-09-24)
+        row = next(r for r in e.orch.equipment.rows() if r["id"] == "EQ-003")
+        self.assertEqual((row["declared_verdict"], row["verdict"]), ("cannot", "risky"))
         applied = json.loads(q.lesson(lid)["applied_json"])
         self.assertEqual(applied["before"]["verdict"], "risky")
-        self.assertEqual(applied["after"]["verdict"], "cannot")
+        self.assertEqual(applied["after"]["declared_verdict"], "cannot")
         with self.assertRaises(PermissionError):
             q.undo(lid, founder="operator:claude", note="undo it please, builder")
         q.undo(lid, founder=e.founder(), note="The lift was fine on the next brand; restore.")
@@ -310,7 +312,9 @@ class LearningIsAutomated(unittest.TestCase):
         [c] = q.enqueue(closed_job(e, "accepted"), lesson("small_taster", "equipment_sheet", diff))
         self.assertEqual(q.lesson(c)["status"], "applied")
         self.assertEqual(q.lesson(a)["status"], "applied_with_support")
-        self.assertEqual(e.orch.equipment.verdict("lift_closed_product", "FILM-C")["verdict"], "reliable")
+        applied = json.loads(q.lesson(c)["applied_json"])
+        self.assertEqual(applied["after"]["declared_verdict"], "reliable")         # written; shown as risky until counts prove it
+        self.assertEqual(e.orch.equipment.verdict("lift_closed_product", "FILM-C")["verdict"], "risky")
 
     def test_a_change_to_a_judges_card_may_relax_a_check_so_it_waits_for_the_founders_review(self):
         # reviewer 2026-09-24 (founder: "do both the fixes"): was ≥ 2 accepted jobs then auto; now always the founder's review

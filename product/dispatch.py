@@ -180,11 +180,21 @@ class Dispatcher:
         cost = quote("veo-3.1-fast-i2v", duration_s=duration_s)
         att = self.store.reserve(job_id, route="veo-3.1-fast-i2v", category="provider", amount_usd=cost, node_id=node_id,
                                  is_repair=is_repair)
+        silent = False
         with self.store.timed(job_id, "provider", f"{node_id} clip"):
             res = self.p.video_submit(prompt, image, duration_s, aspect, negative)
             if res.status == "pending":
                 self.store.mark_request(att, res.request_ref)
                 res = self.p.video_poll(res.request_ref)
+            if res.status != "ok" and "audio" in (res.message or "").lower() and "safety" in (res.message or "").lower():
+                # live 2026-09-25: the model's own AUDIO tripped its safety filter (the picture was fine, and a refusal is not
+                # billed). The film has its own music bed, so the same clip is asked for once more without generated sound.
+                silent = True
+                self.store.event(job_id, "system", "clip_audio_refused", {"node": node_id, "detail": (res.message or "")[:200]})
+                res = self.p.video_submit(prompt, image, duration_s, aspect, negative, generate_audio=False)
+                if res.status == "pending":
+                    self.store.mark_request(att, res.request_ref)
+                    res = self.p.video_poll(res.request_ref)
         if res.status != "ok":
             err = self._fail(att, res, cost)
             if err.failure_class == "provider_refusal":
@@ -193,7 +203,7 @@ class Dispatcher:
         self._count(job_id, node_id, "veo-3.1-fast-i2v", fp)
         aid = self._register(job_id, node_id, att, res, "video", "mp4",
                              {"prompt": prompt, "negative": negative, "duration_s": duration_s, "aspect": aspect,
-                              "route": "veo-3.1-fast-i2v", **(meta or {})})
+                              "route": "veo-3.1-fast-i2v", "generated_audio": not silent, **(meta or {})})
         self.store.settle(att, status="ok", settled_usd=cost, detail=f"{len(res.data)} bytes")
         return aid
 

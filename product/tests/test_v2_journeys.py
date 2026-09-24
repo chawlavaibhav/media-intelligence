@@ -54,7 +54,7 @@ class WebJourneys(unittest.TestCase):
         self.post(self.c, f"/jobs/{jid}/approve", f"/jobs/{jid}", {"budget_usd": "15"})
         e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")
-        self.assertIn(b"your look at this preview is the final check", self.c.req("GET", f"/jobs/{jid}/details")["body"])
+        self.assertIn(b"your look is the final check", self.c.req("GET", f"/jobs/{jid}/details")["body"])
         self.post(self.c, f"/jobs/{jid}/changes", f"/jobs/{jid}", {"target_1": "shot:1", "change_1": "a slower slide"})
         e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")

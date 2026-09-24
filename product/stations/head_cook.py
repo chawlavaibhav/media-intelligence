@@ -458,6 +458,12 @@ def _draw(k, job_id, node_id, fn):
     while True:
         cur = k.store.node(job_id, node_id)
         if cur["draws"] >= cur["max_draws"]:
+            takes = _takes(k, job_id, node_id)
+            if takes:                   # takes exist (rejected ones): the best is kept, flagged, and the customer is told
+                last = [json.loads(v["data_json"]) for v in k.store.events(job_id, ("take_rejected",))]
+                last = [d for d in last if d.get("node") == node_id]
+                raise KeepFlagged(node_id, takes[-1], f"rejected {len(last)} times: "
+                                  + ((last[-1].get("why") if last else "") or "our takes were not right"))
             raise _node_failed(f"{node_id}: attempt allowance ({cur['max_draws']}) used")
         k.store.set_node(job_id, node_id, draws=cur["draws"] + 1)
         try:
@@ -612,10 +618,21 @@ def _node_shot(k, job_id, n, spec, ctx):
             k.store.event(job_id, "system", "recovered_take_used", {"node": node_id, "asset": aid})
         else:
             aid = None
-        aid = aid or _draw(k, job_id, node_id, lambda: k.dispatch.video(job_id, node_id, prompt=prompt, image=(frame["content_type"] or "image/png",
-                                                                                                       Path(frame["path"]).read_bytes()),
-                                                                 duration_s=dur, aspect=spec["aspect"], negative=negative, guard=ctx["guard"],
-                                                                 is_repair=bool(spec.get("repair_round")), meta={"shot": s["n"], "route": spec["route"], "from_frame": frame["id"]}))
+        try:
+            aid = aid or _draw(k, job_id, node_id, lambda: k.dispatch.video(job_id, node_id, prompt=prompt, image=(frame["content_type"] or "image/png",
+                                                                                                           Path(frame["path"]).read_bytes()),
+                                                                     duration_s=dur, aspect=spec["aspect"], negative=negative, guard=ctx["guard"],
+                                                                     is_repair=bool(spec.get("repair_round")), meta={"shot": s["n"], "route": spec["route"], "from_frame": frame["id"]}))
+        except DispatchFailed as e:
+            # live 2026-09-25: the video model's AUDIO safety filter refused the clip even with its sound switched off. The
+            # sounds the prompt describes are what it objects to; the film's sound comes from the music bed and ambience
+            # anyway, so the next attempt keeps every picture instruction and leaves out the sentences about sound.
+            if e.failure_class == "provider_refusal" and "audio" in str(e).lower() and not spec.get("sound_left_out"):
+                quiet = _without_sound(motion)
+                k.store.set_node(job_id, node_id, spec_json=json.dumps({**spec, "motion_override": quiet, "sound_left_out": True}))
+                k.store.event(job_id, "head_cook", "head_cook_repair", {"node": node_id, "repair": "sound_left_out", "better_prompt": quiet[:1500]})
+                continue
+            raise
         a = k.store.asset(aid)
         det = _clip_det(a, use)
         instruction = {"asset": f"clip for shot {s['n']} — {s.get('title', '')} ({dur}s; {use}s used)", "motion_prompt": motion,
@@ -630,6 +647,16 @@ def _node_shot(k, job_id, n, spec, ctx):
         if det["status"] == "FAIL":
             verdict = {**verdict, "usable": False, "notes": f"{det['detail']}; {verdict.get('notes', '')}"}
         correction = _rejected(k, job_id, node_id, aid, verdict)
+
+
+_SOUND = re.compile(r"\b(sound\w*|chime\w*|click\w*|music\w*|audio|hum\w*|ring\w*|tap\w*|clink\w*|whisper\w*|voice\w*|"
+                    r"noise\w*|song|sing\w*|speak\w*|talk\w*|say\w*|laugh\w*|mouths?)\b", re.I)
+
+
+def _without_sound(text: str) -> str:
+    """The motion prompt with its sentences about sound left out (the picture instructions stay)."""
+    keep = [x for x in re.split(r"(?<=[.;!?])\s+", text or "") if x and not _SOUND.search(x)]
+    return " ".join(keep) or text
 
 
 def _usable(v) -> bool:

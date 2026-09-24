@@ -87,19 +87,24 @@ class ApprovedLessonsChangeTheNextJob(unittest.TestCase):
             cls = next(s for s in e.store.artifact(first, "recipe")["shots"] if s["n"] == 1)["action_class"]
             before = e.orch.equipment.verdict(cls, "FILM-C")["verdict"]
             self.assertNotEqual(before, "cannot")
+            self.assertFalse([r for r in e.orch.equipment.rows() if r["action_class"] == cls and r.get("basis") == "lesson"])
             e.orch.abandon(first, e.user["email"], "the moment was the point of the film; closing")
             proposals = [r for r in e.orch.lessons.all(first) if r["target"] == "equipment_sheet"]
             ins = [r for r in proposals if json.loads(r["proposal_json"])["action_class"] == cls]
             self.assertTrue(ins, [json.loads(r["proposal_json"]) for r in proposals])
             self.assertEqual((ins[0]["kind"], ins[0]["status"]), ("careful", "applied"))          # more careful: applied at once
-            self.assertEqual(e.orch.equipment.verdict(cls, "FILM-C")["verdict"], "cannot")
+            # the row now says cannot; without counts it is shown as risky until counts prove it (founder 2026-09-24)
+            rows = [r["id"] for r in e.orch.equipment.rows() if r["action_class"] == cls and "FILM-C" in r["routes"]
+                    and r["declared_verdict"] == "cannot" and r.get("basis") == "lesson"]
+            self.assertTrue(rows)
             second = fx.submit_backpack_film(e)
             e.drain()
-            rows = [r["id"] for r in e.orch.equipment.rows() if r["action_class"] == cls and "FILM-C" in r["routes"] and r["verdict"] == "cannot"]
             tray = {i["id"] for i in e.store.artifact(second, "tray:chef")["items"] if i["section"] == "equipment_sheet"}
             self.assertTrue(set(rows) & tray, (rows, tray))                # the next chef is aware of it
             e.orch.lessons.undo(ins[0]["id"], founder=e.founder(), note="The moment worked on the next brand; restore the old verdict.")
             self.assertEqual(e.orch.equipment.verdict(cls, "FILM-C")["verdict"], before)           # undone: the previous verdict is back
+            self.assertFalse([r for r in e.orch.equipment.rows() if r["action_class"] == cls and r["declared_verdict"] == "cannot"
+                              and r.get("basis") == "lesson"])
         finally:
             e.close()
 
