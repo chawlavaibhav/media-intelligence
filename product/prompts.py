@@ -18,7 +18,8 @@ BASE_NEGATIVE = ["text", "letters", "captions", "watermark", "logo", "signage", 
 
 def _strip(text: str, words: list) -> str:
     for w in sorted({w for w in words if w and len(w) > 1}, key=len, reverse=True):
-        text = re.sub(r"\b" + re.escape(w) + r"\b", "the", text, flags=re.I)
+        # (?<!\w)/(?!\w) rather than \b, so a string that starts or ends in punctuation ("Pack less. Go further.") is scrubbed too
+        text = re.sub(r"(?<!\w)" + re.escape(w) + r"(?!\w)", "the", text, flags=re.I)
     return re.sub(r"\bthe the\b", "the", text)
 
 
@@ -40,6 +41,9 @@ def guard_for(intent: dict, direction: dict, brief: dict) -> dict:
     brand = (intent.get("brand") or "").strip()
     forbidden = [brand] if brand and brand.lower() not in ("the brand", "") else []
     forbidden += list(brief.get("forbidden_words") or [])
+    # every exact string the dispatcher refuses (dispatch.prompt_guard: longer than 3 characters) is scrubbed from the
+    # prompts like the brand — live 2026-09-24: a recipe naming "iPhone Duo" in its product anchor could never produce
+    forbidden += [s for s in exact if s and len(s) > 3 and s not in forbidden]
     return {"exact_strings": exact, "forbidden_words": forbidden}
 
 

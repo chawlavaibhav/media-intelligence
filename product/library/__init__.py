@@ -53,11 +53,47 @@ def manipulation_classes() -> set:
     return {cid for cid, _, m in _classes() if m}
 
 
+# A negation governs the words after it up to the next clause boundary: "without spoken words or dialogue", "no voice".
+# "not only" and "never stop(s)" do not negate what follows, so they are left alone (the floor stays strict).
+_NEGATED = re.compile(r"(?:\b(?:without|no|not|never|nor)\b(?!\s+(?:only|stop))|n't\b)"
+                      r"(?:(?!\b(?:and|but|then|while|whereas|when|so|as)\b)[^.,;:!?\u2013\u2014])*", re.I)
+# Clause boundaries used to find clauses that describe a still picture rather than an action.
+_CLAUSE = re.compile(r"[.,;:!?\u2013\u2014]|\s-\s|\b(?:and|but|then|while|before|after)\b", re.I)
+# "still" used as a NOUN (a picture), not as an adjective ("a still hand") or adverb ("stays still").
+_STILL_NOUN = re.compile(r"\bstills\b|\bstill\s+(?:of|image|images|frame|frames|shot|shots|picture|pictures|photo|photos|state|states)\b"
+                         r"|\bas\s+a\s+still\b|\b(?:a|the|one)\s+still\s*$", re.I)
+
+
+def _unnegated(text: str) -> str:
+    return _NEGATED.sub(" ", text or "")
+
+
+def _without_still_clauses(text: str) -> str:
+    """The text with every clause that describes a still picture blanked out (the clause boundaries are kept)."""
+    out, pos = [], 0
+    for m in list(_CLAUSE.finditer(text)) + [None]:
+        end = m.start() if m else len(text)
+        clause = text[pos:end]
+        out.append(" " if _STILL_NOUN.search(clause) else clause)
+        if m:
+            out.append(" . ")
+            pos = m.end()
+    return "".join(out)
+
+
 def floor_class(text: str, model_class: str | None) -> str:
     """The class code will hold an action to: the model's class, unless the text matches a MORE restrictive one.
-    Two or more distinct manipulations in one action are `multi_step_manipulation`."""
+    Two or more distinct manipulations in one action are `multi_step_manipulation`.
+    Words inside a negated clause ("without spoken words or dialogue") are not an action, and a clause that describes a
+    still picture ("a still of the phone unfolded", "the folded and unfolded still states") performs no manipulation —
+    but any other clause in the same text is still held to every class its words match."""
+    text = _unnegated(text)
     hits = classify(text)
-    manip = [h for h in hits if h in manipulation_classes()]
+    manip_set = manipulation_classes()
+    if _STILL_NOUN.search(text):
+        acting = set(classify(_without_still_clauses(text)))
+        hits = [h for h in hits if h not in manip_set or h in acting]
+    manip = [h for h in hits if h in manip_set]
     order = [cid for cid, _, _ in _classes()]
     if len(set(manip)) >= 2 and "hands_work_mechanism" not in manip:
         hits = ["multi_step_manipulation"] + hits
