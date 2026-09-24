@@ -110,6 +110,12 @@ instructions:
           a person's hands inside a moment, that is a `video` shot: describe the product exactly from the photos (the
           reference photos go with the prompt) and let the head cook use the real photo only if a take draws it wrong.
           `picture_prompt` may describe the background; `motion_prompt` names the move.
+          `photo_crop`: the part of the photo to show, as fractions of its width and height [left, top, right, bottom]
+          (e.g. [0.1, 0.6, 0.9, 0.9] = the lower band), or null for the whole photo; use it to keep out what must not be
+          seen (other products, names, prices). `photo_fill`: `cut_out` (a product on a plain studio background, lifted
+          off it into the film's world), `card` (the photo kept whole, like a screen or a print, floating in the softened
+          world), `full_frame` (the photo fills the frame). A screenshot or a photo with its own background is never
+          `cut_out`. null lets code choose (cut out only when the photo has a plain white studio background).
         - `end_card`: set by code from `end_card`; prompts empty.
       `product_present`: whether the product is in the shot. `super_id`: the copy line on this shot, or null.
     - Prompts are written by you, in full, and sent as written. Never put the words that will be set on screen inside a

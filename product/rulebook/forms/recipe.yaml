@@ -69,6 +69,10 @@ schema:
           picture_prompt: {type: string}
           motion_prompt: {type: string}
           photo_index: {type: [integer, "null"]}
+          photo_crop:
+            type: [array, "null"]
+            items: {type: number}
+          photo_fill: {type: [string, "null"], enum: [cut_out, card, full_frame, null]}
           product_present: {type: boolean}
           super_id: {type: [string, "null"]}
     end_card:

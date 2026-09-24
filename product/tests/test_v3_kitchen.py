@@ -188,6 +188,37 @@ class TheHeadCookRepairs(unittest.TestCase):
             e.close()
 
 
+class ThePhotoToolFollowsTheChefsCropAndFill(unittest.TestCase):
+    def test_a_screen_is_cropped_and_kept_whole_as_a_card_never_cut_out(self):
+        from PIL import Image
+        e = Env()
+        try:
+            jid = e.submit(duration_s=15)
+            e.drain()
+            r = e.store.artifact(jid, "recipe")
+            for s in r["shots"]:
+                if s["tool"] == "photo":
+                    s.update(photo_crop=[0.0, 0.0, 1.0, 0.5], photo_fill="card")
+            e.store.put_artifact(jid, "recipe", r, "system")
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            e.drain()
+            photo = next(n for n in e.store.nodes(jid) if n["kind"] == "photo")
+            a = e.store.asset(photo["selected_asset_id"])
+            self.assertFalse(json.loads(a["meta_json"])["cut_out"])
+            self.assertEqual(Image.open(a["path"]).size, (1080, 1920))
+        finally:
+            e.close()
+
+    def test_full_frame_fills_the_frame_with_the_photos_own_pixels(self):
+        from PIL import Image
+        wide = Image.new("RGB", (1600, 900), (246, 245, 241))
+        out = head_cook._fit_full_frame(wide, 1920, 1080)
+        self.assertEqual(out.size, (1920, 1080))
+        band = Image.new("RGB", (1600, 240), (238, 236, 231))
+        out = head_cook._fit_full_frame(band, 1920, 1080)
+        self.assertEqual(out.getpixel((5, 5)), (238, 236, 231))           # a thin band sits on its own colour, not stretched
+
+
 class ChefAndTastersAreDifferentCompanies(unittest.TestCase):
     def test_default_models_are_independent_and_a_same_company_taster_is_refused(self):
         m = config.worker_models()

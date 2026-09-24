@@ -149,7 +149,7 @@ def plan(k, job_id: str):
                 deps = ["master"] + ([f"shot_{prev}"] if prev else [])
                 spec = {"shot": s["n"], "aspect": aspect, "route": s["route"], "tool": tool, "starts_from": "master_plate",
                         "previous": f"shot_{prev}" if prev else None, "fp": _shot_fp(s), "gates": [],
-                        "photo_index": s.get("photo_index")}
+                        "photo_index": s.get("photo_index"), "photo_crop": s.get("photo_crop"), "photo_fill": s.get("photo_fill")}
                 want.append((f"frame_{s['n']}", "photo" if tool == "photo" else "frame", list(dict.fromkeys(deps)), spec))
                 want.append((f"shot_{s['n']}", "shot", [f"frame_{s['n']}"], dict(spec)))
                 if s.get("super_id") and not _logo_copy(k, job_id, recipe, s["super_id"]):
@@ -185,7 +185,7 @@ def plan(k, job_id: str):
 
 def _shot_fp(s: dict) -> str:
     from product.store import sha256_json
-    return sha256_json({kk: s.get(kk) for kk in ("tool", "picture_prompt", "motion_prompt", "photo_index", "duration_s", "route",
+    return sha256_json({kk: s.get(kk) for kk in ("tool", "picture_prompt", "motion_prompt", "photo_index", "photo_crop", "photo_fill", "duration_s", "route",
                                                  "action", "first_frame")})[:16]
 
 
@@ -806,6 +806,24 @@ def _photo_asset(k, job_id, index):
     return k.store.asset(best[0]["asset_id"]) if best else None
 
 
+def _fit_full_frame(ph, W, H):
+    """The photo fills the frame: scaled to cover, centred; where the photo is too short or narrow for the frame's shape,
+    the rest is filled with the photo's own edge colour (a screen's page colour), never stretched."""
+    from PIL import Image
+    s = min(W / ph.width, H / ph.height)
+    if ph.width * s < W * 0.8 or ph.height * s < H * 0.8:        # far from the frame's shape: keep it whole on its own colour
+        edge = ph.crop((0, 0, ph.width, 2)).resize((1, 1), Image.BOX).getpixel((0, 0))
+        canvas = Image.new("RGB", (W, H), edge)
+        s = min(W * 0.9 / ph.width, H * 0.9 / ph.height)
+        p2 = ph.resize((round(ph.width * s), round(ph.height * s)), Image.LANCZOS)
+        canvas.paste(p2, ((W - p2.width) // 2, (H - p2.height) // 2))
+        return canvas
+    s = max(W / ph.width, H / ph.height)
+    p2 = ph.resize((round(ph.width * s), round(ph.height * s)), Image.LANCZOS)
+    x, y = (p2.width - W) // 2, (p2.height - H) // 2
+    return p2.crop((x, y, x + W, y + H))
+
+
 def _node_photo(k, job_id, n, spec, ctx):
     """The customer's own product photo, cut out from its studio background and placed over the film's world (the look of
     the film, softened), with a soft shadow. Code only; the product is exactly the real product."""
@@ -825,24 +843,42 @@ def _node_photo(k, job_id, n, spec, ctx):
     bg = bg.resize((W // 10, H // 10)).filter(ImageFilter.GaussianBlur(5)).resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(20))
     bg = Image.blend(bg, Image.new("RGB", (W, H), (38, 26, 16)), 0.25)
     ph = Image.open(src["path"]).convert("RGB")
+    crop = spec.get("photo_crop")
+    if crop and len(crop) == 4:
+        l, t_, r, b = [min(1.0, max(0.0, float(v))) for v in crop]
+        if r - l > 0.05 and b - t_ > 0.05:
+            ph = ph.crop((round(l * ph.width), round(t_ * ph.height), round(r * ph.width), round(b * ph.height)))
+    how = spec.get("photo_fill")
+    if how == "full_frame":
+        out = k.store.new_output_path(k.job_dir(job_id) / "gen", f"{node_id}__product-photo", "png")
+        _fit_full_frame(ph, W, H).save(out)
+        aid = k.store.add_asset(job_id, path=out, kind="image", source="composed", content_type="image/png", node_id=node_id,
+                                meta={"source_kind": "customer product photo", "from": src["id"], "fill": "full_frame",
+                                      "crop": crop, "shot": spec.get("shot")})
+        return _done(k, job_id, node_id, aid)
     fill = ph.convert("L").point(lambda v: 255 if v > 244 else 0)
     for c in [(0, 0), (ph.width - 1, 0), (0, ph.height - 1), (ph.width - 1, ph.height - 1)]:
         if fill.getpixel(c) == 255:
             ImageDraw.floodfill(fill, c, 128)
     bgmask = fill.point(lambda v: 255 if v == 128 else 0)
-    cut_out = sum(bgmask.histogram()[255:]) > 0.05 * ph.width * ph.height
+    cut_out = how != "card" and sum(bgmask.histogram()[255:]) > 0.05 * ph.width * ph.height
     alpha = ImageChops.invert(bgmask).filter(ImageFilter.GaussianBlur(1.2)) if cut_out else Image.new("L", ph.size, 255)
     if cut_out and alpha.getbbox():
         bb = alpha.getbbox(); ph, alpha = ph.crop(bb), alpha.crop(bb)
     zone = ((ctx["recipe"].get("look") or {}).get("text_zone") or "top")
-    th = int(H * 0.56); tw = int(ph.width * th / ph.height)
+    th = int(H * (0.56 if cut_out else 0.72)); tw = int(ph.width * th / ph.height)
     if tw > W * 0.86:
         tw = int(W * 0.86); th = int(ph.height * tw / ph.width)
+    if not cut_out:                                   # a whole photo or screen sits in the middle of the frame
+        zone = "none"
     ph, alpha = ph.resize((tw, th), Image.LANCZOS), alpha.resize((tw, th), Image.LANCZOS)
     x = (W - tw) // 2
     y = int(H * 0.34) if zone == "top" else (int(H * 0.10) if zone == "bottom" else (H - th) // 2)
     sh = Image.new("L", (W, H), 0)
-    ImageDraw.Draw(sh).rounded_rectangle([x + 14, y + 26, x + tw + 14, y + th + 26], 50, fill=150)
+    ImageDraw.Draw(sh).rounded_rectangle([x + 14, y + 26, x + tw + 14, y + th + 26], 50 if cut_out else 18, fill=150)
+    if not cut_out:                                   # a card: rounded corners, the photo whole
+        alpha = Image.new("L", (tw, th), 0)
+        ImageDraw.Draw(alpha).rounded_rectangle([0, 0, tw - 1, th - 1], max(6, tw // 90), fill=255)
     bg = Image.composite(Image.new("RGB", (W, H), (15, 10, 6)), bg, sh.filter(ImageFilter.GaussianBlur(30)))
     bg.paste(ph, (x, y), alpha)
     out = k.store.new_output_path(k.job_dir(job_id) / "gen", f"{node_id}__product-photo", "png")
