@@ -119,11 +119,11 @@ class ApprovedLessonsChangeTheNextJob(unittest.TestCase):
             self.assertEqual(e.state(first), "awaiting_approval")            # the system's safe re-plan, for the customer
             e.orch.abandon(first, e.user["email"], "the chef kept planning hands on zips")
             for c in e.store.llm_calls(first):
-                self.assertEqual(c["card_version"], 1, c["worker"])
+                self.assertEqual(c["card_version"], int(rulebook.seed_cards()[c["worker"]]["version"]), c["worker"])
             lesson = next(r for r in e.orch.lessons.all(first) if r["target"] == "rulebook_card")
             self.assertEqual((lesson["kind"], lesson["status"]), ("rulebook", "applied"))
             self.assertEqual(json.loads(lesson["watch_json"])["status"], "watching")      # the next 5 jobs are watched
-            self.assertEqual(e.orch.rulebook.version("chef"), 2)
+            self.assertEqual(e.orch.rulebook.version("chef"), int(rulebook.seed_cards()["chef"]["version"]) + 1)
             hist = e.orch.rulebook.history("chef")
             self.assertEqual(hist[-1]["source_lesson"], lesson["id"])
             del e.orch.sim.chef__recipe
@@ -131,10 +131,10 @@ class ApprovedLessonsChangeTheNextJob(unittest.TestCase):
             fx.film_to_hold(e, second)
             chef_calls = [c for c in e.store.llm_calls(second) if c["worker"] == "chef"]
             self.assertTrue(chef_calls)
-            self.assertTrue(all(c["card_version"] == 2 for c in chef_calls))
-            self.assertEqual(e.store.artifact(second, "recipe")["rulebook_card_version"], 2)
+            self.assertTrue(all(c["card_version"] == int(rulebook.seed_cards()["chef"]["version"]) + 1 for c in chef_calls))
+            self.assertEqual(e.store.artifact(second, "recipe")["rulebook_card_version"], int(rulebook.seed_cards()["chef"]["version"]) + 1)
             others = [c for c in e.store.llm_calls(second) if c["worker"] != "chef"]
-            self.assertTrue(all(c["card_version"] == 1 for c in others))
+            self.assertTrue(all(c["card_version"] == int(rulebook.seed_cards()[c["worker"]]["version"]) for c in others))
         finally:
             e.close()
 

@@ -23,7 +23,7 @@ def _strip(text: str, words: list) -> str:
 
 
 _OVERLAY = re.compile(r"\b(logo|logos|wordmark|code-set|code set|composit\w*|overlay\w*|supers?|headline|tagline|copy deck|"
-                      r"text layer|end card|typeset|caption\w*|website|url)\b", re.I)
+                      r"text layer|end card|typeset|caption\w*|website|url|on[- ]screen|words? (appear|fade|rise|sit)\w*)\b", re.I)
 
 
 def _visual(text: str) -> str:
@@ -68,6 +68,11 @@ def still_prompt(direction: dict, guard: dict, *, beat: dict | None = None, aspe
                      f"reference photo{'s' if with_product_ref else ''}.")
     else:
         lines.append(f"A cinematic film still, the first frame of a shot. {_visual(beat.get('first_frame', ''))}")
+        if beat.get("description"):     # recipe v2: the chef's full plain-English paragraph for this shot
+            lines.append(f"The shot: {_visual(beat['description'])}")
+        anchors = direction.get("identity_anchors") or {}
+        if anchors.get("world"):
+            lines.append(f"The place: {_visual(anchors['world'])}")
         if beat.get("product_present"):
             lines.append(f"The product: {_anchor(direction, guard)} State: {_visual(beat.get('product_state') or 'intact')}; "
                          f"brand new, completely intact, exactly as in the reference photo.")
@@ -89,8 +94,10 @@ def still_prompt(direction: dict, guard: dict, *, beat: dict | None = None, aspe
 
 
 def clip_prompt(direction: dict, guard: dict, beat: dict) -> str:
-    parts = [f"Animate this exact first frame. {_visual(beat.get('action', ''))}",
-             f"By the end of the shot: {_visual(beat.get('end_state', ''))}"]
+    parts = [f"Animate this exact first frame. {_visual(beat.get('action', ''))}"]
+    if beat.get("description"):         # recipe v2: what the camera sees, moment by moment, and what the viewer feels
+        parts.append(f"The shot: {_visual(beat['description'])}")
+    parts.append(f"By the end of the shot: {_visual(beat.get('end_state', ''))}")
     if beat.get("exit_action"):
         parts.append(f"After that: {_visual(beat['exit_action'])} The goal state is never undone.")
     if beat.get("product_present"):
