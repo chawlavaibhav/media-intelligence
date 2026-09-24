@@ -65,7 +65,15 @@ class Orchestrator:
 
     # ── the job file ────────────────────────────────────────────────────────────────────────────────────
     def brief(self, job_id) -> dict:
-        return self.store.original_brief(job_id)
+        """The order as it stands: the original brief (frozen, fingerprinted) with the waiter's recorded decisions laid over
+        it (`order_change`: the customer's answer to "image or film?", or — for an order that was only a prompt — what the
+        waiter filled in from their words). The customer's words themselves are never changed."""
+        brief = dict(self.store.original_brief(job_id))
+        change = self.store.artifact(job_id, "order_change") or {}
+        for key in ("media", "formats", "duration_s", "exact_strings", "product"):
+            if change.get(key):
+                brief[key] = change[key]
+        return brief
 
     def exact_words(self, job_id) -> str:
         """The customer's brief exactly as submitted: stored once (fingerprinted), never edited, sent to every AI worker."""

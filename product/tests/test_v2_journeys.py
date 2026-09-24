@@ -36,33 +36,33 @@ class WebJourneys(unittest.TestCase):
         e = self.e
         ups = [("product_photos", name, fx.with_shows(make_png(64, 64, seed=10 + i), shows), "image/png")
                for i, (name, shows) in enumerate(fx.BACKPACK_PHOTOS)] + [("logo", "logo.png", make_png(32, 16, seed=5), "image/png")]
-        tok = self.c.csrf("/jobs/new")
+        tok = self.c.csrf("/jobs/new/form")
         r = self.c.req("POST", "/jobs", {"csrf": tok, "brief": fx.BACKPACK_FILM_ORDER, "media": "video", "formats": ["9:16"],
                                          "duration_s": "30", "product_name": "Transit Backpack 30L", "brand": "Mokobara",
                                          "category": "backpack", "exact_text": "\n".join(fx.BACKPACK_EXACT), "brand_colours": "#101820",
                                          "max_budget_usd": "15", "allow_preview": "yes", "references_note": fx.BACKPACK_NOTE}, files=ups)
         jid = dict(r["headers"])["Location"].split("/")[-1]
         e.drain()
-        page = self.c.req("GET", f"/jobs/{jid}")["body"]
+        page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"We can&#39;t film", page)                                    # hands zipping the bag: cannot, with an alternative
         n = len(e.store.artifact(jid, "feasibility")["alternatives"])
         self.post(self.c, f"/jobs/{jid}/input", f"/jobs/{jid}", {**{f"alt_{i}": "yes" for i in range(n)}}, files=[])
         e.drain()
         self.assertEqual(e.state(jid), "awaiting_approval")                        # no founder step (amendment 1 §3)
-        self.assertIn(b"Our reviewer found no problems", self.c.req("GET", f"/jobs/{jid}")["body"])
+        self.assertIn(b"Our reviewer found no problems", self.c.req("GET", f"/jobs/{jid}/details")["body"])
         self.post(self.c, f"/jobs/{jid}/approve", f"/jobs/{jid}", {"budget_usd": "15"})
         e.drain()
         self.assertEqual(e.state(jid), "awaiting_master_approval")
         self.post(self.c, f"/jobs/{jid}/master", f"/jobs/{jid}", {})
         e.drain()
         self.assertEqual(e.state(jid), "awaiting_taste")                           # the hardest shot, made first, to taste
-        page = self.c.req("GET", f"/jobs/{jid}")["body"]
+        page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"Have a first taste", page)
         self.assertIn(b"is made.", page)                                           # the progress line kept moving
         self.post(self.c, f"/jobs/{jid}/taste", f"/jobs/{jid}", {})
         e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")
-        self.assertIn(b"your look at this preview is the final check", self.c.req("GET", f"/jobs/{jid}")["body"])
+        self.assertIn(b"your look at this preview is the final check", self.c.req("GET", f"/jobs/{jid}/details")["body"])
         self.post(self.c, f"/jobs/{jid}/changes", f"/jobs/{jid}", {"target_1": "shot:2", "change_1": "a slower slide"})
         e.drain()
         self.assertEqual(e.state(jid), "ready_for_review")
@@ -94,7 +94,7 @@ class WebJourneys(unittest.TestCase):
 
     def test_an_image_order_is_accepted_through_the_web_app(self):
         e = self.e
-        tok = self.c.csrf("/jobs/new")
+        tok = self.c.csrf("/jobs/new/form")
         r = self.c.req("POST", "/jobs", {"csrf": tok, "brief": "A calm launch poster for our navy travel backpack; the bag must be the "
                                                               "first thing you see; no people.", "media": "image", "formats": ["1:1", "4:5"],
                                          "product_name": "Transit Backpack 30L", "brand": "Mokobara", "category": "backpack",
@@ -104,7 +104,7 @@ class WebJourneys(unittest.TestCase):
                               ("logo", "logo.png", make_png(32, 16, seed=5), "image/png")])
         jid = dict(r["headers"])["Location"].split("/")[-1]
         e.drain()
-        page = self.c.req("GET", f"/jobs/{jid}")["body"]
+        page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"Approve direction", page)
         prev = re.search(rb'/assets/(ast_\w+)"', page).group(1).decode()
         self.assertTrue(self.c.req("GET", f"/assets/{prev}")["status"].startswith("200"))

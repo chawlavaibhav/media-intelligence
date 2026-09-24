@@ -195,7 +195,7 @@ class FounderPages(unittest.TestCase):
         c = Client(self.app); c.login("buyer@acme.test")
         jid = fx.submit_backpack_film(e)
         e.drain()
-        page = c.req("GET", f"/jobs/{jid}")["body"]
+        page = c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"we need something from you", page)
         self.assertIn(b"Nothing has been spent on production yet", page)
         n = len(e.store.artifact(jid, "feasibility")["alternatives"])
@@ -204,12 +204,12 @@ class FounderPages(unittest.TestCase):
         self.assertTrue(r["status"].startswith("303"), r["body"][:300])
         e.drain()
         tok = c.csrf(f"/jobs/{jid}")
-        page = c.req("GET", f"/jobs/{jid}")["body"]
+        page = c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"Planning and quality checks", page)
         c.req("POST", f"/jobs/{jid}/approve", {"csrf": tok, "budget_usd": "15"})
         e.drain()
         self.assertEqual(e.state(jid), "awaiting_master_approval")
-        page = c.req("GET", f"/jobs/{jid}")["body"]
+        page = c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"Approve the look of your film", page)
         master = re.search(rb'/assets/(ast_\w+)" alt="The master', page).group(1).decode()
         self.assertTrue(c.req("GET", f"/assets/{master}")["status"].startswith("200"))
