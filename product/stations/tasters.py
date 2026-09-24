@@ -11,6 +11,7 @@ The gatekeeper never judges taste (the customer's) and never asks for a safer or
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from product import customer, flow, media, verify
@@ -213,17 +214,33 @@ def _send_back(k, job_id, review, results):
     except flow.LimitReached:
         return _to_customer(k, job_id, review, results)
     from product.stations.head_cook import _reset_downstream
-    reset = []
+    reset, mute = [], []
     for n in shots:
         if k.store.node(job_id, f"shot_{n}"):
-            note = "; ".join(d.get("repair", "") for d in defects if d.get("shot") == n)[:300]
-            # the first frame is redrawn too: a clip remade from the same wrong frame copies the fault
+            mine = [d for d in defects if d.get("shot") == n]
+            note = "; ".join(d.get("repair", "") for d in mine)[:300]
+            said = " ".join(f"{d.get('where', '')} {d.get('description', '')}" for d in mine)
+            if mine and all(d.get("earliest_stage") == "composition" for d in mine):
+                continue                                   # the edit itself: only the film is rebuilt (below)
+            if SOUND_ONLY.search(said) and not PICTURE.search(said):
+                mute.append(n)                              # a sound fault: the clip keeps its picture, loses its own sound
+                continue
+            # a picture fault: the first frame is redrawn too — a clip remade from the same wrong frame copies the fault
             reset += _reset_downstream(k, job_id, f"frame_{n}", note)
+    if mute and k.store.node(job_id, "film"):
+        fs = json.loads(k.store.node(job_id, "film")["spec_json"])
+        k.store.set_node(job_id, "film", spec_json=json.dumps({**fs, "mute_shots": sorted(set(fs.get("mute_shots", []) + mute))}))
+        reset += _reset_downstream(k, job_id, "film", "clip sound removed on shots " + ", ".join(map(str, mute)))
     if not reset:
         for x in ("film",) if k.store.node(job_id, "film") else [n["node_id"] for n in k.store.nodes(job_id) if n["kind"] == "compose_still"]:
             reset += _reset_downstream(k, job_id, x, why[:300])
     k.store.put_artifact(job_id, "internal_repair", {"defects": defects, "nodes": sorted(set(reset))}, "gatekeeper")
     k.store.transition(job_id, "checking", "producing", actor="gatekeeper", data={"fix": sorted(set(reset))})
+
+
+SOUND_ONLY = re.compile(r"\b(audio|sound|voice|speech|speak\w*|talk\w*|gibberish|narrat\w*|music|noise|hum|click)\b", re.I)
+PICTURE = re.compile(r"\b(lip|lips|mouth|face|hand|finger|product|phone|frame|picture|image|screen|warp\w*|morph\w*|text|letter\w*|"
+                     r"subtitle\w*|logo|colour|color)\b", re.I)
 
 
 def big_taste(k, job_id, finals, media_kind) -> dict:

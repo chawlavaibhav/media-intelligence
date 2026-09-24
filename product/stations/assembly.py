@@ -135,7 +135,8 @@ def assemble(k, job_id, n, spec, ctx):
         # heard speech, keeps its picture but not its own sound (the music bed carries the film there).
         heard = " ".join(str(x) for x in ((cm.get("inspection") or {}).get("notes"), (cm.get("inspection") or {}).get("differences")))
         spec_flag = json.loads(k.store.node(job_id, f"shot_{s['n']}")["spec_json"]).get("flagged")
-        mute = bool(spec_flag) or bool(re.search(r"speak|speech|talk|voice|lip|dialog|subtitle|sing|narrat", heard, re.I))
+        mute = bool(spec_flag) or bool(re.search(r"speak|speech|talk|voice|lip|dialog|subtitle|sing|narrat", heard, re.I)) \
+            or s["n"] in (spec.get("mute_shots") or [])
         segs.append({"clip": clip["path"], "in": cm.get("in_s", 0.0), "use": float(s["duration_s"]), "shot": s["n"], "asset": clip["id"],
                      "mute": mute})
         sn = k.store.node(job_id, f"super_{s['n']}")

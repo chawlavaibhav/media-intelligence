@@ -331,6 +331,34 @@ class AClipRefusedForItsSoundEvenWhenSilent(unittest.TestCase):
             e.close()
 
 
+class TheGatekeepersFixIsTheSizeOfTheFault(unittest.TestCase):
+    def test_a_sound_fault_rebuilds_only_the_film_with_that_clip_muted(self):
+        e = Env()
+        try:
+            real = e.orch.sim.gatekeeper__final_review
+            seen = {"n": 0}
+
+            def gate(b, media, **kw):
+                v = real(b, media, **kw)
+                if seen["n"] == 0:
+                    seen["n"] += 1
+                    v = {**v, "verdict": "fix", "defects": [{"id": "D1", "shot": 1, "where": "audio track 0:00-0:03",
+                                                             "description": "an unintelligible voice speaks", "severity": "blocker",
+                                                             "earliest_stage": "generation", "repair": "remove the voice"}]}
+                return v
+            e.orch.sim.gatekeeper__final_review = gate
+            jid = e.submit(duration_s=15)
+            e.drain()
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            e.drain()
+            fix = [json.loads(x["data_json"]) for x in e.store.events(jid, ("state",)) if json.loads(x["data_json"]).get("fix")]
+            self.assertTrue(fix)
+            self.assertEqual(fix[0]["fix"], ["film"])                                        # no frame or clip is bought again
+            self.assertEqual(json.loads(e.store.node(jid, "film")["spec_json"]).get("mute_shots"), [1])
+        finally:
+            e.close()
+
+
 class ChefAndTastersAreDifferentCompanies(unittest.TestCase):
     def test_default_models_are_independent_and_a_same_company_taster_is_refused(self):
         m = config.worker_models()
