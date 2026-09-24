@@ -4,7 +4,7 @@ import json
 import unittest
 
 from product import flow
-from product.library.librarian import CAPS
+from product.library.librarian import CAPS, MIN_FAILURE_JOBS
 from product.tests import fixtures_v2 as fx
 from product.tests.support import Env
 
@@ -116,6 +116,12 @@ class RecipeRoundsAndTheCustomer(unittest.TestCase):
             e.close()
 
 
+def times_seen(e, items):
+    from product import library
+    rows = {r["id"]: r for r in library.FailureDiary(e.store).all(None)}
+    return [rows[i["id"]]["times_seen"] for i in items]
+
+
 class TraysAreCappedLoggedAndCarryMatchingFailures(unittest.TestCase):
     """Spec §11 test 12."""
 
@@ -133,7 +139,13 @@ class TraysAreCappedLoggedAndCarryMatchingFailures(unittest.TestCase):
             self.assertTrue({"cookbook", "failure_diary", "recipe_library"} <= sections, sections)
             self.assertLessEqual(len([i for i in tray["items"] if i["section"] == "cookbook"]), 6)
             self.assertLessEqual(len([i for i in tray["items"] if i["section"] == "recipe_library"]), 3)
-            self.assertIn("FD-0923-02", ids)                   # continuity drift: matches the planned insert action class
+            # founder 2026-09-24: only failures repeated on MIN_FAILURE_JOBS different jobs reach a tray, one per kind, few
+            fails = [i for i in tray["items"] if i["section"] == "failure_diary"]
+            self.assertLessEqual(len(fails), 3)
+            self.assertTrue(all(n >= MIN_FAILURE_JOBS for n in times_seen(e, fails)), times_seen(e, fails))
+            self.assertIn("FD-0923-03", ids)                   # character drift: seen on 3 jobs, matches the planned actions
+            self.assertNotIn("FD-0923-02", ids)                # continuity drift: seen on 2 jobs only — no longer steers
+            self.assertNotIn("FD-0923-07", ids)                # a one-off
             self.assertIn("RL-0923-FILM", ids)                 # the similar past recipe, with its outcome (rejected)
             self.assertIn("insert_object_into_container", tray["filters"]["action_classes"])
             chef_call = [c for c in e.store.llm_calls(jid) if c["worker"] == "chef"][-1]

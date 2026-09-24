@@ -162,6 +162,7 @@ def _atlas_rows() -> list:
         if re.search(r"nano|still|image model|plate", low):
             routes += ["IMG", "FILM-A"]
         out.append({"id": f"ATLAS-{r['id']}", "section": "failure_diary", "failure_mode": r["failure_mode"], "bucket": r["bucket"],
+                    "recurrence": r.get("recurrence"),
                     "action_classes": classify(text), "routes": routes, "media": None, "text": text[:700],
                     "account_id": None, "source_job_id": r.get("job")})
     return out
@@ -186,6 +187,13 @@ class FailureDiary:
             rows.append({"id": r["id"], "section": "failure_diary", "failure_mode": r["failure_mode"], "bucket": None,
                          "action_classes": json.loads(r["action_classes"]), "routes": json.loads(r["routes"]), "media": r["media"],
                          "text": r["text"], "account_id": r["account_id"], "source_job_id": r["source_job_id"]})
+        # How many different jobs hit the same kind of failure (founder 2026-09-24: a failure only carries weight when it
+        # repeats; one-off failures steered the chef into safe, lifeless plans).
+        jobs = {}
+        for r in rows:
+            jobs.setdefault(r.get("failure_mode"), set()).add(r.get("source_job_id") or r["id"])
+        for r in rows:
+            r["times_seen"] = len(jobs.get(r.get("failure_mode"), ()))
         return rows
 
     def add(self, entry: dict, *, by: str, source_lesson: str | None, account_id: str | None = None) -> str:

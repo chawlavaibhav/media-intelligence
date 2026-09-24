@@ -16,6 +16,11 @@ from product.library import bm25, tokens
 CAPS = {"chef": 6000, "recipe_checker": 4000, "pantry_checker": 1500}
 MAX_COOKBOOK_PAGES = 6
 MAX_RECIPES = 3
+# Founder ruling 2026-09-24: "weaken the impact of failure notes unless they repeat multiple times — it's causing more harm
+# than good". A failure note reaches a tray only when its kind was seen on MIN_FAILURE_JOBS different jobs and was not
+# since prevented; one note per kind; a few at most; each labelled as a watch-out, not a rule.
+MIN_FAILURE_JOBS = 3
+MAX_FAILURES = {"chef": 3, "recipe_checker": 5}
 
 
 def _item(d, score, section=None):
@@ -29,10 +34,19 @@ class Librarian:
         self.store, self.equipment, self.failures, self.recipes, self.shelf = store, equipment, failures, recipes, shelf
 
     # ── sections ────────────────────────────────────────────────────────────────────────────────────────────
-    def _failures(self, query, classes, routes, account_id, media):
+    def _failures(self, query, classes, routes, account_id, media, worker="chef"):
         rows = [r for r in self.failures.all(account_id) if set(r["action_classes"]) & set(classes)
-                and (not routes or not r["routes"] or set(r["routes"]) & set(routes)) and (not r.get("media") or r["media"] == media)]
-        return [_item(d, s + 1.0) for s, d in bm25(query, rows)]
+                and (not routes or not r["routes"] or set(r["routes"]) & set(routes)) and (not r.get("media") or r["media"] == media)
+                and r.get("times_seen", 1) >= MIN_FAILURE_JOBS and r.get("recurrence") != "PREVENTED"]
+        out, kinds = [], set()
+        for s, d in bm25(query, rows):
+            if d.get("failure_mode") in kinds:
+                continue
+            kinds.add(d.get("failure_mode"))
+            out.append(_item({**d, "text": f"Watch-out (seen on {d['times_seen']} jobs): {d['text']}"}, s))
+            if len(out) >= MAX_FAILURES.get(worker, 3):
+                break
+        return out
 
     def _recipes(self, query, media, category, account_id, classes):
         rows = [r for r in self.recipes.all(account_id) if r["media"] == media]
@@ -76,12 +90,12 @@ class Librarian:
         if worker == "pantry_checker":
             groups = [self._equipment(classes or rulebook.action_class_ids(), routes)]
         elif worker == "recipe_checker":
-            groups = [self._failures(query, classes, routes, account_id, media), self._equipment(classes, routes),
+            groups = [self._failures(query, classes, routes, account_id, media, worker), self._equipment(classes, routes),
                       self._recipes(query, media, product_category, account_id, classes)]
         else:  # chef
             cook, record = self._cookbooks(query, cookbook_args)
-            groups = [self._failures(query, classes, routes, account_id, media), self._shelf(account_id),
-                      self._recipes(query, media, product_category, account_id, classes), cook]
+            groups = [cook, self._shelf(account_id), self._recipes(query, media, product_category, account_id, classes),
+                      self._failures(query, classes, routes, account_id, media, worker)]      # craft first, watch-outs last
         # round-robin across sections so every section is represented before any one fills the cap
         chosen, used = [], 0
         queues = [list(g) for g in groups]
