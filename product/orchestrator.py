@@ -105,8 +105,13 @@ class Orchestrator:
         job = self.store.job(job_id)
         photos = [{"photo": i + 1, "asset_id": a["id"], "customer_label": json.loads(a["meta_json"]).get("label"),
                    "filename": json.loads(a["meta_json"]).get("filename") or ""} for i, a in enumerate(self.photos(job_id))]
+        # the customer's answer to "image or film?" (waiter.MEDIA_Q) changes what is made; their words stay as written
+        change = self.store.artifact(job_id, "order_change") or {}
+        eff = {"media": change.get("media") or brief["media"], "formats": change.get("formats") or brief.get("formats") or [],
+               "duration_s": change.get("duration_s") or brief.get("duration_s")}
         cur = self.store.artifact(job_id, "order_slip")
-        if cur and [p["asset_id"] for p in cur["photos"]] == [p["asset_id"] for p in photos]:
+        if cur and [p["asset_id"] for p in cur["photos"]] == [p["asset_id"] for p in photos] \
+                and (cur["media"], cur["formats"], cur.get("duration_s")) == (eff["media"], eff["formats"], eff["duration_s"]):
             return cur
         colours = list(brief.get("brand_colours") or [])
         prefilled = []
@@ -115,8 +120,8 @@ class Orchestrator:
                 colours.append(json.loads(it["data_json"]).get("hex"))
                 self.shelf.record_use(job_id, job["account_id"], it["id"], "brand_colour")
                 prefilled.append(it["id"])
-        slip = {"customer_exact_words": brief["text"], "media": brief["media"], "formats": brief.get("formats") or [],
-                "duration_s": brief.get("duration_s"), "exact_strings": brief.get("exact_strings") or [], "product": brief.get("product") or {},
+        slip = {"customer_exact_words": brief["text"], "media": eff["media"], "formats": eff["formats"],
+                "duration_s": eff["duration_s"], "exact_strings": brief.get("exact_strings") or [], "product": brief.get("product") or {},
                 "brand_colours": [c for c in colours if c], "photos": photos, "max_budget_usd": str(brief.get("max_budget_usd") or "0"),
                 "forbidden_words": brief.get("forbidden_words") or [], "references_note": brief.get("references_note") or "",
                 "prefilled_from_shelf": prefilled}

@@ -3,8 +3,41 @@ The change-taker of v1 is merged in here (spec §4.9)."""
 from __future__ import annotations
 
 import json
+import re
 
 from product.store import sha256_bytes
+
+# Founder 2026-09-24 (a beta customer's 20-s Reel was ordered with the form left on "Image 1:1" and the waiter REFUSED the
+# job): a mix-up or an unsupported ask is a question to the customer, never a dead end. Asked once; refused only if the
+# answer still cannot be made.
+MEDIA_Q, ALT_Q = "Q-MEDIA", "Q-ALTERNATIVE"
+FILM_WORDS = re.compile(r"\b(reels?|videos?|films?|clips?|animat\w*|motion|footage|\d{1,2}\s*-?\s*(?:s|sec|secs|seconds?)\b)", re.I)
+IMAGE_WORDS = re.compile(r"\b(posters?|still images?|static|banners?|carousels?|flyers?|thumbnails?)\b", re.I)
+
+
+def media_mismatch(slip: dict, words: str) -> str | None:
+    """What the customer's words describe, when it contradicts the media they picked on the order form."""
+    if slip["media"] == "image" and FILM_WORDS.search(words):
+        return "video"
+    if slip["media"] == "video" and IMAGE_WORDS.search(words) and not FILM_WORDS.search(words):
+        return "image"
+    return None
+
+
+def _apply_media_answer(k, job_id, slip, answers) -> dict:
+    a = str(answers.get(MEDIA_Q) or "").lower()
+    if not a:
+        return slip
+    media = "video" if re.search(r"video|film|reel|clip", a) else "image" if re.search(r"image|poster|still|picture", a) else None
+    if not media or media == slip["media"]:
+        return slip
+    fmts = [f for f in ("9:16", "16:9", "1:1", "4:5") if f in a] or (["9:16"] if media == "video" else ["1:1"])
+    secs = re.search(r"(\d{1,2})\s*(?:s|sec|second)", a)
+    dur = float(min(30, max(6, int(secs.group(1))))) if media == "video" and secs else (20.0 if media == "video" else None)
+    k.store.put_artifact(job_id, "order_change", {"media": media, "formats": fmts[:1] if media == "video" else fmts,
+                                                  "duration_s": dur, "from_answer": a[:300]}, "customer")
+    k.store.set_job(job_id, media=media)
+    return k.order_slip(job_id)
 
 
 def understand(k, job_id: str):
@@ -14,6 +47,7 @@ def understand(k, job_id: str):
     slip = k.order_slip(job_id)
     words = k.exact_words(job_id)
     answers = k.store.artifact(job_id, "answers") or {}
+    slip = _apply_media_answer(k, job_id, slip, answers)
     cinput = k.store.artifact(job_id, "customer_input") or {}
     ctx = {"ORDER_SLIP": {kk: v for kk, v in slip.items() if kk not in ("customer_exact_words",) and not kk.startswith("_")},
            "ANSWERS": answers or "none yet", "CUSTOMER_INPUT": cinput or "none",
@@ -21,6 +55,20 @@ def understand(k, job_id: str):
     with k.store.timed(job_id, "understanding"):
         form = k.workers.call(job_id, "waiter", "understanding", ctx, exact_words=words, media=k.photo_media(job_id))
     _floor(k, job_id, form, slip, words)
+    wants = None if answers else media_mismatch(slip, words)
+    if not answers and (wants or not form["supported"]):
+        qs = list(form.get("questions") or [])
+        if wants:
+            picked = "an image (" + ", ".join(slip["formats"] or ["1:1"]) + ")" if slip["media"] == "image" else "a short film"
+            qs.insert(0, {"id": MEDIA_Q, "question": f"Your brief describes {'a film / Reel' if wants == 'video' else 'an image'}, but the order "
+                          f"form says {picked}. Which should we make? Answer 'video' (and 9:16 or 16:9, and the length in seconds) or 'image'.",
+                          "why_it_matters": "a film and an image are planned and priced differently",
+                          "default_if_delegated": "video 9:16" if wants == "video" else "image 1:1"})
+        if not form["supported"] and not wants:
+            qs.insert(0, {"id": ALT_Q, "question": f"We can't make this exactly as asked: {form.get('refusal_reason') or ''} "
+                          f"We can make: {form.get('nearest_supported_alternative') or 'a close alternative'}. Go ahead with that? (yes / no)",
+                          "why_it_matters": "without it we cannot start", "default_if_delegated": "no"})
+        form.update(questions=qs[:5], supported=True)
     k.put_form(job_id, "understanding", form)
     if not form["supported"]:
         k.store.transition(job_id, "understanding", "refused", actor="system",
