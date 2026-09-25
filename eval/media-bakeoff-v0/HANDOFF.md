@@ -35,6 +35,22 @@ The questions tonight's run answers:
   - Write the must-haves, deal-breakers and price anchors for any brief missing them **before** generating anything.
   - Hash the file into `BRIEFS.sha256`. The founder reviews this in the morning, and a brief he rejects is dropped from scoring.
 
+## API keys: use the MI keys on this laptop (authorised by the founder)
+
+The keys live outside the repo, as the Capability Lab harness used them (EVAL-039C):
+
+| File | Holds (names only) | How to load |
+|---|---|---|
+| `~/.mi-keys` | `FAL_KEY`, `GOOGLE_API_KEY`, `ANTHROPIC_API_KEY`, `SARVAM_API_KEY`, `GOOGLE_CLOUD_VISION_API_KEY` (every line starts with `export`) | `source ~/.mi-keys` in the same shell command that runs the runner |
+| `~/.aight-litellm-keys/vertex-sa.json` | the Vertex service account (Veo on Vertex, Lyria) | pass the **path** to the adapter; never read the file into a prompt or a log |
+| `/etc/mi/mi.env` (studio server only) | the studio's own keys, including the Azure OpenAI ones for Luna/Sol | only if running on the server: `set -a; . /etc/mi/mi.env; set +a` |
+
+Rules for keys:
+- **Read by name only.** Never print, echo, `cat`, log or commit a value, and never paste one into chat. Check presence with `grep -c '^export FAL_KEY=' ~/.mi-keys`, not by printing.
+- **Load keys inside the command that runs the job:** `bash -c 'source ~/.mi-keys && python3 run.py …'`. Environment variables do not carry between tool calls.
+- **If the Azure (Luna) key is not on this laptop,** run P's understand step on Claude Haiku 4.5 with `ANTHROPIC_API_KEY`, and log the substitution in `RUN-LOG.md`.
+- **If Claude Code blocks reading `~/.mi-keys`** (a permission prompt the founder can't answer while asleep), the founder instead starts the session from a terminal that already ran `source ~/.mi-keys` (`source ~/.mi-keys && claude`). The keys are then inherited by every command.
+
 ## Rules
 
 - **Freeze.** No code, prompt or model change once exam generation starts. Log problems in `RUN-LOG.md`; do not fix them mid-run. Practice briefs (T1–T4) are the only tuning, and tuning ends before step 3.
