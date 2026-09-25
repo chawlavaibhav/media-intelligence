@@ -12,6 +12,30 @@ wakes up.
 - `docs/research/context-engineering-2026-09/MASTER-PLAN.md` (§4 the pipeline, §5 the exam);
 - the reviews in `docs/research/context-engineering-2026-09/personas/`.
 
+## PRE-FLIGHT: before any spend, confirm three things, then wait for the founder's "GO"
+
+1. **Keys.** Run `python3 eval/media-bakeoff-v0/preflight.py`. It prints key **names** and yes/no only, plus the tools
+   and git access. If any required key shows NO, stop: the session was not started with `source ~/.mi-keys && claude`.
+   Tell the founder to restart it that way. Do not read `~/.mi-keys` yourself.
+2. **Understanding.** Write back to the founder, in **≤10 plain lines**:
+   - the three arms;
+   - what tonight answers;
+   - the media model per class;
+   - the spend cap and per-step caps;
+   - the freeze rule;
+   - that you won't judge;
+   - what `MORNING.md` will contain.
+3. **Uninterrupted.** Do a zero-cost dry run of the runner on T1–T4 with simulated providers. Then do **one** tiny live
+   smoke call per provider (≤US$0.50 total, counted in step 2's cap): one fal image, one Gemini image, a Veo *status*
+   call or the cheapest clip, and one writer call. This proves no step will stop at a permission prompt or a network
+   block overnight.
+   - Report any command that needed approval.
+   - The founder can pre-approve those commands in `.claude/settings.local.json` (`permissions.allow`), or you
+     restructure them so the run needs no further approvals.
+
+Then **stop and wait for the founder to reply "GO"**. After GO, run to the end without asking anything. Anything
+unexpected goes into `RUN-LOG.md`, and the run carries on or stops at a cap. It never waits for input.
+
 ## Phase 1 (tonight): three arms, no Canon
 
 - **B0, direct:** the customer's words sent straight to the media model.
