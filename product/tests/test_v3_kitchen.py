@@ -36,7 +36,7 @@ class TheLine(unittest.TestCase):
         self.assertIsNone(e.store.artifact(jid, "feasibility"))
         self.assertIsNone(e.store.artifact(jid, "recipe_check"))
         r = e.store.artifact(jid, "recipe")
-        self.assertEqual(r["form_version"], 4)
+        self.assertEqual(r["form_version"], 5)
         self.assertTrue(r["story"] and r["identity_anchors"]["person"] and r["look"]["picture_prompt"])
         tools = [s["tool"] for s in r["shots"]]
         self.assertIn("video", tools)                          # the chef chose a moving moment; nothing forced it to a still
@@ -461,3 +461,93 @@ class ChefPromptsAreSentAsWritten(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TodaysEquipmentIsNotTheChefsCard(unittest.TestCase):
+    """2026-09-25 (founder, after the ChatGPT architecture review): the machines' limits live in today's equipment, not in
+    the chef's card, so the card stays true when a machine changes."""
+
+    def test_the_chefs_card_names_no_machine_limit_and_the_chef_reads_todays_equipment(self):
+        text = json.dumps(rulebook.seed_cards()["chef"])
+        for limit in ("8 s at most", "never speaks", "garbles Hindi", "fiddly hands", "animated from stills"):
+            self.assertNotIn(limit, text)
+        self.assertIn("TODAYS_EQUIPMENT", text)
+        e = Env()
+        try:
+            seen = {}
+            real = e.orch.sim.chef__recipe
+
+            def chef(b, media):
+                seen["eq"] = b.get("TODAYS_EQUIPMENT")
+                return real(b, media)
+            e.orch.sim.chef__recipe = chef
+            e.submit(duration_s=15)
+            e.drain()
+            kinds = {m["machine"] for m in seen["eq"]["machines"]}
+            self.assertEqual(kinds, {"video", "image", "audio"})
+            self.assertTrue(any("voice-over" in f for m in seen["eq"]["machines"] for f in m["facts"]))
+        finally:
+            e.close()
+
+    def test_a_picture_order_sees_only_the_picture_machine_and_unused_machines_are_never_shown(self):
+        from unittest import mock
+        from product.library import equipment
+        self.assertEqual({m["machine"] for m in equipment.today("image")["machines"]}, {"image"})
+        with mock.patch.object(equipment, "in_use", return_value={"nano-banana-2"}):
+            self.assertEqual({m["machine"] for m in equipment.today("video")["machines"]}, {"image"})
+            self.assertEqual(equipment.longest_clip_s(), 8.0)            # no video machine: the old default, never a crash
+
+    def test_the_longest_clip_comes_from_the_equipment_so_a_longer_machine_frees_the_chef(self):
+        from unittest import mock
+        from product.library import equipment
+        from product.stations import chef
+        u = {"deliverable": {"media": "video", "duration_s": 15}}
+
+        def recipe():
+            return {"shots": [{"n": 1, "duration_s": 12.0, "tool": "video", "picture_prompt": "p", "motion_prompt": "m"},
+                              {"n": 2, "duration_s": 3.0, "tool": "end_card"}]}
+        r = recipe(); chef.normalise(r, u, {})
+        self.assertEqual(r["shots"][0]["duration_s"], equipment.longest_clip_s())
+        with mock.patch.object(equipment, "longest_clip_s", return_value=15.0):
+            r = recipe(); chef.normalise(r, u, {})
+            self.assertEqual(r["shots"][0]["duration_s"], 12.0)
+
+
+class WhatMustSurviveTravelsWithTheShot(unittest.TestCase):
+    """Recipe v5: each shot says what must survive, what may change, and what is not an acceptable substitute; the head
+    cook tastes and repairs against it, the gatekeeper checks it, the customer sees it."""
+
+    def test_the_head_cook_sees_the_shots_meaning_and_a_take_that_loses_it_is_not_served(self):
+        e = Env()
+        try:
+            jid = e.submit(duration_s=15)
+            e.drain()
+            r = e.store.artifact(jid, "recipe")
+            self.assertTrue(all(s["must_survive"] for s in r["shots"] if s["tool"] != "end_card"))
+            e.orch.approve(jid, by=e.user["email"], budget_usd="15")
+            real = e.orch.sim.head_cook__ingredient_check
+            seen = {"meaning": None, "n": 0}
+
+            def lost_it(b, media, **kw):
+                v = real(b, media, **kw)
+                if kw.get("node_id") == "frame_1":
+                    seen["meaning"] = b["INSTRUCTION"].get("meaning")
+                    if seen["n"] == 0:
+                        seen["n"] += 1
+                        return {**v, "usable": True, "must_survive_kept": "no", "repair": "retake",
+                                "better_prompt": "SAME MOMENT: the same woman, the same gesture."}
+                return v
+            e.orch.sim.head_cook__ingredient_check = lost_it
+            e.drain()
+            self.assertEqual(seen["meaning"]["must_survive"], r["shots"][0]["must_survive"])
+            self.assertIn("not_instead", seen["meaning"])
+            self.assertIn("SAME MOMENT", json.loads(e.store.node(jid, "frame_1")["spec_json"]).get("prompt_override", ""))
+        finally:
+            e.close()
+
+    def test_a_take_that_keeps_only_part_of_it_is_not_usable(self):
+        ok = {"usable": True, "lettering_present": "no", "must_survive_kept": "yes"}
+        self.assertTrue(head_cook._usable(ok))
+        for bad in ("no", "partial"):
+            self.assertFalse(head_cook._usable({**ok, "must_survive_kept": bad}))
+        self.assertTrue(head_cook._usable({**ok, "must_survive_kept": "cannot_determine"}))

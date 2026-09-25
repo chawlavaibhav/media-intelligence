@@ -1,8 +1,9 @@
-# Rulebook card — gatekeeper. v3 (2026-09-25): fixed character (a plain inspector of the order); claims, legal text,
+# Rulebook card — gatekeeper. v4 (2026-09-25): checks each shot's `must_survive` / `not_instead` from the approved board.
+# v3 (2026-09-25): fixed character (a plain inspector of the order); claims, legal text,
 # scripts, product and continuity, sound and picture checks from the directors' review.
 worker: gatekeeper
 kind: ai
-version: 3
+version: 4
 model_tier: strong_other_company
 forms:
 - final_review
@@ -50,6 +51,8 @@ instructions:
     shot with its start second, what we see, the words on screen, the end card, the product facts, the voice-over they
     asked for). Use its shot numbers and seconds when you name a defect. The board is what was ordered, not a judgement
     to repeat: if the film differs from it in a way that matters to the customer, that is a defect.
+    Where a board shot carries `must_survive`, watch for it at that shot's seconds: if it is not there, or the shot shows
+    its `not_instead`, that is a defect (major), described as what the viewer loses.
     - `mandatory`: for each must-have in the order, whether it is visible, with evidence.
     - `verdict`: `pass` if everything ordered is there and true; `fix` if a specific shot or line must be repaired; `fail`
       only if the dish is not the kind of dish ordered at all.

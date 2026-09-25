@@ -1,16 +1,18 @@
 # Ingredient check — the head cook's tasting skill (kitchen v3; was the small taster). v2 adds the repair decision and a
 # sharper prompt for a retake, so the head cook repairs a take instead of code freezing it.
+# v5 (2026-09-25): `must_survive_kept` — did the take keep what the chef said must survive this shot (recipe v5)?
 form: ingredient_check
-version: 4
+version: 5
 written_by: head_cook
 schema:
   type: object
-  required: [usable, unsure, required_action_occurred, end_state_reached, product_identity_ok, character_consistent,
+  required: [usable, unsure, must_survive_kept, required_action_occurred, end_state_reached, product_identity_ok, character_consistent,
              matches_master_plate, matches_previous_plate, differences, prohibited_present, unrequested_elements,
              lettering_present, best_segment, notes, repair, better_prompt]
   properties:
     usable: {type: boolean}
     unsure: {type: boolean}
+    must_survive_kept: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
     required_action_occurred: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
     end_state_reached: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
     product_identity_ok: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}

@@ -195,10 +195,13 @@ class SimulatedWorkers:
                               "motion_prompt": ("She looks down at the product and a slow smile arrives; the camera drifts in a "
                                                 "little. Nothing else moves." if tool == "video" else "a slow push-in"),
                               "photo_index": 1 if tool == "photo" else None, "product_present": True,
-                              "super_id": "c1" if (i == 2 and copy) else None})
+                              "super_id": "c1" if (i == 2 and copy) else None,
+                              "must_survive": f"{title.lower()}: {feeling}, with the same person", "may_change": "angle, lens, length",
+                              "not_instead": "a product photo in place of the moment"})
             shots.append({"n": 4, "duration_s": 3.0, "title": "End card", "feeling": "the idea, remembered", "framing": "the end card",
                           "impact": "the name and the line", "description": "The end card, set by code.", "tool": "end_card",
-                          "picture_prompt": "", "motion_prompt": "", "photo_index": None, "product_present": False, "super_id": None})
+                          "picture_prompt": "", "motion_prompt": "", "photo_index": None, "product_present": False, "super_id": None,
+                          "must_survive": "", "may_change": "", "not_instead": ""})
         wants_voice = bool(re.search(r"\bvoice[- ]?over\b|\bnarrat|\bvo\b", words, re.I)) and \
             not re.search(r"\bno voice|without (a )?voice|no vo\b", words, re.I)
         voice = {"wanted": wants_voice and media_kind == "video", "language": "hi-IN",
@@ -230,7 +233,7 @@ class SimulatedWorkers:
 
     # ── tasters ───────────────────────────────────────────────────────────────────────────────────────────
     def head_cook__ingredient_check(self, b, media, **kw):
-        return {"usable": True, "unsure": False, "required_action_occurred": "cannot_determine", "end_state_reached": "cannot_determine",
+        return {"usable": True, "unsure": False, "must_survive_kept": "cannot_determine", "required_action_occurred": "cannot_determine", "end_state_reached": "cannot_determine",
                 "product_identity_ok": "cannot_determine", "character_consistent": "cannot_determine",
                 "matches_master_plate": "cannot_determine", "matches_previous_plate": "cannot_determine", "differences": [],
                 "prohibited_present": [], "unrequested_elements": [], "lettering_present": "cannot_determine",

@@ -41,7 +41,7 @@ def _chef_call(k, job_id, u, extra: dict) -> dict:
     photos = [{"photo_index": i + 1, "shows": r.get("shows"), "customer_label": r.get("customer_label")}
               for i, r in enumerate(u.get("photo_roles") or [])]
     # kitchen v4 / chef v9 (directors' review): the kitchen's recent dishes and three lenses offered for this order
-    from product.library import lenses
+    from product.library import equipment, lenses
     recent = lenses.recent_dishes(k.store, job_id)
     offered = lenses.offer(job_id, u["deliverable"]["media"],
                            " ".join(str(x) for x in ((u.get("product") or {}).get("category"), (u.get("product") or {}).get("name"),
@@ -52,7 +52,9 @@ def _chef_call(k, job_id, u, extra: dict) -> dict:
            "PHOTOS": photos or "no photos supplied",
            "SHELF": k.shelf.summary(job["account_id"]),
            "RECENT_DISHES": recent or "none yet",
-           "LENSES": {"rule": lenses.roster()["rule"], "offered": offered}, **extra}
+           "LENSES": {"rule": lenses.roster()["rule"], "offered": offered},
+           # 2026-09-25: the machines' limits come from today's equipment, never from the chef's card
+           "TODAYS_EQUIPMENT": equipment.today(u["deliverable"]["media"]), **extra}
     with k.store.timed(job_id, "creative_planning"):
         r = k.workers.call(job_id, "chef", "recipe", ctx, exact_words=k.exact_words(job_id), media=k.photo_media(job_id, 6), tray=tray,
                            model_key="chef_image" if u["deliverable"]["media"] == "image" else None)
@@ -182,10 +184,12 @@ def normalise(r: dict, u: dict, slip: dict) -> list:
                       "description": "The end card, set by code from the end card copy.", "tool": "end_card",
                       "picture_prompt": "", "motion_prompt": "", "photo_index": None, "product_present": False, "super_id": None})
         notes.append("added a 3 s end card")
+    from product.library.equipment import longest_clip_s
+    longest = longest_clip_s()
     for s in shots:
-        if s.get("tool") != "end_card" and float(s["duration_s"]) > 8.0:
-            notes.append(f"shot {s['n']} shortened from {s['duration_s']}s to 8s (the longest clip the video model makes)")
-            s["duration_s"] = 8.0
+        if s.get("tool") == "video" and float(s["duration_s"]) > longest:
+            notes.append(f"shot {s['n']} shortened from {s['duration_s']}s to {longest:g}s (the longest clip today's video machine makes)")
+            s["duration_s"] = longest
         s["duration_s"] = max(1.0, float(s["duration_s"]))
     target = min(float(u["deliverable"].get("duration_s") or sum(float(s["duration_s"]) for s in shots)), 30.0)
     total = sum(float(s["duration_s"]) for s in shots)
@@ -194,7 +198,9 @@ def normalise(r: dict, u: dict, slip: dict) -> list:
         card = sum(float(s["duration_s"]) for s in shots if s.get("tool") == "end_card")
         scale = (target - card) / max(0.1, sum(float(s["duration_s"]) for s in body))
         for s in body:
-            s["duration_s"] = round(min(8.0, max(1.0, float(s["duration_s"]) * scale)), 2)
+            s["duration_s"] = round(max(1.0, float(s["duration_s"]) * scale), 2)
+            if s.get("tool") == "video":
+                s["duration_s"] = min(longest, s["duration_s"])
         notes.append(f"shot lengths scaled so the film runs {target:.1f}s (was {total:.1f}s)")
     shots.sort(key=lambda s: (s.get("tool") == "end_card", s["n"]))
     for i, s in enumerate(shots, 1):
@@ -207,7 +213,7 @@ def normalise(r: dict, u: dict, slip: dict) -> list:
         s["first_frame"] = s.get("picture_prompt", "")
         s["action"] = s.get("motion_prompt", "")
         s.setdefault("purpose", s.get("title", ""))
-        for kk, v in (("end_state", ""), ("camera", ""), ("product_state", ""), ("continuity", []), ("must_not", []),
+        for kk, v in (("must_survive", ""), ("may_change", ""), ("not_instead", ""), ("end_state", ""), ("camera", ""), ("product_state", ""), ("continuity", []), ("must_not", []),
                       ("mandatory_ids", []), ("feasibility_refs", [])):
             s.setdefault(kk, v)
     r["shots"] = shots

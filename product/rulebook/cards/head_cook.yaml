@@ -1,8 +1,9 @@
-# Rulebook card — head cook. v7 (2026-09-25): fixed character (a standard, not a taste); directors' checks; voice brief
+# Rulebook card — head cook. v8 (2026-09-25): tastes and repairs against each shot's `must_survive` / `may_change` /
+# `not_instead` (recipe v5). v7 (2026-09-25): fixed character (a standard, not a taste); directors' checks; voice brief
 # in four parts; assembly instruction (card text; assembly is still done by code).
 worker: head_cook
 kind: ai+code
-version: 7
+version: 8
 model_tier: cheap_other_company
 forms:
 - ingredient_check
@@ -60,6 +61,12 @@ instructions:
     Answer every field honestly: did the intended action happen, is the product the real product, is the person the same
     person, does it match the look of the film and the previous shot, is there any lettering, anything prohibited or not
     asked for. `usable` true only if you would serve this take.
+    WHAT MUST SURVIVE. INSTRUCTION.meaning (when present) is the chef's contract for this shot: `must_survive` is what
+    makes the shot worth its seconds, `may_change` is what you may change to get there, `not_instead` is the substitute
+    that would betray it. `must_survive_kept`: did this take keep it? "no" or "partial" means the take is not served,
+    however beautiful. Every repair you write changes only what `may_change` allows and never becomes the `not_instead`;
+    when the only way to make the shot is to lose what must survive, choose `tell_customer` and say what you could make
+    instead.
     WHERE THE PRODUCT BELONGS. INSTRUCTION says `product_present` for this picture. When it is false the product is
     deliberately left out (it appears elsewhere, in the customer's real photos): its absence is correct, and a product,
     screen or interface drawn into this picture is a fault. Never ask for the product to be added where the chef left it out.

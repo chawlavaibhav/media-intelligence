@@ -1,7 +1,9 @@
-# Recipe — the chef. v4 (2026-09-25): three directions through three lenses, audience truth, form, habits refused,
-# sound plan, image plan, legal copy. Code derives the older production fields (stations/chef.py `normalise`).
+# Recipe — the chef. v5 (2026-09-25): each shot (and each picture format) states what must survive, what may change and
+# what is not an acceptable substitute, so meaning survives every hand-off (the head cook's repairs, the gatekeeper).
+# v4: three directions through three lenses, audience truth, form, habits refused, sound plan, image plan, legal copy.
+# Code derives the older production fields (stations/chef.py `normalise`).
 form: recipe
-version: 4
+version: 5
 written_by: chef
 schema:
   type: object
@@ -183,7 +185,16 @@ schema:
         - photo_index
         - product_present
         - super_id
+        - must_survive
+        - may_change
+        - not_instead
         properties:
+          must_survive:
+            type: string
+          may_change:
+            type: string
+          not_instead:
+            type: string
           n:
             type: integer
           duration_s:
@@ -304,6 +315,12 @@ schema:
         - picture_prompt
         - super_ids
         properties:
+          must_survive:
+            type: string
+          may_change:
+            type: string
+          not_instead:
+            type: string
           format:
             type: string
           frame:

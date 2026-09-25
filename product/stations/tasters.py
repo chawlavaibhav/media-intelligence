@@ -274,7 +274,8 @@ def big_taste(k, job_id, finals, media_kind) -> dict:
     deck = {c["id"]: c["text"] for c in recipe.get("copy_deck", [])}
     for s in recipe.get("shots", []):
         board.append({"shot": s["n"], "title": s.get("title"), "starts_s": round(t0, 2), "duration_s": s.get("duration_s"),
-                      "what_we_see": s.get("description"), "tool": s.get("tool"), "words_on_screen": deck.get(s.get("super_id"))})
+                      "what_we_see": s.get("description"), "tool": s.get("tool"), "words_on_screen": deck.get(s.get("super_id")),
+                      **({"must_survive": s.get("must_survive"), "not_instead": s.get("not_instead")} if s.get("must_survive") else {})})
         t0 += float(s.get("duration_s") or 0)
     vo = recipe.get("voice_over") or {}
     ctx = {"UNDERSTANDING": {kk: u[kk] for kk in ("objective", "audience", "audience_response", "forbidden", "deliverable")},

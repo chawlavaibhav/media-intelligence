@@ -1,0 +1,76 @@
+# Today's equipment (2026-09-25, founder ruling after the ChatGPT architecture review): what the machines in the kitchen
+# TODAY can and cannot do, kept OUT of the chef's card so the card stays true when a machine changes. The chef reads
+# these as facts about the tools, never as creative law: it conceives the moment the idea needs, then plans how today's
+# machines make it. Change a machine → change this file (and its adapter in providers.py); the cards do not move.
+#
+# Only machines the kitchen actually runs (providers.ROUTES) are shown to the chef. Each fact names its basis:
+#   deterministic  what the provider's interface allows (cannot fail at random)
+#   observed       counted in our own jobs (evidence ids as in equipment_seed.yaml)
+#   research       published by the maker or practitioners (studio-jobs/media-research/notes), not yet counted by us
+as_of: "2026-09-25"
+rule: >-
+  Facts about today's machines, not rules of filmmaking. Conceive the moment the idea needs first, then plan how these
+  machines make it: a longer moment becomes several shots joined by cuts, spoken words come from the voice-over, an
+  exact product detail comes from the customer's real photo. When a fact here makes the idea itself impossible, say so
+  in `customer_summary`; never quietly swap the idea for an easier one.
+machines:
+  - generator: veo-3.1-fast-i2v
+    kind: video
+    facts:
+      - id: longest_clip_s
+        value: 8
+        says: "One clip is 4, 6 or 8 seconds; a longer moment is planned as several shots joined by cuts."
+        basis: deterministic
+      - id: starts_from_a_still
+        says: "Every clip is animated from a first frame (a designed still or the customer's real photo), so each video
+          shot needs its first frame written in full, already posed for the action."
+        basis: deterministic
+      - id: speech
+        says: "Cannot deliver usable speech or singing: it garbles Hindi, invents lines, burns in subtitles, may give a
+          silent person a voice, and its sound is sometimes refused for safety. Nobody talks or sings on screen; spoken
+          words come only from the voice-over; open-mouth laughter is risky."
+        basis: observed
+        evidence: [EV-0923-FILM, AIGHT-STUDIO-V10-0925]
+      - id: small_mechanisms
+        says: "Hands working a small mechanism (a zip, a hinge, a lid, a clasp) warp. Show the change across a cut
+          (closed in one shot, open in the next) and keep the moving part still."
+        basis: observed
+        evidence: [EQ-001]
+      - id: new_product_detail
+        says: "A product it has never seen is drawn as its famous look-alike. In generated frames show the side it can
+          draw (a screen, an outline, partly turned or held); the exact detail comes only from the real photo. Worn or
+          intricate products (jewellery, watches, embroidery, labels) appear only in real photos or edited in from them."
+        basis: observed
+        evidence: [EQ-015]
+      - id: tender_close_faces
+        says: "Weakest at near-real tender drama on tight faces and hands; tenderness reads better wide, from behind,
+          through hands and places."
+        basis: research
+      - id: one_action_per_clip
+        says: "Follows one action and one camera move per clip; several actions in one clip drift or are skipped."
+        basis: research
+      - id: continuity_between_clips
+        says: "Faces, clothes and props drift between separately made clips; everyone and everything seen must be
+          described word for word the same in every shot."
+        basis: observed
+        evidence: [AIGHT-STUDIO-V10-0925]
+  - generator: nano-banana-2
+    kind: image
+    facts:
+      - id: lettering
+        says: "Draws letters, logos and prices badly; ask for blank signboards, screens and labels. Code sets every word."
+        basis: observed
+      - id: edits_real_photos
+        says: "Can edit a picture it made, putting the customer's real product in from the reference photos (best for a
+          worn or intricate product in a designed still)."
+        basis: observed
+  - generator: lyria
+    kind: audio
+    facts:
+      - id: instrumental_only
+        says: "Makes instrumental music only (no singing, no words)."
+        basis: deterministic
+      - id: drifts_to_average
+        says: "A brief made of avoidances returns soft piano and strings; name the genre, lead instruments, tempo and
+          structure in seconds."
+        basis: research

@@ -553,7 +553,7 @@ def _image_request(k, job_id, n, spec, ctx, correction=""):
     p = prompts.chef_picture_prompt(text, g, aspect=aspect, refs_note=prompts.REFS_NOTE)
     return p, use, {"asset": f"first frame of shot {s['n']} — {s.get('title', '')}", "prompt": p,
                     "chef_description": s.get("description"), "feeling": s.get("feeling"),
-                    "product_present": s.get("product_present")}, \
+                    "product_present": s.get("product_present"), **meaning(s)}, \
         "look of the film" + (f" + end frame of {spec['previous']}" if prev_end else "")
 
 
@@ -649,7 +649,8 @@ def _node_shot(k, job_id, n, spec, ctx):
         a = k.store.asset(aid)
         det = _clip_det(a, use)
         instruction = {"asset": f"clip for shot {s['n']} — {s.get('title', '')} ({dur}s; {use}s used)", "motion_prompt": motion,
-                       "chef_description": s.get("description"), "feeling": s.get("feeling"), "product_present": s.get("product_present")}
+                       "chef_description": s.get("description"), "feeling": s.get("feeling"), "product_present": s.get("product_present"),
+                       **meaning(s)}
         verdict = taste(k, job_id, node_id, instruction, a, prev=[("image/png", Path(frame["path"]).read_bytes())], video_seconds=dur)
         seg = verdict.get("best_segment") or {}
         t_in = min(float(seg.get("in_s") or 0.0), max(0.0, dur - use))
@@ -672,8 +673,14 @@ def _without_sound(text: str) -> str:
     return " ".join(keep) or text
 
 
+def meaning(s: dict) -> dict:
+    """The chef's contract for a shot (recipe v5): what must survive it, what may change, what is not an acceptable
+    substitute. It travels with every take the head cook tastes and every repair it writes."""
+    return {"meaning": {kk: s.get(kk) or "" for kk in ("must_survive", "may_change", "not_instead")}} if s.get("must_survive") else {}
+
+
 def _usable(v) -> bool:
-    return bool(v.get("usable")) and v.get("lettering_present") != "yes" and v.get("product_identity_ok") not in ("no", "partial") \
+    return v.get("must_survive_kept") not in ("no", "partial") and bool(v.get("usable")) and v.get("lettering_present") != "yes" and v.get("product_identity_ok") not in ("no", "partial") \
         and v.get("matches_master_plate") not in ("no", "partial") and v.get("matches_previous_plate") not in ("no", "partial") \
         and v.get("required_action_occurred") != "no" and v.get("end_state_reached") not in ("no", "partial") and not v.get("prohibited_present")
 
@@ -761,7 +768,7 @@ def taste(k, job_id, node_id, instruction, a, *, prev=None, video_seconds=8.0) -
                            model_key=key, video_seconds=video_seconds, sim_args={"node_id": node_id})
     k.put_form(job_id, "ingredient_check", v)
     meta = {**json.loads(k.store.asset(a["id"])["meta_json"]), "inspection": {kk: v.get(kk) for kk in (
-        "usable", "unsure", "required_action_occurred", "end_state_reached", "product_identity_ok", "matches_master_plate",
+        "usable", "unsure", "must_survive_kept", "required_action_occurred", "end_state_reached", "product_identity_ok", "matches_master_plate",
         "matches_previous_plate", "differences", "lettering_present", "notes")}, "taster_form_version": len(k.store.artifact_versions(job_id, "ingredient_check")),
             "taster_model": v["written_by"]["model"], "taster_simulated": v["written_by"]["simulated"]}
     k.store.set_asset(a["id"], meta_json=json.dumps(meta, default=str))
