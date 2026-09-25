@@ -274,7 +274,9 @@ class Reasoner:
             backend, provider, model = None, "simulated", "simulated"
         user_text = "\n\n".join(f"## {k}\n{v if isinstance(v, str) else json.dumps(v, ensure_ascii=False, indent=1)}"
                                 for k, v in context.items())
-        user_text += "\n\n## OUTPUT\nReturn one JSON object with exactly these fields (JSON Schema):\n" + json.dumps(out_schema)
+        user_text += ("\n\n## OUTPUT\nReturn ONE JSON object holding YOUR ANSWERS — a value for every field below. The JSON Schema "
+                  "describes the fields; never return the schema itself (no \"type\"/\"properties\"/\"required\" keys).\n"
+                  + json.dumps(out_schema))
         in_sha = sha256_json({"role": role, "context": context, "knowledge_sha": sha256_json(knowledge or ""),
                               "media": [(m, len(d)) for m, d in media]})
         est_in = estimate_in_tokens or (len(user_text) + len(knowledge or "") + len(system_role)) // 3 + 1500 * len(media)
@@ -320,6 +322,9 @@ class Reasoner:
             self.store.settle(att, status="ok", settled_usd=actual, detail=json.dumps(usage)[:300])
             try:
                 out = _extract_json(text)
+                if isinstance(out, dict) and "properties" in out and out.get("type") == "object":
+                    # live 2026-09-25: a model echoed the schema instead of filling it in
+                    raise ValueError("you returned the JSON Schema itself; return your filled-in answers, one value per field")
                 errs = schema.errors(out, out_schema)
             except ValueError as e:
                 out, errs = None, [str(e)]
