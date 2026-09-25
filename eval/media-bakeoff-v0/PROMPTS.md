@@ -12,6 +12,23 @@ The four arms differ **only** as described below. Everything else is identical a
 
 ---
 
+## Media model per class (pinned; the same model for every arm within a class)
+
+Chosen from the Capability Lab's measured results (MEDIA-HISTORY part 03 / Registry). If a primary route is
+unavailable, use the fallback for **all** arms of that class and log it.
+
+| Class | Primary | Fallback | Evidence |
+|---|---|---|---|
+| S1 product ad still | Nano Banana 2 (`gemini-3.1-flash-image`, Gemini API, reference image) | GPT Image 2 | NB2 11/12, GPT Image 2 11/12 accepted blind; the P1 poster |
+| S2 edit my photo | Seedream 5 Pro edit (fal) | Nano Banana 2 edit | Seedream edit 10/12 |
+| M1 animate my image | Kling (fal, image-to-video, 5 s) | Wan (fal, image-to-video) | Kling 8/8, Wan 8/8 |
+| M2 product film, no people | Veo 3.1 Fast from approved stills (image-to-video, 8-s scenes) | Kling | Mokobara v2 path |
+| F1 story film with people | Veo 3.1 Fast, 8-s scenes **with native audio** (text-to-video, or image-to-video from an approved first frame) | — (no fallback; log it if unavailable) | Both direct-Veo wins; Mokobara v2 |
+| Music bed (P only, where the writer asks for it) | Lyria | none | Lab |
+
+Text, logo and end cards are always composed by code in P, never drawn by a model. B0 and B1 get no code finishing:
+they are the direct baselines.
+
 ## B0: direct (no writer)
 
 Send the customer's verbatim words (plus any answers) **as the prompt**, with the reference photos, to the class's

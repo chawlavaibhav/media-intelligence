@@ -51,6 +51,14 @@ Rules for keys:
 - **If the Azure (Luna) key is not on this laptop,** run P's understand step on Claude Haiku 4.5 with `ANTHROPIC_API_KEY`, and log the substitution in `RUN-LOG.md`.
 - **If Claude Code blocks reading `~/.mi-keys`** (a permission prompt the founder can't answer while asleep), the founder instead starts the session from a terminal that already ran `source ~/.mi-keys` (`source ~/.mi-keys && claude`). The keys are then inherited by every command.
 
+## If something outside the repo can't be found
+
+- **`studio-jobs/` or the job DB can't be found** (they sit outside git on the Mac): do not search the home folder.
+  Use the briefs that are already verbatim (E09–E12), fill the rest from in-repo sources (`production-learning/cases/`,
+  `canon/research/marketplace-demand-v1/`, the job branches), and list every swap in `RUN-LOG.md`.
+- **The existing direct-Veo films for E09 and E10 can't be found:** generate B1 for them as well (about US$10 more,
+  still within the film cap), and log it.
+
 ## Rules
 
 - **Freeze.** No code, prompt or model change once exam generation starts. Log problems in `RUN-LOG.md`; do not fix them mid-run. Practice briefs (T1–T4) are the only tuning, and tuning ends before step 3.
