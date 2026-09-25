@@ -130,7 +130,7 @@ we optimise.
 | Product facts and claims | brand shelf, with sources | The author, as ≤1k tokens of facts |
 | Model craft ("how Veo wants to be prompted") | one-page style guide per model (versioned, bench-tested) | The author, ≤600 tokens per model |
 | Format craft | one-page format card | The author |
-| Creative doctrine (the Canon) | frozen; optional ≤15-question critique card + copy reviewer | Only after winning CANON-ABL-1 on finished media |
+| Creative doctrine (the Canon) | frozen; optional ≤15-question critique card + copy reviewer | Only after winning CANON-ABL-1 on finished media. Retrieval test (`eval/retrieval-canon-2026-09-25/RESULT.md`): classic RAG is near random on this corpus; a fixed core list + LLM lookup over a label index works best — no vector DB |
 | What models can and can't do | equipment sheet (Registry rows + live stats, Clopper–Pearson) | The intake (for the menu and refusals) and the lint |
 | Lessons | deltas to a card, guide or check, with evidence and counters | Only through those artefacts |
 | Taste | founder and customer picks (labels) | Never as rules; later via qualified judges |
