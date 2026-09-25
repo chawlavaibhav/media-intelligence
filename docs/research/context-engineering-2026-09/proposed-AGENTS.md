@@ -1,4 +1,5 @@
-<!-- DRAFT, not active. Proposed root AGENTS.md (with CLAUDE.md = "@AGENTS.md"). See CONTEXT-SOLUTION.md §6.
+<!-- SUPERSEDED by MASTER-PLAN.md §6 (it pointed at the old Controller/runtime apparatus). Kept for reference only.
+     DRAFT, not active. Proposed root AGENTS.md (with CLAUDE.md = "@AGENTS.md"). See CONTEXT-SOLUTION.md §6.
      Budget: ≤100 lines, ≤8 KB. Every line must answer "would removing this cause a mistake?" Nothing inferable from code. -->
 # Media Intelligence — agent entry point
 

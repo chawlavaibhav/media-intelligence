@@ -1,5 +1,18 @@
 # Context, memory and knowledge: why we lose to a direct prompt, and the fix
 
+> **Amended 2026-09-25, later the same day. Read `MASTER-PLAN.md` first.**
+>
+> Six persona reviews tested this document against the complete project history and corrected it.
+>
+> **Corrections:**
+> 1. **Prompt hygiene is a secondary cause.** The primary causes are four: split authorship; films chopped into short muted clips; vetoes held by unqualified judges; and the absence of any baseline or regression set. CQ-001 lost only 1 of 16 creative decisions at the prompt step, and the accepted Mokobara v2 prompts repeated anchors and used a negative line.
+> 2. **The per-model adapters that assemble prompts in code (§3 R2, §4 step 4) are withdrawn.** The author LLM writes the prompts, reading a style guide per model; code only lints them.
+> 3. **The bake-off must include B1** (one strong-LLM session writing the prompts directly). That is what actually beat the pipeline. It must also test **films in week 1**, not stills only.
+> 4. **Auto-selection by preference models and the bandit router are deferred.** A human picks until judges qualify.
+> 5. **The Canon migration (§4) is deferred.** The Canon is frozen apart from one ablation on finished media.
+>
+> **What stands:** knowledge stays out of generator prompts; identity comes from references, not paragraphs; the direct arm is permanent; lessons are stored as evidence-backed deltas; nothing is promoted by argument.
+
 **Written:** 2026-09-25, from a research sweep of frontier-lab engineering posts, ~80 papers, generative-media companies,
 coding-agent tooling and practitioner talks. The sweep is in five appendices in this folder (`01`–`05`), each with URLs.
 **Status:** a proposal. Nothing here changes Canon, Registry, routing, runtime or CONTROL-STATE. Adoption is a Controller decision.
