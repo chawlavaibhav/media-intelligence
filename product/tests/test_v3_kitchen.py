@@ -36,7 +36,7 @@ class TheLine(unittest.TestCase):
         self.assertIsNone(e.store.artifact(jid, "feasibility"))
         self.assertIsNone(e.store.artifact(jid, "recipe_check"))
         r = e.store.artifact(jid, "recipe")
-        self.assertEqual(r["form_version"], 3)
+        self.assertEqual(r["form_version"], 4)
         self.assertTrue(r["story"] and r["identity_anchors"]["person"] and r["look"]["picture_prompt"])
         tools = [s["tool"] for s in r["shots"]]
         self.assertIn("video", tools)                          # the chef chose a moving moment; nothing forced it to a still
@@ -391,6 +391,43 @@ class TheCopyCheckReadsTheBoard(unittest.TestCase):
         board["shots"][0]["super_id"] = "c"                                   # placed on a shot: now it must be drawn
         r = verify.exact_copy_match(["getaight.ai"], board, ["One key to AI that always gives back a little more.", "getaight.ai"])
         self.assertEqual(r["status"], "FAIL")
+
+
+class TheKitchenRemembersWhatItServed(unittest.TestCase):
+    def test_lenses_fit_the_medium_skip_recent_ones_and_include_one_far_from_the_category(self):
+        from product.library import lenses
+        recent = [{"lens": "observer"}, {"lens": "mood_painter"}, {"lens": "demonstrator"}]
+        for jid in ("job_a", "job_b", "job_c", "job_d"):
+            got = lenses.offer(jid, "video", "gold jewellery Diwali festive", recent)
+            ids = [x["id"] for x in got]
+            self.assertEqual(len(set(ids)), 3)
+            self.assertFalse({"observer", "mood_painter", "demonstrator"} & set(ids))
+            self.assertFalse({"documentary_photographer", "graphic_designer", "portraitist"} & set(ids))   # picture-only
+        pics = [x["id"] for x in lenses.offer("job_e", "image", "poster", [])]
+        self.assertFalse({"suspense", "rhythm_editor"} & set(pics))                                     # film-only
+
+    def test_a_second_order_sees_the_first_dish_and_the_customer_sees_the_lens_in_plain_words(self):
+        e = Env()
+        try:
+            first = e.submit(duration_s=15)
+            e.drain()
+            seen = {}
+            real = e.orch.sim.chef__recipe
+
+            def chef(b, media):
+                seen["recent"], seen["lenses"] = b.get("RECENT_DISHES"), b.get("LENSES")
+                return real(b, media)
+            e.orch.sim.chef__recipe = chef
+            second = e.submit(duration_s=15)
+            e.drain()
+            self.assertIsInstance(seen["recent"], list)
+            self.assertEqual(len(seen["recent"]), 1)
+            self.assertEqual(seen["recent"][0]["lens"], e.store.artifact(first, "recipe")["lens"])
+            self.assertNotIn(seen["recent"][0]["lens"], [x["id"] for x in seen["lenses"]["offered"]])
+            self.assertIn("Told as", e.store.artifact(second, "plan_note")["text"])
+            self.assertEqual(len(e.store.artifact(second, "recipe")["directions"]), 3)
+        finally:
+            e.close()
 
 
 class ChefAndTastersAreDifferentCompanies(unittest.TestCase):

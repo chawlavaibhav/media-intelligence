@@ -215,6 +215,16 @@ class SimulatedWorkers:
             "voice_over": voice, "copy_deck": copy, "shots": shots,
             "end_card": {"copy_ids": [c["id"] for c in copy], "background_hex": "#1f2a44"},
             "reference_photos": [1] if b.get("PHOTOS") not in (None, "no photos supplied") else [],
+            # chef v9: three directions through the three offered lenses; recent dishes read
+            "audience_truth": "They want to feel looked after without being sold to.",
+            "directions": [{"lens": x["id"], "idea": f"{name}, seen as {x['name']}", "form": "three moments and an end card",
+                            "on_screen": "the person and the product"} for x in ((b.get("LENSES") or {}).get("offered") or
+                                                                                   [{"id": "observer", "name": "o"}, {"id": "street_comic", "name": "c"},
+                                                                                    {"id": "demonstrator", "name": "d"}])][:3],
+            "chosen_direction": "the first direction, because its idea fits this order best",
+            "lens": ((b.get("LENSES") or {}).get("offered") or [{"id": "observer"}])[0]["id"],
+            "shape": "three moments and an end card",
+            "habits_refused": "none repeated" if b.get("RECENT_DISHES") in (None, "none yet") else "changed the setting and the music from the recent dishes",
             "library_used": tray_ids,
             "customer_summary": f"One warm evening with {name}: a real moment, the product exactly as it is, and your words at the end."}
 

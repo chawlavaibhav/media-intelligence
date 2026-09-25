@@ -15,7 +15,7 @@ NO_LETTERING = ("No text, no lettering, no captions, no signage, no watermark an
 # model follows a POSITIVE description of the soundtrack better, so the sound is described as it should be heard
 NO_SPEECH = ("Audio: only quiet room tone and soft natural ambience — no voices, no dialogue, no narration, no singing. "
              "Everyone stays silent, lips gently closed throughout; no subtitles.")
-BASE_NEGATIVE = ["text", "letters", "captions", "watermark", "logo", "signage", "talking", "speech", "singing",
+BASE_NEGATIVE = ["text", "letters", "captions", "subtitles", "watermark", "logo", "signage", "talking", "speech", "singing",
                  "lip movement", "extra fingers", "warped product", "duplicate product"]
 
 

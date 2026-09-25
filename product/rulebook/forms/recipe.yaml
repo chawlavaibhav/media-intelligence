@@ -1,85 +1,343 @@
-# Recipe — the chef. v3 (kitchen v3, founder-approved 2026-09-25): the chef writes the dish in full — the story, the
-# people and world described once, a board where every shot names its tool and carries the chef's OWN full prompts, the
-# sound, and the voice-over when the customer asked for one. Code derives the older production fields from these
-# (stations/chef.py `normalise`); it never rewrites the chef's prompts.
+# Recipe — the chef. v4 (2026-09-25): three directions through three lenses, audience truth, form, habits refused,
+# sound plan, image plan, legal copy. Code derives the older production fields (stations/chef.py `normalise`).
 form: recipe
-version: 3
+version: 4
 written_by: chef
 schema:
   type: object
-  required: [selected_concept, remember, story, audience_person, identity_anchors, look, sound, voice_over, copy_deck, shots,
-             end_card, reference_photos, library_used, customer_summary]
+  required:
+  - selected_concept
+  - remember
+  - story
+  - audience_person
+  - identity_anchors
+  - look
+  - sound
+  - voice_over
+  - copy_deck
+  - shots
+  - end_card
+  - reference_photos
+  - library_used
+  - customer_summary
+  - audience_truth
+  - directions
+  - chosen_direction
+  - lens
+  - shape
+  - habits_refused
   properties:
-    selected_concept: {type: string}
-    remember: {type: string}
-    story: {type: string}
-    audience_person: {type: string}
+    selected_concept:
+      type: string
+    remember:
+      type: string
+    story:
+      type: string
+    audience_person:
+      type: string
     identity_anchors:
       type: object
-      required: [person, product, world, grade]
-      properties: {person: {type: string}, product: {type: string}, world: {type: string}, grade: {type: string}}
+      required:
+      - person
+      - product
+      - world
+      - grade
+      properties:
+        person:
+          type: string
+        product:
+          type: string
+        world:
+          type: string
+        grade:
+          type: string
     look:
       type: object
-      required: [picture_prompt, text_zone, product_present]
+      required:
+      - picture_prompt
+      - text_zone
+      - product_present
       properties:
-        picture_prompt: {type: string}
-        product_present: {type: boolean}
-        text_zone: {type: string, enum: [top, bottom, none]}
+        picture_prompt:
+          type: string
+        product_present:
+          type: boolean
+        text_zone:
+          type: string
+          enum:
+          - top
+          - bottom
+          - none
     sound:
       type: object
-      required: [music_prompt, ambience]
-      properties: {music_prompt: {type: string}, ambience: {type: string}}
+      required:
+      - music_prompt
+      - ambience
+      properties:
+        music_prompt:
+          type: string
+        ambience:
+          type: string
+        key_sounds:
+          type: array
+          items:
+            type: object
+            required:
+            - sound
+            - at_s
+            properties:
+              sound:
+                type: string
+              at_s:
+                type: number
+        silences:
+          type: array
+          items:
+            type: object
+            required:
+            - from_s
+            - to_s
+            properties:
+              from_s:
+                type: number
+              to_s:
+                type: number
+        music_in_s:
+          type:
+          - number
+          - 'null'
+        music_out_s:
+          type:
+          - number
+          - 'null'
     voice_over:
       type: object
-      required: [wanted, language, direction, lines]
+      required:
+      - wanted
+      - language
+      - direction
+      - lines
       properties:
-        wanted: {type: boolean}
-        language: {type: string}
-        direction: {type: string}
+        wanted:
+          type: boolean
+        language:
+          type: string
+        direction:
+          type: string
         lines:
           type: array
           items:
             type: object
-            required: [shot, text]
-            properties: {shot: {type: integer}, text: {type: string}}
+            required:
+            - shot
+            - text
+            properties:
+              shot:
+                type: integer
+              text:
+                type: string
     copy_deck:
       type: array
       items:
         type: object
-        required: [id, text, role, source]
+        required:
+        - id
+        - text
+        - role
+        - source
         properties:
-          id: {type: string}
-          text: {type: string}
-          role: {type: string}
-          source: {type: string, enum: [customer_exact, proposed]}
+          id:
+            type: string
+          text:
+            type: string
+          role:
+            type: string
+          source:
+            type: string
+            enum:
+            - customer_exact
+            - proposed
+          min_seconds:
+            type:
+            - number
+            - 'null'
+          script:
+            type:
+            - string
+            - 'null'
     shots:
       type: array
       items:
         type: object
-        required: [n, duration_s, title, feeling, framing, impact, description, tool, picture_prompt, motion_prompt,
-                   photo_index, product_present, super_id]
+        required:
+        - n
+        - duration_s
+        - title
+        - feeling
+        - framing
+        - impact
+        - description
+        - tool
+        - picture_prompt
+        - motion_prompt
+        - photo_index
+        - product_present
+        - super_id
         properties:
-          n: {type: integer}
-          duration_s: {type: number}
-          title: {type: string}
-          feeling: {type: string}
-          framing: {type: string}
-          impact: {type: string}
-          description: {type: string}
-          tool: {type: string, enum: [video, still, photo, end_card]}
-          picture_prompt: {type: string}
-          motion_prompt: {type: string}
-          photo_index: {type: [integer, "null"]}
+          n:
+            type: integer
+          duration_s:
+            type: number
+          title:
+            type: string
+          feeling:
+            type: string
+          framing:
+            type: string
+          impact:
+            type: string
+          description:
+            type: string
+          tool:
+            type: string
+            enum:
+            - video
+            - still
+            - photo
+            - end_card
+          picture_prompt:
+            type: string
+          motion_prompt:
+            type: string
+          photo_index:
+            type:
+            - integer
+            - 'null'
           photo_crop:
-            type: [array, "null"]
-            items: {type: number}
-          photo_fill: {type: [string, "null"], enum: [cut_out, card, full_frame, null]}
-          product_present: {type: boolean}
-          super_id: {type: [string, "null"]}
+            type:
+            - array
+            - 'null'
+            items:
+              type: number
+          photo_fill:
+            type:
+            - string
+            - 'null'
+            enum:
+            - cut_out
+            - card
+            - full_frame
+            - null
+          product_present:
+            type: boolean
+          super_id:
+            type:
+            - string
+            - 'null'
     end_card:
       type: object
-      required: [copy_ids, background_hex]
-      properties: {copy_ids: {type: array, items: {type: string}}, background_hex: {type: string}}
-    reference_photos: {type: array, items: {type: integer}}
-    library_used: {type: array, items: {type: string}}
-    customer_summary: {type: string}
+      required:
+      - copy_ids
+      - background_hex
+      properties:
+        copy_ids:
+          type: array
+          items:
+            type: string
+        background_hex:
+          type: string
+        type_note:
+          type: string
+    reference_photos:
+      type: array
+      items:
+        type: integer
+    library_used:
+      type: array
+      items:
+        type: string
+    customer_summary:
+      type: string
+    audience_truth:
+      type: string
+    chosen_direction:
+      type: string
+    lens:
+      type: string
+    shape:
+      type: string
+    habits_refused:
+      type: string
+    sound_idea:
+      type: string
+    directions:
+      type: array
+      minItems: 3
+      maxItems: 3
+      items:
+        type: object
+        required:
+        - lens
+        - idea
+        - form
+        - on_screen
+        properties:
+          lens:
+            type: string
+          lens_swap_reason:
+            type: string
+          idea:
+            type: string
+          form:
+            type: string
+          on_screen:
+            type: string
+          sound_idea:
+            type: string
+    image_plan:
+      type: array
+      items:
+        type: object
+        required:
+        - format
+        - composition
+        - picture_prompt
+        - super_ids
+        properties:
+          format:
+            type: string
+          frame:
+            type:
+            - integer
+            - 'null'
+          job:
+            type:
+            - string
+            - 'null'
+          composition:
+            type: string
+          picture_prompt:
+            type: string
+          photo_index:
+            type:
+            - integer
+            - 'null'
+          photo_crop:
+            type:
+            - array
+            - 'null'
+            items:
+              type: number
+          photo_fill:
+            type:
+            - string
+            - 'null'
+            enum:
+            - cut_out
+            - card
+            - full_frame
+            - null
+          super_ids:
+            type: array
+            items:
+              type: string

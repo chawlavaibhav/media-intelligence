@@ -40,10 +40,19 @@ def _chef_call(k, job_id, u, extra: dict) -> dict:
     tray = _tray(k, job_id, u)
     photos = [{"photo_index": i + 1, "shows": r.get("shows"), "customer_label": r.get("customer_label")}
               for i, r in enumerate(u.get("photo_roles") or [])]
+    # kitchen v4 / chef v9 (directors' review): the kitchen's recent dishes and three lenses offered for this order
+    from product.library import lenses
+    recent = lenses.recent_dishes(k.store, job_id)
+    offered = lenses.offer(job_id, u["deliverable"]["media"],
+                           " ".join(str(x) for x in ((u.get("product") or {}).get("category"), (u.get("product") or {}).get("name"),
+                                                     u.get("objective"), k.exact_words(job_id))), recent)
+    k.store.event(job_id, "system", "lenses_offered", {"lenses": [x["id"] for x in offered], "recent": len(recent)})
     ctx = {"UNDERSTANDING": _public(u),
            "ORDER_SLIP": {kk: slip[kk] for kk in ("exact_strings", "formats", "duration_s", "brand_colours", "media")},
            "PHOTOS": photos or "no photos supplied",
-           "SHELF": k.shelf.summary(job["account_id"]), **extra}
+           "SHELF": k.shelf.summary(job["account_id"]),
+           "RECENT_DISHES": recent or "none yet",
+           "LENSES": {"rule": lenses.roster()["rule"], "offered": offered}, **extra}
     with k.store.timed(job_id, "creative_planning"):
         r = k.workers.call(job_id, "chef", "recipe", ctx, exact_words=k.exact_words(job_id), media=k.photo_media(job_id, 6), tray=tray,
                            model_key="chef_image" if u["deliverable"]["media"] == "image" else None)
@@ -86,6 +95,10 @@ def to_customer(k, job_id, recipe, again: bool = False):
     text = ("Our final check found the finished film was not the dish you ordered, so the chef has rewritten the recipe. "
             "Read it, then say go ahead or tell us what to change." if again else
             "Here is the recipe for your dish. Read it, then say go ahead or tell us what to change.")
+    from product.library import lenses
+    told = lenses.plain(recipe.get("lens"))
+    if told:
+        text += f" Told as {told}"
     k.store.put_artifact(job_id, "plan_note", {"text": text, "objections": False}, "system")
     from product.stations import head_cook
     prev = [a for a in k.store.assets(job_id, role="preview")]
