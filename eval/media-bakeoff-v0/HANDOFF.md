@@ -1,7 +1,7 @@
 # HANDOFF: run the media bake-off v0, phase 1, overnight on the laptop (where the API keys are)
 
 **Written 2026-09-25** by a cloud Claude Code session with no media-API access. **For** a Claude Code session on the
-founder's laptop that has the fal / Google / Azure keys. The founder is asleep during the run. Judging happens when he
+founder's laptop that has the Google (Gemini API / Vertex) and Azure keys (fal is not available). The founder is asleep during the run. Judging happens when he
 wakes up.
 
 **Start:**
@@ -26,8 +26,8 @@ wakes up.
    - that you won't judge;
    - what `MORNING.md` will contain.
 3. **Uninterrupted.** Do a zero-cost dry run of the runner on T1–T4 with simulated providers. Then do **one** tiny live
-   smoke call per provider (≤US$0.50 total, counted in step 2's cap): one fal image, one Gemini image, a Veo *status*
-   call or the cheapest clip, and one writer call. This proves no step will stop at a permission prompt or a network
+   smoke call per provider (≤US$0.50 total, counted in step 2's cap): one Gemini image (Nano Banana 2), the cheapest Veo Fast clip, one Azure call if Azure keys
+   are present, and one writer call. No fal calls: fal is not available. This proves no step will stop at a permission prompt or a network
    block overnight.
    - Report any command that needed approval.
    - The founder can pre-approve those commands in `.claude/settings.local.json` (`permissions.allow`), or you
@@ -51,7 +51,7 @@ The questions tonight's run answers:
 
 ## Pre-authorised by the founder in the kick-off message (no need to wake him)
 
-- **Spend cap:** as stated in the kick-off message (proposed US$55). Release it in the per-step caps below. Stop the whole run the moment a step would exceed its cap, and write why in `RUN-LOG.md`.
+- **Spend cap:** as stated in the kick-off message (proposed US$65). Release it in the per-step caps below. Stop the whole run the moment a step would exceed its cap, and write why in `RUN-LOG.md`.
 - **Writer model:** as stated in the kick-off message. Use the same model for B1 and for P's writer step. Use GPT-5.6 Luna (or Claude Haiku) for P's understand step.
 - **Briefs:**
   - Fill each `verbatim: TODO` in `BRIEFS.yaml` from the named source: the studio DB under `studio-jobs/`, the job branches, or the prospect and CANON-011 files.
@@ -99,7 +99,7 @@ Rules for keys:
 | 0 | Fill and hash `BRIEFS.yaml` (above) | `BRIEFS.sha256` committed; the swaps are listed in `RUN-LOG.md` | 0 |
 | 1 | Wire the runner for B0, B1 and P exactly as in `PROMPTS.md` | Dry run with simulated providers passes on T1–T4 | 0 |
 | 2 | Practice: T1–T4 through P, live (tuning allowed here only) | End to end works; the notes are in `RUN-LOG.md` | 6 |
-| 3 | Exam, stills-type (E01–E07): B0, B1, P | 21 outputs sealed with cost and time | 9 |
+| 3 | Exam, stills-type (E01–E07): B0, B1, P (animate uses Veo Fast, so this costs more than with Kling) | 21 outputs sealed with cost and time | 18 |
 | 4 | Exam, films (E08–E12): B0, P, and B1 for E08, E11 and E12 (E09 and E10 reuse the existing direct-Veo films as B1) | Outputs sealed | 40 |
 | 5 | `outputs.json` → `python3 make_pairs.py <run_dir>` (phase 1 is the default) | `pairs.json` is ready and `viewer.html` loads it | 0 |
 | 6 | Morning handover: a one-page `MORNING.md` covering what ran, spend, failures, brief swaps, and how to judge | Committed and pushed | 0 |

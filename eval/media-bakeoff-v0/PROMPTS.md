@@ -14,17 +14,22 @@ The four arms differ **only** as described below. Everything else is identical a
 
 ## Media model per class (pinned; the same model for every arm within a class)
 
-Chosen from the Capability Lab's measured results (MEDIA-HISTORY part 03 / Registry). If a primary route is
-unavailable, use the fallback for **all** arms of that class and log it.
+**Only Google (Gemini API / Vertex) and Azure (Aight subscription) keys are used. fal is not available.** If a primary
+route fails, use the fallback for **all** arms of that class and log it. Never use Azure subscription `d3ee8dc2`
+(Wherehouse).
 
-| Class | Primary | Fallback | Evidence |
+| Class | Primary | Fallback | Evidence / note |
 |---|---|---|---|
-| S1 product ad still | Nano Banana 2 (`gemini-3.1-flash-image`, Gemini API, reference image) | GPT Image 2 | NB2 11/12, GPT Image 2 11/12 accepted blind; the P1 poster |
-| S2 edit my photo | Seedream 5 Pro edit (fal) | Nano Banana 2 edit | Seedream edit 10/12 |
-| M1 animate my image | Kling (fal, image-to-video, 5 s) | Wan (fal, image-to-video) | Kling 8/8, Wan 8/8 |
-| M2 product film, no people | Veo 3.1 Fast from approved stills (image-to-video, 8-s scenes) | Kling | Mokobara v2 path |
-| F1 story film with people | Veo 3.1 Fast, 8-s scenes **with native audio** (text-to-video, or image-to-video from an approved first frame) | — (no fallback; log it if unavailable) | Both direct-Veo wins; Mokobara v2 |
-| Music bed (P only, where the writer asks for it) | Lyria | none | Lab |
+| S1 product ad still | Nano Banana 2 (`gemini-3.1-flash-image`, Gemini API, with the product reference image) | GPT Image 2 (Azure) | NB2 11/12, GPT Image 2 11/12 accepted blind; the P1 poster |
+| S2 edit my photo | Nano Banana 2 edit (Gemini API, "change only X, keep everything else the same") | GPT Image 2 edit (Azure) | Seedream (fal) was the Lab's best edit route and is unavailable; NB2 edit is the substitute (weaker evidence) |
+| M1 animate my image | Veo 3.1 Fast image-to-video (Gemini API / Vertex), motion-only prompt | Veo 3.1 (standard) image-to-video | Kling/Wan (fal) unavailable; Veo Fast i2v was 5/8 in the Lab, so expect this class to be harder |
+| M2 product film, no people | Veo 3.1 Fast image-to-video from approved stills, 8-s scenes | Veo 3.1 (standard) | Mokobara v2 path |
+| F1 story film with people | Veo 3.1 Fast, 8-s scenes **with native audio** (text-to-video, or image-to-video from an approved first frame) | Veo 3.1 (standard) | Both direct-Veo wins; Mokobara v2. Two-speaker Hindi: Veo Fast 2/2 in the Lab |
+| Music bed (P only, if the writer asks) | Lyria (Vertex) | none | Lab |
+
+**Text models:**
+- **Writer:** the model named in the kick-off. Claude Sonnet 5, via `ANTHROPIC_API_KEY` or Claude on Vertex, or else GPT-5.6 Sol on Azure. Use the same model for B1 and P.
+- **Understand step:** GPT-5.6 Luna (Azure); fallback Gemini Flash.
 
 Text, logo and end cards are always composed by code in P, never drawn by a model. B0 and B1 get no code finishing:
 they are the direct baselines.
