@@ -15,13 +15,13 @@ from product.tests.support import Env
 class RulebookAndForms(unittest.TestCase):
     def test_every_worker_in_the_diagram_has_a_card_and_every_ai_worker_fills_exactly_one_form_per_call(self):
         cards = rulebook.seed_cards()
-        self.assertEqual(len(rulebook.AI_WORKERS), 7)
-        self.assertEqual(len(rulebook.CODE_WORKERS), 5)
+        self.assertEqual(rulebook.AI_WORKERS, ("waiter", "chef", "head_cook", "gatekeeper", "diary_writer"))   # kitchen v3
+        self.assertEqual(len(rulebook.CODE_WORKERS), 4)
         self.assertEqual(len(rulebook.PEOPLE), 2)
         for w in rulebook.AI_WORKERS + rulebook.CODE_WORKERS:
             self.assertIn(w, cards, w)
             c = cards[w]
-            self.assertTrue(c["mission"] and c["kra"] and c["version"] == 1, w)
+            self.assertTrue(c["mission"] and c["kra"] and int(c["version"]) >= 1, w)
         for w in rulebook.AI_WORKERS:
             for f in cards[w]["forms"]:
                 self.assertIn(f, rulebook.forms(), f"{w} writes {f}, which has no schema")
@@ -29,29 +29,32 @@ class RulebookAndForms(unittest.TestCase):
 
     def test_all_forms_load_with_a_version_and_the_action_class_enum_is_resolved(self):
         fs = rulebook.forms()
-        for name in ("order_slip", "understanding", "feasibility", "recipe", "recipe_check", "production_log",
-                     "ingredient_check", "final_review", "change_request", "gateway_report", "lessons", "tray", "rulebook_card"):
+        for name in ("order_slip", "understanding", "recipe", "production_log", "ingredient_check", "voice_cast",
+                     "final_review", "change_request", "gateway_report", "lessons", "tray", "rulebook_card"):
             self.assertIn(name, fs)
-            self.assertEqual(fs[name]["version"], 1)
+            self.assertGreaterEqual(int(fs[name]["version"]), 1)
         shot = fs["recipe"]["schema"]["properties"]["shots"]["items"]["properties"]
-        self.assertIn("hands_work_mechanism", shot["action_class"]["enum"])
-        self.assertEqual(set(rulebook.ai_schema("feasibility")["properties"]), {"product_truth", "actions_needed"})
+        self.assertEqual(set(shot["tool"]["enum"]), {"video", "still", "photo", "end_card"})     # kitchen v3: the chef picks the tool
+        for k in ("picture_prompt", "motion_prompt", "feeling", "framing", "impact", "description"):
+            self.assertIn(k, shot)
 
     def test_a_card_change_is_a_new_version_with_a_reason_and_the_seed_is_untouched(self):
         e = Env()
         try:
             rb = rulebook.Rulebook(e.store)
-            self.assertEqual(rb.version("chef"), 1)
+            seed = int(rulebook.seed_cards()["chef"]["version"])       # v2 since the founder's 2026-09-24 ruling
+            self.assertEqual(rb.version("chef"), seed)
             with self.assertRaises(ValueError):
                 rb.change_card("chef", {"kra_add": "x"}, by="founder:f", reason="")
             v = rb.change_card("chef", {"kra_add": "Never plan hands on zips."}, by="founder:f", reason="lesson L-1 approved")
-            self.assertEqual(v, 2)
+            self.assertEqual(v, seed + 1)
             self.assertIn("Never plan hands on zips.", rb.card("chef")["kra"])
-            self.assertEqual(rulebook.seed_cards()["chef"]["version"], 1)
-            self.assertEqual([h["version"] for h in rb.history("chef")], [1, 2])
+            self.assertEqual(rulebook.seed_cards()["chef"]["version"], seed)
+            self.assertEqual([h["version"] for h in rb.history("chef")], [seed, seed + 1])
             text, ver = rb.card_text("chef", "recipe")
-            self.assertEqual(ver, 2)
-            self.assertTrue(text.startswith("RULEBOOK CARD — chef (version 2)"))
+            self.assertEqual(ver, seed + 1)
+            self.assertTrue(text.startswith("THE KITCHEN"))                 # kitchen v3: every role reads the kitchen first
+            self.assertIn(f"RULEBOOK CARD — chef (version {seed + 1})", text)
         finally:
             e.close()
 
@@ -59,12 +62,12 @@ class RulebookAndForms(unittest.TestCase):
 class FlowTable(unittest.TestCase):
     def test_the_send_back_table_matches_spec_6_2(self):
         r = flow.RULES
-        self.assertEqual(r["SB-RECIPE"]["limit"], 2)
-        self.assertEqual(r["SB-RECIPE"]["then"], "SB-RECIPE-SAFE")                  # amendment 1 §3: system, then customer
+        for gone in ("SB-RECIPE", "SB-RECIPE-SAFE", "SB-PANTRY-CANNOT", "SB-TASTER-REPLAN"):   # kitchen v3: retired roles
+            self.assertNotIn(gone, r)
         for rule in flow.SEND_BACKS:
             self.assertNotIn("paused_for_founder", rule["then"] + rule["to"])
-        self.assertEqual(r["SB-TASTER-RETRY"]["limit"], 2)
-        self.assertEqual(r["SB-TASTER-REPLAN"]["limit"], 1)
+            self.assertNotIn("still with code motion", rule["then"] + rule["to"])            # never a forced still
+        self.assertIn("never a still", r["SB-HEAD-COOK-RETAKE"]["then"])
         self.assertEqual(r["SB-BIG-FIX"]["limit"], 2)
         self.assertEqual(r["SB-BIG-FAIL"]["limit"], 1)
         for s in ("awaiting_customer_input", "awaiting_master_approval", "paused_for_founder", "feasibility", "abandoned"):
@@ -74,11 +77,11 @@ class FlowTable(unittest.TestCase):
         e = Env()
         try:
             jid = e.submit("image")
-            self.assertEqual(flow.send_back(e.store, jid, "SB-RECIPE", why="a"), 1)
-            self.assertEqual(flow.send_back(e.store, jid, "SB-RECIPE", why="b"), 2)
+            self.assertEqual(flow.send_back(e.store, jid, "SB-BIG-FIX", why="a"), 1)
+            self.assertEqual(flow.send_back(e.store, jid, "SB-BIG-FIX", why="b"), 2)
             with self.assertRaises(flow.LimitReached):
-                flow.send_back(e.store, jid, "SB-RECIPE", why="c")
-            self.assertEqual(flow.rounds_used(e.store, jid, "SB-RECIPE"), 2)
+                flow.send_back(e.store, jid, "SB-BIG-FIX", why="c")
+            self.assertEqual(flow.rounds_used(e.store, jid, "SB-BIG-FIX"), 2)
         finally:
             e.close()
 

@@ -1,96 +1,360 @@
-# Recipe — the chef (spec §4.4). v1 DIRECTION + BEAT fields; each shot names route, action class, what it starts from.
+# Recipe — the chef. v5 (2026-09-25): each shot (and each picture format) states what must survive, what may change and
+# what is not an acceptable substitute, so meaning survives every hand-off (the head cook's repairs, the gatekeeper).
+# v4: three directions through three lenses, audience truth, form, habits refused, sound plan, image plan, legal copy.
+# Code derives the older production fields (stations/chef.py `normalise`).
 form: recipe
-version: 1
+version: 5
 written_by: chef
 schema:
   type: object
-  required: [proposition, concepts, selected_concept, rationale, audience_experience, hook, remember, visual_language,
-             sound, product_anchor, master_plate, character, copy_deck, composition, shots, end_card, risks,
-             library_used, reuse_shelf_items, customer_summary]
+  required:
+  - selected_concept
+  - remember
+  - story
+  - audience_person
+  - identity_anchors
+  - look
+  - sound
+  - voice_over
+  - copy_deck
+  - shots
+  - end_card
+  - reference_photos
+  - library_used
+  - customer_summary
+  - audience_truth
+  - directions
+  - chosen_direction
+  - lens
+  - shape
+  - habits_refused
   properties:
-    proposition: {type: string}
-    concepts:
-      type: array
-      minItems: 1
-      maxItems: 3
-      items:
-        type: object
-        required: [name, idea, why_it_works]
-        properties: {name: {type: string}, idea: {type: string}, why_it_works: {type: string}}
-    selected_concept: {type: string}
-    rationale: {type: string}
-    audience_experience: {type: string}
-    hook: {type: string}
-    remember: {type: string}
-    visual_language:
+    selected_concept:
+      type: string
+    remember:
+      type: string
+    story:
+      type: string
+    audience_person:
+      type: string
+    identity_anchors:
       type: object
-      required: [look, light, palette, camera]
-      properties: {look: {type: string}, light: {type: string}, palette: {type: array, items: {type: string}}, camera: {type: string}}
+      required:
+      - person
+      - product
+      - world
+      - grade
+      properties:
+        person:
+          type: string
+        product:
+          type: string
+        world:
+          type: string
+        grade:
+          type: string
+    look:
+      type: object
+      required:
+      - picture_prompt
+      - text_zone
+      - product_present
+      properties:
+        picture_prompt:
+          type: string
+        product_present:
+          type: boolean
+        text_zone:
+          type: string
+          enum:
+          - top
+          - bottom
+          - none
     sound:
       type: object
-      required: [music_brief, ambience]
-      properties: {music_brief: {type: string}, ambience: {type: string}}
-    product_anchor: {type: string}
-    master_plate:
+      required:
+      - music_prompt
+      - ambience
+      properties:
+        music_prompt:
+          type: string
+        ambience:
+          type: string
+        key_sounds:
+          type: array
+          items:
+            type: object
+            required:
+            - sound
+            - at_s
+            properties:
+              sound:
+                type: string
+              at_s:
+                type: number
+        silences:
+          type: array
+          items:
+            type: object
+            required:
+            - from_s
+            - to_s
+            properties:
+              from_s:
+                type: number
+              to_s:
+                type: number
+        music_in_s:
+          type:
+          - number
+          - 'null'
+        music_out_s:
+          type:
+          - number
+          - 'null'
+    voice_over:
       type: object
-      required: [description, product_state]
-      properties: {description: {type: string}, product_state: {type: string}}
-    character:
-      type: object
-      required: [present, description]
-      properties: {present: {type: boolean}, description: {type: string}}
+      required:
+      - wanted
+      - language
+      - direction
+      - lines
+      properties:
+        wanted:
+          type: boolean
+        language:
+          type: string
+        direction:
+          type: string
+        lines:
+          type: array
+          items:
+            type: object
+            required:
+            - shot
+            - text
+            properties:
+              shot:
+                type: integer
+              text:
+                type: string
     copy_deck:
       type: array
       items:
         type: object
-        required: [id, text, role, source]
+        required:
+        - id
+        - text
+        - role
+        - source
         properties:
-          id: {type: string}
-          text: {type: string}
-          role: {type: string}
-          source: {type: string, enum: [customer_exact, proposed]}
-    composition:
-      type: object
-      required: [hero, text_zone, background, product_treatment]
-      properties:
-        hero: {type: string}
-        text_zone: {type: string, enum: [top, bottom, left, right, none]}
-        background: {type: string}
-        product_treatment: {type: string}
+          id:
+            type: string
+          text:
+            type: string
+          role:
+            type: string
+          source:
+            type: string
+            enum:
+            - customer_exact
+            - proposed
+          min_seconds:
+            type:
+            - number
+            - 'null'
+          script:
+            type:
+            - string
+            - 'null'
     shots:
       type: array
       items:
         type: object
-        required: [n, duration_s, purpose, first_frame, action, end_state, camera, route, action_class, starts_from,
-                   feasibility_refs, product_present, product_state, continuity, must_not, super_id, mandatory_ids]
+        required:
+        - n
+        - duration_s
+        - title
+        - feeling
+        - framing
+        - impact
+        - description
+        - tool
+        - picture_prompt
+        - motion_prompt
+        - photo_index
+        - product_present
+        - super_id
+        - must_survive
+        - may_change
+        - not_instead
         properties:
-          n: {type: integer}
-          duration_s: {type: number}
-          purpose: {type: string}
-          first_frame: {type: string}
-          action: {type: string}
-          end_state: {type: string}
-          camera: {type: string}
-          route: {type: string, enum: [IMG, FILM-A, FILM-B, FILM-C, END-CARD]}
-          action_class: {type: string, $enum: action_classes}
-          starts_from: {type: string, enum: [master_plate, previous_shot_end, still_only]}
-          feasibility_refs: {type: array, items: {type: string}}
-          product_present: {type: boolean}
-          product_state: {type: string}
-          continuity: {type: array, items: {type: string}}
-          must_not: {type: array, items: {type: string}}
-          super_id: {type: [string, "null"]}
-          mandatory_ids: {type: array, items: {type: string}}
+          must_survive:
+            type: string
+          may_change:
+            type: string
+          not_instead:
+            type: string
+          n:
+            type: integer
+          duration_s:
+            type: number
+          title:
+            type: string
+          feeling:
+            type: string
+          framing:
+            type: string
+          impact:
+            type: string
+          description:
+            type: string
+          tool:
+            type: string
+            enum:
+            - video
+            - still
+            - photo
+            - end_card
+          picture_prompt:
+            type: string
+          motion_prompt:
+            type: string
+          photo_index:
+            type:
+            - integer
+            - 'null'
+          photo_crop:
+            type:
+            - array
+            - 'null'
+            items:
+              type: number
+          photo_fill:
+            type:
+            - string
+            - 'null'
+            enum:
+            - cut_out
+            - card
+            - full_frame
+            - null
+          product_present:
+            type: boolean
+          super_id:
+            type:
+            - string
+            - 'null'
     end_card:
       type: object
-      required: [copy_ids, background_hex]
-      properties: {copy_ids: {type: array, items: {type: string}}, background_hex: {type: string}}
-    risks:
+      required:
+      - copy_ids
+      - background_hex
+      properties:
+        copy_ids:
+          type: array
+          items:
+            type: string
+        background_hex:
+          type: string
+        type_note:
+          type: string
+    reference_photos:
+      type: array
+      items:
+        type: integer
+    library_used:
+      type: array
+      items:
+        type: string
+    customer_summary:
+      type: string
+    audience_truth:
+      type: string
+    chosen_direction:
+      type: string
+    lens:
+      type: string
+    shape:
+      type: string
+    habits_refused:
+      type: string
+    sound_idea:
+      type: string
+    directions:
+      type: array
+      minItems: 3
+      maxItems: 3
+      items:
+        type: object
+        required:
+        - lens
+        - idea
+        - form
+        - on_screen
+        properties:
+          lens:
+            type: string
+          lens_swap_reason:
+            type: string
+          idea:
+            type: string
+          form:
+            type: string
+          on_screen:
+            type: string
+          sound_idea:
+            type: string
+    image_plan:
       type: array
       items:
         type: object
-        required: [shot, action_id, risk, limit]
-        properties: {shot: {type: [integer, "null"]}, action_id: {type: [string, "null"]}, risk: {type: string}, limit: {type: string}}
-    library_used: {type: array, items: {type: string}}
-    reuse_shelf_items: {type: array, items: {type: string}}
-    customer_summary: {type: string}
+        required:
+        - format
+        - composition
+        - picture_prompt
+        - super_ids
+        properties:
+          must_survive:
+            type: string
+          may_change:
+            type: string
+          not_instead:
+            type: string
+          format:
+            type: string
+          frame:
+            type:
+            - integer
+            - 'null'
+          job:
+            type:
+            - string
+            - 'null'
+          composition:
+            type: string
+          picture_prompt:
+            type: string
+          photo_index:
+            type:
+            - integer
+            - 'null'
+          photo_crop:
+            type:
+            - array
+            - 'null'
+            items:
+              type: number
+          photo_fill:
+            type:
+            - string
+            - 'null'
+            enum:
+            - cut_out
+            - card
+            - full_frame
+            - null
+          super_ids:
+            type: array
+            items:
+              type: string

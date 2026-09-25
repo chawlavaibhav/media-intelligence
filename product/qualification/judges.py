@@ -181,7 +181,7 @@ def recipe_from_v1(direction: dict) -> dict:
                                           "risks")} | {"shots": shots}
 
 
-def run(*, live=False, founder_session=None, product_data=None, budget="2.00", out=None, judges=("recipe_checker", "small_taster", "big_taster")):
+def run(*, live=False, founder_session=None, product_data=None, budget="2.00", out=None, judges=("head_cook", "gatekeeper")):
     cases = yaml.safe_load((HERE / "JUDGE-CASES.yaml").read_text())
     marks = yaml.safe_load((HERE / "PASS-MARKS.yaml").read_text())
     authorised_by = None
@@ -223,11 +223,9 @@ def run(*, live=False, founder_session=None, product_data=None, budget="2.00", o
 # judge and never changes the product's configuration. Models are "provider:model" (azure_openai:<deployment name> works
 # for any model deployed on the Azure resource, including open models such as DeepSeek, Llama or Kimi if deployed there).
 TRIAL_MODELS = {
-    "recipe_checker": ["azure_openai:gpt-5.6-terra", "azure_openai:gpt-5.6-sol", "azure_openai:DeepSeek-V3.1",
-                       "azure_openai:Kimi-K2-Instruct", "gemini:gemini-3.1-pro-preview"],
-    "small_taster": ["azure_openai:gpt-5.6-terra", "azure_openai:Llama-4-Maverick-17B-128E-Instruct-FP8", "anthropic:claude-haiku-4-5",
+    "head_cook": ["azure_openai:gpt-5.6-terra", "azure_openai:Llama-4-Maverick-17B-128E-Instruct-FP8", "anthropic:claude-haiku-4-5",
                      "gemini:gemini-3.5-flash"],
-    "big_taster": ["azure_openai:gpt-5.6-terra", "azure_openai:gpt-5.6-sol", "azure_openai:Llama-4-Maverick-17B-128E-Instruct-FP8",
+    "gatekeeper": ["azure_openai:gpt-5.6-terra", "azure_openai:gpt-5.6-sol", "azure_openai:Llama-4-Maverick-17B-128E-Instruct-FP8",
                    "gemini:gemini-3.1-pro-preview"],
 }
 KEYS = {"azure_openai": ("AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT"), "anthropic": ("ANTHROPIC_API_KEY",),
@@ -245,7 +243,7 @@ def _usable(spec: str) -> str | None:
 
 
 def trial(*, models: dict | None = None, max_usd="10.00", estimate_only=False, approved_by=None, out=None,
-          judges=("recipe_checker", "small_taster", "big_taster")) -> dict:
+          judges=("head_cook", "gatekeeper")) -> dict:
     """Run each judge's cases on each candidate model (or, with estimate_only, price it at USD 0). A hard cap: the run
     stops before the case that would take the total past max_usd."""
     from product.reasoning import _price
@@ -338,7 +336,7 @@ def _recipe_checker_historical(k, jid, c):
             "predicted_acceptance": f["predicted_acceptance"], "simulated": f["written_by"]["simulated"]}
 
 
-def _small_taster(k, jid, c, ev):
+def _head_cook(k, jid, c, ev):
     hit = ev.asset(c["evidence"]["asset"]) if ev.root else None
     if not hit:
         return {"id": c["id"], "available": False, "known": c["known"]}
@@ -347,12 +345,12 @@ def _small_taster(k, jid, c, ev):
     meta = json.loads(a["meta_json"])
     ctx = {"INSTRUCTION": {"asset": c["what"], "prompt": meta.get("prompt", "")[:1500]},
            "MEDIA_NOTE": "The last item is the output to inspect."}
-    f = k.workers.call(jid, "small_taster", "ingredient_check", ctx, exact_words=_words(ev, a["job_id"]), media=[(ctype, p.read_bytes())])
+    f = k.workers.call(jid, "head_cook", "ingredient_check", ctx, exact_words=_words(ev, a["job_id"]), media=[(ctype, p.read_bytes())])
     got = "good" if f["usable"] and f["product_identity_ok"] != "no" and f["lettering_present"] != "yes" else "bad"
     return {"id": c["id"], "available": True, "known": c["known"], "got": got, "simulated": f["written_by"]["simulated"], "notes": f["notes"][:200]}
 
 
-def _big_taster(k, jid, c, ev):
+def _gatekeeper(k, jid, c, ev):
     media_items, words = [], None
     known = c.get("known_judge_verdict") or {"accept": "pass", "reject": "fail"}[c["known_verdict"]]
     if "historical" in c.get("evidence", {}):
@@ -380,7 +378,7 @@ def _big_taster(k, jid, c, ev):
     if not media_items:
         return {"id": c["id"], "available": False, "known": known}
     sent_type = media_items[0][0]
-    if sent_type.startswith("video/") and not k.s.models.get("big_taster", "").startswith("gemini"):
+    if sent_type.startswith("video/") and not k.s.models.get("gatekeeper", "").startswith("gemini"):
         # only Gemini takes video with sound; every other model gets the same contact sheet of still frames
         from product import media as media_mod
         tmp = Path(tempfile.mkdtemp(prefix="mi-sheet-"))
@@ -401,7 +399,7 @@ def _big_taster(k, jid, c, ev):
             understanding["waiters_sheet"] = {kk: intent.get(kk) for kk in ("objective", "audience", "mandatory", "forbidden", "deliverable", "product")}
     ctx = {"UNDERSTANDING": understanding, "MANDATORY": [], "MEASUREMENTS": [],
            "MEDIA_NOTE": "The attached item is the finished work, exactly as the customer saw it."}
-    f = k.workers.call(jid, "big_taster", "final_review", ctx, exact_words=words or "(the customer's words are not on this host)",
+    f = k.workers.call(jid, "gatekeeper", "final_review", ctx, exact_words=words or "(the customer's words are not on this host)",
                        media=media_items)
     got = f["verdict"]
     found = []
@@ -439,7 +437,7 @@ def _score(judge, rows, marks, live) -> dict:
         mk = m["agreement_with_known_outcome_min"]
         passed = out["agreement_accepted"] is not None and out["agreement_not_accepted"] is not None \
             and out["agreement_accepted"] >= mk and out["agreement_not_accepted"] >= mk
-    elif judge == "small_taster":
+    elif judge == "head_cook":
         bad = [r for r in avail if r["known"] == "bad"]
         good = [r for r in avail if r["known"] == "good"]
         out["known_bad_caught"] = round(sum(r["got"] == "bad" for r in bad) / len(bad), 3) if bad else None

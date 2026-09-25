@@ -35,8 +35,9 @@ def required_checks(media_kind: str, *, mandatory_ids: list, has_copy: bool, has
            "not_previously_rejected": "REJECTED_DESIGN_REUSE",
            "independent_review": "QA_COVERAGE_ENFORCEMENT",
            "product_fidelity": "PRODUCT_INTACT_AND_FAITHFUL",
-           "no_model_lettering": "VIDEO_FRAME_TEXT_HYGIENE",
-           "ad_structure": "AD_STRUCTURE_MINIMUM"}
+           "no_model_lettering": "VIDEO_FRAME_TEXT_HYGIENE"}
+    # kitchen v3: "ad_structure" (a brand line / logo in every ad) is no longer required — the gatekeeper checks the dish
+    # against what the customer ordered (a film that must carry no logo failed it on 2026-09-24).
     for m in mandatory_ids:
         req[f"mandatory:{m}"] = "MANDATORY_EVENT_VISIBILITY_LJ_LINE"
     req.update(PROCESS_CONTROLS)
@@ -68,15 +69,15 @@ def required_checks(media_kind: str, *, mandatory_ids: list, has_copy: bool, has
 # Obligations only a person can discharge, by doing the thing — never by a waiver. The atlas's most repeated mechanism
 # (no_human_ear_on_the_delivered_audio: six jobs) recurred because "nobody could listen" was always waivable in effect.
 NON_WAIVABLE = {"audio_heard_by_person"}
-ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on: no speech, no singing, no clicks or holes at the cuts, "
-                                       "music suits the story",
+ATTESTABLE = {"audio_heard_by_person": "Listened to the whole film with sound on: no speech or singing except the voice-over the "
+                                       "customer ordered, no clicks or holes at the cuts, music suits the story",
               "independent_review": "Watched the whole piece at phone size: a demanding customer would accept it as is",
               "product_fidelity": "The product is the customer's product — shape, colour, parts, openings — intact, not torn or warped",
               "product_across_shots": "The product is the same product in every shot",
               "character_continuity": "The person is the same person in every shot (face, hair, clothes, accessories)",
               "no_model_lettering": "No lettering, logo or wordmark was drawn by the model; only code-set text and the supplied logo",
               "subject_unobstructed": "The product/subject is never covered, cut off or blocked by text, graphics or objects",
-              "small_taster_confirmed": "I looked at every picture and clip the small taster passed in this cut: the customer's "
+              "head_cook_confirmed": "I looked at every picture and clip the small taster passed in this cut: the customer's "
                                         "product, the same hands/person, the same room and light, nothing warped"}
 
 
@@ -126,7 +127,7 @@ def waive(store: Store, job_id: str, asset_id: str, check_id: str, *, founder, r
 _CONTROL_OF = {"audio_heard_by_person": "AUDIO_REVIEWED_BY_EAR", "independent_review": "QA_COVERAGE_ENFORCEMENT",
                "product_fidelity": "PRODUCT_INTACT_AND_FAITHFUL", "product_across_shots": "PRODUCT_CONTINUITY_ACROSS_SHOTS",
                "character_continuity": "CHARACTER_CONTINUITY", "no_model_lettering": "VIDEO_FRAME_TEXT_HYGIENE",
-               "subject_unobstructed": "SUBJECT_OBSTRUCTION", "small_taster_confirmed": "QA_COVERAGE_ENFORCEMENT"}
+               "subject_unobstructed": "SUBJECT_OBSTRUCTION", "head_cook_confirmed": "QA_COVERAGE_ENFORCEMENT"}
 
 
 def record_rows(store: Store, job_id: str, asset_id: str, rows: list, *, runner: str, prefix: str = ""):
@@ -161,18 +162,24 @@ def ledger_integrity(store: Store, job_id: str) -> dict:
 def exact_copy_match(exact_strings: list, direction: dict, rendered: list | None, logo_present: bool = False) -> dict:
     """Every customer string must be in the copy deck verbatim AND have been drawn, by code, on this exact file
     (the renderer refuses any string its font cannot draw, so a rendered string is a glyph-complete one)."""
-    deck = {c["text"] for c in direction.get("copy_deck", [])}
+    def n(s):                                # a line set on two lines is the same words (live 2026-09-25: an end card
+        return " ".join((s or "").split())    # set "One key to AI / that always gives back…" failed as "not drawn")
+    deck = {n(c["text"]) for c in direction.get("copy_deck", [])}
     if rendered is None:
         return {"check_id": "exact_copy_match", "control": "EXACT_COPY_MATCH", "status": "NOT_VERIFIED",
                 "detail": "no render record for this file: which strings it carries is unknown"}
-    drawn = set(rendered)
-    not_in_deck = [s for s in exact_strings if s and s not in deck]
-    not_drawn = [s for s in exact_strings if s and s not in drawn]
-    # atlas approved_copy_line_not_carried_into_the_cut (UPW1-25): every approved deck line is placed somewhere
+    drawn = {n(r) for r in rendered}
+    not_in_deck = [s for s in exact_strings if s and n(s) not in deck]
+    not_drawn = [s for s in exact_strings if s and n(s) not in drawn]
+    # atlas approved_copy_line_not_carried_into_the_cut (UPW1-25): every line the approved board PLACES (on a shot or the end
+    # card) is drawn. Kitchen v3: a deck line the chef placed nowhere (e.g. the real screen already says it) is not required.
     from product.compose import is_logo_line
-    logo_lines = {c["text"] for c in direction.get("copy_deck", []) if logo_present and is_logo_line(c)}
+    logo_lines = {n(c["text"]) for c in direction.get("copy_deck", []) if logo_present and is_logo_line(c)}
     drawn |= logo_lines                     # delivered by the supplied logo file, not by type
-    dropped = [t for t in deck if t and t not in drawn and t not in exact_strings]
+    placed_ids = {s.get("super_id") for s in direction.get("shots", []) if s.get("super_id")} | \
+        set((direction.get("end_card") or {}).get("copy_ids") or [])
+    placed = {n(c["text"]) for c in direction.get("copy_deck", []) if c.get("id") in placed_ids} if direction.get("shots") else deck
+    dropped = [t for t in placed if t and t not in drawn and t not in {n(s) for s in exact_strings}]
     problems = ([f"altered or missing in the copy deck: {not_in_deck}"] if not_in_deck else []) + \
                ([f"not drawn on this file: {not_drawn}"] if not_drawn else []) + \
                ([f"approved copy lines not carried into the cut: {dropped}"] if dropped else [])
@@ -200,7 +207,7 @@ def ad_structure(direction: dict, media_kind: str, has_logo: bool) -> dict:
 
 
 def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple, planned_s: float | None = None,
-                card_in_s: float | None = None) -> list:
+                card_in_s: float | None = None, music: Path | None = None, music_from_s: float = 0.0) -> list:
     rows = []
     if not media.have_ffmpeg():
         for cid, ctl in [("container_edit_lists", "CONTAINER_EDIT_LIST_CHECK"), ("loudness_true_peak", "CODEC_TRUE_PEAK_MARGIN"),
@@ -260,7 +267,19 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
             unmeasured.append(t)
             continue
         hole = min(before, later) - after
-        ev.append({"t": t, "before_db": before, "after_db": after, "later_db": later, "hole_db": round(hole, 1)})
+        row = {"t": t, "before_db": before, "after_db": after, "later_db": later, "hole_db": round(hole, 1)}
+        # The music bed runs straight across every cut, so a rest IN the music that happens to fall on a cut is not a
+        # join fault: measure the same windows on the music file itself, and when it dips at least as much (within 3 dB)
+        # the dip is the score's own rest (AIGHT-STUDIO v10, 3.50 s: all clips muted, music 3.50–3.65 s at −41/−47 dB).
+        if hole > 6.0 and music and t - music_from_s > 0.1:
+            mt = t - music_from_s
+            mb, ma, ml = media.rms_db(music, mt - 0.10, 0.10), media.rms_db(music, mt + 0.005, 0.03), media.rms_db(music, mt + 0.15, 0.15)
+            if None not in (mb, ma, ml):
+                row["music_hole_db"] = round(min(mb, ml) - ma, 1)
+                if row["music_hole_db"] >= hole - 3.0:
+                    row["music_rest"] = True
+                    hole = 0.0
+        ev.append(row)
         worst = max(worst, hole)
         if hole > 6.0:
             bad.append(f"{t:.2f}s hole {hole:.1f} dB")
@@ -268,7 +287,9 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
     rows.append({"check_id": "audio_joins", "control": "AUDIO_LEVEL_CONTINUITY_AT_CUTS", "status": status, "evidence": {"cuts": ev},
                  "detail": "; ".join(bad) or (f"could not measure the level at {unmeasured}" if unmeasured else
                                               ("no cut positions were supplied" if not cuts else
-                                               f"{len(cuts)} cuts, worst dip {worst:.1f} dB (limit 6)"))})
+                                               f"{len(cuts)} cuts, worst dip {worst:.1f} dB (limit 6)" +
+                                               ("".join(f"; {e['t']:.2f}s dip is the music's own rest ({e['music_hole_db']} dB in "
+                                                        f"the score)" for e in ev if e.get("music_rest")))))})
     # disclosure, with a flag when a source is stretched more than 1.5× to reach the delivered frame
     scale = max((max(delivered[0] / w, delivered[1] / h) for w, h in source_sizes if w and h), default=None)
     rows.append({"check_id": "source_resolution", "control": "SOURCE_RESOLUTION_STATED",
@@ -281,7 +302,7 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
 
 
 def review_rows(review: dict, *, mandatory_ids: list, media_kind: str, asset_sha256: str | None = None,
-                qualified: bool = True) -> list:
+                qualified: bool = True, voice_over: bool = False) -> list:
     """Turn an independent review into check rows for ONE file. Simulated reviews never PASS; a review that was not
     shown this exact file proves nothing about it; an unanswered question is NOT_VERIFIED, never a pass by silence."""
     simulated = bool(review.get("_simulated")) or "simulated" in (review.get("modalities_evaluated") or [])
@@ -332,7 +353,9 @@ def review_rows(review: dict, *, mandatory_ids: list, media_kind: str, asset_sha
             rows.append({"check_id": "audio_reviewed", "control": "AUDIO_REVIEWED_BY_EAR", "status": "NOT_VERIFIED", "blocking": False,
                          "detail": "the model reviewer did not listen; the person's listen (audio_heard_by_person) decides"})
         else:
-            row("audio_reviewed", "AUDIO_REVIEWED_BY_EAR", sp, ("no",), ("yes",), f"speech/singing: {sp}; {(review.get('audio') or {}).get('notes', '')}")
+            # a voice-over the customer ordered is speech that belongs (kitchen v3); only unordered speech is a fault
+            row("audio_reviewed", "AUDIO_REVIEWED_BY_EAR", sp, ("no", "yes") if voice_over else ("no",), () if voice_over else ("yes",),
+                f"speech/singing: {sp}{' (a voice-over was ordered)' if voice_over else ''}; {(review.get('audio') or {}).get('notes', '')}")
         pa = review.get("product_across_shots") if isinstance(review.get("product_across_shots"), dict) else {}
         row("product_across_shots", "PRODUCT_CONTINUITY_ACROSS_SHOTS", pa.get("verdict"), ("consistent", "single_shot"), ("inconsistent",),
             f"{pa.get('verdict')}: {pa.get('evidence', '')}")
@@ -412,32 +435,12 @@ def process_controls(store: Store, job_id: str, media_kind: str, *, clip_asset_i
     add("process:provider_pool", not held and (not streaks or paused),
         f"unsettled reservations: {held or 'none'}; transient runs ≥3: {sorted(set(streaks)) or 'none'}"
         + ("; job paused for the provider" if streaks else ""))
-    # 4. the recipe that was paid for passed the recipe checker (or the founder overrode it, named and reasoned)
-    rc = store.artifact(job_id, "recipe_check") or {}
-    over = store.overrides(job_id, "recipe_send_back")
-    confirmed = store.overrides(job_id, "confirm_recipe")
-    went_ahead = store.events(job_id, ("customer_accepted_objections",))
-    sim_rc = bool((rc.get("written_by") or {}).get("simulated"))
-    if not rc:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "NOT_VERIFIED",
-                     "detail": "no recipe check on record"})
-    elif rc.get("verdict_after_code") != "approve" and over:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG",
-                     "blocking": False, "detail": f"recipe send-back overridden by {over[-1]['founder_email']}: {over[-1]['reason'][:200]}"})
-    elif rc.get("verdict_after_code") != "approve" and went_ahead:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FLAG",
-                     "blocking": False, "detail": "our reviewer objected to the plan; the customer read the objections and chose to go "
-                                                  f"ahead ({json.loads(went_ahead[-1]['data_json']).get('objections', [])[:3]})"})
-    elif rc.get("verdict_after_code") != "approve":
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "FAIL",
-                     "detail": "the recipe checker sent the recipe back"})
-    elif sim_rc and not confirmed:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "NOT_VERIFIED",
-                     "detail": "simulated recipe check — nobody judged the recipe"})
-    else:
-        rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND", "status": "PASS",
-                     "detail": f"recipe checker approved; code rules clean ({len(rc.get('code_findings', []))} findings)"
-                               + (f"; confirmed by {confirmed[-1]['founder_email']}" if confirmed else "")})
+    # 4. kitchen v3: the recipe that was paid for is the one the CUSTOMER approved (there is no recipe checker)
+    approvals = [e for e in store.events(job_id, ("state",)) if json.loads(e["data_json"]).get("to") == "planning"]
+    who = approvals[-1]["actor"] if approvals else None
+    rows.append({"check_id": "process:direction_truth", "control": "PRODUCT_AND_WORLD_TRUTH_BEFORE_SPEND",
+                 "status": "PASS" if who else "FAIL",
+                 "detail": f"the customer approved the recipe ({who})" if who else "no recorded approval of the recipe before spend"})
     if media_kind != "video":
         return rows
     shot_nodes = [n for n in store.nodes(job_id) if n["kind"] in ("shot", "frame") and n["status"] != "retired"]

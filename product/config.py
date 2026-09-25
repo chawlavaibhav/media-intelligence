@@ -25,22 +25,22 @@ def _env(name: str, default: str | None = None) -> str | None:
 # Beta (founder 2026-09-24): checkers as picked from the model trial; Anthropic skipped for now, cheap workers on the
 # Aight Azure models; an image job's final check needs no sound, so a cheap model that sees images does it (Kimi); only a
 # film's final check needs Gemini (the one model that is sent the film WITH its sound).
+# Kitchen v3 (founder 2026-09-25): the chef (OpenAI) never tastes its own food — the head cook's tasting runs on another
+# company's model (Kimi for pictures; Gemini whenever a clip or a voice must be watched or heard with its sound), and the
+# gatekeeper is Gemini (it watches the finished film with its sound).
 DEFAULT_WORKER_MODELS = {
     "chef": "azure_openai:gpt-5.6-sol",
     "chef_image": "azure_openai:gpt-5.6-terra",
-    "recipe_checker": "gemini:gemini-3.1-pro-preview",
-    "big_taster": "gemini:gemini-3.1-pro-preview",
-    "big_taster_image": "azure_openai:Kimi-K2.6",
-    "small_taster_escalation": "gemini:gemini-3.1-pro-preview",
     "waiter": "azure_openai:gpt-5.6-luna",
-    "pantry_checker": "azure_openai:gpt-5.6-luna",
-    "small_taster": "azure_openai:Kimi-K2.6",
+    "head_cook": "azure_openai:Kimi-K2.6",
+    "head_cook_av": "gemini:gemini-3.1-pro-preview",
+    "gatekeeper": "gemini:gemini-3.1-pro-preview",
+    "gatekeeper_image": "azure_openai:Kimi-K2.6",
     "diary_writer": "azure_openai:gpt-5.6-luna",
 }
 COMPANY = {"anthropic": "anthropic", "azure_openai": "openai", "openai": "openai", "gemini": "google", "decision": "decision"}
 # Reasoning effort per worker (spec §9.4: medium by default).
-DEFAULT_EFFORT = {"chef": "medium", "chef_image": "medium", "recipe_checker": "medium", "big_taster": "medium", "big_taster_image": "medium",
-                  "small_taster_escalation": "medium"}
+DEFAULT_EFFORT = {"chef": "medium", "chef_image": "medium", "gatekeeper": "medium", "gatekeeper_image": "medium", "head_cook_av": "medium"}
 
 
 def worker_models() -> dict:
@@ -64,8 +64,7 @@ MAKERS = (("gpt", "openai"), ("o1", "openai"), ("o3", "openai"), ("o4", "openai"
 # they may never hold a worker that is shown pictures. Extend with MI_TEXT_ONLY_MODELS="name,name".
 TEXT_ONLY_MODELS = ("deepseek-v4-flash", "deepseek-v3.2")
 # Workers that are sent pictures or films: everyone except the diary writer and the decision slot.
-SEEING_WORKERS = ("waiter", "pantry_checker", "chef", "chef_image", "recipe_checker", "small_taster", "small_taster_escalation",
-                  "big_taster", "big_taster_image")
+SEEING_WORKERS = ("waiter", "chef", "chef_image", "head_cook", "head_cook_av", "gatekeeper", "gatekeeper_image")
 
 
 def maker(spec: str) -> str:
@@ -91,11 +90,12 @@ def check_vision(models: dict):
 
 
 def check_independence(models: dict):
-    """The chef and the judges must come from different AI makers (spec §3, §9.3, checklist C4) — the maker, not the host."""
+    """The chef and whoever tastes its food must come from different AI makers — the maker, not the host (spec §3, checklist
+    C4; founder 2026-09-25: "taster and chef cannot be the same models")."""
     def company(w):
         return maker(models[w])
     for chef in [c for c in ("chef", "chef_image") if c in models]:
-        for judge in [j for j in ("recipe_checker", "big_taster", "big_taster_image") if j in models]:
+        for judge in [j for j in ("head_cook", "head_cook_av", "gatekeeper", "gatekeeper_image") if j in models]:
             if company(judge) == company(chef):
                 raise ValueError(f"the {chef} ({models[chef]}) and the {judge} ({models[judge]}) are from the same company; "
                                  f"the judges must be independent")

@@ -168,14 +168,16 @@ class LessonQueueApplies(unittest.TestCase):
             ids = q.enqueue(jid, form)
             self.assertEqual(len(ids), 2)
             eq = library.EquipmentSheet(st)
-            self.assertEqual(eq.verdict("lift_closed_product", "FILM-C")["verdict"], "cannot")      # careful: applied at once
+            # careful: applied at once — a lesson without counts is shown as risky until counts prove it (founder 2026-09-24)
+            row = next(r for r in eq.rows() if r["id"] == "EQ-003")
+            self.assertEqual((row["declared_verdict"], row["verdict"]), ("cannot", "risky"))
             self.assertEqual(json.loads(q.lesson(ids[0])["applied_json"])["version"], 2)
             self.assertEqual(q.lesson(ids[1])["status"], "founder_only")                          # money: never automatic
-            self.assertEqual(rulebook.Rulebook(st).version("chef"), 1)
+            self.assertEqual(rulebook.Rulebook(st).version("chef"), int(rulebook.seed_cards()["chef"]["version"]))
             with self.assertRaises(PermissionError):
                 q.decide(ids[1], founder="operator:claude", decision="approve", note="looks right to me, applying")
             q.decide(ids[1], founder=e.founder(), decision="reject", note="Budget rules are mine; never in a card.")
-            self.assertEqual(rulebook.Rulebook(st).version("chef"), 1)
+            self.assertEqual(rulebook.Rulebook(st).version("chef"), int(rulebook.seed_cards()["chef"]["version"]))
             self.assertEqual(q.waiting(), [])
         finally:
             e.close()

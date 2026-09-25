@@ -1,6 +1,10 @@
 """P1 v2 phase 5 — the head cook, the tasters, the door guard. Spec §11 tests 5, 7, 8 (journey half), and the station
 halves of tests 3 and 4 (only the founder can pick a take, override the big taster, or release — and, since amendment 1
-§3, nothing ever waits for the founder to do so). USD 0, real ffmpeg."""
+§3, nothing ever waits for the founder to do so). USD 0, real ffmpeg.
+
+Kitchen v3 (2026-09-25): the head cook tastes and repairs (no chef re-plan to a still: forced stills are retired), the
+gatekeeper does the final review (was the big taster), and the look of the film is approved with the recipe (no
+master-plate wait). No test retired."""
 import hashlib
 import json
 import unittest
@@ -26,7 +30,8 @@ class ContinuityChain(unittest.TestCase):
             log = e.store.artifact(jid, "production_log")
             master = e.store.node(jid, "master")["selected_asset_id"]
             self.assertEqual(log["master_plate"]["asset_id"], master)
-            self.assertEqual(log["master_plate"]["approved_by"], e.user["email"])
+            # v3: the look of the film is the picture the customer approved with the recipe (no separate approval wait)
+            self.assertIn(master, [a["id"] for a in e.store.assets(jid, role="preview")])
             frames = [x for x in log["entries"] if x["node"].startswith("frame_")]
             self.assertTrue(frames)
             for fr in frames:
@@ -41,10 +46,10 @@ class ContinuityChain(unittest.TestCase):
                 if x["node"].startswith("shot_"):
                     frame = e.store.node(jid, x["node"].replace("shot_", "frame_"))["selected_asset_id"]
                     self.assertEqual(x["source_image"], frame)
-            # generated first frames were drawn WITH the master plate as a reference
+            # generated first frames were drawn WITH the look of the film (the master plate) as a reference
             for a in e.store.assets(jid, source="generated"):
                 if (a["node_id"] or "").startswith("frame_"):
-                    self.assertIn("master plate", json.loads(a["meta_json"])["source_kind"])
+                    self.assertIn("look of the film", json.loads(a["meta_json"])["source_kind"])
             rows = {r["check_id"]: r for aid in e.orch.final_assets(jid) for r in e.store.checks(aid)}
             self.assertEqual(rows["process:continuity_chain"]["status"], "PASS")
             self.assertEqual(rows["process:riskiest_first"]["status"], "PASS")
@@ -52,44 +57,45 @@ class ContinuityChain(unittest.TestCase):
             e.close()
 
 
-class RiskiestShotFirstAndOnlyTheFounderPicksATake(unittest.TestCase):
-    """Checklist E4, E6 and the small-taster half of tests 3 and 4."""
+class AWeakShotIsKeptFlaggedAndOnlyTheFounderPicksATake(unittest.TestCase):
+    """Checklist E4, E6 and the tasting half of tests 3 and 4, in the v3 kitchen: the head cook retakes a weak moving
+    shot; when its takes are used up the best take is kept, flagged and the customer is told — never frozen into a still,
+    and nobody waits for the founder."""
 
-    def test_a_risky_shot_rejected_twice_goes_to_the_chef_then_to_a_still_and_the_job_continues_without_the_founder(self):
+    def test_a_moving_shot_rejected_on_every_take_is_kept_flagged_as_a_moving_shot_and_the_job_continues_without_the_founder(self):
         e = Env()
         try:
-            orig = e.orch.sim.small_taster__ingredient_check
+            orig = e.orch.sim.head_cook__ingredient_check
 
             def taster(b, media, **kw):
                 out = orig(b, media, **kw)
-                if kw.get("node_id") in ("frame_2", "shot_2"):
+                if kw.get("node_id") in ("frame_1", "shot_1"):
                     out.update(usable=False, product_identity_ok="no", notes="the bag's flap has changed shape", differences=["flap shape"])
                 return out
-            e.orch.sim.small_taster__ingredient_check = taster
+            e.orch.sim.head_cook__ingredient_check = taster
             jid = fx.submit_backpack_film(e)
-            fx.film_to_hold(e, jid)
-            self.assertEqual(e.state(jid), "ready_for_review")                                          # amendment 1 §3
-            self.assertEqual(flow.rounds_used(e.store, jid, "SB-TASTER-REPLAN", "shot2"), 1)          # the chef re-planned once
-            self.assertEqual(e.store.artifact(jid, "recipe")["shots"][1]["route"], "FILM-A")            # ...to a still
-            frame2 = [a for a in paid(e, jid, "frame_2")]
-            self.assertLessEqual(len(frame2), 4)                                                         # 2 per plan, never a 3rd identical
-            n = e.store.node(jid, "frame_2")
+            self.assertEqual(fx.film_to_hold(e, jid), "ready_for_review")
+            self.assertEqual(e.store.artifact(jid, "recipe")["shots"][0]["tool"], "video")               # still a moving shot
+            self.assertEqual(json.loads(e.store.node(jid, "shot_1")["spec_json"])["route"], "FILM-C")
+            n = e.store.node(jid, "frame_1")
             self.assertEqual(n["status"], "done")
+            self.assertLessEqual(len(paid(e, jid, "frame_1")), n["max_draws"])                          # never past the take limit
             self.assertIn("rejected", json.loads(n["spec_json"])["flagged"])                            # kept, flagged
-            self.assertIn("shot 2", " ".join(e.store.artifact(jid, "customer_notes")["notes"]))         # ...and the customer is told
+            self.assertIn("shot 1", " ".join(e.store.artifact(jid, "customer_notes")["notes"]))         # ...and the customer is told
+            self.assertIn("flap", " ".join(e.store.artifact(jid, "customer_notes")["notes"]))
             self.assertFalse([x for x in e.store.nodes(jid) if x["status"] == "needs_founder"])
             self.assertFalse(hasattr(e.orch, "select_take"))           # beta rules 2026-09-24: no "the founder picks a take" wait
         finally:
             e.close()
 
 
-class BigTasterSendBacks(unittest.TestCase):
-    """Spec §11 test 7 and checklist E5 — plus the big-taster / release half of tests 3 and 4."""
+class GatekeeperSendBacks(unittest.TestCase):
+    """Spec §11 test 7 and checklist E5 — plus the gatekeeper / release half of tests 3 and 4."""
 
     def test_fix_redoes_only_the_named_shot_and_a_second_fail_goes_to_the_customer_with_the_report(self):
         e = Env()
         try:
-            orig = e.orch.sim.big_taster__final_review
+            orig = e.orch.sim.gatekeeper__final_review
             script = ["fix", "fail", "fail"]
 
             def big(b, media, **kw):
@@ -103,13 +109,14 @@ class BigTasterSendBacks(unittest.TestCase):
                                                          "description": "the story never shows capacity", "earliest_stage": "plan",
                                                          "shot": None, "repair": "re-plan around the full bag"}])
                 return out
-            e.orch.sim.big_taster__final_review = big
+            e.orch.sim.gatekeeper__final_review = big
             jid = fx.submit_backpack_film(e)
             fx.film_to_hold(e, jid)
             # fix → only shot 3 (and what is built from it) was redone; after the second pass the fail went to the chef
             fix = e.store.artifact(jid, "internal_repair")
             self.assertIn("shot_3", fix["nodes"])
-            for x in ("master", "frame_1", "shot_1", "frame_2", "shot_2", "frame_3", "music"):
+            self.assertIn("frame_3", fix["nodes"])            # v3: a clip remade from the same wrong frame copies the fault
+            for x in ("master", "frame_1", "shot_1", "frame_2", "shot_2", "music"):
                 self.assertNotIn(x, fix["nodes"], x)
             self.assertEqual(flow.rounds_used(e.store, jid, "SB-BIG-FIX"), 1)
             self.assertEqual(flow.rounds_used(e.store, jid, "SB-BIG-FAIL"), 1)
@@ -120,7 +127,7 @@ class BigTasterSendBacks(unittest.TestCase):
             self.assertEqual(len(paid(e, jid)) - before, 0)                       # the unchanged recipe re-bought nothing
             self.assertIn("the story never shows capacity", " ".join(e.store.artifact(jid, "customer_notes")["notes"]))
             self.assertEqual(e.store.artifact(jid, "review_report")["verdict"], "fail")
-            with self.assertRaises(PermissionError):                              # overriding the big taster stays founder-only
+            with self.assertRaises(PermissionError):                              # overriding the gatekeeper stays founder-only
                 e.orch.override_final_review(jid, session="operator:claude", reason="the film is good enough, ship it")
             e.orch.accept(jid, e.user["email"])                                   # the customer accepts it as is
             self.assertEqual(e.state(jid), "accepted")

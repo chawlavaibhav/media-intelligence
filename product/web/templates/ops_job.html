@@ -13,7 +13,6 @@
 <form method="post" action="/ops/jobs/{{ job.id }}/pause" style="display:inline"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="reason" value="paused by our team"><button class="secondary">Pause</button></form>
 
 {% if job.state == 'paused_for_founder' and forms.recipe_check and forms.recipe_check.verdict_after_code != 'approve' %}
-<form method="post" action="/ops/jobs/{{ job.id }}/override_recipe"><input type="hidden" name="csrf" value="{{ csrf }}"><label for="or">Override the recipe checker's send-back — why?</label>
 <input id="or" type="text" name="reason" required minlength="15"><button class="danger">Override recipe check</button></form>{% endif %}
 {% if job.state == 'paused_for_founder' and forms.final_review and forms.final_review.verdict != 'pass' %}
 <form method="post" action="/ops/jobs/{{ job.id }}/override_final"><input type="hidden" name="csrf" value="{{ csrf }}"><label for="of">Override the big taster's "{{ forms.final_review.verdict }}" — why?</label>

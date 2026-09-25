@@ -6,7 +6,7 @@ is labelled simulated, and the door guard never counts a simulated judge's "yes"
 Simulated vision: a test photo may carry a PNG text chunk `mi-sim-shows` saying what the picture shows (tests use it to
 stand in for what a vision model would see, e.g. "people for scale" behind a caption that says "product"). Without it,
 the simulation only knows the customer's caption.
-Tests change a worker's behaviour by replacing a method on this object (e.g. `sim.small_taster__ingredient_check`).
+Tests change a worker's behaviour by replacing a method on this object (e.g. `sim.head_cook__ingredient_check`).
 """
 from __future__ import annotations
 
@@ -76,8 +76,8 @@ class SimulatedWorkers:
         return getattr(self, f"{worker}__{form}")(blocks, media, **kw)
 
     # ── waiter ─────────────────────────────────────────────────────────────────────────────────────────────
-    UNSUPPORTED = [(r"\bvoice[- ]?over\b(?! ?(?:is|are)? ?not)|\bnarrat", "spoken voice-over"),
-                   (r"\bdialogue\b(?!,? ?no)|\btalking head|\bspeaks?\b", "dialogue or talking heads"),
+    # kitchen v3: a voice-over is offered when the customer asks; dialogue and lip-sync are not
+    UNSUPPORTED = [(r"\bdialogue\b(?!,? ?no)|\btalking head|\bspeaks?\b", "dialogue or talking heads"),
                    (r"lip[- ]?sync", "lip-sync"), (r"celebrity|shah ?rukh|virat|deepika", "identifiable real person / celebrity likeness"),
                    (r"\b(4[5-9]|[5-9]\d|1\d\d)[- ]?(s|sec|second)", "films longer than 30 seconds")]
 
@@ -164,129 +164,90 @@ class SimulatedWorkers:
                 "copy_changes": [], "explanation_for_customer": "We'll rework the picture with that change."}
 
     # ── pantry and oven checker (the vision half; verdicts are code) ─────────────────────────────────────────────
-    def pantry_checker__feasibility(self, b, media):
-        words = b["CUSTOMER_EXACT_WORDS"]
-        u = b.get("UNDERSTANDING") or {}
-        roles = u.get("photo_roles") or []
-        media_kind = (u.get("deliverable") or {}).get("media", "image")
-        need = truths_in(words)
-        for m in u.get("mandatory", []):
-            need += truths_in(m["requirement"])
-        truths = []
-        for t in dict.fromkeys(need):
-            key = [w for w in t.split() if len(w) > 3 and w not in ("open", "opened", "closed", "visible", "shut", "zipped")]
-            state = t.split()[-1]
-            hit = next((r for r in roles if r["role"] in ("product_view", "product_detail", "infographic")
-                        and all(k.rstrip("s") in r["shows"].lower() for k in key[-1:])
-                        and (state in ("closed", "shut", "visible", "packed") or state.rstrip("ed") in r["shows"].lower())), None)
-            truths.append({"part_state": t, "covered_by_photo": "yes" if hit else "no", "photo_ref": hit["photo"] if hit else None,
-                           "source": "photo" if hit else "none"})
-        accepted = {a["instead_of"].lower(): a["use"] for a in u.get("accepted_alternatives") or []}
-        actions = []
-        for c in _clauses(words):
-            if re.search(r"\b(no|never|not)\b.*\b(dialogue|voice|face)", c, re.I):
-                continue
-            cls = library.classify(c)
-            if not cls or cls[0] in ("product_state_still",):
-                continue
-            if any(k in c.lower() or c.lower() in k for k in accepted):
-                continue
-            actions.append({"id": f"A{len(actions) + 1}", "action": c, "action_class": cls[0], "required_by_customer": True})
-        for use in dict.fromkeys(accepted.values()):
-            actions.append({"id": f"A{len(actions) + 1}", "action": use, "action_class": "product_state_still", "required_by_customer": True})
-        if media_kind == "video" and not any(a["action_class"] == "camera_move_static_product" for a in actions):
-            actions.insert(0, {"id": "A0", "action": "the camera moves gently around the product at rest",
-                               "action_class": "camera_move_static_product", "required_by_customer": False})
-        if media_kind == "image":
-            infographic = any(r["role"] == "infographic" for r in roles) and not any(r["role"] == "product_view" for r in roles)
-            actions = [{"id": "A1", "action": "the product pictured from the customer's photo",
-                        "action_class": "product_still_from_infographic_photo" if infographic else "product_still_from_clean_photo",
-                        "required_by_customer": True}]
-        return {"product_truth": truths, "actions_needed": actions}
-
     # ── chef ───────────────────────────────────────────────────────────────────────────────────────────────
     def chef__recipe(self, b, media):
-        u, f = b.get("UNDERSTANDING") or {}, b.get("FEASIBILITY") or {}
+        """Kitchen v3 recipe: the story, the anchors, a board where each shot names its tool and carries full prompts."""
+        u = b.get("UNDERSTANDING") or {}
         order = b.get("ORDER_SLIP") or {}
         media_kind = (u.get("deliverable") or {}).get("media", "image")
         name = (u.get("product") or {}).get("name") or "the product"
+        words = b.get("CUSTOMER_EXACT_WORDS", "")
         strings = order.get("exact_strings") or []
         copy = [{"id": f"c{i + 1}", "text": s, "role": "headline" if i == 0 else "line", "source": "customer_exact"} for i, s in enumerate(strings)]
-        tray_ids = [i["id"] for i in (b.get("TRAY") or [])][:4]
-        verdicts = {}
-        for v in f.get("route_verdicts", []):
-            verdicts.setdefault(v["action_id"], []).append(v)
-        shots, risks = [], []
+        tray_ids = [i["id"] for i in (b.get("TRAY") or [])][:6]
+        hands_only = bool(re.search(r"\bonly hands|hands only|\bhands\b", words, re.I))
+        person = ("the same two hands and lower forearms, off-white cuffs, no rings" if hands_only
+                  else "a woman of about 60 in a sage cotton kurta, silver hair in a low bun, thin reading glasses")
+        world = "a warm Indian living room at evening, a teak side table, one cup of chai, a warm lamp"
+        look = (f"A cinematic photograph, vertical: {person}, in {world}, holding {name} exactly as in the product photos; "
+                f"soft lamp light from the left; warm natural colour; calm upper third.")
+        shots = []
         if media_kind == "video":
             total = float((u.get("deliverable") or {}).get("duration_s") or 15)
-            usable = []
-            for a in f.get("actions_needed", []):
-                ok = [v for v in verdicts.get(a["id"], []) if v["verdict"] in ("reliable", "risky")]
-                if ok:
-                    best = min(ok, key=lambda v: (library.RANK[v["verdict"]], v["route"]))
-                    usable.append((a, best))
-            usable = usable[:5] or []
-            each = round((total - 3.0) / max(1, len(usable)), 2)
-            mand = [m["id"] for m in u.get("mandatory", []) if not m["requirement"].startswith("the exact text")]
-            for i, (a, v) in enumerate(usable):
-                risky = v["verdict"] == "risky"
-                shots.append({"n": i + 1, "duration_s": each, "purpose": "show it", "first_frame": f"{name} in the master-plate room; {a['action']}",
-                              "action": a["action"], "end_state": "the moment holds", "camera": "35mm, eye level", "route": v["route"],
-                              "action_class": a["action_class"], "starts_from": "master_plate" if (i == 0 or risky) else "previous_shot_end",
-                              "feasibility_refs": [a["id"]], "product_present": True, "product_state": "intact",
-                              "continuity": ["same room, light and product as the master plate"], "must_not": [],
-                              "super_id": "c1" if (i == 1 and copy) else None, "mandatory_ids": mand if i == 0 else []})
-                if risky:
-                    risks.append({"shot": i + 1, "action_id": a["id"], "risk": f"{a['action_class']} is risky on {v['route']}",
-                                  "limit": "produced first from the master plate; one simple action; code motion fallback"})
-            shots.append({"n": len(shots) + 1, "duration_s": 3.0, "purpose": "sign-off", "first_frame": "end card", "action": "none",
-                          "end_state": "logo and line", "camera": "n/a", "route": "END-CARD", "action_class": "none", "starts_from": "still_only",
-                          "feasibility_refs": [], "product_present": False, "product_state": "n/a", "continuity": [], "must_not": [],
-                          "super_id": None, "mandatory_ids": [m["id"] for m in u.get("mandatory", []) if m["requirement"].startswith("the exact text")]})
+            each = round((total - 3.0) / 3, 2)
+            board = [("The moment", "recognition", "video"), ("The product", "admiration", "photo"), ("The feeling", "warmth", "still")]
+            for i, (title, feeling, tool) in enumerate(board, 1):
+                shots.append({"n": i, "duration_s": each, "title": title, "feeling": feeling,
+                              "framing": f"medium close shot, eye level, {title.lower()}", "impact": f"{feeling} lands",
+                              "description": f"A 50mm eye-level shot in {world}: {person}; {title.lower()} with {name}. The viewer "
+                                             f"feels {feeling}.",
+                              "tool": tool, "picture_prompt": "" if tool == "photo" else f"{look} Shot {i}: {title.lower()}.",
+                              "motion_prompt": ("She looks down at the product and a slow smile arrives; the camera drifts in a "
+                                                "little. Nothing else moves." if tool == "video" else "a slow push-in"),
+                              "photo_index": 1 if tool == "photo" else None, "product_present": True,
+                              "super_id": "c1" if (i == 2 and copy) else None,
+                              "must_survive": f"{title.lower()}: {feeling}, with the same person", "may_change": "angle, lens, length",
+                              "not_instead": "a product photo in place of the moment"})
+            shots.append({"n": 4, "duration_s": 3.0, "title": "End card", "feeling": "the idea, remembered", "framing": "the end card",
+                          "impact": "the name and the line", "description": "The end card, set by code.", "tool": "end_card",
+                          "picture_prompt": "", "motion_prompt": "", "photo_index": None, "product_present": False, "super_id": None,
+                          "must_survive": "", "may_change": "", "not_instead": ""})
+        wants_voice = bool(re.search(r"\bvoice[- ]?over\b|\bnarrat|\bvo\b", words, re.I)) and \
+            not re.search(r"\bno voice|without (a )?voice|no vo\b", words, re.I)
+        voice = {"wanted": wants_voice and media_kind == "video", "language": "hi-IN",
+                 "direction": "a warm woman in her fifties, unhurried, smiling in the voice, soft Hindi-English, small pauses",
+                 "lines": [{"shot": 1, "text": f"{name}. Aaram se."}] if wants_voice and media_kind == "video" else []}
         return {
-            "proposition": f"{name}: the small thing that makes the day easier",
-            "concepts": [{"name": "The quiet fix", "idea": f"an ordinary moment, resolved by {name}", "why_it_works": "product as hero"}],
-            "selected_concept": "The quiet fix", "rationale": "simplest route from the audience's moment to the product truth",
-            "audience_experience": "recognition, then relief", "hook": "a moment the viewer knows", "remember": name,
-            "visual_language": {"look": "natural, premium", "light": "one soft window light", "palette": ["#1f2a44", "#f4efe6"],
-                                "camera": "35mm, shallow depth"},
-            "sound": {"music_brief": "warm, understated, gentle build", "ambience": "room tone"},
-            "product_anchor": f"{name} exactly as the customer's photos show it, clean and intact",
-            "master_plate": {"description": f"{name} at rest on a warm oak table by a window, soft morning light", "product_state": "closed, intact"},
-            "character": ({"present": True, "description": "the same two hands and lower forearms, off-white cuffs, no rings, in every shot"}
-                          if media_kind == "video" and re.search(r"\bonly hands|hands only|\bhands\b", b.get("CUSTOMER_EXACT_WORDS", ""), re.I)
-                          else {"present": False, "description": ""}),
-            "copy_deck": copy,
-            "composition": {"hero": f"{name} centre-left, three-quarter view", "text_zone": "top" if media_kind == "image" else "none",
-                            "background": "calm warm wall", "product_treatment": "soft key light, gentle shadow"},
-            "shots": shots, "end_card": {"copy_ids": [c["id"] for c in copy], "background_hex": "#1f2a44"},
-            "risks": risks, "library_used": tray_ids, "reuse_shelf_items": [s["id"] for s in (b.get("SHELF") or {}).get("master_plates", [])[:1]]
-            + [s["id"] for s in (b.get("SHELF") or {}).get("characters", [])[:1]],
-            "customer_summary": f"We open on {name} in one calm room and let the story unfold shot by shot, ending on your line and logo."}
-
-    # ── recipe checker (the model half; code rules decide too) ───────────────────────────────────────────────
-    def recipe_checker__recipe_check(self, b, media):
-        r = b.get("RECIPE") or {}
-        u = b.get("UNDERSTANDING") or {}
-        planned = {s.get("action_class") for s in r.get("shots", [])}
-        matched = [i["id"] for i in (b.get("TRAY") or []) if i["section"] == "failure_diary"
-                   and any(c in i["text"] for c in planned if c not in ("none",))][:5]
-        covered = {m for s in r.get("shots", []) for m in s.get("mandatory_ids", [])}
-        return {"verdict": "approve", "predicted_acceptance": "uncertain",
-                "acceptance_reason": "simulated recipe check — nobody judged the idea",
-                "mandatory_coverage": [{"mandatory_id": m["id"], "covered": m["id"] in covered or not r.get("shots"),
-                                        "where": "shots" if m["id"] in covered else "composition"} for m in u.get("mandatory", [])],
-                "issues": [], "add_steps": [], "past_failures_matched": matched}
+            "selected_concept": "The quiet evening", "remember": name, "audience_person": "a 60-year-old at home in the evening",
+            "story": (f"An ordinary evening in a warm home. Someone the viewer could be picks up {name}, and a small moment of "
+                      f"comfort follows; the film ends on their smile and the product at rest in the soft lamp light."),
+            "identity_anchors": {"person": person, "product": f"{name} exactly as the customer's photos show it", "world": world,
+                                 "grade": "natural, warm, premium"},
+            "look": {"picture_prompt": look, "text_zone": "top", "product_present": True},
+            "sound": {"music_prompt": "warm, understated piano with a gentle build; instrumental", "ambience": "room tone, a cup set down"},
+            "voice_over": voice, "copy_deck": copy, "shots": shots,
+            "end_card": {"copy_ids": [c["id"] for c in copy], "background_hex": "#1f2a44"},
+            "reference_photos": [1] if b.get("PHOTOS") not in (None, "no photos supplied") else [],
+            # chef v9: three directions through the three offered lenses; recent dishes read
+            "audience_truth": "They want to feel looked after without being sold to.",
+            "directions": [{"lens": x["id"], "idea": f"{name}, seen as {x['name']}", "form": "three moments and an end card",
+                            "on_screen": "the person and the product"} for x in ((b.get("LENSES") or {}).get("offered") or
+                                                                                   [{"id": "observer", "name": "o"}, {"id": "street_comic", "name": "c"},
+                                                                                    {"id": "demonstrator", "name": "d"}])][:3],
+            "chosen_direction": "the first direction, because its idea fits this order best",
+            "lens": ((b.get("LENSES") or {}).get("offered") or [{"id": "observer"}])[0]["id"],
+            "shape": "three moments and an end card",
+            "habits_refused": "none repeated" if b.get("RECENT_DISHES") in (None, "none yet") else "changed the setting and the music from the recent dishes",
+            "library_used": tray_ids,
+            "customer_summary": f"One warm evening with {name}: a real moment, the product exactly as it is, and your words at the end."}
 
     # ── tasters ───────────────────────────────────────────────────────────────────────────────────────────
-    def small_taster__ingredient_check(self, b, media, **kw):
-        return {"usable": True, "unsure": False, "required_action_occurred": "cannot_determine", "end_state_reached": "cannot_determine",
+    def head_cook__ingredient_check(self, b, media, **kw):
+        return {"usable": True, "unsure": False, "must_survive_kept": "cannot_determine", "required_action_occurred": "cannot_determine", "end_state_reached": "cannot_determine",
                 "product_identity_ok": "cannot_determine", "character_consistent": "cannot_determine",
                 "matches_master_plate": "cannot_determine", "matches_previous_plate": "cannot_determine", "differences": [],
                 "prohibited_present": [], "unrequested_elements": [], "lettering_present": "cannot_determine",
-                "best_segment": {"in_s": 0.0, "out_s": 0.0}, "notes": "simulated inspection: nothing was looked at"}
+                "best_segment": {"in_s": 0.0, "out_s": 0.0}, "notes": "simulated inspection: nothing was looked at",
+                "repair": "keep", "better_prompt": ""}
 
-    def big_taster__final_review(self, b, media, **kw):
+    def head_cook__voice_cast(self, b, media, **kw):
+        vo = b.get("VOICE_OVER") or {}
+        return {"provider": "sarvam", "voice": "priya", "language_code": vo.get("language") or "hi-IN",
+                "settings": {"pace": 0.95, "pitch": 0, "style": "warm", "style_prompt": vo.get("direction", "")},
+                "lines": [{"shot": ln["shot"], "text": ln["text"], "ssml": ""} for ln in vo.get("lines", [])],
+                "why": "simulated cast: Sarvam carries Hinglish best on the evidence so far"}
+
+    def gatekeeper__final_review(self, b, media, **kw):
         mand = b.get("MANDATORY") or []
         return {"verdict": "pass", "modalities_evaluated": ["simulated"],
                 "mandatory": [{"mandatory_id": m["id"], "visible": "cannot_determine", "evidence": "simulated"} for m in mand],
@@ -318,7 +279,7 @@ class SimulatedWorkers:
         for node, n in sorted((jf.get("taster_rejections") or {}).items()):
             cls = (jf.get("node_classes") or {}).get(node)
             if n >= 2 and cls:
-                per.append({"worker": "small_taster", "what_went_right": f"rejected {n} takes of {node} before they reached the film",
+                per.append({"worker": "head_cook", "what_went_right": f"rejected {n} takes of {node} before they reached the film",
                             "what_went_wrong": f"{cls} failed repeatedly on its route",
                             "evidence_refs": [f"events take_rejected node={node}"],
                             "proposed_change": {"target": "equipment_sheet", "why": f"{n} rejected takes of {cls}",
@@ -326,7 +287,7 @@ class SimulatedWorkers:
                                                          "sample_count": n, "evidence_refs": [f"{jf.get('job_id')} {node}"],
                                                          "note": f"rejected {n} of {n} takes on {jf.get('job_id')}"}}})
         for d in jf.get("defects") or []:
-            per.append({"worker": "big_taster", "what_went_right": f"found {d.get('id')}", "what_went_wrong": d.get("description", "")[:200],
+            per.append({"worker": "gatekeeper", "what_went_right": f"found {d.get('id')}", "what_went_wrong": d.get("description", "")[:200],
                         "evidence_refs": [f"final_review {d.get('id')}"],
                         "proposed_change": {"target": "failure_diary", "why": "a defect found on a finished cut",
                                             "diff": {"text": d.get("description", "")[:600], "failure_mode": d.get("earliest_stage") or "unknown",

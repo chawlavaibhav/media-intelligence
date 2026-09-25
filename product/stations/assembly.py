@@ -4,6 +4,7 @@ overwrote the image job's first-cut posters), and brand fonts/colours come from 
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import time
 from pathlib import Path
@@ -130,7 +131,14 @@ def assemble(k, job_id, n, spec, ctx):
     for s in shots:
         clip = k.store.asset(k.store.node(job_id, f"shot_{s['n']}")["selected_asset_id"])
         cm = json.loads(clip["meta_json"])
-        segs.append({"clip": clip["path"], "in": cm.get("in_s", 0.0), "use": float(s["duration_s"]), "shot": s["n"], "asset": clip["id"]})
+        # live 2026-09-25: the video model sometimes gives a person a voice. A clip the head cook kept flagged, or whose tasting
+        # heard speech, keeps its picture but not its own sound (the music bed carries the film there).
+        heard = " ".join(str(x) for x in ((cm.get("inspection") or {}).get("notes"), (cm.get("inspection") or {}).get("differences")))
+        spec_flag = json.loads(k.store.node(job_id, f"shot_{s['n']}")["spec_json"]).get("flagged")
+        mute = bool(spec_flag) or bool(re.search(r"speak|speech|talk|voice|lip|dialog|subtitle|sing|narrat", heard, re.I)) \
+            or s["n"] in (spec.get("mute_shots") or [])
+        segs.append({"clip": clip["path"], "in": cm.get("in_s", 0.0), "use": float(s["duration_s"]), "shot": s["n"], "asset": clip["id"],
+                     "mute": mute})
         sn = k.store.node(job_id, f"super_{s['n']}")
         if sn and sn["status"] == "done" and sn["selected_asset_id"]:
             supers.append({"png": k.store.asset(sn["selected_asset_id"])["path"], "t_in": round(t + 0.2, 2),
@@ -143,12 +151,16 @@ def assemble(k, job_id, n, spec, ctx):
     out = k.store.new_output_path(k.job_dir(job_id) / "out", f"cut{ctx['cut']}-{fid(spec['aspect'])}", "mp4")
     if not media.have_ffmpeg():
         return placeholder_final(k, job_id, n, segs[0]["clip"], out, "video/mp4", ctx, extra={"segments": segs, "supers": supers})
+    vn = k.store.node(job_id, "voice")
+    voice = k.store.asset(vn["selected_asset_id"]) if vn and vn["status"] == "done" and vn["selected_asset_id"] else None
     rep = media.assemble_film(segments=[{**sg, "beat": sg["shot"]} for sg in segs], endcard=Path(endcard["path"]), supers=supers,
                               music=Path(music["path"]), out=out, size=size, card_s=float(spec["card_s"]),
+                              voice=Path(voice["path"]) if voice else None,
                               workdir=ctx["workdir"] / f"assemble-cut{ctx['cut']}-{int(time.time() * 1000)}")
     aid = k.store.add_asset(job_id, path=out, kind="video", source="composed", content_type="video/mp4", node_id=n["node_id"],
                             role="deliverable", cut=ctx["cut"],
-                            meta={"segments": segs, "supers": supers, "assembly": rep, "end_card": endcard["id"], "music": music["id"]})
+                            meta={"segments": segs, "supers": supers, "assembly": rep, "end_card": endcard["id"], "music": music["id"],
+                                  "voice": voice["id"] if voice else None})
     rows = [dict(r, check_id="end_card:" + r["check_id"]) for r in json.loads(endcard["meta_json"]).get("checks", [])]
     for sp in supers:
         for r in json.loads(k.store.asset(sp["asset"])["meta_json"]).get("checks", []):

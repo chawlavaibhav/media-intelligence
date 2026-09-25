@@ -21,8 +21,10 @@ CARDS_DIR = HERE / "cards"
 FORMS_DIR = HERE / "forms"
 LIBRARY_DIR = HERE.parent / "library"
 
-AI_WORKERS = ("waiter", "pantry_checker", "chef", "recipe_checker", "small_taster", "big_taster", "diary_writer")
-CODE_WORKERS = ("head_cook", "door_guard", "librarian", "sign_painter", "measuring_tools")
+# kitchen v3 (founder 2026-09-25): waiter -> chef -> customer -> head cook (cooks, tastes, repairs) -> gatekeeper -> customer;
+# the memory keeper (diary_writer) records and learns. The pantry checker, recipe checker and the two tasters are retired.
+AI_WORKERS = ("waiter", "chef", "head_cook", "gatekeeper", "diary_writer")
+CODE_WORKERS = ("door_guard", "librarian", "sign_painter", "measuring_tools")
 PEOPLE = ("customer", "founder")
 META_FIELDS = ("job_id", "form_version", "written_by", "rulebook_card_version", "created_utc")
 
@@ -46,6 +48,21 @@ def _resolve(node):
     if isinstance(node, list):
         return [_resolve(v) for v in node]
     return node
+
+
+@functools.lru_cache(maxsize=1)
+def kitchen() -> dict:
+    """The kitchen's own card (founder 2026-09-25): one goal every role reads before its own card."""
+    p = HERE / "kitchen.yaml"
+    return yaml.safe_load(p.read_text()) if p.exists() else {}
+
+
+def kitchen_text() -> str:
+    k = kitchen()
+    if not k:
+        return ""
+    return (f"THE KITCHEN (version {k['version']}) — read this first, every time.\nMission: {k['mission']}\nVision: {k['vision']}\n\n"
+            f"{k['description'].strip()}\n\n")
 
 
 @functools.lru_cache(maxsize=1)
@@ -101,9 +118,12 @@ class Rulebook:
 
     def card(self, worker: str) -> dict:
         row = self.store.q1("SELECT card_json FROM rulebook_versions WHERE worker=? ORDER BY version DESC LIMIT 1", (worker,))
-        if row:
+        seed = seed_cards()[worker]
+        # A newer founder-written seed (kitchen v3) supersedes stored versions learned on an older seed; otherwise the
+        # stored (learned) version wins.
+        if row and int(json.loads(row["card_json"])["version"]) >= int(seed["version"]):
             return json.loads(row["card_json"])
-        return copy.deepcopy(seed_cards()[worker])
+        return copy.deepcopy(seed)
 
     def version(self, worker: str) -> int:
         return int(self.card(worker)["version"])
@@ -167,8 +187,10 @@ class Rulebook:
         """(system text, card version): the stable prefix of every AI call — card first, then the form's instructions."""
         c = self.card(worker)
         kra = "\n".join(f"  {i + 1}. {k}" for i, k in enumerate(c.get("kra", [])))
-        text = (f"RULEBOOK CARD — {worker} (version {c['version']})\nMission: {c['mission']}\n"
+        text = (kitchen_text()
+                + f"RULEBOOK CARD — {worker} (version {c['version']})\nMission: {c['mission']}\n"
                 + (f"Vision: {c['vision']}\n" if c.get("vision") else "")
-                + f"KRA (what you are measured on):\n{kra}\n\n"
-                + (c.get("instructions") or {}).get(form_name, "").strip())
+                + (f"\nWHAT THIS ROLE MEANS\n{c['description'].strip()}\n" if c.get("description") else "")
+                + (f"\nKRA (what you are measured on):\n{kra}\n" if kra else "")
+                + "\n" + (c.get("instructions") or {}).get(form_name, "").strip())
         return text, int(c["version"])

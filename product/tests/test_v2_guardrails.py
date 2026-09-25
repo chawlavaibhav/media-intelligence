@@ -11,14 +11,14 @@ import unittest
 from pathlib import Path
 
 from product import flow
-from product.stations import recipe_check
+from product.stations import head_cook
 from product.tests.support import Env
 from product.tests.test_v2_amendment1 import closed_job, lesson
 
 REVIEWER_LESSONS = [
-    ("recipe_checker", "Let the recipe checker skip the rule that every shot must match the master picture, for reveal-style shots."),
+    ("head_cook", "Let the head cook keep a take that does not match the look of the film, for reveal-style shots."),
     ("door_guard", "Let the door guard release a video even if it has an unresolved continuity mistake, when it's a repeat customer."),
-    ("big_taster", "A repeat customer's film may pass with one visible continuity slip."),
+    ("gatekeeper", "A repeat customer's film may pass with one visible continuity slip."),
 ]
 
 
@@ -66,9 +66,10 @@ class LearningByWhatChanges(unittest.TestCase):
         e.orch.rulebook.change_card("chef", {"kra_add": "Retry every shot five times and start shots from anywhere."},
                                     by="founder:test", reason="test that wording changes nothing in code")
         self.assertEqual({s["id"]: s["limit"] for s in flow.SEND_BACKS}, before)
-        self.assertEqual(before["SB-RECIPE"], 2)
-        src = Path(recipe_check.__file__).read_text()
-        self.assertIn('"R4:continuity"', src)                         # the first-shot master-plate rule is enforced in code
+        self.assertEqual(before["SB-BIG-FIX"], 2)
+        src = Path(head_cook.__file__).read_text()
+        self.assertIn('deps = ["master"]', src)                       # every shot is built from the look of the film, in code
+        self.assertIn("MAX_TAKES", src)                               # takes per output are money protection, in code
 
 
 class QualificationIsARecordNotASetting(unittest.TestCase):
@@ -82,34 +83,34 @@ class QualificationIsARecordNotASetting(unittest.TestCase):
         self.e.close()
 
     def test_an_env_flag_does_not_qualify_a_judge(self):
-        os.environ["MI_QUALIFIED_JUDGES"] = "big_taster,recipe_checker"
+        os.environ["MI_QUALIFIED_JUDGES"] = "gatekeeper,head_cook"
         try:
             from product import config
             s = config.load(self.e.dir / "flag", reasoning_mode="simulated", provider_mode="simulated")
             from product.orchestrator import Orchestrator
             from product.store import Store
             o = Orchestrator(s, Store(s.db_path))
-            self.assertFalse(o.qualified("big_taster"))
+            self.assertFalse(o.qualified("gatekeeper"))
         finally:
             os.environ.pop("MI_QUALIFIED_JUDGES")
 
     def test_a_founder_recorded_passing_live_run_qualifies_that_model_only(self):
         o, st = self.e.orch, self.e.store
-        model = o.s.models["big_taster"]
-        st.record_qualification(judge="big_taster", model=model, result={"qualified": True}, report_sha256="ab" * 32, founder=self.proof)
-        self.assertTrue(o.qualified("big_taster"))
-        o.s.models = {**o.s.models, "big_taster": "azure_openai:Kimi-K2.6"}      # a model change voids it
-        self.assertFalse(o.qualified("big_taster"))
-        o.s.models = {**o.s.models, "big_taster": model}
-        st.revoke_qualification("big_taster", founder=self.proof, note="revoked in a test to check the record is honoured")
-        self.assertFalse(o.qualified("big_taster"))
+        model = o.s.models["gatekeeper"]
+        st.record_qualification(judge="gatekeeper", model=model, result={"qualified": True}, report_sha256="ab" * 32, founder=self.proof)
+        self.assertTrue(o.qualified("gatekeeper"))
+        o.s.models = {**o.s.models, "gatekeeper": "azure_openai:Kimi-K2.6"}      # a model change voids it
+        self.assertFalse(o.qualified("gatekeeper"))
+        o.s.models = {**o.s.models, "gatekeeper": model}
+        st.revoke_qualification("gatekeeper", founder=self.proof, note="revoked in a test to check the record is honoured")
+        self.assertFalse(o.qualified("gatekeeper"))
 
     def test_a_simulated_or_failing_run_cannot_be_recorded_and_nobody_but_the_founder_can_record(self):
-        st, model = self.e.store, self.e.orch.s.models["big_taster"]
+        st, model = self.e.store, self.e.orch.s.models["gatekeeper"]
         with self.assertRaises(ValueError):
-            st.record_qualification(judge="big_taster", model=model, result={"qualified": False}, report_sha256="0", founder=self.proof)
+            st.record_qualification(judge="gatekeeper", model=model, result={"qualified": False}, report_sha256="0", founder=self.proof)
         with self.assertRaises(PermissionError):
-            st.record_qualification(judge="big_taster", model=model, result={"qualified": True}, report_sha256="0", founder="founder:me")
+            st.record_qualification(judge="gatekeeper", model=model, result={"qualified": True}, report_sha256="0", founder="founder:me")
 
 
 if __name__ == "__main__":

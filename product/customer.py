@@ -52,8 +52,10 @@ def node_words(kind: str, spec: dict, total_shots: int) -> str | None:
         return "The look of your film is ready."
     if kind == "character":
         return "The people in your film are ready."
-    if kind == "frame":
-        return f"Scene {spec.get('shot')} of {total_shots} is set up."
+    if kind in ("frame", "photo"):
+        return f"Scene {spec.get('shot')} of {total_shots} is set up — here is how it looks."
+    if kind == "voice":
+        return "The voice-over is recorded."
     if kind == "shot":
         return f"Shot {spec.get('shot')} of {total_shots} is made."
     if kind == "plate":
@@ -65,12 +67,13 @@ def node_words(kind: str, spec: dict, total_shots: int) -> str | None:
     return None
 
 
-def tell(store, job_id: str, text: str):
-    """One line on the customer's progress (never repeated back to back)."""
+def tell(store, job_id: str, text: str, asset: str | None = None):
+    """One line on the customer's progress (never repeated back to back). `asset`: a still the head cook kept, shown with
+    the line (founder 2026-09-25: keep showing the customer the stills as they are made)."""
     last = store.events(job_id, ("customer_update",))
-    if last and json.loads(last[-1]["data_json"]).get("text") == text:
+    if last and json.loads(last[-1]["data_json"]).get("text") == text and not asset:
         return
-    store.event(job_id, "waiter", "customer_update", {"text": text})
+    store.event(job_id, "waiter", "customer_update", {"text": text, **({"asset": asset} if asset else {})})
 
 
 def progress(store, job_id: str, limit: int = 40) -> list:
@@ -80,8 +83,8 @@ def progress(store, job_id: str, limit: int = 40) -> list:
     for e in store.events(job_id, ("state", "customer_update")):
         d = json.loads(e["data_json"])
         text = STATE_WORDS.get(d.get("to")) if e["kind"] == "state" else d.get("text")
-        if text and text != last:
-            out.append({"utc": e["utc"], "text": text})
+        if text and (text != last or d.get("asset")):
+            out.append({"utc": e["utc"], "text": text, "asset": d.get("asset")})
             last = text
     return out[-limit:]
 

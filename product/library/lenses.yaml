@@ -1,0 +1,109 @@
+# Lenses: ways of seeing the chef writes its three directions through (draft v10, merged from the eight
+# directors' round-2 reviews). Invented names, each modelled on a known approach; never a real person, never named in
+# a prompt to a machine.
+rule: |
+  Code offers the chef three lenses per order: all fit the medium ordered (film or picture); at least one is far from
+  what the category usually gets; none was used in the last three dishes unless the order demands it (a plain sale
+  banner may always get the hard-seller). The chef writes one direction through each lens and may swap one lens for
+  another from this roster only with a one-line reason. It chooses the direction on the merit of its idea, never
+  because of the lens or the category. The chosen lens is recorded in `lens` and in RECENT_DISHES, is shown to the
+  customer in plain words ("told as a neighbourhood comedy"), and is passed to the head cook for the cut and the sound.
+  A lens is never named in a machine prompt; the chef turns it into plain camera, light, composition and sound. A lens
+  decides how the dish is seen, never what the order is about or what it may claim.
+lenses:
+  - id: observer
+    name: "The Patient Observer"
+    for: both
+    way_of_seeing: "Ordinary lives watched with patience and respect; the particular gesture over the grand one."
+    good_at: "Family, first purchases, festivals of the home, dignity, wide and mid shots that keep faces honest."
+    risks: "Quiet, slow, soft-lit sameness (our old habit); tender near-real faces the tools draw badly."
+  - id: street_comic
+    name: "The Street Comic"
+    for: both
+    way_of_seeing: "Everyday Indian life with a turn: neighbours, family, jugaad, one situation and a punchline."
+    good_at: "Snacks, telecom, apps, antacids, anything where a laugh carries the truth."
+    risks: "Mocking the buyer; becoming the house joke; dialogue the video model cannot speak."
+  - id: suspense
+    name: "The Tension Builder"
+    for: film
+    way_of_seeing: "Withhold information, point at an object, pay it off in the last seconds."
+    good_at: "Reveals, launches, B2B problem-to-answer, product-only films."
+    risks: "A reveal that needs more than 15 s; a payoff too small to read on a phone."
+  - id: formalist
+    name: "The Formalist"
+    for: both
+    way_of_seeing: "One rigorous rule of form (symmetry, one unbroken move, one colour) held from first frame to last."
+    good_at: "Product choreography, premium goods, films with no people, memorable single images."
+    risks: "Cold precision without feeling; a form the tools cannot hold for eight seconds."
+  - id: mood_painter
+    name: "The Mood Painter"
+    for: both
+    way_of_seeing: "Colour, texture, time and music; what is felt and left unsaid."
+    good_at: "Jewellery, fragrance, fashion, cafés at night, longing."
+    risks: "Beautiful vagueness where an offer or a fact was needed; the same dusk every time."
+  - id: premise_maker
+    name: "The Premise Maker"
+    for: both
+    way_of_seeing: "One impossible \"what if\", played completely straight."
+    good_at: "Stylised worlds, objects and animals with character: the tools' strongest register."
+    risks: "Cleverness that hides the product; absurdity where trust (health, money) is the point."
+  - id: demonstrator
+    name: "The Demonstrator"
+    for: both
+    way_of_seeing: "One true fact, shown working, said plainly."
+    good_at: "B2B, software from real screenshots, pharma within the allowed claim, finance, loans."
+    risks: "A dry list of features; a demonstration that claims more than the order allows."
+  - id: festive_showman
+    name: "The Festive Showman"
+    for: both
+    way_of_seeing: "Indian popular cinema's scale: crowds, colour, song-picturisation movement, a hero moment."
+    good_at: "Diwali and wedding seasons, launches, sales that must feel like an event."
+    risks: "Noise without an idea; crowds of faces the tools warp in close-up."
+  - id: regional_realist
+    name: "The Regional Realist"
+    for: both
+    way_of_seeing: "The cinema of one place and one language: its light, work, roads and the dignity of its people."
+    good_at: "Rural and small-town India, two-wheelers, loans, agriculture, regional-language films."
+    risks: "Poverty shown as picturesque; a generic \"village\" instead of a real district."
+  - id: rhythm_editor
+    name: "The Rhythm Editor"
+    for: film
+    way_of_seeing: "The film is built from cut and sound outward: a beat, a key sound, a silence."
+    good_at: "Montage of many people, product-only films, energy, films that must work with the sound off and on."
+    risks: "Speed without a story; a cut too fast for a 50+ viewer to read."
+  - id: hard_seller
+    name: "The Bazaar Hard-Seller"
+    for: both
+    way_of_seeing: "The offer is the hero: the number first, the deadline and conditions clear, readable at thumbnail."
+    good_at: "Sales, cashback, recharges, direct response, banner sets."
+    risks: "Shouting with no idea; small print that breaks the law; used where the order asked for a brand feeling."
+  - id: documentary_photographer
+    name: "The Street Documentarian"
+    for: picture
+    way_of_seeing: "The decisive instant in a real place, colour layered in depth, caught rather than posed."
+    good_at: "Posters and posts rooted in a city or a shop, regional pride, events."
+    risks: "A busy frame with no room for the words; a caught moment that hides the product."
+  - id: still_life
+    name: "The Still-Life Photographer"
+    for: both
+    way_of_seeing: "Objects lit with reverence; a table-top story told by arrangement and light."
+    good_at: "Food, sweets, D2C products, jewellery from the real photos, product films with no people."
+    risks: "A product floating on a gradient; lifeless perfection."
+  - id: graphic_designer
+    name: "The Poster Modernist"
+    for: picture
+    way_of_seeing: "One bold shape, a field of colour, type as the image."
+    good_at: "Offers, launches, typographic posters, orders with no photos, multi-format sets."
+    risks: "A clever symbol nobody decodes in one second; type in a script the font cannot set well."
+  - id: bazaar_illustrator
+    name: "The Bazaar Illustrator"
+    for: both
+    way_of_seeing: "Hand-painted signage, calendar art, illustrated worlds: warm, abundant, honestly drawn."
+    good_at: "Local shops, festivals, menus with no photos, playful stories that should not pretend to be photographs."
+    risks: "Kitsch; drawn letters (every word is still set by code); a style that looks cheap for a premium brand."
+  - id: portraitist
+    name: "The Editorial Portraitist"
+    for: picture
+    way_of_seeing: "One person, lit and posed with intent, looking back at the viewer."
+    good_at: "Fashion, jewellery worn (with the real piece edited in), founders, beauty."
+    risks: "The stock smile at the product; a generated face presented as a real customer or expert."

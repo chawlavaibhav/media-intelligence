@@ -207,6 +207,28 @@ class FilmPictureChecks(unittest.TestCase):
         self.assertIn("duration", rows["delivery_conformance"]["detail"])
 
 
+    def test_a_rest_in_the_music_on_a_cut_is_not_a_join_hole(self):
+        """AIGHT-STUDIO v10 (2026-09-25): every clip muted, the score rests 0.14 s exactly on the 2.5 s cut. The film dips,
+        but the music file dips the same: the score's rest, not a join. Measured against a score WITHOUT that rest, the
+        same dip is still a hole."""
+        import subprocess
+        rest, steady = self.d / "rest.wav", self.d / "steady.wav"
+        for out, vol in ((rest, "volume='if(between(t,2.46,2.60),0.001,1)':eval=frame"), (steady, "volume=1")):
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "sine=frequency=220:duration=8:sample_rate=48000",
+                            "-af", vol, "-ac", "2", str(out)], check=True)
+        rep = self.media.assemble_film(segments=[{"clip": c, "in": 0.0, "use": 2.5, "mute": True} for c in self.clips],
+                                       endcard=self.card, supers=[], music=rest, out=self.d / "rest.mp4", size=(1080, 1920),
+                                       card_s=2.0, workdir=self.d / "w-rest")
+        kw = dict(cuts=rep["cuts_s"], source_sizes=[[720, 1280]], delivered=(1080, 1920), planned_s=rep["duration_s"])
+        blind = {r["check_id"]: r for r in verify.film_checks(self.d / "rest.mp4", **kw)}
+        self.assertEqual(blind["audio_joins"]["status"], "FAIL", blind["audio_joins"])
+        told = {r["check_id"]: r for r in verify.film_checks(self.d / "rest.mp4", music=rest, **kw)}
+        self.assertEqual(told["audio_joins"]["status"], "PASS", told["audio_joins"])
+        self.assertIn("music's own rest", told["audio_joins"]["detail"])
+        wrong = {r["check_id"]: r for r in verify.film_checks(self.d / "rest.mp4", music=steady, **kw)}
+        self.assertEqual(wrong["audio_joins"]["status"], "FAIL", wrong["audio_joins"])
+
+
 def Image_mode(p):
     from PIL import Image
     return Image.open(p).mode

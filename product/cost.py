@@ -32,19 +32,19 @@ def expected_calls(recipe: dict, media: str, formats: list) -> list:
     out = []
     if media == "image":
         for _ in formats or ["1:1"]:
-            out.append(("small_taster", CARD_AND_SCHEMA_TOKENS + 2 * 1300 + 400))
-        out.append(("big_taster_image", CARD_AND_SCHEMA_TOKENS + len(formats or [1]) * 1300 + 1300 + 1500))
+            out.append(("head_cook", CARD_AND_SCHEMA_TOKENS + 2 * 1300 + 400))
+        out.append(("gatekeeper_image", CARD_AND_SCHEMA_TOKENS + len(formats or [1]) * 1300 + 1300 + 1500))
     else:
-        out.append(("small_taster", CARD_AND_SCHEMA_TOKENS + 2 * 1300 + 400))                  # the master plate
+        out.append(("head_cook", CARD_AND_SCHEMA_TOKENS + 2 * 1300 + 400))                  # the master plate
         for s in recipe.get("shots", []):
             if s["route"] == "END-CARD":
                 continue
             if s["starts_from"] != "previous_shot_end":
-                out.append(("small_taster", CARD_AND_SCHEMA_TOKENS + 3 * 1300 + 400))          # the shot's first frame
+                out.append(("head_cook", CARD_AND_SCHEMA_TOKENS + 3 * 1300 + 400))          # the shot's first frame
             if s["route"] in ("FILM-B", "FILM-C"):
-                out.append(("small_taster", CARD_AND_SCHEMA_TOKENS + 3 * 1300 + int(300 * clip_len(float(s["duration_s"]))) + 400))
+                out.append(("head_cook", CARD_AND_SCHEMA_TOKENS + 3 * 1300 + int(300 * clip_len(float(s["duration_s"]))) + 400))
         total = sum(float(s["duration_s"]) for s in recipe.get("shots", []))
-        out.append(("big_taster", CARD_AND_SCHEMA_TOKENS + int(300 * total) + 2 * 1300 + 1500))
+        out.append(("gatekeeper", CARD_AND_SCHEMA_TOKENS + int(300 * total) + 2 * 1300 + 1500))
     out.append(("diary_writer", 6000))
     return out
 

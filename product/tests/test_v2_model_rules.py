@@ -31,19 +31,19 @@ class Maker(unittest.TestCase):
         self.assertEqual(config.maker("azure_openai:some-new-model"), "openai")
 
     def test_a_judge_from_another_maker_on_the_chefs_host_is_independent(self):
-        config.check_independence(models(recipe_checker="azure_openai:Kimi-K2.6", big_taster="azure_openai:Kimi-K2.6"))
+        config.check_independence(models(head_cook="azure_openai:Kimi-K2.6", gatekeeper="azure_openai:Kimi-K2.6"))
 
     def test_a_judge_from_the_chefs_maker_is_refused_whatever_the_host(self):
         with self.assertRaises(ValueError):
-            config.check_independence(models(big_taster="azure_openai:gpt-5.6-luna"))
+            config.check_independence(models(gatekeeper="azure_openai:gpt-5.6-luna"))
         with self.assertRaises(ValueError):
             config.check_independence(models(chef="gemini:gemini-3.1-pro-preview", chef_image="gemini:gemini-3.1-pro-preview",
-                                             recipe_checker="vertex:gemini-3.1-pro-preview"))
+                                             head_cook="vertex:gemini-3.1-pro-preview"))
 
 
 class Vision(unittest.TestCase):
     def test_a_text_only_model_is_refused_for_any_worker_that_is_shown_pictures(self):
-        for w in ("waiter", "pantry_checker", "chef", "recipe_checker", "small_taster", "big_taster"):
+        for w in ("waiter", "chef", "head_cook", "head_cook_av", "gatekeeper"):
             with self.subTest(worker=w), self.assertRaises(ValueError):
                 config.check_vision(models(**{w: "azure_openai:DeepSeek-V4-Flash"}))
 

@@ -2,7 +2,12 @@
 
 1. The founder is never inside a running job: every wait the system itself creates is a customer's (or automatic). A step
    error retries twice by itself, then the customer chooses try again / stop. Founder overrides stay, never required.
-2. The customer owns the money decision: no account ceiling in beta (MI_ENFORCE_ACCOUNT_CEILING, default off)."""
+2. The customer owns the money decision: no account ceiling in beta (MI_ENFORCE_ACCOUNT_CEILING, default off).
+
+Kitchen v3 (2026-09-25): the step-error tests use the chef's step (the pantry checker is retired); the hostile journeys
+use the head cook and the gatekeeper. Retired:
+  - test_a_send_back_limit_that_reaches_the_kitchen_goes_to_the_customer_with_the_objections — guarded the recipe
+    checker's send-back limit and plan objections; the recipe checker is retired."""
 import json
 import os
 import unittest
@@ -13,7 +18,7 @@ from product import config, flow
 from product.orchestrator import Orchestrator
 from product.reasoning import ReasoningFailed
 from product.service import Invalid
-from product.stations import chef, head_cook, pantry, tasters, waiter
+from product.stations import chef, head_cook, tasters, waiter
 from product.tests import fixtures_v2 as fx
 from product.tests.support import Env
 
@@ -42,17 +47,13 @@ def failing(fn, times, exc=None):
 
 
 def run_to_end(e, jid, budget="15"):
-    """The customer's side of a journey, whatever the system asks: alternatives, plan (objections accepted), look, taste,
-    try again after an error, final acceptance. Returns the last state."""
+    """The customer's side of a journey, whatever the system asks: the recipe, the look and taste (only when
+    MI_CUSTOMER_TASTES is on), try again after an error, final acceptance. Returns the last state."""
     for _ in range(40):
         e.drain()
         s = e.state(jid)
-        if s == "awaiting_customer_input":
-            f = e.store.artifact(jid, "feasibility")
-            e.orch.provide_input(jid, by=e.user["email"], accepted_alternatives=[
-                {"instead_of": x["for_action"], "use": "the bag shown closed and zipped as a still"} for x in f["alternatives"]])
-        elif s == "awaiting_approval":
-            e.orch.approve(jid, by=e.user["email"], budget_usd=budget, accept_objections=True)
+        if s == "awaiting_approval":
+            e.orch.approve(jid, by=e.user["email"], budget_usd=budget)
         elif s == "awaiting_master_approval":
             e.orch.approve_master(jid, by=e.user["email"])
         elif s == "awaiting_taste":
@@ -88,27 +89,22 @@ class TheFounderIsNeverInsideARunningJob(unittest.TestCase):
             self.assertNotIn("reviewing", words.lower(), s)
 
     def test_every_hostile_journey_ends_with_the_system_or_the_customer(self):
-        """Walk what the system does on its own: the recipe checker never approves, the small taster rejects every take, the
-        big taster fails every cut, a measured check fails, and a step errors in every station. No founder, ever."""
+        """Walk what the system does on its own: the head cook rejects every take, the gatekeeper fails every cut, a
+        measured check fails, and a step errors in every station. No founder, ever."""
         from product import verify
         cases = {
-            "recipe checker never approves": lambda e: mock.patch.object(
-                e.orch.sim, "recipe_checker__recipe_check",
-                lambda b, m, _o=e.orch.sim.recipe_checker__recipe_check: {**_o(b, m), "verdict": "send_back",
-                                                                          "issues": [{"severity": "major", "where": "shot 2",
-                                                                                      "issue": "flat", "fix": "surprise"}]}),
-            "small taster rejects everything": lambda e: mock.patch.object(
-                e.orch.sim, "small_taster__ingredient_check",
-                lambda b, m, _o=e.orch.sim.small_taster__ingredient_check, **kw: {**_o(b, m, **kw), "usable": False, "notes": "no"}),
-            "big taster fails every cut": lambda e: mock.patch.object(
-                e.orch.sim, "big_taster__final_review",
-                lambda b, m, _o=e.orch.sim.big_taster__final_review, **kw: {**_o(b, m, **kw), "verdict": "fail", "defects": [
+            "the head cook rejects everything": lambda e: mock.patch.object(
+                e.orch.sim, "head_cook__ingredient_check",
+                lambda b, m, _o=e.orch.sim.head_cook__ingredient_check, **kw: {**_o(b, m, **kw), "usable": False, "notes": "no"}),
+            "the gatekeeper fails every cut": lambda e: mock.patch.object(
+                e.orch.sim, "gatekeeper__final_review",
+                lambda b, m, _o=e.orch.sim.gatekeeper__final_review, **kw: {**_o(b, m, **kw), "verdict": "fail", "defects": [
                     {"id": "D", "where": "whole", "severity": "blocker", "description": "flat", "earliest_stage": "plan", "shot": None,
                      "repair": "re-plan"}]}),
             "a measured check fails": lambda e: mock.patch.object(verify, "exact_copy_match", side_effect=lambda *a, **k: {
                 "check_id": "exact_copy_match", "control": "EXACT_COPY_MATCH", "status": "FAIL", "detail": "a letter is missing"}),
         }
-        for (mod, fn) in ((waiter, "understand"), (pantry, "check"), (chef, "direct"), (head_cook, "plan"), (head_cook, "produce"),
+        for (mod, fn) in ((waiter, "understand"), (chef, "direct"), (head_cook, "plan"), (head_cook, "produce"),
                           (tasters, "check_cut")):
             cases[f"{fn} errors three times"] = (lambda mod, fn: lambda e: mock.patch.object(mod, fn, failing(getattr(mod, fn), 3)))(mod, fn)
         cases["produce crashes three times"] = lambda e: mock.patch.object(head_cook, "produce", failing(head_cook.produce, 3, KeyError("x")))
@@ -129,25 +125,6 @@ class TheFounderIsNeverInsideARunningJob(unittest.TestCase):
                     finally:
                         e.close()
 
-    def test_a_send_back_limit_that_reaches_the_kitchen_goes_to_the_customer_with_the_objections(self):
-        """Even when every recipe round and the system's safe re-plan were already used in this plan cycle (a retried step),
-        the limit ends with the customer, never the founder."""
-        e = Env()
-        try:
-            orig = e.orch.sim.recipe_checker__recipe_check
-            e.orch.sim.recipe_checker__recipe_check = lambda b, m: {**orig(b, m), "verdict": "send_back", "issues": [
-                {"severity": "major", "where": "the plan", "issue": "the idea is flat", "fix": "find a surprise"}]}
-            jid = e.submit("image", text=IMAGE_ORDER)
-            for rule in ("SB-RECIPE", "SB-RECIPE", "SB-RECIPE-SAFE"):
-                e.store.event(jid, "system", "send_back", {"rule": rule, "key": "cycle1", "why": "an earlier attempt of this step"})
-            e.drain()
-            self.assertEqual(e.state(jid), "awaiting_approval")
-            self.assertIn("the idea is flat", " ".join(e.store.artifact(jid, "plan_objections")["plain_words"]))
-            self.assertEqual(paid(e, jid), [])
-            self.assert_no_founder_state(e, jid)
-        finally:
-            e.close()
-
 
 class AStepErrorRetriesThenAsksTheCustomer(unittest.TestCase):
     def setUp(self):
@@ -158,13 +135,13 @@ class AStepErrorRetriesThenAsksTheCustomer(unittest.TestCase):
 
     def test_two_automatic_retries_then_the_customer_is_asked_to_try_again_or_stop(self):
         e = self.e
-        with mock.patch.object(pantry, "check", failing(pantry.check, 99)):
+        with mock.patch.object(chef, "direct", failing(chef.direct, 99)):
             jid = e.submit("image", text=IMAGE_ORDER)
             e.drain()
         self.assertEqual(e.state(jid), "needs_retry_decision")
-        self.assertEqual(e.store.job(jid)["resume_state"], "feasibility")
+        self.assertEqual(e.store.job(jid)["resume_state"], "directing")
         retries = [json.loads(x["data_json"]) for x in e.store.events(jid, ("step_retry",))]
-        self.assertEqual([(r["state"], r["retry"]) for r in retries], [("feasibility", 1), ("feasibility", 2)])
+        self.assertEqual([(r["state"], r["retry"]) for r in retries], [("directing", 1), ("directing", 2)])
         self.assertEqual(len(e.store.events(jid, ("step_failed",))), 3)              # the first try and two retries
         self.assertIn("try again", e.store.job(jid)["pause_reason"].lower())
         self.assertTrue(flow.label("needs_retry_decision").startswith("Something went wrong on our side"))
@@ -173,7 +150,7 @@ class AStepErrorRetriesThenAsksTheCustomer(unittest.TestCase):
 
     def test_two_errors_are_absorbed_by_the_retries_and_the_customer_never_hears_of_them(self):
         e = self.e
-        with mock.patch.object(pantry, "check", failing(pantry.check, 2)):
+        with mock.patch.object(chef, "direct", failing(chef.direct, 2)):
             jid = e.submit("image", text=IMAGE_ORDER)
             e.drain()
         self.assertEqual(e.state(jid), "awaiting_approval")
@@ -182,12 +159,12 @@ class AStepErrorRetriesThenAsksTheCustomer(unittest.TestCase):
 
     def test_try_again_resumes_the_same_step_with_fresh_retries(self):
         e = self.e
-        with mock.patch.object(pantry, "check", failing(pantry.check, 3)):
+        with mock.patch.object(chef, "direct", failing(chef.direct, 3)):
             jid = e.submit("image", text=IMAGE_ORDER)
             e.drain()
             self.assertEqual(e.state(jid), "needs_retry_decision")
             e.orch.decide(jid, by=e.user["email"], choice="try_again")
-            self.assertEqual(e.state(jid), "feasibility")
+            self.assertEqual(e.state(jid), "directing")
             self.assertTrue(e.store.events(jid, ("customer_retry",)))
             e.drain()
         self.assertEqual(e.state(jid), "awaiting_approval")

@@ -36,9 +36,9 @@ RANK = {"reliable": 0, "risky": 1, "cannot": 2}
 WATCH_JOBS = 5
 BOLD_SUPPORT = 2
 SYSTEM = "system:auto-apply"
-JUDGES = ("recipe_checker", "small_taster", "big_taster")
+JUDGES = ("head_cook", "gatekeeper")          # kitchen v3: the head cook tastes; the gatekeeper checks the dish
 # Every worker that checks or can block work: its card only changes at the founder's review (reviewer, 2026-09-24).
-CHECKERS = JUDGES + ("small_taster_escalation", "pantry_checker", "door_guard", "measuring_tools")
+CHECKERS = JUDGES + ("head_cook_av", "door_guard", "measuring_tools")
 # The only card changes code can tell are purely additive: a new KRA line, or an instruction under a NEW key.
 ADDITIVE_KEYS = ("kra_add", "instructions")
 # Money, spend, who may override, safety — founder only, never applied by code (amendment 1 §4, last row).

@@ -3,6 +3,12 @@
 # lesson queue) and live in the store; this file is never edited by the running product. A pair with no row is `unknown`,
 # which the pantry checker treats as `risky`.
 #
+# Statistics (founder ruling 2026-09-24: "apply stats to the equipment sheet too"): a row with `successes`/`failures` has
+# its verdict COMPUTED from them by exact binomial bounds (library/stats.py, EquipmentSheet.rows): `cannot` only when the
+# failure rate is significantly above 50 %, `reliable` only when it is significantly below 25 %, otherwise `risky`. The
+# written `verdict` is kept as `declared_verdict`. Rows with `basis: policy` (a founder decision, not an observation) or
+# `basis: deterministic` (code that cannot fail at random) keep their declared verdict.
+#
 # Evidence ids:
 #   EV-0923-FILM   private repo chawlavaibhav/mi-p1-evidence, job_20260923_7d36a5b6 (the rejected 30-s Reel): events
 #                  take_rejected 05:02–06:37 UTC (15 of 16 Veo takes rejected by the per-clip inspector), the founder's
@@ -17,28 +23,34 @@ rows:
     action_class: hands_work_mechanism
     verdict: cannot
     sample_count: 16
+    successes: 1
+    failures: 15
     evidence_refs: [EV-0923-FILM, ATLAS-B7]
     note: hands pulling zips and folding the flap on the backpack — 15 of 16 takes rejected; the founder rejected the film
       ("two random hands, too many AI slops, robotic").
-    alternative: show the before and after states as separate stills (FILM-A) and cut between them; no hand operates the mechanism.
+    alternative: re-stage the same moment around the mechanism — the face and the result on video (before, then after), the hand action implied by the cut; a still only for an exact product detail.
   - id: EQ-002
     generator: veo-3.1-fast-i2v
     routes: [FILM-C]
     action_class: insert_object_into_container
     verdict: risky
     sample_count: 0
+    successes: 0
+    failures: 0
     evidence_refs: [EV-0923-FILM]
     note: not yet observed — beat 4 was refused by the provider twice; the risk is the recipe checker's written prediction.
-    alternative: show the object already inside as a still (FILM-A).
+    alternative: re-stage — the person's reaction and the object already inside, on video; the insertion implied by the cut.
   - id: EQ-003
     generator: veo-3.1-fast-i2v
     routes: [FILM-C]
     action_class: lift_closed_product
     verdict: risky
     sample_count: 2
+    successes: 0
+    failures: 2
     evidence_refs: [EV-0923-FILM]
     note: the bag floated or began mid-air in both takes.
-    alternative: end on the closed bag at rest (FILM-A), or a camera move around it (FILM-B).
+    alternative: re-stage — the person with the closed bag on video (a glance, a pat, walking off with it), or a camera move around it (FILM-B).
   - id: EQ-004
     generator: veo-3.1-fast-i2v
     routes: [FILM-B, FILM-C]
@@ -55,6 +67,8 @@ rows:
     action_class: product_still_from_clean_photo
     verdict: reliable
     sample_count: 1
+    successes: 1
+    failures: 0
     evidence_refs: [EV-0923-IMG]
     note: product fidelity from a single clean product photo — the launch poster was accepted.
     alternative: null
@@ -64,6 +78,8 @@ rows:
     action_class: product_still_from_infographic_photo
     verdict: risky
     sample_count: 1
+    successes: 0
+    failures: 1
     evidence_refs: [EV-0923-FILM]
     note: an annotated, text-labelled infographic reference confused the geometry; the brand was misspelt "mokebara" on the
       plaque (still_b7).
@@ -74,6 +90,9 @@ rows:
     action_class: legible_text_on_product
     verdict: cannot
     sample_count: 1
+    successes: 0
+    failures: 1
+    basis: policy
     evidence_refs: [EV-0923-FILM]
     note: legible brand text drawn by the picture model is unreliable ("mokebara").
     alternative: code-composed text and the supplied logo only.
@@ -83,6 +102,7 @@ rows:
     action_class: camera_move_static_product
     verdict: reliable
     sample_count: 3
+    basis: deterministic
     evidence_refs: [EV-0923-FILM]
     note: push-in / pan on an approved still is deterministic code (three beats of the rejected film used it; the robotic
       feel came from the generated clips around them, not from the code motion).
@@ -93,6 +113,7 @@ rows:
     action_class: product_state_still
     verdict: reliable
     sample_count: 3
+    basis: deterministic
     evidence_refs: [EV-0923-FILM]
     note: a still of a product state held with gentle code motion.
     alternative: null
@@ -102,15 +123,18 @@ rows:
     action_class: speech_or_lipsync
     verdict: cannot
     sample_count: 0
+    basis: policy
     evidence_refs: [SPEC-9.1]
-    note: not offered in P1 (no speech anywhere).
-    alternative: music, ambience and code-set supers.
+    note: a person ON SCREEN speaking or lip-syncing is not offered (the video model's lips and words are unreliable). A voice-over
+      heard over the film is different and is offered when the customer asks (cast and recorded by the head cook).
+    alternative: the person reacts without speaking; the words come as a voice-over (when asked) or code-set supers.
   - id: EQ-011
     generator: veo-3.1-fast-i2v
     routes: [FILM-B, FILM-C]
     action_class: identifiable_person
     verdict: cannot
     sample_count: 0
+    basis: policy
     evidence_refs: [SPEC-9.1]
     note: not offered in P1.
     alternative: an anonymous person, or hands only.
@@ -120,15 +144,48 @@ rows:
     action_class: multi_step_manipulation
     verdict: cannot
     sample_count: 0
+    basis: policy
     evidence_refs: [SPEC-9.1, EV-0923-FILM]
     note: several manipulations in one shot are not offered.
-    alternative: one simple action per shot, or stills of each state.
+    alternative: one simple action per shot, each on video.
   - id: EQ-013
     generator: veo-3.1-fast-i2v
     routes: [FILM-B]
     action_class: camera_move_static_product
     verdict: risky
     sample_count: 0
+    successes: 0
+    failures: 0
     evidence_refs: []
     note: FILM-B's intended use; not yet observed on a P1 job, so it is qualified first like any risky shot.
     alternative: code motion on an approved still (FILM-A).
+  - id: EQ-015
+    generator: nano-banana-2
+    routes: [IMG, FILM-A, FILM-B, FILM-C]
+    action_class: new_product_detail
+    verdict: cannot
+    sample_count: 6
+    successes: 0
+    failures: 6
+    evidence_refs: [IPHONE-DUO-0924-A, IPHONE-DUO-0924-B]
+    note: "a product NEW to the picture model (Apple iPhone Duo, launched after the model was trained), its detailed side (the
+      back: camera bar, lenses, logo) drawn in a person's hands. 6 takes over two jobs with clean reference photos and a
+      part-by-part description: a clamshell flip phone, an iPhone 15 slab, and three edits that kept a wrong half-open phone
+      with a triangle camera. The FRONT (a screen with thin borders, the fold line) was drawn right each time."
+    alternative: in moving shots show the side the machine can draw (the screen, the simple outline); show the detailed side
+      only in the customer's real photos (the photo tool).
+
+  - id: EQ-014
+    generator: veo-3.1-fast-i2v
+    routes: [FILM-C]
+    action_class: person_performance
+    verdict: risky
+    sample_count: 14
+    successes: 7
+    failures: 7
+    evidence_refs: [MOKOBARA-ODYSSEY-007]
+    note: "a person's moment animated from a designed still — a man on a grey shore scratching a mark, finding the bag, looking at a
+      photograph, both arms inside the bag (the gag), packing, rowing away. 14 takes, 7 kept; every failed take was fixed by ONE
+      sharper prompt (gen/RETAKES.md on branch work/agency-job-mokobara-odyssey-001). The customer accepted the film: 'excellent. pass'."
+    alternative: retake with a sharper prompt, or re-stage the same moment another way — never a still in its place.
+

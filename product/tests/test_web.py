@@ -76,17 +76,11 @@ class WebJourney(unittest.TestCase):
         return dict(r["headers"])["Location"].split("/")[-1]
 
     def test_customer_can_submit_approve_and_see_every_stage_page(self):
-        # v2 steps: the pantry checker's question (the brief's "zipped shut" is offered as a still), the master-plate
-        # approval; since amendment 1 §3 no founder step — the customer's preview is the final check
+        # kitchen v3 steps: the waiter and the chef write the recipe; the customer approves it and receives the dish —
+        # no pantry question, no look / first-shot wait, no founder step
         jid = self._create()
         self.assertEqual(len(self.e.store.assets(jid, source="customer")), 2)
         self.assertIn(b"Understanding your brief", self.c.req("GET", f"/jobs/{jid}/details")["body"])
-        self.e.drain()
-        page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
-        self.assertIn(b"we need something from you", page)
-        n = len(self.e.store.artifact(jid, "feasibility")["alternatives"])
-        tok = self.c.csrf(f"/jobs/{jid}")
-        self.c.req("POST", f"/jobs/{jid}/input", {"csrf": tok, **{f"alt_{i}": "yes" for i in range(n)}}, files=[])
         self.assertEqual(self.e.front(jid), "awaiting_approval")
         page = self.c.req("GET", f"/jobs/{jid}/details")["body"]
         self.assertIn(b"Your plan", page)
@@ -98,14 +92,6 @@ class WebJourney(unittest.TestCase):
         tok = self.c.csrf(f"/jobs/{jid}")
         self.c.req("POST", f"/jobs/{jid}/approve", {"csrf": tok, "budget_usd": "15"})
         self.e.drain()
-        self.assertEqual(self.e.state(jid), "awaiting_master_approval")
-        tok = self.c.csrf(f"/jobs/{jid}")
-        self.c.req("POST", f"/jobs/{jid}/master", {"csrf": tok})
-        self.e.drain()
-        if self.e.state(jid) == "awaiting_taste":          # only when the film has a moving shot to taste
-            tok = self.c.csrf(f"/jobs/{jid}")
-            self.c.req("POST", f"/jobs/{jid}/taste", {"csrf": tok})
-            self.e.drain()
         self.assertEqual(self.e.state(jid), "ready_for_review")
         final = self.e.orch._final_assets(jid)[0]
         page = self.c.req("GET", f"/jobs/{jid}/details")["body"]

@@ -79,7 +79,26 @@ def quote(route: str, **params) -> Decimal:
     return Decimal(str(q.expected_cost_usd))
 
 
-def prompt_guard(prompt: str, *, exact_strings: list, forbidden_words: list, needs_no_lettering: bool = True):
+# Voice prices per character (kitchen v3). The route roster has no voice rows yet (adding one is a Controller decision),
+# so the product pins these from the saved price pages — eval/empirical-planning/price-pins-2026-09/:
+#   sarvam      sarvam-bulbul-v3/sarvam-api-pricing.html: "Text to Speech is priced at ₹3.00 per 1,000 characters"
+#               (USD at ₹83 = 0.0000361; rounded up to 0.00004)
+#   azure       azure-neural-tts-hi-in/...centralindia.json: "Neural HD Text to Speech Characters" USD 22 per 1M (the higher
+#               HD rate is used so standard neural voices are never under-reserved)
+#   elevenlabs  elevenlabs-direct: 1 credit per character; USD 0.0003 per character is a deliberate over-estimate
+#   google      Gemini speech is billed in audio tokens; USD 0.0002 per character is a deliberate over-estimate
+SPEECH_USD_PER_CHAR = {"sarvam": Decimal("0.00004"), "azure": Decimal("0.000022"), "elevenlabs": Decimal("0.0003"),
+                       "google": Decimal("0.0002")}
+
+
+def speech_price(provider: str, text: str) -> Decimal:
+    per = SPEECH_USD_PER_CHAR.get(provider)
+    if per is None:
+        raise GuardRefused(f"voice provider {provider} is unpriced; nothing sent")
+    return max(Decimal("0.001"), (per * len(text or "")).quantize(Decimal("0.000001")))
+
+
+def prompt_guard(prompt: str, *, exact_strings: list, forbidden_words: list, needs_no_lettering: bool = True, copy_lines=()):
     low = prompt.lower()
     for w in forbidden_words:
         if w and re.search(r"\b" + re.escape(w.lower()) + r"\b", low):
@@ -161,11 +180,21 @@ class Dispatcher:
         cost = quote("veo-3.1-fast-i2v", duration_s=duration_s)
         att = self.store.reserve(job_id, route="veo-3.1-fast-i2v", category="provider", amount_usd=cost, node_id=node_id,
                                  is_repair=is_repair)
+        silent = False
         with self.store.timed(job_id, "provider", f"{node_id} clip"):
             res = self.p.video_submit(prompt, image, duration_s, aspect, negative)
             if res.status == "pending":
                 self.store.mark_request(att, res.request_ref)
                 res = self.p.video_poll(res.request_ref)
+            if res.status != "ok" and "audio" in (res.message or "").lower() and "safety" in (res.message or "").lower():
+                # live 2026-09-25: the model's own AUDIO tripped its safety filter (the picture was fine, and a refusal is not
+                # billed). The film has its own music bed, so the same clip is asked for once more without generated sound.
+                silent = True
+                self.store.event(job_id, "system", "clip_audio_refused", {"node": node_id, "detail": (res.message or "")[:200]})
+                res = self.p.video_submit(prompt, image, duration_s, aspect, negative, generate_audio=False)
+                if res.status == "pending":
+                    self.store.mark_request(att, res.request_ref)
+                    res = self.p.video_poll(res.request_ref)
         if res.status != "ok":
             err = self._fail(att, res, cost)
             if err.failure_class == "provider_refusal":
@@ -174,7 +203,7 @@ class Dispatcher:
         self._count(job_id, node_id, "veo-3.1-fast-i2v", fp)
         aid = self._register(job_id, node_id, att, res, "video", "mp4",
                              {"prompt": prompt, "negative": negative, "duration_s": duration_s, "aspect": aspect,
-                              "route": "veo-3.1-fast-i2v", **(meta or {})})
+                              "route": "veo-3.1-fast-i2v", "generated_audio": not silent, **(meta or {})})
         self.store.settle(att, status="ok", settled_usd=cost, detail=f"{len(res.data)} bytes")
         return aid
 
@@ -192,6 +221,26 @@ class Dispatcher:
         self._count(job_id, node_id, "lyria", fp)
         aid = self._register(job_id, node_id, att, res, "audio", "mp3" if (res.content_type or "").endswith(("mpeg", "mp3")) else "wav",
                              {"prompt": prompt, "route": "lyria"})
+        self.store.settle(att, status="ok", settled_usd=cost)
+        return aid
+
+    # ── voice (kitchen v3: voice-over when the customer asks) ───────────────────────
+    def speech(self, job_id, node_id, *, provider: str, text: str, voice: str, language_code: str, settings: dict, ssml: str = "",
+               is_repair=False) -> str:
+        route = f"tts-{provider}"
+        fp = fingerprint(route, text=text, voice=voice, lang=language_code, settings=settings, ssml=ssml)
+        self._check_identical(job_id, node_id, route, fp)
+        cost = speech_price(provider, ssml if (provider == "azure" and ssml) else text)
+        att = self.store.reserve(job_id, route=route, category="provider", amount_usd=cost, node_id=node_id, is_repair=is_repair)
+        with self.store.timed(job_id, "provider", f"{node_id} voice"):
+            res = self.p.speech(provider, text, voice=voice, language_code=language_code, settings=settings, ssml=ssml)
+        if res.status != "ok":
+            raise self._fail(att, res, cost)
+        self._count(job_id, node_id, route, fp)
+        ext = "mp3" if (res.content_type or "").endswith(("mpeg", "mp3")) else "wav"
+        aid = self._register(job_id, node_id, att, res, "audio", ext,
+                             {"route": route, "provider": provider, "voice": voice, "language_code": language_code,
+                              "settings": settings, "text": text, "ssml": ssml})
         self.store.settle(att, status="ok", settled_usd=cost)
         return aid
 

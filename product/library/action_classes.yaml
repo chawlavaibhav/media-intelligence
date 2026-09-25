@@ -4,8 +4,8 @@
 # most restrictive classes come first.
 classes:
   - id: speech_or_lipsync
-    description: a person talks, sings, narrates, or moves their lips
-    patterns: ['\bspeak', '\btalk', '\bsing', '\bsays?\b', 'dialog', 'voice[- ]?over', 'lip[- ]?sync', 'narrat']
+    description: a person ON SCREEN talks, sings or moves their lips (a voice-over heard over the film is not this)
+    patterns: ['\bspeak', '\btalk', '\bsing', '\bsays?\b', 'dialog', 'lip[- ]?sync', 'to camera']
   - id: identifiable_person
     description: a recognisable real person or celebrity likeness
     patterns: ['celebrity', 'look[- ]?alike', 'shah ?rukh', 'virat', 'deepika']
@@ -48,6 +48,9 @@ classes:
     patterns: []
   - id: product_still_from_infographic_photo
     description: a product picture generated from an annotated, text-labelled infographic reference
+    patterns: []
+  - id: new_product_detail
+    description: the detailed side (cameras, logos, mechanisms, labels) of a product new to the picture model, drawn by a model
     patterns: []
   - id: none
     description: no action (end card, held frame)

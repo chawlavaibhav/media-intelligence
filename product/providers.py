@@ -256,6 +256,79 @@ class LiveProviders:
             return ProviderResult("failed", http_status=st, message=scrub(str(reply))[:600])
         return ProviderResult("ok", base64.b64decode(p0[k]), "audio/wav")
 
+    # Voice — kitchen v3 (founder 2026-09-25: voice-over when the customer asks; the head cook casts and configures it)
+    def speech(self, provider: str, text: str, *, voice: str, language_code: str, settings: dict, ssml: str = "") -> ProviderResult:
+        try:
+            if provider == "sarvam":
+                return self._sarvam(text, voice, language_code, settings)
+            if provider == "azure":
+                return self._azure_tts(text, voice, language_code, settings, ssml)
+            if provider == "google":
+                return self._gemini_tts(text, voice, settings)
+            if provider == "elevenlabs":
+                return self._eleven(text, voice, settings)
+        except (urllib.error.URLError, TimeoutError) as e:
+            return ProviderResult("failed", message=f"{provider}: {scrub(str(e))[:300]}")
+        return ProviderResult("failed", message=f"unknown voice provider {provider!r}")
+
+    def _sarvam(self, text, voice, lang, st):
+        key = self.s.secret("SARVAM_API_KEY")
+        if not key:
+            return ProviderResult("failed", message="SARVAM_API_KEY is not set")
+        body = {"text": text, "language_code": lang or "hi-IN", "speaker": (voice or "priya").lower(), "model": "bulbul:v3",
+                "pace": max(0.5, min(2.0, float(st.get("pace") or 1.0)))}
+        stc, reply = _http_json("POST", "https://api.sarvam.ai/text-to-speech", {"api-subscription-key": key}, body, timeout=120)
+        if stc != 200 or not isinstance(reply, dict) or not (reply.get("audios") or [None])[0]:
+            return ProviderResult("failed", http_status=stc, message=scrub(str(reply))[:400])
+        return ProviderResult("ok", base64.b64decode(reply["audios"][0]), "audio/wav", request_ref=reply.get("request_id"))
+
+    def _azure_tts(self, text, voice, lang, st, ssml):
+        key = self.s.secret("MI_AZURE_SPEECH_KEY") or self.s.secret("AZURE_OPENAI_API_KEY")
+        region = _env_region(self.s)
+        if not key:
+            return ProviderResult("failed", message="no Azure speech key (MI_AZURE_SPEECH_KEY)")
+        if not ssml or "<speak" not in ssml:
+            rate = f"{int(round((float(st.get('pace') or 1.0) - 1) * 100)):+d}%"
+            pitch = f"{int(round(float(st.get('pitch') or 0))):+d}%"
+            ssml = (f'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="{lang or "hi-IN"}">'
+                    f'<voice name="{voice or "hi-IN-SwaraNeural"}"><prosody rate="{rate}" pitch="{pitch}">{_xml(text)}</prosody></voice></speak>')
+        req = urllib.request.Request(f"https://{region}.tts.speech.microsoft.com/cognitiveservices/v1", data=ssml.encode("utf-8"),
+                                     method="POST", headers={"Ocp-Apim-Subscription-Key": key, "Content-Type": "application/ssml+xml",
+                                                             "X-Microsoft-OutputFormat": "riff-24khz-16bit-mono-pcm",
+                                                             "User-Agent": "aight-studio"})
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                return ProviderResult("ok", r.read(), "audio/wav")
+        except urllib.error.HTTPError as e:
+            return ProviderResult("failed", http_status=e.code, message=scrub(e.read().decode("utf-8", "replace"))[:400])
+
+    def _gemini_tts(self, text, voice, st):
+        model = _env_model("MI_GEMINI_TTS_MODEL", "gemini-2.5-flash-preview-tts")
+        say = (f"{st.get('style_prompt')}: " if st.get("style_prompt") else "") + text
+        body = {"contents": [{"parts": [{"text": say}]}],
+                "generationConfig": {"responseModalities": ["AUDIO"],
+                                     "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice or "Kore"}}}}}
+        stc, reply = _http_json("POST", f"{self.GEMINI}/models/{model}:generateContent", {"x-goog-api-key": self._gemini_key()}, body, timeout=180)
+        try:
+            part = reply["candidates"][0]["content"]["parts"][0]["inlineData"]
+        except (KeyError, IndexError, TypeError):
+            return ProviderResult("failed", http_status=stc, message=scrub(str(reply))[:400])
+        return ProviderResult("ok", _pcm_to_wav(base64.b64decode(part["data"]), 24000), "audio/wav")
+
+    def _eleven(self, text, voice, st):
+        key = self.s.secret("ELEVENLABS_API_KEY")
+        if not key:
+            return ProviderResult("failed", message="ELEVENLABS_API_KEY is not set")
+        body = {"text": text, "model_id": "eleven_multilingual_v2",
+                "voice_settings": {"stability": 0.45, "similarity_boost": 0.8, "style": 0.3, "speed": float(st.get("pace") or 1.0)}}
+        req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128",
+                                     data=json.dumps(body).encode(), method="POST",
+                                     headers={"xi-api-key": key, "Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                return ProviderResult("ok", r.read(), "audio/mpeg")
+        except urllib.error.HTTPError as e:
+            return ProviderResult("failed", http_status=e.code, message=scrub(e.read().decode("utf-8", "replace"))[:400])
 
 # ── Simulated providers: real files, no network, USD 0 ──────────────────────────────────────────
 def _png(w: int, h: int, seed: int) -> bytes:
@@ -293,6 +366,8 @@ class SimulatedProviders:
                 return ProviderResult("failed", timed_out=True, message="simulated timeout")
             if f == "crash":
                 raise KeyboardInterrupt("simulated worker crash during provider call")
+            if f == "audio_refusal":                   # live 2026-09-25: Veo's audio safety filter
+                return ProviderResult("failed", message="safety_filtered: ['We encountered an issue with the audio for your prompt']")
             return ProviderResult("failed", http_status=int(f), message=f"simulated HTTP {f}")
         return None
 
@@ -336,6 +411,37 @@ class SimulatedProviders:
         if f:
             return f
         return ProviderResult("ok", _wav(32.0), "audio/wav", request_ref="sim-music")
+
+    def speech(self, provider, text, *, voice, language_code, settings, ssml=""):
+        f = self._fault("speech")
+        if f:
+            return f
+        return ProviderResult("ok", _wav(max(1.0, len(text) / 14.0)), "audio/wav", request_ref=f"sim-voice-{provider}")
+
+
+def _xml(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _env_region(settings) -> str:
+    import os
+    if os.environ.get("MI_AZURE_SPEECH_REGION"):
+        return os.environ["MI_AZURE_SPEECH_REGION"]
+    ep = os.environ.get("AZURE_OPENAI_ENDPOINT") or ""
+    return "eastus2" if "eastus2" in ep or not ep else os.environ.get("MI_AZURE_REGION", "eastus2")
+
+
+def _env_model(name: str, default: str) -> str:
+    import os
+    return os.environ.get(name) or default
+
+
+def _pcm_to_wav(pcm: bytes, rate: int) -> bytes:
+    import io, wave
+    b = io.BytesIO()
+    with wave.open(b, "wb") as w:
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate); w.writeframes(pcm)
+    return b.getvalue()
 
 
 def providers_for(settings: Settings):

@@ -1,21 +1,24 @@
-# Ingredient check — the small taster (spec §4.7). v1 INSPECT + previous/master plate comparison.
+# Ingredient check — the head cook's tasting skill (kitchen v3; was the small taster). v2 adds the repair decision and a
+# sharper prompt for a retake, so the head cook repairs a take instead of code freezing it.
+# v5 (2026-09-25): `must_survive_kept` — did the take keep what the chef said must survive this shot (recipe v5)?
 form: ingredient_check
-version: 1
-written_by: small_taster
+version: 5
+written_by: head_cook
 schema:
   type: object
-  required: [usable, unsure, required_action_occurred, end_state_reached, product_identity_ok, character_consistent,
+  required: [usable, unsure, must_survive_kept, required_action_occurred, end_state_reached, product_identity_ok, character_consistent,
              matches_master_plate, matches_previous_plate, differences, prohibited_present, unrequested_elements,
-             lettering_present, best_segment, notes]
+             lettering_present, best_segment, notes, repair, better_prompt]
   properties:
     usable: {type: boolean}
     unsure: {type: boolean}
+    must_survive_kept: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
     required_action_occurred: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
-    end_state_reached: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
-    product_identity_ok: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
-    character_consistent: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
-    matches_master_plate: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
-    matches_previous_plate: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
+    end_state_reached: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
+    product_identity_ok: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
+    character_consistent: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
+    matches_master_plate: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
+    matches_previous_plate: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
     differences: {type: array, items: {type: string}}
     prohibited_present: {type: array, items: {type: string}}
     unrequested_elements: {type: array, items: {type: string}}
@@ -25,3 +28,6 @@ schema:
       required: [in_s, out_s]
       properties: {in_s: {type: number}, out_s: {type: number}}
     notes: {type: string}
+    repair: {type: string, enum: [keep, retake, edit, restage, use_photo, tell_customer]}
+    better_prompt: {type: string}
+    better_picture_prompt: {type: string}

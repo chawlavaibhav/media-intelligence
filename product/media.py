@@ -286,13 +286,17 @@ def compose(*, canvas: tuple, out: Path, plate: Path | None = None, background_h
 # ── film ─────────────────────────────────────────────────────────────────────────────────────────
 def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | None, out: Path, size: tuple,
                   card_s: float, workdir: Path, fps: int = 24, xfade: float = 0.6, audio_join: float = 0.06,
-                  music_from_s: float = 0.0) -> dict:
+                  music_from_s: float = 0.0, voice: Path | None = None) -> dict:
     """segments: [{"clip": path, "in": s, "use": s}]; supers: [{"png": path, "t_in": s, "t_out": s}] (full-frame RGBA)."""
     W, H = size
     workdir.mkdir(parents=True, exist_ok=True)
     n = len(segments)
     total_v = sum(s["use"] for s in segments)
     total = total_v + card_s
+    # a line belongs to its shot: it is gone before the dip into the end card starts (live 2026-09-25: the last line hung
+    # over the end card)
+    supers = [{**sp, "t_out": min(float(sp["t_out"]), total_v - xfade - 0.05)} for sp in supers
+              if min(float(sp["t_out"]), total_v - xfade - 0.05) - float(sp["t_in"]) > 0.4]
     inputs, f = [], []
     for s in segments:
         inputs += ["-i", str(s["clip"])]
@@ -306,9 +310,11 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
         f.append(f"[{i}:v]trim={t0}:{t0 + use},setpts=PTS-STARTPTS,scale={W}:{H}:force_original_aspect_ratio=increase:"
                  f"flags=lanczos:out_range=tv,crop={W}:{H},setsar=1,fps={fps},format=yuv420p[v{i}]")
         tail = audio_join if i < n - 1 else 0
-        if probe(s["clip"])["has_audio"]:
+        if probe(s["clip"])["has_audio"] and not s.get("mute"):
+            # a very short fade at both ends of every clip's own sound (inside the 60 ms cross-fade): an abrupt edge pops at the cut,
+            # and a longer fade leaves a hole the join check rightly fails (live 2026-09-25)
             f.append(f"[{i}:a]atrim={t0}:{t0 + use + tail},asetpts=PTS-STARTPTS,aresample=48000,"
-                     f"aformat=channel_layouts=stereo[a{i}]")
+                     f"aformat=channel_layouts=stereo,afade=t=in:d=0.005,afade=t=out:st={max(0.0, use + tail - 0.01):.3f}:d=0.01[a{i}]")
         else:
             f.append(f"anullsrc=r=48000:cl=stereo,atrim=0:{use + tail}[a{i}]")
     f.append("".join(f"[v{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=0,settb=AVTB[vcat]")
@@ -317,6 +323,15 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
         f.append(f"[{prev}][a{i}]acrossfade=d={audio_join}:c1=tri:c2=tri[ax{i}]"); prev = f"ax{i}"
     f.append(f"[{prev}]anull[acat]")
     f.append(f"[{iec}:v]scale={W}:{H}:out_range=tv,setsar=1,fps={fps},format=yuv420p,settb=AVTB[ec]")
+    # the scene cross-fades into the end card's OWN BACKGROUND COLOUR, then the words fade in over it (live 2026-09-25: a
+    # plain dissolve ghosted the logo over the last scene; a dip to black tripped the no-black-picture check)
+    try:
+        from PIL import Image
+        bg = Image.open(endcard).convert("RGB").getpixel((4, 4))
+    except Exception:
+        bg = (16, 16, 16)
+    bg_hex = "0x%02x%02x%02x" % bg
+    f[-1] = f[-1].replace("[ec]", f",fade=t=in:st={xfade:.3f}:d=0.45:color={bg_hex}[ec]") if f[-1].endswith("[ec]") else f[-1]
     f.append(f"[vcat][ec]xfade=transition=fade:duration={xfade}:offset={total_v - xfade:.3f}[vx]")
     cur = "vx"
     for j, sp in enumerate(supers):
@@ -333,7 +348,14 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
         f.append(f"[{im}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:{span:.3f},asetpts=PTS-STARTPTS,"
                  f"afade=t=in:d=1.5,afade=t=out:st={max(0.0, span - 1.8):.2f}:d=1.8,adelay={int(music_from_s * 1000)}|{int(music_from_s * 1000)},"
                  f"volume=-9dB[bed]")
-        f.append(f"[acat]apad=whole_dur={total:.3f},volume=-4dB[amb];[amb][bed]amix=inputs=2:duration=first:normalize=0[amix]")
+        if voice:                   # kitchen v3: the voice-over leads; the music bed and the scene sound sit under it
+            iv = im + 1
+            inputs += ["-i", str(voice)]
+            f.append(f"[{iv}:a]aresample=48000,aformat=channel_layouts=stereo,apad=whole_dur={total:.3f},atrim=0:{total:.3f}[vo]")
+            f.append(f"[bed]volume=-6dB[bedlo];[acat]apad=whole_dur={total:.3f},volume=-10dB[amb];"
+                     f"[amb][bedlo][vo]amix=inputs=3:duration=first:normalize=0[amix]")
+        else:
+            f.append(f"[acat]apad=whole_dur={total:.3f},volume=-4dB[amb];[amb][bed]amix=inputs=2:duration=first:normalize=0[amix]")
     else:
         f.append(f"[acat]apad=whole_dur={total:.3f},volume=-4dB[amix]")
     raw = workdir / "assembled-raw.mov"

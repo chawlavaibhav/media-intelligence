@@ -110,7 +110,7 @@ class App:
             ("GET", r"/shelf", self.shelf_page), ("POST", r"/shelf/(?P<sid>shf_\w+)", self.shelf_action),
             ("GET", r"/assets/(?P<aid>ast_\w+)(?P<dl>/download)?", self.asset),
             ("GET", r"/ops", self.ops_home), ("GET", r"/ops/jobs/(?P<jid>job_\w+)", self.ops_job),
-            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override|override_recipe|override_final|close|approve_master)", self.ops_action),
+            ("POST", r"/ops/jobs/(?P<jid>job_\w+)/(?P<action>pause|resume|waive|release|retry|attest|override|override_final|close|approve_master)", self.ops_action),
             ("GET", r"/ops/lessons", self.ops_lessons), ("POST", r"/ops/lessons/(?P<lid>lsn_\w+)", self.ops_lesson_action),
             ("GET", r"/ops/digest", self.ops_digest), ("POST", r"/ops/lessons/(?P<lid>lsn_\w+)/undo", self.ops_lesson_undo),
             ("GET", r"/ops/rulebook", self.ops_rulebook), ("GET", r"/ops/library", self.ops_library),
@@ -399,7 +399,8 @@ class App:
             for x in req.files:
                 self.svc.add_upload(u, jid, role="product", filename=x["filename"], data=x["data"], label=f.get("label") or None)
             feas = self.store.artifact(jid, "feasibility") or {}
-            accepted = [{"instead_of": a["for_action"], "use": a["alternative"]} for i, a in enumerate(feas.get("alternatives", []))
+            accepted = [{"instead_of": a["for_action"], "use": a["alternative"], **({"action_class": a["action_class"]} if a.get("action_class") else {})}
+                        for i, a in enumerate(feas.get("alternatives", []))
                         if f.get(f"alt_{i}") == "yes"]
             o.provide_input(jid, by=who, accepted_alternatives=accepted, facts=[f.get("facts", "")], note=f.get("note", ""))
         elif action == "master":
@@ -454,7 +455,7 @@ class App:
         req_checks = required(o, jid) if st.artifact(jid, "understanding") and st.artifact(jid, "recipe") else {}
         forms = {k: st.artifact(jid, k) for k in ("order_slip", "understanding", "feasibility", "recipe", "recipe_check", "production_log",
                                                   "final_review", "lessons", "change_request")}
-        trays = {w: st.artifact(jid, f"tray:{w}") for w in ("pantry_checker", "chef", "recipe_checker")}
+        trays = {w: st.artifact(jid, f"tray:{w}") for w in ("chef",)}
         v.update(events=st.events(jid), attempts=st.attempts(jid), llm=st.llm_calls(jid), assets=st.assets(jid),
                  gateway=[verify.gateway(st, jid, a, req_checks) for a in finals], forms=forms, trays=trays,
                  overrides=st.overrides(jid), founder_decision=st.artifact(jid, "founder_decision"),
@@ -483,8 +484,6 @@ class App:
                                 outcome=f.get("outcome", "PASS"))
             elif action == "release":
                 o.release(jid, session=req.session)
-            elif action in ("override", "override_recipe"):
-                o.override_recipe(jid, session=req.session, reason=f.get("reason", ""))
             elif action == "override_final":
                 o.override_final_review(jid, session=req.session, reason=f.get("reason", ""))
             elif action == "approve_master":
@@ -547,7 +546,7 @@ class App:
         rb = self.svc.orch.rulebook
         cards = [(w, rb.card(w), rb.history(w)) for w in rulebook.AI_WORKERS + rulebook.CODE_WORKERS]
         return self.page("ops_rulebook.html", req, cards=cards, forms=rulebook.forms(), send_backs=flow.SEND_BACKS, models=self.s.models,
-                         qualified=tuple(j for j in ("recipe_checker", "small_taster", "big_taster") if self.svc.orch.qualified(j)))
+                         qualified=tuple(j for j in ("head_cook", "gatekeeper") if self.svc.orch.qualified(j)))
 
     def ops_library(self, req):
         self.user(req, "operator")
