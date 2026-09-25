@@ -321,15 +321,16 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
         f.append(f"[{prev}][a{i}]acrossfade=d={audio_join}:c1=tri:c2=tri[ax{i}]"); prev = f"ax{i}"
     f.append(f"[{prev}]anull[acat]")
     f.append(f"[{iec}:v]scale={W}:{H}:out_range=tv,setsar=1,fps={fps},format=yuv420p,settb=AVTB[ec]")
-    # dip through the end card's own tone, never a see-through dissolve (live 2026-09-25: the logo ghosted over the last
-    # scene and read as a render glitch)
+    # the scene cross-fades into the end card's OWN BACKGROUND COLOUR, then the words fade in over it (live 2026-09-25: a
+    # plain dissolve ghosted the logo over the last scene; a dip to black tripped the no-black-picture check)
     try:
-        from PIL import Image, ImageStat
-        lum = sum(ImageStat.Stat(Image.open(endcard).convert("L")).mean) / 255.0
+        from PIL import Image
+        bg = Image.open(endcard).convert("RGB").getpixel((4, 4))
     except Exception:
-        lum = 0.0
-    dip = "fadewhite" if lum > 0.6 else "fadeblack"
-    f.append(f"[vcat][ec]xfade=transition={dip}:duration={xfade}:offset={total_v - xfade:.3f}[vx]")
+        bg = (16, 16, 16)
+    bg_hex = "0x%02x%02x%02x" % bg
+    f[-1] = f[-1].replace("[ec]", f",fade=t=in:st={xfade:.3f}:d=0.45:color={bg_hex}[ec]") if f[-1].endswith("[ec]") else f[-1]
+    f.append(f"[vcat][ec]xfade=transition=fade:duration={xfade}:offset={total_v - xfade:.3f}[vx]")
     cur = "vx"
     for j, sp in enumerate(supers):
         k = iec + 1 + j
