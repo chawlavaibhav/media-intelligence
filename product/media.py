@@ -311,9 +311,10 @@ def assemble_film(*, segments: list, endcard: Path, supers: list, music: Path | 
                  f"flags=lanczos:out_range=tv,crop={W}:{H},setsar=1,fps={fps},format=yuv420p[v{i}]")
         tail = audio_join if i < n - 1 else 0
         if probe(s["clip"])["has_audio"] and not s.get("mute"):
-            # a short fade at both ends of every clip's own sound: an abrupt start or stop pops at the cut (live 2026-09-25)
+            # a very short fade at both ends of every clip's own sound (inside the 60 ms cross-fade): an abrupt edge pops at the cut,
+            # and a longer fade leaves a hole the join check rightly fails (live 2026-09-25)
             f.append(f"[{i}:a]atrim={t0}:{t0 + use + tail},asetpts=PTS-STARTPTS,aresample=48000,"
-                     f"aformat=channel_layouts=stereo,afade=t=in:d=0.03,afade=t=out:st={max(0.0, use + tail - 0.05):.3f}:d=0.05[a{i}]")
+                     f"aformat=channel_layouts=stereo,afade=t=in:d=0.005,afade=t=out:st={max(0.0, use + tail - 0.01):.3f}:d=0.01[a{i}]")
         else:
             f.append(f"anullsrc=r=48000:cl=stereo,atrim=0:{use + tail}[a{i}]")
     f.append("".join(f"[v{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=0,settb=AVTB[vcat]")
