@@ -65,7 +65,7 @@ judge sees the best one, chosen by the writer from a contact sheet. The pick rul
 
 ---
 
-## P+Canon: the same as P, plus Canon shape v1 in the writer's context
+## P+Canon: the same as P, plus Canon shape v1 in the writer's context (PHASE 2, later; do not run in phase 1)
 
 This is the **only** difference from P, and it applies to steps 2 and 2b:
 

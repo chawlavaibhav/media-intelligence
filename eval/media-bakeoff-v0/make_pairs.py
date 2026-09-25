@@ -19,7 +19,10 @@ from pathlib import Path
 
 import yaml
 
-COMPARISONS = [("P", "B0"), ("P", "B1"), ("P+Canon", "P"), ("P+Canon", "B1")]
+import os
+# Phase 1 (tonight): P vs B0, P vs B1, B1 vs B0. Phase 2 (Canon, later): set BAKEOFF_PHASE=2.
+COMPARISONS = ([("P+Canon", "P"), ("P+Canon", "B1")] if os.environ.get("BAKEOFF_PHASE") == "2"
+               else [("P", "B0"), ("P", "B1"), ("B1", "B0")])
 REPEAT_SHARE = 0.10
 
 
