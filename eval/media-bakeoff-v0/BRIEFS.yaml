@@ -1,0 +1,69 @@
+# Media bake-off v0 — 16 briefs (4 practice + 12 exam). DRAFT: the founder approves or swaps before any spend.
+# Rules: the customer's words verbatim; must-haves and deal-breakers written BEFORE anything is generated; the pipeline
+# never sees must_haves / deal_breakers / price_anchor (they are for the judge). Once approved: hash, and never edit.
+# `verbatim: TODO` = the laptop session fills it from the source named (studio-jobs DB, job branch, or the founder).
+
+practice:   # tuning only — never judged as exam
+  - {id: T1, class: S1_product_ad, source: "Upwork portfolio tile (Dhaba 47 offer)", verbatim: TODO}
+  - {id: T2, class: M1_animate, source: "animate the accepted P1 Mokobara poster", verbatim: TODO}
+  - {id: T3, class: F1_story_film, source: "Aight tea-seller extra biscuit (job_20260924_005c1c24)", verbatim: TODO}
+  - {id: T4, class: S2_edit, source: "any customer product photo: 'put this on a festive Diwali table'", verbatim: TODO}
+
+exam:
+  # --- S1 product ad still, exact copy (4) ---
+  - id: E01
+    class: S1_product_ad
+    source: "P1 Mokobara launch poster (job_20260923_6720871c) — the one accepted P1 output"
+    verbatim: TODO
+    assets: [mokobara product photos, logo]
+    price_anchor_inr: 799
+    must_haves: [real bag as in photo, exact headline, logo as supplied, 1:1 and 4:5]
+    deal_breakers: [redrawn/changed bag, misspelt copy, text over the product]
+  - {id: E02, class: S1_product_ad, source: "Jaipur sweet shop Diwali offer poster (Hindi + English copy)", verbatim: TODO, price_anchor_inr: 499,
+     must_haves: [exact Hindi offer line, product appetising, shop name], deal_breakers: [wrong Devanagari, fake-looking food]}
+  - {id: E03, class: S1_product_ad, source: "CANON-011 marketplace brief (real Upwork job, product-photo ad)", verbatim: TODO, price_anchor_inr: 799}
+  - {id: E04, class: S1_product_ad, source: "prospect D2C brand from the prospect list, own product photo", verbatim: TODO, price_anchor_inr: 799}
+  # --- S2 edit my photo (1) ---
+  - {id: E05, class: S2_edit, source: "real customer product photo + 'change only the background to X'", verbatim: TODO, price_anchor_inr: 299,
+     must_haves: [product pixels unchanged, requested change done], deal_breakers: [product altered]}
+  # --- M1 animate my image (2) ---
+  - {id: E06, class: M1_animate, source: "animate an accepted portfolio still (5–8 s, no speech)", verbatim: TODO, price_anchor_inr: 999,
+     must_haves: [moves naturally, product unchanged], deal_breakers: [product morphs, text appears]}
+  - {id: E07, class: M1_animate, source: "animate a customer product photo for an Instagram reel", verbatim: TODO, price_anchor_inr: 999}
+  # --- M2 product film, no people (1) ---
+  - {id: E08, class: M2_product_film, source: "condensation-bottle / earbuds product film (Lab brief)", verbatim: TODO, price_anchor_inr: 1999}
+  # --- F1 story films with people (4) — includes the two we lost to direct Veo ---
+  - id: E09
+    class: F1_story_film
+    source: "iPhone Duo (24 Sep, S-MAIN 16:38 IST)"
+    verbatim: "Make a 15 sec ad copy for the newest Iphone Duo for the non tech persons who are not very aware about features, looks, style. Make sure you highlight them. it should not look like ai slop. target audience - 50+ age group male, female in india."
+    assets: [Apple product photos used on 24 Sep]
+    price_anchor_inr: 4999
+    must_haves: [phone looks exactly like the real one, the 'small in pocket / big when opened' feature shown, 50+ Indian characters, feels like a video not a slideshow]
+    deal_breakers: [phone redrawn wrongly, slideshow of stills, unreadable small text]
+    existing_B1: "iphone-duo-ad/iPhone-Duo-15s-Veo-9x16.mp4 (direct-Veo, 24 Sep)"
+  - id: E10
+    class: F1_story_film
+    source: "Ascend Foods (25 Sep 17:10 IST)"
+    verbatim: "I run a company by the name Ascend foods. you can check my website. Its a B2B quick commerce company dealing in grocery prodcuts. I am looking to an ad film that i can share with retailers- kirana stores in gurgaon. The ad film talks about how they can get all the products they want from us in 4 hours by placing an order from our app. It will save them shelf space and money which is otherwsie get blocked in holding extra inventory. this extra saving can be invested by them to build more business and earn a better life"
+    answers: "https://ascendfoods.in/ ; no logo/app screenshots (make placeholders) ; Hindi ; CTA: download link on WhatsApp"
+    price_anchor_inr: 4999
+    must_haves: [kirana owner problem shown, order-on-app moment, delivery, better life SHOWN not written, Hindi]
+    deal_breakers: [overlapping or robotic voice, "promise that contradicts the website (60 min vs 4 h - flag it)"]
+    existing_B1: "ascend-ad/Ascend_Kirana_Ad.mp4 (direct-Veo, 25 Sep)"
+  - id: E11
+    class: F1_story_film
+    source: "Mousi Kitchen ramen (25 Sep 19:33 IST)"
+    verbatim: "make an ad for a indianised ramen bar. my girlfriedn has started- making ramen wih indiian fusiin)flavours)"
+    answers: "video, mousi kitchen, ramen tandoori, ramen cream and onion, ramen punjabi, ramen tadka and ramen afghani; no photos, make them yourself. home delivery on instagram; use a placeholder handle, gurgaon"
+    price_anchor_inr: 2999
+    must_haves: [food looks delicious and Indian-fusion, brand name correct, Instagram delivery ask, 9:16 15 s]
+    deal_breakers: [brand name misspelt in frame, unappetising food]
+  - id: E12
+    class: F1_story_film
+    source: "Mokobara castaway (21 Sep) — accepted v2 exists as a hand-made reference"
+    verbatim: "lets make an ad with mokobara. i would preferably give it the odysey movie angel. the proatagonist had mokbara bags. the protagonist found his mokobara bag, while he was on the island where he was kept for years. in that bag he founds her wives photo and a lot of stuff that he could use to go back. he packs food and stuff and goes back. would be funny that he could keep his arms in the bag and food and so much stuff. Avoid getting copyright violoations from odysssey."
+    assets: [mokobara product photos]
+    price_anchor_inr: 9999
+    must_haves: [arms-in-the-bag gag lands, wife's photo moment, bag intact and identical in every shot, journey home]
+    deal_breakers: [bag torn/changed colour, objects appearing twice, slideshow]
