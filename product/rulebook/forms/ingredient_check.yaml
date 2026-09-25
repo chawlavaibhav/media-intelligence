@@ -12,11 +12,11 @@ schema:
     usable: {type: boolean}
     unsure: {type: boolean}
     required_action_occurred: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
-    end_state_reached: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
-    product_identity_ok: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
-    character_consistent: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
-    matches_master_plate: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
-    matches_previous_plate: {type: string, enum: ["yes", "no", n/a, cannot_determine]}
+    end_state_reached: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
+    product_identity_ok: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
+    character_consistent: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
+    matches_master_plate: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
+    matches_previous_plate: {type: string, enum: ["yes", "no", partial, n/a, cannot_determine]}
     differences: {type: array, items: {type: string}}
     prohibited_present: {type: array, items: {type: string}}
     unrequested_elements: {type: array, items: {type: string}}

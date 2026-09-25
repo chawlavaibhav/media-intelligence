@@ -673,9 +673,9 @@ def _without_sound(text: str) -> str:
 
 
 def _usable(v) -> bool:
-    return bool(v.get("usable")) and v.get("lettering_present") != "yes" and v.get("product_identity_ok") != "no" \
-        and v.get("matches_master_plate") != "no" and v.get("matches_previous_plate") != "no" \
-        and v.get("required_action_occurred") != "no" and v.get("end_state_reached") != "no" and not v.get("prohibited_present")
+    return bool(v.get("usable")) and v.get("lettering_present") != "yes" and v.get("product_identity_ok") not in ("no", "partial") \
+        and v.get("matches_master_plate") not in ("no", "partial") and v.get("matches_previous_plate") not in ("no", "partial") \
+        and v.get("required_action_occurred") != "no" and v.get("end_state_reached") not in ("no", "partial") and not v.get("prohibited_present")
 
 
 def _rejected(k, job_id, node_id, aid, verdict) -> str:
