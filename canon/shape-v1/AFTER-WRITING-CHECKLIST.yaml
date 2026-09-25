@@ -1,0 +1,33 @@
+# Canon shape v1 — piece 3 of 5: AFTER-WRITING CHECKLIST
+# PROPOSED 2026-09-25, not adopted. Derived from the accepted library + the 22-Sep failure atlas.
+#
+# How it is used:
+#   1. The writer writes freely and fills REQUIRED-DECISIONS.
+#   2. The SAME writer (or a second strong model) answers each question YES / NO with one line of evidence
+#      quoted from its own treatment.
+#   3. For every NO, the writer either revises or keeps it with a one-line reason ("the brief asks for no logo").
+#   4. It NEVER blocks, never deletes a moment, never swaps motion for a still. (Blocking is reserved for
+#      measured code checks on the rendered file — text bounds, contrast, OCR, motion, audio fit, loudness.)
+#
+# Why: models skip what they know when writing forward; checklist-guided revision works where
+# "review yourself" does not (TICK/STICK arXiv 2410.03608; RLCF arXiv 2507.18624). Items are the Canon claims
+# producers cited on 3+ of 5 real jobs, plus the writer-side modes of the failure atlas (B4 "the plan never
+# said it", B6 "not good enough"). Measurable items (contrast 4.5:1, safe areas, screen direction in the cut)
+# are NOT here — they belong to code checks.
+
+questions:
+  - {id: C01, q: "Can you say the idea in one sentence, and would it be wrong for any other product?", canon: [sk_hea_mts_0009, sk_ogl_c003_0014]}
+  - {id: C02, q: "Is there a real obstacle or tension before the product appears (not just life after purchase)?", canon: [sk_whip_0011]}
+  - {id: C03, q: "Is the customer the hero and the brand the guide/enabler (not the brand bragging)?", canon: [sk_sb_c003_0008, sk_whip_0015]}
+  - {id: C04, q: "Would the first 2 seconds stop a thumb — mid-action, a close-up, or a bold image?", canon: [sk_abcd_0007, sk_abcd_0006]}
+  - {id: C05, q: "Is the brand or product seen early, again later, and through more than one kind of asset — so a viewer could not credit a competitor?", canon: [sk_ogx_0039, sk_abcd_0010, sk_abcd_0011, sk_abcd_0013]}
+  - {id: C06, q: "Does the film make the viewer FEEL something, and is each scene's feeling stated and shown (not a feature list)?", canon: [sk_murch_c003_0020], atlas: ["overall verdict not good enough"]}
+  - {id: C07, q: "Is the product the hero of at least one scene — shown doing the thing that matters?", canon: [sk_ogl_c003_0014, sk_hop_sa_0026]}
+  - {id: C08, q: "Does every scene add new information, and is every cut motivated?", canon: [sk_gote_c003_0004, sk_gote_c003_0006]}
+  - {id: C09, q: "Is every must-have from the brief SHOWN on screen in a specific scene (not only written in text or voice)?", atlas: ["mandatory event never happens on screen", "'better life' only ever written, never shown (Ascend)"]}
+  - {id: C10, q: "Does each scene ask for only one action the video model can do in that time?", atlas: ["route cannot meet the demand", "prompt instruction ignored by the model"]}
+  - {id: C11, q: "Will the payoff and the product read clearly on a phone screen (size, time on screen)?", atlas: ["effect or payoff reads weak at phone size", "proof or subject reads too small"]}
+  - {id: C12, q: "Is the next step clear and carried by picture, voice or text — and does it end on the product?", canon: [sk_abcd_0019, sk_abcd_0021, sk_abcd_0026]}
+  - {id: C13, q: "Is it written for one typical buyer in THIS market (who, where, what they worry about)?", canon: [sk_hop_sa_0014], see: "GAP-CARD.md for the market-specific knowledge the model lacks"}
+  - {id: C14, q: "Does anything shown or said go beyond the product facts you listed (D7)?", atlas: ["picture depicts a capability the product lacks"]}
+  - {id: C15, q: "Is this different from the last pieces we made (casting, music, setting, structure)?", atlas: ["overnight films: same 'Meera', same piano, same shape"]}

@@ -1,0 +1,68 @@
+# Canon shape v1 — piece 1 of 5: REQUIRED DECISIONS (the writer's output form)
+# PROPOSED 2026-09-25, not adopted. Derived from the accepted library; the library is unchanged.
+#
+# Why this piece exists: a strong model already KNOWS most of the craft (see the Q&A knowledge test,
+# eval/canon-qa-knowledge-2026-09-25/) but SKIPS it while writing. A required field forces the decision
+# at the moment of writing. Evidence that forcing works: CQ-001 (feeling/framing/impact per beat: +7 blind,
+# US$0.067) and the blind board comparison (winners won on first_frame, one job per clip, declared
+# deviations — "none of them is knowledge").
+#
+# Rules for this form (so it does not become the kitchen's 20-field form-filler):
+#   - at most 8 top-level decisions + one short block per scene;
+#   - every field is a DECISION, not a restatement of the brief;
+#   - the writer writes the whole treatment in prose FIRST, then fills this form from it;
+#   - code only checks that fields exist and are non-empty; it never edits them.
+
+decisions:
+  - id: D1_idea
+    ask: "The idea in one sentence — a specific moment in which this product matters. Not a feature list."
+    why: "Stated core by exclusion; no dull products, only dull writers."
+    canon: [sk_hea_mts_0009, sk_ogl_c003_0014]
+    atlas: ["overall verdict not good enough (B6)"]
+
+  - id: D2_conflict
+    ask: "What stands in the way (the problem, obstacle or tension) before the product enters?"
+    why: "A story needs an opposing force; briefs that show only life-after-purchase short-circuit it."
+    canon: [sk_whip_0011]
+
+  - id: D3_roles
+    ask: "Who is the hero (the customer/person) and what role does the brand play (the guide/enabler)?"
+    canon: [sk_sb_c003_0008, sk_whip_0015]
+
+  - id: D4_opening
+    ask: "The first 2 seconds: what is on screen? (mid-action, a close-up, or a bold image — say which)"
+    canon: [sk_abcd_0007, sk_abcd_0006]
+
+  - id: D5_brand
+    ask: "When is the brand/product first seen (second), where does it recur, and through which kinds of asset (product shot, pack, logo, spoken name, sound)?"
+    why: "By default viewers remember the ad and forget the brand; attribution must be forced."
+    canon: [sk_ogx_0039, sk_abcd_0010, sk_abcd_0011, sk_abcd_0013, sk_abcd_0012]
+
+  - id: D6_ask_and_end
+    ask: "What should the viewer do next, how is it carried (picture / voice / text), and what is the final frame? (default: end on the product)"
+    canon: [sk_abcd_0019, sk_abcd_0020, sk_abcd_0021, sk_abcd_0026]
+
+  - id: D7_product_truth
+    ask: "Every product fact the film shows or implies, each with its source (customer photo, product page, customer answer). Nothing else may be shown."
+    atlas: ["picture depicts a capability the product lacks (B5)", "board asserted a zip the bag does not have (MDR8-03)"]
+
+  - id: D8_deviations
+    ask: "Anything in the brief you are changing or not doing, and why (model limit, format, legal)."
+    why: "Declared deviations distinguished the winning boards in the blind comparison."
+
+per_scene:        # one block per scene (a whole 8-s scene for Veo-type video; one still for image jobs)
+  - id: S1_feeling
+    ask: "The one emotion the viewer should feel here."
+    canon: [sk_murch_c003_0020]
+  - id: S2_first_frame
+    ask: "The opening picture of the scene — it must already contain the idea of the scene (not an ordinary state the motion has to rescue)."
+    atlas: ["mandatory event never happens on screen (B2)", "D1 gag never landed because the still showed ordinary rummaging (Mokobara)"]
+  - id: S3_one_action
+    ask: "The ONE action from start to end in this scene, and how long it takes."
+    atlas: ["route cannot meet the demand (B7)", "3.5-s clip asked for wade + board + two strokes (Mokobara D3)"]
+  - id: S4_new_information
+    ask: "What the viewer learns here that they did not know before; why we leave the previous scene now."
+    canon: [sk_gote_c003_0004, sk_gote_c003_0006]
+  - id: S5_impact
+    ask: "How the scene lands (the payoff), and is it big enough to read on a phone?"
+    atlas: ["effect or payoff reads weak at phone size (B6)", "proof or subject reads too small (B6)"]
