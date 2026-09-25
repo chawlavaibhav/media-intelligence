@@ -207,7 +207,7 @@ def ad_structure(direction: dict, media_kind: str, has_logo: bool) -> dict:
 
 
 def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple, planned_s: float | None = None,
-                card_in_s: float | None = None) -> list:
+                card_in_s: float | None = None, music: Path | None = None, music_from_s: float = 0.0) -> list:
     rows = []
     if not media.have_ffmpeg():
         for cid, ctl in [("container_edit_lists", "CONTAINER_EDIT_LIST_CHECK"), ("loudness_true_peak", "CODEC_TRUE_PEAK_MARGIN"),
@@ -267,7 +267,19 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
             unmeasured.append(t)
             continue
         hole = min(before, later) - after
-        ev.append({"t": t, "before_db": before, "after_db": after, "later_db": later, "hole_db": round(hole, 1)})
+        row = {"t": t, "before_db": before, "after_db": after, "later_db": later, "hole_db": round(hole, 1)}
+        # The music bed runs straight across every cut, so a rest IN the music that happens to fall on a cut is not a
+        # join fault: measure the same windows on the music file itself, and when it dips at least as much (within 3 dB)
+        # the dip is the score's own rest (AIGHT-STUDIO v10, 3.50 s: all clips muted, music 3.50–3.65 s at −41/−47 dB).
+        if hole > 6.0 and music and t - music_from_s > 0.1:
+            mt = t - music_from_s
+            mb, ma, ml = media.rms_db(music, mt - 0.10, 0.10), media.rms_db(music, mt + 0.005, 0.03), media.rms_db(music, mt + 0.15, 0.15)
+            if None not in (mb, ma, ml):
+                row["music_hole_db"] = round(min(mb, ml) - ma, 1)
+                if row["music_hole_db"] >= hole - 3.0:
+                    row["music_rest"] = True
+                    hole = 0.0
+        ev.append(row)
         worst = max(worst, hole)
         if hole > 6.0:
             bad.append(f"{t:.2f}s hole {hole:.1f} dB")
@@ -275,7 +287,9 @@ def film_checks(path: Path, *, cuts: list, source_sizes: list, delivered: tuple,
     rows.append({"check_id": "audio_joins", "control": "AUDIO_LEVEL_CONTINUITY_AT_CUTS", "status": status, "evidence": {"cuts": ev},
                  "detail": "; ".join(bad) or (f"could not measure the level at {unmeasured}" if unmeasured else
                                               ("no cut positions were supplied" if not cuts else
-                                               f"{len(cuts)} cuts, worst dip {worst:.1f} dB (limit 6)"))})
+                                               f"{len(cuts)} cuts, worst dip {worst:.1f} dB (limit 6)" +
+                                               ("".join(f"; {e['t']:.2f}s dip is the music's own rest ({e['music_hole_db']} dB in "
+                                                        f"the score)" for e in ev if e.get("music_rest")))))})
     # disclosure, with a flag when a source is stretched more than 1.5× to reach the delivered frame
     scale = max((max(delivered[0] / w, delivered[1] / h) for w, h in source_sizes if w and h), default=None)
     rows.append({"check_id": "source_resolution", "control": "SOURCE_RESOLUTION_STATED",

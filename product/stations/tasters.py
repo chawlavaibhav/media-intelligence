@@ -55,7 +55,8 @@ def check_cut(k, job_id: str):
                 rep = meta["assembly"]
                 rows += verify.film_checks(Path(a["path"]), cuts=rep["cuts_s"], source_sizes=srcs,
                                            delivered=media.FORMAT_PX[json.loads(k.store.node(job_id, "film")["spec_json"])["aspect"]],
-                                           planned_s=rep.get("duration_s"), card_in_s=rep.get("card_in_s"))
+                                           planned_s=rep.get("duration_s"), card_in_s=rep.get("card_in_s"),
+                                           music=Path(k.store.asset(meta["music"])["path"]) if meta.get("music") else None)
             if media_kind == "image" and not meta.get("placeholder"):
                 rows.append(verify.format_revalidated(k.store, aid, meta.get("format")))
             rows += verify.process_controls(k.store, job_id, media_kind, clip_asset_ids=[sg["asset"] for sg in meta.get("segments", [])])
