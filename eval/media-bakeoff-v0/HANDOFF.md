@@ -1,4 +1,4 @@
-# HANDOFF: run the media bake-off v0, phase 1, overnight on the laptop (where the API keys are)
+# HANDOFF: run the media bake-off v1 (arms A, B, C) on the laptop (where the API keys are)
 
 **Written 2026-09-25** by a cloud Claude Code session with no media-API access. **For** a Claude Code session on the
 founder's laptop that has the Google (Gemini API / Vertex) and Azure keys (fal is not available). The founder is asleep during the run. Judging happens when he
@@ -6,7 +6,7 @@ wakes up.
 
 **Start:**
 1. `git fetch origin claude/magical-volta-q45jee && git checkout claude/magical-volta-q45jee`
-2. Read this file, `BRIEFS.yaml` and `PROMPTS.md`.
+2. Read this file, `BRIEFS.yaml` and `TEST-FLOWS.md`.
 
 **Background, if needed:**
 - `docs/research/context-engineering-2026-09/MASTER-PLAN.md` (§4 the pipeline, §5 the exam);
@@ -15,7 +15,7 @@ wakes up.
 ## ADDENDUM: the founder's direct messages override this handoff
 
 The founder, typing directly in this session, may change or cancel **any** rule, cap, step, model or decision rule in
-this handoff or in `PROMPTS.md`, at any time. Examples: raise or lower the cap, swap a model, skip a step, change a
+this handoff or in `TEST-FLOWS.md`, at any time. Examples: raise or lower the cap, swap a model, skip a step, change a
 brief, stop the run.
 
 - **The founder's latest message wins** over anything written here.
@@ -47,23 +47,18 @@ brief, stop the run.
 Then **stop and wait for the founder to reply "GO"**. After GO, run to the end without asking anything. Anything
 unexpected goes into `RUN-LOG.md`, and the run carries on or stops at a cap. It never waits for input.
 
-## Phase 1 (tonight): three arms, no Canon
+## The design (v1, founder ruling 26 Sep): three arms, Canon included. Full flows and prompts: `TEST-FLOWS.md`
 
-- **B0, direct:** the customer's words sent straight to the media model.
-- **B1, smart writer:** one fresh writer session writes the prompts. No pipeline.
-- **P, the pipeline:** Author + Finish + Choose, as in `PROMPTS.md`, **without** the P+Canon section.
+- **A: LLM + media model.** The writer LLM turns the brief into media prompts. No pipeline and no finishing.
+- **B: our pipeline.** Understand → writer (3 ideas, treatment, scenes, style guides) → lint → generate → checks → finishing → pick.
+- **C: LLM + Canon + our pipeline.** B, plus the Canon lookup (librarian), the Canon block in the writer's context, and the checklist pass. Use `canon_context.py` to build it.
 
-**P+Canon (the Canon test) is phase 2, later.** Do not run it tonight.
-
-The questions tonight's run answers:
-1. Does P beat B0 by a lot?
-2. Does P beat B1?
-3. Does a smart writer (B1) alone beat raw direct (B0)?
+"Customer words straight to the media model" (the old B0) is **dropped**. `TEST-FLOWS.md` supersedes `PROMPTS.md`.
 
 ## Pre-authorised by the founder in the kick-off message (no need to wake him)
 
-- **Spend cap:** as stated in the kick-off message (proposed US$65). Release it in the per-step caps below. Stop the whole run the moment a step would exceed its cap, and write why in `RUN-LOG.md`.
-- **Writer model:** as stated in the kick-off message. Use the same model for B1 and for P's writer step. Use GPT-5.6 Luna (or Claude Haiku) for P's understand step.
+- **Spend cap:** as stated in the kick-off message (proposed US$85). Release it in the per-step caps below. Stop the whole run the moment a step would exceed its cap, and write why in `RUN-LOG.md`.
+- **Writer model:** as stated in the kick-off message. Use the same model in all three arms (A, the B/C writer, and the C librarian). Use GPT-5.6 Luna (or Gemini Flash) for the B/C understand step.
 - **Briefs:**
   - Fill each `verbatim: TODO` in `BRIEFS.yaml` from the named source: the studio DB under `studio-jobs/`, the job branches, or the prospect and CANON-011 files.
   - If a source can't be found, swap in the closest real brief of the same class and note it.
@@ -91,8 +86,7 @@ Rules for keys:
 - **`studio-jobs/` or the job DB can't be found** (they sit outside git on the Mac): do not search the home folder.
   Use the briefs that are already verbatim (E09–E12), fill the rest from in-repo sources (`production-learning/cases/`,
   `canon/research/marketplace-demand-v1/`, the job branches), and list every swap in `RUN-LOG.md`.
-- **The existing direct-Veo films for E09 and E10 can't be found:** generate B1 for them as well (about US$10 more,
-  still within the film cap), and log it.
+- **The old direct-Veo films (E09, E10)** are reference only; A is always generated fresh with the same writer, within the film cap.
 
 ## Rules
 
@@ -100,7 +94,7 @@ Rules for keys:
 - **Ledger.** Reserve before every call and record every attempt, failures included. No hidden retries.
 - **Blind.** Arms are never named in anything the founder sees before he exports his verdicts. Do not open `mapping.json`.
 - **No verdicts by Claude.** Do not judge, accept or rank outputs as the customer. The founder judges in the morning. P's own internal take pick (from its contact sheet) is part of the pipeline and is allowed.
-- **Blocking is by measurement only.** Only the code checks in `PROMPTS.md` step 5 may block or trigger a retake. No model judge decides anything.
+- **Blocking is by measurement only.** Only the code checks in `TEST-FLOWS.md` step 5 may block or trigger a retake. No model judge decides anything.
 - **Reuse, don't rebuild.** Use the existing P1/studio providers, compositor, Typeset, ledger and job store. Use **no kitchen stations** (waiter, chef, gatekeeper, tasters) in any arm.
 
 ## Steps
@@ -108,22 +102,18 @@ Rules for keys:
 | # | Step | Done when | Cap US$ |
 |---|---|---|---|
 | 0 | Fill and hash `BRIEFS.yaml` (above) | `BRIEFS.sha256` committed; the swaps are listed in `RUN-LOG.md` | 0 |
-| 1 | Wire the runner for B0, B1 and P exactly as in `PROMPTS.md` | Dry run with simulated providers passes on T1–T4 | 0 |
-| 2 | Practice: T1–T4 through P, live (tuning allowed here only) | End to end works; the notes are in `RUN-LOG.md` | 6 |
-| 3 | Exam, stills-type (E01–E07): B0, B1, P (animate uses Veo Fast, so this costs more than with Kling) | 21 outputs sealed with cost and time | 18 |
-| 4 | Exam, films (E08–E12): B0, P, and B1 for E08, E11 and E12 (E09 and E10 reuse the existing direct-Veo films as B1) | Outputs sealed | 40 |
-| 5 | `outputs.json` → `python3 make_pairs.py <run_dir>` (phase 1 is the default) | `pairs.json` is ready and `viewer.html` loads it | 0 |
+| 1 | Wire the runner for A, B and C exactly as in `TEST-FLOWS.md` | Dry run with simulated providers passes on T1–T4 | 0 |
+| 2 | Practice: T1–T4 through B and C, live (tuning allowed here only) | End to end works; the notes are in `RUN-LOG.md` | 8 |
+| 3 | Exam, stills-type (E01–E07): A, B, C | 21 outputs sealed with cost and time | 22 |
+| 4 | Exam, films (E08–E12): A, B, C (A generated fresh with the same writer; the old direct-Veo films are reference only) | 15 outputs sealed | 50 |
+| 5 | `outputs.json` → `python3 make_pairs.py <run_dir>` | `pairs.json` is ready and `viewer.html` loads it | 0 |
 | 6 | Morning handover: a one-page `MORNING.md` covering what ran, spend, failures, brief swaps, and how to judge | Committed and pushed | 0 |
 
-The founder then judges in `viewer.html`: 3 pairs × 12 briefs + ~4 repeats, about 35 minutes. He exports `verdicts.json`, and the session runs `python3 score.py <run_dir>` → `SCORECARD.md`.
+The founder then judges in `viewer.html`: 3 pairs (B vs A, C vs B, C vs A) × 12 briefs + ~4 repeats, about 35 minutes. He exports `verdicts.json`, and the session runs `python3 score.py <run_dir>` → `SCORECARD.md`.
 
 ## Decision rules (fixed before any output exists)
 
-- **P vs B0:** P wins ≥80% of non-tie pairs **and** gets ≥2× B0's "would pay" rate. This is the golden benchmark's "much better than a direct prompt".
-- **P vs B1, per class:** P wins ≥2/3 → ship P for that class. Otherwise ship "B1 + finishing" for that class.
-- **B1 vs B0:** report only. It tells us how much a good writer alone adds.
-- **Cost and time:** record CpAO and TpAO per arm. P's cost per round should be ≤1.5× B1's.
-- **Honesty:** report ties, the agreement rate on the swapped repeats, and every failed call.
+The rules are in `TEST-FLOWS.md` §6, and `score.py` applies them.
 
 ## Commit
 

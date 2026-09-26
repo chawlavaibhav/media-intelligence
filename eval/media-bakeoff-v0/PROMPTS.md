@@ -1,3 +1,5 @@
+> **SUPERSEDED 26 Sep by `TEST-FLOWS.md`** (arms A/B/C; B0 dropped by the founder). Kept for history.
+
 # Media bake-off v0: the exact prompts for every arm
 
 **One writer model for every arm.** B1, P and P+Canon use the same model, set once in `HANDOFF.md`. Otherwise a win

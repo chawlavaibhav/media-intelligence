@@ -93,20 +93,21 @@ def main(run_dir: str) -> None:
         n = (c["w"] + c["l"]) if c else 0
         return (c["w"] / n if n else None), c
 
-    r, _ = rate("P vs B0")
-    pb0 = (pay["P"][0] / pay["P"][1]) if pay["P"][1] else 0
-    b0 = (pay["B0"][0] / pay["B0"][1]) if pay["B0"][1] else 0
-    L.append(f"- P vs B0 (≥80% wins and ≥2× would-pay): win {r:.0%}, would-pay P {pb0:.0%} vs B0 {b0:.0%} → "
-             f"{'PASS' if r is not None and r >= 0.8 and pb0 >= 2 * b0 else 'FAIL'}" if r is not None else "- P vs B0: no data")
-    _, c = rate("P vs B1")
+    _, c = rate("B vs A")
     if c:
         for k, (w, l, t) in sorted(c["by_class"].items()):
             ok = (w + l) and w / (w + l) >= 2 / 3
-            L.append(f"- {k}: P vs B1 {w}/{l} (ties {t}) → {'ship P' if ok else 'ship B1 + finishing'}")
-    r, c = rate("P+Canon vs P")
+            L.append(f"- {k}: B vs A {w}/{l} (ties {t}) -> {'ship the pipeline' if ok else 'ship A + our finishing'}")
+    pr = lambda arm: (pay[arm][0] / pay[arm][1]) if pay[arm][1] else 0
+    for arm, name in (("B", "B vs A"), ("C", "C vs A")):
+        _, c = rate(name)
+        if c:
+            ok = c["w"] >= 8 and pr(arm) - pr("A") >= 0.20
+            L.append(f"- Golden benchmark via {arm}: {name} {c['w']}/{c['l']} (ties {c['t']}), would-pay {arm} {pr(arm):.0%} vs A {pr('A'):.0%} -> {'BEATS LLM+model' if ok else 'does not clearly beat LLM+model'}")
+    _, c = rate("C vs B")
     if c:
         ok = c["w"] > c["l"] and c["w"] >= 7
-        L.append(f"- Canon: P+Canon vs P {c['w']}/{c['l']} (ties {c['t']}) → {'KEEP in writer context (confirm on 30 briefs)' if ok else 'NOT in writer context'}")
+        L.append(f"- Canon: C vs B {c['w']}/{c['l']} (ties {c['t']}) -> {'KEEP in writer context (confirm on 30 briefs)' if ok else 'NOT in writer context'}")
     (run / "SCORECARD.md").write_text("\n".join(L))
     print("\n".join(L))
 

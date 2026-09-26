@@ -19,10 +19,8 @@ from pathlib import Path
 
 import yaml
 
-import os
-# Phase 1 (tonight): P vs B0, P vs B1, B1 vs B0. Phase 2 (Canon, later): set BAKEOFF_PHASE=2.
-COMPARISONS = ([("P+Canon", "P"), ("P+Canon", "B1")] if os.environ.get("BAKEOFF_PHASE") == "2"
-               else [("P", "B0"), ("P", "B1"), ("B1", "B0")])
+# v1 design (TEST-FLOWS.md): A = LLM + media model, B = our pipeline, C = LLM + Canon + our pipeline.
+COMPARISONS = [("B", "A"), ("C", "B"), ("C", "A")]
 REPEAT_SHARE = 0.10
 
 
