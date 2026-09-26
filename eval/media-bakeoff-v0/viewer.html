@@ -31,11 +31,11 @@
   <div class="muted" id="progress">Loading…</div>
   <div class="brief" id="brief"></div>
   <div class="pair">
-    <div class="side"><h3>A</h3><div id="mA"></div>
-      <div class="muted">Would you pay the anchor price for A?</div><div class="row" id="payA"></div>
+    <div class="side"><h3>Left</h3><div id="mA"></div>
+      <div class="muted">Would you pay the anchor price for the left one?</div><div class="row" id="payA"></div>
       <select id="whyA"></select></div>
-    <div class="side"><h3>B</h3><div id="mB"></div>
-      <div class="muted">Would you pay the anchor price for B?</div><div class="row" id="payB"></div>
+    <div class="side"><h3>Right</h3><div id="mB"></div>
+      <div class="muted">Would you pay the anchor price for the right one?</div><div class="row" id="payB"></div>
       <select id="whyB"></select></div>
   </div>
   <div class="muted" style="margin-top:12px">Preference</div>
@@ -48,24 +48,31 @@
   </div>
 </main>
 <script>
-const PREF = ["A clearly","A slightly","Can't choose","B slightly","B clearly"];
+const PREF = ["Left clearly","Left slightly","Can't choose","Right slightly","Right clearly"];
 const PAY = ["Yes as-is","Yes after one small fix","No"];
 const WHY = ["(if No) reason…","Wrong product or world","Identity drift","Artefact (hands, morph)","Text or layout","Audio or voice","No motion / slideshow","Not an ad / boring","Off-brief"];
 let pairs = [], i = 0, V = {};
-const store = { get(){ try { return JSON.parse(localStorage.getItem("verdicts")||"{}"); } catch(e){ return {}; } },
-                set(v){ try { localStorage.setItem("verdicts", JSON.stringify(v)); } catch(e){} } };
+const KEY = () => "verdicts:" + ((pairs[0] && pairs[0].set) || "unset");   // answers are kept per pair set, never shared across runs
+const store = { get(){ try { return JSON.parse(localStorage.getItem(KEY())||"{}"); } catch(e){ return {}; } },
+                set(v){ try { localStorage.setItem(KEY(), JSON.stringify(v)); } catch(e){} } };
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function media(src, kind){ return kind === "video" ? `<video class="media" src="${src}" controls playsinline preload="metadata"></video>` : `<img class="media" src="${src}" alt="">`; }
 function buttons(el, opts, key){ el.innerHTML = ""; opts.forEach(o => { const b = document.createElement("button"); b.textContent = o;
-  b.onclick = () => { cur()[key] = o; render(); }; if (cur()[key] === o) b.className = "on"; el.appendChild(b); }); }
-function select(el, key){ el.innerHTML = WHY.map(w => `<option ${cur()[key]===w?"selected":""}>${w}</option>`).join(""); el.onchange = () => { cur()[key] = el.value; }; }
-function cur(){ const id = pairs[i].pair_id; V[id] = V[id] || {pair_id:id}; return V[id]; }
+  b.onclick = () => { cur()[key] = o; if (key.startsWith("pay") && o !== "No") delete cur()["why" + key.slice(3)]; store.set(V); render(); }; if (cur()[key] === o) b.className = "on"; el.appendChild(b); }); }
+function select(el, key){ el.innerHTML = WHY.map(w => `<option ${cur()[key]===w?"selected":""}>${w}</option>`).join(""); el.onchange = () => { cur()[key] = el.value; store.set(V); }; }
+function cur(){ const p = pairs[i], id = p.pair_id; V[id] = V[id] || {pair_id:id, set:p.set, left:p.left, right:p.right}; return V[id]; }
 function render(){
   const p = pairs[i];
   document.getElementById("progress").textContent = `Pair ${i+1} of ${pairs.length} · ${Object.values(V).filter(v=>v.pref).length} judged`;
-  document.getElementById("brief").innerHTML = `<b>Brief:</b> ${p.brief || "(see sheet)"}<div class="muted">Price anchor: ₹${p.price_anchor_inr ?? "—"}</div>`;
+  const list = (t, xs) => xs && xs.length ? `<div class="muted"><b>${t}:</b> ${xs.map(esc).join(" · ")}</div>` : "";
+  document.getElementById("brief").innerHTML = `<b>Brief:</b> ${esc(p.brief) || "(see sheet)"}`
+    + (p.answers ? `<div class="muted"><b>Customer's answers:</b> ${esc(p.answers)}</div>` : "")
+    + `<div class="muted"><b>Photos supplied:</b> ${p.photos ? p.photos : "none"}</div>`
+    + list("Must have", p.must_haves) + list("Deal-breakers", p.deal_breakers)
+    + `<div class="muted">Price anchor: ₹${p.price_anchor_inr ?? "—"}</div>`;
   const a = document.getElementById("mA"), b = document.getElementById("mB");
-  if (a.dataset.src !== p.left) { a.innerHTML = media(p.left, p.kind); a.dataset.src = p.left; }
-  if (b.dataset.src !== p.right) { b.innerHTML = media(p.right, p.kind); b.dataset.src = p.right; }
+  if (a.dataset.src !== p.left) { a.innerHTML = media(p.left, p.left_kind || p.kind); a.dataset.src = p.left; }
+  if (b.dataset.src !== p.right) { b.innerHTML = media(p.right, p.right_kind || p.kind); b.dataset.src = p.right; }
   buttons(document.getElementById("pref"), PREF, "pref");
   buttons(document.getElementById("payA"), PAY, "payA");
   buttons(document.getElementById("payB"), PAY, "payB");
