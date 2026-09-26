@@ -184,14 +184,15 @@ These items need fixing before generation (code checks, not opinions): {list}. R
 
 ## 4. Arm C: LLM + Canon + our pipeline
 
-It is **identical to B**, plus three additions: C0 (the Canon lookup), extra context in C2, and C2b (the checklist pass).
+It is **identical to B**, plus three additions: C0 (the Canon lookup), the Canon block in C2, and C2b (the checklist pass).
+Founder rulings of 26 Sep: **no example piece** is sent, and **the gap card is filtered** per ad.
 
 ```
 brief
   → [B1] understand (same as B)
-  → [C0] LIBRARIAN (Canon lookup): the writer model reads the label index, picks ≤10 claim ids for THIS brief
-          → code fetches those claims' full text                                      (1 call)
-  → [C2] writer = B2 prompt + CANON BLOCK (below)                                      (1 call)
+  → [C0] LIBRARIAN: the writer model reads the 25 gap-card rules + the 1,300-line label index and picks
+          ≤8 gap rules that apply to THIS ad and ≤10 claim ids → code fetches those claims' full text   (1 call)
+  → [C2] writer = B2 prompt + CANON BLOCK (chosen gap rules + chosen claims + required decisions)     (1 call)
   → [C2b] CHECKLIST PASS: the same writer answers 15 yes/no questions on its own draft, revises  (1 call)
   → [B3]–[B7] exactly as B
   → OUTPUT
@@ -199,58 +200,36 @@ brief
 
 ### 4.1 The Canon shape used (all in `canon/shape-v1/`; the 1,300-claim library is unchanged)
 
-| Piece | What it is | How C uses it | Size |
-|---|---|---|---|
-| 1. Required decisions | 8 decisions (idea in one sentence, conflict, hero and brand roles, the first 2 s, brand moments, the ask and the ending, product facts with sources, declared deviations), plus 5 per scene (feeling, first frame containing the idea, one action, new information, impact at phone size) | Added to the C2 output JSON: the writer must fill them | about 640 words |
-| 2. Gap card | 25 rules the Q&A test showed Claude does **not** know by itself: Indian audience (8), idea and copy (4), proof and persuasion (4), picture (4), film and type (3), brand (2) | Always in the C2 context | about 1,180 words |
-| 3. After-writing checklist | 15 yes/no questions built from the claims producers reused on 3+ jobs and the writer-side failure-atlas modes | The C2b pass. It **never blocks** and never deletes a moment | about 620 words |
-| 4. Label index | 1,300 lines, `sk_id \| topic` | Read **only** by the librarian (C0), never by the writer | about 25k tokens, in C0 only |
-| 5. Examples | Accepted work with the founder's verdict | The C2 context gets **one** example matching the class, as an excerpt (films: the Mokobara v2 skeleton, direction layer and structure, ≤800 words). Stills: none yet (no accepted still template exists) | ≤800 words |
+| Piece | What it is | How C uses it |
+|---|---|---|
+| 1. Required decisions | 8 decisions: idea in one sentence, conflict, hero and brand roles, the first 2 s, brand moments, the ask and ending, product facts with sources, declared deviations. Plus per scene: feeling, first frame, one action, new information, impact | Added to C2's output: the writer must fill them |
+| 2. Gap card (filtered) | 25 rules the Q&A test showed Claude does **not** know by itself | The librarian picks ≤8 that apply to this ad. Only those go to the writer |
+| 3. After-writing checklist | 15 yes/no questions (the claims producers reused on 3+ jobs, plus the writer-side failure-atlas modes) | The C2b pass. It **never blocks** and never deletes a moment |
+| 4. Label index | 1,300 lines, `sk_id \| topic` | Read **only** by the librarian (C0), never by the writer |
+| 5. Examples | **Not used** (founder, 26 Sep): Mokobara is an exam brief, doesn't fit most classes, and isn't Canon | — |
 
-**Total Canon in the writer's context:** about 6k tokens (pieces 1, 2 and 5, plus ≤10 looked-up claims). The old packs were 25k.
+### 4.2 C0: the librarian prompt
 
-### 4.2 Canon lookup (C0, the "librarian")
+This is built by `canon_context.py librarian`. It lists the 25 gap rules (G1–G25) and the 1,300-line index, then asks
+for `{"gap_rules":[…≤8], "ids":[…≤10], "why":{…}}`. The full rendered text for each brief is in `prompts/`.
 
-This uses the method that won the retrieval test: an LLM scanning a compact index. Keyword and embedding search scored
-near random on this corpus.
+### 4.3 C2: the B2 prompt with the Canon block inserted before "Do this in order"
 
-```
-You are the librarian for an ad-making AI. Below is an index of 1,300 short claims from advertising, film, design,
-photography and Indian-marketing books (one per line: id | topic).
-
-CUSTOMER REQUEST (verbatim): {brief_verbatim}
-CLASS: {class}
-
-Pick AT MOST 10 claim ids whose full text would most change a real decision for THIS ad (idea, story, humour, brand
-presence, short-form hook, shots/edit, character, showing the product, on-screen text, Indian audience).
-Prefer specific over generic; skip anything the writer surely knows. Return JSON {"ids":[...], "why":{"id":"≤10 words"}}.
-
-INDEX:
-{LABEL-INDEX.md}
-```
-
-Code then fetches each chosen claim's `claim` text (plus its `concept_label` and source) from
-`canon/knowledge/current/*/source-knowledge.yaml` and passes them to C2. It logs the IDs chosen and the tokens used.
-
-### 4.3 C2: the B2 prompt with the Canon block inserted after STYLE GUIDE
+This is built by `canon_context.py block <class> <ids> <gap rules>`:
 
 ```
 CRAFT NOTES FROM OUR LIBRARY (use them as a sharp colleague's notes — they never override the customer's words, and
 you may depart from any with a one-line reason):
 
-A. WHAT THE MODEL USUALLY DOESN'T KNOW (gap card):
-{GAP-CARD.md body}
+A. WHAT YOU PROBABLY DON'T KNOW THAT MATTERS FOR THIS AD:
+{the ≤8 gap rules the librarian chose}
 
-B. CLAIMS THE LIBRARIAN PULLED FOR THIS BRIEF:
-{≤10 claims: [id] topic — claim text}
-
-C. WHAT GOOD LOOKED LIKE (one accepted piece; learn the level, do not copy its story, casting, setting or music):
-{example excerpt}
+B. CLAIMS FROM OUR BOOKS PULLED FOR THIS AD:
+{≤10 claims: [id] topic (source) — claim text}
 
 ADDITIONAL OUTPUT — fill after your treatment:
-"decisions": {REQUIRED-DECISIONS fields: D1_idea, D2_conflict, D3_roles, D4_opening, D5_brand, D6_ask_and_end,
-              D7_product_truth, D8_deviations},
-and per scene: "feeling", "first_frame", "one_action", "new_information", "impact".
+"decisions": {D1_idea … D8_deviations, each with its question}
+and per scene (S1_feeling … S5_impact, each with its question)
 ```
 
 ### 4.4 C2b: the checklist pass (one call, the same writer)

@@ -81,12 +81,15 @@ def main() -> None:
           .replace("{media_model_name}", model).replace("{style_guide_for_class}", style(kind)))
     lint = block("**The lint message returned to the writer:**")
     bfile = HERE / f".brief-{a.brief_id}.txt"
-    bfile.write_text(brief + (f"\nANSWERS: {answers}" if answers else ""))
+    bfile.write_text(brief + (f"\nANSWERS: {answers}" if answers else "")
+                     + ("\nPHOTOS: " + ", ".join(b["assets"]) if b.get("assets") else "\nPHOTOS: none supplied"))
     lib = canon("librarian", str(bfile), cls)
     bfile.unlink()
-    lib_short = lib[:lib.index("INDEX:") + 6] + "\n… (the 1,300-line label index follows — canon/shape-v1/LABEL-INDEX.md)"
-    ids = json.loads(Path(a.librarian_json).read_text())["ids"] if a.librarian_json else []
-    C2 = B2.replace("Do this in order:", canon("block", cls, ",".join(ids)) + "\n\nDo this in order:")
+    lib_short = (lib[:lib.index("GAP RULES:") + 10] + "\n… (the 25 gap-card rules, numbered G1–G25 — canon/shape-v1/GAP-CARD.md)\n\nINDEX:"
+                 + "\n… (the 1,300-line label index — canon/shape-v1/LABEL-INDEX.md)")
+    picks = json.loads(Path(a.librarian_json).read_text()) if a.librarian_json else {}
+    ids, gaps = picks.get("ids", []), [str(g).lstrip("G") for g in picks.get("gap_rules", [])]
+    C2 = B2.replace("Do this in order:", canon("block", cls, ",".join(ids), ",".join(gaps)) + "\n\nDo this in order:")
     C2b = block("### 4.4 C2b").replace("{AFTER-WRITING-CHECKLIST.yaml questions C01–C15}", canon("checklist"))
 
     f = lambda t: f"{FENCE}\n{t}\n{FENCE}"
@@ -97,7 +100,7 @@ def main() -> None:
         "## ARM B: our pipeline", "### B1 → understand model", f(B1), "### B2 → writer", f(B2),
         "### B3 → lint message (only if code flags something)", f(lint), "(B6 pick = the same as A3.)",
         "## ARM C: LLM + Canon + our pipeline", "### C0 → librarian (the full label index is appended)", f(lib_short),
-        "**Librarian picks used below:** " + (", ".join(ids) if ids else "(none — run C0 first)"),
+        "**Librarian picks used below:** gap rules " + (", ".join("G" + g for g in gaps) or "none") + "; claims " + (", ".join(ids) if ids else "(none — run C0 first)"),
         "### C2 → writer (the B2 prompt with the Canon block inserted — the complete prompt)", f(C2),
         "### C2b → the same writer, after its draft", f(C2b),
     ])

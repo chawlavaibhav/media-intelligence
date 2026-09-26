@@ -1,69 +1,159 @@
-# Media bake-off v0 — 16 briefs (4 practice + 12 exam). DRAFT: the founder approves or swaps before any spend.
-# Rules: the customer's words verbatim; must-haves and deal-breakers written BEFORE anything is generated; the pipeline
-# never sees must_haves / deal_breakers / price_anchor (they are for the judge). Once approved: hash, and never edit.
-# `verbatim: TODO` = the laptop session fills it from the source named (studio-jobs DB, job branch, or the founder).
+# Media bake-off v1: 16 briefs (4 practice + 12 exam). FOR FOUNDER APPROVAL before any spend.
+#
+# Rules:
+# - `wording: verbatim` means the customer's real words from our history. `wording: drafted` means written 26 Sep in
+#   the style of a real customer; the founder may edit or swap it.
+# - must_haves, deal_breakers and price_anchor are for the JUDGE only. No arm ever sees them.
+# - Once approved: hash (BRIEFS.sha256) and never edit.
+#
+# Photos: the only real product photos in the repo are Mokobara's (8 bag photos + logo), on branch
+# origin/work/agency-job-mokobara-odyssey-001 under agency/jobs/AGY-2026-09-21-MOKOBARA-ODYSSEY-001/source/mokobara/.
+# Every photo-based brief therefore uses those photos. Briefs without photos say so, as real customers do. The founder
+# can swap in another brand's photos.
+#
+# The same customer message (verbatim or drafted text + answers + photos) goes to arms A, B and C unchanged.
 
-practice:   # tuning only — never judged as exam
-  - {id: T1, class: S1_product_ad, source: "Upwork portfolio tile (Dhaba 47 offer)", verbatim: TODO}
-  - {id: T2, class: M1_animate, source: "animate the accepted P1 Mokobara poster", verbatim: TODO}
-  - {id: T3, class: F1_story_film, source: "Aight tea-seller extra biscuit (job_20260924_005c1c24)", verbatim: TODO}
-  - {id: T4, class: S2_edit, source: "any customer product photo: 'put this on a festive Diwali table'", verbatim: TODO}
+photo_dir: agency/jobs/AGY-2026-09-21-MOKOBARA-ODYSSEY-001/source/mokobara/   # on origin/work/agency-job-mokobara-odyssey-001
+
+practice:   # tuning only; never judged
+  - id: T1
+    class: S1_product_ad
+    wording: drafted
+    source: "Upwork portfolio tile type (dhaba offer)"
+    verbatim: "make an instagram post for my dhaba. Dhaba 47, NH-48 Murthal. offer is flat 20% off on family thali this weekend. no photos, make it look tasty. write the offer exactly: Family Thali – 20% OFF – Sat & Sun"
+    assets: []
+  - id: T2
+    class: M1_animate
+    wording: drafted
+    source: "animate a product photo"
+    verbatim: "animate this photo of our bag for an instagram story, 5-8 seconds, no people, keep the bag exactly the same"
+    assets: [The_Transit_Backpack_30L_Private_Island_1.jpg]
+  - id: T3
+    class: F1_story_film
+    wording: drafted
+    source: "Aight brand film (the tea-seller's extra biscuit idea, 25 Sep)"
+    verbatim: "make a 15 sec brand film for Aight, an AI platform that always gives back a little more. no photos. line to use: One key to AI that always gives back a little more."
+    assets: []
+  - id: T4
+    class: S2_edit
+    wording: drafted
+    source: "edit a product photo for a festival"
+    verbatim: "put this bag on a festive diwali table with diyas and marigolds, keep the bag exactly as it is"
+    assets: [The_Transit_Backpack_30L_Private_Island_2.jpg]
 
 exam:
-  # --- S1 product ad still, exact copy (4) ---
+  # --- S1 product ad still (4) ---
   - id: E01
     class: S1_product_ad
-    source: "P1 Mokobara launch poster (job_20260923_6720871c) — the one accepted P1 output"
-    verbatim: TODO
-    assets: [mokobara product photos, logo]
+    wording: drafted
+    source: "P1 Mokobara launch poster (the one accepted P1 output); exact wording not in the repo"
+    verbatim: "launch poster for the Mokobara Transit Backpack 30L. headline: Room for the long way home. also show Transit Backpack · 30L and mokobara.com. use our photos and logo. need 1:1 and 4:5."
+    assets: [The_Transit_Backpack_30L_Private_Island_1.jpg, The_Transit_Backpack_30L_Private_Island_3_a146ab00-cbf7-481a-b50c-86fdb42f2aae.jpg, logo-png.png]
     price_anchor_inr: 799
-    must_haves: [real bag as in photo, exact headline, logo as supplied, 1:1 and 4:5]
-    deal_breakers: [redrawn/changed bag, misspelt copy, text over the product]
-  - {id: E02, class: S1_product_ad, source: "Jaipur sweet shop Diwali offer poster (Hindi + English copy)", verbatim: TODO, price_anchor_inr: 499,
-     must_haves: [exact Hindi offer line, product appetising, shop name], deal_breakers: [wrong Devanagari, fake-looking food]}
-  - {id: E03, class: S1_product_ad, source: "CANON-011 marketplace brief (real Upwork job, product-photo ad)", verbatim: TODO, price_anchor_inr: 799}
-  - {id: E04, class: S1_product_ad, source: "prospect D2C brand from the prospect list, own product photo", verbatim: TODO, price_anchor_inr: 799}
+    must_haves: [the bag exactly as in the photos, exact headline, logo as supplied, 1:1 and 4:5 versions]
+    deal_breakers: [bag redrawn or changed, misspelt copy, text over the bag]
+  - id: E02
+    class: S1_product_ad
+    wording: drafted
+    source: "Jaipur sweet-shop Diwali offer poster (fictional shop)"
+    verbatim: "diwali poster for my sweet shop, Shree Ganesh Sweets, Johari Bazaar Jaipur. write exactly: दिवाली धमाका and below it 1 kg kaju katli pe 250 g FREE. no photos, make the sweets look fresh. for whatsapp status and instagram."
+    assets: []
+    price_anchor_inr: 499
+    must_haves: [exact Hindi line in correct Devanagari, exact offer line, sweets look appetising, shop name]
+    deal_breakers: [wrong or broken Devanagari, fake-looking food]
+  - id: E03
+    class: S1_product_ad
+    wording: drafted
+    source: "small D2C product ad without photos (fictional brand)"
+    verbatim: "instagram feed ad (4:5) for our copper water bottle. brand Tamra, pure copper bottle 1L, ₹899. headline: Paani, jaise Dadi rakhti thi. no photos yet, make the bottle yourself."
+    assets: []
+    price_anchor_inr: 799
+    must_haves: [a believable copper bottle, exact headline, price shown exactly, 4:5]
+    deal_breakers: [headline misspelt, the bottle looks plastic or cheap]
+  - id: E04
+    class: S1_product_ad
+    wording: drafted
+    source: "new colourway drop from the brand's own photo"
+    verbatim: "new colour drop. Transit Backpack 30L in Crypto Sunray. make an instagram ad from our photo. text: New: Crypto Sunray and mokobara.com"
+    assets: [The_Transit_Backpack_30L_Crypto_Sunray_1.jpg, logo-png.png]
+    price_anchor_inr: 799
+    must_haves: [the exact Crypto Sunray bag, exact text, logo]
+    deal_breakers: [colour changed, bag redrawn]
   # --- S2 edit my photo (1) ---
-  - {id: E05, class: S2_edit, source: "real customer product photo + 'change only the background to X'", verbatim: TODO, price_anchor_inr: 299,
-     must_haves: [product pixels unchanged, requested change done], deal_breakers: [product altered]}
+  - id: E05
+    class: S2_edit
+    wording: drafted
+    source: "change only the background"
+    verbatim: "change only the background of this bag photo to a goa beach at sunset. keep the bag exactly the same."
+    assets: [The_Transit_Backpack_30L_Private_Island_5.jpg]
+    price_anchor_inr: 299
+    must_haves: [bag pixels unchanged, believable Goa sunset beach, natural light on the bag]
+    deal_breakers: [bag altered, pasted-on look]
   # --- M1 animate my image (2) ---
-  - {id: E06, class: M1_animate, source: "animate an accepted portfolio still (5–8 s, no speech)", verbatim: TODO, price_anchor_inr: 999,
-     must_haves: [moves naturally, product unchanged], deal_breakers: [product morphs, text appears]}
-  - {id: E07, class: M1_animate, source: "animate a customer product photo for an Instagram reel", verbatim: TODO, price_anchor_inr: 999}
+  - id: E06
+    class: M1_animate
+    wording: drafted
+    source: "animate a product photo for a reel"
+    verbatim: "animate this photo for a reel, 8 sec, make it feel premium, no people"
+    assets: [The_Transit_Backpack_30L_Private_Island_6.jpg]
+    price_anchor_inr: 999
+    must_haves: [moves naturally, bag unchanged, feels premium]
+    deal_breakers: [bag morphs, text or logo appears]
+  - id: E07
+    class: M1_animate
+    wording: drafted
+    source: "animate a product photo, eye-catching"
+    verbatim: "animate our bag photo for instagram, something eye catching, 5-8 sec"
+    assets: [The_Transit_Backpack_30L_Private_Island_7.jpg]
+    price_anchor_inr: 999
+    must_haves: [catches the eye in the first second, bag unchanged]
+    deal_breakers: [bag morphs, a still with a slow zoom only]
   # --- M2 product film, no people (1) ---
-  - {id: E08, class: M2_product_film, source: "condensation-bottle / earbuds product film (Lab brief)", verbatim: TODO, price_anchor_inr: 1999}
-  # --- F1 story films with people (4) — includes the two we lost to direct Veo ---
+  - id: E08
+    class: M2_product_film
+    wording: drafted
+    source: "product film with no people (fictional product, no photos)"
+    verbatim: "15 sec product video for our cold brew coffee bottle, Kaapi Cold, 250 ml glass bottle, for instagram reels. no people, just the product. make it feel chilled and fresh. no photos, make it yourself."
+    assets: []
+    price_anchor_inr: 1999
+    must_haves: [bottle consistent across shots, feels cold and fresh, brand name correct, 9:16 15 s]
+    deal_breakers: [bottle changes between shots, the brand name drawn wrong]
+  # --- F1 story films with people (4) ---
   - id: E09
     class: F1_story_film
+    wording: verbatim
     source: "iPhone Duo (24 Sep, S-MAIN 16:38 IST)"
     verbatim: "Make a 15 sec ad copy for the newest Iphone Duo for the non tech persons who are not very aware about features, looks, style. Make sure you highlight them. it should not look like ai slop. target audience - 50+ age group male, female in india."
-    assets: [Apple product photos used on 24 Sep]
+    assets: []   # 24 Sep used Apple product photos from the laptop; attach them if available, the same to all arms
     price_anchor_inr: 4999
-    must_haves: [phone looks exactly like the real one, the 'small in pocket / big when opened' feature shown, 50+ Indian characters, feels like a video not a slideshow]
-    deal_breakers: [phone redrawn wrongly, slideshow of stills, unreadable small text]
-    existing_B1: "iphone-duo-ad/iPhone-Duo-15s-Veo-9x16.mp4 (direct-Veo, 24 Sep)"
+    must_haves: [the phone looks consistent and real, the 'small in pocket / big when opened' feature shown, 50+ Indian characters, feels like a video not a slideshow]
+    deal_breakers: [phone looks different in every shot, slideshow of stills, unreadable small text]
   - id: E10
     class: F1_story_film
+    wording: verbatim
     source: "Ascend Foods (25 Sep 17:10 IST)"
     verbatim: "I run a company by the name Ascend foods. you can check my website. Its a B2B quick commerce company dealing in grocery prodcuts. I am looking to an ad film that i can share with retailers- kirana stores in gurgaon. The ad film talks about how they can get all the products they want from us in 4 hours by placing an order from our app. It will save them shelf space and money which is otherwsie get blocked in holding extra inventory. this extra saving can be invested by them to build more business and earn a better life"
-    answers: "https://ascendfoods.in/ ; no logo/app screenshots (make placeholders) ; Hindi ; CTA: download link on WhatsApp"
+    answers: "https://ascendfoods.in/ ; don't have logo or app screenshots, make placeholders ; Hindi ; call to action: download link on WhatsApp"
+    assets: []
     price_anchor_inr: 4999
-    must_haves: [kirana owner problem shown, order-on-app moment, delivery, better life SHOWN not written, Hindi]
-    deal_breakers: [overlapping or robotic voice, "promise that contradicts the website (60 min vs 4 h - flag it)"]
-    existing_B1: "ascend-ad/Ascend_Kirana_Ad.mp4 (direct-Veo, 25 Sep)"
+    must_haves: [kirana owner's problem shown, ordering on the app, delivery, better life SHOWN not written, Hindi]
+    deal_breakers: [overlapping or robotic voice, "promise that contradicts the website (60 min vs 4 h)"]
   - id: E11
     class: F1_story_film
+    wording: verbatim
     source: "Mousi Kitchen ramen (25 Sep 19:33 IST)"
     verbatim: "make an ad for a indianised ramen bar. my girlfriedn has started- making ramen wih indiian fusiin)flavours)"
     answers: "video, mousi kitchen, ramen tandoori, ramen cream and onion, ramen punjabi, ramen tadka and ramen afghani; no photos, make them yourself. home delivery on instagram; use a placeholder handle, gurgaon"
+    assets: []
     price_anchor_inr: 2999
     must_haves: [food looks delicious and Indian-fusion, brand name correct, Instagram delivery ask, 9:16 15 s]
     deal_breakers: [brand name misspelt in frame, unappetising food]
   - id: E12
     class: F1_story_film
-    source: "Mokobara castaway (21 Sep) — accepted v2 exists as a hand-made reference"
+    wording: verbatim
+    source: "Mokobara castaway (21 Sep)"
     verbatim: "lets make an ad with mokobara. i would preferably give it the odysey movie angel. the proatagonist had mokbara bags. the protagonist found his mokobara bag, while he was on the island where he was kept for years. in that bag he founds her wives photo and a lot of stuff that he could use to go back. he packs food and stuff and goes back. would be funny that he could keep his arms in the bag and food and so much stuff. Avoid getting copyright violoations from odysssey."
-    assets: [mokobara product photos]
+    assets: [The_Transit_Backpack_30L_Private_Island_1.jpg, The_Transit_Backpack_30L_Private_Island_2.jpg, logo-png.png]
     price_anchor_inr: 9999
     must_haves: [arms-in-the-bag gag lands, wife's photo moment, bag intact and identical in every shot, journey home]
-    deal_breakers: [bag torn/changed colour, objects appearing twice, slideshow]
+    deal_breakers: [bag torn or changes colour, objects appearing twice, slideshow]
