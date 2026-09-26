@@ -1,0 +1,118 @@
+{
+ "brief": "E08",
+ "arm": "B",
+ "class": "M2_product_film",
+ "events": [
+  {
+   "t": 1790407677.5,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: negative phrasing ('no music') — rephrase positively",
+    "scene 1 first_frame_still_prompt: still prompt has 85 words (needs 30–80)",
+    "scene 1 first_frame_still_prompt: contains exact copy / brand name ['Kaapi Cold'] — copy is added by code",
+    "scene 2 prompt: negative phrasing ('no music') — rephrase positively",
+    "scene 2 first_frame_still_prompt: contains exact copy / brand name ['Kaapi Cold'] — copy is added by code"
+   ]
+  },
+  {
+   "t": 1790407882.2,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790407965.1,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: cold brew coffee single origin 250 roasted london shake well keep refrigerated",
+    "t=4.0s stray text: cold brew coffee single origin 250 roasted london shake well keep refrigerated",
+    "t=6.8s stray text: cold brew coffee ingle origin 250 roasted london shake well keep refrigerated"
+   ],
+   "loudness_lufs": -32.1
+  },
+  {
+   "t": 1790407967.3,
+   "kind": "check_clip",
+   "file": "S2-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: cold brew 250ml beans small batch",
+    "t=4.0s stray text: cold brew 250ml deans small batch",
+    "t=6.8s stray text: cold brew 250nl mgadick beams small gatch"
+   ],
+   "loudness_lufs": -31.4
+  },
+  {
+   "t": 1790407967.3,
+   "kind": "retake_slot",
+   "scene": 1,
+   "reason": "failed checks"
+  },
+  {
+   "t": 1790408028.4,
+   "kind": "check_clip",
+   "file": "S1-t2.mp4",
+   "problems": [
+    "t=1.6s stray text: cold brew coffee sngle origin 250 roasted london shake well keep refrigerated",
+    "t=4.0s stray text: cold brew coffee single origin 250 oasted london shake well keep refrigerated",
+    "t=6.8s stray text: cold brew coffee single origin 250 roasted london shake well keep refrigerated"
+   ],
+   "loudness_lufs": -28.6
+  },
+  {
+   "t": 1790408033.9,
+   "kind": "super",
+   "scene": 2,
+   "text": "Kaapi Cold",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408034.5,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408072.6,
+   "kind": "music_bed",
+   "mood": "Yes — minimal, airy lo-fi/ambient bed with soft plinky texture and light reverb, cool and unhurried, sitting under the ice-clink and pour sounds rather than over them."
+  },
+  {
+   "t": 1790408072.6,
+   "kind": "final",
+   "file": "E08/B-final.mp4"
+  }
+ ]
+}

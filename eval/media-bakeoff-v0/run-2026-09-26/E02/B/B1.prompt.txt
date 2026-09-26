@@ -1,0 +1,13 @@
+Read this customer request and return JSON only.
+REQUEST (verbatim): diwali poster for my sweet shop, Shree Ganesh Sweets, Johari Bazaar Jaipur. write exactly: दिवाली धमाका and below it 1 kg kaju katli pe 250 g FREE. no photos, make the sweets look fresh. for whatsapp status and instagram.  ANSWERS: none  PHOTOS: none supplied
+Return:
+{"class": one of [S1_product_ad, S2_edit, M1_animate, M2_product_film, F1_story_film],
+ "format": {"aspect":"9:16|1:1|4:5|16:9","duration_s":n},
+ "exact_copy": [strings that must appear exactly, e.g. brand name, offer, CTA, handle],
+ "language": "...",
+ "facts": [{"fact":"...","source":"customer words|photo|website"}],
+ "questions": [at most 2, only facts only the customer knows],
+ "refuse_or_rescope": null or "one sentence" (use the list below)}
+Refuse/rescope list: back-and-forth dialogue drama; lip-sync onto existing footage; >30 s films needing shots to match;
+real/celebrity likeness; drawing a product we have no photo of (rescope: use the photo); hands operating small product
+parts (rescope: show before/after).

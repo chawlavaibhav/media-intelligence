@@ -1,0 +1,29 @@
+You are one senior creative director and writer making this whole ad yourself, start to finish.
+
+CUSTOMER REQUEST (verbatim — the loudest thing here): lets make an ad with mokobara. i would preferably give it the odysey movie angel. the proatagonist had mokbara bags. the protagonist found his mokobara bag, while he was on the island where he was kept for years. in that bag he founds her wives photo and a lot of stuff that he could use to go back. he packs food and stuff and goes back. would be funny that he could keep his arms in the bag and food and so much stuff. Avoid getting copyright violoations from odysssey.
+ANSWERS: none
+UNDERSTANDING: {"class": "M2_product_film", "format": {"aspect": "9:16", "duration_s": 20}, "exact_copy": ["mokobara"], "language": "English", "facts": [{"fact": "The ad should feature a mokobara bag.", "source": "customer words"}, {"fact": "The story involves a fictional protagonist stranded on an island for years who discovers the bag and uses it to pack food and survival supplies for the journey home.", "source": "customer words"}, {"fact": "The bag should be shown humorously holding an unusually large amount of food and supplies.", "source": "customer words"}, {"fact": "Three photos were provided for reference.", "source": "photo"}], "questions": ["Which of the three provided photos shows the hero bag to feature?"], "refuse_or_rescope": "Rescope this as an original stranded-island survival adventure with a fictional protagonist and no Odyssey characters, plot recreation, movie footage, or celebrity likeness."}
+PHOTOS: 3 attached as references — the product must look exactly like them; never describe it at length.
+MEDIA MODEL: Veo 3.1 (8-second scenes with native audio; first frames by Nano Banana 2).  HOW THIS MODEL WANTS TO BE PROMPTED:
+- **Veo 3.1:**
+  - one 8-second scene per prompt: cinematography → subject → one action from start to end → setting → style and ambience;
+  - the scene's own sound (ambience, effects), with spoken words in quotes, at most one short line;
+  - keep it literal, because Veo rewrites prompts;
+  - the same character description, word for word, in every scene;
+  - image-to-video from a still: describe **motion and camera only**, and don't re-describe the image.
+
+Do this in order:
+1. IDEAS. Write 3 genuinely different ideas. Each = a human truth + one specific moment where this product matters
+   + a one-line key-frame description. At most one may have no people. Pick the strongest and say why in one line.
+2. TREATMENT. ≤150 words of plain prose for the chosen idea: what we see and hear, start to finish.
+3. SCENES (films) / FRAME (stills). For each scene: the prompt written in this model's own style (the style notes above),
+   duration, which reference photos to attach, at most one spoken line in quotes (≤ 2.5 words per second of the scene,
+   minus 0.4 s), and any ON-SCREEN COPY — copy is added by code afterwards, so NEVER ask the model to draw text, logos
+   or brand names. Mark the riskiest scene.
+4. FINISH NOTES. Where the copy/logo/end card go, and whether a music bed is wanted (one line of mood if yes).
+
+Return JSON:
+{"ideas":[{"truth":"","moment":"","key_frame":""}x3], "chosen":0, "why":"",
+ "treatment":"",
+ "scenes":[{"n":1,"prompt":"","duration_s":8,"references":["photo1"],"spoken":"" ,"on_screen_copy":[],"first_frame_still_prompt":""}],
+ "riskiest_scene":n, "finish":{"copy_placement":"","end_card":"","music":""}}

@@ -38,7 +38,7 @@ def sign_p(wins: int, n: int) -> float:
 
 def main(run_dir: str) -> None:
     run = Path(run_dir)
-    mapping = json.loads((run / "mapping.json").read_text())
+    mapping = {k: v for k, v in json.loads((run / "mapping.json").read_text()).items() if not k.startswith("_")}
     verdicts = {v["pair_id"]: v for v in json.loads((run / "verdicts.json").read_text())}
     outputs = json.loads((run / "outputs.json").read_text())
     pairs = {p["pair_id"]: p for p in json.loads((run / "judge" / "pairs.json").read_text())} \
@@ -142,7 +142,10 @@ def main(run_dir: str) -> None:
     if side_pay:
         L.append("- Side check would-pay (not used in the main benchmark): " + ", ".join(
             f"{a} {side_pay[a][0]}/{side_pay[a][1]}" for a in sorted(side_pay)))
-    mean = lambda a: (sum(cost[a]) / len(cost[a])) if cost[a] else None
+    comparable = json.loads((run / "COSTS.json").read_text()).get("mean_comparable_per_arm", {}) if (run / "COSTS.json").exists() else {}
+    # cost per round excludes clips re-made because of the runner's spoken-line defect and duplicates from stopped
+    # attempts (cost_report.py -> COSTS.json); falls back to outputs.json when COSTS.json is missing
+    mean = lambda a: comparable.get(a) if comparable else ((sum(cost[a]) / len(cost[a])) if cost[a] else None)
     for arm in ("B", "C"):
         if mean(arm) is not None and mean("A"):
             L.append(f"- Cost rule: {arm} mean US${mean(arm):.2f} per round vs A US${mean('A'):.2f} "

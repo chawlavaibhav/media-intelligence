@@ -1,0 +1,17 @@
+Using the **frontend-design** / creative-ad approach directly (no coding/debugging skill applies here — this is a single AI image-generation task, not a build/fix task, so I'm proceeding straight to the deliverable).
+
+Since there are **0 reference photos**, this is a **text-to-image "still"** job for Nano Banana 2 — the bottle, scene, and brand elements must be fully described in one prompt.
+
+```json
+{
+  "prompts": [
+    {
+      "scene": 1,
+      "prompt": "Instagram feed ad, vertical 4:5 aspect ratio, clean commercial product photography style. Center-hero shot of a PURE COPPER water bottle, 1-litre capacity, cylindrical body with a subtle hand-hammered (dhinga) copper texture, warm reddish-orange patina with soft golden highlights, a slim brass-copper screw cap, and a small minimal embossed/engraved wordmark 'Tamra' on the lower third of the bottle. Bottle stands upright on a rustic wooden table or stone surface, softly backlit by warm late-afternoon window light, evoking nostalgia — in the soft-focus background, hints of a traditional Indian home: a brass matka/lota, a woven cane stool, a faded cotton dupatta, dust motes in golden light. Color palette: warm copper, terracotta, cream, muted sepia — nostalgic 'dadi ke ghar' mood, not sterile studio white. Leave generous clean negative space in the upper third of the frame (soft blurred warm background, no clutter) for headline text to be added later, and a small clean area in the lower-right for price/logo. Photoreal, shallow depth of field, 85mm lens look, soft shadows, premium D2C product-ad lighting, no visible brand text baked into image except the small 'Tamra' engraving on the bottle itself — do not render any other words, price, or headline text in the image.",
+      "duration_s": null
+    }
+  ],
+  "riskiest_scene": 1,
+  "notes": "Only one still is needed (no video requested). Riskiest part isn't a 'scene' but TEXT RENDERING: Nano Banana 2 (like most image models) often garbles Hindi/Hinglish script and rupee symbols. So the prompt deliberately excludes the headline 'Paani, jaise Dadi rakhti thi.', '1L', and '₹899' from the AI render — generate the clean product image first, then add the headline, price, and 'Tamra 1L • ₹899' as a crisp typeset overlay in post (Canva/Photoshop) using the reserved negative-space areas. If you want the bottle re-rendered with your exact real product later, resend as an 'edit' with the actual photo attached and I'll rewrite this as an edit instruction instead."
+}
+```

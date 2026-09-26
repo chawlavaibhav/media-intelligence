@@ -1,0 +1,248 @@
+{
+ "brief": "E11",
+ "arm": "C",
+ "class": "F1_story_film",
+ "events": [
+  {
+   "t": 1790408015.3,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: video prompt has 186 words (max 120)",
+    "scene 1 prompt: negative phrasing ('no dialogue') — rephrase positively",
+    "scene 1 first_frame_still_prompt: still prompt has 123 words (needs 30–80)",
+    "scene 2 prompt: video prompt has 177 words (max 120)",
+    "scene 2 prompt: contains exact copy / brand name ['Gurgaon'] — copy is added by code",
+    "scene 2 first_frame_still_prompt: still prompt has 103 words (needs 30–80)",
+    "scene 2 first_frame_still_prompt: contains exact copy / brand name ['Gurgaon'] — copy is added by code"
+   ]
+  },
+  {
+   "t": 1790408127.8,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790408225.9,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -27.6
+  },
+  {
+   "t": 1790408228.5,
+   "kind": "check_clip",
+   "file": "S2-t1.mp4",
+   "problems": [
+    "t=6.8s stray text: instagram new avalable"
+   ],
+   "loudness_lufs": -19.1
+  },
+  {
+   "t": 1790408228.5,
+   "kind": "retake_slot",
+   "scene": 2,
+   "reason": "failed checks"
+  },
+  {
+   "t": 1790408303.5,
+   "kind": "check_clip",
+   "file": "S2-t2.mp4",
+   "problems": [
+    "t=6.8s stray text: instagram froudes four seran tuone fud"
+   ],
+   "loudness_lufs": -14.4
+  },
+  {
+   "t": 1790408311.3,
+   "kind": "super",
+   "scene": 1,
+   "text": "Mousi Kitchen",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408315.2,
+   "kind": "super",
+   "scene": 2,
+   "text": "5 Fusion Flavours",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408315.2,
+   "kind": "voice_timing",
+   "scene": 2,
+   "words": 3,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790408315.7,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "contrast:c2",
+     "PASS"
+    ],
+    [
+     "bounds:c2",
+     "PASS"
+    ],
+    [
+     "fit:c2",
+     "PASS"
+    ],
+    [
+     "contrast:c3",
+     "PASS"
+    ],
+    [
+     "bounds:c3",
+     "PASS"
+    ],
+    [
+     "fit:c3",
+     "PASS"
+    ],
+    [
+     "contrast:c4",
+     "PASS"
+    ],
+    [
+     "bounds:c4",
+     "PASS"
+    ],
+    [
+     "fit:c4",
+     "PASS"
+    ],
+    [
+     "contrast:c5",
+     "PASS"
+    ],
+    [
+     "bounds:c5",
+     "PASS"
+    ],
+    [
+     "fit:c5",
+     "PASS"
+    ],
+    [
+     "contrast:c6",
+     "PASS"
+    ],
+    [
+     "bounds:c6",
+     "PASS"
+    ],
+    [
+     "fit:c6",
+     "PASS"
+    ],
+    [
+     "contrast:c7",
+     "PASS"
+    ],
+    [
+     "bounds:c7",
+     "PASS"
+    ],
+    [
+     "fit:c7",
+     "PASS"
+    ],
+    [
+     "contrast:c8",
+     "PASS"
+    ],
+    [
+     "bounds:c8",
+     "PASS"
+    ],
+    [
+     "fit:c8",
+     "PASS"
+    ],
+    [
+     "contrast:c9",
+     "PASS"
+    ],
+    [
+     "bounds:c9",
+     "PASS"
+    ],
+    [
+     "fit:c9",
+     "PASS"
+    ],
+    [
+     "contrast:c10",
+     "PASS"
+    ],
+    [
+     "bounds:c10",
+     "PASS"
+    ],
+    [
+     "fit:c10",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408340.5,
+   "kind": "music_bed",
+   "mood": "Warm, playful lo-fi bed with a light tabla pulse under it — cozy late-night comfort-food craving, not a big jingle."
+  },
+  {
+   "t": 1790408340.5,
+   "kind": "final",
+   "file": "E11/C-final.mp4"
+  }
+ ]
+}

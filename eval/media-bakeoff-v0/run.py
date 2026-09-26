@@ -1024,8 +1024,11 @@ def veo_prompt(s: dict) -> str:
     sp = (s.get("spoken") or "").strip().strip('"').strip("“”")
     if not sp:
         return pr
-    norm = lambda t: re.sub(r"[^\w\s]", "", t.lower())
-    if " ".join(norm(sp).split()[:4]) in norm(pr):
+    norm = lambda t: " ".join(re.sub(r"[^\w\s]", "", t.lower()).split())
+    # the line counts as sent only when it is inside quotes in the prompt (a paraphrase in the action text is not speech:
+    # E12 C s2 "How much more?" vs "laughing at how much more keeps coming", found by the final check, 26 Sep)
+    quoted = re.findall(r"[\"“”](.+?)[\"“”]|(?<!\w)['‘’](.+?)['‘’](?!\w)", pr)
+    if any(norm(sp) and norm(sp) in norm(a or b) for a, b in quoted):
         return pr
     return f'{pr} Spoken line: "{sp}"'
 

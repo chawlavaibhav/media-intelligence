@@ -1,0 +1,140 @@
+{
+ "brief": "T3",
+ "arm": "C",
+ "class": "F1_story_film",
+ "events": [
+  {
+   "t": 1790408005.3,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: negative phrasing ('No re') — rephrase positively",
+    "scene 1 first_frame_still_prompt: still prompt has 105 words (needs 30–80)",
+    "scene 1 first_frame_still_prompt: contains exact copy / brand name ['Aight'] — copy is added by code",
+    "scene 1 first_frame_still_prompt: negative phrasing ('no other') — rephrase positively",
+    "scene 2 prompt: video prompt has 130 words (max 120)",
+    "scene 2 prompt: contains exact copy / brand name ['Aight', 'One key to AI that always gives back a little more.'] — copy is added by code",
+    "scene 2 prompt: negative phrasing ('never re') — rephrase positively",
+    "scene 2 first_frame_still_prompt: still prompt has 110 words (needs 30–80)",
+    "scene 2 first_frame_still_prompt: contains exact copy / brand name ['Aight'] — copy is added by code"
+   ]
+  },
+  {
+   "t": 1790408137.8,
+   "kind": "lint_after_fix",
+   "flags": [
+    "scene 1 prompt: negative phrasing ('never lit') — rephrase positively"
+   ]
+  },
+  {
+   "t": 1790408234.6,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -27.5
+  },
+  {
+   "t": 1790408237.0,
+   "kind": "check_clip",
+   "file": "S2-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: aetheris rtal",
+    "t=4.0s stray text: aetheris poortal",
+    "t=6.8s stray text: aetheris poortal"
+   ],
+   "loudness_lufs": -17.1
+  },
+  {
+   "t": 1790408237.0,
+   "kind": "retake_slot",
+   "scene": 2,
+   "reason": "failed checks"
+  },
+  {
+   "t": 1790408298.2,
+   "kind": "check_clip",
+   "file": "S2-t2.mp4",
+   "problems": [
+    "t=1.6s stray text: aetheris ort",
+    "t=4.0s stray text: aetheris portal",
+    "t=6.8s stray text: aetheris iportal"
+   ],
+   "loudness_lufs": -17.2
+  },
+  {
+   "t": 1790408301.5,
+   "kind": "super",
+   "scene": 2,
+   "text": "Aight",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408301.5,
+   "kind": "voice_timing",
+   "scene": 2,
+   "words": 12,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790408301.9,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "contrast:c2",
+     "PASS"
+    ],
+    [
+     "bounds:c2",
+     "PASS"
+    ],
+    [
+     "fit:c2",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408328.1,
+   "kind": "music_bed",
+   "mood": "One warm, minimal sustained pad/tone that stays nearly silent and cold under Scene 1, then swells gently and brightens the instant the key turns in Scene 2 — mood: quiet trust arriving late."
+  },
+  {
+   "t": 1790408328.1,
+   "kind": "final",
+   "file": "T3/C-final.mp4"
+  }
+ ]
+}

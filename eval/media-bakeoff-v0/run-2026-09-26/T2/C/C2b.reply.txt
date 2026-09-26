@@ -1,0 +1,70 @@
+# Review & Revisions
+
+I ran the draft against all 15 checks. Two real gaps came up (C04 hook strength, C09/C11 vertical/story-safe framing) — fixed below without touching the rotation motion or adding people. The rest are either satisfied or correctly not applicable given the narrow, literal brief ("animate this photo... no people... keep the bag exactly the same").
+
+## Revised JSON
+
+```json
+{
+  "aspect_ratio": "9:16",
+  "ideas": [
+    {
+      "truth": "A still product photo feels dead until something in the frame breathes.",
+      "moment": "The bag sits untouched on a lit surface as morning light shifts and its texture and hardware catch new highlights — the object simply comes alive in place.",
+      "key_frame": "Bag centered on a warm-lit surface, soft shadow beneath, light drifting across the leather grain."
+    },
+    {
+      "truth": "We trust things we can see from every side.",
+      "moment": "The bag rotates slowly on a plinth as if a hand just set it down for inspection, letting every strap and stitch be checked at a glance — no hand shown, just the object offering itself.",
+      "key_frame": "Bag filling most of a vertical 9:16 frame at a 3/4 angle, tight and bold, beginning a slow turn, clean backdrop, single soft key light."
+    },
+    {
+      "truth": "Good things arrive quietly, not with fanfare.",
+      "moment": "The camera itself moves — a slow push-in toward the bag as if walking up to a shop window and stopping right in front of it.",
+      "key_frame": "Bag small in frame at a slight distance, camera beginning to close the gap toward it."
+    }
+  ],
+  "chosen": 1,
+  "why": "A slow, motivated rotation shows the bag's full form and craft without touching or altering it, and gives Veo one clean, literal motion instruction. Reframed tighter and vertically so it also lands as a strong immediate stopper on Stories.",
+  "treatment": "The bag sits on a low plinth against a soft, neutral backdrop, framed vertically (9:16) so it fills roughly 70-80% of the frame height from the very first frame — a bold, close, unmistakable product image that reads instantly on a phone. It is lit by one warm key light from above and slightly behind, casting a soft contact shadow directly beneath it. Nothing else is in frame. Over about six seconds the bag rotates slowly and evenly on the spot, as if placed for inspection, completing roughly three-quarters of a full turn so every strap, seam and hardware detail catches the light in sequence. The background stays still and quiet; only the bag moves. Ambient room tone with the faintest soft rustle as it turns. No music swells, no cuts — one continuous take, ending with the bag settled at a flattering three-quarter angle, motion easing to a stop on the final frame.",
+  "scenes": [
+    {
+      "n": 1,
+      "prompt": "Cinematography: vertical 9:16 frame, locked-off camera, eye-level, subject framed tight and bold filling ~70-80% of frame height from the first frame (a stopping close/medium-close shot, not a distant product shot), soft single warm key light from above and slightly behind, shallow depth of field keeping the subject sharp against a soft neutral backdrop. Subject: the bag, unchanged, resting on a low plinth with a soft contact shadow directly beneath it. Action: the bag rotates slowly and smoothly in place on its own axis, completing about three-quarters of a full turn over the shot, easing to a gentle stop at a flattering three-quarter angle in the final frame — no other movement, nothing else enters frame. Setting: a quiet, minimal studio backdrop, softly lit, out of focus. Style and ambience: calm, premium, still-life come alive; sound is ambient studio quiet with a faint, soft rustle as the bag turns, no music, no voice.",
+      "duration_s": 6.5,
+      "references": ["photo1"],
+      "spoken": "",
+      "on_screen_copy": [],
+      "first_frame_still_prompt": "Bag exactly as in reference photo, framed vertically (9:16), close and bold — filling most of the frame height — resting on a low plinth against a soft neutral backdrop, one warm key light from above and slightly behind, soft contact shadow directly beneath, angled slightly off-center so rotation has room to read, positioned safely within Instagram Story UI margins top and bottom."
+    }
+  ],
+  "riskiest_scene": 1,
+  "finish": {
+    "copy_placement": "Small, high-contrast wordmark/logo locked bottom-third, safe within Instagram story UI margins, present from first frame to last so brand is visible throughout without covering the bag.",
+    "end_card": "Final frame is the bag itself at rest, three-quarter angle, no card — the product is the end card.",
+    "music": "Optional: a very quiet, warm ambient bed, minimal and unhurried, low enough to keep the bag's own soft rustle audible — mood: calm confidence, not upbeat."
+  }
+}
+```
+
+## Checklist
+
+```json
+"checklist": [
+  {"id":"C01","answer":"YES","evidence":"\"every strap, seam and hardware detail catches the light in sequence\" — description is specific to a bag's construction, would misdescribe a bottle or watch.","action":"none"},
+  {"id":"C02","answer":"NO","evidence":"\"the bag rotates slowly and evenly on the spot, as if placed for inspection\" — product is fully present and calm from frame one, no obstacle.","action":"kept — the customer asked only to animate a still product photo, no people, no scenario; an obstacle would require a narrative element outside that scope."},
+  {"id":"C03","answer":"NO","evidence":"no character appears anywhere in the draft; the plinth/bag is the only subject.","action":"kept — customer explicitly said 'no people', so no hero/guide relationship can be shown; not applicable to this asset type."},
+  {"id":"C04","answer":"NO → fixed","evidence":"old key_frame: \"Bag at a 3/4 angle beginning a slow turn, clean backdrop, single soft key light\" (mid-distance, not bold/close).","action":"revised — new key_frame/prompt: \"Bag filling most of a vertical 9:16 frame... tight and bold\" so the first 2 seconds are a close, frame-filling stopper."},
+  {"id":"C05","answer":"YES","evidence":"\"Small, high-contrast wordmark/logo locked bottom-third... present from first frame to last\" — product (video asset) plus logo (graphic asset) both carry the brand.","action":"none"},
+  {"id":"C06","answer":"YES","evidence":"\"Style and ambience: calm, premium, still-life come alive\" / \"mood: calm confidence, not upbeat\" — feeling is named and matches the slow, warm-lit reveal.","action":"none"},
+  {"id":"C07","answer":"YES","evidence":"\"Nothing else is in frame\" / \"only the bag moves\" — the bag is the sole subject and hero of the only scene.","action":"none"},
+  {"id":"C08","answer":"YES","evidence":"\"no cuts — one continuous take\" with progressive detail reveal (\"every strap, seam and hardware detail catches the light in sequence\") — no unmotivated cuts, continuous new info as it turns.","action":"none"},
+  {"id":"C09","answer":"NO → fixed","evidence":"original draft had no aspect ratio or Story-format framing spec anywhere.","action":"revised — added top-level \"aspect_ratio\":\"9:16\" and vertical framing language in treatment/scene/first_frame_still_prompt."},
+  {"id":"C10","answer":"YES","evidence":"\"Action: the bag rotates slowly and smoothly in place on its own axis... no other movement, nothing else enters frame\" — exactly one motion instruction.","action":"none"},
+  {"id":"C11","answer":"NO → fixed","evidence":"without vertical framing, a horizontally-composed 'centered on a surface' shot could crop poorly in a phone Story.","action":"revised — same fix as C09: bag now specified to fill ~70-80% of a 9:16 frame, safe within Story UI margins."},
+  {"id":"C12","answer":"NO","evidence":"\"on_screen_copy\": [] and no swipe-up/CTA text anywhere; only the end-on-product part (\"the product is the end card\") is satisfied.","action":"kept — the customer's request was only to animate the photo, not to add a call-to-action; adding one would be outside the literal ask."},
+  {"id":"C13","answer":"NO","evidence":"no persona, worry, or market context is referenced anywhere in the draft.","action":"kept — a single silent product-only Story asset with 'no people' doesn't carry persona framing; adding it would require narrative elements the customer didn't request."},
+  {"id":"C14","answer":"NO","evidence":"only descriptive/atmospheric language (light, mood, rustle) is used — no material, durability, capacity, or price claims are made beyond what's visually shown.","action":"none — this is the desired answer (no overreach beyond product facts)."},
+  {"id":"C15","answer":"NO","evidence":"no prior creative was provided in this conversation to compare casting, music, setting, or structure against.","action":"kept — flagging for manual comparison against past assets before final approval; not fabricating a novelty claim without reference material."}
+]
+```

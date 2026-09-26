@@ -1,0 +1,122 @@
+{
+ "brief": "E09",
+ "arm": "C",
+ "class": "F1_story_film",
+ "events": [
+  {
+   "t": 1790408756.8,
+   "kind": "lint",
+   "flags": [
+    "scene 1 first_frame_still_prompt: still prompt has 142 words (needs 30–80)",
+    "scene 2 prompt: negative phrasing ('No dialogue') — rephrase positively",
+    "scene 2 first_frame_still_prompt: still prompt has 114 words (needs 30–80)",
+    "scene 2 first_frame_still_prompt: negative phrasing ('no clutter') — rephrase positively"
+   ]
+  },
+  {
+   "t": 1790408823.9,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790408929.6,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -21.2
+  },
+  {
+   "t": 1790408931.8,
+   "kind": "check_clip",
+   "file": "S2-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -24.6
+  },
+  {
+   "t": 1790408931.8,
+   "kind": "retake_slot",
+   "scene": 1,
+   "reason": "riskiest"
+  },
+  {
+   "t": 1790408999.8,
+   "kind": "check_clip",
+   "file": "S1-t2.mp4",
+   "problems": [],
+   "loudness_lufs": -15.5
+  },
+  {
+   "t": 1790409013.6,
+   "kind": "picked",
+   "name": "pick-s1",
+   "label": "C-s1-t2",
+   "raw": [
+    "C-s1-t2"
+   ]
+  },
+  {
+   "t": 1790409013.6,
+   "kind": "voice_timing",
+   "scene": 1,
+   "words": 5,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790409016.8,
+   "kind": "super",
+   "scene": 2,
+   "text": "iPhone Duo",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790409017.2,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790409041.4,
+   "kind": "music_bed",
+   "mood": "Warm, understated solo piano that enters softly under the ambient birthday sounds in Scene 1 and rises gently through Scene 2 — tender and homely, not epic or 'tech trailer' in tone."
+  },
+  {
+   "t": 1790409041.4,
+   "kind": "final",
+   "file": "E09/C-final.mp4"
+  }
+ ]
+}

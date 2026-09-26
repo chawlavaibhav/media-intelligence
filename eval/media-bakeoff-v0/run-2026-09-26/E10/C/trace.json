@@ -1,0 +1,227 @@
+{
+ "brief": "E10",
+ "arm": "C",
+ "class": "F1_story_film",
+ "events": [
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_llm",
+   "step": "C2"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_llm",
+   "step": "C2b"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "lint",
+   "flags": [
+    "scene 1 first_frame_still_prompt: still prompt has 115 words (needs 30–80)",
+    "scene 1 first_frame_still_prompt: negative phrasing ('no printed') — rephrase positively",
+    "scene 2 prompt: contains exact copy / brand name ['Ascend Foods'] — copy is added by code",
+    "scene 2 first_frame_still_prompt: still prompt has 105 words (needs 30–80)",
+    "scene 2 first_frame_still_prompt: negative phrasing ('no real') — rephrase positively",
+    "scene 3 prompt: contains exact copy / brand name ['Ascend Foods'] — copy is added by code",
+    "scene 3 first_frame_still_prompt: still prompt has 138 words (needs 30–80)",
+    "scene 3 first_frame_still_prompt: contains exact copy / brand name ['Ascend Foods'] — copy is added by code",
+    "scene 4 first_frame_still_prompt: still prompt has 125 words (needs 30–80)",
+    "scene 4 first_frame_still_prompt: contains exact copy / brand name ['Ascend Foods'] — copy is added by code"
+   ]
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_llm",
+   "step": "B3-fix"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S1-first",
+   "file": "S1-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S2-first",
+   "file": "S2-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S3-first",
+   "file": "S3-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S4-first",
+   "file": "S4-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_failed_not_resent",
+   "tag": "S2-t1"
+  },
+  {
+   "t": 1790426353.2,
+   "kind": "resumed_media",
+   "tag": "S1-t1",
+   "file": "S1-t1.mp4"
+  },
+  {
+   "t": 1790426427.0,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: rice vipa",
+    "t=6.8s stray text: oponed"
+   ],
+   "loudness_lufs": -23.9
+  },
+  {
+   "t": 1790426430.2,
+   "kind": "check_clip",
+   "file": "S3-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: ramesh kirana store 90816542010 coke listen meggle augitud blinkit delivery bein chr",
+    "t=4.0s stray text: kirana store amesh 9516542010 coke maggla hojaft lipton allgetarno ofbin bud dliinnit",
+    "t=6.8s stray text: kirana store mesh 9816847 coke maggla lipton allocar ohhire budjb dlinkit delivery"
+   ],
+   "loudness_lufs": -21.2
+  },
+  {
+   "t": 1790426432.8,
+   "kind": "check_clip",
+   "file": "S4-t1.mp4",
+   "problems": [
+    "t=1.2s stray text: pegle fortuna days kays parle part gafices stro tide sor mame tide",
+    "t=3.0s stray text: pegle laus laurs parle parit cedes burma sorf bame tide tide ledxica",
+    "t=5.1s stray text: payle gators lays kays parle pare saffors tide tide sorf bam haler"
+   ],
+   "loudness_lufs": -18.7
+  },
+  {
+   "t": 1790426432.8,
+   "kind": "retake_slot",
+   "scene": 1,
+   "reason": "failed checks"
+  },
+  {
+   "t": 1790426506.0,
+   "kind": "check_clip",
+   "file": "S1-t2.mp4",
+   "problems": [],
+   "loudness_lufs": -20.8
+  },
+  {
+   "t": 1790426506.0,
+   "kind": "voice_timing",
+   "scene": 1,
+   "words": 6,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790426506.0,
+   "kind": "voice_timing",
+   "scene": 3,
+   "words": 6,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790426508.6,
+   "kind": "super",
+   "scene": 4,
+   "text": "Ascend Foods",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426508.6,
+   "kind": "voice_timing",
+   "scene": 4,
+   "words": 5,
+   "max_words": 14.0,
+   "ok": true
+  },
+  {
+   "t": 1790426509.0,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "contrast:c2",
+     "PASS"
+    ],
+    [
+     "bounds:c2",
+     "PASS"
+    ],
+    [
+     "fit:c2",
+     "PASS"
+    ],
+    [
+     "contrast:c3",
+     "PASS"
+    ],
+    [
+     "bounds:c3",
+     "PASS"
+    ],
+    [
+     "fit:c3",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426538.9,
+   "kind": "music_bed",
+   "mood": "Yes — starts as sparse, tense pizzicato-style strings under Scene 1, and builds into a warm, hopeful Hindi acoustic/harmonium-and-guitar swell by Scene 4, landing on the CTA with quiet optimism rather than triumph."
+  },
+  {
+   "t": 1790426538.9,
+   "kind": "final",
+   "file": "E10/C-final.mp4"
+  }
+ ]
+}

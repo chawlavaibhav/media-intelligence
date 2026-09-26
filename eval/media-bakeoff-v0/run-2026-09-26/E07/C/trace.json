@@ -1,0 +1,56 @@
+{
+ "brief": "E07",
+ "arm": "C",
+ "class": "M1_animate",
+ "events": [
+  {
+   "t": 1790409739.7,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: animate prompt has 123 words (max 40; motion and camera only)",
+    "scene 1 prompt: negative phrasing ('No dialogue') — rephrase positively",
+    "scene 1 first_frame_still_prompt: negative phrasing ('no light') — rephrase positively"
+   ]
+  },
+  {
+   "t": 1790409782.4,
+   "kind": "lint_after_fix",
+   "flags": [
+    "scene 1 first_frame_still_prompt: still prompt has 29 words (needs 30–80)"
+   ]
+  },
+  {
+   "t": 1790409845.5,
+   "kind": "check_clip",
+   "file": "take1.mp4",
+   "problems": [
+    "t=1.2s stray text: dingoon diego"
+   ],
+   "loudness_lufs": -14.6
+  },
+  {
+   "t": 1790409904.9,
+   "kind": "check_clip",
+   "file": "take2.mp4",
+   "problems": [
+    "t=1.2s stray text: chache pable rap buckdes mototere mokobora",
+    "t=3.0s stray text: mokebera"
+   ],
+   "loudness_lufs": -14.5
+  },
+  {
+   "t": 1790409922.6,
+   "kind": "picked",
+   "name": "pick",
+   "label": "t1",
+   "raw": [
+    "t1"
+   ]
+  },
+  {
+   "t": 1790409922.6,
+   "kind": "final",
+   "file": "E07/C-final.mp4"
+  }
+ ]
+}

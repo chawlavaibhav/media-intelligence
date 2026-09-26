@@ -1,0 +1,141 @@
+{
+ "brief": "E01",
+ "arm": "B",
+ "class": "S1_product_ad",
+ "events": [
+  {
+   "t": 1790407618.8,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: still prompt has 124 words (needs 30–80)",
+    "scene 1 prompt: contains exact copy / brand name ['mokobara'] — copy is added by code",
+    "scene 1 first_frame_still_prompt: still prompt has 13 words (needs 30–80)",
+    "scene 2 prompt: still prompt has 117 words (needs 30–80)",
+    "scene 2 prompt: contains exact copy / brand name ['mokobara'] — copy is added by code",
+    "scene 2 first_frame_still_prompt: still prompt has 13 words (needs 30–80)"
+   ]
+  },
+  {
+   "t": 1790407791.4,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790407807.6,
+   "kind": "check_still",
+   "file": "draw1.jpg",
+   "problems": [
+    "stray text: mobobora"
+   ],
+   "ocr": "mobobora\nmokobara"
+  },
+  {
+   "t": 1790407829.6,
+   "kind": "check_still",
+   "file": "draw2.jpg",
+   "problems": [
+    "stray text: mokeboro"
+   ],
+   "ocr": "mokeboro"
+  },
+  {
+   "t": 1790407842.1,
+   "kind": "check_still",
+   "file": "draw3.jpg",
+   "problems": [
+    "stray text: mokoboro"
+   ],
+   "ocr": "mokoboro"
+  },
+  {
+   "t": 1790407878.1,
+   "kind": "check_still",
+   "file": "draw4.jpg",
+   "problems": [
+    "stray text: mokobora"
+   ],
+   "ocr": "mokobora"
+  },
+  {
+   "t": 1790407878.1,
+   "kind": "all_draws_failed_checks_pick_from_all"
+  },
+  {
+   "t": 1790408038.6,
+   "kind": "picked",
+   "name": "pick",
+   "label": "d1",
+   "raw": [
+    "d1"
+   ]
+  },
+  {
+   "t": 1790408039.9,
+   "kind": "finish_still",
+   "checks": [
+    [
+     "bounds:logo",
+     "PASS"
+    ],
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "contrast:c2",
+     "PASS"
+    ],
+    [
+     "fit:c2",
+     "PASS"
+    ],
+    [
+     "bounds:c2",
+     "PASS"
+    ],
+    [
+     "contrast:c3",
+     "PASS"
+    ],
+    [
+     "fit:c3",
+     "PASS"
+    ],
+    [
+     "bounds:c3",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "clear_of_product",
+     "PASS"
+    ],
+    [
+     "hero_visible",
+     "PASS"
+    ]
+   ],
+   "text": [
+    "Room for the long way home.",
+    "Transit Backpack · 30L",
+    "mokobara.com"
+   ]
+  },
+  {
+   "t": 1790408039.9,
+   "kind": "final",
+   "file": "E01/B-final.png"
+  }
+ ]
+}

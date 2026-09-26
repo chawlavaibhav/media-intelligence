@@ -1,0 +1,11 @@
+{
+ "prompts": [
+  {
+   "scene": 1,
+   "prompt": "Edit instruction: Keep the bag (product) in the reference photo completely unchanged — same shape, color, texture, logo, straps, hardware, shadows/highlights on the bag itself, and exact position/angle/scale in frame. Replace ONLY the background with a Goa beach at sunset: warm golden-orange sky fading to soft pink and purple near the horizon, sun low over the Arabian Sea, gentle waves with light foam, scattered palm tree silhouettes at the edges of frame, soft warm rim light consistent with the sunset direction falling naturally on the bag to match the new lighting, fine sand in the foreground with a shallow depth of field so the bag stays crisp and in sharp focus while the beach background has a soft photographic bokeh. Maintain original photo's camera angle, perspective, and image resolution/aspect ratio. No people, no text, no added objects — background environment change only.",
+   "duration_s": 8
+  }
+ ],
+ "riskiest_scene": 1,
+ "notes": "Since this is a single still-image edit (not a multi-scene film), there is only one prompt/instruction, delivered as one 'scene' for schema consistency (duration_s is not applicable but included as required). Main risk: Nano Banana 2 may slightly alter bag lighting/shadow direction or bag edges/matte lines when compositing the new background — review the output closely at the bag's edges and reflective areas (buckles, zippers) to ensure no warping or color shift occurred, and re-run with 'preserve original lighting on subject, change environment lighting only around it' as a fallback instruction if the first pass alters the bag itself."
+}
