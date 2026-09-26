@@ -87,8 +87,25 @@ class Ledger:
                 tot[r["id"]] = {**tot[r["id"]], "amount": r["amount"]}
         return sum(r["amount"] for r in tot.values() if step is None or r["step"] == step)
 
+    def _locked(self):
+        """A cross-process lock on the ledger file (several step processes share it); re-reads every row under it."""
+        import fcntl
+
+        class _L:
+            def __enter__(s2):
+                self.lock.acquire()
+                s2.f = open(str(self.path) + ".lock", "a")
+                fcntl.flock(s2.f, fcntl.LOCK_EX)
+                self.rows = [json.loads(line) for line in self.path.read_text().splitlines() if line.strip()] if self.path.exists() else []
+
+            def __exit__(s2, *exc):
+                fcntl.flock(s2.f, fcntl.LOCK_UN)
+                s2.f.close()
+                self.lock.release()
+        return _L()
+
     def reserve(self, *, brief, arm, what, route, amount, sim):
-        with self.lock:
+        with self._locked():
             amount = 0.0 if sim else amount
             if self._spent(self.step) + amount > CAPS[self.step] + 1e-9:
                 raise CapReached(f"step {self.step} cap US${CAPS[self.step]} would be exceeded by {route} {what} "
@@ -101,7 +118,7 @@ class Ledger:
             return rid
 
     def settle(self, rid, *, status, amount, detail="", seconds=0.0):
-        with self.lock:
+        with self._locked():
             self._write({"kind": "settle", "id": rid, "t": time.time(), "status": status, "amount": round(amount, 6),
                          "detail": str(detail)[:500], "seconds": round(seconds, 2)})
 
@@ -111,6 +128,8 @@ class Ledger:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
     def arm_cost(self, brief, arm):
+        with self._locked():
+            pass
         res = {r["id"]: r for r in self.rows if r["kind"] == "reserve" and r["brief"] == brief and r["arm"] == arm}
         cost, secs = 0.0, 0.0
         for r in self.rows:
@@ -1069,9 +1088,17 @@ def main():
         else:
             fz.write_text(json.dumps(now, indent=1))
     briefs = a.briefs.split(",") if a.briefs else STEP_BRIEFS[a.step]
-    outf = ctx.run / ("outputs.json" if a.step != "practice" else "practice-outputs.json")
-    outs = json.loads(outf.read_text()) if outf.exists() else []
-    done = {(o["brief_id"], o["arm"]) for o in outs if o.get("status") == "ok"}
+    def collect():
+        """outputs.json / practice-outputs.json from every brief's results.json (several processes write briefs)."""
+        for name, pref in (("outputs.json", "E"), ("practice-outputs.json", "T")):
+            rows = []
+            for rf in sorted(ctx.run.glob(f"{pref}*/results.json")):
+                rows += json.loads(rf.read_text())
+            if rows:
+                (ctx.run / name).write_text(json.dumps(rows, indent=1))
+    done = set()
+    for rf in ctx.run.glob("*/results.json"):
+        done |= {(o["brief_id"], o["arm"]) for o in json.loads(rf.read_text()) if o.get("status") == "ok"}
     for bid in briefs:
         if all((bid, arm) in done for arm in STEP_ARMS[a.step]):
             print(f"[{bid}] already done, skipped", flush=True)
@@ -1082,8 +1109,8 @@ def main():
             print(f"CAP REACHED: {e}", flush=True)
             (ctx.run / "CAP-REACHED.txt").write_text(str(e))
             return 3
-        outs = [o for o in outs if o["brief_id"] != bid] + res
-        outf.write_text(json.dumps(outs, indent=1))
+        (ctx.run / bid / "results.json").write_text(json.dumps(res, indent=1))
+        collect()
     spent = ctx.ledger._spent(a.step)
     print(f"STEP {a.step} finished. step spend US${spent:.2f} / cap {CAPS[a.step]}; total US${ctx.ledger._spent():.2f} / {TOTAL_CAP}", flush=True)
     return 0
