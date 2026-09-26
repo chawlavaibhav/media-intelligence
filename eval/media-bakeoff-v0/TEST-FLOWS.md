@@ -141,15 +141,15 @@ You are one senior creative director and writer making this whole ad yourself, s
 CUSTOMER REQUEST (verbatim — the loudest thing here): {brief_verbatim}
 ANSWERS: {answers}
 UNDERSTANDING: {B1 json}
-PHOTOS: attached as references. The product must look exactly like them; never describe it at length.
+PHOTOS: {photos_line}
 MEDIA MODEL: {media_model_name}.  HOW THIS MODEL WANTS TO BE PROMPTED:
-{style_guide_for_class}          ← one page, section 5 below
+{style_guide_for_class}
 
 Do this in order:
 1. IDEAS. Write 3 genuinely different ideas. Each = a human truth + one specific moment where this product matters
    + a one-line key-frame description. At most one may have no people. Pick the strongest and say why in one line.
 2. TREATMENT. ≤150 words of plain prose for the chosen idea: what we see and hear, start to finish.
-3. SCENES (films) / FRAME (stills). For each scene: the prompt written in this model's own style (section 5 rules),
+3. SCENES (films) / FRAME (stills). For each scene: the prompt written in this model's own style (the style notes above),
    duration, which reference photos to attach, at most one spoken line in quotes (≤ 2.5 words per second of the scene,
    minus 0.4 s), and any ON-SCREEN COPY — copy is added by code afterwards, so NEVER ask the model to draw text, logos
    or brand names. Mark the riskiest scene.
@@ -161,6 +161,12 @@ Return JSON:
  "scenes":[{"n":1,"prompt":"","duration_s":8,"references":["photo1"],"spoken":"" ,"on_screen_copy":[],"first_frame_still_prompt":""}],
  "riskiest_scene":n, "finish":{"copy_placement":"","end_card":"","music":""}}
 ```
+
+Template fields in B2:
+- `{style_guide_for_class}` = the section 5 page for the class.
+- `{photos_line}` = "{n} attached as references — the product must look exactly like them; never describe it at length."
+  when photos exist. Otherwise: "none supplied — invent the food/product look yourself, and keep it identical across
+  scenes by repeating one fixed description word for word."
 
 **B3 lint:** code checks the writer's JSON and returns it **once**. Code never edits a prompt.
 - **Word budgets:** stills 30–80 words; video scenes ≤120 words; animate prompts ≤40 words.
