@@ -50,6 +50,7 @@ STEP_ARMS = {"practice": ["B", "C"], "stills": ["A", "B", "C"], "films": ["A", "
 MAI_BRIEFS = {"E01", "E02", "E03", "E04", "E05"}
 CAPS = {"practice": 14.0, "stills": 23.0, "films": 128.0}        # founder 26 Sep: total US$165
 TOTAL_CAP = 165.0
+STEP_CAPS_HARD = False    # founder 26 Sep: the US$165 total is the only hard cap; CAPS are reporting targets (my split)
 
 WRITER_MODEL = "claude-sonnet-5"
 PRICE = {"nb2": 0.067, "mai": 0.05, "veo-fast": 0.15, "veo-std": 0.40, "lyria": 0.06, "ocr": 0.0015,
@@ -107,7 +108,7 @@ class Ledger:
     def reserve(self, *, brief, arm, what, route, amount, sim):
         with self._locked():
             amount = 0.0 if sim else amount
-            if self._spent(self.step) + amount > CAPS[self.step] + 1e-9:
+            if STEP_CAPS_HARD and self._spent(self.step) + amount > CAPS[self.step] + 1e-9:
                 raise CapReached(f"step {self.step} cap US${CAPS[self.step]} would be exceeded by {route} {what} "
                                  f"(spent {self._spent(self.step):.2f} + {amount:.2f})")
             if self._spent() + amount > TOTAL_CAP + 1e-9:
@@ -1017,7 +1018,9 @@ def run_brief(ctx, bid):
     U = None
     arms = STEP_ARMS[ctx.step]
     t_start = time.time()
-    if "B" in arms or "C" in arms:
+    if (ctx.run / bid / "B1.json").exists():          # resume: the understanding the finished arms already used
+        U = json.loads((ctx.run / bid / "B1.json").read_text())
+    elif "B" in arms or "C" in arms:
         ar = ArmRun(ctx, bid, "B", prompts0, photos)
         txt = ar.call("luna", "B1", 0.01, ctx.p.luna, prompts0["B1"])
         ar.write_llm("B1", prompts0["B1"], txt)
@@ -1027,6 +1030,15 @@ def run_brief(ctx, bid):
                              json.loads((HERE / "librarian-picks" / f"picks-{bid}.json").read_text()))
 
     def arm_job(arm):
+        prev = sorted((ctx.run / bid).glob(f"{arm}-final.*"))
+        tr = ctx.run / bid / arm / "trace.json"
+        if prev and tr.exists() and any(e["kind"] == "final" for e in json.loads(tr.read_text())["events"]):
+            cost, secs = ctx.ledger.arm_cost(bid, arm)          # resume: this arm finished before a restart; reuse it
+            results[arm] = {"brief_id": bid, "arm": arm, "file": str(prev[0].relative_to(ctx.run)),
+                            "kind": "video" if prev[0].suffix == ".mp4" else "image", "status": "ok", "cost_usd": cost,
+                            "seconds": secs, "wall_seconds": None, "resumed": True}
+            print(f"[{bid}] {arm} already finished before the restart: reused", flush=True)
+            return
         ar = ArmRun(ctx, bid, arm if arm != "A_MAI" else "A_MAI", P, photos, U)
         t = time.time()
         try:
