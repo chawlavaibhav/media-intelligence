@@ -15,3 +15,5 @@
 - Finishing: studio compose (origin/claude/kitchen-v3) needs Pillow+raqm; venv made at ~/Vaibhav_Personal_Projects/bakeoff-media/.venv (Pillow 12.3, raqm yes); Devanagari font Kohinoor.ttc present.
 - Runner: none exists on the branch yet (HANDOFF step 1). To build, then dry-run T1–T4 simulated.
 - Pre-flight spend so far: ~US$0.07.
+- 2026-09-26 10:35 IST — founder: "MAI was hosted for llm gateway. if not there, you host the mAI model" — MAI not found on any aight-* Foundry/OpenAI account (gateway included). MAI-Image-2.6 is offered in eastus only; founder ran the create/deploy himself (my attempt was blocked by Claude Code's classifier). New: AIServices account aight-bakeoff-mai-eus (RG aight-studio, eastus, getaight sub), deployment MAI-Image-2.6 (2026-07-31, GlobalStandard cap 1). Key read via `az ... keys list` inside the command only.
+- MAI-Image-2.6 smoke: 1 image OK via POST /mai/v1/images/generations (1024x1024, 39 s).
