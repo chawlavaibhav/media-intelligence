@@ -48,7 +48,7 @@ STEP_BRIEFS = {"practice": ["T1", "T2", "T3", "T4"],
                "films": ["E08", "E09", "E10", "E11", "E12"]}
 STEP_ARMS = {"practice": ["B", "C"], "stills": ["A", "B", "C"], "films": ["A", "B", "C"]}
 MAI_BRIEFS = {"E01", "E02", "E03", "E04", "E05"}
-CAPS = {"practice": 12.0, "stills": 25.0, "films": 128.0}        # founder 26 Sep: total US$165
+CAPS = {"practice": 14.0, "stills": 23.0, "films": 128.0}        # founder 26 Sep: total US$165
 TOTAL_CAP = 165.0
 
 WRITER_MODEL = "claude-sonnet-5"
