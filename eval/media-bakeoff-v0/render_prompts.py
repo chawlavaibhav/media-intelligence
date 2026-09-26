@@ -26,7 +26,7 @@ MEDIA = {
     "S2_edit": ("Nano Banana 2 edit", "edit"),
     "M1_animate": ("Veo 3.1 Fast image-to-video", "veo"),
     "M2_product_film": ("Veo 3.1 Fast (8-second scenes from approved stills)", "veo"),
-    "F1_story_film": ("Veo 3.1 Fast (8-second scenes with native audio; first frames by Nano Banana 2)", "veo"),
+    "F1_story_film": ("Veo 3.1 (8-second scenes with native audio; first frames by Nano Banana 2)", "veo"),
 }
 
 

@@ -42,8 +42,9 @@ through a strong LLM first, so the baseline is **LLM + media model**. That leave
 | S2 edit my photo | Nano Banana 2 edit | GPT Image 2 edit (Azure) |
 | M1 animate my image | Veo 3.1 Fast image-to-video | Veo 3.1 |
 | M2 product film, no people | Veo 3.1 Fast image-to-video from stills | Veo 3.1 |
-| F1 story film with people | Veo 3.1 Fast, 8-s scenes with native audio | Veo 3.1 |
+| F1 story film with people | **Veo 3.1 (standard, best tier)**, 8-s scenes with native audio (founder, 26 Sep) | Veo 3.1 Fast (log it) |
 | Music (B and C only, if the writer asks) | Lyria (Vertex) | none |
+| **Side check** (S1, S2 only) | **MAI-Image-2.6** (Azure Foundry), sent arm A's exact prompts, judged vs Nano Banana 2 | MAI-Image-2.6-Flash |
 
 **Draw budget, so that arms differ by method, not by luck:**
 

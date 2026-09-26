@@ -20,7 +20,8 @@ from pathlib import Path
 import yaml
 
 # v1 design (TEST-FLOWS.md): A = LLM + media model, B = our pipeline, C = LLM + Canon + our pipeline.
-COMPARISONS = [("B", "A"), ("C", "B"), ("C", "A")]
+COMPARISONS = [("B", "A"), ("C", "B"), ("C", "A"),
+               ("A_MAI", "A")]   # side check: the same A prompt sent to MAI-Image-2.6 vs Nano Banana 2 (stills/edits only)
 REPEAT_SHARE = 0.10
 
 

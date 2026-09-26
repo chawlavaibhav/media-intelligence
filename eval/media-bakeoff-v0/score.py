@@ -108,6 +108,10 @@ def main(run_dir: str) -> None:
     if c:
         ok = c["w"] > c["l"] and c["w"] >= 7
         L.append(f"- Canon: C vs B {c['w']}/{c['l']} (ties {c['t']}) -> {'KEEP in writer context (confirm on 30 briefs)' if ok else 'NOT in writer context'}")
+    _, c = rate("A_MAI vs A")
+    if c:
+        L.append(f"- Side check, image model: MAI-Image-2.6 vs Nano Banana 2 (same prompts) {c['w']}/{c['l']} (ties {c['t']}) -> "
+                 f"{'MAI preferred' if c['w'] > c['l'] else 'Nano Banana 2 preferred' if c['l'] > c['w'] else 'no difference'} (directional, n small)")
     (run / "SCORECARD.md").write_text("\n".join(L))
     print("\n".join(L))
 

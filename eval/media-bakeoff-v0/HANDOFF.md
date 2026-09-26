@@ -1,5 +1,7 @@
 # HANDOFF: run the media bake-off v1 (arms A, B, C) on the laptop (where the API keys are)
 
+> **Superseded by `START-HERE.md` (26 Sep).** Kept for its detail on keys and pre-flight; where the two differ, START-HERE wins.
+
 **Written 2026-09-25** by a cloud Claude Code session with no media-API access. **For** a Claude Code session on the
 founder's laptop that has the Google (Gemini API / Vertex) and Azure keys (fal is not available). The founder is asleep during the run. Judging happens when he
 wakes up.
