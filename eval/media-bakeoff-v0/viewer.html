@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blind Pair Judge</title>
+<style>
+  :root { --bg:#f6f5f2; --fg:#1d1d1b; --muted:#6b6a66; --card:#ffffff; --line:#dddad3; --accent:#1f5fbf; --sel:#dbe7fb; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#141413; --fg:#eeece6; --muted:#a09e97; --card:#1f1f1d; --line:#35342f; --accent:#7aa7ff; --sel:#243552; } }
+  :root[data-theme="dark"] { --bg:#141413; --fg:#eeece6; --muted:#a09e97; --card:#1f1f1d; --line:#35342f; --accent:#7aa7ff; --sel:#243552; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.45 system-ui, sans-serif; }
+  main { max-width:1100px; margin:0 auto; padding:16px; }
+  .brief { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin:8px 0 14px; }
+  .muted { color:var(--muted); font-size:13px; }
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:700px) { .pair { grid-template-columns:1fr; } }
+  .side { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px; }
+  .side h3 { margin:0 0 8px; }
+  .media { width:100%; max-width:360px; display:block; margin:0 auto 10px; aspect-ratio:auto; background:#000; border-radius:6px; }
+  .row { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0; }
+  button { font:inherit; padding:7px 10px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--fg); cursor:pointer; }
+  button.on { background:var(--sel); border-color:var(--accent); }
+  select { font:inherit; padding:6px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--fg); max-width:100%; }
+  .nav { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:14px; flex-wrap:wrap; }
+  .primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1 style="margin:4px 0">Which would you rather pay for?</h1>
+  <div class="muted" id="progress">Loading…</div>
+  <div class="brief" id="brief"></div>
+  <div class="pair">
+    <div class="side"><h3>Left</h3><div id="mA"></div>
+      <div class="muted">Would you pay the anchor price for the left one?</div><div class="row" id="payA"></div>
+      <select id="whyA"></select></div>
+    <div class="side"><h3>Right</h3><div id="mB"></div>
+      <div class="muted">Would you pay the anchor price for the right one?</div><div class="row" id="payB"></div>
+      <select id="whyB"></select></div>
+  </div>
+  <div class="muted" style="margin-top:12px">Preference</div>
+  <div class="row" id="pref"></div>
+  <div class="nav">
+    <button id="prev">← Back</button>
+    <span class="muted" id="saved"></span>
+    <button id="next" class="primary">Save &amp; next →</button>
+    <button id="export">Export verdicts.json</button>
+  </div>
+</main>
+<script>
+const PREF = ["Left clearly","Left slightly","Can't choose","Right slightly","Right clearly"];
+const PAY = ["Yes as-is","Yes after one small fix","No"];
+const WHY = ["(if No) reason…","Wrong product or world","Identity drift","Artefact (hands, morph)","Text or layout","Audio or voice","No motion / slideshow","Not an ad / boring","Off-brief"];
+let pairs = [], i = 0, V = {};
+const KEY = () => "verdicts:" + ((pairs[0] && pairs[0].set) || "unset");   // answers are kept per pair set, never shared across runs
+const store = { get(){ try { return JSON.parse(localStorage.getItem(KEY())||"{}"); } catch(e){ return {}; } },
+                set(v){ try { localStorage.setItem(KEY(), JSON.stringify(v)); } catch(e){} } };
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function media(src, kind){ return kind === "video" ? `<video class="media" src="${src}" controls playsinline preload="metadata"></video>` : `<img class="media" src="${src}" alt="">`; }
+function buttons(el, opts, key){ el.innerHTML = ""; opts.forEach(o => { const b = document.createElement("button"); b.textContent = o;
+  b.onclick = () => { cur()[key] = o; if (key.startsWith("pay") && o !== "No") delete cur()["why" + key.slice(3)]; store.set(V); render(); }; if (cur()[key] === o) b.className = "on"; el.appendChild(b); }); }
+function select(el, key){ el.innerHTML = WHY.map(w => `<option ${cur()[key]===w?"selected":""}>${w}</option>`).join(""); el.onchange = () => { cur()[key] = el.value; store.set(V); }; }
+function cur(){ const p = pairs[i], id = p.pair_id; V[id] = V[id] || {pair_id:id, set:p.set, left:p.left, right:p.right}; return V[id]; }
+function render(){
+  const p = pairs[i];
+  document.getElementById("progress").textContent = `Pair ${i+1} of ${pairs.length} · ${Object.values(V).filter(v=>v.pref).length} judged`;
+  const list = (t, xs) => xs && xs.length ? `<div class="muted"><b>${t}:</b> ${xs.map(esc).join(" · ")}</div>` : "";
+  document.getElementById("brief").innerHTML = `<b>Brief:</b> ${esc(p.brief) || "(see sheet)"}`
+    + (p.answers ? `<div class="muted"><b>Customer's answers:</b> ${esc(p.answers)}</div>` : "")
+    + `<div class="muted"><b>Photos supplied:</b> ${p.photos ? p.photos : "none"}</div>`
+    + list("Must have", p.must_haves) + list("Deal-breakers", p.deal_breakers)
+    + `<div class="muted">Price anchor: ₹${p.price_anchor_inr ?? "—"}</div>`;
+  const a = document.getElementById("mA"), b = document.getElementById("mB");
+  if (a.dataset.src !== p.left) { a.innerHTML = media(p.left, p.left_kind || p.kind); a.dataset.src = p.left; }
+  if (b.dataset.src !== p.right) { b.innerHTML = media(p.right, p.right_kind || p.kind); b.dataset.src = p.right; }
+  buttons(document.getElementById("pref"), PREF, "pref");
+  buttons(document.getElementById("payA"), PAY, "payA");
+  buttons(document.getElementById("payB"), PAY, "payB");
+  select(document.getElementById("whyA"), "whyA"); select(document.getElementById("whyB"), "whyB");
+}
+document.getElementById("next").onclick = () => { store.set(V); document.getElementById("saved").textContent = "saved"; if (i < pairs.length-1) { i++; render(); } };
+document.getElementById("prev").onclick = () => { if (i > 0) { i--; render(); } };
+document.getElementById("export").onclick = () => { store.set(V); const blob = new Blob([JSON.stringify(Object.values(V), null, 1)], {type:"application/json"});
+  const u = URL.createObjectURL(blob); const l = document.createElement("a"); l.href = u; l.download = "verdicts.json"; l.click(); };
+fetch("pairs.json").then(r => r.json()).then(p => { pairs = p; V = store.get(); render(); })
+  .catch(() => { document.getElementById("progress").textContent = "Could not load pairs.json — serve this folder with: python3 -m http.server"; });
+</script>
+</body>
+</html>

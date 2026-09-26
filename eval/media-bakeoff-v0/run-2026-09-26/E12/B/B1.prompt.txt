@@ -1,0 +1,13 @@
+Read this customer request and return JSON only.
+REQUEST (verbatim): lets make an ad with mokobara. i would preferably give it the odysey movie angel. the proatagonist had mokbara bags. the protagonist found his mokobara bag, while he was on the island where he was kept for years. in that bag he founds her wives photo and a lot of stuff that he could use to go back. he packs food and stuff and goes back. would be funny that he could keep his arms in the bag and food and so much stuff. Avoid getting copyright violoations from odysssey.  ANSWERS: none  PHOTOS: 3 photo(s)
+Return:
+{"class": one of [S1_product_ad, S2_edit, M1_animate, M2_product_film, F1_story_film],
+ "format": {"aspect":"9:16|1:1|4:5|16:9","duration_s":n},
+ "exact_copy": [strings that must appear exactly, e.g. brand name, offer, CTA, handle],
+ "language": "...",
+ "facts": [{"fact":"...","source":"customer words|photo|website"}],
+ "questions": [at most 2, only facts only the customer knows],
+ "refuse_or_rescope": null or "one sentence" (use the list below)}
+Refuse/rescope list: back-and-forth dialogue drama; lip-sync onto existing footage; >30 s films needing shots to match;
+real/celebrity likeness; drawing a product we have no photo of (rescope: use the photo); hands operating small product
+parts (rescope: show before/after).

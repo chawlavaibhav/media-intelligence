@@ -1,0 +1,64 @@
+{
+ "brief": "E06",
+ "arm": "C",
+ "class": "M1_animate",
+ "events": [
+  {
+   "t": 1790426362.6,
+   "kind": "resumed_llm",
+   "step": "C2"
+  },
+  {
+   "t": 1790426362.6,
+   "kind": "resumed_llm",
+   "step": "C2b"
+  },
+  {
+   "t": 1790426362.6,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: animate prompt has 139 words (max 40; motion and camera only)",
+    "scene 1 prompt: negative phrasing ('no orbit') — rephrase positively",
+    "scene 1 first_frame_still_prompt: still prompt has 18 words (needs 30–80)",
+    "scene 1 first_frame_still_prompt: negative phrasing ('no re') — rephrase positively"
+   ]
+  },
+  {
+   "t": 1790426362.6,
+   "kind": "resumed_llm",
+   "step": "B3-fix"
+  },
+  {
+   "t": 1790426362.6,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790426362.7,
+   "kind": "resumed_media",
+   "tag": "take1",
+   "file": "take1.mp4"
+  },
+  {
+   "t": 1790426381.0,
+   "kind": "check_clip",
+   "file": "take1.mp4",
+   "problems": [
+    "t=1.6s stray text: qualy hits lapport tray exaceaerias"
+   ],
+   "loudness_lufs": -70.0
+  },
+  {
+   "t": 1790426446.6,
+   "kind": "check_clip",
+   "file": "take2.mp4",
+   "problems": [],
+   "loudness_lufs": -21.7
+  },
+  {
+   "t": 1790426446.6,
+   "kind": "final",
+   "file": "E06/C-final.mp4"
+  }
+ ]
+}

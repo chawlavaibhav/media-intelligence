@@ -1,0 +1,42 @@
+{
+ "brief": "E07",
+ "arm": "B",
+ "class": "M1_animate",
+ "events": [
+  {
+   "t": 1790409459.0,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: animate prompt has 94 words (max 40; motion and camera only)",
+    "scene 1 first_frame_still_prompt: still prompt has 7 words (needs 30–80)",
+    "scene 1 first_frame_still_prompt: negative phrasing ('no regeneration') — rephrase positively"
+   ]
+  },
+  {
+   "t": 1790409586.7,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790409640.9,
+   "kind": "check_clip",
+   "file": "take1.mp4",
+   "problems": [
+    "t=1.2s stray text: mokoboro mokobor leb sbpora delica"
+   ],
+   "loudness_lufs": -15.6
+  },
+  {
+   "t": 1790409691.0,
+   "kind": "check_clip",
+   "file": "take2.mp4",
+   "problems": [],
+   "loudness_lufs": -14.8
+  },
+  {
+   "t": 1790409691.0,
+   "kind": "final",
+   "file": "E07/B-final.mp4"
+  }
+ ]
+}

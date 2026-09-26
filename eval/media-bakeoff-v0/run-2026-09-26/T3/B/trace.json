@@ -1,0 +1,132 @@
+{
+ "brief": "T3",
+ "arm": "B",
+ "class": "F1_story_film",
+ "events": [
+  {
+   "t": 1790407639.5,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: negative phrasing ('No dialogue') — rephrase positively",
+    "scene 2 prompt: contains exact copy / brand name ['One key to AI that always gives back a little more.'] — copy is added by code"
+   ]
+  },
+  {
+   "t": 1790407803.6,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790407890.3,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -22.6
+  },
+  {
+   "t": 1790407892.5,
+   "kind": "check_clip",
+   "file": "S2-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -21.6
+  },
+  {
+   "t": 1790407892.5,
+   "kind": "retake_slot",
+   "scene": 2,
+   "reason": "riskiest"
+  },
+  {
+   "t": 1790407951.2,
+   "kind": "check_clip",
+   "file": "S2-t2.mp4",
+   "problems": [],
+   "loudness_lufs": -17.9
+  },
+  {
+   "t": 1790408021.9,
+   "kind": "picked",
+   "name": "pick-s2",
+   "label": "B-s2-t1",
+   "raw": [
+    "B-s2-t1"
+   ]
+  },
+  {
+   "t": 1790408027.7,
+   "kind": "super",
+   "scene": 2,
+   "text": "One key to AI that always gives back a little more.",
+   "checks": [
+    [
+     "contrast:super",
+     "FAIL"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408027.7,
+   "kind": "voice_timing",
+   "scene": 2,
+   "words": 11,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790408028.1,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "contrast:c2",
+     "PASS"
+    ],
+    [
+     "bounds:c2",
+     "PASS"
+    ],
+    [
+     "fit:c2",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408060.5,
+   "kind": "music_bed",
+   "mood": "Yes — a single sustained warm swell, minimal and reverberant, like one held piano note with soft strings underneath; quiet confidence, not triumphant."
+  },
+  {
+   "t": 1790408060.5,
+   "kind": "final",
+   "file": "T3/B-final.mp4"
+  }
+ ]
+}

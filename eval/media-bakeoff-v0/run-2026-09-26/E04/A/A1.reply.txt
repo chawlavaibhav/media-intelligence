@@ -1,0 +1,17 @@
+Using no additional skill here — this is a straightforward creative/ad-copy task, not a coding/debugging/brainstorming workflow, so I'll proceed directly.
+
+Since you've supplied 2 product reference photos of the actual Transit Backpack 30L in the new "Crypto Sunray" colorway and want an Instagram ad built from that real photo (not a generated new scene), this is an **edit** job — Nano Banana 2 will use the attached photos as the ground-truth product and enhance/compose around them.
+
+```json
+{
+  "prompts": [
+    {
+      "scene": 1,
+      "prompt": "Using the attached reference photos as the exact product (Transit Backpack 30L in Crypto Sunray colorway — preserve its true color, texture, logo, zippers, and proportions with zero distortion), create a clean Instagram square (1:1) ad. Place the backpack as the hero subject, angled 3/4 front-facing, on a softly lit gradient studio background that echoes the 'Crypto Sunray' color story (warm golden-orange to deep amber tones, subtle sunburst light rays radiating behind the product). Add soft directional studio lighting with a gentle drop shadow beneath the bag for realism. Overlay clean, modern sans-serif white/cream typography: large text 'New: Crypto Sunray' positioned in the upper third, and smaller text 'mokobara.com' near the bottom, both with generous padding and left-aligned to a subtle margin. Keep overall composition minimal, premium, and on-brand for a D2C travel/bag brand — no extra clutter, no additional props.",
+      "duration_s": 8
+    }
+  ],
+  "riskiest_scene": 1,
+  "notes": "This is a single still edit, not a multi-scene film, so only one prompt is needed (duration_s included only for schema consistency, not applicable). Risk areas: (1) Nano Banana 2 must preserve exact product fidelity from the reference photos rather than hallucinating a new backpack design/color — worth generating 2-3 variants and picking the one with truest color/logo match. (2) Text rendering quality (kerning, spelling of 'mokobara.com') can be inconsistent — recommend adding text as a separate overlay in post if the model's native text isn't crisp. Suggest requesting output at 1080x1080 for native IG feed placement."
+}
+```

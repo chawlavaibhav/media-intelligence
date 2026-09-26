@@ -1,0 +1,256 @@
+{
+ "brief": "E10",
+ "arm": "B",
+ "class": "F1_story_film",
+ "events": [
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_llm",
+   "step": "B2"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: negative phrasing ('No dialogue') — rephrase positively",
+    "scene 1 first_frame_still_prompt: still prompt has 28 words (needs 30–80)",
+    "scene 2 prompt: negative phrasing ('No dialogue') — rephrase positively",
+    "scene 2 first_frame_still_prompt: still prompt has 21 words (needs 30–80)",
+    "scene 3 prompt: negative phrasing ('no real') — rephrase positively",
+    "scene 3 first_frame_still_prompt: still prompt has 21 words (needs 30–80)",
+    "scene 4 prompt: negative phrasing ('No dialogue') — rephrase positively",
+    "scene 4 first_frame_still_prompt: still prompt has 25 words (needs 30–80)",
+    "scene 5 first_frame_still_prompt: still prompt has 26 words (needs 30–80)"
+   ]
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_llm",
+   "step": "B3-fix"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S1-first",
+   "file": "S1-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S2-first",
+   "file": "S2-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S3-first",
+   "file": "S3-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S4-first",
+   "file": "S4-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_media",
+   "tag": "S5-first",
+   "file": "S5-first.jpg"
+  },
+  {
+   "t": 1790426353.1,
+   "kind": "resumed_failed_not_resent",
+   "tag": "S2-t1"
+  },
+  {
+   "t": 1790426353.2,
+   "kind": "resumed_media",
+   "tag": "S4-t1",
+   "file": "S4-t1.mp4"
+  },
+  {
+   "t": 1790426353.2,
+   "kind": "resumed_media",
+   "tag": "S3-t1",
+   "file": "S3-t1.mp4"
+  },
+  {
+   "t": 1790426353.2,
+   "kind": "resumed_media",
+   "tag": "S1-t1",
+   "file": "S1-t1.mp4"
+  },
+  {
+   "t": 1790426353.2,
+   "kind": "resumed_media",
+   "tag": "S5-t1",
+   "file": "S5-t1.mp4"
+  },
+  {
+   "t": 1790426356.8,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: atatea parle parle cal",
+    "t=6.8s stray text: tren tafa yea table parle maga mag"
+   ],
+   "loudness_lufs": -32.8
+  },
+  {
+   "t": 1790426359.4,
+   "kind": "check_clip",
+   "file": "S3-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: grocery afr foals veg panary today deals",
+    "t=4.0s stray text: raimesh add cart add clare add cart add cart",
+    "t=6.8s stray text: confirmt"
+   ],
+   "loudness_lufs": -23.6
+  },
+  {
+   "t": 1790426362.1,
+   "kind": "check_clip",
+   "file": "S4-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -21.9
+  },
+  {
+   "t": 1790426369.1,
+   "kind": "check_clip",
+   "file": "S5-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -16.8
+  },
+  {
+   "t": 1790426369.1,
+   "kind": "retake_slot",
+   "scene": 1,
+   "reason": "failed checks"
+  },
+  {
+   "t": 1790426443.4,
+   "kind": "check_clip",
+   "file": "S1-t2.mp4",
+   "problems": [
+    "t=1.6s stray text: taxa tea 4111 parle evron cal",
+    "t=4.0s stray text: tafa tea parke tale parle parle parle magple maddo",
+    "t=6.8s stray text: tata tea dow fack tralence parki parle parle maga mnd"
+   ],
+   "loudness_lufs": -31.6
+  },
+  {
+   "t": 1790426451.5,
+   "kind": "super",
+   "scene": 4,
+   "text": "4 घंटे में आपके स्टोर तक",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426457.5,
+   "kind": "super",
+   "scene": 5,
+   "text": "Ascend Foods",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426457.5,
+   "kind": "voice_timing",
+   "scene": 5,
+   "words": 5,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790426457.9,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "contrast:c2",
+     "PASS"
+    ],
+    [
+     "bounds:c2",
+     "PASS"
+    ],
+    [
+     "fit:c2",
+     "PASS"
+    ],
+    [
+     "contrast:c3",
+     "PASS"
+    ],
+    [
+     "bounds:c3",
+     "PASS"
+    ],
+    [
+     "fit:c3",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426491.8,
+   "kind": "music_bed",
+   "mood": "Warm, hopeful acoustic-guitar-led score that starts sparse and tired in scene 1, builds gently through scenes 3-4, and resolves into a full, uplifting swell by scene 5 — mirroring the shift from stress to relief."
+  },
+  {
+   "t": 1790426491.8,
+   "kind": "final",
+   "file": "E10/B-final.mp4"
+  }
+ ]
+}

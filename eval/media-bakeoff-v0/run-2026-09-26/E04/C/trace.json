@@ -1,0 +1,124 @@
+{
+ "brief": "E04",
+ "arm": "C",
+ "class": "S1_product_ad",
+ "events": [
+  {
+   "t": 1790427045.6,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: still prompt has 121 words (needs 30–80)",
+    "scene 1 first_frame_still_prompt: still prompt has 21 words (needs 30–80)"
+   ]
+  },
+  {
+   "t": 1790427105.9,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790427125.8,
+   "kind": "check_still",
+   "file": "draw1.jpg",
+   "problems": [
+    "stray text: mekobora"
+   ],
+   "ocr": "mekobora"
+  },
+  {
+   "t": 1790427140.3,
+   "kind": "check_still",
+   "file": "draw2.jpg",
+   "problems": [
+    "stray text: mokoboro"
+   ],
+   "ocr": "mokoboro\nmokobara"
+  },
+  {
+   "t": 1790427152.0,
+   "kind": "check_still",
+   "file": "draw3.jpg",
+   "problems": [
+    "exact copy drawn by the model: ['mokobara.com']"
+   ],
+   "ocr": "mokobara.com"
+  },
+  {
+   "t": 1790427164.9,
+   "kind": "check_still",
+   "file": "draw4.jpg",
+   "problems": [
+    "stray text: mckobere"
+   ],
+   "ocr": "mckobere"
+  },
+  {
+   "t": 1790427164.9,
+   "kind": "all_draws_failed_checks_pick_from_all"
+  },
+  {
+   "t": 1790427199.1,
+   "kind": "picked",
+   "name": "pick",
+   "label": "d1",
+   "raw": [
+    "d1"
+   ]
+  },
+  {
+   "t": 1790427199.5,
+   "kind": "finish_still",
+   "checks": [
+    [
+     "bounds:logo",
+     "PASS"
+    ],
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "contrast:c2",
+     "PASS"
+    ],
+    [
+     "fit:c2",
+     "PASS"
+    ],
+    [
+     "bounds:c2",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "clear_of_product",
+     "PASS"
+    ],
+    [
+     "hero_visible",
+     "PASS"
+    ]
+   ],
+   "text": [
+    "New: Crypto Sunray",
+    "mokobara.com"
+   ]
+  },
+  {
+   "t": 1790427199.5,
+   "kind": "final",
+   "file": "E04/C-final.png"
+  }
+ ]
+}

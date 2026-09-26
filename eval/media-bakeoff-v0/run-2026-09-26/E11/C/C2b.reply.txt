@@ -1,0 +1,113 @@
+Using no special skill here — this is a direct content-review task (evaluate the ad draft against the 15-point checklist), not a coding/build task, so I'm answering it directly per your instructions.
+
+## Checklist Review
+
+**C01 — YES.** `"D1_idea": "The exact moment sizzling Indian tadka is poured into a bowl of ramen, fusing two comfort foods into one dish."` — this idea is meaningless for any product except an Indian-fusion ramen bar.
+
+**C02 — NO (fixed).** Original: `"S2_first_frame": "The ramen bowl is already mid-pour... the collision-idea is visible in frame one."` The product appears literally in frame 1 with zero "before" tension — only the *concept* of craving-conflict lives in the `truth` field, it was never shown. **Action: revised** — added a background visual cue (two blurred food-delivery icons on a phone) inside the same continuous shot so the "can't choose" tension is visible before the pour dominates, without adding a new scene or a still.
+
+**C03 — YES.** `"D3_roles": "Hero is the everyday Gurgaon craver (represented only by hands, not a face)... Mousi Kitchen is the maker/enabler that fuses the two worlds for them."`
+
+**C04 — YES.** `"S2_first_frame": "...a ladle tipped fully, sizzling tadka frozen just above the broth's surface — the collision-idea is visible in frame one."` (retained after fix — the new detail is a background blur, doesn't delay the bold pour).
+
+**C05 — YES.** Brand appears early as text (`"Mousi Kitchen" ... around 3s into Scene 1`), again as CTA block, plus product visual throughout, plus voice line `"Order kar do"` — four different asset types (visual product, on-screen text, CTA card, VO) rule out competitor confusion.
+
+**C06 — YES.** Each scene has a stated feeling shown, not told: `"S1_feeling": "Appetite spiking — delighted surprise..."` shown via `"crackling as a burst of steam rises"`.
+
+**C07 — YES.** Scene 1 is 100% product-hero: `"the tadka hitting the broth and crackling as a burst of steam rises"` — the product doing the thing that matters.
+
+**C08 — YES.** Scene 1 = the fusion action; Scene 2 = `"the viewer learns the full menu range and exactly how to order"` — one cut, both scenes add new info.
+
+**C09 — YES.** Five flavours are shown as five visually distinct bowls (not just named in text): `"one glossy red with tandoori sauce, one pale gold with crisped onions and cream..."`; Instagram ordering is shown as an actual phone lighting up, not just stated; Gurgaon is shown via skyline, not only text.
+
+**C10 — YES.** Each scene is one continuous camera/action move: `"The ladle empties in one continuous 8-second pour"`; `"A single continuous 8-second lateral glide... settling on a phone screen"`.
+
+**C11 — NO (fixed).** Original Scene 2 `on_screen_copy` had 8 separate text lines in 8 seconds: `["Ramen Tandoori","Ramen Cream & Onion","Ramen Punjabi","Ramen Tadka","Ramen Afghani","Home delivery on Instagram","@YOUR_HANDLE","Gurgaon"]` — too dense to read on a phone in that time. **Action: revised** — collapsed the 5 flavour names into a single "5 Fusion Flavours" tag (variety is already visually obvious from the bowls' colours) and extended the CTA hold from 2s to 3s for legibility.
+
+**C12 — YES.** `"end_card": "Freeze on the five steaming bowls with the CTA block centred..."` — ends on product, CTA carried by text + VO.
+
+**C13 — YES.** Persona is specific to this market: `"You never have to choose between craving your mother's tadka and craving ramen"` = Gurgaon night-owl professional missing home food while craving trendy comfort food, ordering late via Instagram.
+
+**C14 — NO (i.e., nothing overclaimed) — kept as is.** `"D8_deviations": "Bowl styling, kitchen setting and hand/ladle visuals are invented since no photos were supplied"` — this is stylistic invention only, no factual/claims overreach beyond D7 facts. Reason kept: styling ≠ claim.
+
+**C15 — Kept, one-line reason.** No prior campaign assets were provided in this request to compare casting/music/setting/structure against — nothing to differentiate from. Action: kept as-is; flag for account team to confirm against past creative before shoot.
+
+---
+
+## Revised JSON
+
+```json
+{
+  "ideas": [
+    {"truth": "You never have to choose between craving your mother's tadka and craving ramen — some nights you want both at once.", "moment": "Midnight in Gurgaon, phone in hand, a bowl of ramen gets a ladle of sizzling Indian tempering poured straight into it.", "key_frame": "Macro shot of a steaming ramen bowl mid-pour, sizzling ghee, mustard seeds and curry leaves splashing into the amber broth."},
+    {"truth": "The best flavours happen when nobody asks permission to break the rules of a cuisine.", "moment": "A tempering ladle collides with a ramen bowl — two food worlds fusing in one sizzling pour, then a row of five such fusions on a counter.", "key_frame": "Chopsticks lifting noodles glazed in tandoori-red oil against a dark, steam-lit counter, mid-sizzle."},
+    {"truth": "At 11pm every phone in Gurgaon is open on a food app, but nothing on it ever tastes like home.", "moment": "Five ramen bowls glow in a row like a skyline, each a different regional Indian flavour, as an Instagram order notification lights up.", "key_frame": "Five bowls lined up under one warm light, each a different colour — tandoori red, punjabi gold, afghani cream — steam rising like a skyline."}
+  ],
+  "chosen": 1,
+  "why": "It shows the fusion happening, in one literal, appetising, camera-friendly action — no explaining needed, and it's a single idea, not a menu recital.",
+  "treatment": "Close on a bowl of ramen already steaming, a phone glowing softly out of focus in the corner with two food-app icons — a hint of unresolved craving. A hand tips a small steel ladle and a stream of sizzling ghee, mustard seeds, curry leaves and dried red chillies pours into the broth — it crackles, steam bursts up, resolving the craving. 'Mousi Kitchen' appears as the sizzle peaks. Then the camera glides past four more bowls, each a different Indianised ramen — tandoori red, buttery Punjabi gold, creamy Afghani, crisp cream & onion — landing on a phone lighting up with an Instagram order. A warm off-screen voice says 'Order kar do.' Final frame: the five bowls, steaming, with 'Home delivery on Instagram / @YOUR_HANDLE / Gurgaon' held over them.",
+  "decisions": {
+    "D1_idea": "The exact moment sizzling Indian tadka is poured into a bowl of ramen, fusing two comfort foods into one dish.",
+    "D2_conflict": "Craving both Indian home-cooking and ramen comfort but nothing on the market lets you have both at once — visualised as a blurred phone with two food-app icons before the pour resolves it.",
+    "D3_roles": "Hero is the everyday Gurgaon craver (represented only by hands, not a face) reaching for comfort food; Mousi Kitchen is the maker/enabler that fuses the two worlds for them.",
+    "D4_opening": "Mid-action close-up: the tadka is already sizzling in the air as it's poured, with a soft background cue of the craving-conflict, per open-on-bold-imagery/close-up guidance.",
+    "D5_brand": "Brand name 'Mousi Kitchen' appears as on-screen text around 3s into Scene 1, during the sizzle; recurs as the full CTA block (handle, Gurgaon, home delivery) in the final 3s of Scene 2.",
+    "D6_ask_and_end": "Ask is to order via Instagram DM/home delivery; carried by on-screen CTA text plus the spoken line 'Order kar do'; final frame is the five steaming bowls with the CTA text held over them.",
+    "D7_product_truth": "Business name Mousi Kitchen (customer), Indian-fusion ramen concept (customer), five named menu items — Tandoori, Cream & Onion, Punjabi, Tadka, Afghani (customer), Instagram home delivery (customer), Gurgaon location (customer). Bowl styling, kitchen setting and hand/ladle visuals are invented since no photos were supplied, and kept identical wording across scenes.",
+    "D8_deviations": "Used two 8-second Veo scenes (16s total) instead of exactly 15s, because Veo 3.1 is built around native 8-second units — closest practical fit. Showed only a hand, not a face, to keep it a universal 'people like us' POV rather than needing a specific actor likeness."
+  },
+  "scenes": [
+    {
+      "n": 1,
+      "S1_feeling": "Appetite spiking — delighted surprise at an unexpected combination, after a beat of 'can't decide' tension.",
+      "S2_first_frame": "The ramen bowl is mid-pour, ladle tipped fully, sizzling tadka frozen just above the broth's surface; softly out of focus in the corner, a phone glows with two food-delivery icons, hinting at the unresolved craving the pour is about to settle.",
+      "S3_one_action": "The ladle empties in one continuous 8-second pour, sizzling ghee and spices hitting the broth as steam bursts up and the blurred phone fades from view.",
+      "S4_new_information": "This is not ordinary ramen — Indian tempering is being poured into it live, on camera, resolving a craving conflict the viewer recognises.",
+      "S5_impact": "The sizzle and steam burst read big even with sound off, landing as pure mouth-watering surprise.",
+      "prompt": "Macro cinematic close-up, slow steady push-in, warm single overhead spotlight. Subject: a deep matte-black ceramic bowl filled with thick wavy ramen noodles in a rich amber broth, topped with a halved soft-boiled egg and charred scallions, steam rising gently, sitting on a dark wooden counter; softly out of focus in the near corner of frame, a smartphone glows faintly with two food-delivery app icons. Action: a woman's hand with short clean nails and a thin gold ring, sleeve rolled to the wrist in a rust-orange fabric, tips a small steel tempering ladle so sizzling ghee loaded with mustard seeds, curry leaves and dried red chillies pours in one continuous stream into the bowl, the tadka hitting the broth and crackling as a burst of steam rises and the blurred phone glow fades — the pour and sizzle run the full length of the shot. Setting: moody dark kitchen counter, blurred warm red and gold bokeh lights behind. Style: rich, appetising food-commercial look, warm amber and red palette, shallow depth of field. Ambience: crackling sizzle of tempering spices, soft steam hiss, low warm kitchen hum, no dialogue.",
+      "duration_s": 8,
+      "references": [],
+      "spoken": "",
+      "on_screen_copy": ["Mousi Kitchen", "Indianised Ramen Bar"],
+      "first_frame_still_prompt": "Macro close-up photograph of a deep matte-black ceramic bowl filled with thick wavy ramen noodles in a rich amber broth, topped with a halved soft-boiled egg and charred scallions, steam rising gently, on a dark wooden counter; softly blurred in the near corner, a smartphone glows with two food-delivery app icons; a woman's hand with short clean nails and a thin gold ring, sleeve rolled to the wrist in a rust-orange fabric, holds a small steel tempering ladle tipped fully, a stream of sizzling ghee with mustard seeds, curry leaves and dried red chillies already in mid-air about to hit the broth, a chili-oil droplet frozen above the surface; warm single overhead spotlight, blurred red and gold bokeh background, shallow depth of field."
+    },
+    {
+      "n": 2,
+      "S1_feeling": "Craving turning into urgency — 'I want to order this right now'.",
+      "S2_first_frame": "Five identically-styled ramen bowls are already lined up, glowing under one warm light, each a different colour of fusion — the variety is visible immediately.",
+      "S3_one_action": "A single continuous 8-second lateral glide past all five bowls, settling on a phone screen lighting up with an Instagram order notification.",
+      "S4_new_information": "The viewer learns there's a full range of fusion flavours and exactly how to order — Instagram, home delivery, Gurgaon.",
+      "S5_impact": "Colour variety plus an easy, named ordering channel — CTA text and voice line make it land clearly even muted, on a phone, with the CTA now held longer for legibility.",
+      "prompt": "Slow lateral dolly shot at counter height, moving left to right, warm single-source lighting. Subject: five deep matte-black ceramic bowls filled with thick wavy ramen noodles in a rich amber broth, topped with a halved soft-boiled egg and charred scallions, steam rising gently, lined up on the same dark wooden counter — one glossy red with tandoori sauce, one pale gold with crisped onions and cream, one deep turmeric-gold with a butter swirl, one amber with curry-leaf tadka garnish, one soft green-cream with herbs. Action: the camera glides once across all five steaming bowls in a single continuous move and settles on a smartphone lying beside them, its screen lighting up with an Instagram message notification, the whole move taking the full length of the shot. Setting: dark kitchen counter at night, a blurred Gurgaon skyline glowing softly through a window behind. Style: warm, appetising, cinematic food-commercial look matching the previous shot, consistent amber and red palette. Ambience: soft kitchen sizzle fading under a gentle phone notification chime; a woman's warm off-screen voice says, \"Order kar do.\"",
+      "duration_s": 8,
+      "references": [],
+      "spoken": "Order kar do",
+      "on_screen_copy": ["5 Fusion Flavours", "Home delivery on Instagram", "@YOUR_HANDLE", "Gurgaon"],
+      "first_frame_still_prompt": "Wide photograph at counter height of five deep matte-black ceramic bowls filled with thick wavy ramen noodles in a rich amber broth, each topped with a halved soft-boiled egg and charred scallions and steaming gently, lined up on a dark wooden counter — one glossy red with tandoori sauce, one pale gold with crisped onions and cream, one deep turmeric-gold with a butter swirl, one amber with curry-leaf tadka garnish, one soft green-cream with herbs; a smartphone rests beside them with its screen dark; warm single-source lighting, a blurred Gurgaon skyline glowing softly through a window behind, cinematic warm amber and red palette."
+    }
+  ],
+  "riskiest_scene": 2,
+  "finish": {
+    "copy_placement": "Scene 1: 'Mousi Kitchen' + 'Indianised Ramen Bar' fade in over the sizzle around second 3. Scene 2: a single '5 Fusion Flavours' tag appears as the camera passes the bowls; the CTA block ('Home delivery on Instagram / @YOUR_HANDLE / Gurgaon') holds over the last 3 seconds for phone legibility.",
+    "end_card": "Freeze on the five steaming bowls with the CTA block centred: Home delivery on Instagram, @YOUR_HANDLE, Gurgaon.",
+    "music": "Warm, playful lo-fi bed with a light tabla pulse under it — cozy late-night comfort-food craving, not a big jingle."
+  },
+  "checklist": [
+    {"id": "C01", "answer": "YES", "evidence": "D1_idea: 'The exact moment sizzling Indian tadka is poured into a bowl of ramen, fusing two comfort foods into one dish.'", "action": "kept"},
+    {"id": "C02", "answer": "NO", "evidence": "Original S2_first_frame: 'the collision-idea is visible in frame one' — no pre-product tension shown.", "action": "revised — added blurred dual food-app phone cue in same shot before pour resolves it"},
+    {"id": "C03", "answer": "YES", "evidence": "D3_roles: 'Hero is the everyday Gurgaon craver... Mousi Kitchen is the maker/enabler'", "action": "kept"},
+    {"id": "C04", "answer": "YES", "evidence": "S2_first_frame: 'a ladle tipped fully, sizzling tadka frozen just above the broth's surface'", "action": "kept"},
+    {"id": "C05", "answer": "YES", "evidence": "D5_brand: brand text at 3s, CTA block, plus VO 'Order kar do' — 4 asset types", "action": "kept"},
+    {"id": "C06", "answer": "YES", "evidence": "S1_feeling scene1: 'Appetite spiking — delighted surprise', shown via 'crackling as a burst of steam rises'", "action": "kept"},
+    {"id": "C07", "answer": "YES", "evidence": "S3_one_action scene1: 'the tadka hitting the broth and crackling as a burst of steam rises'", "action": "kept"},
+    {"id": "C08", "answer": "YES", "evidence": "S4_new_information scene2: 'the viewer learns the full menu range and exactly how to order'", "action": "kept"},
+    {"id": "C09", "answer": "YES", "evidence": "Five distinct bowl colours shown visually: 'one glossy red with tandoori sauce, one pale gold with crisped onions and cream...'", "action": "kept"},
+    {"id": "C10", "answer": "YES", "evidence": "S3_one_action scene1: 'in one continuous 8-second pour'; scene2: 'A single continuous 8-second lateral glide'", "action": "kept"},
+    {"id": "C11", "answer": "NO", "evidence": "Original on_screen_copy had 8 text lines in 8s: '[\"Ramen Tandoori\",...,\"Gurgaon\"]'", "action": "revised — collapsed 5 flavour names to one '5 Fusion Flavours' tag, extended CTA hold to 3s"},
+    {"id": "C12", "answer": "YES", "evidence": "end_card: 'Freeze on the five steaming bowls with the CTA block centred'", "action": "kept"},
+    {"id": "C13", "answer": "YES", "evidence": "truth[0]: 'You never have to choose between craving your mother's tadka and craving ramen'", "action": "kept"},
+    {"id": "C14", "answer": "NO", "evidence": "D8_deviations: 'Bowl styling, kitchen setting and hand/ladle visuals are invented since no photos were supplied' — styling only, no factual overclaim", "action": "kept — styling ≠ claim beyond D7 facts"},
+    {"id": "C15", "answer": "NO", "evidence": "No prior campaign assets were supplied in this request to compare casting/music/setting/structure against", "action": "kept — no reference material provided; flag for confirmation against past creative before production"}
+  ]
+}
+```

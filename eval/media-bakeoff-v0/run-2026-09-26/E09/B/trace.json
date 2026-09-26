@@ -1,0 +1,156 @@
+{
+ "brief": "E09",
+ "arm": "B",
+ "class": "F1_story_film",
+ "events": [
+  {
+   "t": 1790426356.1,
+   "kind": "resumed_llm",
+   "step": "B2"
+  },
+  {
+   "t": 1790426356.1,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: video prompt has 142 words (max 120)",
+    "scene 2 prompt: video prompt has 137 words (max 120)"
+   ]
+  },
+  {
+   "t": 1790426356.1,
+   "kind": "resumed_llm",
+   "step": "B3-fix"
+  },
+  {
+   "t": 1790426356.1,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790426356.1,
+   "kind": "resumed_media",
+   "tag": "S1-first",
+   "file": "S1-first.jpg"
+  },
+  {
+   "t": 1790426356.1,
+   "kind": "resumed_media",
+   "tag": "S2-first",
+   "file": "S2-first.jpg"
+  },
+  {
+   "t": 1790426356.3,
+   "kind": "resumed_media",
+   "tag": "S2-t1",
+   "file": "S2-t1.mp4"
+  },
+  {
+   "t": 1790426431.0,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -21.0
+  },
+  {
+   "t": 1790426433.6,
+   "kind": "check_clip",
+   "file": "S2-t1.mp4",
+   "problems": [
+    "t=4.0s stray text: rec ycoe"
+   ],
+   "loudness_lufs": -19.6
+  },
+  {
+   "t": 1790426433.6,
+   "kind": "retake_slot",
+   "scene": 2,
+   "reason": "failed checks"
+  },
+  {
+   "t": 1790426433.7,
+   "kind": "resumed_media",
+   "tag": "S2-t2",
+   "file": "S2-t2.mp4"
+  },
+  {
+   "t": 1790426436.0,
+   "kind": "check_clip",
+   "file": "S2-t2.mp4",
+   "problems": [
+    "t=4.0s stray text: sose sics",
+    "t=6.8s stray text: sose sics how"
+   ],
+   "loudness_lufs": -21.6
+  },
+  {
+   "t": 1790426436.0,
+   "kind": "voice_timing",
+   "scene": 1,
+   "words": 3,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790426442.3,
+   "kind": "super",
+   "scene": 2,
+   "text": "iPhone Duo",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426442.7,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426455.7,
+   "kind": "resumed_media",
+   "tag": "music",
+   "file": "music.mp3"
+  },
+  {
+   "t": 1790426457.2,
+   "kind": "music_bed",
+   "mood": "Yes — a warm, gentle acoustic bed (soft guitar/piano with a faint Indian string texture), slow and reassuring, building only slightly at the smile, never upbeat or 'ad-jingly'."
+  },
+  {
+   "t": 1790426457.2,
+   "kind": "final",
+   "file": "E09/B-final.mp4"
+  }
+ ]
+}

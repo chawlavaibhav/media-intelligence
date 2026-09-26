@@ -1,0 +1,122 @@
+Using no additional skill — this is a direct creative-QA task (evaluate/revise an ad draft against a checklist), not a coding/build task that matches the superpowers process skills, so I'm answering directly per the user's explicit request.
+
+## Checklist Review
+
+**C01 — One-sentence idea, wrong for any other product?**
+**YES** — `"truth": "A bag stops being furniture and becomes desirable the instant light reveals what it's made of."` — the "furniture" framing plus hardware/zipper specificity ties it to a bag, not a generic product.
+
+**C02 — Real obstacle/tension before product appears?**
+**NO** — the film opens already on the product in shadow; there's no pre-purchase problem shown. Kept with reason: this is a 6-second single-photo product-hero cutdown, not a narrative spot — the customer asked only to "animate our bag photo, eye catching," not to dramatize a before/after problem.
+
+**C03 — Customer is hero, brand is enabler?**
+**NO** — no human appears at all: `"treatment": "...no people..."`. Kept with reason: the only source asset is a still product photo with no person in it; inventing an un-referenced customer would break product fidelity.
+
+**C04 — First 2 seconds stop a thumb?**
+**YES** — `"first_frame_still_prompt": "Extreme macro shot of the bag's zipper pull and adjacent hardware..."` — bold, tight close-up as the opening frame.
+
+**C05 — Brand/product seen early, again later, via more than one asset type?**
+**YES** — product is on-screen continuously (visual asset) and `"brand wordmark placed lower-third, present from first frame through to the end card"` (text/graphic asset) — two asset types, both spanning early-to-late.
+
+**C06 — Film makes viewer feel something, feeling stated & shown per scene?**
+**YES** — `"S1_feeling": "Quiet anticipation tipping into desire."` matched to the shadow→light reveal beat, not a spec list.
+
+**C07 — Product is hero of a scene, doing the thing that matters?**
+**NO** — the bag only sits and is lit; it isn't shown carried/used. Kept with reason: only one static photo was supplied — showing it "in use" would require inventing a hand/person not in the reference, breaking fidelity; the hardware/craft reveal is the closest feasible hero beat from a still.
+
+**C08 — Every scene adds new info, every cut motivated?**
+**YES** — `"One continuous 6-second shot, no cuts, no people."` No cuts exist to be unmotivated, and the pull-back genuinely reveals new information (the full bag).
+
+**C09 — Every must-have from the brief shown on screen?**
+**YES** — customer's asks (animate the bag, eye-catching, Instagram-length) are all delivered visually: `"duration_s": 6` (within 5–8s) and a dramatic camera/light reveal (not just text/voice).
+
+**C10 — Each scene asks for only one action the model can do in that time?**
+**NO** — original prompt stacked camera pull-back + rising + light sweep + dust motes + a settling sway + a hold, too many simultaneous physical behaviors for one 6s generation (this is why the draft itself flagged `"riskiest_scene": 1`). **Revised** below: simplified to one coordinated reveal action (camera pull-back synchronized with the light sweep, settling to a hold), removing the dust-motes/sway micro-actions that weren't essential to the scene's actual moment.
+
+**C11 — Payoff and product read clearly on a phone screen?**
+**YES** — macro-to-full-body reveal, shallow DOF, centered framing: `"The full bag is revealed standing centered against a soft, muted background."`
+
+**C12 — Next step clear, carried by picture/voice/text, ends on product?**
+**YES** — `"CTA text appears only in the final 1.5s over the still hero frame"` and `"end_card": "Hold on the final still hero frame (bag centered, fully lit)..."`
+
+**C13 — Written for one typical buyer in this market?**
+**NO** — no persona (who/where/worry) is encoded, only a generic premium mood. Kept with reason: the customer's request didn't specify an audience segment ("something eye catching" only) — no persona detail was given to encode.
+
+**C14 — Does anything shown/said go beyond listed product facts?**
+**NO** (this is the desired answer) — `"on_screen_copy": []` in the scene, and no spoken claims exist beyond the visual demonstration of the physical object itself. No action needed.
+
+**C15 — Different from last pieces made?**
+**NO/Unknown** — no prior-campaign data was provided to compare against. Kept with reason: no history of past assets supplied by the customer in this brief; treating this as the first Instagram cut for this product.
+
+---
+
+## Revision Made (for C10 only — per the rule, the scene's core moment is preserved; only redundant simultaneous micro-actions are trimmed)
+
+## REVISED JSON
+
+```json
+{
+  "ideas": [
+    {
+      "truth": "A bag stops being furniture and becomes desirable the instant light reveals what it's made of.",
+      "moment": "The bag sits in shadow, then a shaft of warm light sweeps across it, hardware and texture catching fire, right before it's grabbed and carried out the door.",
+      "key_frame": "Extreme macro on the zipper pull and hardware, warm light just beginning to cross it, background dark and soft."
+    },
+    {
+      "truth": "First-day energy needs a bag that keeps pace with the rush.",
+      "moment": "A hand reaches into frame, grips the strap, and lifts the bag off the table into motion toward the door.",
+      "key_frame": "A hand entering from frame-right closing around the strap, bag mid-lift."
+    },
+    {
+      "truth": "Packing well is its own small satisfaction before any trip begins.",
+      "moment": "The zipper is pulled shut in one clean motion, sealing everything in with a decisive snap.",
+      "key_frame": "Close-up on the zipper pull mid-travel, fabric taut on either side."
+    }
+  ],
+  "chosen": 0,
+  "why": "It's the only idea buildable purely from one still photo without inventing a person, a hand, or an action the reference can't support — safest and strongest fit for image-to-video-from-a-still with product fidelity intact.",
+  "treatment": "One continuous 6-second shot, no cuts, no people. We open on an extreme macro of the bag's zipper pull and hardware sitting in shadow. The camera smoothly pulls back as a single warm shaft of light sweeps left to right across the bag's surface in sync with the reveal, catching texture and metal in a brief flare. The full bag is revealed standing centered against a soft, muted background, then the camera settles to a static hold. Sound is ambient only — quiet room tone and a light metallic tick as the flare crosses the hardware. No dialogue. The final frame is the bag, fully lit, centered, still — clean space around it for brand text and CTA to be added afterward.",
+  "scenes": [
+    {
+      "n": 1,
+      "prompt": "Slow macro-to-wide camera move: begin extremely close on the bag's zipper pull and hardware sitting in shadow, then pull back smoothly to reveal the entire bag standing centered in frame. As the camera moves, a single warm directional shaft of light sweeps once across the bag's surface from left to right in sync with the pull-back, catching texture and hardware with a brief soft flare. The camera settles to a static hold on the fully lit bag, centered against a softly blurred, muted neutral background. Ambient room tone throughout, with a light metallic tick as the flare crosses the hardware. No dialogue. Cinematic, minimal, premium product-hero mood, shallow depth of field, warm golden-hour color grade, frame ends on a still, clean hero shot.",
+      "duration_s": 6,
+      "references": ["photo1"],
+      "spoken": "",
+      "on_screen_copy": [],
+      "first_frame_still_prompt": "Extreme macro shot of the bag's zipper pull and adjacent hardware, sitting in soft shadow, background dark and out of focus, no light flare yet — the calm instant before the reveal.",
+      "S1_feeling": "Quiet anticipation tipping into desire.",
+      "S2_first_frame": "Tight, shadowed macro on the zipper/hardware — already implies something worth waiting to see fully.",
+      "S3_one_action": "One coordinated reveal action: a continuous camera pull-back from macro to full shot, synchronized with a single light sweep across the bag's surface, ending in a static hold — over 6 seconds.",
+      "S4_new_information": "We learn what the bag actually looks like in full, and that it's built well enough to reward a close look — the previous frame withheld this on purpose.",
+      "S5_impact": "The reveal lands on a bright, still, centered hero frame with clean negative space; big enough to read as a scroll-stopping product beat on a phone, and it leaves the exact end-frame needed for a CTA overlay."
+    }
+  ],
+  "riskiest_scene": 1,
+  "finish": {
+    "copy_placement": "Hook line (no exclamation marks) appears as on-screen text in the upper third from ~0.5s, out of the way of the hardware and light flare; brand wordmark placed lower-third, present from first frame through to the end card so it reads with sound off; CTA text appears only in the final 1.5s over the still hero frame.",
+    "end_card": "Hold on the final still hero frame (bag centered, fully lit) with brand wordmark and a short CTA ('Shop now' or equivalent) added as code-generated text — no new visual element introduced.",
+    "music": "Yes — a soft, minimal, premium ambient bed with a gentle swell timed to the light sweep, resolving to a quiet hold on the final still frame."
+  }
+}
+```
+
+## checklist
+```json
+[
+  {"id":"C01","answer":"YES","evidence":"\"truth\": \"A bag stops being furniture and becomes desirable the instant light reveals what it's made of.\"","action":"none needed"},
+  {"id":"C02","answer":"NO","evidence":"\"We open on an extreme macro of the bag's zipper pull and hardware sitting in shadow.\"","action":"kept — 6s single-photo product cutdown; customer asked only for an eye-catching animation, not a before/after narrative"},
+  {"id":"C03","answer":"NO","evidence":"\"One continuous 6-second shot, no cuts, no people.\"","action":"kept — only a people-free product photo was supplied; inventing a customer would break fidelity"},
+  {"id":"C04","answer":"YES","evidence":"\"first_frame_still_prompt\": \"Extreme macro shot of the bag's zipper pull and adjacent hardware...\"","action":"none needed"},
+  {"id":"C05","answer":"YES","evidence":"\"brand wordmark placed lower-third, present from first frame through to the end card\"","action":"none needed"},
+  {"id":"C06","answer":"YES","evidence":"\"S1_feeling\": \"Quiet anticipation tipping into desire.\"","action":"none needed"},
+  {"id":"C07","answer":"NO","evidence":"\"The camera settles to a static hold on the fully lit bag\"","action":"kept — no photo/reference of the bag in use exists; hardware/craft reveal is the closest feasible hero beat without inventing a hand"},
+  {"id":"C08","answer":"YES","evidence":"\"One continuous 6-second shot, no cuts, no people.\"","action":"none needed"},
+  {"id":"C09","answer":"YES","evidence":"\"duration_s\": 6","action":"none needed"},
+  {"id":"C10","answer":"NO (fixed)","evidence":"original prompt combined camera pull-back + rise + light sweep + dust motes + sway + hold in 6s","action":"revised scenes[0].prompt and S3_one_action to a single coordinated reveal action (pull-back synced to light sweep, then static hold), moment preserved, motion not replaced with a still"},
+  {"id":"C11","answer":"YES","evidence":"\"The full bag is revealed standing centered against a soft, muted background.\"","action":"none needed"},
+  {"id":"C12","answer":"YES","evidence":"\"CTA text appears only in the final 1.5s over the still hero frame.\"","action":"none needed"},
+  {"id":"C13","answer":"NO","evidence":"no persona/market detail present anywhere in the draft","action":"kept — customer's verbatim request gave no audience detail to encode"},
+  {"id":"C14","answer":"NO","evidence":"\"on_screen_copy\": []","action":"none needed — desired outcome, nothing invented beyond the product itself"},
+  {"id":"C15","answer":"NO/Unknown","evidence":"no prior-asset data available in this brief","action":"kept — no history of past pieces provided to compare against"}
+]
+```

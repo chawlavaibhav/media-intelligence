@@ -1,0 +1,187 @@
+{
+ "brief": "E12",
+ "arm": "B",
+ "class": "F1_story_film",
+ "events": [
+  {
+   "t": 1790426358.5,
+   "kind": "resumed_llm",
+   "step": "B2"
+  },
+  {
+   "t": 1790426358.5,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: contains exact copy / brand name ['mokobara'] — copy is added by code",
+    "scene 1 prompt: negative phrasing ('no text') — rephrase positively",
+    "scene 1 first_frame_still_prompt: contains exact copy / brand name ['mokobara'] — copy is added by code",
+    "scene 2 prompt: contains exact copy / brand name ['mokobara'] — copy is added by code",
+    "scene 2 prompt: negative phrasing ('no text') — rephrase positively",
+    "scene 2 first_frame_still_prompt: still prompt has 29 words (needs 30–80)",
+    "scene 2 first_frame_still_prompt: contains exact copy / brand name ['mokobara'] — copy is added by code",
+    "scene 3 prompt: negative phrasing ('no text') — rephrase positively",
+    "scene 3 first_frame_still_prompt: still prompt has 29 words (needs 30–80)",
+    "scene 3 first_frame_still_prompt: contains exact copy / brand name ['mokobara'] — copy is added by code"
+   ]
+  },
+  {
+   "t": 1790426358.5,
+   "kind": "resumed_llm",
+   "step": "B3-fix"
+  },
+  {
+   "t": 1790426358.5,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790426358.5,
+   "kind": "resumed_media",
+   "tag": "S1-first",
+   "file": "S1-first.jpg"
+  },
+  {
+   "t": 1790426358.5,
+   "kind": "resumed_media",
+   "tag": "S2-first",
+   "file": "S2-first.jpg"
+  },
+  {
+   "t": 1790426358.5,
+   "kind": "resumed_media",
+   "tag": "S3-first",
+   "file": "S3-first.jpg"
+  },
+  {
+   "t": 1790426358.5,
+   "kind": "resumed_media",
+   "tag": "S3-t1",
+   "file": "S3-t1.mp4"
+  },
+  {
+   "t": 1790426433.8,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -31.0
+  },
+  {
+   "t": 1790426436.1,
+   "kind": "check_clip",
+   "file": "S2-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -22.7
+  },
+  {
+   "t": 1790426439.2,
+   "kind": "check_clip",
+   "file": "S3-t1.mp4",
+   "problems": [],
+   "loudness_lufs": -35.3
+  },
+  {
+   "t": 1790426439.2,
+   "kind": "retake_slot",
+   "scene": 1,
+   "reason": "riskiest"
+  },
+  {
+   "t": 1790426511.9,
+   "kind": "check_clip",
+   "file": "S1-t2.mp4",
+   "problems": [],
+   "loudness_lufs": -33.1
+  },
+  {
+   "t": 1790426528.2,
+   "kind": "picked",
+   "name": "pick-s1",
+   "label": "B-s1-t1",
+   "raw": [
+    "B-s1-t1"
+   ]
+  },
+  {
+   "t": 1790426528.2,
+   "kind": "voice_timing",
+   "scene": 1,
+   "words": 2,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790426528.2,
+   "kind": "voice_timing",
+   "scene": 2,
+   "words": 4,
+   "max_words": 19.0,
+   "ok": true
+  },
+  {
+   "t": 1790426530.9,
+   "kind": "super",
+   "scene": 3,
+   "text": "Built for the impossible.",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426531.4,
+   "kind": "end_card",
+   "checks": [
+    [
+     "bounds:logo",
+     "PASS"
+    ],
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790426547.7,
+   "kind": "resumed_media",
+   "tag": "music",
+   "file": "music.mp3"
+  },
+  {
+   "t": 1790426549.6,
+   "kind": "music_bed",
+   "mood": "Warm, adventurous acoustic build that turns comedic/bouncy during the packing gag, then swells hopeful and cinematic for the paddle-away finish."
+  },
+  {
+   "t": 1790426549.6,
+   "kind": "final",
+   "file": "E12/B-final.mp4"
+  }
+ ]
+}

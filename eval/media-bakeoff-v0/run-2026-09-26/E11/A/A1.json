@@ -1,0 +1,16 @@
+{
+ "prompts": [
+  {
+   "scene": 1,
+   "prompt": "Vertical 9:16 cinematic close-up in a warm, modern Indian home kitchen at golden-hour evening light. A young Indian woman (mid-20s, casual kurta, hair tied back, warm smile, hands with mehendi-style rings) stands over a steaming ceramic ramen bowl. She ladles a sizzling tadka — mustard seeds, curry leaves, dried red chili, hot ghee — over tandoori-spiced ramen topped with charred tikka pieces, a swirl of cream, and fresh coriander. Steam billows up as the camera slowly dollies in from the sizzling pan to her face, which is softly lit by the steam, her eyes crinkling in a proud smile as she looks at the camera. Shallow depth of field, moody kitchen bokeh with hanging spice jars and a tandoor glow in the background. Native audio: sharp tadka sizzle-pop, gentle sitar-and-tabla underscore fading in, soft ambient kitchen clinks. She says softly, warmly, in a Hindi-accented voice: \"Ramen... but make it desi.\"",
+   "duration_s": 8
+  },
+  {
+   "scene": 2,
+   "prompt": "Vertical 9:16 continuous glide shot across a wooden countertop with five distinct ramen bowls lined up, each glowing with steam and colorful garnish: Ramen Tandoori (charred red-orange broth, tikka bits), Ramen Cream and Onion (pale creamy broth, crispy fried onions), Ramen Punjabi (deep golden makhani-style broth, butter swirl), Ramen Tadka (yellow dal-tempered broth, curry leaf garnish), Ramen Afghani (smoky char, saffron threads, nuts). Camera glides left to right in one smooth motion, steam rising off each bowl in slow motion as it passes. As the camera clears the last bowl, a stylized logo animates into frame — 'Mousi Kitchen' in a fusion of Devanagari-inspired and modern typography, formed by a swirl of steam. Below it, an Instagram handle '@mousikitchen.ggn' fades in, followed by the line 'Home Delivery • Gurgaon'. Native audio: rising dhol drumbeat that hits hard exactly as the logo forms, then a soft chime as the handle text appears. A warm female voiceover says: \"Mousi Kitchen — ramen, ab Indian style. Order on Instagram.\"",
+   "duration_s": 8
+  }
+ ],
+ "riskiest_scene": 2,
+ "notes": "Scene 2 is the riskiest: it requires the AI to keep five different bowls visually distinct and consistent while panning across them in one continuous shot, AND accurately render on-screen text (logo wordmark, Instagram handle, tagline) — text rendering and multi-object continuity are the most common failure points for current video models. Recommend generating scene 2's bowls and logo/text overlay as a separate pass (Nano Banana 2 stills for each bowl + text card), then adding the camera-glide motion in Veo, rather than relying on the model to invent all five dishes and clean text in a single generation. Scene 1 is comparatively low-risk (single subject, no on-screen text). Final edit: trim scene 2 to ~7s and hard-cut or quick-dissolve from scene 1 to hit the 15s total. Handle '@mousikitchen.ggn' is a placeholder — swap for the real Instagram handle once confirmed."
+}

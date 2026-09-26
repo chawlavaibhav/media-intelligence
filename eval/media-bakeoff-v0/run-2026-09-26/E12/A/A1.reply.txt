@@ -1,0 +1,22 @@
+Using this as a straightforward creative-production task (customer has already given clear direction), I'll go straight to the deliverable rather than a brainstorming pass — the concept, format, and constraints are already well-defined by the client.
+
+**Concept note before the JSON:** To get the "Odyssey" *feeling* without copyright risk, I'm avoiding named characters (no Odysseus/Penelope/Ithaca/Circe references, no specific film's actor likeness, costumes, or shot compositions) and instead using **generic archetypes**: "a weathered castaway," "a photo of his wife," "a mythic-looking Mediterranean island." The word "odyssey" is used only in its common lowercase sense (a long journey) in the tagline — not as a title card or logo. This keeps the mood/homage intact while staying clearly original creative work.
+
+```json
+{
+  "prompts": [
+    {
+      "scene": 1,
+      "prompt": "Vertical 9:16 cinematic shot, golden late-afternoon light on a rocky Mediterranean-style island shore. A weathered, muscular castaway man, mid-40s, deeply sun-tanned, long salt-and-pepper beard, wearing a ragged sand-colored tunic, kneels in the sand digging out a half-buried Mokobara bag (navy canvas with tan leather trim and visible Mokobara logo patch) wedged under driftwood and seaweed. He brushes sand off, unzips it slowly. Camera pushes into a macro shot inside the bag: a faded photograph of a smiling woman, a small compass, a coiled rope, a sharpened knife, and dried fruit wrapped in cloth. His eyes well up, hands trembling slightly, he lifts the photo and presses it to his chest, exhaling. Natural handheld camera movement, warm cinematic color grade, shallow depth of field. Native audio: crashing waves, distant gulls, wind, the zipper sound, sand sifting, soft emotional orchestral strings swelling underneath. He whispers, barely audible: \"Ten years... and she's still here.\"",
+      "duration_s": 8
+    },
+    {
+      "scene": 2,
+      "prompt": "Vertical 9:16, same castaway now standing with a determined grin, rapid confident montage (3-4 quick cuts within the shot) of him packing the same Mokobara bag on the beach: he stuffs in a whole fish, a loaf of bread, a coiled rope, and a full wooden oar — each item comically larger than expected, disappearing into the bag with a satisfying zip and a surprised laugh from him each time, played straight-faced like impressive engineering rather than cartoon magic. He slings the bag across his back, wades into the surf toward a small handmade raft, turns back for one look at the island, then starts rowing into a golden sunset, the Mokobara logo clearly visible on the bag strap. Final beat: bag rests hero-lit on the sand in foreground as he rows away in the background, soft text overlay fades in: 'Built for every odyssey.' Native audio: upbeat adventurous acoustic/percussion music building, comedic zip and thud sounds timed to each item, ocean waves, and his voice saying: \"Some things carry more than you'd think.\" Music swells to a confident final beat as the frame holds on the bag.",
+      "duration_s": 8
+    }
+  ],
+  "riskiest_scene": 2,
+  "notes": "Scene 2 is riskiest: it relies on physically-implausible-but-grounded comedic packing (oar/fish/bread into one bag) across quick cuts within a single 8s generation — Veo may struggle with object permanence, consistent bag identity, and clean comedic timing across cuts. If it doesn't render well, fallback is to simplify to 2 items instead of 4, or split the gag across a jump-cut using the same background rather than multiple actions in one continuous take. Also note: interpreted 'keep his arms in the bag' as a pun on weapons/gear (oar, rope, knife), not literal human limbs, to keep tone light rather than grotesque — flag if the customer meant something else. Avoided all named Odyssey characters/titles/movie-specific visuals to stay clear of copyright; 'odyssey' used only as a common noun in the tagline."
+}
+```

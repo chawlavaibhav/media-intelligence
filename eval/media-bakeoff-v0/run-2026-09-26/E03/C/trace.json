@@ -1,0 +1,161 @@
+{
+ "brief": "E03",
+ "arm": "C",
+ "class": "S1_product_ad",
+ "events": [
+  {
+   "t": 1790426361.0,
+   "kind": "resumed_llm",
+   "step": "C2"
+  },
+  {
+   "t": 1790426361.0,
+   "kind": "resumed_llm",
+   "step": "C2b"
+  },
+  {
+   "t": 1790426361.0,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: still prompt has 169 words (needs 30–80)",
+    "scene 1 prompt: contains exact copy / brand name ['Tamra'] — copy is added by code",
+    "scene 1 first_frame_still_prompt: still prompt has 169 words (needs 30–80)",
+    "scene 1 first_frame_still_prompt: contains exact copy / brand name ['Tamra'] — copy is added by code"
+   ]
+  },
+  {
+   "t": 1790426361.0,
+   "kind": "resumed_llm",
+   "step": "B3-fix"
+  },
+  {
+   "t": 1790426361.0,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790426361.0,
+   "kind": "resumed_media",
+   "tag": "draw1",
+   "file": "draw1.jpg"
+  },
+  {
+   "t": 1790426362.5,
+   "kind": "check_still",
+   "file": "draw1.jpg",
+   "problems": [
+    "stray text: aurelia"
+   ],
+   "ocr": "AURELIA"
+  },
+  {
+   "t": 1790426376.2,
+   "kind": "check_still",
+   "file": "draw2.jpg",
+   "problems": [],
+   "ocr": "AURA"
+  },
+  {
+   "t": 1790426388.7,
+   "kind": "check_still",
+   "file": "draw3.jpg",
+   "problems": [],
+   "ocr": ""
+  },
+  {
+   "t": 1790426403.1,
+   "kind": "check_still",
+   "file": "draw4.jpg",
+   "problems": [
+    "stray text: aurora"
+   ],
+   "ocr": "AURORA"
+  },
+  {
+   "t": 1790426421.7,
+   "kind": "picked",
+   "name": "pick",
+   "label": "d3",
+   "raw": [
+    "d3"
+   ]
+  },
+  {
+   "t": 1790426422.3,
+   "kind": "finish_still",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "contrast:c2",
+     "PASS"
+    ],
+    [
+     "fit:c2",
+     "PASS"
+    ],
+    [
+     "bounds:c2",
+     "PASS"
+    ],
+    [
+     "contrast:c3",
+     "PASS"
+    ],
+    [
+     "fit:c3",
+     "PASS"
+    ],
+    [
+     "bounds:c3",
+     "PASS"
+    ],
+    [
+     "contrast:c4",
+     "PASS"
+    ],
+    [
+     "fit:c4",
+     "PASS"
+    ],
+    [
+     "bounds:c4",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "clear_of_product",
+     "PASS"
+    ],
+    [
+     "hero_visible",
+     "PASS"
+    ]
+   ],
+   "text": [
+    "Tamra",
+    "pure copper bottle 1L",
+    "₹899",
+    "Paani, jaise Dadi rakhti thi."
+   ]
+  },
+  {
+   "t": 1790426422.3,
+   "kind": "final",
+   "file": "E03/C-final.png"
+  }
+ ]
+}

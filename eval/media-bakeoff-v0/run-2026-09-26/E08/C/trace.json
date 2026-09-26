@@ -1,0 +1,148 @@
+{
+ "brief": "E08",
+ "arm": "C",
+ "class": "M2_product_film",
+ "events": [
+  {
+   "t": 1790408000.5,
+   "kind": "lint",
+   "flags": [
+    "scene 1 prompt: negative phrasing ('no dialogue') — rephrase positively",
+    "scene 1 first_frame_still_prompt: still prompt has 121 words (needs 30–80)",
+    "scene 1 first_frame_still_prompt: contains exact copy / brand name ['Kaapi Cold'] — copy is added by code",
+    "scene 2 prompt: video prompt has 121 words (max 120)",
+    "scene 2 prompt: negative phrasing ('no hands') — rephrase positively",
+    "scene 2 first_frame_still_prompt: still prompt has 131 words (needs 30–80)",
+    "scene 2 first_frame_still_prompt: contains exact copy / brand name ['Kaapi Cold'] — copy is added by code",
+    "scene 2 first_frame_still_prompt: negative phrasing ('no hand') — rephrase positively"
+   ]
+  },
+  {
+   "t": 1790408071.4,
+   "kind": "lint_after_fix",
+   "flags": []
+  },
+  {
+   "t": 1790408155.2,
+   "kind": "check_clip",
+   "file": "S1-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: 250ml kenya single origin est 2021 cold brew coffee est 2021 250",
+    "t=4.0s stray text: 250ml kenya single origin est 2021 cold brew coffee est 202 250",
+    "t=6.8s stray text: 250ml kenya single origin est 2021 cold brew coffee est 2021 250"
+   ],
+   "loudness_lufs": -32.7
+  },
+  {
+   "t": 1790408157.8,
+   "kind": "check_clip",
+   "file": "S2-t1.mp4",
+   "problems": [
+    "t=1.6s stray text: handcrafted cold brew coffee bold smooth single origin arabica 250ml",
+    "t=4.0s stray text: handcrafted cold brew coffee build sinduth smile gioin ararica",
+    "t=6.8s stray text: handcrafted cold brew coffee bold saiooth bingle origin arabica 250ml"
+   ],
+   "loudness_lufs": -25.4
+  },
+  {
+   "t": 1790408157.8,
+   "kind": "retake_slot",
+   "scene": 1,
+   "reason": "failed checks"
+  },
+  {
+   "t": 1790408219.1,
+   "kind": "check_clip",
+   "file": "S1-t2.mp4",
+   "problems": [
+    "t=1.6s stray text: 250ml kenya single origin 421 est 2021 cold brew coffee est 2021",
+    "t=4.0s stray text: 250ml kenya single orig est 2021 cold brew coffee est 2021250 leal",
+    "t=6.8s stray text: 250ml kenya single ori est 2021 cold brew coffee est 2021 250"
+   ],
+   "loudness_lufs": -24.2
+  },
+  {
+   "t": 1790408222.8,
+   "kind": "super",
+   "scene": 1,
+   "text": "Kaapi Cold",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408226.2,
+   "kind": "super",
+   "scene": 2,
+   "text": "Cold brew. Always fresh.",
+   "checks": [
+    [
+     "contrast:super",
+     "PASS"
+    ],
+    [
+     "bounds:super",
+     "PASS"
+    ],
+    [
+     "fit:super",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408226.6,
+   "kind": "end_card",
+   "checks": [
+    [
+     "contrast:c1",
+     "PASS"
+    ],
+    [
+     "bounds:c1",
+     "PASS"
+    ],
+    [
+     "fit:c1",
+     "PASS"
+    ],
+    [
+     "disjoint",
+     "PASS"
+    ],
+    [
+     "brand_colour:end_card",
+     "PASS"
+    ]
+   ]
+  },
+  {
+   "t": 1790408245.1,
+   "kind": "call_failed",
+   "route": "lyria",
+   "what": "music",
+   "error": "lyria HTTP 400: {'$error': '{\"error\":{\"message\":\"Request blocked for an unspecified policy reason. Please modify your input and retry.\",\"code\":\"content_blocked\"}}'}"
+  },
+  {
+   "t": 1790408245.1,
+   "kind": "music_failed",
+   "error": "lyria HTTP 400: {'$error': '{\"error\":{\"message\":\"Request blocked for an unspecified policy reason. Please modify your input and retry.\",\"code\":\"content_blocked\"}}'}"
+  },
+  {
+   "t": 1790408245.1,
+   "kind": "final",
+   "file": "E08/C-final.mp4"
+  }
+ ]
+}

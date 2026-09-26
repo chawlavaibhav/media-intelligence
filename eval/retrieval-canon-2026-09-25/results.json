@@ -1,0 +1,290 @@
+{
+ "corpus_size": 1300,
+ "truth_sizes": {
+  "rentok": 82,
+  "mokobara": 22
+ },
+ "packs_union_size": 369,
+ "packs_recall": {
+  "rentok": 1.0,
+  "mokobara": 1.0
+ },
+ "random_expected_recall": {
+  "5": 0.0038461538461538464,
+  "10": 0.007692307692307693,
+  "20": 0.015384615384615385,
+  "50": 0.038461538461538464,
+  "100": 0.07692307692307693
+ },
+ "methods": {
+  "bm25 (brief, claim text only)": {
+   "rentok": {
+    "R@5": 0.024,
+    "R@10": 0.037,
+    "R@20": 0.061,
+    "R@50": 0.11,
+    "R@100": 0.134
+   },
+   "mokobara": {
+    "R@5": 0.0,
+    "R@10": 0.0,
+    "R@20": 0.0,
+    "R@50": 0.0,
+    "R@100": 0.045
+   }
+  },
+  "bm25 (brief, contextual doc)": {
+   "rentok": {
+    "R@5": 0.012,
+    "R@10": 0.012,
+    "R@20": 0.049,
+    "R@50": 0.183,
+    "R@100": 0.207
+   },
+   "mokobara": {
+    "R@5": 0.0,
+    "R@10": 0.0,
+    "R@20": 0.0,
+    "R@50": 0.0,
+    "R@100": 0.0
+   }
+  },
+  "dense bge-base (brief, claim text only)": {
+   "rentok": {
+    "R@5": 0.0,
+    "R@10": 0.012,
+    "R@20": 0.024,
+    "R@50": 0.037,
+    "R@100": 0.073
+   },
+   "mokobara": {
+    "R@5": 0.045,
+    "R@10": 0.045,
+    "R@20": 0.091,
+    "R@50": 0.091,
+    "R@100": 0.182
+   }
+  },
+  "dense bge-small-en-v1.5 (brief)": {
+   "rentok": {
+    "R@5": 0.024,
+    "R@10": 0.024,
+    "R@20": 0.049,
+    "R@50": 0.11,
+    "R@100": 0.171
+   },
+   "mokobara": {
+    "R@5": 0.045,
+    "R@10": 0.091,
+    "R@20": 0.182,
+    "R@50": 0.227,
+    "R@100": 0.273
+   }
+  },
+  "dense bge-base-en-v1.5 (brief)": {
+   "rentok": {
+    "R@5": 0.0,
+    "R@10": 0.024,
+    "R@20": 0.037,
+    "R@50": 0.122,
+    "R@100": 0.146
+   },
+   "mokobara": {
+    "R@5": 0.0,
+    "R@10": 0.0,
+    "R@20": 0.0,
+    "R@50": 0.136,
+    "R@100": 0.182
+   }
+  },
+  "dense e5-base-v2 (brief)": {
+   "rentok": {
+    "R@5": 0.0,
+    "R@10": 0.012,
+    "R@20": 0.012,
+    "R@50": 0.049,
+    "R@100": 0.098
+   },
+   "mokobara": {
+    "R@5": 0.0,
+    "R@10": 0.0,
+    "R@20": 0.0,
+    "R@50": 0.091,
+    "R@100": 0.091
+   }
+  },
+  "hybrid bm25+bge-base RRF (brief)": {
+   "rentok": {
+    "R@5": 0.012,
+    "R@10": 0.037,
+    "R@20": 0.085,
+    "R@50": 0.146,
+    "R@100": 0.232
+   },
+   "mokobara": {
+    "R@5": 0.0,
+    "R@10": 0.0,
+    "R@20": 0.0,
+    "R@50": 0.045,
+    "R@100": 0.136
+   }
+  },
+  "hybrid + cross-encoder rerank (brief)": {
+   "rentok": {
+    "R@5": 0.037,
+    "R@10": 0.049,
+    "R@20": 0.073,
+    "R@50": 0.171,
+    "R@100": 0.232
+   },
+   "mokobara": {
+    "R@5": 0.091,
+    "R@10": 0.091,
+    "R@20": 0.091,
+    "R@50": 0.136,
+    "R@100": 0.136
+   }
+  },
+  "bm25 (LLM sub-queries, RRF)": {
+   "rentok": {
+    "R@5": 0.037,
+    "R@10": 0.061,
+    "R@20": 0.085,
+    "R@50": 0.159,
+    "R@100": 0.293
+   },
+   "mokobara": {
+    "R@5": 0.0,
+    "R@10": 0.045,
+    "R@20": 0.182,
+    "R@50": 0.273,
+    "R@100": 0.409
+   }
+  },
+  "dense bge-base (LLM sub-queries, RRF)": {
+   "rentok": {
+    "R@5": 0.024,
+    "R@10": 0.061,
+    "R@20": 0.098,
+    "R@50": 0.183,
+    "R@100": 0.207
+   },
+   "mokobara": {
+    "R@5": 0.045,
+    "R@10": 0.045,
+    "R@20": 0.045,
+    "R@50": 0.091,
+    "R@100": 0.318
+   }
+  },
+  "hybrid (LLM sub-queries, RRF)": {
+   "rentok": {
+    "R@5": 0.037,
+    "R@10": 0.073,
+    "R@20": 0.146,
+    "R@50": 0.207,
+    "R@100": 0.244
+   },
+   "mokobara": {
+    "R@5": 0.0,
+    "R@10": 0.0,
+    "R@20": 0.136,
+    "R@50": 0.273,
+    "R@100": 0.409
+   }
+  },
+  "hybrid (LLM sub-queries) + cross-encoder rerank": {
+   "rentok": {
+    "R@5": 0.024,
+    "R@10": 0.049,
+    "R@20": 0.122,
+    "R@50": 0.171,
+    "R@100": 0.244
+   },
+   "mokobara": {
+    "R@5": 0.045,
+    "R@10": 0.045,
+    "R@20": 0.091,
+    "R@50": 0.091,
+    "R@100": 0.409
+   }
+  },
+  "hybrid (brief + LLM sub-queries) + cross-encoder rerank": {
+   "rentok": {
+    "R@5": 0.037,
+    "R@10": 0.061,
+    "R@20": 0.098,
+    "R@50": 0.159,
+    "R@100": 0.256
+   },
+   "mokobara": {
+    "R@5": 0.091,
+    "R@10": 0.091,
+    "R@20": 0.091,
+    "R@50": 0.182,
+    "R@100": 0.318
+   }
+  }
+ },
+ "per_job_rentok": {
+  "RENTOK-GAME-A-004": {
+   "R@20": 0.219,
+   "R@50": 0.312
+  },
+  "RENTOK-GAME-B-005": {
+   "R@20": 0.118,
+   "R@50": 0.191
+  },
+  "RENTOK-CREATIVE-QUALITY-001": {
+   "R@20": 0.167,
+   "R@50": 0.167
+  },
+  "RENTOK-GAME-V2-006": {
+   "R@20": 0.16,
+   "R@50": 0.2
+  }
+ },
+ "truth_sources": {
+  "rentok": [
+   "albers-interaction-of-color",
+   "alton-painting-with-light-ch2",
+   "berger-contagious",
+   "dwyer-patel-cinema-india",
+   "freeman-photographers-eye-graphic-guide",
+   "google-abcd-video-ads",
+   "grammar-of-the-edit-ch3-5",
+   "grammar-of-the-shot-ch4",
+   "heath-made-to-stick-introduction",
+   "hopkins-my-life-in-advertising",
+   "hopkins-scientific-advertising-ch1-7",
+   "kenworthy-master-shots-ch8",
+   "miller-storybrand-sb7",
+   "murch-blink-p1-25",
+   "ogilvy-beyond-ch2",
+   "ogilvy-ch2-advertising-that-sells",
+   "ondaatje-conversations-ch3",
+   "pandey-pandeymonium",
+   "parameswaran-nawabs-nudes-noodles",
+   "samara-making-breaking-grid-ch1",
+   "sullivan-hey-whipple",
+   "vignelli-canon-intangibles",
+   "w3c-wcag22-text-legibility"
+  ],
+  "mokobara": [
+   "alton-painting-with-light-ch2",
+   "freeman-photographers-eye-graphic-guide",
+   "google-abcd-video-ads",
+   "grammar-of-the-edit-ch3-5",
+   "grammar-of-the-shot-ch4",
+   "heath-made-to-stick-introduction",
+   "hopkins-my-life-in-advertising",
+   "hopkins-scientific-advertising-ch1-7",
+   "miller-storybrand-sb7",
+   "murch-blink-p1-25",
+   "ogilvy-beyond-ch2",
+   "ogilvy-ch2-advertising-that-sells",
+   "sullivan-hey-whipple",
+   "vignelli-canon-intangibles"
+  ]
+ }
+}

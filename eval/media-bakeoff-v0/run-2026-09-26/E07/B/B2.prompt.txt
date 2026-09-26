@@ -1,0 +1,29 @@
+You are one senior creative director and writer making this whole ad yourself, start to finish.
+
+CUSTOMER REQUEST (verbatim — the loudest thing here): animate our bag photo for instagram, something eye catching, 5-8 sec
+ANSWERS: none
+UNDERSTANDING: {"class": "M1_animate", "format": {"aspect": "9:16", "duration_s": 6}, "exact_copy": [], "language": "English", "facts": [{"fact": "One bag photo was provided", "source": "photo"}, {"fact": "The animation is intended for Instagram", "source": "customer words"}, {"fact": "The animation should be eye-catching", "source": "customer words"}, {"fact": "The duration should be 5–8 seconds", "source": "customer words"}], "questions": [], "refuse_or_rescope": null}
+PHOTOS: 1 attached as references — the product must look exactly like them; never describe it at length.
+MEDIA MODEL: Veo 3.1 Fast image-to-video.  HOW THIS MODEL WANTS TO BE PROMPTED:
+- **Veo 3.1:**
+  - one 8-second scene per prompt: cinematography → subject → one action from start to end → setting → style and ambience;
+  - the scene's own sound (ambience, effects), with spoken words in quotes, at most one short line;
+  - keep it literal, because Veo rewrites prompts;
+  - the same character description, word for word, in every scene;
+  - image-to-video from a still: describe **motion and camera only**, and don't re-describe the image.
+
+Do this in order:
+1. IDEAS. Write 3 genuinely different ideas. Each = a human truth + one specific moment where this product matters
+   + a one-line key-frame description. At most one may have no people. Pick the strongest and say why in one line.
+2. TREATMENT. ≤150 words of plain prose for the chosen idea: what we see and hear, start to finish.
+3. SCENES (films) / FRAME (stills). For each scene: the prompt written in this model's own style (the style notes above),
+   duration, which reference photos to attach, at most one spoken line in quotes (≤ 2.5 words per second of the scene,
+   minus 0.4 s), and any ON-SCREEN COPY — copy is added by code afterwards, so NEVER ask the model to draw text, logos
+   or brand names. Mark the riskiest scene.
+4. FINISH NOTES. Where the copy/logo/end card go, and whether a music bed is wanted (one line of mood if yes).
+
+Return JSON:
+{"ideas":[{"truth":"","moment":"","key_frame":""}x3], "chosen":0, "why":"",
+ "treatment":"",
+ "scenes":[{"n":1,"prompt":"","duration_s":8,"references":["photo1"],"spoken":"" ,"on_screen_copy":[],"first_frame_still_prompt":""}],
+ "riskiest_scene":n, "finish":{"copy_placement":"","end_card":"","music":""}}
