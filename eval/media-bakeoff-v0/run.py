@@ -641,7 +641,12 @@ class ArmRun:
     def lint(self, d: dict) -> list[str]:
         flags = []
         exact = [c for c in (self.U or {}).get("exact_copy") or [] if c]
-        brand_words = {w.lower() for c in exact for w in re.findall(r"[A-Za-z][A-Za-z0-9.]{3,}", c) if w[0].isupper() or "." in w}
+        # brand names = web addresses / handles and their name part (mokobara.com → mokobara); capitalised ordinary words
+        # in an offer line ("Family Thali") are NOT brand names (practice T1, 26 Sep: "thali" was flagged in a thali photo)
+        brand_words = set()
+        for c in exact:
+            for w in re.findall(r"@?[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)+|@[A-Za-z0-9_.]+", c):
+                brand_words |= {w.lower().lstrip("@"), w.lower().lstrip("@").split(".")[0]}
         neg = re.compile(r"\b(no|without|don't|do not|never|avoid)\b\s+\w+", re.I)
         for s in d.get("scenes") or []:
             n = s.get("n", "?")
