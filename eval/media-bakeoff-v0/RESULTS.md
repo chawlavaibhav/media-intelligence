@@ -26,14 +26,14 @@ Scored by `score.py`. Checked by two independent recomputations, a sensitivity c
 
 ## How much to trust this
 
-- **12 pairs per comparison can only show big effects.** No comparison differs from a coin toss (two-sided p: B vs A 1.00, C vs A 0.55, C vs B 0.75). Each 95% range on a win rate is about 50 points wide. A significant result would need 10 of 12.
+- **12 pairs per comparison can only show big effects.** No comparison differs from a coin toss (two-sided p: B vs A 0.75, C vs A 0.55, C vs B 0.75). Each 95% range on a win rate is about 50 points wide. A significant result would need 10 of 12.
 - **Repeat consistency ("33%") is not a fair measure here.** Only 3 swapped repeats were scorable:
   - E06 was a tie both times.
   - E04 MAI moved one step, from "slightly" to "can't choose".
   - E04 C vs B reversed, from "C slightly" to "B clearly".
   - With 3 repeats, 33% cannot separate a careful judge from a random one.
 - **Would-pay answers for the same file shown twice agree 77% of the time** (moderate). A file got a "yes" 80% of the time in pairs it won, and 37% in pairs it lost, so the would-pay answer leans on what it was shown against.
-- **"Would pay" is mostly "after one small fix".** Counting only "Yes as-is": A 30%, C 21%, B 4%.
+- **"Would pay" is mostly "after one small fix".** Counting only "Yes as-is": A 29%, C 21%, B 4%.
 - **Confounds** (AFTER-VERDICTS.md):
   - in E10/E12, B and C made more scenes than A;
   - two E10 films lack scene 2;
