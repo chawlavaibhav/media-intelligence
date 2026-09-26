@@ -49,7 +49,7 @@ STEP_BRIEFS = {"practice": ["T1", "T2", "T3", "T4"],
 STEP_ARMS = {"practice": ["B", "C"], "stills": ["A", "B", "C"], "films": ["A", "B", "C"]}
 MAI_BRIEFS = {"E01", "E02", "E03", "E04", "E05"}
 CAPS = {"practice": 14.0, "stills": 23.0, "films": 128.0}        # founder 26 Sep: total US$165
-TOTAL_CAP = 165.0
+TOTAL_CAP = float(os.environ.get("BAKEOFF_TOTAL_CAP", "165"))   # founder's total; set per launch, logged in RUN-LOG
 STEP_CAPS_HARD = False    # founder 26 Sep: the US$165 total is the only hard cap; CAPS are reporting targets (my split)
 
 WRITER_MODEL = "claude-sonnet-5"
@@ -507,6 +507,14 @@ class ArmRun:
         (self.dir / f"{name}.reply.txt").write_text(text)
 
     def claude_json(self, name, prompt, files=None, workdir=None):
+        prev = self.dir / f"{name}.reply.txt"
+        if prev.exists() and (self.dir / f"{name}.prompt.txt").exists() and (self.dir / f"{name}.prompt.txt").read_text() == prompt:
+            try:                                  # resume: the same prompt was already answered before a restart; reuse the reply
+                d = extract_json(prev.read_text())
+                self.ev("resumed_llm", step=name)
+                return d
+            except (ValueError, json.JSONDecodeError):
+                pass
         for attempt in (1, 2):
             text, meta = self.call("claude", name, PRICE["claude"], self.ctx.p.claude, prompt, files, workdir)
             self.write_llm(f"{name}" + ("" if attempt == 1 else "-retry"), prompt, text)
@@ -521,12 +529,42 @@ class ArmRun:
     def refs_bytes(self, paths):
         return [(mime(p), p.read_bytes()) for p in paths]
 
+    def _failed_before(self, tag, route_prefix):
+        """A media call for this tag that failed before a restart is not sent again (the draw budget stays as designed)."""
+        with self.ctx.ledger._locked():
+            rows = list(self.ctx.ledger.rows)
+        res = {r["id"] for r in rows if r["kind"] == "reserve" and r["brief"] == self.bid and r["arm"] == self.arm
+               and r["what"] == tag and r["route"].startswith(route_prefix) and not r["route"].endswith("-submit")}
+        return any(r["kind"] == "settle" and r["id"] in res and r["status"] == "failed" for r in rows)
+
+    def _resumed(self, tag, exts):
+        for ext in exts:
+            f = self.dir / f"{tag}{ext}"
+            if f.exists() and f.stat().st_size > 1000:
+                if ext == ".mp4" and float(probe(f).get("format", {}).get("duration", 0) or 0) <= 0:
+                    continue
+                self.ev("resumed_media", tag=tag, file=f.name)
+                return f
+        return None
+
     def image(self, prompt, aspect, refs, tag, model="nb2"):
+        prev = self._resumed(tag, (".png", ".jpg"))          # resume: paid for before a restart; reuse
+        if prev:
+            return prev
+        if self._failed_before(tag, model):
+            self.ev("resumed_failed_not_resent", tag=tag)
+            raise RuntimeError(f"{tag} failed before the restart; not sent again")
         fn = self.ctx.p.mai if model == "mai" else self.ctx.p.nb2
         b = self.call(model, tag, PRICE[model], fn, prompt, aspect, self.refs_bytes(refs))
         return self.save(f"{tag}{img_ext(b)}", b)
 
     def video(self, model, prompt, duration, aspect, tag, image: Path | None = None, refs=None):
+        prev = self._resumed(tag, (".mp4",))                  # resume: paid for before a restart; reuse
+        if prev:
+            return prev
+        if self._failed_before(tag, f"veo-{model}"):
+            self.ev("resumed_failed_not_resent", tag=tag)
+            raise RuntimeError(f"{tag} failed before the restart; not sent again")
         route = f"veo-{model}"
         cost = PRICE[route] * duration
         refb = self.refs_bytes(refs) if refs else None
@@ -844,7 +882,7 @@ class ArmRun:
                 raise
             except Exception:  # noqa: BLE001
                 firsts[i] = None
-        specs = [(f"S{i+1}-t1", s["prompt"], veo_dur(s.get("duration_s", 8)), aspect, firsts[i], None) for i, s in enumerate(scenes)]
+        specs = [(f"S{i+1}-t1", veo_prompt(s), veo_dur(s.get("duration_s", 8)), aspect, firsts[i], None) for i, s in enumerate(scenes)]
         clips = self._parallel_videos(vm, specs)
         fails = {}
         for i, s in enumerate(scenes):
@@ -854,7 +892,7 @@ class ArmRun:
         retake = bad[0] if bad else min(max(int(d.get("riskiest_scene") or len(scenes)) - 1, 0), len(scenes) - 1)
         self.ev("retake_slot", scene=retake + 1, reason="failed checks" if bad else "riskiest")
         s = scenes[retake]
-        clips.update(self._parallel_videos(vm, [(f"S{retake+1}-t2", s["prompt"], veo_dur(s.get("duration_s", 8)), aspect, firsts[retake], None)]))
+        clips.update(self._parallel_videos(vm, [(f"S{retake+1}-t2", veo_prompt(s), veo_dur(s.get("duration_s", 8)), aspect, firsts[retake], None)]))
         if clips.get(f"S{retake+1}-t2"):
             self.check_clip(clips[f"S{retake+1}-t2"], veo_dur(s.get("duration_s", 8)), aspect, s.get("spoken", ""))
         chosen = []
@@ -957,8 +995,12 @@ class ArmRun:
         music = ((d.get("finish") or {}).get("music") or "").strip()
         if music and not re.match(r"^(no|none|n/?a|false)\b", music, re.I):
             try:
-                mb = self.call("lyria", "music", PRICE["lyria"], self.ctx.p.lyria, music)
-                mp = self.save("music.mp3", mb)
+                mp = self._resumed("music", (".mp3",))            # resume: paid for before a restart; reuse
+                if mp is None:
+                    if self._failed_before("music", "lyria"):
+                        raise RuntimeError("music failed before the restart; not sent again")
+                    mb = self.call("lyria", "music", PRICE["lyria"], self.ctx.p.lyria, music)
+                    mp = self.save("music.mp3", mb)
                 out = self.dir / "film.mp4"
                 r = ff("-i", film, "-i", mp, "-filter_complex",
                        "[1:a]volume=0.18,afade=t=out:st=0:d=0.1[m];[0:a][m]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-16:TP=-1.5[a]",
@@ -972,6 +1014,20 @@ class ArmRun:
             except Exception as e:  # noqa: BLE001
                 self.ev("music_failed", error=str(e)[:300])
         return film
+
+
+def veo_prompt(s: dict) -> str:
+    """TEST-FLOWS §5: the scene's spoken words go in quotes INSIDE the Veo prompt. The writer returns them in a separate
+    `spoken` field; when the scene prompt does not already contain them, they are appended (founder-approved fix, 26 Sep:
+    the first runner sent only `prompt`, so lines the writer kept in `spoken` were never voiced)."""
+    pr = (s.get("prompt") or "").strip()
+    sp = (s.get("spoken") or "").strip().strip('"').strip("“”")
+    if not sp:
+        return pr
+    norm = lambda t: re.sub(r"[^\w\s]", "", t.lower())
+    if " ".join(norm(sp).split()[:4]) in norm(pr):
+        return pr
+    return f'{pr} Spoken line: "{sp}"'
 
 
 def concat(paths, out: Path, wd: Path, size=None):
