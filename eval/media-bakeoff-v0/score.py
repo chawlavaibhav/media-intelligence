@@ -53,9 +53,27 @@ def main(run_dir: str) -> None:
     pay = defaultdict(lambda: [0, 0])
     reasons = defaultdict(lambda: defaultdict(int))
     repeats = []
+    unanswered = []
     for pid, m in mapping.items():
         v = verdicts.get(pid)
-        if not v or not v.get("pref"):
+        if not v:
+            unanswered.append(f"{m['brief_id']} {m['comparison']}" + (" (repeat)" if "repeat_of" in m else ""))
+            continue
+        side_check = EXCLUDE_SIDE_CHECK_FROM_MAIN_PAY and m["comparison"] not in MAIN
+        if "repeat_of" not in m:
+            # would-pay and reasons count even when no preference was picked (final check, 26 Sep: a pair without a
+            # preference used to drop its would-pay answers); side-check pairs feed side_pay only, reasons included
+            for side, key in (("left", "payA"), ("right", "payB")):
+                arm = m[side]
+                if v.get(key) in PAYS:
+                    tgt = side_pay if side_check else pay
+                    tgt[arm][0] += PAYS[v[key]]
+                    tgt[arm][1] += 1
+                why = v.get("whyA" if side == "left" else "whyB")
+                if why and not why.startswith("(") and v.get(key) == "No" and not side_check:
+                    reasons[arm][why] += 1
+        if not v.get("pref"):
+            unanswered.append(f"{m['brief_id']} {m['comparison']}" + (" (repeat)" if "repeat_of" in m else ""))
             continue
         first = m["comparison"].split(" vs ")[0]
         winner_side = side_of(v["pref"])
@@ -67,15 +85,6 @@ def main(run_dir: str) -> None:
         k = "t" if winner is None else ("w" if winner == first else "l")
         c[k] += 1
         c["by_class"][m["class"]][{"w": 0, "l": 1, "t": 2}[k]] += 1
-        for side, key in (("left", "payA"), ("right", "payB")):
-            arm = m[side]
-            if v.get(key) in PAYS:
-                tgt = side_pay if (EXCLUDE_SIDE_CHECK_FROM_MAIN_PAY and m["comparison"] not in MAIN) else pay
-                tgt[arm][0] += PAYS[v[key]]
-                tgt[arm][1] += 1
-            why = v.get("whyA" if side == "left" else "whyB")
-            if why and not why.startswith("(") and v.get(key) == "No":
-                reasons[arm][why] += 1
     agree = None
     if repeats:
         orig = {}
@@ -94,17 +103,19 @@ def main(run_dir: str) -> None:
 
     judged = sum(1 for pid in mapping if (verdicts.get(pid) or {}).get("pref"))
     L = ["# Bake-off scorecard", "",
-         f"Pairs judged: {judged} of {len(mapping)}" + (f"; {len(refused)} answers refused (they belonged to different pairs)" if refused else ""),
+         f"Pairs judged: {judged} of {len(mapping)}" + (f"; {len(refused)} answers refused (they belonged to different pairs)" if refused else "")
+         + (f"; no preference given: {', '.join(unanswered)}" if unanswered else ""),
          f"Rulings: side-check pairs {'excluded from' if EXCLUDE_SIDE_CHECK_FROM_MAIN_PAY else 'included in'} A's would-pay; "
          f"ties {'count against' if TIES_COUNT_AGAINST_CLASS_WIN else 'are dropped from'} the per-class rule.", ""]
     L += ["| comparison | wins | losses | ties | win rate (non-tie) | sign-test p |", "|---|---|---|---|---|---|"]
     for name, c in comp.items():
         n = c["w"] + c["l"]
         L.append(f"| {name} | {c['w']} | {c['l']} | {c['t']} | {c['w']/n:.0%} | {sign_p(c['w'], n):.3f} |" if n else f"| {name} | 0 | 0 | {c['t']} | – | – |")
-    L += ["", "| arm | would pay | mean cost/round US$ | mean machine time s | top 'no' reasons |", "|---|---|---|---|---|"]
+    L += ["", "| arm | would pay | mean cost/round US$ (comparable) | mean machine time s (includes queue waits) | top 'no' reasons |", "|---|---|---|---|---|"]
     for arm in sorted(set(pay) | set(cost)):
         pr = f"{pay[arm][0]}/{pay[arm][1]} ({pay[arm][0]/pay[arm][1]:.0%})" if pay[arm][1] else "–"
-        mc = sum(cost[arm]) / len(cost[arm]) if cost[arm] else 0
+        cmp_ = json.loads((run / "COSTS.json").read_text()).get("mean_comparable_per_arm", {}) if (run / "COSTS.json").exists() else {}
+        mc = cmp_.get(arm, sum(cost[arm]) / len(cost[arm]) if cost[arm] else 0)
         ms = sum(secs[arm]) / len(secs[arm]) if secs[arm] else 0
         top = ", ".join(f"{k} ×{n}" for k, n in sorted(reasons[arm].items(), key=lambda kv: -kv[1])[:3])
         L.append(f"| {arm} | {pr} | {mc:.2f} | {ms:.0f} | {top} |")
