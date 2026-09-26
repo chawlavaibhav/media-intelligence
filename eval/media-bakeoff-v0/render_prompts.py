@@ -50,15 +50,10 @@ def canon(*args: str) -> str:
     return subprocess.run([sys.executable, str(HERE / "canon_context.py"), *args], capture_output=True, text=True, check=True).stdout.strip()
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("brief_id")
-    ap.add_argument("--librarian-json")
-    ap.add_argument("--understanding-json")
-    ap.add_argument("--out")
-    a = ap.parse_args()
+def build(brief_id: str, understanding: str | None = None, picks: dict | None = None) -> dict:
+    """Every prompt for one brief, as the models receive them (used by main() and by run.py)."""
     d = yaml.safe_load((HERE / "BRIEFS.yaml").read_text())
-    b = next(x for x in d["exam"] + d["practice"] if x["id"] == a.brief_id)
+    b = next(x for x in d["exam"] + d["practice"] if x["id"] == brief_id)
     cls, brief, answers = b["class"], (b.get("verbatim") or "").strip(), (b.get("answers") or "").strip()
     n_photos = len(b.get("assets") or [])
     model, kind = MEDIA[cls]
@@ -66,7 +61,7 @@ def main() -> None:
     photos_line = (f"{n_photos} attached as references — the product must look exactly like them; never describe it at length."
                    if n_photos else "none supplied — invent the food/product look yourself, and keep it identical across scenes by "
                    "repeating one fixed description word for word.")
-    understanding = Path(a.understanding_json).read_text().strip() if a.understanding_json else "{produced at run time by B1}"
+    understanding = understanding.strip() if understanding else "{produced at run time by B1}"
 
     A1 = (block("**A1 prompt (writer):**").replace("{brief_verbatim}", brief)
           .replace("{answers_if_any}", f"ANSWERS: {answers}" if answers else "")
@@ -80,18 +75,33 @@ def main() -> None:
           .replace("{B1 json}", understanding).replace("{photos_line}", photos_line)
           .replace("{media_model_name}", model).replace("{style_guide_for_class}", style(kind)))
     lint = block("**The lint message returned to the writer:**")
-    bfile = HERE / f".brief-{a.brief_id}.txt"
+    bfile = HERE / f".brief-{brief_id}.txt"
     bfile.write_text(brief + (f"\nANSWERS: {answers}" if answers else "")
                      + ("\nPHOTOS: " + ", ".join(b["assets"]) if b.get("assets") else "\nPHOTOS: none supplied"))
     lib = canon("librarian", str(bfile), cls)
     bfile.unlink()
     lib_short = (lib[:lib.index("GAP RULES:") + 10] + "\n… (the 25 gap-card rules, numbered G1–G25 — canon/shape-v1/GAP-CARD.md)\n\nINDEX:"
                  + "\n… (the 1,300-line label index — canon/shape-v1/LABEL-INDEX.md)")
-    picks = json.loads(Path(a.librarian_json).read_text()) if a.librarian_json else {}
+    picks = picks or {}
     ids, gaps = picks.get("ids", []), [str(g).lstrip("G") for g in picks.get("gap_rules", [])]
     C2 = B2.replace("Do this in order:", canon("block", cls, ",".join(ids), ",".join(gaps)) + "\n\nDo this in order:")
     C2b = block("### 4.4 C2b").replace("{AFTER-WRITING-CHECKLIST.yaml questions C01–C15}", canon("checklist"))
 
+    return {"brief": b, "cls": cls, "A1": A1, "A3": A3, "B1": B1, "B2": B2, "lint": lint, "C0": lib, "C0_short": lib_short,
+            "C2": C2, "C2b": C2b, "ids": ids, "gaps": gaps}
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("brief_id")
+    ap.add_argument("--librarian-json")
+    ap.add_argument("--understanding-json")
+    ap.add_argument("--out")
+    a = ap.parse_args()
+    r = build(a.brief_id, Path(a.understanding_json).read_text() if a.understanding_json else None,
+              json.loads(Path(a.librarian_json).read_text()) if a.librarian_json else None)
+    cls, A1, A3, B1, B2, lint, lib_short, C2, C2b, ids, gaps = (r[k] for k in
+        ("cls", "A1", "A3", "B1", "B2", "lint", "C0_short", "C2", "C2b", "ids", "gaps"))
     f = lambda t: f"{FENCE}\n{t}\n{FENCE}"
     out = "\n\n".join([
         f"# Every prompt, rendered for {a.brief_id} ({cls})",
