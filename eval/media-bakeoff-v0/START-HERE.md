@@ -52,6 +52,9 @@ The same customer message goes to every arm; the arms differ only in what they a
 - Writer and librarian: **Claude Sonnet 5**, unless the founder says otherwise.
 - Understand step: GPT-5.6 Luna, or Gemini Flash if Luna isn't available.
 - Google and Azure only. **No fal.**
+- **Voice, in all three arms: Veo's own native speech only.** Spoken words go in quotes inside the scene prompt. No TTS
+  voice-over and no Sarvam/ElevenLabs/Azure TTS in any arm. B and C add only the pipeline's limits: ≤1 short line per 8-s
+  scene, timed at 2.5 words/s minus 0.4 s, plus overlap and loudness checks.
 
 ## 3. Order of work
 
